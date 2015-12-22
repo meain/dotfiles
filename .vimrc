@@ -30,6 +30,8 @@ Bundle 'gmarik/vundle'
 
 " Plugins from github repos:
 
+" Vim colorscheme
+Plugin 'flazz/vim-colorschemes'
 " Python and PHP Debugger
 Bundle 'jaredly/vim-debug'
 " Better file browser
@@ -158,7 +160,7 @@ set nobackup
 set langmenu=zh_CN.UTF-8
 set mouse=a
 set whichwrap+=<,>,h,l,[,]
-set background=dark
+set background=light
 set encoding=utf-8
 
 
