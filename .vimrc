@@ -237,7 +237,7 @@ nmap ,wr :RecurGrepFast <cword><CR>
 " -----------------------------------------------------------------------------------------------------------------------
 "if &term =~? 'mlterm\|xterm\|xterm-256\|screen-256'
 let &t_Co = 256
-colorscheme atom 
+colorscheme 256-grayvim 
 "else
 "    colorscheme delek
 "endif
