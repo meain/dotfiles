@@ -12,6 +12,12 @@ export PATH
 export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
 # Finished adapting your PATH environment variable for use with MacPorts.
 
+#enabling pandoc and lunx to make reading .md files in terminal
+#To read do : rmd file.md
+rmd () {
+  pandoc $1 | lynx -stdin
+}
+
 #setting up the profile for recognising the bsh profile
 source ~/.bashrc
 
