@@ -4,10 +4,10 @@
 It includes my basic vim conifg, tmux config  and bash config files.
 
 ###Dependencies
-####For bash profile
+#####For bash profile
     pandoc and lynx -- this is needed to enable reding markdown files in the terminal
 
-####For vimrc
+#####For vimrc
     vundle -- will be autoinstalled first time you start vim after having this config file
 
 >Released under WTFPL
