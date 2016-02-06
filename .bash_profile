@@ -21,13 +21,10 @@ rmd () {
 #setting up the profile for recognising the bsh profile
 source ~/.bashrc
 
-#colouring up the terminal session
-export CLICOLOR=1
-export LSCOLORS=ExFxBxDxCxegedabagacad
-alias ls='ls -GFh'
+#---------------------bash-it----------------------
 
 # Path to the bash it configuration
-export BASH_IT="/Users/abinsimon/Desktop/bash-it"
+export BASH_IT="/Users/abinsimon/.bash-it"
 
 # Lock and Load a custom theme file
 # location /.bash_it/themes/
