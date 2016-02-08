@@ -10,6 +10,6 @@ It includes my basic vim conifg, tmux config  and bash config files.
   [bash-it](https://github.com/Bash-it/bash-it) -- For the lovely git info display
 
 #####For vimrc
-  vundle -- will be autoinstalled first time you start vim after having this config file
+  [vundle](https://github.com/VundleVim/Vundle.vim) -- will be autoinstalled first time you start vim after having this config file
 
 >Released under WTFPL
