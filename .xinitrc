@@ -1,0 +1,1 @@
+etxkbmap -option caps:escape
