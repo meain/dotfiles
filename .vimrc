@@ -1,3 +1,5 @@
+" meain
+"
 " ============================================================================
 " Vundle initialization
 " Avoid modify this section, unless you are very sure of what you are doing
@@ -37,9 +39,9 @@ Bundle 'jaredly/vim-debug'
 " Better file browser
 Bundle 'scrooloose/nerdtree'
 " Code commenter
-Bundle 'scrooloose/nerdcommenter'
+" Bundle 'scrooloose/nerdcommenter'
 " Class/module browser
-Bundle 'majutsushi/tagbar'
+" Bundle 'majutsushi/tagbar'
 " Code and files fuzzy finder
 Bundle 'kien/ctrlp.vim'
 " Extension to ctrlp, for fuzzy command finder
@@ -49,13 +51,15 @@ Bundle 'mattn/emmet-vim'
 " Git integration
 Bundle 'motemen/git-vim'
 " Tab list panel
-Bundle 'kien/tabman.vim'
+" Bundle 'kien/tabman.vim'
 " Airline
 Bundle 'bling/vim-airline'
+" Airline themes
+Bundle 'vim-airline/vim-airline-themes'
 " Consoles as buffers
-Bundle 'rosenfeld/conque-term'
+" Bundle 'rosenfeld/conque-term'
 " Pending tasks list
-Bundle 'fisadev/FixedTaskList.vim'
+" Bundle 'fisadev/FixedTaskList.vim'
 " Surround
 Bundle 'tpope/vim-surround'
 " Autoclose
@@ -73,15 +77,15 @@ Bundle 'tomtom/tlib_vim'
 Bundle 'honza/vim-snippets'
 Bundle 'garbas/vim-snipmate'
 " awesome colorscheme
-Bundle 'tomasr/molokai'
+" Bundle 'tomasr/molokai'
 " Git/mercurial/others diff icons on the side of the file lines
 Bundle 'mhinz/vim-signify'
 " Automatically sort python imports
-Bundle 'fisadev/vim-isort'
+" Bundle 'fisadev/vim-isort'
 " Drag visual blocks arround
-Bundle 'fisadev/dragvisuals.vim'
+" Bundle 'fisadev/dragvisuals.vim'
 " Window chooser
-Bundle 't9md/vim-choosewin'
+" Bundle 't9md/vim-choosewin'
 " Python and other languages code checker
 Bundle 'scrooloose/syntastic'
 " Paint css colors with the real color
@@ -100,9 +104,9 @@ Bundle 'IndexedSearch'
 " XML/HTML tags navigation
 Bundle 'matchit.zip'
 " Gvim colorscheme
-Bundle 'Wombat'
+" Bundle 'Wombat'
 " Yank history navigation
-Bundle 'YankRing.vim'
+" Bundle 'YankRing.vim'
 "javascript complete after install the plugin, you must cd the install
 "directory and run `npm install`, then add a .tern-project config file
 "the doc at http://ternjs.net/doc/manual.html#vim
@@ -146,7 +150,7 @@ set softtabstop=4
 set shiftwidth=4
 " highlight cursor line and column
 set cursorline
-set cursorcolumn
+" set cursorcolumn
 " hidden startup messages
 set shortmess=atI
 " auto read and write
@@ -160,7 +164,7 @@ set nobackup
 set langmenu=zh_CN.UTF-8
 set mouse=a
 set whichwrap+=<,>,h,l,[,]
-set background=light
+set background=dark
 set encoding=utf-8
 
 
@@ -237,7 +241,7 @@ nmap ,wr :RecurGrepFast <cword><CR>
 " -----------------------------------------------------------------------------------------------------------------------
 "if &term =~? 'mlterm\|xterm\|xterm-256\|screen-256'
 let &t_Co = 256
-colorscheme 256-grayvim 
+colorscheme Monokai
 "else
 "    colorscheme delek
 "endif
@@ -283,9 +287,9 @@ endif
 " Tagbar ----------------------------- 
 
 " toggle tagbar display
-map <F4> :TagbarToggle<CR>
+" map <F4> :TagbarToggle<CR>
 " autofocus on tagbar open
-let g:tagbar_autofocus = 1
+" let g:tagbar_autofocus = 1
 
 " NERDTree ----------------------------- 
 
@@ -300,7 +304,7 @@ let NERDTreeIgnore = ['\.pyc$', '\.pyo$']
 " Tasklist ------------------------------
 
 " show pending tasks list
-map <F2> :TaskList<CR>
+" map <F2> :TaskList<CR>
 
 " Vim-debug ------------------------------
 
@@ -384,6 +388,8 @@ let g:pymode_lint_signs = 0
 let g:pymode_folding = 0
 " don't load rope by default. Change to 1 to use rope
 let g:pymode_rope = 0
+" Remove detecting whitespace
+let g:pymode_syntax_space_errors = 0
 " open definitions on same window, and custom mappings for definitions and
 " occurrences
 let g:pymode_rope_goto_definition_bind = ',d'
