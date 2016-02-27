@@ -4,6 +4,9 @@
 PATH="/Library/Frameworks/Python.framework/Versions/2.7/bin:${PATH}"
 export PATH
 
+##pipsi install addition to the path variable
+export PATH="/Users/abinsimon/.local/bin:$PATH"
+
 ##
 # Your previous /Users/abinsimon/.bash_profile file was backed up as /Users/abinsimon/.bash_profile.macports-saved_2015-10-23_at_16:04:25
 ##
@@ -28,7 +31,7 @@ export BASH_IT="/Users/abinsimon/.bash-it"
 
 # Lock and Load a custom theme file
 # location /.bash_it/themes/
-export BASH_IT_THEME='sexy'
+export BASH_IT_THEME='sexy2'
 
 # Your place for hosting Git repos. I use this for private repos.
 export GIT_HOSTING='https://github.com/meain'
