@@ -112,7 +112,7 @@ Bundle 'matchit.zip'
 "the doc at http://ternjs.net/doc/manual.html#vim
 Bundle 'marijnh/tern_for_vim'
 " Golang Plugins
-Bundle 'fatih/vim-go'
+" Bundle 'fatih/vim-go'
 " JSX syntax highlight.
 Bundle 'mxw/vim-jsx'
 " Markdown syntastic highlight
@@ -122,6 +122,8 @@ Bundle 'plasticboy/vim-markdown'
 " Before you want to use it, please run
 " `sudo npm -g install instant-markdown-d`
 Bundle 'suan/vim-instant-markdown'
+" Plugin used to comment out a line
+Bundle 'scrooloose/nerdcommenter'
 
 " ============================================================================
 " Install plugins the first time vim runs
@@ -206,6 +208,7 @@ map <C-S-Left> :tabp<CR>
 imap <C-S-Left> <ESC>:tabp<CR>
 
 " navigate windows with meta+arrows
+" This meta key thing wont work in mac
 map <M-Right> <c-w>l
 map <M-Left> <c-w>h
 map <M-Up> <c-w>k
@@ -467,6 +470,9 @@ let g:choosewin_overlay_enable = 1
 let g:airline_powerline_fonts = 1
 let g:airline_theme = 'bubblegum'
 let g:airline#extensions#whitespace#enabled = 1
+
+" Top bar
+let g:airline#extensions#tabline#enabled = 1
 
 " to use fancy symbols for airline, uncomment the following lines and use a
 " patched font (more info on the README.rst)

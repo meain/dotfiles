@@ -9,4 +9,4 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 #This is to change the long text to just a %
-PS1="% : "
+# PS1="% : "
