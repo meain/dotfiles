@@ -207,6 +207,10 @@ imap <C-S-Right> <ESC>:tabn<CR>
 map <C-S-Left> :tabp<CR>
 imap <C-S-Left> <ESC>:tabp<CR>
 
+" Buffer switching
+map <Leader>bn :bn<CR>
+map <Leader>bp :bp<CR>
+
 " navigate windows with meta+arrows
 " This meta key thing wont work in mac
 map <M-Right> <c-w>l
