@@ -35,7 +35,7 @@ Bundle 'gmarik/vundle'
 " Vim colorscheme
 Plugin 'flazz/vim-colorschemes'
 " Python and PHP Debugger
-Bundle 'jaredly/vim-debug'
+"Bundle 'jaredly/vim-debug'
 " Better file browser
 Bundle 'scrooloose/nerdtree'
 " Minimap for vim
@@ -85,7 +85,7 @@ Bundle 'mhinz/vim-signify'
 " Automatically sort python imports
 " Bundle 'fisadev/vim-isort'
 " Drag visual blocks arround
-" Bundle 'fisadev/dragvisuals.vim'
+Bundle 'fisadev/dragvisuals.vim'
 " Window chooser
 " Bundle 't9md/vim-choosewin'
 " Python and other languages code checker
@@ -441,10 +441,10 @@ let g:AutoClosePumvisible = {"ENTER": "\<C-Y>", "ESC": "\<ESC>"}
 " DragVisuals ------------------------------
 
 " mappings to move blocks in 4 directions
-vmap <expr> <S-M-LEFT> DVB_Drag('left')
-vmap <expr> <S-M-RIGHT> DVB_Drag('right')
-vmap <expr> <S-M-DOWN> DVB_Drag('down')
-vmap <expr> <S-M-UP> DVB_Drag('up')
+vmap <expr> <S-LEFT> DVB_Drag('left')
+vmap <expr> <S-RIGHT> DVB_Drag('right')
+vmap <expr> <S-DOWN> DVB_Drag('down')
+vmap <expr> <S-UP> DVB_Drag('up')
 " mapping to duplicate block
 vmap <expr> D DVB_Duplicate()
 
