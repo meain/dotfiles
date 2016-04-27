@@ -9,7 +9,11 @@ It includes my `vim`, `tmux`, `git` and `bash` config files.
     
 * [**bash-it**](https://github.com/Bash-it/bash-it) -- For the lovely git info display
 
+![Bash-it](http://s32.postimg.org/uk5t8dft1/Screen_Shot_2016_04_27_at_8_38_33_AM.png)
+
 #####For vimrc
 * [**vundle**](https://github.com/VundleVim/Vundle.vim) -- will be autoinstalled first time you start vim after having this config file
 
+######Vim editor(has not so bad mouse support)
+![Vim](http://s32.postimg.org/xd3m655j9/Screen_Shot_2016_04_27_at_8_38_06_AM.png)
 >Released under WTFPL
