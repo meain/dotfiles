@@ -32,6 +32,14 @@ Bundle 'gmarik/vundle'
 
 " Plugins from github repos:
 
+" Org mode - kind of like in emacs
+Plugin 'jceb/vim-orgmode'
+" dependencey for orgmode
+Plugin 'tpope/vim-speeddating'
+" Better clipboard managemant
+Plugin 'svermeulen/vim-easyclip' 
+" Installing this as a dependency for easyclip
+Plugin 'tpope/vim-repeat'
 " Vim colorscheme
 Plugin 'flazz/vim-colorschemes'
 " Python and PHP Debugger
@@ -139,6 +147,9 @@ endif
 " ============================================================================
 " Vim settings and mappings
 " You can edit them as you wish
+
+" Leader key remap
+:let mapleader = " "
 
 " allow plugins by file type (required for plugins!)
 filetype plugin on
