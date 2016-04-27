@@ -212,12 +212,18 @@ syntax on
 set nu
 set relativenumber
 
+" Just something I have to do
+:command WQ wq
+:command Wq wq
+:command W w
+:command Q q
+
 " tab navigation mappings
-map tn :tabn<CR>
-map tp :tabp<CR>
-map tm :tabm 
-map tt :tabnew 
-map ts :tab split<CR>
+map <Leader>tn :tabn<CR>
+map <Leader>tp :tabp<CR>
+map <Leader>tm :tabm 
+map <Leader>tt :tabnew 
+map <Leader>ts :tab split<CR>
 map <C-S-Right> :tabn<CR>
 imap <C-S-Right> <ESC>:tabn<CR>
 map <C-S-Left> :tabp<CR>
