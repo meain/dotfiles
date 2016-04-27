@@ -95,7 +95,7 @@ Bundle 'mhinz/vim-signify'
 " Drag visual blocks arround
 Bundle 'fisadev/dragvisuals.vim'
 " Window chooser
-" Bundle 't9md/vim-choosewin'
+Bundle 't9md/vim-choosewin'
 " Python and other languages code checker
 Bundle 'scrooloose/syntastic'
 " Paint css colors with the real color
