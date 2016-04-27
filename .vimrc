@@ -151,6 +151,9 @@ endif
 " Leader key remap
 :let mapleader = " "
 
+"Remaping the pane switching
+:map <Leader>w <C-w>
+
 " allow plugins by file type (required for plugins!)
 filetype plugin on
 filetype indent on
@@ -221,8 +224,8 @@ map <C-S-Left> :tabp<CR>
 imap <C-S-Left> <ESC>:tabp<CR>
 
 " Buffer switching
-map <Leader>bn :bn<CR>
-map <Leader>bp :bp<CR>
+map bb :bn<CR>
+map <Leader>bb :bp<CR>
 
 " navigate windows with meta+arrows
 " This meta key thing wont work in mac
