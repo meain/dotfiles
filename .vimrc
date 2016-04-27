@@ -154,12 +154,16 @@ endif
 "Remaping the pane switching
 :map <Leader>w <C-w>
 
+" Window resizing
+nnoremap <silent> <Leader>= :exe "resize " . (winheight(0) * 3/2)<CR>
+nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
+
 " allow plugins by file type (required for plugins!)
 filetype plugin on
 filetype indent on
 
 "Enable copy paste from other sources
-set clipboard=unnamed
+" set clipboard=unnamed
 
 " tabs and spaces handling
 set expandtab
