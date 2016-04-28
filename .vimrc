@@ -155,6 +155,11 @@ endif
 " Leader key remap
 :let mapleader = " "
 
+" Saving and quitting keybindings
+:nmap <Leader>w :w<CR>
+:nmap <Leader>q :q<CR>
+:nmap <Leader>ww :wq<CR>
+
 "Remaping the pane switching
 :map <Leader>w <C-w>
 
