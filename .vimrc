@@ -234,8 +234,8 @@ map <C-S-Left> :tabp<CR>
 imap <C-S-Left> <ESC>:tabp<CR>
 
 " Buffer switching
-map bb :bn<CR>
-map <Leader>bb :bp<CR>
+map <Leader>bn :bn<CR>
+map <Leader>bp :bp<CR>
 
 " navigate windows with meta+arrows
 " This meta key thing wont work in mac
