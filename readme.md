@@ -1,5 +1,5 @@
 #Dotfiles
-**Hey**, this is the dotfiles that I use.
+**Hey**, these are the dotfiles that I use.
 
 It includes my `vim`, `tmux`, `git` and `bash` config files.
 
