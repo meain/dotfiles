@@ -16,3 +16,6 @@ alias blah='cd ~/Documents/Projects'
 
 # Alias for easier commit
 alias gu='git add -u && git commit'
+
+# Easier push to origin master
+alias gp='git push origin master'
