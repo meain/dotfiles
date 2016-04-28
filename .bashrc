@@ -11,13 +11,17 @@ export LANG=en_US.UTF-8
 #This is to change the long text to just a %
 # PS1="% : "
 
+#Alias
+alias ss='ls -l'
+alias ll='ls -a -l'
+alias la='ls -a'
+
 parse_git_branch() {
 
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 
 }
 
-alias oo='echo $branch'
 # Git alias
 
 # Alias to get into project folder
