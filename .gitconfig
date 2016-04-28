@@ -11,3 +11,5 @@
      st = status -sb -uno --ignore-submodules=untracked
 [color]
 	ui = auto
+[core]
+	editor = /usr/bin/vim

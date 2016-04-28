@@ -10,3 +10,10 @@ export LANG=en_US.UTF-8
 
 #This is to change the long text to just a %
 # PS1="% : "
+
+# Alias to get into project folder
+alias blah='cd ~/Documents/Projects'
+
+# Alias for easier commit
+alias gu='git add -u && git commit'
+alias ga='git add * && git commit'
