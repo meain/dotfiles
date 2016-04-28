@@ -16,4 +16,3 @@ alias blah='cd ~/Documents/Projects'
 
 # Alias for easier commit
 alias gu='git add -u && git commit'
-alias ga='git add * && git commit'
