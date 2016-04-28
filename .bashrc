@@ -1,7 +1,16 @@
 #!/bin/bash
 
 echo ""
-echo "*meain* : Just don't code shit" 
+h=`date +%H`
+if [ $h -lt 12 ]; then
+     echo Good morning, *meain*!|lolcat
+elif [ $h -lt 18 ]; then
+     echo Good afternoon, *meain*!|lolcat
+elif [ $h -lt 24 ]; then
+     echo Good evening, *meain*!|lolcat
+else
+     echo Get some sleep, *meain*!|lolcat
+fi
 echo ""
 
 #Python sometimes messed up with me when I used matplotlib without the following statements, I don't know why
@@ -12,23 +21,38 @@ export LANG=en_US.UTF-8
 # PS1="% : "
 
 #Alias
-alias ss='ls -l'
-alias ll='ls -a -l'
-alias la='ls -a'
+alias ss='ls -lht'
+alias ll='ls -A -l'
+alias la='ls -A'
+alias lr='ls -lRht'
+alias c='clear'
+alias q='exit'
+alias d='less'
+alias oo='vim ~/notes.org'
+alias mkdir='mkdir -p'
+alias rm='rm -i'
+alias ffind='find . -name'
+alias .='cd ..'
+#Check evey single file for a specific text and print surrounding 2 lines
+alias here='find . -type f -print0|xargs -0 grep -C 2 -i'
 
 parse_git_branch() {
 
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 
 }
-
-# Git alias
-
+# Alias to open multimedia folder in finder
+alias fun='cd ~/Documents/Multimedia && open . && cd -'
 # Alias to get into project folder
 alias blah='cd ~/Documents/Projects'
 
+# Git alias
+
 # Alias for easier commit
 alias gu='git add -u && git commit'
+
+# Git add
+alias ga='git add'
 
 # Easier push to origin master
 alias gp='git push origin $(parse_git_branch)'
