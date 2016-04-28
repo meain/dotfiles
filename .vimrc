@@ -34,6 +34,10 @@ Bundle 'gmarik/vundle'
 
 " A fancy start page for vim
 Plugin 'mhinz/vim-startify'
+" This is like the holy grail of dependencies
+Plugin 'xolox/vim-misc'
+" Vim session maanager
+Bundle 'xolox/vim-session'
 " Org mode - kind of like in emacs
 Plugin 'jceb/vim-orgmode'
 " dependencey for orgmode
@@ -337,6 +341,8 @@ nmap ,t :NERDTreeFind<CR>
 " don;t show these file types
 let NERDTreeIgnore = ['\.pyc$', '\.pyo$']
 
+"Vim session manager
+:let g:session_autosave = 'no'
 
 " Tasklist ------------------------------
 
