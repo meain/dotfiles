@@ -19,3 +19,7 @@ alias gu='git add -u && git commit'
 
 # Easier push to origin master
 alias gp='git push origin master'
+
+# Git log and history alias 
+alias gh='git hi'
+alias gl='git lg'

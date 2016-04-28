@@ -52,8 +52,6 @@ Plugin 'flazz/vim-colorschemes'
 "Bundle 'jaredly/vim-debug'
 " Better file browser
 Bundle 'scrooloose/nerdtree'
-" Minimap for vim
-Plugin 'severin-lemaignan/vim-minimap'
 " Code commenter
 " Bundle 'scrooloose/nerdcommenter'
 " Class/module browser
