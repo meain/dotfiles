@@ -33,6 +33,7 @@ alias gd='git diff'
 
 #Git status alias
 alias gs='git status'
+alias g='git status'
 
 #Git commit 
 alias gc='git commit'
