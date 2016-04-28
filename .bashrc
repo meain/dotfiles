@@ -11,7 +11,9 @@ export LANG=en_US.UTF-8
 #This is to change the long text to just a %
 # PS1="% : "
 
+branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
 
+alias oo='echo $branch'
 # Git alias
 
 # Alias to get into project folder
@@ -21,7 +23,7 @@ alias blah='cd ~/Documents/Projects'
 alias gu='git add -u && git commit'
 
 # Easier push to origin master
-alias gp='git push origin master'
+alias gp='git push origin $branch'
 
 # Git log and history alias 
 alias gg='git lh'
