@@ -343,6 +343,8 @@ let NERDTreeIgnore = ['\.pyc$', '\.pyo$']
 
 "Vim session manager
 :let g:session_autosave = 'no'
+nmap <Leader>s :SaveSession
+nmap <Leader>o :OpenSession
 
 " Tasklist ------------------------------
 
