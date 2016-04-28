@@ -11,6 +11,9 @@ export LANG=en_US.UTF-8
 #This is to change the long text to just a %
 # PS1="% : "
 
+
+# Git alias
+
 # Alias to get into project folder
 alias blah='cd ~/Documents/Projects'
 
@@ -21,5 +24,12 @@ alias gu='git add -u && git commit'
 alias gp='git push origin master'
 
 # Git log and history alias 
+alias gg='git lh'
 alias gh='git hi'
 alias gl='git lg'
+
+# Git diff alias
+alias gd='git diff'
+
+#Git status alias
+alias gs='git status'
