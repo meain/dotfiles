@@ -32,6 +32,8 @@ Bundle 'gmarik/vundle'
 
 " Plugins from github repos:
 
+" A fancy start page for vim
+Plugin 'mhinz/vim-startify'
 " Org mode - kind of like in emacs
 Plugin 'jceb/vim-orgmode'
 " dependencey for orgmode
@@ -195,8 +197,9 @@ set encoding=utf-8
 "autocmd FileType htmldjango setlocal shiftwidth=2 tabstop=2 softtabstop=2
 "autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2
 
-"auto open or close NERDTree
-autocmd vimenter * if !argc() | NERDTree | endif
+"auto open or close on start 
+"autocmd vimenter * if !argc() | NERDTree | endif
+autocmd vimenter * if !argc() | Startify | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 " always show status bar
