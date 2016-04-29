@@ -36,6 +36,8 @@ alias .='cd ..'
 #Check evey single file for a specific text and print surrounding 2 lines
 alias here='find . -type f -print0|xargs -0 grep -C 2 -i'
 alias server='python -m SimpleHTTPServer '
+alias tn='tmux new -s'
+alias ta='tmux attach -t'
 
 parse_git_branch() {
 
