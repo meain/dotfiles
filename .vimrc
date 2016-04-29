@@ -53,7 +53,7 @@ Plugin 'flazz/vim-colorschemes'
 " Better file browser
 Bundle 'scrooloose/nerdtree'
 " Code commenter
-" Bundle 'scrooloose/nerdcommenter'
+Bundle 'tpope/vim-commentary'
 " Class/module browser
 " Bundle 'majutsushi/tagbar'
 " Code and files fuzzy finder
@@ -136,8 +136,6 @@ Bundle 'plasticboy/vim-markdown'
 " Before you want to use it, please run
 " `sudo npm -g install instant-markdown-d`
 Bundle 'suan/vim-instant-markdown'
-" Plugin used to comment out a line
-Bundle 'scrooloose/nerdcommenter'
 "Easy vim and tmux splitting
 Bundle 'christoomey/vim-tmux-navigator'
 
@@ -346,7 +344,11 @@ nmap ,t :NERDTreeFind<CR>
 " don;t show these file types
 let NERDTreeIgnore = ['\.pyc$', '\.pyo$']
 
-"Vim session manager
+" Commenter ---------------------------------
+nmap <Leader>c gc
+nmap <Leader>cc gcc
+
+" Vim session manager ------------------------
 :let g:session_autosave = 'no'
 :let g:session_autoload = 'no'
 nmap <Leader>s :SaveSession
@@ -472,8 +474,8 @@ let g:neocomplcache_same_filetype_lists._ = '_'
 " TabMan ------------------------------
 
 " mappings to toggle display, and to focus on it
-let g:tabman_toggle = 'tl'
-let g:tabman_focus  = 'tf'
+" let g:tabman_toggle = 'tl'
+" let g:tabman_focus  = 'tf'
 
 " Autoclose ------------------------------
 
