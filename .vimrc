@@ -46,6 +46,8 @@ Plugin 'tpope/vim-speeddating'
 Plugin 'svermeulen/vim-easyclip' 
 " Installing this as a dependency for easyclip
 Plugin 'tpope/vim-repeat'
+" Easy motion plugins
+Bundle 'easymotion/vim-easymotion'
 " Vim colorscheme
 Plugin 'flazz/vim-colorschemes'
 " Python and PHP Debugger
@@ -61,7 +63,8 @@ Bundle 'kien/ctrlp.vim'
 " Extension to ctrlp, for fuzzy command finder
 Bundle 'fisadev/vim-ctrlp-cmdpalette'
 " Zen coding
-Bundle 'mattn/emmet-vim'
+" Bundle 'mattn/emmet-vim'
+Bundle 'rstacruz/sparkup' 
 " Git integration
 Bundle 'motemen/git-vim'
 " Tab list panel
@@ -323,6 +326,10 @@ if !isdirectory(&undodir)
     call mkdir(&undodir, "p")
 endif
 
+" Splitting keybindings
+nmap <Leader>h :split <cr>
+nmap <Leader>v :vsplit <cr>
+
 " ============================================================================
 " Plugins settings and mappings
 " Edit them as you wish.
@@ -353,6 +360,15 @@ nmap <Leader>cc gcc
 :let g:session_autoload = 'no'
 nmap <Leader>s :SaveSession
 nmap <Leader>o :OpenSession
+
+" Easymotion plugin ------------------------
+" Move to line
+map <Leader>l <Plug>(easymotion-bd-jk)
+nmap <Leader>l <Plug>(easymotion-overwin-line)
+
+" Move to word
+map  <Leader>f <Plug>(easymotion-bd-w)
+nmap <Leader>f <Plug>(easymotion-overwin-w)
 
 " Tasklist ------------------------------
 
@@ -569,6 +585,9 @@ autocmd BufNewFile * normal G
 
 " if you use JSX syntax in .js file, please enable it.
 let g:jsx_ext_required = 0
+
+"Emmet -----------
+" let g:user_emmet_leader_key='<C-Z>'
 
 " Vim-markdown ------------------------------
 
