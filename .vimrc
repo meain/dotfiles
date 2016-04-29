@@ -158,6 +158,9 @@ endif
 " Leader key remap
 :let mapleader = " "
 
+"Loacal leader remap
+:let maplocalleader = "\\"
+
 " Saving and quitting keybindings
 :nmap <Leader>w :w<CR>
 :nmap <Leader>q :q<CR>
