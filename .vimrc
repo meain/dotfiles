@@ -138,6 +138,8 @@ Bundle 'plasticboy/vim-markdown'
 Bundle 'suan/vim-instant-markdown'
 " Plugin used to comment out a line
 Bundle 'scrooloose/nerdcommenter'
+"Easy vim and tmux splitting
+Bundle 'christoomey/vim-tmux-navigator'
 
 " ============================================================================
 " Install plugins the first time vim runs
