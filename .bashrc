@@ -35,6 +35,7 @@ alias ffind='find . -name'
 alias .='cd ..'
 #Check evey single file for a specific text and print surrounding 2 lines
 alias here='find . -type f -print0|xargs -0 grep -C 2 -i'
+alias server='python -m SimpleHTTPServer '
 
 parse_git_branch() {
 
@@ -44,7 +45,9 @@ parse_git_branch() {
 # Alias to open multimedia folder in finder
 alias fun='cd ~/Documents/Multimedia && open . && cd -'
 # Alias to get into project folder
-alias blah='cd ~/Documents/Projects'
+alias meh='cd ~/Documents/Projects'
+# Alias to get into desktop folder
+alias blah='cd ~/Desktop'
 
 # Git alias
 
