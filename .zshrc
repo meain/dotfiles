@@ -110,11 +110,6 @@ alias server='python -m SimpleHTTPServer '
 alias tn='tmux new -s'
 alias ta='tmux attach -t'
 
-parse_git_branch() {
-
-    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
-
-}
 # Alias to open multimedia folder in finder
 alias fun='cd ~/Documents/Multimedia && open . && cd -'
 # Alias to get into project folder
@@ -131,7 +126,7 @@ alias gu='git add -u && git commit'
 alias ga='git add'
 
 # Easier push to origin master
-alias gp='git push origin $(parse_git_branch)'
+alias gp="git push origin $(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/' | sed 's:^.\(.*\).$:\1:' | sed 's/^.//')"
 
 # Git log and history alias 
 alias gg='git lh'
