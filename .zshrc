@@ -59,6 +59,7 @@ export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/git/bin"
 source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
+export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
@@ -83,6 +84,66 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+#--------------------------------------------------------------------------------------------
 
 # Custom
 plugins=(git colored-man colorize github jira vagrant virtualenv pip python brew osx zsh-syntax-highlighting)
+
+
+
+#Alias
+alias ss='ls -lht'
+alias ll='ls -A -l'
+alias la='ls -A'
+alias lr='ls -lRht'
+alias c='clear'
+alias q='exit'
+alias d='less'
+alias oo='vim ~/notes.org'
+alias mkdir='mkdir -p'
+alias rm='rm -i'
+alias ffind='find . -name'
+alias ..='cd ..'
+#Check evey single file for a specific text and print surrounding 2 lines
+alias here='find . -type f -print0|xargs -0 grep -C 2 -i'
+alias server='python -m SimpleHTTPServer '
+alias tn='tmux new -s'
+alias ta='tmux attach -t'
+
+parse_git_branch() {
+
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+
+}
+# Alias to open multimedia folder in finder
+alias fun='cd ~/Documents/Multimedia && open . && cd -'
+# Alias to get into project folder
+alias meh='cd ~/Documents/Projects'
+# Alias to get into desktop folder
+alias blah='cd ~/Desktop'
+
+# Git alias
+
+# Alias for easier commit
+alias gu='git add -u && git commit'
+
+# Git add
+alias ga='git add'
+
+# Easier push to origin master
+alias gp='git push origin $(parse_git_branch)'
+
+# Git log and history alias 
+alias gg='git lh'
+alias gh='git hi'
+alias gl='git lg'
+
+# Git diff alias
+alias gd='git diff'
+
+#Git status alias
+alias gs='git status'
+alias g='git status -s'
+
+#Git commit 
+alias gc='git commit'
