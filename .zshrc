@@ -49,7 +49,7 @@ HIST_STAMPS="dd.mm.yyyy"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git colored-man colorize virtualenv pip python brew osx zsh-syntax-highlighting extract web-search catimg)
+plugins=(git python brew osx extract web-search)
 
 # User configuration
 
@@ -113,7 +113,8 @@ alias q='exit'
 alias d='less'
 alias oo='vim ~/notes.org'
 alias mkdir='mkdir -p'
-alias rm='rm -i'
+# alias rm='rm -i'
+alias rm='trash'
 alias ffind='find . -name'
 alias ..='cd ..'
 #Check evey single file for a specific text and print surrounding 2 lines
