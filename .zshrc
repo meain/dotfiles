@@ -49,12 +49,21 @@ HIST_STAMPS="dd.mm.yyyy"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git colored-man colorize virtualenv pip python brew osx zsh-syntax-highlighting extract web-search catimg)
 
 # User configuration
 
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/git/bin"
 # export MANPATH="/usr/local/man:$MANPATH"
+
+
+# Setting PATH for Python 2.7
+# The orginal version is saved in .bash_profile.pysave
+PATH="/Library/Frameworks/Python.framework/Versions/2.7/bin:${PATH}"
+export PATH
+
+##pipsi install addition to the path variable
+export PATH="/Users/abinsimon/.local/bin:$PATH"
 
 source $ZSH/oh-my-zsh.sh
 
@@ -68,6 +77,12 @@ if [[ -n $SSH_CONNECTION ]]; then
 else
   export EDITOR='vim'
 fi
+
+#enabling pandoc and lunx to make reading .md files in terminal
+#To read do : rmd file.md
+rmd () {
+  pandoc $1 | lynx -stdin
+}
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -87,9 +102,6 @@ fi
 #--------------------------------------------------------------------------------------------
 
 # Custom
-plugins=(git colored-man colorize github jira vagrant virtualenv pip python brew osx zsh-syntax-highlighting)
-
-
 
 #Alias
 alias ss='ls -lht'
