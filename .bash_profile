@@ -56,3 +56,4 @@ export SCM_CHECK=true
 source $BASH_IT/bash_it.sh
 
 export PATH="/Users/abinsimon/Desktop/Zed.app/bin":$PATH
+eval $(thefuck --alias)

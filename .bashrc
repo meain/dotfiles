@@ -39,6 +39,8 @@ alias server='python -m SimpleHTTPServer '
 alias tn='tmux new -s'
 alias ta='tmux attach -t'
 
+eval $(thefuck --alias)
+
 parse_git_branch() {
 
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
