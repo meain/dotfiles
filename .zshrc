@@ -65,6 +65,8 @@ export PATH
 ##pipsi install addition to the path variable
 export PATH="/Users/abinsimon/.local/bin:$PATH"
 
+. `brew --prefix`/etc/profile.d/z.sh
+
 source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment

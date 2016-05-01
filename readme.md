@@ -4,10 +4,12 @@
 It includes my `vim`, `tmux`, `git` and `bash` config files.
 
 ###Dependencies
-#####For bash profile
-* [**pandoc**](http://pandoc.org/index.html) and [**lynx**](http://lynx.browser.org/) -- this is needed to enable reding markdown files in the terminal. *Both could be installed using 'homebrew' on mac*
+#####For bash/zsh profile
+* [**z**](https://github.com/rupa/z) -- used for easier folder switching ( can be installed using homebrew ) 
+
+* [**pandoc**](http://pandoc.org/index.html) and [**lynx**](http://lynx.browser.org/) -- this is needed to enable reding markdown files in the terminal. ( Both could be installed using 'homebrew' on mac )
     
-* [**bash-it**](https://github.com/Bash-it/bash-it) -- For the lovely git info display
+* [**bash-it**](https://github.com/Bash-it/bash-it) -- for the lovely git info display
 
 ![Bash-it](http://s32.postimg.org/uk5t8dft1/Screen_Shot_2016_04_27_at_8_38_33_AM.png)
 
@@ -18,7 +20,7 @@ It includes my `vim`, `tmux`, `git` and `bash` config files.
 
 ###Image section
 
-######Vim editor(has not so bad mouse support)
+######Vim editor (has not so bad mouse support)
 ![Vim](http://s32.postimg.org/xd3m655j9/Screen_Shot_2016_04_27_at_8_38_06_AM.png)
 
 ######Better git log

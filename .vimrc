@@ -167,7 +167,7 @@ endif
 :nmap <Leader>ww :wq<CR>
 
 "Remaping the pane switching
-:map <Leader>w <C-w>
+":map <Leader>w <C-w>
 
 " Window resizing
 nnoremap <silent> <Leader>= :exe "resize " . (winheight(0) * 3/2)<CR>
