@@ -1,6 +1,4 @@
 " meain
-nnoremap <silent> <Leader>= :exe "resize " . (winheight(0) * 3/2)<CR>
-nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
 "
 " ============================================================================
 " Vundle initialization
@@ -176,6 +174,8 @@ endif
 " Window resizing
 nnoremap <silent> <Leader>= :exe "resize " . (winheight(0) * 3/2)<CR>
 nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
+nnoremap <silent> <Leader>0 :exe "vertical resize " . (winwidth(0) * 3/2)<CR>
+nnoremap <silent> <Leader>9 :exe "vertical resize " . (winwidth(0) * 2/3)<CR>
 
 " allow plugins by file type (required for plugins!)
 filetype plugin on
@@ -274,7 +274,17 @@ imap <M-Down> <ESC><c-w>j
 imap <C-J> <C-X><C-O>
 
 " Get output of shell command in vim window
-nmap ,s :new +0r!
+function! SplitRunCommand()
+    call inputsave()
+    let l:cmd = input('Command: ')
+    new
+    setlocal buftype=nofile
+    call append(0, systemlist(l:cmd))
+    call inputrestore()
+endfunction
+
+nnoremap ,s :call SplitRunCommand()<cr>
+" nmap ,s :new \| 0read !  
 
 " Comment this line to enable autocompletion preview window
 " (displays documentation related to the selected completion option)
@@ -345,6 +355,10 @@ nmap <Leader>v :vsplit <cr>
 " ============================================================================
 " Plugins settings and mappings
 " Edit them as you wish.
+
+" Startify ---------------------------
+nmap ,l :Startify<cr>
+
 
 " Tagbar ----------------------------- 
 
