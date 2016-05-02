@@ -1,4 +1,6 @@
 " meain
+nnoremap <silent> <Leader>= :exe "resize " . (winheight(0) * 3/2)<CR>
+nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
 "
 " ============================================================================
 " Vundle initialization
@@ -88,6 +90,8 @@ Bundle 'michaeljsmith/vim-indent-object'
 Bundle 'klen/python-mode'
 " Better autocompletion
 Bundle 'Shougo/neocomplcache.vim'
+"Youcomplete me
+" Bundle 'Valloric/YouCompleteMe'
 " Snippets manager (SnipMate), dependencies, and snippets repo
 Bundle 'MarcWeber/vim-addon-mw-utils'
 Bundle 'tomtom/tlib_vim'
@@ -248,6 +252,8 @@ map <C-S-Right> :tabn<CR>
 imap <C-S-Right> <ESC>:tabn<CR>
 map <C-S-Left> :tabp<CR>
 imap <C-S-Left> <ESC>:tabp<CR>
+set splitbelow
+set splitright
 
 " Buffer switching
 map <Leader>bn :bn<CR>
@@ -266,6 +272,9 @@ imap <M-Down> <ESC><c-w>j
 
 " old autocomplete keyboard shortcut
 imap <C-J> <C-X><C-O>
+
+" Get output of shell command in vim window
+nmap ,s :new +0r!
 
 " Comment this line to enable autocompletion preview window
 " (displays documentation related to the selected completion option)
