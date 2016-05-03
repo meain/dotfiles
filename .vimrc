@@ -37,11 +37,13 @@ Plugin 'mhinz/vim-startify'
 " This is like the holy grail of dependencies
 Plugin 'xolox/vim-misc'
 " Vim session maanager
-Bundle 'xolox/vim-session'
+"Bundle 'xolox/vim-session'
 " Org mode - kind of like in emacs
 Plugin 'jceb/vim-orgmode'
 " dependencey for orgmode
 Plugin 'tpope/vim-speeddating'
+" Python autocomplete
+Plugin 'davidhalter/jedi-vim'
 " Better clipboard managemant
 Plugin 'svermeulen/vim-easyclip' 
 " Installing this as a dependency for easyclip
@@ -381,11 +383,9 @@ let NERDTreeIgnore = ['\.pyc$', '\.pyo$']
 nmap <Leader>c gc
 nmap <Leader>cc gcc
 
-" Vim session manager ------------------------
-:let g:session_autosave = 'no'
-:let g:session_autoload = 'no'
-nmap <Leader>s :SaveSession
-nmap <Leader>o :OpenSession
+" Vim session manager using startify ------------------------
+nmap <Leader>s :SSave 
+nmap <Leader>o :SLoad 
 
 " Easymotion plugin ------------------------
 " Move to line
