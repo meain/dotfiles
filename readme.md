@@ -7,14 +7,14 @@ It includes my `vim`, `tmux`, `git` and `bash` config files.
 #####For bash/zsh profile
 * [**z**](https://github.com/rupa/z) -- used for easier folder switching ( can be installed using homebrew ) 
 
-* [**pandoc**](http://pandoc.org/index.html) and [**lynx**](http://lynx.browser.org/) -- this is needed to enable reding markdown files in the terminal. ( Both could be installed using 'homebrew' on mac )
+* [**pandoc**](http://pandoc.org/index.html) and [**lynx**](http://lynx.browser.org/) -- this is needed to enable reeding markdown files in the terminal. ( Both could be installed using 'homebrew' on mac )
     
 * [**bash-it**](https://github.com/Bash-it/bash-it) -- for the lovely git info display
 
 ![Bash-it](http://s32.postimg.org/uk5t8dft1/Screen_Shot_2016_04_27_at_8_38_33_AM.png)
 
 #####For vimrc
-* [**vundle**](https://github.com/VundleVim/Vundle.vim) -- will be autoinstalled first time you start vim after having this config file
+* [**vundle**](https://github.com/VundleVim/Vundle.vim) -- will be auto installed first time you start vim after having this config file
 
 ---
 

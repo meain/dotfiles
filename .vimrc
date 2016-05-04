@@ -34,8 +34,10 @@ Bundle 'gmarik/vundle'
 
 " A fancy start page for vim
 Plugin 'mhinz/vim-startify'
+" Supertab - kind of does the autocompletion on pressing tab
+Plugin 'ervandew/supertab'
 " This is like the holy grail of dependencies
-Plugin 'xolox/vim-misc'
+"Plugin 'xolox/vim-misc'
 " Vim session maanager
 "Bundle 'xolox/vim-session'
 " Org mode - kind of like in emacs
@@ -145,6 +147,8 @@ Bundle 'plasticboy/vim-markdown'
 Bundle 'suan/vim-instant-markdown'
 "Easy vim and tmux splitting
 Bundle 'christoomey/vim-tmux-navigator'
+" Plugin to do spelling checking
+" Plugin 'reedes/vim-litecorrect'
 
 " ============================================================================
 " Install plugins the first time vim runs
@@ -275,6 +279,14 @@ imap <M-Down> <ESC><c-w>j
 " old autocomplete keyboard shortcut
 imap <C-J> <C-X><C-O>
 
+" Spell checking 
+autocmd BufRead,BufNewFile *.md setlocal spell
+autocmd BufRead,BufNewFile *.org setlocal spell
+autocmd BufRead,BufNewFile *.txt setlocal spell
+autocmd BufRead,BufNewFile *.mk setlocal spell
+set complete+=kspell
+nmap <Leader>z z=1<cr><cr>
+
 " Get output of shell command in vim window
 function! SplitRunCommand()
     call inputsave()
@@ -311,7 +323,7 @@ nmap ,wr :RecurGrepFast <cword><CR>
 " -----------------------------------------------------------------------------------------------------------------------
 "if &term =~? 'mlterm\|xterm\|xterm-256\|screen-256'
 let &t_Co = 256
-colorscheme Monokai
+colorscheme CandyPaper
 "else
 "    colorscheme delek
 "endif
@@ -623,6 +635,16 @@ let g:vim_markdown_folding_disabled=1
 let g:vim_markdown_math=1
 " Highlight YAML frontmatter
 let g:vim_markdown_frontmatter=1
+
+" Spelling check --------------------------
+" augroup litecorrect
+"     autocmd!
+"     autocmd FileType markdown,mkd call litecorrect#init()
+"     autocmd FileType textile call litecorrect#init()
+" augroup END
+" " Mapping
+" nnoremap <C-s> [s1z=<c-o>
+" inoremap <C-s> <c-g>u<Esc>[s1z=`]A<c-g>u`]]
 
 " Vim-instant-markdown -----------------
 
