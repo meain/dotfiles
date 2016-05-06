@@ -324,6 +324,7 @@ nmap ,wr :RecurGrepFast <cword><CR>
 "if &term =~? 'mlterm\|xterm\|xterm-256\|screen-256'
 let &t_Co = 256
 colorscheme CandyPaper
+highlight ColorColumn ctermbg=0 guibg=lightgrey
 "else
 "    colorscheme delek
 "endif
