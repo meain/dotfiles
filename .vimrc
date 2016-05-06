@@ -325,9 +325,6 @@ nmap ,wr :RecurGrepFast <cword><CR>
 let &t_Co = 256
 colorscheme CandyPaper
 highlight ColorColumn ctermbg=0 guibg=lightgrey
-"else
-"    colorscheme delek
-"endif
 
 " colors for gvim
 if has('gui_running')
@@ -366,6 +363,7 @@ endif
 " Splitting keybindings
 nmap <Leader>h :split <cr>
 nmap <Leader>v :vsplit <cr>
+nmap <Leader>n :tabnew <cr>
 
 " ============================================================================
 " Plugins settings and mappings
