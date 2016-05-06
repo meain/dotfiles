@@ -46,10 +46,6 @@ Plugin 'jceb/vim-orgmode'
 Plugin 'tpope/vim-speeddating'
 " Python autocomplete
 Plugin 'davidhalter/jedi-vim'
-" Better clipboard managemant
-Plugin 'svermeulen/vim-easyclip' 
-" Installing this as a dependency for easyclip
-Plugin 'tpope/vim-repeat'
 " Easy motion plugins
 Bundle 'easymotion/vim-easymotion'
 " Vim colorscheme
