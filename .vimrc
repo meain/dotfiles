@@ -257,6 +257,17 @@ imap <C-S-Left> <ESC>:tabp<CR>
 set splitbelow
 set splitright
 
+" Copy and paste to the system clipboard - this also helps with dd or x
+" replacing the content in the clipboard
+nnoremap  y "*y
+nnoremap  Y "*Y
+nnoremap  p "*p
+nnoremap  P "*P
+vnoremap y "*y
+vnoremap Y "*Y
+vnoremap p "*p
+vnoremap P "*P
+
 " Buffer switching
 map <Leader>bn :bn<CR>
 map <Leader>bp :bp<CR>
