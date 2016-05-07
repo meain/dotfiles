@@ -276,12 +276,17 @@ imap <M-Down> <ESC><c-w>j
 imap <C-J> <C-X><C-O>
 
 " Spell checking 
+" Initially choose the file types which support spell check
 autocmd BufRead,BufNewFile *.md setlocal spell
 autocmd BufRead,BufNewFile *.org setlocal spell
 autocmd BufRead,BufNewFile *.txt setlocal spell
 autocmd BufRead,BufNewFile *.mk setlocal spell
 set complete+=kspell
-nmap <Leader>z z=1<cr><cr>
+function! FixLastSpellingError()
+    normal! mz[s1z=`z
+endfunction
+
+nmap <Leader>z :call FixLastSpellingError()<cr>
 
 " Get output of shell command in vim window
 function! SplitRunCommand()
@@ -367,7 +372,6 @@ nmap <Leader>n :tabnew <cr>
 
 " Startify ---------------------------
 nmap ,l :Startify<cr>
-
 
 " Tagbar ----------------------------- 
 
