@@ -179,6 +179,21 @@ nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
 nnoremap <silent> <Leader>0 :exe "vertical resize " . (winwidth(0) * 3/2)<CR>
 nnoremap <silent> <Leader>9 :exe "vertical resize " . (winwidth(0) * 2/3)<CR>
 
+" Necessary stuff
+:nmap ; :
+:nnoremap H 0 
+:nnoremap L $
+
+" Indent based folding
+set foldmethod=indent
+set foldignore=
+set foldlevelstart=10
+set foldnestmax=10 
+nnoremap J za
+
+" Redraw only when essential
+set lazyredraw
+
 " allow plugins by file type (required for plugins!)
 filetype plugin on
 filetype indent on

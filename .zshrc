@@ -105,6 +105,8 @@ rmd () {
 
 # Custom
 
+eval $(thefuck --alias)
+
 #Alias
 alias ss='ls -lht'
 alias ll='ls -A -l'
