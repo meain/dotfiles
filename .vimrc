@@ -138,9 +138,9 @@ endif
 :let maplocalleader = "\\"
 
 " Saving and quitting keybindings
-:nmap <Leader>w :w<CR>
-:nmap <Leader>q :q<CR>
-:nmap <Leader>ww :wq<CR>
+:nnoremap <Leader>w :w<CR>
+:nnoremap <Leader>q :q<CR>
+:nnoremap <Leader>ww :wq<CR>
 
 "Remaping the pane switching
 ":map <Leader>w <C-w>
@@ -152,8 +152,9 @@ nnoremap <silent> <Leader>0 :exe "vertical resize " . (winwidth(0) * 3/2)<CR>
 nnoremap <silent> <Leader>9 :exe "vertical resize " . (winwidth(0) * 2/3)<CR>
 
 " Necessary stuff
-:nmap ; :
-:nnoremap H 0 
+:nnoremap ; :
+:nnoremap ' ;
+:nnoremap H 0
 :nnoremap L $
 
 " Indent based folding
@@ -280,7 +281,7 @@ set complete+=kspell
 function! FixLastSpellingError()
     normal! mz[s1z=`z
 endfunction
-nmap <Leader>z :call FixLastSpellingError()<cr>
+nnoremap <Leader>z :call FixLastSpellingError()<cr>
 
 " Get output of shell command in vim window
 function! SplitRunCommand()
@@ -293,7 +294,7 @@ function! SplitRunCommand()
 endfunction
 
 nnoremap ,s :call SplitRunCommand()<cr>
-" nmap ,s :new \| 0read !  
+" nnoremap ,s :new \| 0read !  
 
 " Comment this line to enable autocompletion preview window
 " (displays documentation related to the selected completion option)
@@ -308,11 +309,11 @@ ca w!! w !sudo tee "%"
 command! -nargs=1 RecurGrep lvimgrep /<args>/gj ./**/*.* | lopen | set nowrap
 command! -nargs=1 RecurGrepFast silent exec 'lgrep! <q-args> ./**/*.*' | lopen
 " mappings to call them
-nmap ,R :RecurGrep 
-nmap ,r :RecurGrepFast 
+nnoremap ,R :RecurGrep 
+nnoremap ,r :RecurGrepFast 
 " mappings to call them with the default word as search text
-nmap ,wR :RecurGrep <cword><CR>
-nmap ,wr :RecurGrepFast <cword><CR>
+nnoremap ,wR :RecurGrep <cword><CR>
+nnoremap ,wr :RecurGrepFast <cword><CR>
 
 " use 256 colors when possible
 " -----------------------------------------------------------------------------------------------------------------------
@@ -356,16 +357,16 @@ if !isdirectory(&undodir)
 endif
 
 " Splitting keybindings
-nmap <Leader>h :split <cr>
-nmap <Leader>v :vsplit <cr>
-nmap <Leader>n :tabnew <cr>
+nnoremap <Leader>h :split <cr>
+nnoremap <Leader>v :vsplit <cr>
+nnoremap <Leader>n :tabnew <cr>
 
 " ============================================================================
 " Plugins settings and mappings
 " Edit them as you wish.
 
 " Startify ---------------------------
-nmap ,l :Startify<cr>
+nnoremap ,l :Startify<cr>
 
 " NERDTree ----------------------------- 
 
@@ -373,26 +374,26 @@ nmap ,l :Startify<cr>
 map <F3> :NERDTreeToggle<CR>
 map <Leader>t :NERDTreeToggle<CR>
 " open nerdtree with the current file selected
-nmap ,t :NERDTreeFind<CR>
+nnoremap ,t :NERDTreeFind<CR>
 " don;t show these file types
 let NERDTreeIgnore = ['\.pyc$', '\.pyo$']
 
 " Commenter ---------------------------------
-nmap <Leader>c gc
-nmap <Leader>cc gcc
+nnoremap <Leader>c gc
+nnoremap <Leader>cc gcc
 
 " Vim session manager using startify ------------------------
-nmap <Leader>s :SSave 
-nmap <Leader>o :SLoad 
+nnoremap <Leader>s :SSave 
+nnoremap <Leader>o :SLoad 
 
 " Easymotion plugin ------------------------
 " Move to line
 map <Leader>l <Plug>(easymotion-bd-jk)
-nmap <Leader>l <Plug>(easymotion-overwin-line)
+nnoremap <Leader>l <Plug>(easymotion-overwin-line)
 
 " Move to word
 map  <Leader>f <Plug>(easymotion-bd-w)
-nmap <Leader>f <Plug>(easymotion-overwin-w)
+nnoremap <Leader>f <Plug>(easymotion-overwin-w)
 
 " Vim-debug ------------------------------
 
@@ -416,28 +417,28 @@ let g:ctrlp_map = ',e'
 let g:ctrlp_show_hidden = 1
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.png,*.jpg,*.gif           "Linux
 " tags (symbols) in current file finder mapping
-nmap ,g :CtrlPBufTag<CR>
+nnoremap ,g :CtrlPBufTag<CR>
 " tags (symbols) in all files finder mapping
-nmap ,G :CtrlPBufTagAll<CR>
+nnoremap ,G :CtrlPBufTagAll<CR>
 " general code finder in all files mapping
-nmap ,f :CtrlPLine<CR>
+nnoremap ,f :CtrlPLine<CR>
 " recent files finder mapping
-nmap ,m :CtrlPMRUFiles<CR>
+nnoremap ,m :CtrlPMRUFiles<CR>
 " commands finder mapping
-nmap ,c :CtrlPCmdPalette<CR>
+nnoremap ,c :CtrlPCmdPalette<CR>
 " to be able to call CtrlP with default search text
 function! CtrlPWithSearchText(search_text, ctrlp_command_end)
     execute ':CtrlP' . a:ctrlp_command_end
     call feedkeys(a:search_text)
 endfunction
 " same as previous mappings, but calling with current word as default text
-nmap ,wg :call CtrlPWithSearchText(expand('<cword>'), 'BufTag')<CR>
-nmap ,wG :call CtrlPWithSearchText(expand('<cword>'), 'BufTagAll')<CR>
-nmap ,wf :call CtrlPWithSearchText(expand('<cword>'), 'Line')<CR>
-nmap ,we :call CtrlPWithSearchText(expand('<cword>'), '')<CR>
-nmap ,pe :call CtrlPWithSearchText(expand('<cfile>'), '')<CR>
-nmap ,wm :call CtrlPWithSearchText(expand('<cword>'), 'MRUFiles')<CR>
-nmap ,wc :call CtrlPWithSearchText(expand('<cword>'), 'CmdPalette')<CR>
+nnoremap ,wg :call CtrlPWithSearchText(expand('<cword>'), 'BufTag')<CR>
+nnoremap ,wG :call CtrlPWithSearchText(expand('<cword>'), 'BufTagAll')<CR>
+nnoremap ,wf :call CtrlPWithSearchText(expand('<cword>'), 'Line')<CR>
+nnoremap ,we :call CtrlPWithSearchText(expand('<cword>'), '')<CR>
+nnoremap ,pe :call CtrlPWithSearchText(expand('<cfile>'), '')<CR>
+nnoremap ,wm :call CtrlPWithSearchText(expand('<cword>'), 'MRUFiles')<CR>
+nnoremap ,wc :call CtrlPWithSearchText(expand('<cword>'), 'CmdPalette')<CR>
 " don't change working directory
 let g:ctrlp_working_path_mode = 0
 " ignore these files and folders on file finder
@@ -449,7 +450,7 @@ let g:ctrlp_custom_ignore = {
 " Syntastic ------------------------------
 
 " show list of errors and warnings on the current file
-nmap <leader>e :Errors<CR>
+nnoremap <leader>e :Errors<CR>
 " check also when just opened the file
 let g:syntastic_check_on_open = 1
 " syntastic checker for javascript.
@@ -482,8 +483,8 @@ let g:pymode_syntax_space_errors = 0
 " occurrences
 let g:pymode_rope_goto_definition_bind = ',d'
 let g:pymode_rope_goto_definition_cmd = 'e'
-nmap ,D :tab split<CR>:PymodePython rope.goto()<CR>
-nmap ,o :RopeFindOccurrences<CR>
+nnoremap ,D :tab split<CR>:PymodePython rope.goto()<CR>
+nnoremap ,o :RopeFindOccurrences<CR>
 
 " NeoComplCache ------------------------------
 
@@ -531,8 +532,8 @@ vmap <expr> D DVB_Duplicate()
 " UPDATE it to reflect your preferences, it will speed up opening files
 let g:signify_vcs_list = [ 'git', 'hg' ]
 " mappings to jump to changed blocks
-nmap <leader>sn <plug>(signify-next-hunk)
-nmap <leader>sp <plug>(signify-prev-hunk)
+nnoremap <leader>sn <plug>(signify-next-hunk)
+nnoremap <leader>sp <plug>(signify-prev-hunk)
 " nicer colors
 highlight DiffAdd           cterm=bold ctermbg=none ctermfg=119
 highlight DiffDelete        cterm=bold ctermbg=none ctermfg=167
@@ -544,7 +545,7 @@ highlight SignifySignChange cterm=bold ctermbg=237  ctermfg=227
 " Window Chooser ------------------------------
 
 " mapping
-nmap  -  <Plug>(choosewin)
+nnoremap  -  <Plug>(choosewin)
 " show big letters
 let g:choosewin_overlay_enable = 1
 
@@ -599,10 +600,10 @@ endfunction
 autocmd BufNewFile * normal G
 
 " Conqueterm ----------------------------
-:nmap <Leader>c :ConqueTermSplit zsh <cr><cr>
+:nnoremap <Leader>c :ConqueTermSplit zsh <cr><cr>
 
 " Tagbar --------------------------------
-:nmap <F8> :TagbarToggle<CR>
+:nnoremap <F8> :TagbarToggle<CR>
 
 " Vim-jsx ------------------------------
 
