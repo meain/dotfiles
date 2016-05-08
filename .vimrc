@@ -145,6 +145,8 @@ Bundle 'suan/vim-instant-markdown'
 Bundle 'christoomey/vim-tmux-navigator'
 " Plugin to do spelling checking
 " Plugin 'reedes/vim-litecorrect'
+" Better python folding
+Plugin 'tmhedberg/SimpylFold'
 
 " ============================================================================
 " Install plugins the first time vim runs
@@ -560,6 +562,10 @@ let g:neocomplcache_same_filetype_lists._ = '_'
 
 " Fix to let ESC work as espected with Autoclose plugin
 let g:AutoClosePumvisible = {"ENTER": "\<C-Y>", "ESC": "\<ESC>"}
+
+" Simple fold
+autocmd BufWinEnter *.py setlocal foldexpr=SimpylFold(v:lnum) foldmethod=expr
+autocmd BufWinLeave *.py setlocal foldexpr< foldmethod<
 
 " DragVisuals ------------------------------
 
