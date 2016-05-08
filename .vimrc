@@ -36,10 +36,6 @@ Bundle 'gmarik/vundle'
 Plugin 'mhinz/vim-startify'
 " Supertab - kind of does the autocompletion on pressing tab
 Plugin 'ervandew/supertab'
-" This is like the holy grail of dependencies
-"Plugin 'xolox/vim-misc'
-" Vim session maanager
-"Bundle 'xolox/vim-session'
 " Org mode - kind of like in emacs
 Plugin 'jceb/vim-orgmode'
 " dependencey for orgmode
@@ -50,33 +46,26 @@ Plugin 'davidhalter/jedi-vim'
 Bundle 'easymotion/vim-easymotion'
 " Vim colorscheme
 Plugin 'flazz/vim-colorschemes'
-" Python and PHP Debugger
-"Bundle 'jaredly/vim-debug'
 " Better file browser
 Bundle 'scrooloose/nerdtree'
 " Code commenter
 Bundle 'tpope/vim-commentary'
 " Class/module browser
-" Bundle 'majutsushi/tagbar'
+Bundle 'majutsushi/tagbar'
 " Code and files fuzzy finder
 Bundle 'kien/ctrlp.vim'
 " Extension to ctrlp, for fuzzy command finder
 Bundle 'fisadev/vim-ctrlp-cmdpalette'
 " Zen coding
-" Bundle 'mattn/emmet-vim'
 Bundle 'rstacruz/sparkup' 
 " Git integration
 Bundle 'motemen/git-vim'
-" Tab list panel
-" Bundle 'kien/tabman.vim'
 " Airline
 Bundle 'bling/vim-airline'
 " Airline themes
 Bundle 'vim-airline/vim-airline-themes'
 " Consoles as buffers
-" Bundle 'rosenfeld/conque-term'
-" Pending tasks list
-" Bundle 'fisadev/FixedTaskList.vim'
+Bundle 'rosenfeld/conque-term'
 " Surround
 Bundle 'tpope/vim-surround'
 " Autoclose
@@ -88,19 +77,13 @@ Bundle 'michaeljsmith/vim-indent-object'
 Bundle 'klen/python-mode'
 " Better autocompletion
 Bundle 'Shougo/neocomplcache.vim'
-"Youcomplete me
-" Bundle 'Valloric/YouCompleteMe'
 " Snippets manager (SnipMate), dependencies, and snippets repo
 Bundle 'MarcWeber/vim-addon-mw-utils'
 Bundle 'tomtom/tlib_vim'
 Bundle 'honza/vim-snippets'
 Bundle 'garbas/vim-snipmate'
-" awesome colorscheme
-" Bundle 'tomasr/molokai'
 " Git/mercurial/others diff icons on the side of the file lines
 Bundle 'mhinz/vim-signify'
-" Automatically sort python imports
-" Bundle 'fisadev/vim-isort'
 " Drag visual blocks arround
 Bundle 'fisadev/dragvisuals.vim'
 " Window chooser
@@ -109,12 +92,7 @@ Bundle 't9md/vim-choosewin'
 Bundle 'scrooloose/syntastic'
 " Paint css colors with the real color
 Bundle 'lilydjwg/colorizer'
-" Relative numbering of lines (0 is the current line)
-" (disabled by default because is very intrusive and can't be easily toggled
-" on/off. When the plugin is present, will always activate the relative 
-" numbering every time you go to normal mode. Author refuses to add a setting 
-" to avoid that)
-" Bundle 'myusuf3/numbers.vim'
+
 
 " Plugins from vim-scripts repos:
 
@@ -122,16 +100,10 @@ Bundle 'lilydjwg/colorizer'
 Bundle 'IndexedSearch'
 " XML/HTML tags navigation
 Bundle 'matchit.zip'
-" Gvim colorscheme
-" Bundle 'Wombat'
-" Yank history navigation
-" Bundle 'YankRing.vim'
 "javascript complete after install the plugin, you must cd the install
 "directory and run `npm install`, then add a .tern-project config file
 "the doc at http://ternjs.net/doc/manual.html#vim
 Bundle 'marijnh/tern_for_vim'
-" Golang Plugins
-" Bundle 'fatih/vim-go'
 " JSX syntax highlight.
 Bundle 'mxw/vim-jsx'
 " Markdown syntastic highlight
@@ -143,8 +115,6 @@ Bundle 'plasticboy/vim-markdown'
 Bundle 'suan/vim-instant-markdown'
 "Easy vim and tmux splitting
 Bundle 'christoomey/vim-tmux-navigator'
-" Plugin to do spelling checking
-" Plugin 'reedes/vim-litecorrect'
 " Better python folding
 Plugin 'tmhedberg/SimpylFold'
 
@@ -199,9 +169,6 @@ set lazyredraw
 " allow plugins by file type (required for plugins!)
 filetype plugin on
 filetype indent on
-
-"Enable copy paste from other sources
-" set clipboard=unnamed
 
 " tabs and spaces handling
 set expandtab
@@ -313,7 +280,6 @@ set complete+=kspell
 function! FixLastSpellingError()
     normal! mz[s1z=`z
 endfunction
-
 nmap <Leader>z :call FixLastSpellingError()<cr>
 
 " Get output of shell command in vim window
@@ -401,13 +367,6 @@ nmap <Leader>n :tabnew <cr>
 " Startify ---------------------------
 nmap ,l :Startify<cr>
 
-" Tagbar ----------------------------- 
-
-" toggle tagbar display
-" map <F4> :TagbarToggle<CR>
-" autofocus on tagbar open
-" let g:tagbar_autofocus = 1
-
 " NERDTree ----------------------------- 
 
 " toggle nerdtree display
@@ -434,11 +393,6 @@ nmap <Leader>l <Plug>(easymotion-overwin-line)
 " Move to word
 map  <Leader>f <Plug>(easymotion-bd-w)
 nmap <Leader>f <Plug>(easymotion-overwin-w)
-
-" Tasklist ------------------------------
-
-" show pending tasks list
-" map <F2> :TaskList<CR>
 
 " Vim-debug ------------------------------
 
@@ -552,12 +506,6 @@ let g:neocomplcache_min_syntax_length = 1
 let g:neocomplcache_same_filetype_lists = {}
 let g:neocomplcache_same_filetype_lists._ = '_'
 
-" TabMan ------------------------------
-
-" mappings to toggle display, and to focus on it
-" let g:tabman_toggle = 'tl'
-" let g:tabman_focus  = 'tf'
-
 " Autoclose ------------------------------
 
 " Fix to let ESC work as espected with Autoclose plugin
@@ -650,6 +598,12 @@ function SetTitle()
 endfunction
 autocmd BufNewFile * normal G
 
+" Conqueterm ----------------------------
+:nmap <Leader>c :ConqueTermSplit zsh <cr><cr>
+
+" Tagbar --------------------------------
+:nmap <F8> :TagbarToggle<CR>
+
 " Vim-jsx ------------------------------
 
 " if you use JSX syntax in .js file, please enable it.
@@ -666,23 +620,3 @@ let g:vim_markdown_folding_disabled=1
 let g:vim_markdown_math=1
 " Highlight YAML frontmatter
 let g:vim_markdown_frontmatter=1
-
-" Spelling check --------------------------
-" augroup litecorrect
-"     autocmd!
-"     autocmd FileType markdown,mkd call litecorrect#init()
-"     autocmd FileType textile call litecorrect#init()
-" augroup END
-" " Mapping
-" nnoremap <C-s> [s1z=<c-o>
-" inoremap <C-s> <c-g>u<Esc>[s1z=`]A<c-g>u`]]
-
-" Vim-instant-markdown -----------------
-
-" If it taxes your system too much, you can specify
-" let g:instant_markdown_slow = 1
-" if you don't want to manually control it
-" you can open this setting
-" and when you open this, you can manually trigger preview
-" via the command :InstantMarkdownPreview
-" let g:instant_markdown_autostart = 0
