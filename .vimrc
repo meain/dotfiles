@@ -223,6 +223,10 @@ syntax on
 set nu
 set relativenumber
 
+" Enable going down in case text is wrapped
+:nnoremap j gj
+:nnoremap k gk
+
 " Just something I have to do
 :command WQ wq
 :command Wq wq
