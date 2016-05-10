@@ -227,6 +227,9 @@ set relativenumber
 :nnoremap j gj
 :nnoremap k gk
 
+" Proper indenting on pasting
+:nnoremap p  p=`]
+
 " Just something I have to do
 :command WQ wq
 :command Wq wq
