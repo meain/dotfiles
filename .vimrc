@@ -228,7 +228,7 @@ set relativenumber
 :nnoremap k gk
 
 " Proper indenting on pasting
-:nnoremap p  p=`]
+:nnoremap p  "*p=`]
 
 " Just something I have to do
 :command WQ wq
@@ -253,7 +253,6 @@ set splitright
 " replacing the content in the clipboard
 nnoremap  y "*y
 nnoremap  Y "*Y
-nnoremap  p "*p
 nnoremap  P "*P
 vnoremap y "*y
 vnoremap Y "*Y
