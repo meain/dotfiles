@@ -5,7 +5,7 @@ export ZSH=/Users/abinsimon/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="meain"
+ZSH_THEME="mhedit"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -105,6 +105,8 @@ rmd () {
 
 # Custom
 
+source ~/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
 eval $(thefuck --alias)
 
 #Alias
@@ -160,3 +162,6 @@ alias g='git status -s'
 
 #Git commit 
 alias gc='git commit'
+
+#eeeks
+alias vim="nvim"
