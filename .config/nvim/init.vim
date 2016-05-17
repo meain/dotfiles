@@ -221,19 +221,11 @@ vnoremap P "*P
 map <Leader>bn :bn<CR>
 map <Leader>bp :bp<CR>
 
-" navigate windows with meta+arrows
-" This meta key thing wont work in mac
-map <M-Right> <c-w>l
-map <M-Left> <c-w>h
-map <M-Up> <c-w>k
-map <M-Down> <c-w>j
-imap <M-Right> <ESC><c-w>l
-imap <M-Left> <ESC><c-w>h
-imap <M-Up> <ESC><c-w>k
-imap <M-Down> <ESC><c-w>j
-
-" old autocomplete keyboard shortcut
-imap <C-J> <C-X><C-O>
+" navigate splits with shit and hjkl 
+map <s-l> <c-w>l
+map <s-h> <c-w>h
+map <s-k> <c-w>k
+map <s-j> <c-w>j
 
 " Spell checking 
 " Initially choose the file types which support spell check
@@ -298,6 +290,9 @@ nnoremap <Leader>h :split <cr>
 nnoremap <Leader>v :vsplit\|:Startify<cr>
 nnoremap <Leader>n :tabnew\|:Startify<cr>
 
+"Better line limit making
+" let &colorcolumn=join(range(81,999),",")
+highlight ColorColumn ctermbg=235 guibg=#2c2d27
 
 
 
