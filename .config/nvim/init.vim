@@ -448,7 +448,7 @@ highlight SignifySignChange cterm=bold ctermbg=237  ctermfg=227
 
 " Window Chooser
 " mapping
-nnoremap  -  <Plug>(choosewin)
+nmap  -  <Plug>(choosewin)
 " show big letters
 let g:choosewin_overlay_enable = 1
 
