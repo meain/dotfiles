@@ -294,6 +294,21 @@ nnoremap <Leader>n :tabnew\|:Startify<cr>
 " let &colorcolumn=join(range(81,999),",")
 highlight ColorColumn ctermbg=235 guibg=#2c2d27
 
+" Zoom in and out of windows
+function! s:ZoomToggle() abort
+    if exists('t:zoomed') && t:zoomed
+        exec t:zoom_winrestcmd
+        let t:zoomed = 0
+    else
+        let t:zoom_winrestcmd = winrestcmd()
+        resize
+        vertical resize
+        let t:zoomed = 1
+    endif
+endfunction
+
+command! ZoomToggle call s:ZoomToggle()
+nnoremap <silent> _ :ZoomToggle<CR>
 
 
 

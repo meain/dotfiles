@@ -136,6 +136,8 @@ alias fun='cd ~/Documents/Multimedia && open . && cd -'
 alias meh='cd ~/Documents/Projects'
 # Alias to get into desktop folder
 alias blah='cd ~/Desktop'
+#Just because it happens all the time
+alias ivm='vim'
 
 # Git alias
 
