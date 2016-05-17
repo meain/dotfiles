@@ -13,4 +13,4 @@
 [color]
 	ui = auto
 [core]
-	editor = /usr/bin/vim
+    editor = /usr/local/bin/nvim
