@@ -19,9 +19,11 @@ charge_threshold = int(math.ceil(10 * charge))
 
 total_slots, slots = 10, []
 filled = int(math.ceil(charge_threshold * (total_slots / 10.0))) * u'▸'
+filled_string = int(math.ceil(charge_threshold * (total_slots / 10.0)))
 empty = (total_slots - len(filled)) * u'▹'
 
-out = (filled + empty).encode('utf-8')
+# out = (filled + empty).encode('utf-8')
+out = str(filled_string)
 import sys
 
 color_green = '%{[32m%}'
