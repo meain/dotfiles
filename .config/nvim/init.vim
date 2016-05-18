@@ -60,14 +60,6 @@ Plug 'lilydjwg/colorizer'
 Plug 'neomake/neomake'
 " Easier seakin to the desired text
 Plug 'justinmk/vim-sneak'
-
-
-" Plugins from vim-scripts repos:
-
-" Search results counter
-Plug 'IndexedSearch'
-" XML/HTML tags navigation
-Plug 'matchit.zip'
 "javascript complete after install the plugin, you must cd the install
 "directory and run `npm install`, then add a .tern-project config file
 "the doc at http://ternjs.net/doc/manual.html#vim
@@ -85,6 +77,17 @@ Plug 'suan/vim-instant-markdown'
 " Plug 'christoomey/vim-tmux-navigator'
 " Better python folding
 Plug 'tmhedberg/SimpylFold'
+
+
+" Plugins from vim-scripts repos:
+
+" Search results counter
+Plug 'IndexedSearch'
+" XML/HTML tags navigation
+Plug 'matchit.zip'
+" Restore file pointer
+Plug 'restore_view.vim'
+
 
 call plug#end()
 
@@ -132,7 +135,7 @@ nnoremap <c-j> za
 set lazyredraw
 
 " make backspace work like most other apps
-set backspace=2 
+set backspace=2
 
 " allow plugins by file type (required for plugins!)
 filetype plugin on
@@ -174,12 +177,6 @@ set ignorecase
 
 "Clear search highlight
 nnoremap <silent><Leader>/ :nohls<CR>
-
-" Make search results to apppear in center
-nnoremap <silent> n nzz
-nnoremap <silent> N Nzz
-nnoremap <silent> * *zz
-nnoremap <silent> # #zz
 
 "Repeat last macro with !
 map ! @@
@@ -322,7 +319,7 @@ endfunction
 command! ZoomToggle call s:ZoomToggle()
 nnoremap <silent> _ :ZoomToggle<CR>
 
-" Save session as zz and quit all buffers - y at the end as it ask to replace
+" Save session as zzz and quit all buffers - y at the end as it ask to replace
 " old zzz
 function! MinimizeIfZoomed()
     if exists('t:zoomed') && t:zoomed
@@ -330,14 +327,17 @@ function! MinimizeIfZoomed()
         let t:zoomed = 0
     endif
 endfunction
-nnoremap <c-q> :call MinimizeIfZoomed() \|:SSave zzz \| :qa<cr>y
+nnoremap <c-q> :call MinimizeIfZoomed() \|:SSave zPreviousSession \| :qa<cr>y
+
+" Easier session reload
+nnoremap <Leader>z :SLoad zPreviousSession<cr>
 
 " Easier indentation - does dot loose selection
 vnoremap > >gv
 vnoremap < <gv
 
 " Remove whitespace at save
-autocmd BufWritePre *.py :%s/\s\+$//e
+autocmd BufWritePre *.py,*.vim,*.css,*.js,*.html,*.md,*.cpp,*.c,*.java :%s/\s\+$//e
 
 " Open new terminal
 nnoremap <F1> :vsp\|:terminal<cr>
