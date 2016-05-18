@@ -27,12 +27,12 @@ Plug 'majutsushi/tagbar'
 Plug 'kien/ctrlp.vim'
 " Git stuff from within vim
 Plug 'tpope/vim-fugitive'
-" Git add commit and stuff 
+" Git add commit and stuff
 Plug 'motemen/git-vim'
 " Extension to ctrlp, for fuzzy command finder
 Plug 'fisadev/vim-ctrlp-cmdpalette'
 " Zen coding
-Plug 'rstacruz/sparkup' 
+Plug 'rstacruz/sparkup'
 " Airline
 Plug 'bling/vim-airline'
 " Airline themes
@@ -85,7 +85,7 @@ Plug 'plasticboy/vim-markdown'
 " `sudo npm -g install instant-markdown-d`
 Plug 'suan/vim-instant-markdown'
 "Easy vim and tmux splitting
-Plug 'christoomey/vim-tmux-navigator'
+" Plug 'christoomey/vim-tmux-navigator'
 " Better python folding
 Plug 'tmhedberg/SimpylFold'
 
@@ -121,15 +121,13 @@ nnoremap <silent> <Leader>9 :exe "vertical resize " . (winwidth(0) * 2/3)<CR>
 " Necessary stuff
 nnoremap ; :
 nnoremap ' ;
-nnoremap H 0
-nnoremap L $
 
 " Indent based folding
 set foldmethod=indent
 set foldignore=
 set foldlevelstart=10
-set foldnestmax=10 
-nnoremap J za
+set foldnestmax=10
+nnoremap <c-j> za
 
 " Redraw only when essential
 set lazyredraw
@@ -159,9 +157,9 @@ set nobackup
 set mouse=a
 
 
-"auto open or close on start 
+"auto open or close on start
 "autocmd vimenter * if !argc() | NERDTree | endif
-autocmd vimenter * if !argc() | Startify | endif
+" autocmd vimenter * if !argc() | Startify | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 " always show status bar
@@ -194,8 +192,8 @@ set relativenumber
 " tab navigation mappings
 map <Leader>tn :tabn<CR>
 map <Leader>tp :tabp<CR>
-map <Leader>tm :tabm 
-map <Leader>tt :tabnew 
+map <Leader>tm :tabm
+map <Leader>tt :tabnew
 map <Leader>ts :tab split<CR>
 map <C-S-Right> :tabn<CR>
 imap <C-S-Right> <ESC>:tabn<CR>
@@ -221,13 +219,13 @@ vnoremap P "*P
 map <Leader>bn :bn<CR>
 map <Leader>bp :bp<CR>
 
-" navigate splits with shit and hjkl 
+" navigate splits with shift and hjkl
 map <s-l> <c-w>l
 map <s-h> <c-w>h
 map <s-k> <c-w>k
 map <s-j> <c-w>j
 
-" Spell checking 
+" Spell checking
 " Initially choose the file types which support spell check
 autocmd BufRead,BufNewFile *.md setlocal spell
 autocmd BufRead,BufNewFile *.org setlocal spell
@@ -310,6 +308,16 @@ endfunction
 command! ZoomToggle call s:ZoomToggle()
 nnoremap <silent> _ :ZoomToggle<CR>
 
+" Save session as zz and quit all buffers - y at the end as it ask to replace
+" old zzz
+function! MinimizeIfZoomed()
+    if exists('t:zoomed') && t:zoomed
+        exec t:zoom_winrestcmd
+        let t:zoomed = 0
+    endif
+endfunction
+nnoremap <c-q> :call MinimizeIfZoomed() \|:SSave zzz \| :qa<cr>y
+
 
 
 " =============================
@@ -319,7 +327,7 @@ nnoremap <silent> _ :ZoomToggle<CR>
 " Startify
 nnoremap ,l :Startify<cr>
 
-" NERDTree 
+" NERDTree
 
 " toggle nerdtree display
 map <F3> :NERDTreeToggle<CR>
@@ -330,8 +338,8 @@ nnoremap ,t :NERDTreeFind<CR>
 let NERDTreeIgnore = ['\.pyc$', '\.pyo$']
 
 " Vim session manager using startify
-nnoremap <Leader>s :SSave 
-nnoremap <Leader>o :SLoad 
+nnoremap <Leader>s :SSave
+nnoremap <Leader>o :SLoad
 
 " Easymotion plugin
 " Move to line
@@ -411,7 +419,7 @@ nnoremap ,o :RopeFindOccurrences<CR>
 
 " NeoComplCache
 " most of them not documented because I'm not sure how they work
-" (docs aren't good, had to do a lot of trial and error to make 
+" (docs aren't good, had to do a lot of trial and error to make
 " it play nice)
 let g:neocomplcache_enable_at_startup = 1
 let g:neocomplcache_enable_ignore_case = 1
@@ -498,7 +506,7 @@ function SetTitle()
     elseif &filetype == 'python'
         call setline(1,"#!/usr/bin/env python")
         call append(line("."),"# coding=utf-8")
-        call append(line(".")+1, "") 
+        call append(line(".")+1, "")
 
     elseif &filetype == 'ruby'
         call setline(1,"#!/usr/bin/env ruby")

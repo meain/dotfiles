@@ -5,7 +5,7 @@ export ZSH=/Users/abinsimon/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="mhedit"
+ZSH_THEME="terminalparty"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -116,6 +116,7 @@ alias la='ls -A'
 alias lr='ls -lRht'
 alias c='clear'
 alias q='exit'
+alias :q='exit'
 alias d='less'
 alias oo='vim ~/notes.org'
 alias mkdir='mkdir -p'
@@ -136,34 +137,31 @@ alias fun='cd ~/Documents/Multimedia && open . && cd -'
 alias meh='cd ~/Documents/Projects'
 # Alias to get into desktop folder
 alias blah='cd ~/Desktop'
-#Just because it happens all the time
-alias ivm='vim'
 
 # Git alias
 
 # Alias for easier commit
 alias gu='git add -u && git commit'
-
 # Git add
 alias ga='git add'
-
 # Easier push to origin master
 alias gp="git push origin $(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/' | sed 's:^.\(.*\).$:\1:' | sed 's/^.//')"
-
 # Git log and history alias 
 alias gg='git lh'
 alias gh='git hi'
 alias gl='git lg'
-
 # Git diff alias
 alias gd='git diff'
-
 #Git status alias
 alias gs='git status'
 alias g='git status -s'
-
 #Git commit 
 alias gc='git commit'
 
+# More stuff
 #eeeks
 alias vim="nvim"
+#Just because it happens all the time
+alias ivm='vim'
+#Open last vim session
+alias viml='nvim -c e -c :SLoad zzz'
