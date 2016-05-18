@@ -5,7 +5,7 @@ export ZSH=/Users/abinsimon/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="terminalparty"
+ZSH_THEME="terminalpartyedit"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -147,8 +147,8 @@ alias ga='git add'
 # Easier push to origin master
 alias gp="git push origin $(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/' | sed 's:^.\(.*\).$:\1:' | sed 's/^.//')"
 # Git log and history alias 
-alias gg='git lh'
-alias gh='git hi'
+alias gg='git lh|cat'
+alias gh='git hi|cat'
 alias gl='git lg'
 # Git diff alias
 alias gd='git diff'
