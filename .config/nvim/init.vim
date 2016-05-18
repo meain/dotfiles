@@ -13,8 +13,6 @@ Plug 'jceb/vim-orgmode'
 Plug 'tpope/vim-speeddating'
 " Python autocomplete
 Plug 'davidhalter/jedi-vim'
-" Easy motion plugins
-Plug 'easymotion/vim-easymotion'
 " Vim colorscheme
 Plug 'flazz/vim-colorschemes'
 " Better file browser
@@ -43,9 +41,6 @@ Plug 'tpope/vim-surround'
 Plug 'Townk/vim-autoclose'
 " Indent text object
 Plug 'michaeljsmith/vim-indent-object'
-" Python mode (indentation, doc, refactor, lints, code checking, motion and
-" operators, highlighting, run and ipdb breakpoints)
-Plug 'klen/python-mode'
 " Better autocompletion
 Plug 'Shougo/neocomplcache.vim'
 " Snippets manager (SnipMate), dependencies, and snippets repo
@@ -63,6 +58,8 @@ Plug 't9md/vim-choosewin'
 Plug 'lilydjwg/colorizer'
 " Neomake - linting and stuf
 Plug 'neomake/neomake'
+" Easier seakin to the desired text
+Plug 'justinmk/vim-sneak'
 
 
 " Plugins from vim-scripts repos:
@@ -111,6 +108,8 @@ nnoremap <Leader>0 :source ~/.config/nvim/init.vim<cr>
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>q :q<CR>
 nnoremap <Leader>ww :wq<CR>
+nnoremap W :w<CR>
+nnoremap Q :q<CR>
 
 " Window resizing
 nnoremap <silent> <Leader>= :exe "resize " . (winheight(0) * 3/2)<CR>
@@ -119,8 +118,8 @@ nnoremap <silent> <Leader>0 :exe "vertical resize " . (winwidth(0) * 3/2)<CR>
 nnoremap <silent> <Leader>9 :exe "vertical resize " . (winwidth(0) * 2/3)<CR>
 
 " Necessary stuff
-nnoremap ; :
-nnoremap ' ;
+" nnoremap ; :
+" nnoremap ' ;
 
 " Indent based folding
 set foldmethod=indent
@@ -131,6 +130,9 @@ nnoremap <c-j> za
 
 " Redraw only when essential
 set lazyredraw
+
+" make backspace work like most other apps
+set backspace=2 
 
 " allow plugins by file type (required for plugins!)
 filetype plugin on
@@ -158,8 +160,6 @@ set mouse=a
 
 
 "auto open or close on start
-"autocmd vimenter * if !argc() | NERDTree | endif
-" autocmd vimenter * if !argc() | Startify | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 " always show status bar
@@ -171,6 +171,18 @@ set incsearch
 set hlsearch
 " search ignore case
 set ignorecase
+
+"Clear search highlight
+nnoremap <silent><Leader>/ :nohls<CR>
+
+" Make search results to apppear in center
+nnoremap <silent> n nzz
+nnoremap <silent> N Nzz
+nnoremap <silent> * *zz
+nnoremap <silent> # #zz
+
+"Repeat last macro with !
+map ! @@
 
 " syntax highlight on
 syntax on
@@ -193,7 +205,7 @@ set relativenumber
 map <Leader>tn :tabn<CR>
 map <Leader>tp :tabp<CR>
 map <Leader>tm :tabm
-map <Leader>tt :tabnew
+map <Leader>tt :tabnew\|:Startify<cr>
 map <Leader>ts :tab split<CR>
 map <C-S-Right> :tabn<CR>
 imap <C-S-Right> <ESC>:tabn<CR>
@@ -220,10 +232,12 @@ map <Leader>bn :bn<CR>
 map <Leader>bp :bp<CR>
 
 " navigate splits with shift and hjkl
+" rotate with shift r
 map <s-l> <c-w>l
 map <s-h> <c-w>h
 map <s-k> <c-w>k
 map <s-j> <c-w>j
+map <s-r> <c-w>r
 
 " Spell checking
 " Initially choose the file types which support spell check
@@ -289,7 +303,7 @@ nnoremap <Leader>v :vsplit\|:Startify<cr>
 nnoremap <Leader>n :tabnew\|:Startify<cr>
 
 "Better line limit making
-" let &colorcolumn=join(range(81,999),",")
+let &colorcolumn=join(range(81,999),",")
 highlight ColorColumn ctermbg=235 guibg=#2c2d27
 
 " Zoom in and out of windows
@@ -318,6 +332,23 @@ function! MinimizeIfZoomed()
 endfunction
 nnoremap <c-q> :call MinimizeIfZoomed() \|:SSave zzz \| :qa<cr>y
 
+" Easier indentation - does dot loose selection
+vnoremap > >gv
+vnoremap < <gv
+
+" Remove whitespace at save
+autocmd BufWritePre *.py :%s/\s\+$//e
+
+" Open new terminal
+nnoremap <F1> :vsp\|:terminal<cr>
+
+" Open new termial and run the currently open python file
+nnoremap <F2> :vsp\|:terminal python %<cr>
+
+" Easier increment and decrement
+nnoremap + <C-a>
+nnoremap - <C-x>
+
 
 
 " =============================
@@ -340,14 +371,6 @@ let NERDTreeIgnore = ['\.pyc$', '\.pyo$']
 " Vim session manager using startify
 nnoremap <Leader>s :SSave
 nnoremap <Leader>o :SLoad
-
-" Easymotion plugin
-" Move to line
-map <Leader>l <Plug>(easymotion-bd-jk)
-nnoremap <Leader>l <Plug>(easymotion-overwin-line)
-" Move to word
-map  <Leader>f <Plug>(easymotion-bd-w)
-nnoremap <Leader>f <Plug>(easymotion-overwin-w)
 
 " Vim-debug
 " disable default mappings, have a lot of conflicts with other plugins
@@ -398,24 +421,6 @@ let g:ctrlp_custom_ignore = {
             \ 'dir':  '\v[\/](\.git|\.hg|\.svn)$',
             \ 'file': '\.pyc$\|\.pyo$',
             \ }
-
-
-" Python-mode
-" don't use linter, we use syntastic for that
-let g:pymode_lint_on_write = 0
-let g:pymode_lint_signs = 0
-" don't fold python code on open
-let g:pymode_folding = 0
-" don't load rope by default. Change to 1 to use rope
-let g:pymode_rope = 0
-" Remove detecting whitespace
-let g:pymode_syntax_space_errors = 0
-" open definitions on same window, and custom mappings for definitions and
-" occurrences
-let g:pymode_rope_goto_definition_bind = ',d'
-let g:pymode_rope_goto_definition_cmd = 'e'
-nnoremap ,D :tab split<CR>:PymodePython rope.goto()<CR>
-nnoremap ,o :RopeFindOccurrences<CR>
 
 " NeoComplCache
 " most of them not documented because I'm not sure how they work
@@ -479,12 +484,8 @@ let g:choosewin_overlay_enable = 1
 let g:airline_powerline_fonts = 1
 let g:airline_theme = 'bubblegum'
 let g:airline#extensions#whitespace#enabled = 1
-
 " Top bar
 let g:airline#extensions#tabline#enabled = 1
-
-" to use fancy symbols for airline, uncomment the following lines and use a
-" patched font (more info on the README.rst)
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
@@ -533,3 +534,13 @@ let g:vim_markdown_frontmatter=1
 
 " Neomake linting
 autocmd! BufWritePost,BufEnter * Neomake
+
+" Jedi for python
+let g:jedi#use_splits_not_buffers = "bottom"
+let g:jedi#goto_command = "<leader>d"
+let g:jedi#goto_assignments_command = "<leader>g"
+let g:jedi#goto_definitions_command = ""
+let g:jedi#documentation_command = "<leader>k"
+let g:jedi#usages_command = "<leader>n"
+let g:jedi#completions_command = "<C-Space>"
+let g:jedi#rename_command = "<leader>r"

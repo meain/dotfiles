@@ -164,4 +164,4 @@ alias vim="nvim"
 #Just because it happens all the time
 alias ivm='vim'
 #Open last vim session
-alias viml='nvim -c e -c :SLoad zzz'
+alias viml='nvim -c :SLoad zzz'
