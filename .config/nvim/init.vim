@@ -246,7 +246,8 @@ set complete+=kspell
 function! FixLastSpellingError()
     normal! mz[s1z=`z
 endfunction
-nnoremap <Leader>z :call FixLastSpellingError()<cr>
+nnoremap Z :call FixLastSpellingError()<cr>
+inoremap <c-z> :call FixLastSpellingError()<cr>
 
 " Get output of shell command in vim window
 function! SplitRunCommand()
@@ -266,7 +267,7 @@ ca w!! w !sudo tee "%"
 colorscheme CandyPaper
 
 " when scrolling, keep cursor 3 lines away from screen border
-set scrolloff=3
+set scrolloff=5
 
 " autocompletion of files and commands behaves like zsh
 " (autocomplete menu)
@@ -298,10 +299,6 @@ endif
 nnoremap <Leader>h :split <cr>
 nnoremap <Leader>v :vsplit\|:Startify<cr>
 nnoremap <Leader>n :tabnew\|:Startify<cr>
-
-"Better line limit making
-let &colorcolumn=join(range(81,999),",")
-highlight ColorColumn ctermbg=235 guibg=#2c2d27
 
 " Zoom in and out of windows
 function! s:ZoomToggle() abort
@@ -349,6 +346,9 @@ nnoremap <F2> :vsp\|:terminal python %<cr>
 nnoremap + <C-a>
 nnoremap - <C-x>
 
+"Better line limit making
+let &colorcolumn=join(range(81,999),",")
+highlight ColorColumn ctermbg=235 guibg=#2c2d27
 
 
 " =============================
