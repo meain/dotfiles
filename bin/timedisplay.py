@@ -17,8 +17,8 @@ color_blue = '%{[34m%}'
 color_reset = '%{[00m%}'
 color_out = (
         color_red if minute > 39
-        else color_green if minute > 19
-        else color_blue
+        else color_blue if minute > 19
+        else color_green
         )
 
 out = color_out + out + color_reset

@@ -165,4 +165,8 @@ alias vim="nvim"
 #Just because it happens all the time
 alias ivm='vim'
 #Open last vim session
-alias viml='nvim -c :SLoad\ zzz'
+alias viml='nvim -c :SLoad\ zPreviousSession'
+
+# Note taking
+alias k='python ~/bin/terminalnote.py "'
+alias kk='python ~/bin/terminalnote.py k'

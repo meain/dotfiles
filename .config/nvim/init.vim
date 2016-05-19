@@ -212,7 +212,7 @@ set splitbelow
 set splitright
 
 " Proper indenting on pasting
-:nnoremap p  "*p=`]
+:nnoremap p  mp"*p=`]`p
 
 " Copy and paste to the system clipboard - this also helps with dd or x
 " replacing the content in the clipboard
@@ -223,6 +223,9 @@ vnoremap y "*y
 vnoremap Y "*Y
 vnoremap p "*p
 vnoremap P "*P
+
+" Easy save
+nnoremap <Leader><Leader> :w<cr>
 
 " Buffer switching
 map <Leader>bn :bn<CR>
@@ -259,6 +262,9 @@ function! SplitRunCommand()
     call inputrestore()
 endfunction
 nnoremap ,s :call SplitRunCommand()<cr>
+
+" Inser a space before and after
+nnoremap <Leader>9 :normal! i<Space><Esc>lli<Space><Esc>
 
 " save as sudo
 ca w!! w !sudo tee "%"
