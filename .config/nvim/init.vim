@@ -361,13 +361,21 @@ def set_breakpoint():
 
     vim.current.buffer.append(white_spaces + ipdb_breakpoint, breakpoint_line)
 
-vim.command('map <f6> :py set_breakpoint()<cr>')
-
 def remove_breakpoints():
     op = 'g/^.*%s.*/d' % ipdb_breakpoint
     vim.command(op)
 
-vim.command('map <f7> :py remove_breakpoints()<cr>')
+def toggle_breakpoint():
+    breakpoint_line = int(vim.eval('line(".")')) - 1
+    if 'import ipdb; ipdb.set_trace()' in vim.current.buffer[breakpoint_line]:
+        remove_breakpoints()
+    elif 'import ipdb; ipdb.set_trace()' in vim.current.buffer[breakpoint_line-1]:
+        remove_breakpoints()
+    else :
+        set_breakpoint()
+    vim.command(':w')
+
+vim.command('map <f6> :py toggle_breakpoint()<cr>')
 EOF
 
 " Open new terminal
