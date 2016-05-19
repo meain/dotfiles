@@ -172,10 +172,8 @@ def main():
     data = args.string
 
     if data == 'k':
-        # print bcolors.HEADER + "   === NOTES ===" + bcolors.ENDC
         display_notes()
     elif is_number(data):
-        # print "Deleted note" + data
         delete_note(int(data))
     else:
         write_new_entry(data)
