@@ -350,6 +350,12 @@ nnoremap - <C-x>
 let &colorcolumn=join(range(81,999),",")
 highlight ColorColumn ctermbg=235 guibg=#2c2d27
 
+" Remap for easier use of arrow keys
+nnoremap <c-j> <Down>
+inoremap <c-j> <Down>
+nnoremap <c-k> <Up>
+inoremap <c-k> <Up>
+
 
 " =============================
 " Keybindings - plugin specific
