@@ -84,6 +84,21 @@ def extract_note(number):
     return available, note, actual_count
 
 def write_new_entry(data):
+    sys.stdout.write( bcolors.RED + "Added : " + bcolors.ORANGE )
+    if data[1] == '\n':
+        for i in range(1,len(data)):
+            if data[i] != '\n':
+                sys.stdout.write(data[i])
+            if i < len(data)-1:
+                if data[i + 1] == '\n':
+                    sys.stdout.write( "\n        ")
+    else:
+        for i in range(len(data)):
+            if data[i] == '\n':
+                sys.stdout.write("\n        ")
+            else:
+                sys.stdout.write(data[i])
+    print ""
     notesfile = open(notes_filename, 'r+')
     if data != "":
         notesfile.seek(0, 2)
@@ -100,7 +115,7 @@ def display_notes():
         new_line_count = 0
         available, note, actual_count = extract_note(count)
         if available:
-            sys.stdout.write(bcolors.BLUE + ": "  + str(actual_count) + " : " + bcolors.ENDC)
+            sys.stdout.write(bcolors.BLUE + ": "  + str(actual_count) + " : ")
             # for i in range(len(note)):
             #     if note[i] == '\n':
             #         new_line_count += 1
@@ -115,6 +130,10 @@ def display_notes():
                         sys.stdout.write(" ")
                         temp = temp/10
                 else:
+                    if actual_count % 2 == 1:
+                        sys.stdout.write(bcolors.ORANGE)
+                    else:
+                        sys.stdout.write(bcolors.ENDC)
                     sys.stdout.write(note[i])
             print ""
             count += 1
@@ -122,6 +141,7 @@ def display_notes():
             break
 
 def delete_note(number):
+    sys.stdout.write(bcolors.RED + "Deleted : ")
     notesfile = open(notes_filename, 'r')
     notesfile.seek(0,0)
     count = 0
@@ -152,6 +172,7 @@ def delete_note(number):
                 if count - done_notes == number:
                     deleted = True
                     sys.stdout.write(bcolors.ORANGE + content[line_number + 2 + margin])
+                    sys.stdout.write("          ")
                     content[line_number + 2 + margin] = "#" + content[line_number + 2 + margin]
                     margin += 1
                 else:
@@ -168,11 +189,13 @@ def delete_note(number):
         if count - done_notes == number or ( line_number ) >= len(content):
             break
     if deleted == True:
-        print bcolors.RED + "Note deleted"
+        sys.stdout.write("\n")
         nfile = open(notes_filename, 'w')
         for item in content:
             nfile.write("%s" % item)
         nfile.close
+    else:
+        sys.stdout.write(bcolors.BLUE + "--none--\n")
     return deleted, note
 
 def main():
