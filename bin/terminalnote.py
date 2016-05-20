@@ -30,6 +30,8 @@ class bcolors:
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
+    color_red = '%{[31m%}'
+    color_reset = '%{[00m%}'
 
 notes_filename = '/Users/abinsimon/.terminalnotesdata'
 
@@ -108,6 +110,16 @@ def write_new_entry(data):
             note = "--\n---\n\n" + data[1:] + "\n"
         notesfile.write(note)
     notesfile.close()
+
+def get_remaining_notes_count():
+    count = 1
+    while True:
+        available, note, actual_count = extract_note(count)
+        if available == False:
+            break
+        else:
+            count += 1
+    return actual_count
 
 def display_notes():
     count = 1
@@ -206,6 +218,8 @@ def main():
 
     if data == 'k':
         display_notes()
+    elif data == 'n':
+        sys.stdout.write(bcolors.color_red + str(get_remaining_notes_count()) + bcolors.color_reset)
     elif is_number(data):
         delete_note(int(data))
     else:
