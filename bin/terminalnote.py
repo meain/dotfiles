@@ -101,12 +101,22 @@ def display_notes():
         available, note, actual_count = extract_note(count)
         if available:
             sys.stdout.write(bcolors.BLUE + ": "  + str(actual_count) + " : " + bcolors.ENDC)
-            for i in range(len(note)):
+            # for i in range(len(note)):
+            #     if note[i] == '\n':
+            #         new_line_count += 1
+            # if new_line_count > 1:
+            #     print ""
+            # print note
+            for i in range(len(note)-1):
                 if note[i] == '\n':
-                    new_line_count += 1
-            if new_line_count > 1:
-                print ""
-            print note
+                    sys.stdout.write("\n     ")
+                    temp = count*10
+                    while int(temp/10) > 0:
+                        sys.stdout.write(" ")
+                        temp = temp/10
+                else:
+                    sys.stdout.write(note[i])
+            print ""
             count += 1
         else:
             break
