@@ -77,6 +77,11 @@ Plug 'suan/vim-instant-markdown'
 " Plug 'christoomey/vim-tmux-navigator'
 " Better python folding
 Plug 'tmhedberg/SimpylFold'
+" For javascript
+Plug 'jelera/vim-javascript-syntax'
+Plug 'pangloss/vim-javascript'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'Raimondi/delimitMate'
 
 
 " Plugins from vim-scripts repos:
@@ -588,6 +593,7 @@ let g:vim_markdown_frontmatter=1
 
 " Neomake linting
 autocmd! BufWritePost,BufEnter * Neomake
+let g:neomake_javascript_enabled_makers = ['eslint']
 
 " Jedi for python
 let g:jedi#use_splits_not_buffers = "bottom"
