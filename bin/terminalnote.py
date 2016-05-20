@@ -100,7 +100,7 @@ def display_notes():
         new_line_count = 0
         available, note, actual_count = extract_note(count)
         if available:
-            sys.stdout.write(bcolors.BLUE + "Note "  + str(actual_count) + " : " + bcolors.ENDC)
+            sys.stdout.write(bcolors.BLUE + ": "  + str(actual_count) + " : " + bcolors.ENDC)
             for i in range(len(note)):
                 if note[i] == '\n':
                     new_line_count += 1
