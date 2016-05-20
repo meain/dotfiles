@@ -171,7 +171,12 @@ set mouse=a
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 " Disable wrapping
-autocmd BufNew,VimEnter * set nowrap
+function! DisableWrap()
+	set nowrap
+	set nolinebreak
+	set formatoptions-=cro
+endfunction
+autocmd BufNew,BufAdd,BufCreate,VimEnter * call DisableWrap()
 
 " always show status bar
 set laststatus=2
@@ -252,7 +257,6 @@ map <s-r> <c-w>r
 autocmd BufRead,BufNewFile *.md setlocal spell
 autocmd BufRead,BufNewFile *.org setlocal spell
 autocmd BufRead,BufNewFile *.txt setlocal spell
-autocmd BufRead,BufNewFile *.mk setlocal spel
 set complete+=kspell
 function! FixLastSpellingError()
     normal! mz[s1z=`z
