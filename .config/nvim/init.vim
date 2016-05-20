@@ -170,6 +170,9 @@ set mouse=a
 "auto open or close on start
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
+" Disable wrapping
+autocmd BufNew,VimEnter * set nowrap
+
 " always show status bar
 set laststatus=2
 
@@ -408,6 +411,7 @@ nnoremap <c-j> <Down>
 inoremap <c-j> <Down>
 nnoremap <c-k> <Up>
 inoremap <c-k> <Up>
+
 
 
 " =============================
