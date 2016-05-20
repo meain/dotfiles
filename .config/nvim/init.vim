@@ -178,6 +178,12 @@ function! DisableWrap()
 endfunction
 autocmd BufNew,BufAdd,BufCreate,VimEnter * call DisableWrap()
 
+" Disable autocomment
+function! DisableAutoComment()
+	set formatoptions-=qr
+endfunction
+autocmd BufNew,BufAdd,BufCreate,VimEnter * call DisableAutoComment()
+
 " always show status bar
 set laststatus=2
 
