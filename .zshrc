@@ -157,7 +157,7 @@ alias ggg='git diff'
 alias gs='git status'
 alias g='git status -s'
 #Git commit 
-alias gc='git commit'
+alias gc='git commit -m'
 
 # More stuff
 #eeeks
