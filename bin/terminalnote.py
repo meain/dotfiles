@@ -93,11 +93,11 @@ def write_new_entry(data):
                 sys.stdout.write(data[i])
             if i < len(data)-1:
                 if data[i + 1] == '\n':
-                    sys.stdout.write( "\n        ")
+                    sys.stdout.write( "\n         ")
     else:
         for i in range(len(data)):
             if data[i] == '\n':
-                sys.stdout.write("\n        ")
+                sys.stdout.write("\n         ")
             else:
                 sys.stdout.write(data[i])
     print ""
@@ -226,8 +226,6 @@ def main():
         write_new_entry(data)
 
 
-
-#Final call and doing the "thing"
+# Final call and doing the "thing"
 if __name__ == '__main__':
     main()
-
