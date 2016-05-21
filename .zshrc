@@ -161,7 +161,7 @@ alias ggg='git diff'
 alias gs='git status'
 alias g='git status -s'
 #Git commit 
-alias gc='git commit -m'
+alias gc='git commit'
 
 # More stuff
 #eeeks
@@ -176,4 +176,4 @@ alias k='python ~/bin/terminalnote.py "'
 alias kk='python ~/bin/terminalnote.py k'
 
 # Eywa start
-alias eywa='cd ~/Documents/Projects/eywa && source bin/activate && cd eywa && python manage.py runserver localhost:4500'
+alias eywa='cd ~/Documents/Projects/eywa && source bin/activate && cd eywa && echo "\033[0;31m Do start chromix server using chromix-server \033[0m" && python manage.py runserver localhost:4500'

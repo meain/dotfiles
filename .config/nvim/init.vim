@@ -242,7 +242,7 @@ set splitright
 nnoremap  y "*y
 nnoremap  Y "*Y
 nnoremap  P "*P
-vnoremap y "*y`]gv
+vnoremap y "*y`]
 vnoremap Y "*Y
 vnoremap p "*p
 vnoremap P "*P
