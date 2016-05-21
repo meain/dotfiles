@@ -1,4 +1,5 @@
 #Dotfiles
+
 **Hey**, these are the dotfiles that I use.
 
 It includes my `vim`, `tmux`, `git` and `bash` config files.
@@ -11,16 +12,19 @@ It includes my `vim`, `tmux`, `git` and `bash` config files.
     
 * [**bash-it**](https://github.com/Bash-it/bash-it) -- for the lovely git info display
 
-![Bash-it](http://i.imgur.com/wR0bYSL.png)
-
-The numbers on right are < `time` - `battery %` - `number of undone notes` >
 
 #####For vimrc
 * [**vundle**](https://github.com/VundleVim/Vundle.vim) -- will be auto installed first time you start vim after having this config file
 
----
+
 
 ###Image section
+
+######Terminal display
+![bash](http://i.imgur.com/wR0bYSL.png)
+
+The numbers on right are < `time` - `battery %` - `number of undone notes` >
+
 
 ######Vim editor (has not so bad mouse support)
 ![Vim](http://s32.postimg.org/xd3m655j9/Screen_Shot_2016_04_27_at_8_38_06_AM.png)
