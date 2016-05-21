@@ -211,6 +211,10 @@ set relativenumber
 :nnoremap j gj
 :nnoremap k gk
 
+" Faster navigation
+nnoremap 9 20j
+nnoremap 8 20k
+
 " Just something I have to do
 :command WQ wq
 :command Wq wq
@@ -231,14 +235,14 @@ set splitbelow
 set splitright
 
 " Proper indenting on pasting
-:nnoremap p  mp"*p=`]`p
+:nnoremap p  "*]p`]
 
 " Copy and paste to the system clipboard - this also helps with dd or x
 " replacing the content in the clipboard
 nnoremap  y "*y
 nnoremap  Y "*Y
 nnoremap  P "*P
-vnoremap y "*y
+vnoremap y "*y`]gv
 vnoremap Y "*Y
 vnoremap p "*p
 vnoremap P "*P
@@ -269,6 +273,8 @@ function! FixLastSpellingError()
 endfunction
 nnoremap Z :call FixLastSpellingError()<cr>
 inoremap <c-z> :call FixLastSpellingError()<cr>
+" Disable spell check in help files
+autocmd FileType help setlocal nospell
 
 " Get output of shell command in vim window
 function! SplitRunCommand()
@@ -280,6 +286,9 @@ function! SplitRunCommand()
     call inputrestore()
 endfunction
 nnoremap ,s :call SplitRunCommand()<cr>
+
+" Reload chrome tab on save of web files
+autocmd BufWritePost *.html,*.js,*.css :silent ! chromix with http://localhost:4500/ reload
 
 " Inser a space before and after
 nnoremap <Leader>9 :normal! i<Space><Esc>lli<Space><Esc>
@@ -422,6 +431,11 @@ inoremap <c-j> <Down>
 nnoremap <c-k> <Up>
 inoremap <c-k> <Up>
 
+" Saves file when Vim window loses focus
+au FocusLost * :wa
+
+" Alphabetically sort CSS properties in file with :SortCSS
+:command! SortCSS :g#\({\n\)\@<=#.,/}/sort
 
 
 " =============================
