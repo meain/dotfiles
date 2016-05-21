@@ -11,7 +11,9 @@ It includes my `vim`, `tmux`, `git` and `bash` config files.
     
 * [**bash-it**](https://github.com/Bash-it/bash-it) -- for the lovely git info display
 
-![Bash-it](http://s32.postimg.org/uk5t8dft1/Screen_Shot_2016_04_27_at_8_38_33_AM.png)
+![Bash-it](http://i.imgur.com/wR0bYSL.png)
+
+The numbers on right are < `time` - `battery %` - `number of undone notes` >
 
 #####For vimrc
 * [**vundle**](https://github.com/VundleVim/Vundle.vim) -- will be auto installed first time you start vim after having this config file
