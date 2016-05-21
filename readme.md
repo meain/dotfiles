@@ -13,9 +13,11 @@ It includes my `vim`, `tmux`, `git` and `bash` config files.
 * [**bash-it**](https://github.com/Bash-it/bash-it) -- for the lovely git info display
 
 
-#####For vimrc
+#####For vim/nvim
+
 * [**vundle**](https://github.com/VundleVim/Vundle.vim) -- will be auto installed first time you start vim after having this config file
 
+* [**Chromix**](https://github.com/smblott-github/chromix) -- to refresh chrome on save of file in vim
 
 
 ###Image section
