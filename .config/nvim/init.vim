@@ -82,6 +82,8 @@ Plug 'jelera/vim-javascript-syntax'
 Plug 'pangloss/vim-javascript'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'Raimondi/delimitMate'
+" Hilight charecter to make using f easier
+Plug 'unblevable/quick-scope'
 
 
 " Plugins from vim-scripts repos:
@@ -93,6 +95,12 @@ Plug 'matchit.zip'
 " Restore file pointer
 Plug 'restore_view.vim'
 
+" Non code related
+
+" Read Hacker news in vim
+Plug 'ryanss/vim-hackernews', { 'on':  'HackerNews' }
+" Better language usage in writing
+Plug 'davidbeckingsale/writegood.vim'
 
 call plug#end()
 
@@ -166,6 +174,10 @@ set nobackup
 " allow mouse
 set mouse=a
 
+" (Hopefully) removes the delay when hitting esc in insert mode
+set noesckeys
+set ttimeout
+set ttimeoutlen=1
 
 "auto open or close on start
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
@@ -212,14 +224,14 @@ set relativenumber
 :nnoremap k gk
 
 " Faster navigation
-nnoremap 9 20j
-nnoremap 8 20k
+nnoremap 8 20j
+nnoremap 9 20k
 
 " Just something I have to do
-:command WQ wq
-:command Wq wq
-:command W w
-:command Q q
+command WQ wq
+command Wq wq
+command W w
+command Q q
 
 " tab navigation mappings
 map <Leader>tn :tabn<CR>
@@ -333,6 +345,21 @@ nnoremap <Leader>h :split <cr>
 nnoremap <Leader>v :vsplit\|:Startify<cr>
 nnoremap <Leader>n :tabnew\|:Startify<cr>
 
+" Google search from within vim
+function! GoogleSearch(arg)
+py << EOF
+import vim
+def frame_querry():
+	term = vim.eval("a:arg")
+	term = unicode(term, "utf-8")
+	base = "www.google.com/search?q="
+	url = base + term
+	vim.command("term w3m www.google.com")
+frame_querry()
+EOF
+endfunction
+command! -nargs=1 Google call GoogleSearch(<f-args>)
+
 " Zoom in and out of windows
 function! s:ZoomToggle() abort
     if exists('t:zoomed') && t:zoomed
@@ -435,7 +462,10 @@ inoremap <c-k> <Up>
 au FocusLost * :wa
 
 " Alphabetically sort CSS properties in file with :SortCSS
-:command! SortCSS :g#\({\n\)\@<=#.,/}/sort
+command! SortCSS :g#\({\n\)\@<=#.,/}/sort
+
+" Put parathesis
+nnoremap \ <Esc>A{<cr>}<Esc>O<Tab>
 
 
 " =============================
@@ -636,3 +666,10 @@ let g:jedi#rename_command = "<leader>r"
 " Snipmate
 nnoremap <c-s> <Plug>snipMateTrigger
 imap <c-s> <Plug>snipMateTrigger
+
+"Quick scope
+" Trigger a highlight in the appropriate direction when pressing these keys:
+" let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+
+" Writegood
+autocmd BufCreate *.txt WritegoodEnable
