@@ -379,7 +379,7 @@ function! s:ZoomToggle() abort
 endfunction
 
 command! ZoomToggle call s:ZoomToggle()
-nnoremap <silent> _ :ZoomToggle<CR>
+nnoremap <silent> - :ZoomToggle<CR> \| :normal! 0<cr>
 
 " Save session as zzz and quit all buffers - y at the end as it ask to replace
 " old zzz
@@ -451,7 +451,7 @@ nnoremap <F2> :vsp\|:terminal python %<cr>
 
 " Easier increment and decrement
 nnoremap + <C-a>
-nnoremap - <C-x>
+" nnoremap - <C-x>
 
 "Better line limit making
 let &colorcolumn=join(range(81,999),",")
@@ -605,7 +605,7 @@ highlight SignifySignChange cterm=bold ctermbg=237  ctermfg=227
 
 " Window Chooser
 " mapping
-nmap  -  <Plug>(choosewin)
+nmap  _  <Plug>(choosewin)
 " show big letters
 let g:choosewin_overlay_enable = 1
 
