@@ -88,6 +88,8 @@ Plug 'unblevable/quick-scope'
 Plug 'digitaltoad/vim-pug'
 " Stylus syntax and indentation
 Plug 'wavded/vim-stylus'
+" Show indent
+Plug 'Yggdroot/indentLine'
 
 
 " Plugins from vim-scripts repos:
@@ -357,7 +359,7 @@ import vim
 def frame_querry():
 	term = vim.eval("a:arg")
 	vim.command("vsp")
-	vim.command("term googler " + term)
+	vim.command("term googler -count 5 " + term)
 frame_querry()
 EOF
 endfunction
