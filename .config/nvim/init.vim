@@ -84,6 +84,10 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'Raimondi/delimitMate'
 " Hilight charecter to make using f easier
 Plug 'unblevable/quick-scope'
+" Jade syntax and indentation
+Plug 'digitaltoad/vim-pug'
+" Stylus syntax and indentation
+Plug 'wavded/vim-stylus'
 
 
 " Plugins from vim-scripts repos:
@@ -94,6 +98,7 @@ Plug 'IndexedSearch'
 Plug 'matchit.zip'
 " Restore file pointer
 Plug 'restore_view.vim'
+
 
 " Non code related
 
@@ -299,8 +304,8 @@ function! SplitRunCommand()
 endfunction
 nnoremap ,s :call SplitRunCommand()<cr>
 
-" Reload chrome tab on save of web files
-autocmd BufWritePost *.html,*.js,*.css :silent ! chromix with http://localhost:4500/ reload
+" Put parathesis
+nnoremap \ <Esc>A{<cr>}<Esc>O<Tab>
 
 " Inser a space before and after
 nnoremap <Leader>9 :normal! i<Space><Esc>lli<Space><Esc>
@@ -351,10 +356,8 @@ py << EOF
 import vim
 def frame_querry():
 	term = vim.eval("a:arg")
-	term = unicode(term, "utf-8")
-	base = "www.google.com/search?q="
-	url = base + term
-	vim.command("term w3m www.google.com")
+	vim.command("vsp")
+	vim.command("term googler " + term)
 frame_querry()
 EOF
 endfunction
@@ -464,8 +467,15 @@ au FocusLost * :wa
 " Alphabetically sort CSS properties in file with :SortCSS
 command! SortCSS :g#\({\n\)\@<=#.,/}/sort
 
-" Put parathesis
-nnoremap \ <Esc>A{<cr>}<Esc>O<Tab>
+" Compile css and pug files on save and refresh chrome
+autocmd BufWritePost *.pug :silent ! pug -P %
+autocmd BufWritePost *.pug :silent ! chromix with http://localhost:4500/ reload
+autocmd BufWritePost *.stylus :silent ! stylus %
+autocmd BufWritePost *.stylus :silent ! chromix with http://localhost:4500/ reload
+
+" Reload chrome tab on save of web files
+autocmd BufWritePost *.html,*.js,*.css :silent ! chromix with http://localhost:4500/ reload
+
 
 
 " =============================
