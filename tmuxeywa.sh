@@ -5,7 +5,7 @@ tmux -2 new-session -d -s $SESSION
 
 tmux split-window -h
 tmux select-pane -t 0
-tmux resize-pane -R 30
+tmux resize-pane -R 27
 tmux send-keys "eywa" C-m
 tmux select-pane -t 1
 tmux send-keys "chromix-server" C-m
