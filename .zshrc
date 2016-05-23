@@ -106,11 +106,6 @@ rmd () {
 # Custom
 
 # source ~/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-echo ""
-python ~/bin/terminalnote.py k
-echo ""
-
 eval $(thefuck --alias)
 
 #Alias
