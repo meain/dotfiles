@@ -105,6 +105,10 @@ rmd () {
 
 # Custom
 
+echo ""
+echo "Hey *meain*, what's up? How you doing?" | fmt -c -w $COLUMNS | lolcat
+echo ""
+
 # source ~/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 eval $(thefuck --alias)
 
@@ -113,7 +117,7 @@ alias ss='ls -lht'
 alias ll='ls -A -l'
 alias la='ls -A'
 alias lr='ls -lRht'
-alias c='clear'
+alias c='clear && echo "\n¯\_(ツ)_/¯\n" | fmt -c -w $COLUMNS | lolcat'
 alias q='exit'
 alias :q='exit'
 alias mkdir='mkdir -p'
@@ -170,5 +174,5 @@ alias kk='python ~/bin/terminalnote.py k'
 
 # Eywa start
 alias eywa='cd ~/Documents/Projects/eywa && source bin/activate && cd eywa && echo "\033[0;31m Do start chromix server using chromix-server \033[0m" && python manage.py runserver localhost:4500'
-alias eywaserver='./tmuxeywa.sh'
-alias es='./tmuxeywavim.sh'
+alias eywaserver='./bin/tmuxeywa.sh'
+alias es='./bin/tmuxeywavim.sh'
