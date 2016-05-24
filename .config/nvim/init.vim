@@ -14,7 +14,10 @@ Plug 'tpope/vim-speeddating'
 " Python autocomplete
 Plug 'davidhalter/jedi-vim'
 " Better autocompletion
-Plug 'Shougo/neocomplcache.vim'
+function! DoRemote(arg)
+	UpdateRemotePlugins
+endfunction
+Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
 " Vim colorscheme
 Plug 'flazz/vim-colorschemes'
 " Better file browser
@@ -89,6 +92,8 @@ Plug 'wavded/vim-stylus'
 Plug 'Yggdroot/indentLine'
 " Way better undo
 Plug 'sjl/gundo.vim'
+" Smooth scroll
+Plug 'terryma/vim-smooth-scroll'
 
 " Plugins from vim-scripts repos:
 
@@ -227,10 +232,6 @@ set relativenumber
 " Enable going down in case text is wrapped
 :nnoremap j gj
 :nnoremap k gk
-
-" Faster navigation
-nnoremap 8 20j
-nnoremap 9 20k
 
 " Just something I have to do
 command WQ wq
@@ -655,26 +656,6 @@ let g:vim_markdown_frontmatter=1
 autocmd! BufWritePost,BufEnter * Neomake
 let g:neomake_javascript_enabled_makers = ['eslint']
 
-" NeoComplCache
-" most of them not documented because I'm not sure how they work
-" (docs aren't good, had to do a lot of trial and error to make
-" it play nice)
-let g:neocomplcache_enable_at_startup = 1
-let g:neocomplcache_enable_ignore_case = 1
-let g:neocomplcache_enable_smart_case = 1
-let g:neocomplcache_enable_auto_select = 1
-let g:neocomplcache_enable_fuzzy_completion = 1
-let g:neocomplcache_enable_camel_case_completion = 1
-let g:neocomplcache_enable_underbar_completion = 1
-let g:neocomplcache_fuzzy_completion_start_length = 1
-let g:neocomplcache_auto_completion_start_length = 1
-let g:neocomplcache_manual_completion_start_length = 1
-let g:neocomplcache_min_keyword_length = 1
-let g:neocomplcache_min_syntax_length = 1
-" complete with workds from any opened file
-let g:neocomplcache_same_filetype_lists = {}
-let g:neocomplcache_same_filetype_lists._ = '_'
-
 " Jedi python
 let g:jedi#use_splits_not_buffers = "bottom"
 let g:jedi#goto_command = "<leader>d"
@@ -700,3 +681,15 @@ autocmd BufCreate *.txt WritegoodEnable
 
 " Gundo
 nnoremap <F5> :GundoToggle<CR>
+
+" Use deoplete.
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#auto_complete_start_length = 1
+
+" Smooth scroll
+noremap <silent> 9 :call smooth_scroll#up(&scroll, 0, 2)<CR>
+noremap <silent> 8 :call smooth_scroll#down(&scroll, 0, 2)<CR>
+noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
+noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
+noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
+noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
