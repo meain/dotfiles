@@ -117,7 +117,7 @@ alias ss='ls -lht'
 alias ll='ls -A -l'
 alias la='ls -A'
 alias lr='ls -lRht'
-alias c='clear && echo "\n¯\_(ツ)_/¯\n" | fmt -c -w $COLUMNS | lolcat'
+alias c='clear && echo "\n¯\_(ツ)_/¯\n" | fmt -c -w $COLUMNS | lolcat && ls'
 alias q='exit'
 alias :q='exit'
 alias mkdir='mkdir -p'
@@ -133,11 +133,11 @@ alias tn='tmux new -s'
 alias ta='tmux attach -t'
 
 # Alias to open multimedia folder in finder
-alias fun='cd ~/Documents/Multimedia && open . && cd -'
+alias m='cd ~/Documents/Multimedia && open . && cd -'
 # Alias to get into project folder
-alias meh='cd ~/Documents/Projects'
+alias p='cd ~/Documents/Projects && ls'
 # Alias to get into desktop folder
-alias blah='cd ~/Desktop'
+alias d='cd ~/Desktop && ls'
 
 # Git alias
 

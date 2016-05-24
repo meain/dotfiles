@@ -5,8 +5,6 @@ call plug#begin('~/.vim/plugged')
 
 " A fancy start page for vim
 Plug 'mhinz/vim-startify'
-" Supertab - kind of does the autocompletion on pressing tab
-Plug 'ervandew/supertab'
 " Python autocomplete
 Plug 'davidhalter/jedi-vim', { 'for' : 'python' }
 " Better autocompletion
@@ -89,6 +87,9 @@ Plug 'mbbill/undotree', { 'on' : 'UndotreeToggle' }
 Plug 'terryma/vim-smooth-scroll'
 " Print documents in echo area
 Plug 'Shougo/echodoc.vim'
+" Multiple cursors
+Plug 'terryma/vim-multiple-cursors'
+
 
 " Plugins from vim-scripts repos:
 
@@ -104,8 +105,6 @@ Plug 'restore_view.vim'
 
 " Read Hacker news in vim
 Plug 'ryanss/vim-hackernews', { 'on':  'HackerNews' }
-" Better language usage in writing
-Plug 'davidbeckingsale/writegood.vim', { 'on' : 'WritegoodEnable' }
 " Writing support ( dark surround[limelight] goyo )
 Plug 'junegunn/limelight.vim'
 Plug 'junegunn/goyo.vim', { 'on' : 'Goyo' }
@@ -126,7 +125,7 @@ let mapleader = "\<Space>"
 let maplocalleader = "\\"
 
 " Easier sourcing of init.vim
-nnoremap <Leader>0 :source ~/.config/nvim/init.vim<cr>
+nnoremap <Leader>1 :source ~/.config/nvim/init.vim<cr>
 
 " Saving and quitting keybindings
 nnoremap <Leader>w :w<CR>
@@ -190,13 +189,19 @@ set ttimeoutlen=1
 "auto open or close on start
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
-" Disable wrapping
+" Enble and Disable wrapping
 function! DisableWrap()
 	set nowrap
 	set nolinebreak
 	set formatoptions-=cro
 endfunction
-autocmd BufNew,BufAdd,BufCreate,VimEnter * call DisableWrap()
+autocmd BufNew,BufAdd,BufCreate,VimEnter *  call DisableWrap()
+function! EnableWrap()
+	set wrap
+	set linebreak
+	set formatoptions+=cro
+endfunction
+autocmd BufNew,BufAdd,BufCreate,VimEnter *.md, *.txt  call EnableWrap()
 
 " Disable autocomment
 function! DisableAutoComment()
@@ -315,7 +320,7 @@ nnoremap <Leader>9 :normal! i<Space><Esc>lli<Space><Esc>
 ca w!! w !sudo tee "%"
 
 " Setting colorscheme
-colorscheme CandyPaper
+colorscheme Tomorrow-Night-Eighties
 
 " when scrolling, keep cursor 3 lines away from screen border
 set scrolloff=5
@@ -491,7 +496,6 @@ highlight StartifySlash   ctermfg=240
 highlight StartifySpecial ctermfg=240
 
 " NERDTree
-
 " toggle nerdtree display
 map <F3> :NERDTreeToggle<CR>
 map <Leader>t :NERDTreeToggle<CR>
@@ -667,9 +671,6 @@ imap <c-s> <Plug>snipMateTrigger
 " Trigger a highlight in the appropriate direction when pressing these keys:
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
-" Writegood
-autocmd BufCreate *.txt WritegoodEnable
-
 " Undo tree toggle
 " if has("persistent_undo")
 " 	set undodir=~/.undodir/
@@ -693,3 +694,9 @@ noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
 "Limelight and goyo toggles
 nnoremap <Leader>ll :Limelight!!<cr>
 nnoremap <Leader>go :Goyo<cr>
+
+" Multiple cursors
+let g:multi_cursor_next_key='<C-n>'
+let g:multi_cursor_prev_key='<C-p>'
+let g:multi_cursor_skip_key='<C-x>'
+let g:multi_cursor_quit_key='<Esc>'
