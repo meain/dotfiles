@@ -7,12 +7,8 @@ call plug#begin('~/.vim/plugged')
 Plug 'mhinz/vim-startify'
 " Supertab - kind of does the autocompletion on pressing tab
 Plug 'ervandew/supertab'
-" Org mode - kind of like in emacs
-Plug 'jceb/vim-orgmode'
-" dependencey for orgmode
-Plug 'tpope/vim-speeddating'
 " Python autocomplete
-Plug 'davidhalter/jedi-vim'
+Plug 'davidhalter/jedi-vim', { 'for' : 'python' }
 " Better autocompletion
 function! DoRemote(arg)
 	UpdateRemotePlugins
@@ -22,21 +18,19 @@ Plug 'Shougo/echodoc.vim'
 " Vim colorscheme
 Plug 'flazz/vim-colorschemes'
 " Better file browser
-Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree', { 'on' : 'NERDTreeToggle' }
 " Code commenter
 Plug 'tpope/vim-commentary'
 " Class/module browser
 Plug 'majutsushi/tagbar'
-" Code and files fuzzy finder
-Plug 'kien/ctrlp.vim'
 " Git stuff from within vim
 Plug 'tpope/vim-fugitive'
-" Git add commit and stuff
-Plug 'motemen/git-vim'
+" Code and files fuzzy finder
+Plug 'kien/ctrlp.vim'
 " Extension to ctrlp, for fuzzy command finder
 Plug 'fisadev/vim-ctrlp-cmdpalette'
 " Zen coding
-Plug 'rstacruz/sparkup'
+Plug 'rstacruz/sparkup', { 'for' : 'html' }
 " Airline
 Plug 'bling/vim-airline'
 " Airline themes
@@ -59,7 +53,7 @@ Plug 'fisadev/dragvisuals.vim'
 " Window chooser
 Plug 't9md/vim-choosewin'
 " Paint css colors with the real color
-Plug 'lilydjwg/colorizer'
+Plug 'lilydjwg/colorizer', { 'for' : ['css', 'stylus', 'html', 'js', 'pug'] }
 " Neomake - linting and stuf
 Plug 'neomake/neomake'
 " Easier seakin to the desired text
@@ -67,32 +61,30 @@ Plug 'justinmk/vim-sneak'
 "javascript complete after install the plugin, you must cd the install
 "directory and run `npm install`, then add a .tern-project config file
 "the doc at http://ternjs.net/doc/manual.html#vim
-Plug 'marijnh/tern_for_vim'
-" JSX syntax highlight.
-Plug 'mxw/vim-jsx'
+Plug 'marijnh/tern_for_vim', { 'for' : 'js' }
 " Markdown realtime preview
 " Before you want to use it, please run
 " `sudo npm -g install instant-markdown-d`
-Plug 'suan/vim-instant-markdown'
+Plug 'suan/vim-instant-markdown', { 'for' : 'markdown' }
 "Easy vim and tmux splitting
 " Plug 'christoomey/vim-tmux-navigator'
 " Better python folding
-Plug 'tmhedberg/SimpylFold'
+Plug 'tmhedberg/SimpylFold', { 'for' : 'python' }
 " For javascript
-Plug 'jelera/vim-javascript-syntax'
-Plug 'pangloss/vim-javascript'
-Plug 'nathanaelkane/vim-indent-guides'
-Plug 'Raimondi/delimitMate'
+Plug 'jelera/vim-javascript-syntax', { 'for' : 'js' }
+Plug 'pangloss/vim-javascript', { 'for' : 'js' }
+Plug 'nathanaelkane/vim-indent-guides', { 'for' : 'js' }
+Plug 'Raimondi/delimitMate', { 'for' : 'js' }
 " Hilight charecter to make using f easier
 Plug 'unblevable/quick-scope'
 " Jade syntax and indentation
-Plug 'digitaltoad/vim-pug'
+Plug 'digitaltoad/vim-pug', { 'for' : 'pug' }
 " Stylus syntax and indentation
-Plug 'wavded/vim-stylus'
+Plug 'wavded/vim-stylus', { 'for' : 'stylus' }
 " Show indent
 Plug 'Yggdroot/indentLine'
 " Way better undo
-Plug 'mbbill/undotree'
+Plug 'mbbill/undotree', { 'on' : 'UndotreeToggle' }
 " Smooth scroll
 Plug 'terryma/vim-smooth-scroll'
 " Print documents in echo area
@@ -113,10 +105,10 @@ Plug 'restore_view.vim'
 " Read Hacker news in vim
 Plug 'ryanss/vim-hackernews', { 'on':  'HackerNews' }
 " Better language usage in writing
-Plug 'davidbeckingsale/writegood.vim'
+Plug 'davidbeckingsale/writegood.vim', { 'on' : 'WritegoodEnable' }
 " Writing support ( dark surround[limelight] goyo )
 Plug 'junegunn/limelight.vim'
-Plug 'junegunn/goyo.vim'
+Plug 'junegunn/goyo.vim', { 'on' : 'Goyo' }
 
 call plug#end()
 
