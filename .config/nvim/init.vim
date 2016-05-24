@@ -13,6 +13,8 @@ Plug 'jceb/vim-orgmode'
 Plug 'tpope/vim-speeddating'
 " Python autocomplete
 Plug 'davidhalter/jedi-vim'
+" Better autocompletion
+Plug 'Shougo/neocomplcache.vim'
 " Vim colorscheme
 Plug 'flazz/vim-colorschemes'
 " Better file browser
@@ -41,8 +43,6 @@ Plug 'tpope/vim-surround'
 Plug 'Townk/vim-autoclose'
 " Indent text object
 Plug 'michaeljsmith/vim-indent-object'
-" Better autocompletion
-Plug 'Shougo/neocomplcache.vim'
 " Snippets manager (SnipMate), dependencies, and snippets repo
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
@@ -66,9 +66,6 @@ Plug 'justinmk/vim-sneak'
 Plug 'marijnh/tern_for_vim'
 " JSX syntax highlight.
 Plug 'mxw/vim-jsx'
-" Markdown syntastic highlight
-Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
 " Markdown realtime preview
 " Before you want to use it, please run
 " `sudo npm -g install instant-markdown-d`
@@ -92,7 +89,6 @@ Plug 'wavded/vim-stylus'
 Plug 'Yggdroot/indentLine'
 " Way better undo
 Plug 'sjl/gundo.vim'
-
 
 " Plugins from vim-scripts repos:
 
@@ -143,8 +139,8 @@ nnoremap <silent> <Leader>0 :exe "vertical resize " . (winwidth(0) * 3/2)<CR>
 nnoremap <silent> <Leader>9 :exe "vertical resize " . (winwidth(0) * 2/3)<CR>
 
 " Necessary stuff
-" nnoremap ; :
-" nnoremap ' ;
+nnoremap ; :
+nnoremap ' ;
 
 " Indent based folding
 set foldmethod=indent
@@ -267,6 +263,11 @@ vnoremap y "*y`]
 vnoremap Y "*Y
 vnoremap p "*p
 vnoremap P "*P
+
+"Get back to where you were easily
+nnoremap gg mpgg
+nnoremap G mpG
+nnoremap / mp/
 
 " Easy save
 nnoremap <Leader><Leader> :w<cr>
@@ -488,6 +489,14 @@ autocmd BufWritePost *.html,*.js,*.css :silent ! chromix with http://localhost:4
 
 " Startify
 nnoremap ,l :Startify<cr>
+let g:startify_custom_footer = "It's good to see you back! How is your work going on bud : )"
+highlight StartifyBracket ctermfg=240
+highlight StartifyFooter  ctermfg=240
+highlight StartifyHeader  ctermfg=114
+highlight StartifyNumber  ctermfg=215
+highlight StartifyPath    ctermfg=245
+highlight StartifySlash   ctermfg=240
+highlight StartifySpecial ctermfg=240
 
 " NERDTree
 
@@ -552,26 +561,6 @@ let g:ctrlp_custom_ignore = {
             \ 'dir':  '\v[\/](\.git|\.hg|\.svn)$',
             \ 'file': '\.pyc$\|\.pyo$',
             \ }
-
-" NeoComplCache
-" most of them not documented because I'm not sure how they work
-" (docs aren't good, had to do a lot of trial and error to make
-" it play nice)
-let g:neocomplcache_enable_at_startup = 1
-let g:neocomplcache_enable_ignore_case = 1
-let g:neocomplcache_enable_smart_case = 1
-let g:neocomplcache_enable_auto_select = 1
-let g:neocomplcache_enable_fuzzy_completion = 1
-let g:neocomplcache_enable_camel_case_completion = 1
-let g:neocomplcache_enable_underbar_completion = 1
-let g:neocomplcache_fuzzy_completion_start_length = 1
-let g:neocomplcache_auto_completion_start_length = 1
-let g:neocomplcache_manual_completion_start_length = 1
-let g:neocomplcache_min_keyword_length = 1
-let g:neocomplcache_min_syntax_length = 1
-" complete with workds from any opened file
-let g:neocomplcache_same_filetype_lists = {}
-let g:neocomplcache_same_filetype_lists._ = '_'
 
 " Autoclose
 " Fix to let ESC work as espected with Autoclose plugin
@@ -646,7 +635,6 @@ function SetTitle()
         call append(line(".")+1, "")
     endif
 endfunction
-autocmd BufNewFile * normal G
 
 " Tagbar
 :nnoremap <F8> :TagbarToggle<CR>
@@ -667,7 +655,27 @@ let g:vim_markdown_frontmatter=1
 autocmd! BufWritePost,BufEnter * Neomake
 let g:neomake_javascript_enabled_makers = ['eslint']
 
-" Jedi for python
+" NeoComplCache
+" most of them not documented because I'm not sure how they work
+" (docs aren't good, had to do a lot of trial and error to make
+" it play nice)
+let g:neocomplcache_enable_at_startup = 1
+let g:neocomplcache_enable_ignore_case = 1
+let g:neocomplcache_enable_smart_case = 1
+let g:neocomplcache_enable_auto_select = 1
+let g:neocomplcache_enable_fuzzy_completion = 1
+let g:neocomplcache_enable_camel_case_completion = 1
+let g:neocomplcache_enable_underbar_completion = 1
+let g:neocomplcache_fuzzy_completion_start_length = 1
+let g:neocomplcache_auto_completion_start_length = 1
+let g:neocomplcache_manual_completion_start_length = 1
+let g:neocomplcache_min_keyword_length = 1
+let g:neocomplcache_min_syntax_length = 1
+" complete with workds from any opened file
+let g:neocomplcache_same_filetype_lists = {}
+let g:neocomplcache_same_filetype_lists._ = '_'
+
+" Jedi python
 let g:jedi#use_splits_not_buffers = "bottom"
 let g:jedi#goto_command = "<leader>d"
 let g:jedi#goto_assignments_command = "<leader>g"
@@ -676,6 +684,8 @@ let g:jedi#documentation_command = "<leader>k"
 let g:jedi#usages_command = "<leader>n"
 let g:jedi#completions_command = "<C-Space>"
 let g:jedi#rename_command = "<leader>r"
+let g:jedi#max_doc_height = 30
+autocmd FileType python setlocal completeopt-=preview
 
 " Snipmate
 nnoremap <c-s> <Plug>snipMateTrigger
@@ -688,5 +698,5 @@ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 " Writegood
 autocmd BufCreate *.txt WritegoodEnable
 
-"Gundo
+" Gundo
 nnoremap <F5> :GundoToggle<CR>
