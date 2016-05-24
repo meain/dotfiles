@@ -18,6 +18,7 @@ function! DoRemote(arg)
 	UpdateRemotePlugins
 endfunction
 Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
+Plug 'Shougo/echodoc.vim'
 " Vim colorscheme
 Plug 'flazz/vim-colorschemes'
 " Better file browser
@@ -91,9 +92,11 @@ Plug 'wavded/vim-stylus'
 " Show indent
 Plug 'Yggdroot/indentLine'
 " Way better undo
-Plug 'sjl/gundo.vim'
+Plug 'mbbill/undotree'
 " Smooth scroll
 Plug 'terryma/vim-smooth-scroll'
+" Print documents in echo area
+Plug 'Shougo/echodoc.vim'
 
 " Plugins from vim-scripts repos:
 
@@ -111,6 +114,9 @@ Plug 'restore_view.vim'
 Plug 'ryanss/vim-hackernews', { 'on':  'HackerNews' }
 " Better language usage in writing
 Plug 'davidbeckingsale/writegood.vim'
+" Writing support ( dark surround[limelight] goyo )
+Plug 'junegunn/limelight.vim'
+Plug 'junegunn/goyo.vim'
 
 call plug#end()
 
@@ -310,9 +316,6 @@ function! SplitRunCommand()
 endfunction
 nnoremap ,s :call SplitRunCommand()<cr>
 
-" Put parathesis
-nnoremap \ <Esc>A{<cr>}<Esc>O<Tab>
-
 " Inser a space before and after
 nnoremap <Leader>9 :normal! i<Space><Esc>lli<Space><Esc>
 
@@ -452,10 +455,6 @@ nnoremap <F1> :vsp\|:terminal<cr>
 
 " Open new termial and run the currently open python file
 nnoremap <F2> :vsp\|:terminal python %<cr>
-
-" Easier increment and decrement
-nnoremap + <C-a>
-" nnoremap - <C-x>
 
 "Better line limit making
 let &colorcolumn=join(range(81,999),",")
@@ -679,12 +678,17 @@ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 " Writegood
 autocmd BufCreate *.txt WritegoodEnable
 
-" Gundo
-nnoremap <F5> :GundoToggle<CR>
+" Undo tree toggle
+" if has("persistent_undo")
+" 	set undodir=~/.undodir/
+" 	set undofile
+" endif
+nnoremap <F5> :UndotreeToggle<cr>
 
 " Use deoplete.
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#auto_complete_start_length = 1
+set completeopt+=noinsert
 
 " Smooth scroll
 noremap <silent> 9 :call smooth_scroll#up(&scroll, 0, 2)<CR>
@@ -693,3 +697,7 @@ noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
 noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
 noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
 noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
+
+"Limelight and goyo toggles
+nnoremap <Leader>ll :Limelight!!<cr>
+nnoremap <Leader>go :Goyo<cr>
