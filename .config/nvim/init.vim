@@ -90,6 +90,8 @@ Plug 'digitaltoad/vim-pug'
 Plug 'wavded/vim-stylus'
 " Show indent
 Plug 'Yggdroot/indentLine'
+" Way better undo
+Plug 'sjl/gundo.vim'
 
 
 " Plugins from vim-scripts repos:
@@ -685,3 +687,6 @@ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
 " Writegood
 autocmd BufCreate *.txt WritegoodEnable
+
+"Gundo
+nnoremap <F5> :GundoToggle<CR>
