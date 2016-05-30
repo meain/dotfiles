@@ -458,7 +458,7 @@ nnoremap <F2> :vsp\|:terminal python %<cr>
 
 "Better line limit making
 highlight ColorColumn ctermbg=0
-autocmd BufNew,BufAdd,BufCreate,VimEnter * set cc=80
+autocmd BufNew,BufAdd,BufCreate,VimEnter * normal! :set cc=80
 
 " Remap for easier use of arrow keys
 nnoremap <c-j> <Down>
