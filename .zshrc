@@ -146,7 +146,7 @@ alias gu='git add -u && git commit'
 # Git add
 alias ga='git add'
 # Easier push to origin master
-alias gp="git push origin $(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/' | sed 's:^.\(.*\).$:\1:' | sed 's/^.//')"
+alias gp="git push origin $(git branch | grep \* | sed s/^\*\ //g)"
 # Git log and history alias 
 alias gg='git lh|cat'
 alias gh='git hi|cat'
