@@ -252,11 +252,13 @@ map <C-S-Right> :tabn<CR>
 imap <C-S-Right> <ESC>:tabn<CR>
 map <C-S-Left> :tabp<CR>
 imap <C-S-Left> <ESC>:tabp<CR>
+
+" Better split opening
 set splitbelow
 set splitright
 
 " Proper indenting on pasting
-:nnoremap p  "*]p`]
+nnoremap p  "*]p`]
 
 " Copy and paste to the system clipboard - this also helps with dd or x
 " replacing the content in the clipboard
@@ -403,7 +405,7 @@ vnoremap > >gv
 vnoremap < <gv
 
 " Remove whitespace at save
-autocmd BufWritePre *.py,*.vim,*.css,*.js,*.html,*.md,*.cpp,*.c,*.java :%s/\s\+$//e
+autocmd BufWritePre *.py,*.vim,*.css,*.js,*.html,*.cpp,*.c,*.java :%s/\s\+$//e
 
 " Python with virtualenv support
 " py << EOF
@@ -454,8 +456,8 @@ nnoremap <F1> :vsp\|:terminal<cr>
 nnoremap <F2> :vsp\|:terminal python %<cr>
 
 "Better line limit making
-let &colorcolumn=join(range(81,999),",")
-highlight ColorColumn ctermbg=235 guibg=#2c2d27
+" let &colorcolumn=join(range(81,999),",")
+" highlight ColorColumn ctermbg=235 guibg=#2c2d27
 
 " Remap for easier use of arrow keys
 nnoremap <c-j> <Down>
@@ -605,13 +607,13 @@ let g:airline#extensions#tabline#enabled = 1
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
-let g:airline_left_sep = '  '
+let g:airline_left_sep = ' '
 let g:airline_left_alt_sep = ' '
-let g:airline_right_sep = '  '
-let g:airline_right_alt_sep = '  '
-let g:airline_symbols.branch = '  '
-let g:airline_symbols.readonly = '  '
-let g:airline_symbols.linenr = '  '
+let g:airline_right_sep = ' '
+let g:airline_right_alt_sep = ' '
+let g:airline_symbols.branch = ' '
+let g:airline_symbols.readonly = ' '
+let g:airline_symbols.linenr = ' '
 
 " new file set title and turn to endline
 autocmd BufNewFile *.sh,*.py,*.rb exec ":call SetTitle()"
@@ -633,7 +635,7 @@ function SetTitle()
 endfunction
 
 " Tagbar
-:nnoremap <F8> :TagbarToggle<CR>
+nnoremap <F8> :TagbarToggle<CR>
 
 " Vim-jsx
 " if you use JSX syntax in .js file, please enable it.
