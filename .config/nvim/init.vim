@@ -322,7 +322,8 @@ nnoremap <Leader>9 :normal! i<Space><Esc>lli<Space><Esc>
 ca w!! w !sudo tee "%"
 
 " Setting colorscheme
-colorscheme Tomorrow-Night-Eighties
+set background=dark
+colorscheme mango
 
 " when scrolling, keep cursor 3 lines away from screen border
 set scrolloff=5
@@ -456,8 +457,8 @@ nnoremap <F1> :vsp\|:terminal<cr>
 nnoremap <F2> :vsp\|:terminal python %<cr>
 
 "Better line limit making
-" let &colorcolumn=join(range(81,999),",")
-" highlight ColorColumn ctermbg=235 guibg=#2c2d27
+highlight ColorColumn ctermbg=0
+autocmd BufNew,BufAdd,BufCreate,VimEnter * set cc=80
 
 " Remap for easier use of arrow keys
 nnoremap <c-j> <Down>
@@ -600,7 +601,7 @@ let g:choosewin_overlay_enable = 1
 
 " Airline
 let g:airline_powerline_fonts = 1
-let g:airline_theme = 'bubblegum'
+let g:airline_theme = 'base16_ashes'
 let g:airline#extensions#whitespace#enabled = 1
 " Top bar
 let g:airline#extensions#tabline#enabled = 1
