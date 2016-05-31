@@ -148,12 +148,12 @@ alias ga='git add'
 # Easier push to origin master
 alias gp="git push origin $(git branch | grep \* | sed s/^\*\ //g)"
 # Git log and history alias 
-alias gg='git lh|cat'
+alias ggg='git lh|cat'
+alias gg='git hm|cat'
 alias gh='git hi|cat'
 alias gl='git lg'
 # Git diff alias
 alias gd='git diff'
-alias ggg='git diff'
 #Git status alias
 alias gs='git status'
 alias g='git status -s'
