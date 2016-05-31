@@ -10,7 +10,7 @@ tmux send-keys "eywa" C-m
 tmux select-pane -t 1
 tmux send-keys "chromix-server" C-m
 tmux split-window -v
-tmux send-keys "pagekite.py 4500 meain.pagekite.me" C-m
+tmux send-keys "vtclock" C-m
 
 # Attach to session
 tmux -2 attach-session -t $SESSION

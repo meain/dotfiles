@@ -174,5 +174,5 @@ alias kk='python ~/bin/terminalnote.py k'
 
 # Eywa start
 alias eywa='cd ~/Documents/Projects/eywa && source bin/activate && cd eywa && echo "\033[0;31m Do start chromix server using chromix-server \033[0m" && python manage.py runserver localhost:4500'
-alias eywaserver='./bin/tmuxeywa.sh'
-alias es='./bin/tmuxeywavim.sh'
+alias es='./bin/tmuxeywa.sh'
+alias eywaserver='./bin/tmuxeywavim.sh'

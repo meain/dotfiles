@@ -497,6 +497,7 @@ highlight StartifyNumber  ctermfg=215
 highlight StartifyPath    ctermfg=245
 highlight StartifySlash   ctermfg=240
 highlight StartifySpecial ctermfg=240
+let g:startify_list_order = ['dir', 'files', 'sessions']
 
 " NERDTree
 " toggle nerdtree display
