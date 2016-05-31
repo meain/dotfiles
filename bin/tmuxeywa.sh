@@ -5,12 +5,13 @@ tmux -2 new-session -d -s $SESSION
 
 tmux split-window -h
 tmux select-pane -t 0
-tmux resize-pane -R 27
-tmux send-keys "eywa" C-m
+tmux resize-pane -R 23
+tmux send-keys "c && eywa" C-m
 tmux select-pane -t 1
-tmux send-keys "chromix-server" C-m
+tmux send-keys "c && chromix-server" C-m
 tmux split-window -v
-tmux send-keys "vtclock" C-m
+tmux resize-pane -U 17
+tmux send-keys "c && cd ~/Documents/Projects/eywa/eywa && gg" C-m
 
 # Attach to session
 tmux -2 attach-session -t $SESSION
