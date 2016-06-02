@@ -51,7 +51,7 @@ Plug 'fisadev/dragvisuals.vim'
 " Window chooser
 Plug 't9md/vim-choosewin'
 " Paint css colors with the real color
-Plug 'lilydjwg/colorizer', { 'for' : ['css', 'stylus', 'html', 'js', 'pug'] }
+Plug 'lilydjwg/colorizer'
 " Neomake - linting and stuf
 Plug 'neomake/neomake'
 " Easier seakin to the desired text
@@ -59,7 +59,12 @@ Plug 'justinmk/vim-sneak'
 "javascript complete after install the plugin, you must cd the install
 "directory and run `npm install`, then add a .tern-project config file
 "the doc at http://ternjs.net/doc/manual.html#vim
-Plug 'marijnh/tern_for_vim'
+" Plug 'marijnh/tern_for_vim'
+" For javascript
+Plug 'jelera/vim-javascript-syntax'
+Plug 'pangloss/vim-javascript'
+Plug 'nathanaelkane/vim-indent-guides'
+" Plug 'Raimondi/delimitMate'
 " Markdown realtime preview
 " Before you want to use it, please run
 " `sudo npm -g install instant-markdown-d`
@@ -68,11 +73,6 @@ Plug 'suan/vim-instant-markdown', { 'for' : 'markdown' }
 " Plug 'christoomey/vim-tmux-navigator'
 " Better python folding
 Plug 'tmhedberg/SimpylFold', { 'for' : 'python' }
-" For javascript
-Plug 'jelera/vim-javascript-syntax'
-Plug 'pangloss/vim-javascript'
-Plug 'nathanaelkane/vim-indent-guides'
-Plug 'Raimondi/delimitMate'
 " Hilight charecter to make using f easier
 Plug 'unblevable/quick-scope'
 " Jade syntax and indentation
