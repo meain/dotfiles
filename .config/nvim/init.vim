@@ -200,7 +200,7 @@ function! EnableWrap()
 	set linebreak
 	set formatoptions+=cro
 endfunction
-autocmd BufNew,BufAdd,BufCreate,VimEnter *.md, *.txt  call EnableWrap()
+" autocmd BufNew,BufAdd,BufCreate,VimEnter *.md, *.txt  call EnableWrap()
 
 " Disable autocomment
 function! DisableAutoComment()
