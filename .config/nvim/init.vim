@@ -35,8 +35,8 @@ Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 " Surround
 Plug 'tpope/vim-surround'
-" Autoclose
-Plug 'Townk/vim-autoclose'
+" Autopair
+Plug 'jiangmiao/auto-pairs'
 " Indent text object
 Plug 'michaeljsmith/vim-indent-object'
 " Snippets manager (SnipMate), dependencies, and snippets repo
@@ -59,7 +59,7 @@ Plug 'justinmk/vim-sneak'
 "javascript complete after install the plugin, you must cd the install
 "directory and run `npm install`, then add a .tern-project config file
 "the doc at http://ternjs.net/doc/manual.html#vim
-Plug 'marijnh/tern_for_vim', { 'for' : 'js' }
+Plug 'marijnh/tern_for_vim'
 " Markdown realtime preview
 " Before you want to use it, please run
 " `sudo npm -g install instant-markdown-d`
@@ -69,10 +69,10 @@ Plug 'suan/vim-instant-markdown', { 'for' : 'markdown' }
 " Better python folding
 Plug 'tmhedberg/SimpylFold', { 'for' : 'python' }
 " For javascript
-Plug 'jelera/vim-javascript-syntax', { 'for' : 'js' }
-Plug 'pangloss/vim-javascript', { 'for' : 'js' }
-Plug 'nathanaelkane/vim-indent-guides', { 'for' : 'js' }
-Plug 'Raimondi/delimitMate', { 'for' : 'js' }
+Plug 'jelera/vim-javascript-syntax'
+Plug 'pangloss/vim-javascript'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'Raimondi/delimitMate'
 " Hilight charecter to make using f easier
 Plug 'unblevable/quick-scope'
 " Jade syntax and indentation
@@ -561,10 +561,6 @@ let g:ctrlp_custom_ignore = {
             \ 'dir':  '\v[\/](\.git|\.hg|\.svn)$',
             \ 'file': '\.pyc$\|\.pyo$',
             \ }
-
-" Autoclose
-" Fix to let ESC work as espected with Autoclose plugin
-let g:AutoClosePumvisible = {"ENTER": "\<C-Y>", "ESC": "\<ESC>"}
 
 " Simple fold
 autocmd BufWinEnter *.py setlocal foldexpr=SimpylFold(v:lnum) foldmethod=expr
