@@ -115,6 +115,7 @@ eval $(thefuck --alias)
 #Alias
 alias ss='ls -lht'
 alias ll='ls -A -l'
+alias l='ls'
 alias la='ls -A'
 alias lr='ls -lRht'
 alias c='clear && echo "\n¯\_(ツ)_/¯\n" | fmt -c -w $COLUMNS | lolcat'
@@ -165,6 +166,8 @@ alias gc='git commit'
 alias vim="nvim"
 #Just because it happens all the time
 alias ivm='vim'
+alias vm='nvim'
+alias v='nvim'
 #Open last vim session
 alias viml='nvim -c :SLoad\ zPreviousSession'
 
