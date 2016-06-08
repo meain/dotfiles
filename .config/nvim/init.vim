@@ -143,6 +143,11 @@ nnoremap <silent> <Leader>9 :exe "vertical resize " . (winwidth(0) * 2/3)<CR>
 nnoremap ; :
 nnoremap ' ;
 
+" Show invisibles
+set list
+set listchars=tab:▸\ ,eol:¬,trail:⋅,extends:❯,precedes:❮
+set showbreak=↪
+
 " Indent based folding
 set foldmethod=indent
 set foldignore=
@@ -195,12 +200,6 @@ function! DisableWrap()
 	set formatoptions-=cro
 endfunction
 autocmd BufNew,BufAdd,BufCreate,VimEnter *  call DisableWrap()
-function! EnableWrap()
-	set wrap
-	set linebreak
-	set formatoptions+=cro
-endfunction
-" autocmd BufNew,BufAdd,BufCreate,VimEnter *.md, *.txt  call EnableWrap()
 
 " Disable autocomment
 function! DisableAutoComment()
