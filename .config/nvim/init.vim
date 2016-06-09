@@ -24,7 +24,7 @@ Plug 'majutsushi/tagbar'
 " Git stuff from within vim
 Plug 'tpope/vim-fugitive'
 " Code and files fuzzy finder
-Plug 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 " Extension to ctrlp, for fuzzy command finder
 Plug 'fisadev/vim-ctrlp-cmdpalette'
 " Zen coding
