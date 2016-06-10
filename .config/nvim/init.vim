@@ -184,6 +184,8 @@ set confirm
 set nobackup
 " allow mouse
 set mouse=a
+" smart case
+set smartcase
 
 " (Hopefully) removes the delay when hitting esc in insert mode
 set noesckeys
