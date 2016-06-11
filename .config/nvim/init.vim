@@ -707,3 +707,4 @@ let g:sparkupExecuteMapping='<c-r>'
 
 " Fugitive
 nnoremap <leader>g :Gstatus<cr>
+command! Gl normal! :!git vhm<cr>
