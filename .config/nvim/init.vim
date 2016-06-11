@@ -489,6 +489,7 @@ autocmd BufWritePost *.html,*.js,*.css :silent ! chromix with http://localhost:4
 
 " Startify
 nnoremap ,l :Startify<cr>
+nnoremap <leader>l :Startify<cr>
 let g:startify_custom_footer = "It's good to see you back! How is your work going on bud : )"
 highlight StartifyBracket ctermfg=240
 highlight StartifyFooter  ctermfg=240
@@ -703,3 +704,6 @@ let g:multi_cursor_quit_key='<Esc>'
 
 " sparkup
 let g:sparkupExecuteMapping='<c-r>'
+
+" Fugitive
+nnoremap <leader>g :Gstatus<cr>
