@@ -532,11 +532,11 @@ let g:ctrlp_map = ',e'
 let g:ctrlp_show_hidden = 1
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.png,*.jpg,*.gif           "Linux
 " tags (symbols) in current file finder mapping
-nnoremap ,g :CtrlPBufTag<CR>
+nnoremap ,f :CtrlPBufTag<CR>
 " tags (symbols) in all files finder mapping
-nnoremap ,G :CtrlPBufTagAll<CR>
+nnoremap ,F :CtrlPBufTagAll<CR>
 " general code finder in all files mapping
-nnoremap ,f :CtrlPLine<CR>
+nnoremap ,g :CtrlPLine<CR>
 " recent files finder mapping
 nnoremap ,m :CtrlPMRUFiles<CR>
 nnoremap ,, :CtrlPMRUFiles<CR>
