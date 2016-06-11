@@ -323,7 +323,7 @@ ca w!! w !sudo tee "%"
 
 " Setting colorscheme
 set background=dark
-colorscheme mango
+colorscheme onedark
 
 " when scrolling, keep cursor 3 lines away from screen border
 set scrolloff=5
