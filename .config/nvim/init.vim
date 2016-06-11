@@ -88,6 +88,8 @@ Plug 'terryma/vim-smooth-scroll'
 Plug 'Shougo/echodoc.vim'
 " Multiple cursors
 Plug 'terryma/vim-multiple-cursors'
+" Ack like code search in vim
+Plug 'rking/ag.vim'
 
 
 " Plugins from vim-scripts repos:
