@@ -538,6 +538,7 @@ nnoremap ,G :CtrlPBufTagAll<CR>
 nnoremap ,f :CtrlPLine<CR>
 " recent files finder mapping
 nnoremap ,m :CtrlPMRUFiles<CR>
+nnoremap ,, :CtrlPMRUFiles<CR>
 " commands finder mapping
 nnoremap ,c :CtrlPCmdPalette<CR>
 " to be able to call CtrlP with default search text
