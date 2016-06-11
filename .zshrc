@@ -144,6 +144,8 @@ alias d='cd ~/Desktop && ls'
 
 # Alias for easier commit
 alias gu='git add -u && git commit'
+alias guu='git add -u && git commit -m "Update"'
+alias guc='git add -u && git commit -m "Clean up"'
 # Git add
 alias ga='git add'
 # Easier push to origin master
@@ -162,6 +164,7 @@ alias g='git status -s'
 alias gc='git commit'
 #Git checkeout
 alias gco='git checkout'
+alias gcom='git checkout master'
 
 # More stuff
 #eeeks
