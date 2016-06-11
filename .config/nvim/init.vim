@@ -708,3 +708,4 @@ let g:sparkupExecuteMapping='<c-r>'
 " Fugitive
 nnoremap <leader>g :Gstatus<cr>
 command! Gl normal! :!git vhm<cr>
+command! Gp normal! :!git push origin $(git branch | grep \* | sed s/^\*\ //g)
