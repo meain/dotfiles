@@ -1,3 +1,6 @@
+;; Set font
+(set-default-font "monaco 12")
+
 (require 'package)
 
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
@@ -7,9 +10,6 @@
 (setq package-enable-at-startup nil)
 (package-initialize)
 
-(require 'evil)
-(evil-mode t)
-
 ;; Handle installing packages in emacs
 (defun ensure-package-installed (&rest packages)
   "Assure every package is installed, ask for installation if it’s not.
@@ -17,7 +17,6 @@
 Return a list of installed packages or nil for every skipped package."
   (mapcar
    (lambda (package)
-     ;; (package-installed-p 'evil)
      (if (package-installed-p package)
          nil
        (if (y-or-n-p (format "Package %s is missing. Install it? " package))
@@ -37,20 +36,24 @@ Return a list of installed packages or nil for every skipped package."
                           'projectile
                           'magit)
 
+;; Evil mode
+(require 'evil)
+(evil-mode t)
+
 ;; Theme
 (load-theme 'misterioso t)
 
 ;; Set up leader key in emacs
 (setq evil-leader/in-all-states 1)
 (global-evil-leader-mode)
-(evil-leader/set-leader "SPC")
+(evil-leader/set-leader ",")
 
 ;; Vim like syntax hilighting
 (require 'evil-search-highlight-persist)
 (global-evil-search-highlight-persist t)
 (evil-leader/set-key "/" 'evil-search-highlight-persist-remove-all)
 
-;; Start up helm
+;; Set up helm
 (require 'helm-config)
 (require 'helm-misc)
 (require 'helm-projectile)
@@ -90,3 +93,66 @@ scroll-step 1)
 (require 'powerline)
 (powerline-evil-vim-color-theme)
 (display-time-mode t)
+
+;; j/k for wrapped lines
+(define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
+(define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
+
+;; flycheck
+(require 'flycheck)
+(global-flycheck-mode t)
+
+;; flycheck errors on a tooltip (doesnt work on console)
+(when (display-graphic-p (selected-frame))
+  (eval-after-load 'flycheck
+    '(custom-set-variables
+      '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages))))
+
+;; esc quits
+(defun minibuffer-keyboard-quit ()
+  "Abort recursive edit.
+In Delete Selection mode, if the mark is active, just deactivate it;
+then it takes a second \\[keyboard-quit] to abort the minibuffer."
+  (interactive)
+  (if (and delete-selection-mode transient-mark-mode mark-active)
+      (setq deactivate-mark  t)
+    (when (get-buffer "*Completions*") (delete-windows-on "*Completions*"))
+    (abort-recursive-edit)))
+(define-key evil-normal-state-map [escape] 'keyboard-quit)
+(define-key evil-visual-state-map [escape] 'keyboard-quit)
+(define-key minibuffer-local-map [escape] 'minibuffer-keyboard-quit)
+(define-key minibuffer-local-ns-map [escape] 'minibuffer-keyboard-quit)
+(define-key minibuffer-local-completion-map [escape] 'minibuffer-keyboard-quit)
+(define-key minibuffer-local-must-match-map [escape] 'minibuffer-keyboard-quit)
+(define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
+(global-set-key [escape] 'evil-exit-emacs-state)
+
+;; Start maximized
+(custom-set-variables
+ '(initial-frame-alist (quote ((fullscreen . maximized)))))
+
+;; Page up and down
+(define-key evil-normal-state-map (kbd "C-k") (lambda ()
+                    (interactive)
+                    (evil-scroll-up nil)))
+(define-key evil-normal-state-map (kbd "C-j") (lambda ()
+                        (interactive)
+                        (evil-scroll-down nil)))
+
+;; Automateic indentation
+(define-key global-map (kbd "RET") 'newline-and-indent)
+
+;; Autopair
+(require 'autopair)
+(autopair-global-mode)
+
+;; No backup files
+(setq make-backup-files nil)
+
+;; Remember cursor positon
+(setq save-place-file "~/.emacs.d/saveplace")
+(setq-default save-place t)
+(require 'saveplace)
+
+;; Remove scroll bars
+(scroll-bar-mode -1)
