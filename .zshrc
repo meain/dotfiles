@@ -167,6 +167,10 @@ alias gco='git checkout'
 alias gcom='git checkout master'
 
 # More stuff
+
+# Tmux alias
+alias tmux='sh tmuxcopyhotfix.sh & tmux && fg'
+
 #eeeks
 alias vim="nvim"
 #Just because it happens all the time
