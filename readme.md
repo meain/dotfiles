@@ -9,16 +9,16 @@ It includes my `[z/ba]sh`, `[v/nv/mv/gv]im`, `tmux`, `git` config files.
 ## Dependencies
 ### For bash/zsh profile
 
-[oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) : Shell prompt customisation
+[oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : Shell prompt customisation
 
-[Pandoc](http://pandoc.org/index.html) & [Lynx](http://lynx.browser.org/) : This is needed to enable reading markdown files in the terminal
+[Pandoc](http://pandoc.org/index.html) & [Lynx](http://lynx.browser.org/) &nbsp; : This is needed to enable reading markdown files in the terminal
   
-[bash-it](https://github.com/Bash-it/bash-it) : For the lovely git info display in bash shell
+[bash-it](https://github.com/Bash-it/bash-it)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : For the lovely git info display in bash shell
 
 
 ### For vim/nvim
 
-[Chromix](https://github.com/smblott-github/chromix) : To do the cool chrome refresh on file save
+[Chromix](https://github.com/smblott-github/chromix)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : To do the cool chrome refresh on file save
 
 
 ## Screenshots
