@@ -151,7 +151,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (evil-leader/set-key "o" (kbd "C-x 1"))
 
 ;; Easer help access - i wil need it
-(evil-leader/set-key "h" (kbd "C-h f"))
+(evil-leader/set-key "f" (kbd "C-h f"))
 
 ;; Autocompletion plugin
 (require `auto-complete)
@@ -166,3 +166,11 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 ;; Git gutter
 (global-git-gutter-mode +1)
+
+;; Like drag visuals
+(drag-stuff-mode t)
+(drag-stuff-global-mode 1)
+
+;; Split like vim
+(evil-leader/set-key "h" (kbd "C-x 2"))
+(evil-leader/set-key "v" (kbd "C-x 3"))
