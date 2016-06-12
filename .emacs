@@ -71,8 +71,8 @@ Return a list of installed packages or nil for every skipped package."
 
 ;; Power line ;)
 (require 'powerline)
+(require 'powerline-evil)
 (powerline-evil-vim-color-theme)
-(display-time-mode t)
 
 ;; j/k for wrapped lines
 (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
@@ -100,16 +100,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (define-key minibuffer-local-must-match-map [escape] 'minibuffer-keyboard-quit)
 (define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
 (global-set-key [escape] 'evil-exit-emacs-state)
-
-;; Start maximized
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(global-linum-mode t)
- '(inhibit-startup-screen t)
- '(initial-frame-alist (quote ((fullscreen . maximized)))))
 
 ;; Page up and down
 (define-key evil-normal-state-map (kbd "9") (lambda ()
@@ -184,3 +174,23 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 ;; Remap ; to :
 (define-key evil-normal-state-map (kbd ";") 'evil-ex)
+
+;; Start maximized
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("e87a2bd5abc8448f8676365692e908b709b93f2d3869c42a4371223aab7d9cf8" default)))
+ '(global-linum-mode t)
+ '(inhibit-startup-screen t)
+ '(initial-frame-alist (quote ((fullscreen . maximized)))))
+
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
