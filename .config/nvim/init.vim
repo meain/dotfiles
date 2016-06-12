@@ -91,7 +91,7 @@ Plug 'terryma/vim-multiple-cursors'
 " Ack like code search in vim
 Plug 'rking/ag.vim'
 " Mru - mostly for use with v in shell
-Plug 'yegappan/mru'
+Plug 'vim-scripts/mru.vim'
 
 
 " Plugins from vim-scripts repos:
