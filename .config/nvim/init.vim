@@ -90,6 +90,8 @@ Plug 'Shougo/echodoc.vim'
 Plug 'terryma/vim-multiple-cursors'
 " Ack like code search in vim
 Plug 'rking/ag.vim'
+" Mru - mostly for use with v in shell
+Plug 'yegappan/mru'
 
 
 " Plugins from vim-scripts repos:
@@ -712,3 +714,9 @@ let g:sparkupExecuteMapping='<c-r>'
 " Fugitive
 nnoremap <leader>g :Gstatus<cr>
 command! Gl normal! :!git vhm<cr>
+
+" MRU
+let MRU_Max_Entries = 100
+let MRU_Exclude_Files = '^/tmp/.*\|^/var/tmp/.*'
+let MRU_Auto_Close = 1
+let MRU_Max_Menu_Entries = 10
