@@ -146,6 +146,8 @@ alias d='cd ~/Desktop && ls'
 alias gu='git add -u && git commit'
 alias guu='git add -u && git commit -m "Update"'
 alias guc='git add -u && git commit -m "Clean up"'
+alias gup='git add -u && git commit -m "Clean up" && git push origin $(git branch | grep \* | sed s/^\*\ //g)'
+alias gcp='git add -u && git commit -m "Clean up" && git push origin $(git branch | grep \* | sed s/^\*\ //g)'
 # Git add
 alias ga='git add'
 # Easier push to origin master
