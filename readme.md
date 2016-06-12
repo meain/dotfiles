@@ -9,10 +9,6 @@ It includes my `[z/ba]sh`, `[v/nv/mv/gv]im`, `tmux`, `git` config files.
 ## Dependencies
 ### For bash/zsh profile
 
-[z](https://github.com/rupa/z) : For easier folder switching
-
-[v](https://github.com/meain/v) : For easier access latest vim files
-
 [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) : Shell prompt customisation
 
 [Pandoc](http://pandoc.org/index.html) & [Lynx](http://lynx.browser.org/) : This is needed to enable reading markdown files in the terminal
