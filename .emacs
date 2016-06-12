@@ -152,3 +152,17 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 ;; Easer help access - i wil need it
 (evil-leader/set-key "h" (kbd "C-h f"))
+
+;; Autocompletion plugin
+(require `auto-complete)
+(ac-config-default)
+
+;; Comment out stuff easily
+(evil-commentary-mode)
+
+;;Surround pllugin
+(require 'evil-surround)
+(global-evil-surround-mode 1)
+
+;; Git gutter
+(global-git-gutter-mode +1)
