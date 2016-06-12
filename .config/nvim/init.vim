@@ -495,7 +495,6 @@ autocmd BufWritePost *.html,*.js,*.css :silent ! chromix with http://localhost:4
 
 " Startify
 nnoremap ,l :Startify<cr>
-nnoremap <leader>l :Startify<cr>
 let g:startify_custom_footer = "It's good to see you back! How is your work going on bud : )"
 highlight StartifyBracket ctermfg=240
 highlight StartifyFooter  ctermfg=240
@@ -535,6 +534,7 @@ nnoremap ,m :CtrlPMRUFiles<CR>
 nnoremap ,, :CtrlPMRUFiles<CR>
 " commands finder mapping
 nnoremap ,c :CtrlPCmdPalette<CR>
+nnoremap <leader>l :CtrlPCmdPalette<CR>
 " to be able to call CtrlP with default search text
 function! CtrlPWithSearchText(search_text, ctrlp_command_end)
     execute ':CtrlP' . a:ctrlp_command_end
