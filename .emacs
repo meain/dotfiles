@@ -145,7 +145,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; CtrlP ish thing
 (require 'ido)
 (ido-mode t)
-(define-key evil-normal-state-map (kbd ", ,")`ido-find-file)
+(define-key evil-normal-state-map (kbd ", ,") `ido-find-file)
 
 ;; Remap to kill all other buffers
 (evil-leader/set-key "o" (kbd "C-x 1"))
