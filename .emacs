@@ -63,12 +63,7 @@ Return a list of installed packages or nil for every skipped package."
 (helm-mode 1)
 (global-set-key (kbd "M-x") 'helm-M-x)
 (setq helm-M-x-fuzzy-match t) ;; optional fuzzy matching for helm-M-x
-(define-key evil-normal-state-map (kbd ", m") 'helm-mini)
-
-;;Line numering -relative
-(add-hook 'prog-mode-hook 'relative-line-numbers-mode t)
-(add-hook 'prog-mode-hook 'line-number-mode t)
-(add-hook 'prog-mode-hook 'column-number-mode t)
+(define-key evil-normal-state-map (kbd ", ,") 'helm-find-files)
 
 ;; Smoother scrolling
 (require 'smooth-scrolling)
@@ -112,6 +107,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(global-linum-mode t)
  '(inhibit-startup-screen t)
  '(initial-frame-alist (quote ((fullscreen . maximized)))))
 
@@ -145,7 +141,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; CtrlP ish thing
 (require 'ido)
 (ido-mode t)
-(define-key evil-normal-state-map (kbd ", ,") `ido-find-file)
+(define-key evil-normal-state-map (kbd ", m") `ido-find-file)
 
 ;; Remap to kill all other buffers
 (evil-leader/set-key "o" (kbd "C-x 1"))
@@ -174,3 +170,14 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; Split like vim
 (evil-leader/set-key "h" (kbd "C-x 2"))
 (evil-leader/set-key "v" (kbd "C-x 3"))
+
+;; Relative and absolutr numberig
+(require 'linum-relative)
+(linum-relative-on)
+(setq linum-relative-current-symbol "")
+
+;; Easier buffer switching
+(define-key evil-normal-state-map (kbd "H") `windmove-left)
+(define-key evil-normal-state-map (kbd "J") `windmove-down)
+(define-key evil-normal-state-map (kbd "K") `windmove-up)
+(define-key evil-normal-state-map (kbd "L") `windmove-right)
