@@ -33,4 +33,4 @@ The numbers on right are `time`, `battery %`, `number of undone notes`
 ![Vim](http://i.imgur.com/NNbG0TW.png)
 
 ### Emacs
-![Emacs](http://i.imgur.com/zFyum38.png)
+![Emacs](http://i.imgur.com/P3VryKg.png)
