@@ -9,11 +9,11 @@ It includes my `vim`, `tmux`, `git` and `bash` config files.
 
 [z](https://github.com/rupa/z) : For easier folder switching
 
-[v](https://github.com/meain/v) : For easier access latest Vim files
+[v](https://github.com/meain/v) : For easier access latest vim files
 
 [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) : Shell prompt customisation
 
-[Pandoc](http://pandoc.org/index.html) & [Lynx](http://lynx.browser.org/) : This is needed to enable reeding markdown files in the terminal
+[Pandoc](http://pandoc.org/index.html) & [Lynx](http://lynx.browser.org/) : This is needed to enable reading markdown files in the terminal
   
 [bash-it](https://github.com/Bash-it/bash-it) : For the lovely git info display in bash shell
 
