@@ -7,20 +7,20 @@ It includes my `vim`, `tmux`, `git` and `bash` config files.
 ## Dependencies
 ### For bash/zsh profile
 
-[**z**](https://github.com/rupa/z) : Used for easier folder switching.
+[z](https://github.com/rupa/z) : For easier folder switching
 
-[**v**](https://github.com/meain/v) : Used for easier access latest Vim files.
+[v](https://github.com/meain/v) : For easier access latest Vim files
 
-[**oh-my-zsh**](https://github.com/robbyrussell/oh-my-zsh) : Shell prompt customisation.
+[oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) : Shell prompt customisation
 
-[**pandoc**](http://pandoc.org/index.html) & [**lynx**](http://lynx.browser.org/) : This is needed to enable reeding markdown files in the terminal.
+[Pandoc](http://pandoc.org/index.html) & [Lynx](http://lynx.browser.org/) : This is needed to enable reeding markdown files in the terminal
   
-[**bash-it**](https://github.com/Bash-it/bash-it) : For the lovely git info display in bash shell.
+[bash-it](https://github.com/Bash-it/bash-it) : For the lovely git info display in bash shell
 
 
 ### For vim/nvim
 
-[**Chromix**](https://github.com/smblott-github/chromix) : To do the cool chrome refresh on file save.
+[Chromix](https://github.com/smblott-github/chromix) : To do the cool chrome refresh on file save
 
 
 ## Screenshots
