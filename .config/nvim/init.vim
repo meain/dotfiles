@@ -120,6 +120,8 @@ call plug#end()
 " =============================
 " Keybindings - non plugin ones
 " =============================
+" Set encoding
+set encoding=utf8
 
 " Mapping for leader and local leader
 let mapleader = "\<Space>"
