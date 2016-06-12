@@ -181,3 +181,5 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (define-key evil-normal-state-map (kbd "J") `windmove-down)
 (define-key evil-normal-state-map (kbd "K") `windmove-up)
 (define-key evil-normal-state-map (kbd "L") `windmove-right)
+
+(define-key key-translation-map (kbd ";") (kbd ":"))
