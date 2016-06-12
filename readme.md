@@ -1,36 +1,38 @@
-#Dotfiles
+# Dotfiles
 
 **Hey**, these are the dotfiles that I use.
 
 It includes my `vim`, `tmux`, `git` and `bash` config files.
 
-###Dependencies
-#####For bash/zsh profile
-* [**z**](https://github.com/rupa/z) -- used for easier folder switching ( can be installed using homebrew ) 
+## Dependencies
+### For bash/zsh profile
 
-* [**pandoc**](http://pandoc.org/index.html) and [**lynx**](http://lynx.browser.org/) -- this is needed to enable reeding markdown files in the terminal. ( Both could be installed using 'homebrew' on mac )
-    
-* [**bash-it**](https://github.com/Bash-it/bash-it) -- for the lovely git info display
+[**z**](https://github.com/rupa/z) : Used for easier folder switching.
 
+[**v**](https://github.com/meain/v) : Used for easier access latest Vim files.
 
-#####For vim/nvim
+[**oh-my-zsh**](https://github.com/robbyrussell/oh-my-zsh) : Shell prompt customisation.
 
-* [**vundle**](https://github.com/VundleVim/Vundle.vim) -- will be auto installed first time you start vim after having this config file
-
-* [**Chromix**](https://github.com/smblott-github/chromix) -- to refresh chrome on save of file in vim
+[**pandoc**](http://pandoc.org/index.html) & [**lynx**](http://lynx.browser.org/) : This is needed to enable reeding markdown files in the terminal.
+  
+[**bash-it**](https://github.com/Bash-it/bash-it) : For the lovely git info display in bash shell.
 
 
-###Image section
+### For vim/nvim
 
-######Terminal display
-![bash](http://i.imgur.com/wR0bYSL.png)
-
-The numbers on right are < `time` - `battery %` - `number of undone notes` >
+[**Chromix**](https://github.com/smblott-github/chromix) : To do the cool chrome refresh on file save.
 
 
-######Vim editor (has not so bad mouse support)
-![Vim](http://s32.postimg.org/xd3m655j9/Screen_Shot_2016_04_27_at_8_38_06_AM.png)
+## Screenshots
 
-######Better git log
-![Git log](http://s32.postimg.org/t4xt0etl1/Screen_Shot_2016_04_27_at_8_46_44_AM.png)
->Released under WTFPL
+### Shell
+The numbers on right are `time`, `battery %`, `number of undone notes`
+
+![shell](http://i.imgur.com/86s8gxU.png)
+
+
+### Vim
+![Vim](http://i.imgur.com/NNbG0TW.png)
+
+### Emacs
+![Emacs](http://i.imgur.com/zFyum38.png)
