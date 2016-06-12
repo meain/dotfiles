@@ -44,40 +44,26 @@ Return a list of installed packages or nil for every skipped package."
 (load-theme 'misterioso t)
 
 ;; Set up leader key in emacs
-(setq evil-leader/in-all-states 1)
 (global-evil-leader-mode)
-(evil-leader/set-leader ",")
+(evil-leader/set-leader "<SPC>")
 
-;; Vim like syntax hilighting
+;; Vim like search hilighting
 (require 'evil-search-highlight-persist)
 (global-evil-search-highlight-persist t)
 (evil-leader/set-key "/" 'evil-search-highlight-persist-remove-all)
 
+;; Use leader<space> to save file
+(evil-leader/set-key "SPC" 'save-buffer)
+
+;; Easer opening of M-x
+(evil-leader/set-key "l" `helm-M-x)
+
 ;; Set up helm
 (require 'helm-config)
-(require 'helm-misc)
-(require 'helm-projectile)
-(require 'helm-locate)
-(setq helm-quick-update t)
-(setq helm-bookmark-show-location t)
-(setq helm-buffers-fuzzy-matching t)
-
+(helm-mode 1)
 (global-set-key (kbd "M-x") 'helm-M-x)
-
-(defun helm-my-buffers ()
-  (interactive)
-  (let ((helm-ff-transformer-show-only-basename nil))
-  (helm-other-buffer '(helm-c-source-buffers-list
-                       helm-c-source-elscreen
-                       helm-c-source-projectile-files-list
-                       helm-c-source-ctags
-                       helm-c-source-recentf
-                       helm-c-source-locate)
-                     "*helm-my-buffers*")))
-
-;; save bookmarks
-(setq bookmark-default-file "~/.emacs.d/bookmarks"
-      bookmark-save-flag 1) ;; save after every change
+(setq helm-M-x-fuzzy-match t) ;; optional fuzzy matching for helm-M-x
+(define-key evil-normal-state-map (kbd ", m") 'helm-mini)
 
 ;;Line numering -relative
 (add-hook 'prog-mode-hook 'relative-line-numbers-mode t)
@@ -85,9 +71,8 @@ Return a list of installed packages or nil for every skipped package."
 (add-hook 'prog-mode-hook 'column-number-mode t)
 
 ;; Smoother scrolling
-(setq scroll-margin 5
-scroll-conservatively 9999
-scroll-step 1)
+(require 'smooth-scrolling)
+(smooth-scrolling-mode 1)
 
 ;; Power line ;)
 (require 'powerline)
@@ -100,13 +85,7 @@ scroll-step 1)
 
 ;; flycheck
 (require 'flycheck)
-(global-flycheck-mode t)
-
-;; flycheck errors on a tooltip (doesnt work on console)
-(when (display-graphic-p (selected-frame))
-  (eval-after-load 'flycheck
-    '(custom-set-variables
-      '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages))))
+(global-flycheck-mode)
 
 ;; esc quits
 (defun minibuffer-keyboard-quit ()
@@ -129,13 +108,18 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 ;; Start maximized
 (custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(inhibit-startup-screen t)
  '(initial-frame-alist (quote ((fullscreen . maximized)))))
 
 ;; Page up and down
-(define-key evil-normal-state-map (kbd "C-k") (lambda ()
+(define-key evil-normal-state-map (kbd "9") (lambda ()
                     (interactive)
                     (evil-scroll-up nil)))
-(define-key evil-normal-state-map (kbd "C-j") (lambda ()
+(define-key evil-normal-state-map (kbd "8") (lambda ()
                         (interactive)
                         (evil-scroll-down nil)))
 
@@ -150,9 +134,15 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (setq make-backup-files nil)
 
 ;; Remember cursor positon
-(setq save-place-file "~/.emacs.d/saveplace")
-(setq-default save-place t)
 (require 'saveplace)
+(setq-default save-place t)
 
-;; Remove scroll bars
+;; Remove unnecessary stuff
 (scroll-bar-mode -1)
+(menu-bar-mode -1) 
+(tool-bar-mode -1) 
+
+;; CtrlP ish thing
+(require 'ido)
+(ido-mode t)
+(evil-leader/set-key ", ," `ido-find-file)

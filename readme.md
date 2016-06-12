@@ -12,7 +12,7 @@ It includes my `[z/ba]sh`, `[v/nv/mv/gv]im`, `tmux`, `git` config files.
 [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : Shell prompt customisation
 
 [Pandoc](http://pandoc.org/index.html) & [Lynx](http://lynx.browser.org/) &nbsp; : This is needed to enable reading markdown files in the terminal
-  
+
 [bash-it](https://github.com/Bash-it/bash-it)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : For the lovely git info display in bash shell
 
 
