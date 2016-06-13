@@ -58,12 +58,15 @@ Return a list of installed packages or nil for every skipped package."
 ;; Easer opening of M-x
 (evil-leader/set-key "l" `helm-M-x)
 
+;; Magit call
+(evil-leader/set-key "g" `magit-status)
+
 ;; Set up helm
 (require 'helm-config)
 (helm-mode 1)
 (global-set-key (kbd "M-x") 'helm-M-x)
 (setq helm-M-x-fuzzy-match t) ;; optional fuzzy matching for helm-M-x
-(define-key evil-normal-state-map (kbd ", ,") 'helm-find-files)
+(define-key evil-normal-state-map (kbd ", ,") 'helm-projectile)
 
 ;; Smoother scrolling
 (require 'smooth-scrolling)
@@ -158,8 +161,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (drag-stuff-global-mode 1)
 
 ;; Split like vim
-(evil-leader/set-key "h" (kbd "C-x 2"))
-(evil-leader/set-key "v" (kbd "C-x 3"))
+(evil-leader/set-key "h" (lambda () (interactive) (split-window-below) (windmove-down)))
+(evil-leader/set-key "v" (lambda () (interactive) (split-window-right) (windmove-right)))
 
 ;; Relative and absolutr numberig
 (require 'linum-relative)
@@ -174,6 +177,12 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 ;; Remap ; to :
 (define-key evil-normal-state-map (kbd ";") 'evil-ex)
+
+;; get :<caps> to work
+(evil-ex-define-cmd "Q" `kill-buffer-and-window)
+(evil-ex-define-cmd "W" `save-buffer)
+(evil-ex-define-cmd "WQ" (lambda () (interactive) (save-buffer) (kill-buffer-and-window)))
+(evil-ex-define-cmd "Wq" (lambda () (interactive) (save-buffer) (kill-buffer-and-window)))
 
 ;; Start maximized
 (custom-set-variables
