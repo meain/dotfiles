@@ -479,14 +479,13 @@ au FocusLost * :wa
 command! SortCSS :g#\({\n\)\@<=#.,/}/sort
 
 " Compile css and pug files on save and refresh chrome
-autocmd BufWritePost *.pug :silent ! pug -P % > /tmp/output2>&1 &
-autocmd BufWritePost *.pug :silent ! chromix with http://localhost:4500/ reload > /tmp/output2>&1 &
-autocmd BufWritePost *.stylus :silent ! stylus % > /tmp/output2>&1 &
-autocmd BufWritePost *.stylus :silent ! chromix with http://localhost:4500/ reload > /tmp/output2>&1 &
-
+autocmd BufWritePost *.pug :silent ! pug -P %
+autocmd BufWritePost *.pug :silent ! chromix with http://localhost:4500/ reload
+autocmd BufWritePost *.stylus :silent ! stylus %
+autocmd BufWritePost *.stylus :silent ! chromix with http://localhost:4500/ reload
 
 " Reload chrome tab on save of web files
-autocmd BufWritePost *.html,*.js,*.css :silent ! chromix with http://localhost:4500/ reload > /tmp/output2>&1 &
+autocmd BufWritePost *.html,*.js,*.css :silent ! chromix with http://localhost:4500/ reload
 
 
 
