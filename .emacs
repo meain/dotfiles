@@ -34,7 +34,8 @@ Return a list of installed packages or nil for every skipped package."
 
 (ensure-package-installed 'evil
                           'projectile
-                          'magit)
+                          'magit
+			  'helm)
 
 ;; Evil mode
 (require 'evil)
