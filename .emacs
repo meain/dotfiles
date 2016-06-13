@@ -35,7 +35,9 @@ Return a list of installed packages or nil for every skipped package."
 (ensure-package-installed 'evil
                           'projectile
                           'magit
-			  'helm)
+			  'helm
+			  `powerline
+			  `powerline-evil)
 
 ;; Evil mode
 (require 'evil)
@@ -184,6 +186,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (evil-ex-define-cmd "W" `save-buffer)
 (evil-ex-define-cmd "WQ" (lambda () (interactive) (save-buffer) (kill-buffer-and-window)))
 (evil-ex-define-cmd "Wq" (lambda () (interactive) (save-buffer) (kill-buffer-and-window)))
+
+;; Disable the annoying bell
+(setq ring-bell-function 'ignore)
 
 ;; Start maximized
 (custom-set-variables
