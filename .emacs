@@ -190,6 +190,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; Disable the annoying bell
 (setq ring-bell-function 'ignore)
 
+;; Don't touch my clipboard
+(setq x-select-enable-clipboard nil)
+
 ;; Start maximized
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
