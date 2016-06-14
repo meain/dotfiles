@@ -136,6 +136,7 @@ nnoremap <Leader>1 :source ~/.config/nvim/init.vim<cr>
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>q :q<CR>
 nnoremap <Leader>ww :wq<CR>
+nnoremap <Leader>ww :qw<CR>
 nnoremap W :w<CR>
 nnoremap Q :q<CR>
 
@@ -562,10 +563,10 @@ autocmd BufWinLeave *.py setlocal foldexpr< foldmethod<
 
 " DragVisuals
 " mappings to move blocks in 4 directions
-vmap <expr> <S-LEFT> DVB_Drag('left')
-vmap <expr> <S-RIGHT> DVB_Drag('right')
-vmap <expr> <S-DOWN> DVB_Drag('down')
-vmap <expr> <S-UP> DVB_Drag('up')
+vmap <expr> <m-LEFT> DVB_Drag('left')
+vmap <expr> <m-RIGHT> DVB_Drag('right')
+vmap <expr> <m-DOWN> DVB_Drag('down')
+vmap <expr> <m-UP> DVB_Drag('up')
 " mapping to duplicate block
 vmap <expr> D DVB_Duplicate()
 
