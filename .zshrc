@@ -153,8 +153,8 @@ get_git_branch(){
 alias gu='git add -u && git commit'
 alias guu='git add -u && git commit -m "Update$(get_git_files_changed)"'
 alias guc='git add -u && git commit -m "Clean up$(get_git_files_changed)"'
-alias gup='git add -u && git commit -m "Update$(get_git_file_changes)" && git push origin $(get_git_branch)'
-alias gcp='git add -u && git commit -m "Clean up$(get_git_file_changes)" && git push origin $(get_git_branch)'
+alias gup='git add -u && git commit -m "Update$(get_git_files_changed)" && git push origin $(get_git_branch)'
+alias gcp='git add -u && git commit -m "Clean up$(get_git_files_changed)" && git push origin $(get_git_branch)'
 # Git add
 alias ga='git add'
 # Easier push to origin master
