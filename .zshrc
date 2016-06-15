@@ -149,9 +149,6 @@ get_git_files_changed(){
 get_git_branch(){
     git branch | grep \* | sed s/^\*\ //g
 }
-get_change_message_without_pre(){
-    echo "" | vipe | cat
-}
 get_change_message(){
     echo "($(git status --short | sed s/.\ //g | tr '\n' ','  | sed s/,$//g | sed s/^.//g)):" | vipe | cat
 }
@@ -159,12 +156,11 @@ get_change_message_without_filename(){
     echo ":" | vipe | cat
 }
 
-# Alias for easier commit
-alias gu='git add -u && git commit'
+# Alias for easier git commits
 # Commit message wihout any s***
-alias gv='git add -u && git commit -m "$(get_change_message_without_pre)"'
+alias gu='git add -u && git commit'
 # Commit message wihout any s*** + push
-alias gvp='git add -u && git commit -m "$(get_change_message_without_pre)" && git push origin $(get_git_branch)'
+alias gvp='git add -u && git commit" && git push origin $(get_git_branch)'
 # Simple messages
 alias gu='git add -u && git commit -m "Updated$(get_git_files_changed)"'
 alias gc='git add -u && git commit -m "Clean up$(get_git_files_changed)"'
