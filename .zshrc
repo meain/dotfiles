@@ -171,7 +171,7 @@ alias gcom='git checkout master'
 # More stuff
 
 # Tmux alias
-alias tmux='sh tmuxcopyhotfix.sh & tmux && fg'
+alias tmux='sh ~/bin/tmuxcopyhotfix.sh & tmux && fg'
 
 #eeeks
 alias vim="nvim"
