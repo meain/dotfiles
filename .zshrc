@@ -158,7 +158,7 @@ get_change_message_without_filename(){
 
 # Alias for easier git commits
 # Commit message wihout any s***
-alias gu='git add -u && git commit'
+alias gv='git add -u && git commit'
 # Commit message wihout any s*** + push
 alias gvp='git add -u && git commit" && git push origin $(get_git_branch)'
 # Simple messages
