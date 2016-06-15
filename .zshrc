@@ -150,7 +150,7 @@ get_git_branch(){
     git branch | grep \* | sed s/^\*\ //g
 }
 get_change_message(){
-    echo "($(git status --short | sed s/.\ //g | tr '\n' ','  | sed s/,$//g | sed s/^.//g)) : " | vipe | cat
+    echo "($(git status --short | sed s/.\ //g | tr '\n' ','  | sed s/,$//g | sed s/^.//g)):" | vipe | cat
 }
 
 # Alias for easier commit
