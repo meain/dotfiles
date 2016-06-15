@@ -142,12 +142,17 @@ alias d='cd ~/Desktop && ls'
 
 # Git alias
 
+# Functions - mostly git
 get_git_files_changed(){
     git status --short | sed s/.\ //g | tr '\n' ','  | sed s/,$//g
 }
 get_git_branch(){
     git branch | grep \* | sed s/^\*\ //g
 }
+get_bugfix_message(){
+    echo "Update($(git status --short | sed s/.\ //g | tr '\n' ','  | sed s/,$//g | sed s/^.//g)) : " | vipe | cat
+}
+alias gub='git add -u && git commit -m "$(get_bugfix_message)"'
 
 # Alias for easier commit
 alias gu='git add -u && git commit'
