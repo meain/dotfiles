@@ -168,7 +168,7 @@ alias gb='git add -u && git commit -m "Bugfix$(get_git_files_changed)"'
 # Simple messge with push
 alias gup='git add -u && git commit -m "Updated$(get_git_files_changed)" && git push origin $(get_git_branch)'
 alias gcp='git add -u && git commit -m "Clean up$(get_git_files_changed)" && git push origin $(get_git_branch)'
-alias gcp='git add -u && git commit -m "Bugfix$(get_git_files_changed)" && git push origin $(get_git_branch)'
+alias gbp='git add -u && git commit -m "Bugfix$(get_git_files_changed)" && git push origin $(get_git_branch)'
 # Message with more information without filenmae
 alias guv='git add -u && git commit -m "$(get_change_message_without_filename)"'
 alias gcv='git add -u && git commit -m "$(get_change_message_without_filename)"'
