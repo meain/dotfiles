@@ -142,16 +142,19 @@ alias d='cd ~/Desktop && ls'
 
 # Git alias
 
-get_git_file_changes(){
+get_git_files_changed(){
     git status --short | sed s/.\ //g | tr '\n' ','  | sed s/,$//g
+}
+get_git_branch(){
+    git branch | grep \* | sed s/^\*\ //g
 }
 
 # Alias for easier commit
 alias gu='git add -u && git commit'
-alias guu='git add -u && git commit -m "Update $(get_git_file_changes)"'
-alias guc='git add -u && git commit -m "Clean up $(get_git_file_changes)"'
-alias gup='git add -u && git commit -m "Update" && git push origin $(git branch | grep \* | sed s/^\*\ //g)'
-alias gcp='git add -u && git commit -m "Clean up" && git push origin $(git branch | grep \* | sed s/^\*\ //g)'
+alias guu='git add -u && git commit -m "Update$(get_git_files_changed)"'
+alias guc='git add -u && git commit -m "Clean up$(get_git_files_changed)"'
+alias gup='git add -u && git commit -m "Update$(get_git_file_changes)" && git push origin $(get_git_branch)'
+alias gcp='git add -u && git commit -m "Clean up$(get_git_file_changes)" && git push origin $(get_git_branch)'
 # Git add
 alias ga='git add'
 # Easier push to origin master
