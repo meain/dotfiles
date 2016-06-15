@@ -200,7 +200,7 @@ alias gd='git diff'
 alias gs='git status'
 alias g='git status -s'
 #Git commit 
-alias gc='git commit'
+alias gcm='git commit'
 #Git checkeout
 alias gco='git checkout'
 alias gcom='git checkout master'
