@@ -481,6 +481,9 @@ autocmd BufWritePost *.stylus :silent ! chromix with http://localhost:4500/ relo
 " Reload chrome tab on save of web files
 autocmd BufWritePost *.html,*.js,*.css :silent ! chromix with http://localhost:4500/ reload > /dev/null
 
+" Fix overflow ( above 80 )
+command! FixOverflow :normal! gqap
+
 
 
 " =============================
@@ -515,7 +518,7 @@ nnoremap <Leader>o :SLoad
 let g:ctrlp_map = ',e'
 "hidden some types files
 let g:ctrlp_show_hidden = 1
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.png,*.jpg,*.gif           "Linux
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.png,*.jpg,*.gif  "Linux
 " tags (symbols) in current file finder mapping
 nnoremap ,f :CtrlPBufTag<CR>
 " tags (symbols) in all files finder mapping
