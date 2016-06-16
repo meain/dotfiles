@@ -131,9 +131,6 @@ set encoding=utf8
 let mapleader = "\<Space>"
 let maplocalleader = "\\"
 
-" Easier sourcing of init.vim
-nnoremap <Leader>1 :source ~/.config/nvim/init.vim<cr>
-
 " Saving and quitting keybindings
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>q :q<CR>
