@@ -159,8 +159,16 @@ get_change_message_without_filename(){
 # Alias for easier git commits
 # Commit message wihout any s***
 alias gv='git add -u && git commit'
+# Message with more information with filename
+alias gvf='git add -u && git commit -m "$(get_change_message)"'
+alias gvf='git add -u && git commit -m "$(get_change_message)"'
+alias gvf='git add -u && git commit -m "$(get_change_message)"'
 # Commit message wihout any s*** + push
 alias gvp='git add -u && git commit" && git push origin $(get_git_branch)'
+# More info + push with filename
+alias gvfp='git add -u && git commit -m "$(get_change_message)" && git push origin $(get_git_branch)'
+alias gvfp='git add -u && git commit -m "$(get_change_message)" && git push origin $(get_git_branch)'
+alias gvfp='git add -u && git commit -m "$(get_change_message)" && git push origin $(get_git_branch)'
 # Simple messages
 alias gu='git add -u && git commit -m "Updated$(get_git_files_changed)"'
 alias gc='git add -u && git commit -m "Clean up$(get_git_files_changed)"'
@@ -169,22 +177,6 @@ alias gb='git add -u && git commit -m "Bugfix$(get_git_files_changed)"'
 alias gup='git add -u && git commit -m "Updated$(get_git_files_changed)" && git push origin $(get_git_branch)'
 alias gcp='git add -u && git commit -m "Clean up$(get_git_files_changed)" && git push origin $(get_git_branch)'
 alias gbp='git add -u && git commit -m "Bugfix$(get_git_files_changed)" && git push origin $(get_git_branch)'
-# Message with more information without filenmae
-alias guv='git add -u && git commit -m "$(get_change_message_without_filename)"'
-alias gcv='git add -u && git commit -m "$(get_change_message_without_filename)"'
-alias gbv='git add -u && git commit -m "$(get_change_message_without_filename)"'
-# More info + push without filename
-alias gupv='git add -u && git commit -m "Update$(get_change_message_without_filename)" && git push origin $(get_git_branch)'
-alias gcpv='git add -u && git commit -m "Clean up$(get_change_message_without_filename)" && git push origin $(get_git_branch)'
-alias gbpv='git add -u && git commit -m "Bugfix$(get_change_message_without_filename)" && git push origin $(get_git_branch)'
-# Message with more information with filename
-alias guvf='git add -u && git commit -m "$(get_change_message)"'
-alias gcvf='git add -u && git commit -m "$(get_change_message)"'
-alias gbvf='git add -u && git commit -m "$(get_change_message)"'
-# More info + push with filename
-alias gupvf='git add -u && git commit -m "Update$(get_change_message)" && git push origin $(get_git_branch)'
-alias gcpvf='git add -u && git commit -m "Clean up$(get_change_message)" && git push origin $(get_git_branch)'
-alias gbpvf='git add -u && git commit -m "Bugfix$(get_change_message)" && git push origin $(get_git_branch)'
 # Git add
 alias ga='git add'
 # Easier push to origin master
