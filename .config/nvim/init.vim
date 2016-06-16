@@ -145,7 +145,6 @@ nnoremap <silent> <Leader>9 :exe "vertical resize " . (winwidth(0) * 2/3)<CR>
 
 " Necessary stuff
 nnoremap ; :
-nnoremap : ;
 nnoremap ' ;
 
 " Show invisibles
