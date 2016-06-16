@@ -170,13 +170,13 @@ alias gvfp='git add -u && git commit -m "$(get_change_message)" && git push orig
 alias gvfp='git add -u && git commit -m "$(get_change_message)" && git push origin $(get_git_branch)'
 alias gvfp='git add -u && git commit -m "$(get_change_message)" && git push origin $(get_git_branch)'
 # Simple messages
-alias gu='git add -u && git commit -m "Updated$(get_git_files_changed)"'
-alias gc='git add -u && git commit -m "Clean up$(get_git_files_changed)"'
-alias gb='git add -u && git commit -m "Bugfix$(get_git_files_changed)"'
+alias gu='git add -u && git commit -m "Updated $(get_git_files_changed)"'
+alias gc='git add -u && git commit -m "Clean up $(get_git_files_changed)"'
+alias gb='git add -u && git commit -m "Bugfix $(get_git_files_changed)"'
 # Simple messge with push
-alias gup='git add -u && git commit -m "Updated$(get_git_files_changed)" && git push origin $(get_git_branch)'
-alias gcp='git add -u && git commit -m "Clean up$(get_git_files_changed)" && git push origin $(get_git_branch)'
-alias gbp='git add -u && git commit -m "Bugfix$(get_git_files_changed)" && git push origin $(get_git_branch)'
+alias gup='git add -u && git commit -m "Updated $(get_git_files_changed)" && git push origin $(get_git_branch)'
+alias gcp='git add -u && git commit -m "Clean up $(get_git_files_changed)" && git push origin $(get_git_branch)'
+alias gbp='git add -u && git commit -m "Bugfix $(get_git_files_changed)" && git push origin $(get_git_branch)'
 # Git add
 alias ga='git add'
 # Easier push to origin master
