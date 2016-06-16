@@ -136,8 +136,6 @@ nnoremap <Leader>w :w<CR>
 nnoremap <Leader>q :q<CR>
 nnoremap <Leader>ww :wq<CR>
 nnoremap <Leader>ww :qw<CR>
-nnoremap W :w<CR>
-nnoremap Q :q<CR>
 
 " Window resizing
 nnoremap <silent> <Leader>= :exe "resize " . (winheight(0) * 3/2)<CR>
@@ -147,6 +145,7 @@ nnoremap <silent> <Leader>9 :exe "vertical resize " . (winwidth(0) * 2/3)<CR>
 
 " Necessary stuff
 nnoremap ; :
+nnoremap : ;
 nnoremap ' ;
 
 " Show invisibles
