@@ -248,15 +248,11 @@ command W w
 command Q q
 
 " tab navigation mappings
-map <Leader>tn :tabn<CR>
-map <Leader>tp :tabp<CR>
+map <Leader>y :tabn<CR>
+map <Leader>t :tabnew\|:Startify<cr>
+map <Leader>r :tabp<CR>
 map <Leader>tm :tabm
-map <Leader>tt :tabnew\|:Startify<cr>
 map <Leader>ts :tab split<CR>
-map <C-S-Right> :tabn<CR>
-imap <C-S-Right> <ESC>:tabn<CR>
-map <C-S-Left> :tabp<CR>
-imap <C-S-Left> <ESC>:tabp<CR>
 
 " Better split opening
 set splitbelow
@@ -506,7 +502,6 @@ highlight StartifySpecial ctermfg=240
 " NERDTree
 " toggle nerdtree display
 map <F3> :NERDTreeToggle<CR>
-map <Leader>t :NERDTreeToggle<CR>
 " open nerdtree with the current file selected
 nnoremap ,t :NERDTreeFind<CR>
 " don't show these file types
