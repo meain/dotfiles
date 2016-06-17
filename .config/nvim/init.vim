@@ -643,7 +643,7 @@ let g:neomake_javascript_enabled_makers = ['eslint']
 " Jedi python
 let g:jedi#use_splits_not_buffers = "bottom"
 let g:jedi#goto_command = "<leader>d"
-let g:jedi#goto_assignments_command = "<leader>g"
+let g:jedi#goto_assignments_command = "<leader>a"
 let g:jedi#goto_definitions_command = "<leader>k"
 let g:jedi#documentation_command = "<leader>c"
 let g:jedi#usages_command = "<leader>n"
@@ -682,7 +682,7 @@ noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
 
 "Limelight and goyo toggles
 nnoremap <Leader>ll :Limelight!!<cr>
-nnoremap <Leader>go :Goyo<cr>
+nnoremap <Leader>oo :Goyo<cr>
 
 " Multiple cursors
 let g:multi_cursor_next_key='<C-n>'
