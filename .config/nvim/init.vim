@@ -492,7 +492,7 @@ command! FixOverflow :normal! gqap
 
 " Startify
 nnoremap ,l :Startify<cr>
-let g:startify_custom_footer = "It's good to see you back! How is your work going on bud : )"
+let g:startify_custom_footer = ".                       *meain*"
 highlight StartifyBracket ctermfg=240
 highlight StartifyFooter  ctermfg=240
 highlight StartifyHeader  ctermfg=114
@@ -537,9 +537,9 @@ function! CtrlPWithSearchText(search_text, ctrlp_command_end)
     call feedkeys(a:search_text)
 endfunction
 " same as previous mappings, but calling with current word as default text
-nnoremap ,wg :call CtrlPWithSearchText(expand('<cword>'), 'BufTag')<CR>
-nnoremap ,wG :call CtrlPWithSearchText(expand('<cword>'), 'BufTagAll')<CR>
-nnoremap ,wf :call CtrlPWithSearchText(expand('<cword>'), 'Line')<CR>
+nnoremap ,wf :call CtrlPWithSearchText(expand('<cword>'), 'BufTag')<CR>
+nnoremap ,wF :call CtrlPWithSearchText(expand('<cword>'), 'BufTagAll')<CR>
+nnoremap ,wg :call CtrlPWithSearchText(expand('<cword>'), 'Line')<CR>
 nnoremap ,we :call CtrlPWithSearchText(expand('<cword>'), '')<CR>
 nnoremap ,pe :call CtrlPWithSearchText(expand('<cfile>'), '')<CR>
 nnoremap ,wm :call CtrlPWithSearchText(expand('<cword>'), 'MRUFiles')<CR>
@@ -649,7 +649,7 @@ let g:jedi#goto_definitions_command = ""
 let g:jedi#documentation_command = "<leader>c"
 let g:jedi#usages_command = "<leader>n"
 let g:jedi#completions_command = "<C-Space>"
-let g:jedi#rename_command = "<leader>r"
+let g:jedi#rename_command = "<leader>cr"
 let g:jedi#max_doc_height = 30
 autocmd FileType python setlocal completeopt-=preview
 
