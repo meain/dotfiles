@@ -5,6 +5,8 @@ import datetime
 
 current_time = datetime.datetime.now()
 hour = current_time.hour
+if hour > 12:
+    hour = hour - 12
 minute = current_time.minute
 
 out = str(hour)
@@ -16,10 +18,10 @@ color_red = '%{[31m%}'
 color_blue = '%{[34m%}'
 color_reset = '%{[00m%}'
 color_out = (
-        color_blue if minute > 39
+        color_red if minute > 39
         else color_green if minute > 19
-        else color_red
+        else color_blue
         )
 
-out = color_out + out + color_reset
+out = color_out + '\xE2\x8F\xB0'+ ' :' + out + color_reset
 sys.stdout.write(out)

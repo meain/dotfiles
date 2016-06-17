@@ -219,7 +219,7 @@ def main():
     if data == 'k':
         display_notes()
     elif data == 'n':
-        sys.stdout.write(bcolors.color_red + str(get_remaining_notes_count()) + bcolors.color_reset)
+        sys.stdout.write(bcolors.color_red + '\xF0\x9F\x93\x9D' + ' :' + str(get_remaining_notes_count()) + bcolors.color_reset)
     elif is_number(data):
         delete_note(int(data))
     else:
