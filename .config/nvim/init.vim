@@ -247,9 +247,9 @@ command W w
 command Q q
 
 " tab navigation mappings
-map <Leader>y :tabn<CR>
+map <Leader>u :tabn<CR>
 map <Leader>t :tabnew\|:Startify<cr>
-map <Leader>r :tabp<CR>
+map <Leader>y :tabp<CR>
 map <Leader>tm :tabm
 map <Leader>ts :tab split<CR>
 
@@ -279,8 +279,8 @@ nnoremap / mp/
 nnoremap <Leader><Leader> :w<cr>
 
 " Buffer switching
-map <Leader>bn :bn<CR>
-map <Leader>bp :bp<CR>
+map <Leader>n :bn<CR>
+map <Leader>m :bp<CR>
 
 " navigate splits with shift and hjkl
 " rotate with shift r
@@ -357,7 +357,6 @@ endif
 " Splitting keybindings
 nnoremap <Leader>h :split <cr>
 nnoremap <Leader>v :vsplit\|:Startify<cr>
-nnoremap <Leader>n :tabnew\|:Startify<cr>
 
 " Google search from within vim
 function! GoogleSearch(arg)
@@ -645,11 +644,11 @@ let g:neomake_javascript_enabled_makers = ['eslint']
 let g:jedi#use_splits_not_buffers = "bottom"
 let g:jedi#goto_command = "<leader>d"
 let g:jedi#goto_assignments_command = "<leader>g"
-let g:jedi#goto_definitions_command = ""
+let g:jedi#goto_definitions_command = "<leader>k"
 let g:jedi#documentation_command = "<leader>c"
 let g:jedi#usages_command = "<leader>n"
 let g:jedi#completions_command = "<C-Space>"
-let g:jedi#rename_command = "<leader>cr"
+let g:jedi#rename_command = "<leader>r"
 let g:jedi#max_doc_height = 30
 autocmd FileType python setlocal completeopt-=preview
 
