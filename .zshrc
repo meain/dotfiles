@@ -136,8 +136,8 @@ alias l='ls'
 alias la='ls -A'
 alias lr='ls -lRht'
 alias c='clear && echo "\n¯\_(ツ)_/¯\n" | fmt -c -w $COLUMNS | lolcat'
-alias q='exit'
-alias :q='exit'
+alias q="jobs -l | grep 'tmuxcopyhotfix.sh' | grep -v grep | sed 's:.*\ [+/-]\ ::g' | sed 's:\ .*::g' | xargs kill && exit"
+alias :q="jobs -l | grep 'tmuxcopyhotfix.sh' | grep -v grep | sed 's:.*\ [+/-]\ ::g' | sed 's:\ .*::g' | xargs kill && exit"
 alias mkdir='mkdir -p'
 alias o='open .'
 # alias rm='rm -i'
@@ -217,7 +217,7 @@ alias gcom='git checkout master'
 # More stuff
 
 # Tmux alias - you will probaby have to kill all the hotfix processes at last
-alias tmux='sh ~/bin/tmuxcopyhotfix.sh & tmux'
+alias tmux="jobs -l | grep 'tmuxcopyhotfix.sh' | grep -v grep | sed 's:.*\ [+/-]\ ::g' | sed 's:\ .*::g' | xargs kill && sh ~/bin/tmuxcopyhotfix.sh & tmux"
 alias ta='tmux attach -t'
 alias tn='tmux new-session -s'
 alias tl='tmux list-sessions'
