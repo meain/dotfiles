@@ -94,6 +94,8 @@ Plug 'rking/ag.vim'
 Plug 'vim-scripts/mru.vim'
 " Multiple hilights
 Plug 'lfv89/vim-interestingwords'
+" A better gf
+Plug 'gorkunov/smartgf.vim'
 
 
 " Plugins from vim-scripts repos:
