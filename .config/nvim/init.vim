@@ -704,3 +704,15 @@ let MRU_Max_Entries = 1000
 let MRU_Exclude_Files = '^/tmp/.*\|^/var/tmp/.*'
 let MRU_Auto_Close = 1
 let MRU_Max_Menu_Entries = 10
+
+" Smarter gf
+" disable custom mapping, and use your own:
+let g:smartgf_create_default_mappings = 0
+" use custom <Plug> to create your own mappings:
+" <Plug>(smartgf-search)
+" <Plug>(smart-search-unfiltered)
+" for example:
+nmap gs <Plug>(smartgf-search)
+vmap gs <Plug>(smartgf-search)
+nmap gS <Plug>(smartgf-search-unfiltered)
+vmap gS <Plug>(smartgf-search-unfiltered)
