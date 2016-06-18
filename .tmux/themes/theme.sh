@@ -9,7 +9,7 @@ set -g status-utf8 on
 set -g status-justify left
 set -g status-bg default
 set -g status-fg colour12
-set -g status-interval 2
+set -g status-interval 1
 
 # messaging
 set -g message-fg black
