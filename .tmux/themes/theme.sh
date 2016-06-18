@@ -1,4 +1,4 @@
-# Theme!
+# Tmux theme!
 
 # panes
 set -g pane-border-fg black
@@ -94,48 +94,3 @@ set -g status-left '#[fg=colour233,bg=colour2,bold] *meain* '
 set -g status-right $tm_tunes' #[fg=colour233,bg=colour1,bold] '$tm_battery'#[fg=colour233,bg=colour241,bold] %d/%m #[fg=colour233,bg=colour245,bold] %H:%M:%S |'$tm_session_name' '
 set -g status-right-length 100
 set -g status-left-length 20
-
-# tm_icon="*meain* "
-
-# # separators
-# tm_separator_left_bold="◀"
-# tm_separator_left_thin="❮"
-# tm_separator_right_bold="▶"
-# tm_separator_right_thin="❯"
-
-# set -g status-left-length 32
-# set -g status-right-length 150
-# set -g status-interval 5
-
-
-# # default statusbar colors
-# # set-option -g status-bg colour0
-# set-option -g status-fg $tm_color_active
-# set-option -g status-bg default
-# set-option -g status-attr default
-
-# # default window title colors
-# set-window-option -g window-status-fg $tm_color_inactive
-# set-window-option -g window-status-bg default
-# set -g window-status-format "#I #W"
-
-# # active window title colors
-# set-window-option -g window-status-current-fg $tm_color_active
-# set-window-option -g window-status-current-bg default
-# set-window-option -g  window-status-current-format "#[bold]#I #W"
-
-# # pane border
-# set-option -g pane-border-fg $tm_color_inactive
-# set-option -g pane-active-border-fg $tm_active_border_color
-
-# # message text
-# set-option -g message-bg default
-# set-option -g message-fg $tm_color_active
-
-# # pane number display
-# set-option -g display-panes-active-colour $tm_color_active
-# set-option -g display-panes-colour $tm_color_inactive
-
-# clock
-# set-window-option -g clock-mode-colour $tm_color_active
-
