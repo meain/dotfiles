@@ -178,8 +178,6 @@ get_change_message_without_filename(){
 alias gv='git add -u && git commit'
 # Message with more information with filename
 alias gvf='git add -u && git commit -m "$(get_change_message)"'
-alias gvf='git add -u && git commit -m "$(get_change_message)"'
-alias gvf='git add -u && git commit -m "$(get_change_message)"'
 # Commit message wihout any s*** + push
 alias gvp='git add -u && git commit" && git push origin $(get_git_branch)'
 # More info + push with filename
