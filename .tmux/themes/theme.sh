@@ -34,7 +34,7 @@ setw -g window-status-fg black
 setw -g window-status-attr reverse
 
 # loud or quiet?
-set-option -g visual-activity on
+set-option -g visual-activity off
 set-option -g visual-bell off
 set-option -g visual-silence off
 set-window-option -g monitor-activity on
