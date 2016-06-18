@@ -26,7 +26,7 @@ It includes my `[z/ba]sh`, `[v/nv/mv/gv]im`, `emacs`, `tmux`, `git` config files
 ### Shell
 The numbers on right are `time`, `battery %`, `number of undone notes`
 
-![shell](http://i.imgur.com/86s8gxU.png)
+![shell](http://i.imgur.com/MwjW9Hu.png)
 
 
 ### Vim
