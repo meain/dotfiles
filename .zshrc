@@ -216,8 +216,13 @@ alias gcom='git checkout master'
 
 # More stuff
 
-# Tmux alias
-alias tmux='sh ~/bin/tmuxcopyhotfix.sh & tmux && fg'
+# Tmux alias - you will probaby have to kill all the hotfix processes at last
+alias tmux='sh ~/bin/tmuxcopyhotfix.sh & tmux'
+alias ta='tmux attach -t'
+alias tn='tmux new-session -s'
+alias tl='tmux list-sessions'
+alias tksv='tmux kill-server'
+alias tkss='tmux kill-session -t'
 
 #eeeks
 alias vim="nvim"
