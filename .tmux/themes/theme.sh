@@ -55,7 +55,7 @@ set -g pane-active-border-bg colour236
 set -g pane-active-border-fg colour51
 
 # statusbar
-set -g status-position bottom
+set -g status-position top
 set -g status-bg colour234
 set -g status-fg colour137
 set -g status-attr dim
