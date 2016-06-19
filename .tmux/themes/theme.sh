@@ -91,6 +91,6 @@ tm_date="#[fg=$tm_color_inactive] %R %d %b"
 tm_host="#[fg=$tm_color_feature,bold]#h"
 tm_session_name="$tm_icon #S"
 set -g status-left '#[fg=colour233,bg=colour2,bold] *meain* #[bg=black] '
-set -g status-right $tm_tunes' #[fg=colour233,bg=colour1,bold] '$tm_battery'#[fg=colour233,bg=colour241,bold] %d/%m #[fg=colour233,bg=colour245,bold] %H:%M:%S |'$tm_session_name' '
+set -g status-right $tm_tunes' #[fg=colour233,bg=colour1,bold] '$tm_battery'#[fg=colour233,bg=colour241,bold] %d/%m #[fg=colour233,bg=colour245,bold] %r |'$tm_session_name' '
 set -g status-right-length 100
 set -g status-left-length 20
