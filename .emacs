@@ -118,6 +118,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; Automateic indentation
 (define-key global-map (kbd "RET") 'newline-and-indent)
 
+;; Simple clipboard
+(require 'simpleclip)
+(simpleclip-mode 1)
+
 ;; Autopair
 (require 'autopair)
 (autopair-global-mode)
