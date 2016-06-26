@@ -411,6 +411,16 @@ hs.hotkey.bind({'ctrl', 'alt', 'cmd'}, 'down', chain({
   grid.centeredSmall,
 }))
 
+hs.hotkey.bind({'ctrl', 'alt', 'cmd'}, 'f1', (function()
+  hs.alert('One-monitor layout')
+  activateLayout(1)
+end))
+
+hs.hotkey.bind({'ctrl', 'alt', 'cmd'}, 'f2', (function()
+  hs.alert('Two-monitor layout')
+  activateLayout(2)
+end))
+
 hs.hotkey.bind({'ctrl', 'alt', 'cmd'}, 'f3', (function()
   hs.alert('Hammerspoon console')
   hs.openConsole()
@@ -449,16 +459,17 @@ hs.urlevent.bind('screencast', prepareScreencast)
 --
 -- Auto-reload config on change.
 --
+
 function reloadConfig(files)
-doReload = false
-for _,file in pairs(files) do
-    if file:sub(-4) == ".lua" then
-        doReload = true
+    doReload = false
+    for _,file in pairs(files) do
+        if file:sub(-4) == ".lua" then
+            doReload = true
+        end
+    end
+    if doReload then
+        hs.reload()
     end
 end
-if doReload then
-    hs.reload()
-end
-end
 hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", reloadConfig):start()
-hs.alert.show("Config loaded")
+hs.notify.new({title="Hammerspoon", informativeText="Hammerspoon config reloaded!"}):send()
