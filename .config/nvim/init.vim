@@ -96,6 +96,8 @@ Plug 'vim-scripts/mru.vim'
 Plug 'lfv89/vim-interestingwords'
 " A better gf
 Plug 'gorkunov/smartgf.vim'
+" Live update in browser
+Plug 'jaxbot/browserlink.vim'
 
 
 " Plugins from vim-scripts repos:
