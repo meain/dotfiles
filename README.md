@@ -2,7 +2,7 @@
 
 **Hey**, these are the dotfiles that I use.
 
-It includes my `[z/ba]sh`, `[v/nv/mv/gv]im`, `emacs`, `tmux`, `git` config files.
+It includes my `[z/ba/fi]sh`, `[v/nv/mv/gv]im`, `emacs`, `tmux`, `git` config files.
 
 > Currently using zsh and nvim
 
