@@ -242,3 +242,6 @@ alias eywaserver='~/bin/tmuxeywavim.sh'
 
 # Youtube-dl
 alias ydp='youtube-dl -o "%(playlist_index)s_%(title)s.%(ext)s"'
+
+# fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

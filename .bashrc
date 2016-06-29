@@ -78,3 +78,5 @@ alias g='git status'
 
 #Git commit 
 alias gc='git commit'
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
