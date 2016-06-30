@@ -175,7 +175,7 @@ get_change_message_without_filename(){
 
 # Alias for easier git commits
 # Commit message wihout any s***
-alias gv='git add -u && git commit'
+alias gh='git add -u && git commit'
 alias gm="git add -u && git commit -m '"
 # Message with more information with filename
 alias gvf='git add -u && git commit -m "$(get_change_message)"'
@@ -200,7 +200,7 @@ alias gp="git push origin $(git branch | grep \* | sed s/^\*\ //g)"
 # Git log and history alias 
 alias ggg='git lh|cat'
 alias gg='git hm|cat'
-alias gh='git hi|cat'
+alias gggg='git hi|cat'
 alias gl='git lg'
 # Git diff alias
 alias gd='git diff'
