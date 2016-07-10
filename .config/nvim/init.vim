@@ -411,47 +411,8 @@ vnoremap < <gv
 " Remove whitespace at save
 autocmd BufWritePre *.py,*.vim,*.css,*.js,*.html,*.cpp,*.c,*.java :%s/\s\+$//e
 
-" Python with virtualenv support
-" py << EOF
-" import os
-" import sys
-" if 'VIRTUAL_ENV' in os.environ:
-"     project_base_dir = os.environ['VIRTUAL_ENV']
-"     activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-"     execfile(activate_this, dict(__file__=activate_this))
-" EOF
-
 " Setting ipdb breakponts
-python << EOF
-import vim
-import re
-
-ipdb_breakpoint = 'import ipdb; ipdb.set_trace()'
-
-def set_breakpoint():
-    breakpoint_line = int(vim.eval('line(".")')) - 1
-
-    current_line = vim.current.line
-    white_spaces = re.search('^(\s*)', current_line).group(1)
-
-    vim.current.buffer.append(white_spaces + ipdb_breakpoint, breakpoint_line)
-
-def remove_breakpoints():
-    op = 'g/^.*%s.*/d' % ipdb_breakpoint
-    vim.command(op)
-
-def toggle_breakpoint():
-    breakpoint_line = int(vim.eval('line(".")')) - 1
-    if 'import ipdb; ipdb.set_trace()' in vim.current.buffer[breakpoint_line]:
-        remove_breakpoints()
-    elif 'import ipdb; ipdb.set_trace()' in vim.current.buffer[breakpoint_line-1]:
-        remove_breakpoints()
-    else :
-        set_breakpoint()
-    vim.command(':w')
-
-vim.command('map <f6> :py toggle_breakpoint()<cr>')
-EOF
+nnoremap <Leader>b :normal! Oimport ipdb; ipdb.set_trace()<cr>
 
 " Open new terminal
 nnoremap <F1> :vsp\|:terminal<cr>
