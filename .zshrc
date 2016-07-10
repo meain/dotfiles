@@ -129,6 +129,16 @@ echo ""
 # source ~/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 eval $(thefuck --alias)
 
+# Use vi mode in zshell
+bindkey -v
+bindkey '^P' up-history
+bindkey '^N' down-history
+bindkey '^?' backward-delete-char
+bindkey '^h' backward-delete-char
+bindkey '^w' backward-kill-word
+bindkey '^r' history-incremental-search-backward
+export KEYTIMEOUT=1
+
 #Alias
 alias ss='ls -lht'
 alias ll='ls -A -l'
@@ -156,8 +166,6 @@ alias m='cd ~/Documents/Multimedia && open . && cd -'
 alias p='cd ~/Documents/Projects && ls'
 # Alias to get into desktop folder
 alias d='cd ~/Desktop && ls'
-
-# Git alias
 
 # Functions - mostly git
 get_git_files_changed(){
