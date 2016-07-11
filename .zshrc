@@ -109,19 +109,19 @@ echo ""
 hours=`date +%H`
 if [ $hours -le 12 ]
 then
-    echo "Good morning *meain*, what's up? How you doing?" | fmt -c -w $COLUMNS | lolcat
+    echo "Good morning meain, what's up? How you doing?" | fmt -c -w $COLUMNS | lolcat
 else
     if [ $hours -le 16 ]
     then
-        echo "Good afternoon *meain*, cool to see you up here!" | fmt -c -w $COLUMNS | lolcat
+        echo "Good afternoon meain, cool to see you up here!" | fmt -c -w $COLUMNS | lolcat
     elif [ $hours -le 18 ]
     then
-        echo "Good evening *meain*, maybe go out and get some fresh air?" | fmt -c -w $COLUMNS | lolcat
+        echo "Good evening meain, maybe go out and get some fresh air?" | fmt -c -w $COLUMNS | lolcat
     elif [ $hours -le 24 ]
     then
-        echo "Good evening *meain*, maybe sleep early today?" | fmt -c -w $COLUMNS | lolcat
+        echo "Good evening meain, maybe sleep early today?" | fmt -c -w $COLUMNS | lolcat
     else
-        echo "Good night *meain*, better get some sleep kid!" | fmt -c -w $COLUMNS | lolcat
+        echo "Good night meain, better get some sleep kid!" | fmt -c -w $COLUMNS | lolcat
     fi
 fi
 echo ""
