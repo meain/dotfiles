@@ -169,7 +169,7 @@ alias d='cd ~/Desktop && ls'
 
 # Functions - mostly git
 get_git_files_changed(){
-    git status --short | sed 's:.*\ ::g' | sed 's:.*/::g' | tr '\n' ',' | sed s/,$//g
+	git status --short | grep -v ' D ' | grep -v '?? ' | sed 's:^...::g' | sed 's:.*/::g' | tr '\n' ',' | sed s/,$//g
 }
 get_git_branch(){
     git branch | grep \* | sed s/^\*\ //g
