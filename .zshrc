@@ -253,3 +253,9 @@ alias ydp='youtube-dl -o "%(playlist_index)s_%(title)s.%(ext)s"'
 
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# prev prev command
+get_second_last_command(){
+	history | tail -2 | head -1 | sed 's:.*\ .*\ ..\:...::g'
+}
+alias f='eval $(get_second_last_command)'
