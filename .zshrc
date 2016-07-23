@@ -223,6 +223,12 @@ alias gcom='git checkout master'
 
 # More stuff
 
+# prev prev command
+get_second_last_command(){
+	history | tail -2 | head -1 | sed 's:.*\ .*\ ..\:...::g'
+}
+alias f='eval $(get_second_last_command)'
+
 # Tmux alias - you will probaby have to kill all the hotfix processes at last
 alias tmux="jobs -l | grep 'tmuxcopyhotfix.sh' | grep -v grep | sed 's:.*\ [+/-]\ ::g' | sed 's:\ .*::g' | xargs kill && sh ~/bin/tmuxcopyhotfix.sh & tmux"
 alias ta='tmux attach -t'
@@ -253,9 +259,3 @@ alias ydp='youtube-dl -o "%(playlist_index)s_%(title)s.%(ext)s"'
 
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# prev prev command
-get_second_last_command(){
-	history | tail -2 | head -1 | sed 's:.*\ .*\ ..\:...::g'
-}
-alias f='eval $(get_second_last_command)'
