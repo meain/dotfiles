@@ -327,7 +327,7 @@ ca w!! w !sudo tee "%"
 
 " Setting colorscheme
 set background=dark
-colorscheme mango
+colorscheme gruvbox
 
 " when scrolling, keep cursor 3 lines away from screen border
 set scrolloff=5
@@ -552,7 +552,7 @@ let g:choosewin_overlay_enable = 1
 
 " Airline
 let g:airline_powerline_fonts = 1
-let g:airline_theme = 'base16_ashes'
+let g:airline_theme = 'base16_codeschool'
 let g:airline#extensions#whitespace#enabled = 1
 " Top bar
 let g:airline#extensions#tabline#enabled = 1
