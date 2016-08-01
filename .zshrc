@@ -223,6 +223,12 @@ alias gcom='git checkout master'
 
 # More stuff
 
+# Excecute OpenGL c file
+execogl(){
+	echo "gcc -framework GLUT -framework OpenGL $1"
+}
+alias ogl="$(execogl)"
+
 # prev prev command
 get_second_last_command(){
 	history | tail -2 | head -1 | sed 's:.*\ .*\ ..\:...::g'
