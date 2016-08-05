@@ -252,7 +252,7 @@ alias vm='nvim'
 alias viml='nvim -c :SLoad\ zPreviousSession'
 
 # Note taking
-alias k="python ~/bin/terminalnote.py '"
+alias k="python ~/bin/terminalnote.py"
 alias kk='python ~/bin/terminalnote.py k'
 
 # Eywa start
