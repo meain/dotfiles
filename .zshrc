@@ -113,7 +113,7 @@ then
 else
     if [ $hours -le 16 ]
     then
-        echo "Good afternoon meain, cool to see you up here!" | fmt -c -w $COLUMNS | lolcat
+        echo "Hey guys, this guy might open up a lot of terminal windows to act cool, just act like you don't care" | fmt -c -w $COLUMNS | lolcat
     elif [ $hours -le 18 ]
     then
         echo "Good evening meain, maybe go out and get some fresh air?" | fmt -c -w $COLUMNS | lolcat
