@@ -27,7 +27,7 @@ function time_display() {
 PROMPT='%(?,%{$fg[green]%},%{$fg[red]%}) x '
 # Vi mode display
 function zle-line-init zle-keymap-select {
-    VIM_PROMPT="%{$fg_bold[blue]%} * %{$reset_color%}"
+    VIM_PROMPT="%{$fg_bold[blue]%} : %{$reset_color%}"
     RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/} %{$fg[white]%}%2~$(git_prompt_info) $(time_display) $(battery_charge) $(get_note_count)"
     zle reset-prompt
 }
