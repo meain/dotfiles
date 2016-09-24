@@ -125,8 +125,6 @@ else
     fi
 fi
 echo ""
-curl -sS wttr.in/thrissur > /dev/null | head -7 | tail -5
-echo ""
 
 # source ~/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 eval $(thefuck --alias)
