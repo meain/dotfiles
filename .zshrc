@@ -248,6 +248,7 @@ alias vim="nvim"
 #Just because it happens all the time
 alias ivm='vim'
 alias vm='nvim'
+alias vi='nvim'
 #Open last vim session
 alias viml='nvim -c :SLoad\ zPreviousSession'
 
