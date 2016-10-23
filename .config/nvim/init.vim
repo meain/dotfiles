@@ -376,8 +376,8 @@ if !isdirectory(&undodir)
 endif
 
 " Splitting keybindings
-nnoremap <Leader>h :split<cr>
-nnoremap <Leader>v :vsplit<cr>
+nnoremap <Leader>h :split <cr>
+nnoremap <Leader>v :vsplit\|:Startify<cr>
 
 " Google search from within vim
 function! GoogleSearch(arg)
