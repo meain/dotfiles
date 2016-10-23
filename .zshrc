@@ -283,3 +283,5 @@ transfer() {
 	cat $tmpfile;
 	rm -f $tmpfile;
 } 
+
+alias meain='echo "Yep thats me, something I can help you with?"'
