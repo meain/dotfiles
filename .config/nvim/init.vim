@@ -385,15 +385,10 @@ autocmd BufNew,BufAdd,BufCreate,VimEnter * normal! :set cc=80
 " Alphabetically sort CSS properties in file with :SortCSS
 command! SortCSS :g#\({\n\)\@<=#.,/}/sort
 
-" Compile pug and jade files on save and refresh chrome on any web file change
+" Compile pug and stylus files on save and refresh chrome on any web file change
 autocmd BufWritePost *.pug :silent ! pug -P % > /dev/null
-autocmd BufWritePost *.pug :silent ! chromix with http://localhost:4500/ reload > /dev/null
 autocmd BufWritePost *.stylus :silent ! stylus % > /dev/null
-autocmd BufWritePost *.stylus :silent ! chromix with http://localhost:4500/ reload > /dev/null
-
-" Reload chrome tab on save of web files
-autocmd BufWritePost *.html,*.js,*.css :silent ! chromix with http://localhost:4500/ reload > /dev/null
-autocmd BufWritePost *.html,*.js,*.css :silent ! chromix with http://localhost* reload > /dev/null
+autocmd BufWritePost *.html,*.js,*.css,*pug,*stylus :silent ! chromix with http://localhost* reload > /dev/null
 
 " Fix overflow ( above 80 )
 command! FixOverflow :normal! gqap
