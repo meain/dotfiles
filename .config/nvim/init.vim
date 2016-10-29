@@ -12,7 +12,6 @@ function! DoRemote(arg)
 	UpdateRemotePlugins
 endfunction
 Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
-Plug 'Shougo/echodoc.vim'
 " Vim colorscheme
 Plug 'flazz/vim-colorschemes'
 " Better file browser
@@ -20,7 +19,7 @@ Plug 'scrooloose/nerdtree', { 'on' : 'NERDTreeToggle' }
 " Code commenter
 Plug 'tpope/vim-commentary'
 " Class/module browser
-Plug 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar', { 'on' : 'Tagbar' }
 " Git stuff from within vim
 Plug 'tpope/vim-fugitive'
 " Code and files fuzzy finder
@@ -37,8 +36,6 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-surround'
 " Autopair
 Plug 'jiangmiao/auto-pairs'
-" Indent text object
-Plug 'michaeljsmith/vim-indent-object'
 " Snippets manager (SnipMate), dependencies, and snippets repo
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
@@ -46,16 +43,10 @@ Plug 'honza/vim-snippets'
 Plug 'garbas/vim-snipmate'
 " Git/mercurial/others diff icons on the side of the file lines
 Plug 'mhinz/vim-signify'
-" Drag visual blocks arround
-Plug 'fisadev/dragvisuals.vim'
-" Window chooser
-Plug 't9md/vim-choosewin'
 " Paint css colors with the real color
 Plug 'lilydjwg/colorizer'
 " Neomake - linting and stuf
 Plug 'neomake/neomake'
-" Easier seakin to the desired text
-Plug 'justinmk/vim-sneak'
 "javascript complete after install the plugin, you must cd the install
 "directory and run `npm install`, then add a .tern-project config file
 "the doc at http://ternjs.net/doc/manual.html#vim
@@ -70,34 +61,16 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'suan/vim-instant-markdown', { 'for' : 'markdown' }
 "Easy vim and tmux splitting
 " Plug 'christoomey/vim-tmux-navigator'
-" Better python folding
-Plug 'tmhedberg/SimpylFold', { 'for' : 'python' }
-" Hilight charecter to make using f easier
-Plug 'unblevable/quick-scope'
 " Jade syntax and indentation
 Plug 'digitaltoad/vim-pug', { 'for' : 'pug' }
 " Stylus syntax and indentation
 Plug 'wavded/vim-stylus', { 'for' : 'stylus' }
 " Show indent
 Plug 'Yggdroot/indentLine'
-" Way better undo
-Plug 'mbbill/undotree', { 'on' : 'UndotreeToggle' }
-" Smooth scroll
-Plug 'terryma/vim-smooth-scroll'
-" Print documents in echo area
-Plug 'Shougo/echodoc.vim'
-" Multiple cursors
-Plug 'terryma/vim-multiple-cursors'
 " Ack like code search in vim
-Plug 'rking/ag.vim'
+Plug 'rking/ag.vim', { 'on' : 'Ag' }
 " Mru - mostly for use with v in shell
 Plug 'vim-scripts/mru.vim'
-" Multiple hilights
-Plug 'lfv89/vim-interestingwords'
-" A better gf
-Plug 'gorkunov/smartgf.vim'
-" Live update in browser
-Plug 'jaxbot/browserlink.vim'
 
 
 " Plugins from vim-scripts repos:
@@ -108,15 +81,6 @@ Plug 'IndexedSearch'
 Plug 'matchit.zip'
 " Restore file pointer
 Plug 'restore_view.vim'
-
-
-" Non code related
-
-" Read Hacker news in vim
-Plug 'ryanss/vim-hackernews', { 'on':  'HackerNews' }
-" Writing support ( dark surround[limelight] goyo )
-Plug 'junegunn/limelight.vim'
-Plug 'junegunn/goyo.vim', { 'on' : 'Goyo' }
 
 call plug#end()
 
@@ -131,6 +95,9 @@ call plug#end()
 " Set encoding
 set encoding=utf8
 
+" Set path variable so that the autocomplete for filenames is complete
+set path+=**
+
 " Mapping for leader and local leader
 let mapleader = "\<Space>"
 let maplocalleader = "\\"
@@ -139,13 +106,6 @@ let maplocalleader = "\\"
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>q :q<CR>
 nnoremap <Leader>ww :wq<CR>
-nnoremap <Leader>ww :qw<CR>
-
-" Window resizing
-nnoremap <silent> <Leader>= :exe "resize " . (winheight(0) * 3/2)<CR>
-nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
-nnoremap <silent> <Leader>0 :exe "vertical resize " . (winwidth(0) * 3/2)<CR>
-nnoremap <silent> <Leader>9 :exe "vertical resize " . (winwidth(0) * 2/3)<CR>
 
 " Necessary stuff
 nnoremap ; :
@@ -161,7 +121,6 @@ set foldmethod=indent
 set foldignore=
 set foldlevelstart=10
 set foldnestmax=10
-nnoremap <c-j> za
 
 " Redraw only when essential
 set lazyredraw
@@ -178,26 +137,23 @@ set expandtab
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
+" Switch between using tabs or spaces bsed on the file
 function TabsOrSpaces()
     " Determines whether to use spaces or tabs on the current buffer.
     if getfsize(bufname("%")) > 256000
         " File is very large, just use the default.
         return
     endif
-
     let numTabs=len(filter(getbufline(bufname("%"), 1, 250), 'v:val =~ "^\\t"'))
     let numSpaces=len(filter(getbufline(bufname("%"), 1, 250), 'v:val =~ "^ "'))
-
     if numTabs > numSpaces
         setlocal noexpandtab
     endif
 endfunction
-" Call the function after opening a buffer
 autocmd BufReadPost * call TabsOrSpaces()
 
-" highlight cursor line and column
+" highlight cursor line
 set cursorline
-" set cursorcolumn
 " hidden startup messages
 set shortmess=atI
 " auto read and write
@@ -247,19 +203,12 @@ set ignorecase
 "Clear search highlight
 nnoremap <silent><Leader>/ :nohls<CR>
 
-"Repeat last macro with !
-map ! @@
-
 " syntax highlight on
 syntax on
 
-" better line numberings
-set nu
-set relativenumber
-
 " Enable going down in case text is wrapped
-:nnoremap j gj
-:nnoremap k gk
+nnoremap j gj
+nnoremap k gk
 
 " Just something I have to do
 command WQ wq
@@ -271,8 +220,10 @@ command Q q
 map <Leader>u :tabn<CR>
 map <Leader>t :tabnew\|:Startify<cr>
 map <Leader>y :tabp<CR>
-map <Leader>tm :tabm
-map <Leader>ts :tab split<CR>
+
+" Buffer switching
+map <Leader>n :bn<CR>
+map <Leader>m :bp<CR>
 
 " Better split opening
 set splitbelow
@@ -298,10 +249,6 @@ nnoremap / mp/
 
 " Easy save
 nnoremap <Leader><Leader> :w<cr>
-
-" Buffer switching
-map <Leader>n :bn<CR>
-map <Leader>m :bp<CR>
 
 " navigate splits with shift and hjkl
 " rotate with shift r
@@ -346,7 +293,7 @@ ca w!! w !sudo tee "%"
 set background=dark
 colorscheme gruvbox
 
-" when scrolling, keep cursor 3 lines away from screen border
+" when scrolling, keep cursor 5 lines away from screen border
 set scrolloff=5
 
 " autocompletion of files and commands behaves like zsh
@@ -386,7 +333,7 @@ import vim
 def frame_querry():
 	term = vim.eval("a:arg")
 	vim.command("vsp")
-	vim.command("term googler -count 5 " + term)
+	vim.command("term googler --count 7 " + term)
 frame_querry()
 EOF
 endfunction
@@ -404,12 +351,10 @@ function! s:ZoomToggle() abort
         let t:zoomed = 1
     endif
 endfunction
-
 command! ZoomToggle call s:ZoomToggle()
 nnoremap <silent> - :ZoomToggle<CR> \| :normal! 0<cr>
 
-" Save session as zzz and quit all buffers - y at the end as it ask to replace
-" old zzz
+" Save session and quit all buffers (for use with viml command)
 function! MinimizeIfZoomed()
     if exists('t:zoomed') && t:zoomed
         exec t:zoom_winrestcmd
@@ -417,9 +362,6 @@ function! MinimizeIfZoomed()
     endif
 endfunction
 nnoremap <c-q> :call MinimizeIfZoomed() \|:SSave zPreviousSession \| :qa<cr>y
-
-" Easier session reload
-nnoremap <Leader>z :SLoad zPreviousSession<cr>
 
 " Easier indentation - does dot loose selection
 vnoremap > >gv
@@ -433,27 +375,17 @@ nnoremap <Leader>b :normal! Oimport ipdb; ipdb.set_trace()<cr>
 
 " Open new terminal
 nnoremap <F1> :vsp\|:terminal<cr>
-
 " Open new termial and run the currently open python file
 nnoremap <F2> :vsp\|:terminal python %<cr>
 
-"Better line limit making
+"Better line limit
 highlight ColorColumn ctermbg=0
 autocmd BufNew,BufAdd,BufCreate,VimEnter * normal! :set cc=80
-
-" Remap for easier use of arrow keys
-nnoremap <c-j> <Down>
-inoremap <c-j> <Down>
-nnoremap <c-k> <Up>
-inoremap <c-k> <Up>
-
-" Saves file when Vim window loses focus
-au FocusLost * :wa
 
 " Alphabetically sort CSS properties in file with :SortCSS
 command! SortCSS :g#\({\n\)\@<=#.,/}/sort
 
-" Compile css and pug files on save and refresh chrome
+" Compile pug and jade files on save and refresh chrome on any web file change
 autocmd BufWritePost *.pug :silent ! pug -P % > /dev/null
 autocmd BufWritePost *.pug :silent ! chromix with http://localhost:4500/ reload > /dev/null
 autocmd BufWritePost *.stylus :silent ! stylus % > /dev/null
@@ -461,6 +393,7 @@ autocmd BufWritePost *.stylus :silent ! chromix with http://localhost:4500/ relo
 
 " Reload chrome tab on save of web files
 autocmd BufWritePost *.html,*.js,*.css :silent ! chromix with http://localhost:4500/ reload > /dev/null
+autocmd BufWritePost *.html,*.js,*.css :silent ! chromix with http://localhost* reload > /dev/null
 
 " Fix overflow ( above 80 )
 command! FixOverflow :normal! gqap
@@ -485,14 +418,8 @@ highlight StartifySpecial ctermfg=240
 " NERDTree
 " toggle nerdtree display
 map <F3> :NERDTreeToggle<CR>
-" open nerdtree with the current file selected
-nnoremap ,t :NERDTreeFind<CR>
 " don't show these file types
 let NERDTreeIgnore = ['\.pyc$', '\.pyo$']
-
-" Vim session manager using startify
-nnoremap <Leader>s :SSave
-nnoremap <Leader>o :SLoad
 
 " CtrlP
 " file finder mapping
@@ -533,19 +460,6 @@ let g:ctrlp_custom_ignore = {
             \ 'file': '\.pyc$\|\.pyo$',
             \ }
 
-" Simple fold
-autocmd BufWinEnter *.py setlocal foldexpr=SimpylFold(v:lnum) foldmethod=expr
-autocmd BufWinLeave *.py setlocal foldexpr< foldmethod<
-
-" DragVisuals
-" mappings to move blocks in 4 directions
-vmap <expr> <m-LEFT> DVB_Drag('left')
-vmap <expr> <m-RIGHT> DVB_Drag('right')
-vmap <expr> <m-DOWN> DVB_Drag('down')
-vmap <expr> <m-UP> DVB_Drag('up')
-" mapping to duplicate block
-vmap <expr> D DVB_Duplicate()
-
 " Signify
 " this first setting decides in which order try to guess your current vcs
 " UPDATE it to reflect your preferences, it will speed up opening files
@@ -560,12 +474,6 @@ highlight DiffChange        cterm=bold ctermbg=none ctermfg=227
 highlight SignifySignAdd    cterm=bold ctermbg=237  ctermfg=119
 highlight SignifySignDelete cterm=bold ctermbg=237  ctermfg=167
 highlight SignifySignChange cterm=bold ctermbg=237  ctermfg=227
-
-" Window Chooser
-" mapping
-nmap  _  <Plug>(choosewin)
-" show big letters
-let g:choosewin_overlay_enable = 1
 
 " Airline
 let g:airline_powerline_fonts = 1
@@ -584,39 +492,9 @@ let g:airline_symbols.branch = ' '
 let g:airline_symbols.readonly = ' '
 let g:airline_symbols.linenr = ' '
 
-" new file set title and turn to endline
-autocmd BufNewFile *.sh,*.py,*.rb exec ":call SetTitle()"
-function SetTitle()
-    if &filetype == 'sh'
-        call setline(1,"\#!/bin/bash")
-        call append(line("."), "")
-
-    elseif &filetype == 'python'
-        call setline(1,"#!/usr/bin/env python")
-        call append(line("."),"# coding=utf-8")
-        call append(line(".")+1, "")
-
-    elseif &filetype == 'ruby'
-        call setline(1,"#!/usr/bin/env ruby")
-        call append(line("."),"# encoding: utf-8")
-        call append(line(".")+1, "")
-    endif
-endfunction
-
-" Tagbar
-nnoremap <F8> :TagbarToggle<CR>
-
 " Vim-jsx
 " if you use JSX syntax in .js file, please enable it.
 let g:jsx_ext_required = 0
-
-" Vim-markdown
-" Disabled automatically folding
-let g:vim_markdown_folding_disabled=1
-" LeTeX math
-let g:vim_markdown_math=1
-" Highlight YAML frontmatter
-let g:vim_markdown_frontmatter=1
 
 " Neomake linting
 autocmd! BufWritePost,BufEnter * Neomake
@@ -634,46 +512,17 @@ let g:jedi#rename_command = "<leader>r"
 let g:jedi#max_doc_height = 30
 autocmd FileType python setlocal completeopt-=preview
 
-" Snipmate
-nnoremap <c-s> <Plug>snipMateTrigger
-imap <c-s> <Plug>snipMateTrigger
-
-"Quick scope
-" Trigger a highlight in the appropriate direction when pressing these keys:
-let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
-
-" Undo tree toggle
-" if has("persistent_undo")
-" 	set undodir=~/.undodir/
-" 	set undofile
-" endif
-nnoremap <F5> :UndotreeToggle<cr>
-
 " Use deoplete.
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#auto_complete_start_length = 1
 set completeopt+=noinsert
 
 " Smooth scroll
-noremap <silent> 9 :call smooth_scroll#up(&scroll, 0, 2)<CR>
-noremap <silent> 8 :call smooth_scroll#down(&scroll, 0, 2)<CR>
-noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
-noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
-noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
-noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
-
-"Limelight and goyo toggles
-nnoremap <Leader>ll :Limelight!!<cr>
-nnoremap <Leader>oo :Goyo<cr>
-
-" Multiple cursors
-let g:multi_cursor_next_key='<C-n>'
-let g:multi_cursor_prev_key='<C-p>'
-let g:multi_cursor_skip_key='<C-x>'
-let g:multi_cursor_quit_key='<Esc>'
+noremap <silent> 9 :normal!10j<cr>
+noremap <silent> 8 :normal!10k<cr>
 
 " sparkup
-let g:sparkupExecuteMapping='<c-r>'
+let g:sparkupExecuteMapping='<c-e>'
 
 " Fugitive
 nnoremap <leader>g :Gstatus<cr>
@@ -684,15 +533,3 @@ let MRU_Max_Entries = 1000
 let MRU_Exclude_Files = '^/tmp/.*\|^/var/tmp/.*'
 let MRU_Auto_Close = 1
 let MRU_Max_Menu_Entries = 10
-
-" Smarter gf
-" disable custom mapping, and use your own:
-let g:smartgf_create_default_mappings = 0
-" use custom <Plug> to create your own mappings:
-" <Plug>(smartgf-search)
-" <Plug>(smart-search-unfiltered)
-" for example:
-nmap gs <Plug>(smartgf-search)
-vmap gs <Plug>(smartgf-search)
-nmap gS <Plug>(smartgf-search-unfiltered)
-vmap gS <Plug>(smartgf-search-unfiltered)
