@@ -1,6 +1,6 @@
-"==========================
-"Vim plug to manage plugins
-"==========================
+" ==========================
+" Vim plug to manage plugins
+" ==========================
 call plug#begin('~/.vim/plugged')
 
 " A fancy start page for vim
@@ -125,14 +125,14 @@ set foldnestmax=10
 " Redraw only when essential
 set lazyredraw
 
-" make backspace work like most other apps
+" Make backspace work like most other apps
 set backspace=2
 
-" allow plugins by file type (required for plugins!)
+" Allow plugins by file type (required for plugins!)
 filetype plugin on
 filetype indent on
 
-" tabs and spaces handling
+" Tabs and spaces handling
 set expandtab
 set tabstop=4
 set softtabstop=4
@@ -152,20 +152,20 @@ function TabsOrSpaces()
 endfunction
 autocmd BufReadPost * call TabsOrSpaces()
 
-" highlight cursor line
+" Highlight cursor line
 set cursorline
-" hidden startup messages
+" Hidden startup messages
 set shortmess=atI
-" auto read and write
+" Auto read and write
 set autowrite
 set autoread
-" when deal with unsaved files ask what to do
+" When deal with unsaved files ask what to do
 set confirm
-" no backup files
+" No backup files
 set nobackup
-" allow mouse
+" Allow mouse
 set mouse=a
-" smart case
+" Smart case
 set smartcase
 
 " (Hopefully) removes the delay when hitting esc in insert mode
@@ -173,7 +173,7 @@ set noesckeys
 set ttimeout
 set ttimeoutlen=1
 
-"auto open or close on start
+" Auto open or close on start
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 " Enble and Disable wrapping
@@ -190,20 +190,20 @@ function! DisableAutoComment()
 endfunction
 autocmd BufNew,BufAdd,BufCreate,VimEnter * call DisableAutoComment()
 
-" always show status bar
+" Always show status bar
 set laststatus=2
 
-" incremental search
+" Incremental search
 set incsearch
-" highlighted search results
+" Highlighted search results
 set hlsearch
-" search ignore case
+" Search ignore case
 set ignorecase
 
-"Clear search highlight
+" Clear search highlight
 nnoremap <silent><Leader>/ :nohls<CR>
 
-" syntax highlight on
+" Syntax highlight on
 syntax on
 
 " Enable going down in case text is wrapped
@@ -216,7 +216,7 @@ command Wq wq
 command W w
 command Q q
 
-" tab navigation mappings
+" Tab navigation mappings
 map <Leader>u :tabn<CR>
 map <Leader>t :tabnew\|:Startify<cr>
 map <Leader>y :tabp<CR>
@@ -232,8 +232,8 @@ set splitright
 " Proper indenting on pasting
 nnoremap p  "*]p`]
 
-" Copy and paste to the system clipboard - this also helps with dd or x
-" replacing the content in the clipboard
+" Copy and paste to the system clipboard
+" This also helps with dd or x replacing the content in the clipboard
 nnoremap  y "*y
 nnoremap  Y "*Y
 nnoremap  P "*P
@@ -250,27 +250,24 @@ nnoremap / mp/
 " Easy save
 nnoremap <Leader><Leader> :w<cr>
 
-" navigate splits with shift and hjkl
-" rotate with shift r
+" Navigate splits with shift and hjkl
 map <s-l> <c-w>l
 map <s-h> <c-w>h
 map <s-k> <c-w>k
 map <s-j> <c-w>j
-map <s-r> <c-w>r
 
 " Spell checking
 " Initially choose the file types which support spell check
 autocmd BufRead,BufNewFile *.md setlocal spell
 autocmd BufRead,BufNewFile *.org setlocal spell
 autocmd BufRead,BufNewFile *.txt setlocal spell
+autocmd FileType help setlocal nospell
 set complete+=kspell
 function! FixLastSpellingError()
     normal! mz[s1z=`z
 endfunction
 nnoremap Z :call FixLastSpellingError()<cr>
 inoremap <c-z> :call FixLastSpellingError()<cr>
-" Disable spell check in help files
-autocmd FileType help setlocal nospell
 
 " Get output of shell command in vim window
 function! SplitRunCommand()
@@ -286,32 +283,35 @@ nnoremap ,s :call SplitRunCommand()<cr>
 " Inser a space before and after
 nnoremap <Leader>9 :normal! i<Space><Esc>lli<Space><Esc>
 
-" save as sudo
+" Save as sudo
 ca w!! w !sudo tee "%"
 
 " Setting colorscheme
 set background=dark
 colorscheme gruvbox
 
-" when scrolling, keep cursor 5 lines away from screen border
+" When scrolling, keep cursor 5 lines away from screen border
 set scrolloff=5
 
-" autocompletion of files and commands behaves like zsh
-" (autocomplete menu)
+" Autocompletion of files and commands behaves like zsh
 set wildmenu
 set wildmode=full
 
-" better backup, swap and undos storage
+" Fast scroll
+noremap <silent> 9 :normal!10j<cr>
+noremap <silent> 8 :normal!10k<cr>
+
+" Better backup, swap and undos storage
 set directory=~/.vim/dirs/tmp     " directory to place swap files in
 set backup                        " make backup files
 set backupdir=~/.vim/dirs/backups " where to put backup files
 set undofile                      " persistent undos - undo after you re-open the file
 set undodir=~/.vim/dirs/undos
 set viminfo+=n~/.vim/dirs/viminfo
-" store yankring history file there too
+" Store yankring history file there too
 let g:yankring_history_dir = '~/.vim/dirs/'
 
-" create needed directories if they don't exist
+" Create needed directories if they don't exist
 if !isdirectory(&backupdir)
     call mkdir(&backupdir, "p")
 endif
@@ -378,7 +378,7 @@ nnoremap <F1> :vsp\|:terminal<cr>
 " Open new termial and run the currently open python file
 nnoremap <F2> :vsp\|:terminal python %<cr>
 
-"Better line limit
+" Better line limit
 highlight ColorColumn ctermbg=0
 autocmd BufNew,BufAdd,BufCreate,VimEnter * normal! :set cc=80
 
@@ -411,35 +411,35 @@ highlight StartifySlash   ctermfg=240
 highlight StartifySpecial ctermfg=240
 
 " NERDTree
-" toggle nerdtree display
+" Toggle nerdtree display
 map <F3> :NERDTreeToggle<CR>
-" don't show these file types
+" Don't show these file types
 let NERDTreeIgnore = ['\.pyc$', '\.pyo$']
 
 " CtrlP
-" file finder mapping
+" File finder mapping
 let g:ctrlp_map = ',e'
-"hidden some types files
+" Hidden some types files
 let g:ctrlp_show_hidden = 1
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.png,*.jpg,*.gif  "Linux
-" tags (symbols) in current file finder mapping
+" Tags (symbols) in current file finder mapping
 nnoremap ,f :CtrlPBufTag<CR>
-" tags (symbols) in all files finder mapping
+" Tags (symbols) in all files finder mapping
 nnoremap ,F :CtrlPBufTagAll<CR>
-" general code finder in all files mapping
+" General code finder in all files mapping
 nnoremap ,g :CtrlPLine<CR>
-" recent files finder mapping
+" Recent files finder mapping
 nnoremap ,m :CtrlPMRUFiles<CR>
 nnoremap ,, :CtrlPMRUFiles<CR>
-" commands finder mapping
+" Commands finder mapping
 nnoremap ,c :CtrlPCmdPalette<CR>
 nnoremap <leader>l :CtrlPCmdPalette<CR>
-" to be able to call CtrlP with default search text
+" To be able to call CtrlP with default search text
 function! CtrlPWithSearchText(search_text, ctrlp_command_end)
     execute ':CtrlP' . a:ctrlp_command_end
     call feedkeys(a:search_text)
 endfunction
-" same as previous mappings, but calling with current word as default text
+" Same as previous mappings, but calling with current word as default text
 nnoremap ,wf :call CtrlPWithSearchText(expand('<cword>'), 'BufTag')<CR>
 nnoremap ,wF :call CtrlPWithSearchText(expand('<cword>'), 'BufTagAll')<CR>
 nnoremap ,wg :call CtrlPWithSearchText(expand('<cword>'), 'Line')<CR>
@@ -447,9 +447,9 @@ nnoremap ,we :call CtrlPWithSearchText(expand('<cword>'), '')<CR>
 nnoremap ,pe :call CtrlPWithSearchText(expand('<cfile>'), '')<CR>
 nnoremap ,wm :call CtrlPWithSearchText(expand('<cword>'), 'MRUFiles')<CR>
 nnoremap ,wc :call CtrlPWithSearchText(expand('<cword>'), 'CmdPalette')<CR>
-" don't change working directory
+" Don't change working directory
 let g:ctrlp_working_path_mode = 0
-" ignore these files and folders on file finder
+" Ignore these files and folders on file finder
 let g:ctrlp_custom_ignore = {
             \ 'dir':  '\v[\/](\.git|\.hg|\.svn)$',
             \ 'file': '\.pyc$\|\.pyo$',
@@ -459,10 +459,8 @@ let g:ctrlp_custom_ignore = {
 " this first setting decides in which order try to guess your current vcs
 " UPDATE it to reflect your preferences, it will speed up opening files
 let g:signify_vcs_list = [ 'git', 'hg' ]
-" mappings to jump to changed blocks
 nnoremap <leader>sn <plug>(signify-next-hunk)
 nnoremap <leader>sp <plug>(signify-prev-hunk)
-" nicer colors
 highlight DiffAdd           cterm=bold ctermbg=none ctermfg=119
 highlight DiffDelete        cterm=bold ctermbg=none ctermfg=167
 highlight DiffChange        cterm=bold ctermbg=none ctermfg=227
@@ -474,7 +472,6 @@ highlight SignifySignChange cterm=bold ctermbg=237  ctermfg=227
 let g:airline_powerline_fonts = 1
 let g:airline_theme = 'bubblegum'
 let g:airline#extensions#whitespace#enabled = 1
-" Top bar
 let g:airline#extensions#tabline#enabled = 1
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
@@ -512,11 +509,7 @@ let g:deoplete#enable_at_startup = 1
 let g:deoplete#auto_complete_start_length = 1
 set completeopt+=noinsert
 
-" Smooth scroll
-noremap <silent> 9 :normal!10j<cr>
-noremap <silent> 8 :normal!10k<cr>
-
-" sparkup
+" Sparkup
 let g:sparkupExecuteMapping='<c-e>'
 
 " Fugitive
