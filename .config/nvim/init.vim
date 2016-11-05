@@ -173,6 +173,9 @@ set noesckeys
 set ttimeout
 set ttimeoutlen=1
 
+" Turn on line numbers
+set number
+
 " Auto open or close on start
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
@@ -298,8 +301,8 @@ set wildmenu
 set wildmode=full
 
 " Fast scroll
-noremap <silent> 9 :normal!10j<cr>
-noremap <silent> 8 :normal!10k<cr>
+noremap <silent> 9 :normal!10k<cr>
+noremap <silent> 8 :normal!10j<cr>
 
 " Better backup, swap and undos storage
 set directory=~/.vim/dirs/tmp     " directory to place swap files in
