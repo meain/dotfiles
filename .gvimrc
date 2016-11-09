@@ -1,1 +1,2 @@
-set guifont=Monaco:h13
+set macligatures
+set guifont=Fira\ Code:h13
