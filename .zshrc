@@ -101,10 +101,7 @@ rmd () {
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-#--------------------------------------------------------------------------------------------
-
 # Custom
-
 echo ""
 hours=`date +%H`
 if [ $hours -le 12 ]
@@ -139,7 +136,7 @@ bindkey '^w' backward-kill-word
 bindkey '^r' history-incremental-search-backward
 export KEYTIMEOUT=1
 
-#Alias
+# Alias
 alias ss='ls -lht'
 alias ll='ls -A -l'
 alias l='ls'
@@ -150,11 +147,10 @@ alias q="jobs -l | grep 'tmuxcopyhotfix.sh' | grep -v grep | sed 's:.*\ [+/-]\ :
 alias :q="jobs -l | grep 'tmuxcopyhotfix.sh' | grep -v grep | sed 's:.*\ [+/-]\ ::g' | sed 's:\ .*::g' | xargs kill && exit"
 alias mkdir='mkdir -p'
 alias o='open .'
-# alias rm='rm -i'
 alias rm='trash'
 alias ffind='find . -name'
 alias ..='cd ..'
-#Check evey single file for a specific text and print surrounding 2 lines
+# Check evey single file for a specific text and print surrounding 2 lines
 alias here='find . -type f -print0|xargs -0 grep -C 2 -i'
 alias server='python -m SimpleHTTPServer '
 alias tn='tmux new -s'
@@ -212,14 +208,16 @@ alias gggg='git hi|cat'
 alias gl='git lg'
 # Git diff alias
 alias gd='git diff'
-#Git status alias
+# Git status alias
 alias gs='git status'
 alias g='git status -s'
-#Git commit 
+# Git commit 
 alias gcm='git commit'
-#Git checkeout
+# Git checkeout
 alias gco='git checkout'
 alias gcom='git checkout master'
+# Compile with OpenGL gcc
+alias cg='gcc -framework GLUT -framework OpenGL'
 
 # More stuff
 
