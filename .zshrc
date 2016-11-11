@@ -262,6 +262,9 @@ alias eywaserver='~/bin/tmuxeywavim.sh'
 # Youtube-dl
 alias ydp='youtube-dl -o "%(playlist_index)s_%(title)s.%(ext)s"'
 
+# Use hub instead of git
+eval "$(hub alias -s)"
+
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
