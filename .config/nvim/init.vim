@@ -331,6 +331,9 @@ endif
 nnoremap <Leader>h :split <cr>
 nnoremap <Leader>v :vsplit\|:Startify<cr>
 
+" Terminal mode remaps
+tnoremap <Leader><Esc> <C-\><C-n>
+
 " Google search from within vim
 function! GoogleSearch(arg)
 py << EOF
