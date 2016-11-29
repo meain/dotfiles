@@ -216,16 +216,8 @@ alias gcm='git commit'
 # Git checkeout
 alias gco='git checkout'
 alias gcom='git checkout master'
-# Compile with OpenGL gcc
-alias cg='gcc -framework GLUT -framework OpenGL'
 
 # More stuff
-
-# Excecute OpenGL c file
-execogl(){
-	echo "gcc -framework GLUT -framework OpenGL $1"
-}
-alias ogl="$(execogl)"
 
 # prev prev command
 get_second_last_command(){
