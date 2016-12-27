@@ -200,7 +200,7 @@ alias gbp='git add -u && git commit -m "Bugfix $(get_git_files_changed)" && git 
 # Git add
 alias ga='git add'
 # Easier push to origin master
-alias gp="git push origin $(git branch | grep \* | sed s/^\*\ //g)"
+alias gp="git push origin $(get_git_branch)"
 # Git log and history alias 
 alias ggg='git lh|cat'
 alias gg='git hm|cat'
