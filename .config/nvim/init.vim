@@ -43,10 +43,11 @@ Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
 Plug 'honza/vim-snippets'
 Plug 'garbas/vim-snipmate'
+Plug 'ervandew/supertab'
 " Git/mercurial/others diff icons on the side of the file lines
 Plug 'mhinz/vim-signify'
 " Paint css colors with the real color
-Plug 'lilydjwg/colorizer'
+Plug 'gko/vim-coloresque'
 " Neomake - linting and stuf
 Plug 'neomake/neomake'
 "javascript complete after install the plugin, you must cd the install
@@ -73,6 +74,8 @@ Plug 'Yggdroot/indentLine'
 Plug 'rking/ag.vim', { 'on' : 'Ag' }
 " Mru - mostly for use with v in shell
 Plug 'vim-scripts/mru.vim'
+" See images in vim
+Plug 'ashisha/image.vim'
 
 
 " Plugins from vim-scripts repos:
