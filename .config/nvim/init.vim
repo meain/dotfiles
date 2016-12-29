@@ -28,6 +28,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'ctrlpvim/ctrlp.vim'
 " Extension to ctrlp, for fuzzy command finder
 Plug 'fisadev/vim-ctrlp-cmdpalette'
+" Ack in vim
+Plug 'mileszs/ack.vim'
 " Zen coding
 Plug 'rstacruz/sparkup', { 'for' : 'html' }
 " Airline
@@ -43,7 +45,6 @@ Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
 Plug 'honza/vim-snippets'
 Plug 'garbas/vim-snipmate'
-Plug 'ervandew/supertab'
 " Git/mercurial/others diff icons on the side of the file lines
 Plug 'mhinz/vim-signify'
 " Paint css colors with the real color
@@ -431,6 +432,9 @@ map <F3> :NERDTreeToggle<CR>
 " Don't show these file types
 let NERDTreeIgnore = ['\.pyc$', '\.pyo$']
 
+" Ack vim
+nnoremap <Leader>a :tab :split<CR>:Ack ""<Left>
+
 " CtrlP
 " File finder mapping
 let g:ctrlp_map = ',e'
@@ -510,7 +514,7 @@ let g:neomake_javascript_enabled_makers = ['eslint']
 " Jedi python
 let g:jedi#use_splits_not_buffers = "bottom"
 let g:jedi#goto_command = "<leader>d"
-let g:jedi#goto_assignments_command = "<leader>a"
+let g:jedi#goto_assignments_command = "<leader>s"
 let g:jedi#goto_definitions_command = ""
 let g:jedi#documentation_command = "<leader>k"
 let g:jedi#usages_command = "<leader>n"
