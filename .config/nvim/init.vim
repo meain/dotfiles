@@ -421,7 +421,7 @@ command! FixOverflow :normal! gqap
 
 " Startify
 nnoremap ,l :Startify<cr>
-let g:startify_custom_footer = " * BITE MY SHINY METAL ASS * "
+let g:startify_custom_footer = " Bite my shiny metal ass!  -Bender "
 highlight StartifyBracket ctermfg=240
 highlight StartifyFooter  ctermfg=240
 highlight StartifyHeader  ctermfg=114
