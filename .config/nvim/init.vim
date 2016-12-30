@@ -88,6 +88,14 @@ Plug 'matchit.zip'
 " Restore file pointer
 Plug 'restore_view.vim'
 
+" NyaoVim plugins
+" Markdown preview
+Plug 'rhysd/nyaovim-markdown-preview'
+" Popup for images and stuff
+Plug 'rhysd/nyaovim-popup-tooltip'
+" Mini browser inside of nyaovim
+Plug 'rhysd/nyaovim-mini-browser'
+
 call plug#end()
 
 
@@ -413,7 +421,7 @@ command! FixOverflow :normal! gqap
 
 " Startify
 nnoremap ,l :Startify<cr>
-let g:startify_custom_footer = ".                       *meain*"
+let g:startify_custom_footer = " * BITE MY SHINY METAL ASS * "
 highlight StartifyBracket ctermfg=240
 highlight StartifyFooter  ctermfg=240
 highlight StartifyHeader  ctermfg=114
