@@ -40,6 +40,8 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-surround'
 " Autopair
 Plug 'jiangmiao/auto-pairs'
+" Better search and replace
+Plug 'osyo-manga/vim-over'
 " Snippets manager (SnipMate), dependencies, and snippets repo
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
