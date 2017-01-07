@@ -23,5 +23,5 @@ color_out = (
         else color_blue
         )
 
-out = color_out + '\xE2\x8F\xB0'+ ' :' + out + color_reset
+out = color_out + 'ø' + out + color_reset
 sys.stdout.write(out)

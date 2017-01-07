@@ -36,5 +36,5 @@ color_out = (
         else color_red
         )
 
-out = color_out + '\xF0\x9F\x94\x8B' + ' :' + out + color_reset
+out = color_out + '±' + out + color_reset
 sys.stdout.write(out)

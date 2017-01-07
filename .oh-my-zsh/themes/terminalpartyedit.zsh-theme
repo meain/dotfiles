@@ -7,15 +7,6 @@ function battery_charge() {
     fi
 }
 
-function get_note_count() {
-    if [ -e ~/bin/timedisplay.py ]
-        then
-            echo `python ~/bin/terminalnote.py n`
-    else
-        echo '';
-    fi
-}
-
 function time_display() {
     if [ -e ~/bin/timedisplay.py ]
         then
@@ -28,7 +19,7 @@ PROMPT='%(?,%{$fg[green]%},%{$fg[red]%}) x '
 # Vi mode display
 function zle-line-init zle-keymap-select {
     VIM_PROMPT="%{$fg_bold[blue]%} : %{$reset_color%}"
-    RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/} %{$fg[white]%}%2~$(git_prompt_info) $(time_display) $(battery_charge) $(get_note_count)"
+    RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/} %{$fg[white]%}%2~$(git_prompt_info) $(time_display) $(battery_charge)"
     zle reset-prompt
 }
 zle -N zle-line-init
