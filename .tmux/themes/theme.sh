@@ -5,9 +5,8 @@ set -g pane-border-fg black
 set -g pane-active-border-fg brightred
 
 # status line
-set -g status-utf8 on
 set -g status-justify left
-set -g status-bg default
+set -g status-bg colour8
 set -g status-fg colour12
 set -g status-interval 1
 
@@ -24,8 +23,8 @@ setw -g mode-fg colour0
 # window status
 setw -g window-status-format " #F#I:#W#F "
 setw -g window-status-current-format " #F#I:#W#F "
-setw -g window-status-format "#[fg=magenta]#[bg=black] #I #[bg=cyan]#[fg=colour8] #W "
-setw -g window-status-current-format "#[bg=brightmagenta]#[fg=colour8] #I #[fg=colour8]#[bg=colour14] #W "
+setw -g window-status-format "#[fg=magenta]#[bg=colour8] #I #[bg=colour8]#[fg=colour231] #W "
+setw -g window-status-current-format "#[bg=color8]#[fg=colour231] #I #[fg=colour231]#[bg=colour8] #W "
 setw -g window-status-current-bg colour0
 setw -g window-status-current-fg colour11
 setw -g window-status-current-attr dim
@@ -49,48 +48,48 @@ setw -g mode-fg colour196
 setw -g mode-bg colour238
 
 # pane
-set -g pane-border-bg colour235
+set -g pane-border-bg colour8
 set -g pane-border-fg colour238
-set -g pane-active-border-bg colour236
+set -g pane-active-border-bg colour8
 set -g pane-active-border-fg colour51
 
 # statusbar
 set -g status-position top
-set -g status-bg colour234
+set -g status-bg colour8
 set -g status-fg colour137
 set -g status-attr dim
 
 setw -g window-status-current-fg colour81
-setw -g window-status-current-bg colour238
+setw -g window-status-current-bg colour8
 setw -g window-status-current-attr bold
 setw -g window-status-current-format ' #I#[fg=colour250]:#[fg=colour255]#W#[fg=colour50]#F '
 
 setw -g window-status-fg colour138
-setw -g window-status-bg colour235
+setw -g window-status-bg colour8
 setw -g window-status-attr none
 setw -g window-status-format ' #I#[fg=colour237]:#[fg=colour250]#W#[fg=colour244]#F '
 
 setw -g window-status-bell-attr bold
 setw -g window-status-bell-fg colour255
-setw -g window-status-bell-bg colour1
+setw -g window-status-bell-bg colour8
 
 # messages
 set -g message-attr bold
 set -g message-fg colour232
-set -g message-bg colour166
+set -g message-bg colour8
 
 # status bar left and right
 tm_color_active=colour39
-tm_color_inactive=colour241
+tm_color_inactive=colour32
+tm_active_border_color=colour39
 tm_color_feature=colour198
 tm_color_music=colour245
-tm_active_border_color=colour39
-tm_tunes="#[fg=$tm_color_music]|#(osascript ~/.applescripts/tunes.scpt)|"
+tm_tunes="#[fg=$tm_color_music]#(osascript ~/.applescripts/tunes.scpt)"
 tm_battery="#(~/bin/battery_indicator.sh)"
 tm_date="#[fg=$tm_color_inactive] %R %d %b"
 tm_host="#[fg=$tm_color_feature,bold]#h"
 tm_session_name="$tm_icon #S"
-set -g status-left '#[fg=colour233,bg=colour2,bold] *meain* #[bg=black] '
-set -g status-right $tm_tunes' #[fg=colour233,bg=colour1,bold] '$tm_battery'#[fg=colour233,bg=colour241,bold] %d/%m #[fg=colour233,bg=colour245,bold] %r |'$tm_session_name' '
+set -g status-left '#[fg=colour231,bg=colour8,bold] *meain* #[bg=black] '
+set -g status-right $tm_tunes' #[fg=colour15,bg=colour8,bold] '$tm_battery'#[fg=colour15,bg=colour8,bold] %d/%m #[fg=colour15,bg=colour8,bold] %r |'$tm_session_name' '
 set -g status-right-length 100
 set -g status-left-length 20
