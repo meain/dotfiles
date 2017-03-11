@@ -307,7 +307,7 @@ ca w!! w !sudo tee "%"
 
 " Setting colorscheme
 set background=dark
-colorscheme solarized
+colorscheme gruvbox
 
 " When scrolling, keep cursor 5 lines away from screen border
 set scrolloff=5
@@ -499,7 +499,7 @@ highlight SignifySignChange cterm=bold ctermbg=237  ctermfg=227
 
 " Airline
 let g:airline_powerline_fonts = 1
-let g:airline_theme = 'solarized'
+let g:airline_theme = 'distinguished'
 let g:airline#extensions#whitespace#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 if !exists('g:airline_symbols')
