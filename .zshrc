@@ -102,25 +102,9 @@ rmd () {
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Custom
+
 echo ""
-hours=`date +%H`
-if [ $hours -le 12 ]
-then
-    echo "Good morning meain, what's up? How you doing?" | fmt -c -w $COLUMNS | lolcat
-else
-    if [ $hours -le 16 ]
-    then
-        echo "Good afternoon meain, good to see you here." | fmt -c -w $COLUMNS | lolcat
-    elif [ $hours -le 18 ]
-    then
-        echo "Good evening meain, maybe go out and get some fresh air?" | fmt -c -w $COLUMNS | lolcat
-    elif [ $hours -le 24 ]
-    then
-        echo "Good evening meain, maybe sleep early today?" | fmt -c -w $COLUMNS | lolcat
-    else
-        echo "Good night meain, better get some sleep kid!" | fmt -c -w $COLUMNS | lolcat
-    fi
-fi
+fortune -s | fmt -c -w $COLUMNS
 echo ""
 
 # source ~/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -142,7 +126,7 @@ alias ll='ls -A -l'
 alias l='ls'
 alias la='ls -A'
 alias lr='ls -lRht'
-alias c='clear && echo "\n¯\_(ツ)_/¯\n" | fmt -c -w $COLUMNS | lolcat'
+alias c='clear && echo "\n_\n" | fmt -c -w $COLUMNS'
 alias q="jobs -l | grep 'tmuxcopyhotfix.sh' | grep -v grep | sed 's:.*\ [+/-]\ ::g' | sed 's:\ .*::g' | xargs kill && exit"
 alias :q="jobs -l | grep 'tmuxcopyhotfix.sh' | grep -v grep | sed 's:.*\ [+/-]\ ::g' | sed 's:\ .*::g' | xargs kill && exit"
 alias mkdir='mkdir -p'
