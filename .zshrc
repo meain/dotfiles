@@ -201,7 +201,7 @@ alias g='git status -s'
 # Git commit 
 alias gcm='git commit'
 # Git checkeout
-alias gco='git checkout'
+alias gco='git checkout $(git branch|fzf)'
 alias gcom='git checkout master'
 
 # More stuff
