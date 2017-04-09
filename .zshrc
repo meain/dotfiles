@@ -147,6 +147,9 @@ alias p='cd ~/Documents/Projects && ls'
 # Alias to get into desktop folder
 alias d='cd ~/Desktop && ls'
 
+#polly-node
+alias polly='sh ~/bin/polly_node.sh'
+
 # Functions - mostly git
 get_git_files_changed(){
 	git status --short | grep -v ' D ' | grep -v '?? ' | sed 's:^...::g' | sed 's:.*/::g' | tr '\n' ',' | sed s/,$//g
