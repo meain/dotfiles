@@ -514,9 +514,25 @@ let MRU_Max_Menu_Entries = 10
 
 " Fzf
 let $FZF_DEFAULT_COMMAND = 'ag --hidden -l -g ""'
-let g:fzf_files_options =
-\ '--preview "(rougify {} || cat {}) 2> /dev/null | head -'.&lines.'"'
+command! -bang -nargs=? -complete=dir GFiles
+\ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
 nnoremap ,, :History<CR>
 nnoremap <leader>f :GFiles<CR>
 nnoremap <leader>l :Commands<CR>
 " nnoremap <leader>ta :Tags<CR>
+" Default fzf layout
+let g:fzf_layout = { 'down': '~40%' }
+" Customize fzf colors to match your color scheme
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
