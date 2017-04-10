@@ -24,12 +24,6 @@ Plug 'tpope/vim-commentary'
 Plug 'majutsushi/tagbar', { 'on' : 'Tagbar' }
 " Git stuff from within vim
 Plug 'tpope/vim-fugitive'
-" Code and files fuzzy finder
-Plug 'ctrlpvim/ctrlp.vim'
-" Extension to ctrlp, for fuzzy command finder
-Plug 'fisadev/vim-ctrlp-cmdpalette'
-" Ack in vim
-Plug 'mileszs/ack.vim'
 " Zen coding
 Plug 'rstacruz/sparkup', { 'for' : 'html' }
 " Airline
@@ -79,6 +73,11 @@ Plug 'rking/ag.vim', { 'on' : 'Ag' }
 Plug 'vim-scripts/mru.vim'
 " See images in vim
 Plug 'ashisha/image.vim'
+" Hyper focus editing
+Plug 'junegunn/limelight.vim'
+" Fzf for vim
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
 
 " Plugins from vim-scripts repos:
@@ -191,6 +190,10 @@ set ttimeoutlen=1
 
 " Turn on line numbers
 set number
+
+
+" Setting up ignores
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.png,*.jpg,*.gif  "Linux
 
 " Auto open or close on start
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
@@ -442,48 +445,6 @@ map <F3> :NERDTreeToggle<CR>
 " Don't show these file types
 let NERDTreeIgnore = ['\.pyc$', '\.pyo$']
 
-" Ack vim
-nnoremap <Leader>a :tab :split<CR>:Ack ""<Left>
-
-" CtrlP
-" File finder mapping
-let g:ctrlp_map = ',e'
-" Hidden some types files
-let g:ctrlp_show_hidden = 1
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.png,*.jpg,*.gif  "Linux
-" Tags (symbols) in current file finder mapping
-nnoremap ,f :CtrlPBufTag<CR>
-" Tags (symbols) in all files finder mapping
-nnoremap ,F :CtrlPBufTagAll<CR>
-" General code finder in all files mapping
-nnoremap ,g :CtrlPLine<CR>
-" Recent files finder mapping
-nnoremap ,m :CtrlPMRUFiles<CR>
-nnoremap ,, :CtrlPMRUFiles<CR>
-" Commands finder mapping
-nnoremap ,c :CtrlPCmdPalette<CR>
-nnoremap <leader>l :CtrlPCmdPalette<CR>
-" To be able to call CtrlP with default search text
-function! CtrlPWithSearchText(search_text, ctrlp_command_end)
-    execute ':CtrlP' . a:ctrlp_command_end
-    call feedkeys(a:search_text)
-endfunction
-" Same as previous mappings, but calling with current word as default text
-nnoremap ,wf :call CtrlPWithSearchText(expand('<cword>'), 'BufTag')<CR>
-nnoremap ,wF :call CtrlPWithSearchText(expand('<cword>'), 'BufTagAll')<CR>
-nnoremap ,wg :call CtrlPWithSearchText(expand('<cword>'), 'Line')<CR>
-nnoremap ,we :call CtrlPWithSearchText(expand('<cword>'), '')<CR>
-nnoremap ,pe :call CtrlPWithSearchText(expand('<cfile>'), '')<CR>
-nnoremap ,wm :call CtrlPWithSearchText(expand('<cword>'), 'MRUFiles')<CR>
-nnoremap ,wc :call CtrlPWithSearchText(expand('<cword>'), 'CmdPalette')<CR>
-" Don't change working directory
-let g:ctrlp_working_path_mode = 0
-" Ignore these files and folders on file finder
-let g:ctrlp_custom_ignore = {
-            \ 'dir':  '\v[\/](\.git|\.hg|\.svn)$',
-            \ 'file': '\.pyc$\|\.pyo$',
-            \ }
-
 " Signify
 " this first setting decides in which order try to guess your current vcs
 " UPDATE it to reflect your preferences, it will speed up opening files
@@ -550,3 +511,12 @@ let MRU_Max_Entries = 1000
 let MRU_Exclude_Files = '^/tmp/.*\|^/var/tmp/.*'
 let MRU_Auto_Close = 1
 let MRU_Max_Menu_Entries = 10
+
+" Fzf
+let $FZF_DEFAULT_COMMAND = 'ag --hidden -l -g ""'
+let g:fzf_files_options =
+\ '--preview "(rougify {} || cat {}) 2> /dev/null | head -'.&lines.'"'
+nnoremap ,, :History<CR>
+nnoremap <leader>f :GFiles<CR>
+nnoremap <leader>l :Commands<CR>
+" nnoremap <leader>ta :Tags<CR>
