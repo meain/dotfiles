@@ -202,8 +202,8 @@ alias g='git status -s'
 alias gcm='git commit'
 # Git checkeout
 alias gco='git checkout $(git branch|fzf)'
-alias gpu='git pull origin $(git branch | sed s:^..::g|fzf)'
-alias gpl='git push origin $(git branch | sed s:^..::g|fzf)'
+alias gpu='git pull origin $(git branch | sed s:^..::g | fzf --height 40% --reverse)'
+alias gpl='git push origin $(git branch | sed s:^..::g | fzf --height 40% --reverse)'
 alias gcom='git checkout master'
 
 # More stuff
