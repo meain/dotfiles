@@ -16,7 +16,7 @@ function time_display() {
     fi
 }
 PROMPT='
- %(?,%{$fg[grey]%},%{$fg[red]%})►%{$reset_color%} '
+ %(?,%{$fg[white]%},%{$fg[red]%})¬%{$reset_color%} '
 # Vi mode display
 function zle-line-init zle-keymap-select {
     VIM_PROMPT="%{$fg_bold[blue]%} : %{$reset_color%}"

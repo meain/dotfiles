@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/abinsimon/.oh-my-zsh
+export ZSH=~/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -49,7 +49,7 @@ HIST_STAMPS="dd.mm.yyyy"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git python brew osx extract web-search zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(git python extract web-search zsh-autosuggestions zsh-syntax-highlighting)
 
 # User configuration
 
@@ -65,7 +65,7 @@ export PATH
 ##pipsi install addition to the path variable
 export PATH="/Users/abinsimon/.local/bin:$PATH"
 
-. `brew --prefix`/etc/profile.d/z.sh
+# . `brew --prefix`/etc/profile.d/z.sh
 
 source $ZSH/oh-my-zsh.sh
 
