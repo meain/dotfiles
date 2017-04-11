@@ -388,6 +388,15 @@ function! MinimizeIfZoomed()
 endfunction
 nnoremap <c-q> :call MinimizeIfZoomed() \|:SSave zPreviousSession \| :qa<cr>y
 
+function StripTrailingWhitespace()
+    if !&binary && &filetype != 'diff'
+      normal mz
+      %s/\s\+$//e
+      normal `z
+    endif
+endfunction
+command! StripTrailingWhitespace :call StripTrailingWhitespace()
+
 " Easier indentation - does dot loose selection
 vnoremap > >gv
 vnoremap < <gv
