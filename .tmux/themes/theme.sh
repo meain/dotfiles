@@ -85,7 +85,7 @@ tm_active_border_color=colour39
 tm_color_feature=colour198
 tm_color_music=colour245
 tm_tunes="#[fg=$tm_color_music]#(osascript ~/.applescripts/tunes.scpt)"
-tm_battery="#(~/bin/battery_indicator.sh)"
+tm_battery="#(python ~/bin/batchargetmux.py)"
 tm_date="#[fg=$tm_color_inactive] %R %d %b"
 tm_host="#[fg=$tm_color_feature,bold]#h"
 tm_session_name="$tm_icon #S"

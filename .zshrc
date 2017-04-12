@@ -204,7 +204,7 @@ alias g='git status -s'
 # Git commit 
 alias gcm='git commit'
 # Git checkeout
-alias gco='git checkout $(git branch|fzf)'
+alias gco='git checkout $(git branch | sed s:^..::g | fzf --height 40% --reverse)'
 alias gpl='git pull origin $(git branch | sed s:^..::g | fzf --height 40% --reverse)'
 alias gpu='git push origin $(git branch | sed s:^..::g | fzf --height 40% --reverse)'
 alias gcom='git checkout master'
@@ -233,6 +233,8 @@ alias vm='nvim'
 alias vi='nvim'
 #Open last vim session
 alias viml='nvim -c :SLoad\ zPreviousSession'
+alias v='~/bin/nvimopeniffile $(~/bin/checkiffile ~/.vim_mru_files | grep -v ".git" | fzf --height 40% --reverse)'
+alias vv='nvim $(~/bin/checkiffile ~/.vim_mru_files | grep -v ".git" | head -n 1)'
 
 # Note taking
 alias k="python ~/bin/terminalnote.py"
