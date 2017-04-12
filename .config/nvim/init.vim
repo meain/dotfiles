@@ -523,9 +523,10 @@ let MRU_Max_Menu_Entries = 10
 
 " Fzf
 let $FZF_DEFAULT_COMMAND = 'ag --hidden -l -g ""'
+command! -bang -nargs=* MRUFzf call fzf#vim#history(fzf#vim#with_preview())
 command! -bang -nargs=? -complete=dir GFiles
 \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
-nnoremap ,, :History<CR>
+nnoremap ,, :MRUFzf<CR>
 nnoremap <leader>f :GFiles<CR>
 nnoremap <leader>l :Commands<CR>
 " nnoremap <leader>ta :Tags<CR>

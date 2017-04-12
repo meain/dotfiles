@@ -127,8 +127,8 @@ alias l='ls'
 alias la='ls -A'
 alias lr='ls -lRht'
 alias c='clear && echo "\n_\n" | fmt -c -w $COLUMNS'
-alias q="jobs -l | grep 'tmuxcopyhotfix.sh' | grep -v grep | sed 's:.*\ [+/-]\ ::g' | sed 's:\ .*::g' | xargs kill && exit"
-alias :q="jobs -l | grep 'tmuxcopyhotfix.sh' | grep -v grep | sed 's:.*\ [+/-]\ ::g' | sed 's:\ .*::g' | xargs kill && exit"
+alias q="exit"
+alias :q="exit"
 alias mkdir='mkdir -p'
 alias o='open .'
 alias rm='trash'
@@ -149,6 +149,9 @@ alias d='cd ~/Desktop && ls'
 
 #polly-node
 alias polly='sh ~/bin/polly_node.sh'
+
+# extras
+alias resetpacman='rm /var/lib/pacman/db.lck'
 
 # Functions - mostly git
 get_git_files_changed(){
@@ -215,7 +218,7 @@ get_second_last_command(){
 alias f='eval $(get_second_last_command)'
 
 # Tmux alias - you will probaby have to kill all the hotfix processes at last
-alias tmux="jobs -l | grep 'tmuxcopyhotfix.sh' | grep -v grep | sed 's:.*\ [+/-]\ ::g' | sed 's:\ .*::g' | xargs kill && sh ~/bin/tmuxcopyhotfix.sh & tmux"
+alias tmux="tmux"
 alias ta='tmux attach -t'
 alias tn='tmux new-session -s'
 alias tl='tmux list-sessions'
