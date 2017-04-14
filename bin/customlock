@@ -1,0 +1,11 @@
+#!/bin/bash
+scrot /tmp/screen_locked.png
+convert /tmp/screen_locked.png -blur 0x5 /tmp/screen_locked_blur.png
+
+TEXT="meain"
+convert -font monaco -fill red -pointsize 63 -draw "text 150,500 '$TEXT'" /tmp/screen_locked_blur.png /tmp/screen_locked_blur_text.png
+
+TEXT="enter password to unlock"
+convert -font monaco -fill red -pointsize 20 -draw "text 150,530 '$TEXT'" /tmp/screen_locked_blur_text.png /tmp/screen_locked_blur_text_sub.png
+
+i3lock -u -i /tmp/screen_locked_blur_text_sub.png

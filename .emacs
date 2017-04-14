@@ -1,5 +1,5 @@
 ;; Set font
-(set-default-font "monaco 14")
+(set-default-font "monaco 13")
 
 ;; change default scratch buffer message and change it to orgmode
 ;; (setq initial-scratch-message "   : meain")

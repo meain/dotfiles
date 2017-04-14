@@ -78,6 +78,8 @@ Plug 'junegunn/limelight.vim'
 " Fzf for vim
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+"Rainbow delim
+Plug 'luochen1990/rainbow'
 
 
 " Plugins from vim-scripts repos:
@@ -88,6 +90,9 @@ Plug 'IndexedSearch'
 Plug 'matchit.zip'
 " Restore file pointer
 Plug 'restore_view.vim'
+" Github from vim
+" Plug 'wsdjeg/GitHub.vim'
+Plug 'junegunn/vim-github-dashboard'
 
 " NyaoVim plugins
 " Markdown preview
@@ -252,7 +257,7 @@ set splitbelow
 set splitright
 
 " Proper indenting on pasting
-nnoremap p  "*]p`]
+nnoremap p  "+]p`]
 
 " Copy and paste to the system clipboard
 " This also helps with dd or x replacing the content in the clipboard
@@ -546,3 +551,6 @@ let g:fzf_colors =
   \ 'marker':  ['fg', 'Keyword'],
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
+
+" Rainbow delim
+let g:rainbow_active = 1

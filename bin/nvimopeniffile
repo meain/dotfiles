@@ -1,0 +1,6 @@
+#!/bin/bash
+file=$1
+if [ -f "$file" ]
+    then
+        nvim "$file"
+fi
