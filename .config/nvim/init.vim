@@ -73,15 +73,16 @@ Plug 'rking/ag.vim', { 'on' : 'Ag' }
 " Mru - mostly for use with v in shell
 Plug 'vim-scripts/mru.vim'
 " See images in vim
-" Plug 'ashisha/image.vim'
+Plug 'ashisha/image.vim'
 " Hyper focus editing
 Plug 'junegunn/limelight.vim'
 " Fzf for vim
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-"Rainbow delim
+" Rainbow delim
 Plug 'luochen1990/rainbow'
-
+" Ipython from vim
+Plug 'meain/ipyvim'
 
 " Plugins from vim-scripts repos:
 
@@ -260,6 +261,7 @@ set splitright
 " This also helps with dd or x replacing the content in the clipboard
 nnoremap  y "+y
 nnoremap  Y "+Y
+nnoremap  p "+p
 nnoremap  P "+P
 vnoremap y "+y`]
 vnoremap Y "+Y
