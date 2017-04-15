@@ -1,6 +1,7 @@
 " ==========================
 " Vim plug to manage plugins
 " ==========================
+
 call plug#begin('~/.vim/plugged')
 
 " A fancy start page for vim
@@ -112,6 +113,7 @@ call plug#end()
 " =============================
 " Keybindings - non plugin ones
 " =============================
+
 " Set encoding
 set encoding=utf8
 
@@ -125,7 +127,6 @@ let maplocalleader = "\\"
 " Saving and quitting keybindings
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>q :q<CR>
-nnoremap <Leader>ww :wq<CR>
 
 " Necessary stuff
 nnoremap ; :
@@ -179,7 +180,7 @@ set shortmess=atI
 " Auto read and write
 set autowrite
 set autoread
-" When deal with unsaved files ask what to do
+" When dealing with unsaved files ask what to do
 set confirm
 " No backup files
 set nobackup
@@ -195,7 +196,6 @@ set ttimeoutlen=1
 
 " Turn on line numbers
 set number
-
 
 " Setting up ignores
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.png,*.jpg,*.gif  "Linux
@@ -255,9 +255,6 @@ map <Leader>m :bp<CR>
 " Better split opening
 set splitbelow
 set splitright
-
-" Proper indenting on pasting
-nnoremap p  "+]p`]
 
 " Copy and paste to the system clipboard
 " This also helps with dd or x replacing the content in the clipboard
@@ -363,7 +360,7 @@ import vim
 def frame_querry():
 	term = vim.eval("a:arg")
 	vim.command("vsp")
-	vim.command("term googler --count 7 " + term)
+	vim.command("term googler --count 5 " + term)
 frame_querry()
 EOF
 endfunction
