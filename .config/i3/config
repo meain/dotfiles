@@ -211,16 +211,16 @@ bindsym $mod+Shift+Right move right
 
 #Workspaces
 
-set $ws1 "1: "
-set $ws2 "2: "
-set $ws3 "3: "
-set $ws4 "4: "
-set $ws5 "5: "
-set $ws6 "6: "
-set $ws7 "7: "
-set $ws8 "8: "
-set $ws9 "9: "
-set $ws10 "10: "
+set $ws1 "one"
+set $ws2 "two"
+set $ws3 "three"
+set $ws4 "four"
+set $ws5 "five"
+set $ws6 "six"
+set $ws7 "seven"
+set $ws8 "eight"
+set $ws9 "nine"
+set $ws10 "ten"
 
 # switch to workspace
 bindsym $mod+1		workspace $ws1
@@ -305,9 +305,18 @@ bindsym XF86AudioNext		exec $next
 bindsym XF86AudioPrev		exec $prev
 bindsym XF86AudioStop		exec $pause
 
-bindsym XF86AudioRaiseVolume	exec --no-startup-id pamixer -i 5
-bindsym XF86AudioLowerVolume	exec --no-startup-id pamixer -d 5
-bindsym XF86AudioMute		exec --no-startup-id pamixer -t
+bindsym XF86AudioRaiseVolume	exec --no-startup-id amixer -D pulse sset Master 5%+
+bindsym XF86AudioLowerVolume	exec --no-startup-id amixer -D pulse sset Master 5%-
+bindsym XF86AudioMute		exec --no-startup-id amixer -D pulse sset Master mute
+
+#kebyboard LED  brightness
+bindsym XF86KbdBrightnessDown exec --no-startup-id "sudo /usr/bin/kbd_led_down"
+bindsym XF86KbdBrightnessUp   exec --no-startup-id "sudo /usr/bin/kbd_led_up"
+
+# Sreen brightness controls
+bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
+bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
+
 #END
 
 bindsym XF86Mail		exec $term -e "mutt"
