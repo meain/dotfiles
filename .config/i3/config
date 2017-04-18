@@ -1,5 +1,3 @@
-# vim: filetype=i3
-
 #Basic settings
 set $mod Mod4
 floating_modifier $mod
@@ -7,12 +5,20 @@ set $term termite
 set $screencast  ffmpeg -y -f x11grab -video_size 1280x800 -i :0.0 -f alsa -i default -c:v ffvhuff -r 30 -c:a flac output.mkv
 set $audio ffmpeg -f alsa -i default -c:a flac -y output.flac
 set $browser chromium
-font pango:monaco 11
+font pango:monaco, FontAwesome 11
 
 #The wifi manager applet:
 exec --no-startup-id nm-applet
+# start flux
+exec --no-startup-id fluxgui
+# start guake
+exec --no-startup-id guake
+# start whatpulse
+exec --no-startup-id whatpulse --delaystartup
+# fix trackpad issues
+exec --no-startup-id sh ~/bin/fixtouchpad
 #For transparency:
-exec --no-startup-id xcompmgr -slt
+#exec --no-startup-id xcompmgr -slt
 #This runs the script that renews the config shortcuts:
 exec_always --no-startup-id python ~/.config/Scripts/shortcuts.py
 
@@ -59,7 +65,7 @@ colors {
 	active_workspace #000000 #000000 #008080
 	urgent_workspace #8B0000 #8B0000 #000000
 	}
-	status_command ~/.config/i3/bar/bumblebee-status -m pasink pasource battery nic pacman disk datetime -p disk.path=/home datetime.format="%a, %b %d, %Y at %I:%M %p" -t kulade_standard
+	status_command ~/.config/i3/bar/bumblebee-status -m pasink pasource battery disk datetime -p disk.path=/home datetime.format="%a, %b %d, %Y at %I:%M %p" -t gruvbox-powerline-edit
 	position top
 	}
 
@@ -174,13 +180,13 @@ bindsym $mod+backslash	workspace back_and_forth
 #Function Buttons
 bindsym F1		exec --no-startup-id echo "help" > /dev/null
 #bindsym F2
-#bindsym F3
+bindsym F3 exec --no-startup-id scrot $date
 #bindsym F4
 #bindsym F5
 #bindsym F6
-#bindsym F7
-#bindsym F8
-#bindsym F9
+bindsym F7 layout stacking
+bindsym F8 layout toggle split
+bindsym F9 layout tabbed
 #bindsym F10
 bindsym F11		fullscreen toggle
 #bindsym F12
@@ -211,16 +217,16 @@ bindsym $mod+Shift+Right move right
 
 #Workspaces
 
-set $ws1 "one"
-set $ws2 "two"
-set $ws3 "three"
-set $ws4 "four"
-set $ws5 "five"
-set $ws6 "six"
-set $ws7 "seven"
-set $ws8 "eight"
-set $ws9 "nine"
-set $ws10 "ten"
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "0"
 
 # switch to workspace
 bindsym $mod+1		workspace $ws1

@@ -76,6 +76,8 @@ Plug 'vim-scripts/mru.vim'
 Plug 'ashisha/image.vim'
 " Hyper focus editing
 Plug 'junegunn/limelight.vim'
+" Goyo
+Plug 'junegunn/goyo.vim'
 " Fzf for vim
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -135,7 +137,7 @@ nnoremap ' ;
 
 " Show invisibles
 set list
-set listchars=tab:▸\ ,eol:¬,trail:⋅,extends:❯,precedes:❮
+set listchars=tab:▸\ ,eol:¬,trail:⋅
 set showbreak=↪
 
 " Indent based folding
