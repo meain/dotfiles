@@ -28,6 +28,8 @@ exec_always --no-startup-id feh --bg-scale ~/Pictures/wallhaven-143449.png
 #Needed for i3-gaps
 hide_edge_borders both
 for_window [class="^.*"] border pixel 0 
+bindsym $mod [class=".*"] border pixel 3
+bindsym $mod --release [class=".*"] border none
 gaps inner 10
 gaps outer 10
 
