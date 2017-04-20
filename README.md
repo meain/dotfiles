@@ -24,13 +24,15 @@ It includes my `[z/ba/fi]sh`, `[v/nv/mv/gv]im`, `emacs`, `tmux`, `git` config fi
 ## Screenshots
 
 ### Shell
-The numbers on right are `time`, `battery %`, `number of undone notes`
+The numbers on right are `time`, `battery %`
 
-![shell](http://i.imgur.com/NJnmnL2.png)
-
+![shell](http://i.imgur.com/zigaSP1.png)
 
 ### Vim
-![Vim](http://i.imgur.com/XLRKXhF.png)
+![Vim](http://i.imgur.com/356JYdT.png)
 
 ### Emacs
-![Emacs](http://i.imgur.com/P3VryKg.png)
+![Emacs](http://i.imgur.com/6UOu93k.png)
+
+### i3
+![i3](http://i.imgur.com/nLtPlEC.png)
