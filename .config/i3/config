@@ -27,7 +27,7 @@ exec --no-startup-id sh ~/bin/fixtouchpad
 exec_always --no-startup-id feh --bg-scale ~/Downloads/wallhaven-186642.jpg
 
 # Don't change windows based on mouse position
-focus_follows_mouse no
+# focus_follows_mouse no
 
 #Needed for i3-gaps
 hide_edge_borders both
@@ -68,7 +68,7 @@ inactive_workspace #000000 #000000 #928374
 active_workspace #000000 #000000 #008080
 urgent_workspace #8B0000 #8B0000 #000000
      }
-     status_command ~/.config/i3/bar/bumblebee-status -m cmus weather pasink caffeine battery date time -p disk.path=/home datetime.format="%a, %b %d, %Y at %I:%M %p" -t gruvbox-powerline
+     status_command ~/.config/i3/bar/bumblebee-status -m cmus pasink caffeine battery datetime -p disk.path=/home datetime.format="%a, %b %d, %Y at %I:%M %p" -t gruvbox-powerline
      position top
      strip_workspace_numbers yes
  }
@@ -186,7 +186,7 @@ urgent_workspace #8B0000 #8B0000 #000000
  #Function Buttons
  # bindsym F1 exec --no-startup-id echo "help" > /dev/null
  #bindsym F2
- bindsym F3 exec --no-startup-id scrot $date
+ bindsym F3 exec --no-startup-id scrot img.png -e "mv ./img.png ~/Pictures/Screenshots/$(date|sed 's: ::g'|sed 's:\:::g').png"
  #bindsym F4
  #bindsym F5
  #bindsym F6
