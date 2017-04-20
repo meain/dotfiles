@@ -11,6 +11,8 @@ font pango:monaco, FontAwesome 11
 exec --no-startup-id nm-applet
 # start flux
 exec --no-startup-id fluxgui
+# start oneko
+exec --no-startup-id oneko
 # start guake
 exec --no-startup-id guake
 # start whatpulse

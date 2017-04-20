@@ -49,7 +49,7 @@ HIST_STAMPS="dd.mm.yyyy"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git python extract web-search zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(z zsh-syntax-highlighting zsh-autosuggestions)
 
 # User configuration
 
@@ -59,11 +59,11 @@ export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/git/bin"
 
 # Setting PATH for Python 2.7
 # The orginal version is saved in .bash_profile.pysave
-PATH="/Library/Frameworks/Python.framework/Versions/2.7/bin:${PATH}"
-export PATH
+# PATH="/Library/Frameworks/Python.framework/Versions/2.7/bin:${PATH}"
+# export PATH
 
 ##pipsi install addition to the path variable
-export PATH="/Users/abinsimon/.local/bin:$PATH"
+# export PATH="/Users/abinsimon/.local/bin:$PATH"
 
 # . `brew --prefix`/etc/profile.d/z.sh
 
@@ -107,7 +107,6 @@ echo ""
 fortune -s | fmt -c -w $COLUMNS
 echo ""
 
-# source ~/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 eval $(thefuck --alias)
 
 # Use vi mode in zshell

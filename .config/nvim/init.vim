@@ -6,6 +6,8 @@ call plug#begin('~/.vim/plugged')
 
 " A fancy start page for vim
 Plug 'mhinz/vim-startify'
+" Go development
+Plug 'fatih/vim-go'
 " Python autocomplete
 Plug 'davidhalter/jedi-vim', { 'for' : 'python' }
 " Better autocompletion
