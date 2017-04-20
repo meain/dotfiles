@@ -76,268 +76,269 @@ urgent_workspace #8B0000 #8B0000 #000000
  }
 
 
- bindsym $mod+Return  exec $term
- bindsym $mod+Shift+Return  exec $term -e tmux
+bindsym $mod+Return  exec $term
+bindsym $mod+Shift+Return  exec $term -e tmux
 
- bindsym $mod+Shift+space  floating toggle
- # bindsym $mod+space focus mode_toggle
- # bindsym $mod+space exec rofi -combi-modi window,run -show combi -font 'Monaco 12' -opacity 50 -lines 25 -eh 1 -line-margin 5 -hide-scrollbar -width 100 -padding 250
- bindsym $mod+space exec rofi -show run
+bindsym $mod+Shift+space  floating toggle
+# bindsym $mod+space focus mode_toggle
+# bindsym $mod+space exec rofi -combi-modi window,run -show combi -font 'Monaco 12' -opacity 50 -lines 25 -eh 1 -line-margin 5 -hide-scrollbar -width 100 -padding 250
+bindsym $mod+space workspace back_and_forth
 
- bindsym $mod+Escape workspace prev
- bindsym $mod+Shift+Escape  exec i3-msg exit
+bindsym $mod+Escape workspace prev
+bindsym $mod+Shift+Escape  exec i3-msg exit
 
- #bindsym $mod+BackSpace exec $term
- # bindsym $mod+Shift+BackSpace exec sudo reboot
+#bindsym $mod+BackSpace exec $term
+# bindsym $mod+Shift+BackSpace exec sudo reboot
 
- bindsym $mod+Tab workspace back_and_forth
+bindsym $mod+Tab workspace back_and_forth
 
- #bindsym $mod+grave
- #bindsym $mod+asciitilde
+#bindsym $mod+grave
+#bindsym $mod+asciitilde
 
- #bindsym $mod+XF86Back
- #bindsym $mod+Shift+XF86Back
+#bindsym $mod+XF86Back
+#bindsym $mod+Shift+XF86Back
 
- #bindsym $mod+XF86Forward
- #bindsym $mod+Shift+XF86Forward 
- #END
+#bindsym $mod+XF86Forward
+#bindsym $mod+Shift+XF86Forward 
+#END
 
- #Letter Keys
+#Letter Keys
 
- bindsym $mod+q kill
- bindsym $mod+Shift+q kill
+bindsym $mod+q kill
+bindsym $mod+Shift+q kill
 
- bindsym $mod+w exec --no-startup-id $browser
+bindsym $mod+w exec --no-startup-id $browser
 
- bindsym $mod+e exec $term -e "mutt"
- # bindsym $mod+Shift+e exec --no-startup-id icedove ; exec --no-startup-id thunderbird
+bindsym $mod+e exec $term -e "mutt"
+# bindsym $mod+Shift+e exec --no-startup-id icedove ; exec --no-startup-id thunderbird
 
- bindsym $mod+r  exec $term -e ranger
- # bindsym $mod+Shift+r restart
+bindsym $mod+r  exec $term -e ranger
+# bindsym $mod+Shift+r restart
 
- bindsym $mod+t split toggle
- bindsym $mod+Shift+t gaps inner current set 15; gaps outer current set 15
+bindsym $mod+t split toggle
+bindsym $mod+Shift+t gaps inner current set 15; gaps outer current set 15
 
- # bindsym $mod+y exec $term -e "calcurse -D $HOME/.config/calcurse/"
- bindsym $mod+Shift+y resize shrink width 10 px or 10ppt
+# bindsym $mod+y exec $term -e "calcurse -D $HOME/.config/calcurse/"
+bindsym $mod+Shift+y resize shrink width 10 px or 10ppt
 
- # bindsym $mod+i  exec $term -e htop
- bindsym $mod+Shift+i resize grow height 10 px or 10 ppt
+# bindsym $mod+i  exec $term -e htop
+bindsym $mod+Shift+i resize grow height 10 px or 10 ppt
 
- # bindsym $mod+o exec --no-startup-id $beg
- bindsym $mod+Shift+o resize grow width 10 px or 10 ppt
+# bindsym $mod+o exec --no-startup-id $beg
+bindsym $mod+Shift+o resize grow width 10 px or 10 ppt
 
- # bindsym $mod+p exec $pause
- # bindsym $mod+Shift+p exec pinta
+# bindsym $mod+p exec $pause
+# bindsym $mod+Shift+p exec pinta
 
- # bindsym $mod+a exec $term -e qalc
- # bindsym $mod+Shift+a exec pavucontrol
+# bindsym $mod+a exec $term -e qalc
+# bindsym $mod+Shift+a exec pavucontrol
 
- bindsym $mod+s gaps inner current plus 5
- bindsym $mod+Shift+s gaps inner current minus 5
+bindsym $mod+s gaps inner current plus 5
+bindsym $mod+Shift+s gaps inner current minus 5
 
- bindsym $mod+d exec rofi -show run
- bindsym $mod+Shift+d gaps inner current set 0; gaps outer current set 0
+bindsym $mod+d exec rofi -show run -font 'Monaco 20' -opacity 50 -lines 25 -eh 1 -line-margin 5 -hide-scrollbar -width 100 -padding 250
+# bindsym $mod+a exec rofi -combi-modi window,run -show combi -font 'Monaco 12' -opacity 50 -lines 25 -eh 1 -line-margin 5 -hide-scrollbar -width 100 -padding 250
+bindsym $mod+Shift+d gaps inner current set 0; gaps outer current set 0
 
- bindsym $mod+f fullscreen toggle
- # bindsym $mod+Shift+f exec --no-startup-id syncthing -home="~/.syncthing"
+bindsym $mod+f fullscreen toggle
+# bindsym $mod+Shift+f exec --no-startup-id syncthing -home="~/.syncthing"
 
- # bindsym $mod+g workspace prev
- # bindsym $mod+Shift+g exec --no-startup-id gimp; workspace $ws5
+# bindsym $mod+g workspace prev
+# bindsym $mod+Shift+g exec --no-startup-id gimp; workspace $ws5
 
- bindsym $mod+h focus left
- bindsym $mod+Shift+h move left 30
+bindsym $mod+h focus left
+bindsym $mod+Shift+h move left 30
 
- bindsym $mod+j focus down
- bindsym $mod+Shift+j move down 30
+bindsym $mod+j focus down
+bindsym $mod+Shift+j move down 30
 
- bindsym $mod+k focus up
- bindsym $mod+Shift+k move up 30
+bindsym $mod+k focus up
+bindsym $mod+Shift+k move up 30
 
- bindsym $mod+l focus right
- bindsym $mod+Shift+l move right 30
+bindsym $mod+l focus right
+bindsym $mod+Shift+l move right 30
 
- bindsym $mod+z gaps outer current plus 5
- bindsym $mod+Shift+z gaps outer current minus 5
+bindsym $mod+z gaps outer current plus 5
+bindsym $mod+Shift+z gaps outer current minus 5
 
- bindsym $mod+x exec --no-startup-id ~/.config/i3/lock.sh
- # bindsym $mod+Shift+x exec shutdown now
+bindsym $mod+x exec --no-startup-id ~/.config/i3/lock.sh
+# bindsym $mod+Shift+x exec shutdown now
 
- bindsym $mod+c exec $term -e irssi
- # bindsym $mod+Shift+c exec --no-startup-id audacity
+bindsym $mod+c exec $term -e irssi
+# bindsym $mod+Shift+c exec --no-startup-id audacity
 
- bindsym $mod+v exec $term -e cava
- # bindsym $mod+Shift+v exec --no-startup-id projectM-pulseaudio
+bindsym $mod+v exec $term -e cava
+# bindsym $mod+Shift+v exec --no-startup-id projectM-pulseaudio
 
- # bindsym $mod+b exec $prev
- # bindsym $mod+Shift+b exec --no-startup-id blender; workspace $ws6
+# bindsym $mod+b exec $prev
+# bindsym $mod+Shift+b exec --no-startup-id blender; workspace $ws6
 
- # bindsym $mod+n exec $next
- # bindsym $mod+Shift+n exec $term -e newsbeuter
+# bindsym $mod+n exec $next
+# bindsym $mod+Shift+n exec $term -e newsbeuter
 
- bindsym $mod+m  exec $term -e $music
- # bindsym $mod+Shift+m exec --no-startup-id pamixer -t
+bindsym $mod+m  exec $term -e $music
+# bindsym $mod+Shift+m exec --no-startup-id pamixer -t
 
- bindsym $mod+semicolon workspace next
- bindsym $mod+apostrophe split horizontal ;; exec $term
- bindsym $mod+slash split vertical ;; exec $term
- bindsym $mod+Shift+slash kill
- bindsym $mod+backslash workspace back_and_forth
- #END
+bindsym $mod+semicolon workspace next
+bindsym $mod+apostrophe split horizontal ;; exec $term
+bindsym $mod+slash split vertical ;; exec $term
+bindsym $mod+Shift+slash kill
+bindsym $mod+backslash workspace back_and_forth
+#END
 
- #Function Buttons
- # bindsym F1 exec --no-startup-id echo "help" > /dev/null
- #bindsym F2
- bindsym F3 exec --no-startup-id scrot img.png -e "mv ./img.png ~/Pictures/Screenshots/$(date|sed 's: ::g'|sed 's:\:::g').png"
- #bindsym F4
- #bindsym F5
- #bindsym F6
- bindsym F7 layout stacking
- bindsym F8 layout toggle split
- bindsym F9 layout tabbed
- #bindsym F10
- # bindsym F11 fullscreen toggle
- #bindsym F12
+#Function Buttons
+# bindsym F1 exec --no-startup-id echo "help" > /dev/null
+#bindsym F2
+bindsym F3 exec --no-startup-id scrot img.png -e "mv ./img.png ~/Pictures/Screenshots/$(date|sed 's: ::g'|sed 's:\:::g').png"
+#bindsym F4
+#bindsym F5
+#bindsym F6
+bindsym F7 layout stacking
+bindsym F8 layout toggle split
+bindsym F9 layout tabbed
+#bindsym F10
+# bindsym F11 fullscreen toggle
+#bindsym F12
 
- #bindsym $mod+F1
- #bindsym $mod+F2
- # bindsym $mod+F3 exec --no-startup-id arandr
- # bindsym $mod+F4 exec --no-startup-id sudo systemctl suspend
- # bindsym $mod+F5 exec --no-startup-id sudo systemctl restart NetworkManager
- #bindsym $mod+F6
- # bindsym $mod+F7 exec transset-df -a --dec .15
- # bindsym $mod+F8 exec transset-df -a --inc .15
- # bindsym $mod+F9 exec --no-startup-id sudo bash ~/.config/i3/mount.sh
- # bindsym $mod+F10 exec --no-startup-id sudo bash ~/.config/i3/unmount.sh
- #bindsym $mod+F11 
- # bindsym $mod+F12 exec --no-startup-id marble
+#bindsym $mod+F1
+#bindsym $mod+F2
+# bindsym $mod+F3 exec --no-startup-id arandr
+# bindsym $mod+F4 exec --no-startup-id sudo systemctl suspend
+# bindsym $mod+F5 exec --no-startup-id sudo systemctl restart NetworkManager
+#bindsym $mod+F6
+# bindsym $mod+F7 exec transset-df -a --dec .15
+# bindsym $mod+F8 exec transset-df -a --inc .15
+# bindsym $mod+F9 exec --no-startup-id sudo bash ~/.config/i3/mount.sh
+# bindsym $mod+F10 exec --no-startup-id sudo bash ~/.config/i3/unmount.sh
+#bindsym $mod+F11 
+# bindsym $mod+F12 exec --no-startup-id marble
 
- #Arrow Keys
- bindsym $mod+Left focus left
- bindsym $mod+Down focus down
- bindsym $mod+Up focus up
- bindsym $mod+Right  focus right
- bindsym $mod+Shift+Left move left
- bindsym $mod+Shift+Down move down
- bindsym $mod+Shift+Up move up
- bindsym $mod+Shift+Right move right
- #END
+#Arrow Keys
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right  focus right
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+#END
 
- #Workspaces
+#Workspaces
 
- set $ws1 "1:(1:)"
- set $ws2 "2:(2:)"
- set $ws3 "3:(3:)"
- set $ws4 "4:(4:)"
- set $ws5 "5:(5:)"
- set $ws6 "6:(6:)"
- set $ws7 "7:(7:)"
- set $ws8 "8:(8:)"
- set $ws9 "9:(9:)"
- set $ws10 "0:(0:)"
+set $ws1 "1:(1:)"
+set $ws2 "2:(2:)"
+set $ws3 "3:(3:)"
+set $ws4 "4:(4:)"
+set $ws5 "5:(5:)"
+set $ws6 "6:(6:)"
+set $ws7 "7:(7:)"
+set $ws8 "8:(8:)"
+set $ws9 "9:(9:)"
+set $ws10 "0:(0:)"
 
- # switch to workspace
- bindsym $mod+1 workspace $ws1
- bindsym $mod+2 workspace $ws2
- bindsym $mod+3 workspace $ws3
- bindsym $mod+4 workspace $ws4
- bindsym $mod+5 workspace $ws5
- bindsym $mod+6 workspace $ws6
- bindsym $mod+7 workspace $ws7
- bindsym $mod+8 workspace $ws8
- bindsym $mod+9 workspace $ws9
- bindsym $mod+0 workspace $ws10
+# switch to workspace
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
 
- # move focused container to workspace
- bindsym $mod+Shift+1 move container to workspace $ws1
- bindsym $mod+Shift+2 move container to workspace $ws2
- bindsym $mod+Shift+3 move container to workspace $ws3
- bindsym $mod+Shift+4 move container to workspace $ws4
- bindsym $mod+Shift+5 move container to workspace $ws5
- bindsym $mod+Shift+6 move container to workspace $ws6
- bindsym $mod+Shift+7 move container to workspace $ws7
- bindsym $mod+Shift+8 move container to workspace $ws8
- bindsym $mod+Shift+9 move container to workspace $ws9
- bindsym $mod+Shift+0 move container to workspace $ws10
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
 
- for_window [class="Chromium"] move to workspace $ws2
- # for_window [class="Icedove"] move to workspace $ws9
- # for_window [class="marble"] move to workspace $ws7
- # for_window [class="Thunderbird"] move to workspace $ws9
- # for_window [class="Iceweasel"] move to workspace $ws2
- # for_window [title="GIMP Startup"] move workspace $ws5
- # for_window [class="Gimp"] move workspace $ws5
- # for_window [window_role="gimp-dock"] floating disable; move left; resize shrink width 50 px or 50ppt
- # for_window [window_role="gimp-toolbox"] floating disable; move right; resize grow width 30 px or 30ppt
- # for_window [window_role="tr-main"] move to workspace $ws8
+for_window [class="Chromium"] move to workspace $ws2
+# for_window [class="Icedove"] move to workspace $ws9
+# for_window [class="marble"] move to workspace $ws7
+# for_window [class="Thunderbird"] move to workspace $ws9
+# for_window [class="Iceweasel"] move to workspace $ws2
+# for_window [title="GIMP Startup"] move workspace $ws5
+# for_window [class="Gimp"] move workspace $ws5
+# for_window [window_role="gimp-dock"] floating disable; move left; resize shrink width 50 px or 50ppt
+# for_window [window_role="gimp-toolbox"] floating disable; move right; resize grow width 30 px or 30ppt
+# for_window [window_role="tr-main"] move to workspace $ws8
 
- # bindsym $mod+Home workspace $ws1
- # bindsym $mod+Shift+Home move container to workspace $ws1
- # bindsym $mod+End workspace $ws10
- # bindsym $mod+Shift+End move container to workspace $ws10
- # bindsym $mod+Prior workspace prev
- # bindsym $mod+Shift+Prior move container to workspace prev
- # bindsym $mod+Next workspace next
- # bindsym $mod+Shift+Next move container to workspace next
- #END
+# bindsym $mod+Home workspace $ws1
+# bindsym $mod+Shift+Home move container to workspace $ws1
+# bindsym $mod+End workspace $ws10
+# bindsym $mod+Shift+End move container to workspace $ws10
+# bindsym $mod+Prior workspace prev
+# bindsym $mod+Shift+Prior move container to workspace prev
+# bindsym $mod+Next workspace next
+# bindsym $mod+Shift+Next move container to workspace next
+#END
 
- #Media
+#Media
 
- # TODO
- # bindsym $mod+plus exec --no-startup-id pamixer -i 5
- # bindsym $mod+Shift+plus exec --no-startup-id pamixer -i 15
+# TODO
+# bindsym $mod+plus exec --no-startup-id pamixer -i 5
+# bindsym $mod+Shift+plus exec --no-startup-id pamixer -i 15
 
- # bindsym $mod+minus  exec --no-startup-id pamixer -d 5
- # bindsym $mod+Shift+minus exec --no-startup-id pamixer -d 15
+# bindsym $mod+minus  exec --no-startup-id pamixer -d 5
+# bindsym $mod+Shift+minus exec --no-startup-id pamixer -d 15
 
- # bindsym $mod+bracketleft  exec $lilbak
- # bindsym $mod+Shift+bracketleft  exec $bigbak
+# bindsym $mod+bracketleft  exec $lilbak
+# bindsym $mod+Shift+bracketleft  exec $bigbak
 
- # bindsym $mod+bracketright  exec $lilfor
- # bindsym $mod+Shift+bracketright exec $bigfor
+# bindsym $mod+bracketright  exec $lilfor
+# bindsym $mod+Shift+bracketright exec $bigfor
 
- # bindsym $mod+greater exec --no-startup-id pamixer -i 5
- # bindsym $mod+Shift+greater exec --no-startup-id pamixer -i 15
+# bindsym $mod+greater exec --no-startup-id pamixer -i 5
+# bindsym $mod+Shift+greater exec --no-startup-id pamixer -i 15
 
- # bindsym $mod+less  exec --no-startup-id pamixer -d 5
- # bindsym $mod+Shift+less exec --no-startup-id pamixer -d 15
+# bindsym $mod+less  exec --no-startup-id pamixer -d 5
+# bindsym $mod+Shift+less exec --no-startup-id pamixer -d 15
 
- # bindsym Print exec --no-startup-id scrot
- # bindsym Shift+Print  exec --no-startup-id scrot -u
+# bindsym Print exec --no-startup-id scrot
+# bindsym Shift+Print  exec --no-startup-id scrot -u
 
- # bindsym Scroll_Lock exec --no-startup-id $audio
- # bindsym $mod+Scroll_Lock exec --no-startup-id killall ffmpeg
+# bindsym Scroll_Lock exec --no-startup-id $audio
+# bindsym $mod+Scroll_Lock exec --no-startup-id killall ffmpeg
 
- # bindsym Pause exec --no-startup-id $screencast
- # bindsym $mod+Pause exec --no-startup-id killall ffmpeg
+# bindsym Pause exec --no-startup-id $screencast
+# bindsym $mod+Pause exec --no-startup-id killall ffmpeg
 
- # bindsym XF86Launch1 exec --no-startup-id killall ffmpeg
+# bindsym XF86Launch1 exec --no-startup-id killall ffmpeg
 
- # bindsym XF86AudioPlay exec $pause
- # bindsym XF86AudioPause exec $pause
- # bindsym XF86AudioNext exec $next
- # bindsym XF86AudioPrev exec $prev
- # bindsym XF86AudioStop exec $pause
+# bindsym XF86AudioPlay exec $pause
+# bindsym XF86AudioPause exec $pause
+# bindsym XF86AudioNext exec $next
+# bindsym XF86AudioPrev exec $prev
+# bindsym XF86AudioStop exec $pause
 
- bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -D pulse sset Master 5%+
- bindsym XF86AudioLowerVolume exec --no-startup-id amixer -D pulse sset Master 5%-
- bindsym XF86AudioMute exec --no-startup-id amixer -D pulse sset Master mute
+bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -D pulse sset Master 5%+
+bindsym XF86AudioLowerVolume exec --no-startup-id amixer -D pulse sset Master 5%-
+bindsym XF86AudioMute exec --no-startup-id amixer -D pulse sset Master mute
 
- #kebyboard LED  brightness
- bindsym XF86KbdBrightnessDown exec --no-startup-id "sudo /usr/bin/kbd_led_down"
- bindsym XF86KbdBrightnessUp   exec --no-startup-id "sudo /usr/bin/kbd_led_up"
+#kebyboard LED  brightness
+bindsym XF86KbdBrightnessDown exec --no-startup-id "sudo /usr/bin/kbd_led_down"
+bindsym XF86KbdBrightnessUp   exec --no-startup-id "sudo /usr/bin/kbd_led_up"
 
- # Sreen brightness controls
- bindsym XF86MonBrightnessUp exec xbacklight -inc 10 # increase screen brightness
- bindsym XF86MonBrightnessDown exec xbacklight -dec 10 # decrease screen brightness
+# Sreen brightness controls
+bindsym XF86MonBrightnessUp exec xbacklight -inc 10 # increase screen brightness
+bindsym XF86MonBrightnessDown exec xbacklight -dec 10 # decrease screen brightness
 
- #END
+#END
 
- # bindsym XF86Mail exec $term -e "mutt"
- # bindsym XF86MyComputer exec
- # bindsym $mod+XF86MyComputer exec
- # bindsym XF86HomePage exec --no-startup-id qutebrowser lukesmith.xyz
- # bindsym $mod+XF86HomePage exec --no-startup-id $browser
- # bindsym $mod+XF86WWW exec --no-startup-id $browser
+# bindsym XF86Mail exec $term -e "mutt"
+# bindsym XF86MyComputer exec
+# bindsym $mod+XF86MyComputer exec
+# bindsym XF86HomePage exec --no-startup-id qutebrowser lukesmith.xyz
+# bindsym $mod+XF86HomePage exec --no-startup-id $browser
+# bindsym $mod+XF86WWW exec --no-startup-id $browser
 
- # bindsym XF86Calculator exec $term -e qalc
+# bindsym XF86Calculator exec $term -e qalc
