@@ -271,3 +271,5 @@ transfer() {
 } 
 
 alias meain='echo "Yep thats me, something I can help you with?"'
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"

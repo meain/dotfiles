@@ -74,8 +74,6 @@ Plug 'Yggdroot/indentLine'
 Plug 'rking/ag.vim', { 'on' : 'Ag' }
 " Mru - mostly for use with v in shell
 Plug 'vim-scripts/mru.vim'
-" See images in vim
-Plug 'ashisha/image.vim'
 " Hyper focus editing
 Plug 'junegunn/limelight.vim'
 " Goyo
