@@ -3,6 +3,9 @@
 
 call plug#begin('~/.vim/plugged')
 
+" A fancy start page for vim
+Plug 'mhinz/vim-startify'
+
 " Vim colorscheme
 Plug 'flazz/vim-colorschemes'
 
@@ -12,8 +15,11 @@ function! DoRemote(arg)
 endfunction
 Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
 Plug 'SirVer/ultisnips'
-Plug 'zchee/deoplete-go', { 'do': 'make', 'for': 'go'}
-Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern', 'for': 'js' }
+Plug 'honza/vim-snippets'
+Plug 'zchee/deoplete-go', { 'do': 'make'}
+Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern'}
+Plug 'othree/jspc.vim', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'zchee/deoplete-jedi'
 
 " Better file browser
@@ -86,7 +92,7 @@ Plug 'suan/vim-instant-markdown', { 'for' : 'markdown' , 'do': 'npm install -g i
 Plug 'fatih/vim-go', { 'for': 'go' }
 
 " Python development
-" Plug 'davidhalter/jedi-vim'
+Plug 'davidhalter/jedi-vim'
 
 call plug#end()
 
@@ -276,7 +282,7 @@ nnoremap <Leader>q :q<cr>
 nnoremap <Leader>w :w<cr>
 
 " Split like a boss
-nnoremap <Leader>v :vsp<cr>
+nnoremap <Leader>v :vsplit\|:Startify<cr>
 nnoremap <Leader>h :sp<cr>
 
 " Clear search highlight
@@ -420,6 +426,8 @@ let g:deoplete#enable_at_startup = 1
 let g:deoplete#auto_complete_start_length = 1
 " autocmd CompleteDone * pclose
 set completeopt+=noinsert
+set completeopt-=preview
+
 
 " Neomake linting
 autocmd! BufWritePost,BufEnter * Neomake
@@ -440,3 +448,17 @@ let g:airline_right_alt_sep = ' '
 let g:airline_symbols.branch = ' '
 let g:airline_symbols.readonly = ' '
 let g:airline_symbols.linenr = ' '
+
+" Startify
+nnoremap ,l :Startify<cr>
+highlight StartifyBracket ctermfg=240
+highlight StartifyFooter  ctermfg=240
+highlight StartifyHeader  ctermfg=114
+highlight StartifyNumber  ctermfg=215
+highlight StartifyPath    ctermfg=245
+highlight StartifySlash   ctermfg=240
+highlight StartifySpecial ctermfg=240
+let g:startify_skiplist = [
+       \ '\.png',
+       \ '\.jpeg',
+       \ ]
