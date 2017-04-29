@@ -1,112 +1,80 @@
-" ==========================
-" Vim plug to manage plugins
-" ==========================
+"                            Plugin Management                         "
+"                    ==============================                    "
 
 call plug#begin('~/.vim/plugged')
 
-" A fancy start page for vim
-Plug 'mhinz/vim-startify'
-" Go development
-Plug 'fatih/vim-go'
-" Python autocomplete
-Plug 'davidhalter/jedi-vim', { 'for' : 'python' }
-" Better autocompletion
-function! DoRemote(arg)
-	UpdateRemotePlugins
-endfunction
-Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
 " Vim colorscheme
 Plug 'flazz/vim-colorschemes'
+
 " Better file browser
 Plug 'scrooloose/nerdtree', { 'on' : 'NERDTreeToggle' }
+
 " Autocomplete on tab
 Plug 'ervandew/supertab'
+
 " Code commenter
 Plug 'tpope/vim-commentary'
-" Class/module browser
-Plug 'majutsushi/tagbar', { 'on' : 'Tagbar' }
-" Git stuff from within vim
-Plug 'tpope/vim-fugitive'
-" Zen coding
-Plug 'rstacruz/sparkup', { 'for' : 'html' }
-" Airline
-Plug 'bling/vim-airline'
-" Airline themes
-Plug 'vim-airline/vim-airline-themes'
-" Surround
-Plug 'tpope/vim-surround'
-" Autopair
-Plug 'jiangmiao/auto-pairs'
-" Better search and replace
-Plug 'osyo-manga/vim-over'
-" Snippets manager (SnipMate), dependencies, and snippets repo
-Plug 'MarcWeber/vim-addon-mw-utils'
-Plug 'tomtom/tlib_vim'
-Plug 'honza/vim-snippets'
-Plug 'garbas/vim-snipmate'
-" Git/mercurial/others diff icons on the side of the file lines
-Plug 'mhinz/vim-signify'
-" Paint css colors with the real color
-Plug 'gko/vim-coloresque'
-" Neomake - linting and stuf
-Plug 'neomake/neomake'
-"javascript complete after install the plugin, you must cd the install
-"directory and run `npm install`, then add a .tern-project config file
-"the doc at http://ternjs.net/doc/manual.html#vim
-Plug 'marijnh/tern_for_vim'
-" For javascript
-Plug 'jelera/vim-javascript-syntax'
-Plug 'pangloss/vim-javascript'
-Plug 'nathanaelkane/vim-indent-guides'
-" Markdown realtime preview
-" Before you want to use it, please run
-" `sudo npm -g install instant-markdown-d`
-Plug 'suan/vim-instant-markdown', { 'for' : 'markdown' }
-"Easy vim and tmux splitting
-" Plug 'christoomey/vim-tmux-navigator'
-" Jade syntax and indentation
-Plug 'digitaltoad/vim-pug', { 'for' : 'pug' }
-" Stylus syntax and indentation
-Plug 'wavded/vim-stylus', { 'for' : 'stylus' }
-" Show indent
-Plug 'Yggdroot/indentLine'
-" Ack like code search in vim
-Plug 'rking/ag.vim', { 'on' : 'Ag' }
-" Mru - mostly for use with v in shell
-Plug 'vim-scripts/mru.vim'
-" See images in vim
-Plug 'ashisha/image.vim'
-" Hyper focus editing
-Plug 'junegunn/limelight.vim'
-" Goyo
-Plug 'junegunn/goyo.vim'
+
 " Fzf for vim
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+
 " Rainbow delim
 Plug 'luochen1990/rainbow'
-" Ipython from vim
-Plug 'meain/ipyvim'
 
-" Plugins from vim-scripts repos:
+" Class/module browser
+Plug 'majutsushi/tagbar', { 'on' : 'Tagbar' }
+
+" Git stuff from within vim
+Plug 'tpope/vim-fugitive'
+
+" Airline
+Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+" Surround
+Plug 'tpope/vim-surround'
+
+" Autopair
+Plug 'jiangmiao/auto-pairs'
+
+" Git/mercurial/others diff icons on the side of the file lines
+Plug 'mhinz/vim-signify'
+
+" Neomake - linting and stuf
+Plug 'neomake/neomake'
+
+" Show indent
+Plug 'Yggdroot/indentLine'
+
+" Mru - mostly for use with v in shell
+Plug 'vim-scripts/mru.vim'
+
+" See images in vim
+Plug 'ashisha/image.vim'
+
+" Hyper focus editing
+Plug 'junegunn/limelight.vim'
+Plug 'junegunn/goyo.vim'
 
 " Search results counter
 Plug 'IndexedSearch'
+
 " XML/HTML tags navigation
 Plug 'matchit.zip'
+
 " Restore file pointer
 Plug 'restore_view.vim'
-" Github from vim
-" Plug 'wsdjeg/GitHub.vim'
-Plug 'junegunn/vim-github-dashboard'
 
-" NyaoVim plugins
-" Markdown preview
-Plug 'rhysd/nyaovim-markdown-preview'
-" Popup for images and stuff
-Plug 'rhysd/nyaovim-popup-tooltip'
-" Mini browser inside of nyaovim
-Plug 'rhysd/nyaovim-mini-browser'
+" Paint css colors with the real color
+Plug 'gko/vim-coloresque'
+
+" Markdown realtime preview
+" `sudo npm -g install instant-markdown-d`
+Plug 'suan/vim-instant-markdown', { 'for' : 'markdown' }
+
+" Go development
+Plug 'fatih/vim-go'
 
 call plug#end()
 
@@ -114,33 +82,93 @@ call plug#end()
 
 
 
+"                           Editor Settings                            "
+"                    ==============================                    "
 
-" =============================
-" Keybindings - non plugin ones
-" =============================
 
-" Set encoding
+" Set encoding to utf8
 set encoding=utf8
 
-" Set path variable so that the autocomplete for filenames is complete
+" Make autocomplete for filenames work
 set path+=**
 
-" Mapping for leader and local leader
-let mapleader = "\<Space>"
-let maplocalleader = "\\"
+" Turn on line numbers
+set number
 
-" Saving and quitting keybindings
-nnoremap <Leader>w :w<CR>
-nnoremap <Leader>q :q<CR>
+" Highlight cursor line
+set cursorline
 
-" Necessary stuff
-nnoremap ; :
-nnoremap ' ;
+" Hidden startup messages
+set shortmess=atI
+
+" Auto read and write
+set autowrite
+set autoread
+
+" Confirm before quit without save
+set confirm
+
+" Disable wrapping
+set nowrap
+
+" Better backup, swap and undos storage
+set directory=~/.vim/dirs/tmp     " directory to place swap files in
+set backup                        " make backup files
+set backupdir=~/.vim/dirs/backups " where to put backup files
+set undofile                      " persistent undos - undo after you re-open the file
+
+" Allow mouse
+set mouse=a
+
+" Incremental search
+set incsearch
+
+" Highlighted search results
+set hlsearch
+
+" Search ignore case
+set ignorecase
+
+" Remove delay on hitting esc ( tmux )
+set noesckeys
+set ttimeout
+set ttimeoutlen=1
+
+" Allow plugins by file type (required for plugins!)
+filetype plugin on
+filetype indent on
+
+" Redraw only when essential
+set lazyredraw
+
+" Make backspace great again
+set backspace=2
+
+" Set split direction
+set splitbelow
+set splitright
+
+" Default intent to 4 spaces ( auto switch based on type in code section )
+set expandtab
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
 
 " Show invisibles
 set list
 set listchars=tab:▸\ ,eol:¬,trail:⋅
+"set listchars=tab:▸\ ,trail:⋅
 set showbreak=↪
+
+" When scrolling, keep cursor 5 lines away from screen border
+set scrolloff=5
+
+" Autocompletion of files and commands behaves like zsh
+set wildmenu
+set wildmode=full
+
+" Setting up ignores
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.png,*.jpg,*.gif  "Linux
 
 " Indent based folding
 set foldmethod=indent
@@ -148,27 +176,112 @@ set foldignore=
 set foldlevelstart=10
 set foldnestmax=10
 
-" Redraw only when essential
-set lazyredraw
+" Setting colorscheme
+set background=dark
+colorscheme gruvbox
 
-" Make backspace work like most other apps
-set backspace=2
+" Set up leader keys
+let mapleader = "\<Space>"
+let maplocalleader = "\\"
 
-" Allow plugins by file type (required for plugins!)
-filetype plugin on
-filetype indent on
+" Terminal mode esc remap
+tnoremap <Leader><Esc> <C-\><C-n>
 
-" Tabs and spaces handling
-set expandtab
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
+
+
+
+"                                Commands                              "
+"                    ==============================                    "
+
+" Save as sudo
+ca w!! w !sudo tee "%"
+
+" I am too lazy to take my hands from shift
+command WQ wq
+command Wq wq
+command W w
+command Q q
+
+" Remove whitespace at save
+autocmd BufWritePre *.py,*.vim,*.css,*.js,*.html,*.cpp,*.c,*.java :%s/\s\+$//e
+
+" Alphabetically sort CSS properties in file with :SortCSS
+command! SortCSS :g#\({\n\)\@<=#.,/}/sort
+
+" Fix overflow ( above 80 )
+command! FixOverflow :normal! gqap
+
+
+
+"                               Key remaps                             "
+"                    ==============================                    "
+
+
+" Enable going down in case text is wrapped
+nnoremap j gj
+nnoremap k gk
+
+"Get back to where you were easily
+nnoremap gg mpgg
+nnoremap G mpG
+nnoremap / mp/
+
+" Quick command mode (second binding to get find next)
+nnoremap ; :
+nnoremap ' ;
+
+" Use the clipboard for copy and paste
+nnoremap y "+y
+nnoremap Y "+Y
+nnoremap p "+p
+nnoremap P "+P
+vnoremap y "+y
+vnoremap Y "+Y
+vnoremap p "+p
+vnoremap P "+P
+
+" Easy navigation
+map <s-l> <c-w>l
+map <s-h> <c-w>h
+map <s-k> <c-w>k
+map <s-j> <c-w>j
+
+" Easier indentation - does dot loose selection
+vnoremap > >gv
+vnoremap < <gv
+
+
+
+
+
+"                            Leader key maps                           "
+"                    ==============================                    "
+
+
+" Quick save an quit
+nnoremap <Leader><Leader> :w<cr>
+nnoremap <Leader>q :q<cr>
+nnoremap <Leader>w :w<cr>
+
+" Split like a boss
+nnoremap <Leader>v :vsp<cr>
+nnoremap <Leader>h :sp<cr>
+
+" Clear search highlight
+nnoremap <silent><Leader>/ :nohls<CR>
+
+
+
+
+
+"                                Code                                  "
+"                    ==============================                    "
+
+
 " Switch between using tabs or spaces bsed on the file
 function TabsOrSpaces()
-    " Determines whether to use spaces or tabs on the current buffer.
     if getfsize(bufname("%")) > 256000
-        " File is very large, just use the default.
-        return
+        return  " File is huge
     endif
     let numTabs=len(filter(getbufline(bufname("%"), 1, 250), 'v:val =~ "^\\t"'))
     let numSpaces=len(filter(getbufline(bufname("%"), 1, 250), 'v:val =~ "^ "'))
@@ -178,116 +291,7 @@ function TabsOrSpaces()
 endfunction
 autocmd BufReadPost * call TabsOrSpaces()
 
-" Highlight cursor line
-set cursorline
-" Hidden startup messages
-set shortmess=atI
-" Auto read and write
-set autowrite
-set autoread
-" When dealing with unsaved files ask what to do
-set confirm
-" No backup files
-set nobackup
-" Allow mouse
-set mouse=a
-" Smart case
-set smartcase
-
-" (Hopefully) removes the delay when hitting esc in insert mode
-set noesckeys
-set ttimeout
-set ttimeoutlen=1
-
-" Turn on line numbers
-set number
-
-" Setting up ignores
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.png,*.jpg,*.gif  "Linux
-
-" Auto open or close on start
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-
-" Enble and Disable wrapping
-function! DisableWrap()
-	set nowrap
-	set nolinebreak
-	set formatoptions-=cro
-endfunction
-autocmd BufNew,BufAdd,BufCreate,VimEnter *  call DisableWrap()
-
-" Disable autocomment
-function! DisableAutoComment()
-	set formatoptions-=qr
-endfunction
-autocmd BufNew,BufAdd,BufCreate,VimEnter * call DisableAutoComment()
-
-" Always show status bar
-set laststatus=2
-
-" Incremental search
-set incsearch
-" Highlighted search results
-set hlsearch
-" Search ignore case
-set ignorecase
-
-" Clear search highlight
-nnoremap <silent><Leader>/ :nohls<CR>
-
-" Syntax highlight on
-syntax on
-
-" Enable going down in case text is wrapped
-nnoremap j gj
-nnoremap k gk
-
-" Just something I have to do
-command WQ wq
-command Wq wq
-command W w
-command Q q
-
-" Tab navigation mappings
-map <Leader>u :tabn<CR>
-map <Leader>t :tabnew\|:Startify<cr>
-map <Leader>y :tabp<CR>
-
-" Buffer switching
-map <Leader>n :bn<CR>
-map <Leader>m :bp<CR>
-
-" Better split opening
-set splitbelow
-set splitright
-
-" Copy and paste to the system clipboard
-" This also helps with dd or x replacing the content in the clipboard
-nnoremap  y "+y
-nnoremap  Y "+Y
-nnoremap  p "+p
-nnoremap  P "+P
-vnoremap y "+y`]
-vnoremap Y "+Y
-vnoremap p "+p
-vnoremap P "+P
-
-"Get back to where you were easily
-nnoremap gg mpgg
-nnoremap G mpG
-nnoremap / mp/
-
-" Easy save
-nnoremap <Leader><Leader> :w<cr>
-
-" Navigate splits with shift and hjkl
-map <s-l> <c-w>l
-map <s-h> <c-w>h
-map <s-k> <c-w>k
-map <s-j> <c-w>j
-
 " Spell checking
-" Initially choose the file types which support spell check
 autocmd BufRead,BufNewFile *.md setlocal spell
 autocmd BufRead,BufNewFile *.org setlocal spell
 autocmd BufRead,BufNewFile *.txt setlocal spell
@@ -310,63 +314,14 @@ function! SplitRunCommand()
 endfunction
 nnoremap ,s :call SplitRunCommand()<cr>
 
-" Inser a space before and after
-nnoremap <Leader>9 :normal! i<Space><Esc>lli<Space><Esc>
-
-" Save as sudo
-ca w!! w !sudo tee "%"
-
-" Setting colorscheme
-set background=dark
-colorscheme gruvbox
-
-" When scrolling, keep cursor 5 lines away from screen border
-set scrolloff=5
-
-" Autocompletion of files and commands behaves like zsh
-set wildmenu
-set wildmode=full
-
-" Fast scroll
-noremap <silent> 9 :normal!10k<cr>
-noremap <silent> 8 :normal!10j<cr>
-
-" Better backup, swap and undos storage
-set directory=~/.vim/dirs/tmp     " directory to place swap files in
-set backup                        " make backup files
-set backupdir=~/.vim/dirs/backups " where to put backup files
-set undofile                      " persistent undos - undo after you re-open the file
-set undodir=~/.vim/dirs/undos
-set viminfo+=n~/.vim/dirs/viminfo
-" Store yankring history file there too
-let g:yankring_history_dir = '~/.vim/dirs/'
-
-" Create needed directories if they don't exist
-if !isdirectory(&backupdir)
-    call mkdir(&backupdir, "p")
-endif
-if !isdirectory(&directory)
-    call mkdir(&directory, "p")
-endif
-if !isdirectory(&undodir)
-    call mkdir(&undodir, "p")
-endif
-
-" Splitting keybindings
-nnoremap <Leader>h :split <cr>
-nnoremap <Leader>v :vsplit\|:Startify<cr>
-
-" Terminal mode remaps
-tnoremap <Leader><Esc> <C-\><C-n>
-
 " Google search from within vim
 function! GoogleSearch(arg)
 py << EOF
 import vim
 def frame_querry():
-	term = vim.eval("a:arg")
-	vim.command("vsp")
-	vim.command("term googler --count 5 " + term)
+    term = vim.eval("a:arg")
+    vim.command("vsp")
+    vim.command("term googler --count 5 " + term)
 frame_querry()
 EOF
 endfunction
@@ -405,131 +360,13 @@ function StripTrailingWhitespace()
 endfunction
 command! StripTrailingWhitespace :call StripTrailingWhitespace()
 
-" Easier indentation - does dot loose selection
-vnoremap > >gv
-vnoremap < <gv
-
-" Remove whitespace at save
-autocmd BufWritePre *.py,*.vim,*.css,*.js,*.html,*.cpp,*.c,*.java :%s/\s\+$//e
-
-" Setting ipdb breakponts
-nnoremap <Leader>b :normal! Oimport ipdb; ipdb.set_trace()<cr>
-
-" Open new terminal
-nnoremap <F1> :vsp\|:terminal<cr>
-" Open new termial and run the currently open python file
-nnoremap <F2> :vsp\|:terminal python %<cr>
-
-" Better line limit
-highlight ColorColumn ctermbg=0
-autocmd BufNew,BufAdd,BufCreate,VimEnter * normal! :set cc=80
-
-" Alphabetically sort CSS properties in file with :SortCSS
-command! SortCSS :g#\({\n\)\@<=#.,/}/sort
-
-" Compile pug and stylus files on save and refresh chrome on any web file change
-autocmd BufWritePost *.pug :silent ! pug -P % > /dev/null
-autocmd BufWritePost *.stylus :silent ! stylus % > /dev/null
-"autocmd BufWritePost *.html,*.js,*.css,*pug,*stylus :silent ! chromix with http://localhost* reload > /dev/null
-
-" Fix overflow ( above 80 )
-command! FixOverflow :normal! gqap
 
 
 
-" =============================
-" Keybindings - plugin specific
-" =============================
+"                            Plugin settings                           "
+"                    ==============================                    "
 
-" Startify
-nnoremap ,l :Startify<cr>
-let g:startify_custom_footer = " Bite my shiny metal ass!  -Bender "
-highlight StartifyBracket ctermfg=240
-highlight StartifyFooter  ctermfg=240
-highlight StartifyHeader  ctermfg=114
-highlight StartifyNumber  ctermfg=215
-highlight StartifyPath    ctermfg=245
-highlight StartifySlash   ctermfg=240
-highlight StartifySpecial ctermfg=240
-let g:startify_skiplist = [
-       \ '\.png',
-       \ '\.jpeg',
-       \ ]
-
-" NERDTree
-" Toggle nerdtree display
-map <F3> :NERDTreeToggle<CR>
-" Don't show these file types
-let NERDTreeIgnore = ['\.pyc$', '\.pyo$']
-
-" Signify
-" this first setting decides in which order try to guess your current vcs
-" UPDATE it to reflect your preferences, it will speed up opening files
-let g:signify_vcs_list = [ 'git', 'hg' ]
-nnoremap <leader>sn <plug>(signify-next-hunk)
-nnoremap <leader>sp <plug>(signify-prev-hunk)
-highlight DiffAdd           cterm=bold ctermbg=none ctermfg=119
-highlight DiffDelete        cterm=bold ctermbg=none ctermfg=167
-highlight DiffChange        cterm=bold ctermbg=none ctermfg=227
-highlight SignifySignAdd    cterm=bold ctermbg=237  ctermfg=119
-highlight SignifySignDelete cterm=bold ctermbg=237  ctermfg=167
-highlight SignifySignChange cterm=bold ctermbg=237  ctermfg=227
-
-" Airline
-let g:airline_powerline_fonts = 1
-let g:airline_theme = 'distinguished'
-let g:airline#extensions#whitespace#enabled = 1
-let g:airline#extensions#tabline#enabled = 1
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-let g:airline_left_sep = ' '
-let g:airline_left_alt_sep = ' '
-let g:airline_right_sep = ' '
-let g:airline_right_alt_sep = ' '
-let g:airline_symbols.branch = ' '
-let g:airline_symbols.readonly = ' '
-let g:airline_symbols.linenr = ' '
-
-" Vim-jsx
-" if you use JSX syntax in .js file, please enable it.
-let g:jsx_ext_required = 0
-
-" Neomake linting
-autocmd! BufWritePost,BufEnter * Neomake
-let g:neomake_javascript_enabled_makers = ['eslint']
-
-" Jedi python
-let g:jedi#use_splits_not_buffers = "bottom"
-let g:jedi#goto_command = "<leader>d"
-let g:jedi#goto_assignments_command = "<leader>s"
-let g:jedi#goto_definitions_command = ""
-let g:jedi#documentation_command = "<leader>k"
-let g:jedi#usages_command = "<leader>n"
-let g:jedi#completions_command = "<C-Space>"
-let g:jedi#rename_command = "<leader>r"
-let g:jedi#max_doc_height = 30
-autocmd FileType python setlocal completeopt-=preview
-
-" Use deoplete.
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#auto_complete_start_length = 1
-set completeopt+=noinsert
-
-" Sparkup
-let g:sparkupExecuteMapping='<c-e>'
-
-" Fugitive
-nnoremap <leader>g :Gstatus<cr>
-command! Gl normal! :!git vhm<cr>
-
-" MRU
-let MRU_Max_Entries = 1000
-let MRU_Exclude_Files = '^/tmp/.*\|^/var/tmp/.*'
-let MRU_Auto_Close = 1
-let MRU_Max_Menu_Entries = 10
-
-" Fzf
+" Fzf fuzzy search
 let $FZF_DEFAULT_COMMAND = 'ag --hidden -l -g ""'
 command! -bang -nargs=* MRUFzf call fzf#vim#history(fzf#vim#with_preview())
 command! -bang -nargs=? -complete=dir GFiles
@@ -537,10 +374,8 @@ command! -bang -nargs=? -complete=dir GFiles
 nnoremap ,, :MRUFzf<CR>
 nnoremap <leader>f :GFiles<CR>
 nnoremap <leader>l :Commands<CR>
-" nnoremap <leader>ta :Tags<CR>
-" Default fzf layout
-let g:fzf_layout = { 'down': '~40%' }
-" Customize fzf colors to match your color scheme
+" nnoremap <leader>t :Tags<CR>
+let g:fzf_layout = { 'down': '~40%' }  " Default fzf layout
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],
   \ 'bg':      ['bg', 'Normal'],
@@ -557,3 +392,38 @@ let g:fzf_colors =
 
 " Rainbow delim
 let g:rainbow_active = 1
+
+" Fugitive
+nnoremap <leader>g :Gstatus<cr>
+command! Gl normal! :!git vhm<cr>
+
+" MRU
+let MRU_Max_Entries = 1000
+let MRU_Exclude_Files = '^/tmp/.*\|^/var/tmp/.*'
+let MRU_Auto_Close = 1
+let MRU_Max_Menu_Entries = 10
+
+" Use deoplete.
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#auto_complete_start_length = 1
+set completeopt+=noinsert
+
+" Neomake linting
+autocmd! BufWritePost,BufEnter * Neomake
+let g:neomake_javascript_enabled_makers = ['eslint']
+
+" Airline
+let g:airline_powerline_fonts = 1
+let g:airline_theme = 'distinguished'
+let g:airline#extensions#whitespace#enabled = 1
+let g:airline#extensions#tabline#enabled = 1
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+let g:airline_left_sep = ' '
+let g:airline_left_alt_sep = ' '
+let g:airline_right_sep = ' '
+let g:airline_right_alt_sep = ' '
+let g:airline_symbols.branch = ' '
+let g:airline_symbols.readonly = ' '
+let g:airline_symbols.linenr = ' '
