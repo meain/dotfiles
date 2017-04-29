@@ -6,11 +6,21 @@ call plug#begin('~/.vim/plugged')
 " Vim colorscheme
 Plug 'flazz/vim-colorschemes'
 
+" Better autocompletion
+function! DoRemote(arg)
+	UpdateRemotePlugins
+endfunction
+Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
+Plug 'SirVer/ultisnips'
+Plug 'zchee/deoplete-go', { 'do': 'make', 'for': 'go'}
+Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern', 'for': 'js' }
+Plug 'zchee/deoplete-jedi'
+
 " Better file browser
 Plug 'scrooloose/nerdtree', { 'on' : 'NERDTreeToggle' }
 
 " Autocomplete on tab
-Plug 'ervandew/supertab'
+" Plug 'ervandew/supertab'
 
 " Code commenter
 Plug 'tpope/vim-commentary'
@@ -67,14 +77,16 @@ Plug 'matchit.zip'
 Plug 'restore_view.vim'
 
 " Paint css colors with the real color
-Plug 'gko/vim-coloresque'
+Plug 'gko/vim-coloresque', { 'for': 'css' }
 
 " Markdown realtime preview
-" `sudo npm -g install instant-markdown-d`
-Plug 'suan/vim-instant-markdown', { 'for' : 'markdown' }
+Plug 'suan/vim-instant-markdown', { 'for' : 'markdown' , 'do': 'npm install -g instant-markdown-d' }
 
 " Go development
-Plug 'fatih/vim-go'
+Plug 'fatih/vim-go', { 'for': 'go' }
+
+" Python development
+" Plug 'davidhalter/jedi-vim'
 
 call plug#end()
 
@@ -406,6 +418,7 @@ let MRU_Max_Menu_Entries = 10
 " Use deoplete.
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#auto_complete_start_length = 1
+" autocmd CompleteDone * pclose
 set completeopt+=noinsert
 
 " Neomake linting
