@@ -26,7 +26,7 @@ Plug 'zchee/deoplete-jedi'
 Plug 'scrooloose/nerdtree', { 'on' : 'NERDTreeToggle' }
 
 " Autocomplete on tab
-" Plug 'ervandew/supertab'
+Plug 'ervandew/supertab'
 
 " Code commenter
 Plug 'tpope/vim-commentary'
