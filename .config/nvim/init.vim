@@ -288,6 +288,10 @@ nnoremap <Leader>h :sp<cr>
 " Clear search highlight
 nnoremap <silent><Leader>/ :nohls<CR>
 
+" Easy tag navigation
+nnoremap <silent><Leader>; <C-]>
+nnoremap <silent><Leader>' <C-o>
+
 
 
 
@@ -408,6 +412,17 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 
+" Jedi python
+let g:jedi#use_splits_not_buffers = "bottom"
+let g:jedi#goto_command = "<leader>d"
+let g:jedi#goto_assignments_command = "<leader>s"
+let g:jedi#goto_definitions_command = ""
+let g:jedi#documentation_command = "<leader>k"
+let g:jedi#usages_command = "<leader>n"
+let g:jedi#completions_command = "<C-Space>"
+let g:jedi#rename_command = "<leader>r"
+let g:jedi#max_doc_height = 30
+
 " Rainbow delim
 let g:rainbow_active = 1
 
@@ -428,6 +443,9 @@ let g:deoplete#auto_complete_start_length = 1
 set completeopt+=noinsert
 set completeopt-=preview
 
+" Fugitive
+nnoremap <leader>g :Gstatus<cr>
+command! Gl normal! :!git vhm<cr>
 
 " Neomake linting
 autocmd! BufWritePost,BufEnter * Neomake
