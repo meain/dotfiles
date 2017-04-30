@@ -431,7 +431,7 @@ nnoremap <leader>g :Gstatus<cr>
 command! Gl normal! :!git vhm<cr>
 
 " MRU
-let MRU_Max_Entries = 1000
+let MRU_Max_Entries = 100
 let MRU_Exclude_Files = '^/tmp/.*\|^/var/tmp/.*'
 let MRU_Auto_Close = 1
 let MRU_Max_Menu_Entries = 10
