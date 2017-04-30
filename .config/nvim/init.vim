@@ -415,20 +415,16 @@ let g:fzf_colors =
 " Jedi python
 let g:jedi#use_splits_not_buffers = "bottom"
 let g:jedi#goto_command = "<leader>d"
-let g:jedi#goto_assignments_command = "<leader>s"
+let g:jedi#goto_assignments_command = ""
 let g:jedi#goto_definitions_command = ""
 let g:jedi#documentation_command = "<leader>k"
 let g:jedi#usages_command = "<leader>n"
-let g:jedi#completions_command = "<C-Space>"
+let g:jedi#completions_command = ""
 let g:jedi#rename_command = "<leader>r"
 let g:jedi#max_doc_height = 30
 
 " Rainbow delim
 let g:rainbow_active = 1
-
-" Fugitive
-nnoremap <leader>g :Gstatus<cr>
-command! Gl normal! :!git vhm<cr>
 
 " MRU
 let MRU_Max_Entries = 100
