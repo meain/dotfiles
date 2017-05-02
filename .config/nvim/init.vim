@@ -94,6 +94,10 @@ Plug 'fatih/vim-go', { 'for': 'go' }
 " Python development
 Plug 'davidhalter/jedi-vim'
 
+" Latex plugin
+Plug 'lervag/vimtex'
+Plug 'xuhdev/vim-latex-live-preview'
+
 call plug#end()
 
 
@@ -396,7 +400,7 @@ command! -bang -nargs=? -complete=dir GFiles
 nnoremap ,, :MRUFzf<CR>
 nnoremap <leader>f :GFiles<CR>
 nnoremap <leader>l :Commands<CR>
-" nnoremap <leader>t :Tags<CR>
+nnoremap <leader>t :Tags<CR>
 let g:fzf_layout = { 'down': '~40%' }  " Default fzf layout
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],
@@ -476,3 +480,7 @@ let g:startify_skiplist = [
        \ '\.png',
        \ '\.jpeg',
        \ ]
+
+" LaTeX
+autocmd Filetype tex setl updatetime=1
+let g:livepreview_previewer = 'open -a Preview'
