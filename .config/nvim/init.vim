@@ -70,11 +70,12 @@ Plug 'vim-scripts/mru.vim'
 Plug 'ashisha/image.vim'
 
 " Hyper focus editing
-Plug 'junegunn/limelight.vim'
-Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
+Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 
-" Search results counter
+" Better search
 Plug 'IndexedSearch'
+" Plug 'meain/hlnext.vim'
 
 " XML/HTML tags navigation
 Plug 'matchit.zip'
@@ -92,11 +93,14 @@ Plug 'suan/vim-instant-markdown', { 'for' : 'markdown' , 'do': 'npm install -g i
 Plug 'fatih/vim-go', { 'for': 'go' }
 
 " Python development
-Plug 'davidhalter/jedi-vim'
+Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+
+" Vue JS development
+Plug 'posva/vim-vue', { 'do': 'npm i -g eslint eslint-plugin-vue'}
 
 " Latex plugin
-Plug 'lervag/vimtex'
-Plug 'xuhdev/vim-latex-live-preview'
+Plug 'lervag/vimtex', { 'for': 'tex' }
+Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 
 call plug#end()
 
@@ -178,8 +182,7 @@ set shiftwidth=4
 
 " Show invisibles
 set list
-set listchars=tab:▸\ ,eol:¬,trail:⋅
-"set listchars=tab:▸\ ,trail:⋅
+set listchars=tab:▸~,eol:¬,trail:⋅
 set showbreak=↪
 
 " When scrolling, keep cursor 5 lines away from screen border
@@ -205,6 +208,10 @@ colorscheme gruvbox
 " Set up leader keys
 let mapleader = "\<Space>"
 let maplocalleader = "\\"
+
+" Smart colorcolumn
+highlight ColorColumn ctermbg=magenta
+call matchadd('ColorColumn', '\%120v', 100)
 
 " Terminal mode esc remap
 tnoremap <Leader><Esc> <C-\><C-n>
