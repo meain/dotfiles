@@ -31,6 +31,9 @@ Plug 'ervandew/supertab'
 " Code commenter
 Plug 'tpope/vim-commentary'
 
+" Better drag visuals
+Plug 'zirrostig/vim-schlepp'
+
 " Fzf for vim
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -491,3 +494,12 @@ let g:startify_skiplist = [
 " LaTeX
 autocmd Filetype tex setl updatetime=1
 let g:livepreview_previewer = 'open -a Preview'
+
+" Drag Visuals
+vmap <unique> <up>    <Plug>SchleppUp
+vmap <unique> <down>  <Plug>SchleppDown
+vmap <unique> <left>  <Plug>SchleppLeft
+vmap <unique> <right> <Plug>SchleppRight
+vmap <unique> D <Plug>SchleppDup
+" let g:Schlepp#allowSquishingLines = 1
+" let g:Schlepp#allowSquishingBlocks = 1
