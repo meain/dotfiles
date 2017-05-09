@@ -102,8 +102,8 @@ Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'posva/vim-vue', { 'do': 'npm i -g eslint eslint-plugin-vue'}
 
 " Latex plugin
-Plug 'lervag/vimtex', { 'for': 'tex' }
-Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
+" Plug 'lervag/vimtex', { 'for': 'tex' }
+" Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 
 call plug#end()
 
