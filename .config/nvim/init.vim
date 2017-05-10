@@ -243,6 +243,9 @@ command! SortCSS :g#\({\n\)\@<=#.,/}/sort
 " Fix overflow ( above 80 )
 command! FixOverflow :normal! gqap
 
+" Set cwd to the one in open file
+autocmd BufEnter * silent! lcd %:p:h
+
 
 
 "                               Key remaps                             "
@@ -293,11 +296,11 @@ vnoremap < <gv
 " Quick save an quit
 nnoremap <Leader><Leader> :w<cr>
 nnoremap <Leader>q :q<cr>
-nnoremap <Leader>w :w<cr>
+nnoremap <silent><Leader>w :w<cr>
 
 " Split like a boss
-nnoremap <Leader>v :vsplit\|:Startify<cr>
-nnoremap <Leader>h :sp<cr>
+nnoremap <silent><Leader>v :vsplit\|:Startify<cr>
+nnoremap <silent><Leader>h :sp<cr>
 
 " Clear search highlight
 nnoremap <silent><Leader>/ :nohls<CR>
@@ -408,9 +411,11 @@ command! -bang -nargs=* MRUFzf call fzf#vim#history(fzf#vim#with_preview())
 command! -bang -nargs=? -complete=dir GFiles
 \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
 nnoremap ,, :MRUFzf<CR>
+nnoremap ,e :FZF<cr>
 nnoremap <leader>f :GFiles<CR>
 nnoremap <leader>l :Commands<CR>
 nnoremap <leader>t :Tags<CR>
+nnoremap <leader>b :Buffers<cr>
 let g:fzf_layout = { 'down': '~40%' }  " Default fzf layout
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],

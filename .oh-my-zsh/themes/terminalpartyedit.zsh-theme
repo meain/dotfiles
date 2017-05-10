@@ -15,8 +15,8 @@ function time_display() {
         echo '';
     fi
 }
-PROMPT='
- %(?,%{$fg[white]%},%{$fg[red]%})¬%{$reset_color%} '
+PROMPT='%(?,%{$fg[white]%},%{$fg[red]%})¬%{$reset_color%} '
+RPROMPT="%{$fg[white]%}%2~$(git_prompt_info) $(time_display) $(battery_charge)"
 # Vi mode display
 function zle-line-init zle-keymap-select {
     VIM_PROMPT="%{$fg_bold[blue]%} : %{$reset_color%}"
