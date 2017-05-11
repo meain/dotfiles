@@ -232,8 +232,6 @@ ca w!! w !sudo tee "%"
 command WQ wq
 command Wq wq
 command W w
-command Q q
-
 " Remove whitespace at save
 autocmd BufWritePre *.py,*.vim,*.css,*.js,*.html,*.cpp,*.c,*.java :%s/\s\+$//e
 
@@ -308,6 +306,9 @@ nnoremap <silent><Leader>/ :nohls<CR>
 " Easy tag navigation
 nnoremap <silent><Leader>; <C-]>
 nnoremap <silent><Leader>' <C-o>
+
+" Quick fold and unfold
+nnoremap <silent><Leader><esc> :normal!za<cr>
 
 
 
