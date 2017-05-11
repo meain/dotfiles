@@ -158,6 +158,13 @@ function code_view(){
 	}
 alias cl='code_view'
 
+# cd with ls
+function cdls(){
+	cd $1
+	ls
+}
+alias cd='cdls'
+
 #polly-node
 alias polly='sh ~/bin/polly_node.sh'
 
