@@ -146,6 +146,18 @@ alias p='cd ~/Documents/Projects && ls'
 # Alias to get into desktop folder
 alias d='cd ~/Desktop && ls'
 
+# pretty code viewer
+function code_view(){
+	pygmentize $1 > /tmp/hilighted_code
+	if [ $? -eq 0 ];
+	then
+		less /tmp/hilighted_code
+	else
+		less $1
+	fi
+	}
+alias cl='code_view'
+
 #polly-node
 alias polly='sh ~/bin/polly_node.sh'
 
