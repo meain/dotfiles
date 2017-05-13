@@ -310,6 +310,9 @@ nnoremap <silent><Leader>' <C-o>
 " Quick fold and unfold
 nnoremap <silent><Leader><esc> :normal!za<cr>
 
+" Quick excecute python
+nnoremap <silent><Leader>e :!python %<cr>
+
 
 
 
