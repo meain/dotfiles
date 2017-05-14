@@ -34,6 +34,9 @@ Plug 'tpope/vim-commentary'
 " Better drag visuals
 Plug 'zirrostig/vim-schlepp'
 
+" Dim inactive windows
+" Plug 'blueyed/vim-diminactive'
+
 " Fzf for vim
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -312,6 +315,10 @@ nnoremap <silent><Leader><esc> :normal!za<cr>
 
 " Quick excecute python
 nnoremap <silent><Leader>e :!python %<cr>
+
+" Quick switch tabs
+nnoremap <silent><Leader>n :tabn<cr>
+nnoremap <silent><Leader>p :tabp<cr>
 
 
 
