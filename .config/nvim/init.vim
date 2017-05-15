@@ -401,6 +401,7 @@ function! MinimizeIfZoomed()
 endfunction
 nnoremap <c-q> :call MinimizeIfZoomed() \|:SSave zPreviousSession \| :qa<cr>y
 
+" Strip trailing whitespaces
 function StripTrailingWhitespace()
     if !&binary && &filetype != 'diff'
       normal mz
@@ -409,6 +410,9 @@ function StripTrailingWhitespace()
     endif
 endfunction
 command! StripTrailingWhitespace :call StripTrailingWhitespace()
+
+" Auto pep8
+command! AutoPep8 :normal! :%! autopep8 %<cr>
 
 
 
