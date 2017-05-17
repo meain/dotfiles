@@ -23,7 +23,7 @@ Plug 'othree/jspc.vim', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'zchee/deoplete-jedi'
 
 " Better file browser
-Plug 'scrooloose/nerdtree', { 'on' : 'NERDTreeToggle' }
+Plug 'tpope/vim-vinegar'
 
 " Autocomplete on tab
 Plug 'ervandew/supertab'
@@ -412,7 +412,7 @@ function! s:ZoomToggle() abort
     endif
 endfunction
 command! ZoomToggle call s:ZoomToggle()
-nnoremap <silent> - :ZoomToggle<CR> \| :normal! 0<cr>
+nnoremap <silent> = :ZoomToggle<CR> \| :normal! 0<cr>
 
 " Save session and quit all buffers (for use with viml command)
 function! MinimizeIfZoomed()
