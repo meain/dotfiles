@@ -489,7 +489,7 @@ set completeopt+=noinsert
 set completeopt-=preview
 
 " Fugitive
-nnoremap <leader>g :Gstatus<cr>
+nnoremap <silent><leader>g :Gstatus\|normal!gg8j<cr>
 command! Gl normal! :!git vhm<cr>
 
 " Neomake linting
