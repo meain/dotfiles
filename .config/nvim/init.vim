@@ -39,6 +39,9 @@ Plug 'scrooloose/nerdcommenter'
 " Better drag visuals
 Plug 'zirrostig/vim-schlepp'
 
+" Auto skeleton for new files
+Plug 'noahfrederick/vim-skeleton'
+
 " Better f and d
 Plug 'unblevable/quick-scope'
 
