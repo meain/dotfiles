@@ -55,6 +55,9 @@ Plug 'blueyed/vim-diminactive'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
+" colorschemes for vim
+Plug 'flazz/vim-colorschemes'
+
 " Rainbow delim
 Plug 'luochen1990/rainbow'
 
