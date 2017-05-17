@@ -69,9 +69,8 @@ Plug 'majutsushi/tagbar', { 'on' : 'Tagbar' }
 Plug 'tpope/vim-fugitive'
 
 " Airline
-" Plug 'bling/vim-airline'
-" Plug 'vim-airline/vim-airline-themes'
-Plug 'itchyny/lightline.vim'
+Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 " Surround
 Plug 'tpope/vim-surround'
@@ -524,20 +523,20 @@ command! Gl normal! :!git vhm<cr>
 " let g:neomake_javascript_enabled_makers = ['eslint']
 
 " Airline
-" let g:airline_powerline_fonts = 1
-" let g:airline_theme = 'distinguished'
-" let g:airline#extensions#whitespace#enabled = 1
-" let g:airline#extensions#tabline#enabled = 1
-" if !exists('g:airline_symbols')
-    " let g:airline_symbols = {}
-" endif
-" let g:airline_left_sep = ' '
-" let g:airline_left_alt_sep = ' '
-" let g:airline_right_sep = ' '
-" let g:airline_right_alt_sep = ' '
-" let g:airline_symbols.branch = ' '
-" let g:airline_symbols.readonly = ' '
-" let g:airline_symbols.linenr = ' '
+let g:airline_powerline_fonts = 1
+let g:airline_theme = 'distinguished'
+let g:airline#extensions#whitespace#enabled = 1
+let g:airline#extensions#tabline#enabled = 1
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+let g:airline_left_sep = ' '
+let g:airline_left_alt_sep = ' '
+let g:airline_right_sep = ' '
+let g:airline_right_alt_sep = ' '
+let g:airline_symbols.branch = 'Y'
+let g:airline_symbols.readonly = 'ro'
+let g:airline_symbols.linenr = ' '
 
 " Startify
 nnoremap ,l :Startify<cr>
@@ -623,60 +622,3 @@ let g:scratch_top = 1
 let g:scratch_persistence_file = '/tmp/scratch'
 let g:scratch_autohide = &hidden
 let g:scratch_filetype = 'yaml'
-
-" lightline
-let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'fugitive', 'filename' ] ]
-      \ },
-      \ 'component_function': {
-      \   'fugitive': 'LightlineFugitive',
-      \   'readonly': 'LightlineReadonly',
-      \   'modified': 'LightlineModified',
-      \   'filename': 'LightlineFilename'
-      \ },
-      \ 'separator': { 'left': '', 'right': '' },
-      \ 'subseparator': { 'left': '|', 'right': '|' }
-      \ }
-
-function! LightlineModified()
-  if &filetype == "help"
-    return ""
-  elseif &modified
-    return "+"
-  elseif &modifiable
-    return ""
-  else
-    return ""
-  endif
-endfunction
-
-function! LightlineReadonly()
-  if &filetype == "help"
-    return ""
-  elseif &readonly
-    return "⭤"
-  else
-    return ""
-  endif
-endfunction
-
-function! LightlineFugitive()
-  return exists('*fugitive#head') ? fugitive#head() : ''
-endfunction
-
-function! LightlineFilename()
-  return ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
-       \ ('' != expand('%:t') ? expand('%:t') : '[No Name]') .
-       \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
-endfunction
-
-function! LightlineFugitive()
-  if exists("*fugitive#head")
-    let branch = fugitive#head()
-    return branch !=# '' ? 'Y '.branch : ''
-  endif
-  return ''
-endfunction
