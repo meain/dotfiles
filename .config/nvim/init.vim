@@ -68,7 +68,8 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'mhinz/vim-signify'
 
 " Neomake - linting and stuf
-Plug 'neomake/neomake'
+Plug 'w0rp/ale'
+" Plug 'neomake/neomake'
 
 " Show indent
 Plug 'Yggdroot/indentLine'
@@ -482,8 +483,8 @@ nnoremap <leader>g :Gstatus<cr>
 command! Gl normal! :!git vhm<cr>
 
 " Neomake linting
-autocmd! BufWritePost,BufEnter * Neomake
-let g:neomake_javascript_enabled_makers = ['eslint']
+" autocmd! BufWritePost,BufEnter * Neomake
+" let g:neomake_javascript_enabled_makers = ['eslint']
 
 " Airline
 let g:airline_powerline_fonts = 1
@@ -555,3 +556,14 @@ function! NERDCommenter_after()
         let g:ft = ''
     endif
 endfunction
+
+" Quick scope
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+let g:qs_first_occurrence_highlight_color = 155
+let g:qs_second_occurrence_highlight_color = 81
+
+" Ale
+let g:ale_sign_column_always = 1
+let g:ale_sign_error = ':x'
+let g:ale_sign_warning = ':!'
+let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
