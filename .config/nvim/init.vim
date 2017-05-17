@@ -29,8 +29,8 @@ Plug 'scrooloose/nerdtree', { 'on' : 'NERDTreeToggle' }
 Plug 'ervandew/supertab'
 
 " Smoother scrolling
-" Plug 'yuttie/comfortable-motion.vim'
-Plug 'terryma/vim-smooth-scroll'
+Plug 'yuttie/comfortable-motion.vim'
+" Plug 'terryma/vim-smooth-scroll'
 
 " Code commenter
 " Plug 'tpope/vim-commentary'
@@ -577,5 +577,8 @@ let g:ale_sign_warning = ':!'
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
 
 " Smooth scrolling
-noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
-noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
+let g:comfortable_motion_scroll_down_key = "j"
+let g:comfortable_motion_scroll_up_key = "k"
+let g:comfortable_motion_interval = 50.0
+let g:comfortable_motion_friction = 0.0
+let g:comfortable_motion_air_drag = 4.0
