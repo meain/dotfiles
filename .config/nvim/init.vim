@@ -430,6 +430,16 @@ command! StripTrailingWhitespace :call StripTrailingWhitespace()
 " Auto pep8
 command! AutoPep8 :normal! :%! autopep8 %<cr>
 
+function Marks()
+    marks abcdefghijklmnopqrstuvwxyz.
+    echo 'Jump to mark: '
+    let mark=nr2char(getchar())
+    redraw
+    execute 'normal! `'.mark
+endfunction
+command Marks call Marks()
+nnoremap <silent>`` :call Marks()<cr>
+
 
 
 
