@@ -281,15 +281,21 @@ vnoremap Y "+Y
 vnoremap p "+p
 vnoremap P "+P
 
-" Easy navigation
-map <s-l> <c-w>l
-map <s-h> <c-w>h
-map <s-k> <c-w>k
-map <s-j> <c-w>j
+" Split navigation
+nnoremap <s-l> <c-w>l
+nnoremap <s-h> <c-w>h
+nnoremap <s-k> <c-w>k
+nnoremap <s-j> <c-w>j
 
 " Easier indentation - does dot loose selection
 vnoremap > >gv
 vnoremap < <gv
+
+" Navigaiion
+nnoremap <Down> 20j
+nnoremap <Up> 20k
+nnoremap <s-Down> 10<c-y>
+nnoremap <s-Up> 10<c-e>
 
 
 
