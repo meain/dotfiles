@@ -590,6 +590,9 @@ function! NERDCommenter_after()
     endif
 endfunction
 
+" Limelight
+let g:limelight_conceal_ctermfg=0
+
 " Quick scope
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 let g:qs_first_occurrence_highlight_color = 155
