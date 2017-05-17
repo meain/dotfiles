@@ -47,7 +47,7 @@ Plug 'noahfrederick/vim-skeleton', { 'on': ['SkelEdit', 'SkelInsert'] }
 Plug 'unblevable/quick-scope'
 
 " Scratch buffer
-Plug 'mtth/scratch.vim', { 'on': 'Scratch' }
+Plug 'mtth/scratch.vim', { 'on': ['Scratch', 'ScratchPreview'] }
 
 " Dim inactive windows
 Plug 'blueyed/vim-diminactive'
@@ -454,6 +454,7 @@ nnoremap <silent>`` :call Marks()<cr>
 
 
 
+
 "                            Plugin settings                           "
 "                    ==============================                    "
 
@@ -608,10 +609,10 @@ let g:comfortable_motion_friction = 0.0
 let g:comfortable_motion_air_drag = 4.0
 
 " Scratch buffer
-nnoremap <silent><leader>s :ScratchPreview<cr>
+nnoremap <silent><leader>s :Scratch<cr>
 let g:scratch_height = 20
 let g:scratch_top = 1
 " let g:scratch_persistenc_file='~/.vim/scratch'
-let g:scratch_persistence_file = '/tmp/scratch.vim'
+let g:scratch_persistence_file = '/tmp/scratch'
 let g:scratch_autohide = &hidden
-let g:scratch_filetype = 'markdown'
+let g:scratch_filetype = 'yaml'
