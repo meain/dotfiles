@@ -29,13 +29,17 @@ Plug 'scrooloose/nerdtree', { 'on' : 'NERDTreeToggle' }
 Plug 'ervandew/supertab'
 
 " Code commenter
-Plug 'tpope/vim-commentary'
+" Plug 'tpope/vim-commentary'
+Plug 'scrooloose/nerdcommenter'
 
 " Better drag visuals
 Plug 'zirrostig/vim-schlepp'
 
+" Better f and d
+Plug 'unblevable/quick-scope'
+
 " Dim inactive windows
-" Plug 'blueyed/vim-diminactive'
+Plug 'blueyed/vim-diminactive'
 
 " Fzf for vim
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -216,7 +220,7 @@ let mapleader = "\<Space>"
 let maplocalleader = "\\"
 
 " Smart colorcolumn
-highlight ColorColumn ctermbg=magenta
+highlight ColorColumn ctermbg=0 guibg=#eee8d5
 call matchadd('ColorColumn', '\%120v', 100)
 
 " Terminal mode esc remap
@@ -523,3 +527,31 @@ vmap <unique> <right> <Plug>SchleppRight
 vmap <unique> D <Plug>SchleppDup
 " let g:Schlepp#allowSquishingLines = 1
 " let g:Schlepp#allowSquishingBlocks = 1
+
+" Nerd comment ( just out of habbit )
+let g:NERDSpaceDelims = 1
+nnoremap <silent> gc :call NERDComment(0,"toggle")<CR>
+vnoremap <silent> gc :call NERDComment(0,"toggle")<CR>
+
+" Vue stuff
+autocmd FileType vue syntax sync fromstart
+autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
+let g:ft = ''
+function! NERDCommenter_before()
+  if &ft == 'vue'
+    let g:ft = 'vue'
+    let stack = synstack(line('.'), col('.'))
+    if len(stack) > 0
+      let syn = synIDattr((stack)[0], 'name')
+      if len(syn) > 0
+        exe 'setf ' . substitute(tolower(syn), '^vue_', '', '')
+      endif
+    endif
+  endif
+endfunction
+function! NERDCommenter_after()
+  if g:ft == 'vue'
+    setf vue
+    let g:ft = ''
+  endif
+endfunction
