@@ -296,10 +296,12 @@ vnoremap > >gv
 vnoremap < <gv
 
 " Navigaiion
-nnoremap <Down> 20j
-nnoremap <Up> 20k
-nnoremap <s-Down> 10<c-y>
-nnoremap <s-Up> 10<c-e>
+nnoremap <Down> 10<c-y>
+nnoremap <Up> 10<c-e>
+
+" Invert caret and 0
+nnoremap ^ 0
+nnoremap 0 ^
 
 
 
@@ -581,5 +583,3 @@ let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
 " Smooth scrolling
 noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
 noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
-noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
-noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
