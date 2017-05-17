@@ -138,6 +138,7 @@ alias here='find . -type f -print0|xargs -0 grep -C 2 -i'
 alias server='python -m SimpleHTTPServer '
 alias tn='tmux new -s'
 alias ta='tmux attach -t'
+alias r='ranger'
 
 # Alias to open multimedia folder in finder
 alias m='cd ~/Documents/Multimedia && open . && cd -'
