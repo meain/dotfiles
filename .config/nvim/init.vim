@@ -42,6 +42,9 @@ Plug 'zirrostig/vim-schlepp'
 " Better f and d
 Plug 'unblevable/quick-scope'
 
+" Scratch buffer
+Plug 'mtth/scratch.vim'
+
 " Dim inactive windows
 Plug 'blueyed/vim-diminactive'
 
@@ -308,8 +311,8 @@ nnoremap <Up> 10<c-e>
 
 
 " Quick save an quit
-nnoremap <Leader><Leader> :w<cr>
-nnoremap <Leader>q :q<cr>
+nnoremap <silent><Leader><Leader> :w<cr>
+nnoremap <silent><Leader>q :q<cr>
 nnoremap <silent><Leader>w :w<cr>
 
 " Split like a boss
@@ -582,3 +585,12 @@ let g:comfortable_motion_scroll_up_key = "k"
 let g:comfortable_motion_interval = 50.0
 let g:comfortable_motion_friction = 0.0
 let g:comfortable_motion_air_drag = 4.0
+
+" Scratch buffer
+nnoremap <silent><leader>s :Scratch<cr>
+let g:scratch_height = 20
+let g:scratch_top = 1
+" let g:scratch_persistenc_file='~/.vim/scratch'
+let g:scratch_persistence_file = '/tmp/scratch.vim'
+let g:scratch_autohide = &hidden
+let g:scratch_filetype = 'markdown'
