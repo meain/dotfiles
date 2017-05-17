@@ -93,6 +93,9 @@ Plug 'vim-scripts/mru.vim'
 " See images in vim
 Plug 'ashisha/image.vim'
 
+" Beautify code
+Plug '~/Documents/Projects/beautify.vim'
+
 " Hyper focus editing
 Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
@@ -436,18 +439,6 @@ function StripTrailingWhitespace()
     endif
 endfunction
 command! StripTrailingWhitespace :call StripTrailingWhitespace()
-
-" Auto pep8
-augroup autopep8
-    autocmd!
-    autocmd Filetype python command! Beautify :normal! :%! autopep8 %<cr>
-augroup END
-
-" File beautify on for html, css, js
-augroup jsbeautify
-    autocmd!
-    autocmd Filetype html,css,javascript,json command! Beatify :normal! :%! js-beautify %<cr>
-augroup END
 
 " Better marks
 function Marks()
