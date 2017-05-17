@@ -299,10 +299,6 @@ vnoremap < <gv
 nnoremap <Down> 10<c-y>
 nnoremap <Up> 10<c-e>
 
-" Invert caret and 0
-nnoremap ^ 0
-nnoremap 0 ^
-
 
 
 
