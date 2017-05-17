@@ -16,13 +16,13 @@ endfunction
 Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-Plug 'zchee/deoplete-go', { 'do': 'make'}
+Plug 'zchee/deoplete-go', { 'for': 'go', 'do': 'make'}
 Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern'}
 Plug 'othree/jspc.vim', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'zchee/deoplete-jedi'
+Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 
-" Better file browser
+" Better netrw
 Plug 'tpope/vim-vinegar'
 
 " Autocomplete on tab
@@ -30,23 +30,24 @@ Plug 'ervandew/supertab'
 
 " Smoother scrolling
 Plug 'yuttie/comfortable-motion.vim'
-" Plug 'terryma/vim-smooth-scroll'
 
-" Code commenter
-" Plug 'tpope/vim-commentary'
+" Code commenting
 Plug 'scrooloose/nerdcommenter'
 
 " Better drag visuals
 Plug 'zirrostig/vim-schlepp'
 
+" Undo tree
+Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
+
 " Auto skeleton for new files
-Plug 'noahfrederick/vim-skeleton'
+Plug 'noahfrederick/vim-skeleton', { 'on': ['SkelEdit', 'SkelInsert'] }
 
 " Better f and d
 Plug 'unblevable/quick-scope'
 
 " Scratch buffer
-Plug 'mtth/scratch.vim'
+Plug 'mtth/scratch.vim', { 'on': 'Scratch' }
 
 " Dim inactive windows
 Plug 'blueyed/vim-diminactive'
@@ -82,7 +83,6 @@ Plug 'mhinz/vim-signify'
 
 " Neomake - linting and stuf
 Plug 'w0rp/ale'
-" Plug 'neomake/neomake'
 
 " Show indent
 Plug 'Yggdroot/indentLine'
@@ -102,7 +102,7 @@ Plug 'IndexedSearch'
 " Plug 'meain/hlnext.vim'
 
 " XML/HTML tags navigation
-Plug 'matchit.zip'
+Plug 'matchit.zip', { 'for': ['html','xml'] }
 
 " Restore file pointer
 Plug 'restore_view.vim'
@@ -119,12 +119,12 @@ Plug 'fatih/vim-go', { 'for': 'go' }
 " Python development
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 
-" Vue JS development
-Plug 'posva/vim-vue', { 'do': 'npm i -g eslint eslint-plugin-vue'}
+" Vue development
+Plug 'posva/vim-vue', { 'for': 'vue', 'do': 'npm i -g eslint eslint-plugin-vue'}
 
 " Latex plugin
-" Plug 'lervag/vimtex', { 'for': 'tex' }
-" Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
+Plug 'lervag/vimtex', { 'for': 'tex' }
+Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 
 call plug#end()
 
@@ -163,8 +163,9 @@ set nowrap
 
 " Better backup, swap and undos storage
 set directory=~/.vim/dirs/tmp     " directory to place swap files in
-set backup                        " make backup files
 set backupdir=~/.vim/dirs/backups " where to put backup files
+set backup                        " make backup files
+set undodir=~/.vim/dirs/undodir   " undo directory
 set undofile                      " persistent undos - undo after you re-open the file
 
 " Allow mouse
@@ -190,6 +191,9 @@ filetype indent on
 
 " Redraw only when essential
 set lazyredraw
+
+" Setting as hidden ( for scratch )
+set hidden
 
 " Make backspace great again
 set backspace=2
@@ -285,8 +289,8 @@ nnoremap ; :
 nnoremap ' ;
 
 " Use the clipboard for copy and paste
-nnoremap y "+y`]
-nnoremap Y "+Y`]
+nnoremap y "+y
+nnoremap Y "+Y
 nnoremap p "+p`]
 nnoremap P "+P`]
 vnoremap y "+y
@@ -353,7 +357,7 @@ nnoremap <silent><Leader>p :tabp<cr>
 " Switch between using tabs or spaces bsed on the file
 function TabsOrSpaces()
     if getfsize(bufname("%")) > 256000
-        return  " File is huge
+        return
     endif
     let numTabs=len(filter(getbufline(bufname("%"), 1, 250), 'v:val =~ "^\\t"'))
     let numSpaces=len(filter(getbufline(bufname("%"), 1, 250), 'v:val =~ "^ "'))
@@ -421,7 +425,7 @@ function! MinimizeIfZoomed()
         let t:zoomed = 0
     endif
 endfunction
-nnoremap <c-q> :call MinimizeIfZoomed() \|:SSave zPreviousSession \| :qa<cr>y
+nnoremap <c-q> :call MinimizeIfZoomed() \|:SSave zzz \| :qa<cr>y
 
 " Strip trailing whitespaces
 function StripTrailingWhitespace()
@@ -613,7 +617,7 @@ let g:comfortable_motion_friction = 0.0
 let g:comfortable_motion_air_drag = 4.0
 
 " Scratch buffer
-nnoremap <silent><leader>s :Scratch<cr>
+nnoremap <silent><leader>s :ScratchPreview<cr>
 let g:scratch_height = 20
 let g:scratch_top = 1
 " let g:scratch_persistenc_file='~/.vim/scratch'
