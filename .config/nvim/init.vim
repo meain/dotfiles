@@ -147,6 +147,7 @@ set path+=**
 
 " Turn on line numbers
 set number
+set relativenumber
 
 " Highlight cursor line
 set cursorline
@@ -274,6 +275,10 @@ command! FixOverflow :normal! gqap
 
 " Set cwd to the one in open file
 autocmd BufEnter * silent! lcd %:p:h
+
+" Better line numbers
+autocmd InsertLeave * :set relativenumber
+autocmd InsertEnter * :set norelativenumber
 
 
 
