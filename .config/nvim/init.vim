@@ -295,8 +295,8 @@ nnoremap ; :
 nnoremap ' ;
 
 " Use the clipboard for copy and paste
-nnoremap y "+y
-nnoremap Y "+Y
+nnoremap y "+y`]
+nnoremap Y "+Y`]
 nnoremap p "+p`]
 nnoremap P "+P`]
 vnoremap y "+y
@@ -422,7 +422,7 @@ function! s:ZoomToggle() abort
     endif
 endfunction
 command! ZoomToggle call s:ZoomToggle()
-nnoremap <silent> = :ZoomToggle<CR> \| :normal! 0<cr>
+nnoremap <silent> ~ :ZoomToggle<CR> \| :normal! 0<cr>
 
 " Save session and quit all buffers (for use with viml command)
 function! MinimizeIfZoomed()
