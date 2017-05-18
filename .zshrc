@@ -252,7 +252,7 @@ alias vm='nvim'
 alias vi='nvim'
 #Open last vim session
 alias viml='nvim -c :SLoad\ zPreviousSession'
-alias v='~/bin/nvimopeniffile $(~/bin/checkiffile ~/.vim_mru_files | grep -v ".git" | fzf --height 40% --reverse)'
+alias v='~/bin/nvimopeniffile $(~/bin/checkiffile ~/.vim_mru_files | grep -v ".git" | fzf --height 40% --reverse --preview "coderay {}")'
 alias vv='nvim $(~/bin/checkiffile ~/.vim_mru_files | grep -v ".git" | head -n 1)'
 
 # Note taking
