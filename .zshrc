@@ -255,6 +255,28 @@ alias viml='nvim -c :SLoad\ zPreviousSession'
 alias v='~/bin/nvimopeniffile $(~/bin/checkiffile ~/.vim_mru_files | grep -v ".git" | fzf --height 40% --reverse --preview "coderay {}")'
 alias vv='nvim $(~/bin/checkiffile ~/.vim_mru_files | grep -v ".git" | head -n 1)'
 
+# fzf aliases
+alias fd='ls -d */ | fzf --reverse --height "40%" --preview "ls {}"'
+alias fgd='gl | cat | fzf --preview "echo {} | sed s:.*\*.::g | sed s: .*::g | git diff"'
+fshow() {
+  git log --graph --color=always \
+      --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
+  fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
+	  --preview "echo {} | sed 's/.*\*.//' | sed 's/ .*//g' | git diff" \
+      --bind "ctrl-m:execute:
+                (grep -o '[a-f0-9]\{7\}' | head -1 |
+                xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF'
+                {}
+FZF-EOF"
+}
+
+# for z
+unalias z 2> /dev/null
+z() {
+  [ $# -gt 0 ] && _z "$*" && return
+  cd "$(_z -l 2>&1 | fzf --height 40% --reverse --inline-info +s --tac --query "$*" | sed 's/^[0-9,.]* *//')"
+}
+
 # Note taking
 alias k="python ~/bin/terminalnote.py"
 alias kk='python ~/bin/terminalnote.py k'
