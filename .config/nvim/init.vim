@@ -474,7 +474,9 @@ let $FZF_DEFAULT_COMMAND = 'ag --hidden -l -g ""'
 command! -bang -nargs=* MRUFzf call fzf#vim#history(fzf#vim#with_preview())
 command! -bang -nargs=? -complete=dir GFiles
 \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
-nnoremap ,, :MRUFzf<CR>
+" nnoremap ,, :MRUFzf<CR>
+command! History call fzf#run({'sink': 'e', 'source': 'tail -n+3 ~/.vim_mru_files | grep -v ".git"', 'down': '30%' })
+nnoremap <silent>,, :History<cr>
 nnoremap ,e :FZF<cr>
 nnoremap <leader>f :GFiles<CR>
 nnoremap <leader>l :Commands<CR>
