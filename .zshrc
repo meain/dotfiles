@@ -257,7 +257,6 @@ alias vv='nvim $(~/bin/checkiffile ~/.vim_mru_files | grep -v ".git" | head -n 1
 
 # fzf aliases
 alias fd='ls -d */ | fzf --reverse --height "40%" --preview "ls {}"'
-alias fgd='gl | cat | fzf --preview "echo {} | sed s:.*\*.::g | sed s: .*::g | git diff"'
 fshow() {
   git log --graph --color=always \
       --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
