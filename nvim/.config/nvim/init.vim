@@ -631,3 +631,11 @@ let g:scratch_top = 1
 let g:scratch_persistence_file = '/tmp/scratch'
 let g:scratch_autohide = &hidden
 let g:scratch_filetype = 'yaml'
+
+" Vim-Tmux navigator
+let g:tmux_navigator_no_mappings = 1
+nnoremap <silent> <m-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <m-j> :TmuxNavigateDown<cr>
+nnoremap <silent> <m-k> :TmuxNavigateUp<cr>
+nnoremap <silent> <m-l> :TmuxNavigateRight<cr>
+nnoremap <silent> <m-/> :TmuxNavigatePrevious<cr>
