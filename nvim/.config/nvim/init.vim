@@ -166,6 +166,9 @@ set autoread
 " Confirm before quit without save
 set confirm
 
+" Automatically change to file's dir
+set autochdir
+
 " Disable wrapping
 set nowrap
 
@@ -276,9 +279,6 @@ command! SortCSS :g#\({\n\)\@<=#.,/}/sort
 
 " Fix overflow ( above 80 )
 command! FixOverflow :normal! gqap
-
-" Set cwd to the one in open file
-autocmd BufEnter * silent! lcd %:p:h
 
 " Better line numbers
 autocmd InsertLeave * :set relativenumber

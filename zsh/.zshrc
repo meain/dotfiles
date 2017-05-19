@@ -33,15 +33,15 @@ else
 fi
 
 
-source './.common_aliases'
-source './.other_aliases'
-source './.vim_aliases'
-source './.git_aliases'
-source './.tmux_aliases'
-source './.fzf_aliases'
+source '~/.common_aliases'
+source '~/.other_aliases'
+source '~/.vim_aliases'
+source '~/.git_aliases'
+source '~/.tmux_aliases'
+source '~/.fzf_aliases'
 
-source './.common_functions'
-source './.other_functions'
+source '~/.common_functions'
+source '~/.other_functions'
 
 eval $(thefuck --alias)
 eval "$(hub alias -s)"
