@@ -19,4 +19,5 @@ alias r='ranger'
 
 alias o='open .'
 alias p='cd ~/Documents/Projects'
-alias dots='cd ~/.dotfiles'
+alias da='cd ~/Documents/datalogai'
+alias df='cd ~/.dotfiles'
