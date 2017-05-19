@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# Swear all you wan't until you commit
+function check_sanity(){
+    git diff | grep -i 'fuck\|shit\|crap\|dammit\|bitch\|asshole\|shithead'|wc -m
+}
+function print_insanity(){
+    git diff | grep -i 'fuck\|shit\|crap\|dammit\|bitch\|asshole\|shithead'
+}
+if [ $(check_sanity) -gt 0 ]
+    then
+        echo "Curse word found!"
+        echo ""
+        echo "$(print_insanity)"
+        exit 1
+fi

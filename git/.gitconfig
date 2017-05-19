@@ -20,3 +20,5 @@
   command = /Users/abinsimon/.config/spaceman-diff/spaceman-diff
 [credential]
 	helper = cache
+[init]
+	templatedir = ~/.git_template
