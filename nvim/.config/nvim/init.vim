@@ -22,8 +22,9 @@ Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern'}
 Plug 'othree/jspc.vim', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 
-" Better netrw
+" Better file browsing
 Plug 'tpope/vim-vinegar'
+Plug 'scrooloose/nerdtree', { 'on': ['NERDTree', 'NERDTreeToggle'] }
 
 " Autocomplete on tab
 Plug 'ervandew/supertab'
@@ -526,10 +527,6 @@ set completeopt-=preview
 " Fugitive
 nnoremap <silent><leader>g :Gstatus\|normal!gg8j<cr>
 command! Gl normal! :!git vhm<cr>
-
-" Neomake linting
-" autocmd! BufWritePost,BufEnter * Neomake
-" let g:neomake_javascript_enabled_makers = ['eslint']
 
 " Airline
 let g:airline_powerline_fonts = 1
