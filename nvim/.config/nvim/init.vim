@@ -110,9 +110,6 @@ Plug 'matchit.zip', { 'for': ['html','xml'] }
 " Restore file pointer
 Plug 'restore_view.vim'
 
-" Quick move to anywhere in the buffer
-Plug 'easymotion/vim-easymotion'
-
 " Paint css colors with the real color
 Plug 'gko/vim-coloresque', { 'for': 'css' }
 
@@ -637,6 +634,3 @@ let g:scratch_top = 1
 let g:scratch_persistence_file = '/tmp/scratch'
 let g:scratch_autohide = &hidden
 let g:scratch_filetype = 'yaml'
-
-" Easymotion
-nnoremap s <Plug>(easymotion-overwin-w)

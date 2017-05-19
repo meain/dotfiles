@@ -30,7 +30,7 @@ DISABLE_AUTO_TITLE="true"
 # ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -209,7 +209,7 @@ alias gbp='git add -u && git commit -m "Bugfix $(get_git_files_changed)" && git 
 # Git add
 alias ga='git add'
 # Easier push to origin master
-alias gp="git push origin $(get_git_branch)"
+alias gp='git push origin "$(get_git_branch)""'
 # Git log and history alias 
 alias ggg='git lh|cat'
 alias gg='git hm|cat'
@@ -273,7 +273,8 @@ FZF-EOF"
 unalias z 2> /dev/null
 z() {
   [ $# -gt 0 ] && _z "$*" && return
-  cd "$(_z -l 2>&1 | fzf --height 40% --reverse --inline-info +s --tac --query "$*" | sed 's/^[0-9,.]* *//')"
+  PREVIEW_COMMAND_FOR_Z_ZSH="echo {} | cut -d ' ' -f 2 | ls"
+  cd "$(_z -l 2>&1 | fzf --height 40% --reverse --inline-info +s --tac --query "$*" --preview "$PREVIEW_COMMAND_FOR_Z_ZSH" | sed 's/^[0-9,.]* *//')"
 }
 
 # Note taking
