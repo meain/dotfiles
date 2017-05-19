@@ -1,0 +1,20 @@
+alias fd='ls -d */ | fzf --reverse --height "40%" --preview "ls {}"'
+
+fshow() {
+  git log --graph --color=always \
+      --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
+  fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
+	  --preview "echo {} | sed 's/.*\*.//' | sed 's/ .*//g' | git diff" \
+      --bind "ctrl-m:execute:
+                (grep -o '[a-f0-9]\{7\}' | head -1 |
+                xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF'
+                {}
+FZF-EOF"
+}
+
+unalias z 2> /dev/null
+z() {
+  [ $# -gt 0 ] && _z "$*" && return
+  PREVIEW_COMMAND_FOR_Z_ZSH="echo {} | cut -d ' ' -f 2 | ls"
+  cd "$(_z -l 2>&1 | fzf --height 40% --reverse --inline-info +s --tac --query "$*" --preview "$PREVIEW_COMMAND_FOR_Z_ZSH" | sed 's/^[0-9,.]* *//')"
+}

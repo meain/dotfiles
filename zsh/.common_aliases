@@ -1,0 +1,23 @@
+alias ss='ls -lht'
+alias ll='ls -A -l'
+alias l='ls'
+alias la='ls -A'
+alias lr='ls -lRht'
+
+alias c='clear'
+
+alias q="exit"
+alias :q="exit"
+
+alias mkdir='mkdir -p'
+
+alias rm='trash'
+
+alias ffind='find . -name'
+
+alias r='ranger'
+
+alias o='open .'
+alias m='cd ~/Documents/Multimedia && open . && cd -'
+alias p='cd ~/Documents/Projects && ls'
+alias d='cd ~/Desktop && ls'

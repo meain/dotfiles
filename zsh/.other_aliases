@@ -1,0 +1,4 @@
+alias k='python ~/bin/terminalnote.py'
+alias kk='python ~/bin/terminalnote.py k'
+
+alias ydp='youtube-dl -o "%(playlist_index)s_%(title)s.%(ext)s"'

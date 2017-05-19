@@ -1,0 +1,11 @@
+# cd > cd&&ls
+function cdls(){
+	cd $1
+	ls
+}
+alias cd='cdls'
+
+# view README in shell
+rmd () {
+  pandoc $1 | lynx -stdin
+}
