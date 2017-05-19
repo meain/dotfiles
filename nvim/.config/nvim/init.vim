@@ -312,12 +312,6 @@ vnoremap Y "+Y
 vnoremap p "+p
 vnoremap P "+P
 
-" Split navigation
-" nnoremap <c-l> <c-w>l
-" nnoremap <c-h> <c-w>h
-" nnoremap <c-k> <c-w>k
-" nnoremap <c-j> <c-w>j
-
 " Easier indentation - does dot loose selection
 vnoremap > >gv
 vnoremap < <gv
