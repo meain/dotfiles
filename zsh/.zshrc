@@ -147,18 +147,6 @@ alias p='cd ~/Documents/Projects && ls'
 # Alias to get into desktop folder
 alias d='cd ~/Desktop && ls'
 
-# pretty code viewer
-function code_view(){
-	pygmentize $1 > /tmp/hilighted_code
-	if [ $? -eq 0 ];
-	then
-		less /tmp/hilighted_code
-	else
-		less $1
-	fi
-	}
-alias cl='code_view'
-
 # cd with ls
 function cdls(){
 	cd $1
@@ -311,7 +299,5 @@ transfer() {
 	cat $tmpfile;
 	rm -f $tmpfile;
 } 
-
-alias meain='echo "Yep thats me, something I can help you with?"'
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
