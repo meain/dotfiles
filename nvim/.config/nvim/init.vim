@@ -28,6 +28,9 @@ Plug 'tpope/vim-vinegar'
 " Autocomplete on tab
 Plug 'ervandew/supertab'
 
+" Seamless navigation between vim and tmux
+Plug 'christoomey/vim-tmux-navigator'
+
 " Smoother scrolling
 Plug 'yuttie/comfortable-motion.vim'
 
@@ -310,10 +313,10 @@ vnoremap p "+p
 vnoremap P "+P
 
 " Split navigation
-nnoremap <s-l> <c-w>l
-nnoremap <s-h> <c-w>h
-nnoremap <s-k> <c-w>k
-nnoremap <s-j> <c-w>j
+" nnoremap <c-l> <c-w>l
+" nnoremap <c-h> <c-w>h
+" nnoremap <c-k> <c-w>k
+" nnoremap <c-j> <c-w>j
 
 " Easier indentation - does dot loose selection
 vnoremap > >gv
