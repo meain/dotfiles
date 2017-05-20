@@ -18,9 +18,9 @@ This will symlink the necessary files
 
 [`oh-my-zsh`](https://github.com/robbyrussell/oh-my-zsh) better zsh
 
-[`pandoc`](http://pandoc.org/index.html) + [`lynx`](http://lynx.browser.org/) view README in shell
+[`pandoc`](http://pandoc.org/index.html) + [`lynx`](http://lynx.browser.org/) view markdown in shell
 
-[`bash-it`](https://github.com/Bash-it/bash-it) better bzsh
+[`bash-it`](https://github.com/Bash-it/bash-it) better bash
 
 [`chromix`](https://github.com/smblott-github/chromix) refresh chrome on file save
 
