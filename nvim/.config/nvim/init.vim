@@ -271,6 +271,7 @@ call matchadd('ColorColumn', '\%120v', 100)
 
 
 
+
 "                                Commands                              "
 "                    ==============================                    "
 
@@ -296,6 +297,8 @@ autocmd BufEnter * silent! lcd %:p:h
 " Better line numbers
 autocmd InsertLeave * :set relativenumber
 autocmd InsertEnter * :set norelativenumber
+
+
 
 
 
@@ -673,3 +676,4 @@ nnoremap <silent> <m-/> :TmuxNavigatePrevious<cr>
 " Vim Indentline
 let g:indentLine_enabled = 1
 let g:vim_json_syntax_conceal = 0
+autocmd TermOpen * IndentLinesDisable
