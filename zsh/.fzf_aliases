@@ -1,4 +1,4 @@
-alias fd='ls -d */ | fzf --reverse --height "40%" --preview "ls {}"'
+alias fd='cd $(ls -d */ | fzf --reverse --height "40%" --preview "ls {}")'
 
 fshow() {
   git log --graph --color=always \
