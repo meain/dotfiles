@@ -216,12 +216,12 @@ set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 
-" We have pluins that show this
+" Don't show --INSERT-- at bottom
 set noshowmode
 
 " Show invisibles
 set list
-set listchars=tab:▸~,eol:¬,trail:⋅
+set listchars=tab:▸~,eol:¬,trail:⋅,nbsp:+
 set showbreak=↪
 
 " When scrolling, keep cursor 5 lines away from screen border
@@ -232,7 +232,11 @@ set wildmenu
 set wildmode=full
 
 " Setting up ignores
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.png,*.jpg,*.gif  "Linux
+set wildignore+=*/tmp/*,*.so,*.pyc,*.png,*.jpg,*.gif
+set wildignore+=*.o,*.out,*.obj,.git,*.rbc,*.rbo,*.class,.svn,*.gem
+set wildignore+=*.zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz
+set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
+set wildignore+=*.swp,*~,._*
 
 " Indent based folding
 set foldmethod=indent
@@ -293,6 +297,8 @@ autocmd InsertEnter * :set norelativenumber
 " Enable going down in case text is wrapped
 nnoremap j gj
 nnoremap k gk
+vnoremap j gj
+vnoremap k gk
 
 "Get back to where you were easily
 nnoremap gg mpgg
@@ -321,6 +327,11 @@ vnoremap < <gv
 nnoremap <Down> 10<c-y>
 nnoremap <Up> 10<c-e>
 
+" Easy buffer switching
+nnoremap <silent><Tab> :bn<cr>
+nnoremap <silent><s-Tab> :bp<cr>
+nnoremap <silent><Leader><Tab> :enew\|:Startify\|:MRUFzf<cr>
+
 
 
 
@@ -331,12 +342,12 @@ nnoremap <Up> 10<c-e>
 
 " Quick save an quit
 nnoremap <silent><Leader><Leader> :w<cr>
-nnoremap <silent><Leader>q :q<cr>
+nnoremap <silent><Leader>q :bd<cr>
 nnoremap <silent><Leader>w :w<cr>
 
 " Split like a boss
-nnoremap <silent><Leader>v :vsplit\|:Startify<cr>
-nnoremap <silent><Leader>h :sp<cr>
+nnoremap <silent><Leader>v :vsplit\|:Startify\|:MRUFzf<cr>
+nnoremap <silent><Leader>h :sp\|:Startify\|:MRUFzf<cr>
 
 " Clear search highlight
 nnoremap <silent><Leader>/ :nohls<CR>
