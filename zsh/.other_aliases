@@ -1,3 +1,5 @@
+alias j=z
+
 alias k='python ~/bin/terminalnote.py'
 alias kk='python ~/bin/terminalnote.py k'
 
