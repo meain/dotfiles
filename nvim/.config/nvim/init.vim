@@ -16,6 +16,8 @@ endfunction
 Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+Plug 'Shougo/neosnippet'
+Plug 'Shougo/neosnippet-snippets'
 Plug 'zchee/deoplete-go', { 'for': 'go', 'do': 'make'}
 Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern'}
@@ -40,6 +42,9 @@ Plug 'scrooloose/nerdcommenter'
 
 " Better drag visuals
 Plug 'zirrostig/vim-schlepp'
+
+" Show marks
+Plug 'kshenoy/vim-signature'
 
 " Undo tree
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
@@ -71,6 +76,7 @@ Plug 'majutsushi/tagbar', { 'on' : 'Tagbar' }
 
 " Git stuff from within vim
 Plug 'tpope/vim-fugitive'
+Plug 'gregsexton/gitv', {'on': ['Gitv']}
 
 " Airline
 Plug 'bling/vim-airline'
@@ -299,6 +305,10 @@ nnoremap j gj
 nnoremap k gk
 vnoremap j gj
 vnoremap k gk
+
+" Unset J and K for now
+nnoremap J 10<c-y>
+nnoremap K 10<c-e>
 
 "Get back to where you were easily
 nnoremap gg mpgg
