@@ -268,9 +268,6 @@ let maplocalleader = "\\"
 highlight ColorColumn ctermbg=0 guibg=#eee8d5
 call matchadd('ColorColumn', '\%120v', 100)
 
-" Terminal mode esc remap
-tnoremap <Leader><Esc> <C-\><C-n>
-
 
 
 
@@ -347,6 +344,15 @@ nnoremap <Up> 10<c-e>
 nnoremap <silent><Tab> :bn<cr>
 nnoremap <silent><s-Tab> :bp<cr>
 nnoremap <silent><Leader><Tab> :enew\|:Startify\|:MRUFzf<cr>
+
+" Terminal split jump
+tnoremap <m-h> <C-\><C-N><C-w>h
+tnoremap <m-j> <C-\><C-N><C-w>j
+tnoremap <m-k> <C-\><C-N><C-w>k
+tnoremap <m-l> <C-\><C-N><C-w>l
+
+" Terminal mode esc remap
+tnoremap <Leader><Esc> <C-\><C-n>
 
 
 
@@ -663,3 +669,7 @@ nnoremap <silent> <m-j> :TmuxNavigateDown<cr>
 nnoremap <silent> <m-k> :TmuxNavigateUp<cr>
 nnoremap <silent> <m-l> :TmuxNavigateRight<cr>
 nnoremap <silent> <m-/> :TmuxNavigatePrevious<cr>
+
+" Vim Indentline
+let g:indentLine_enabled = 1
+let g:vim_json_syntax_conceal = 0
