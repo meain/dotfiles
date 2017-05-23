@@ -16,8 +16,10 @@ transfer() {
 } 
 
 
-# prev prev command
-get_second_last_command(){
-	history | tail -2 | head -1 | sed 's:.*\ .*\ ..\:...::g'
+# run prev commands
+get_prev_command(){
+    echo $(history | tail "-$1"  | head "-$2" | awk '{ $1=$2=$3=""; print $0 }' | sed s:^...::g)
 }
-alias f='eval $(get_second_last_command)'
+alias f='!!'
+alias ff='$(get_prev_command 2 1)'
+alias fff='$(get_prev_command 3 2)'
