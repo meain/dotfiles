@@ -18,7 +18,7 @@ transfer() {
 
 # run prev commands
 get_prev_command(){
-    echo $(history | tail "-$1"  | head "-$2" | awk '{ $1=$2=$3=""; print $0 }' | sed s:^...::g)
+    history | tail "-$1"  | head "-$2" | awk '{ $1=$2=$3=""; print $0 }' | sed s:^...::g
 }
 alias f='!!'
 alias ff='$(get_prev_command 2 1)'
