@@ -265,7 +265,7 @@ let maplocalleader = "\\"
 
 " Smart colorcolumn
 highlight ColorColumn ctermbg=0 guibg=#eee8d5
-call matchadd('ColorColumn', '\%120v', 100)
+autocmd BufEnter * call matchadd('ColorColumn', '\%120v', 100)
 
 
 
@@ -456,7 +456,7 @@ function! s:ZoomToggle() abort
     endif
 endfunction
 command! ZoomToggle call s:ZoomToggle()
-nnoremap <silent> ~ :ZoomToggle<CR> \| :normal! 0<cr>
+nnoremap <silent> _ :ZoomToggle<CR> \| :normal! 0<cr>
 
 " Save session and quit all buffers (for use with viml command)
 function! MinimizeIfZoomed()
