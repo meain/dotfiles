@@ -21,8 +21,6 @@ alias gvf='git add -u && git commit -m "$(get_change_message)"'
 alias gvp='git add -u && git commit" && git push origin $(get_git_branch)'
 # More info + push with filename
 alias gvfp='git add -u && git commit -m "$(get_change_message)" && git push origin $(get_git_branch)'
-alias gvfp='git add -u && git commit -m "$(get_change_message)" && git push origin $(get_git_branch)'
-alias gvfp='git add -u && git commit -m "$(get_change_message)" && git push origin $(get_git_branch)'
 # Simple messages
 alias gu='git add -u && git commit -m "Updated $(get_git_files_changed)"'
 alias gc='git add -u && git commit -m "Clean up $(get_git_files_changed)"'
