@@ -232,7 +232,7 @@ set noshowmode
 
 " Show invisibles
 set list
-set listchars=tab:▸~,eol:¬,trail:⋅,nbsp:+
+set listchars=tab:▸~,eol:¬,trail:⋅
 set showbreak=↪
 
 " When scrolling, keep cursor 5 lines away from screen border
