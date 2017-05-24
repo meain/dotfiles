@@ -643,6 +643,10 @@ let g:ale_sign_column_always = 1
 let g:ale_sign_error = ':x'
 let g:ale_sign_warning = ':!'
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\   'python': ['flake8']
+\}
 
 " Smooth scrolling
 let g:comfortable_motion_scroll_down_key = "j"
