@@ -262,6 +262,9 @@ let maplocalleader = "\\"
 highlight ColorColumn ctermbg=0 guibg=#eee8d5
 autocmd BufEnter * call matchadd('ColorColumn', '\%120v', 100)
 
+" Don't you f'in touch my cursor
+set guicursor=
+
 
 
 
