@@ -199,11 +199,6 @@ set hlsearch
 " Search ignore case
 set ignorecase
 
-" Remove delay on hitting esc ( tmux )
-set noesckeys
-set ttimeout
-set ttimeoutlen=1
-
 " Allow plugins by file type (required for plugins!)
 filetype plugin on
 filetype indent on
