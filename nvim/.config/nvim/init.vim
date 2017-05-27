@@ -602,6 +602,8 @@ vmap <unique> D <Plug>SchleppDup
 
 " Nerd comment ( just out of habbit )
 let g:NERDSpaceDelims = 1
+let g:NERDCompactSexyComs = 1
+let g:NERDDefaultAlign = 'left'
 nnoremap <silent> gc :call NERDComment(0,"toggle")<CR>
 vnoremap <silent> gc :call NERDComment(0,"toggle")<CR>
 
