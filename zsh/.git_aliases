@@ -51,7 +51,7 @@ alias gpl='git pull origin $(git branch | sed s:^..::g | fzf --height 40% --reve
 alias gpu='git push origin $(git branch | sed s:^..::g | fzf --height 40% --reverse)'
 alias gcom='git checkout master'
 # Easier commit ammend
-alias gca='commit -a --amend -C HEAD'
+alias gca='git commit -a --amend -C HEAD'
 # Clean up merged branches
 alias gbcl="!f() { git branch --merged ${1-master} | grep -v " ${1-master}$" | xargs -r git branch -d; }; f"
 
