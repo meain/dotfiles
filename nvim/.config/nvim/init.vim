@@ -644,7 +644,7 @@ let g:ale_sign_error = ':x'
 let g:ale_sign_warning = ':!'
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
 let g:ale_linters = {
-\   'javascript': ['eslint'],
+\   'javascript': ['jshint'],
 \   'python': ['flake8']
 \}
 
