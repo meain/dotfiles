@@ -1,0 +1,15 @@
+set from = "abinsimon10@gmail.com"
+set realname = "Abin Simon"
+set imap_user = "abinsimon10@gmail.com"
+set imap_pass = "${GOOGLE_PASSWORD}"
+set folder = "imaps://imap.gmail.com:993"
+set spoolfile = "+INBOX"
+set postponed ="+[Gmail]/Drafts"
+set header_cache =~/.mutt/cache/headers
+set message_cachedir =~/.mutt/cache/bodies
+set certificate_file =~/.mutt/certificates
+set smtp_url = "smtp://abinsimon10@smtp.gmail.com:587/"
+set smtp_pass = "${GOOGLE_PASSWORD}"
+set move = no 
+set imap_keepalive = 900
+macro index,pager a ":set confirmappend=no\n<save-message>=Archive<enter>" "Archived Message"
