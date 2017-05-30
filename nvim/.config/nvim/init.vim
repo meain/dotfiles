@@ -16,19 +16,16 @@ Plug 'mhinz/vim-startify'
 Plug 'flazz/vim-colorschemes'
 
 " Better autocompletion
-function! DoRemote(arg)
-	UpdateRemotePlugins
-endfunction
-Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
+Plug 'roxma/nvim-completion-manager'
+Plug 'roxma/nvim-cm-tern',  {'do': 'npm install', 'for': 'javascript'}
+Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
+Plug 'nsf/gocode', { 'for': 'go' }
+
+" Snippet packages
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
-Plug 'zchee/deoplete-go', { 'for': 'go', 'do': 'make'}
-Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern'}
-Plug 'othree/jspc.vim', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 
 " Better file browsing
 Plug 'tpope/vim-vinegar'
@@ -134,6 +131,9 @@ Plug 'suan/vim-instant-markdown', { 'for' : 'markdown' , 'do': 'npm install -g i
 
 " Go development
 Plug 'fatih/vim-go', { 'for': 'go' }
+
+" Javascript stuff
+Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'] }
 
 " Python development
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
@@ -546,12 +546,11 @@ let MRU_Exclude_Files = '^/tmp/.*\|^/var/tmp/.*'
 let MRU_Auto_Close = 1
 let MRU_Max_Menu_Entries = 10
 
-" Use deoplete.
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#auto_complete_start_length = 1
+" nvim-completion-engine
+set shortmess+=c   " supress the annoying completion messages
 " autocmd CompleteDone * pclose
-set completeopt+=noinsert
-set completeopt-=preview
+" set completeopt+=noinsert
+" set completeopt-=preview
 
 " Fugitive
 nnoremap <silent><leader>g :Gstatus\|normal!gg8j<cr>
