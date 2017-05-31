@@ -39,7 +39,6 @@ t))
 
 (setq package-enable-at-startup nil)
 (package-initialize)
-
 ;; Handle installing packages in emacs
 (defun ensure-package-installed (&rest packages)
   "Assure every package is installed, ask for installation if it’s not.
@@ -48,9 +47,10 @@ Return a list of installed packages or nil for every skipped package."
    (lambda (package)
      (if (package-installed-p package)
          nil
-       (if (y-or-n-p (format "Package %s is missing. Install it? " package))
-           (package-install package)
-         package)))
+	   (package-install package))
+       ;; (if (y-or-n-p (format "Package %s is missing. Install it? " package))
+       ;;     (package-install package)
+       ;;   package)))
    packages))
 
 ;; make sure to have downloaded archive description.
@@ -64,32 +64,32 @@ Return a list of installed packages or nil for every skipped package."
 (ensure-package-installed 'evil
                           'projectile
                           'magit
-              'helm
-              `powerline
-              `powerline-evil
-              `evil-leader
-              `smooth-scrolling
-              `flycheck
-              `autopair
-              `saveplace
-              `ido
-              `auto-complete
-              `evil-commentary
-              `evil-surround
-              `evil-search-highlight-persist
-              `git-gutter
-              `drag-stuff
-              `evil-surround
-              `gruvbox-theme
-              `spaceline
-              `diff-hl
-              `markdown-mode+
-              `persistent-scratch
-              `neotree
-              `minimap
-              `rainbow-mode
-              `rainbow-delimiters
-              `elpy)
+						  'helm
+						  'powerline
+						  'powerline-evil
+						  'evil-leader
+						  'smooth-scrolling
+						  'flycheck
+						  'autopair
+						  'saveplace
+						  'ido
+						  'auto-complete
+						  'evil-commentary
+						  'evil-surround
+						  'evil-search-highlight-persist
+						  'git-gutter
+						  'drag-stuff
+						  'evil-surround
+						  'gruvbox-theme
+						  'spaceline
+						  'diff-hl
+						  'markdown-mode+
+						  'persistent-scratch
+						  'neotree
+						  'minimap
+						  'rainbow-mode
+						  'rainbow-delimiters
+						  'elpy)
 
 ;; Evil mode
 (require 'evil)
@@ -343,7 +343,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(package-selected-packages
    (quote
-	(snippet vimrc-mode auctex-latexmk magic-latex-buffer init-open-recentf magit-find-file find-things-fast helm-fuzzy-find highlight-current-line rainbow-mode neotree linum-relative drag-stuff git-gutter evil-surround evil-commentary autopair simpleclip flycheck smooth-scrolling projectile powerline-evil magit helm gruvbox-theme evil-search-highlight-persist evil-leader auto-complete)))
+	(term+ snippet vimrc-mode auctex-latexmk magic-latex-buffer init-open-recentf magit-find-file find-things-fast helm-fuzzy-find highlight-current-line rainbow-mode neotree linum-relative drag-stuff git-gutter evil-surround evil-commentary autopair simpleclip flycheck smooth-scrolling projectile powerline-evil magit helm gruvbox-theme evil-search-highlight-persist evil-leader auto-complete)))
  '(send-mail-function (quote smtpmail-send-it)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
