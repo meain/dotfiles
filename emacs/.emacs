@@ -1,11 +1,10 @@
 ;; Set font
 (set-default-font "Monaco 16")
 
-;; change default scratch buffer message and change it to orgmode
 ;; (setq initial-scratch-message "   : meain")
 (setq initial-major-mode 'markdown-mode)
-;; make scratch buffer immortal
 (defun immortal-scratch ()
+  "Make scratch buffer immortal."
   (if (eq (current-buffer) (get-buffer "*scratch*"))
   (progn (bury-buffer)
      nil)
