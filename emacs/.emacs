@@ -12,10 +12,10 @@ t))
 (add-hook 'kill-buffer-query-functions 'immortal-scratch)
 
 
-;disable backup
+;;disable backup
 (setq backup-inhibited t)
 
-;disable auto save
+;;disable auto save
 (setq auto-save-default nil)
 
 ;; no line wrapping
