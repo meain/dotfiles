@@ -85,6 +85,7 @@ Return a list of installed PACKAGES or nil for every skipped package."
                           'evil-search-highlight-persist
                           'git-gutter
                           'drag-stuff
+                          'osx-clipboard
                           'evil-surround
                           'gruvbox-theme
                           'spaceline
