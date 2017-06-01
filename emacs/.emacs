@@ -30,6 +30,9 @@
 ;; disable backup
 (setq backup-inhibited t)
 
+;; No backup files
+(setq make-backup-files nil)
+
 ;; disable auto save
 (setq auto-save-default nil)
 
@@ -76,6 +79,7 @@ Return a list of installed PACKAGES or nil for every skipped package."
 (ensure-package-installed 'evil
                           'projectile
                           'magit
+                          'ag
                           'helm
                           'sane-term
                           'web-mode
@@ -120,7 +124,6 @@ Return a list of installed PACKAGES or nil for every skipped package."
 ;; enable which-key
 (require 'which-key)
 (which-key-mode t)
-
 
 ;; hook into osx clipboard
 (require 'osx-clipboard)
@@ -243,9 +246,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; Autopair
 (require 'autopair)
 (autopair-global-mode)
-
-;; No backup files
-(setq make-backup-files nil)
 
 ;; Save whitespace before save
 (add-hook 'before-save-hook 'whitespace-cleanup)
