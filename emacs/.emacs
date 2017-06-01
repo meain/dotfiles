@@ -72,6 +72,8 @@ Return a list of installed PACKAGES or nil for every skipped package."
                           'magit
                           'helm
                           'powerline
+                          'sane-term
+                          'web-mode
                           'powerline-evil
                           'evil-leader
                           'smooth-scrolling
@@ -165,9 +167,6 @@ Return a list of installed PACKAGES or nil for every skipped package."
 ;; Smoother scrolling
 (require 'smooth-scrolling)
 (smooth-scrolling-mode 1)
-
-;; persistant undo
-(require 'undohist)
 
 ;; Powerline
 (require 'spaceline)
