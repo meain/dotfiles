@@ -82,6 +82,7 @@ Return a list of installed PACKAGES or nil for every skipped package."
                           'evil-leader
                           'smooth-scrolling
                           'flycheck
+                          'which-key
                           'autopair
                           'saveplace
                           'ido
@@ -115,6 +116,11 @@ Return a list of installed PACKAGES or nil for every skipped package."
 ;; Theme
 (require 'gruvbox-theme)
 (load-theme 'gruvbox t)
+
+;; enable which-key
+(require 'which-key)
+(which-key-mode t)
+
 
 ;; hook into osx clipboard
 (require 'osx-clipboard)
