@@ -39,6 +39,7 @@
 
 ;; set default tab width
 (setq-default tab-width 4)
+(setq-default indent-tabs-mode nil)
 
 ;; set up package
 (require 'package)
