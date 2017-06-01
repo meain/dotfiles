@@ -80,8 +80,6 @@ Return a list of installed PACKAGES or nil for every skipped package."
                           'projectile
                           'magit
                           'ag
-                          'mode-icons
-                          ;; 'all-the-icons  ;; laggy performace on big files
                           'helm
                           'sane-term
                           'web-mode
@@ -123,10 +121,6 @@ Return a list of installed PACKAGES or nil for every skipped package."
 ;; Theme
 (require 'gruvbox-theme)
 (load-theme 'gruvbox t)
-
-;; mode-icon
-(require 'mode-icons)
-(mode-icons-mode t)
 
 ;; enable which-key
 (require 'which-key)
