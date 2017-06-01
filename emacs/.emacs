@@ -1,14 +1,24 @@
+;;; .emacs --- my personal emacs configuration file
+
+;;; Commentary:
+
+;; This is a vim user's Emacs configuration fully littered with Vim stuff.
+;; The main reason I set this up is so that I can use magic, damn that is cool.
+;; So yeah, that's it.
+
+;;; Code:
+
 ;; Set font
-(set-default-font "Monaco 16")
+(set-frame-font "Monaco 16")
 
 ;; (setq initial-scratch-message "   : meain")
 (setq initial-major-mode 'markdown-mode)
 (defun immortal-scratch ()
   "Make scratch buffer immortal."
   (if (eq (current-buffer) (get-buffer "*scratch*"))
-  (progn (bury-buffer)
-     nil)
-t))
+    (progn (bury-buffer)
+           nil)
+    t))
 (add-hook 'kill-buffer-query-functions 'immortal-scratch)
 
 
@@ -42,16 +52,13 @@ t))
 ;; Handle installing packages in emacs
 (defun ensure-package-installed (&rest packages)
   "Assure every package is installed, ask for installation if it’s not.
-Return a list of installed packages or nil for every skipped package."
+  Return a list of installed packages or nil for every skipped package."
   (mapcar
-   (lambda (package)
-     (if (package-installed-p package)
-         nil
-	   (package-install package)))
-       ;; (if (y-or-n-p (format "Package %s is missing. Install it? " package))
-       ;;     (package-install package)
-       ;;   package)))
-   packages))
+    (lambda (package)
+      (if (package-installed-p package)
+        nil
+        (package-install package)))
+    packages))
 
 ;; make sure to have downloaded archive description.
 ;; Or use package-archive-contents as suggested by Nicolas Dudebout
@@ -101,9 +108,9 @@ Return a list of installed packages or nil for every skipped package."
 ;; yank and copy to clipboard (rest everything into the kill rig)
 ;; stil have issue with c and x
 (evil-define-operator evil-delete-into-null-register (beg end type register yank-handler)
-  "Delete text from BEG to END with TYPE. Do not save it in any register."
-  (interactive "<R><x><y>")
-  (evil-delete beg end type ?_ yank-handler))
+                      "Delete text from BEG to END with TYPE. Do not save it in any register."
+                      (interactive "<R><x><y>")
+                      (evil-delete beg end type ?_ yank-handler))
 (define-key evil-normal-state-map "d" 'evil-delete-into-null-register)
 
 ;; Theme
@@ -176,11 +183,11 @@ Return a list of installed packages or nil for every skipped package."
 ;; esc quits
 (defun minibuffer-keyboard-quit ()
   "Abort recursive edit.
-In Delete Selection mode, if the mark is active, just deactivate it;
-then it takes a second \\[keyboard-quit] to abort the minibuffer."
+  In Delete Selection mode, if the mark is active, just deactivate it;
+  then it takes a second \\[keyboard-quit] to abort the minibuffer."
   (interactive)
   (if (and delete-selection-mode transient-mark-mode mark-active)
-      (setq deactivate-mark  t)
+    (setq deactivate-mark  t)
     (when (get-buffer "*Completions*") (delete-windows-on "*Completions*"))
     (abort-recursive-edit)))
 (define-key evil-normal-state-map [escape] 'keyboard-quit)
@@ -194,11 +201,11 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 ;; Page up and down
 (define-key evil-normal-state-map (kbd "9") (lambda ()
-                    (interactive)
-                    (evil-scroll-up nil)))
+                                              (interactive)
+                                              (evil-scroll-up nil)))
 (define-key evil-normal-state-map (kbd "8") (lambda ()
-                        (interactive)
-                        (evil-scroll-down nil)))
+                                              (interactive)
+                                              (evil-scroll-down nil)))
 
 ;; Automateic indentation
 (define-key global-map (kbd "RET") 'newline-and-indent)
@@ -208,8 +215,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (define-key evil-normal-state-map (kbd ", ,") `helm-recentf)
 ;; helm-recentf-fuzzy-match var is broken: redeclare it manually
 (setq helm-source-recentf
-  (helm-make-source "Recentf" 'helm-recentf-source
-    :fuzzy-match t))
+      (helm-make-source "Recentf" 'helm-recentf-source
+                        :fuzzy-match t))
 
 ;; Autopair
 (require 'autopair)
@@ -291,26 +298,26 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (defun copy-to-clipboard ()
   (interactive)
   (if (display-graphic-p)
-      (progn
-        (message "Yanked region to x-clipboard!")
-        (call-interactively 'clipboard-kill-ring-save)
-        )
+    (progn
+      (message "Yanked region to x-clipboard!")
+      (call-interactively 'clipboard-kill-ring-save)
+      )
     (if (region-active-p)
-        (progn
-          (shell-command-on-region (region-beginning) (region-end) "xsel -i -b")
-          (message "Yanked region to clipboard!")
-          (deactivate-mark))
+      (progn
+        (shell-command-on-region (region-beginning) (region-end) "xsel -i -b")
+        (message "Yanked region to clipboard!")
+        (deactivate-mark))
       (message "No region active; can't yank to clipboard!")))
   )
 (evil-define-command paste-from-clipboard()
-  (if (display-graphic-p)
-      (progn
-        (clipboard-yank)
-        (message "graphics active")
-        )
-    (insert (shell-command-to-string "xsel -o -b"))
-    )
-  )
+                     (if (display-graphic-p)
+                       (progn
+                         (clipboard-yank)
+                         (message "graphics active")
+                         )
+                       (insert (shell-command-to-string "xsel -o -b"))
+                       )
+                     )
 (global-set-key [f8] 'copy-to-clipboard)
 (global-set-key [f9] 'paste-from-clipboard)
 
@@ -319,7 +326,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (defun toggle-maximize-buffer () "Maximize buffer"
   (interactive)
   (if (= 1 (length (window-list)))
-      (jump-to-register '_)
+    (jump-to-register '_)
     (progn
       (window-configuration-to-register '_)
       (delete-other-windows))))
@@ -331,23 +338,23 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 ;; Start maximized
 (custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-	("e87a2bd5abc8448f8676365692e908b709b93f2d3869c42a4371223aab7d9cf8" default)))
- '(global-linum-mode t)
- '(inhibit-startup-screen t)
- '(initial-frame-alist (quote ((fullscreen . maximized))))
- '(package-selected-packages
-   (quote
-	(term+ snippet vimrc-mode auctex-latexmk magic-latex-buffer init-open-recentf magit-find-file find-things-fast helm-fuzzy-find highlight-current-line rainbow-mode neotree linum-relative drag-stuff git-gutter evil-surround evil-commentary autopair simpleclip flycheck smooth-scrolling projectile powerline-evil magit helm gruvbox-theme evil-search-highlight-persist evil-leader auto-complete)))
- '(send-mail-function (quote smtpmail-send-it)))
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+  '(custom-safe-themes
+     (quote
+       ("e87a2bd5abc8448f8676365692e908b709b93f2d3869c42a4371223aab7d9cf8" default)))
+  '(global-linum-mode t)
+  '(inhibit-startup-screen t)
+  '(initial-frame-alist (quote ((fullscreen . maximized))))
+  '(package-selected-packages
+     (quote
+       (term+ snippet vimrc-mode auctex-latexmk magic-latex-buffer init-open-recentf magit-find-file find-things-fast helm-fuzzy-find highlight-current-line rainbow-mode neotree linum-relative drag-stuff git-gutter evil-surround evil-commentary autopair simpleclip flycheck smooth-scrolling projectile powerline-evil magit helm gruvbox-theme evil-search-highlight-persist evil-leader auto-complete)))
+  '(send-mail-function (quote smtpmail-send-it)))
 (custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(trailing-whitespace ((t (:background "dim gray")))))
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+  '(trailing-whitespace ((t (:background "dim gray")))))
