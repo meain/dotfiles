@@ -103,6 +103,7 @@ Return a list of installed PACKAGES or nil for every skipped package."
 (evil-mode t)
 
 ;; enable elpy, yeah its mostly python here
+(require 'elpy)
 (elpy-enable)
 
 ;; yank and copy to clipboard (rest everything into the kill rig)
