@@ -157,7 +157,7 @@ Return a list of installed PACKAGES or nil for every skipped package."
 (evil-leader/set-key "'" `evil-jump-backward)
 
 ;; vinegarish
-(evil-leader/set-key "-" `dired)
+(define-key evil-normal-state-map (kbd "-") 'helm-find-files)
 
 ;; Set up helm
 (require 'helm-config)
@@ -177,6 +177,7 @@ Return a list of installed PACKAGES or nil for every skipped package."
 (require 'spaceline-config)
 (spaceline-spacemacs-theme)
 (spaceline-toggle-minor-modes-off)
+(spaceline-toggle-evil-state)
 (spaceline-toggle-hud-off)
 (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
 (setq powerline-height 20)
