@@ -3,7 +3,7 @@
 ;;; Commentary:
 
 ;; This is a vim user's Emacs configuration fully littered with Vim stuff.
-;; The main reason I set this up is so that I can use magic, damn that is cool.
+;; The main reason I set this up is so that I can use magit, damn that is cool.
 ;; So yeah, that's it.
 
 ;;; Code:
@@ -276,7 +276,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (drag-stuff-define-keys)
 
 ;; easier viewing of delimiters
-(require `rainbow-delimiters)
+(require 'rainbow-delimiters)
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 
 ;; Split like vim
