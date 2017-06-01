@@ -11,6 +11,12 @@
 ;; Set font
 (set-frame-font "Monaco 16")
 
+;; Remove unnecessary stuff
+(when (display-graphic-p)
+  (scroll-bar-mode -1)
+  (tool-bar-mode -1))
+(menu-bar-mode -1)
+
 ;; (setq initial-scratch-message "   : meain")
 (setq initial-major-mode 'markdown-mode)
 (defun immortal-scratch ()
@@ -238,13 +244,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (require 'saveplace)
 (setq save-place-file "~/.emacs.d/saveplace") ;; keep my ~/ clean
 (setq-default save-place t)                   ;; activate it for all buffers
-
-
-;; Remove unnecessary stuff
-(when (display-graphic-p)
-  (scroll-bar-mode -1)
-  (tool-bar-mode -1))
-(menu-bar-mode -1)
 
 ;; Remap to kill all other buffers
 (evil-leader/set-key "o" (kbd "C-x 1"))
