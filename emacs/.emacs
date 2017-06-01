@@ -241,6 +241,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; No backup files
 (setq make-backup-files nil)
 
+;; Save whitespace before save
+(add-hook 'before-save-hook 'whitespace-cleanup)
+
 ;; Remember cursor positon
 (require 'saveplace)
 (setq save-place-file "~/.emacs.d/saveplace") ;; keep my ~/ clean
@@ -253,7 +256,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (evil-leader/set-key "f" (kbd "C-h f"))
 
 ;; Autocompletion plugin
-(require `auto-complete)
+(require 'auto-complete)
 (ac-config-default)
 
 ;; persistant scratch buffer - so cool
