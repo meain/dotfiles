@@ -343,7 +343,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
     (progn
       (window-configuration-to-register '_)
       (delete-other-windows))))
-(define-key evil-normal-state-map (kbd "-") `toggle-maximize-buffer)
+(define-key evil-normal-state-map (kbd "_") `toggle-maximize-buffer)
 
 
 ;; Visible whitespace
