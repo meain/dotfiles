@@ -80,6 +80,8 @@ Return a list of installed PACKAGES or nil for every skipped package."
                           'projectile
                           'magit
                           'ag
+                          'mode-icons
+                          ;; 'all-the-icons  ;; laggy performace on big files
                           'helm
                           'sane-term
                           'web-mode
@@ -88,6 +90,7 @@ Return a list of installed PACKAGES or nil for every skipped package."
                           'flycheck
                           'which-key
                           'autopair
+                          'neotree
                           'saveplace
                           'ido
                           'auto-complete
@@ -120,6 +123,10 @@ Return a list of installed PACKAGES or nil for every skipped package."
 ;; Theme
 (require 'gruvbox-theme)
 (load-theme 'gruvbox t)
+
+;; mode-icon
+(require 'mode-icons)
+(mode-icons-mode t)
 
 ;; enable which-key
 (require 'which-key)
@@ -185,6 +192,7 @@ Return a list of installed PACKAGES or nil for every skipped package."
 (require 'spaceline)
 (require 'spaceline-config)
 (spaceline-spacemacs-theme)
+;; (spaceline-all-the-icons-theme)
 (spaceline-toggle-minor-modes-off)
 (spaceline-toggle-evil-state)
 (spaceline-toggle-hud-off)
@@ -341,7 +349,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(package-selected-packages
    (quote
-    (try elscreen-multi-term sane-term nclip clippy clipmon osx-clipboard undohist web-mode term+ snippet vimrc-mode auctex-latexmk magic-latex-buffer init-open-recentf magit-find-file find-things-fast helm-fuzzy-find highlight-current-line rainbow-mode neotree linum-relative drag-stuff git-gutter evil-surround evil-commentary autopair simpleclip flycheck smooth-scrolling projectile magit helm gruvbox-theme evil-search-highlight-persist evil-leader auto-complete)))
+    (spaceline-all-the-icons all-the-icons-dired all-the-icons try elscreen-multi-term sane-term nclip clippy clipmon osx-clipboard undohist web-mode term+ snippet vimrc-mode auctex-latexmk magic-latex-buffer init-open-recentf magit-find-file find-things-fast helm-fuzzy-find highlight-current-line rainbow-mode neotree linum-relative drag-stuff git-gutter evil-surround evil-commentary autopair simpleclip flycheck smooth-scrolling projectile magit helm gruvbox-theme evil-search-highlight-persist evil-leader auto-complete)))
  '(send-mail-function (quote smtpmail-send-it)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
