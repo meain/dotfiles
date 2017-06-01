@@ -233,9 +233,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 
 ;; Remove unnecessary stuff
-(scroll-bar-mode -1)
+(when (display-graphic-p)
+  (scroll-bar-mode -1)
+  (tool-bar-mode -1))
 (menu-bar-mode -1)
-(tool-bar-mode -1)
 
 ;; Remap to kill all other buffers
 (evil-leader/set-key "o" (kbd "C-x 1"))
