@@ -62,7 +62,6 @@ Return a list of installed PACKAGES or nil for every skipped package."
     packages))
 
 ;; make sure to have downloaded archive description.
-;; Or use package-archive-contents as suggested by Nicolas Dudebout
 (or (file-exists-p package-user-dir)
     (package-refresh-contents))
 
@@ -362,3 +361,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
   '(trailing-whitespace ((t (:background "dim gray")))))
+
+(provide '.emacs)
+;;; .emacs ends here
