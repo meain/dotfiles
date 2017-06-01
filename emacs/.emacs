@@ -109,6 +109,10 @@ Return a list of installed PACKAGES or nil for every skipped package."
 (require 'gruvbox-theme)
 (load-theme 'gruvbox t)
 
+;; hook into osx clipboard
+(require 'osx-clipboard)
+(osx-clipboard-mode)
+
 ;; Set up leader key in emacs
 (require 'evil-leader)
 (global-evil-leader-mode)
