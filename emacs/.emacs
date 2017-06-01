@@ -292,12 +292,12 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (global-diff-hl-mode t)
 
 ;; Easier buffer switching
-(define-key evil-normal-state-map (kbd "H") `windmove-left)
-(define-key evil-normal-state-map (kbd "J") `windmove-down)
-(define-key evil-normal-state-map (kbd "K") `windmove-up)
-(define-key evil-normal-state-map (kbd "L") `windmove-right)
+(define-key evil-normal-state-map (kbd "M-h") `windmove-left)
+(define-key evil-normal-state-map (kbd "M-j") `windmove-down)
+(define-key evil-normal-state-map (kbd "M-k") `windmove-up)
+(define-key evil-normal-state-map (kbd "M-l") `windmove-right)
 
-;; Remap ; to :
+;; remap ; to :
 (define-key evil-normal-state-map (kbd ";") 'evil-ex)
 
 ;; get :<caps> to work
