@@ -106,14 +106,6 @@ Return a list of installed PACKAGES or nil for every skipped package."
 (require 'elpy)
 (elpy-enable)
 
-;; yank and copy to clipboard (rest everything into the kill rig)
-;; stil have issue with c and x
-(evil-define-operator evil-delete-into-null-register (beg end type register yank-handler)
-                      "Delete text from BEG to END with TYPE. Do not save it in any register."
-                      (interactive "<R><x><y>")
-                      (evil-delete beg end type ?_ yank-handler))
-(define-key evil-normal-state-map "d" 'evil-delete-into-null-register)
-
 ;; Theme
 (load-theme 'gruvbox t)
 
@@ -308,35 +300,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 ;; Disable the annoying bell
 (setq ring-bell-function 'ignore)
-
-;; for now, the clipboard thing is messy
-(defun copy-to-clipboard ()
-  "Copy from buffer to clipboard rather than to register."
-  (interactive)
-  (if (display-graphic-p)
-    (progn
-      (message "Yanked region to x-clipboard!")
-      (call-interactively 'clipboard-kill-ring-save)
-      )
-    (if (region-active-p)
-      (progn
-        (shell-command-on-region (region-beginning) (region-end) "xsel -i -b")
-        (message "Yanked region to clipboard!")
-        (deactivate-mark))
-      (message "No region active; can't yank to clipboard!")))
-  )
-(evil-define-command paste-from-clipboard()
-                     (if (display-graphic-p)
-                       (progn
-                         (clipboard-yank)
-                         (message "graphics active")
-                         )
-                       (insert (shell-command-to-string "xsel -o -b"))
-                       )
-                     )
-(global-set-key [f8] 'copy-to-clipboard)
-(global-set-key [f9] 'paste-from-clipboard)
-
 
 ;; Maximize current buffer
 (defun toggle-maximize-buffer ()
