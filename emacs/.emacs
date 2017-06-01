@@ -151,7 +151,10 @@ Return a list of installed PACKAGES or nil for every skipped package."
 (require 'helm-config)
 (helm-mode 1)
 (global-set-key (kbd "M-x") 'helm-M-x)
-(setq helm-M-x-fuzzy-match t) ;; optional fuzzy matching for helm-M-x
+;; make everything fuzzy
+(setq helm-M-x-fuzzy-match t)
+(setq helm-buffers-fuzzy-matching t)
+(setq helm-recentf-fuzzy-match t)
 
 ;; Smoother scrolling
 (require 'smooth-scrolling)
