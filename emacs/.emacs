@@ -47,7 +47,7 @@ Return a list of installed packages or nil for every skipped package."
    (lambda (package)
      (if (package-installed-p package)
          nil
-	   (package-install package))
+	   (package-install package)))
        ;; (if (y-or-n-p (format "Package %s is missing. Install it? " package))
        ;;     (package-install package)
        ;;   package)))
@@ -64,32 +64,32 @@ Return a list of installed packages or nil for every skipped package."
 (ensure-package-installed 'evil
                           'projectile
                           'magit
-						  'helm
-						  'powerline
-						  'powerline-evil
-						  'evil-leader
-						  'smooth-scrolling
-						  'flycheck
-						  'autopair
-						  'saveplace
-						  'ido
-						  'auto-complete
-						  'evil-commentary
-						  'evil-surround
-						  'evil-search-highlight-persist
-						  'git-gutter
-						  'drag-stuff
-						  'evil-surround
-						  'gruvbox-theme
-						  'spaceline
-						  'diff-hl
-						  'markdown-mode+
-						  'persistent-scratch
-						  'neotree
-						  'minimap
-						  'rainbow-mode
-						  'rainbow-delimiters
-						  'elpy)
+                          'helm
+                          'powerline
+                          'powerline-evil
+                          'evil-leader
+                          'smooth-scrolling
+                          'flycheck
+                          'autopair
+                          'saveplace
+                          'ido
+                          'auto-complete
+                          'evil-commentary
+                          'evil-surround
+                          'evil-search-highlight-persist
+                          'git-gutter
+                          'drag-stuff
+                          'evil-surround
+                          'gruvbox-theme
+                          'spaceline
+                          'diff-hl
+                          'markdown-mode+
+                          'persistent-scratch
+                          'neotree
+                          'minimap
+                          'rainbow-mode
+                          'rainbow-delimiters
+                          'elpy)
 
 ;; Evil mode
 (require 'evil)
