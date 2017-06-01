@@ -319,7 +319,33 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (define-key evil-normal-state-map (kbd "_") `toggle-maximize-buffer)
 
 ;; Visible whitespace
-(setq whitespace-style '(trailing tabs newline tab-mark newline-mark))
+(global-whitespace-mode t)
+(setq whitespace-display-mappings '(
+  (space-mark   ?\     [?\u00B7]     [?.])
+  (space-mark   ?\xA0  [?\u00A4]     [?_])
+  (newline-mark ?\n    [?¬ ?\n])
+  (tab-mark     ?\t    [?\u00BB ?\t] [?\\ ?\t])
+            ))
+;; lines lines-tail newline trailing space-before-tab space-afte-tab empty
+;; indentation-space indentation indentation-tab tabs spaces
+;; (setq whitespace-style '(face space-mark tab-mark newline-mark) )
+(setq whitespace-style '(tab-mark newline-mark))
+(setq whitespace-line-column 85)
+(custom-set-faces
+  '(whitespace-space ((t (:bold t :foreground "gray75"))))
+  '(whitespace-empty ((t (:foreground "firebrick" :background "SlateGray1"))))
+  '(whitespace-hspace ((t (:foreground "lightgray" :background "LemonChiffon3"))))
+  '(whitespace-indentation ((t (:foreground "firebrick" :background "beige"))))
+  '(whitespace-line ((t (:foreground "black" :background "red"))))
+  '(whitespace-newline ((t (:foreground "orange" :background "blue"))))
+  '(whitespace-space-after-tab ((t (:foreground "black" :background "green"))))
+  '(whitespace-space-before-tab ((t (:foreground "black" :background "DarkOrange"))))
+  '(whitespace-tab ((t (:foreground "blue" :background "white"))))
+  '(whitespace-trailing ((t (:foreground "red" :background "yellow"))))
+  )
+
+;; Enable line numbers globally
+ '(global-linum-mode t)
 
 ;; F'ing clipboard
 (defun bb/evil-delete (orig-fn beg end &optional type _ &rest args)
@@ -336,7 +362,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(custom-safe-themes
    (quote
     ("e87a2bd5abc8448f8676365692e908b709b93f2d3869c42a4371223aab7d9cf8" default)))
- '(global-linum-mode t)
  '(inhibit-startup-screen t)
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(package-selected-packages
