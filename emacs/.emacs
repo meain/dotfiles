@@ -142,7 +142,8 @@ Return a list of installed PACKAGES or nil for every skipped package."
 (evil-leader/set-key "q" `evil-delete-buffer)
 
 ;; start shell with leader t
-(evil-leader/set-key "t" `term)
+(require 'sane-term)
+(evil-leader/set-key "t" `sane-term)
 
 ;; tag jumping
 (evil-leader/set-key ";" `evil-jump-to-tag)
