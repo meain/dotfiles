@@ -320,6 +320,11 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; Visible whitespace
 (setq whitespace-style '(trailing tabs newline tab-mark newline-mark))
 
+;; F'ing clipboard
+(defun bb/evil-delete (orig-fn beg end &optional type _ &rest args)
+  "Make d, c, x to not write to clipboard.  And ORIG-FN, BEG, END, TYPE, ARGS should appear in docstring."
+  (apply orig-fn beg end type ?_ args))
+(advice-add 'evil-delete :around 'bb/evil-delete)
 
 ;; Start maximized
 (custom-set-variables
@@ -335,7 +340,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(package-selected-packages
    (quote
-    (undohist web-mode term+ snippet vimrc-mode auctex-latexmk magic-latex-buffer init-open-recentf magit-find-file find-things-fast helm-fuzzy-find highlight-current-line rainbow-mode neotree linum-relative drag-stuff git-gutter evil-surround evil-commentary autopair simpleclip flycheck smooth-scrolling projectile powerline-evil magit helm gruvbox-theme evil-search-highlight-persist evil-leader auto-complete)))
+    (elscreen-multi-term sane-term nclip clippy clipmon osx-clipboard undohist web-mode term+ snippet vimrc-mode auctex-latexmk magic-latex-buffer init-open-recentf magit-find-file find-things-fast helm-fuzzy-find highlight-current-line rainbow-mode neotree linum-relative drag-stuff git-gutter evil-surround evil-commentary autopair simpleclip flycheck smooth-scrolling projectile powerline-evil magit helm gruvbox-theme evil-search-highlight-persist evil-leader auto-complete)))
  '(send-mail-function (quote smtpmail-send-it)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
