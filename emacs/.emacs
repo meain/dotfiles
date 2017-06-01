@@ -167,6 +167,9 @@ Return a list of installed PACKAGES or nil for every skipped package."
 (require 'smooth-scrolling)
 (smooth-scrolling-mode 1)
 
+;; persistant undo
+(require 'undohist)
+
 ;; Powerline
 (require 'spaceline)
 (require 'spaceline-config)
