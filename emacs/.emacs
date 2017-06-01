@@ -283,8 +283,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (evil-leader/set-key "h" (lambda () (interactive) (split-window-below) (windmove-down)))
 (evil-leader/set-key "v" (lambda () (interactive) (split-window-right) (windmove-right)))
 
-(global-linum-mode)
-
 ;; Git gutter
 (diff-hl-flydiff-mode t)
 (global-diff-hl-mode t)
@@ -317,9 +315,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
       (window-configuration-to-register '_)
       (delete-other-windows))))
 (define-key evil-normal-state-map (kbd "_") `toggle-maximize-buffer)
-
-;; Enable line numbers globally
- '(global-linum-mode t)
 
 ;; F'ing clipboard
 (defun bb/evil-delete (orig-fn beg end &optional type _ &rest args)
