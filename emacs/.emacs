@@ -21,7 +21,6 @@
     t))
 (add-hook 'kill-buffer-query-functions 'immortal-scratch)
 
-
 ;; disable backup
 (setq backup-inhibited t)
 
@@ -107,10 +106,11 @@ Return a list of installed PACKAGES or nil for every skipped package."
 (elpy-enable)
 
 ;; Theme
+(require 'gruvbox-theme)
 (load-theme 'gruvbox t)
 
 ;; Set up leader key in emacs
-(require `evil-leader)
+(require 'evil-leader)
 (global-evil-leader-mode)
 (evil-leader/set-leader "<SPC>")
 
@@ -312,9 +312,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
       (delete-other-windows))))
 (define-key evil-normal-state-map (kbd "_") `toggle-maximize-buffer)
 
-
 ;; Visible whitespace
 (setq whitespace-style '(trailing tabs newline tab-mark newline-mark))
+
 
 ;; Start maximized
 (custom-set-variables
