@@ -22,10 +22,10 @@
 (add-hook 'kill-buffer-query-functions 'immortal-scratch)
 
 
-;;disable backup
+;; disable backup
 (setq backup-inhibited t)
 
-;;disable auto save
+;; disable auto save
 (setq auto-save-default nil)
 
 ;; no line wrapping
@@ -52,7 +52,7 @@
 ;; Handle installing packages in emacs
 (defun ensure-package-installed (&rest packages)
   "Assure every package is installed, ask for installation if it’s not.
-  Return a list of installed packages or nil for every skipped package."
+Return a list of installed PACKAGES or nil for every skipped package."
   (mapcar
     (lambda (package)
       (if (package-installed-p package)
@@ -183,8 +183,8 @@
 ;; esc quits
 (defun minibuffer-keyboard-quit ()
   "Abort recursive edit.
-  In Delete Selection mode, if the mark is active, just deactivate it;
-  then it takes a second \\[keyboard-quit] to abort the minibuffer."
+In Delete Selection mode, if the mark is active, just deactivate it;
+then it takes a second \\[keyboard-quit] to abort the minibuffer."
   (interactive)
   (if (and delete-selection-mode transient-mark-mode mark-active)
     (setq deactivate-mark  t)
@@ -296,6 +296,7 @@
 
 ;; for now, the clipboard thing is messy
 (defun copy-to-clipboard ()
+  "Copy from buffer to clipboard rather than to register."
   (interactive)
   (if (display-graphic-p)
     (progn
@@ -323,7 +324,8 @@
 
 
 ;; Maximize current buffer
-(defun toggle-maximize-buffer () "Maximize buffer"
+(defun toggle-maximize-buffer ()
+  "Maximize the current buffer."
   (interactive)
   (if (= 1 (length (window-list)))
     (jump-to-register '_)
