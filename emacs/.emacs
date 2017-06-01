@@ -147,6 +147,13 @@ Return a list of installed PACKAGES or nil for every skipped package."
 ;; start shell with leader t
 (evil-leader/set-key "t" `term)
 
+;; tag jumping
+(evil-leader/set-key ";" `evil-jump-to-tag)
+(evil-leader/set-key "'" `evil-jump-backward)
+
+;; vinegarish
+(evil-leader/set-key "-" `dired)
+
 ;; Set up helm
 (require 'helm-config)
 (helm-mode 1)
