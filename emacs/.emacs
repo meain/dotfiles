@@ -110,6 +110,8 @@ Return a list of installed PACKAGES or nil for every skipped package."
                           'neotree
                           'minimap
                           'rainbow-mode
+                          'labburn-theme
+                          'jazz-theme
                           'rainbow-delimiters
                           'elpy)
 
@@ -126,9 +128,8 @@ Return a list of installed PACKAGES or nil for every skipped package."
 (elpy-enable)
 
 ;; Theme
-(when (display-graphic-p)
-(load-theme 'wombat t))
-(load-theme 'gruvbox t)
+(if (display-graphic-p)
+(load-theme 'jazz t) (load-theme 'gruvbox t))
 
 ;; enable which-key
 (require 'which-key)
@@ -366,12 +367,12 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("e87a2bd5abc8448f8676365692e908b709b93f2d3869c42a4371223aab7d9cf8" default)))
+    ("3a5f04a517096b08b08ef39db6d12bd55c04ed3d43b344cf8bd855bde6d3a1ae" "d3a7eea7ebc9a82b42c47e49517f7a1454116487f6907cf2f5c2df4b09b50fc1" "47744f6c8133824bdd104acc4280dbed4b34b85faa05ac2600f716b0226fb3f6" "a1289424bbc0e9f9877aa2c9a03c7dfd2835ea51d8781a0bf9e2415101f70a7e" "99473228af8c280ed5534952a1a687732c2450d076528c6363ec23febccccd7b" "bc4b650c41b16b98166b35da94b366c6a9e1e7883bbf4937c897fb7bd05aa619" "83db918b06f0b1df1153f21c0d47250556c7ffb5b5e6906d21749f41737babb7" "e87a2bd5abc8448f8676365692e908b709b93f2d3869c42a4371223aab7d9cf8" default)))
  '(inhibit-startup-screen t)
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(package-selected-packages
    (quote
-    (dashboard spaceline-all-the-icons all-the-icons-dired all-the-icons try elscreen-multi-term sane-term nclip clippy clipmon osx-clipboard undohist web-mode term+ snippet vimrc-mode auctex-latexmk magic-latex-buffer init-open-recentf magit-find-file find-things-fast helm-fuzzy-find highlight-current-line rainbow-mode neotree linum-relative drag-stuff git-gutter evil-surround evil-commentary autopair simpleclip flycheck smooth-scrolling projectile magit helm gruvbox-theme evil-search-highlight-persist evil-leader auto-complete)))
+    (jazz-theme dashboard spaceline-all-the-icons all-the-icons-dired all-the-icons try elscreen-multi-term sane-term nclip clippy clipmon osx-clipboard undohist web-mode term+ snippet vimrc-mode auctex-latexmk magic-latex-buffer init-open-recentf magit-find-file find-things-fast helm-fuzzy-find highlight-current-line rainbow-mode neotree linum-relative drag-stuff git-gutter evil-surround evil-commentary autopair simpleclip flycheck smooth-scrolling projectile magit helm gruvbox-theme evil-search-highlight-persist evil-leader auto-complete)))
  '(send-mail-function (quote smtpmail-send-it)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
