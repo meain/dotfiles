@@ -110,7 +110,6 @@ Return a list of installed PACKAGES or nil for every skipped package."
                           'fiplr
                           'minimap
                           'rainbow-mode
-                          'labburn-theme
                           'jazz-theme
                           'rainbow-delimiters
                           'elpy)
@@ -135,7 +134,7 @@ Return a list of installed PACKAGES or nil for every skipped package."
 
 ;; Theme
 (if (display-graphic-p)
-(load-theme 'labburn t) (load-theme 'gruvbox t))
+(load-theme 'jazz t) (load-theme 'gruvbox t))
 
 ;; enable which-key
 (require 'which-key)
@@ -399,7 +398,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("3a5f04a517096b08b08ef39db6d12bd55c04ed3d43b344cf8bd855bde6d3a1ae" "d3a7eea7ebc9a82b42c47e49517f7a1454116487f6907cf2f5c2df4b09b50fc1" "47744f6c8133824bdd104acc4280dbed4b34b85faa05ac2600f716b0226fb3f6" "a1289424bbc0e9f9877aa2c9a03c7dfd2835ea51d8781a0bf9e2415101f70a7e" "99473228af8c280ed5534952a1a687732c2450d076528c6363ec23febccccd7b" "bc4b650c41b16b98166b35da94b366c6a9e1e7883bbf4937c897fb7bd05aa619" "83db918b06f0b1df1153f21c0d47250556c7ffb5b5e6906d21749f41737babb7" "e87a2bd5abc8448f8676365692e908b709b93f2d3869c42a4371223aab7d9cf8" default)))
+    ("98cc377af705c0f2133bb6d340bf0becd08944a588804ee655809da5d8140de6" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "2d16f85f22f1841390dfc1234bd5acfcce202d9bb1512aa8eabd0068051ac8c3" "7feeed063855b06836e0262f77f5c6d3f415159a98a9676d549bfeb6c49637c4" "235dc2dd925f492667232ead701c450d5c6fce978d5676e54ef9ca6dd37f6ceb" "67e998c3c23fe24ed0fb92b9de75011b92f35d3e89344157ae0d544d50a63a72" "ff7625ad8aa2615eae96d6b4469fcc7d3d20b2e1ebc63b761a349bebbb9d23cb" "d5b121d69e48e0f2a84c8e4580f0ba230423391a78fcb4001ccb35d02494d79e" "bc40f613df8e0d8f31c5eb3380b61f587e1b5bc439212e03d4ea44b26b4f408a" "3a5f04a517096b08b08ef39db6d12bd55c04ed3d43b344cf8bd855bde6d3a1ae" "d3a7eea7ebc9a82b42c47e49517f7a1454116487f6907cf2f5c2df4b09b50fc1" "47744f6c8133824bdd104acc4280dbed4b34b85faa05ac2600f716b0226fb3f6" "a1289424bbc0e9f9877aa2c9a03c7dfd2835ea51d8781a0bf9e2415101f70a7e" "99473228af8c280ed5534952a1a687732c2450d076528c6363ec23febccccd7b" "bc4b650c41b16b98166b35da94b366c6a9e1e7883bbf4937c897fb7bd05aa619" "83db918b06f0b1df1153f21c0d47250556c7ffb5b5e6906d21749f41737babb7" "e87a2bd5abc8448f8676365692e908b709b93f2d3869c42a4371223aab7d9cf8" default)))
  '(inhibit-startup-screen t)
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(package-selected-packages
@@ -411,6 +410,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(markdown-header-face ((t (:inherit default))))
  '(trailing-whitespace ((t (:background "dim gray")))))
 
 (provide '.emacs)
