@@ -318,6 +318,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (require 'evil-surround)
 (global-evil-surround-mode 1)
 
+;; undotree
+(global-undo-tree-mode)
+
 ;; Like drag visuals
 (require 'drag-stuff)
 (drag-stuff-mode t)
