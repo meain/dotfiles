@@ -9,7 +9,7 @@
 ;;; Code:
 
 ;; Set font
-(set-frame-font "Monaco 15")
+(set-frame-font "Monaco 14")
 
 ;; Remove unnecessary stuff
 (when (display-graphic-p)
