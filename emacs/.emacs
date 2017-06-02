@@ -117,7 +117,7 @@ Return a list of installed PACKAGES or nil for every skipped package."
 (dashboard-setup-startup-hook)
 (setq dashboard-banner-logo-title ":meain")
 (setq dashboard-startup-banner 'logo)
-(setq dashboard-items '((recents  . 5)
+(setq dashboard-items '((recents  . 10)
                         (bookmarks . 5)
                         (projects . 5)
                         (agenda . 5)))
@@ -176,6 +176,9 @@ Return a list of installed PACKAGES or nil for every skipped package."
 
 ;; switch to scratch buffer
 (evil-leader/set-key "s" (lambda() (interactive) (switch-to-buffer "*scratch*")))
+
+;; switch to dashboard buffer
+(evil-leader/set-key "d" (lambda() (interactive) (switch-to-buffer "*dashboard*")))
 
 ;; quick switch to previous buffer
 (evil-leader/set-key "f" 'switch-to-prev-buffer)
