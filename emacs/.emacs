@@ -320,6 +320,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 ;; undotree
 (global-undo-tree-mode)
+(setq undo-tree-auto-save-history t)
+(setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
 
 ;; Like drag visuals
 (require 'drag-stuff)
