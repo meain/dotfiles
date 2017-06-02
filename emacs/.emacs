@@ -103,7 +103,6 @@ Return a list of installed PACKAGES or nil for every skipped package."
                           'gruvbox-theme
                           'spaceline
                           'diff-hl
-                          'markdown-mode+
                           'try
                           'persistent-scratch
                           'fiplr
