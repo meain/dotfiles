@@ -338,6 +338,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (require 'markdown-mode)
 (setq markdown-command "~/bin/stdgrip")
 (setq markdown-header-scaling nil)
+(add-hook 'markdown-mode-hook 'markdown-preview)
+(add-hook 'markdown-mode-hook
+          (lambda () (add-hook 'before-save-hook 'markdown-preview nil 'local)))
 
 ;; neotree
 (require 'neotree)
