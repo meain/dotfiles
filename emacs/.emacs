@@ -117,6 +117,12 @@ Return a list of installed PACKAGES or nil for every skipped package."
 ;; fancy start screen
 (require 'dashboard)
 (dashboard-setup-startup-hook)
+(setq dashboard-banner-logo-title ":meain")
+(setq dashboard-startup-banner 'logo)
+(setq dashboard-items '((recents  . 5)
+                        (bookmarks . 5)
+                        (projects . 5)
+                        (agenda . 5)))
 
 ;; Evil mode
 (require 'evil)
