@@ -7,7 +7,7 @@
 ;;; Code:
 
 ;; Set font
-(set-frame-font "Monaco 14")
+(set-frame-font "Monaco 15")
 
 ;; Remove unnecessary stuff
 (when (display-graphic-p)
@@ -157,7 +157,7 @@ Return a list of installed PACKAGES or nil for every skipped package."
 (evil-leader/set-key "/" 'evil-search-highlight-persist-remove-all)
 
 ;; Use leader<space> to save file
-(evil-leader/set-key "SPC" 'save-buffer)
+(evil-leader/set-key "SPC" (lambda() (interactive) (if (eq (current-buffer) (get-buffer "*scratch*")) (message ":meain") (save-buffer) )))
 
 ;; Easer opening of M-x
 (evil-leader/set-key "l" 'helm-M-x)
