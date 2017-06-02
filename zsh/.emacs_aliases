@@ -1,3 +1,3 @@
-alias eserver='/Applications/Emacs.app/Contents/MacOS/Emacs-x86_64-10_5 --daemon'
-alias ma='/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -t'
-alias eserverkill='/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -e "(kill-emacs)"'
+alias eserver='emacs --daemon'
+alias em='emacsclient -t'
+alias eserverkill='emacsclient -e "(kill-emacs)"'
