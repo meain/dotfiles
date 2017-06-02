@@ -296,8 +296,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 ;; Remember cursor positon
 (require 'saveplace)
-(setq save-place-file "~/.emacs.d/saveplace") ;; keep my ~/ clean
-(setq-default save-place t)                   ;; activate it for all buffers
+(save-place-mode t)
+(setq save-place-file "~/.emacs.d/saveplace")
 
 ;; Autocompletion plugin
 ;; Enable snippets
