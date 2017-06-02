@@ -176,6 +176,9 @@ Return a list of installed PACKAGES or nil for every skipped package."
 ;; quick switch to previous buffer
 (evil-leader/set-key "f" 'switch-to-prev-buffer)
 
+;; switch projects
+(evil-leader/set-key "p" 'projectile-switch-project)
+
 ;; start shell with leader t
 (require 'sane-term)
 (evil-leader/set-key "t" 'sane-term)
@@ -277,6 +280,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; Autopair
 (require 'autopair)
 (autopair-global-mode)
+
+;; Projectile
+(require 'projectile)
+(projectile-global-mode)
 
 ;; Save whitespace before save
 (add-hook 'before-save-hook 'whitespace-cleanup)
