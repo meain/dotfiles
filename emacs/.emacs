@@ -93,6 +93,7 @@ Return a list of installed PACKAGES or nil for every skipped package."
                           'ido
                           'auto-complete
                           'evil-commentary
+                          'yasnippet
                           'evil-surround
                           'evil-search-highlight-persist
                           'git-gutter
@@ -264,8 +265,13 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (evil-leader/set-key "f" (kbd "C-h f"))
 
 ;; Autocompletion plugin
+;; Enable snippets
 (require 'auto-complete)
+(global-auto-complete-mode t)
 (ac-config-default)
+(require 'yasnippet)
+(yas-global-mode 1)
+(add-to-list 'load-path "~/.emacs.d/plugins/yasnippet")
 
 ;; persistant scratch buffer - so cool
 (persistent-scratch-setup-default)
