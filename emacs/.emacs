@@ -127,6 +127,10 @@ Return a list of installed PACKAGES or nil for every skipped package."
 (require 'which-key)
 (which-key-mode t)
 
+;; hmm, we should prpbably have line numbers
+;; flydiff does not work pretty without it
+(global-linum-mode t)
+
 ;; hook into osx clipboard
 (require 'osx-clipboard)
 (osx-clipboard-mode)
