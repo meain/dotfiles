@@ -104,12 +104,18 @@ Return a list of installed PACKAGES or nil for every skipped package."
                           'spaceline
                           'diff-hl
                           'markdown-mode+
+                          'try
                           'persistent-scratch
+                          'fiplr
                           'neotree
                           'minimap
                           'rainbow-mode
                           'rainbow-delimiters
                           'elpy)
+
+;; fancy start screen
+(require 'dashboard)
+(dashboard-setup-startup-hook)
 
 ;; Evil mode
 (require 'evil)
