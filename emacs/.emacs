@@ -2,9 +2,7 @@
 
 ;;; Commentary:
 
-;; This is a vim user's Emacs configuration fully littered with Vim stuff.
-;; The main reason I set this up is so that I can use magit, damn that is cool.
-;; So yeah, that's it.
+;; This is a vim user's Emacs configuration and I warn you that its fully littered with Vim stuff.
 
 ;;; Code:
 
