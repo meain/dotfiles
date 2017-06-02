@@ -149,27 +149,30 @@ Return a list of installed PACKAGES or nil for every skipped package."
 (evil-leader/set-key "SPC" 'save-buffer)
 
 ;; Easer opening of M-x
-(evil-leader/set-key "l" `helm-M-x)
+(evil-leader/set-key "l" 'helm-M-x)
 
 ;; Magit call
-(evil-leader/set-key "g" `magit-status)
+(evil-leader/set-key "g" 'magit-status)
 
 ;; buffer list easy open
-(evil-leader/set-key "b" `helm-buffers-list)
+(evil-leader/set-key "b" 'helm-buffers-list)
 
 ;; shortcut to save current buffer
-(evil-leader/set-key "w" `evil-save)
+(evil-leader/set-key "w" 'evil-save)
 
 ;; easy quitting of buffer/window
-(evil-leader/set-key "q" `evil-delete-buffer)
+(evil-leader/set-key "q" 'evil-delete-buffer)
+
+;; switch to scratch buffer
+(evil-leader/set-key "s" (lambda() (interactive) (switch-to-buffer "*scratch*")))
 
 ;; start shell with leader t
 (require 'sane-term)
-(evil-leader/set-key "t" `sane-term)
+(evil-leader/set-key "t" 'sane-term)
 
 ;; tag jumping
-(evil-leader/set-key ";" `evil-jump-to-tag)
-(evil-leader/set-key "'" `evil-jump-backward)
+(evil-leader/set-key ";" 'evil-jump-to-tag)
+(evil-leader/set-key "'" 'evil-jump-backward)
 
 ;; vinegarish
 (define-key evil-normal-state-map (kbd "-") 'helm-find-files)
