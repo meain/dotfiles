@@ -126,7 +126,8 @@ Return a list of installed PACKAGES or nil for every skipped package."
 (elpy-enable)
 
 ;; Theme
-(require 'gruvbox-theme)
+(when (display-graphic-p)
+(load-theme 'wombat t))
 (load-theme 'gruvbox t)
 
 ;; enable which-key
