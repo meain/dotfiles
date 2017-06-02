@@ -15,6 +15,9 @@
   (tool-bar-mode -1))
 (menu-bar-mode -1)
 
+;; set env variables
+(setenv "PATH" "/Library/Frameworks/Python.framework/Versions/2.7/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/git/bin:/Users/abinsimon/.fzf/bin")
+
 ;; (setq initial-scratch-message "   : meain")
 (setq initial-major-mode 'org-mode)
 (defun immortal-scratch ()
