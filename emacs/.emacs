@@ -336,7 +336,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 ;; markdown mode
 (require 'markdown-mode)
-(setq markdown-command "multimarkdown")
+(setq markdown-command "~/bin/stdgrip")
 (setq markdown-header-scaling nil)
 
 ;; neotree
