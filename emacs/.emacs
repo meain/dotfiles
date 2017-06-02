@@ -132,7 +132,7 @@ Return a list of installed PACKAGES or nil for every skipped package."
 
 ;; Theme
 (if (display-graphic-p)
-(load-theme 'jazz t) (load-theme 'gruvbox t))
+(load-theme 'labburn t) (load-theme 'gruvbox t))
 
 ;; enable which-key
 (require 'which-key)
@@ -335,6 +335,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; markdown mode
 (require 'markdown-mode)
 (setq markdown-command "multimarkdown")
+(setq markdown-header-scaling nil)
 
 ;; neotree
 (require 'neotree)
