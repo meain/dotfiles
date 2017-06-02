@@ -16,7 +16,7 @@
 (menu-bar-mode -1)
 
 ;; (setq initial-scratch-message "   : meain")
-(setq initial-major-mode 'markdown-mode)
+(setq initial-major-mode 'org-mode)
 (defun immortal-scratch ()
   "Make scratch buffer immortal."
   (if (eq (current-buffer) (get-buffer "*scratch*"))
