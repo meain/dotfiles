@@ -1,4 +1,5 @@
-# Dotfiles
+Dotfiles
+===========
 
 **Hey**, these are the dotfiles that I use.
 
@@ -10,8 +11,8 @@ It includes my `[z/ba/fi]sh`, `[v/nv/mv/gv]im`, `emacs`, `tmux`, `git` config fi
 
 **Use `gnu-stow` to link the files.**
 
-For example if you need my `nvim` config clone the repo then inside the repo use: 
-`stow nvim`  
+For example if you need my `nvim` config clone the repo then inside the repo use:
+`stow nvim`
 This will symlink the necessary files
 
 ## Dependencies
