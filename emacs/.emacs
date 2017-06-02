@@ -269,9 +269,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; Automateic indentation
 (define-key global-map (kbd "RET") 'newline-and-indent)
 
-;; recentf config
 (require 'recentf)
 (add-to-list 'recentf-exclude "/var/folders/nc")
+(define-key evil-normal-state-map (kbd ", e") 'helm-recentf)
 
 ;; opening recent files
 (require 'fiplr)
