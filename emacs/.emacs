@@ -191,9 +191,12 @@ Return a list of installed PACKAGES or nil for every skipped package."
 (spaceline-toggle-minor-modes-off)
 (spaceline-toggle-evil-state)
 (spaceline-toggle-hud-off)
+(spaceline-toggle-buffer-size)
 (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
 (setq powerline-height 20)
 (setq powerline-raw " ")
+(setq powerline-default-separator "zigzag")
+(spaceline-compile)
 (setq ns-use-srgb-colorspace nil)
 
 ;; j/k for wrapped lines
