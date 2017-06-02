@@ -172,6 +172,9 @@ Return a list of installed PACKAGES or nil for every skipped package."
 ;; switch to scratch buffer
 (evil-leader/set-key "s" (lambda() (interactive) (switch-to-buffer "*scratch*")))
 
+;; quick switch to previous buffer
+(evil-leader/set-key "f" 'switch-to-prev-buffer)
+
 ;; start shell with leader t
 (require 'sane-term)
 (evil-leader/set-key "t" 'sane-term)
