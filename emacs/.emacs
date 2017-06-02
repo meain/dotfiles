@@ -179,6 +179,7 @@ Return a list of installed PACKAGES or nil for every skipped package."
 ;; start shell with leader t
 (require 'sane-term)
 (evil-leader/set-key "t" 'sane-term)
+(add-hook 'term-mode-hook (lambda () (linum-mode -1)))
 
 ;; tag jumping
 (evil-leader/set-key ";" 'evil-jump-to-tag)
