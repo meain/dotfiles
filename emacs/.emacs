@@ -268,12 +268,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (setq save-place-file "~/.emacs.d/saveplace") ;; keep my ~/ clean
 (setq-default save-place t)                   ;; activate it for all buffers
 
-;; Remap to kill all other buffers
-(evil-leader/set-key "o" (kbd "C-x 1"))
-
-;; Easer help access - i wil need it
-(evil-leader/set-key "f" (kbd "C-h f"))
-
 ;; Autocompletion plugin
 ;; Enable snippets
 (require 'auto-complete)
