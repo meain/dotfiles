@@ -336,11 +336,18 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 ;; markdown mode
 (require 'markdown-mode)
-(setq markdown-command "~/bin/stdgrip")
 (setq markdown-header-scaling nil)
-(add-hook 'markdown-mode-hook 'markdown-preview)
-(add-hook 'markdown-mode-hook
-          (lambda () (add-hook 'before-save-hook 'markdown-preview nil 'local)))
+;; (setq markdown-header-face-1 :default)
+;; (setq markdown-header-face-2 :default)
+;; (setq markdown-header-face-3 :default)
+;; (setq markdown-header-face-4 :default)
+(defun markdown-custom-preview()
+    "Documentation"
+    (interactive)
+    (start-process "markdown-grip" "*markdown-grip*" "/Library/Frameworks/Python.framework/Versions/2.7/bin/grip" buffer-file-name)
+    (browse-url "http://localhost:6419/"))
+(defun markdown-custom-preview-stop() (interactive) (kill-process "markdown-grip"))
+
 
 ;; neotree
 (require 'neotree)
@@ -414,6 +421,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(markdown-header-face ((t (:inherit default))))
+ '(markdown-header-face-1 ((t (:inherit markdown-header-face :height 1.4))))
+ '(markdown-header-face-2 ((t (:inherit markdown-header-face :height 1.3))))
  '(trailing-whitespace ((t (:background "dim gray")))))
 
 (provide '.emacs)
