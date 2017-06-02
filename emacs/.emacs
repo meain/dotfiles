@@ -332,7 +332,12 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (drag-stuff-global-mode 1)
 (drag-stuff-define-keys)
 
+;; markdown mode
+(require 'markdown-mode)
+(setq markdown-command "multimarkdown")
+
 ;; neotree
+(require 'neotree)
 (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
 
 ;; easier viewing of delimiters
@@ -395,7 +400,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(package-selected-packages
    (quote
-    (jazz-theme dashboard spaceline-all-the-icons all-the-icons-dired all-the-icons try elscreen-multi-term sane-term nclip clippy clipmon osx-clipboard undohist web-mode term+ snippet vimrc-mode auctex-latexmk magic-latex-buffer init-open-recentf magit-find-file find-things-fast helm-fuzzy-find highlight-current-line rainbow-mode neotree linum-relative drag-stuff git-gutter evil-surround evil-commentary autopair simpleclip flycheck smooth-scrolling projectile magit helm gruvbox-theme evil-search-highlight-persist evil-leader auto-complete)))
+    (markdown-mode jazz-theme dashboard spaceline-all-the-icons all-the-icons-dired all-the-icons try elscreen-multi-term sane-term nclip clippy clipmon osx-clipboard undohist web-mode term+ snippet vimrc-mode auctex-latexmk magic-latex-buffer init-open-recentf magit-find-file find-things-fast helm-fuzzy-find highlight-current-line rainbow-mode neotree linum-relative drag-stuff git-gutter evil-surround evil-commentary autopair simpleclip flycheck smooth-scrolling projectile magit helm gruvbox-theme evil-search-highlight-persist evil-leader auto-complete)))
  '(send-mail-function (quote smtpmail-send-it)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
