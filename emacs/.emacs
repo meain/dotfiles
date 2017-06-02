@@ -269,10 +269,12 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; Automateic indentation
 (define-key global-map (kbd "RET") 'newline-and-indent)
 
-;; opening recent files
+;; recentf config
 (require 'recentf)
-(require 'fiplr)
+(add-to-list 'recentf-exclude "/var/folders/nc")
 
+;; opening recent files
+(require 'fiplr)
 (defun recent-selector-open ()
   "Switch between helm and fiplr based on directory."
   (interactive)
