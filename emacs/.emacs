@@ -97,6 +97,7 @@ Return a list of installed PACKAGES or nil for every skipped package."
                           'git-gutter
                           'drag-stuff
                           'osx-clipboard
+                          'all-the-icons
                           'evil-surround
                           'gruvbox-theme
                           'spaceline
@@ -104,7 +105,6 @@ Return a list of installed PACKAGES or nil for every skipped package."
                           'try
                           'persistent-scratch
                           'fiplr
-                          'neotree
                           'minimap
                           'rainbow-mode
                           'labburn-theme
@@ -331,6 +331,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (drag-stuff-mode t)
 (drag-stuff-global-mode 1)
 (drag-stuff-define-keys)
+
+;; neotree
+(setq neo-theme (if (display-graphic-p) 'icons 'arrow))
 
 ;; easier viewing of delimiters
 (require 'rainbow-delimiters)
