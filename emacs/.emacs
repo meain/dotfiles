@@ -20,12 +20,11 @@
 
 ;; (setq initial-scratch-message "   : meain")
 (setq initial-major-mode 'org-mode)
+(add-hook 'org-mode-hook (lambda() (interactive) (org-bullets-mode)))
 (defun immortal-scratch ()
-  "Make scratch buffer immortal."
+  "Make scratch buffer immortal.  Burry on kill."
   (if (eq (current-buffer) (get-buffer "*scratch*"))
-    (progn (bury-buffer)
-           nil)
-    t))
+    (progn (bury-buffer) nil) t))
 (add-hook 'kill-buffer-query-functions 'immortal-scratch)
 
 ;; disable backup
@@ -92,6 +91,7 @@ Return a list of installed PACKAGES or nil for every skipped package."
                           'neotree
                           'saveplace
                           'ido
+                          'org-bullets
                           'auto-complete
                           'evil-commentary
                           'yasnippet
