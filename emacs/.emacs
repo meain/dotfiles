@@ -180,6 +180,9 @@ Return a list of installed PACKAGES or nil for every skipped package."
 ;; switch to scratch buffer
 (evil-leader/set-key "s" (lambda() (interactive) (switch-to-buffer "*scratch*")))
 
+;; Personal todo buffer
+(evil-leader/set-key "a" (lambda() (interactive) (find-file "~/.todo.org")))
+
 ;; switch to dashboard buffer
 (evil-leader/set-key "d" (lambda() (interactive) (switch-to-buffer "*dashboard*")))
 
