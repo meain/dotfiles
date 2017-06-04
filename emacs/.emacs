@@ -341,17 +341,13 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; markdown mode
 (require 'markdown-mode)
 (setq markdown-header-scaling nil)
-;; (setq markdown-header-face-1 :default)
-;; (setq markdown-header-face-2 :default)
-;; (setq markdown-header-face-3 :default)
-;; (setq markdown-header-face-4 :default)
 (defun markdown-custom-preview()
     "Documentation"
     (interactive)
+    (if (get-process "markdown-grip") (kill-process "markdown-grip"))
     (start-process "markdown-grip" "*markdown-grip*" "/Library/Frameworks/Python.framework/Versions/2.7/bin/grip" buffer-file-name)
     (browse-url "http://localhost:6419/"))
-(defun markdown-custom-preview-stop() (interactive) (kill-process "markdown-grip"))
-
+(defun markdown-custom-preview-stop() (interactive) (lambda() (kill-process "markdown-grip")))
 
 ;; neotree
 (require 'neotree)
