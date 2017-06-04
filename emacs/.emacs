@@ -84,6 +84,7 @@ Return a list of installed PACKAGES or nil for every skipped package."
                           'sane-term
                           'web-mode
                           'evil-leader
+                          'restclient
                           'smooth-scrolling
                           'flycheck
                           'which-key
