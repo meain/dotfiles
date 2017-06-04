@@ -169,7 +169,7 @@ Return a list of installed PACKAGES or nil for every skipped package."
 (evil-leader/set-key "g" 'magit-status)
 
 ;; buffer list easy open
-(evil-leader/set-key "b" 'helm-buffers-list)
+(evil-leader/set-key "b" 'ido-switch-buffer)
 
 ;; shortcut to save current buffer
 (evil-leader/set-key "w" 'evil-save)
