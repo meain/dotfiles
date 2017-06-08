@@ -20,6 +20,7 @@
 
 ;; (setq initial-scratch-message "   : meain")
 (setq initial-major-mode 'org-mode)
+(setq org-ellipsis "…")
 (add-hook 'org-mode-hook (lambda() (interactive) (org-bullets-mode)))
 (defun immortal-scratch ()
   "Make scratch buffer immortal.  Burry on kill."
@@ -112,6 +113,7 @@ Return a list of installed PACKAGES or nil for every skipped package."
                           'minimap
                           'rainbow-mode
                           'jazz-theme
+                          'expand-region
                           'rainbow-delimiters
                           'elpy)
 
@@ -132,6 +134,8 @@ Return a list of installed PACKAGES or nil for every skipped package."
 ;; enable elpy, yeah its mostly python here
 (require 'elpy)
 (elpy-enable)
+(defun elpy-change-to-python-3() (interactive) (setq elpy-rpc-python-command "python3"))
+(defun elpy-change-to-python-2() (interactive) (setq elpy-rpc-python-command "python"))
 
 ;; Theme
 (if (display-graphic-p)
@@ -203,6 +207,10 @@ Return a list of installed PACKAGES or nil for every skipped package."
 
 ;; vinegarish
 (define-key evil-normal-state-map (kbd "-") 'helm-find-files)
+
+
+(require 'expand-region)
+(global-set-key (kbd "M-e") 'er/expand-region)
 
 ;; Set up helm
 (require 'helm-config)
