@@ -48,6 +48,10 @@
     ;; no line wrapping
     (setq-default truncate-lines 1)
    #+END_SRC
+** OSX Scrolling
+   #+BEGIN_SRC emacs-lisp
+   (setq mouse-wheel-scroll-amount (quote (0.01)))
+   #+END_SRC
 ** Page break line
    #+BEGIN_SRC emacs-lisp
     (use-package page-break-lines
