@@ -635,6 +635,11 @@
         :init
             (persistent-scratch-setup-default))
     #+END_SRC
+** Better locate command
+   #+BEGIN_SRC emacs-lisp
+    ;; mdfind is the command line interface to Spotlight
+    (setq locate-command "mdfind")
+   #+END_SRC
 ** Esc quits anywhere
     #+BEGIN_SRC emacs-lisp
         (defun minibuffer-keyboard-quit ()
