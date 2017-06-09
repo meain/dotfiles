@@ -534,6 +534,10 @@
 (use-package restclient
     :ensure t)
 #+END_SRC
+** Tramp
+    #+BEGIN_SRC emacs-lisp
+    (use-packaage tramp)
+    #+END_SRC
 * Major modes
 ** Org mode
     #+BEGIN_SRC emacs-lisp
