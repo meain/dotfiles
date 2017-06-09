@@ -135,11 +135,14 @@
     #+END_SRC
 ** Ring bell
    #+BEGIN_SRC emacs-lisp
-    ;; Don't beep at me
-    (setq visible-bell t)
-
-    ;; Disable the annoying bell
-    ;; (setq ring-bell-function 'ignore)
+    ;; status line blinks
+    (setq ring-bell-function
+    (lambda ()
+        (unless (memq this-command
+            '(isearch-abort abort-recursive-edit
+                    exit-minibuffer keyboard-quit))
+        (invert-face 'mode-line)
+        (run-with-timer 0.1 nil 'invert-face 'mode-line))))
     #+END_SRC
 * Personal information
   #+BEGIN_SRC emacs-lisp
@@ -226,7 +229,7 @@
 **** Quick save file
    #+BEGIN_SRC
     ;; Use leader<space> to save file
-    (evil-leader/set-key "SPC" (lambda() (interactive) (if (eq (current-buffer) (get-buffer "*scratch*")) (message ":meain") (save-buffer) )))
+    (evil-leader/set-key "<SPC>" (lambda() (interactive) (if (eq (current-buffer) (get-buffer "*scratch*")) (message ":meain") (save-buffer) )))
    #+END_SRC
 **** Save file
     #+BEGIN_SRC emacs-lisp
