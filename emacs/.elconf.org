@@ -57,9 +57,8 @@
     #+END_SRC
 ** Line numbers
     #+BEGIN_SRC emacs-lisp
-    ;; enable line numbers
-    ;; flycheck won't work without this
-    (global-linum-mode t)
+    ;; disable line numbers
+    ;; (global-linum-mode -1)
     #+END_SRC
 ** Cursor
     #+BEGIN_SRC emacs-lisp
