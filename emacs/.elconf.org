@@ -264,8 +264,8 @@
     #+END_SRC
 **** Switch to previous buffer
     #+BEGIN_SRC emacs-lisp
-    ;; quick switch to previous buffer
-    (evil-leader/set-key "f" 'switch-to-prev-buffer)
+      ;; quick switch to previous buffer
+      (evil-leader/set-key "f" 'evil-switch-to-windows-last-buffer)
     #+END_SRC
 **** Tag jumping
     #+BEGIN_SRC emacs-lisp
