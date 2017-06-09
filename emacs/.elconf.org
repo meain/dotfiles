@@ -566,6 +566,15 @@
         :init
         (evil-leader/set-key "r" 'quickrun))
     #+END_SRC
+** Hiwin
+    #+BEGIN_SRC emacs-lisp
+    (use-package hiwin
+        :ensure t
+        :init
+            (progn
+                ;; (set-face-background 'hiwin-face "gray80")
+                (hiwin-activate)))
+    #+END_SRC
 * Major modes
 ** Org mode
     #+BEGIN_SRC emacs-lisp
