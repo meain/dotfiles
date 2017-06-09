@@ -541,7 +541,10 @@
     (use-package elpy
         :ensure t
         :init
-        (elpy-enable))
+            (progn
+                (elpy-enable)
+                (delete `elpy-module-highlight-indentation elpy-modules)
+                (defalias 'workon 'pyvenv-workon)))
     #+END_SRC
 ** Markdown mode
    #+BEGIN_SRC emacs-lisp
@@ -659,4 +662,10 @@
     #+BEGIN_SRC emacs-lisp
     ;; Remove whitespace before save
     (add-hook 'before-save-hook 'whitespace-cleanup)
+    #+END_SRC
+** Visual indents
+    #+BEGIN_SRC emacs-lisp
+    (highlight-indentation-mode nil)
+    (set-face-background 'highlight-indentation-face "#3D3432")
+    (set-face-background 'highlight-indentation-current-column-face "#c3b3b3")
     #+END_SRC
