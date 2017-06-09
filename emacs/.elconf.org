@@ -654,7 +654,7 @@
                      (browse-url "http://localhost:6419/"))
                  (defun markdown-custom-preview-stop() (interactive) (lambda() (kill-process "markdown-grip")))))
    #+END_SRC
-* Config chanages
+* Configurations
 ** Visual indents
     #+BEGIN_SRC emacs-lisp
     (highlight-indentation-mode nil)
