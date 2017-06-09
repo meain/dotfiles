@@ -38,9 +38,9 @@
     ;; set initial mode as org-mode
     (setq initial-major-mode 'org-mode)
    #+END_SRC
-** Fullscrenn emacs
+** Fullscreen emacs
    #+BEGIN_SRC emacs-lisp
-  ;; (toggle-frame-fullscreen)
+   (global-set-key (kbd "<s-return>") 'toggle-frame-fullscreen)
    #+END_SRC
 * Visual settings
 ** No line wrapping
