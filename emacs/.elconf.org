@@ -44,10 +44,12 @@
     ;; no line wrapping
     (setq-default truncate-lines 1)
    #+END_SRC
-** Line hilight
+** Page break line
    #+BEGIN_SRC emacs-lisp
-    ;; line highlight
-    (global-hl-line-mode 1)
+    (use-package page-break-lines
+        :ensure t
+        :init
+            (page-break-lines-mode))
    #+END_SRC
 ** Tab and spaces
     #+BEGIN_SRC emacs-lisp
@@ -55,6 +57,11 @@
     (setq-default tab-width 4)
     (setq-default indent-tabs-mode nil)
     #+END_SRC
+** Line hilight
+   #+BEGIN_SRC emacs-lisp
+    ;; line highlight
+    (global-hl-line-mode 1)
+   #+END_SRC
 ** Line numbers
     #+BEGIN_SRC emacs-lisp
     ;; disable line numbers
@@ -65,13 +72,6 @@
     ;; Don't blink the cursor
     (blink-cursor-mode -1)
     #+END_SRC
-** Page break line
-   #+BEGIN_SRC emacs-lisp
-    (use-package page-break-lines
-        :ensure t
-        :init
-            (page-break-lines-mode))
-   #+END_SRC
 ** Font
 *** Editor font
     #+BEGIN_SRC emacs-lisp
@@ -127,12 +127,6 @@
         :ensure t)
     #+END_SRC
 * Other settings
-** Add additional package repos
-    #+BEGIN_SRC emacs-lisp
-    (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
-    (add-to-list 'package-archives '("elpy" . "https://jorgenschaefer.github.io/packages/"))
-    (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
-    #+END_SRC
 ** Ring bell
    #+BEGIN_SRC emacs-lisp
     ;; status line blinks
@@ -143,6 +137,12 @@
                     exit-minibuffer keyboard-quit))
         (invert-face 'mode-line)
         (run-with-timer 0.1 nil 'invert-face 'mode-line))))
+    #+END_SRC
+** Add additional package repos
+    #+BEGIN_SRC emacs-lisp
+    (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
+    (add-to-list 'package-archives '("elpy" . "https://jorgenschaefer.github.io/packages/"))
+    (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
     #+END_SRC
 * Personal information
   #+BEGIN_SRC emacs-lisp
@@ -285,6 +285,13 @@
     (evil-ex-define-cmd "Wq" (lambda () (interactive) (save-buffer) (kill-buffer-and-window)))
     #+END_SRC
 * Packages
+** Magit
+   #+BEGIN_SRC emacs-lisp
+    (use-package magit
+        :ensure t
+        :init
+            (evil-leader/set-key "g" 'magit-status))
+   #+END_SRC
 ** Projectile
    #+BEGIN_SRC emacs-lisp
     (use-package projectile
@@ -294,85 +301,6 @@
                 ;; switch projects
                 (evil-leader/set-key "p" 'projectile-switch-project)
                 (projectile-global-mode)))
-   #+END_SRC
-** All the icons
-   #+BEGIN_SRC emacs-lisp
-    (use-package all-the-icons
-        :ensure t)
-    ;; do this the first time you have installed all-the-icons
-    ;; (all-the-icons-install-fonts)
-   #+END_SRC
-** Magit
-   #+BEGIN_SRC emacs-lisp
-    (use-package magit
-        :ensure t
-        :init
-            (evil-leader/set-key "g" 'magit-status))
-   #+END_SRC
-** dashboardk
-    #+BEGIN_SRC emacs-lisp
-    (use-package dashboard
-        :ensure t
-        :init
-        (progn
-            (dashboard-setup-startup-hook)
-            (setq dashboard-banner-logo-title ":meain")
-            (setq dashboard-startup-banner 'logo)
-            (setq dashboard-items '((recents  . 10)
-                                    (bookmarks . 5)
-                                    (projects . 5)
-                                    (agenda . 5)))))
-    #+END_SRC
-** Which key
-    #+BEGIN_SRC emacs-lisp
-    (use-package which-key
-        :ensure t
-        :init
-        (which-key-mode t))
-    #+END_SRC
-** OSX clipboard
-    #+BEGIN_SRC emacs-lisp
-    (use-package osx-clipboard
-        :ensure t
-        :init
-        (osx-clipboard-mode))
-    #+END_SRC
-** Sane term
-    #+BEGIN_SRC emacs-lisp
-    (use-package sane-term
-        :ensure t
-        :init
-        (progn
-        (evil-leader/set-key "t" 'sane-term)
-        (add-hook 'term-mode-hook (lambda () (linum-mode -1)))))
-    #+END_SRC
-** Expand region
-    #+BEGIN_SRC emacs-lisp
-    (use-package expand-region
-        :ensure t
-        :init
-        (global-set-key (kbd "M-e") 'er/expand-region))
-    #+END_SRC
-** Helm
-   #+BEGIN_SRC emacs-lisp
-    (use-package helm
-        :ensure t
-        :init
-            (progn
-            (helm-mode 1)
-            ;; (global-set-key (kbd "M-x") 'helm-M-x)
-            (evil-leader/set-key "l" 'helm-M-x)
-            ;; make everything fuzzy
-            (setq helm-M-x-fuzzy-match t)
-            (setq helm-buffers-fuzzy-matching t)
-            (setq helm-recentf-fuzzy-match t)))
-   #+END_SRC
-** Smooth scroll
-   #+BEGIN_SRC emacs-lisp
-    (use-package smooth-scrolling
-        :ensure t
-        :init
-            (smooth-scrolling-mode 1))
    #+END_SRC
 ** Spaceline
    #+BEGIN_SRC emacs-lisp
@@ -393,6 +321,78 @@
             (setq powerline-default-separator "zigzag")
             (spaceline-compile)
             (setq ns-use-srgb-colorspace nil)))
+   #+END_SRC
+** All the icons
+   #+BEGIN_SRC emacs-lisp
+    (use-package all-the-icons
+        :ensure t)
+    ;; do this the first time you have installed all-the-icons
+    ;; (all-the-icons-install-fonts)
+   #+END_SRC
+** Dashboard
+    #+BEGIN_SRC emacs-lisp
+    (use-package dashboard
+        :ensure t
+        :init
+        (progn
+            (dashboard-setup-startup-hook)
+            (setq dashboard-banner-logo-title ":meain")
+            (setq dashboard-startup-banner 'logo)
+            (setq dashboard-items '((recents  . 10)
+                                    (bookmarks . 5)
+                                    (projects . 5)
+                                    (agenda . 5)))))
+    #+END_SRC
+** Helm
+   #+BEGIN_SRC emacs-lisp
+    (use-package helm
+        :ensure t
+        :init
+            (progn
+            (helm-mode 1)
+            ;; (global-set-key (kbd "M-x") 'helm-M-x)
+            (evil-leader/set-key "l" 'helm-M-x)
+            ;; make everything fuzzy
+            (setq helm-M-x-fuzzy-match t)
+            (setq helm-buffers-fuzzy-matching t)
+            (setq helm-recentf-fuzzy-match t)))
+   #+END_SRC
+** Which key
+    #+BEGIN_SRC emacs-lisp
+    (use-package which-key
+        :ensure t
+        :init
+        (which-key-mode t))
+    #+END_SRC
+** Sane term
+    #+BEGIN_SRC emacs-lisp
+    (use-package sane-term
+        :ensure t
+        :init
+        (progn
+        (evil-leader/set-key "t" 'sane-term)
+        (add-hook 'term-mode-hook (lambda () (linum-mode -1)))))
+    #+END_SRC
+** OSX clipboard
+    #+BEGIN_SRC emacs-lisp
+    (use-package osx-clipboard
+        :ensure t
+        :init
+        (osx-clipboard-mode))
+    #+END_SRC
+** Expand region
+    #+BEGIN_SRC emacs-lisp
+    (use-package expand-region
+        :ensure t
+        :init
+        (global-set-key (kbd "M-e") 'er/expand-region))
+    #+END_SRC
+** Smooth scroll
+   #+BEGIN_SRC emacs-lisp
+    (use-package smooth-scrolling
+        :ensure t
+        :init
+            (smooth-scrolling-mode 1))
    #+END_SRC
 ** Flycheck
     #+BEGIN_SRC emacs-lisp
@@ -549,21 +549,6 @@
                 (delete `elpy-module-highlight-indentation elpy-modules)
                 (defalias 'workon 'pyvenv-workon)))
     #+END_SRC
-** Markdown mode
-   #+BEGIN_SRC emacs-lisp
-     (use-package markdown-mode
-         :ensure t
-         :init
-             (progn
-                 (setq markdown-header-scaling nil)
-                 (defun markdown-custom-preview()
-                     "Documentation"
-                     (interactive)
-                     (if (get-process "markdown-grip") (kill-process "markdown-grip"))
-                     (start-process "markdown-grip" "*markdown-grip*" "/Library/Frameworks/Python.framework/Versions/2.7/bin/grip" buffer-file-name)
-                     (browse-url "http://localhost:6419/"))
-                 (defun markdown-custom-preview-stop() (interactive) (lambda() (kill-process "markdown-grip")))))
-   #+END_SRC
 ** Web mode
     #+BEGIN_SRC emacs-lisp
     (use-package web-mode
@@ -597,7 +582,28 @@
                 (add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))
                 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))))
     #+END_SRC
+** Markdown mode
+   #+BEGIN_SRC emacs-lisp
+     (use-package markdown-mode
+         :ensure t
+         :init
+             (progn
+                 (setq markdown-header-scaling nil)
+                 (defun markdown-custom-preview()
+                     "Documentation"
+                     (interactive)
+                     (if (get-process "markdown-grip") (kill-process "markdown-grip"))
+                     (start-process "markdown-grip" "*markdown-grip*" "/Library/Frameworks/Python.framework/Versions/2.7/bin/grip" buffer-file-name)
+                     (browse-url "http://localhost:6419/"))
+                 (defun markdown-custom-preview-stop() (interactive) (lambda() (kill-process "markdown-grip")))))
+   #+END_SRC
 * Config chanages
+** Visual indents
+    #+BEGIN_SRC emacs-lisp
+    (highlight-indentation-mode nil)
+    (set-face-background 'highlight-indentation-face "#3D3432")
+    (set-face-background 'highlight-indentation-current-column-face "#c3b3b3")
+    #+END_SRC
 ** Scratch buffer
     #+BEGIN_SRC emacs-lisp
     ;; set initial scratch content
@@ -616,26 +622,6 @@
         :init
             (persistent-scratch-setup-default))
     #+END_SRC
-** Fullscreen current buffer
-    #+BEGIN_SRC emacs-lisp
-    ;; Maximize current buffer
-    (defun toggle-maximize-buffer ()
-    "Maximize the current buffer."
-    (interactive)
-    (if (= 1 (length (window-list)))
-        (jump-to-register '_)
-        (progn
-        (window-configuration-to-register '_)
-        (delete-other-windows))))
-    (define-key evil-normal-state-map (kbd "-") `toggle-maximize-buffer)
-    #+END_SRC
-** Don't touch my clipboard
-   #+BEGIN_SRC emacs-lisp
-    (defun bb/evil-delete (orig-fn beg end &optional type _ &rest args)
-        "Make d, c, x to not write to clipboard.  And ORIG-FN, BEG, END, TYPE, ARGS should appear in docstring."
-        (apply orig-fn beg end type ?_ args))
-    (advice-add 'evil-delete :around 'bb/evil-delete)
-   #+END_SRC
 ** Esc quits anywhere
     #+BEGIN_SRC emacs-lisp
         (defun minibuffer-keyboard-quit ()
@@ -666,9 +652,23 @@
     ;; Remove whitespace before save
     (add-hook 'before-save-hook 'whitespace-cleanup)
     #+END_SRC
-** Visual indents
+** Don't touch my clipboard
+   #+BEGIN_SRC emacs-lisp
+    (defun bb/evil-delete (orig-fn beg end &optional type _ &rest args)
+        "Make d, c, x to not write to clipboard.  And ORIG-FN, BEG, END, TYPE, ARGS should appear in docstring."
+        (apply orig-fn beg end type ?_ args))
+    (advice-add 'evil-delete :around 'bb/evil-delete)
+   #+END_SRC
+** Fullscreen current buffer
     #+BEGIN_SRC emacs-lisp
-    (highlight-indentation-mode nil)
-    (set-face-background 'highlight-indentation-face "#3D3432")
-    (set-face-background 'highlight-indentation-current-column-face "#c3b3b3")
+    ;; Maximize current buffer
+    (defun toggle-maximize-buffer ()
+    "Maximize the current buffer."
+    (interactive)
+    (if (= 1 (length (window-list)))
+        (jump-to-register '_)
+        (progn
+        (window-configuration-to-register '_)
+        (delete-other-windows))))
+    (define-key evil-normal-state-map (kbd "-") `toggle-maximize-buffer)
     #+END_SRC
