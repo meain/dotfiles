@@ -413,6 +413,11 @@
             (progn
             (add-to-list 'recentf-exclude "/var/folders/nc")
             (add-to-list 'recentf-exclude "TAGS")
+            (add-to-list 'recentf-exclude ".pyc")
+
+            ;; max number
+            (setq recentf-max-saved-items 200)
+
             ;; helm-recentf-fuzzy-match var is broken: redeclare it manually
             (setq helm-source-recentf
                 (helm-make-source "Recentf" 'helm-recentf-source
