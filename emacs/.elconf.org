@@ -558,6 +558,14 @@
             (setq shell-pop-window-position "bottom")
             (define-key evil-normal-state-map (kbd "~") 'shell-pop)))
     #+END_SRC
+** Quickrun
+    #+BEGIN_SRC emacs-lisp
+    (use-package quickrun
+        :defer 10
+        :ensure t
+        :init
+        (evil-leader/set-key "r" 'quickrun))
+    #+END_SRC
 * Major modes
 ** Org mode
     #+BEGIN_SRC emacs-lisp
