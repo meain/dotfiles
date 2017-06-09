@@ -134,12 +134,10 @@ Return a list of installed PACKAGES or nil for every skipped package."
 ;; enable elpy, yeah its mostly python here
 (require 'elpy)
 (elpy-enable)
-(defun elpy-change-to-python-3() (interactive) (setq elpy-rpc-python-command "python3"))
-(defun elpy-change-to-python-2() (interactive) (setq elpy-rpc-python-command "python"))
 
 ;; Theme
 (if (display-graphic-p)
-(load-theme 'jazz t) (load-theme 'gruvbox t))
+(load-theme 'cyberpunk t) (load-theme 'gruvbox t))
 
 ;; enable which-key
 (require 'which-key)
@@ -421,7 +419,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(package-selected-packages
    (quote
-    (markdown-mode jazz-theme dashboard spaceline-all-the-icons all-the-icons-dired all-the-icons try elscreen-multi-term sane-term nclip clippy clipmon osx-clipboard undohist web-mode term+ snippet vimrc-mode auctex-latexmk magic-latex-buffer init-open-recentf magit-find-file find-things-fast helm-fuzzy-find highlight-current-line rainbow-mode neotree linum-relative drag-stuff git-gutter evil-surround evil-commentary autopair simpleclip flycheck smooth-scrolling projectile magit helm gruvbox-theme evil-search-highlight-persist evil-leader auto-complete)))
+    (cyberpunk-theme markdown-mode jazz-theme dashboard spaceline-all-the-icons all-the-icons-dired all-the-icons try elscreen-multi-term sane-term nclip clippy clipmon osx-clipboard undohist web-mode term+ snippet vimrc-mode auctex-latexmk magic-latex-buffer init-open-recentf magit-find-file find-things-fast helm-fuzzy-find highlight-current-line rainbow-mode neotree linum-relative drag-stuff git-gutter evil-surround evil-commentary autopair simpleclip flycheck smooth-scrolling projectile magit helm gruvbox-theme evil-search-highlight-persist evil-leader auto-complete)))
  '(send-mail-function (quote smtpmail-send-it)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
