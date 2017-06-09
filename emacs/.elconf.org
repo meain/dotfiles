@@ -1,0 +1,663 @@
+#+TITLE: Emacs Configuration
+#+AUTHOR: Abin Simon ( meain )
+
+
+* Basic setup
+** Set up env variables
+   #+BEGIN_SRC emacs-lisp
+    (setenv "PATH" "/Library/Frameworks/Python.framework/Versions/2.7/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/git/bin:/Users/abinsimon/.fzf/bin")
+   #+END_SRC
+** Backups
+   #+BEGIN_SRC emacs-lisp
+    ;; (setq backup-inhibited t)
+    ;; (setq make-backup-files nil)
+    (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+   #+end_SRC
+** Use UTF8
+   #+BEGIN_SRC emacs-lisp
+    ;; UTF-8 please
+    (setq locale-coding-system 'utf-8)
+    (set-terminal-coding-system 'utf-8)
+    (set-keyboard-coding-system 'utf-8)
+    (set-selection-coding-system 'utf-8)
+    (prefer-coding-system 'utf-8)
+   #+END_SRC
+** Auto save
+   #+BEGIN_SRC emacs-lisp
+    ;; disable auto save
+    ;; (setq auto-save-default nil)
+   #+END_SRC
+** Easier prompts
+   #+BEGIN_SRC emacs-lisp
+    ;; change all prompts to y or n
+    (fset 'yes-or-no-p 'y-or-n-p)
+   #+END_SRC
+
+** Initial mode
+   #+BEGIN_SRC emacs-lisp
+    ;; set initial mode as org-mode
+    (setq initial-major-mode 'org-mode)
+   #+END_SRC
+* Visual settings
+** No line wrapping
+   #+BEGIN_SRC emacs-lisp
+    ;; no line wrapping
+    (setq-default truncate-lines 1)
+   #+END_SRC
+** Line hilight
+   #+BEGIN_SRC emacs-lisp
+    ;; line highlight
+    (global-hl-line-mode 1)
+   #+END_SRC
+** Tab and spaces
+    #+BEGIN_SRC emacs-lisp
+    ;; set default tab width
+    (setq-default tab-width 4)
+    (setq-default indent-tabs-mode nil)
+    #+END_SRC
+** Line numbers
+    #+BEGIN_SRC emacs-lisp
+    ;; enable line numbers
+    ;; flycheck won't work without this
+    (global-linum-mode t)
+    #+END_SRC
+** Cursor
+    #+BEGIN_SRC emacs-lisp
+    ;; Don't blink the cursor
+    (blink-cursor-mode -1)
+    #+END_SRC
+** Page break line
+   #+BEGIN_SRC emacs-lisp
+    (use-package page-break-lines
+        :ensure t
+        :init
+            (page-break-lines-mode))
+   #+END_SRC
+** Font
+*** Editor font
+    #+BEGIN_SRC emacs-lisp
+    ;; Set font
+    (set-frame-font "Monaco 14")
+    #+END_SRC
+*** Emojis
+    #+BEGIN_SRC emacs-lisp
+      (let ((font (if (= emacs-major-version 25)
+                      "Symbola"
+                  (cond ((string-equal system-type "darwin")    "Apple Color Emoji")
+                          ((string-equal system-type "gnu/linux") "Symbola")))))
+      (set-fontset-font t 'unicode font nil 'prepend))
+    #+END_SRC
+** Themes
+*** Cyberpunk theme
+    #+BEGIN_SRC emacs-lisp
+    ;; Theme
+    (use-package cyberpunk-theme
+    :disabled
+    :if (window-system)
+    :ensure t
+    :init
+    (progn
+        (load-theme 'cyberpunk t)
+        (set-face-attribute `mode-line nil
+                            :box nil)
+        (set-face-attribute `mode-line-inactive nil
+                            :box nil)))
+    #+END_SRC
+*** Gruvbox thmee
+    #+BEGIN_SRC emacs-lisp
+    (use-package gruvbox-theme
+    :disabled
+    :if (window-system)
+    :ensure t
+    :init
+    (setq gruvbox-use-variable-pitch nil))
+    #+END_SRC
+*** Monokai theme
+    #+BEGIN_SRC emacs-lisp
+    (use-package monokai-theme
+    :if (window-system)
+    :ensure t
+    :init
+    (setq monokai-use-variable-pitch nil))
+    #+END_SRC
+*** Waher theme
+    #+BEGIN_SRC emacs-lisp
+    (use-package waher-theme
+        :disabled
+        :if (window-system)
+        :ensure t)
+    #+END_SRC
+* Other settings
+** Add additional package repos
+    #+BEGIN_SRC emacs-lisp
+    (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
+    (add-to-list 'package-archives '("elpy" . "https://jorgenschaefer.github.io/packages/"))
+    (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
+    #+END_SRC
+** Ring bell
+   #+BEGIN_SRC emacs-lisp
+    ;; Don't beep at me
+    (setq visible-bell t)
+
+    ;; Disable the annoying bell
+    ;; (setq ring-bell-function 'ignore)
+    #+END_SRC
+* Personal information
+  #+BEGIN_SRC emacs-lisp
+  (setq user-full-name "Abin Simon"
+      user-mail-address "abinsimon10@gmail.com")
+  #+END_SRC
+* Evil mode
+** Evil
+    #+BEGIN_SRC emacs-lisp
+    (use-package evil
+            :ensure t
+            :init
+            (evil-mode t))
+    #+END_SRC
+** Evil leader
+    #+BEGIN_SRC emacs-lisp
+    (use-package evil-leader
+        :ensure t
+        :init
+        (progn
+        (global-evil-leader-mode)
+        (evil-leader/set-leader "<SPC>")))
+    #+END_SRC
+** Evil commentary
+   #+BEGIN_SRC emacs-lisp
+    (use-package evil-commentary
+        :ensure t
+        :init
+            (evil-commentary-mode))
+   #+END_SRC
+** Evil surround
+   #+BEGIN_SRC emacs-lisp
+    (use-package evil-surround
+        :ensure t
+        :init
+            (global-evil-surround-mode 1))
+    #+END_SRC
+** Evil search
+    #+BEGIN_SRC emacs-lisp
+    (use-package evil-search-highlight-persist
+        :ensure t
+        :init
+            (progn
+                (global-evil-search-highlight-persist t)
+                (evil-leader/set-key "/" 'evil-search-highlight-persist-remove-all)))
+    #+END_SRC
+** Configs
+*** Normal mode remaps
+**** Vinegar memmories
+    #+BEGIN_SRC emacs-lisp
+    ;; vinegarish
+    (define-key evil-normal-state-map (kbd "_") 'helm-find-files)
+    #+END_SRC
+**** Remap ; to :
+    #+BEGIN_SRC emacs-lisp
+    ;; remap ; to :
+    (define-key evil-normal-state-map (kbd ";") 'evil-ex)
+    #+END_SRC
+**** Buffer switching
+    #+BEGIN_SRC emacs-lisp
+    ;; Easier buffer switching
+    (define-key evil-normal-state-map (kbd "M-h") `windmove-left)
+    (define-key evil-normal-state-map (kbd "M-j") `windmove-down)
+    (define-key evil-normal-state-map (kbd "M-k") `windmove-up)
+    (define-key evil-normal-state-map (kbd "M-l") `windmove-right)
+    #+END_SRC
+**** Faster page-up and page-down
+    #+BEGIN_SRC emacs-lisp
+    ;; Page up and down
+    (define-key evil-normal-state-map (kbd "9") (lambda ()
+                                                (interactive)
+                                                (evil-scroll-up nil)))
+    (define-key evil-normal-state-map (kbd "8") (lambda ()
+                                                (interactive)
+                                                (evil-scroll-down nil)))
+    #+END_SRC
+**** Don't bother about wrapped lines
+    #+BEGIN_SRC emacs-lisp
+    ;; j/k for wrapped lines
+    (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
+    (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
+    #+END_SRC
+*** Leader key remaps
+**** Quick save file
+   #+BEGIN_SRC
+    ;; Use leader<space> to save file
+    (evil-leader/set-key "SPC" (lambda() (interactive) (if (eq (current-buffer) (get-buffer "*scratch*")) (message ":meain") (save-buffer) )))
+   #+END_SRC
+**** Save file
+    #+BEGIN_SRC emacs-lisp
+    ;; shortcut to save current buffer
+    (evil-leader/set-key "w" 'evil-save)
+    #+END_SRC
+**** Quit buffer
+    #+BEGIN_SRC emacs-lisp
+    ;; easy quitting of buffer/window
+    (evil-leader/set-key "q" 'evil-delete-buffer)
+    #+END_SRC
+**** Switch to scratch buffer
+     #+BEGIN_SRC emacs-lisp
+       ;; switch to scratch buffer
+       (evil-leader/set-key "s" (lambda()
+                (interactive)
+                (switch-to-buffer "*scratch*")))
+     #+END_SRC
+**** Switch to todo
+    #+BEGIN_SRC emacs-lisp
+    ;; Personal todo buffer
+    (evil-leader/set-key "a" (lambda() (interactive) (find-file "~/.todo.org")))
+    #+END_SRC
+**** Switch to dashboard
+    #+BEGIN_SRC emacs-lisp
+    ;; switch to dashboard buffer
+    (evil-leader/set-key "d" (lambda() (interactive) (switch-to-buffer "*dashboard*")))
+    #+END_SRC
+**** Switch to previous buffer
+    #+BEGIN_SRC emacs-lisp
+    ;; quick switch to previous buffer
+    (evil-leader/set-key "f" 'switch-to-prev-buffer)
+    #+END_SRC
+**** Tag jumping
+    #+BEGIN_SRC emacs-lisp
+    ;; tag jumping
+    (evil-leader/set-key ";" 'evil-jump-to-tag)
+    (evil-leader/set-key "'" 'evil-jump-backward)
+    #+END_SRC
+**** Pane splitting
+    #+BEGIN_SRC emacs-lisp
+    ;; Split like vim
+    (evil-leader/set-key "h" (lambda () (interactive) (split-window-below) (windmove-down)))
+    (evil-leader/set-key "v" (lambda () (interactive) (split-window-right) (windmove-right)))
+    #+END_SRC
+*** Command remaps
+**** Capital save and quit commands
+    #+BEGIN_SRC emacs-lisp
+    ;; get :<caps> to work
+    (evil-ex-define-cmd "Q" `kill-buffer-and-window)
+    (evil-ex-define-cmd "W" `save-buffer)
+    (evil-ex-define-cmd "WQ" (lambda () (interactive) (save-buffer) (kill-buffer-and-window)))
+    (evil-ex-define-cmd "Wq" (lambda () (interactive) (save-buffer) (kill-buffer-and-window)))
+    #+END_SRC
+* Packages
+** Projectile
+   #+BEGIN_SRC emacs-lisp
+    (use-package projectile
+        :ensure t
+        :init
+            (progn
+                ;; switch projects
+                (evil-leader/set-key "p" 'projectile-switch-project)
+                (projectile-global-mode)))
+   #+END_SRC
+** All the icons
+   #+BEGIN_SRC emacs-lisp
+    (use-package all-the-icons
+        :ensure t)
+    ;; do this the first time you have installed all-the-icons
+    ;; (all-the-icons-install-fonts)
+   #+END_SRC
+** Magit
+   #+BEGIN_SRC emacs-lisp
+    (use-package magit
+        :ensure t
+        :init
+            (evil-leader/set-key "g" 'magit-status))
+   #+END_SRC
+** dashboardk
+    #+BEGIN_SRC emacs-lisp
+    (use-package dashboard
+        :ensure t
+        :init
+        (progn
+            (dashboard-setup-startup-hook)
+            (setq dashboard-banner-logo-title ":meain")
+            (setq dashboard-startup-banner 'logo)
+            (setq dashboard-items '((recents  . 10)
+                                    (bookmarks . 5)
+                                    (projects . 5)
+                                    (agenda . 5)))))
+    #+END_SRC
+** Which key
+    #+BEGIN_SRC emacs-lisp
+    (use-package which-key
+        :ensure t
+        :init
+        (which-key-mode t))
+    #+END_SRC
+** OSX clipboard
+    #+BEGIN_SRC emacs-lisp
+    (use-package osx-clipboard
+        :ensure t
+        :init
+        (osx-clipboard-mode))
+    #+END_SRC
+** Sane term
+    #+BEGIN_SRC emacs-lisp
+    (use-package sane-term
+        :ensure t
+        :init
+        (progn
+        (evil-leader/set-key "t" 'sane-term)
+        (add-hook 'term-mode-hook (lambda () (linum-mode -1)))))
+    #+END_SRC
+** Expand region
+    #+BEGIN_SRC emacs-lisp
+    (use-package expand-region
+        :ensure t
+        :init
+        (global-set-key (kbd "M-e") 'er/expand-region))
+    #+END_SRC
+** Helm
+   #+BEGIN_SRC emacs-lisp
+    (use-package helm
+        :ensure t
+        :init
+            (progn
+            (helm-mode 1)
+            ;; (global-set-key (kbd "M-x") 'helm-M-x)
+            (evil-leader/set-key "l" 'helm-M-x)
+            ;; make everything fuzzy
+            (setq helm-M-x-fuzzy-match t)
+            (setq helm-buffers-fuzzy-matching t)
+            (setq helm-recentf-fuzzy-match t)))
+   #+END_SRC
+** Smooth scroll
+   #+BEGIN_SRC emacs-lisp
+    (use-package smooth-scrolling
+        :ensure t
+        :init
+            (smooth-scrolling-mode 1))
+   #+END_SRC
+** Spaceline
+   #+BEGIN_SRC emacs-lisp
+     (use-package spaceline
+         :ensure t
+         :init
+         (progn
+            (require 'spaceline-config)
+            (spaceline-spacemacs-theme)
+            ;; (spaceline-all-the-icons-theme)
+            (spaceline-toggle-minor-modes-off)
+            (spaceline-toggle-evil-state)
+            (spaceline-toggle-hud-off)
+            (spaceline-toggle-buffer-size)
+            (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
+            (setq powerline-height 20)
+            (setq powerline-raw " ")
+            (setq powerline-default-separator "zigzag")
+            (spaceline-compile)
+            (setq ns-use-srgb-colorspace nil)))
+   #+END_SRC
+** Flycheck
+    #+BEGIN_SRC emacs-lisp
+    (use-package flycheck
+        :ensure t
+        :init
+            (global-flycheck-mode))
+    #+END_SRC
+** Recentf
+    #+BEGIN_SRC emacs-lisp
+    (use-package recentf
+        :ensure t
+        :init
+            (progn
+            (add-to-list 'recentf-exclude "/var/folders/nc")
+            (add-to-list 'recentf-exclude "TAGS")
+            ;; helm-recentf-fuzzy-match var is broken: redeclare it manually
+            (setq helm-source-recentf
+                (helm-make-source "Recentf" 'helm-recentf-source
+                                    :fuzzy-match t))
+            (define-key evil-normal-state-map (kbd ", e") 'helm-recentf)))
+    #+END_SRC
+** Fiplr
+    #+BEGIN_SRC emacs-lisp
+    (use-package fiplr
+        :ensure t
+        :init
+        (progn
+            (defun recent-selector-open ()
+                "Switch between helm and fiplr based on directory."
+                (interactive)
+                (if (string= (shell-command-to-string (concat "git -C " default-directory " rev-parse")) "") (fiplr-find-file) (helm-recentf)))
+            (define-key evil-normal-state-map (kbd ", ,") 'recent-selector-open)))
+    #+END_SRC
+** Autopair
+    #+BEGIN_SRC emacs-lisp
+    (use-package autopair
+        :ensure t
+        :init
+            (autopair-global-mode))
+    #+END_SRC
+** Saveplace
+   #+BEGIN_SRC emacs-lisp
+    (use-package saveplace
+        :ensure t
+        :init
+            (save-place-mode t)
+            (setq save-place-file "~/.emacs.d/saveplace"))
+   #+END_SRC
+** Autocomplete
+    #+BEGIN_SRC emacs-lisp
+    (use-package auto-complete
+        :ensure t
+        :init
+            (progn
+                (global-auto-complete-mode t)
+                (ac-config-default)))
+    #+END_SRC
+** Yasnippet
+    #+BEGIN_SRC emacs-lisp
+    (use-package yasnippet
+        :ensure t
+        :init
+            (progn
+                (yas-global-mode 1)
+                (add-to-list 'load-path "~/.emacs.d/plugins/yasnippet")))
+    #+END_SRC
+** Drag stuff
+    #+BEGIN_SRC emacs-lisp
+    (use-package drag-stuff
+        :ensure t
+        :init
+            (progn
+                (drag-stuff-mode t)
+                ;; just disable in orgmode
+                ;; (drag-stuff-global-mode 1)
+                (drag-stuff-define-keys)))
+    #+END_SRC
+** Undo tree
+    #+BEGIN_SRC emacs-lisp
+    (require 'undo-tree)
+    (global-undo-tree-mode)
+    (setq undo-tree-auto-save-history t)
+    (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
+    #+END_SRC
+** Neotree
+    #+BEGIN_SRC emacs-lisp
+    (use-package neotree
+        :ensure t
+        :init
+            (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
+    #+END_SRC
+** Rainbow delimiters
+   #+BEGIN_SRC emacs-lisp
+    (use-package rainbow-delimiters
+        :ensure t
+        :init
+            (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+   #+END_SRC
+** Flydiff
+    #+BEGIN_SRC emacs-lisp
+    (use-package diff-hl
+        :ensure t
+        :init
+            (progn
+                (diff-hl-flydiff-mode t)
+                (global-diff-hl-mode t)
+                (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)))
+    #+END_SRC
+** Ido
+    #+BEGIN_SRC emacs-lisp
+    (use-package ido
+        :ensure t
+        :init
+            ;; easy buffer switching
+            (evil-leader/set-key "b" 'ido-switch-buffer))
+    #+END_SRC
+** Ag
+    #+BEGIN_SRC emacs-lisp
+    (use-package ag
+        :ensure t)
+    #+END_SRC
+** Try
+    #+BEGIN_SRC emacs-lisp
+    (use-package try
+        :ensure t)
+    #+END_SRC
+** Restclient
+#+BEGIN_SRC emacs-lisp
+(use-package restclient
+    :ensure t)
+#+END_SRC
+* Major modes
+** Org mode
+    #+BEGIN_SRC emacs-lisp
+        ;; change ellipsis
+        (setq org-ellipsis "…")
+
+        ;; org-bullets
+        (use-package org-bullets
+            :ensure t
+            :init
+            (add-hook 'org-mode-hook
+                    (lambda () (org-bullets-mode 1))))
+    #+END_SRC
+** Elpy mode
+    #+BEGIN_SRC emacs-lisp
+    ;; python editing
+    (use-package elpy
+        :ensure t
+        :init
+        (elpy-enable))
+    #+END_SRC
+** Markdown mode
+   #+BEGIN_SRC emacs-lisp
+     (use-package markdown-mode
+         :ensure t
+         :init
+             (progn
+                 (setq markdown-header-scaling nil)
+                 (defun markdown-custom-preview()
+                     "Documentation"
+                     (interactive)
+                     (if (get-process "markdown-grip") (kill-process "markdown-grip"))
+                     (start-process "markdown-grip" "*markdown-grip*" "/Library/Frameworks/Python.framework/Versions/2.7/bin/grip" buffer-file-name)
+                     (browse-url "http://localhost:6419/"))
+                 (defun markdown-custom-preview-stop() (interactive) (lambda() (kill-process "markdown-grip")))))
+   #+END_SRC
+** Web mode
+    #+BEGIN_SRC emacs-lisp
+    (use-package web-mode
+        :ensure t
+        :init
+            (progn
+                (defun my-web-mode-hook ()
+                    "Hooks for Web mode."
+
+                    ;; indent offset
+                    (setq web-mode-markup-indent-offset 2)
+
+                    ;; colors in css
+                    (setq web-mode-enable-css-colorization t)
+
+                    ;; autoindent
+                    (local-set-key (kbd "RET") 'newline-and-indent)
+
+                    ;; hilighting
+                    (setq web-mode-enable-current-element-highlight t)
+                    (setq web-mode-enable-current-column-highlight t)
+
+                    ;; context aware autocomplete
+                    (setq web-mode-ac-sources-alist
+                    '(("css" . (ac-source-css-property))
+                        ("html" . (ac-source-words-in-buffer ac-source-abbrev)))))
+                (add-hook 'web-mode-hook  'my-web-mode-hook)
+
+                ;; add autoload
+                (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+                (add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))
+                (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))))
+    #+END_SRC
+* Config chanages
+** Scratch buffer
+    #+BEGIN_SRC emacs-lisp
+    ;; set initial scratch content
+    (setq initial-scratch-message ":meain")
+
+    ;; unkillable scratch
+    (defun immortal-scratch ()
+    "Make scratch buffer immortal.  Burry on kill."
+    (if (eq (current-buffer) (get-buffer "*scratch*"))
+        (progn (bury-buffer) nil) t))
+    (add-hook 'kill-buffer-query-functions 'immortal-scratch)
+
+    ;; persistant scratch
+    (use-package persistent-scratch
+        :ensure t
+        :init
+            (persistent-scratch-setup-default))
+    #+END_SRC
+** Fullscreen current buffer
+    #+BEGIN_SRC emacs-lisp
+    ;; Maximize current buffer
+    (defun toggle-maximize-buffer ()
+    "Maximize the current buffer."
+    (interactive)
+    (if (= 1 (length (window-list)))
+        (jump-to-register '_)
+        (progn
+        (window-configuration-to-register '_)
+        (delete-other-windows))))
+    (define-key evil-normal-state-map (kbd "-") `toggle-maximize-buffer)
+    #+END_SRC
+** Don't touch my clipboard
+   #+BEGIN_SRC emacs-lisp
+    (defun bb/evil-delete (orig-fn beg end &optional type _ &rest args)
+        "Make d, c, x to not write to clipboard.  And ORIG-FN, BEG, END, TYPE, ARGS should appear in docstring."
+        (apply orig-fn beg end type ?_ args))
+    (advice-add 'evil-delete :around 'bb/evil-delete)
+   #+END_SRC
+** Esc quits anywhere
+    #+BEGIN_SRC emacs-lisp
+        (defun minibuffer-keyboard-quit ()
+            "Abort recursive edit.
+        In Delete Selection mode, if the mark is active, just deactivate it;
+        then it takes a second \\[keyboard-quit] to abort the minibuffer."
+            (interactive)
+            (if (and delete-selection-mode transient-mark-mode mark-active)
+                (setq deactivate-mark  t)
+                (when (get-buffer "*Completions*") (delete-windows-on "*Completions*"))
+                (abort-recursive-edit)))
+        (define-key evil-normal-state-map [escape] 'keyboard-quit)
+        (define-key evil-visual-state-map [escape] 'keyboard-quit)
+        (define-key minibuffer-local-map [escape] 'minibuffer-keyboard-quit)
+        (define-key minibuffer-local-ns-map [escape] 'minibuffer-keyboard-quit)
+        (define-key minibuffer-local-completion-map [escape] 'minibuffer-keyboard-quit)
+        (define-key minibuffer-local-must-match-map [escape] 'minibuffer-keyboard-quit)
+        (define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
+        (global-set-key [escape] 'evil-exit-emacs-state)
+    #+END_SRC
+** Automatic indentation
+    #+BEGIN_SRC emacs-lisp
+    ;; Automateic indentation - don't actually need it but just in case
+    ;; (define-key global-map (kbd "RET") 'newline-and-indent)
+    #+END_SRC
+** Auto remove whitespace
+    #+BEGIN_SRC emacs-lisp
+    ;; Remove whitespace before save
+    (add-hook 'before-save-hook 'whitespace-cleanup)
+    #+END_SRC
