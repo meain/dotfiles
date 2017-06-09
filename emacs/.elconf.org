@@ -227,14 +227,14 @@
     #+END_SRC
 *** Leader key remaps
 **** Quick save file
-   #+BEGIN_SRC
-    ;; Use leader<space> to save file
-    (evil-leader/set-key "<SPC>" (lambda() (interactive) (if (eq (current-buffer) (get-buffer "*scratch*")) (message ":meain") (save-buffer) )))
-   #+END_SRC
+    #+BEGIN_SRC emacs-lisp
+    ;; spc spc to save file
+    (evil-leader/set-key "SPC" (lambda() (interactive) (if (eq (current-buffer) (get-buffer "*scratch*")) (message ":meain") (save-buffer) )))
+    #+END_SRC
 **** Save file
     #+BEGIN_SRC emacs-lisp
     ;; shortcut to save current buffer
-    (evil-leader/set-key "w" 'evil-save)
+    (evil-leader/set-key "w" 'evil-write)
     #+END_SRC
 **** Quit buffer
     #+BEGIN_SRC emacs-lisp
