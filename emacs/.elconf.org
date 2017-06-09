@@ -536,7 +536,27 @@
 #+END_SRC
 ** Tramp
     #+BEGIN_SRC emacs-lisp
-    (use-packaage tramp)
+    (use-package tramp
+        :ensure t)
+    #+END_SRC
+** Olivetti
+    #+BEGIN_SRC emacs-lisp
+    ;; better writing env inside emacs
+    (use-package olivetti
+        :ensure t)
+    #+END_SRC
+** Shellpop
+    #+BEGIN_SRC emacs-lisp
+    (use-package shell-pop
+        :ensure t
+        :init
+        (progn
+            (setq shell-pop-shell-type (quote ("ansi-term" "*ansi-term*" (lambda nil (ansi-term shell-pop-term-shell)))))
+            (setq shell-pop-universal-key "C-t")
+            (setq shell-pop-window-size 30)
+            (setq shell-pop-full-span t)
+            (setq shell-pop-window-position "bottom")
+            (define-key evil-normal-state-map (kbd "~") 'shell-pop)))
     #+END_SRC
 * Major modes
 ** Org mode
