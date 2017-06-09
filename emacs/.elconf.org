@@ -220,12 +220,8 @@
 **** Faster page-up and page-down
     #+BEGIN_SRC emacs-lisp
     ;; Page up and down
-    (define-key evil-normal-state-map (kbd "9") (lambda ()
-                                                (interactive)
-                                                (evil-scroll-up nil)))
-    (define-key evil-normal-state-map (kbd "8") (lambda ()
-                                                (interactive)
-                                                (evil-scroll-down nil)))
+    (define-key evil-normal-state-map (kbd "9") 'evil-scroll-up)
+    (define-key evil-normal-state-map (kbd "8") 'evil-scroll-down)
     #+END_SRC
 **** Don't bother about wrapped lines
     #+BEGIN_SRC emacs-lisp
@@ -236,8 +232,11 @@
 *** Leader key remaps
 **** Quick save file
     #+BEGIN_SRC emacs-lisp
-    ;; spc spc to save file
-    (evil-leader/set-key "SPC" (lambda() (interactive) (if (eq (current-buffer) (get-buffer "*scratch*")) (message ":meain") (save-buffer) )))
+      ;; spc spc to save file
+      (defun evil-leader-quick-save-file()
+          (interactive)
+          (if (eq (current-buffer) (get-buffer "*scratch*")) (message ":meain") (save-buffer) ))
+      (evil-leader/set-key "SPC" 'evil-leader-quick-save-file)
     #+END_SRC
 **** Save file
     #+BEGIN_SRC emacs-lisp
@@ -251,20 +250,24 @@
     #+END_SRC
 **** Switch to scratch buffer
      #+BEGIN_SRC emacs-lisp
-       ;; switch to scratch buffer
-       (evil-leader/set-key "s" (lambda()
-                (interactive)
-                (switch-to-buffer "*scratch*")))
+    ;; switch to scratch buffer
+    (defun evil-leader-switch-to-scratch-buffer()
+        (interactive)
+        (switch-to-buffer "*scratch*"))
+    (evil-leader/set-key "s" 'evil-leader-switch-to-scratch-buffer)
      #+END_SRC
 **** Switch to todo
     #+BEGIN_SRC emacs-lisp
     ;; Personal todo buffer
-    (evil-leader/set-key "a" (lambda() (interactive) (find-file "~/.todo.org")))
+    (defun evil-leader-switch-to-todo-buffer()
+        (interactive)
+        (find-file "~/.todo.org"))
+    (evil-leader/set-key "a" 'evil-leader-switch-to-todo-buffer)
     #+END_SRC
 **** Switch to dashboard
     #+BEGIN_SRC emacs-lisp
     ;; switch to dashboard buffer
-    (evil-leader/set-key "d" (lambda() (interactive) (switch-to-buffer "*dashboard*")))
+    (evil-leader/set-key "d" (defun switch-to-dashboard() (interactive) (switch-to-buffer "*dashboard*")))
     #+END_SRC
 **** Switch to previous buffer
     #+BEGIN_SRC emacs-lisp
@@ -280,8 +283,8 @@
 **** Pane splitting
     #+BEGIN_SRC emacs-lisp
     ;; Split like vim
-    (evil-leader/set-key "h" (lambda () (interactive) (split-window-below) (windmove-down)))
-    (evil-leader/set-key "v" (lambda () (interactive) (split-window-right) (windmove-right)))
+    (evil-leader/set-key "h" (defun evil-leader-horizontal-split() (interactive) (split-window-below) (windmove-down)))
+    (evil-leader/set-key "v" (defun evil-leader-vertical-split () (interactive) (split-window-right) (windmove-right)))
     #+END_SRC
 *** Command remaps
 **** Capital save and quit commands
