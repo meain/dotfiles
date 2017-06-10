@@ -506,15 +506,15 @@
                   (defun my-neotree-mode-hook ()
                       ;; up down
                       (define-key neotree-mode-map (kbd "k") 'neotree-previous-line)
-                      (define-key neotree-mode-map (kbd "j") 'neotree-next-line))
+                      (define-key neotree-mode-map (kbd "j") 'neotree-next-line)
 
                       ;; window switching
                       (define-key neotree-mode-map (kbd "M-h") `windmove-left)
                       (define-key neotree-mode-map (kbd "M-j") `windmove-down)
                       (define-key neotree-mode-map (kbd "M-k") `windmove-up)
-                      (define-key neotree-mode-map (kbd "M-l") `windmove-right)
+                      (define-key neotree-mode-map (kbd "M-l") `windmove-right))
                   (add-hook 'neotree-mode-hook 'my-neotree-mode-hook)
-                  (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
+                  (setq neo-theme (if (display-graphic-p) 'icons 'arrow))))
     #+END_SRC
 ** Rainbow delimiters
    #+BEGIN_SRC emacs-lisp
@@ -574,7 +574,7 @@
         :init
         (progn
             (setq shell-pop-shell-type (quote ("ansi-term" "*ansi-term*" (lambda nil (ansi-term shell-pop-term-shell)))))
-            (setq shell-pop-universal-key "C-t")
+            (setq shell-pop-universal-key "M-t")
             (setq shell-pop-window-size 30)
             (setq shell-pop-full-span t)
             (setq shell-pop-window-position "bottom")
