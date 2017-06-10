@@ -499,10 +499,22 @@
     #+END_SRC
 ** Neotree
     #+BEGIN_SRC emacs-lisp
-    (use-package neotree
-        :ensure t
-        :init
-            (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
+      (use-package neotree
+          :ensure t
+          :init
+              (progn
+                  (defun my-neotree-mode-hook ()
+                      ;; up down
+                      (define-key neotree-mode-map (kbd "k") 'neotree-previous-line)
+                      (define-key neotree-mode-map (kbd "j") 'neotree-next-line))
+
+                      ;; window switching
+                      (define-key neotree-mode-map (kbd "M-h") `windmove-left)
+                      (define-key neotree-mode-map (kbd "M-j") `windmove-down)
+                      (define-key neotree-mode-map (kbd "M-k") `windmove-up)
+                      (define-key neotree-mode-map (kbd "M-l") `windmove-right)
+                  (add-hook 'neotree-mode-hook 'my-neotree-mode-hook)
+                  (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
     #+END_SRC
 ** Rainbow delimiters
    #+BEGIN_SRC emacs-lisp
@@ -682,7 +694,7 @@
         :init
             (persistent-scratch-setup-default))
     #+END_SRC
-** Dired with all-the-icons
+**
     #+BEGIN_SRC emacs-lisp
       (use-package all-the-icons-dired
           :ensure t
