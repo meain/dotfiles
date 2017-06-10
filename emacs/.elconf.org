@@ -599,6 +599,7 @@
     #+BEGIN_SRC emacs-lisp
     (use-package hiwin
         :ensure t
+        :disabled
         :init
             (progn
                 ;; (set-face-background 'hiwin-face "gray10")
