@@ -694,7 +694,7 @@
         :init
             (persistent-scratch-setup-default))
     #+END_SRC
-**
+** Better dired with all-the-icons
     #+BEGIN_SRC emacs-lisp
       (use-package all-the-icons-dired
           :ensure t
