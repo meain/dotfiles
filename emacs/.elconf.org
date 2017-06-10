@@ -245,8 +245,8 @@
     #+END_SRC
 **** Quit buffer
     #+BEGIN_SRC emacs-lisp
-    ;; easy quitting of buffer/window
-    (evil-leader/set-key "q" 'evil-delete-buffer)
+      ;; easy quitting of buffer/window
+      (evil-leader/set-key "q" 'bury-buffer)
     #+END_SRC
 **** Switch to scratch buffer
      #+BEGIN_SRC emacs-lisp
