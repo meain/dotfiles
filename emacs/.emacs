@@ -39,19 +39,3 @@
 (org-babel-load-file "~/.elconf.org")
 
 (setq gc-cons-threshold 800000)
-
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (monokai-theme which-key web-mode vimrc-mode use-package try spaceline-all-the-icons smooth-scrolling sane-term restclient rainbow-mode rainbow-delimiters projectile persistent-scratch osx-clipboard org-bullets neotree mode-icons minimap markdown-mode magit labburn-theme jazz-theme hemisu-theme helm gruvbox-theme go-mode git-gutter flycheck fiplr expand-region evil-surround evil-search-highlight-persist evil-leader evil-commentary elpy drag-stuff diff-hl dashboard cyberpunk-theme autopair auto-complete all-the-icons-dired ag))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
