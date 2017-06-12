@@ -450,16 +450,13 @@
                 (if (string= (shell-command-to-string (concat "git -C " default-directory " rev-parse")) "") (fiplr-find-file) (helm-recentf)))
             (define-key evil-normal-state-map (kbd ", ,") 'recent-selector-open)))
     #+END_SRC
-** Smartparens
-   #+BEGIN_SRC emacs-lisp
-     (use-package smartparens
-         :ensure t
-         :init
-             (progn
-                 (add-hook 'js-mode-hook #'smartparens-mode)
-                 (setq smartparens-strict-mode t)
-                 (smartparens-global-mode)))
-   #+END_SRC
+** Autopair
+    #+BEGIN_SRC emacs-lisp
+    (use-package autopair
+        :ensure t
+        :init
+            (autopair-global-mode))
+    #+END_SRC
 ** Saveplace
    #+BEGIN_SRC emacs-lisp
     (use-package saveplace
