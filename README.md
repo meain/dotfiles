@@ -47,6 +47,8 @@ This will symlink the necessary files
 
 [`cmus`](https://cmus.github.io/) a beautiful music player in the shell
 
+[`vtop`](https://github.com/MrRio/vtop) a pretty `top` command with ascii art
+
 ## Screenshots
 
 ### Shell
