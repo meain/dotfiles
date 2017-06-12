@@ -605,6 +605,14 @@
                 ;; (set-face-background 'hiwin-face "gray10")
                 (hiwin-activate)))
     #+END_SRC
+** Wakatime
+    #+BEGIN_SRC emacs-lisp
+      (use-package wakatime-mode
+          :ensure t
+          :init
+              (custom-set-variables '(wakatime-api-key (getenv "WAKATIME_API_KEY")))
+              (global-wakatime-mode))
+    #+END_SRC
 * Major modes
 ** Org mode
     #+BEGIN_SRC emacs-lisp
