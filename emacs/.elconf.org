@@ -11,7 +11,8 @@
    #+BEGIN_SRC emacs-lisp
     ;; (setq backup-inhibited t)
     ;; (setq make-backup-files nil)
-    (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+    (setq backup-directory-alist
+        `((".*" . ,temporary-file-directory)))
    #+end_SRC
 ** Use UTF8
    #+BEGIN_SRC emacs-lisp
@@ -26,6 +27,8 @@
    #+BEGIN_SRC emacs-lisp
     ;; disable auto save
     ;; (setq auto-save-default nil)
+    (setq auto-save-file-name-transforms
+        `((".*" ,temporary-file-directory t)))
    #+END_SRC
 ** Easier prompts
    #+BEGIN_SRC emacs-lisp
