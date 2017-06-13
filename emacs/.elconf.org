@@ -95,6 +95,14 @@
       (set-fontset-font t 'unicode font nil 'prepend))
     #+END_SRC
 ** Themes
+*** Sanityinc tomorrow
+    #+BEGIN_SRC emacs-lisp
+            (use-package color-theme-sanityinc-tomorrow
+            :if (window-system)
+            :ensure t
+            :init
+            (load-theme 'sanityinc-tomorrow-bright))
+    #+END_SRC
 *** Cyberpunk theme
     #+BEGIN_SRC emacs-lisp
     ;; Theme
@@ -124,6 +132,7 @@
     (use-package monokai-theme
     :if (window-system)
     :ensure t
+    :disabled
     :init
     (setq monokai-use-variable-pitch nil))
     #+END_SRC
