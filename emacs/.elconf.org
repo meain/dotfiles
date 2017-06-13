@@ -645,6 +645,13 @@
                       (evil-leader/set-key "i" 'popup-imenu)
                     ))
     #+END_SRC
+** Mode icons
+   #+BEGIN_SRC emacs-lisp
+     (use-package mode-icons
+       :ensure t
+       :init
+         (mode-icons-mode t))
+   #+END_SRC
 * Major modes
 ** Org mode
     #+BEGIN_SRC emacs-lisp
