@@ -628,6 +628,23 @@
               (custom-set-variables '(wakatime-api-key credential-store/wakatime-api-key))
               (global-wakatime-mode))
     #+END_SRC
+** Imenu-list
+    #+BEGIN_SRC emacs-lisp
+    ;; kinda like tagbar
+    (use-package imenu-list
+        :ensure t)
+    #+END_SRC
+** Popup imenu
+    #+BEGIN_SRC emacs-lisp
+          (use-package popup-imenu
+              :ensure t
+              :init
+                  (progn
+                      (setq popup-imenu-style 'indent)
+                      (define-key popup-isearch-keymap [escape] 'popup-isearch-cancel)
+                      (evil-leader/set-key "i" 'popup-imenu)
+                    ))
+    #+END_SRC
 * Major modes
 ** Org mode
     #+BEGIN_SRC emacs-lisp
