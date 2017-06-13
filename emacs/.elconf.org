@@ -460,6 +460,18 @@
                                     :fuzzy-match t))
             (define-key evil-normal-state-map (kbd ", e") 'helm-recentf)))
     #+END_SRC
+** Emmet
+#+BEGIN_SRC emacs-lisp
+  (use-package emmet-mode
+    :ensure t
+    :init
+        (progn
+            (add-hook 'sgml-mode-hook 'emmet-mode)
+            (add-hook 'css-mode-hook  'emmet-mode)
+            (add-hook 'web-mode-hook  'emmet-mode)
+            ;; (define-key global-map (kbd "M-n") `emmet-expand-line)
+            (setq emmet-move-cursor-between-quotes t)))
+#+END_SRC
 ** Fiplr
     #+BEGIN_SRC emacs-lisp
     (use-package fiplr
