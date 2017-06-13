@@ -574,11 +574,11 @@
     #+END_SRC
 ** Ido
     #+BEGIN_SRC emacs-lisp
-    (use-package ido
-        :ensure t
-        :init
-            ;; easy buffer switching
-            (evil-leader/set-key "b" 'ido-switch-buffer))
+      (use-package ido
+          :ensure t
+          :init
+              ;; easy buffer switching
+              (evil-leader/set-key "b" 'helm-buffers-list))
     #+END_SRC
 ** Ag
     #+BEGIN_SRC emacs-lisp
@@ -770,6 +770,22 @@
                      (start-process "markdown-grip" "*markdown-grip*" "/Library/Frameworks/Python.framework/Versions/2.7/bin/grip" buffer-file-name)
                      (browse-url "http://localhost:6419/"))
                  (defun markdown-custom-preview-stop() (interactive) (lambda() (kill-process "markdown-grip")))))
+   #+END_SRC
+** Writing mode
+   #+BEGIN_SRC emacs-lisp
+    (defun my/writing-mode()
+    (interactive)
+    (if (bound-and-true-p my/writing-mode-is-enabled)
+        (progn
+            (setq my/writing-mode-is-enabled nil)
+            (flyspell-mode -1)
+            (olivetti-mode -1)
+            (focus-mode -1))
+        (progn
+            (setq my/writing-mode-is-enabled t)
+            (flyspell-mode t)
+            (olivetti-mode t)
+            (focus-mode t))))
    #+END_SRC
 * Configurations
 ** Visual indents
