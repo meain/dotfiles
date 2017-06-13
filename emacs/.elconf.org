@@ -322,6 +322,15 @@
         :init
             (evil-leader/set-key "g" 'magit-status))
    #+END_SRC
+** Magithub
+    #+BEGIN_SRC emacs-lisp
+        (setq ghub-username credential-store/ghub-username)
+        (setq ghub-token credential-store/ghub-token)
+        (use-package magithub
+            :after magit
+            :ensure t
+            :config (magithub-feature-autoinject t))
+    #+END_SRC
 ** Projectile
    #+BEGIN_SRC emacs-lisp
     (use-package projectile
