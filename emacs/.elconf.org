@@ -297,6 +297,10 @@
     (evil-leader/set-key "h" (defun evil-leader-horizontal-split() (interactive) (split-window-below) (windmove-down)))
     (evil-leader/set-key "v" (defun evil-leader-vertical-split () (interactive) (split-window-right) (windmove-right)))
     #+END_SRC
+**** Remap for :only
+    #+BEGIN_SRC emacs-lisp
+      (evil-leader/set-key "o" 'delete-other-windows)
+    #+END_SRC
 *** Command remaps
 **** Capital save and quit commands
     #+BEGIN_SRC emacs-lisp
