@@ -615,31 +615,31 @@
 * Major modes
 ** Org mode
     #+BEGIN_SRC emacs-lisp
-        ;; fontify code in code blocks
-        (setq org-src-fontify-natively t)
+      ;; fontify code in code blocks
+      (setq org-src-fontify-natively t)
 
-        ;; visual tweaks
-        (defface org-block-begin-line
-        '((t (:underline "#A7A6AA" :foreground "#008ED1" :background "#EAEAFF")))
-        "Face used for the line delimiting the begin of source blocks.")
+      ;; visual tweaks -- don't wanna remove it just yet
+      ;; (defface org-block-begin-line
+      ;; '((t (:underline "#A7A6AA" :foreground "#008ED1" :background "#EAEAFF")))
+      ;; "Face used for the line delimiting the begin of source blocks.")
 
-        (defface org-block-background
-        '((t (:background "#FFFFEA")))
-        "Face used for the source block background.")
+      ;; (defface org-block-background
+      ;; '((t (:background "#FFFFEA")))
+      ;; "Face used for the source block background.")
 
-        (defface org-block-end-line
-        '((t (:overline "#A7A6AA" :foreground "#008ED1" :background "#EAEAFF")))
-        "Face used for the line delimiting the end of source blocks.")
+      ;; (defface org-block-end-line
+      ;; '((t (:overline "#A7A6AA" :foreground "#008ED1" :background "#EAEAFF")))
+      ;; "Face used for the line delimiting the end of source blocks.")
 
-        ;; change ellipsis
-        (setq org-ellipsis "…")
+      ;; change ellipsis
+      (setq org-ellipsis "…")
 
-        ;; org-bullets
-        (use-package org-bullets
-            :ensure t
-            :init
-                (add-hook 'org-mode-hook
-                        (lambda () (org-bullets-mode 1))))
+      ;; org-bullets
+      (use-package org-bullets
+          :ensure t
+          :init
+              (add-hook 'org-mode-hook
+                      (lambda () (org-bullets-mode 1))))
     #+END_SRC
 ** Elpy mode
     #+BEGIN_SRC emacs-lisp
