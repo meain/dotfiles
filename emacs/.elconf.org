@@ -449,6 +449,7 @@
             (add-to-list 'recentf-exclude "/var/folders/nc")
             (add-to-list 'recentf-exclude "TAGS")
             (add-to-list 'recentf-exclude ".pyc")
+            (add-to-list 'recentf-exclude ".emacs.d")
 
             ;; max number
             (setq recentf-max-saved-items 200)
