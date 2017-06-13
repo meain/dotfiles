@@ -652,6 +652,12 @@
        :init
          (mode-icons-mode t))
    #+END_SRC
+** Nyan mode
+#+BEGIN_SRC emacs-lisp
+  (use-package nyan-mode
+    :defer 10
+    :ensure t)
+#+END_SRC
 * Major modes
 ** Org mode
     #+BEGIN_SRC emacs-lisp
