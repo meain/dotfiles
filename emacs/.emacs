@@ -39,7 +39,9 @@
 ;; (server-start)
 
 ;;; Load the config
+(setq vc-follow-symlinks nil)
 (org-babel-load-file "~/.elconf.org")
+(setq vc-follow-symlinks "ask")
 
 (setq gc-cons-threshold 800000)
 (custom-set-variables
