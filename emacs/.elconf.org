@@ -607,7 +607,7 @@
       (use-package wakatime-mode
           :ensure t
           :init
-              (custom-set-variables '(wakatime-api-key (getenv "WAKATIME_API_KEY")))
+              (custom-set-variables '(wakatime-api-key credential-store/wakatime-api-key))
               (global-wakatime-mode))
     #+END_SRC
 * Major modes

@@ -13,6 +13,9 @@
 ;; Don't show start message
 (setq inhibit-startup-message t)
 
+;; Load credentials
+(load "~/.credentials.el")
+
 ;;; Set up package
 (require 'package)
 (add-to-list 'package-archives
