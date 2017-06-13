@@ -104,7 +104,7 @@
             :if (window-system)
             :ensure t
             :init
-            (load-theme 'sanityinc-tomorrow-bright))
+            (load-theme 'sanityinc-tomorrow-bright t))
     #+END_SRC
 *** Cyberpunk theme
     #+BEGIN_SRC emacs-lisp
@@ -257,7 +257,11 @@
 **** Quit buffer
     #+BEGIN_SRC emacs-lisp
       ;; easy quitting of buffer/window
-      (evil-leader/set-key "q" 'bury-buffer)
+      (evil-leader/set-key "q" (lambda()
+            (interactive)
+            (if (= (length (mapcar #'window-buffer (window-list))) 1)
+                (bury-buffer)
+                (evil-save-and-close (buffer-file-name (window-buffer (minibuffer-selected-window)))))))
     #+END_SRC
 **** Switch to scratch buffer
      #+BEGIN_SRC emacs-lisp
