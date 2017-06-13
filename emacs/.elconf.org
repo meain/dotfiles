@@ -473,6 +473,7 @@
         :init
             (progn
                 (global-auto-complete-mode t)
+                (setq ac-show-menu-immediately-on-auto-complete t)
                 (ac-config-default)))
     #+END_SRC
 ** Yasnippet
