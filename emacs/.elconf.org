@@ -260,8 +260,8 @@
       (evil-leader/set-key "q" (lambda()
             (interactive)
             (if (= (length (mapcar #'window-buffer (window-list))) 1)
-                (bury-buffer)
-                (evil-save-and-close (buffer-file-name (window-buffer (minibuffer-selected-window)))))))
+                (switch-to-buffer "*dashboard*")
+                (evil-quit))))
     #+END_SRC
 **** Switch to scratch buffer
      #+BEGIN_SRC emacs-lisp
