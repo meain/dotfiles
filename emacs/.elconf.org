@@ -216,14 +216,6 @@
     ;; remap ; to :
     (define-key evil-normal-state-map (kbd ";") 'evil-ex)
     #+END_SRC
-**** Buffer switching
-    #+BEGIN_SRC emacs-lisp
-    ;; Easier buffer switching
-    (define-key evil-normal-state-map (kbd "M-h") `windmove-left)
-    (define-key evil-normal-state-map (kbd "M-j") `windmove-down)
-    (define-key evil-normal-state-map (kbd "M-k") `windmove-up)
-    (define-key evil-normal-state-map (kbd "M-l") `windmove-right)
-    #+END_SRC
 **** Faster page-up and page-down
     #+BEGIN_SRC emacs-lisp
     ;; Page up and down
@@ -754,6 +746,14 @@
         (define-key minibuffer-local-must-match-map [escape] 'minibuffer-keyboard-quit)
         (define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
         (global-set-key [escape] 'evil-exit-emacs-state)
+    #+END_SRC
+** Buffer switching
+    #+BEGIN_SRC emacs-lisp
+    ;; Easier buffer switching
+    (define-key global-map (kbd "M-h") `windmove-left)
+    (define-key global-map (kbd "M-j") `windmove-down)
+    (define-key global-map (kbd "M-k") `windmove-up)
+    (define-key global-map (kbd "M-l") `windmove-right)
     #+END_SRC
 ** Automatic indentation
     #+BEGIN_SRC emacs-lisp
