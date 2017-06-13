@@ -649,6 +649,9 @@
         :init
             (progn
                 (elpy-enable)
+                (elpy-use-ipython)
+                (setq elpy-rpc-backend "jedi")
+                (pyvenv-activate "~/.virtual_envs")
                 (delete `elpy-module-highlight-indentation elpy-modules)
                 (defalias 'workon 'pyvenv-workon)))
     #+END_SRC
