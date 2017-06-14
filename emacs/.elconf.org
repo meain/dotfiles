@@ -758,13 +758,13 @@
          :init
              (progn
                  (setq markdown-header-scaling nil)
-                 (defun markdown-custom-preview()
+                 (defun markdown-custom-preview-start()
                      "Documentation"
                      (interactive)
-                     (if (get-process "markdown-grip") (kill-process "markdown-grip"))
-                     (start-process "markdown-grip" "*markdown-grip*" "/Library/Frameworks/Python.framework/Versions/2.7/bin/grip" buffer-file-name)
-                     (browse-url "http://localhost:6419/"))
-                 (defun markdown-custom-preview-stop() (interactive) (lambda() (kill-process "markdown-grip")))))
+                        (if (get-process "markdown-grip") (kill-process "markdown-grip") nil)
+                        (start-process "markdown-grip" "*markdown-grip*" "/Library/Frameworks/Python.framework/Versions/2.7/bin/grip" buffer-file-name)
+                        (browse-url "http://localhost:6419/"))
+                 (defun markdown-custom-preview-stop() (interactive) (progn (if (get-process "markdown-grip") (kill-process "markdown-grip") nil)))))
    #+END_SRC
 ** Writing mode
    #+BEGIN_SRC emacs-lisp
