@@ -36,11 +36,6 @@
     (fset 'yes-or-no-p 'y-or-n-p)
    #+END_SRC
 
-** Initial mode
-   #+BEGIN_SRC emacs-lisp
-    ;; set initial mode as org-mode
-    (setq initial-major-mode 'org-mode)
-   #+END_SRC
 ** Fullscreen emacs
    #+BEGIN_SRC emacs-lisp
    (global-set-key (kbd "<s-return>") 'toggle-frame-fullscreen)
