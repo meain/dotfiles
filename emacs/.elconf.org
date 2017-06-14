@@ -323,6 +323,7 @@
         (setq ghub-token credential-store/ghub-token)
         (use-package magithub
             :after magit
+            :disabled
             :ensure t
             :config (magithub-feature-autoinject t))
     #+END_SRC
@@ -444,7 +445,8 @@
             (add-to-list 'recentf-exclude "/var/folders/nc")
             (add-to-list 'recentf-exclude "TAGS")
             (add-to-list 'recentf-exclude ".pyc")
-            (add-to-list 'recentf-exclude ".emacs.d")
+            (add-to-list 'recentf-exclude ".emacs.d/")
+            (add-to-list 'recentf-exclude "/temp")
 
             ;; max number
             (setq recentf-max-saved-items 200)
