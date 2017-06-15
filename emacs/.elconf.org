@@ -82,7 +82,7 @@
 *** Editor font
     #+BEGIN_SRC emacs-lisp
     ;; Set font
-    (set-frame-font "Monaco 14")
+    (set-frame-font "Monaco 14" nil t)
     #+END_SRC
 *** Emojis
     #+BEGIN_SRC emacs-lisp
@@ -659,7 +659,7 @@
               :ensure t
               :init
                   (progn
-                      (setq popup-imenu-style 'indent)
+                      (setq popup-imenu-style 'flat)
                       (define-key popup-isearch-keymap [escape] 'popup-isearch-cancel)
                       (evil-leader/set-key "i" 'popup-imenu)
                     ))
