@@ -310,14 +310,15 @@
     (evil-ex-define-cmd "Wq" (lambda () (interactive) (save-buffer) (kill-buffer-and-window)))
     #+END_SRC
 * Packages
-** Magit
+** Programming
+*** Magit
    #+BEGIN_SRC emacs-lisp
     (use-package magit
         :ensure t
         :init
             (evil-leader/set-key "g" 'magit-status))
    #+END_SRC
-** Magithub
+*** Magithub
     #+BEGIN_SRC emacs-lisp
         (setq ghub-username credential-store/ghub-username)
         (setq ghub-token credential-store/ghub-token)
@@ -327,7 +328,7 @@
             :ensure t
             :config (magithub-feature-autoinject t))
     #+END_SRC
-** Projectile
+*** Projectile
    #+BEGIN_SRC emacs-lisp
     (use-package projectile
         :ensure t
@@ -337,34 +338,191 @@
                 (evil-leader/set-key "p" 'projectile-switch-project)
                 (projectile-global-mode)))
    #+END_SRC
-** Spaceline
-   #+BEGIN_SRC emacs-lisp
-     (use-package spaceline
-         :ensure t
-         :init
-         (progn
-            (require 'spaceline-config)
-            (spaceline-spacemacs-theme)
-            ;; (spaceline-all-the-icons-theme)
-            (spaceline-toggle-minor-modes-off)
-            (spaceline-toggle-evil-state)
-            (spaceline-toggle-hud-off)
-            (spaceline-toggle-buffer-size)
-            (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
-            (setq powerline-height 20)
-            (setq powerline-raw " ")
-            (setq powerline-default-separator "zigzag")
-            (spaceline-compile)
-            (setq ns-use-srgb-colorspace nil)))
-   #+END_SRC
-** All the icons
-   #+BEGIN_SRC emacs-lisp
-    (use-package all-the-icons
+*** Expand region
+    #+BEGIN_SRC emacs-lisp
+    (use-package expand-region
+        :ensure t
+        :init
+        (global-set-key (kbd "M-e") 'er/expand-region))
+    #+END_SRC
+*** Flydiff
+    #+BEGIN_SRC emacs-lisp
+    (use-package diff-hl
+        :ensure t
+        :init
+            (progn
+                (diff-hl-flydiff-mode t)
+                (global-diff-hl-mode t)
+                (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)))
+    #+END_SRC
+*** Flycheck
+    #+BEGIN_SRC emacs-lisp
+    (use-package flycheck
+        :ensure t
+        :init
+            (global-flycheck-mode))
+    #+END_SRC
+*** Flyspell
+    #+BEGIN_SRC emacs-lisp
+    (use-package flyspell
         :ensure t)
-    ;; do this the first time you have installed all-the-icons
-    ;; (all-the-icons-install-fonts)
+    #+END_SRC
+*** Emmet
+#+BEGIN_SRC emacs-lisp
+  (use-package emmet-mode
+    :ensure t
+    :init
+        (progn
+            (add-hook 'sgml-mode-hook 'emmet-mode)
+            (add-hook 'css-mode-hook  'emmet-mode)
+            (add-hook 'web-mode-hook  'emmet-mode)
+            ;; (define-key global-map (kbd "M-n") `emmet-expand-line)
+            (setq emmet-move-cursor-between-quotes t)))
+#+END_SRC
+*** Ag
+    #+BEGIN_SRC emacs-lisp
+    (use-package ag
+        :ensure t)
+    #+END_SRC
+*** Autopair
+    #+BEGIN_SRC emacs-lisp
+    (use-package autopair
+        :ensure t
+        :init
+            (autopair-global-mode))
+    #+END_SRC
+*** Saveplace
+   #+BEGIN_SRC emacs-lisp
+    (use-package saveplace
+        :ensure t
+        :init
+            (save-place-mode t)
+            (setq save-place-file "~/.emacs.d/saveplace"))
    #+END_SRC
-** Dashboard
+*** Yasnippet
+    #+BEGIN_SRC emacs-lisp
+    (use-package yasnippet
+        :ensure t
+        :init
+            (progn
+                (yas-global-mode 1)
+                (add-to-list 'load-path "~/.emacs.d/plugins/yasnippet")))
+    #+END_SRC
+*** Autocomplete
+    #+BEGIN_SRC emacs-lisp
+    (use-package auto-complete
+        :ensure t
+        :init
+            (progn
+                (global-auto-complete-mode t)
+                (setq ac-show-menu-immediately-on-auto-complete t)
+                (ac-config-default)))
+    #+END_SRC
+*** Drag stuff
+    #+BEGIN_SRC emacs-lisp
+      (use-package drag-stuff
+          :ensure t
+          :init
+              (progn
+                  (drag-stuff-mode t)
+                  ;; just disable in orgmode
+                  (drag-stuff-global-mode 1)
+                  (drag-stuff-define-keys)))
+    #+END_SRC
+*** Ido
+    #+BEGIN_SRC emacs-lisp
+      (use-package ido
+          :ensure t)
+    #+END_SRC
+*** Shellpop
+    #+BEGIN_SRC emacs-lisp
+    (use-package shell-pop
+        :ensure t
+        :init
+        (progn
+            (setq shell-pop-shell-type (quote ("ansi-term" "*ansi-term*" (lambda nil (ansi-term shell-pop-term-shell)))))
+            (setq shell-pop-universal-key "M-t")
+            (setq shell-pop-window-size 30)
+            (setq shell-pop-full-span t)
+            (setq shell-pop-window-position "bottom")
+            (define-key evil-normal-state-map (kbd "~") 'shell-pop)))
+    #+END_SRC
+*** Quickrun
+    #+BEGIN_SRC emacs-lisp
+    (use-package quickrun
+        :defer 10
+        :ensure t
+        :init
+        (evil-leader/set-key "r" 'quickrun))
+    #+END_SRC
+*** Imenu-list
+    #+BEGIN_SRC emacs-lisp
+    ;; kinda like tagbar
+    (use-package imenu-list
+        :ensure t)
+    #+END_SRC
+*** Popup imenu
+    #+BEGIN_SRC emacs-lisp
+          (use-package popup-imenu
+              :ensure t
+              :init
+                  (progn
+                      (setq popup-imenu-style 'flat)
+                      (define-key popup-isearch-keymap [escape] 'popup-isearch-cancel)
+                      (evil-leader/set-key "i" 'popup-imenu)
+                    ))
+    #+END_SRC
+*** Rainbow delimiters
+   #+BEGIN_SRC emacs-lisp
+    (use-package rainbow-delimiters
+        :ensure t
+        :init
+            (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+   #+END_SRC
+** Special modes
+*** Tramp
+    #+BEGIN_SRC emacs-lisp
+    (use-package tramp
+        :ensure t)
+    #+END_SRC
+*** Focus
+    #+BEGIN_SRC emacs-lisp
+    (use-package focus
+        :ensure t)
+    #+END_SRC
+*** Olivetti
+    #+BEGIN_SRC emacs-lisp
+    ;; better writing env inside emacs
+    (use-package olivetti
+        :ensure t)
+    #+END_SRC
+*** Neotree
+    #+BEGIN_SRC emacs-lisp
+      (use-package neotree
+          :ensure t
+          :init
+              (progn
+                  (defun my-neotree-mode-hook ()
+                      ;; up down
+                      (define-key neotree-mode-map (kbd "k") 'neotree-previous-line)
+                      (define-key neotree-mode-map (kbd "j") 'neotree-next-line)
+
+                      ;; window switching
+                      (define-key neotree-mode-map (kbd "M-h") `windmove-left)
+                      (define-key neotree-mode-map (kbd "M-j") `windmove-down)
+                      (define-key neotree-mode-map (kbd "M-k") `windmove-up)
+                      (define-key neotree-mode-map (kbd "M-l") `windmove-right))
+                  (add-hook 'neotree-mode-hook 'my-neotree-mode-hook)
+                  (setq neo-theme (if (display-graphic-p) 'icons 'arrow))))
+    #+END_SRC
+*** Undo tree
+    #+BEGIN_SRC emacs-lisp
+    (require 'undo-tree)
+    (global-undo-tree-mode)
+    (setq undo-tree-auto-save-history t)
+    (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
+    #+END_SRC
+*** Dashboard
     #+BEGIN_SRC emacs-lisp
     (use-package dashboard
         :ensure t
@@ -378,7 +536,18 @@
                                     (projects . 5)
                                     (agenda . 5)))))
     #+END_SRC
-** Helm
+*** Restclient
+#+BEGIN_SRC emacs-lisp
+(use-package restclient
+    :ensure t)
+#+END_SRC
+** Visual and utils
+*** Try
+    #+BEGIN_SRC emacs-lisp
+    (use-package try
+        :ensure t)
+    #+END_SRC
+*** Helm
    #+BEGIN_SRC emacs-lisp
     (use-package helm
         :ensure t
@@ -387,56 +556,25 @@
             (helm-mode 1)
             ;; (global-set-key (kbd "M-x") 'helm-M-x)
             (evil-leader/set-key "l" 'helm-M-x)
+            (evil-leader/set-key "b" 'helm-buffers-list)
             ;; make everything fuzzy
             (setq helm-M-x-fuzzy-match t)
             (setq helm-buffers-fuzzy-matching t)
             (setq helm-recentf-fuzzy-match t)))
    #+END_SRC
-** Which key
+*** Fiplr
     #+BEGIN_SRC emacs-lisp
-    (use-package which-key
-        :ensure t
-        :init
-        (which-key-mode t))
-    #+END_SRC
-** Sane term
-    #+BEGIN_SRC emacs-lisp
-    (use-package sane-term
+    (use-package fiplr
         :ensure t
         :init
         (progn
-        (evil-leader/set-key "t" 'sane-term)
-        (add-hook 'term-mode-hook (lambda () (linum-mode -1)))))
+            (defun recent-selector-open ()
+                "Switch between helm and fiplr based on directory."
+                (interactive)
+                (if (string= (shell-command-to-string (concat "git -C " default-directory " rev-parse")) "") (fiplr-find-file) (helm-recentf)))
+            (define-key evil-normal-state-map (kbd ", ,") 'recent-selector-open)))
     #+END_SRC
-** OSX clipboard
-    #+BEGIN_SRC emacs-lisp
-    (use-package osx-clipboard
-        :ensure t
-        :init
-        (osx-clipboard-mode))
-    #+END_SRC
-** Expand region
-    #+BEGIN_SRC emacs-lisp
-    (use-package expand-region
-        :ensure t
-        :init
-        (global-set-key (kbd "M-e") 'er/expand-region))
-    #+END_SRC
-** Smooth scroll
-   #+BEGIN_SRC emacs-lisp
-    (use-package smooth-scrolling
-        :ensure t
-        :init
-            (smooth-scrolling-mode 1))
-   #+END_SRC
-** Flycheck
-    #+BEGIN_SRC emacs-lisp
-    (use-package flycheck
-        :ensure t
-        :init
-            (global-flycheck-mode))
-    #+END_SRC
-** Recentf
+*** Recentf
     #+BEGIN_SRC emacs-lisp
     (use-package recentf
         :ensure t
@@ -457,179 +595,43 @@
                                     :fuzzy-match t))
             (define-key evil-normal-state-map (kbd ", e") 'helm-recentf)))
     #+END_SRC
-** Emmet
-#+BEGIN_SRC emacs-lisp
-  (use-package emmet-mode
-    :ensure t
-    :init
-        (progn
-            (add-hook 'sgml-mode-hook 'emmet-mode)
-            (add-hook 'css-mode-hook  'emmet-mode)
-            (add-hook 'web-mode-hook  'emmet-mode)
-            ;; (define-key global-map (kbd "M-n") `emmet-expand-line)
-            (setq emmet-move-cursor-between-quotes t)))
-#+END_SRC
-** Fiplr
-    #+BEGIN_SRC emacs-lisp
-    (use-package fiplr
-        :ensure t
-        :init
-        (progn
-            (defun recent-selector-open ()
-                "Switch between helm and fiplr based on directory."
-                (interactive)
-                (if (string= (shell-command-to-string (concat "git -C " default-directory " rev-parse")) "") (fiplr-find-file) (helm-recentf)))
-            (define-key evil-normal-state-map (kbd ", ,") 'recent-selector-open)))
-    #+END_SRC
-** Autopair
-    #+BEGIN_SRC emacs-lisp
-    (use-package autopair
-        :ensure t
-        :init
-            (autopair-global-mode))
-    #+END_SRC
-** Saveplace
+*** Spaceline
    #+BEGIN_SRC emacs-lisp
-    (use-package saveplace
-        :ensure t
-        :init
-            (save-place-mode t)
-            (setq save-place-file "~/.emacs.d/saveplace"))
+     (use-package spaceline
+         :ensure t
+         :init
+         (progn
+            (require 'spaceline-config)
+            (spaceline-spacemacs-theme)
+            ;; (spaceline-all-the-icons-theme)
+            (spaceline-toggle-minor-modes-off)
+            (spaceline-toggle-evil-state)
+            (spaceline-toggle-hud-off)
+            (spaceline-toggle-buffer-size)
+            (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
+            (setq powerline-height 20)
+            (setq powerline-raw " ")
+            (setq powerline-default-separator "zigzag")
+            (spaceline-compile)
+            (setq ns-use-srgb-colorspace nil)))
    #+END_SRC
-** Autocomplete
+*** Which key
     #+BEGIN_SRC emacs-lisp
-    (use-package auto-complete
+    (use-package which-key
         :ensure t
         :init
-            (progn
-                (global-auto-complete-mode t)
-                (setq ac-show-menu-immediately-on-auto-complete t)
-                (ac-config-default)))
+        (which-key-mode t))
     #+END_SRC
-** Yasnippet
+*** Sane term
     #+BEGIN_SRC emacs-lisp
-    (use-package yasnippet
-        :ensure t
-        :init
-            (progn
-                (yas-global-mode 1)
-                (add-to-list 'load-path "~/.emacs.d/plugins/yasnippet")))
-    #+END_SRC
-** Drag stuff
-    #+BEGIN_SRC emacs-lisp
-      (use-package drag-stuff
-          :ensure t
-          :init
-              (progn
-                  (drag-stuff-mode t)
-                  ;; just disable in orgmode
-                  (drag-stuff-global-mode 1)
-                  (drag-stuff-define-keys)))
-    #+END_SRC
-** Undo tree
-    #+BEGIN_SRC emacs-lisp
-    (require 'undo-tree)
-    (global-undo-tree-mode)
-    (setq undo-tree-auto-save-history t)
-    (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
-    #+END_SRC
-** Neotree
-    #+BEGIN_SRC emacs-lisp
-      (use-package neotree
-          :ensure t
-          :init
-              (progn
-                  (defun my-neotree-mode-hook ()
-                      ;; up down
-                      (define-key neotree-mode-map (kbd "k") 'neotree-previous-line)
-                      (define-key neotree-mode-map (kbd "j") 'neotree-next-line)
-
-                      ;; window switching
-                      (define-key neotree-mode-map (kbd "M-h") `windmove-left)
-                      (define-key neotree-mode-map (kbd "M-j") `windmove-down)
-                      (define-key neotree-mode-map (kbd "M-k") `windmove-up)
-                      (define-key neotree-mode-map (kbd "M-l") `windmove-right))
-                  (add-hook 'neotree-mode-hook 'my-neotree-mode-hook)
-                  (setq neo-theme (if (display-graphic-p) 'icons 'arrow))))
-    #+END_SRC
-** Rainbow delimiters
-   #+BEGIN_SRC emacs-lisp
-    (use-package rainbow-delimiters
-        :ensure t
-        :init
-            (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
-   #+END_SRC
-** Flydiff
-    #+BEGIN_SRC emacs-lisp
-    (use-package diff-hl
-        :ensure t
-        :init
-            (progn
-                (diff-hl-flydiff-mode t)
-                (global-diff-hl-mode t)
-                (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)))
-    #+END_SRC
-** Ido
-    #+BEGIN_SRC emacs-lisp
-      (use-package ido
-          :ensure t
-          :init
-              ;; easy buffer switching
-              (evil-leader/set-key "b" 'helm-buffers-list))
-    #+END_SRC
-** Ag
-    #+BEGIN_SRC emacs-lisp
-    (use-package ag
-        :ensure t)
-    #+END_SRC
-** Try
-    #+BEGIN_SRC emacs-lisp
-    (use-package try
-        :ensure t)
-    #+END_SRC
-** Restclient
-#+BEGIN_SRC emacs-lisp
-(use-package restclient
-    :ensure t)
-#+END_SRC
-** Tramp
-    #+BEGIN_SRC emacs-lisp
-    (use-package tramp
-        :ensure t)
-    #+END_SRC
-** Olivetti
-    #+BEGIN_SRC emacs-lisp
-    ;; better writing env inside emacs
-    (use-package olivetti
-        :ensure t)
-    #+END_SRC
-** Focus
-    #+BEGIN_SRC emacs-lisp
-    (use-package focus
-        :ensure t)
-    #+END_SRC
-** Shellpop
-    #+BEGIN_SRC emacs-lisp
-    (use-package shell-pop
+    (use-package sane-term
         :ensure t
         :init
         (progn
-            (setq shell-pop-shell-type (quote ("ansi-term" "*ansi-term*" (lambda nil (ansi-term shell-pop-term-shell)))))
-            (setq shell-pop-universal-key "M-t")
-            (setq shell-pop-window-size 30)
-            (setq shell-pop-full-span t)
-            (setq shell-pop-window-position "bottom")
-            (define-key evil-normal-state-map (kbd "~") 'shell-pop)))
+        (evil-leader/set-key "t" 'sane-term)
+        (add-hook 'term-mode-hook (lambda () (linum-mode -1)))))
     #+END_SRC
-** Quickrun
-    #+BEGIN_SRC emacs-lisp
-    (use-package quickrun
-        :defer 10
-        :ensure t
-        :init
-        (evil-leader/set-key "r" 'quickrun))
-    #+END_SRC
-** Hiwin
+*** Hiwin
     #+BEGIN_SRC emacs-lisp
     (use-package hiwin
         :ensure t
@@ -639,7 +641,7 @@
                 ;; (set-face-background 'hiwin-face "gray10")
                 (hiwin-activate)))
     #+END_SRC
-** Wakatime
+*** Wakatime
     #+BEGIN_SRC emacs-lisp
       (use-package wakatime-mode
           :ensure t
@@ -647,38 +649,42 @@
               (custom-set-variables '(wakatime-api-key credential-store/wakatime-api-key))
               (global-wakatime-mode))
     #+END_SRC
-** Imenu-list
-    #+BEGIN_SRC emacs-lisp
-    ;; kinda like tagbar
-    (use-package imenu-list
-        :ensure t)
-    #+END_SRC
-** Popup imenu
-    #+BEGIN_SRC emacs-lisp
-          (use-package popup-imenu
-              :ensure t
-              :init
-                  (progn
-                      (setq popup-imenu-style 'flat)
-                      (define-key popup-isearch-keymap [escape] 'popup-isearch-cancel)
-                      (evil-leader/set-key "i" 'popup-imenu)
-                    ))
-    #+END_SRC
-** Mode icons
+*** Mode icons
    #+BEGIN_SRC emacs-lisp
      (use-package mode-icons
        :ensure t
        :init
          (mode-icons-mode t))
    #+END_SRC
-** Nyan mode
+*** Nyan mode
 #+BEGIN_SRC emacs-lisp
   (use-package nyan-mode
     :defer 10
     :ensure t)
 #+END_SRC
-* Major modes
-** Org mode
+*** All the icons
+   #+BEGIN_SRC emacs-lisp
+    (use-package all-the-icons
+        :ensure t)
+    ;; do this the first time you have installed all-the-icons
+    ;; (all-the-icons-install-fonts)
+   #+END_SRC
+*** Smooth scroll
+   #+BEGIN_SRC emacs-lisp
+    (use-package smooth-scrolling
+        :ensure t
+        :init
+            (smooth-scrolling-mode 1))
+   #+END_SRC
+*** OSX clipboard
+    #+BEGIN_SRC emacs-lisp
+    (use-package osx-clipboard
+        :ensure t
+        :init
+        (osx-clipboard-mode))
+    #+END_SRC
+** Filetype specific
+*** Org
     #+BEGIN_SRC emacs-lisp
     ;; fontify code in code blocks
     (setq org-src-fontify-natively t)
@@ -708,21 +714,20 @@
                       (drag-stuff-mode -1)
                       (org-bullets-mode 1)))))
     #+END_SRC
-** Elpy mode
+*** Python
     #+BEGIN_SRC emacs-lisp
-    ;; python editing
-    (use-package elpy
+    (use-package jedi
         :ensure t
         :init
             (progn
-                (elpy-enable)
-                (elpy-use-ipython)
+                (add-hook 'python-mode-hook 'jedi:setup)
+                (add-hook 'python-mode-hook 'jedi:ac-setup)
+                ;; edi:tooltip-method
+                (setq jedi:complete-on-dot t)
                 (setq elpy-rpc-backend "jedi")
-                (pyvenv-activate "~/.virtual_envs")
-                (delete `elpy-module-highlight-indentation elpy-modules)
-                (defalias 'workon 'pyvenv-workon)))
+                (pyvenv-activate "~/.virtual_envs")))
     #+END_SRC
-** Web mode
+*** Web
     #+BEGIN_SRC emacs-lisp
     (use-package web-mode
         :ensure t
@@ -755,7 +760,7 @@
                 (add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))
                 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))))
     #+END_SRC
-** Markdown mode
+*** Markdown
    #+BEGIN_SRC emacs-lisp
      (use-package markdown-mode
          :ensure t
@@ -770,7 +775,7 @@
                         (browse-url "http://localhost:6419/"))
                  (defun markdown-custom-preview-stop() (interactive) (progn (if (get-process "markdown-grip") (kill-process "markdown-grip") nil)))))
    #+END_SRC
-** Writing mode
+*** Writing
    #+BEGIN_SRC emacs-lisp
     (defun my/writing-mode()
     (interactive)
