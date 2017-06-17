@@ -739,6 +739,12 @@
         (add-hook 'go-mode-hook (lambda () (
             (add-hook 'before-save-hook 'gofmt-before-save)))))
     #+END_SRC
+*** Yaml
+    #+BEGIN_SRC emacs-lisp
+    (use-package yaml-mode
+        :defer t
+        :diminish)
+    #+END_SRC
 *** Web
     #+BEGIN_SRC emacs-lisp
     (use-package web-mode
