@@ -389,7 +389,9 @@
     (use-package autopair
         :ensure t
         :init
-            (autopair-global-mode))
+            (progn
+                (show-paren-mode)
+                (autopair-global-mode)))
     #+END_SRC
 *** Saveplace
    #+BEGIN_SRC emacs-lisp
