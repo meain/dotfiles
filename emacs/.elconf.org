@@ -474,6 +474,12 @@
                       (evil-leader/set-key "i" 'popup-imenu)
                     ))
     #+END_SRC
+*** Yafolding
+    #+BEGIN_SRC emacs-lisp
+    (use-package yaml-mode
+        :defer t
+        :diminish)
+    #+END_SRC
 *** Rainbow delimiters
    #+BEGIN_SRC emacs-lisp
     (use-package rainbow-delimiters
