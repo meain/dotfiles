@@ -211,6 +211,14 @@
                 (global-evil-search-highlight-persist t)
                 (evil-leader/set-key "/" 'evil-search-highlight-persist-remove-all)))
     #+END_SRC
+** Evil tabs
+   #+BEGIN_SRC emacs-lisp
+   (use-package evil-tabs
+    :defer t
+    :diminish
+    :config
+        (global-evil-tabs-mode t))
+   #+END_SRC
 ** Configs
 *** Normal mode remaps
 **** Vinegar memmories
