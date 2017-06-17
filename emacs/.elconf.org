@@ -751,6 +751,14 @@
         :defer t
         :diminish)
     #+END_SRC
+*** Docker
+    #+BEGIN_SRC emacs-lisp
+    (use-package docker
+        :defer t
+        :diminish)
+    (use-package dockerfile-mode
+        :defer t)
+    #+END_SRC
 *** Web
     #+BEGIN_SRC emacs-lisp
     (use-package web-mode
