@@ -729,6 +729,16 @@
                 (setq elpy-rpc-backend "jedi")
                 (pyvenv-activate "~/.virtual_envs")))
     #+END_SRC
+*** Go
+    #+BEGIN_SRC emacs-lisp
+    (use-package go-mode
+    :mode "\\.go"
+    :init
+        (setenv "GOPATH" "~/go")
+    :config
+        (add-hook 'go-mode-hook (lambda () (
+            (add-hook 'before-save-hook 'gofmt-before-save)))))
+    #+END_SRC
 *** Web
     #+BEGIN_SRC emacs-lisp
     (use-package web-mode
