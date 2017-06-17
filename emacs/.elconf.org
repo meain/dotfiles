@@ -365,7 +365,15 @@
 *** Flyspell
     #+BEGIN_SRC emacs-lisp
     (use-package flyspell
-        :ensure t)
+        :ensure t
+        :init
+            (progn
+                (add-hook 'prog-mode-hook (lambda () (flyspell-prog-mode)))
+                (add-hook 'text-mode-hook (lambda () (flyspell-mode)))
+                ;; (define-key flyspell-mouse-map [down-mouse-2] nil)
+                ;; (define-key flyspell-mouse-map [mouse-2] #'flyspell-correct-word))
+                (add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:"))
+                (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC"))))
     #+END_SRC
 *** Emmet
 #+BEGIN_SRC emacs-lisp
