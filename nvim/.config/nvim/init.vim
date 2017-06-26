@@ -124,7 +124,7 @@ Plug 'matchit.zip', { 'for': ['html','xml'] }
 Plug 'restore_view.vim'
 
 " Paint css colors with the real color
-Plug 'gko/vim-coloresque', { 'for': 'css' }
+" Plug 'gko/vim-coloresque', { 'for': 'css' }
 
 " Markdown realtime preview
 Plug 'suan/vim-instant-markdown', { 'for' : 'markdown' , 'do': 'npm install -g instant-markdown-d' }
@@ -675,3 +675,6 @@ nnoremap <silent> <m-/> :TmuxNavigatePrevious<cr>
 let g:indentLine_enabled = 1
 let g:vim_json_syntax_conceal = 0
 autocmd TermOpen * IndentLinesDisable
+
+" Gonvim stuff
+let g:gonvim_draw_statusline = 0

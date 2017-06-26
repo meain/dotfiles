@@ -93,46 +93,43 @@
       (set-fontset-font t 'unicode font nil 'prepend))
     #+END_SRC
 ** Themes
-*** Sanityinc tomorrow
+*** Hamburg theme
     #+BEGIN_SRC emacs-lisp
-            (use-package color-theme-sanityinc-tomorrow
-            :if (window-system)
-            :ensure t
-            :init
-            (load-theme 'sanityinc-tomorrow-bright t))
+      (use-package hamburg-theme
+          :ensure t)
     #+END_SRC
 *** Cyberpunk theme
     #+BEGIN_SRC emacs-lisp
-    ;; Theme
-    (use-package cyberpunk-theme
-    :disabled
-    :if (window-system)
-    :ensure t
-    :init
-    (progn
-        (load-theme 'cyberpunk t)
-        (set-face-attribute `mode-line nil
-                            :box nil)
-        (set-face-attribute `mode-line-inactive nil
-                            :box nil)))
+      ;; Theme
+      (use-package cyberpunk-theme
+          :disabled
+          :if (window-system)
+          :ensure t
+          :init
+          (progn
+              (load-theme 'cyberpunk t)
+              (set-face-attribute `mode-line nil
+                                  :box nil)
+              (set-face-attribute `mode-line-inactive nil
+                                  :box nil)))
     #+END_SRC
 *** Gruvbox thmee
     #+BEGIN_SRC emacs-lisp
     (use-package gruvbox-theme
-    :disabled
-    :if (window-system)
-    :ensure t
-    :init
-    (setq gruvbox-use-variable-pitch nil))
+        :disabled
+        :if (window-system)
+        :ensure t
+        :init
+            (setq gruvbox-use-variable-pitch nil))
     #+END_SRC
 *** Monokai theme
     #+BEGIN_SRC emacs-lisp
     (use-package monokai-theme
-    :if (window-system)
-    :ensure t
-    :disabled
-    :init
-    (setq monokai-use-variable-pitch nil))
+        :if (window-system)
+        :ensure t
+        :disabled
+        :init
+        (setq monokai-use-variable-pitch nil))
     #+END_SRC
 *** Leuven theme
     #+BEGIN_SRC emacs-lisp
@@ -147,6 +144,13 @@
         :disabled
         :if (window-system)
         :ensure t)
+    #+END_SRC
+*** Twilight theme
+    #+BEGIN_SRC emacs-lisp
+      (use-package twilight-theme
+          :ensure t
+          :init
+            (load-theme 'twilight t))
     #+END_SRC
 * Other settings
 ** Ring bell
