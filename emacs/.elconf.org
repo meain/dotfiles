@@ -93,17 +93,16 @@
       (set-fontset-font t 'unicode font nil 'prepend))
     #+END_SRC
 ** Themes
-*** Hamburg theme
+*** Set theme
     #+BEGIN_SRC emacs-lisp
-      (use-package hamburg-theme
-          :ensure t)
+    (use-package seti
+        :ensure t)
     #+END_SRC
 *** Cyberpunk theme
     #+BEGIN_SRC emacs-lisp
-      ;; Theme
       (use-package cyberpunk-theme
-          :disabled
           :if (window-system)
+          :disabled
           :ensure t
           :init
           (progn
@@ -535,6 +534,15 @@
                       (define-key neotree-mode-map (kbd "k") 'neotree-previous-line)
                       (define-key neotree-mode-map (kbd "j") 'neotree-next-line)
 
+                      ;; other motion
+                      (define-key neotree-mode-map (kbd "R") 'neotree-refresh)
+                      (define-key neotree-mode-map (kbd "r") 'neotree-rename-node)
+                      (define-key neotree-mode-map (kbd "c") 'neotree-create-node)
+                      (define-key neotree-mode-map (kbd "d") 'neotree-delete-node)
+
+                      ;; don't bother about escape key
+                      (define-key  neotree-mode-map [escape] nil)
+
                       ;; window switching
                       (define-key neotree-mode-map (kbd "M-h") `windmove-left)
                       (define-key neotree-mode-map (kbd "M-j") `windmove-down)
@@ -639,7 +647,7 @@
             (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
             (setq powerline-height 20)
             (setq powerline-raw " ")
-            (setq powerline-default-separator "zigzag")
+            (setq powerline-default-separator "curve")
             (spaceline-compile)
             (setq ns-use-srgb-colorspace nil)))
    #+END_SRC
