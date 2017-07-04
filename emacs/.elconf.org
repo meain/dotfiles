@@ -95,8 +95,10 @@
 ** Themes
 *** Set theme
     #+BEGIN_SRC emacs-lisp
-    (use-package seti
-        :ensure t)
+    (use-package seti-theme
+        :ensure t
+        :init
+        (load-theme 'seti t))
     #+END_SRC
 *** Cyberpunk theme
     #+BEGIN_SRC emacs-lisp
@@ -148,6 +150,7 @@
     #+BEGIN_SRC emacs-lisp
       (use-package twilight-theme
           :ensure t
+          :disabled
           :init
             (load-theme 'twilight t))
     #+END_SRC
@@ -725,6 +728,14 @@
     ;; fontify code in code blocks
     (setq org-src-fontify-natively t)
 
+
+    (custom-set-faces
+        '(org-level-1 ((t (:inherit outline-1 :height 1.7))))
+        '(org-level-2 ((t (:inherit outline-2 :height 1.5))))
+        '(org-level-3 ((t (:inherit outline-3 :height 1.3))))
+        '(org-level-4 ((t (:inherit outline-4 :height 1.1))))
+        '(org-level-5 ((t (:inherit outline-5 :height 1.0)))))
+
     ;; visual tweaks -- don't wanna remove it just yet
     ;; (defface org-block-begin-line
     ;; '((t (:underline "#A7A6AA" :foreground "#008ED1" :background "#EAEAFF")))
@@ -822,18 +833,29 @@
     #+END_SRC
 *** Markdown
    #+BEGIN_SRC emacs-lisp
-     (use-package markdown-mode
-         :ensure t
-         :init
-             (progn
-                 (setq markdown-header-scaling nil)
-                 (defun markdown-custom-preview-start()
-                     "Documentation"
-                     (interactive)
-                        (if (get-process "markdown-grip") (kill-process "markdown-grip") nil)
-                        (start-process "markdown-grip" "*markdown-grip*" "/Library/Frameworks/Python.framework/Versions/2.7/bin/grip" buffer-file-name)
-                        (browse-url "http://localhost:6419/"))
-                 (defun markdown-custom-preview-stop() (interactive) (progn (if (get-process "markdown-grip") (kill-process "markdown-grip") nil)))))
+          (defun markdown-custom-preview-start()
+              "Documentation"
+              (interactive)
+              (if (get-process "markdown-grip") (kill-process "markdown-grip") nil)
+              (start-process "markdown-grip" "*markdown-grip*" "/Library/Frameworks/Python.framework/Versions/2.7/bin/grip" buffer-file-name)
+              (browse-url "http://localhost:6419/"))
+          (defun markdown-custom-preview-stop() (interactive) (progn (if (get-process "markdown-grip") (kill-process "markdown-grip") nil)))
+
+          (use-package markdown-mode+
+            :ensure t
+            :init
+                (progn
+                    (defun fix-mardown-issues ()
+
+     (custom-set-faces
+      '(markdown-header-face ((t (:inherit font-lock-function-name-face :weight bold :family "variable-pitch"))))
+      '(markdown-header-face-1 ((t (:inherit markdown-header-face :height 1.8))))
+      '(markdown-header-face-2 ((t (:inherit markdown-header-face :height 1.4))))
+      '(markdown-header-face-3 ((t (:inherit markdown-header-face :height 1.2)))))
+
+                        (setq markdown-header-scaling nil)
+                        (markdown-toggle-fontify-code-blocks-natively t))
+                    (add-hook 'markdown-mode-hook 'fix-mardown-issues)))
    #+END_SRC
 *** Writing
    #+BEGIN_SRC emacs-lisp

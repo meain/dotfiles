@@ -1,5 +1,4 @@
-Dotfiles
-===========
+# Dotfiles
 
 **Hey**, these are the dotfiles that I use.
 
