@@ -10,7 +10,11 @@ export TERM=xterm-256color
 
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/git/bin"
 PATH="/Library/Frameworks/Python.framework/Versions/2.7/bin:${PATH}"
+export PATH=$PATH:~/.cargo/bin
 # export MANPATH="/usr/local/man:$MANPATH"
+
+# Add path vars for webassembly
+# PATH="/Users/abinsimon/Documents/Projects/emsdk:/Users/abinsimon/Documents/Projects/emsdk/clang/fastcomp/build_incoming_64/bin:/Users/abinsimon/Documents/Projects/emsdk/node/4.1.1_64bit/bin:/Users/abinsimon/Documents/Projects/emsdk/emscripten/incoming:/Users/abinsimon/Documents/Projects/emsdk/binaryen/master_64bit_binaryen/bin:${PATH}"
 
 ZSH_THEME="terminalpartyedit"
 
