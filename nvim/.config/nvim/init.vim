@@ -481,7 +481,7 @@ let g:airline_left_sep = ' '
 let g:airline_left_alt_sep = ' '
 let g:airline_right_sep = ' '
 let g:airline_right_alt_sep = ' '
-let g:airline_symbols.branch = 'Y'
+let g:airline_symbols.branch = '✌'
 let g:airline_symbols.readonly = 'ro'
 let g:airline_symbols.linenr = ' '
 
@@ -506,13 +506,6 @@ vmap <unique> <left>  <Plug>SchleppLeft
 vmap <unique> <right> <Plug>SchleppRight
 vmap <unique> D <Plug>SchleppDup
 
-" Nerd comment ( just out of habbit )
-let g:NERDSpaceDelims = 1
-let g:NERDCompactSexyComs = 1
-let g:NERDDefaultAlign = 'left'
-nnoremap <silent> gc :call NERDComment(0,"toggle")<CR>
-vnoremap <silent> gc :call NERDComment(0,"toggle")<CR>
-
 " Limelight
 let g:limelight_conceal_ctermfg=0
 
@@ -523,8 +516,11 @@ let g:qs_second_occurrence_highlight_color = 81
 
 " Ale
 let g:ale_sign_column_always = 1
+let g:airline#extensions#ale#enabled = 1
 let g:ale_sign_error = ':x'
 let g:ale_sign_warning = ':!'
+highlight ALEErrorSign ctermfg=196
+highlight ALEWarningSign ctermfg=226
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
 let g:ale_linters = {
 \   'javascript': ['eslint'],
@@ -545,7 +541,10 @@ let g:vim_json_syntax_conceal = 0
 autocmd TermOpen * IndentLinesDisable
 
 " Easy allign
-" Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
+
+" Signfy
+highlight SignifySignAdd    cterm=bold ctermbg=240  ctermfg=119
+highlight SignifySignDelete cterm=bold ctermbg=240  ctermfg=167
+highlight SignifySignChange cterm=bold ctermbg=240  ctermfg=227
