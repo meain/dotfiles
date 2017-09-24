@@ -11,7 +11,7 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'mhinz/vim-startify'                                                                  " A fancy start page for vim
 Plug 'flazz/vim-colorschemes'                                                              " Vim colorscheme
-Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }                                         " Some prettification
+Plug 'junegunn/vim-easy-align'                                                             " Some prettification
 Plug 'roxma/nvim-completion-manager'                                                       " Better autocompletion
 Plug 'roxma/nvim-cm-tern',  {'do': 'npm install', 'for': 'javascript'}                     " Completing for js
 Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }                    " nvim language client
@@ -543,3 +543,9 @@ nnoremap <silent> <m-/> :TmuxNavigatePrevious<cr>
 let g:indentLine_enabled = 1
 let g:vim_json_syntax_conceal = 0
 autocmd TermOpen * IndentLinesDisable
+
+" Easy allign
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
