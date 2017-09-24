@@ -9,141 +9,64 @@ endif
 
 call plug#begin('~/.vim/plugged')
 
-" A fancy start page for vim
-Plug 'mhinz/vim-startify'
-
-" Vim colorscheme
-Plug 'flazz/vim-colorschemes'
-
-" Better autocompletion
-Plug 'roxma/nvim-completion-manager'
-Plug 'roxma/nvim-cm-tern',  {'do': 'npm install', 'for': 'javascript'}
-Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
-Plug 'nsf/gocode', { 'for': 'go' }
-
-" Snippet packages
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-Plug 'Shougo/neosnippet'
-Plug 'Shougo/neosnippet-snippets'
-
-" Better file browsing
-Plug 'tpope/vim-vinegar'
-Plug 'scrooloose/nerdtree', { 'on': ['NERDTree', 'NERDTreeToggle'] }
-
-" Autocomplete on tab
-Plug 'ervandew/supertab'
-
-" Seamless navigation between vim and tmux
-Plug 'christoomey/vim-tmux-navigator'
-
-" Smoother scrolling
-Plug 'yuttie/comfortable-motion.vim'
-
-" Code commenting
-Plug 'scrooloose/nerdcommenter'
-
-" Better drag visuals
-Plug 'zirrostig/vim-schlepp'
-
-" Show marks
-Plug 'kshenoy/vim-signature'
-
-" Undo tree
-Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
-
-" Auto skeleton for new files
-Plug 'noahfrederick/vim-skeleton', { 'on': ['SkelEdit', 'SkelInsert'] }
-
-" Better f and d
-Plug 'unblevable/quick-scope'
-
-" Scratch buffer
-Plug 'mtth/scratch.vim', { 'on': ['Scratch', 'ScratchPreview'] }
-
-" Dim inactive windows
-Plug 'blueyed/vim-diminactive'
-
-" Fzf for vim
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-
-" colorschemes for vim
-Plug 'flazz/vim-colorschemes'
-
-" Rainbow delim
-Plug 'luochen1990/rainbow'
-
-" Class/module browser
-Plug 'majutsushi/tagbar', { 'on' : 'Tagbar' }
-
-" Git stuff from within vim
-Plug 'tpope/vim-fugitive'
-Plug 'gregsexton/gitv', {'on': ['Gitv']}
-
-" Airline
-Plug 'bling/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-
-" Surround
-Plug 'tpope/vim-surround'
-
-" Autopair
-Plug 'jiangmiao/auto-pairs'
-
-" Git/mercurial/others diff icons on the side of the file lines
-Plug 'mhinz/vim-signify'
-
-" Neomake - linting and stuf
-Plug 'w0rp/ale'
-
-" Show indent
-Plug 'Yggdroot/indentLine'
-
-" Mru - mostly for use with v in shell
-Plug 'vim-scripts/mru.vim'
-
-" See images in vim
-Plug 'ashisha/image.vim'
-
-" Beautify code
-Plug '~/Documents/Projects/beautify.vim'
-
-" Hyper focus editing
-Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
-Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
-
-" Better search
-Plug 'IndexedSearch'
-" Plug 'meain/hlnext.vim'
-
-" XML/HTML tags navigation
-Plug 'matchit.zip', { 'for': ['html','xml'] }
-
-" Restore file pointer
-Plug 'restore_view.vim'
-
-" Paint css colors with the real color
-" Plug 'gko/vim-coloresque', { 'for': 'css' }
-
-" Markdown realtime preview
-Plug 'suan/vim-instant-markdown', { 'for' : 'markdown' , 'do': 'npm install -g instant-markdown-d' }
-
-" Go development
-Plug 'fatih/vim-go', { 'for': 'go' }
-
-" Javascript stuff
-Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'] }
-
-" Python development
-Plug 'davidhalter/jedi-vim', { 'for': 'python' }
-
-" Vue development
-Plug 'posva/vim-vue', { 'for': 'vue', 'do': 'npm i -g eslint eslint-plugin-vue'}
-
-" Latex plugin
-Plug 'lervag/vimtex', { 'for': 'tex' }
-Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
+Plug 'mhinz/vim-startify'                                                                            " A fancy start page for vim
+Plug 'flazz/vim-colorschemes'                                                                        " Vim colorscheme
+Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }                                                   " Some prettification
+Plug 'roxma/nvim-completion-manager'                                                                 " Better autocompletion
+Plug 'roxma/nvim-cm-tern',  {'do': 'npm install', 'for': 'javascript'}                               " Completing for js
+Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }                              " nvim language client
+Plug 'nsf/gocode', { 'for': 'go' }                                                                   " Golang
+Plug 'SirVer/ultisnips'                                                                              " Snippet packages
+Plug 'honza/vim-snippets'                                                                            " Snippet packages
+Plug 'Shougo/neosnippet'                                                                             " Snippet packages
+Plug 'Shougo/neosnippet-snippets'                                                                    " Snippet packages
+Plug 'tpope/vim-vinegar'                                                                             " Better netrw
+Plug 'scrooloose/nerdtree', { 'on': ['NERDTree', 'NERDTreeToggle'] }                                 " Nerdtree
+Plug 'ervandew/supertab'                                                                             " Autocomplete on tab
+Plug 'christoomey/vim-tmux-navigator'                                                                " Seamless navigation between vim and tmux
+Plug 'yuttie/comfortable-motion.vim'                                                                 " Smoother scrolling
+Plug 'scrooloose/nerdcommenter'                                                                      " Code commenting
+Plug 'zirrostig/vim-schlepp'                                                                         " Better drag visuals
+Plug 'kshenoy/vim-signature'                                                                         " Show marks
+Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }                                                   " Undo tree
+Plug 'noahfrederick/vim-skeleton', { 'on': ['SkelEdit', 'SkelInsert'] }                              " Auto skeleton for new files
+Plug 'unblevable/quick-scope'                                                                        " Better f and d
+Plug 'mtth/scratch.vim', { 'on': ['Scratch', 'ScratchPreview'] }                                     " Scratch buffer
+Plug 'blueyed/vim-diminactive'                                                                       " Dim inactive windows
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }                                    " Fzf for vim
+Plug 'junegunn/fzf.vim'                                                                              " fzf for vim
+Plug 'flazz/vim-colorschemes'                                                                        " colorschemes for vim
+Plug 'luochen1990/rainbow'                                                                           " Rainbow delim
+Plug 'majutsushi/tagbar', { 'on' : 'Tagbar' }                                                        " Class/module browser
+Plug 'tpope/vim-fugitive'                                                                            " Git stuff from within vim
+Plug 'gregsexton/gitv', {'on': ['Gitv']}                                                             " Magit like git interface
+Plug 'bling/vim-airline'                                                                             " Airline
+Plug 'vim-airline/vim-airline-themes'                                                                " Airline themes
+Plug 'tpope/vim-surround'                                                                            " Surround
+Plug 'jiangmiao/auto-pairs'                                                                          " Autopair
+Plug 'mhinz/vim-signify'                                                                             " Git/mercurial/others diff icons on the side of the file lines
+Plug 'w0rp/ale'                                                                                      " Neomake - linting and stuf
+Plug 'Yggdroot/indentLine'                                                                           " Show indent
+Plug 'vim-scripts/mru.vim'                                                                           " Mru - mostly for use with v in shell
+Plug 'ashisha/image.vim'                                                                             " See images in vim
+Plug '~/Documents/Projects/beautify.vim'                                                             " Beautify code
+Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }                                                 " Hyper focus editing
+Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }                                                           " Centerify
+Plug 'IndexedSearch'                                                                                 " Indexed search
+Plug 'meain/hlnext.vim'                                                                              " Hilight searched terms
+Plug 'matchit.zip', { 'for': ['html','xml'] }                                                        " XML/HTML tags navigation
+Plug 'restore_view.vim'                                                                              " Restore file pointer
+Plug 'suan/vim-instant-markdown', { 'for' : 'markdown' , 'do': 'npm install -g instant-markdown-d' } " Markdown realtime preview
+Plug 'fatih/vim-go', { 'for': 'go' }                                                                 " Go development
+Plug 'rust-lang/rust.vim', { 'for': 'rust' }                                                         " Rust development
+Plug 'leafgarland/typescript-vim', { 'for': ['typescript', 'tsc'] }                                  " Typescript development
+Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'] }                              " Javascript stuff
+Plug 'davidhalter/jedi-vim', { 'for': 'python' }                                                     " Python development
+Plug 'posva/vim-vue', { 'for': 'vue', 'do': 'npm i -g eslint eslint-plugin-vue'}                     " Vue development
+Plug 'lervag/vimtex', { 'for': 'tex' }                                                               " Latex plugin
+Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }                                               " Latex preview
+Plug 'equalsraf/neovim-gui-shim'                                                                     " Gonvim
+" Plug 'gko/vim-coloresque', { 'for': 'css' }                                                        " Paint css colors with the real color
 
 call plug#end()
 
@@ -252,7 +175,7 @@ set foldnestmax=10
 
 " Setting colorscheme
 set background=dark
-colorscheme gruvbox
+colorscheme buddy
 
 " Set up leader keys
 let mapleader = "\<Space>"
@@ -264,6 +187,9 @@ autocmd BufEnter * call matchadd('ColorColumn', '\%120v', 100)
 
 " Don't you f'in touch my cursor
 set guicursor=
+
+" Don't slow down vim due to long lines
+set synmaxcol=200
 
 
 
@@ -364,8 +290,10 @@ nnoremap <silent><Leader>q :bd<cr>
 nnoremap <silent><Leader>w :w<cr>
 
 " Split like a boss
-nnoremap <silent><Leader>v :vsplit\|:Startify\|:MRUFzf<cr>
-nnoremap <silent><Leader>h :sp\|:Startify\|:MRUFzf<cr>
+" nnoremap <silent><Leader>v :vsplit\|:Startify\|:MRUFzf<cr>
+" nnoremap <silent><Leader>h :sp\|:Startify\|:MRUFzf<cr>
+nnoremap <silent><Leader>v :vsplit\|:Startify<cr>
+nnoremap <silent><Leader>h :sp\|:Startify<cr>
 
 " Clear search highlight
 nnoremap <silent><Leader>/ :nohls<CR>
@@ -607,6 +535,7 @@ nnoremap <silent> gc :call NERDComment(0,"toggle")<CR>
 vnoremap <silent> gc :call NERDComment(0,"toggle")<CR>
 
 " Vue stuff
+let g:vue_disable_pre_processors=1
 autocmd FileType vue syntax sync fromstart
 autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
 let g:ft = ''
@@ -643,7 +572,7 @@ let g:ale_sign_error = ':x'
 let g:ale_sign_warning = ':!'
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
 let g:ale_linters = {
-\   'javascript': ['jshint'],
+\   'javascript': ['eslint'],
 \   'python': ['flake8']
 \}
 
