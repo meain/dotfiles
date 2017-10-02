@@ -11,6 +11,7 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'mhinz/vim-startify'                                                                  " A fancy start page for vim
 Plug 'flazz/vim-colorschemes'                                                              " Vim colorscheme
+Plug 'ayu-theme/ayu-vim'
 Plug 'junegunn/vim-easy-align'                                                             " Some prettification
 Plug 'roxma/nvim-completion-manager'                                                       " Better autocompletion
 Plug 'roxma/nvim-cm-tern',  {'do': 'npm install', 'for': 'javascript'}                     " Completing for js
@@ -29,7 +30,6 @@ Plug 'unblevable/quick-scope'                                                   
 Plug 'blueyed/vim-diminactive'                                                             " Dim inactive windows
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }                          " Fzf for vim
 Plug 'junegunn/fzf.vim'                                                                    " fzf for vim
-Plug 'luochen1990/rainbow'                                                                 " Rainbow delim
 Plug 'majutsushi/tagbar', { 'on' : 'Tagbar' }                                              " Class/module browser
 Plug 'tpope/vim-fugitive'                                                                  " Git stuff from within vim
 Plug 'gregsexton/gitv', {'on': ['Gitv']}                                                   " Magit like git interface
@@ -53,6 +53,7 @@ Plug 'sheerun/vim-polyglot'                                                     
 Plug 'davidhalter/jedi-vim', { 'for': ['python'] }                                         " Python helper
 Plug 'leafgarland/typescript-vim', { 'for': ['js', 'typescript', 'tsc'] }                  " Much better js and tsc support
 " Plug 'gko/vim-coloresque', { 'for': 'css' }                                              " Paint css colors with the real color
+" Plug 'luochen1990/rainbow'                                                                 " Rainbow delim
 
 call plug#end()
 
@@ -170,6 +171,10 @@ let maplocalleader = "\\"
 " Smart colorcolumn
 highlight ColorColumn ctermbg=0 guibg=#eee8d5
 autocmd BufEnter * call matchadd('ColorColumn', '\%120v', 100)
+
+" Better coloring for errors
+hi clear SpellBad
+hi SpellBad cterm=underline
 
 " Don't you f'in touch my cursor
 set guicursor=
