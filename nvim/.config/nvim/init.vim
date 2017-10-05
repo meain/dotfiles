@@ -206,7 +206,7 @@ command! SortCSS :g#\({\n\)\@<=#.,/}/sort
 command! FixOverflow :normal! gqap
 
 " Set cwd to the one in open file
-autocmd BufEnter * silent! lcd %:p:h
+" autocmd BufEnter * silent! lcd %:p:h
 
 
 

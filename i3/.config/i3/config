@@ -200,19 +200,6 @@ bindsym F9 layout tabbed
 # bindsym F11 fullscreen toggle
 #bindsym F12
 
-#bindsym $mod+F1
-#bindsym $mod+F2
-# bindsym $mod+F3 exec --no-startup-id arandr
-# bindsym $mod+F4 exec --no-startup-id sudo systemctl suspend
-# bindsym $mod+F5 exec --no-startup-id sudo systemctl restart NetworkManager
-#bindsym $mod+F6
-# bindsym $mod+F7 exec transset-df -a --dec .15
-# bindsym $mod+F8 exec transset-df -a --inc .15
-# bindsym $mod+F9 exec --no-startup-id sudo bash ~/.config/i3/mount.sh
-# bindsym $mod+F10 exec --no-startup-id sudo bash ~/.config/i3/unmount.sh
-#bindsym $mod+F11 
-# bindsym $mod+F12 exec --no-startup-id marble
-
 #Arrow Keys
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
@@ -272,54 +259,6 @@ for_window [class="Chromium"] move to workspace $ws2
 # for_window [window_role="gimp-toolbox"] floating disable; move right; resize grow width 30 px or 30ppt
 # for_window [window_role="tr-main"] move to workspace $ws8
 
-# bindsym $mod+Home workspace $ws1
-# bindsym $mod+Shift+Home move container to workspace $ws1
-# bindsym $mod+End workspace $ws10
-# bindsym $mod+Shift+End move container to workspace $ws10
-# bindsym $mod+Prior workspace prev
-# bindsym $mod+Shift+Prior move container to workspace prev
-# bindsym $mod+Next workspace next
-# bindsym $mod+Shift+Next move container to workspace next
-#END
-
-#Media
-
-# TODO
-# bindsym $mod+plus exec --no-startup-id pamixer -i 5
-# bindsym $mod+Shift+plus exec --no-startup-id pamixer -i 15
-
-# bindsym $mod+minus  exec --no-startup-id pamixer -d 5
-# bindsym $mod+Shift+minus exec --no-startup-id pamixer -d 15
-
-# bindsym $mod+bracketleft  exec $lilbak
-# bindsym $mod+Shift+bracketleft  exec $bigbak
-
-# bindsym $mod+bracketright  exec $lilfor
-# bindsym $mod+Shift+bracketright exec $bigfor
-
-# bindsym $mod+greater exec --no-startup-id pamixer -i 5
-# bindsym $mod+Shift+greater exec --no-startup-id pamixer -i 15
-
-# bindsym $mod+less  exec --no-startup-id pamixer -d 5
-# bindsym $mod+Shift+less exec --no-startup-id pamixer -d 15
-
-# bindsym Print exec --no-startup-id scrot
-# bindsym Shift+Print  exec --no-startup-id scrot -u
-
-# bindsym Scroll_Lock exec --no-startup-id $audio
-# bindsym $mod+Scroll_Lock exec --no-startup-id killall ffmpeg
-
-# bindsym Pause exec --no-startup-id $screencast
-# bindsym $mod+Pause exec --no-startup-id killall ffmpeg
-
-# bindsym XF86Launch1 exec --no-startup-id killall ffmpeg
-
-# bindsym XF86AudioPlay exec $pause
-# bindsym XF86AudioPause exec $pause
-# bindsym XF86AudioNext exec $next
-# bindsym XF86AudioPrev exec $prev
-# bindsym XF86AudioStop exec $pause
-
 bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -D pulse sset Master 5%+
 bindsym XF86AudioLowerVolume exec --no-startup-id amixer -D pulse sset Master 5%-
 bindsym XF86AudioMute exec --no-startup-id amixer -D pulse sset Master mute
@@ -331,14 +270,3 @@ bindsym XF86KbdBrightnessUp   exec --no-startup-id "sudo /usr/bin/kbd_led_up"
 # Sreen brightness controls
 bindsym XF86MonBrightnessUp exec xbacklight -inc 10 # increase screen brightness
 bindsym XF86MonBrightnessDown exec xbacklight -dec 10 # decrease screen brightness
-
-#END
-
-# bindsym XF86Mail exec $term -e "mutt"
-# bindsym XF86MyComputer exec
-# bindsym $mod+XF86MyComputer exec
-# bindsym XF86HomePage exec --no-startup-id qutebrowser lukesmith.xyz
-# bindsym $mod+XF86HomePage exec --no-startup-id $browser
-# bindsym $mod+XF86WWW exec --no-startup-id $browser
-
-# bindsym XF86Calculator exec $term -e qalc
