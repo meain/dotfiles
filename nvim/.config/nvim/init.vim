@@ -33,8 +33,9 @@ Plug 'junegunn/fzf.vim'                                                         
 Plug 'majutsushi/tagbar', { 'on' : 'Tagbar' }                                              " Class/module browser
 Plug 'tpope/vim-fugitive'                                                                  " Git stuff from within vim
 Plug 'gregsexton/gitv', {'on': ['Gitv']}                                                   " Magit like git interface
-Plug 'bling/vim-airline'                                                                   " Airline
-Plug 'vim-airline/vim-airline-themes'                                                      " Airline themes
+"Plug 'bling/vim-airline'                                                                   " Airline
+"Plug 'vim-airline/vim-airline-themes'                                                      " Airline themes
+Plug 'itchyny/lightline.vim'
 Plug 'tpope/vim-surround'                                                                  " Surround
 Plug 'jiangmiao/auto-pairs'                                                                " Autopair
 Plug 'mhinz/vim-signify'                                                                   " Git/mercurial/others diff icons on the side of the file lines
@@ -74,8 +75,8 @@ set path+=**
 " Turn on line numbers
 set number
 
-" Highlight cursor line
-set cursorline
+" Highlight cursor line (slows down)
+set nocursorline
 
 " Hidden startup messages
 set shortmess=atI
