@@ -170,7 +170,7 @@ let mapleader = "\<Space>"
 let maplocalleader = "\\"
 
 " Smart colorcolumn
-highlight ColorColumn ctermbg=0 guibg=#eee8d5
+highlight ColorColumn ctermbg=0 guibg=#474747
 autocmd BufEnter * call matchadd('ColorColumn', '\%120v', 100)
 
 " Better coloring for errors
@@ -554,3 +554,8 @@ nmap ga <Plug>(EasyAlign)
 highlight SignifySignAdd    cterm=bold ctermbg=240  ctermfg=119
 highlight SignifySignDelete cterm=bold ctermbg=240  ctermfg=167
 highlight SignifySignChange cterm=bold ctermbg=240  ctermfg=227
+
+" Lightline
+let g:lightline = {
+      \ 'colorscheme': 'seoul256',
+      \ }
