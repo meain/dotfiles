@@ -23,3 +23,15 @@ get_prev_command(){
 alias f='!!'
 alias ff='$(get_prev_command 2 1)'
 alias fff='$(get_prev_command 3 2)'
+
+# Use C-Z to get it back to foreground
+fg-bg () {
+  if [[ $#BUFFER -eq 0 ]]; then
+    fg
+    zle redisplay
+  else
+    zle push-input
+  fi
+}
+zle -N fg-bg
+bindkey '^Z' fg-bg
