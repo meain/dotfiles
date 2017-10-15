@@ -43,6 +43,8 @@ Plug 'vim-scripts/mru.vim'                                                      
 Plug 'Chiel92/vim-autoformat'                                                              " Beautify code
 Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }                                       " Hyper focus editing
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }                                                 " Centerify
+Plug 'mattn/webapi-vim'                                                                    " Inplementation of differnt web apis
+Plug 'Rykka/colorv.vim'                                                                    " Color picker, color schemes etc
 Plug 'vim-scripts/IndexedSearch'                                                           " Indexed search
 Plug 'meain/hlnext.vim'                                                                    " Hilight next search
 Plug 'tmhedberg/matchit', { 'for': ['html','xml', 'tex'] }                                 " Match tags for html, xml latex etc
