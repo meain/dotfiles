@@ -11,7 +11,7 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'mhinz/vim-startify'                                                                  " A fancy start page for vim
 Plug 'flazz/vim-colorschemes'                                                              " Vim colorscheme
-Plug 'ayu-theme/ayu-vim'
+Plug 'ayu-theme/ayu-vim'                                                                   " A sick colorscheme
 Plug 'junegunn/vim-easy-align'                                                             " Some prettification
 Plug 'roxma/nvim-completion-manager'                                                       " Better autocompletion
 Plug 'roxma/nvim-cm-tern',  {'do': 'npm install', 'for': 'javascript'}                     " Completing for js
@@ -27,15 +27,13 @@ Plug 'zirrostig/vim-schlepp'                                                    
 Plug 'kshenoy/vim-signature'                                                               " Show marks
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }                                         " Undo tree
 Plug 'unblevable/quick-scope'                                                              " Better f and d
-Plug 'blueyed/vim-diminactive'                                                             " Dim inactive windows
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }                          " Fzf for vim
 Plug 'junegunn/fzf.vim'                                                                    " fzf for vim
 Plug 'majutsushi/tagbar', { 'on' : 'Tagbar' }                                              " Class/module browser
 Plug 'tpope/vim-fugitive'                                                                  " Git stuff from within vim
 Plug 'gregsexton/gitv', {'on': ['Gitv']}                                                   " Magit like git interface
-"Plug 'bling/vim-airline'                                                                   " Airline
-"Plug 'vim-airline/vim-airline-themes'                                                      " Airline themes
-Plug 'itchyny/lightline.vim'
+Plug 'itchyny/lightline.vim'                                                               " Statusline plugin
+Plug 'tpope/vim-sleuth'                                                                    " Automatic indentation setting
 Plug 'tpope/vim-surround'                                                                  " Surround
 Plug 'jiangmiao/auto-pairs'                                                                " Autopair
 Plug 'mhinz/vim-signify'                                                                   " Git/mercurial/others diff icons on the side of the file lines
@@ -53,8 +51,9 @@ Plug 'suan/vim-instant-markdown', {'for': 'markdown' ,'do': 'npm i -g instant-ma
 Plug 'sheerun/vim-polyglot'                                                                " Multiple language support
 Plug 'davidhalter/jedi-vim', { 'for': ['python'] }                                         " Python helper
 Plug 'leafgarland/typescript-vim', { 'for': ['js', 'typescript', 'tsc'] }                  " Much better js and tsc support
+" Plug 'blueyed/vim-diminactive'                                                           " Dim inactive windows
 " Plug 'gko/vim-coloresque', { 'for': 'css' }                                              " Paint css colors with the real color
-" Plug 'luochen1990/rainbow'                                                                 " Rainbow delim
+" Plug 'luochen1990/rainbow'                                                               " Rainbow delim
 
 call plug#end()
 
@@ -179,9 +178,6 @@ hi SpellBad cterm=underline
 
 " Don't you f'in touch my cursor
 set guicursor=
-
-" Don't slow down vim due to long lines
-set synmaxcol=200
 
 
 
@@ -559,3 +555,7 @@ highlight SignifySignChange cterm=bold ctermbg=240  ctermfg=227
 let g:lightline = {
       \ 'colorscheme': 'seoul256',
       \ }
+
+" Sleuth auto indent
+" let g:sleuth_automatic = 1
+autocmd BufReadPost * normal! :Sleuth<cr>
