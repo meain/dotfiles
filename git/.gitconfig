@@ -6,19 +6,32 @@
 	name = Abin Simon
 	email = abinsimon10@gmail.com
 [Alias]
-     lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --branches
-     lh = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --branches -20
-     hi = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative -20
-     hm = log --pretty=format:'%Cred%h%Creset %C(yellow)%d%Creset %s' --abbrev-commit --date=relative -20
-     vhm = log --pretty=format:'%h -%d %s' --abbrev-commit --date=relative -20
-     st = status -sb -uno --ignore-submodules=untracked
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --branches
+	lh = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --branches -20
+	hi = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative -20
+	hm = log --pretty=format:'%Cred%h%Creset %C(yellow)%d%Creset %s' --abbrev-commit --date=relative -20
+	vhm = log --pretty=format:'%h -%d %s' --abbrev-commit --date=relative -20
+	st = status -sb -uno --ignore-submodules=untracked
 [color]
-	ui = auto
+	ui = true
 [core]
     editor = /usr/local/bin/nvim
+	pager = diff-so-fancy | less --tabs=4 -RFX
 [diff "spaceman-diff"]
   command = /Users/abinsimon/.config/spaceman-diff/spaceman-diff
 [credential]
 	helper = cache
 [init]
 	templatedir = ~/.git_template
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+[color "diff"]
+	meta = 227
+	frag = magenta bold
+	commit = 227 bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
