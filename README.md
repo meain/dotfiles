@@ -4,7 +4,7 @@
 
 It includes my `[z/ba/fi]sh`, `[v/nv/mv/gv]im`, `emacs`, `tmux`, `git` config files.
 
-> Currently using [`zsh`](https://github.com/meain/dotfiles/tree/master/zsh) and [`emacs`](https://github.com/meain/dotfiles/tree/master/emacs)
+> Currently using [`zsh`](https://github.com/meain/dotfiles/tree/master/zsh) and [`nvim`](https://github.com/meain/dotfiles/tree/master/nvim)
 
 ## How to use
 
