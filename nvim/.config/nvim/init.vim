@@ -51,6 +51,8 @@ Plug 'tmhedberg/matchit', { 'for': ['html','xml', 'tex'] }                      
 Plug 'vim-scripts/restore_view.vim'                                                        " Restore file pointer
 Plug 'suan/vim-instant-markdown', {'for': 'markdown' ,'do': 'npm i -g instant-markdown-d'} " Markdown realtime preview
 Plug 'sheerun/vim-polyglot'                                                                " Multiple language support
+Plug 'tpope/vim-markdown'
+Plug 'suan/vim-instant-markdown'
 Plug 'davidhalter/jedi-vim', { 'for': ['python'] }                                         " Python helper
 Plug 'leafgarland/typescript-vim', { 'for': ['js', 'typescript', 'tsc'] }                  " Much better js and tsc support
 " Plug 'blueyed/vim-diminactive'                                                           " Dim inactive windows
@@ -559,5 +561,10 @@ let g:lightline = {
       \ }
 
 " Sleuth auto indent
-" let g:sleuth_automatic = 1
-autocmd BufReadPost * normal! :Sleuth<cr>
+let g:sleuth_automatic = 1
+
+" Polyglot
+let g:polyglot_disabled = ['markdown', 'md']
+
+" Markdown
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
