@@ -1,63 +1,65 @@
 "                            Plugin Management                         "
 "                    ==============================                    "
 
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-
 call plug#begin('~/.vim/plugged')
 
-Plug 'mhinz/vim-startify'                                                                  " A fancy start page for vim
+" Visual enhancements
+Plug 'kshenoy/vim-signature'                                                               " Show marks
+Plug 'itchyny/lightline.vim'                                                               " Statusline plugin
 Plug 'flazz/vim-colorschemes'                                                              " Vim colorscheme
 Plug 'ayu-theme/ayu-vim'                                                                   " A sick colorscheme
-Plug 'junegunn/vim-easy-align'                                                             " Some prettification
-Plug 'roxma/nvim-completion-manager'                                                       " Better autocompletion
-Plug 'roxma/nvim-cm-tern',  {'do': 'npm install', 'for': 'javascript'}                     " Completing for js
-Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }                    " nvim language client
-Plug 'SirVer/ultisnips'                                                                    " Snippet manager
-Plug 'honza/vim-snippets'                                                                  " Snippet packages
-Plug 'tpope/vim-vinegar'                                                                   " Better netrw
-Plug 'scrooloose/nerdtree', { 'on': ['NERDTree', 'NERDTreeToggle'] }                       " Nerdtree
-Plug 'ervandew/supertab'                                                                   " Autocomplete on tab
-Plug 'christoomey/vim-tmux-navigator'                                                      " Seamless navigation between vim and tmux
-Plug 'tomtom/tcomment_vim'                                                                 " Code commenting
-Plug 'zirrostig/vim-schlepp'                                                               " Better drag visuals
-Plug 'kshenoy/vim-signature'                                                               " Show marks
-Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }                                         " Undo tree
+Plug 'luochen1990/rainbow'                                                                 " Rainbow delim
+Plug 'blueyed/vim-diminactive'                                                             " Dim inactive windows
+Plug 'Yggdroot/indentLine'                                                                 " Show indent
+Plug 'mhinz/vim-signify'                                                                   " Git diff icons in gutter
+Plug 'meain/hlnext.vim'                                                                    " Hilight next search
+Plug 'vim-scripts/IndexedSearch'                                                           " Indexed search
+
+" Added functinality
+Plug 'mhinz/vim-startify'                                                                  " A fancy start page for vim
 Plug 'unblevable/quick-scope'                                                              " Better f and d
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }                          " Fzf for vim
 Plug 'junegunn/fzf.vim'                                                                    " fzf for vim
-Plug 'majutsushi/tagbar', { 'on' : 'Tagbar' }                                              " Class/module browser
-Plug 'tpope/vim-fugitive'                                                                  " Git stuff from within vim
 Plug 'gregsexton/gitv', {'on': ['Gitv']}                                                   " Magit like git interface
-Plug 'itchyny/lightline.vim'                                                               " Statusline plugin
-Plug 'tpope/vim-sleuth'                                                                    " Automatic indentation setting
-Plug 'tpope/vim-surround'                                                                  " Surround
-Plug 'jiangmiao/auto-pairs'                                                                " Autopair
-Plug 'mhinz/vim-signify'                                                                   " Git/mercurial/others diff icons on the side of the file lines
-Plug 'w0rp/ale'                                                                            " Neomake - linting and stuf
-Plug 'Yggdroot/indentLine'                                                                 " Show indent
-Plug 'vim-scripts/mru.vim'                                                                 " Mru - mostly for use with v in shell
-Plug 'Chiel92/vim-autoformat'                                                              " Beautify code
+Plug 'christoomey/vim-tmux-navigator'                                                      " Seamless navigation between vim and tmux
 Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }                                       " Hyper focus editing
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }                                                 " Centerify
 Plug 'mattn/webapi-vim'                                                                    " Inplementation of differnt web apis
 Plug 'Rykka/colorv.vim'                                                                    " Color picker, color schemes etc
-Plug 'vim-scripts/IndexedSearch'                                                           " Indexed search
-Plug 'meain/hlnext.vim'                                                                    " Hilight next search
-Plug 'tmhedberg/matchit', { 'for': ['html','xml', 'tex'] }                                 " Match tags for html, xml latex etc
+Plug 'suan/vim-instant-markdown'                                                           " View markdown in browser while editing
+Plug 'ervandew/supertab'                                                                   " Autocomplete on tab
+Plug 'zirrostig/vim-schlepp'                                                               " Better drag visuals
 Plug 'vim-scripts/restore_view.vim'                                                        " Restore file pointer
-Plug 'suan/vim-instant-markdown', {'for': 'markdown' ,'do': 'npm i -g instant-markdown-d'} " Markdown realtime preview
+Plug 'vim-scripts/mru.vim'                                                                 " Mru - mostly for use with v in shell
+Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }                    " nvim language client
+
+" Code editing enhacements
+Plug 'tpope/vim-sleuth'                                                                    " Automatic indentation setting
+Plug 'tpope/vim-vinegar'                                                                   " Better netrw
+Plug 'tpope/vim-fugitive'                                                                  " Git stuff from within vim
+Plug 'majutsushi/tagbar', { 'on' : 'Tagbar' }                                              " Class/module browser
+Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }                                         " Undo tree
+Plug 'scrooloose/nerdtree', { 'on': ['NERDTree', 'NERDTreeToggle'] }                       " Nerdtree
+
+" Morph code
+Plug 'tpope/vim-surround'                                                                  " Surround
+Plug 'jiangmiao/auto-pairs'                                                                " Autopair
+Plug 'tomtom/tcomment_vim'                                                                 " Code commenting
+Plug 'junegunn/vim-easy-align'                                                             " Some prettification
+Plug 'Chiel92/vim-autoformat'                                                              " Beautify code
+
+" Language helpers
 Plug 'sheerun/vim-polyglot'                                                                " Multiple language support
-Plug 'tpope/vim-markdown'
-Plug 'suan/vim-instant-markdown'
+Plug 'tpope/vim-markdown'                                                                  " Better markdown support
 Plug 'davidhalter/jedi-vim', { 'for': ['python'] }                                         " Python helper
 Plug 'leafgarland/typescript-vim', { 'for': ['js', 'typescript', 'tsc'] }                  " Much better js and tsc support
-" Plug 'blueyed/vim-diminactive'                                                           " Dim inactive windows
-" Plug 'gko/vim-coloresque', { 'for': 'css' }                                              " Paint css colors with the real color
-" Plug 'luochen1990/rainbow'                                                               " Rainbow delim
+Plug 'tmhedberg/matchit', { 'for': ['html','xml', 'tex'] }                                 " Match tags for html, xml latex etc
+
+" Linting / Autocomplete / Snippets
+Plug 'w0rp/ale'                                                                            " Neomake - linting and stuf
+Plug 'SirVer/ultisnips'                                                                    " Snippet manager
+Plug 'roxma/nvim-completion-manager'                                                       " Better autocompletion
+Plug 'roxma/nvim-cm-tern',  {'do': 'npm install', 'for': 'javascript'}                     " Completing for js
 
 call plug#end()
 
@@ -120,9 +122,6 @@ filetype indent on
 " Redraw only when essential
 set lazyredraw
 
-" Setting as hidden ( for scratch )
-set hidden
-
 " Make backspace great again
 set backspace=2
 
@@ -141,7 +140,7 @@ set noshowmode
 
 " Show invisibles
 set list
-set listchars=tab:▸~,eol:¬,trail:⋅
+set listchars=eol:¬,trail:⋅
 set showbreak=↪
 
 " When scrolling, keep cursor 5 lines away from screen border
@@ -205,9 +204,6 @@ command! SortCSS :g#\({\n\)\@<=#.,/}/sort
 
 " Fix overflow ( above 80 )
 command! FixOverflow :normal! gqap
-
-" Set cwd to the one in open file
-" autocmd BufEnter * silent! lcd %:p:h
 
 
 
@@ -282,8 +278,6 @@ nnoremap <silent><Leader>q :bd<cr>
 nnoremap <silent><Leader>w :w<cr>
 
 " Split like a boss
-" nnoremap <silent><Leader>v :vsplit\|:Startify\|:MRUFzf<cr>
-" nnoremap <silent><Leader>h :sp\|:Startify\|:MRUFzf<cr>
 nnoremap <silent><Leader>v :vsplit\|:Startify<cr>
 nnoremap <silent><Leader>h :sp\|:Startify<cr>
 
@@ -311,19 +305,6 @@ nnoremap <silent><Leader>p :tabp<cr>
 "                                Code                                  "
 "                    ==============================                    "
 
-
-" Switch between using tabs or spaces bsed on the file
-function TabsOrSpaces()
-    if getfsize(bufname("%")) > 256000
-        return
-    endif
-    let numTabs=len(filter(getbufline(bufname("%"), 1, 250), 'v:val =~ "^\\t"'))
-    let numSpaces=len(filter(getbufline(bufname("%"), 1, 250), 'v:val =~ "^ "'))
-    if numTabs > numSpaces
-        setlocal noexpandtab
-    endif
-endfunction
-autocmd BufReadPost * call TabsOrSpaces()
 
 " Spell checking
 autocmd BufRead,BufNewFile *.md setlocal spell
@@ -457,7 +438,7 @@ let g:jedi#rename_command = "<leader>r"
 let g:jedi#max_doc_height = 30
 
 " Rainbow delim
-let g:rainbow_active = 1
+let g:rainbow_active = 0
 
 " MRU
 let MRU_Max_Entries = 100
@@ -474,22 +455,6 @@ set shortmess+=c   " supress the annoying completion messages
 " Fugitive
 nnoremap <silent><leader>g :Gstatus\|normal!gg8j<cr>
 command! Gl normal! :!git vhm<cr>
-
-" Airline
-let g:airline_powerline_fonts = 1
-let g:airline_theme = 'distinguished'
-let g:airline#extensions#whitespace#enabled = 1
-let g:airline#extensions#tabline#enabled = 1
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-let g:airline_left_sep = ' '
-let g:airline_left_alt_sep = ' '
-let g:airline_right_sep = ' '
-let g:airline_right_alt_sep = ' '
-let g:airline_symbols.branch = '✌'
-let g:airline_symbols.readonly = 'ro'
-let g:airline_symbols.linenr = ' '
 
 " Startify
 nnoremap ,l :Startify<cr>
