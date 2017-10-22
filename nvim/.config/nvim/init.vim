@@ -9,7 +9,6 @@ Plug 'itchyny/lightline.vim'                                                    
 Plug 'flazz/vim-colorschemes'                                                              " Vim colorscheme
 Plug 'ayu-theme/ayu-vim'                                                                   " A sick colorscheme
 Plug 'luochen1990/rainbow'                                                                 " Rainbow delim
-Plug 'blueyed/vim-diminactive'                                                             " Dim inactive windows
 Plug 'Yggdroot/indentLine'                                                                 " Show indent
 Plug 'mhinz/vim-signify'                                                                   " Git diff icons in gutter
 Plug 'meain/hlnext.vim'                                                                    " Hilight next search
@@ -140,8 +139,9 @@ set noshowmode
 
 " Show invisibles
 set list
-set listchars=eol:¬,trail:⋅
+set listchars=tab:\ \ ,eol:¬,trail:⋅
 set showbreak=↪
+highlight SpecialKey ctermfg=8
 
 " When scrolling, keep cursor 5 lines away from screen border
 set scrolloff=5
@@ -172,12 +172,12 @@ let mapleader = "\<Space>"
 let maplocalleader = "\\"
 
 " Smart colorcolumn
-highlight ColorColumn ctermbg=0 guibg=#474747
-autocmd BufEnter * call matchadd('ColorColumn', '\%120v', 100)
+highlight ColorColumn ctermbg=154 ctermfg=0 guibg=#474747
+autocmd BufEnter * call matchadd('ColorColumn', '\%160v', 100)
 
 " Better coloring for errors
 hi clear SpellBad
-hi SpellBad cterm=underline
+hi SpellBad cterm=underline ctermfg=11 guifg=#ffff00
 
 " Don't you f'in touch my cursor
 set guicursor=
