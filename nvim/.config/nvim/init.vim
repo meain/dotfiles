@@ -412,6 +412,7 @@ command! -bang -nargs=? -complete=dir GFiles
 \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
 command! History call fzf#run({'sink': 'e', 'source': 'tail -n+3 ~/.vim_mru_files | grep -v ".git"', 'down': '40%', 'options': '--preview "coderay {}"' })
 nnoremap <silent>,, :History<cr>
+nnoremap <silent><Enter> :Buffers<cr>
 nnoremap ,e :FZF<cr>
 command! -bang -nargs=* Ag
   \ call fzf#vim#ag(<q-args>,
