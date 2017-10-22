@@ -9,29 +9,21 @@ export LANG=en_US.UTF-8
 export TERM=screen-256color
 
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/git/bin"
-PATH="/Library/Frameworks/Python.framework/Versions/2.7/bin:${PATH}"
+export PATH="/Library/Frameworks/Python.framework/Versions/2.7/bin:${PATH}"
 export PATH=$PATH:~/.cargo/bin
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# Add path vars for webassembly
-# PATH="/Users/abinsimon/Documents/Projects/emsdk:/Users/abinsimon/Documents/Projects/emsdk/clang/fastcomp/build_incoming_64/bin:/Users/abinsimon/Documents/Projects/emsdk/node/4.1.1_64bit/bin:/Users/abinsimon/Documents/Projects/emsdk/emscripten/incoming:/Users/abinsimon/Documents/Projects/emsdk/binaryen/master_64bit_binaryen/bin:${PATH}"
 
 ZSH_THEME="terminalpartyedit"
 
-# CASE_SENSITIVE="true"
-# HYPHEN_INSENSITIVE="true"
-# DISABLE_AUTO_UPDATE="true"
-# export UPDATE_ZSH_DAYS=13
-# DISABLE_LS_COLORS="true"
 DISABLE_AUTO_TITLE="true"
-# ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="false"
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
 HIST_STAMPS="dd.mm.yyyy"
+
+# Plugins
 plugins=(z zsh-syntax-highlighting zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
+# Virtualenv ( python )
 export WORKON_HOME=~/.virtual_envs
 source /Library/Frameworks/Python.framework/Versions/2.7/bin/virtualenvwrapper.sh
 
@@ -43,6 +35,7 @@ else
 fi
 
 
+# Source aliases
 source $HOME/.common_aliases
 source $HOME/.other_aliases
 source $HOME/.vim_aliases
@@ -51,6 +44,7 @@ source $HOME/.git_aliases
 source $HOME/.tmux_aliases
 source $HOME/.fzf_aliases
 
+# Source custom functions
 source $HOME/.common_functions
 source $HOME/.other_functions
 
