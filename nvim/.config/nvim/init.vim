@@ -28,6 +28,7 @@ Plug 'ervandew/supertab'                                                        
 Plug 'zirrostig/vim-schlepp'                                                               " Better drag visuals
 Plug 'vim-scripts/restore_view.vim'                                                        " Restore file pointer
 Plug 'jsfaint/gen_tags.vim'                                                                " Better tags usage
+Plug 'tpope/vim-dispatch'                                                                  " Async tasks in vim
 
 " Code editing enhacements
 Plug 'tpope/vim-sleuth'                                                                    " Automatic indentation setting
@@ -63,11 +64,12 @@ Plug 'mhartington/nvim-typescript'                                              
 Plug 'roxma/nvim-cm-tern',  {'do': 'npm install'}                                          " Completion for js
 Plug 'Shougo/neco-vim'                                                                     " Vimscript autocomplete
 Plug 'roxma/ncm-github'                                                                    " Github completion
+Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }                    " nvim language client (nvim-completion-manager)
 
 " Dependencies
 Plug 'mattn/webapi-vim'                                                                    " Inplementation of differnt web apis (colorv)
 Plug 'vim-scripts/mru.vim'                                                                 " Save recently used files (v)
-Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }                    " nvim language client (nvim-completion-manager)
+Plug 'radenling/vim-dispatch-neovim'                                                       " Neovim support for vim-dispatch
 
 call plug#end()
 
