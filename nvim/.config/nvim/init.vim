@@ -27,6 +27,7 @@ Plug 'suan/vim-instant-markdown'                                                
 Plug 'ervandew/supertab'                                                                   " Autocomplete on tab
 Plug 'zirrostig/vim-schlepp'                                                               " Better drag visuals
 Plug 'vim-scripts/restore_view.vim'                                                        " Restore file pointer
+Plug 'jsfaint/gen_tags.vim'                                                                " Better tags usage
 
 " Code editing enhacements
 Plug 'tpope/vim-sleuth'                                                                    " Automatic indentation setting
@@ -541,3 +542,6 @@ let g:polyglot_disabled = ['markdown', 'md']
 
 " Markdown
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
+
+" Gentags
+let g:gen_tags#blacklist = ['$HOME']
