@@ -464,7 +464,7 @@ set shortmess+=c   " supress the annoying completion messages
 " set completeopt-=preview
 
 " Fugitive
-nnoremap <silent><leader>g :Gstatus\|normal!gg8j<cr>
+nnoremap <silent><leader>g :Gstatus\|normal!gg7j<cr>
 command! Gl normal! :!git vhm<cr>
 
 " Startify
