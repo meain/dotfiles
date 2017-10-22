@@ -7,7 +7,6 @@ call plug#begin('~/.vim/plugged')
 Plug 'kshenoy/vim-signature'                                                               " Show marks
 Plug 'itchyny/lightline.vim'                                                               " Statusline plugin
 Plug 'flazz/vim-colorschemes'                                                              " Vim colorscheme
-Plug 'ayu-theme/ayu-vim'                                                                   " A sick colorscheme
 Plug 'luochen1990/rainbow'                                                                 " Rainbow delim
 Plug 'Yggdroot/indentLine'                                                                 " Show indent
 Plug 'mhinz/vim-signify'                                                                   " Git diff icons in gutter
@@ -23,14 +22,11 @@ Plug 'gregsexton/gitv', {'on': ['Gitv']}                                        
 Plug 'christoomey/vim-tmux-navigator'                                                      " Seamless navigation between vim and tmux
 Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }                                       " Hyper focus editing
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }                                                 " Centerify
-Plug 'mattn/webapi-vim'                                                                    " Inplementation of differnt web apis
 Plug 'Rykka/colorv.vim'                                                                    " Color picker, color schemes etc
 Plug 'suan/vim-instant-markdown'                                                           " View markdown in browser while editing
 Plug 'ervandew/supertab'                                                                   " Autocomplete on tab
 Plug 'zirrostig/vim-schlepp'                                                               " Better drag visuals
 Plug 'vim-scripts/restore_view.vim'                                                        " Restore file pointer
-Plug 'vim-scripts/mru.vim'                                                                 " Mru - mostly for use with v in shell
-Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }                    " nvim language client
 
 " Code editing enhacements
 Plug 'tpope/vim-sleuth'                                                                    " Automatic indentation setting
@@ -45,7 +41,6 @@ Plug 'tpope/vim-surround'                                                       
 Plug 'jiangmiao/auto-pairs'                                                                " Autopair
 Plug 'tomtom/tcomment_vim'                                                                 " Code commenting
 Plug 'junegunn/vim-easy-align'                                                             " Some prettification
-Plug 'Chiel92/vim-autoformat'                                                              " Beautify code
 
 " Language helpers
 Plug 'sheerun/vim-polyglot'                                                                " Multiple language support
@@ -54,11 +49,24 @@ Plug 'davidhalter/jedi-vim', { 'for': ['python'] }                              
 Plug 'leafgarland/typescript-vim', { 'for': ['js', 'typescript', 'tsc'] }                  " Much better js and tsc support
 Plug 'tmhedberg/matchit', { 'for': ['html','xml', 'tex'] }                                 " Match tags for html, xml latex etc
 
-" Linting / Autocomplete / Snippets
+" Linting / Checking
 Plug 'w0rp/ale'                                                                            " Neomake - linting and stuf
+Plug 'Chiel92/vim-autoformat'                                                              " Beautify code
+
+" Autocomplete / Snippets
 Plug 'SirVer/ultisnips'                                                                    " Snippet manager
+Plug 'honza/vim-snippets'                                                                  " More snippets
 Plug 'roxma/nvim-completion-manager'                                                       " Better autocompletion
-Plug 'roxma/nvim-cm-tern',  {'do': 'npm install', 'for': 'javascript'}                     " Completing for js
+Plug 'calebeby/ncm-css'                                                                    " CSS Completion
+Plug 'mhartington/nvim-typescript'                                                         " Typescript completion
+Plug 'roxma/nvim-cm-tern',  {'do': 'npm install'}                                          " Completion for js
+Plug 'Shougo/neco-vim'                                                                     " Vimscript autocomplete
+Plug 'roxma/ncm-github'                                                                    " Github completion
+
+" Dependencies
+Plug 'mattn/webapi-vim'                                                                    " Inplementation of differnt web apis (colorv)
+Plug 'vim-scripts/mru.vim'                                                                 " Save recently used files (v)
+Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }                    " nvim language client (nvim-completion-manager)
 
 call plug#end()
 
