@@ -151,8 +151,10 @@ set noshowmode
 " Show invisibles
 set list
 set listchars=tab:\ \ ,eol:¬,trail:⋅
+autocmd ColorScheme * highlight NonText ctermfg=238 ctermbg=234 guifg=#808080 guibg=#202020 guisp=#202020
+
+" Show line breaks
 set showbreak=↪
-highlight SpecialKey ctermfg=8
 
 " When scrolling, keep cursor 5 lines away from screen border
 set scrolloff=5
