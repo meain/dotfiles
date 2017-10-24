@@ -209,8 +209,9 @@ ca w!! w !sudo tee "%"
 command WQ wq
 command Wq wq
 command W w
+
 " Remove whitespace at save
-autocmd BufWritePre *.py,*.vim,*.css,*.js,*.html,*.cpp,*.c,*.java :%s/\s\+$//e
+autocmd BufWritePre *.py,*.vim,*.css,*.js,*.html,*.cpp,*.c,*.java,*.go,*.rs,*.ts,*.cljs,*.clj :%s/\s\+$//e
 
 " Alphabetically sort CSS properties in file with :SortCSS
 command! SortCSS :g#\({\n\)\@<=#.,/}/sort
