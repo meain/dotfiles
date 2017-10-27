@@ -182,7 +182,7 @@ colorscheme buddy
 
 " Set up leader keys
 let mapleader = "\<Space>"
-let maplocalleader = "\\"
+let maplocalleader = "\|"
 
 " Smart colorcolumn
 highlight ColorColumn ctermbg=154 ctermfg=0 guibg=#474747
@@ -416,6 +416,7 @@ command! -bang -nargs=? -complete=dir GFiles
 command! History call fzf#run({'sink': 'e', 'source': 'tail -n+3 ~/.vim_mru_files | grep -v ".git"', 'down': '40%', 'options': '--preview "coderay {}"' })
 nnoremap <silent>,, :History<cr>
 nnoremap <silent><Enter> :Buffers<cr>
+nnoremap <silent><M-Enter> :Files<cr>
 nnoremap ,e :FZF<cr>
 command! -bang -nargs=* Ag
   \ call fzf#vim#ag(<q-args>,
@@ -544,10 +545,14 @@ let g:lightline = {
 let g:sleuth_automatic = 1
 
 " Polyglot
-let g:polyglot_disabled = ['markdown', 'md']
+let g:polyglot_disabled = ['markdown', 'md', 'latex', 'tex']
 
 " Markdown
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
 
 " Gentags
 let g:gen_tags#blacklist = ['$HOME']
+
+" Nvim completion manager ( works but flickering )
+" let g:cm_matcher = {'module': 'cm_matchers.abbrev_matcher'}
+" let g:cm_matcher = {'module': 'cm_matchers.fuzzy_matcher', 'case': 'smartcase'}
