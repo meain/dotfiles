@@ -1,17 +1,18 @@
-echo ""
-fortune -s | fmt -c -w $COLUMNS
-echo ""
-
 export ZSH=~/.oh-my-zsh
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 export TERM=screen-256color
 
-export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/git/bin
-export PATH=/Library/Frameworks/Python.framework/Versions/2.7/bin:$PATH
-export PATH=/Library/TeX/texbin:$PATH
-export PATH=$PATH:~/.cargo/bin
+PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/git/bin:$PATH
+PATH=/Library/Frameworks/Python.framework/Versions/2.7/bin:$PATH
+PATH=/Library/TeX/texbin:$PATH
+PATH=$PATH:~/.cargo/bin
+export PATH
+
+echo ""
+fortune -s | fmt -c -w $COLUMNS
+echo ""
 
 ZSH_THEME="terminalpartyedit"
 
