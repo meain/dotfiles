@@ -25,8 +25,8 @@ plugins=(z zsh-syntax-highlighting zsh-autosuggestions)
 source $ZSH/oh-my-zsh.sh
 
 # Virtualenv ( python )
-export WORKON_HOME=~/.virtual_envs
-source /Library/Frameworks/Python.framework/Versions/2.7/bin/virtualenvwrapper.sh
+# export WORKON_HOME=~/.virtual_envs
+# source /Library/Frameworks/Python.framework/Versions/2.7/bin/virtualenvwrapper.sh
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
@@ -49,7 +49,7 @@ source $HOME/.fzf_aliases
 source $HOME/.common_functions
 source $HOME/.other_functions
 
-eval $(thefuck --alias)
+# eval $(thefuck --alias)
 eval "$(hub alias -s)"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
