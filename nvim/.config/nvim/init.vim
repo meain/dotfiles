@@ -553,6 +553,6 @@ let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
 " Gentags
 let g:gen_tags#blacklist = ['$HOME']
 
-" Nvim completion manager ( works but flickering )
-" let g:cm_matcher = {'module': 'cm_matchers.abbrev_matcher'}
+" Nvim completion manager
+let g:cm_matcher = {'module': 'cm_matchers.abbrev_matcher'}
 " let g:cm_matcher = {'module': 'cm_matchers.fuzzy_matcher', 'case': 'smartcase'}
