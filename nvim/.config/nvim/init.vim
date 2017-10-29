@@ -10,8 +10,8 @@ Plug 'flazz/vim-colorschemes'                                                   
 Plug 'luochen1990/rainbow'                                                                 " Rainbow delim
 Plug 'Yggdroot/indentLine'                                                                 " Show indent
 Plug 'mhinz/vim-signify'                                                                   " Git diff icons in gutter
-Plug 'meain/hlnext.vim'                                                                    " Hilight next search
-Plug 'vim-scripts/IndexedSearch'                                                           " Indexed search
+Plug 'osyo-manga/vim-over'                                                                 " Sleek replace panel
+Plug 'haya14busa/incsearch.vim'                                                            " Better search
 
 " Added functinality
 Plug 'mhinz/vim-startify'                                                                  " A fancy start page for vim
@@ -29,6 +29,7 @@ Plug 'zirrostig/vim-schlepp'                                                    
 Plug 'vim-scripts/restore_view.vim'                                                        " Restore file pointer
 Plug 'jsfaint/gen_tags.vim'                                                                " Better tags usage
 Plug 'tpope/vim-dispatch'                                                                  " Async tasks in vim
+Plug 'osyo-manga/vim-jplus'                                                                " Better J for join
 
 " Code editing enhacements
 Plug 'tpope/vim-sleuth'                                                                    " Automatic indentation setting
@@ -555,4 +556,22 @@ let g:gen_tags#blacklist = ['$HOME']
 
 " Nvim completion manager
 " let g:cm_matcher = {'module': 'cm_matchers.abbrev_matcher'}
-" let g:cm_matcher = {'module': 'cm_matchers.fuzzy_matcher', 'case': 'smartcase'}
+let g:cm_matcher = {'module': 'cm_matchers.fuzzy_matcher', 'case': 'smartcase'}
+
+" Jplus
+nmap J <Plug>(jplus)
+vmap J <Plug>(jplus)
+nmap <Leader>J <Plug>(jplus-getchar)
+vmap <Leader>J <Plug>(jplus-getchar)
+let g:jplus#config = {
+\	"_" : {
+\		"delimiter_format" : ' %d '
+\	}
+\}
+
+" Incsearch
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+let g:incsearch#separate_highlight = 1
+highlight IncSearchCursor ctermfg=0 ctermbg=9 guifg=#000000 guibg=#FF0000
