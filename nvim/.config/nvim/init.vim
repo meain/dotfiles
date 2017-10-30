@@ -5,7 +5,6 @@ call plug#begin('~/.vim/plugged')
 
 " Visual enhancements
 Plug 'kshenoy/vim-signature'                                                               " Show marks
-Plug 'itchyny/lightline.vim'                                                               " Statusline plugin
 Plug 'flazz/vim-colorschemes'                                                              " Vim colorscheme
 Plug 'luochen1990/rainbow'                                                                 " Rainbow delim
 Plug 'Yggdroot/indentLine'                                                                 " Show indent
@@ -318,6 +317,57 @@ nnoremap <silent><Leader>p :tabp<cr>
 
 
 
+
+"                              Statusline                              "
+"                    ==============================                    "
+function! GitBranch()
+  return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
+endfunction
+
+function! StatuslineGit()
+  let l:branchname = GitBranch()
+  return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
+endfunction
+
+hi StatusLine ctermfg=238 ctermbg=235
+function! InsertStatuslineColor(mode)
+  if a:mode == 'i'
+    hi StatusLine ctermbg=2
+  elseif a:mode == 'r'
+    hi StatusLine ctermbg=1
+  else
+    hi StatusLine ctermbg=4
+  endif
+endfunction
+au InsertEnter * call InsertStatuslineColor(v:insertmode)
+au InsertChange * call InsertStatuslineColor(v:insertmode)
+au InsertLeave * hi StatusLine ctermfg=238 ctermbg=235
+
+set statusline=
+set statusline+=\ |
+set statusline+=%#StatusLine#
+set statusline+=[%{mode()}]
+set statusline+=\ |
+set statusline+=%#LineNr#
+set statusline+=%#PmenuSel#
+set statusline+=%{StatuslineGit()}
+set statusline+=%#LineNr#
+set statusline+=\ %t
+set statusline+=\ %m
+set statusline+=\ %<
+
+set statusline+=%=
+
+set statusline+=%#CursorColumn#
+set statusline+=\ %y
+set statusline+=\ %p%%
+set statusline+=\ %l:%c
+set statusline+=\ |
+
+
+
+
+
 "                                Code                                  "
 "                    ==============================                    "
 
@@ -505,7 +555,7 @@ let g:qs_second_occurrence_highlight_color = 81
 
 " Ale
 let g:ale_sign_column_always = 1
-let g:airline#extensions#ale#enabled = 1
+let g:airline#extensions#ale#enabled = 0
 let g:ale_sign_error = ':x'
 let g:ale_sign_warning = ':!'
 highlight ALEErrorSign ctermfg=196
@@ -537,11 +587,6 @@ nmap ga <Plug>(EasyAlign)
 highlight SignifySignAdd    cterm=bold ctermbg=240  ctermfg=119
 highlight SignifySignDelete cterm=bold ctermbg=240  ctermfg=167
 highlight SignifySignChange cterm=bold ctermbg=240  ctermfg=227
-
-" Lightline
-let g:lightline = {
-      \ 'colorscheme': 'seoul256',
-      \ }
 
 " Sleuth auto indent
 let g:sleuth_automatic = 1
