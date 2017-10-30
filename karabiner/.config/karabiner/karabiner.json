@@ -4,77 +4,149 @@
         "show_in_menu_bar": true,
         "show_profile_name_in_menu_bar": false
     },
-    "profiles": [{
-        "complex_modifications": {
-            "parameters": {
-                "basic.to_if_alone_timeout_milliseconds": 1000
+    "profiles": [
+        {
+            "complex_modifications": {
+                "parameters": {
+                    "basic.to_if_alone_timeout_milliseconds": 1000
+                },
+                "rules": [
+                    {
+                        "description": "Change caps_lock to option. (Post esc if pressed alone)",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "caps_lock",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "left_option"
+                                    }
+                                ],
+                                "to_if_alone": [
+                                    {
+                                        "key_code": "escape"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    }
+                ]
             },
-            "rules": [{
-                    "manipulators": [{
-                        "description": "Change spacebar to left_shift. (Post spacebar if pressed alone)",
-                        "manipulators": [{
-                            "from": {
-                                "key_code": "spacebar",
-                                "modifiers": {
-                                    "optional": [
-                                        "any"
-                                    ]
-                                }
-                            },
-                            "to": [{
-                                "key_code": "left_shift"
-                            }],
-                            "to_if_alone": [{
-                                "key_code": "spacebar"
-                            }],
-                            "type": "basic"
-                        }]
-                    }]
+            "devices": [],
+            "fn_function_keys": [
+                {
+                    "from": {
+                        "key_code": "f1"
+                    },
+                    "to": {
+                        "key_code": "display_brightness_decrement"
+                    }
                 },
                 {
-                    "description": "Change caps_lock to option. (Post esc if pressed alone)",
-                    "manipulators": [{
-                        "from": {
-                            "key_code": "caps_lock",
-                            "modifiers": {
-                                "optional": [
-                                    "any"
-                                ]
-                            }
-                        },
-                        "to": [{
-                            "key_code": "left_option"
-                        }],
-                        "to_if_alone": [{
-                            "key_code": "escape"
-                        }],
-                        "type": "basic"
-                    }]
+                    "from": {
+                        "key_code": "f2"
+                    },
+                    "to": {
+                        "key_code": "display_brightness_increment"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f3"
+                    },
+                    "to": {
+                        "key_code": "mission_control"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f4"
+                    },
+                    "to": {
+                        "key_code": "launchpad"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f5"
+                    },
+                    "to": {
+                        "key_code": "illumination_decrement"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f6"
+                    },
+                    "to": {
+                        "key_code": "illumination_increment"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f7"
+                    },
+                    "to": {
+                        "key_code": "rewind"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f8"
+                    },
+                    "to": {
+                        "key_code": "play_or_pause"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f9"
+                    },
+                    "to": {
+                        "key_code": "fastforward"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f10"
+                    },
+                    "to": {
+                        "key_code": "mute"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f11"
+                    },
+                    "to": {
+                        "key_code": "volume_decrement"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f12"
+                    },
+                    "to": {
+                        "key_code": "volume_increment"
+                    }
                 }
-            ]
-        },
-        "devices": [],
-        "fn_function_keys": {
-            "f1": "display_brightness_decrement",
-            "f10": "mute",
-            "f11": "volume_decrement",
-            "f12": "volume_increment",
-            "f2": "display_brightness_increment",
-            "f3": "mission_control",
-            "f4": "launchpad",
-            "f5": "illumination_decrement",
-            "f6": "illumination_increment",
-            "f7": "rewind",
-            "f8": "play_or_pause",
-            "f9": "fastforward"
-        },
-        "name": "Default profile",
-        "one_to_many_mappings": {},
-        "selected": true,
-        "virtual_hid_keyboard": {
-            "caps_lock_delay_milliseconds": 0,
-            "keyboard_type": "ansi",
-            "standalone_keys_delay_milliseconds": 200
+            ],
+            "name": "Default profile",
+            "one_to_many_mappings": {},
+            "selected": true,
+            "simple_modifications": [],
+            "virtual_hid_keyboard": {
+                "caps_lock_delay_milliseconds": 0,
+                "keyboard_type": "ansi",
+                "standalone_keys_delay_milliseconds": 200
+            }
         }
-    }]
+    ]
 }
