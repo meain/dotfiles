@@ -152,7 +152,7 @@ set noshowmode
 " Show invisibles
 set list
 set listchars=tab:\ \ ,eol:¬,trail:⋅
-autocmd ColorScheme * highlight NonText ctermfg=238 ctermbg=234 guifg=#808080 guibg=#202020 guisp=#202020
+autocmd ColorScheme * highlight NonText ctermfg=238 ctermbg=235
 
 " Show line breaks
 set showbreak=↪
@@ -179,7 +179,8 @@ set foldnestmax=10
 
 " Setting colorscheme
 set background=dark
-colorscheme buddy
+autocmd ColorScheme janah highlight Normal ctermbg=235
+colorscheme janah
 
 " Set up leader keys
 let mapleader = "\<Space>"
