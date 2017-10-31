@@ -169,11 +169,13 @@ set wildmenu
 set wildmode=full
 
 " Setting up ignores
-set wildignore+=*/tmp/*,*.so,*.pyc,*.png,*.jpg,*.gif,*.jpeg
+set wildignore+=*/tmp/*,*.so,*.pyc,*.png,*.jpg,*.gif,*.jpeg,*.ico,*.pdf
+set wildignore+=*.wav,*.mp4,*.mp3
 set wildignore+=*.o,*.out,*.obj,.git,*.rbc,*.rbo,*.class,.svn,*.gem
 set wildignore+=*.zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz
 set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
 set wildignore+=*.swp,*~,._*
+set wildignore+=_pycache_,.DS_Store,.vscode,.localized
 
 " Indent based folding
 set foldmethod=indent
