@@ -56,9 +56,7 @@ Plug 'tmhedberg/matchit', { 'for': ['html','xml', 'tex'] }                      
 Plug 'w0rp/ale'                                                                            " Neomake - linting and stuf
 Plug 'Chiel92/vim-autoformat'                                                              " Beautify code
 
-" Autocomplete / Snippets
-Plug 'SirVer/ultisnips'                                                                    " Snippet manager
-Plug 'honza/vim-snippets'                                                                  " More snippets
+" Autocomplete
 Plug 'roxma/nvim-completion-manager'                                                       " Better autocompletion
 Plug 'calebeby/ncm-css'                                                                    " CSS Completion
 Plug 'mhartington/nvim-typescript'                                                         " Typescript completion
@@ -66,6 +64,12 @@ Plug 'roxma/nvim-cm-tern',  {'do': 'npm install'}                               
 Plug 'Shougo/neco-vim'                                                                     " Vimscript autocomplete
 Plug 'roxma/ncm-github'                                                                    " Github completion
 Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }                    " nvim language client (nvim-completion-manager)
+
+" Snippets
+Plug 'SirVer/ultisnips'                                                                    " Snippet manager
+Plug 'honza/vim-snippets'                                                                  " More snippets
+Plug 'epilande/vim-es2015-snippets'                                                        " ES2015 snippets
+Plug 'epilande/vim-react-snippets'                                                         " React snippets
 
 " Dependencies
 Plug 'mattn/webapi-vim'                                                                    " Inplementation of differnt web apis (colorv)
@@ -165,7 +169,7 @@ set wildmenu
 set wildmode=full
 
 " Setting up ignores
-set wildignore+=*/tmp/*,*.so,*.pyc,*.png,*.jpg,*.gif
+set wildignore+=*/tmp/*,*.so,*.pyc,*.png,*.jpg,*.gif,*.jpeg
 set wildignore+=*.o,*.out,*.obj,.git,*.rbc,*.rbo,*.class,.svn,*.gem
 set wildignore+=*.zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz
 set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
