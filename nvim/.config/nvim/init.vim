@@ -32,6 +32,7 @@ Plug 'tpope/vim-dispatch'                                                       
 Plug 'airblade/vim-rooter'                                                                 " Change directory to project root
 Plug 'editorconfig/editorconfig-vim'                                                       " Editorconfig
 Plug 'mattn/gist-vim', { 'on': 'Gist' }                                                    " Push current buffer as gist
+Plug 'rizzatti/dash.vim'                                                                   " Search Dash docs
 
 " Code editing enhacements
 Plug 'tpope/vim-sleuth'                                                                    " Automatic indentation setting
@@ -244,10 +245,6 @@ nnoremap k gk
 vnoremap j gj
 vnoremap k gk
 
-" Unset J and K for now
-nnoremap J 10<c-y>
-nnoremap K 10<c-e>
-
 "Get back to where you were easily
 nnoremap gg mpgg
 nnoremap G mpG
@@ -272,8 +269,8 @@ vnoremap > >gv
 vnoremap < <gv
 
 " Navigaiion
-nnoremap <Down> 10<c-y>
-nnoremap <Up> 10<c-e>
+nnoremap <Down> V10<c-y><esc>
+nnoremap <Up> V10<c-e><esc>
 
 " Easy buffer switching
 nnoremap <silent><Tab> :bn<cr>
@@ -288,6 +285,9 @@ tnoremap <m-l> <C-\><C-N><C-w>l
 
 " Terminal mode esc remap
 tnoremap <Leader><Esc> <C-\><C-n>
+
+" Copy entire file content
+nnoremap yp mzggVG"+y`z
 
 
 
@@ -638,3 +638,6 @@ let g:rooter_use_lcd = 1
 let g:rooter_silent_chdir = 1
 let g:rooter_resolve_links = 1
 let g:rooter_patterns = ['Rakefile', 'Makefile', 'package.json', '.git/', '.vscode']
+
+" Dash.vim ( maybe fetch it and display inside vim? )
+nnoremap K :Dash<cr>
