@@ -53,6 +53,7 @@ Plug 'osyo-manga/vim-jplus'                                                     
 Plug 'sheerun/vim-polyglot'                                                                " Multiple language support
 Plug 'tpope/vim-markdown'                                                                  " Better markdown support
 Plug 'davidhalter/jedi-vim', { 'for': ['python'] }                                         " Python helper
+Plug 'fatih/vim-go', { 'for': ['go'] }                                                                        " Golang
 Plug 'leafgarland/typescript-vim', { 'for': ['js', 'typescript', 'tsc'] }                  " Much better js and tsc support
 Plug 'tmhedberg/matchit', { 'for': ['html','xml', 'tex'] }                                 " Match tags for html, xml latex etc
 
@@ -322,6 +323,9 @@ nnoremap <silent><Leader>e :!python %<cr>
 " Quick switch tabs
 nnoremap <silent><Leader>n :tabn<cr>
 nnoremap <silent><Leader>p :tabp<cr>
+
+" Only current buffer
+nnoremap <silent><leader>o :only<cr>
 
 
 
@@ -641,3 +645,10 @@ let g:rooter_patterns = ['Rakefile', 'Makefile', 'package.json', '.git/', '.vsco
 
 " Dash.vim ( maybe fetch it and display inside vim? )
 nnoremap K :Dash<cr>
+
+" Vim go
+let g:go_fmt_fail_silently = 1
+let g:go_list_type = "quickfix"
+let g:go_fmt_command = "goimports"
+let g:go_addtags_transform = "camelcase"
+autocmd BufEnter *.go nnoremap <leader>d :GoDef<cr>

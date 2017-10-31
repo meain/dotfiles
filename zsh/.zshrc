@@ -4,10 +4,14 @@ export LANG=en_US.UTF-8
 
 export TERM=screen-256color
 
+# Golang
+export GOPATH=~/.config/go
+
 PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/git/bin:$PATH
 PATH=/Library/Frameworks/Python.framework/Versions/2.7/bin:$PATH
 PATH=/Library/TeX/texbin:$PATH
 PATH=$PATH:~/.cargo/bin
+PATH=$PATH:$GOPATH/bin
 export PATH
 
 echo ""
