@@ -417,11 +417,12 @@ nnoremap <silent>`` :call Marks()<cr>
 "                    ==============================                    "
 
 " Fzf fuzzy search
-let $FZF_DEFAULT_COMMAND = 'ag --hidden -l -g ""'
-command! -bang -nargs=* MRUFzf call fzf#vim#history(fzf#vim#with_preview())
+let g:fzf_layout = { 'down': '~40%' }
+let g:fzf_tags_command = 'ctags -R'
+let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+command! History call fzf#run({'sink': 'e', 'source': 'tail -n+3 ~/.vim_mru_files | grep -v ".git"', 'down': '40%', 'options': '--preview "coderay {}"' })
 command! -bang -nargs=? -complete=dir GFiles
 \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
-command! History call fzf#run({'sink': 'e', 'source': 'tail -n+3 ~/.vim_mru_files | grep -v ".git"', 'down': '40%', 'options': '--preview "coderay {}"' })
 nnoremap <silent>,, :History<cr>
 nnoremap <silent><Enter> :Buffers<cr>
 nnoremap <silent><M-Enter> :Files<cr>
