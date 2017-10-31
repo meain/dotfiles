@@ -30,6 +30,7 @@ Plug 'vim-scripts/restore_view.vim'                                             
 Plug 'jsfaint/gen_tags.vim'                                                                " Better tags usage
 Plug 'tpope/vim-dispatch'                                                                  " Async tasks in vim
 Plug 'osyo-manga/vim-jplus'                                                                " Better J for join
+Plug 'airblade/vim-rooter'                                                                 " Change directory to project root
 
 " Code editing enhacements
 Plug 'tpope/vim-sleuth'                                                                    " Automatic indentation setting
@@ -629,3 +630,9 @@ map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
 let g:incsearch#separate_highlight = 1
 highlight IncSearchCursor ctermfg=0 ctermbg=9 guifg=#000000 guibg=#FF0000
+
+" Vim Router
+let g:rooter_use_lcd = 1
+let g:rooter_silent_chdir = 1
+let g:rooter_resolve_links = 1
+let g:rooter_patterns = ['Rakefile', 'Makefile', 'package.json', '.git/', '.vscode']
