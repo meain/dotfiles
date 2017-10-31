@@ -10,7 +10,7 @@ Plug 'flazz/vim-colorschemes'                                                   
 Plug 'luochen1990/rainbow'                                                                 " Rainbow delim
 Plug 'Yggdroot/indentLine'                                                                 " Show indent
 Plug 'mhinz/vim-signify'                                                                   " Git diff icons in gutter
-Plug 'osyo-manga/vim-over'                                                                 " Sleek replace panel
+Plug 'osyo-manga/vim-over', { 'on': 'OverCommandLine' }                                    " Sleek replace panel
 Plug 'haya14busa/incsearch.vim'                                                            " Better search
 
 " Added functinality
@@ -22,15 +22,16 @@ Plug 'gregsexton/gitv', {'on': ['Gitv']}                                        
 Plug 'christoomey/vim-tmux-navigator'                                                      " Seamless navigation between vim and tmux
 Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }                                       " Hyper focus editing
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }                                                 " Centerify
-Plug 'Rykka/colorv.vim'                                                                    " Color picker, color schemes etc
+Plug 'Rykka/colorv.vim', { 'on': 'ColorV' }                                                " Color picker, color schemes etc
 Plug 'suan/vim-instant-markdown'                                                           " View markdown in browser while editing
 Plug 'ervandew/supertab'                                                                   " Autocomplete on tab
 Plug 'zirrostig/vim-schlepp'                                                               " Better drag visuals
 Plug 'vim-scripts/restore_view.vim'                                                        " Restore file pointer
 Plug 'jsfaint/gen_tags.vim'                                                                " Better tags usage
 Plug 'tpope/vim-dispatch'                                                                  " Async tasks in vim
-Plug 'osyo-manga/vim-jplus'                                                                " Better J for join
 Plug 'airblade/vim-rooter'                                                                 " Change directory to project root
+Plug 'editorconfig/editorconfig-vim'                                                       " Editorconfig
+Plug 'mattn/gist-vim', { 'on': 'Gist' }                                                    " Push current buffer as gist
 
 " Code editing enhacements
 Plug 'tpope/vim-sleuth'                                                                    " Automatic indentation setting
@@ -45,6 +46,7 @@ Plug 'tpope/vim-surround'                                                       
 Plug 'jiangmiao/auto-pairs'                                                                " Autopair
 Plug 'tomtom/tcomment_vim'                                                                 " Code commenting
 Plug 'junegunn/vim-easy-align'                                                             " Some prettification
+Plug 'osyo-manga/vim-jplus'                                                                " Better J for join
 
 " Language helpers
 Plug 'sheerun/vim-polyglot'                                                                " Multiple language support
@@ -55,7 +57,7 @@ Plug 'tmhedberg/matchit', { 'for': ['html','xml', 'tex'] }                      
 
 " Linting / Checking
 Plug 'w0rp/ale'                                                                            " Neomake - linting and stuf
-Plug 'Chiel92/vim-autoformat'                                                              " Beautify code
+Plug 'Chiel92/vim-autoformat', { 'on': 'Autoformat' }                                      " Beautify code
 
 " Autocomplete
 Plug 'roxma/nvim-completion-manager'                                                       " Better autocompletion
