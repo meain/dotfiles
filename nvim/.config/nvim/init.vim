@@ -519,7 +519,6 @@ let g:qs_second_occurrence_highlight_color = 81
 
 " Ale
 let g:ale_sign_column_always = 1
-let g:airline#extensions#ale#enabled = 1
 let g:ale_sign_error = ':x'
 let g:ale_sign_warning = ':!'
 highlight ALEErrorSign ctermfg=196
@@ -530,6 +529,9 @@ let g:ale_linters = {
 \   'javascript': ['eslint'],
 \   'python': ['flake8']
 \}
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%severity%][%linter%] %s '
 
 " Vim-Tmux navigator
 let g:tmux_navigator_no_mappings = 1
