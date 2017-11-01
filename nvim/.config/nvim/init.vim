@@ -12,6 +12,8 @@ Plug 'Yggdroot/indentLine'                                                      
 Plug 'mhinz/vim-signify'                                                                   " Git diff icons in gutter
 Plug 'osyo-manga/vim-over', { 'on': 'OverCommandLine' }                                    " Sleek replace panel
 Plug 'haya14busa/incsearch.vim'                                                            " Better search
+Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }                                       " Hyper focus editing
+Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }                                                 " Centerify
 
 " Added functinality
 Plug 'mhinz/vim-startify'                                                                  " A fancy start page for vim
@@ -20,8 +22,6 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }               
 Plug 'junegunn/fzf.vim'                                                                    " fzf for vim
 Plug 'gregsexton/gitv', {'on': ['Gitv']}                                                   " Magit like git interface
 Plug 'christoomey/vim-tmux-navigator'                                                      " Seamless navigation between vim and tmux
-Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }                                       " Hyper focus editing
-Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }                                                 " Centerify
 Plug 'Rykka/colorv.vim', { 'on': 'ColorV' }                                                " Color picker, color schemes etc
 Plug 'suan/vim-instant-markdown'                                                           " View markdown in browser while editing
 Plug 'ervandew/supertab'                                                                   " Autocomplete on tab
@@ -80,6 +80,10 @@ Plug 'epilande/vim-react-snippets'                                              
 Plug 'mattn/webapi-vim'                                                                    " Inplementation of differnt web apis (colorv)
 Plug 'vim-scripts/mru.vim'                                                                 " Save recently used files (v)
 Plug 'radenling/vim-dispatch-neovim'                                                       " Neovim support for vim-dispatch
+
+" GUI
+Plug 'equalsraf/neovim-gui-shim'
+Plug 'dzhou121/gonvim-fuzzy'
 
 call plug#end()
 
@@ -427,12 +431,12 @@ nnoremap <silent>`` :call Marks()<cr>
 let g:fzf_layout = { 'down': '~40%' }
 let g:fzf_tags_command = 'ctags -R'
 let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
-command! History call fzf#run({'sink': 'e', 'source': 'tail -n+3 ~/.vim_mru_files | grep -v ".git"', 'down': '40%', 'options': '--preview "coderay {}"' })
+command! -bang History call fzf#vim#history( {'options': ['--query', '!.git/ !.vim/ ', '--no-sort']}, <bang>0)
 command! -bang -nargs=? -complete=dir GFiles
 \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
 nnoremap <silent>,, :History<cr>
 nnoremap <silent><Enter> :Buffers<cr>
-nnoremap <silent><M-Enter> :Files<cr>
+nnoremap <silent><M-Enter> :GFiles<cr>
 nnoremap ,e :FZF<cr>
 command! -bang -nargs=* Ag
   \ call fzf#vim#ag(<q-args>,
@@ -535,11 +539,18 @@ let g:ale_echo_msg_format = '[%severity%][%linter%] %s '
 
 " Vim-Tmux navigator
 let g:tmux_navigator_no_mappings = 1
-nnoremap <silent> <m-h> :TmuxNavigateLeft<cr>
-nnoremap <silent> <m-j> :TmuxNavigateDown<cr>
-nnoremap <silent> <m-k> :TmuxNavigateUp<cr>
-nnoremap <silent> <m-l> :TmuxNavigateRight<cr>
-nnoremap <silent> <m-/> :TmuxNavigatePrevious<cr>
+if exists('g:GuiLoaded')
+    nnoremap <silent> <m-h> <c-w>h
+    nnoremap <silent> <m-j> <c-w>j
+    nnoremap <silent> <m-k> <c-w>k
+    nnoremap <silent> <m-l> <c-w>l
+else
+    nnoremap <silent> <m-h> :TmuxNavigateLeft<cr>
+    nnoremap <silent> <m-j> :TmuxNavigateDown<cr>
+    nnoremap <silent> <m-k> :TmuxNavigateUp<cr>
+    nnoremap <silent> <m-l> :TmuxNavigateRight<cr>
+    nnoremap <silent> <m-/> :TmuxNavigatePrevious<cr>
+endif
 
 " Vim Indentline
 let g:indentLine_enabled = 1
@@ -654,3 +665,9 @@ let g:go_list_type = "quickfix"
 let g:go_fmt_command = "goimports"
 let g:go_addtags_transform = "camelcase"
 autocmd BufEnter *.go nnoremap <leader>d :GoDef<cr>
+
+" GUI
+if exists('g:GuiLoaded')
+    GuiFont Monaco:h13
+    GuiLinespace 4
+endif
