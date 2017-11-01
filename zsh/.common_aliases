@@ -19,5 +19,5 @@ alias r='ranger'
 
 alias o='open .'
 alias p='cd ~/Documents/Projects'
-alias da='cd ~/Documents/datalogai'
+alias pg='cd ~/Documents/Projects/goworkspace/src/github.com/meain'
 alias df='cd ~/.dotfiles'

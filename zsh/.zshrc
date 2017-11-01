@@ -5,7 +5,8 @@ export LANG=en_US.UTF-8
 export TERM=screen-256color
 
 # Golang
-export GOPATH=~/.config/go
+export GOPATH=~/Documents/Projects/goworkspace
+export GOBIN=$GOPATH/bin
 
 PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/git/bin:$PATH
 PATH=/Library/Frameworks/Python.framework/Versions/2.7/bin:$PATH

@@ -212,6 +212,8 @@ hi SpellBad cterm=underline ctermfg=11 guifg=#ffff00
 " Don't you f'in touch my cursor
 set guicursor=
 
+" Completefunc
+autocmd BufEnter * set completefunc=cm#_completefunc
 
 
 
@@ -434,9 +436,9 @@ let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %
 command! -bang History call fzf#vim#history( {'options': ['--query', '!.git/ !.vim/ ', '--no-sort']}, <bang>0)
 command! -bang -nargs=? -complete=dir GFiles
 \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
-nnoremap <silent>,, :History<cr>
 nnoremap <silent><Enter> :Buffers<cr>
 nnoremap <silent><M-Enter> :GFiles<cr>
+nnoremap <silent> <leader><Enter> :History<cr>
 nnoremap ,e :FZF<cr>
 command! -bang -nargs=* Ag
   \ call fzf#vim#ag(<q-args>,
