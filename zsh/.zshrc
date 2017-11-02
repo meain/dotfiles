@@ -41,6 +41,8 @@ else
   export EDITOR='nvim'
 fi
 
+# Credentials
+source $HOME/.credentials
 
 # Source aliases
 source $HOME/.common_aliases
