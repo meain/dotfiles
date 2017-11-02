@@ -33,6 +33,7 @@ Plug 'airblade/vim-rooter'                                                      
 Plug 'editorconfig/editorconfig-vim'                                                       " Editorconfig
 Plug 'mattn/gist-vim', { 'on': 'Gist' }                                                    " Push current buffer as gist
 Plug 'rizzatti/dash.vim'                                                                   " Search Dash docs
+Plug 'davidbeckingsale/writegood.vim', { 'on': ['WritegoodEnable', 'WritegoodToggle'] }    " Better writing mode
 
 " Code editing enhacements
 Plug 'tpope/vim-sleuth'                                                                    " Automatic indentation setting
@@ -54,7 +55,7 @@ Plug 'sheerun/vim-polyglot'                                                     
 Plug 'tpope/vim-markdown'                                                                  " Better markdown support
 Plug 'davidhalter/jedi-vim', { 'for': ['python'] }                                         " Python helper
 Plug 'fatih/vim-go', { 'for': ['go'] }                                                                        " Golang
-Plug 'leafgarland/typescript-vim', { 'for': ['js', 'typescript', 'tsc'] }                  " Much better js and tsc support
+Plug 'mhartington/nvim-typescript'                                                         " Typescript completion
 Plug 'tmhedberg/matchit', { 'for': ['html','xml', 'tex'] }                                 " Match tags for html, xml latex etc
 
 " Linting / Checking
@@ -64,10 +65,10 @@ Plug 'Chiel92/vim-autoformat', { 'on': 'Autoformat' }                           
 " Autocomplete
 Plug 'roxma/nvim-completion-manager'                                                       " Better autocompletion
 Plug 'calebeby/ncm-css'                                                                    " CSS Completion
-Plug 'mhartington/nvim-typescript'                                                         " Typescript completion
 Plug 'roxma/nvim-cm-tern',  {'do': 'npm install'}                                          " Completion for js
 Plug 'Shougo/neco-vim'                                                                     " Vimscript autocomplete
 Plug 'roxma/ncm-github'                                                                    " Github completion
+Plug 'roxma/nvim-cm-racer', { 'for': ['rs', 'rust'] }                                      " Rust autocompletion
 Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }                    " nvim language client (nvim-completion-manager)
 
 " Snippets
@@ -145,6 +146,10 @@ filetype indent on
 
 " Redraw only when essential
 set lazyredraw
+
+" Just sync some lines of a large file
+set synmaxcol=200
+syntax sync minlines=256
 
 " Make backspace great again
 set backspace=2
@@ -376,6 +381,8 @@ frame_querry()
 EOF
 endfunction
 command! -nargs=1 Google call GoogleSearch(<f-args>)
+nnoremap <silent><leader>s :Google <c-r><c-w><cr>
+vnoremap <leader>s y:Google <c-r>"<cr>
 
 " Zoom in and out of windows
 function! s:ZoomToggle() abort
@@ -469,7 +476,7 @@ let g:jedi#use_splits_not_buffers = "bottom"
 let g:jedi#goto_command = "<leader>d"
 let g:jedi#goto_assignments_command = ""
 let g:jedi#goto_definitions_command = ""
-let g:jedi#documentation_command = "<leader>k"
+let g:jedi#documentation_command = "K"
 let g:jedi#usages_command = "<leader>n"
 let g:jedi#completions_command = ""
 let g:jedi#rename_command = "<leader>r"
@@ -658,8 +665,9 @@ let g:rooter_silent_chdir = 1
 let g:rooter_resolve_links = 1
 let g:rooter_patterns = ['Rakefile', 'Makefile', 'package.json', '.git/', '.vscode']
 
-" Dash.vim ( maybe fetch it and display inside vim? )
+" Dash.vim
 nnoremap K :Dash<cr>
+nnoremap ,, :Dash<cr>  " For python, go and js we have K mapped
 
 " Vim go
 let g:go_fmt_fail_silently = 1
@@ -694,3 +702,7 @@ function! s:goyo_leave()
 endfunction
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
+
+" Nvim typescript
+autocmd BufEnter *.ts,*.js,*.tsc nnoremap <leader>d :TSDef<cr>
+autocmd BufEnter *.ts,*.js,*.tsc nnoremap K :TSDoc<cr>
