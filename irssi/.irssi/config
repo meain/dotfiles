@@ -26,9 +26,9 @@ chatnets = {
 };
 
 channels = (
-  { name = "#python"; chatnet = "Freenode"; autojoin = "yes"; },
-  { name = "#go-nuts"; chatnet = "Freenode"; autojoin = "yes"; },
-  { name = "#rust-beginners"; chatnet = "Mozilla"; autojoin = "yes"; }
+  { name = "#python"; chatnet = "Freenode"; autojoin = "no"; },
+  { name = "#go-nuts"; chatnet = "Freenode"; autojoin = "no"; },
+  { name = "#rust-beginners"; chatnet = "Mozilla"; autojoin = "no"; }
 );
 
 aliases = {
@@ -251,6 +251,7 @@ settings = {
     real_name = "Abin Simon";
     user_name = "abinsimon";
     nick = "meain";
+    timestamp_format = "%I:%m";
   };
   "fe-text" = { actlist_sort = "refnum"; };
   "fe-common/core" = { theme = "weed"; };
