@@ -45,6 +45,7 @@ alias gs='git status'
 alias g='git status -s'
 # Git commit 
 alias gcm='git commit'
+alias gm='git commit -m'
 # Git checkeout
 alias gco='git checkout $(git branch | sed s:^..::g | fzf --height 40% --reverse)'
 alias gpl='git pull origin $(git branch | sed s:^..::g | fzf --height 40% --reverse)'
