@@ -32,7 +32,8 @@ Plug 'tpope/vim-dispatch'                                                       
 Plug 'airblade/vim-rooter'                                                                 " Change directory to project root
 Plug 'editorconfig/editorconfig-vim'                                                       " Editorconfig
 Plug 'mattn/gist-vim', { 'on': 'Gist' }                                                    " Push current buffer as gist
-Plug 'rizzatti/dash.vim'                                                                   " Search Dash docs
+Plug 'sjl/gundo.vim', { 'on': ['GundoShow', 'GundoToggle'] }                               " Full undo tree
+Plug 'rizzatti/dash.vim', { 'on': 'Dash' }                                                 " Search Dash docs
 Plug 'davidbeckingsale/writegood.vim', { 'on': ['WritegoodEnable', 'WritegoodToggle'] }    " Better writing mode
 
 " Code editing enhacements
@@ -52,11 +53,12 @@ Plug 'osyo-manga/vim-jplus'                                                     
 
 " Language helpers
 Plug 'sheerun/vim-polyglot'                                                                " Multiple language support
-Plug 'tpope/vim-markdown'                                                                  " Better markdown support
+Plug 'tpope/vim-markdown', { 'for': ['md', 'markdown'] }                                   " Better markdown support
 Plug 'davidhalter/jedi-vim', { 'for': ['python'] }                                         " Python helper
-Plug 'fatih/vim-go', { 'for': ['go'] }                                                                        " Golang
-Plug 'mhartington/nvim-typescript'                                                         " Typescript completion
+Plug 'fatih/vim-go', { 'for': ['go'] }                                                     " Golang helper
+Plug 'mhartington/nvim-typescript', { 'for': ['ts','typescript', 'js', 'javascript'] }     " Typescript completion
 Plug 'tmhedberg/matchit', { 'for': ['html','xml', 'tex'] }                                 " Match tags for html, xml latex etc
+Plug 'raimon49/requirements.txt.vim', { 'for': 'requirements' }                            " Requirements file
 
 " Linting / Checking
 Plug 'w0rp/ale'                                                                            " Neomake - linting and stuf
@@ -64,9 +66,9 @@ Plug 'Chiel92/vim-autoformat', { 'on': 'Autoformat' }                           
 
 " Autocomplete
 Plug 'roxma/nvim-completion-manager'                                                       " Better autocompletion
-Plug 'calebeby/ncm-css'                                                                    " CSS Completion
+Plug 'calebeby/ncm-css', { 'for': 'css' }                                                  " CSS Completion
 Plug 'roxma/nvim-cm-tern',  {'do': 'npm install'}                                          " Completion for js
-Plug 'Shougo/neco-vim'                                                                     " Vimscript autocomplete
+Plug 'Shougo/neco-vim', { 'for': 'vim' }                                                   " Vimscript autocomplete
 Plug 'roxma/ncm-github'                                                                    " Github completion
 Plug 'roxma/nvim-cm-racer', { 'for': ['rs', 'rust'] }                                      " Rust autocompletion
 Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }                    " nvim language client (nvim-completion-manager)
@@ -74,8 +76,8 @@ Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }         
 " Snippets
 Plug 'SirVer/ultisnips'                                                                    " Snippet manager
 Plug 'honza/vim-snippets'                                                                  " More snippets
-Plug 'epilande/vim-es2015-snippets'                                                        " ES2015 snippets
-Plug 'epilande/vim-react-snippets'                                                         " React snippets
+Plug 'epilande/vim-es2015-snippets', { 'for': ['javascript', 'typescript'] }               " ES2015 snippets
+Plug 'epilande/vim-react-snippets', { 'for': ['javascript', 'typescript'] }                " React snippets
 
 " Dependencies
 Plug 'mattn/webapi-vim'                                                                    " Inplementation of differnt web apis (colorv)
@@ -453,7 +455,7 @@ command! -bang -nargs=* Ag
   \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
   \                 <bang>0)
 nnoremap <leader>f :GFiles<CR>
-nnoremap <leader>l :Commands<CR>
+nnoremap <leader>c :Commands<CR>
 nnoremap <leader>t :Tags<CR>
 nnoremap <leader>b :Buffers<cr>
 let g:fzf_layout = { 'down': '~40%' }  " Default fzf layout
@@ -548,18 +550,11 @@ let g:ale_echo_msg_format = '[%severity%][%linter%] %s '
 
 " Vim-Tmux navigator
 let g:tmux_navigator_no_mappings = 1
-if exists('g:GuiLoaded')
-    nnoremap <silent> <m-h> <c-w>h
-    nnoremap <silent> <m-j> <c-w>j
-    nnoremap <silent> <m-k> <c-w>k
-    nnoremap <silent> <m-l> <c-w>l
-else
-    nnoremap <silent> <m-h> :TmuxNavigateLeft<cr>
-    nnoremap <silent> <m-j> :TmuxNavigateDown<cr>
-    nnoremap <silent> <m-k> :TmuxNavigateUp<cr>
-    nnoremap <silent> <m-l> :TmuxNavigateRight<cr>
-    nnoremap <silent> <m-/> :TmuxNavigatePrevious<cr>
-endif
+nnoremap <silent> <m-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <m-j> :TmuxNavigateDown<cr>
+nnoremap <silent> <m-k> :TmuxNavigateUp<cr>
+nnoremap <silent> <m-l> :TmuxNavigateRight<cr>
+nnoremap <silent> <m-/> :TmuxNavigatePrevious<cr>
 
 " Vim Indentline
 let g:indentLine_enabled = 1
@@ -667,20 +662,15 @@ let g:rooter_patterns = ['Rakefile', 'Makefile', 'package.json', '.git/', '.vsco
 
 " Dash.vim
 nnoremap K :Dash<cr>
-nnoremap ,, :Dash<cr>  " For python, go and js we have K mapped
+nnoremap <leader>l :Dash<cr>
 
 " Vim go
+let g:go_fmt_autosave = 0
 let g:go_fmt_fail_silently = 1
 let g:go_list_type = "quickfix"
 let g:go_fmt_command = "goimports"
 let g:go_addtags_transform = "camelcase"
 autocmd BufEnter *.go nnoremap <leader>d :GoDef<cr>
-
-" GUI
-if exists('g:GuiLoaded')
-    GuiFont Monaco:h13
-    GuiLinespace 4
-endif
 
 " Goyo
 function! s:goyo_enter()
@@ -706,3 +696,11 @@ autocmd! User GoyoLeave nested call <SID>goyo_leave()
 " Nvim typescript
 autocmd BufEnter *.ts,*.js,*.tsc nnoremap <leader>d :TSDef<cr>
 autocmd BufEnter *.ts,*.js,*.tsc nnoremap K :TSDoc<cr>
+
+" Racer
+au FileType rust nmap <silent><leader>d <Plug>(rust-def)
+au FileType rust nmap K <Plug>(rust-doc)
+
+" Autoformat
+nnoremap <silent>,, :Autoformat<cr>
+au FileType go nnoremap <silent>,, :GoFmt<cr>
