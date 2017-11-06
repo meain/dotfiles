@@ -85,6 +85,9 @@ Plug 'mattn/webapi-vim'                                                         
 Plug 'vim-scripts/mru.vim'                                                                 " Save recently used files (v)
 Plug 'radenling/vim-dispatch-neovim'                                                       " Neovim support for vim-dispatch
 
+" Others
+Plug 'wakatime/vim-wakatime'                                                               " Wakatime
+
 " GUI
 Plug 'equalsraf/neovim-gui-shim'
 Plug 'dzhou121/gonvim-fuzzy'
