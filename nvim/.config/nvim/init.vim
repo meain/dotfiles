@@ -56,6 +56,7 @@ Plug 'sheerun/vim-polyglot'                                                     
 Plug 'tpope/vim-markdown', { 'for': ['md', 'markdown'] }                                   " Better markdown support
 Plug 'davidhalter/jedi-vim', { 'for': ['python'] }                                         " Python helper
 Plug 'fatih/vim-go', { 'for': ['go'] }                                                     " Golang helper
+Plug 'racer-rust/vim-racer', { 'for': 'rust' }
 Plug 'mhartington/nvim-typescript', { 'for': ['ts','typescript', 'js', 'javascript'] }     " Typescript completion
 Plug 'tmhedberg/matchit', { 'for': ['html','xml', 'tex'] }                                 " Match tags for html, xml latex etc
 Plug 'raimon49/requirements.txt.vim', { 'for': 'requirements' }                            " Requirements file
@@ -699,7 +700,7 @@ autocmd BufEnter *.ts,*.js,*.tsc nnoremap K :TSDoc<cr>
 
 " Racer
 au FileType rust nmap <silent><leader>d <Plug>(rust-def)
-au FileType rust nmap K <Plug>(rust-doc)
+au FileType rust nmap  <Plug>(rust-doc)
 
 " Autoformat
 nnoremap <silent>,, :Autoformat<cr>
