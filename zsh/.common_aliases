@@ -21,3 +21,5 @@ alias o='open .'
 alias p='cd ~/Documents/Projects'
 alias pg='cd ~/Documents/Projects/goworkspace/src/github.com/meain'
 alias df='cd ~/.dotfiles'
+
+alias cleanup="find . -name '*.DS_Store' -type f -ls -delete"

@@ -7,3 +7,6 @@ alias ydp='youtube-dl -o "%(playlist_index)s_%(title)s.%(ext)s"'
 
 alias map='telnet mapscii.me' 
 alias weather='curl wttr.in/thrissur'
+
+alias stfu="osascript -e 'set volume output muted true'"
+alias pumpitup="osascript -e 'set volume 10'"

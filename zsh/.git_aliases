@@ -7,52 +7,37 @@ get_git_branch(){
 get_change_message(){
     echo "($(get_git_files_changed)):" | vipe | cat
 }
-get_change_message_without_filename(){
-    echo ":" | vipe | cat
-}
 
-# Alias for easier git commits
-# Commit message wihout any s***
-alias gh="git add -u && git commit -m"
-alias gv='git add -u && git commit'
-# Message with more information with filename
-alias gvf='git add -u && git commit -m "$(get_change_message)"'
-# Commit message wihout any s*** + push
-alias gvp='git add -u && git commit" && git push origin $(get_git_branch)'
-# More info + push with filename
-alias gvfp='git add -u && git commit -m "$(get_change_message)" && git push origin $(get_git_branch)'
-# Simple messages
-alias gu='git add -u && git commit -m "Updated $(get_git_files_changed)"'
-alias gc='git add -u && git commit -m "Clean up $(get_git_files_changed)"'
-alias gb='git add -u && git commit -m "Bugfix $(get_git_files_changed)"'
-# Simple messge with push
-alias gup='git add -u && git commit -m "Updated $(get_git_files_changed)" && git push origin $(get_git_branch)'
-alias gcp='git add -u && git commit -m "Clean up $(get_git_files_changed)" && git push origin $(get_git_branch)'
-alias gbp='git add -u && git commit -m "Bugfix $(get_git_files_changed)" && git push origin $(get_git_branch)'
-# Git add
-alias ga='git add'
-# Easier push to origin master
-alias gp='git push origin "$(get_git_branch)"'
-# Git log and history alias 
-alias ggg='git lh|cat'
-alias gg='git hm|cat'
-alias gggg='git hi|cat'
-alias gl='git lg'
-# Git diff alias
-alias gd='git diff'
-# Git status alias
-alias gs='git status'
 alias g='git status -s'
-# Git commit 
-alias gcm='git commit'
+alias gs='git status'
+
+alias ga='git add'
+alias gau='git add -u'
+
+alias gc='git commit'
 alias gm='git commit -m'
-# Git checkeout
+
+alias gv='git add -u && git commit'
+alias gh="git add -u && git commit -m"
+alias gca='git commit -a --amend -C HEAD'
+
+alias gvf='git add -u && git commit -m "$(get_change_message)"'
+
+alias gp='git push origin "$(get_git_branch)"'
+
+alias gl='git lg'
+alias gg='git hm|cat'
+alias ggg='git lh|cat'
+alias gggg='git hi|cat'
+
+alias gd='git diff'
+alias gdp="git diff master@{1} master"
+
+alias gcom='git checkout master'
 alias gco='git checkout $(git branch | sed s:^..::g | fzf --height 40% --reverse)'
 alias gpl='git pull origin $(git branch | sed s:^..::g | fzf --height 40% --reverse)'
 alias gpu='git push origin $(git branch | sed s:^..::g | fzf --height 40% --reverse)'
-alias gcom='git checkout master'
-# Easier commit ammend
-alias gca='git commit -a --amend -C HEAD'
+
 # Clean up merged branches
 alias gbcl="!f() { git branch --merged ${1-master} | grep -v " ${1-master}$" | xargs -r git branch -d; }; f"
 
