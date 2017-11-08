@@ -12,4 +12,5 @@ set smtp_url = "smtp://abinsimon10@smtp.gmail.com:587/"
 set smtp_pass = "${GOOGLE_PASSWORD}"
 set move = no 
 set imap_keepalive = 900
+set smtp_authenticators = 'gssapi:login'
 macro index,pager a ":set confirmappend=no\n<save-message>=Archive<enter>" "Archived Message"
