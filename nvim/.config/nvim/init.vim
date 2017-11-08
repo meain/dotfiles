@@ -584,12 +584,19 @@ highlight SignifySignChange cterm=bold ctermbg=240  ctermfg=227
 let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ 'active': {
-      \   'right': [ [ 'lineinfo' ],
-      \              [ 'percent' ],
-      \              [ 'gitbranch', 'filetype' ],
+      \   'right': [ [ 'percent' ],
+      \              [ 'filetype' ],
       \              [ 'linter_warnings', 'linter_errors', 'linter_ok'] ],
       \   'left': [ [ 'mode', 'paste' ],
-      \              [ 'filename', 'modified', 'cutpoint', 'readonly' ] ]
+      \              ['gitbranch', 'filename', 'modified', 'cutpoint' ] ]
+      \ },
+      \   'tabline': {
+      \     'left': [ [ 'tabs' ] ],
+      \     'right': [ [ 'close' ] ]
+      \   },
+      \   'tab': {
+      \     'active': [ 'tabnum', 'filename', 'modified' ],
+      \     'inactive': [ 'tabnum', 'filename', 'modified' ]
       \ },
       \ 'component': {
       \   'cutpoint': '%<'
@@ -607,6 +614,12 @@ let g:lightline = {
       \   'linter_warnings': 'warning',
       \   'linter_errors': 'error'
       \ },
+      \   'mode_map': {
+      \     'n': 'no', 'i': 'in', 'R': 're', 'v': 'vs', 'V': 'vl', "\<C-v>": 'vb',
+      \     'c': 'co', 's': 'se', 'S': 'sl', "\<C-s>": 'sl', 't': 'te'
+      \ },
+      \ 'separator': { 'left': '', 'right': '' },
+      \ 'subseparator': { 'left': '', 'right': '' },
       \ }
 
 function! LightlineLinterWarnings() abort
@@ -627,7 +640,7 @@ function! LightlineLinterOK() abort
   let l:counts = ale#statusline#Count(bufnr(''))
   let l:all_errors = l:counts.error + l:counts.style_error
   let l:all_non_errors = l:counts.total - l:all_errors
-  return l:counts.total == 0 ? '✓' : ''
+  return l:counts.total == 0 ? 'OK' : ''
 endfunction
 
 " Sleuth auto indent
