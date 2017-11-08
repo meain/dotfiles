@@ -56,7 +56,8 @@ Plug 'sheerun/vim-polyglot'                                                     
 Plug 'tpope/vim-markdown', { 'for': ['md', 'markdown'] }                                   " Better markdown support
 Plug 'davidhalter/jedi-vim', { 'for': ['python'] }                                         " Python helper
 Plug 'fatih/vim-go', { 'for': ['go'] }                                                     " Golang helper
-Plug 'racer-rust/vim-racer', { 'for': 'rust' }
+Plug 'sebdah/vim-delve', { 'for': 'go' }                                                   " Debugger for go
+Plug 'racer-rust/vim-racer', { 'for': 'rust' }                                             " Rust support
 Plug 'mhartington/nvim-typescript', { 'for': ['ts','typescript', 'js', 'javascript'] }     " Typescript completion
 Plug 'tmhedberg/matchit', { 'for': ['html','xml', 'tex'] }                                 " Match tags for html, xml latex etc
 Plug 'raimon49/requirements.txt.vim', { 'for': 'requirements' }                            " Requirements file
@@ -435,6 +436,12 @@ endfunction
 command Marks call Marks()
 nnoremap <silent>`` :call Marks()<cr>
 
+" Json format
+function! JSONFormat() range
+  execute "%!python -m json.tool"
+endfunction
+command! -range JSONFormat <line1>,<line2>call JSONFormat()
+
 
 
 
@@ -460,7 +467,6 @@ command! -bang -nargs=* Ag
   \                 <bang>0)
 nnoremap <leader>f :GFiles<CR>
 nnoremap <leader>c :Commands<CR>
-nnoremap <leader>t :Tags<CR>
 nnoremap <leader>b :Buffers<cr>
 let g:fzf_layout = { 'down': '~40%' }  " Default fzf layout
 let g:fzf_colors =
@@ -675,6 +681,9 @@ let g:go_list_type = "quickfix"
 let g:go_fmt_command = "goimports"
 let g:go_addtags_transform = "camelcase"
 autocmd BufEnter *.go nnoremap <leader>d :GoDef<cr>
+autocmd BufEnter *.go nnoremap <leader>r :GoRun<cr>
+autocmd BufEnter *.go nnoremap <leader>a :GoBuild<cr>
+autocmd BufEnter *.go nnoremap <leader>t :GoTest<cr>
 
 " Goyo
 function! s:goyo_enter()
