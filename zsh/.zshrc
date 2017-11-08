@@ -1,13 +1,16 @@
 export ZSH=~/.oh-my-zsh
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
-
 export TERM=screen-256color-italic
 
 # Golang
 export GOPATH=~/Documents/Projects/goworkspace
 export GOBIN=$GOPATH/bin
 
+# Python
+export WORKON_HOME=~/.virtual_envs
+
+# PATH
 PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/git/bin:$PATH
 PATH=/Library/Frameworks/Python.framework/Versions/2.7/bin:$PATH
 PATH=/Library/TeX/texbin:$PATH
@@ -20,19 +23,13 @@ fortune -s | fmt -c -w $COLUMNS
 echo ""
 
 ZSH_THEME="terminalpartyedit"
-
 DISABLE_AUTO_TITLE="true"
 COMPLETION_WAITING_DOTS="false"
 HIST_STAMPS="dd.mm.yyyy"
 
-# Plugins
+# Oh my zsh
 plugins=(z zsh-syntax-highlighting zsh-autosuggestions)
-
 source $ZSH/oh-my-zsh.sh
-
-# Virtualenv ( python )
-# export WORKON_HOME=~/.virtual_envs
-# source /Library/Frameworks/Python.framework/Versions/2.7/bin/virtualenvwrapper.sh
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
@@ -57,10 +54,11 @@ source $HOME/.fzf_aliases
 source $HOME/.common_functions
 source $HOME/.other_functions
 
-# eval $(thefuck --alias)
+# Github
 eval "$(hub alias -s)"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# iTerm
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 # Use vim mode in zsh
