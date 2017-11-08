@@ -39,5 +39,5 @@ alias gpl='git pull origin $(git branch | sed s:^..::g | fzf --height 40% --reve
 alias gpu='git push origin $(git branch | sed s:^..::g | fzf --height 40% --reverse)'
 
 # Clean up merged branches
-alias gbcl="!f() { git branch --merged ${1-master} | grep -v " ${1-master}$" | xargs -r git branch -d; }; f"
+alias gbcl='git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d'
 
