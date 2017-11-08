@@ -209,6 +209,14 @@ set background=dark
 autocmd ColorScheme janah highlight Normal ctermbg=235
 colorscheme janah
 
+" Use italics for some text
+hi htmlArg gui=italic
+hi Comment gui=italic
+hi Type    gui=italic
+hi htmlArg cterm=italic
+hi Comment cterm=italic
+hi Type    cterm=italic
+
 " Set up leader keys
 let mapleader = "\<Space>"
 let maplocalleader = "\|"
