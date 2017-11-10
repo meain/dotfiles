@@ -62,6 +62,9 @@ Plug 'mhartington/nvim-typescript', { 'for': ['ts','typescript', 'js', 'javascri
 Plug 'tmhedberg/matchit', { 'for': ['html','xml', 'tex'] }                                 " Match tags for html, xml latex etc
 Plug 'raimon49/requirements.txt.vim', { 'for': 'requirements' }                            " Requirements file
 
+" Language enhacements
+Plug '~/Documents/Projects/vim-jsontogo'
+
 " Linting / Checking
 Plug 'w0rp/ale'                                                                            " Neomake - linting and stuf
 Plug 'Chiel92/vim-autoformat', { 'on': 'Autoformat' }                                      " Beautify code

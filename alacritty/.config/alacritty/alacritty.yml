@@ -59,7 +59,7 @@ font:
     # style: Italic
 
   # Point size of the font
-  size: 19.5
+  size: 16.5
 
   # Offset is the extra space around each character. offset.y can be thought of
   # as modifying the linespacing, and offset.x as modifying the letter spacing.
