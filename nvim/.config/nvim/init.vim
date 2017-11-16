@@ -58,7 +58,7 @@ Plug 'davidhalter/jedi-vim', { 'for': ['python'] }                              
 Plug 'fatih/vim-go', { 'for': ['go'] }                                                     " Golang helper
 Plug 'sebdah/vim-delve', { 'for': 'go' }                                                   " Debugger for go
 Plug 'racer-rust/vim-racer', { 'for': 'rust' }                                             " Rust support
-Plug 'mhartington/nvim-typescript', { 'for': ['ts','typescript', 'js', 'javascript'] }     " Typescript completion
+Plug 'mhartington/nvim-typescript'                                                         " Typescript completion
 Plug 'tmhedberg/matchit', { 'for': ['html','xml', 'tex'] }                                 " Match tags for html, xml latex etc
 Plug 'raimon49/requirements.txt.vim', { 'for': 'requirements' }                            " Requirements file
 
@@ -453,6 +453,41 @@ function! JSONFormat() range
 endfunction
 command! -range JSONFormat <line1>,<line2>call JSONFormat()
 
+" Scratch buffer
+function! ScratchOpen()
+  execute "topleft new __scratch__"
+  if filereadable("/tmp/.scratchfile")
+    execute " %! cat /tmp/.scratchfile"
+  endif
+  redraw
+  execute "resize 15"
+  execute "set ft=scratch"
+  setlocal bufhidden=hide
+  setlocal buftype=nofile
+  setlocal foldcolumn=0
+  setlocal nofoldenable
+  setlocal nonumber
+  setlocal noswapfile
+  setlocal winfixheight
+  setlocal winfixwidth
+endfunction
+function! ScratchToggle()
+  let l:bufNr = bufnr("$")
+  let l:name = "__scratch__"
+  while l:bufNr > 0
+    if buflisted(l:bufNr)
+      if (matchstr(bufname(l:bufNr), l:name."$") == l:name )
+        execute "w /tmp/.scratchfile"
+        execute "bd ".l:bufNr
+        return
+      endif
+    endif
+    let l:bufNr = l:bufNr-1
+  endwhile
+  call ScratchOpen()
+endfunction
+nnoremap <silent><leader>u :call ScratchToggle()<cr>
+
 
 
 
@@ -737,8 +772,13 @@ autocmd BufEnter *.ts,*.js,*.tsc nnoremap K :TSDoc<cr>
 
 " Racer
 au FileType rust nmap <silent><leader>d <Plug>(rust-def)
-au FileType rust nmap  <Plug>(rust-doc)
+au FileType rust nmap K <Plug>(rust-doc)
+au FileType rust nmap <silent><leader>a :Dispatch\ cargo\ build<cr>
+au FileType rust nmap <silent><leader>r :Start\ cargo\ run<cr>
 
 " Autoformat
 nnoremap <silent>,, :Autoformat<cr>
 au FileType go nnoremap <silent>,, :GoFmt<cr>
+
+" Vim docs
+au FileType vim nmap K  :help <c-r><c-w><cr>
