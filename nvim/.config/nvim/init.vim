@@ -616,7 +616,11 @@ nnoremap <silent> <m-/> :TmuxNavigatePrevious<cr>
 " Vim Indentline
 let g:indentLine_enabled = 1
 let g:vim_json_syntax_conceal = 0
-autocmd TermOpen * IndentLinesDisable
+augroup TerminalStuff
+   au! " Clear old autocommands
+  autocmd TermOpen * setlocal nonumber norelativenumber
+  autocmd TermOpen * IndentLinesDisable
+augroup END
 
 " Easy allign
 xmap ga <Plug>(EasyAlign)
