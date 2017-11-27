@@ -35,6 +35,7 @@ Plug 'mattn/gist-vim', { 'on': 'Gist' }                                         
 Plug 'sjl/gundo.vim', { 'on': ['GundoShow', 'GundoToggle'] }                               " Full undo tree
 Plug 'rizzatti/dash.vim', { 'on': 'Dash' }                                                 " Search Dash docs
 Plug 'davidbeckingsale/writegood.vim', { 'on': ['WritegoodEnable', 'WritegoodToggle'] }    " Better writing mode
+Plug 'mattn/emmet-vim'                                                                     " Emmet
 
 " Code editing enhacements
 Plug 'tpope/vim-sleuth'                                                                    " Automatic indentation setting
@@ -53,6 +54,8 @@ Plug 'osyo-manga/vim-jplus'                                                     
 
 " Language helpers
 Plug 'sheerun/vim-polyglot'                                                                " Multiple language support
+Plug 'leafgarland/typescript-vim'                                                          " Typescript supprt
+Plug 'peitalin/vim-jsx-typescript'                                                         " JSX syntax
 Plug 'tpope/vim-markdown', { 'for': ['md', 'markdown'] }                                   " Better markdown support
 Plug 'davidhalter/jedi-vim', { 'for': ['python'] }                                         " Python helper
 Plug 'fatih/vim-go', { 'for': ['go'] }                                                     " Golang helper
@@ -61,9 +64,10 @@ Plug 'racer-rust/vim-racer', { 'for': 'rust' }                                  
 Plug 'mhartington/nvim-typescript'                                                         " Typescript completion
 Plug 'tmhedberg/matchit', { 'for': ['html','xml', 'tex'] }                                 " Match tags for html, xml latex etc
 Plug 'raimon49/requirements.txt.vim', { 'for': 'requirements' }                            " Requirements file
+Plug 'bpietravalle/vim-bolt'                                                               " Bolt file syntax (firebase)
 
 " Language enhacements
-Plug '~/Documents/Projects/vim-jsontogo'
+Plug '~/Documents/Projects/vim-jsontogo'                                                   " Convert JSON to Go struct
 
 " Linting / Checking
 Plug 'w0rp/ale'                                                                            " Neomake - linting and stuf
@@ -93,8 +97,8 @@ Plug 'radenling/vim-dispatch-neovim'                                            
 Plug 'wakatime/vim-wakatime'                                                               " Wakatime
 
 " GUI
-Plug 'equalsraf/neovim-gui-shim'
-Plug 'dzhou121/gonvim-fuzzy'
+Plug 'equalsraf/neovim-gui-shim'                                                           " Font support
+Plug 'dzhou121/gonvim-fuzzy'                                                               " Fuzzy finder
 
 call plug#end()
 
@@ -617,7 +621,7 @@ nnoremap <silent> <m-/> :TmuxNavigatePrevious<cr>
 let g:indentLine_enabled = 1
 let g:vim_json_syntax_conceal = 0
 augroup TerminalStuff
-   au! " Clear old autocommands
+  au!
   autocmd TermOpen * setlocal nonumber norelativenumber
   autocmd TermOpen * IndentLinesDisable
 augroup END
@@ -786,3 +790,12 @@ au FileType go nnoremap <silent>,, :GoFmt<cr>
 
 " Vim docs
 au FileType vim nmap K  :help <c-r><c-w><cr>
+
+" JSX Typescript
+autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.jsx
+hi xmlTagName guifg=#59ACE5 ctermfg=118
+hi xmlTag guifg=#59ACE5 ctermfg=118
+hi xmlEndTag guifg=#2974a1 ctermfg=118
+
+" Emmet
+let user_emmet_expandabbr_key = '<m-i>'
