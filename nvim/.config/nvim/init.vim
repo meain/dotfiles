@@ -14,6 +14,8 @@ Plug 'osyo-manga/vim-over', { 'on': 'OverCommandLine' }                         
 Plug 'haya14busa/incsearch.vim'                                                            " Better search
 Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }                                       " Hyper focus editing
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }                                                 " Centerify
+Plug 'Valloric/MatchTagAlways'                                                             " Highlight enclosing tags
+Plug 'meain/HiCursorWords'                                                                 " Highlight word under cursor
 
 " Added functinality
 Plug 'mhinz/vim-startify'                                                                  " A fancy start page for vim
@@ -36,6 +38,7 @@ Plug 'sjl/gundo.vim', { 'on': ['GundoShow', 'GundoToggle'] }                    
 Plug 'rizzatti/dash.vim', { 'on': 'Dash' }                                                 " Search Dash docs
 Plug 'davidbeckingsale/writegood.vim', { 'on': ['WritegoodEnable', 'WritegoodToggle'] }    " Better writing mode
 Plug 'mattn/emmet-vim'                                                                     " Emmet
+Plug 'alvan/vim-closetag'                                                                  " Automatically add closing tag
 
 " Code editing enhacements
 Plug 'tpope/vim-sleuth'                                                                    " Automatic indentation setting
@@ -55,7 +58,7 @@ Plug 'osyo-manga/vim-jplus'                                                     
 " Language helpers
 Plug 'sheerun/vim-polyglot'                                                                " Multiple language support
 Plug 'leafgarland/typescript-vim'                                                          " Typescript supprt
-Plug 'peitalin/vim-jsx-typescript'                                                         " JSX syntax
+Plug 'neoclide/vim-jsx-improve'                                                            " Much nicer JSX syntax
 Plug 'tpope/vim-markdown', { 'for': ['md', 'markdown'] }                                   " Better markdown support
 Plug 'davidhalter/jedi-vim', { 'for': ['python'] }                                         " Python helper
 Plug 'fatih/vim-go', { 'for': ['go'] }                                                     " Golang helper
@@ -242,6 +245,13 @@ set guicursor=
 " Completefunc
 autocmd BufEnter * set completefunc=cm#_completefunc
 
+" Oh-my-zsh themes are shell.
+autocmd BufNewFile,BufRead *.zsh-theme set filetype=sh
+
+" Resize panes whenever containing window resized.
+autocmd VimResized * wincmd =
+
+
 
 
 
@@ -372,6 +382,7 @@ nnoremap <silent><leader>o :only<cr>
 autocmd BufRead,BufNewFile *.md setlocal spell
 autocmd BufRead,BufNewFile *.org setlocal spell
 autocmd BufRead,BufNewFile *.txt setlocal spell
+autocmd FileType gitcommit setlocal spell
 autocmd FileType help setlocal nospell
 set complete+=kspell
 function! FixLastSpellingError()
@@ -608,6 +619,7 @@ let g:ale_linters = {
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%severity%][%linter%] %s '
+let g:ale_lint_on_enter = 0
 
 " Vim-Tmux navigator
 let g:tmux_navigator_no_mappings = 1
@@ -799,3 +811,19 @@ hi xmlEndTag guifg=#2974a1 ctermfg=118
 
 " Emmet
 let user_emmet_expandabbr_key = '<m-i>'
+
+" CloseTag
+let g:closetag_filenames = '*.html,*.xhtml,*.xml,*.js,*.html.erb,*.md'
+" let g:closetag_xhtml_filenames = '*.xhtml,*.jsx'
+
+" MatchTagAlways
+let g:mta_filetypes = {
+    \ 'html' : 1,
+    \ 'xhtml' : 1,
+    \ 'xml' : 1,
+    \ 'jinja' : 1,
+    \ 'javascript.jsx': 1,
+    \}
+
+" HiCursorWords
+let g:HiCursorWords_delay = 200
