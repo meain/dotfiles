@@ -15,6 +15,7 @@ Plug 'haya14busa/incsearch.vim'                                                 
 Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }                                       " Hyper focus editing
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }                                                 " Centerify
 Plug 'Valloric/MatchTagAlways'                                                             " Highlight enclosing tags
+Plug 'meain/HiCursorWords'                                                                 " Highlight word under cursor
 
 " Added functinality
 Plug 'mhinz/vim-startify'                                                                  " A fancy start page for vim
@@ -817,7 +818,6 @@ let user_emmet_expandabbr_key = '<m-i>'
 
 " CloseTag
 let g:closetag_filenames = '*.html,*.xhtml,*.xml,*.js,*.html.erb,*.md'
-" let g:closetag_xhtml_filenames = '*.xhtml,*.jsx'
 
 " MatchTagAlways
 let g:mta_filetypes = {
@@ -827,3 +827,7 @@ let g:mta_filetypes = {
     \ 'jinja' : 1,
     \ 'javascript.jsx': 1,
     \}
+
+" HiCursorWords
+let g:HiCursorWords_delay = 200
+highlight WordUnderTheCursor ctermbg=238 guibg=#444444
