@@ -521,9 +521,9 @@ let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %
 command! -bang History call fzf#vim#history( {'options': ['--query', '!.git/ !.vim/ ', '--no-sort']}, <bang>0)
 command! -bang -nargs=? -complete=dir GFiles
 \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
-nnoremap <silent><M-Enter> :GFiles<cr>
+nnoremap <silent><Enter> :GFiles<cr>
 nnoremap <silent> <leader><Enter> :History<cr>
-nnoremap <silent><Enter> :Buffers<cr>
+nnoremap <silent><M-Enter> :Buffers<cr>
 autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
 nnoremap ,e :FZF<cr>
 command! -bang -nargs=* Ag
