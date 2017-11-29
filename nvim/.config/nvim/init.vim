@@ -39,6 +39,10 @@ Plug 'rizzatti/dash.vim', { 'on': 'Dash' }                                      
 Plug 'davidbeckingsale/writegood.vim', { 'on': ['WritegoodEnable', 'WritegoodToggle'] }    " Better writing mode
 Plug 'mattn/emmet-vim'                                                                     " Emmet
 Plug 'alvan/vim-closetag'                                                                  " Automatically add closing tag
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'yarn install',
+  \ 'for': ['javascript', 'typescript', 'css', 'less',
+  \ 'scss', 'json', 'graphql', 'markdown'] }
 
 " Code editing enhacements
 Plug 'tpope/vim-sleuth'                                                                    " Automatic indentation setting
@@ -803,6 +807,7 @@ au FileType rust nmap <silent><leader>r :Start\ cargo\ run<cr>
 " Autoformat
 nnoremap <silent>,, :Autoformat<cr>
 au FileType go nnoremap <silent>,, :GoFmt<cr>
+au FileType javascript,typescript,css,less,scss,json,graphql,markdown nnoremap <silent>,, :Prettier<cr>
 
 " Vim docs
 au FileType vim nmap K  :help <c-r><c-w><cr>
@@ -831,3 +836,13 @@ let g:mta_filetypes = {
 " HiCursorWords
 let g:HiCursorWords_delay = 200
 highlight WordUnderTheCursor ctermbg=238 guibg=#444444
+
+" Prettier
+let g:prettier#config#print_width = 100
+let g:prettier#config#tab_width = 2
+let g:prettier#config#use_tabs = 'false'
+let g:prettier#config#semi = 'false'
+let g:prettier#config#single_quote = 'true'
+let g:prettier#config#bracket_spacing = 'true'
+let g:prettier#config#jsx_bracket_same_line = 'true'
+let g:prettier#config#trailing_comma = 'es5'
