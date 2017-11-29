@@ -15,7 +15,6 @@ Plug 'haya14busa/incsearch.vim'                                                 
 Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }                                       " Hyper focus editing
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }                                                 " Centerify
 Plug 'Valloric/MatchTagAlways'                                                             " Highlight enclosing tags
-Plug 'meain/HiCursorWords'                                                                 " Highlight word under cursor
 
 " Added functinality
 Plug 'mhinz/vim-startify'                                                                  " A fancy start page for vim
@@ -57,6 +56,7 @@ Plug 'osyo-manga/vim-jplus'                                                     
 
 " Language helpers
 Plug 'sheerun/vim-polyglot'                                                                " Multiple language support
+Plug 'othree/yajs.vim'
 Plug 'leafgarland/typescript-vim'                                                          " Typescript supprt
 Plug 'neoclide/vim-jsx-improve'                                                            " Much nicer JSX syntax
 Plug 'tpope/vim-markdown', { 'for': ['md', 'markdown'] }                                   " Better markdown support
@@ -250,6 +250,9 @@ autocmd BufNewFile,BufRead *.zsh-theme set filetype=sh
 
 " Resize panes whenever containing window resized.
 autocmd VimResized * wincmd =
+
+" Make sure it is javascript
+augroup filetype javascript syntax=javascript
 
 
 
@@ -824,6 +827,3 @@ let g:mta_filetypes = {
     \ 'jinja' : 1,
     \ 'javascript.jsx': 1,
     \}
-
-" HiCursorWords
-let g:HiCursorWords_delay = 200
