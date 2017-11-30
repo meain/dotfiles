@@ -16,7 +16,7 @@ prompt_git() {
   local PL_BRANCH_CHAR
   () {
     local LC_ALL="" LC_CTYPE="en_US.UTF-8"
-    PL_BRANCH_CHAR=$'\ue0a0'         # 
+    PL_BRANCH_CHAR=$'\ue725'
   }
   local ref dirty mode repo_path
   repo_path=$(git rev-parse --git-dir 2>/dev/null)
@@ -44,8 +44,8 @@ prompt_git() {
     zstyle ':vcs_info:*' enable git
     zstyle ':vcs_info:*' get-revision true
     zstyle ':vcs_info:*' check-for-changes true
-    zstyle ':vcs_info:*' stagedstr '⧾'
-    zstyle ':vcs_info:*' unstagedstr '⨯'
+    zstyle ':vcs_info:*' stagedstr '\uf055'
+    zstyle ':vcs_info:*' unstagedstr '\uf057'
     zstyle ':vcs_info:*' formats ' %u%c'
     zstyle ':vcs_info:*' actionformats ' %u%c'
     vcs_info
@@ -54,13 +54,16 @@ prompt_git() {
 }
 
 # э࿖∞⋈⧁⧋⧓⧥⨱⨳⨴⨵⩘⩟⩨⩩⩸  ⨯⧾⧿
+SH_SIGN=$'\ue601'
 PROMPT=' 
-%{$fg_bold[black]%}%(?,%{$bg[white]%},%{$bg[red]%}) ⨱ %{$reset_color%} '
+%(?,%{$fg[white]%},%{$fg[red]%}) $SH_SIGN %{$reset_color%} '
 RPROMPT="$(prompt_git)   %{$reset_color%} %{$bg[white]%}%{$fg[black]%}  %2~  %{$reset_color%}"
 # Vi mode display
 function zle-line-init zle-keymap-select {
-    VIM_PROMPT="%{$fg_bold[blue]%}:%{$reset_color%}"
-    RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}$(prompt_git)   %{$reset_color%} %{$bg[white]%}%{$fg[black]%}  %2~  %{$reset_color%}"
+    V_SIGN=$'\ue7c5'
+    F_SIGN=$'\ue613'
+    VIM_PROMPT="%{$fg_bold[blue]%} $V_SIGN %{$reset_color%}"
+    RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}$(prompt_git) %{$reset_color%} %{$bg[white]%}%{$fg[black]%} $F_SIGN  %2~  %{$reset_color%}"
     zle reset-prompt
 }
 zle -N zle-line-init
