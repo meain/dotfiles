@@ -16,6 +16,7 @@ Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }                            
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }                                                 " Centerify
 Plug 'Valloric/MatchTagAlways'                                                             " Highlight enclosing tags
 Plug 'meain/HiCursorWords'                                                                 " Highlight word under cursor
+Plug 'cj/vim-webdevicons'
 
 " Added functinality
 Plug 'mhinz/vim-startify'                                                                  " A fancy start page for vim
@@ -537,7 +538,6 @@ command! -bang -nargs=* Ag
   \                 <bang>0 ? fzf#vim#with_preview('up:60%')
   \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
   \                 <bang>0)
-nnoremap <leader>f :GFiles<CR>
 nnoremap <leader>c :Commands<CR>
 nnoremap <leader>b :Buffers<cr>
 let g:fzf_layout = { 'down': '~40%' }  " Default fzf layout
@@ -679,7 +679,9 @@ let g:lightline = {
       \   'cutpoint': '%<'
       \ },
       \ 'component_function': {
-      \   'gitbranch': 'fugitive#head'
+      \   'gitbranch': 'fugitive#head',
+      \   'filetype': 'SignFiletype',
+      \   'fileformat': 'SignFileformat',
       \ },
       \ 'component_expand': {
       \   'linter_warnings': 'LightlineLinterWarnings',
@@ -718,6 +720,14 @@ function! LightlineLinterOK() abort
   let l:all_errors = l:counts.error + l:counts.style_error
   let l:all_non_errors = l:counts.total - l:all_errors
   return l:counts.total == 0 ? 'OK' : ''
+endfunction
+
+function! SignFiletype()
+  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+endfunction
+
+function! SignFileformat()
+  return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
 endfunction
 
 " Sleuth auto indent
@@ -851,3 +861,9 @@ let g:prettier#config#trailing_comma = 'es5'
 
 " SuperTab
 let g:SuperTabDefaultCompletionType = "<c-n>"
+
+" WebDevIcons
+let g:Powerline_symbols = 'unicode'
+let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+
+
