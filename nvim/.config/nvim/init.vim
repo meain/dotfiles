@@ -341,6 +341,9 @@ tnoremap <Leader><Esc> <C-\><C-n>
 " Copy entire file content
 nnoremap yp mzggVG"+y`z
 
+" Quick suspend
+nnoremap <silent><M-Enter> <c-z>
+
 
 
 
@@ -527,7 +530,6 @@ command! -bang -nargs=? -complete=dir GFiles
 \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
 nnoremap <silent><Enter> :GFiles<cr>
 nnoremap <silent> <leader><Enter> :History<cr>
-nnoremap <silent><M-Enter> :Buffers<cr>
 autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
 nnoremap ,e :FZF<cr>
 command! -bang -nargs=* Ag

@@ -9,6 +9,8 @@ alias c='clear'
 alias q="exit"
 alias :q="exit"
 
+alias f='fg'
+
 alias mkdir='mkdir -p'
 
 alias rm='trash'

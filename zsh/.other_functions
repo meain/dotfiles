@@ -22,7 +22,6 @@ alias sourcefuck='eval $(thefuck --alias)'
 get_prev_command(){
     history | tail "-$1"  | head "-$2" | awk '{ $1=$2=$3=""; print $0 }' | sed s:^...::g
 }
-alias f='!!'
 alias ff='$(get_prev_command 2 1)'
 alias fff='$(get_prev_command 3 2)'
 
