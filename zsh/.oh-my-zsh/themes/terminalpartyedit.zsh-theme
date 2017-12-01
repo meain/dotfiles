@@ -54,14 +54,14 @@ prompt_git() {
 }
 
 # э࿖∞⋈⧁⧋⧓⧥⨱⨳⨴⨵⩘⩟⩨⩩⩸  ⨯⧾⧿
-SH_SIGN=$'\ue601'
+SH_SIGN=$'\uf040'
+V_SIGN=$'\ue7c5'
+F_SIGN=$'\uf413'
 PROMPT=' 
 %(?,%{$fg[white]%},%{$fg[red]%}) $SH_SIGN %{$reset_color%} '
-RPROMPT="$(prompt_git)   %{$reset_color%} %{$bg[white]%}%{$fg[black]%}  %2~  %{$reset_color%}"
+RPROMPT="$(prompt_git)   %{$reset_color%} %{$bg[white]%}%{$fg[black]%} $F_SIGN   %2~  %{$reset_color%}"
 # Vi mode display
 function zle-line-init zle-keymap-select {
-    V_SIGN=$'\ue7c5'
-    F_SIGN=$'\ue613'
     VIM_PROMPT="%{$fg_bold[blue]%} $V_SIGN %{$reset_color%}"
     RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}$(prompt_git) %{$reset_color%} %{$bg[white]%}%{$fg[black]%} $F_SIGN  %2~  %{$reset_color%}"
     zle reset-prompt

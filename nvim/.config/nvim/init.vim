@@ -679,7 +679,7 @@ let g:lightline = {
       \   'cutpoint': '%<'
       \ },
       \ 'component_function': {
-      \   'gitbranch': 'fugitive#head',
+      \   'gitbranch': 'GitBranch',
       \   'filetype': 'SignFiletype',
       \   'fileformat': 'SignFileformat',
       \ },
@@ -693,33 +693,37 @@ let g:lightline = {
       \   'linter_warnings': 'warning',
       \   'linter_errors': 'error'
       \ },
-      \   'mode_map': {
-      \     'n': 'no', 'i': 'in', 'R': 're', 'v': 'vs', 'V': 'vl', "\<C-v>": 'vb',
-      \     'c': 'co', 's': 'se', 'S': 'sl', "\<C-s>": 'sl', 't': 'te'
+      \'mode_map': {
+      \   'n': '! ', 'i': '! ', 'R': ' ', 'v': '! ', 'V': '| ', "\<C-v>": ': ',
+      \   'c': '! ', 's': 'se', 'S': 'sl', "\<C-s>": 'sl', 't': '! '
       \ },
       \ 'separator': { 'left': '', 'right': '' },
       \ 'subseparator': { 'left': '', 'right': '' },
       \ }
 
+function! GitBranch() abort
+    return ' ' . fugitive#head()
+endfunction
+
 function! LightlineLinterWarnings() abort
   let l:counts = ale#statusline#Count(bufnr(''))
   let l:all_errors = l:counts.error + l:counts.style_error
   let l:all_non_errors = l:counts.total - l:all_errors
-  return l:counts.total == 0 ? '' : printf('%d', all_non_errors)
+  return l:counts.total == 0 ? '' : printf(' %d', all_non_errors)
 endfunction
 
 function! LightlineLinterErrors() abort
   let l:counts = ale#statusline#Count(bufnr(''))
   let l:all_errors = l:counts.error + l:counts.style_error
   let l:all_non_errors = l:counts.total - l:all_errors
-  return l:counts.total == 0 ? '' : printf('%d', all_errors)
+  return l:counts.total == 0 ? '' : printf(' %d', all_errors)
 endfunction
 
 function! LightlineLinterOK() abort
   let l:counts = ale#statusline#Count(bufnr(''))
   let l:all_errors = l:counts.error + l:counts.style_error
   let l:all_non_errors = l:counts.total - l:all_errors
-  return l:counts.total == 0 ? 'OK' : ''
+  return l:counts.total == 0 ? ' ' : ''
 endfunction
 
 function! SignFiletype()
