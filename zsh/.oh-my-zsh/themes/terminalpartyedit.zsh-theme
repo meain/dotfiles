@@ -54,7 +54,7 @@ prompt_git() {
 }
 
 # э࿖∞⋈⧁⧋⧓⧥⨱⨳⨴⨵⩘⩟⩨⩩⩸  ⨯⧾⧿
-SH_SIGN=$'\uf040'
+SH_SIGN=$'\ue601'
 V_SIGN=$'\ue7c5'
 F_SIGN=$'\uf413'
 PROMPT=' 
