@@ -50,16 +50,18 @@ This will symlink the necessary files
 
 ## Screenshots
 
-### Shell
-The numbers on right are `time`, `battery %`
-
-![shell](http://i.imgur.com/zigaSP1.png)
+### Zsh
+![](https://i.imgur.com/oh4DY5e.png)
 
 ### Vim
-![Vim](http://i.imgur.com/356JYdT.png)
+![](https://i.imgur.com/sPVLbzI.png)
 
-### Emacs
-![Emacs](http://i.imgur.com/6UOu93k.png)
+### Tmux
+![](https://i.imgur.com/YBTlVjK.png)
 
-### i3
-![i3](http://i.imgur.com/nLtPlEC.png)
+### irssi
+![](https://i.imgur.com/08iF4Ts.png)
+
+### Colors
+![](https://i.imgur.com/E9qgsHj.png)
+
