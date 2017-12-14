@@ -16,7 +16,7 @@ Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }                            
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }                                                 " Centerify
 Plug 'Valloric/MatchTagAlways'                                                             " Highlight enclosing tags
 Plug 'meain/HiCursorWords'                                                                 " Highlight word under cursor
-Plug 'cj/vim-webdevicons'
+Plug 'ryanoasis/vim-devicons'                                                              " Add devicon support
 
 " Added functinality
 Plug 'mhinz/vim-startify'                                                                  " A fancy start page for vim
@@ -143,6 +143,9 @@ set confirm
 
 " Disable wrapping
 set nowrap
+
+" Set hidden
+set hidden
 
 " Better backup, swap and undos storage
 set directory=~/.vim/dirs/tmp     " directory to place swap files in
@@ -516,6 +519,9 @@ endfunction
 nnoremap <silent><leader>u :call ScratchToggle()<cr>
 
 
+" Gonvim
+let g:gonvim_draw_split = 0
+
 
 
 
@@ -626,6 +632,7 @@ let g:ale_linters = {
 \   'javascript': ['eslint'],
 \   'python': ['flake8']
 \}
+let g:ale_virtualenv_dir_names = ['~/.virtual_envs']
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%severity%][%linter%] %s '
@@ -694,7 +701,7 @@ let g:lightline = {
       \   'linter_errors': 'error'
       \ },
       \'mode_map': {
-      \   'n': '! ', 'i': '! ', 'R': ' ', 'v': '! ', 'V': '| ', "\<C-v>": ': ',
+      \   'n': '! ', 'i': '! ', 'R': '! ', 'v': '! ', 'V': '| ', "\<C-v>": ': ',
       \   'c': '! ', 's': 'se', 'S': 'sl', "\<C-s>": 'sl', 't': '! '
       \ },
       \ 'separator': { 'left': '', 'right': '' },
@@ -830,9 +837,9 @@ au FileType vim nmap K  :help <c-r><c-w><cr>
 
 " JSX Typescript
 autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.jsx
-hi xmlTagName guifg=#59ACE5 ctermfg=118
-hi xmlTag guifg=#59ACE5 ctermfg=118
-hi xmlEndTag guifg=#2974a1 ctermfg=118
+hi xmlTagName guifg=#87d787 ctermfg=114
+hi xmlTag guifg=#87d787 ctermfg=114
+hi xmlEndTag guifg=#87d787 ctermfg=114
 
 " Emmet
 let user_emmet_expandabbr_key = '<m-i>'
@@ -870,4 +877,12 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 let g:Powerline_symbols = 'unicode'
 let g:WebDevIconsUnicodeDecorateFolderNodes = 1
 
-
+" Language server protocol
+let g:LanguageClient_autoStart = 1
+let g:LanguageClient_serverCommands = {
+    \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+    \ 'javascript': ['/opt/javascript-typescript-langserver/lib/language-server-stdio.js'],
+    \ }
+nnoremap <silent> gd :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> ge :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
