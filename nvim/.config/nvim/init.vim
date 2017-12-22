@@ -672,7 +672,8 @@ let g:lightline = {
       \              [ 'filetype' ],
       \              [ 'linter_warnings', 'linter_errors', 'linter_ok'] ],
       \   'left': [ [ 'mode', 'paste' ],
-      \              ['gitbranch', 'filename', 'modified', 'cutpoint' ] ]
+      \             ['gitbranch'],
+      \             ['filename', 'modified', 'cutpoint' ] ]
       \ },
       \   'tabline': {
       \     'left': [ [ 'tabs' ] ],
@@ -687,6 +688,7 @@ let g:lightline = {
       \ },
       \ 'component_function': {
       \   'gitbranch': 'GitBranch',
+      \   'percent': 'LinePercent',
       \   'filetype': 'SignFiletype',
       \   'fileformat': 'SignFileformat',
       \ },
@@ -709,7 +711,11 @@ let g:lightline = {
       \ }
 
 function! GitBranch() abort
-    return ' ' . fugitive#head()
+    return strlen(fugitive#head()) ? ' ' . fugitive#head() : ''
+endfunction
+
+function! LinePercent()
+    return line('.') * 100 / line('$') . '%'
 endfunction
 
 function! LightlineLinterWarnings() abort
@@ -722,15 +728,12 @@ endfunction
 function! LightlineLinterErrors() abort
   let l:counts = ale#statusline#Count(bufnr(''))
   let l:all_errors = l:counts.error + l:counts.style_error
-  let l:all_non_errors = l:counts.total - l:all_errors
   return l:counts.total == 0 ? '' : printf(' %d', all_errors)
 endfunction
 
 function! LightlineLinterOK() abort
   let l:counts = ale#statusline#Count(bufnr(''))
-  let l:all_errors = l:counts.error + l:counts.style_error
-  let l:all_non_errors = l:counts.total - l:all_errors
-  return l:counts.total == 0 ? ' ' : ''
+  return l:counts.total == 0 ? '' : ''
 endfunction
 
 function! SignFiletype()
