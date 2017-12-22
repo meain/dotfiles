@@ -9,3 +9,5 @@ alias cd='cdls'
 rmd () {
   pandoc $1 | lynx -stdin
 }
+
+alias readme='rmd README.md'
