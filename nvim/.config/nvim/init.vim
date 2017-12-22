@@ -21,8 +21,8 @@ Plug 'ryanoasis/vim-devicons'                                                   
 " Added functinality
 Plug 'mhinz/vim-startify'                                                                  " A fancy start page for vim
 Plug 'unblevable/quick-scope'                                                              " Better f and d
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }                          " Fzf for vim
-Plug 'junegunn/fzf.vim'                                                                    " fzf for vim
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }                          " Fzf
+Plug 'junegunn/fzf.vim'                                                                    " Fzf for vim
 Plug 'gregsexton/gitv', {'on': ['Gitv']}                                                   " Magit like git interface
 Plug 'christoomey/vim-tmux-navigator'                                                      " Seamless navigation between vim and tmux
 Plug 'Rykka/colorv.vim', { 'on': 'ColorV' }                                                " Color picker, color schemes etc
