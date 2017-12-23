@@ -1,272 +1,109 @@
-#Basic settings
-set $mod Mod4
+# Set modifier key
+set $mod Mod1
+
+# Set font
+font pango:Monaco for Powerline 11
+
+# no border
+for_window [class="^.*"] border pixel 1
+
+# use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
-set $term termite
-# set $screencast  ffmpeg -y -f x11grab -video_size 1280x800 -i :0.0 -f alsa -i default -c:v ffvhuff -r 30 -c:a flac output.mkv
-# set $audio ffmpeg -f alsa -i default -c:a flac -y output.flac
-set $browser chromium
-font pango:monaco, FontAwesome 11
 
-#The wifi manager applet:
-exec --no-startup-id nm-applet
-# start flux
-exec --no-startup-id fluxgui
-# start oneko
-# exec --no-startup-id oneko
-# start guake
-exec --no-startup-id guake
-# start whatpulse
-exec --no-startup-id whatpulse --delaystartup
-# start chromium
-exec chromium
-# fix trackpad issues
-exec --no-startup-id sh ~/bin/fixtouchpad
-#For transparency:
-#exec --no-startup-id xcompmgr -slt
-#This runs the script that renews the config shortcuts:
-# exec_always --no-startup-id python ~/.config/Scripts/shortcuts.py
+# start a terminal
+bindsym $mod+Return exec i3-sensible-terminal
 
-exec_always --no-startup-id feh --bg-scale ~/Downloads/wallhaven-186642.jpg
+# kill focused window
+bindsym $mod+semicolon kill
 
-# Don't change windows based on mouse position
-# focus_follows_mouse no
+# start rofi
+bindsym $mod+o exec rofi -show run -font 'Monaco 15' -opacity 50 -lines 25 -eh 1 -line-margin 5 -hide-scrollbar -width 100 -padding 250
 
-#Needed for i3-gaps
-hide_edge_borders both
-for_window [class="^.*"] border pixel 0 
-gaps inner 10
-gaps outer 10
-
-
-#MUSIC:
-##For moc:
-set $music cmus
-# set $pause --no-startup-id mocp -G 
-# set $next --no-startup-id mocp -f
-# set $prev --no-startup-id mocp -r
-# set $lilfor --no-startup-id mocp -k 10
-# set $bigfor --no-startup-id mocp -k 120
-# set $lilbak --no-startup-id mocp -k -10
-# set $bigbak --no-startup-id mocp -k -120
-# set $beg --no-startup-id mocp -j 0%
-
-
-##For cmus:
-#set $music cmus
-#set $pause --no-startup-id cmus-remote -u
-#set $next --no-startup-id cmus-remote -n
-#set $prev --no-startup-id cmus-remote -r
-#set $lilfor --no-startup-id cmus-remote -k +10
-#set $bigfor --no-startup-id cmus-remote -k +120
-#set $lilbak --no-startup-id cmus-remote -k -10
-#set $bigbak --no-startup-id cmus-remote -k -120
-#set $beg --no-startup-id cmus-remote -k 00:00:00
-
-
-bar {
-colors {
-focused_workspace #000000 #000000 #ebdbb2
-inactive_workspace #000000 #000000 #928374
-active_workspace #000000 #000000 #008080
-urgent_workspace #8B0000 #8B0000 #000000
-     }
-     status_command ~/.config/i3/bumblebee-status/bumblebee-status -m traffic pasink caffeine battery datetime -p disk.path=/home datetime.format="%a %b%d %I:%M" -t gruvbox-powerline
-     position top
-     strip_workspace_numbers yes
- }
-
-
-bindsym $mod+Return  exec $term
-bindsym $mod+Shift+Return  exec $term -e tmux
-
-bindsym $mod+Shift+space  floating toggle
-# bindsym $mod+space focus mode_toggle
-# bindsym $mod+space exec rofi -combi-modi window,run -show combi -font 'Monaco 12' -opacity 50 -lines 25 -eh 1 -line-margin 5 -hide-scrollbar -width 100 -padding 250
-bindsym $mod+space workspace back_and_forth
-
-bindsym $mod+Escape workspace prev
-bindsym $mod+Shift+Escape  exec i3-msg exit
-
-#bindsym $mod+BackSpace exec $term
-# bindsym $mod+Shift+BackSpace exec sudo reboot
-
-bindsym $mod+Tab workspace back_and_forth
-
-#bindsym $mod+grave
-#bindsym $mod+asciitilde
-
-#bindsym $mod+XF86Back
-#bindsym $mod+Shift+XF86Back
-
-#bindsym $mod+XF86Forward
-#bindsym $mod+Shift+XF86Forward 
-#END
-
-#Letter Keys
-
-bindsym $mod+q kill
-bindsym $mod+Shift+q kill
-
-bindsym $mod+w exec --no-startup-id $browser
-
-bindsym $mod+e exec $term -e "mutt"
-# bindsym $mod+Shift+e exec --no-startup-id icedove ; exec --no-startup-id thunderbird
-
-bindsym $mod+r  exec $term -e ranger
-# bindsym $mod+Shift+r restart
-
-bindsym $mod+t split toggle
-bindsym $mod+Shift+t gaps inner current set 15; gaps outer current set 15
-
-# bindsym $mod+y exec $term -e "calcurse -D $HOME/.config/calcurse/"
-bindsym $mod+Shift+y resize shrink width 10 px or 10ppt
-
-# bindsym $mod+i  exec $term -e htop
-bindsym $mod+Shift+i resize grow height 10 px or 10 ppt
-
-# bindsym $mod+o exec --no-startup-id $beg
-bindsym $mod+Shift+o resize grow width 10 px or 10 ppt
-
-# bindsym $mod+p exec $pause
-# bindsym $mod+Shift+p exec pinta
-
-# bindsym $mod+a exec $term -e qalc
-# bindsym $mod+Shift+a exec pavucontrol
-
-bindsym $mod+s gaps inner current plus 5
-bindsym $mod+Shift+s gaps inner current minus 5
-
-bindsym $mod+d exec rofi -show run -font 'Monaco 20' -opacity 50 -lines 25 -eh 1 -line-margin 5 -hide-scrollbar -width 100 -padding 250
-# bindsym $mod+a exec rofi -combi-modi window,run -show combi -font 'Monaco 12' -opacity 50 -lines 25 -eh 1 -line-margin 5 -hide-scrollbar -width 100 -padding 250
-bindsym $mod+Shift+d gaps inner current set 0; gaps outer current set 0
-
-bindsym $mod+f fullscreen toggle
-# bindsym $mod+Shift+f exec --no-startup-id syncthing -home="~/.syncthing"
-
-# bindsym $mod+g workspace prev
-# bindsym $mod+Shift+g exec --no-startup-id gimp; workspace $ws5
-
+# change focus
 bindsym $mod+h focus left
-bindsym $mod+Shift+h move left 30
-
 bindsym $mod+j focus down
-bindsym $mod+Shift+j move down 30
-
 bindsym $mod+k focus up
-bindsym $mod+Shift+k move up 30
-
 bindsym $mod+l focus right
-bindsym $mod+Shift+l move right 30
 
-bindsym $mod+z gaps outer current plus 5
-bindsym $mod+Shift+z gaps outer current minus 5
-
-bindsym $mod+x exec --no-startup-id ~/.config/i3/lock.sh
-# bindsym $mod+Shift+x exec shutdown now
-
-bindsym $mod+c exec $term -e irssi
-# bindsym $mod+Shift+c exec --no-startup-id audacity
-
-bindsym $mod+v exec $term -e cava
-# bindsym $mod+Shift+v exec --no-startup-id projectM-pulseaudio
-
-# bindsym $mod+b exec $prev
-# bindsym $mod+Shift+b exec --no-startup-id blender; workspace $ws6
-
-# bindsym $mod+n exec $next
-# bindsym $mod+Shift+n exec $term -e newsbeuter
-
-bindsym $mod+m  exec $term -e $music
-# bindsym $mod+Shift+m exec --no-startup-id pamixer -t
-
-bindsym $mod+semicolon workspace next
-bindsym $mod+apostrophe split horizontal ;; exec $term
-bindsym $mod+slash split vertical ;; exec $term
-bindsym $mod+Shift+slash kill
-bindsym $mod+backslash workspace back_and_forth
-#END
-
-#Function Buttons
-# bindsym F1 exec --no-startup-id echo "help" > /dev/null
-#bindsym F2
-bindsym F3 exec --no-startup-id scrot img.png -e "mv ./img.png ~/Pictures/Screenshots/$(date|sed 's: ::g'|sed 's:\:::g').png"
-#bindsym F4
-#bindsym F5
-#bindsym F6
-bindsym F7 layout stacking
-bindsym F8 layout toggle split
-bindsym F9 layout tabbed
-#bindsym F10
-# bindsym F11 fullscreen toggle
-#bindsym F12
-
-#Arrow Keys
+# alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
-bindsym $mod+Right  focus right
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
-#END
 
-#Workspaces
+# split in horizontal orientation
+bindsym $mod+v split h
 
-set $ws1 "1:(1:)"
-set $ws2 "2:(2:)"
-set $ws3 "3:(3:)"
-set $ws4 "4:(4:)"
-set $ws5 "5:(5:)"
-set $ws6 "6:(6:)"
-set $ws7 "7:(7:)"
-set $ws8 "8:(8:)"
-set $ws9 "9:(9:)"
-set $ws10 "0:(0:)"
+# split in vertical orientation
+bindsym $mod+b split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space workspace back_and_forth
+
+# change focus between tiling / floating windows
+# bindsym $mod+Shift+space focus mode_toggle
+
+# move the currently focused window to the scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym $mod+minus scratchpad show
 
 # switch to workspace
-bindsym $mod+1 workspace $ws1
-bindsym $mod+2 workspace $ws2
-bindsym $mod+3 workspace $ws3
-bindsym $mod+4 workspace $ws4
-bindsym $mod+5 workspace $ws5
-bindsym $mod+6 workspace $ws6
-bindsym $mod+7 workspace $ws7
-bindsym $mod+8 workspace $ws8
-bindsym $mod+9 workspace $ws9
-bindsym $mod+0 workspace $ws10
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace $ws1
-bindsym $mod+Shift+2 move container to workspace $ws2
-bindsym $mod+Shift+3 move container to workspace $ws3
-bindsym $mod+Shift+4 move container to workspace $ws4
-bindsym $mod+Shift+5 move container to workspace $ws5
-bindsym $mod+Shift+6 move container to workspace $ws6
-bindsym $mod+Shift+7 move container to workspace $ws7
-bindsym $mod+Shift+8 move container to workspace $ws8
-bindsym $mod+Shift+9 move container to workspace $ws9
-bindsym $mod+Shift+0 move container to workspace $ws10
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
 
-for_window [class="Chromium"] move to workspace $ws2
-# for_window [class="Icedove"] move to workspace $ws9
-# for_window [class="marble"] move to workspace $ws7
-# for_window [class="Thunderbird"] move to workspace $ws9
-# for_window [class="Iceweasel"] move to workspace $ws2
-# for_window [title="GIMP Startup"] move workspace $ws5
-# for_window [class="Gimp"] move workspace $ws5
-# for_window [window_role="gimp-dock"] floating disable; move left; resize shrink width 50 px or 50ppt
-# for_window [window_role="gimp-toolbox"] floating disable; move right; resize grow width 30 px or 30ppt
-# for_window [window_role="tr-main"] move to workspace $ws8
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
-bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -D pulse sset Master 5%+
-bindsym XF86AudioLowerVolume exec --no-startup-id amixer -D pulse sset Master 5%-
-bindsym XF86AudioMute exec --no-startup-id amixer -D pulse sset Master mute
-
-#kebyboard LED  brightness
-bindsym XF86KbdBrightnessDown exec --no-startup-id "sudo /usr/bin/kbd_led_down"
-bindsym XF86KbdBrightnessUp   exec --no-startup-id "sudo /usr/bin/kbd_led_up"
-
-# Sreen brightness controls
-bindsym XF86MonBrightnessUp exec xbacklight -inc 10 # increase screen brightness
-bindsym XF86MonBrightnessDown exec xbacklight -dec 10 # decrease screen brightness
+# run necessary programs
+exec polybar example &
+exec --no-startup-id nitrogen --restore
+exec --no-startup-id nm-applet
+exec --no-startup-id xset r rate 200 45
