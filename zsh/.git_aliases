@@ -31,7 +31,9 @@ alias ggg='git lh|cat'
 alias gggg='git hi|cat'
 
 alias gd='git diff'
-alias gdp="git diff master@{1} master"
+
+alias gdp="gd @{1}.."
+alias glp="gl @{1}.."
 
 alias gcom='git checkout master'
 alias gco='git checkout $(git branch | sed s:^..::g | fzf --height 40% --reverse)'
