@@ -54,6 +54,9 @@ source $HOME/.fzf_aliases
 source $HOME/.common_functions
 source $HOME/.other_functions
 
+# Add thefuck
+eval $(thefuck --alias)
+
 # Github
 eval "$(hub alias -s)"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

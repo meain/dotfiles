@@ -16,7 +16,6 @@ transfer() {
 } 
 
 alias sourceworkon='source /Library/Frameworks/Python.framework/Versions/2.7/bin/virtualenvwrapper.sh'
-alias sourcefuck='eval $(thefuck --alias)'
 
 # run prev commands
 get_prev_command(){
