@@ -104,6 +104,7 @@ Plug 'radenling/vim-dispatch-neovim'                                            
 
 " Others
 Plug 'wakatime/vim-wakatime'                                                               " Wakatime
+Plug 'junegunn/vim-github-dashboard', { 'on': ['GHA', 'GHD']}                              " Github dashboard
 
 " GUI
 Plug 'equalsraf/neovim-gui-shim'                                                           " Font support
@@ -890,3 +891,6 @@ let g:LanguageClient_serverCommands = {
 nnoremap <silent> gd :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> ge :call LanguageClient_textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+
+" Github Dashboard
+let g:github_dashboard = { 'username': 'meain' , 'password': $GITHUB_DASHBOARD_VIM_TOKEN }
