@@ -10,7 +10,7 @@ Plug 'flazz/vim-colorschemes'                                                   
 Plug 'luochen1990/rainbow'                                                                 " Rainbow delim
 Plug 'Yggdroot/indentLine'                                                                 " Show indent
 Plug 'mhinz/vim-signify'                                                                   " Git diff icons in gutter
-Plug 'osyo-manga/vim-over', { 'on': 'OverCommandLine' }                                    " Sleek replace panel
+Plug 'osyo-manga/vim-over'                                                                 " Sleek replace panel
 Plug 'haya14busa/incsearch.vim'                                                            " Better search
 Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }                                       " Hyper focus editing
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }                                                 " Centerify
@@ -894,3 +894,6 @@ nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 
 " Github Dashboard
 let g:github_dashboard = { 'username': 'meain' , 'password': $GITHUB_DASHBOARD_VIM_TOKEN }
+
+" OverCommandLine
+nnoremap : :OverCommandLine<cr>
