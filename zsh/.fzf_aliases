@@ -17,3 +17,8 @@ z() {
   [ $# -gt 0 ] && _z "$*" && return
   cd "$(_z -l 2>&1 | cat | sed 's/^[^ ]*\ *//' | fzf --height 40% --reverse --inline-info +s --tac --query "$*" --preview "ls {}")"
 }
+
+get_command_from_history(){
+    history | fzf | awk '{$1=$2=$3=""; print $0}'
+}
+alias hf='$(get_command_from_history)'
