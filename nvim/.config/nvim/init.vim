@@ -433,6 +433,17 @@ command! -nargs=1 Google call GoogleSearch(<f-args>)
 nnoremap <silent><leader>s :Google <c-r><c-w><cr>
 vnoremap <leader>s y:Google <c-r>"<cr>
 
+" Toggle quickfix
+function! QuickfixToggle()
+    let nr = winnr("$")
+    cwindow
+    let nr2 = winnr("$")
+    if nr == nr2
+        cclose
+    endif
+endfunction
+nnoremap <silent> <leader>i :call QuickfixToggle()<cr>
+
 " Zoom in and out of windows
 function! s:ZoomToggle() abort
     if exists('t:zoomed') && t:zoomed
@@ -829,8 +840,8 @@ autocmd BufEnter *.ts,*.js,*.tsc nnoremap K :TSDoc<cr>
 " Racer
 au FileType rust nmap <silent><leader>d <Plug>(rust-def)
 au FileType rust nmap K <Plug>(rust-doc)
-au FileType rust nmap <silent><leader>a :Dispatch\ cargo\ build<cr>
-au FileType rust nmap <silent><leader>r :Start\ cargo\ run<cr>
+au FileType rust nmap <silent><leader>a :Dispatch cargo build<cr>
+au FileType rust nmap <silent><leader>r :Start cargo run<cr>
 
 " Autoformat
 nnoremap <silent>,, :Autoformat<cr>
