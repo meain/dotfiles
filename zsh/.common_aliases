@@ -6,6 +6,8 @@ alias lr='ls -lRht'
 
 alias c='clear'
 
+alias cl='colorls'
+
 alias q="exit"
 alias :q="exit"
 

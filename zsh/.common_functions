@@ -1,9 +1,9 @@
 # cd > cd&&ls
-function cdls(){
-	cd $1
-	ls
+function list_all() {
+    emulate -L zsh
+    colorls
 }
-alias cd='cdls'
+chpwd_functions=(${chpwd_functions[@]} "list_all")
 
 # view README in shell
 rmd () {
