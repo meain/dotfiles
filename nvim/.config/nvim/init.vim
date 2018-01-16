@@ -847,6 +847,7 @@ au FileType rust nmap <silent><leader>r :Start cargo run<cr>
 nnoremap <silent>,, :Autoformat<cr>
 au FileType go nnoremap <silent>,, :GoFmt<cr>
 au FileType javascript,typescript,css,less,scss,json,graphql,markdown nnoremap <silent>,, :Prettier<cr>
+au FileType elm nnoremap <silent>,, :ElmFormat<cr>
 
 " Vim docs
 au FileType vim nmap K  :help <c-r><c-w><cr>
@@ -908,3 +909,12 @@ let g:github_dashboard = { 'username': 'meain' , 'password': $GITHUB_DASHBOARD_V
 
 " OverCommandLine
 nnoremap : :OverCommandLine<cr>
+
+" Elm
+let g:elm_format_autosave = 1
+let g:elm_format_fail_silently = 1
+let g:elm_setup_keybindings = 1
+autocmd BufEnter *.elm nnoremap <leader>d :ElmShowDocs<cr>
+autocmd BufEnter *.elm nnoremap <leader>r :ElmMake<cr>
+autocmd BufEnter *.elm nnoremap <leader>a :ElmMakeMain<cr>
+autocmd BufEnter *.elm nnoremap <leader>t :ElmTest<cr>
