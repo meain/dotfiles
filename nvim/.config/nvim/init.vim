@@ -14,8 +14,8 @@ Plug 'osyo-manga/vim-over'                                                      
 Plug 'haya14busa/incsearch.vim'                                                            " Better search
 Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }                                       " Hyper focus editing
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }                                                 " Centerify
-Plug 'Valloric/MatchTagAlways'                                                             " Highlight enclosing tags
-Plug 'meain/HiCursorWords'                                                                 " Highlight word under cursor
+" Plug 'Valloric/MatchTagAlways'                                                             " Highlight enclosing tags
+" Plug 'meain/HiCursorWords'                                                                 " Highlight word under cursor
 Plug 'ryanoasis/vim-devicons'                                                              " Add devicon support
 
 " Added functinality
@@ -681,10 +681,8 @@ let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ 'active': {
       \   'right': [ [ 'percent' ],
-      \              [ 'filetype' ],
       \              [ 'linter_warnings', 'linter_errors', 'linter_ok'] ],
       \   'left': [ [ 'mode', 'paste' ],
-      \             ['gitbranch'],
       \             ['filename', 'modified', 'cutpoint' ] ]
       \ },
       \   'tabline': {
