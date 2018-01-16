@@ -313,8 +313,6 @@ nnoremap <Down> V10<c-y><esc>
 nnoremap <Up> V10<c-e><esc>
 
 " Easy buffer switching
-nnoremap <silent><Tab> :bn<cr>
-nnoremap <silent><s-Tab> :bp<cr>
 nnoremap <silent><Leader><Tab> :enew\|:Startify<cr>
 
 " Terminal split jump
