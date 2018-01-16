@@ -838,6 +838,7 @@ let g:LanguageClient_serverCommands = {
     \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
     \ 'javascript': ['javascript-typescript-stdio'],
     \ 'javascript.jsx': ['javascript-typescript-stdio'],
+    \ 'go': ['go-langserver'],
     \ }
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> ge :call LanguageClient_textDocument_definition()<CR>
