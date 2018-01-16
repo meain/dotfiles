@@ -332,6 +332,10 @@ nnoremap yp mzggVG"+y`z
 " Quick suspend
 nnoremap <silent><M-Enter> <c-z>
 
+" Don't change Enter in all buffers
+autocmd FileType help nnoremap <buffer> <Enter> <Enter>
+autocmd FileType vim-plug nnoremap <buffer> <Enter> <Enter>
+
 
 
 
