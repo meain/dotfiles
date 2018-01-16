@@ -860,6 +860,11 @@ hi xmlEndTag guifg=#87d787 ctermfg=114
 
 " Emmet
 let user_emmet_expandabbr_key = '<m-i>'
+let g:user_emmet_settings = {
+\  'javascript.jsx' : {
+\      'extends' : 'jsx',
+\  },
+\}
 
 " CloseTag
 let g:closetag_filenames = '*.html,*.xhtml,*.xml,*.js,*.html.erb,*.md'
