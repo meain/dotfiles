@@ -9,7 +9,6 @@ Plug 'itchyny/lightline.vim'                                                    
 Plug 'flazz/vim-colorschemes'                                                                 " Vim colorscheme
 Plug 'Yggdroot/indentLine'                                                                    " Show indent
 Plug 'mhinz/vim-signify'                                                                      " Git diff icons in gutter
-Plug 'osyo-manga/vim-over', { 'on': 'OverCommandLine' }                                       " Sleek replace panel
 Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }                                          " Hyper focus editing
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }                                                    " Centerify
 
@@ -146,6 +145,9 @@ set mouse=a
 
 " Incremental search
 set incsearch
+
+" Incremental substitution
+set inccommand=split
 
 " Highlighted search results
 set hlsearch
