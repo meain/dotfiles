@@ -295,7 +295,7 @@ nnoremap ' ;
 
 " Use the clipboard for copy and paste
 nnoremap y "+y
-nnoremap Y "+Y
+nnoremap Y "+y$
 nnoremap p "+p`]
 nnoremap P "+P`]
 vnoremap y "+y
