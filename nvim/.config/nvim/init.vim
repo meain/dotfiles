@@ -839,6 +839,7 @@ let g:LanguageClient_serverCommands = {
     \ 'javascript': ['javascript-typescript-stdio'],
     \ 'javascript.jsx': ['javascript-typescript-stdio'],
     \ 'go': ['go-langserver'],
+    \ 'css': ['css-languageserver', '--stdio']
     \ }
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> ge :call LanguageClient_textDocument_definition()<CR>
