@@ -722,7 +722,7 @@ endfunction
 let g:sleuth_automatic = 1
 
 " Polyglot
-let g:polyglot_disabled = ['markdown', 'md', 'latex', 'tex']
+let g:polyglot_disabled = ['markdown', 'md', 'latex', 'tex', 'julia']
 
 " Markdown
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
@@ -836,10 +836,12 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 let g:LanguageClient_autoStart = 1
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
-    \ 'javascript': ['/opt/javascript-typescript-langserver/lib/language-server-stdio.js'],
+    \ 'javascript': ['javascript-typescript-stdio'],
+    \ 'javascript.jsx': ['javascript-typescript-stdio'],
     \ }
-nnoremap <silent> gd :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> ge :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> gr :call LanguageClient_textDocument_references()<CR>
 nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 
 " Github Dashboard
