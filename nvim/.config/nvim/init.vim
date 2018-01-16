@@ -362,8 +362,8 @@ nnoremap <silent><Leader><esc> :normal!za<cr>
 nnoremap <silent><Leader>e :!python %<cr>
 
 " Quick switch tabs
-nnoremap <silent><Leader>n :tabn<cr>
-nnoremap <silent><Leader>p :tabp<cr>
+nnoremap <silent><Leader>m :tabn<cr>
+nnoremap <silent><Leader>n :tabp<cr>
 
 " Only current buffer
 nnoremap <silent><leader>o :only<cr>
@@ -558,7 +558,7 @@ let g:jedi#goto_command = "<leader>d"
 let g:jedi#goto_assignments_command = ""
 let g:jedi#goto_definitions_command = ""
 let g:jedi#documentation_command = "K"
-let g:jedi#usages_command = "<leader>n"
+let g:jedi#usages_command = ""
 let g:jedi#completions_command = ""
 let g:jedi#rename_command = "<leader>r"
 let g:jedi#max_doc_height = 30
