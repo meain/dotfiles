@@ -31,7 +31,7 @@ Plug 'rizzatti/dash.vim', { 'on': 'Dash' }                                      
 Plug 'davidbeckingsale/writegood.vim', { 'on': ['WritegoodEnable', 'WritegoodToggle'] }       " Better writing mode
 Plug 'mattn/emmet-vim'                                                                        " Emmet
 Plug 'alvan/vim-closetag'                                                                     " Automatically add closing tag
-Plug 'jreybert/vimagit'                                                                       " Even better git interface for vim
+Plug 'jreybert/vimagit', { 'on': 'Magit' }                                                    " Even better git interface for vim
 Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
   \ 'for': ['javascript', 'typescript', 'css', 'less',
@@ -261,9 +261,9 @@ augroup filetype javascript syntax=javascript
 ca w!! w !sudo tee "%"
 
 " I am too lazy to take my hands from shift
-command WQ wq
-command Wq wq
-command W w
+command! WQ wq
+command! Wq wq
+command! W w
 
 " Remove whitespace at save
 autocmd BufWritePre *.py,*.vim,*.css,*.js,*.html,*.cpp,*.c,*.java,*.go,*.rs,*.ts,*.cljs,*.clj :%s/\s\+$//e
@@ -329,6 +329,9 @@ nnoremap yp mzggVG"+y`z
 
 " Quick suspend
 nnoremap <silent><M-Enter> <c-z>
+
+" Vim docs
+au FileType vim nmap K :help <c-r><c-w><cr>
 
 " Don't change Enter in all buffers
 autocmd FileType help nnoremap <buffer> <Enter> <Enter>
@@ -454,7 +457,7 @@ endfunction
 nnoremap <c-q> :call MinimizeIfZoomed() \|:SSave zzz \| :qa<cr>y
 
 " Strip trailing whitespaces
-function StripTrailingWhitespace()
+function! StripTrailingWhitespace()
     if !&binary && &filetype != 'diff'
       normal mz
       %s/\s\+$//e
@@ -464,14 +467,14 @@ endfunction
 command! StripTrailingWhitespace :call StripTrailingWhitespace()
 
 " Better marks
-function Marks()
+function! Marks()
     marks abcdefghijklmnopqrstuvwxyz.
     echo 'Jump to mark: '
     let mark=nr2char(getchar())
     redraw
     execute 'normal! `'.mark
 endfunction
-command Marks call Marks()
+command! Marks call Marks()
 nnoremap <silent>`` :call Marks()<cr>
 
 " Json format
@@ -597,11 +600,11 @@ let g:startify_skiplist = [
        \ ]
 
 " Drag Visuals
-vmap <unique> <up>    <Plug>SchleppUp
-vmap <unique> <down>  <Plug>SchleppDown
-vmap <unique> <left>  <Plug>SchleppLeft
-vmap <unique> <right> <Plug>SchleppRight
-vmap <unique> D <Plug>SchleppDup
+vmap <up>    <Plug>SchleppUp
+vmap <down>  <Plug>SchleppDown
+vmap <left>  <Plug>SchleppLeft
+vmap <right> <Plug>SchleppRight
+vmap D <Plug>SchleppDup
 
 " Limelight
 let g:limelight_conceal_ctermfg=0
@@ -798,9 +801,6 @@ nnoremap <silent>,, :Autoformat<cr>
 au FileType go nnoremap <silent>,, :GoFmt<cr>
 au FileType javascript,typescript,css,less,scss,json,graphql,markdown nnoremap <silent>,, :Prettier<cr>
 au FileType elm nnoremap <silent>,, :ElmFormat<cr>
-
-" Vim docs
-au FileType vim nmap K  :help <c-r><c-w><cr>
 
 " JSX Typescript
 autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.jsx
