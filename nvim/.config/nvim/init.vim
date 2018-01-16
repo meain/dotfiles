@@ -31,6 +31,7 @@ Plug 'rizzatti/dash.vim', { 'on': 'Dash' }                                      
 Plug 'davidbeckingsale/writegood.vim', { 'on': ['WritegoodEnable', 'WritegoodToggle'] }       " Better writing mode
 Plug 'mattn/emmet-vim'                                                                        " Emmet
 Plug 'alvan/vim-closetag'                                                                     " Automatically add closing tag
+Plug 'jreybert/vimagit'                                                                       " Even better git interface for vim
 Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
   \ 'for': ['javascript', 'typescript', 'css', 'less',
@@ -150,7 +151,7 @@ set incsearch
 set hlsearch
 
 " Smart search
-set smartcase
+set ignorecase
 
 " Allow plugins by file type (required for plugins!)
 filetype plugin on
