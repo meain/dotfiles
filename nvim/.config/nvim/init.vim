@@ -12,8 +12,6 @@ Plug 'mhinz/vim-signify'                                                        
 Plug 'osyo-manga/vim-over', { 'on': 'OverCommandLine' }                                       " Sleek replace panel
 Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }                                          " Hyper focus editing
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }                                                    " Centerify
-" Plug 'Valloric/MatchTagAlways'                                                              " Highlight enclosing tags
-" Plug 'meain/HiCursorWords'                                                                  " Highlight word under cursor
 
 " Added functinality
 Plug 'mhinz/vim-startify'                                                                     " A fancy start page for vim
@@ -817,19 +815,6 @@ let g:user_emmet_settings = {
 
 " CloseTag
 let g:closetag_filenames = '*.html,*.xhtml,*.xml,*.js,*.html.erb,*.md'
-
-" MatchTagAlways
-" let g:mta_filetypes = {
-"     \ 'html' : 1,
-"     \ 'xhtml' : 1,
-"     \ 'xml' : 1,
-"     \ 'jinja' : 1,
-"     \ 'javascript.jsx': 1,
-"     \}
-
-" HiCursorWords
-" let g:HiCursorWords_delay = 200
-" highlight WordUnderTheCursor ctermbg=238 guibg=#444444
 
 " Prettier
 let g:prettier#config#print_width = 100
