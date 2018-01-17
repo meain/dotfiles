@@ -11,6 +11,7 @@ Plug 'Yggdroot/indentLine'                                                      
 Plug 'mhinz/vim-signify'                                                                      " Git diff icons in gutter
 Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }                                          " Hyper focus editing
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }                                                    " Centerify
+Plug 'easymotion/vim-easymotion'
 
 " Added functinality
 Plug 'mhinz/vim-startify'                                                                     " A fancy start page for vim
@@ -365,9 +366,6 @@ nnoremap <silent><Leader>' <C-o>
 
 " Quick fold and unfold
 nnoremap <silent><Leader><esc> :normal!za<cr>
-
-" Quick excecute python
-nnoremap <silent><Leader>e :!python %<cr>
 
 " Quick switch tabs
 nnoremap <silent><Leader>m :tabn<cr>
@@ -859,3 +857,8 @@ autocmd BufEnter *.elm nnoremap <leader>d :ElmShowDocs<cr>
 autocmd BufEnter *.elm nnoremap <leader>r :ElmMake<cr>
 autocmd BufEnter *.elm nnoremap <leader>a :ElmMakeMain<cr>
 autocmd BufEnter *.elm nnoremap <leader>t :ElmTest<cr>
+
+" Easymotion
+let g:EasyMotion_do_mapping=0
+nmap  <Leader>e <Plug>(easymotion-bd-w)
+nmap  <Tab> <Plug>(easymotion-bd-w)
