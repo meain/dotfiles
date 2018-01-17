@@ -1,12 +1,10 @@
 alias ss='ls -lht'
 alias ll='ls -A -l'
-alias l='ls'
+alias l='colorls'
 alias la='ls -A'
 alias lr='ls -lRht'
 
 alias c='clear'
-
-alias cl='colorls'
 
 alias q="exit"
 alias :q="exit"
@@ -25,5 +23,7 @@ alias o='open .'
 alias p='cd ~/Documents/Projects'
 alias pg='cd ~/Documents/Projects/goworkspace/src/github.com/meain'
 alias df='cd ~/.dotfiles'
+
+alias s='cd ~/Documents/Saama'
 
 alias cleanup="find . -name '*.DS_Store' -type f -ls -delete"
