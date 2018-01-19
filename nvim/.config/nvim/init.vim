@@ -526,13 +526,14 @@ nnoremap <silent><leader>u :call ScratchToggle()<cr>
 "                    ==============================                    "
 
 " Fzf fuzzy search
+let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 let g:fzf_layout = { 'down': '~40%' }
 let g:fzf_tags_command = 'ctags -R'
 let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 command! -bang History call fzf#vim#history( {'options': ['--query', '!.git/ !.vim/ ', '--no-sort']}, <bang>0)
 command! -bang -nargs=? -complete=dir GFiles
 \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
-nnoremap <silent><Enter> :GFiles<cr>
+nnoremap <silent><Enter> :FZF<cr>
 nnoremap <silent> <leader><Enter> :History<cr>
 autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
 nnoremap ,e :FZF<cr>
