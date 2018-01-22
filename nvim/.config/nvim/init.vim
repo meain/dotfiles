@@ -43,7 +43,7 @@ Plug 'tpope/vim-vinegar'                                                        
 Plug 'tpope/vim-fugitive'                                                                     " Git stuff from within vim
 Plug 'majutsushi/tagbar', { 'on' : 'Tagbar' }                                                 " Class/module browser
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }                                            " Undo tree
-Plug 'scrooloose/nerdtree', { 'on': ['NERDTree', 'NERDTreeToggle'] }                          " Nerdtree
+Plug 'scrooloose/nerdtree'                                                                    " Nerdtree
 
 " Morph code
 Plug 'tpope/vim-surround'                                                                     " Surround
@@ -354,8 +354,8 @@ nnoremap <silent><Leader>q :bd<cr>
 nnoremap <silent><Leader>w :w<cr>
 
 " Split like a boss
-nnoremap <silent><Leader>v :vsplit\|:Startify<cr>
-nnoremap <silent><Leader>h :sp\|:Startify<cr>
+nnoremap <silent><Leader>v :vsplit<cr>
+nnoremap <silent><Leader>h :split<cr>
 
 " Clear search highlight
 nnoremap <silent><Leader>/ :nohls<CR>
@@ -595,6 +595,7 @@ highlight StartifyNumber  ctermfg=215
 highlight StartifyPath    ctermfg=245
 highlight StartifySlash   ctermfg=240
 highlight StartifySpecial ctermfg=240
+let g:startify_list_order = ['dir', 'files',  'sessions']
 let g:startify_skiplist = [
        \ '\.png',
        \ '\.jpeg',
@@ -737,17 +738,6 @@ let g:gen_tags#blacklist = ['$HOME']
 " Nvim completion manager
 " let g:cm_matcher = {'module': 'cm_matchers.abbrev_matcher'}
 let g:cm_matcher = {'module': 'cm_matchers.fuzzy_matcher', 'case': 'smartcase'}
-
-" Jplus
-nmap J <Plug>(jplus)
-vmap J <Plug>(jplus)
-nmap <Leader>J <Plug>(jplus-getchar)
-vmap <Leader>J <Plug>(jplus-getchar)
-let g:jplus#config = {
-\	"_" : {
-\		"delimiter_format" : ' %d '
-\	}
-\}
 
 " Vim Router
 let g:rooter_use_lcd = 1
