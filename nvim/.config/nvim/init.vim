@@ -11,7 +11,8 @@ Plug 'Yggdroot/indentLine'                                                      
 Plug 'mhinz/vim-signify'                                                                      " Git diff icons in gutter
 Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }                                          " Hyper focus editing
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }                                                    " Centerify
-Plug 'easymotion/vim-easymotion'
+Plug 'easymotion/vim-easymotion'                                                              " Quick navigation
+Plug 'ap/vim-css-color'                                                                       " Show colors
 
 " Added functinality
 Plug 'mhinz/vim-startify'                                                                     " A fancy start page for vim
