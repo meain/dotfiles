@@ -341,6 +341,9 @@ au FileType vim nmap K :help <c-r><c-w><cr>
 autocmd FileType help nnoremap <buffer> <Enter> <Enter>
 autocmd FileType vim-plug nnoremap <buffer> <Enter> <Enter>
 
+" Shady remaps
+imap ;; <Esc>A;
+
 
 
 

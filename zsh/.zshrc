@@ -73,3 +73,9 @@ bindkey '^h' backward-delete-char
 bindkey '^w' backward-kill-word
 bindkey '^r' history-incremental-search-backward
 export KEYTIMEOUT=1
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/abinsimon/google-cloud-sdk/path.zsh.inc' ]; then source '/Users/abinsimon/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/abinsimon/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/abinsimon/google-cloud-sdk/completion.zsh.inc'; fi
