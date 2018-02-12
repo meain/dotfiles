@@ -233,8 +233,8 @@ let mapleader = "\<Space>"
 let maplocalleader = "\|"
 
 " Smart colorcolumn
-highlight CursorLine guibg=#ffff00 ctermfg=11
-highlight ColorColumn ctermbg=154 ctermfg=0 guibg=#474747 guifg=#000000
+highlight ColorColumn ctermbg=154 ctermfg=0 guibg=#474747 guifg=#ffffff
+highlight CursorLine ctermbg=154 guibg=#474747
 autocmd BufEnter * call matchadd('ColorColumn', '\%160v', 100)
 
 " Better coloring for errors
@@ -530,6 +530,7 @@ nnoremap <silent><leader>u :call ScratchToggle()<cr>
 
 " Flash line
 function! Flash()
+    highlight CursorLine guibg=#ffff00 ctermfg=11
     set cursorline
     redraw
     sleep 50m
@@ -540,6 +541,7 @@ function! Flash()
     redraw
     sleep 50m
     set nocursorline
+    highlight CursorLine ctermbg=154 guibg=#474747
 endfunction
 
 
