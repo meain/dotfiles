@@ -54,6 +54,9 @@ source $HOME/.fzf_aliases
 source $HOME/.common_functions
 source $HOME/.other_functions
 
+# Source colors for ls
+eval $(gdircolors -b $HOME/.dircolors)
+
 # Add thefuck
 eval $(thefuck --alias)
 
