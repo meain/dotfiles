@@ -187,7 +187,7 @@ set noshowmode
 " Show invisibles
 set list
 set listchars=tab:\ \ ,eol:¬,trail:⋅
-autocmd ColorScheme * highlight NonText ctermfg=238 ctermbg=235 guifg=#444444 guibg=#262626
+autocmd ColorScheme * highlight NonText ctermfg=238 guifg=#444444
 
 " Show line breaks
 set showbreak=↪
@@ -218,6 +218,7 @@ set foldnestmax=10
 set termguicolors
 set background=dark
 autocmd ColorScheme janah highlight Normal ctermbg=235 guibg=#262626
+colorscheme redblack
 colorscheme janah
 
 " Use italics for some text
