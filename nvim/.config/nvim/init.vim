@@ -187,7 +187,7 @@ set noshowmode
 " Show invisibles
 set list
 set listchars=tab:\ \ ,eol:¬,trail:⋅
-autocmd ColorScheme * highlight NonText ctermfg=238 ctermbg=235
+autocmd ColorScheme * highlight NonText ctermfg=238 ctermbg=235 guifg=#444444 guibg=#262626
 
 " Show line breaks
 set showbreak=↪
@@ -215,8 +215,9 @@ set foldlevelstart=10
 set foldnestmax=10
 
 " Setting colorscheme
+set termguicolors
 set background=dark
-autocmd ColorScheme janah highlight Normal ctermbg=235
+autocmd ColorScheme janah highlight Normal ctermbg=235 guibg=#262626
 colorscheme janah
 
 " Use italics for some text
@@ -232,12 +233,12 @@ let mapleader = "\<Space>"
 let maplocalleader = "\|"
 
 " Smart colorcolumn
-highlight ColorColumn ctermbg=154 ctermfg=0 guibg=#474747
+highlight ColorColumn ctermbg=154 ctermfg=0 guibg=#474747 guifg=#000000
 autocmd BufEnter * call matchadd('ColorColumn', '\%160v', 100)
 
 " Better coloring for errors
 hi clear SpellBad
-hi SpellBad cterm=underline ctermfg=11 guifg=#ffff00
+hi SpellBad cterm=underline gui=underline ctermfg=11 guifg=#ffff00
 
 " Don't you f'in touch my cursor
 set guicursor=
@@ -332,7 +333,7 @@ tnoremap <Leader><Esc> <C-\><C-n>
 nnoremap yp mzggVG"+y`z
 
 " Quick suspend
-nnoremap <silent><M-Enter> <c-z>
+" nnoremap <silent><M-Enter> <c-z>
 
 " Vim docs
 au FileType vim nmap K :help <c-r><c-w><cr>
@@ -592,13 +593,13 @@ command! Gl normal! :!git vhm<cr>
 
 " Startify
 nnoremap ,l :Startify<cr>
-highlight StartifyBracket ctermfg=240
-highlight StartifyFooter  ctermfg=240
-highlight StartifyHeader  ctermfg=114
-highlight StartifyNumber  ctermfg=215
-highlight StartifyPath    ctermfg=245
-highlight StartifySlash   ctermfg=240
-highlight StartifySpecial ctermfg=240
+highlight StartifyBracket ctermfg=240 guifg=#585858
+highlight StartifyFooter  ctermfg=240 guifg=#585858
+highlight StartifyHeader  ctermfg=114 guifg=#87d787
+highlight StartifyNumber  ctermfg=215 guifg=#ffaf5f
+highlight StartifyPath    ctermfg=245 guifg=#8a8a8a
+highlight StartifySlash   ctermfg=240 guifg=#585858
+highlight StartifySpecial ctermfg=240 guifg=#585858
 let g:startify_list_order = ['dir', 'files',  'sessions']
 let g:startify_skiplist = [
        \ '\.png',
@@ -619,8 +620,8 @@ let g:limelight_conceal_ctermfg=0
 let g:ale_sign_column_always = 1
 let g:ale_sign_error = ':x'
 let g:ale_sign_warning = ':!'
-highlight ALEErrorSign ctermfg=196
-highlight ALEWarningSign ctermfg=226
+highlight ALEErrorSign ctermbg=196 guibg=#ff0000 guifg=#000000 ctermfg=0
+highlight ALEWarningSign ctermbg=226 guibg=#ffff00 guifg=#000000 ctermfg=0
 autocmd User ALELint call lightline#update()
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
 let g:ale_linters = {
@@ -655,9 +656,9 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 " Signfy
-highlight SignifySignAdd    cterm=bold ctermbg=240  ctermfg=119
-highlight SignifySignDelete cterm=bold ctermbg=240  ctermfg=167
-highlight SignifySignChange cterm=bold ctermbg=240  ctermfg=227
+highlight SignifySignAdd    cterm=bold gui=bold  ctermfg=119 guifg=#87ff5f
+highlight SignifySignDelete cterm=bold gui=bold  ctermfg=167 guifg=#d75f5f
+highlight SignifySignChange cterm=bold gui=bold  ctermfg=227 guifg=#ffff5f
 
 " Lightline
 let g:lightline = {
