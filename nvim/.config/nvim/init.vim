@@ -33,6 +33,7 @@ Plug 'davidbeckingsale/writegood.vim', { 'on': ['WritegoodEnable', 'WritegoodTog
 Plug 'mattn/emmet-vim'                                                                        " Emmet
 Plug 'alvan/vim-closetag'                                                                     " Automatically add closing tag
 Plug 'jreybert/vimagit', { 'on': 'Magit' }                                                    " Even better git interface for vim
+Plug 'metakirby5/codi.vim', { 'on': 'Codi' }                                                  " Live code preview
 Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
   \ 'for': ['javascript', 'typescript', 'css', 'less',
@@ -40,11 +41,12 @@ Plug 'prettier/vim-prettier', {
 
 " Code editing enhacements
 Plug 'tpope/vim-sleuth'                                                                       " Automatic indentation setting
-Plug 'tpope/vim-vinegar'                                                                      " Better netrw
 Plug 'tpope/vim-fugitive'                                                                     " Git stuff from within vim
 Plug 'majutsushi/tagbar', { 'on' : 'Tagbar' }                                                 " Class/module browser
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }                                            " Undo tree
 Plug 'scrooloose/nerdtree'                                                                    " Nerdtree
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'tpope/vim-vinegar'                                                                      " Better netrw
 
 " Morph code
 Plug 'tpope/vim-surround'                                                                     " Surround
@@ -880,3 +882,17 @@ autocmd BufEnter *.elm nnoremap <leader>t :ElmTest<cr>
 let g:EasyMotion_do_mapping=0
 nmap  <Leader>e <Plug>(easymotion-bd-w)
 nmap  <Tab> <Plug>(easymotion-bd-w)
+
+" NerdTree
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "!",
+    \ "Staged"    : "|",
+    \ "Untracked" : "-",
+    \ "Renamed"   : ">",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "/",
+    \ "Clean"     : "",
+    \ 'Ignored'   : '☒',
+    \ "Unknown"   : "?"
+    \ }
