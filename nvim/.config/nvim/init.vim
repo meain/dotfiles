@@ -233,6 +233,7 @@ let mapleader = "\<Space>"
 let maplocalleader = "\|"
 
 " Smart colorcolumn
+highlight CursorLine guibg=#ffff00 ctermfg=11
 highlight ColorColumn ctermbg=154 ctermfg=0 guibg=#474747 guifg=#000000
 autocmd BufEnter * call matchadd('ColorColumn', '\%160v', 100)
 
@@ -314,8 +315,8 @@ vnoremap > >gv
 vnoremap < <gv
 
 " Navigaiion
-nnoremap <Down> V10<c-y><esc>
-nnoremap <Up> V10<c-e><esc>
+nnoremap <Down> 10<c-y>:call Flash()<cr>
+nnoremap <Up> 10<c-e>:call Flash()<cr>
 
 " Easy buffer switching
 nnoremap <silent><Leader><Tab> :enew\|:Startify<cr>
@@ -522,6 +523,20 @@ function! ScratchToggle()
   call ScratchOpen()
 endfunction
 nnoremap <silent><leader>u :call ScratchToggle()<cr>
+
+" Flash line
+function! Flash()
+    set cursorline
+    redraw
+    sleep 50m
+    set nocursorline
+    redraw
+    sleep 50m
+    set cursorline
+    redraw
+    sleep 50m
+    set nocursorline
+endfunction
 
 
 
