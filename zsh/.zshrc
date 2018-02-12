@@ -22,7 +22,7 @@ echo ""
 fortune -s | fmt -c -w $COLUMNS
 echo ""
 
-ZSH_THEME="terminalpartyedit"
+ZSH_THEME="sleak"
 DISABLE_AUTO_TITLE="true"
 COMPLETION_WAITING_DOTS="false"
 HIST_STAMPS="dd.mm.yyyy"
@@ -60,9 +60,6 @@ eval $(thefuck --alias)
 # Github
 eval "$(hub alias -s)"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# iTerm
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 # Use vim mode in zsh
 bindkey -v
