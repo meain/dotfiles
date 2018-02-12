@@ -22,7 +22,7 @@ echo ""
 fortune -s | fmt -c -w $COLUMNS
 echo ""
 
-ZSH_THEME="sleak"
+ZSH_THEME="snipe"
 DISABLE_AUTO_TITLE="true"
 COMPLETION_WAITING_DOTS="false"
 HIST_STAMPS="dd.mm.yyyy"
