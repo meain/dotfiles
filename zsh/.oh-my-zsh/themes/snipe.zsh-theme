@@ -9,7 +9,7 @@ function _prompt_git() {
             GIT_COLOR=%{$fg[green]%}
         fi
     fi
-    echo -n " =$GIT_COLOR${ref/refs\/heads\//$PL_BRANCH_CHAR}${vcs_info_msg_0_%% }%{$reset_color%}"
+    echo -n "$GIT_COLOR${ref/refs\/heads\//$PL_BRANCH_CHAR}${vcs_info_msg_0_%% }%{$reset_color%}"
 }
 
 function _git_time_since_commit() {
@@ -37,13 +37,15 @@ function _git_time_since_commit() {
       commit_age="${minutes}m"
     fi
 
-    color=$ZSH_THEME_GIT_TIME_SINCE_COMMIT_NEUTRAL
+    color="%{$fg[white]%}"
     echo "$color$commit_age%{$reset_color%}"
   fi
 }
 
+local _return_status="%(?..%{$fg_bold[red]%})"
+
 PROMPT='
-$(_prompt_git)%{$reset_color%} '
+ ${_return_status}=%{$reset_color%}$(_prompt_git)%{$reset_color%} '
 RPROMPT='%{$fg_bold[black]%}%2~%{$reset_color%} $(_git_time_since_commit)'
 
 function zle-line-init zle-keymap-select {
