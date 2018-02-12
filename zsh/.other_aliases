@@ -10,3 +10,5 @@ alias weather='curl -s wttr.in/thrissur | head -5 | tail -4'
 
 alias stfu="osascript -e 'set volume output muted true'"
 alias pumpitup="osascript -e 'set volume 10'"
+
+alias sourceworkon='source /Library/Frameworks/Python.framework/Versions/2.7/bin/virtualenvwrapper.sh'

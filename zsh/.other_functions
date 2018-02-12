@@ -15,8 +15,6 @@ transfer() {
 	rm -f $tmpfile;
 } 
 
-alias sourceworkon='source /Library/Frameworks/Python.framework/Versions/2.7/bin/virtualenvwrapper.sh'
-
 # run prev commands
 get_prev_command(){
     history | tail "-$1"  | head "-$2" | awk '{ $1=$2=$3=""; print $0 }' | sed s:^...::g
