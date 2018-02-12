@@ -300,6 +300,10 @@ nnoremap / mp/
 nnoremap ; :
 nnoremap ' ;
 
+" Search remaps
+nnoremap n nzz;
+nnoremap N Nzz;
+
 " Use the clipboard for copy and paste
 nnoremap y "+y
 nnoremap Y "+y$
