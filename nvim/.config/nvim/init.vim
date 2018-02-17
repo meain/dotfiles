@@ -45,7 +45,7 @@ Plug 'tpope/vim-fugitive'                                                       
 Plug 'majutsushi/tagbar', { 'on' : 'Tagbar' }                                                 " Class/module browser
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }                                            " Undo tree
 Plug 'scrooloose/nerdtree'                                                                    " Nerdtree
-Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'Xuyuanp/nerdtree-git-plugin'                                                            " Git sign for nerdtree
 Plug 'tpope/vim-vinegar'                                                                      " Better netrw
 
 " Morph code
@@ -64,7 +64,6 @@ Plug 'davidhalter/jedi-vim', { 'for': ['python'] }                              
 Plug 'fatih/vim-go', { 'for': ['go'] }                                                        " Golang helper
 Plug 'sebdah/vim-delve', { 'for': 'go' }                                                      " Debugger for go
 Plug 'racer-rust/vim-racer', { 'for': 'rust' }                                                " Rust support
-Plug 'mhartington/nvim-typescript', { 'for': ['javascript', 'javascript.jsx', 'typescript'] } " Typescript completion
 Plug 'tmhedberg/matchit', { 'for': ['html','xml', 'tex'] }                                    " Match tags for html, xml latex etc
 Plug 'raimon49/requirements.txt.vim', { 'for': 'requirements' }                               " Requirements file
 Plug 'bpietravalle/vim-bolt' , { 'for': ['bolt'] }                                            " Bolt file syntax (firebase)
@@ -77,13 +76,13 @@ Plug 'w0rp/ale'                                                                 
 Plug 'Chiel92/vim-autoformat', { 'on': 'Autoformat' }                                         " Beautify code
 
 " Autocomplete
-Plug 'roxma/nvim-completion-manager'                                                          " Better autocompletion
-Plug 'calebeby/ncm-css', { 'for': 'css' }                                                     " CSS Completion
-Plug 'roxma/nvim-cm-tern',  {'do': 'npm install'}                                             " Completion for js
-Plug 'Shougo/neco-vim', { 'for': 'vim' }                                                      " Vimscript autocomplete
-Plug 'roxma/ncm-github'                                                                       " Github completion
-Plug 'roxma/nvim-cm-racer', { 'for': ['rs', 'rust'] }                                         " Rust autocompletion
-Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }                       " nvim language client (nvim-completion-manager)
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }                                 " Competion framework
+Plug 'Shougo/echodoc.vim'                                                                     " Show signature
+Plug 'Shougo/neco-vim', { 'for': 'vim' }                                                      " Completion for viml
+Plug 'mhartington/nvim-typescript', { 'for': ['javascript', 'javascript.jsx', 'typescript'] } " Typescript completion
+Plug 'sebastianmarkow/deoplete-rust', { 'for': ['rs', 'rust'] }                               " Rust autocompletion
+" Plug 'wellle/tmux-complete.vim'                                                             " Tmux completion
+" Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }                     " nvim language client (nvim-completion-manager)
 
 " Snippets
 Plug 'SirVer/ultisnips'                                                                       " Snippet manager
@@ -363,7 +362,7 @@ imap ;; <Esc>A;
 
 " Quick save an quit
 nnoremap <silent><leader><leader> :w<cr>
-nnoremap <silent><Leader>q :bd<cr>
+nnoremap <silent><Leader>q :q<cr>
 nnoremap <silent><Leader>w :w<cr>
 
 " Split like a boss
@@ -607,11 +606,8 @@ let MRU_Exclude_Files = '^/tmp/.*\|^/var/tmp/.*'
 let MRU_Auto_Close = 1
 let MRU_Max_Menu_Entries = 10
 
-" nvim-completion-engine
-set shortmess+=c   " supress the annoying completion messages
-" autocmd CompleteDone * pclose
-" set completeopt+=noinsert
-" set completeopt-=preview
+" Supress completion messages
+set shortmess+=c
 
 " Fugitive
 nnoremap <silent><leader>g :Gstatus\|normal!gg7j<cr>
@@ -758,17 +754,13 @@ endfunction
 let g:sleuth_automatic = 1
 
 " Polyglot
-let g:polyglot_disabled = ['markdown', 'md', 'latex', 'tex', 'julia']
+let g:polyglot_disabled = ['markdown', 'md', 'latex', 'tex']
 
 " Markdown
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
 
 " Gentags
 let g:gen_tags#blacklist = ['$HOME']
-
-" Nvim completion manager
-" let g:cm_matcher = {'module': 'cm_matchers.abbrev_matcher'}
-let g:cm_matcher = {'module': 'cm_matchers.fuzzy_matcher', 'case': 'smartcase'}
 
 " Vim Router
 let g:rooter_use_lcd = 1
@@ -898,3 +890,14 @@ let g:NERDTreeIndicatorMapCustom = {
     \ 'Ignored'   : '☒',
     \ "Unknown"   : "?"
     \ }
+
+" Use deoplete.
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_smart_case = 1
+
+" Echodoc
+let g:echodoc#enable_at_startup = 1
+
+" nvim_typesctipt
+let g:nvim_typescript#javascript_support = 1
+let g:nvim_typescript#type_info_on_hold = 1
