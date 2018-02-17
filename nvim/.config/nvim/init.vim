@@ -383,6 +383,8 @@ nnoremap <silent><Leader><esc> :normal!za<cr>
 " Quick switch tabs
 nnoremap <silent><Leader>m :tabn<cr>
 nnoremap <silent><Leader>n :tabp<cr>
+nnoremap <silent><s-right> :tabm +1<cr>
+nnoremap <silent><s-left> :tabm -1<cr>
 
 " Only current buffer
 nnoremap <silent><leader>o :only<cr>
