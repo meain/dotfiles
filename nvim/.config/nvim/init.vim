@@ -93,6 +93,7 @@ Plug 'epilande/vim-react-snippets', { 'for': ['javascript', 'typescript', 'javas
 " Dependencies
 Plug 'vim-scripts/mru.vim'                                                                    " Save recently used files (v)
 Plug 'radenling/vim-dispatch-neovim'                                                          " Neovim support for vim-dispatch
+Plug 'mattn/webapi-vim'                                                                       " Web calls
 
 " Others
 Plug 'wakatime/vim-wakatime'                                                                  " Wakatime
@@ -219,7 +220,7 @@ set foldnestmax=10
 set termguicolors
 set background=dark
 autocmd ColorScheme janah highlight Normal ctermbg=235 guibg=#262626
-colorscheme redblack
+" colorscheme redblack
 colorscheme janah
 
 " Use italics for some text
@@ -547,6 +548,24 @@ function! Flash()
     set nocursorline
     highlight CursorLine ctermbg=154 guibg=#474747
 endfunction
+
+" Close unused buffers
+
+function! s:CloseHiddenBuffers()
+  let open_buffers = []
+
+  for i in range(tabpagenr('$'))
+    call extend(open_buffers, tabpagebuflist(i + 1))
+  endfor
+
+  for num in range(1, bufnr("$") + 1)
+    if buflisted(num) && index(open_buffers, num) == -1
+      exec "bdelete ".num
+    endif
+  endfor
+endfunction
+command! Cleanup call s:CloseHiddenBuffers()
+
 
 
 
@@ -901,3 +920,7 @@ let g:echodoc#enable_at_startup = 1
 " nvim_typesctipt
 let g:nvim_typescript#javascript_support = 1
 let g:nvim_typescript#type_info_on_hold = 1
+
+" Indentline
+let g:indentLine_color_term = 236
+let g:indentLine_color_gui = '#303030'
