@@ -927,3 +927,6 @@ let g:nvim_typescript#type_info_on_hold = 1
 " Indentline
 let g:indentLine_color_term = 236
 let g:indentLine_color_gui = '#303030'
+
+" Ultisnips
+let g:UltiSnipsSnippetDirectories = ['~/.config/nvim/UltiSnips', 'UltiSnips']
