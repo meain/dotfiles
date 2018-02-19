@@ -220,8 +220,8 @@ set foldnestmax=10
 set termguicolors
 set background=dark
 autocmd ColorScheme janah highlight Normal ctermbg=235 guibg=#262626
-" colorscheme redblack
-colorscheme janah
+colorscheme redblack
+" colorscheme janah
 
 " Use italics for some text
 hi htmlArg gui=italic
@@ -239,6 +239,9 @@ let maplocalleader = "\|"
 highlight ColorColumn ctermbg=154 ctermfg=0 guibg=#474747 guifg=#ffffff
 highlight CursorLine ctermbg=154 guibg=#474747
 autocmd BufEnter * call matchadd('ColorColumn', '\%160v', 100)
+
+" Sign colum color
+highlight SignColumn guibg=#000000 ctermbg=0
 
 " Better coloring for errors
 hi clear SpellBad
