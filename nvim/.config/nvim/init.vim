@@ -669,7 +669,7 @@ highlight ALEWarningSign ctermbg=226 guibg=#ffff00 guifg=#000000 ctermfg=0
 autocmd User ALELint call lightline#update()
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
 let g:ale_linters = {
-\   'javascript': ['eslint'],
+\   'javascript': ['flow'],
 \   'python': ['flake8']
 \}
 let g:ale_virtualenv_dir_names = ['~/.virtual_envs']
