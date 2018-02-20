@@ -31,7 +31,6 @@ Plug 'mattn/gist-vim', { 'on': 'Gist' }                                         
 Plug 'rizzatti/dash.vim', { 'on': 'Dash' }                                                    " Search Dash docs
 Plug 'davidbeckingsale/writegood.vim', { 'on': ['WritegoodEnable', 'WritegoodToggle'] }       " Better writing mode
 Plug 'mattn/emmet-vim'                                                                        " Emmet
-Plug 'alvan/vim-closetag'                                                                     " Automatically add closing tag
 Plug 'jreybert/vimagit', { 'on': 'Magit' }                                                    " Even better git interface for vim
 Plug 'metakirby5/codi.vim', { 'on': 'Codi' }                                                  " Live code preview
 Plug 'prettier/vim-prettier', {
@@ -669,7 +668,7 @@ highlight ALEWarningSign ctermbg=226 guibg=#ffff00 guifg=#000000 ctermfg=0
 autocmd User ALELint call lightline#update()
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
 let g:ale_linters = {
-\   'javascript': ['flow'],
+\   'javascript': ['flow', 'eslint'],
 \   'python': ['flake8']
 \}
 let g:ale_virtualenv_dir_names = ['~/.virtual_envs']
