@@ -5,5 +5,5 @@ alias vi='nvim'
 
 alias viml='nvim -c :SLoad\ zzz'
 
-alias v='~/bin/nvimopeniffile $(~/bin/checkiffile ~/.vim_mru_files | grep -v ".git" | fzf --height 40% --reverse --preview "coderay {}")'
-alias vv='nvim $(~/bin/checkiffile ~/.vim_mru_files | grep -v ".git" | head -n 1)'
+alias v='~/.bin/nvimopeniffile $(~/.bin/checkiffile ~/.vim_mru_files | grep -v ".git" | fzf --height 40% --reverse --preview "coderay {}")'
+alias vv='nvim $(~/.bin/checkiffile ~/.vim_mru_files | grep -v ".git" | head -n 1)'

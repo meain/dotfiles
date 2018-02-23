@@ -21,3 +21,7 @@ get_prev_command(){
 }
 alias ff='$(get_prev_command 2 1)'
 alias fff='$(get_prev_command 3 2)'
+
+stdgrip() {
+    grip $1 --export -
+}
