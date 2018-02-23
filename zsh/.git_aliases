@@ -26,9 +26,9 @@ alias gvf='git add -u && git commit -m "$(get_change_message)"'
 alias gp='git push origin "$(get_git_branch)"'
 
 alias gl='git lg'
-alias gg='git hm|cat'
-alias ggg='git lh|cat'
-alias gggg='git hi|cat'
+alias gg='git hm'
+alias ggg='git lh'
+alias gggg='git hi'
 
 alias gd='git diff'
 
