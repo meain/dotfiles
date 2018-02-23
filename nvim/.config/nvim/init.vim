@@ -577,7 +577,7 @@ command! Cleanup call s:CloseHiddenBuffers()
 "                    ==============================                    "
 
 " Fzf fuzzy search
-let $FZF_DEFAULT_COMMAND = 'ag -g ""'
+let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --glob "!.git/*"'
 let g:fzf_layout = { 'down': '~40%' }
 let g:fzf_tags_command = 'ctags -R'
 let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
@@ -588,11 +588,9 @@ nnoremap <silent><Enter> :FZF<cr>
 nnoremap <silent> <leader><Enter> :History<cr>
 autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
 nnoremap ,e :FZF<cr>
-command! -bang -nargs=* Ag
-  \ call fzf#vim#ag(<q-args>,
-  \                 <bang>0 ? fzf#vim#with_preview('up:60%')
-  \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
-  \                 <bang>0)
+command! -bang -nargs=* Find
+      \ call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>),
+      \ 1, <bang>0)
 nnoremap <leader>c :Commands<CR>
 nnoremap <leader>b :Buffers<cr>
 let g:fzf_layout = { 'down': '~40%' }  " Default fzf layout
