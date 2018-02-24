@@ -391,6 +391,9 @@ nnoremap <silent><s-left> :tabm -1<cr>
 " Only current buffer
 nnoremap <silent><leader>o :only<cr>
 
+" New tab
+nnoremap <silent><leader>t :tabnew<cr>
+
 
 
 
