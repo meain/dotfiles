@@ -53,6 +53,7 @@ source $HOME/.fzf_aliases
 # Source custom functions
 source $HOME/.common_functions
 source $HOME/.other_functions
+source $HOME/.coding_functions
 
 # Source colors for ls
 eval $(gdircolors -b $HOME/.dircolors)
