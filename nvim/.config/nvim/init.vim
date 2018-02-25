@@ -319,6 +319,9 @@ vnoremap Y "+Y
 vnoremap p "+p
 vnoremap P "+P
 
+" Switch between recent files
+nnoremap <bs> <C-^>
+
 " Easier indentation - does dot loose selection
 vnoremap > >gv
 vnoremap < <gv
