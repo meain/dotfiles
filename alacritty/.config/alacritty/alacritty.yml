@@ -6,8 +6,8 @@ dimensions:
   lines: 25
 
 padding:
-  x: 2
-  y: 2
+  x: 0
+  y: 0
 
 dpi:
   x: 128
@@ -71,7 +71,7 @@ key_bindings:
   - { key: W,        mods: Command, action: Quit                                                             }
   - { key: N,        mods: Command, command: { program: "open", args: ["-n", "/Applications/Alacritty.app"] }}
   - { key: Equals,   mods: Command, action: IncreaseFontSize                                                 }
-  - { key: Subtract, mods: Command, action: DecreaseFontSize                                                 }
+  - { key: Minus, mods: Command, action: DecreaseFontSize                                                 }
   - { key: Home,                    chars: "\x1bOH",   mode: AppCursor                                       }
   - { key: Home,                    chars: "\x1b[H",   mode: ~AppCursor                                      }
   - { key: End,                     chars: "\x1bOF",   mode: AppCursor                                       }
