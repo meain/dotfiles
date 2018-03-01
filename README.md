@@ -50,6 +50,10 @@ This will symlink the necessary files
 
 ## Screenshots
 
+*as of `620d4e65`*
+
+> Gone quite a bit minimal after that
+
 ### Zsh
 ![](https://i.imgur.com/oh4DY5e.png)
 
