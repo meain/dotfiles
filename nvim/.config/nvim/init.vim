@@ -218,9 +218,9 @@ set foldnestmax=10
 " Setting colorscheme
 set termguicolors
 set background=dark
-autocmd ColorScheme janah highlight Normal ctermbg=235 guibg=#262626
-colorscheme redblack
-" colorscheme janah
+autocmd ColorScheme janah highlight Normal ctermbg=234 guibg=#1f1f1f
+" colorscheme redblack
+colorscheme janah
 
 " Use italics for some text
 hi htmlArg gui=italic
@@ -240,7 +240,7 @@ highlight CursorLine ctermbg=154 guibg=#474747
 autocmd BufEnter * call matchadd('ColorColumn', '\%160v', 100)
 
 " Sign colum color
-highlight SignColumn guibg=#000000 ctermbg=0
+autocmd ColorScheme redblack highlight SignColumn guibg=#000000 ctermbg=0
 
 " Better coloring for errors
 hi clear SpellBad
