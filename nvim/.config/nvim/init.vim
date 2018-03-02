@@ -926,7 +926,7 @@ let g:echodoc#enable_at_startup = 1
 
 " nvim_typesctipt
 let g:nvim_typescript#javascript_support = 1
-let g:nvim_typescript#type_info_on_hold = 1
+let g:nvim_typescript#type_info_on_hold = 0
 
 " Indentline
 let g:indentLine_color_term = 236
