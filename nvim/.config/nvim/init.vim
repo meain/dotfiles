@@ -898,6 +898,8 @@ autocmd BufEnter *.elm nnoremap <leader>a :ElmMakeMain<cr>
 autocmd BufEnter *.elm nnoremap <leader>t :ElmTest<cr>
 
 " NerdTree
+nnoremap <Tab> :NERDTreeFind<cr>
+autocmd FileType nerdtree nnoremap <buffer> <Tab> :NERDTreeToggle<cr>
 let g:NERDTreeIndicatorMapCustom = {
     \ "Modified"  : "!",
     \ "Staged"    : "|",
