@@ -546,13 +546,13 @@ function! Flash()
     highlight CursorLine guibg=#ffff00 ctermfg=11
     set cursorline
     redraw
-    sleep 50m
+    sleep 10m
     set nocursorline
     redraw
-    sleep 50m
+    sleep 10m
     set cursorline
     redraw
-    sleep 50m
+    sleep 10m
     set nocursorline
     highlight CursorLine ctermbg=154 guibg=#474747
 endfunction
