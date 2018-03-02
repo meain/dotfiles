@@ -11,7 +11,6 @@ Plug 'Yggdroot/indentLine'                                                      
 Plug 'mhinz/vim-signify'                                                                      " Git diff icons in gutter
 Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }                                          " Hyper focus editing
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }                                                    " Centerify
-Plug 'easymotion/vim-easymotion'                                                              " Quick navigation
 Plug 'ap/vim-css-color'                                                                       " Show colors
 
 " Added functinality
@@ -897,11 +896,6 @@ autocmd BufEnter *.elm nnoremap <leader>d :ElmShowDocs<cr>
 autocmd BufEnter *.elm nnoremap <leader>r :ElmMake<cr>
 autocmd BufEnter *.elm nnoremap <leader>a :ElmMakeMain<cr>
 autocmd BufEnter *.elm nnoremap <leader>t :ElmTest<cr>
-
-" Easymotion
-let g:EasyMotion_do_mapping=0
-nmap  <Leader>e <Plug>(easymotion-bd-w)
-nmap  <Tab> <Plug>(easymotion-bd-w)
 
 " NerdTree
 let g:NERDTreeIndicatorMapCustom = {
