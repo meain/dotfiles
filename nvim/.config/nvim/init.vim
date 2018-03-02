@@ -665,10 +665,11 @@ let g:limelight_conceal_ctermfg=0
 
 " Ale
 let g:ale_sign_column_always = 1
-let g:ale_sign_error = ':x'
-let g:ale_sign_warning = ':!'
-highlight ALEErrorSign ctermbg=196 guibg=#ff0000 guifg=#000000 ctermfg=0
-highlight ALEWarningSign ctermbg=226 guibg=#ffff00 guifg=#000000 ctermfg=0
+let g:ale_sign_error = 'xx'
+let g:ale_sign_warning = '!!'
+
+highlight ALEErrorSign ctermfg=196 guifg=#ff0000 ctermbg=237 guibg=#3a3a3a
+highlight ALEWarningSign ctermfg=226 guifg=#ffff00 ctermbg=237 guibg=#3a3a3a
 autocmd User ALELint call lightline#update()
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
 let g:ale_linters = {
@@ -703,6 +704,9 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 " Signfy
+let g:signify_sign_add               = '|+'
+let g:signify_sign_delete            = '|_'
+let g:signify_sign_change            = '|~'
 highlight SignifySignAdd    cterm=bold gui=bold  ctermfg=119 guifg=#87ff5f
 highlight SignifySignDelete cterm=bold gui=bold  ctermfg=167 guifg=#d75f5f
 highlight SignifySignChange cterm=bold gui=bold  ctermfg=227 guifg=#ffff5f
