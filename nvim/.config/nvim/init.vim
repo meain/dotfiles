@@ -595,6 +595,7 @@ command! -bang -nargs=* Find
       \ 1, <bang>0)
 nnoremap <leader>c :Commands<CR>
 nnoremap <leader>b :Buffers<cr>
+nnoremap <leader>f :tabnew \| :Find<cr>
 let g:fzf_layout = { 'down': '~40%' }  " Default fzf layout
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],
