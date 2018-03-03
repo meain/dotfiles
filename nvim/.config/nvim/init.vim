@@ -930,6 +930,6 @@ let g:indentLine_color_gui = '#303030'
 let g:UltiSnipsSnippetDirectories = ['~/.config/nvim/UltiSnips', 'UltiSnips']
 
 " Magit
-nnoremap <bs> :Magit<cr>
-autocmd FileType magit nnoremap <buffer> <bs> :q<cr>
-autocmd FileType magit nnoremap <buffer> <Tab> :call <SNR>152_mg_open_close_folding_wrapper('+')<CR>
+nnoremap <silent><bs> :Magit<cr>
+autocmd FileType magit nnoremap <silent><buffer> <bs> :q<cr>
+autocmd FileType magit nnoremap <silent><buffer> <Tab> :call <SNR>152_mg_open_close_folding_wrapper('+')<CR>
