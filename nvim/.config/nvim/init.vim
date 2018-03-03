@@ -318,9 +318,6 @@ vnoremap Y "+Y
 vnoremap p "+p
 vnoremap P "+P
 
-" Switch between recent files
-nnoremap <bs> <C-^>
-
 " Easier indentation - does dot loose selection
 vnoremap > >gv
 vnoremap < <gv
@@ -930,3 +927,8 @@ let g:indentLine_color_gui = '#303030'
 
 " Ultisnips
 let g:UltiSnipsSnippetDirectories = ['~/.config/nvim/UltiSnips', 'UltiSnips']
+
+" Magit
+nnoremap <bs> :Magit<cr>
+autocmd FileType magit nnoremap <buffer> <bs> :q<cr>
+autocmd FileType magit nnoremap <buffer> <Tab> :call <SNR>152_mg_open_close_folding_wrapper('+')<CR>
