@@ -15,6 +15,7 @@ Plug 'ap/vim-css-color'                                                         
 
 " Added functinality
 Plug 'mhinz/vim-startify'                                                                     " A fancy start page for vim
+Plug 'justinmk/vim-sneak'                                                                     " Quickly sneak arround
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }                             " Fzf
 Plug 'junegunn/fzf.vim'                                                                       " Fzf for vim
 Plug 'christoomey/vim-tmux-navigator'                                                         " Seamless navigation between vim and tmux
@@ -932,4 +933,6 @@ let g:UltiSnipsSnippetDirectories = ['~/.config/nvim/UltiSnips', 'UltiSnips']
 " Magit
 nnoremap <silent><bs> :Magit<cr>
 autocmd FileType magit nnoremap <silent><buffer> <bs> :q<cr>
-autocmd FileType magit nnoremap <silent><buffer> <Tab> :call <SNR>152_mg_open_close_folding_wrapper('+')<CR>
+
+" Sneak
+let g:sneak#label = 1
