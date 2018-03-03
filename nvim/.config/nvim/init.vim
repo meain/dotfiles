@@ -323,11 +323,11 @@ vnoremap > >gv
 vnoremap < <gv
 
 " Navigaiion
-nnoremap <Down> 10<c-y>:call Flash()<cr>
-nnoremap <Up> 10<c-e>:call Flash()<cr>
+nnoremap <silent><Down> 10<c-y>:call Flash()<cr>
+nnoremap <silent><Up> 10<c-e>:call Flash()<cr>
 
 " Easy buffer switching
-nnoremap <silent><Leader><Tab> :enew\|:Startify<cr>
+nnoremap <silent><Leader><Tab> :tabnew\|:Startify<cr>
 
 " Terminal split jump
 tnoremap <m-h> <C-\><C-N><C-w>h
