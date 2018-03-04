@@ -1,0 +1,17 @@
+snippet ap "app.post express typescript" b
+app.post('/${1}', (req: Request, res: Response, next: NextFunction) => {
+  const data = req.body
+  console.log('data: ', data)
+
+  res.json({ status: 'OK' })
+})
+endsnippet
+
+snippet ag "app.get express typescript" b
+app.get('/${1}', (req: Request, res: Response, next: NextFunction) => {
+  const data = req.body
+  console.log('data: ', data)
+
+  res.json({ status: 'OK' })
+})
+endsnippet
