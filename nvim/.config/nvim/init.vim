@@ -377,8 +377,8 @@ nnoremap <silent><Leader>q :q<cr>
 nnoremap <silent><Leader>w :w<cr>
 
 " Split like a boss
-nnoremap <silent><Leader>v :vsplit<cr>
-nnoremap <silent><Leader>h :split<cr>
+nnoremap <silent><Leader>v :vsplit \| :Startify<cr>
+nnoremap <silent><Leader>h :split \| :Startify<cr>
 
 " Clear search highlight
 nnoremap <silent><Leader>/ :nohls<CR>
@@ -400,7 +400,7 @@ nnoremap <silent><s-left> :tabm -1<cr>
 nnoremap <silent><leader>o :only<cr>
 
 " New tab
-nnoremap <silent><leader>t :tabnew<cr>
+nnoremap <silent><leader>t :tabnew \| :Startify<cr>
 
 
 
@@ -644,7 +644,8 @@ nnoremap <silent><leader>g :Gstatus\|normal!gg7j<cr>
 command! Gl normal! :!git vhm<cr>
 
 " Startify
-nnoremap ,l :Startify<cr>
+nnoremap <silent>,l :Startify<cr>
+nnoremap <silent><leader>l :Startify<cr>
 autocmd User Startified setlocal cursorline
 highlight StartifyBracket ctermfg=240 guifg=#585858
 highlight StartifyFooter  ctermfg=240 guifg=#585858
@@ -654,7 +655,7 @@ highlight StartifyPath    ctermfg=245 guifg=#8a8a8a
 highlight StartifySlash   ctermfg=240 guifg=#585858
 highlight StartifySpecial ctermfg=240 guifg=#585858
 let g:startify_session_persistence = 1
-let g:startify_custom_indices = ['a', 'd', 'f', 'g', 'h', 'l']
+let g:startify_custom_indices = ['a', 'd', 'f', 'g', 'h', 'l', 'u', 'o', 'p', 'r', 't', 'n', 'm', 'b']
 let g:startify_fortune_use_unicode = 1
 let g:startify_list_order = ['dir', 'files',  'sessions']
 let g:startify_session_before_save = [
