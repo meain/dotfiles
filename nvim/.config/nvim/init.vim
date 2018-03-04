@@ -282,6 +282,9 @@ autocmd BufWritePre *.py,*.vim,*.css,*.js,*.html,*.cpp,*.c,*.java,*.go,*.rs,*.ts
 " Fix overflow ( above 80 )
 command! FixOverflow :normal! gqap
 
+" vertical help
+ca h vert h
+
 
 
 
