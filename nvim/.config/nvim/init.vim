@@ -30,7 +30,7 @@ Plug 'mattn/gist-vim', { 'on': 'Gist' }                                         
 Plug 'rizzatti/dash.vim', { 'on': 'Dash' }                                                    " Search Dash docs
 Plug 'davidbeckingsale/writegood.vim', { 'on': ['WritegoodEnable', 'WritegoodToggle'] }       " Better writing mode
 Plug 'mattn/emmet-vim'                                                                        " Emmet
-Plug 'jreybert/vimagit', { 'on': 'Magit' }                                                    " Even better git interface for vim
+Plug 'jreybert/vimagit'                                                                       " Even better git interface for vim
 Plug 'metakirby5/codi.vim', { 'on': 'Codi' }                                                  " Live code preview
 Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
