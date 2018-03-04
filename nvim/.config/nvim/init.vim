@@ -961,6 +961,4 @@ let g:sneak#label = 1
 
 " AutoPair
 let g:AutoPairsShortcutToggle='<c-p>'
-let g:AutoPairsFlyMode=1
 let g:AutoPairsMultilineClose = 0
-let g:AutoPairsShortcutBackInsert='<c-b>'
