@@ -645,6 +645,7 @@ command! Gl normal! :!git vhm<cr>
 
 " Startify
 nnoremap ,l :Startify<cr>
+autocmd User Startified setlocal cursorline
 highlight StartifyBracket ctermfg=240 guifg=#585858
 highlight StartifyFooter  ctermfg=240 guifg=#585858
 highlight StartifyHeader  ctermfg=114 guifg=#87d787
@@ -652,11 +653,23 @@ highlight StartifyNumber  ctermfg=215 guifg=#ffaf5f
 highlight StartifyPath    ctermfg=245 guifg=#8a8a8a
 highlight StartifySlash   ctermfg=240 guifg=#585858
 highlight StartifySpecial ctermfg=240 guifg=#585858
+let g:startify_session_persistence = 1
+let g:startify_custom_indices = ['a', 'd', 'f', 'g', 'h', 'l']
+let g:startify_fortune_use_unicode = 1
 let g:startify_list_order = ['dir', 'files',  'sessions']
+let g:startify_session_before_save = [
+    \ 'echo "Cleaning up before saving.."',
+    \ 'silent! NERDTreeTabsClose'
+    \ ]
 let g:startify_skiplist = [
-       \ '\.png',
-       \ '\.jpeg',
-       \ ]
+    \ '\.png',
+    \ '\.jpeg',
+    \ 'COMMIT_EDITMSG',
+    \ escape(fnamemodify(resolve($VIMRUNTIME), ':p'), '\') .'doc',
+    \ 'bundle/.*/doc',
+    \ '\.vimgolf',
+    \ '^/tmp',
+    \ ]
 
 " Drag Visuals
 vmap <up>    <Plug>SchleppUp
@@ -698,6 +711,7 @@ nnoremap <silent> <m-/> :TmuxNavigatePrevious<cr>
 " Vim Indentline
 let g:indentLine_enabled = 1
 let g:vim_json_syntax_conceal = 0
+let g:indentLine_fileTypeExclude = ['startify', 'help']
 augroup TerminalStuff
   au!
   autocmd TermOpen * setlocal nonumber norelativenumber
