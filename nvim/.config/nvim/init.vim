@@ -215,10 +215,21 @@ set foldignore=
 set foldlevelstart=10
 set foldnestmax=10
 
+" ColorScheme change ( redblack )
+autocmd ColorScheme redblack highlight SignColumn guibg=#000000 ctermbg=0
+
+" ColorScheme change ( janah )
+autocmd ColorScheme janah highlight Normal ctermbg=234 guibg=#1f1f1f
+autocmd ColorScheme janah highlight SignColumn ctermbg=234 guibg=#1f1f1f
+autocmd ColorScheme janah highlight LineNr ctermbg=234 guibg=#1f1f1f
+autocmd ColorScheme janah highlight VertSplit ctermbg=234 guibg=#1f1f1f
+autocmd ColorScheme janah highlight SignifySignAdd    cterm=bold  ctermfg=119 ctermbg=234 guibg=#1f1f1f
+autocmd ColorScheme janah highlight SignifySignDelete cterm=bold  ctermfg=167 ctermbg=234 guibg=#1f1f1f
+autocmd ColorScheme janah highlight SignifySignChange cterm=bold  ctermfg=227 ctermbg=234 guibg=#1f1f1f
+
 " Setting colorscheme
 set termguicolors
 set background=dark
-autocmd ColorScheme janah highlight Normal ctermbg=234 guibg=#1f1f1f
 " colorscheme redblack
 colorscheme janah
 
@@ -238,9 +249,6 @@ let maplocalleader = "\|"
 highlight ColorColumn ctermbg=154 ctermfg=0 guibg=#474747 guifg=#ffffff
 highlight CursorLine ctermbg=154 guibg=#474747
 autocmd BufEnter * call matchadd('ColorColumn', '\%160v', 100)
-
-" Sign colum color
-autocmd ColorScheme redblack highlight SignColumn guibg=#000000 ctermbg=0
 
 " Better coloring for errors
 hi clear SpellBad
