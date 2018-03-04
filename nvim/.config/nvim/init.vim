@@ -303,7 +303,9 @@ nnoremap / mp/
 
 " Quick command mode (second binding to get find next)
 nnoremap ; :
+vnoremap ; :
 nnoremap ' ;
+vnoremap ' ;
 
 " Search remaps
 nnoremap n nzz;
@@ -343,7 +345,7 @@ tnoremap <Leader><Esc> <C-\><C-n>
 nnoremap yp mzggVG"+y`z
 
 " Quick suspend
-" nnoremap <silent><M-Enter> <c-z>
+nnoremap <silent><M-Enter> <c-z>
 
 " Vim docs
 au FileType vim nmap K :help <c-r><c-w><cr>
@@ -351,6 +353,9 @@ au FileType vim nmap K :help <c-r><c-w><cr>
 " Don't change Enter in all buffers
 autocmd FileType help nnoremap <buffer> <Enter> <Enter>
 autocmd FileType vim-plug nnoremap <buffer> <Enter> <Enter>
+
+" Go back smoother
+nnoremap \ <c-o>
 
 " Shady remaps
 imap ;; <Esc>A;
@@ -590,7 +595,6 @@ command! -bang -nargs=? -complete=dir GFiles
 nnoremap <silent><Enter> :FZF<cr>
 nnoremap <silent> <leader><Enter> :History<cr>
 autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
-nnoremap ,e :FZF<cr>
 command! -bang -nargs=* Find
       \ call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>),
       \ 1, <bang>0)
