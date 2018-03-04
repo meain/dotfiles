@@ -259,7 +259,7 @@ autocmd BufNewFile,BufRead *.zsh-theme set filetype=sh
 autocmd VimResized * wincmd =
 
 " Make sure it is javascript
-augroup filetype javascript syntax=javascript
+augroup Filetype javascript syntax=javascript
 
 
 
@@ -957,3 +957,9 @@ autocmd FileType magit nnoremap <silent><buffer> <bs> :q<cr>
 
 " Sneak
 let g:sneak#label = 1
+
+" AutoPair
+let g:AutoPairsShortcutToggle='<c-p>'
+let g:AutoPairsFlyMode=1
+let g:AutoPairsMultilineClose = 0
+let g:AutoPairsShortcutBackInsert='<c-b>'
