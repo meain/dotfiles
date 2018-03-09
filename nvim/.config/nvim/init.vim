@@ -14,7 +14,8 @@ Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }                                      
 Plug 'ap/vim-css-color'                                                                       " Show colors
 
 " Added functinality
-Plug 'mhinz/vim-startify'                                                                     " A fancy start page for vim
+" Plug 'mhinz/vim-startify'                                                                   " A fancy start page for vim
+Plug '~/Documents/Projects/_todo/vim-startify'
 Plug 'justinmk/vim-sneak'                                                                     " Quickly sneak arround
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }                             " Fzf
 Plug 'junegunn/fzf.vim'                                                                       " Fzf for vim
