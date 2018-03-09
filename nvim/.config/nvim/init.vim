@@ -663,7 +663,7 @@ highlight StartifyPath    ctermfg=245 guifg=#8a8a8a
 highlight StartifySlash   ctermfg=240 guifg=#585858
 highlight StartifySpecial ctermfg=240 guifg=#585858
 let g:startify_session_persistence = 1
-let g:startify_custom_indices = ['a', 'd', 'f', 'g', 'h', 'l', 'u', 'o', 'p', 'r', 't', 'n', 'm', 'b']
+let g:startify_custom_indices = ['a', 'd', 'g', 'h', 'l', 'u', 'o', 'p', 'r', 't', 'n', 'm', 'b']
 let g:startify_fortune_use_unicode = 1
 let g:startify_list_order = ['dir', 'files',  'sessions']
 let g:startify_session_before_save = [
@@ -695,8 +695,8 @@ let g:ale_sign_column_always = 1
 let g:ale_sign_error = 'xx'
 let g:ale_sign_warning = '!!'
 
-highlight ALEErrorSign ctermfg=196 guifg=#ff0000 ctermbg=237 guibg=#3a3a3a
-highlight ALEWarningSign ctermfg=226 guifg=#ffff00 ctermbg=237 guibg=#3a3a3a
+highlight ALEErrorSign ctermfg=196 guifg=#ff0000 ctermbg=234 guibg=#1f1f1f
+highlight ALEWarningSign ctermfg=226 guifg=#ffff00 ctermbg=234 guibg=#1f1f1f
 autocmd User ALELint call lightline#update()
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
 let g:ale_linters = {
@@ -869,6 +869,7 @@ nnoremap <silent>,, :Autoformat<cr>
 au FileType go nnoremap <silent>,, :GoFmt<cr>
 au FileType javascript,typescript,css,less,scss,json,graphql,markdown nnoremap <silent>,, :Prettier<cr>
 au FileType elm nnoremap <silent>,, :ElmFormat<cr>
+au FileType html nnoremap <silent>,, gg=G
 
 " JSX Typescript
 autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.jsx
