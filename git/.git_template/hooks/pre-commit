@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Swear all you wan't until you commit
 function check_sanity(){
