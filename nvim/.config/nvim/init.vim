@@ -970,3 +970,6 @@ let g:sneak#label = 1
 " AutoPair
 let g:AutoPairsShortcutToggle='<c-p>'
 let g:AutoPairsMultilineClose = 0
+
+" Vim Plug
+command! LoadAllPlugins call plug#load(keys(g:plugs))
