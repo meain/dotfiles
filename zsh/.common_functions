@@ -1,7 +1,7 @@
 # cd > cd&&ls
 function list_all() {
     emulate -L zsh
-    colorls
+    ls
 }
 chpwd_functions=(${chpwd_functions[@]} "list_all")
 
