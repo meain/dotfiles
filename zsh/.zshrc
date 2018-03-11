@@ -55,8 +55,23 @@ source $HOME/.common_functions
 source $HOME/.other_functions
 source $HOME/.coding_functions
 
+# Source any changs for linux
+
+case "$(uname -s)" in
+  Linux)
+    source $HOME/.linux_modifications
+    ;;
+esac
+
 # Source colors for ls
-eval $(gdircolors -b $HOME/.dircolors)
+case "$(uname -s)" in
+  Darwin)
+    eval $(gdircolors -b $HOME/.dircolors)
+    ;;
+  Linux)
+    eval $(dircolors -b $HOME/.dircolors)
+    ;;
+esac
 
 # Github
 eval "$(hub alias -s)"
