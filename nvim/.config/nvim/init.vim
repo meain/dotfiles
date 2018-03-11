@@ -23,7 +23,6 @@ Plug 'suan/vim-instant-markdown'                                                
 Plug 'ervandew/supertab'                                                                      " Autocomplete on tab
 Plug 'zirrostig/vim-schlepp'                                                                  " Better drag visuals
 Plug 'vim-scripts/restore_view.vim'                                                           " Restore file pointer
-Plug 'jsfaint/gen_tags.vim'                                                                   " Better tags usage
 Plug 'tpope/vim-dispatch'                                                                     " Async tasks in vim
 Plug 'airblade/vim-rooter'                                                                    " Change directory to project root
 Plug 'editorconfig/editorconfig-vim'                                                          " Editorconfig
