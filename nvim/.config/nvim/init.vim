@@ -19,6 +19,7 @@ Plug 'justinmk/vim-sneak'                                                       
 Plug 'wincent/loupe'                                                                          " Better search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }                             " Fzf
 Plug 'junegunn/fzf.vim'                                                                       " Fzf for vim
+Plug 'fszymanski/fzf-gitignore', {'do': ':UpdateRemotePlugins', 'on': 'GitIgnoreGenerate'}    " Generate gitignore files
 Plug 'christoomey/vim-tmux-navigator'                                                         " Seamless navigation between vim and tmux
 Plug 'suan/vim-instant-markdown'                                                              " View markdown in browser while editing
 Plug 'ervandew/supertab'                                                                      " Autocomplete on tab
@@ -970,3 +971,6 @@ let g:AutoPairsMultilineClose = 0
 
 " Vim Plug
 command! LoadAllPlugins call plug#load(keys(g:plugs))
+
+" Fzf gitignore
+command! GitIgnoreGenerate execute "normal \<Plug>(fzf-gitignore)"
