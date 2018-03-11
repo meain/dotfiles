@@ -16,6 +16,7 @@ Plug 'ap/vim-css-color'                                                         
 " Added functinality
 Plug '~/Documents/Projects/_todo/vim-startify'                                                " A fancy start page for vim
 Plug 'justinmk/vim-sneak'                                                                     " Quickly sneak arround
+Plug 'wincent/loupe'                                                                          " Better search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }                             " Fzf
 Plug 'junegunn/fzf.vim'                                                                       " Fzf for vim
 Plug 'christoomey/vim-tmux-navigator'                                                         " Seamless navigation between vim and tmux
@@ -316,10 +317,6 @@ nnoremap ; :
 vnoremap ; :
 nnoremap ' ;
 vnoremap ' ;
-
-" Search remaps
-nnoremap n nzz;
-nnoremap N Nzz;
 
 " Use the clipboard for copy and paste
 nnoremap y "+y
