@@ -858,17 +858,17 @@ autocmd BufEnter *.ts,*.js,*.tsc nnoremap <leader>d :TSDef<cr>
 autocmd BufEnter *.ts,*.js,*.tsc nnoremap K :TSDoc<cr>
 
 " Racer
-au FileType rust nmap <silent><leader>d <Plug>(rust-def)
-au FileType rust nmap K <Plug>(rust-doc)
-au FileType rust nmap <silent><leader>a :Dispatch cargo build<cr>
-au FileType rust nmap <silent><leader>r :Start cargo run<cr>
+au FileType rust nnoremap <silent><leader>d <Plug>(rust-def)
+au FileType rust nnoremap K <Plug>(rust-doc)
+au FileType rust nnoremap <silent><leader>a :Dispatch cargo build<cr>
+au FileType rust nnoremap <silent><leader>r :Start cargo run<cr>
 
 " Autoformat
 nnoremap <silent>,, :Autoformat<cr>
-au FileType go nnoremap <silent>,, :GoFmt<cr>
-au FileType javascript,typescript,css,less,scss,json,graphql,markdown nnoremap <silent>,, :Prettier<cr>
-au FileType elm nnoremap <silent>,, :ElmFormat<cr>
-au FileType html nnoremap <silent>,, gg=G
+au FileType go nnoremap <silent><buffer>,, :GoFmt<cr>
+au FileType javascript,typescript,css,less,scss,json,graphql,markdown nnoremap <silent><buffer>,, :Prettier<cr>
+au FileType elm nnoremap <silent><buffer>,, :ElmFormat<cr>
+au FileType html nnoremap <silent><buffer>,, gg=G
 
 " JSX Typescript
 autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.jsx
