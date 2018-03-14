@@ -1,4 +1,5 @@
-alias m=neomutt
+alias m="offlineimap && neomutt"
+alias nm=neomutt
 alias j=z
 
 alias k='python ~/bin/terminalnote.py'
