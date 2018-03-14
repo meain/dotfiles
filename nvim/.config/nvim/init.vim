@@ -56,8 +56,7 @@ Plug 'junegunn/vim-easy-align'                                                  
 
 " Language helpers
 Plug 'sheerun/vim-polyglot'                                                                   " Multiple language support
-Plug 'othree/yajs.vim', { 'for': ['javascript', 'javascript.jsx', 'typescript'] }             " JS support
-Plug 'leafgarland/typescript-vim', { 'for': ['javascript', 'javascript.jsx', 'typescript'] }  " Typescript supprt
+Plug 'mhartington/nvim-typescript', { 'for': ['javascript', 'javascript.jsx', 'typescript'] } " Typescript & Javascript support
 Plug 'neoclide/vim-jsx-improve', { 'for': ['javascript', 'javascript.jsx', 'typescript'] }    " Inproved JSX syntax
 Plug 'tpope/vim-markdown', { 'for': ['md', 'markdown'] }                                      " Better markdown support
 Plug 'davidhalter/jedi-vim', { 'for': ['python'] }                                            " Python helper
@@ -79,7 +78,6 @@ Plug 'Chiel92/vim-autoformat', { 'on': 'Autoformat' }                           
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }                                 " Competion framework
 Plug 'Shougo/echodoc.vim'                                                                     " Show signature
 Plug 'Shougo/neco-vim', { 'for': 'vim' }                                                      " Completion for viml
-Plug 'mhartington/nvim-typescript', { 'for': ['javascript', 'javascript.jsx', 'typescript'] } " Typescript completion
 Plug 'sebastianmarkow/deoplete-rust', { 'for': ['rs', 'rust'] }                               " Rust autocompletion
 " Plug 'wellle/tmux-complete.vim'                                                             " Tmux completion
 " Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }                     " nvim language client (nvim-completion-manager)
@@ -805,7 +803,7 @@ endfunction
 let g:sleuth_automatic = 1
 
 " Polyglot
-let g:polyglot_disabled = ['markdown', 'md', 'latex', 'tex']
+let g:polyglot_disabled = ['markdown', 'md', 'latex', 'tex', 'jsx']
 
 " Markdown
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
