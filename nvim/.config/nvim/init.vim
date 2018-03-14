@@ -676,6 +676,7 @@ let g:startify_skiplist = [
     \ ]
 
 " Drag Visuals
+let g:Schlepp#reindent = 1
 vmap <up>    <Plug>SchleppUp
 vmap <down>  <Plug>SchleppDown
 vmap <left>  <Plug>SchleppLeft
