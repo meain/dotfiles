@@ -694,7 +694,7 @@ let g:ale_sign_warning = '!!'
 highlight ALEErrorSign ctermfg=196 guifg=#ff0000 ctermbg=234 guibg=#1f1f1f
 highlight ALEWarningSign ctermfg=226 guifg=#ffff00 ctermbg=234 guibg=#1f1f1f
 autocmd User ALELint call lightline#update()
-let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
+let g:ale_statusline_format = ['X %d', '! %d', '⬥ ok']
 let g:ale_linters = {
 \   'javascript': ['flow', 'eslint'],
 \   'python': ['flake8']
