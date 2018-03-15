@@ -4,7 +4,7 @@
 call plug#begin('~/.vim/plugged')
 
 " Visual enhancements
-Plug 'kshenoy/vim-signature'                                                                   " Show marks
+" Plug 'kshenoy/vim-signature'                                                                   " Show marks ()
 Plug 'itchyny/lightline.vim'                                                                   " Statusline plugin
 Plug 'flazz/vim-colorschemes'                                                                  " Vim colorscheme
 Plug 'Yggdroot/indentLine'                                                                     " Show indent
@@ -14,7 +14,7 @@ Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }                                      
 Plug 'ap/vim-css-color'                                                                        " Show colors
 
 " Added functinality
-Plug '~/Documents/Projects/_todo/vim-startify'                                                 " A fancy start page for vim
+Plug '~/Documents/Projects/_todo/vim-startify'                                                 " A fancy start page for vim ()
 Plug 'justinmk/vim-sneak'                                                                      " Quickly sneak arround
 Plug 'wincent/loupe'                                                                           " Better search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }                              " Fzf
@@ -41,7 +41,7 @@ Plug 'prettier/vim-prettier', {
 
 " Code editing enhacements
 Plug 'tpope/vim-sleuth'                                                                        " Automatic indentation setting
-Plug 'tpope/vim-fugitive'                                                                      " Git stuff from within vim
+Plug 'tpope/vim-fugitive', { 'on': [ 'GStatus', 'GPush', 'GPull'] }                            " Git stuff from within vim
 Plug 'majutsushi/tagbar', { 'on' : 'Tagbar' }                                                  " Class/module browser
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }                                             " Undo tree
 Plug 'scrooloose/nerdtree', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] }         " Nerdtree
@@ -55,7 +55,7 @@ Plug 'tomtom/tcomment_vim'                                                      
 Plug 'junegunn/vim-easy-align'                                                                 " Some prettification
 
 " Language helpers
-Plug 'sheerun/vim-polyglot'                                                                    " Multiple language support
+Plug 'sheerun/vim-polyglot'                                                                    " Multiple language support ()
 Plug 'mhartington/nvim-typescript', { 'for': ['javascript', 'javascript.jsx', 'typescript'] }  " Typescript & Javascript support
 Plug 'neoclide/vim-jsx-improve', { 'for': ['javascript', 'javascript.jsx', 'typescript'] }     " Inproved JSX syntax
 Plug 'tpope/vim-markdown', { 'for': ['md', 'markdown'] }                                       " Better markdown support
@@ -65,7 +65,7 @@ Plug 'sebdah/vim-delve', { 'for': 'go' }                                        
 Plug 'racer-rust/vim-racer', { 'for': 'rust' }                                                 " Rust support
 Plug 'tmhedberg/matchit', { 'for': ['html','xml', 'tex'] }                                     " Match tags for html, xml latex etc
 Plug 'raimon49/requirements.txt.vim', { 'for': 'requirements' }                                " Requirements file
-Plug 'bpietravalle/vim-bolt' , { 'for': ['bolt'] }                                             " Bolt file syntax (firebase)
+" Plug 'bpietravalle/vim-bolt' , { 'for': ['bolt'] }                                             " Bolt file syntax ()
 
 " Language enhacements
 Plug '~/Documents/Projects/vim-jsontogo' , { 'for': ['go'] }                                   " Convert JSON to Go struct
@@ -78,7 +78,7 @@ Plug 'Chiel92/vim-autoformat', { 'on': 'Autoformat' }                           
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }                                  " Competion framework
 Plug 'Shougo/echodoc.vim'                                                                      " Show signature
 Plug 'Shougo/neco-vim', { 'for': 'vim' }                                                       " Completion for viml
-Plug 'sebastianmarkow/deoplete-rust', { 'for': ['rs', 'rust'] }                                " Rust autocompletion
+" Plug 'sebastianmarkow/deoplete-rust', { 'for': ['rs', 'rust'] }                                " Rust autocompletion ()
 " Plug 'wellle/tmux-complete.vim'                                                              " Tmux completion
 " Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }                      " nvim language client (nvim-completion-manager)
 
@@ -94,7 +94,7 @@ Plug 'radenling/vim-dispatch-neovim'                                            
 Plug 'mattn/webapi-vim'                                                                        " Web calls
 
 " Others
-Plug 'wakatime/vim-wakatime'                                                                   " Wakatime
+Plug 'wakatime/vim-wakatime'                                                                   " Wakatime ()
 Plug 'junegunn/vim-github-dashboard', { 'on': ['GHA', 'GHD']}                                  " Github dashboard
 
 call plug#end()
@@ -174,6 +174,9 @@ set backspace=2
 " Set split direction
 set splitbelow
 set splitright
+
+" Set updatetime
+set updatetime=2000
 
 " Default intent to 4 spaces ( auto switch based on type in code section )
 set expandtab
