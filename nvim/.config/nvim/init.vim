@@ -268,6 +268,9 @@ autocmd VimResized * wincmd =
 " Make sure it is javascript
 augroup Filetype javascript syntax=javascript
 
+" Make vim edit crontab
+autocmd filetype crontab setlocal nobackup nowritebackup
+
 
 
 
