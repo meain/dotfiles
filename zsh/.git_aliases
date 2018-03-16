@@ -40,6 +40,8 @@ alias gco='git checkout $(git branch | sed s:^..::g | fzf --height 40% --reverse
 alias gpl='git pull origin $(git branch | sed s:^..::g | fzf --height 40% --reverse)'
 alias gpu='git push origin $(git branch | sed s:^..::g | fzf --height 40% --reverse)'
 
+alias gap='git add -p && git commit'
+
 # Clean up merged branches
 alias gbcl='git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d'
 

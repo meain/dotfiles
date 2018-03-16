@@ -611,6 +611,7 @@ command! -bang -nargs=* Find
       \ call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>),
       \ 1, <bang>0)
 nnoremap <leader>c :Commands<CR>
+nnoremap <leader>d :FZF<CR>
 nnoremap <leader>b :Buffers<cr>
 nnoremap <leader>f :tabnew \| :Find<cr>
 let g:fzf_layout = { 'down': '~40%' }  " Default fzf layout
