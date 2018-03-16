@@ -469,7 +469,6 @@ function! GoogleSearchOpen()
 py3 << EOF
 import vim
 current_line = vim.current.line
-vim.command('bd')
 url = current_line.split('[#] ')[1]
 vim.command(f'silent !open {url}')
 EOF
@@ -479,7 +478,6 @@ function! GoogleSearchCopy()
 py3 << EOF
 import vim
 current_line = vim.current.line
-vim.command('bd')
 url = current_line.split('[#] ')[1]
 print (f'Copied {url}')
 vim.command(f'silent !echo {url} | pbcopy')
