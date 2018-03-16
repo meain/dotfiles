@@ -41,7 +41,7 @@ Plug 'prettier/vim-prettier', {
 
 " Code editing enhacements
 Plug 'tpope/vim-sleuth'                                                                        " Automatic indentation setting
-Plug 'tpope/vim-fugitive', { 'on': [ 'GStatus', 'GPush', 'GPull'] }                            " Git stuff from within vim
+Plug 'tpope/vim-fugitive'                                                                      " Git stuff from within vim
 Plug 'majutsushi/tagbar', { 'on' : 'Tagbar' }                                                  " Class/module browser
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }                                             " Undo tree
 Plug 'scrooloose/nerdtree', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] }         " Nerdtree
