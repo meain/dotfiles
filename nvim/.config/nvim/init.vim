@@ -47,7 +47,6 @@ Plug 'majutsushi/tagbar', { 'on' : 'Tagbar' }                                   
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }                                             " Undo tree
 Plug 'scrooloose/nerdtree', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] }         " Nerdtree
 Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] } " Git sign for nerdtree
-Plug 'tpope/vim-vinegar'                                                                       " Better netrw
 
 " Morph code
 Plug 'tpope/vim-surround'                                                                      " Surround
