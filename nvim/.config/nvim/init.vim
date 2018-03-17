@@ -4,7 +4,7 @@
 call plug#begin('~/.vim/plugged')
 
 " Visual enhancements
-" Plug 'kshenoy/vim-signature'                                                                   " Show marks ()
+Plug 'kshenoy/vim-signature'                                                                   " Show marks (slow)
 Plug 'itchyny/lightline.vim'                                                                   " Statusline plugin
 Plug 'flazz/vim-colorschemes'                                                                  " Vim colorscheme
 Plug 'Yggdroot/indentLine'                                                                     " Show indent
@@ -14,8 +14,8 @@ Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }                                      
 Plug 'ap/vim-css-color'                                                                        " Show colors
 
 " Added functinality
-Plug '~/Documents/Projects/_todo/vim-startify'                                                 " A fancy start page for vim ()
-Plug '~/Documents/Projects/_todo/vim-googler', { 'on': 'Google' }
+Plug '~/Documents/Projects/_todo/vim-startify'                                                 " A fancy start page for vim (slow)
+Plug '~/Documents/Projects/_todo/vim-googler', { 'on': 'Google' }                              " Google from within vim
 Plug 'justinmk/vim-sneak'                                                                      " Quickly sneak arround
 Plug 'wincent/loupe'                                                                           " Better search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }                              " Fzf
@@ -56,7 +56,7 @@ Plug 'tomtom/tcomment_vim'                                                      
 Plug 'junegunn/vim-easy-align'                                                                 " Some prettification
 
 " Language helpers
-Plug 'sheerun/vim-polyglot'                                                                    " Multiple language support ()
+Plug 'sheerun/vim-polyglot'                                                                    " Multiple language support (slow)
 Plug 'mhartington/nvim-typescript', { 'for': ['javascript', 'javascript.jsx', 'typescript'] }  " Typescript & Javascript support
 Plug 'neoclide/vim-jsx-improve', { 'for': ['javascript', 'javascript.jsx', 'typescript'] }     " Inproved JSX syntax
 Plug 'tpope/vim-markdown', { 'for': ['md', 'markdown'] }                                       " Better markdown support
@@ -66,7 +66,14 @@ Plug 'sebdah/vim-delve', { 'for': 'go' }                                        
 Plug 'racer-rust/vim-racer', { 'for': 'rust' }                                                 " Rust support
 Plug 'tmhedberg/matchit', { 'for': ['html','xml', 'tex'] }                                     " Match tags for html, xml latex etc
 Plug 'raimon49/requirements.txt.vim', { 'for': 'requirements' }                                " Requirements file
-" Plug 'bpietravalle/vim-bolt' , { 'for': ['bolt'] }                                             " Bolt file syntax ()
+
+" Custon text objects
+Plug 'kana/vim-textobj-user'                                                                   " Main repo
+Plug 'kana/vim-textobj-indent'                                                                 " Intent text object
+Plug 'kana/vim-textobj-line'                                                                   " Line text object
+Plug 'Julian/vim-textobj-brace'                                                                " Any kind of brace text object
+Plug 'Julian/vim-textobj-variable-segment'                                                     " Between underscore or camel case
+
 
 " Language enhacements
 Plug '~/Documents/Projects/vim-jsontogo' , { 'for': ['go'] }                                   " Convert JSON to Go struct
@@ -79,9 +86,9 @@ Plug 'Chiel92/vim-autoformat', { 'on': 'Autoformat' }                           
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }                                  " Competion framework
 Plug 'Shougo/echodoc.vim'                                                                      " Show signature
 Plug 'Shougo/neco-vim', { 'for': 'vim' }                                                       " Completion for viml
-" Plug 'sebastianmarkow/deoplete-rust', { 'for': ['rs', 'rust'] }                                " Rust autocompletion ()
+" Plug 'sebastianmarkow/deoplete-rust', { 'for': ['rs', 'rust'] }                              " Rust autocompletion (slow)
 " Plug 'wellle/tmux-complete.vim'                                                              " Tmux completion
-" Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }                      " nvim language client (nvim-completion-manager)
+" Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }                      " nvim language client
 
 " Snippets
 Plug 'SirVer/ultisnips'                                                                        " Snippet manager
@@ -90,12 +97,13 @@ Plug 'epilande/vim-es2015-snippets', { 'for': ['javascript', 'typescript'] }    
 Plug 'epilande/vim-react-snippets', { 'for': ['javascript', 'typescript', 'javascript.jsx'] }  " React snippets
 
 " Dependencies
-Plug 'vim-scripts/mru.vim'                                                                     " Save recently used files (v)
+Plug 'vim-scripts/mru.vim'                                                                     " Save recently used files (for v)
 Plug 'radenling/vim-dispatch-neovim'                                                           " Neovim support for vim-dispatch
 Plug 'mattn/webapi-vim'                                                                        " Web calls
+Plug 'tpope/vim-repeat'
 
 " Others
-Plug 'wakatime/vim-wakatime'                                                                   " Wakatime ()
+Plug 'wakatime/vim-wakatime'                                                                   " Wakatime (slow)
 Plug 'junegunn/vim-github-dashboard', { 'on': ['GHA', 'GHD']}                                  " Github dashboard
 
 call plug#end()
