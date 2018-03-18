@@ -12,6 +12,7 @@ Plug 'mhinz/vim-signify'                                                        
 Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }                                           " Hyper focus editing
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }                                                     " Centerify
 Plug 'ap/vim-css-color'                                                                        " Show colors
+Plug 'yuttie/comfortable-motion.vim'                                                           " Scroll up and down
 
 " Added functinality
 Plug '~/Documents/Projects/_todo/vim-startify'                                                 " A fancy start page for vim (slow)
@@ -344,10 +345,6 @@ vnoremap P "+P
 " Easier indentation - does dot loose selection
 vnoremap > >gv
 vnoremap < <gv
-
-" Navigaiion
-nnoremap <silent><Down> 10<c-y>:call Flash()<cr>
-nnoremap <silent><Up> 10<c-e>:call Flash()<cr>
 
 " Easy buffer switching
 nnoremap <silent><Leader><Tab> :tabnew\|:Startify<cr>
@@ -977,3 +974,8 @@ command! GitIgnoreGenerate execute "normal \<Plug>(fzf-gitignore)"
 " Googler
 nnoremap <silent><leader>s :Google <c-r><c-w><cr>
 vnoremap <leader>s y:Google <c-r>"<cr>
+
+" Comfortable motion
+let g:comfortable_motion_no_default_key_mappings = 1
+nnoremap <silent> <Down> :call comfortable_motion#flick(100)<CR>
+nnoremap <silent> <Up> :call comfortable_motion#flick(-100)<CR>
