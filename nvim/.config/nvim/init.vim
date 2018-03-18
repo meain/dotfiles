@@ -26,6 +26,7 @@ Plug 'christoomey/vim-tmux-navigator'                                           
 Plug 'suan/vim-instant-markdown', { 'for': 'markdown' }                                        " View markdown in browser while editing
 Plug 'ervandew/supertab'                                                                       " Autocomplete on tab
 Plug 'zirrostig/vim-schlepp'                                                                   " Better drag visuals
+Plug 'xtal8/traces.vim'                                                                        " Interactive subsititue
 Plug 'vim-scripts/restore_view.vim'                                                            " Restore file pointer
 Plug 'tpope/vim-dispatch'                                                                      " Async tasks in vim
 Plug 'airblade/vim-rooter'                                                                     " Change directory to project root
@@ -157,8 +158,8 @@ set mouse=a
 " Incremental search
 set incsearch
 
-" Incremental substitution
-set inccommand=split
+" Incremental substitution ( now using traces.vim)
+" set inccommand=split
 
 " Highlighted search results
 set hlsearch
