@@ -12,7 +12,7 @@ elif [ $VALUE -lt 90 ];then
   BATTERY_ICON=" "
 fi
 if [ "$SOURCE" = "AC" ]; then
-  echo "$VALUE"
+  echo "$VALUE"%
 else
-  echo "$VALUE"
+  echo "$VALUE"%
 fi
