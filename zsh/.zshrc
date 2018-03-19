@@ -1,4 +1,5 @@
 # Basic exports
+export ZSH=~/.oh-my-zsh
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export TERM=screen-256color-italic
@@ -26,29 +27,13 @@ echo ""
 fortune -s | fmt -c -w $COLUMNS
 echo ""
 
-# History management
-export HISTSIZE=100000
-export HISTFILE="$HOME/.zsh_history"
-export SAVEHIST=$HISTSIZE
-
-# Set some configs
-setopt autocd               # .. is shortcut for cd .. (etc)
-setopt autoparamslash       # tab completing directory appends a slash
-setopt autopushd            # cd automatically pushes old dir onto dir stack
-setopt clobber              # allow clobbering with >, no need to use >!
-setopt correct              # command auto-correction
-setopt correctall           # argument auto-correction
-setopt noflowcontrol        # disable start (C-s) and stop (C-q) characters
-setopt nonomatch            # unmatched patterns are left unchanged
-setopt histignorealldups    # filter duplicates from history
-# setopt histignorespace      # do nont record commands starting with a space
-setopt histverify           # confirm history expansion (!$, !!, !foo)
-setopt ignoreeof            # prevent accidental C-d from exiting shell
-setopt interactivecomments  # allow comments, even in interactive shells
-setopt printexitvalue       # for non-zero exit status
-setopt pushdignoredups      # do not push multiple copies of same dir onto stack
-setopt pushdsilent          # do not print dir stack after pushing/popping
-setopt sharehistory         # share history across shells
+# oh-my-zsh settings
+ZSH_THEME="snipe"
+DISABLE_AUTO_TITLE="true"
+COMPLETION_WAITING_DOTS="false"
+HIST_STAMPS="dd.mm.yyyy"
+plugins=(z zsh-syntax-highlighting zsh-autosuggestions)
+source $ZSH/oh-my-zsh.sh
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
@@ -56,7 +41,6 @@ if [[ -n $SSH_CONNECTION ]]; then
 else
   export EDITOR='nvim'
 fi
-
 
 # Make CTRL-Z background things and unbackground them.
 function fg-bg() {
@@ -69,19 +53,10 @@ function fg-bg() {
 zle -N fg-bg
 bindkey '^Z' fg-bg
 
-# Source shell theme
-source ~/.oh-my-zsh/themes/snipe.zsh-theme
-
-# Source plugins
-source ~/.zsh/z/z.sh
-source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-
 # Credentials
 source $HOME/.credentials
 
 # Source aliases
-source $HOME/.basic_aliases
 source $HOME/.common_aliases
 source $HOME/.other_aliases
 source $HOME/.vim_aliases
