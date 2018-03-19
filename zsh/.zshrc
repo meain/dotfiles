@@ -73,6 +73,7 @@ bindkey '^Z' fg-bg
 source ~/.oh-my-zsh/themes/snipe.zsh-theme
 
 # Source plugins
+source ~/.zsh/z/z.sh
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
