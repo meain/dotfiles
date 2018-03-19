@@ -45,7 +45,7 @@ function _git_time_since_commit() {
 local _return_status="%(?..%{$fg_bold[red]%})"
 
 PROMPT='
- ${_return_status}=%{$reset_color%}$(_prompt_git)%{$reset_color%} '
+ ${_return_status}=%{$reset_color%}$(_prompt_git)%{$reset_color%}%{$fg_bold[yellow]%}%B%(1j.#.) '
 RPROMPT='%{$fg_bold[black]%}%2~%{$reset_color%} $(_git_time_since_commit)'
 
 function zle-line-init zle-keymap-select {
