@@ -80,6 +80,7 @@ source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $HOME/.credentials
 
 # Source aliases
+source $HOME/.basic_aliases
 source $HOME/.common_aliases
 source $HOME/.other_aliases
 source $HOME/.vim_aliases
