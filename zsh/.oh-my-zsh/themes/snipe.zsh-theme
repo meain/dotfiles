@@ -1,19 +1,20 @@
-function _prompt_git() {
-    repo_path=$(git rev-parse --git-dir 2>/dev/null)
-    ref=$(git symbolic-ref HEAD 2> /dev/null) || ref="$(git rev-parse --short HEAD 2> /dev/null)"
-    if $(git rev-parse --is-inside-work-tree >/dev/null 2>&1); then
-        dirty=$(parse_git_dirty)
-        if [[ -n $dirty ]]; then
-            GIT_COLOR=%{$fg[red]%}
-        else
-            GIT_COLOR=%{$fg[green]%}
-        fi
-    fi
-    echo -n "$GIT_COLOR${ref/refs\/heads\//$PL_BRANCH_CHAR}${vcs_info_msg_0_%% }%{$reset_color%}"
-}
+setopt prompt_subst
+
+autoload -U colors
+colors
+
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:*' check-for-changes true
+zstyle ':vcs_info:*' stagedstr "%F{yellow}"
+zstyle ':vcs_info:*' unstagedstr "%F{red}"
+zstyle ':vcs_info:*' use-simple true
+zstyle ':vcs_info:git+set-message:*' hooks git-untracked
+zstyle ':vcs_info:git*:*' formats '%u%c%m%b' # default ' (%s)-[%b]%c%u-'
+zstyle ':vcs_info:git*:*' actionformats '%u%c%m%b|%a' # default ' (%s)-[%b|%a]%c%u-'
 
 function _git_time_since_commit() {
-# Only proceed if there is actually a commit.
+  # Only proceed if there is actually a commit.
   if git log -1 > /dev/null 2>&1; then
     # Get the last commit.
     last_commit=$(git log --pretty=format:'%at' -1 2> /dev/null)
@@ -42,17 +43,31 @@ function _git_time_since_commit() {
   fi
 }
 
-local _return_status="%(?..%{$fg_bold[red]%})"
+_vcs_info_wrapper() {
+  vcs_info
+  if [ -n "$vcs_info_msg_0_" ]; then
+    echo "${vcs_info_msg_0_}"
+  fi
+}
+
+function +vi-git-untracked() {
+  emulate -L zsh
+  if [[ -n $(git ls-files --exclude-standard --others 2> /dev/null) ]]; then
+    hook_com[unstaged]+="%F{blue}"
+  fi
+}
+
+local _return_status="%(?..%F{red})"
 
 PROMPT='
- ${_return_status}=%{$reset_color%}$(_prompt_git)%{$reset_color%}%{$fg_bold[yellow]%}%B%(1j.#.) '
-RPROMPT='%{$fg_bold[black]%}%2~%{$reset_color%} $(_git_time_since_commit)'
+${_return_status}=%f%F{green}$( _vcs_info_wrapper )%F{yellow}%B%(1j.#.) '
+RPROMPT='%F{black}%2~ $(_git_time_since_commit)'
 
 function zle-line-init zle-keymap-select {
-    NORMAL_COLOR="%{$fg_bold[blue]%}"
-    INSERT_COLOR="%{$fg_bold[black]%}"
-    RPS1="${${KEYMAP/vicmd/$NORMAL_COLOR}/(main|viins)/$INSERT_COLOR}%2~%{$reset_color%} $(_git_time_since_commit)"
-    zle reset-prompt
+NORMAL_COLOR="%{$fg_bold[blue]%}"
+INSERT_COLOR="%{$fg_bold[black]%}"
+RPS1="${${KEYMAP/vicmd/$NORMAL_COLOR}/(main|viins)/$INSERT_COLOR}%2~%{$reset_color%} $(_git_time_since_commit)"
+zle reset-prompt
 }
 zle -N zle-line-init
 zle -N zle-keymap-select
