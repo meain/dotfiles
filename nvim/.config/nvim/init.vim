@@ -101,9 +101,10 @@ Plug 'epilande/vim-react-snippets', { 'for': ['javascript', 'typescript', 'javas
 Plug 'vim-scripts/mru.vim'                                                                     " Save recently used files (for v)
 Plug 'radenling/vim-dispatch-neovim'                                                           " Neovim support for vim-dispatch
 Plug 'mattn/webapi-vim'                                                                        " Web calls
-Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-repeat'                                                                        " Repeat plugins with .
 
 " Others
+Plug 'kristijanhusak/vim-carbon-now-sh', { 'on': 'CarbonNowSh' }                               " Polaroid for code
 Plug 'wakatime/vim-wakatime'                                                                   " Wakatime (slow)
 Plug 'junegunn/vim-github-dashboard', { 'on': ['GHA', 'GHD']}                                  " Github dashboard
 
