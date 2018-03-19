@@ -978,5 +978,5 @@ vnoremap <leader>s y:Google <c-r>"<cr>
 
 " Comfortable motion
 let g:comfortable_motion_no_default_key_mappings = 1
-nnoremap <silent> <Down> :call comfortable_motion#flick(100)<CR>
-nnoremap <silent> <Up> :call comfortable_motion#flick(-100)<CR>
+nnoremap <silent> <Up> :call comfortable_motion#flick(100)<CR>
+nnoremap <silent> <Down> :call comfortable_motion#flick(-100)<CR>
