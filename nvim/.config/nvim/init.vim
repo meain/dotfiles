@@ -47,7 +47,7 @@ Plug 'tpope/vim-sleuth'                                                         
 Plug 'tpope/vim-fugitive'                                                                      " Git stuff from within vim
 Plug 'majutsushi/tagbar', { 'on' : 'Tagbar' }                                                  " Class/module browser
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }                                             " Undo tree
-Plug 'scrooloose/nerdtree', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] }         " Nerdtree
+Plug 'scrooloose/nerdtree'                                                                     " Nerdtree
 Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] } " Git sign for nerdtree
 
 " Morph code
@@ -74,6 +74,7 @@ Plug 'kana/vim-textobj-indent'                                                  
 Plug 'kana/vim-textobj-line'                                                                   " Line text object
 Plug 'Julian/vim-textobj-brace'                                                                " Any kind of brace text object
 Plug 'Julian/vim-textobj-variable-segment'                                                     " Between underscore or camel case
+Plug 'junegunn/vim-after-object'                                                               " Things after specific symbols
 
 
 " Language enhacements
@@ -104,6 +105,7 @@ Plug 'mattn/webapi-vim'                                                         
 Plug 'tpope/vim-repeat'                                                                        " Repeat plugins with .
 
 " Others
+Plug 'junegunn/vim-online-thesaurus', { 'on': 'OnlineThesaurusCurrentWord' }                   " Online thesaurus
 Plug 'kristijanhusak/vim-carbon-now-sh', { 'on': 'CarbonNowSh' }                               " Polaroid for code
 Plug 'wakatime/vim-wakatime'                                                                   " Wakatime (slow)
 Plug 'junegunn/vim-github-dashboard', { 'on': ['GHA', 'GHD']}                                  " Github dashboard
@@ -981,3 +983,6 @@ vnoremap <leader>s y:Google <c-r>"<cr>
 let g:comfortable_motion_no_default_key_mappings = 1
 nnoremap <silent> <Up> :call comfortable_motion#flick(100)<CR>
 nnoremap <silent> <Down> :call comfortable_motion#flick(-100)<CR>
+
+" After object
+autocmd VimEnter * call after_object#enable('=', ':', '-', '#', ' ')
