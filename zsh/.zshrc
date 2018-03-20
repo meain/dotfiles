@@ -5,7 +5,7 @@ export LANG=en_US.UTF-8
 export TERM=screen-256color-italic
 
 # Golang
-export GOPATH=~/Documents/Projects/goworkspace
+export GOPATH=~/.go
 export GOBIN=$GOPATH/bin
 
 # Rust

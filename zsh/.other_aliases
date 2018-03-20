@@ -14,3 +14,5 @@ alias stfu="osascript -e 'set volume output muted true'"
 alias pumpitup="osascript -e 'set volume 10'"
 
 alias sourceworkon='source /usr/local/bin/virtualenvwrapper.sh'
+
+alias slack='slack-term -config ~/.slack-term.json'
