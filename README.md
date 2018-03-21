@@ -20,15 +20,9 @@ This will symlink the necessary files
 
 [`pandoc`](http://pandoc.org/index.html) + [`lynx`](http://lynx.browser.org/) view markdown in shell
 
-[`bash-it`](https://github.com/Bash-it/bash-it) better bash
-
-[`chromix`](https://github.com/smblott-github/chromix) refresh chrome on file save
-
 [`fzf`](https://github.com/junegunn/fzf) the most badass fuzzy find
 
 [`mru.vim`](https://github.com/vim-scripts/mru.vim) need for `v` & `vv`
-
-[`thefuck`](https://github.com/nvbn/thefuck) correct your previous command
 
 [`hub`](https://hub.github.com/) better git
 
@@ -47,6 +41,8 @@ This will symlink the necessary files
 [`cmus`](https://cmus.github.io/) a beautiful music player in the shell
 
 [`vtop`](https://github.com/MrRio/vtop) a pretty `top` command with ascii art
+
+[`thefuck`](https://github.com/nvbn/thefuck) correct your previous command
 
 ## Screenshots
 
