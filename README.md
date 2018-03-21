@@ -30,7 +30,9 @@ This will symlink the necessary files
 
 ## Other stuff you might wanna use
 
-[`mutt`](http://www.mutt.org/) why use a web browser to check mail?
+[`alacritty`](https://github.com/jwilm/alacritty) The fasters terminal emulator you can get
+
+[`neomutt`](https://www.neomutt.org/) why use a web browser to check mail?
 
 [`irssi`](https://irssi.org/) the best irc client
 
@@ -43,6 +45,10 @@ This will symlink the necessary files
 [`vtop`](https://github.com/MrRio/vtop) a pretty `top` command with ascii art
 
 [`thefuck`](https://github.com/nvbn/thefuck) correct your previous command
+
+[`ripgrep`](https://github.com/BurntSushi/ripgrep) You think ag is fast? Try this
+
+[`colorls`](https://github.com/athityakumar/colorls) Much prettier ls
 
 ## Screenshots
 
