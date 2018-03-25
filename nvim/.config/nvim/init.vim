@@ -15,8 +15,8 @@ Plug 'ap/vim-css-color'                                                         
 Plug 'yuttie/comfortable-motion.vim'                                                           " Scroll up and down
 
 " Added functinality
-Plug '~/Documents/Projects/_todo/vim-startify'                                                 " A fancy start page for vim (slow)
-Plug '~/Documents/Projects/_todo/vim-googler', { 'on': 'Google' }                              " Google from within vim
+Plug 'meain/vim-startify'                                                 " A fancy start page for vim (slow)
+Plug 'meain/vim-googler', { 'on': 'Google' }                              " Google from within vim
 Plug 'justinmk/vim-sneak'                                                                      " Quickly sneak arround
 Plug 'wincent/loupe'                                                                           " Better search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }                              " Fzf
@@ -58,7 +58,7 @@ Plug 'junegunn/vim-easy-align'                                                  
 
 " Language helpers
 Plug 'sheerun/vim-polyglot'                                                                    " Multiple language support (slow)
-Plug 'mhartington/nvim-typescript', { 'for': ['javascript', 'javascript.jsx', 'typescript'] }  " Typescript & Javascript support
+Plug 'mhartington/nvim-typescript'                                                             " Typescript & Javascript support
 Plug 'neoclide/vim-jsx-improve', { 'for': ['javascript', 'javascript.jsx', 'typescript'] }     " Inproved JSX syntax
 Plug 'tpope/vim-markdown', { 'for': ['md', 'markdown'] }                                       " Better markdown support
 Plug 'davidhalter/jedi-vim', { 'for': ['python'] }                                             " Python helper
