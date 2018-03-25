@@ -23,6 +23,28 @@ class ${1:`!v expand('%:t:r')`} extends React.Component<Props, State> {
 export default $1
 endsnippet
 
+snippet nrcc "React Class Compnent"
+import React, { Component} from 'react';
+import styles from './${2:$1}.css';
+
+class $1 extends Component {
+
+	constructor(props) {
+		super(props);
+	}
+
+	render() {
+		return (
+			<div className='$1'>
+
+			</div>
+		);
+	}
+}
+
+export default $1;
+endsnippet
+
 snippet ss "React set state" b
 this.setState({
 	...this.state,
