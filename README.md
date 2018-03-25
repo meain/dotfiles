@@ -1,10 +1,19 @@
-# Dotfiles
+<h1 align="center">Dotfiles</h1>
+<p align="center"> If there is a shell, there is a way</p>
+<p align="center">
+  <img src="https://img.shields.io/badge/Editor-neovim-brightgreen.svg" />
+  <img src="https://img.shields.io/badge/Terminal-Alacritty-orange.svg" />
+  <img src="https://img.shields.io/badge/Shell-zsh-yellow.svg" />
+  <img src="https://img.shields.io/badge/Font-Code%20New%20Roman-lightgrey.svg" />
+  <img src="https://img.shields.io/badge/Mail-neomutt-red.svg" />
+  <img src="https://img.shields.io/badge/IRC-irssi-blue.svg" />
+  <br><br>
+  <img src="https://i.imgur.com/pVGr7tX.png">
+</p>
 
 **Hey**, these are the dotfiles that I use.
 
 It includes my `[z/ba/fi]sh`, `[v/nv/mv/gv]im`, `emacs`, `tmux`, `git` config files.
-
-> Currently using [`zsh`](https://github.com/meain/dotfiles/tree/master/zsh) and [`nvim`](https://github.com/meain/dotfiles/tree/master/nvim)
 
 ## How to use
 
@@ -12,7 +21,13 @@ It includes my `[z/ba/fi]sh`, `[v/nv/mv/gv]im`, `emacs`, `tmux`, `git` config fi
 
 For example if you need my `nvim` config clone the repo then inside the repo use:
 `stow nvim`
-This will symlink the necessary files
+This will symlink the necessary files.
+
+```
+git clone https://github.com/meain/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
+stow nvim
+```
 
 ## Dependencies
 
