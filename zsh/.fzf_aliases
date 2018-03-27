@@ -22,3 +22,4 @@ get_command_from_history(){
     history | fzf | awk '{$1=$2=$3=""; print $0}'
 }
 alias hf='$(get_command_from_history)'
+alias pp='cd $(find ~/Documents/Projects -type d -maxdepth 4 | sed "s/^\/Users\/meain\/Documents\/Projects//g" | fzf --preview "tree -L 2 ~/Documents/Projects{}" )'
