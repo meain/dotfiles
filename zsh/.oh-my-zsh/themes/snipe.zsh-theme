@@ -58,7 +58,11 @@ function +vi-git-untracked() {
 }
 
 _nesting_count=`expr $SHLVL - 1`
-local _nesting_level="$(printf '=%.0s' {1..$_nesting_count})"
+if [[ -n "$TMUX" ]] ; then
+  local _nesting_level="$(printf '=%.0s' {1..$_nesting_count})"
+else
+  local _nesting_level="!$(printf '=%.0s' {1..$SHLVL})"
+fi
 
 local _return_status="%(?..%F{red})"
 
