@@ -57,10 +57,13 @@ function +vi-git-untracked() {
   fi
 }
 
+_nesting_count=`expr $SHLVL - 1`
+local _nesting_level="$(printf '=%.0s' {1..$_nesting_count})"
+
 local _return_status="%(?..%F{red})"
 
 PROMPT='
-${_return_status}=%f%F{green}$( _vcs_info_wrapper )%F{yellow}%B%(1j.#.) '
+${_return_status}${_nesting_level}%f%F{green}$( _vcs_info_wrapper )%F{yellow}%B%(1j.#.) '
 RPROMPT='%F{black}%2~ $(_git_time_since_commit)'
 
 function zle-line-init zle-keymap-select {
