@@ -15,8 +15,8 @@ Plug 'ap/vim-css-color'                                                         
 Plug 'yuttie/comfortable-motion.vim'                                                           " Scroll up and down
 
 " Added functinality
-Plug 'meain/vim-startify'                                                 " A fancy start page for vim (slow)
-Plug 'meain/vim-googler', { 'on': 'Google' }                              " Google from within vim
+Plug 'meain/vim-startify'                                                                      " A fancy start page for vim (slow)
+Plug 'meain/vim-googler', { 'on': 'Google' }                                                   " Google from within vim
 Plug 'justinmk/vim-sneak'                                                                      " Quickly sneak arround
 Plug 'wincent/loupe'                                                                           " Better search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }                              " Fzf
@@ -324,6 +324,14 @@ nnoremap j gj
 nnoremap k gk
 vnoremap j gj
 vnoremap k gk
+
+" Easier line navigatin
+nnoremap H ^
+nnoremap L $
+
+" Eaier quit and no ex
+nnoremap q :q<cr>
+nnoremap Q q
 
 "Get back to where you were easily
 nnoremap gg mpgg
