@@ -19,12 +19,12 @@ draw_bold_text_with_bright_colors: true
 
 font:
   normal:
-    family: Monaco For Powerline
+    family: Code New Roman
   bold:
-    family: Monaco For Powerline
+    family: Code New Roman
   italic:
-    family: Monaco For Powerline
-  size: 14.5
+    family: Code New Roman
+  size: 17.0
   offset:
     x: 0.0
     y: 0.0
@@ -36,12 +36,9 @@ font:
 custom_cursor_colors: false
 
 colors:
-  # Default colors
   primary:
     background: '0x1f1f1f'
     foreground: '0xe5e1d8'
-
-  # Normal colors
   normal:
     black:   '0x000000'
     red:     '0xf7786d'
@@ -50,9 +47,7 @@ colors:
     blue:    '0x6ebaf8'
     magenta: '0xef88ff'
     cyan:    '0x90fdf8'
-    white:   '0xe5e1d8'
-
-  # Bright colors
+    white:   '0x424242'
   bright:
     black:   '0xb4b4b4'
     red:     '0xf99f92'
@@ -61,7 +56,7 @@ colors:
     blue:    '0xb3d2ff'
     magenta: '0xe5bdff'
     cyan:    '0xc2fefa'
-    white: '0xffffff'
+    white:   '0xffffff'
 
 visual_bell:
   animation: EaseOutExpo

@@ -13,7 +13,6 @@ Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }                            
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }                                                     " Centerify
 Plug 'ap/vim-css-color'                                                                        " Show colors
 Plug 'yuttie/comfortable-motion.vim'                                                           " Scroll up and down
-Plug 'ryanoasis/vim-devicons'                                                                  " Icons in vim
 
 " Added functinality
 Plug 'meain/vim-startify'                                                 " A fancy start page for vim (slow)
@@ -676,9 +675,6 @@ let g:startify_skiplist = [
     \ '\.vimgolf',
     \ '^/tmp',
     \ ]
-function! StartifyEntryFormat()
-    return 'WebDevIconsGetFileTypeSymbol(absolute_path) ." ". entry_path'
-endfunction
 
 " Drag Visuals
 let g:Schlepp#reindent = 1
@@ -791,18 +787,18 @@ function! LightlineLinterWarnings() abort
   let l:counts = ale#statusline#Count(bufnr(''))
   let l:all_errors = l:counts.error + l:counts.style_error
   let l:all_non_errors = l:counts.total - l:all_errors
-  return l:counts.total == 0 ? '' : printf(' %d', all_non_errors)
+  return l:counts.total == 0 ? '' : printf('%d', all_non_errors)
 endfunction
 
 function! LightlineLinterErrors() abort
   let l:counts = ale#statusline#Count(bufnr(''))
   let l:all_errors = l:counts.error + l:counts.style_error
-  return l:counts.total == 0 ? '' : printf(' %d', all_errors)
+  return l:counts.total == 0 ? '' : printf('%d', all_errors)
 endfunction
 
 function! LightlineLinterOK() abort
   let l:counts = ale#statusline#Count(bufnr(''))
-  return l:counts.total == 0 ? '' : ''
+  return l:counts.total == 0 ? 'OK' : ''
 endfunction
 
 " Sleuth auto indent
@@ -990,11 +986,3 @@ nnoremap <silent> <Down> :call comfortable_motion#flick(-100)<CR>
 
 " After object
 autocmd VimEnter * call after_object#enable('=', ':', '-', '#', ' ')
-
-" DevIcons
-let g:webdevicons_enable = 1
-let g:WebDevIconsOS = 'Darwin'
-let g:webdevicons_enable_nerdtree = 1
-let g:DevIconsEnableFoldersOpenClose = 1
-let g:WebDevIconsUnicodeDecorateFolderNodes = 1
-let g:WebDevIconsNerdTreeAfterGlyphPadding = '  '
