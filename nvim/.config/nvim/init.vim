@@ -344,6 +344,10 @@ vnoremap ; :
 nnoremap ' ;
 vnoremap ' ;
 
+" Quickly repeat previous command
+nnoremap : @:
+vnoremap : @:
+
 " Use the clipboard for copy and paste
 nnoremap y "+y
 nnoremap Y "+y$
@@ -427,6 +431,10 @@ nnoremap <silent><leader>o :only<cr>
 
 " New tab
 nnoremap <silent><leader>t :tabnew \| :Startify<cr>
+
+" Easier switching of quickfix list items
+nnoremap <silent><leader>j :cnext<cr>
+nnoremap <silent><leader>k :cprev<cr>
 
 
 
