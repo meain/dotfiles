@@ -1,18 +1,14 @@
-alias m="offlineimap && neomutt"
-alias nm=neomutt
 alias j=z
-
-alias k='python ~/bin/terminalnote.py'
-alias kk='python ~/bin/terminalnote.py k'
 
 alias ydp='youtube-dl -o "%(playlist_index)s_%(title)s.%(ext)s"'
 
 alias map='telnet mapscii.me'
 alias weather='curl -s wttr.in/thrissur | head -5 | tail -4'
 
-alias stfu="osascript -e 'set volume output muted true'"
-alias pumpitup="osascript -e 'set volume 10'"
-
 alias sourceworkon='source /usr/local/bin/virtualenvwrapper.sh'
 
+alias nm=neomutt
+alias m="offlineimap && neomutt"
+alias qrf='qr-filetransfer'
+alias of='offlineimap'
 alias slack='slack-term -config ~/.slack-term.json'
