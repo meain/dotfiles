@@ -23,3 +23,4 @@ get_command_from_history(){
 }
 alias hf='$(get_command_from_history)'
 alias pp='cd $(find ~/Documents/Projects -type d -maxdepth 4 | sed "s/^\/Users\/meain\/Documents\/Projects//g" | fzf --preview "tree -L 2 ~/Documents/Projects{}" )'
+alias jj='cd $(find . -type d -maxdepth 6 | fzf --preview "tree -L 2 {}" )'
