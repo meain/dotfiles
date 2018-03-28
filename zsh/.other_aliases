@@ -12,3 +12,5 @@ alias m="offlineimap && neomutt"
 alias qrf='qr-filetransfer'
 alias of='offlineimap'
 alias slack='slack-term -config ~/.slack-term.json'
+
+alias brew='HOMEBREW_NO_AUTO_UPDATE=1 brew'
