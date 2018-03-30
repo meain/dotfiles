@@ -16,6 +16,7 @@ Plug 'yuttie/comfortable-motion.vim'                                            
 
 " Added functinality
 Plug 'meain/vim-startify'                                                                      " A fancy start page for vim (slow)
+Plug 'vimwiki/vimwiki'                                                                         " Better note taking with vim
 Plug 'meain/vim-googler', { 'on': 'Google' }                                                   " Google from within vim
 Plug 'justinmk/vim-sneak'                                                                      " Quickly sneak arround
 Plug 'wincent/loupe'                                                                           " Better search
@@ -75,7 +76,6 @@ Plug 'kana/vim-textobj-line'                                                    
 Plug 'Julian/vim-textobj-brace'                                                                " Any kind of brace text object
 Plug 'Julian/vim-textobj-variable-segment'                                                     " Between underscore or camel case
 Plug 'junegunn/vim-after-object'                                                               " Things after specific symbols
-
 
 " Language enhacements
 Plug '~/Documents/Projects/vim-jsontogo' , { 'for': ['go'] }                                   " Convert JSON to Go struct
@@ -388,7 +388,7 @@ autocmd FileType help nnoremap <buffer> <Enter> <Enter>
 autocmd FileType vim-plug nnoremap <buffer> <Enter> <Enter>
 
 " Go back smoother
-nnoremap \ <c-o>
+nnoremap <silent>\ <c-o>
 
 " Shady remaps
 imap ;; <Esc>A;
@@ -1002,3 +1002,9 @@ nnoremap <silent> <Down> :call comfortable_motion#flick(-100)<CR>
 
 " After object
 autocmd VimEnter * call after_object#enable('=', ':', '-', '#', ' ')
+
+" Vim instant markdown
+let g:instant_markdown_autostart = 0
+
+" Vimwiki
+let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}

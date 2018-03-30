@@ -1,7 +1,7 @@
 # cd > cd&&ls
 function list_all() {
-    emulate -L zsh
-    ls
+  emulate -L zsh
+  ls
 }
 chpwd_functions=(${chpwd_functions[@]} "list_all")
 
@@ -11,3 +11,10 @@ rmd () {
 }
 
 alias readme='rmd README.md'
+
+n () {
+  cd ~/.notes/$1
+}
+no () {
+  cd ~/.notes/$1 && vim index.md
+}
