@@ -344,10 +344,6 @@ vnoremap ; :
 nnoremap ' ;
 vnoremap ' ;
 
-" Quickly repeat previous command
-nnoremap : @:
-vnoremap : @:
-
 " Use the clipboard for copy and paste
 nnoremap y "+y
 nnoremap Y "+y$
