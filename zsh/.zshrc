@@ -102,5 +102,7 @@ bindkey '^r' history-incremental-search-backward
 export KEYTIMEOUT=1
 
 # updates PATH for Google Cloud SDK && add shell completion for gcloud
-if [ -f '/Users/abinsimon/google-cloud-sdk/path.zsh.inc' ]; then source '/Users/abinsimon/google-cloud-sdk/path.zsh.inc'; fi
-if [ -f '/Users/abinsimon/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/abinsimon/google-cloud-sdk/completion.zsh.inc'; fi
+GOOGLE_CLOUD='/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
+GOOGLE_CLOUD_COMPLETIONS='/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc]'
+if [ -f '$GOOGLE_CLOUD' ]; then source '$GOOGLE_CLOUD'; fi
+if [ -f '$GOOGLE_CLOUD_COMPLETIONS' ]; then source '$GOOGLE_CLOUD_COMPLETIONS'; fi
