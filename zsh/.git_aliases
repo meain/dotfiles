@@ -31,6 +31,7 @@ alias ggg='git lh'
 alias gggg='git hi'
 
 alias gd='git diff'
+alias gds='git diff --staged'
 
 alias gdp="gd @{1}.."
 alias glp="gl @{1}.."
