@@ -5,7 +5,6 @@ call plug#begin('~/.vim/plugged')
 
 " Visual enhancements
 Plug 'kshenoy/vim-signature'                                                                   " Show marks (slow)
-Plug 'itchyny/lightline.vim'                                                                   " Statusline plugin
 Plug 'flazz/vim-colorschemes'                                                                  " Vim colorscheme
 Plug 'Yggdroot/indentLine'                                                                     " Show indent
 Plug 'mhinz/vim-signify'                                                                       " Git diff icons in gutter
@@ -303,7 +302,7 @@ command! Wq wq
 command! W w
 
 " Remove whitespace at save
-autocmd BufWritePre *.py,*.vim,*.css,*.js,*.html,*.cpp,*.c,*.java,*.go,*.rs,*.ts,*.cljs,*.clj :%s/\s\+$//e
+autocmd BufWritePre *.py,*.css,*.js,*.html,*.cpp,*.c,*.java,*.go,*.rs,*.ts,*.cljs,*.clj :%s/\s\+$//e
 
 " Fix overflow ( above 80 )
 command! FixOverflow :normal! gqap
@@ -706,7 +705,6 @@ let g:ale_sign_warning = '!!'
 
 highlight ALEErrorSign ctermfg=196 guifg=#ff0000 ctermbg=234 guibg=#1f1f1f
 highlight ALEWarningSign ctermfg=226 guifg=#ffff00 ctermbg=234 guibg=#1f1f1f
-autocmd User ALELint call lightline#update()
 let g:ale_statusline_format = ['X %d', '! %d', '⬥ ok']
 let g:ale_linters = {
 \   'javascript': ['flow', 'eslint'],
@@ -747,71 +745,6 @@ let g:signify_sign_change            = '|~'
 highlight SignifySignAdd    cterm=bold gui=bold  ctermfg=119 guifg=#87ff5f
 highlight SignifySignDelete cterm=bold gui=bold  ctermfg=167 guifg=#d75f5f
 highlight SignifySignChange cterm=bold gui=bold  ctermfg=227 guifg=#ffff5f
-
-" Lightline
-let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ 'active': {
-      \   'right': [ [ 'percent' ],
-      \              [ 'lineinfo' ],
-      \              [ 'linter_warnings', 'linter_errors', 'linter_ok'] ],
-      \   'left': [ [ 'paste' ],
-      \             ['filename', 'modified', 'cutpoint' ] ]
-      \ },
-      \   'tabline': {
-      \     'left': [ [ 'tabs' ] ],
-      \     'right': [ [ 'close' ] ]
-      \   },
-      \   'tab': {
-      \     'active': [ 'tabnum', 'filename', 'modified' ],
-      \     'inactive': [ 'tabnum', 'filename', 'modified' ]
-      \ },
-      \ 'component': {
-      \   'cutpoint': '%<'
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'GitBranch',
-      \   'percent': 'LinePercent',
-      \ },
-      \ 'component_expand': {
-      \   'linter_warnings': 'LightlineLinterWarnings',
-      \   'linter_errors': 'LightlineLinterErrors',
-      \   'linter_ok': 'LightlineLinterOK'
-      \ },
-      \ 'component_type': {
-      \   'readonly': 'error',
-      \   'linter_warnings': 'warning',
-      \   'linter_errors': 'error'
-      \ },
-      \'mode_map': {
-      \   'n': '! ', 'i': '! ', 'R': '! ', 'v': '! ', 'V': '| ', "\<C-v>": ': ',
-      \   'c': '! ', 's': 'se', 'S': 'sl', "\<C-s>": 'sl', 't': '! '
-      \ },
-      \ 'separator': { 'left': '', 'right': '' },
-      \ 'subseparator': { 'left': '', 'right': '' },
-      \ }
-
-function! LinePercent()
-    return line('.') * 100 / line('$') . '%'
-endfunction
-
-function! LightlineLinterWarnings() abort
-  let l:counts = ale#statusline#Count(bufnr(''))
-  let l:all_errors = l:counts.error + l:counts.style_error
-  let l:all_non_errors = l:counts.total - l:all_errors
-  return l:counts.total == 0 ? '' : printf('%d', all_non_errors)
-endfunction
-
-function! LightlineLinterErrors() abort
-  let l:counts = ale#statusline#Count(bufnr(''))
-  let l:all_errors = l:counts.error + l:counts.style_error
-  return l:counts.total == 0 ? '' : printf('%d', all_errors)
-endfunction
-
-function! LightlineLinterOK() abort
-  let l:counts = ale#statusline#Count(bufnr(''))
-  return l:counts.total == 0 ? 'OK' : ''
-endfunction
 
 " Sleuth auto indent
 let g:sleuth_automatic = 1
@@ -1004,3 +937,5 @@ let g:instant_markdown_autostart = 0
 
 " Vimwiki
 let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
+
+source ~/.config/nvim/statusline.vim
