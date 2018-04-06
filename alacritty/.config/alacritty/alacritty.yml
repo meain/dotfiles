@@ -37,7 +37,7 @@ custom_cursor_colors: false
 
 colors:
   primary:
-    background: '0x1f1f1f'
+    background: '0x1c1c1c'
     foreground: '0xe5e1d8'
   normal:
     black:   '0x000000'
