@@ -13,8 +13,9 @@ endfunction
 
 set statusline=
 set statusline+=%#LineNr#
-set statusline+=\ %f
+set statusline+=\ %t
 set statusline+=%m
+set statusline+=\ %q
 set statusline+=%=
 set statusline+=%#ALEWarningSign#
 set statusline+=%{LinterStatus()}

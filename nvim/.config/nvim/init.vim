@@ -4,8 +4,8 @@
 call plug#begin('~/.vim/plugged')
 
 " Visual enhancements
-Plug 'kshenoy/vim-signature'                                                                   " Show marks (slow)
 Plug 'flazz/vim-colorschemes'                                                                  " Vim colorscheme
+Plug 'chriskempson/base16-vim'
 Plug 'Yggdroot/indentLine'                                                                     " Show indent
 Plug 'mhinz/vim-signify'                                                                       " Git diff icons in gutter
 Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }                                           " Hyper focus editing
