@@ -382,6 +382,7 @@
         :ensure t
         :init
             (progn
+                (setq ispell-program-name "/usr/local/bin/aspell")
                 (add-hook 'prog-mode-hook (lambda () (flyspell-prog-mode)))
                 (add-hook 'text-mode-hook (lambda () (flyspell-mode)))
                 ;; (define-key flyspell-mouse-map [down-mouse-2] nil)
@@ -681,7 +682,7 @@
       (use-package wakatime-mode
           :ensure t
           :init
-              (custom-set-variables '(wakatime-api-key credential-store/wakatime-api-key))
+              (setq wakatime-cli-path "/usr/local/bin/wakatime" )
               (global-wakatime-mode))
     #+END_SRC
 *** Mode icons

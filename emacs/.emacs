@@ -60,8 +60,7 @@
    (quote
     (jedi focus wakatime-mode which-key web-mode waher-theme use-package try spaceline smooth-scrolling smartparens shell-pop sane-term restclient rainbow-delimiters quickrun projectile persistent-scratch osx-clipboard org-bullets olivetti neotree monokai-theme magit hiwin helm flycheck fiplr expand-region evil-surround evil-search-highlight-persist evil-leader evil-commentary elpy drag-stuff diff-hl dashboard autopair auto-complete all-the-icons-dired ag)))
  '(wakatime-api-key credential-store/wakatime-api-key)
- '(wakatime-cli-path
-   "/Library/Frameworks/Python.framework/Versions/2.7/bin/wakatime")
+ '(wakatime-cli-path "/usr/local/bin/wakatime")
  '(wakatime-python-bin nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
