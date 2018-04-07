@@ -202,7 +202,6 @@ set noshowmode
 " Show invisibles
 set list
 set listchars=tab:\ \ ,eol:¬,trail:⋅
-autocmd ColorScheme * highlight NonText ctermfg=238 guifg=#444444
 
 " Show line breaks
 set showbreak=↪
@@ -230,7 +229,17 @@ set foldlevelstart=10
 set foldnestmax=10
 
 " ColorScheme change ( redblack )
+autocmd ColorScheme redblack highlight Normal guibg=#000000 ctermbg=0
 autocmd ColorScheme redblack highlight SignColumn guibg=#000000 ctermbg=0
+autocmd ColorScheme redblack highlight LineNr guibg=#000000 ctermbg=0
+autocmd ColorScheme redblack highlight VertSplit guibg=#000000 ctermbg=0
+autocmd ColorScheme redblack highlight StatusLine guifg=#dadada ctermfg=253 ctermbg=NONE guibg=NONE gui=NONE cterm=NONE
+autocmd ColorScheme redblack highlight StatusLineNC guifg=#878787 ctermfg=102 ctermbg=NONE guibg=NONE gui=NONE cterm=NONE
+autocmd ColorScheme redblack highlight StartifyFile guifg=#eeeeee ctermfg=255 ctermbg=NONE gui=NONE cterm=NONE
+autocmd ColorScheme redblack highlight ColorColumn ctermbg=154 guibg=#212121
+autocmd ColorScheme redblack highlight CursorLine ctermbg=154 guibg=#212121
+autocmd ColorScheme redblack highlight WildMenu ctermfg=red guifg=red ctermbg=NONE guibg=NONE
+autocmd ColorScheme redblack highlight NonText ctermfg=238 guifg=#444444
 
 " ColorScheme change ( janah )
 autocmd ColorScheme janah highlight Normal ctermbg=234 guibg=#1f1f1f
@@ -242,28 +251,29 @@ autocmd ColorScheme janah highlight StatusLineNC guifg=#878787 ctermfg=102 cterm
 autocmd ColorScheme janah highlight SignifySignAdd    cterm=bold  ctermfg=119 ctermbg=234 guibg=#1f1f1f
 autocmd ColorScheme janah highlight SignifySignDelete cterm=bold  ctermfg=167 ctermbg=234 guibg=#1f1f1f
 autocmd ColorScheme janah highlight SignifySignChange cterm=bold  ctermfg=227 ctermbg=234 guibg=#1f1f1f
+autocmd ColorScheme janah highlight ColorColumn ctermbg=154 ctermfg=0 guibg=#474747 guifg=#ffffff
+autocmd ColorScheme janah highlight CursorLine ctermbg=154 guibg=#474747
+autocmd ColorScheme janah highlight WildMenu guifg=#df005f ctermfg=161 guibg=NONE ctermbg=NONE gui=bold cterm=bold
+autocmd ColorScheme janah highlight NonText ctermfg=238 guifg=#444444
 
 " Setting colorscheme
 set termguicolors
 set background=dark
-" colorscheme redblack
 colorscheme janah
 
 " Use italics for some text
-hi htmlArg gui=italic
-hi Comment gui=italic
-hi Type    gui=italic
-hi htmlArg cterm=italic
-hi Comment cterm=italic
-hi Type    cterm=italic
+highlight htmlArg gui=italic
+highlight Comment gui=italic
+highlight Type    gui=italic
+highlight htmlArg cterm=italic
+highlight Comment cterm=italic
+highlight Type    cterm=italic
 
 " Set up leader keys
 let mapleader = "\<Space>"
 let maplocalleader = "\|"
 
 " Smart colorcolumn
-highlight ColorColumn ctermbg=154 ctermfg=0 guibg=#474747 guifg=#ffffff
-highlight CursorLine ctermbg=154 guibg=#474747
 autocmd BufEnter * call matchadd('ColorColumn', '\%160v', 100)
 
 " Better coloring for errors
@@ -561,22 +571,6 @@ function! ScratchToggle()
   call ScratchOpen()
 endfunction
 nnoremap <silent><leader>u :call ScratchToggle()<cr>
-
-" Flash line
-function! Flash()
-    highlight CursorLine guibg=#ffff00 ctermfg=11
-    set cursorline
-    redraw
-    sleep 10m
-    set nocursorline
-    redraw
-    sleep 10m
-    set cursorline
-    redraw
-    sleep 10m
-    set nocursorline
-    highlight CursorLine ctermbg=154 guibg=#474747
-endfunction
 
 " Close unused buffers
 
