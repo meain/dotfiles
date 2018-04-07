@@ -12,8 +12,8 @@ function! LinterStatus() abort
 endfunction
 
 set statusline=
-set statusline+=%#LineNr#
 set statusline+=\ %t
+set statusline+=%#LineNr#
 set statusline+=%m
 set statusline+=\ %q
 set statusline+=%=
@@ -23,3 +23,4 @@ set statusline+=%#LineNr#
 set statusline+=\ %l:%c
 set statusline+=\ %p%%
 set statusline+=\ 
+
