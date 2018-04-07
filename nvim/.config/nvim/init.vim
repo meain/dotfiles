@@ -182,7 +182,6 @@ syntax sync minlines=256
 
 " Make backspace great again
 set backspace=2
-
 " Set split direction
 set splitbelow
 set splitright
@@ -239,7 +238,6 @@ autocmd ColorScheme redblack highlight StartifyFile guifg=#eeeeee ctermfg=255 ct
 autocmd ColorScheme redblack highlight ColorColumn ctermbg=154 guibg=#212121
 autocmd ColorScheme redblack highlight CursorLine ctermbg=154 guibg=#212121
 autocmd ColorScheme redblack highlight WildMenu ctermfg=red guifg=red ctermbg=NONE guibg=NONE
-autocmd ColorScheme redblack highlight NonText ctermfg=238 guifg=#444444
 
 " ColorScheme change ( janah )
 autocmd ColorScheme janah highlight Normal ctermbg=234 guibg=#1f1f1f
@@ -254,12 +252,14 @@ autocmd ColorScheme janah highlight SignifySignChange cterm=bold  ctermfg=227 ct
 autocmd ColorScheme janah highlight ColorColumn ctermbg=154 ctermfg=0 guibg=#474747 guifg=#ffffff
 autocmd ColorScheme janah highlight CursorLine ctermbg=154 guibg=#474747
 autocmd ColorScheme janah highlight WildMenu guifg=#df005f ctermfg=161 guibg=NONE ctermbg=NONE gui=bold cterm=bold
-autocmd ColorScheme janah highlight NonText ctermfg=238 guifg=#444444
 
 " Setting colorscheme
 set termguicolors
 set background=dark
 colorscheme janah
+
+" Colors common
+highlight NonText ctermfg=238 guifg=#444444
 
 " Use italics for some text
 highlight htmlArg gui=italic
@@ -277,8 +277,8 @@ let maplocalleader = "\|"
 autocmd BufEnter * call matchadd('ColorColumn', '\%160v', 100)
 
 " Better coloring for errors
-hi clear SpellBad
-hi SpellBad cterm=underline gui=underline ctermfg=11 guifg=#ffff00
+highlight clear SpellBad
+highlight SpellBad cterm=underline gui=underline ctermfg=11 guifg=#ffff00
 
 " Don't you f'in touch my cursor
 set guicursor=
@@ -298,6 +298,9 @@ augroup Filetype javascript syntax=javascript
 " Make vim edit crontab
 autocmd filetype crontab setlocal nobackup nowritebackup
 
+" Remove whitespace at save
+autocmd BufWritePre *.py,*.css,*.js,*.html,*.cpp,*.c,*.java,*.go,*.rs,*.ts,*.cljs,*.clj :%s/\s\+$//e
+
 
 
 
@@ -312,9 +315,6 @@ ca w!! w !sudo tee "%"
 command! WQ wq
 command! Wq wq
 command! W w
-
-" Remove whitespace at save
-autocmd BufWritePre *.py,*.css,*.js,*.html,*.cpp,*.c,*.java,*.go,*.rs,*.ts,*.cljs,*.clj :%s/\s\+$//e
 
 " Fix overflow ( above 80 )
 command! FixOverflow :normal! gqap
@@ -934,4 +934,12 @@ let g:instant_markdown_autostart = 0
 " Vimwiki
 let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
 
+
+
+
+
+"                             Source External                          "
+"                    ==============================                    "
+
+" Statusline
 source ~/.config/nvim/statusline.vim
