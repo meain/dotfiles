@@ -4,7 +4,7 @@ alias l='ls'
 alias la='ls -A'
 alias lr='ls -lRht'
 
-alias c='clear'
+alias c='clear && echo "" && pwd && ls'
 alias cl='clear && ls'
 
 alias q="exit"
