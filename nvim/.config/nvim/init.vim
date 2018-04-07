@@ -573,7 +573,6 @@ endfunction
 nnoremap <silent><leader>u :call ScratchToggle()<cr>
 
 " Close unused buffers
-
 function! s:CloseHiddenBuffers()
   let open_buffers = []
 
