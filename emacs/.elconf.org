@@ -628,10 +628,6 @@
             ;; max number
             (setq recentf-max-saved-items 200)
 
-            ;; helm-recentf-fuzzy-match var is broken: redeclare it manually
-            (setq helm-source-recentf
-                (helm-make-source "Recentf" 'helm-recentf-source
-                                    :fuzzy-match t))
             (define-key evil-normal-state-map (kbd ", e") 'helm-recentf)))
     #+END_SRC
 *** Spaceline
@@ -771,8 +767,7 @@
                 (add-hook 'python-mode-hook 'jedi:ac-setup)
                 ;; edi:tooltip-method
                 (setq jedi:complete-on-dot t)
-                (setq elpy-rpc-backend "jedi")
-                (pyvenv-activate "~/.virtual_envs")))
+                (setq elpy-rpc-backend "jedi")))
     #+END_SRC
 *** Go
     #+BEGIN_SRC emacs-lisp
@@ -876,9 +871,14 @@
 * Configurations
 ** Visual indents
     #+BEGIN_SRC emacs-lisp
-    (highlight-indentation-mode nil)
-    (set-face-background 'highlight-indentation-face "#3D3432")
-    (set-face-background 'highlight-indentation-current-column-face "#c3b3b3")
+(use-package highlight-indentation
+:ensure t
+:init
+(progn
+     (highlight-indentation-mode nil)
+     (set-face-background 'highlight-indentation-face "#3D3432")
+     (set-face-background 'highlight-indentation-current-column-face "#c3b3b3")
+))
     #+END_SRC
 ** Scratch buffer
     #+BEGIN_SRC emacs-lisp
