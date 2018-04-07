@@ -735,9 +735,9 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 " Signfy
-let g:signify_sign_add               = '|+'
-let g:signify_sign_delete            = '|_'
-let g:signify_sign_change            = '|~'
+let g:signify_sign_add               = '++'
+let g:signify_sign_delete            = '--'
+let g:signify_sign_change            = '~~'
 highlight SignifySignAdd    cterm=bold gui=bold  ctermfg=119 guifg=#87ff5f
 highlight SignifySignDelete cterm=bold gui=bold  ctermfg=167 guifg=#d75f5f
 highlight SignifySignChange cterm=bold gui=bold  ctermfg=227 guifg=#ffff5f

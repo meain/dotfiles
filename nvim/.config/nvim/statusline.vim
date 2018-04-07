@@ -11,16 +11,18 @@ function! LinterStatus() abort
     \)
 endfunction
 
-set statusline=
-set statusline+=\ %t
-set statusline+=%#LineNr#
-set statusline+=%m
-set statusline+=\ %q
-set statusline+=%=
-set statusline+=%#ALEWarningSign#
-set statusline+=%{LinterStatus()}
-set statusline+=%#LineNr#
-set statusline+=\ %l:%c
-set statusline+=\ %p%%
-set statusline+=\ 
+set statusline=                   " Reset status line
+set statusline+=%#StatusLineNC#   " Faded
+set statusline+=[                 " Opening
+set statusline+=%*                " Reset color
+set statusline+=\ %t              " File name
+set statusline+=%#StatusLineNC#   " Faded
+set statusline+=%m                " Modified
+set statusline+=\ %q              " Quickfix, LocList etc
+set statusline+=%=                " Split
+set statusline+=%#ALEWarningSign# " Warning color
+set statusline+=%{LinterStatus()} " ALE errors and warns
+set statusline+=%#StatusLineNC#   " Faded
+set statusline+=\ %l:%c           " Line number and column
+set statusline+=\ %p%%\ ]         " Percentage
 
