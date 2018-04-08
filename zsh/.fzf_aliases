@@ -1,21 +1,16 @@
 alias fd='cd $(ls -d */ | fzf --reverse --height "40%" --preview "ls {}")'
 
-fshow() {
-  git log --graph --color=always \
-      --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
-  fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
-	  --preview "echo {} | sed 's/.*\*.//' | sed 's/ .*//g' | git diff" \
-      --bind "ctrl-m:execute:
-                (grep -o '[a-f0-9]\{7\}' | head -1 |
-                xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF'
-                {}
-FZF-EOF"
-}
-
 unalias z 2> /dev/null
 z() {
-  [ $# -gt 0 ] && _z "$*" && return
-  cd "$(_z -l 2>&1 | cat | sed 's/^[^ ]*\ *//' | fzf --height 40% --reverse --inline-info +s --tac --query "$*" --preview "ls {}")"
+    [ $# -gt 0 ] && _z "$*" && return
+        cd "$(_z -l 2>&1 | cat | sed 's/^[^ ]*\ *//' | fzf --height 40% --reverse --inline-info +s --tac --query "$*" --preview "ls {}")"
+}
+
+jj() {
+    TO_DIR_JJ=$(find . -type d -maxdepth 6 | fzf --preview "tree -L 2 {}" )
+        test "" = "$TO_DIR_JJ" || {
+            cd $TO_DIR_JJ
+        }
 }
 
 get_command_from_history(){
@@ -23,4 +18,3 @@ get_command_from_history(){
 }
 alias hf='$(get_command_from_history)'
 alias pp='cd $(find ~/Documents/Projects -type d -maxdepth 4 | sed "s/^\/Users\/meain\/Documents\/Projects//g" | fzf --preview "tree -L 2 ~/Documents/Projects{}" )'
-alias jj='cd $(find . -type d -maxdepth 6 | fzf --preview "tree -L 2 {}" )'
