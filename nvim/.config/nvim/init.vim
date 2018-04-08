@@ -47,7 +47,8 @@ Plug 'tpope/vim-sleuth'                                                         
 Plug 'tpope/vim-fugitive'                                                                      " Git stuff from within vim
 Plug 'majutsushi/tagbar', { 'on' : 'Tagbar' }                                                  " Class/module browser
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }                                             " Undo tree
-Plug 'scrooloose/nerdtree'                                                                     " Nerdtree
+Plug 'tpope/vim-vinegar'                                                                       " Simpler file browser
+Plug 'scrooloose/nerdtree', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] }         " Nerdtree
 Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] } " Git sign for nerdtree
 
 " Morph code
@@ -499,7 +500,7 @@ function! s:ZoomToggle() abort
     endif
 endfunction
 command! ZoomToggle call s:ZoomToggle()
-nnoremap <silent> - :ZoomToggle<CR> \| :normal! 0<cr>
+nnoremap <silent> ` :ZoomToggle<CR> \| :normal! 0<cr>
 
 " Save session and quit all buffers (for use with viml command)
 function! MinimizeIfZoomed()
@@ -529,7 +530,7 @@ function! Marks()
     execute 'normal! `'.mark
 endfunction
 command! Marks call Marks()
-nnoremap <silent>`` :call Marks()<cr>
+nnoremap <silent>_ :call Marks()<cr>
 
 " Json format
 function! JSONFormat() range
@@ -865,8 +866,13 @@ autocmd BufEnter *.elm nnoremap <leader>a :ElmMakeMain<cr>
 autocmd BufEnter *.elm nnoremap <leader>t :ElmTest<cr>
 
 " NerdTree
-nnoremap <Tab> :NERDTreeFind<cr>
-autocmd FileType nerdtree nnoremap <buffer> <Tab> :NERDTreeToggle<cr>
+let NERDTreeShowHidden=1
+let NERDTreeHighlightCursorline=1
+let NERDTreeMinimalUI=1
+let NERDTreeHijackNetrw=1
+let NERDTreeStatusline = "         File Browser"
+nnoremap <silent><Tab> :NERDTreeToggle<cr>
+autocmd FileType nerdtree nnoremap <silent><buffer> <Tab> :NERDTreeToggle<cr>
 let g:NERDTreeIndicatorMapCustom = {
     \ "Modified"  : "!",
     \ "Staged"    : "|",
