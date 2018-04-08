@@ -65,7 +65,7 @@ stow nvim
 
 [`colorls`](https://github.com/athityakumar/colorls) Much prettier ls
 
-## Screenshots
+## Screenshots (Old)
 
 *as of `620d4e65`*
 
