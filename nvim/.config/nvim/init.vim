@@ -602,9 +602,10 @@ let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --glob "!.git/*"'
 let g:fzf_layout = { 'down': '~40%' }
 let g:fzf_tags_command = 'ctags -R'
 let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
-command! -bang History call fzf#vim#history( {'options': ['--query', '!.git/ !.vim/ ', '--no-sort']}, <bang>0)
+command! -bang History call fzf#vim#history({'options': ['--query', '!.git/ !.vim/ ', '--no-sort', '--preview', 'cat {}']}, <bang>0)
 command! -bang -nargs=? -complete=dir GFiles
 \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
+command! -bang Open call fzf#run({'source': 'rg --files --hidden --follow --glob "!.git/*"', 'sink': 'e', 'down': '40%', 'options': '--preview "cat {}"'})
 nnoremap <silent><Enter> :FZF<cr>
 nnoremap <silent> <leader><Enter> :History<cr>
 autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
@@ -612,23 +613,26 @@ command! -bang -nargs=* Find
       \ call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>),
       \ 1, <bang>0)
 nnoremap <leader>c :Commands<CR>
-nnoremap <leader>d :FZF<CR>
 nnoremap <leader>b :Buffers<cr>
 nnoremap <leader>f :tabnew \| :Find<cr>
-let g:fzf_layout = { 'down': '~40%' }  " Default fzf layout
+autocmd! FileType fzf
+autocmd  FileType fzf set laststatus=0
+  \| autocmd BufLeave <buffer> set laststatus=2
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],
   \ 'bg':      ['bg', 'Normal'],
   \ 'hl':      ['fg', 'Comment'],
-  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'fg+':     ['fg', 'Identifier', 'Normal', 'Normal'],
+  \ 'bg+':     ['bg', 'Normal', 'Normal'],
   \ 'hl+':     ['fg', 'Statement'],
   \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
   \ 'prompt':  ['fg', 'Conditional'],
   \ 'pointer': ['fg', 'Exception'],
-  \ 'marker':  ['fg', 'Keyword'],
+  \ 'marker':  ['fg', 'WildMenu'],
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
+let g:fzf_layout = { 'down': '~40%' }  " Default fzf layout
 
 " Jedi python
 let g:jedi#use_splits_not_buffers = "bottom"
@@ -656,7 +660,6 @@ command! Gl normal! :!git vhm<cr>
 
 " Startify
 nnoremap <silent>,l :Startify<cr>
-nnoremap <silent><leader>l :Startify<cr>
 autocmd User Startified setlocal cursorline
 highlight StartifyBracket ctermfg=240 guifg=#585858
 highlight StartifyFooter  ctermfg=240 guifg=#585858
