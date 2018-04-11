@@ -434,8 +434,8 @@ nnoremap <silent><Leader>' <C-o>
 nnoremap <silent><Leader><esc> :normal!za<cr>
 
 " Quick switch tabs
-nnoremap <silent><Leader>m :tabn<cr>
-nnoremap <silent><Leader>n :tabp<cr>
+nnoremap <silent><Leader>k :tabn<cr>
+nnoremap <silent><Leader>j :tabp<cr>
 nnoremap <silent><s-right> :tabm +1<cr>
 nnoremap <silent><s-left> :tabm -1<cr>
 
@@ -446,8 +446,8 @@ nnoremap <silent><leader>o :only<cr>
 nnoremap <silent><leader>t :tabnew \| :Startify<cr>
 
 " Easier switching of quickfix list items
-nnoremap <silent><leader>j :cnext<cr>
-nnoremap <silent><leader>k :cprev<cr>
+nnoremap <silent><leader>n :cnext<cr>
+nnoremap <silent><leader>m :cprev<cr>
 
 
 
