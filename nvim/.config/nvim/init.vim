@@ -258,6 +258,8 @@ autocmd ColorScheme janah highlight CursorLine ctermbg=154 guibg=#474747
 autocmd ColorScheme janah highlight WildMenu guifg=#df005f ctermfg=161 guibg=NONE ctermbg=NONE gui=bold cterm=bold
 
 " Setting colorscheme
+" janah, base16-greyscale, redblack, seoul256, gruvbox, grb256,
+" tomorrow-night, zenburn, base16-classic-light, base16-classic-dark
 set termguicolors
 set background=dark
 colorscheme janah
