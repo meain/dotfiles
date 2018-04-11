@@ -71,7 +71,7 @@ key_bindings:
   - { key: W,        mods: Command, action: Quit                                                             }
   - { key: N,        mods: Command, command: { program: "open", args: ["-n", "/Applications/Alacritty.app"] }}
   - { key: Equals,   mods: Command, action: IncreaseFontSize                                                 }
-  - { key: Minus, mods: Command, action: DecreaseFontSize                                                    }
+  - { key: Minus,    mods: Command, action: DecreaseFontSize                                                    }
   - { key: Home,                    chars: "\x1bOH",   mode: AppCursor                                       }
   - { key: Home,                    chars: "\x1b[H",   mode: ~AppCursor                                      }
   - { key: End,                     chars: "\x1bOF",   mode: AppCursor                                       }
