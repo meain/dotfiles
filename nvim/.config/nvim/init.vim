@@ -16,7 +16,7 @@ Plug 'yuttie/comfortable-motion.vim'                                            
 " Added functinality
 Plug 'meain/vim-startify'                                                                      " A fancy start page for vim (slow)
 Plug 'vimwiki/vimwiki'                                                                         " Better note taking with vim
-Plug 'jceb/vim-orgmode'                                                                        " Org mode in Vim
+Plug 'jceb/vim-orgmode', { 'for': 'org' }                                                      " Org mode in Vim
 Plug 'meain/vim-googler', { 'on': 'Google' }                                                   " Google from within vim
 Plug 'justinmk/vim-sneak'                                                                      " Quickly sneak arround
 Plug 'wincent/loupe'                                                                           " Better search
@@ -104,10 +104,10 @@ Plug 'vim-scripts/mru.vim'                                                      
 Plug 'radenling/vim-dispatch-neovim'                                                           " Neovim support for vim-dispatch
 Plug 'mattn/webapi-vim'                                                                        " Web calls
 Plug 'tpope/vim-repeat'                                                                        " Repeat plugins with .
-Plug 'tpope/vim-speeddating'                                                                   " Getting dates have never been easier
+Plug 'tpope/vim-speeddating', { 'for': 'org' }                                                 " Getting dates have never been easier
 
 " Others
-Plug 'sedm0784/vim-you-autocorrect'                                                            " Autocorrect like in phones
+Plug 'sedm0784/vim-you-autocorrect', { 'on': 'EnableAutocorrect' }                             " Autocorrect like in phones
 Plug 'junegunn/vim-online-thesaurus', { 'on': 'OnlineThesaurusCurrentWord' }                   " Online thesaurus
 Plug 'kristijanhusak/vim-carbon-now-sh', { 'on': 'CarbonNowSh' }                               " Polaroid for code
 Plug 'wakatime/vim-wakatime'                                                                   " Wakatime (slow)
