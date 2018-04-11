@@ -1,7 +1,7 @@
 "                            Plugin Management                         "
 "                    ==============================                    "
 
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.local/share/nvim/plugged')
 
 " Visual enhancements
 Plug 'flazz/vim-colorschemes'                                                                  " Vim colorscheme
