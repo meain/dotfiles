@@ -225,9 +225,9 @@
     :config
         (global-evil-tabs-mode t))
    #+END_SRC
-** Configs
+** Configuration
 *** Normal mode remaps
-**** Vinegar memmories
+**** Vinegar memories
     #+BEGIN_SRC emacs-lisp
     ;; vinegarish
     (define-key evil-normal-state-map (kbd "_") 'helm-find-files)
@@ -249,6 +249,10 @@
     (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
     (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
     #+END_SRC
+**** Auto correct previous spell error
+     #+BEGIN_SRC emacs-lisp
+    (define-key evil-normal-state-map (kbd "Z") 'flyspell-auto-correct-previous-word)
+     #+END_SRC
 *** Leader key remaps
 **** Quick save file
     #+BEGIN_SRC emacs-lisp
