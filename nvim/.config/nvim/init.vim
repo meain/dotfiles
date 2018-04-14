@@ -5,7 +5,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 " Visual enhancements
 Plug 'flazz/vim-colorschemes'                                                                  " Vim colorscheme
-Plug 'chriskempson/base16-vim'
+Plug 'chriskempson/base16-vim'                                                                 " Base16 colors
 Plug 'Yggdroot/indentLine'                                                                     " Show indent
 Plug 'mhinz/vim-signify'                                                                       " Git diff icons in gutter
 Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }                                           " Hyper focus editing
@@ -15,7 +15,6 @@ Plug 'yuttie/comfortable-motion.vim'                                            
 
 " Added functinality
 Plug 'meain/vim-startify'                                                                      " A fancy start page for vim (slow)
-Plug 'jceb/vim-orgmode', { 'for': 'org' }                                                      " Org mode in Vim
 Plug 'meain/vim-googler', { 'on': 'Google' }                                                   " Google from within vim
 Plug 'justinmk/vim-sneak'                                                                      " Quickly sneak arround
 Plug 'wincent/loupe'                                                                           " Better search
@@ -28,7 +27,7 @@ Plug 'ervandew/supertab'                                                        
 Plug 'zirrostig/vim-schlepp'                                                                   " Better drag visuals
 Plug 'xtal8/traces.vim'                                                                        " Interactive subsititue
 Plug 'vim-scripts/restore_view.vim'                                                            " Restore file pointer
-Plug 'tpope/vim-dispatch'                                                                      " Async tasks in vim
+Plug 'tpope/vim-dispatch', { 'on': 'Dispatch' }                                                " Async tasks in vim
 Plug 'airblade/vim-rooter'                                                                     " Change directory to project root
 Plug 'editorconfig/editorconfig-vim'                                                           " Editorconfig
 Plug 'mattn/gist-vim', { 'on': 'Gist' }                                                        " Push current buffer as gist
@@ -44,7 +43,7 @@ Plug 'prettier/vim-prettier', {
 
 " Code editing enhacements
 Plug 'tpope/vim-sleuth'                                                                        " Automatic indentation setting
-Plug 'tpope/vim-fugitive'                                                                      " Git stuff from within vim
+Plug 'tpope/vim-fugitive', { 'for': ['GStatus', 'GBlame', 'GDiff'] }                           " Git stuff from within vim
 Plug 'majutsushi/tagbar', { 'on' : 'Tagbar' }                                                  " Class/module browser
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }                                             " Undo tree
 Plug 'tpope/vim-vinegar'                                                                       " Simpler file browser
@@ -59,23 +58,15 @@ Plug 'junegunn/vim-easy-align'                                                  
 
 " Language helpers
 Plug 'sheerun/vim-polyglot'                                                                    " Multiple language support (slow)
-Plug 'mhartington/nvim-typescript'                                                             " Typescript & Javascript support
-Plug 'neoclide/vim-jsx-improve', { 'for': ['javascript', 'javascript.jsx', 'typescript'] }     " Inproved JSX syntax
+Plug 'mhartington/nvim-typescript', { 'for': ['javascript', 'javascript.jsx', 'typescript'] }  " Typescript & Javascript support
+Plug 'neoclide/vim-jsx-improve', { 'for': ['javascript', 'javascript.jsx'] }                   " Inproved JSX syntax
 Plug 'tpope/vim-markdown', { 'for': ['md', 'markdown'] }                                       " Better markdown support
 Plug 'davidhalter/jedi-vim', { 'for': ['python'] }                                             " Python helper
 Plug 'fatih/vim-go', { 'for': ['go'] }                                                         " Golang helper
 Plug 'sebdah/vim-delve', { 'for': 'go' }                                                       " Debugger for go
 Plug 'racer-rust/vim-racer', { 'for': 'rust' }                                                 " Rust support
 Plug 'tmhedberg/matchit', { 'for': ['html','xml', 'tex'] }                                     " Match tags for html, xml latex etc
-Plug 'raimon49/requirements.txt.vim', { 'for': 'requirements' }                                " Requirements file
-
-" Custon text objects
-Plug 'kana/vim-textobj-user'                                                                   " Main repo
-Plug 'kana/vim-textobj-indent'                                                                 " Intent text object
-Plug 'kana/vim-textobj-line'                                                                   " Line text object
-Plug 'Julian/vim-textobj-brace'                                                                " Any kind of brace text object
-Plug 'Julian/vim-textobj-variable-segment'                                                     " Between underscore or camel case
-Plug 'junegunn/vim-after-object'                                                               " Things after specific symbols
+" Plug 'raimon49/requirements.txt.vim', { 'for': 'requirements' }                              " Requirements file
 
 " Language enhacements
 Plug '~/Documents/Projects/vim-jsontogo' , { 'for': ['go'] }                                   " Convert JSON to Go struct
@@ -100,10 +91,9 @@ Plug 'epilande/vim-react-snippets', { 'for': ['javascript', 'typescript', 'javas
 
 " Dependencies
 Plug 'vim-scripts/mru.vim'                                                                     " Save recently used files (for v)
-Plug 'radenling/vim-dispatch-neovim'                                                           " Neovim support for vim-dispatch
+Plug 'radenling/vim-dispatch-neovim', { 'on': 'Dispatch' }                                     " Neovim support for vim-dispatch
 Plug 'mattn/webapi-vim'                                                                        " Web calls
 Plug 'tpope/vim-repeat'                                                                        " Repeat plugins with .
-Plug 'tpope/vim-speeddating', { 'for': 'org' }                                                 " Getting dates have never been easier
 
 " Others
 Plug 'sedm0784/vim-you-autocorrect', { 'on': 'EnableAutocorrect' }                             " Autocorrect like in phones
@@ -936,9 +926,6 @@ vnoremap <leader>s y:Google <c-r>"<cr>
 let g:comfortable_motion_no_default_key_mappings = 1
 nnoremap <silent> <Up> :call comfortable_motion#flick(100)<CR>
 nnoremap <silent> <Down> :call comfortable_motion#flick(-100)<CR>
-
-" After object
-autocmd VimEnter * call after_object#enable('=', ':', '-', '#', ' ')
 
 " Vim instant markdown
 let g:instant_markdown_autostart = 0
