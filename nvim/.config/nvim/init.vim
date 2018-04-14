@@ -20,7 +20,6 @@ Plug 'justinmk/vim-sneak'                                                       
 Plug 'wincent/loupe'                                                                           " Better search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }                              " Fzf
 Plug 'junegunn/fzf.vim'                                                                        " Fzf for vim
-Plug 'fszymanski/fzf-gitignore', {'do': ':UpdateRemotePlugins', 'on': 'GitIgnoreGenerate'}     " Generate gitignore files
 Plug 'christoomey/vim-tmux-navigator'                                                          " Seamless navigation between vim and tmux
 Plug 'suan/vim-instant-markdown', { 'for': 'markdown' }                                        " View markdown in browser while editing
 Plug 'ervandew/supertab'                                                                       " Autocomplete on tab
@@ -532,6 +531,29 @@ function! JSONFormat() range
 endfunction
 command! -range JSONFormat <line1>,<line2>call JSONFormat()
 
+" Generate Gitignore
+function! GitignoreGenerate()
+    call inputsave()
+    echo 'Auto generate .gitignore (y/n): '
+    let l:yesno = nr2char(getchar())
+    call inputrestore()
+    if l:yesno ==? 'y'
+      call inputsave()
+      let l:lang = input('Language: ')
+      echo 'Fetching .gitignore for ' . l:lang
+      execute "%!curl -L -s https://www.gitignore.io/api/" . l:lang . " | sed '1,3d;$d' | sed '$d' | sed '$d'"
+      call inputrestore()
+    else
+      echo ''
+    endif
+    redraw
+endfunction
+command! GitignoreGenerate :call GitignoreGenerate()
+augroup GitIgnore
+  au!
+  autocmd BufNewFile .gitignore call GitignoreGenerate()
+augroup end
+
 " Scratch buffer
 function! ScratchOpen()
   execute "topleft new __scratch__"
@@ -914,9 +936,6 @@ let g:AutoPairsMultilineClose = 0
 
 " Vim Plug
 command! LoadAllPlugins call plug#load(keys(g:plugs))
-
-" Fzf gitignore
-command! GitIgnoreGenerate execute "normal \<Plug>(fzf-gitignore)"
 
 " Googler
 nnoremap <silent><leader>s :Google <c-r><c-w><cr>
