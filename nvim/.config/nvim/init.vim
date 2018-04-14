@@ -15,7 +15,6 @@ Plug 'yuttie/comfortable-motion.vim'                                            
 
 " Added functinality
 Plug 'meain/vim-startify'                                                                      " A fancy start page for vim (slow)
-Plug 'vimwiki/vimwiki'                                                                         " Better note taking with vim
 Plug 'jceb/vim-orgmode', { 'for': 'org' }                                                      " Org mode in Vim
 Plug 'meain/vim-googler', { 'on': 'Google' }                                                   " Google from within vim
 Plug 'justinmk/vim-sneak'                                                                      " Quickly sneak arround
@@ -505,7 +504,7 @@ function! s:ZoomToggle() abort
     endif
 endfunction
 command! ZoomToggle call s:ZoomToggle()
-nnoremap <silent> ` :ZoomToggle<CR> \| :normal! 0<cr>
+nnoremap <silent> `` :ZoomToggle<CR> \| :normal! 0<cr>
 
 " Save session and quit all buffers (for use with viml command)
 function! MinimizeIfZoomed()
@@ -943,9 +942,6 @@ autocmd VimEnter * call after_object#enable('=', ':', '-', '#', ' ')
 
 " Vim instant markdown
 let g:instant_markdown_autostart = 0
-
-" Vimwiki
-let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
 
 
 
