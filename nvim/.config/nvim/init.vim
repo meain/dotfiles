@@ -80,7 +80,7 @@ Plug 'Shougo/echodoc.vim'                                                       
 Plug 'Shougo/neco-vim', { 'for': 'vim' }                                                       " Completion for viml
 " Plug 'sebastianmarkow/deoplete-rust', { 'for': ['rs', 'rust'] }                              " Rust autocompletion (slow)
 " Plug 'wellle/tmux-complete.vim'                                                              " Tmux completion
-" Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }                      " nvim language client
+Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }           " Language client
 
 " Snippets
 Plug 'SirVer/ultisnips'                                                                        " Snippet manager
@@ -862,15 +862,16 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 let g:LanguageClient_autoStart = 1
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
-    \ 'javascript': ['javascript-typescript-stdio'],
-    \ 'javascript.jsx': ['javascript-typescript-stdio'],
+    \ 'javascript': ['flow-language-server', '--stdio'],
+    \ 'javascript.jsx': ['flow-language-server', '--stdio'],
+    \ 'typescript': ['javascript-typescript-stdio'],
     \ 'go': ['go-langserver'],
     \ 'css': ['css-languageserver', '--stdio']
     \ }
-nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> ge :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> gh :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> gx :call LanguageClient_textDocument_rename()<CR>
+nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 nnoremap <silent> gr :call LanguageClient_textDocument_references()<CR>
-nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 
 " Github Dashboard
 let g:github_dashboard = { 'username': 'meain' , 'password': $GITHUB_DASHBOARD_VIM_TOKEN }
