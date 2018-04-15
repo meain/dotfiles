@@ -608,7 +608,7 @@
             (define-key evil-normal-state-map (kbd ", e") 'helm-recentf)))
     #+END_SRC
 *** Spaceline
-   #+BEGIN_SRC emacs-lisp
+       #+BEGIN_SRC emacs-lisp
      (use-package spaceline
          :ensure t
          :init
@@ -623,7 +623,7 @@
             (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
             (setq powerline-height 20)
             (setq powerline-raw " ")
-            (setq powerline-default-separator "curve")
+            (setq powerline-default-separator "zigzag")
             (spaceline-compile)
             (setq ns-use-srgb-colorspace nil)))
    #+END_SRC
