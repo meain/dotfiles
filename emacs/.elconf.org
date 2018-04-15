@@ -63,7 +63,7 @@
     (setq-default tab-width 4)
     (setq-default indent-tabs-mode nil)
     #+END_SRC
-** Line hilight
+** Line highlight
    #+BEGIN_SRC emacs-lisp
     ;; line highlight
     (global-hl-line-mode 1)
@@ -93,35 +93,10 @@
       (set-fontset-font t 'unicode font nil 'prepend))
     #+END_SRC
 ** Themes
-*** Set theme
+*** Seti theme
     #+BEGIN_SRC emacs-lisp
     (use-package seti-theme
-        :ensure t
-        :init
-        (load-theme 'seti t))
-    #+END_SRC
-*** Cyberpunk theme
-    #+BEGIN_SRC emacs-lisp
-      (use-package cyberpunk-theme
-          :if (window-system)
-          :disabled
-          :ensure t
-          :init
-          (progn
-              (load-theme 'cyberpunk t)
-              (set-face-attribute `mode-line nil
-                                  :box nil)
-              (set-face-attribute `mode-line-inactive nil
-                                  :box nil)))
-    #+END_SRC
-*** Gruvbox thmee
-    #+BEGIN_SRC emacs-lisp
-    (use-package gruvbox-theme
-        :disabled
-        :if (window-system)
-        :ensure t
-        :init
-            (setq gruvbox-use-variable-pitch nil))
+        :ensure t )
     #+END_SRC
 *** Monokai theme
     #+BEGIN_SRC emacs-lisp
@@ -139,13 +114,6 @@
         :if (window-system)
         :ensure t)
     #+END_SRC
-*** Waher theme
-    #+BEGIN_SRC emacs-lisp
-    (use-package waher-theme
-        :disabled
-        :if (window-system)
-        :ensure t)
-    #+END_SRC
 *** Twilight theme
     #+BEGIN_SRC emacs-lisp
       (use-package twilight-theme
@@ -153,6 +121,10 @@
           :disabled
           :init
             (load-theme 'twilight t))
+    #+END_SRC
+*** Set theme
+    #+BEGIN_SRC emacs-lisp
+        (load-theme 'base16-classic-dark t)
     #+END_SRC
 * Other settings
 ** Ring bell
