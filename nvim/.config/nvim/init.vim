@@ -118,7 +118,12 @@ set encoding=utf8
 set path+=**
 
 " Turn on line numbers
-set number
+set number relativenumber
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+augroup END
 
 " Highlight cursor line (slows down)
 set nocursorline
@@ -229,6 +234,7 @@ autocmd ColorScheme redblack highlight StatusLineNC guifg=#878787 ctermfg=102 ct
 autocmd ColorScheme redblack highlight StartifyFile guifg=#eeeeee ctermfg=255 ctermbg=NONE gui=NONE cterm=NONE
 autocmd ColorScheme redblack highlight ColorColumn ctermbg=154 guibg=#212121
 autocmd ColorScheme redblack highlight CursorLine ctermbg=154 guibg=#212121
+autocmd ColorScheme redblack highlight CursorLineNr ctermfg=red guifg=red ctermbg=NONE guibg=NONE
 autocmd ColorScheme redblack highlight WildMenu ctermfg=red guifg=red ctermbg=NONE guibg=NONE
 
 " ColorScheme change ( janah )
@@ -243,6 +249,7 @@ autocmd ColorScheme janah highlight SignifySignDelete cterm=bold  ctermfg=167 ct
 autocmd ColorScheme janah highlight SignifySignChange cterm=bold  ctermfg=227 ctermbg=234 guibg=#1f1f1f
 autocmd ColorScheme janah highlight ColorColumn ctermbg=154 ctermfg=0 guibg=#474747 guifg=#ffffff
 autocmd ColorScheme janah highlight CursorLine ctermbg=154 guibg=#474747
+autocmd ColorScheme janah highlight CursorLineNr ctermbg=NONE guibg=NONE guifg=#df005f ctermfg=161
 autocmd ColorScheme janah highlight WildMenu guifg=#df005f ctermfg=161 guibg=NONE ctermbg=NONE gui=bold cterm=bold
 
 " Setting colorscheme
