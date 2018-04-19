@@ -20,6 +20,7 @@ Plug 'justinmk/vim-sneak'                                                       
 Plug 'wincent/loupe'                                                                           " Better search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }                              " Fzf
 Plug 'junegunn/fzf.vim'                                                                        " Fzf for vim
+Plug 'jremmen/vim-ripgrep', { 'on': 'Rg' }                                                     " Rg with quickfix list
 Plug 'christoomey/vim-tmux-navigator'                                                          " Seamless navigation between vim and tmux
 Plug 'suan/vim-instant-markdown', { 'for': 'markdown' }                                        " View markdown in browser while editing
 Plug 'ervandew/supertab'                                                                       " Autocomplete on tab
@@ -957,6 +958,9 @@ nnoremap <silent> <Down> :call comfortable_motion#flick(-100)<CR>
 " Vim instant markdown
 let g:instant_markdown_autostart = 0
 
+" Rg
+let g:rg_highlight = 1
+let g:rg_command = 'rg --vimgrep --ignore-case --hidden --follow'
 
 
 
