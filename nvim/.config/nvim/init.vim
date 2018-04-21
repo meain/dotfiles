@@ -219,6 +219,10 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
 set wildignore+=*.swp,*~,._*
 set wildignore+=_pycache_,.DS_Store,.vscode,.localized
 
+" Fill chars
+set fillchars=vert:\|
+set fillchars+=fold:-
+
 " Indent based folding
 set foldmethod=indent
 set foldignore=
