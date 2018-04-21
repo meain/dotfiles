@@ -1,5 +1,10 @@
 function t() {
-    tmux attach -t $1 || tmux new-session -s $1
+    if [ -z "$1" ]
+    then
+        tmux list-sessions
+    else
+        tmux attach -t $1 || tmux new-session -s $1
+    fi
 }
 alias tm='tmux'
 alias ta='tmux attach -t'
