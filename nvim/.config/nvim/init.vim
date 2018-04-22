@@ -58,7 +58,7 @@ Plug 'junegunn/vim-easy-align'                                                  
 
 " Language helpers
 Plug 'sheerun/vim-polyglot'                                                                    " Multiple language support (slow)
-Plug 'mhartington/nvim-typescript', { 'for': ['javascript', 'javascript.jsx', 'typescript'] }  " Typescript & Javascript support
+Plug 'mhartington/nvim-typescript', { 'for': ['typescript'] }                                  " Typescript & Javascript support
 Plug 'neoclide/vim-jsx-improve', { 'for': ['javascript', 'javascript.jsx'] }                   " Inproved JSX syntax
 Plug 'tpope/vim-markdown', { 'for': ['md', 'markdown'] }                                       " Better markdown support
 Plug 'davidhalter/jedi-vim', { 'for': ['python'] }                                             " Python helper
