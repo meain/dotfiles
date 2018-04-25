@@ -363,7 +363,7 @@ vnoremap ' ;
 
 " Use the clipboard for copy and paste
 nnoremap y "+y
-nnoremap Y "+y$
+nnoremap Y my^"+y$`y
 nnoremap p "+p`]
 nnoremap P "+P`]
 vnoremap y "+y
@@ -427,8 +427,7 @@ nnoremap <silent><Leader>h :split \| :Startify<cr>
 nnoremap <silent><Leader>/ :nohls<CR>
 
 " Easy tag navigation
-nnoremap <silent><Leader>; <C-]>
-nnoremap <silent><Leader>' <C-o>
+nnoremap <silent><Leader>' <C-]>
 
 " Quick fold and unfold
 nnoremap <silent><Leader><esc> :normal!za<cr>
@@ -835,6 +834,7 @@ au FileType rust nnoremap <silent><leader>r :Start cargo run<cr>
 
 " Autoformat
 nnoremap <silent>,, :Autoformat<cr>
+au FileType python nnoremap <silent><buffer>,, mf:%!yapf<cr>`f
 au FileType go nnoremap <silent><buffer>,, :GoFmt<cr>
 au FileType javascript,typescript,css,less,scss,graphql,markdown nnoremap <silent><buffer>,, :Prettier<cr>
 au FileType elm nnoremap <silent><buffer>,, :ElmFormat<cr>
@@ -965,6 +965,9 @@ let g:instant_markdown_autostart = 0
 " Rg
 let g:rg_highlight = 1
 let g:rg_command = 'rg --vimgrep --ignore-case --hidden --follow'
+
+" Dash
+nnoremap <silent><leader>; :Dash<cr>
 
 
 

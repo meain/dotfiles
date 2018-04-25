@@ -1,3 +1,6 @@
 .DS_Store
 tags
 .netrwhist
+cache.db
+history.cmdline
+history.search
