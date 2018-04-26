@@ -18,5 +18,14 @@ hf(){
     echo "$COMMAND" && echo "$COMMAND" | awk '{print $1}'| pbcopy
 }
 
+wf(){
+    if which workon >/dev/null; then
+        workon $(workon | fzf)
+    else
+        source /usr/local/bin/virtualenvwrapper.sh
+        workon $(workon | fzf)
+    fi
+}
+
 # alias hf='$(get_command_from_history)'
 alias pp='cd $(find ~/Documents/Projects -type d -maxdepth 4 | sed "s/^\/Users\/meain\/Documents\/Projects//g" | fzf --preview "tree -L 2 ~/Documents/Projects{}" )'
