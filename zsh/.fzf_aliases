@@ -3,19 +3,23 @@ alias fd='cd $(ls -d */ | fzf --reverse --height "40%" --preview "ls {}")'
 unalias z 2> /dev/null
 z() {
     [ $# -gt 0 ] && _z "$*" && return
-        cd "$(_z -l 2>&1 | cat | sed 's/^[^ ]*\ *//' | fzf --height 40% --reverse --inline-info +s --tac --query "$*" --preview "ls {}")"
+    cd "$(_z -l 2>&1 | cat | sed 's/^[^ ]*\ *//' | fzf --height 40% --reverse --inline-info +s --tac --query "$*" --preview "ls {}")"
 }
 
 jj() {
     TO_DIR_JJ=$(find . -type d -maxdepth 6 | fzf --preview "tree -L 2 {}" )
-        test "" = "$TO_DIR_JJ" || {
-            cd $TO_DIR_JJ
-        }
+    test "" = "$TO_DIR_JJ" || {
+        cd $TO_DIR_JJ
+}
 }
 
 hf(){
     COMMAND=$(history | fzf | awk '{$1=$2=$3=""; print $0}')
     echo "$COMMAND" && echo "$COMMAND" | awk '{print $1}'| pbcopy
+}
+
+get_command(){
+    history | uniq | fzf | awk '{$1=$2=$3=""; print $0}'
 }
 
 wf(){
@@ -27,5 +31,5 @@ wf(){
     fi
 }
 
-# alias hf='$(get_command_from_history)'
+alias h='$(get_command)'
 alias pp='cd $(find ~/Documents/Projects -type d -maxdepth 4 | sed "s/^\/Users\/meain\/Documents\/Projects//g" | fzf --preview "tree -L 2 ~/Documents/Projects{}" )'
