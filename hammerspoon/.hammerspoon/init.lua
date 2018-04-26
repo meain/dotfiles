@@ -9,7 +9,10 @@ hs.window.animationDuration = 0
 
 -- Simle key remaps
 hs.hotkey.bind({'alt'}, 'return', (function()
-  hs.eventtap.keyStroke({"cmd"}, "Tab")
+  hs.eventtap.keyStroke({"ctrl"}, "Right")
+end))
+hs.hotkey.bind({'alt'}, 'space', (function()
+  hs.eventtap.keyStroke({"ctrl"}, "Left")
 end))
 
 
