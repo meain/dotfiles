@@ -391,7 +391,7 @@ tnoremap <Leader><Esc> <C-\><C-n>
 nnoremap yp mzggVG"+y`z
 
 " Quick suspend
-nnoremap <silent><M-Enter> <c-z>
+nnoremap <silent><leader>z <c-z>
 
 " Vim docs
 au FileType vim nmap K :help <c-r><c-w><cr>
