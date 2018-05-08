@@ -19,7 +19,7 @@ export WORKON_HOME=~/.virtual_envs
 PATH=/Library/TeX/texbin:$PATH
 
 # PATH
-PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/git/bin:$PATH
+PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/git/bin:/Users/meain/.bin:$PATH
 PATH=$PATH:$GOPATH/bin
 export PATH
 
