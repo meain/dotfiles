@@ -101,6 +101,7 @@ Plug 'junegunn/vim-online-thesaurus', { 'on': 'OnlineThesaurusCurrentWord' }    
 Plug 'kristijanhusak/vim-carbon-now-sh', { 'on': 'CarbonNowSh' }                               " Polaroid for code
 Plug 'wakatime/vim-wakatime'                                                                   " Wakatime (slow)
 Plug 'junegunn/vim-github-dashboard', { 'on': ['GHA', 'GHD']}                                  " Github dashboard
+Plug 'vim-scripts/loremipsum', { 'on': 'Loremipsum' }
 
 call plug#end()
 
