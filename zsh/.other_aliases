@@ -14,3 +14,7 @@ alias of='offlineimap'
 alias slack='slack-term -config ~/.slack-term.json'
 
 alias brew='HOMEBREW_NO_AUTO_UPDATE=1 brew'
+
+alias ssh='TERM="screen-256color" ssh'
+
+alias docupdate="ssh -t idli-chummar 'cd ~/kalan/ReadTheDocs && git pull origin master'"
