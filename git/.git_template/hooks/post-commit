@@ -4,4 +4,7 @@
 git log -1 --format=format:%h | pbcopy
 
 # Show number of commit so far
-echo "★ $(git rev-list --count HEAD) commits so far"
+	
+green=`tput setaf 2`
+reset=`tput sgr0`
+echo -e "★ ${green}$(git rev-list --count HEAD) ${reset}commits so far"
