@@ -2,3 +2,6 @@
 
 # Copy last commit hash to clipboard on commit
 git log -1 --format=format:%h | pbcopy
+
+# Show number of commit so far
+echo "★ $(git rev-list --count HEAD) commits so far"
