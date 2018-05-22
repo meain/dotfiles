@@ -101,7 +101,7 @@ Plug 'junegunn/vim-online-thesaurus', { 'on': 'OnlineThesaurusCurrentWord' }    
 Plug 'kristijanhusak/vim-carbon-now-sh', { 'on': 'CarbonNowSh' }                               " Polaroid for code
 Plug 'wakatime/vim-wakatime'                                                                   " Wakatime (slow)
 Plug 'junegunn/vim-github-dashboard', { 'on': ['GHA', 'GHD']}                                  " Github dashboard
-Plug 'vim-scripts/loremipsum', { 'on': 'Loremipsum' }
+Plug 'vim-scripts/loremipsum', { 'on': 'Loremipsum' }                                          " Loremipsum
 
 call plug#end()
 
@@ -348,7 +348,7 @@ nnoremap H ^
 nnoremap L $
 
 " Eaier quit and no ex
-nnoremap q :q<cr>
+nnoremap <silent> q :q<cr>
 nnoremap Q q
 
 "Get back to where you were easily
