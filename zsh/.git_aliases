@@ -39,8 +39,10 @@ alias glp="gl @{1}.."
 alias gcom='git checkout master'
 alias gcob='git checkout -b'
 alias gco='git checkout $(git branch | grep -v "\*" | sed s:^..::g | fzf --height 40% --reverse)'
-alias gpl='git pull origin $(git branch | sort -r | sed s:^..::g | fzf --height 40% --reverse)'
-alias gpu='git push origin $(git branch | sort -r | sed s:^..::g | fzf --height 40% --reverse)'
+alias gpu='git push origin $(git branch | grep "\*" | sed s:^..::g )'
+alias gpl='git pull origin $(git branch | grep "\*" | sed s:^..::g )'
+alias gpuf='git push origin $(git branch | sort -r | sed s:^..::g | fzf --height 40% --reverse)'
+alias gplf='git pull origin $(git branch | sort -r | sed s:^..::g | fzf --height 40% --reverse)'
 
 alias gap='git add -p && git commit'
 
