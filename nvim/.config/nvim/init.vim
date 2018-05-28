@@ -554,7 +554,7 @@ function! GitignoreGenerate()
       call inputsave()
       let l:lang = input('Language: ')
       echo 'Fetching .gitignore for ' . l:lang
-      execute "%!curl -L -s https://www.gitignore.io/api/" . l:lang . " | sed '1,3d;$d' | sed '$d' | sed '$d'"
+      execute "%!curl -L -s https://www.gitignore.io/api/linux,macos,windows," . l:lang . " | sed '1,3d;$d' | sed '$d' | sed '$d'"
       call inputrestore()
     else
       echo ''
