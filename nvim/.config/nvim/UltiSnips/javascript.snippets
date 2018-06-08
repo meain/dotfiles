@@ -27,7 +27,7 @@ snippet nrcc "React Class Compnent"
 import React, { Component} from 'react';
 import styles from './${2:$1}.css';
 
-class $1 extends Component {
+class ${1:`!v expand('%:t:r')`} extends Component {
 
 	constructor(props) {
 		super(props);

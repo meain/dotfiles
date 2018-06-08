@@ -665,15 +665,15 @@ let g:fzf_colors =
 let g:fzf_layout = { 'down': '~40%' }  " Default fzf layout
 
 " Jedi python
-let g:jedi#use_splits_not_buffers = "bottom"
+let g:jedi#use_splits_not_buffers = "top"
 let g:jedi#goto_command = "<leader>d"
 let g:jedi#goto_assignments_command = ""
 let g:jedi#goto_definitions_command = ""
 let g:jedi#documentation_command = "K"
-let g:jedi#usages_command = ""
+let g:jedi#usages_command = "<leader>r"
 let g:jedi#completions_command = ""
-let g:jedi#rename_command = "<leader>r"
-let g:jedi#max_doc_height = 30
+let g:jedi#rename_command = "<leader>x"
+let g:jedi#max_doc_height = 20
 
 " MRU
 let MRU_Max_Entries = 200
