@@ -1,5 +1,7 @@
 setopt prompt_subst
 
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+
 autoload -U colors
 colors
 
@@ -66,14 +68,18 @@ fi
 
 local _return_status="%(?..%F{red})"
 
+function virtualenv_info {
+    [[ -n "$VIRTUAL_ENV" ]] && echo 'py:'${VIRTUAL_ENV:t}' '
+}
+
 PROMPT='
 ${_return_status}${_nesting_level}%f%F{green}$( _vcs_info_wrapper )%F{yellow}%B%(1j.#.) '
-RPROMPT='%F{black}%2~ $(_git_time_since_commit)'
+RPROMPT='%F{yellow} $(virtualenv_info) %F{black}%2~ $(_git_time_since_commit)'
 
 function zle-line-init zle-keymap-select {
 NORMAL_COLOR="%{$fg_bold[blue]%}"
 INSERT_COLOR="%{$fg_bold[black]%}"
-RPS1="${${KEYMAP/vicmd/$NORMAL_COLOR}/(main|viins)/$INSERT_COLOR}%2~%{$reset_color%} $(_git_time_since_commit)"
+RPS1="%F{yellow} $(virtualenv_info) ${${KEYMAP/vicmd/$NORMAL_COLOR}/(main|viins)/$INSERT_COLOR}%2~%{$reset_color%} $(_git_time_since_commit)"
 zle reset-prompt
 }
 zle -N zle-line-init

@@ -307,7 +307,7 @@ augroup Filetype javascript syntax=javascript
 autocmd filetype crontab setlocal nobackup nowritebackup
 
 " Remove whitespace at save
-autocmd BufWritePre *.py,*.css,*.js,*.html,*.cpp,*.c,*.java,*.go,*.rs,*.ts,*.cljs,*.clj :%s/\s\+$//e
+autocmd BufWritePre *.css,*.js,*.html,*.cpp,*.c,*.java,*.go,*.rs,*.ts,*.cljs,*.clj :%s/\s\+$//e
 
 
 
@@ -365,7 +365,7 @@ vnoremap ' ;
 
 " Use the clipboard for copy and paste
 nnoremap y "+y
-nnoremap Y "+Y
+nnoremap Y "+y$
 nnoremap p "+p`]
 nnoremap P "+P`]
 vnoremap y "+y
