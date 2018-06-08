@@ -37,6 +37,7 @@ Plug 'mattn/emmet-vim', { 'for': ['html', 'javascript', 'css', 'javascript.jsx']
 Plug 'jreybert/vimagit', { 'on': [ 'Magit', 'MagitOnly' ] }                                    " Even better git interface for vim
 Plug 'metakirby5/codi.vim', { 'on': 'Codi' }                                                   " Live code preview
 Plug 'rhysd/committia.vim'                                                                     " Better COMMIT_EDITMSG editing
+Plug 'mindriot101/vim-yapf'                                                                    " Python formatting
 Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
   \ 'for': ['javascript', 'typescript', 'css', 'less',
@@ -836,7 +837,7 @@ au FileType rust nnoremap <silent><leader>r :Start cargo run<cr>
 
 " Autoformat
 nnoremap <silent>,, :Autoformat<cr>
-au FileType python nnoremap <silent><buffer>,, mf:%!yapf<cr>`f
+au FileType python nnoremap <silent><buffer>,, :call Yapf()<cr>
 au FileType go nnoremap <silent><buffer>,, :GoFmt<cr>
 au FileType javascript,typescript,css,less,scss,graphql,markdown nnoremap <silent><buffer>,, :Prettier<cr>
 au FileType elm nnoremap <silent><buffer>,, :ElmFormat<cr>
