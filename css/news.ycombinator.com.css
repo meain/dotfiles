@@ -1,0 +1,33 @@
+* {
+    font-family: monaco;
+    font-size: 14px;
+}
+body{
+    margin: 0;
+}
+.votearrow{
+    margin: 0 5px;
+    margin-top: 13px;
+    zoom: 1.3;
+}
+.rank{
+    margin-left: 20px;
+}
+.title{
+    padding-right: 10px;
+    padding-top: 13px;
+}
+.storylink{
+    font-size: 17px;
+    margin-right: 10px;
+}
+.storylink:hover{
+    color: #ef6437;
+}
+.subtext{
+   padding-bottom: 10px;
+   padding-top: 3px;
+}
+#hnmain{
+    max-width: 900px;
+}
