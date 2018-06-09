@@ -106,3 +106,6 @@ GOOGLE_CLOUD='/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.
 GOOGLE_CLOUD_COMPLETIONS='/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc]'
 if [ -f '$GOOGLE_CLOUD' ]; then source '$GOOGLE_CLOUD'; fi
 if [ -f '$GOOGLE_CLOUD_COMPLETIONS' ]; then source '$GOOGLE_CLOUD_COMPLETIONS'; fi
+
+# source python workon
+source '/usr/local/bin/virtualenvwrapper_lazy.sh'
