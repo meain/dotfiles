@@ -37,7 +37,6 @@ Plug 'mattn/emmet-vim', { 'for': ['html', 'javascript', 'css', 'javascript.jsx']
 Plug 'jreybert/vimagit', { 'on': [ 'Magit', 'MagitOnly' ] }                                    " Even better git interface for vim
 Plug 'metakirby5/codi.vim', { 'on': 'Codi' }                                                   " Live code preview
 Plug 'rhysd/committia.vim'                                                                     " Better COMMIT_EDITMSG editing
-Plug 'mindriot101/vim-yapf'                                                                    " Python formatting
 Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
   \ 'for': ['javascript', 'typescript', 'css', 'less',
@@ -45,7 +44,8 @@ Plug 'prettier/vim-prettier', {
 
 " Code editing enhacements
 Plug 'tpope/vim-sleuth'                                                                        " Automatic indentation setting
-Plug 'tpope/vim-fugitive'                                                                     " Git stuff from within vim
+Plug 'tpope/vim-fugitive'                                                                      " Git stuff from within vim
+Plug 'tmhedberg/SimpylFold'                                                                    " Python folding
 Plug 'majutsushi/tagbar', { 'on' : 'Tagbar' }                                                  " Class/module browser
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }                                             " Undo tree
 Plug 'tpope/vim-vinegar'                                                                       " Simpler file browser
@@ -737,7 +737,7 @@ highlight ALEWarningSign ctermfg=226 guifg=#ffff00 ctermbg=234 guibg=#1f1f1f
 let g:ale_statusline_format = ['X %d', '! %d', '⬥ ok']
 let g:ale_linters = {
 \   'javascript': ['flow', 'eslint'],
-\   'python': ['flake8']
+\   'python': ['pycodestyle', 'pyflakes']
 \}
 let g:ale_virtualenv_dir_names = ['~/.virtual_envs']
 let g:ale_echo_msg_error_str = 'E'
@@ -837,7 +837,7 @@ au FileType rust nnoremap <silent><leader>r :Start cargo run<cr>
 
 " Autoformat
 nnoremap <silent>,, :Autoformat<cr>
-au FileType python nnoremap <silent><buffer>,, :call Yapf()<cr>
+au FileType python nnoremap <silent><buffer>,, :%!yapf<cr>
 au FileType go nnoremap <silent><buffer>,, :GoFmt<cr>
 au FileType javascript,typescript,css,less,scss,graphql,markdown nnoremap <silent><buffer>,, :Prettier<cr>
 au FileType elm nnoremap <silent><buffer>,, :ElmFormat<cr>
