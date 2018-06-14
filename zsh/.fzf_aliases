@@ -1,4 +1,4 @@
-alias fd='cd $(ls -d */ | fzf --reverse --height "40%" --preview "ls {}")'
+alias cdf='cd $(ls -d */ | fzf --reverse --height "40%" --preview "ls {}")'
 
 unalias z 2> /dev/null
 z() {
