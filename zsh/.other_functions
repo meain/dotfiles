@@ -25,3 +25,10 @@ alias fff='$(get_prev_command 3 2)'
 stdgrip() {
     grip $1 --export -
 }
+
+gifup(){
+    # gifigy: https://github.com/vvo/gifify
+    # imgur-uploader: https://github.com/meain/imgur-uploader
+    timestamp="$(date +"%T")"
+    gifify $1 -o /tmp/$timestamp && imgur-uploader /tmp/$timestamp
+}
