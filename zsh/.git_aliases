@@ -48,4 +48,5 @@ alias gap='git add -p && git commit'
 
 # Clean up merged branches
 alias gbcl='git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d'
+alias gbclr='git remote prune'
 
