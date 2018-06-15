@@ -69,6 +69,7 @@ source $HOME/.fzf_aliases
 source $HOME/.common_functions
 source $HOME/.other_functions
 source $HOME/.coding_functions
+source $HOME/.npm_functions
 
 # Source any changs for linux
 case "$(uname -s)" in
