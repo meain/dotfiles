@@ -1,6 +1,10 @@
 npmgit() {
-    PACKAGE=$(cat package.json | jq '.dependencies' | grep -v '{' | grep -v '}' | sed 's:..\"::' | sed 's:\"\:.*$::' | fzf)
-    GITHUB_LINK=$(npm info $PACKAGE --json | jq '.repository.url' | sed 's:^\"git\+::' | sed 's:\.git\"$::')
-    echo $GITHUB_LINK
-    open $GITHUB_LINK
+    if [ -f "package.json" ]; then
+        PACKAGE=$(cat package.json | jq '.dependencies' | grep -v '{' | grep -v '}' | sed 's:..\"::' | sed 's:\"\:.*$::' | fzf)
+        GITHUB_LINK=$(npm info $PACKAGE --json | jq '.repository.url' | sed 's:^\"git\+::' | sed 's:\.git\"$::' | sed 's:\"git\://:https\://:g')
+        echo $GITHUB_LINK
+        open $GITHUB_LINK
+    else
+        echo "Not a npm repo. 'package.json' not found"
+    fi
 }
