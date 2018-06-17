@@ -1,1 +1,16 @@
+cmd put &{{
+    load=$(lf -remote 'load')
+    mode=$(echo "$load" | sed -n '1p')
+    list=$(echo "$load" | sed '1d')
+    if [ $mode = 'copy' ]; then
+        cp -rn $list .
+    elif [ $mode = 'move' ]; then
+        mv -n $list .
+    fi
+    lf -remote "$(printf 'save\nmove\n\n')"
+    lf -remote 'send load'
+    lf -remote 'send sync'
+}}
+
 map S $$SHELL
+map P put-async
