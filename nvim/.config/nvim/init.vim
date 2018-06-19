@@ -45,7 +45,6 @@ Plug 'prettier/vim-prettier', {
 " Code editing enhacements
 Plug 'tpope/vim-sleuth'                                                                        " Automatic indentation setting
 Plug 'tpope/vim-fugitive'                                                                      " Git stuff from within vim
-Plug 'tmhedberg/SimpylFold'                                                                    " Python folding
 Plug 'majutsushi/tagbar', { 'on' : 'Tagbar' }                                                  " Class/module browser
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }                                             " Undo tree
 Plug 'tpope/vim-vinegar'                                                                       " Simpler file browser
