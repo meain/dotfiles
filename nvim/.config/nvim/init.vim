@@ -836,7 +836,7 @@ au FileType rust nnoremap <silent><leader>r :Start cargo run<cr>
 
 " Autoformat
 nnoremap <silent>,, :Autoformat<cr>
-au FileType python nnoremap <silent><buffer>,, :%!yapf<cr>
+au FileType python nnoremap <silent><buffer>,, mp:%!yapf<cr>`p
 au FileType go nnoremap <silent><buffer>,, :GoFmt<cr>
 au FileType javascript,typescript,css,less,scss,graphql,markdown nnoremap <silent><buffer>,, :Prettier<cr>
 au FileType elm nnoremap <silent><buffer>,, :ElmFormat<cr>
