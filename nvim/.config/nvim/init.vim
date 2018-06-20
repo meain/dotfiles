@@ -249,8 +249,8 @@ autocmd ColorScheme janah highlight Normal ctermbg=234 guibg=#1f1f1f
 autocmd ColorScheme janah highlight SignColumn ctermbg=234 guibg=#1f1f1f
 autocmd ColorScheme janah highlight LineNr ctermbg=234 guibg=#1f1f1f
 autocmd ColorScheme janah highlight VertSplit ctermbg=234 guibg=#1f1f1f
-autocmd ColorScheme janah highlight StatusLine guifg=#dadada ctermfg=253 ctermbg=NONE guibg=NONE gui=NONE cterm=NONE
 autocmd ColorScheme janah highlight StatusLineNC guifg=#878787 ctermfg=102 ctermbg=NONE guibg=NONE gui=NONE cterm=NONE
+autocmd ColorScheme janah highlight StatusLine guifg=#878787 ctermfg=102 guibg=#f5f5f5 ctermfg=253 gui=NONE cterm=NONE
 autocmd ColorScheme janah highlight SignifySignAdd    cterm=bold  ctermfg=119 ctermbg=234 guibg=#1f1f1f
 autocmd ColorScheme janah highlight SignifySignDelete cterm=bold  ctermfg=167 ctermbg=234 guibg=#1f1f1f
 autocmd ColorScheme janah highlight SignifySignChange cterm=bold  ctermfg=227 ctermbg=234 guibg=#1f1f1f
