@@ -12,13 +12,12 @@ function! LinterStatus() abort
 endfunction
 
 set statusline=                                        " Reset status line
-set statusline+=%#StatusLineNC#                        " Faded
-set statusline+=%{&readonly?':':!&modifiable?':':''}   " Non modifiable
 set statusline+=%*                                     " Reset color
+set statusline+=%{&readonly?':':!&modifiable?':':''}   " Non modifiable
 set statusline+=\ \ \ \ %t\                            " File name
-set statusline+=%#StatusLineNC#                        " Faded
 set statusline+=%{&modified?'+':''}                    " Modified
 set statusline+=\ %q                                   " Quickfix, LocList etc
+set statusline+=%#StatusLineNC#                        " Faded
 set statusline+=%=                                     " Split
 set statusline+=%#ALEWarningSign#                      " Warning color
 set statusline+=%{LinterStatus()}                      " ALE errors and warns
