@@ -23,12 +23,10 @@ get_command(){
 }
 
 wf(){
-    if which workon >/dev/null; then
-        workon $(workon | fzf)
-    else
+    if ! which workon >/dev/null; then
         source /usr/local/bin/virtualenvwrapper.sh
-        workon $(workon | fzf)
     fi
+    workon $(workon | fzf --height 20% --layout=reverse)
 }
 
 alias h='$(get_command)'
