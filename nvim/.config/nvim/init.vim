@@ -36,6 +36,7 @@ Plug 'davidbeckingsale/writegood.vim', { 'on': ['WritegoodEnable', 'WritegoodTog
 Plug 'mattn/emmet-vim', { 'for': ['html', 'javascript', 'css', 'javascript.jsx'] }             " Emmet
 Plug 'jreybert/vimagit', { 'on': [ 'Magit', 'MagitOnly' ] }                                    " Even better git interface for vim
 Plug 'metakirby5/codi.vim', { 'on': 'Codi' }                                                   " Live code preview
+Plug 'rstacruz/vim-hyperstyle', { 'for': ['css', 'sass', 'stylus'] }                           " Easier css editing
 Plug 'rhysd/committia.vim'                                                                     " Better COMMIT_EDITMSG editing
 Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
