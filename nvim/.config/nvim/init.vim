@@ -63,7 +63,6 @@ Plug 'sheerun/vim-polyglot'                                                     
 Plug 'mhartington/nvim-typescript', { 'for': ['typescript'] }                                  " Typescript & Javascript support
 Plug 'neoclide/vim-jsx-improve', { 'for': ['javascript', 'javascript.jsx'] }                   " Inproved JSX syntax
 Plug 'tpope/vim-markdown', { 'for': ['md', 'markdown'] }                                       " Better markdown support
-Plug 'davidhalter/jedi-vim', { 'for': ['python'] }                                             " Python helper
 Plug 'fatih/vim-go', { 'for': ['go'] }                                                         " Golang helper
 Plug 'sebdah/vim-delve', { 'for': 'go' }                                                       " Debugger for go
 Plug 'racer-rust/vim-racer', { 'for': 'rust' }                                                 " Rust support
@@ -664,17 +663,6 @@ let g:fzf_colors =
   \ 'header':  ['fg', 'Comment'] }
 let g:fzf_layout = { 'down': '~40%' }  " Default fzf layout
 
-" Jedi python
-let g:jedi#use_splits_not_buffers = "top"
-let g:jedi#goto_command = "<leader>d"
-let g:jedi#goto_assignments_command = ""
-let g:jedi#goto_definitions_command = ""
-let g:jedi#documentation_command = "K"
-let g:jedi#usages_command = "<leader>r"
-let g:jedi#completions_command = ""
-let g:jedi#rename_command = "<leader>x"
-let g:jedi#max_doc_height = 20
-
 " MRU
 let MRU_Max_Entries = 200
 let MRU_Exclude_Files = '^/tmp/.*\|^/var/tmp/.*'
@@ -881,7 +869,8 @@ let g:LanguageClient_serverCommands = {
     \ 'javascript.jsx': ['flow-language-server', '--stdio'],
     \ 'typescript': ['javascript-typescript-stdio'],
     \ 'go': ['go-langserver'],
-    \ 'css': ['css-languageserver', '--stdio']
+    \ 'css': ['css-languageserver', '--stdio'],
+    \ 'python': ['pyls']
     \ }
 nnoremap <silent> gh :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> gx :call LanguageClient_textDocument_rename()<CR>
