@@ -64,6 +64,7 @@ brew cask ngrok
 
 # ruby
 gem install lolcat
+gem install neovim
 
 # neovim
 curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
@@ -105,6 +106,7 @@ pip2 install ipdb
 pip2 install flask
 pip2 install falcon
 pip2 install autopep8
+pip2 install neovim
 
 # python3
 pip3 install autopep8
