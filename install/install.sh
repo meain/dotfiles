@@ -1,4 +1,4 @@
-# base utilities
+# brew
 brew install tmux
 brew install tree
 brew install wget
@@ -54,6 +54,13 @@ brew install neomutt
 brew install htop
 brew install newsboat
 brew install hub
+
+# brew cask
+brew cask android-platform-tools
+brew cask hammerspoon
+brew cask mactex
+brew cask google-cloud-sdk
+brew cask ngrok
 
 # ruby
 gem install lolcat
