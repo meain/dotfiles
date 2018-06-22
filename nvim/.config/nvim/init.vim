@@ -60,6 +60,7 @@ Plug 'junegunn/vim-easy-align'                                                  
 
 " Language helpers
 Plug 'sheerun/vim-polyglot'                                                                    " Multiple language support (slow)
+Plug 'jonsmithers/experimental-lit-html-vim'
 Plug 'mhartington/nvim-typescript', { 'for': ['typescript'] }                                  " Typescript & Javascript support
 Plug 'neoclide/vim-jsx-improve', { 'for': ['javascript', 'javascript.jsx'] }                   " Inproved JSX syntax
 Plug 'tpope/vim-markdown', { 'for': ['md', 'markdown'] }                                       " Better markdown support
@@ -726,7 +727,7 @@ let g:startify_commands = [
 \	{ 'ug': [ 'Upgrade Plugin Manager', ':PlugUpgrade' ] },
 \ ]
 let g:startify_bookmarks = [
-	\ { 'c': '~/.dotfiles/.config/nvim/init.vim' },
+	\ { 'c': '~/.dotfiles/nvim/.config/nvim/init.vim' },
 	\ { 'z': '~/.dotfiles/zsh/.zshrc' }
 \ ]
 
