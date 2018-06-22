@@ -49,5 +49,9 @@ rcd () {
 
 # ngrok alternative
 servo(){
-    ssh -R 80:localhost:$1 serveo.net
+    if [ -z $2 ]; then
+	ssh -R 80:localhost:$1 serveo.net
+    else
+	ssh -R $2:80:localhost:$1 serveo.net
+    fi
 }
