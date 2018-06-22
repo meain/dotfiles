@@ -692,6 +692,11 @@ highlight StartifyNumber  ctermfg=215 guifg=#ffaf5f
 highlight StartifyPath    ctermfg=245 guifg=#8a8a8a
 highlight StartifySlash   ctermfg=240 guifg=#585858
 highlight StartifySpecial ctermfg=240 guifg=#585858
+let g:startify_files_number = 5
+let g:startify_change_to_dir = 0
+let g:startify_custom_header = [':meain - neovim','']
+let g:startify_relative_path = 1
+let g:startify_use_env = 1
 let g:startify_session_persistence = 1
 let g:startify_custom_indices = ['a', 'd', 'g', 'h', 'l', 'o', 'p', 'r', 't', 'n', 'm', 'b']
 let g:startify_fortune_use_unicode = 1
@@ -716,12 +721,10 @@ let g:startify_lists = [
 \  { 'type': 'bookmarks', 'header': [ 'Bookmarks' ]		 },
 \  { 'type': 'commands',  'header': [ 'Commands' ]		 },
 \ ]
-
 let g:startify_commands = [
 \	{ 'up': [ 'Update Plugins', ':PlugUpdate' ] },
 \	{ 'ug': [ 'Upgrade Plugin Manager', ':PlugUpgrade' ] },
 \ ]
-
 let g:startify_bookmarks = [
 	\ { 'c': '~/.dotfiles/.config/nvim/init.vim' },
 	\ { 'z': '~/.dotfiles/zsh/.zshrc' }
