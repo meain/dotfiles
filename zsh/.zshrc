@@ -56,6 +56,9 @@ bindkey '^Z' fg-bg
 # Credentials
 source $HOME/.credentials
 
+# source exports
+source $HOME/.exports
+
 # Source aliases
 source $HOME/.common_aliases
 source $HOME/.other_aliases
