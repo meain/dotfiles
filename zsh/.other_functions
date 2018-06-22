@@ -46,3 +46,8 @@ rcd () {
 	fi
     fi
 }
+
+# ngrok alternative
+servo(){
+    ssh -R 80:localhost:$1 serveo.net
+}
