@@ -17,7 +17,7 @@ alias gau='git add -u'
 alias gc='git commit'
 alias gm='git commit -m'
 
-alias gca='git commit --amend'
+alias gva='git commit --amend'
 alias gv='git add -u && git commit'
 alias gh="git add -u && git commit -m"
 alias gca='git commit -a --amend -C HEAD'
