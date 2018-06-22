@@ -870,7 +870,10 @@ let g:LanguageClient_serverCommands = {
     \ 'typescript': ['javascript-typescript-stdio'],
     \ 'go': ['go-langserver'],
     \ 'css': ['css-languageserver', '--stdio'],
-    \ 'python': ['pyls']
+    \ 'python': ['pyls'],
+    \ 'sh': ['bash-language-server', 'start'],
+    \ 'zsh': ['bash-language-server', 'start'],
+    \ 'dockerfile': ['docker-langserver', '--stdio']
     \ }
 nnoremap <silent> gh :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> gx :call LanguageClient_textDocument_rename()<CR>
