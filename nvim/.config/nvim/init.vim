@@ -677,6 +677,12 @@ nnoremap <silent><leader>g :Gstatus\|normal!gg7j<cr>
 command! Gl normal! :!git vhm<cr>
 
 " Startify
+function! s:list_commits()
+  let git = 'git -C ' . getcwd()
+  let commits = systemlist(git . ' log --oneline | head -n5')
+  let git = 'G' . git[1:]
+  return map(commits, '{"line": matchstr(v:val, "\\s\\zs.*"), "cmd": "'. git .' show ". matchstr(v:val, "^\\x\\+") }')
+endfunction
 nnoremap <silent>,l :Startify<cr>
 autocmd User Startified setlocal cursorline
 highlight StartifyBracket ctermfg=240 guifg=#585858
@@ -687,7 +693,7 @@ highlight StartifyPath    ctermfg=245 guifg=#8a8a8a
 highlight StartifySlash   ctermfg=240 guifg=#585858
 highlight StartifySpecial ctermfg=240 guifg=#585858
 let g:startify_session_persistence = 1
-let g:startify_custom_indices = ['a', 'd', 'g', 'h', 'l', 'u', 'o', 'p', 'r', 't', 'n', 'm', 'b']
+let g:startify_custom_indices = ['a', 'd', 'g', 'h', 'l', 'o', 'p', 'r', 't', 'n', 'm', 'b']
 let g:startify_fortune_use_unicode = 1
 let g:startify_list_order = ['dir', 'files',  'sessions']
 let g:startify_session_before_save = [
@@ -703,6 +709,23 @@ let g:startify_skiplist = [
     \ '\.vimgolf',
     \ '^/tmp',
     \ ]
+let g:startify_lists = [
+\  { 'type': 'dir',		  'header': [ 'Files '. getcwd() ] },
+\  { 'type': function('s:list_commits'), 'header': [ 'Recent Commits' ] },
+\  { 'type': 'sessions',  'header': [ 'Sessions' ]		 },
+\  { 'type': 'bookmarks', 'header': [ 'Bookmarks' ]		 },
+\  { 'type': 'commands',  'header': [ 'Commands' ]		 },
+\ ]
+
+let g:startify_commands = [
+\	{ 'up': [ 'Update Plugins', ':PlugUpdate' ] },
+\	{ 'ug': [ 'Upgrade Plugin Manager', ':PlugUpgrade' ] },
+\ ]
+
+let g:startify_bookmarks = [
+	\ { 'c': '~/.dotfiles/.config/nvim/init.vim' },
+	\ { 'z': '~/.dotfiles/zsh/.zshrc' }
+\ ]
 
 " Drag Visuals
 let g:Schlepp#reindent = 1
