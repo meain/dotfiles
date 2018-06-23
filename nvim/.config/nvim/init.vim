@@ -207,7 +207,7 @@ set list
 set listchars=tab:\ \ ,eol:¬,trail:⋅
 
 " Show line breaks
-set showbreak=↪
+set showbreak=…
 
 " When scrolling, keep cursor 5 lines away from screen border
 set scrolloff=5
