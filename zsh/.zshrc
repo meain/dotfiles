@@ -67,6 +67,7 @@ source $HOME/.emacs_aliases
 source $HOME/.git_aliases
 source $HOME/.tmux_aliases
 source $HOME/.fzf_aliases
+source $HOME/.macos_aliases
 
 # Source custom functions
 source $HOME/.common_functions

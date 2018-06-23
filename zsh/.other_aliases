@@ -1,3 +1,5 @@
+alias reload='source ~/.zshrc'
+
 alias j=z
 
 alias ydp='youtube-dl -o "%(playlist_index)s_%(title)s.%(ext)s"'
@@ -7,8 +9,8 @@ alias weather='curl -s wttr.in/thrissur | head -5 | tail -4'
 
 alias sourceworkon='source /usr/local/bin/virtualenvwrapper.sh'
 
-alias nm=neomutt
-alias m="offlineimap -qf INBOX && neomutt"
+alias nm='neomutt'
+alias m='offlineimap -qf INBOX && neomutt'
 alias qrf='qr-filetransfer'
 alias of='offlineimap'
 alias slack='slack-term -config ~/.slack-term.json'
