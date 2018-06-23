@@ -38,10 +38,6 @@ Plug 'jreybert/vimagit', { 'on': [ 'Magit', 'MagitOnly' ] }                     
 Plug 'metakirby5/codi.vim', { 'on': 'Codi' }                                                   " Live code preview
 Plug 'rstacruz/vim-hyperstyle', { 'for': ['css', 'sass', 'stylus'] }                           " Easier css editing
 Plug 'rhysd/committia.vim'                                                                     " Better COMMIT_EDITMSG editing
-Plug 'prettier/vim-prettier', {
-  \ 'do': 'yarn install',
-  \ 'for': ['javascript', 'typescript', 'css', 'less',
-  \ 'scss', 'graphql', 'markdown'] }
 
 " Code editing enhacements
 Plug 'tpope/vim-sleuth'                                                                        " Automatic indentation setting
@@ -753,22 +749,33 @@ vmap D <Plug>SchleppDup
 let g:limelight_conceal_ctermfg=0
 
 " Ale
+nnoremap <silent>,, :ALEFix<cr>
 let g:ale_sign_column_always = 1
 let g:ale_sign_error = 'xx'
 let g:ale_sign_warning = '!!'
-
 highlight ALEErrorSign ctermfg=196 guifg=#ff0000 ctermbg=234 guibg=#1f1f1f
 highlight ALEWarningSign ctermfg=226 guifg=#ffff00 ctermbg=234 guibg=#1f1f1f
 let g:ale_statusline_format = ['X %d', '! %d', '⬥ ok']
 let g:ale_linters = {
-\   'javascript': ['flow', 'eslint'],
-\   'python': ['pycodestyle', 'pyflakes']
+\  'javascript': ['flow', 'eslint'],
+\  'python': ['pycodestyle', 'pyflakes']
 \}
 let g:ale_virtualenv_dir_names = ['~/.virtual_envs']
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%severity%][%linter%] %s '
 let g:ale_lint_on_enter = 0
+let g:ale_fixers = {
+\  'javascript' : ['prettier'],
+\  'typescript' : ['prettier', 'tslint'],
+\  'json' : ['prettier'],
+\  'python' : ['yapf'],
+\  'go' : ['goimports'],
+\  'css' : ['prettier'],
+\  'elm' : ['elm-format'],
+\  'markdown' : ['prettier']
+\}
+let g:ale_javascript_prettier_use_local_config = 1
 
 " Vim-Tmux navigator
 let g:tmux_navigator_no_mappings = 1
@@ -859,14 +866,6 @@ au FileType rust nnoremap <silent><leader>d <Plug>(rust-def)
 au FileType rust nnoremap K <Plug>(rust-doc)
 au FileType rust nnoremap <silent><leader>a :Dispatch cargo build<cr>
 au FileType rust nnoremap <silent><leader>r :Start cargo run<cr>
-
-" Autoformat
-nnoremap <silent>,, :Autoformat<cr>
-au FileType python nnoremap <silent><buffer>,, mp:%!yapf<cr>`p
-au FileType go nnoremap <silent><buffer>,, :GoFmt<cr>
-au FileType javascript,typescript,css,less,scss,graphql,markdown nnoremap <silent><buffer>,, :Prettier<cr>
-au FileType elm nnoremap <silent><buffer>,, :ElmFormat<cr>
-au FileType html nnoremap <silent><buffer>,, gg=G
 
 " JSX Typescript
 autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.jsx
