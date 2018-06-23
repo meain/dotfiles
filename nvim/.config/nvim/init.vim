@@ -411,8 +411,9 @@ au FileType vim nmap K :help <c-r><c-w><cr>
 autocmd FileType help nnoremap <buffer> <Enter> <Enter>
 autocmd FileType vim-plug nnoremap <buffer> <Enter> <Enter>
 
-" Go back smoother
+" Go back and fwd smoother
 nnoremap <silent>\ <c-o>
+nnoremap <silent>~ <c-i>
 
 " Shady remaps
 imap ;; <Esc>A;
