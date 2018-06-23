@@ -1,0 +1,9 @@
+indent: auto
+indent-spaces: 2
+quiet: yes
+tidy-mark: no
+show-errors: 0
+show-warnings: 0
+
+break-before-br: yes
+char-encoding: utf8
