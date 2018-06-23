@@ -354,8 +354,8 @@ vnoremap j gj
 vnoremap k gk
 
 " Easier line navigatin
-nnoremap H ^
-nnoremap L $
+nnoremap H g^
+nnoremap L g$
 
 " Eaier quit and no ex
 nnoremap <silent> q :q<cr>
