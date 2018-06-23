@@ -1,5 +1,5 @@
 get_git_files_changed(){
-	git status --short | grep -v ' D ' | grep -v '?? ' | sed 's:^...::g' | sed 's:.*/::g' | tr '\n' ',' | sed s/,$//g
+    git status --short | grep -v ' D ' | grep -v '?? ' | sed 's:^...::g' | sed 's:.*/::g' | tr '\n' ',' | sed s/,$//g
 }
 get_git_branch(){
     git branch | grep \* | sed s/^\*\ //g
@@ -8,45 +8,51 @@ get_change_message(){
     echo "($(get_git_files_changed)):" | vipe | cat
 }
 
+# Fast was to check status
 alias g='git status -s'
 alias gs='git status'
 
+# Quickly add files
 alias ga='git add'
 alias gau='git add -u'
 
+# Easier commits
 alias gc='git commit'
 alias gm='git commit -m'
-
-alias gva='git commit --amend'
-alias gv='git add -u && git commit'
-alias gh="git add -u && git commit -m"
+alias gma='git commit --amend'
 alias gca='git commit -a --amend -C HEAD'
 
+# Better commits
+alias gv='git add -u && git commit'
+alias gh="git add -u && git commit -m"
 alias gvf='git add -u && git commit -m "$(get_change_message)"'
+alias gap='git add -p && git commit'
 
-alias gp='git push origin "$(get_git_branch)"'
-
+# Pretty logs
 alias gl='git lg'
 alias gg='git hm'
 alias ggg='git lh'
 alias gggg='git hi'
 
+# Simpler diffing
 alias gd='git diff'
 alias gds='git diff --staged'
 
+# View changess in pull
 alias gdp="gd @{1}.."
 alias glp="gl @{1}.."
 
+# Easier checkout
 alias gcom='git checkout master'
 alias gcob='git checkout -b'
 alias gco='git checkout $(git branch | grep -v "\*" | sed s:^..::g | fzf --height 40% --reverse)'
+
+# Fancy push
 alias gpu='git push origin $(git branch | grep "\*" | sed s:^..::g )'
 alias gpl='git pull origin $(git branch | grep "\*" | sed s:^..::g )'
 alias gpuf='git push origin $(git branch | sort -r | sed s:^..::g | fzf --height 40% --reverse)'
 alias gplf='git pull origin $(git branch | sort -r | sed s:^..::g | fzf --height 40% --reverse)'
 
-alias gap='git add -p && git commit'
-
 # Clean up merged branches
 alias gbcl='git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d'
-alias gbclr='git remote prune'
+alias gbclr='git remote prune $(git remote | fzf --height 40% --reverse)'
