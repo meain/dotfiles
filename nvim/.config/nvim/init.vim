@@ -766,7 +766,7 @@ let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%severity%][%linter%] %s '
 let g:ale_lint_on_enter = 0
 let g:ale_fixers = {
-\  'javascript' : ['prettier'],
+\  'javascript' : ['importjs', 'prettier'],
 \  'typescript' : ['prettier', 'tslint'],
 \  'json' : ['prettier'],
 \  'python' : ['yapf'],
@@ -884,16 +884,6 @@ let g:user_emmet_settings = {
 
 " CloseTag
 let g:closetag_filenames = '*.html,*.xhtml,*.xml,*.js,*.html.erb,*.md'
-
-" Prettier
-let g:prettier#config#print_width = 100
-let g:prettier#config#tab_width = 2
-let g:prettier#config#use_tabs = 'false'
-let g:prettier#config#semi = 'false'
-let g:prettier#config#single_quote = 'true'
-let g:prettier#config#bracket_spacing = 'true'
-let g:prettier#config#jsx_bracket_same_line = 'true'
-let g:prettier#config#trailing_comma = 'es5'
 
 " SuperTab
 let g:SuperTabDefaultCompletionType = "<c-n>"
