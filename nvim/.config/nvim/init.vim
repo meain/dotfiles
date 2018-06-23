@@ -199,6 +199,9 @@ set shiftwidth=4
 " Don't show --INSERT-- at bottom
 set noshowmode
 
+" Set textwidth
+set textwidth=120
+
 " Show invisibles
 set list
 set listchars=tab:\ \ ,eol:¬,trail:⋅
