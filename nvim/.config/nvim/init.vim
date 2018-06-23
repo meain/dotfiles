@@ -283,6 +283,9 @@ highlight htmlArg cterm=italic
 highlight Comment cterm=italic
 highlight Type    cterm=italic
 
+" Highlight git conflict markers
+match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
+
 " Set up leader keys
 let mapleader = "\<Space>"
 let maplocalleader = "\|"
