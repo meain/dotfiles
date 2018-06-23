@@ -70,7 +70,7 @@ Plug 'tmhedberg/matchit', { 'for': ['html','xml', 'tex'] }                      
 Plug '~/Documents/Projects/vim-jsontogo' , { 'for': ['go'] }                                   " Convert JSON to Go struct
 
 " Linting / Checking
-Plug 'w0rp/ale'                                                                                " Neomake - linting and stuf
+Plug '~/Documents/Projects/projects/ale'                                                       " Linter formatter and more
 Plug 'Chiel92/vim-autoformat', { 'on': 'Autoformat' }                                          " Beautify code
 
 " Autocomplete
@@ -101,6 +101,7 @@ Plug 'wakatime/vim-wakatime'                                                    
 Plug 'junegunn/vim-github-dashboard', { 'on': ['GHA', 'GHD']}                                  " Github dashboard
 Plug 'vim-scripts/loremipsum', { 'on': 'Loremipsum' }                                          " Loremipsum
 Plug 'sotte/presenting.vim', { 'on': 'PresentingStart' }                                       " Presetation in vim
+Plug 'junegunn/vader.vim'                                                                      " Vimscript testing framework
 
 call plug#end()
 
@@ -758,7 +759,8 @@ highlight ALEWarningSign ctermfg=226 guifg=#ffff00 ctermbg=234 guibg=#1f1f1f
 let g:ale_statusline_format = ['X %d', '! %d', '⬥ ok']
 let g:ale_linters = {
 \  'javascript': ['flow', 'eslint'],
-\  'python': ['pycodestyle', 'pyflakes']
+\  'python': ['pycodestyle', 'pyflakes'],
+\  'html': ['tidy']
 \}
 let g:ale_virtualenv_dir_names = ['~/.virtual_envs']
 let g:ale_echo_msg_error_str = 'E'
