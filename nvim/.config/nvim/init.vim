@@ -190,11 +190,13 @@ set splitright
 " Set updatetime
 set updatetime=2000
 
-" Default intent to 4 spaces ( auto switch based on type in code section )
+" Tabs config
 set expandtab
+set smarttab
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
+set shiftround
 
 " Don't show --INSERT-- at bottom
 set noshowmode
