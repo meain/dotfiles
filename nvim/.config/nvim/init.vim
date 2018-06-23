@@ -773,7 +773,8 @@ let g:ale_fixers = {
 \  'go' : ['goimports'],
 \  'css' : ['prettier'],
 \  'elm' : ['elm-format'],
-\  'markdown' : ['prettier']
+\  'markdown' : ['prettier'],
+\  'html' : ['tidy']
 \}
 let g:ale_javascript_prettier_use_local_config = 1
 
