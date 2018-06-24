@@ -70,7 +70,7 @@ Plug 'tmhedberg/matchit', { 'for': ['html','xml', 'tex'] }                      
 Plug '~/Documents/Projects/vim-jsontogo' , { 'for': ['go'] }                                   " Convert JSON to Go struct
 
 " Linting / Checking
-Plug '~/Documents/Projects/projects/ale'                                                       " Linter formatter and more
+Plug 'w0rp/ale'                                                                                " Linter formatter and more
 Plug 'Chiel92/vim-autoformat', { 'on': 'Autoformat' }                                          " Beautify code
 
 " Autocomplete
