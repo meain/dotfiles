@@ -147,11 +147,11 @@ set nowrap
 set hidden
 
 " Better backup, swap and undos storage
+set backup                        " make backup files
+set undofile                      " persistent undos - undo after you re-open the file
 set directory=~/.vim/dirs/tmp     " directory to place swap files in
 set backupdir=~/.vim/dirs/backups " where to put backup files
-set backup                        " make backup files
 set undodir=~/.vim/dirs/undodir   " undo directory
-set undofile                      " persistent undos - undo after you re-open the file
 
 " Allow mouse
 set mouse=a
