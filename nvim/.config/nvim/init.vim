@@ -258,9 +258,9 @@ autocmd ColorScheme janah highlight LineNr ctermbg=234 guibg=#1f1f1f
 autocmd ColorScheme janah highlight VertSplit ctermbg=234 guibg=#1f1f1f
 autocmd ColorScheme janah highlight StatusLineNC guifg=#878787 ctermfg=102 ctermbg=NONE guibg=NONE gui=NONE cterm=NONE
 autocmd ColorScheme janah highlight StatusLine guifg=#878787 ctermfg=102 guibg=#f5f5f5 ctermfg=253 gui=NONE cterm=NONE
-autocmd ColorScheme janah highlight SignifySignAdd    cterm=bold gui=bold  ctermfg=119 guifg=#87ff5f
-autocmd ColorScheme janah highlight SignifySignDelete cterm=bold gui=bold  ctermfg=167 guifg=#d75f5f
-autocmd ColorScheme janah highlight SignifySignChange cterm=bold gui=bold  ctermfg=227 guifg=#ffff5f
+autocmd ColorScheme janah highlight SignifySignAdd    cterm=bold gui=bold  ctermfg=119 guifg=#87ff5f guibg=#1f1f1f
+autocmd ColorScheme janah highlight SignifySignDelete cterm=bold gui=bold  ctermfg=167 guifg=#d75f5f guibg=#1f1f1f
+autocmd ColorScheme janah highlight SignifySignChange cterm=bold gui=bold  ctermfg=227 guifg=#ffff5f guibg=#1f1f1f
 autocmd ColorScheme janah highlight ColorColumn ctermbg=154 ctermfg=0 guibg=#474747 guifg=#ffffff
 autocmd ColorScheme janah highlight CursorLine ctermbg=154 guibg=#474747
 autocmd ColorScheme janah highlight CursorLineNr ctermbg=NONE guibg=NONE guifg=#df005f ctermfg=161
@@ -779,7 +779,7 @@ let g:ale_lint_on_enter = 0
 let g:ale_fixers = {
 \  'javascript' : ['importjs', 'prettier'],
 \  'typescript' : ['prettier', 'tslint'],
-\  'json' : ['prettier'],
+\  'json' : ['fixjson'],
 \  'python' : ['yapf'],
 \  'go' : ['goimports'],
 \  'css' : ['prettier'],
