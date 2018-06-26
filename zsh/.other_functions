@@ -55,3 +55,7 @@ servo(){
 	ssh -R $2:80:localhost:$1 serveo.net
     fi
 }
+
+root(){
+    . cd $(git rev-parse --show-toplevel 2> /dev/null)
+}
