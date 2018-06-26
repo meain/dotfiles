@@ -13,7 +13,7 @@
 
 **Hey**, these are the dotfiles that I use.
 
-It includes my `[z/ba/fi]sh`, `[v/nv/mv/gv]im`, `emacs`, `tmux`, `git` config files.
+It includes my `[z/ba/fi]sh`, `[v/nv/mv/gv]im`, `emacs`, `tmux`, `git`, `i3`, `karabiner`, `tig`, `newsboat`, `hammerspoon` , ... config files.
 
 ## How to use
 
@@ -39,7 +39,7 @@ stow nvim
 
 [`mru.vim`](https://github.com/vim-scripts/mru.vim) need for `v` & `vv`
 
-[`hub`](https://hub.github.com/) better git
+[`hub`](https://hub.github.com/) git plus something else
 
 [`z`](https://github.com/rupa/z) quickly jump around folders
 
@@ -49,40 +49,42 @@ stow nvim
 
 [`neomutt`](https://www.neomutt.org/) why use a web browser to check mail?
 
-[`irssi`](https://irssi.org/) the best irc client
+[`tiny`](https://github.com/osa1/tiny) a simple irc client
 
-[`ranger`](https://github.com/ranger/ranger) the better way to manage files
+[`lf`](https://github.com/gokcehan/lf) a faster ranger like file manager
 
-[`coderay`](https://github.com/rubychan/coderay) syntax highlight your code
+[`bat`](https://github.com/sharkdp/bat) a cat clone with syntax highlight and stuff
 
 [`cmus`](https://cmus.github.io/) a beautiful music player in the shell
 
 [`vtop`](https://github.com/MrRio/vtop) a pretty `top` command with ascii art
 
+[`fkill`](https://github.com/sindresorhus/fkill-cli) fabulously kill processes
+
 [`thefuck`](https://github.com/nvbn/thefuck) correct your previous command
+
+[`jv`](https://github.com/maxzender/jv) view json in terminal
 
 [`ripgrep`](https://github.com/BurntSushi/ripgrep) You think ag is fast? Try this
 
 [`colorls`](https://github.com/athityakumar/colorls) Much prettier ls
 
-## Screenshots (Old)
-
-*as of `620d4e65`*
-
-> Gone quite a bit minimal after that
+## Screenshots 
 
 ### Zsh
-![](https://i.imgur.com/oh4DY5e.png)
+![zsh](https://i.imgur.com/0IIq0l3.png)
+
+
 
 ### Vim
-![](https://i.imgur.com/sPVLbzI.png)
 
-### Tmux
-![](https://i.imgur.com/YBTlVjK.png)
+![vim](https://i.imgur.com/hBfeYPe.png)
 
-### irssi
-![](https://i.imgur.com/08iF4Ts.png)
+### IRC
+
+![irc](https://i.imgur.com/UF5fca3.png)
 
 ### Colors
-![](https://i.imgur.com/E9qgsHj.png)
+
+![colors](https://i.imgur.com/EB5Chnp.png)
 
