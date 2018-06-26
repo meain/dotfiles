@@ -5,6 +5,7 @@ export VIRTUAL_ENV_DISABLE_PROMPT=1
 autoload -U colors
 colors
 
+# https://github.com/clvv/oh-my-zsh/blob/master/modules/git/functions/git-info
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:*' check-for-changes true
@@ -13,7 +14,7 @@ zstyle ':vcs_info:*' unstagedstr "%F{red}"
 zstyle ':vcs_info:*' use-simple true
 zstyle ':vcs_info:git+set-message:*' hooks git-untracked
 zstyle ':vcs_info:git*:*' formats '%u%c%m%b' # default ' (%s)-[%b]%c%u-'
-zstyle ':vcs_info:git*:*' actionformats '%u%c%m%b|%a' # default ' (%s)-[%b|%a]%c%u-'
+zstyle ':vcs_info:git*:*' actionformats '%u%c%m%b/%a' # default ' (%s)-[%b|%a]%c%u-'
 
 function _git_time_since_commit() {
   # Only proceed if there is actually a commit.
