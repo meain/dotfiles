@@ -74,8 +74,6 @@ stow nvim
 ### Zsh
 ![zsh](https://i.imgur.com/0IIq0l3.png)
 
-
-
 ### Vim
 
 ![vim](https://i.imgur.com/hBfeYPe.png)
@@ -88,3 +86,23 @@ stow nvim
 
 ![colors](https://i.imgur.com/EB5Chnp.png)
 
+## More screenshots
+<details>
+<summary>Screenshots (as of `620d4e65`)</summary>
+<br>
+
+### Zsh
+![](https://i.imgur.com/oh4DY5e.png)
+
+### Vim
+![](https://i.imgur.com/sPVLbzI.png)
+
+### Tmux
+![](https://i.imgur.com/YBTlVjK.png)
+
+### irssi
+![](https://i.imgur.com/08iF4Ts.png)
+
+### Colors
+![](https://i.imgur.com/E9qgsHj.png)
+</details>
