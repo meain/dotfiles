@@ -423,6 +423,12 @@ autocmd FileType vim-plug nnoremap <buffer> <Enter> <Enter>
 nnoremap <silent>\ <c-o>
 nnoremap <silent>~ <c-i>
 
+" Easier arrow keys
+inoremap <silent> <m-h> <left>
+inoremap <silent> <m-j> <down>
+inoremap <silent> <m-k> <up>
+inoremap <silent> <m-l> <right>
+
 " Shady remaps
 imap ;; <Esc>A;
 
