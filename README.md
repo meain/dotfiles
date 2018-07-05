@@ -65,6 +65,8 @@ stow nvim
 
 [`jv`](https://github.com/maxzender/jv) view json in terminal
 
+[`scim`](https://github.com/andmarti1424/sc-im) excel in terminal
+
 [`ripgrep`](https://github.com/BurntSushi/ripgrep) You think ag is fast? Try this
 
 [`colorls`](https://github.com/athityakumar/colorls) Much prettier ls
