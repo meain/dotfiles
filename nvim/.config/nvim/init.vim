@@ -95,6 +95,7 @@ Plug 'mattn/webapi-vim'                                                         
 Plug 'tpope/vim-repeat'                                                                        " Repeat plugins with .
 
 " Others
+Plug 'thalesmello/webcomplete.vim'                                                             " Autocomplete from webpages
 Plug 'sedm0784/vim-you-autocorrect', { 'on': 'EnableAutocorrect' }                             " Autocorrect like in phones
 Plug 'junegunn/vim-online-thesaurus', { 'on': 'OnlineThesaurusCurrentWord' }                   " Online thesaurus
 Plug 'kristijanhusak/vim-carbon-now-sh', { 'on': 'CarbonNowSh' }                               " Polaroid for code
