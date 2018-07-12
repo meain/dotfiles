@@ -786,7 +786,7 @@ let g:ale_fixers = {
 \  'javascript' : ['importjs', 'prettier'],
 \  'typescript' : ['prettier', 'tslint'],
 \  'json' : ['fixjson'],
-\  'python' : ['yapf'],
+\  'python' : ['black'],
 \  'go' : ['goimports'],
 \  'css' : ['prettier'],
 \  'elm' : ['elm-format'],
