@@ -54,9 +54,9 @@ Plug 'tomtom/tcomment_vim'                                                      
 Plug 'junegunn/vim-easy-align'                                                                 " Some prettification
 
 " Language helpers
-Plug 'sheerun/vim-polyglot'                                                                    " Multiple language support (slow)
-Plug 'jonsmithers/experimental-lit-html-vim'
-Plug 'mhartington/nvim-typescript', { 'for': ['typescript'] }                                  " Typescript & Javascript support
+" Plug 'sheerun/vim-polyglot'                                                                  " Multiple language support (slow)
+" Plug 'jonsmithers/experimental-lit-html-vim'                                                 " lit-html highlight
+Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] }                                   " Typescript syntax highlight
 Plug 'neoclide/vim-jsx-improve', { 'for': ['javascript', 'javascript.jsx'] }                   " Inproved JSX syntax
 Plug 'tpope/vim-markdown', { 'for': ['md', 'markdown'] }                                       " Better markdown support
 Plug 'fatih/vim-go', { 'for': ['go'] }                                                         " Golang helper
