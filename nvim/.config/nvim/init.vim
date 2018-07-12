@@ -73,18 +73,19 @@ Plug 'w0rp/ale'                                                                 
 Plug 'Chiel92/vim-autoformat', { 'on': 'Autoformat' }                                          " Beautify code
 
 " Autocomplete
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }                                  " Competion framework
-Plug 'Shougo/echodoc.vim'                                                                      " Show signature
-Plug 'Shougo/neco-vim', { 'for': 'vim' }                                                       " Completion for viml
+Plug 'maralla/completor.vim'
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }                                  " Competion framework
+" Plug 'Shougo/echodoc.vim'                                                                      " Show signature
+" Plug 'Shougo/neco-vim', { 'for': 'vim' }                                                       " Completion for viml
 " Plug 'sebastianmarkow/deoplete-rust', { 'for': ['rs', 'rust'] }                              " Rust autocompletion (slow)
 " Plug 'wellle/tmux-complete.vim'                                                              " Tmux completion
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }           " Language client
 
 " Snippets
 Plug 'SirVer/ultisnips'                                                                        " Snippet manager
-Plug 'honza/vim-snippets'                                                                      " More snippets
-Plug 'epilande/vim-es2015-snippets', { 'for': ['javascript', 'typescript'] }                   " ES2015 snippets
-Plug 'epilande/vim-react-snippets', { 'for': ['javascript', 'typescript', 'javascript.jsx'] }  " React snippets
+" Plug 'honza/vim-snippets'                                                                      " More snippets
+" Plug 'epilande/vim-es2015-snippets', { 'for': ['javascript', 'typescript'] }                   " ES2015 snippets
+" Plug 'epilande/vim-react-snippets', { 'for': ['javascript', 'typescript', 'javascript.jsx'] }  " React snippets
 
 " Dependencies
 Plug 'vim-scripts/mru.vim'                                                                     " Save recently used files (for v)
@@ -93,7 +94,6 @@ Plug 'mattn/webapi-vim'                                                         
 Plug 'tpope/vim-repeat'                                                                        " Repeat plugins with .
 
 " Others
-Plug 'thalesmello/webcomplete.vim'                                                             " Autocomplete from webpages
 Plug 'sedm0784/vim-you-autocorrect', { 'on': 'EnableAutocorrect' }                             " Autocorrect like in phones
 Plug 'junegunn/vim-online-thesaurus', { 'on': 'OnlineThesaurusCurrentWord' }                   " Online thesaurus
 Plug 'kristijanhusak/vim-carbon-now-sh', { 'on': 'CarbonNowSh' }                               " Polaroid for code
