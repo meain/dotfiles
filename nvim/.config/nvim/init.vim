@@ -826,7 +826,7 @@ let g:signify_sign_change            = 'ǁ'
 let g:sleuth_automatic = 1
 
 " Polyglot
-let g:polyglot_disabled = ['markdown', 'md', 'latex', 'tex', 'jsx']
+let g:polyglot_disabled = ['markdown', 'md', 'latex', 'tex', 'jsx', 'typescript']
 
 " Markdown
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
