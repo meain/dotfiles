@@ -872,10 +872,6 @@ endfunction
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
-" Nvim typescript
-autocmd BufEnter *.ts,*.js,*.tsc nnoremap <leader>d :TSDef<cr>
-autocmd BufEnter *.ts,*.js,*.tsc nnoremap K :TSDoc<cr>
-
 " Racer
 au FileType rust nnoremap <silent><leader>d <Plug>(rust-def)
 au FileType rust nnoremap K <Plug>(rust-doc)
@@ -960,10 +956,6 @@ let g:deoplete#enable_smart_case = 1
 
 " Echodoc
 let g:echodoc#enable_at_startup = 1
-
-" nvim_typesctipt
-let g:nvim_typescript#javascript_support = 1
-let g:nvim_typescript#type_info_on_hold = 0
 
 " Indentline
 let g:indentLine_color_term = 236
