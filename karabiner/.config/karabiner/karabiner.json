@@ -272,7 +272,7 @@
                 },
                 {
                     "from": {
-                        "key_code": "left_arrow"
+                        "key_code": "right_arrow"
                     },
                     "to": {
                         "key_code": "fn"
@@ -280,7 +280,7 @@
                 },
                 {
                     "from": {
-                        "key_code": "right_arrow"
+                        "key_code": "left_arrow"
                     },
                     "to": {
                         "key_code": "fn"
