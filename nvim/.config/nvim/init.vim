@@ -101,7 +101,7 @@ Plug 'wakatime/vim-wakatime'                                                    
 Plug 'junegunn/vim-github-dashboard', { 'on': ['GHA', 'GHD']}                                  " Github dashboard
 Plug 'vim-scripts/loremipsum', { 'on': 'Loremipsum' }                                          " Loremipsum
 Plug 'sotte/presenting.vim', { 'on': 'PresentingStart' }                                       " Presetation in vim
-Plug 'junegunn/vader.vim', {'for', 'vader'}                                                    " Vimscript testing framework
+Plug 'junegunn/vader.vim', {'for': 'vader'}                                                    " Vimscript testing framework
 
 call plug#end()
 
