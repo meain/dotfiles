@@ -74,7 +74,6 @@ Plug 'Chiel92/vim-autoformat', { 'on': 'Autoformat' }                           
 
 " Autocomplete
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }                                  " Competion framework
-Plug 'mhartington/deoplete-typescript',{'do': 'npm install -g typescript','for': 'typescript'} " Typescript & Javascript support
 Plug 'Shougo/echodoc.vim'                                                                      " Show signature
 Plug 'Shougo/neco-vim', { 'for': 'vim' }                                                       " Completion for viml
 " Plug 'sebastianmarkow/deoplete-rust', { 'for': ['rs', 'rust'] }                              " Rust autocompletion (slow)
