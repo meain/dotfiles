@@ -75,10 +75,9 @@ Plug 'w0rp/ale'                                                                 
 Plug 'Chiel92/vim-autoformat', { 'on': 'Autoformat' }                                          " Beautify code
 
 " Autocomplete
-Plug 'maralla/completor.vim'
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }                                  " Competion framework
-" Plug 'Shougo/echodoc.vim'                                                                      " Show signature
-" Plug 'Shougo/neco-vim', { 'for': 'vim' }                                                       " Completion for viml
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }                                  " Competion framework
+Plug 'Shougo/echodoc.vim'                                                                      " Show signature
+Plug 'Shougo/neco-vim', { 'for': 'vim' }                                                       " Completion for viml
 " Plug 'sebastianmarkow/deoplete-rust', { 'for': ['rs', 'rust'] }                              " Rust autocompletion (slow)
 " Plug 'wellle/tmux-complete.vim'                                                              " Tmux completion
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }           " Language client
