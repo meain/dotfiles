@@ -7,10 +7,6 @@ type Props ={}
 type State = {}
 
 class ${1:`!v expand('%:t:r')`} extends React.Component<Props, State> {
-	constructor(props: Props) {
-		super(props)
-	}
-
 	render(): React.Node {
 		return (
 			<div className='$1'>
@@ -28,11 +24,6 @@ import React, { Component} from 'react';
 import styles from './${2:$1}.css';
 
 class ${1:`!v expand('%:t:r')`} extends Component {
-
-	constructor(props) {
-		super(props);
-	}
-
 	render() {
 		return (
 			<div className='$1'>
@@ -58,4 +49,40 @@ endsnippet
 
 snippet cim "React component import" b
 import $1 from '../$1/$1'
+endsnippet
+
+snippet conn "React component import" b
+constructor(props) {
+	super(props)
+}
+endsnippet
+
+snippet con "React component import" b
+constructor(props: Props) {
+	super(props)
+}
+endsnippet
+
+snippet c "Simple console.log" b
+console.log($1)
+endsnippet
+
+snippet ecs "Export with connect and state" b
+export default connect(mapStateToProps)($1)
+endsnippet
+
+snippet ecd "Export with connect and dispatch" b
+export default connect( (): {} => { return {} }, mapDispatchToProps)($1)
+endsnippet
+
+snippet pp "this.props" b
+this.props.
+endsnippet
+
+snippet d "Destructuring" b
+const {$1} = $2
+endsnippet
+
+snippet ls "let self" b
+let self: any = this // eslint-disable-line
 endsnippet
