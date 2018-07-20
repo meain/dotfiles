@@ -37,7 +37,7 @@ Plug 'mattn/emmet-vim', { 'for': ['html', 'javascript', 'css', 'javascript.jsx']
 Plug 'jreybert/vimagit', { 'on': [ 'Magit', 'MagitOnly' ] }                                    " Even better git interface for vim
 Plug 'metakirby5/codi.vim', { 'on': 'Codi' }                                                   " Live code preview
 Plug 'rhysd/committia.vim'                                                                     " Better COMMIT_EDITMSG editing
-Plug 'Galooshi/vim-import-js'                                                                  " Easier imports for javascript
+Plug 'Galooshi/vim-import-js', {'for': 'javascript', 'do': 'npm install -g import-js'}         " Easier imports for javascript
 
 " Code editing enhacements
 Plug 'tpope/vim-sleuth'                                                                        " Automatic indentation setting
@@ -57,7 +57,7 @@ Plug 'junegunn/vim-easy-align'                                                  
 " Language helpers
 " Plug 'sheerun/vim-polyglot'                                                                  " Multiple language support (slow)
 " Plug 'jonsmithers/experimental-lit-html-vim'                                                 " lit-html highlight
-Plug 'pangloss/vim-javascript'                                                                 " Javascript syntax highlight
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }                                        " Javascript syntax highlight
 Plug 'mhartington/nvim-typescript', { 'for': ['typescript'] }                                  " Typescript syntax highlight
 Plug 'neoclide/vim-jsx-improve', { 'for': ['javascript', 'javascript.jsx'] }                   " Inproved JSX syntax
 Plug 'tpope/vim-markdown', { 'for': ['md', 'markdown'] }                                       " Better markdown support
@@ -768,20 +768,21 @@ let g:limelight_conceal_ctermfg=0
 " Ale
 nnoremap <silent>,, :ALEFix<cr>
 let g:ale_sign_column_always = 1
-let g:ale_sign_error = 'xx'
-let g:ale_sign_warning = '!!'
+let g:ale_sign_error = '✖'
+let g:ale_sign_warning = '⚠'
 highlight ALEErrorSign ctermfg=196 guifg=#ff0000 ctermbg=234 guibg=#1f1f1f
 highlight ALEWarningSign ctermfg=226 guifg=#ffff00 ctermbg=234 guibg=#1f1f1f
-let g:ale_statusline_format = ['X %d', '! %d', '⬥ ok']
+let g:ale_statusline_format = ['✖ %d', '⚠ %d', '⬥ ok']
 let g:ale_linters = {
 \  'javascript': ['flow', 'eslint'],
 \  'python': ['pycodestyle', 'pyflakes'],
-\  'html': ['tidy']
+\  'html': ['tidy'],
+\  'css': ['stylelint']
 \}
 let g:ale_virtualenv_dir_names = ['~/.virtual_envs']
-let g:ale_echo_msg_error_str = 'E'
-let g:ale_echo_msg_warning_str = 'W'
-let g:ale_echo_msg_format = '[%severity%][%linter%] %s '
+let g:ale_echo_msg_error_str = '✖'
+let g:ale_echo_msg_warning_str = '⚠'
+let g:ale_echo_msg_format = '%severity% %linter%: %s '
 let g:ale_lint_on_enter = 0
 let g:ale_fixers = {
 \  'javascript' : ['importjs', 'prettier'],
