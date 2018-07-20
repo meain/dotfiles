@@ -21,4 +21,6 @@ alias ssh='TERM="screen-256color" ssh'
 
 alias docupdate="ssh -t idli-chummar 'cd ~/kalan/ReadTheDocs && git pull origin master'"
 
-alias py="python"
+alias py="python3"
+
+alias ql='qlmanage -p "$@" > /dev/null 2> /dev/null'
