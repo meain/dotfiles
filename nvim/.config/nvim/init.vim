@@ -38,6 +38,7 @@ Plug 'jreybert/vimagit', { 'on': [ 'Magit', 'MagitOnly' ] }                     
 Plug 'metakirby5/codi.vim', { 'on': 'Codi' }                                                   " Live code preview
 Plug 'rhysd/committia.vim'                                                                     " Better COMMIT_EDITMSG editing
 Plug 'Galooshi/vim-import-js', {'for': 'javascript', 'do': 'npm install -g import-js'}         " Easier imports for javascript
+Plug 'AndrewRadev/splitjoin.vim'                                                               " Single line vs multi line code transformations
 
 " Code editing enhacements
 Plug 'tpope/vim-sleuth'                                                                        " Automatic indentation setting
