@@ -791,7 +791,7 @@ let g:ale_fixers = {
 \  'json' : ['fixjson'],
 \  'python' : ['black'],
 \  'go' : ['goimports'],
-\  'css' : ['prettier'],
+\  'css' : ['stylelint'],
 \  'elm' : ['elm-format'],
 \  'markdown' : ['prettier'],
 \  'html' : ['tidy']
