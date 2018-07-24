@@ -96,6 +96,8 @@ npm install -g ts-node
 npm install -g surge
 npm install -g prettier
 npm install -g http-server
+npm install -g stylelint
+npm install -g stylelint-config-standard
 
 # python2
 pip2 install requests
