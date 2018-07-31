@@ -66,6 +66,7 @@ Plug 'fatih/vim-go', { 'for': ['go'] }                                          
 Plug 'sebdah/vim-delve', { 'for': 'go' }                                                       " Debugger for go
 Plug 'racer-rust/vim-racer', { 'for': 'rust' }                                                 " Rust support
 Plug 'tmhedberg/matchit', { 'for': ['html','xml', 'tex'] }                                     " Match tags for html, xml latex etc
+" Plug 'numirias/semshi', { 'for': 'python', 'do': ':UpdateRemotePlugins' }                      " Better syntax highlight for python
 " Plug 'raimon49/requirements.txt.vim', { 'for': 'requirements' }                              " Requirements file
 
 " Language enhacements
@@ -1007,6 +1008,24 @@ let g:LoupeVeryMagic=0
 
 " Vim javascript
 let g:javascript_plugin_flow = 1
+
+" Semshi
+let g:semshi#excluded_buffers = ['*']
+hi semshiLocal           ctermfg=209 guifg=#ff875f
+hi semshiGlobal          ctermfg=214 guifg=#ffaf00
+hi semshiImported        ctermfg=214 guifg=#ffaf00 cterm=bold gui=bold
+hi semshiParameter       ctermfg=75  guifg=#5fafff
+hi semshiParameterUnused ctermfg=117 guifg=#87d7ff cterm=underline gui=underline
+hi semshiFree            ctermfg=218 guifg=#ffafd7
+hi semshiBuiltin         ctermfg=207 guifg=#ff5fff
+hi semshiAttribute       ctermfg=49  guifg=#00ffaf
+hi semshiSelf            ctermfg=249 guifg=#b2b2b2
+hi semshiUnresolved      ctermfg=226 guifg=#ffff00 cterm=underline gui=underline
+hi semshiSelected        ctermfg=231 guifg=#ffffff ctermbg=161 guibg=#d7005f
+
+hi semshiErrorSign       ctermfg=231 guifg=#ffffff ctermbg=160 guibg=#d70000
+hi semshiErrorChar       ctermfg=231 guifg=#ffffff ctermbg=160 guibg=#d70000
+sign define semshiError text=E> texthl=semshiErrorSign
 
 
 
