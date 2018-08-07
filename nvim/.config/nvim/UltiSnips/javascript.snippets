@@ -63,8 +63,12 @@ constructor(props: Props) {
 }
 endsnippet
 
-snippet c "Simple console.log" b
+snippet cl "Simple console.log" b
 console.log($1)
+endsnippet
+
+snippet c "Simple console.log" b
+console.log('$1:', $1)
 endsnippet
 
 snippet ecs "Export with connect and state" b
