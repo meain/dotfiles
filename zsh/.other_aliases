@@ -24,3 +24,5 @@ alias docupdate="ssh -t idli-chummar 'cd ~/kalan/ReadTheDocs && git pull origin 
 alias py="python3"
 
 alias ql='qlmanage -p "$@" > /dev/null 2> /dev/null'
+
+alias update='brew update && brew upgrade && upgrade_oh_my_zsh && nvim +PlugUpdate +qall'
