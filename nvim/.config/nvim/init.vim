@@ -4,68 +4,66 @@
 call plug#begin('~/.local/share/nvim/plugged')
 
 " Visual enhancements
-Plug 'flazz/vim-colorschemes'                                                                  " Vim colorscheme
-Plug 'chriskempson/base16-vim'                                                                 " Base16 colors
+Plug 'mhinz/vim-janah'                                                                         " Janah colorscheme
 Plug 'Yggdroot/indentLine'                                                                     " Show indent
 Plug 'mhinz/vim-signify'                                                                       " Git diff icons in gutter
-Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }                                           " Hyper focus editing
-Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }                                                     " Centerify
+" Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }                                           " Hyper focus editing
+" Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }                                                     " Centerify
 Plug 'ap/vim-css-color'                                                                        " Show colors
-Plug 'yuttie/comfortable-motion.vim'                                                           " Scroll up and down
+" Plug 'yuttie/comfortable-motion.vim'                                                           " Scroll up and down
 
 " Added functinality
 Plug 'meain/vim-startify'                                                                      " A fancy start page for vim (slow)
 Plug 'meain/vim-googler', { 'on': 'Google' }                                                   " Google from within vim
-Plug 'justinmk/vim-sneak'                                                                      " Quickly sneak arround
+" Plug 'justinmk/vim-sneak'                                                                      " Quickly sneak arround
 Plug 'wincent/loupe'                                                                           " Better search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }                              " Fzf
 Plug 'junegunn/fzf.vim'                                                                        " Fzf for vim
-Plug 'jremmen/vim-ripgrep', { 'on': 'Rg' }                                                     " Rg with quickfix list
+" Plug 'jremmen/vim-ripgrep', { 'on': 'Rg' }                                                     " Rg with quickfix list
 Plug 'christoomey/vim-tmux-navigator'                                                          " Seamless navigation between vim and tmux
 Plug 'suan/vim-instant-markdown', { 'for': 'markdown' }                                        " View markdown in browser while editing
 Plug 'ervandew/supertab'                                                                       " Autocomplete on tab
 Plug 'zirrostig/vim-schlepp'                                                                   " Better drag visuals
 Plug 'xtal8/traces.vim'                                                                        " Interactive subsititue
 Plug 'vim-scripts/restore_view.vim'                                                            " Restore file pointer
-Plug 'tpope/vim-dispatch', { 'on': 'Dispatch' }                                                " Async tasks in vim
+" Plug 'tpope/vim-dispatch', { 'on': 'Dispatch' }                                                " Async tasks in vim
 Plug 'airblade/vim-rooter'                                                                     " Change directory to project root
-Plug 'editorconfig/editorconfig-vim'                                                           " Editorconfig
-Plug 'mattn/gist-vim', { 'on': 'Gist' }                                                        " Push current buffer as gist
-Plug 'rizzatti/dash.vim', { 'on': 'Dash' }                                                     " Search Dash docs
-Plug 'davidbeckingsale/writegood.vim', { 'on': ['WritegoodEnable', 'WritegoodToggle'] }        " Better writing mode
+" Plug 'editorconfig/editorconfig-vim'                                                           " Editorconfig
+" Plug 'mattn/gist-vim', { 'on': 'Gist' }                                                        " Push current buffer as gist
+" Plug 'rizzatti/dash.vim', { 'on': 'Dash' }                                                     " Search Dash docs
+" Plug 'davidbeckingsale/writegood.vim', { 'on': ['WritegoodEnable', 'WritegoodToggle'] }        " Better writing mode
 Plug 'mattn/emmet-vim', { 'for': ['html', 'javascript', 'css', 'javascript.jsx'] }             " Emmet
 Plug 'jreybert/vimagit', { 'on': [ 'Magit', 'MagitOnly' ] }                                    " Even better git interface for vim
-Plug 'metakirby5/codi.vim', { 'on': 'Codi' }                                                   " Live code preview
-Plug 'rhysd/committia.vim'                                                                     " Better COMMIT_EDITMSG editing
+" Plug 'metakirby5/codi.vim', { 'on': 'Codi' }                                                   " Live code preview
+" Plug 'rhysd/committia.vim'                                                                     " Better COMMIT_EDITMSG editing
 Plug 'Galooshi/vim-import-js', {'for': 'javascript', 'do': 'npm install -g import-js'}         " Easier imports for javascript
-Plug 'AndrewRadev/splitjoin.vim'                                                               " Single line vs multi line code transformations
 
 " Code editing enhacements
 Plug 'tpope/vim-sleuth'                                                                        " Automatic indentation setting
-Plug 'tpope/vim-fugitive'                                                                      " Git stuff from within vim
-Plug 'majutsushi/tagbar', { 'on' : 'Tagbar' }                                                  " Class/module browser
+" Plug 'tpope/vim-fugitive'                                                                      " Git stuff from within vim
+" Plug 'majutsushi/tagbar', { 'on' : 'Tagbar' }                                                  " Class/module browser
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }                                             " Undo tree
-Plug 'tpope/vim-vinegar'                                                                       " Simpler file browser
+" Plug 'tpope/vim-vinegar'                                                                       " Simpler file browser
 Plug 'scrooloose/nerdtree', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] }         " Nerdtree
-Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] } " Git sign for nerdtree
+" Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] } " Git sign for nerdtree
 
 " Morph code
 Plug 'tpope/vim-surround'                                                                      " Surround
 Plug 'jiangmiao/auto-pairs'                                                                    " Autopair
 Plug 'tomtom/tcomment_vim'                                                                     " Code commenting
-Plug 'junegunn/vim-easy-align'                                                                 " Some prettification
+" Plug 'junegunn/vim-easy-align'                                                                 " Some prettification
 
 " Language helpers
 " Plug 'sheerun/vim-polyglot'                                                                  " Multiple language support (slow)
 " Plug 'jonsmithers/experimental-lit-html-vim'                                                 " lit-html highlight
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }                                        " Javascript syntax highlight
-Plug 'mhartington/nvim-typescript', { 'for': ['typescript'] }                                  " Typescript syntax highlight
+Plug 'HerringtonDarkholme/yats.vim', { 'for': 'typescript' }                                     " Typescript syntax highlight
 Plug 'neoclide/vim-jsx-improve', { 'for': ['javascript', 'javascript.jsx'] }                   " Inproved JSX syntax
 Plug 'tpope/vim-markdown', { 'for': ['md', 'markdown'] }                                       " Better markdown support
-Plug 'fatih/vim-go', { 'for': ['go'] }                                                         " Golang helper
-Plug 'sebdah/vim-delve', { 'for': 'go' }                                                       " Debugger for go
-Plug 'racer-rust/vim-racer', { 'for': 'rust' }                                                 " Rust support
-Plug 'tmhedberg/matchit', { 'for': ['html','xml', 'tex'] }                                     " Match tags for html, xml latex etc
+" Plug 'fatih/vim-go', { 'for': ['go'] }                                                         " Golang helper
+" Plug 'sebdah/vim-delve', { 'for': 'go' }                                                       " Debugger for go
+" Plug 'racer-rust/vim-racer', { 'for': 'rust' }                                                 " Rust support
+" Plug 'tmhedberg/matchit', { 'for': ['html','xml', 'tex'] }                                     " Match tags for html, xml latex etc
 " Plug 'numirias/semshi', { 'for': 'python', 'do': ':UpdateRemotePlugins' }                      " Better syntax highlight for python
 " Plug 'raimon49/requirements.txt.vim', { 'for': 'requirements' }                              " Requirements file
 
@@ -74,11 +72,11 @@ Plug '~/Documents/Projects/vim-jsontogo' , { 'for': ['go'] }                    
 
 " Linting / Checking
 Plug 'w0rp/ale'                                                                                " Linter formatter and more
-Plug 'Chiel92/vim-autoformat', { 'on': 'Autoformat' }                                          " Beautify code
+" Plug 'Chiel92/vim-autoformat', { 'on': 'Autoformat' }                                          " Beautify code
 
 " Autocomplete
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }                                  " Competion framework
-Plug 'Shougo/echodoc.vim'                                                                      " Show signature
+" Plug 'Shougo/echodoc.vim'                                                                      " Show signature
 Plug 'Shougo/neco-vim', { 'for': 'vim' }                                                       " Completion for viml
 " Plug 'sebastianmarkow/deoplete-rust', { 'for': ['rs', 'rust'] }                              " Rust autocompletion (slow)
 " Plug 'wellle/tmux-complete.vim'                                                              " Tmux completion
@@ -92,19 +90,19 @@ Plug 'SirVer/ultisnips'                                                         
 
 " Dependencies
 Plug 'vim-scripts/mru.vim'                                                                     " Save recently used files (for v)
-Plug 'radenling/vim-dispatch-neovim', { 'on': 'Dispatch' }                                     " Neovim support for vim-dispatch
-Plug 'mattn/webapi-vim'                                                                        " Web calls
-Plug 'tpope/vim-repeat'                                                                        " Repeat plugins with .
+" Plug 'radenling/vim-dispatch-neovim', { 'on': 'Dispatch' }                                     " Neovim support for vim-dispatch
+" Plug 'mattn/webapi-vim'                                                                        " Web calls
+" Plug 'tpope/vim-repeat'                                                                        " Repeat plugins with .
 
 " Others
-Plug 'sedm0784/vim-you-autocorrect', { 'on': 'EnableAutocorrect' }                             " Autocorrect like in phones
-Plug 'junegunn/vim-online-thesaurus', { 'on': 'OnlineThesaurusCurrentWord' }                   " Online thesaurus
-Plug 'kristijanhusak/vim-carbon-now-sh', { 'on': 'CarbonNowSh' }                               " Polaroid for code
+" Plug 'sedm0784/vim-you-autocorrect', { 'on': 'EnableAutocorrect' }                             " Autocorrect like in phones
+" Plug 'junegunn/vim-online-thesaurus', { 'on': 'OnlineThesaurusCurrentWord' }                   " Online thesaurus
+" Plug 'kristijanhusak/vim-carbon-now-sh', { 'on': 'CarbonNowSh' }                               " Polaroid for code
 Plug 'wakatime/vim-wakatime'                                                                   " Wakatime (slow)
-Plug 'junegunn/vim-github-dashboard', { 'on': ['GHA', 'GHD']}                                  " Github dashboard
-Plug 'vim-scripts/loremipsum', { 'on': 'Loremipsum' }                                          " Loremipsum
-Plug 'sotte/presenting.vim', { 'on': 'PresentingStart' }                                       " Presetation in vim
-Plug 'junegunn/vader.vim', {'for': 'vader'}                                                    " Vimscript testing framework
+" Plug 'junegunn/vim-github-dashboard', { 'on': ['GHA', 'GHD']}                                  " Github dashboard
+" Plug 'vim-scripts/loremipsum', { 'on': 'Loremipsum' }                                          " Loremipsum
+" Plug 'sotte/presenting.vim', { 'on': 'PresentingStart' }                                       " Presetation in vim
+" Plug 'junegunn/vader.vim', {'for': 'vader'}                                                    " Vimscript testing framework
 
 call plug#end()
 
@@ -789,12 +787,12 @@ let g:ale_echo_msg_warning_str = '⚠'
 let g:ale_echo_msg_format = '%severity% %linter%: %s '
 let g:ale_lint_on_enter = 0
 let g:ale_fixers = {
-\  'javascript' : ['importjs', 'prettier'],
+\  'javascript' : ['prettier'],
 \  'typescript' : ['prettier', 'tslint'],
 \  'json' : ['fixjson'],
 \  'python' : ['black'],
 \  'go' : ['goimports'],
-\  'css' : ['stylelint'],
+\  'css' : ['prettier'],
 \  'elm' : ['elm-format'],
 \  'markdown' : ['prettier'],
 \  'html' : ['tidy']
