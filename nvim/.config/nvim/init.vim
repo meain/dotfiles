@@ -9,7 +9,7 @@ Plug 'Yggdroot/indentLine'                                                      
 Plug 'mhinz/vim-signify'                                                                       " Git diff icons in gutter
 " Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }                                           " Hyper focus editing
 " Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }                                                     " Centerify
-Plug 'ap/vim-css-color'                                                                        " Show colors
+Plug 'ap/vim-css-color', { 'for': 'css' }                                                      " Show colors
 " Plug 'yuttie/comfortable-motion.vim'                                                           " Scroll up and down
 
 " Added functinality
