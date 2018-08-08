@@ -41,7 +41,7 @@ function _git_time_since_commit() {
       commit_age="${minutes}m"
     fi
 
-    color="%{$fg[white]%}"
+    color="%{$fg[cyan]%}"
     echo "$color$commit_age%{$reset_color%}"
   fi
 }
@@ -75,13 +75,12 @@ function virtualenv_info {
 
 PROMPT='
 ${_return_status}${_nesting_level}%f%F{green}$( _vcs_info_wrapper )%F{yellow}%B%(1j.#.) '
-RPROMPT='%F{yellow} $(virtualenv_info) %F{black}%2~ $(_git_time_since_commit)'
+RPROMPT='%F{yellow} $(virtualenv_info) %F{white}%2~ $(_git_time_since_commit)'
 
 function zle-line-init zle-keymap-select {
 NORMAL_COLOR="%{$fg_bold[blue]%}"
-INSERT_COLOR="%{$fg_bold[black]%}"
-RPS1="%F{yellow} $(virtualenv_info) ${${KEYMAP/vicmd/$NORMAL_COLOR}/(main|viins)/$INSERT_COLOR}%2~%{$reset_color%} $(_git_time_since_commit)"
-zle reset-prompt
+INSERT_COLOR="%{$fg_bold[white]%}"
+RPS1="%F{yellow} $(virtualenv_info) ${${KEYMAP/vicmd/$NORMAL_COLOR}/(main|viins)/$INSERT_COLOR}%2~%{$reset_color%} $(_git_time_since_commit)" zle reset-prompt
 }
 zle -N zle-line-init
 zle -N zle-keymap-select
