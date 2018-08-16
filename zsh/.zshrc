@@ -28,11 +28,11 @@ fortune -s | fmt -c -w $COLUMNS
 echo ""
 
 # oh-my-zsh settings
-ZSH_THEME="snipe"
-DISABLE_AUTO_TITLE="true"
-COMPLETION_WAITING_DOTS="false"
-HIST_STAMPS="dd.mm.yyyy"
-plugins=(z zsh-syntax-highlighting zsh-autosuggestions)
+export ZSH_THEME="snipe"
+export DISABLE_AUTO_TITLE="true"
+export COMPLETION_WAITING_DOTS="false"
+export HIST_STAMPS="dd.mm.yyyy"
+export plugins=(z zsh-syntax-highlighting zsh-autosuggestions)
 source $ZSH/oh-my-zsh.sh
 
 # Preferred editor for local and remote sessions
