@@ -62,7 +62,7 @@ Plug 'neoclide/vim-jsx-improve', { 'for': ['javascript', 'javascript.jsx'] }    
 Plug 'tpope/vim-markdown', { 'for': ['md', 'markdown'] }                                       " Better markdown support
 " Plug 'fatih/vim-go', { 'for': ['go'] }                                                         " Golang helper
 " Plug 'sebdah/vim-delve', { 'for': 'go' }                                                       " Debugger for go
-" Plug 'racer-rust/vim-racer', { 'for': 'rust' }                                                 " Rust support
+Plug 'racer-rust/vim-racer', { 'for': 'rust' }                                                 " Rust support
 " Plug 'tmhedberg/matchit', { 'for': ['html','xml', 'tex'] }                                     " Match tags for html, xml latex etc
 " Plug 'numirias/semshi', { 'for': 'python', 'do': ':UpdateRemotePlugins' }                      " Better syntax highlight for python
 " Plug 'raimon49/requirements.txt.vim', { 'for': 'requirements' }                              " Requirements file
@@ -78,7 +78,7 @@ Plug 'w0rp/ale'                                                                 
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }                                  " Competion framework
 " Plug 'Shougo/echodoc.vim'                                                                      " Show signature
 Plug 'Shougo/neco-vim', { 'for': 'vim' }                                                       " Completion for viml
-" Plug 'sebastianmarkow/deoplete-rust', { 'for': ['rs', 'rust'] }                              " Rust autocompletion (slow)
+Plug 'sebastianmarkow/deoplete-rust', { 'for': ['rs', 'rust'] }                                " Rust autocompletion (slow)
 " Plug 'wellle/tmux-complete.vim'                                                              " Tmux completion
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }           " Language client
 
@@ -98,7 +98,7 @@ Plug 'vim-scripts/mru.vim'                                                      
 " Plug 'sedm0784/vim-you-autocorrect', { 'on': 'EnableAutocorrect' }                             " Autocorrect like in phones
 " Plug 'junegunn/vim-online-thesaurus', { 'on': 'OnlineThesaurusCurrentWord' }                   " Online thesaurus
 " Plug 'kristijanhusak/vim-carbon-now-sh', { 'on': 'CarbonNowSh' }                               " Polaroid for code
-Plug 'wakatime/vim-wakatime'                                                                   " Wakatime (slow)
+" Plug 'wakatime/vim-wakatime'                                                                   " Wakatime (slow)
 " Plug 'junegunn/vim-github-dashboard', { 'on': ['GHA', 'GHD']}                                  " Github dashboard
 " Plug 'vim-scripts/loremipsum', { 'on': 'Loremipsum' }                                          " Loremipsum
 " Plug 'sotte/presenting.vim', { 'on': 'PresentingStart' }                                       " Presetation in vim
