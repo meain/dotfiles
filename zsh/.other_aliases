@@ -25,4 +25,4 @@ alias py="python3"
 
 alias ql='qlmanage -p "$@" > /dev/null 2> /dev/null'
 
-alias update='brew update && brew upgrade && upgrade_oh_my_zsh && nvim +PlugUpdate +qall'
+alias update='brew update && brew upgrade && upgrade_oh_my_zsh && nvim +PlugUpgrade +PlugUpdate +qall && offlineimap'
