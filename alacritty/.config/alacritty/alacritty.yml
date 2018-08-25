@@ -19,12 +19,12 @@ draw_bold_text_with_bright_colors: true
 
 font:
   normal:
-    family: Consolas
+    family: Monaco
   bold:
-    family: Consolas
+    family: Monaco
   italic:
-    family: Consolas
-  size: 16.0
+    family: Monaco
+  size: 14.0
   offset:
     x: 0.0
     y: 0.0
