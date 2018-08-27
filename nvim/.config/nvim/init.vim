@@ -56,6 +56,7 @@ Plug 'tomtom/tcomment_vim'                                                      
 " Language helpers
 " Plug 'sheerun/vim-polyglot'                                                                  " Multiple language support (slow)
 " Plug 'jonsmithers/experimental-lit-html-vim'                                                 " lit-html highlight
+Plug 'elzr/vim-json', { 'for': 'json' }                                                        " Json syntax highlight
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }                                        " Javascript syntax highlight
 Plug 'HerringtonDarkholme/yats.vim', { 'for': 'typescript' }                                     " Typescript syntax highlight
 Plug 'neoclide/vim-jsx-improve', { 'for': ['javascript', 'javascript.jsx'] }                   " Inproved JSX syntax
@@ -828,9 +829,11 @@ let g:signify_sign_change            = 'ǁ'
 " Sleuth auto indent
 let g:sleuth_automatic = 1
 
-" Polyglot
+" Vim-json
 let g:vim_json_syntax_conceal = 0
-let g:polyglot_disabled = ['markdown', 'md', 'latex', 'tex', 'jsx', 'typescript']
+
+" Polyglot
+" let g:polyglot_disabled = ['markdown', 'md', 'latex', 'tex', 'jsx', 'typescript']
 
 " Markdown
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
