@@ -809,7 +809,6 @@ nnoremap <silent> <m-/> :TmuxNavigatePrevious<cr>
 
 " Vim Indentline
 let g:indentLine_enabled = 1
-let g:vim_json_syntax_conceal = 0
 let g:indentLine_fileTypeExclude = ['startify', 'help']
 augroup TerminalStuff
   au!
@@ -830,6 +829,7 @@ let g:signify_sign_change            = 'ǁ'
 let g:sleuth_automatic = 1
 
 " Polyglot
+let g:vim_json_syntax_conceal = 0
 let g:polyglot_disabled = ['markdown', 'md', 'latex', 'tex', 'jsx', 'typescript']
 
 " Markdown
