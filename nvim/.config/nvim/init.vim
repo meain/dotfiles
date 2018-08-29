@@ -15,11 +15,11 @@ Plug 'ap/vim-css-color', { 'for': 'css' }                                       
 " Added functinality
 Plug 'meain/vim-startify'                                                                      " A fancy start page for vim (slow)
 Plug 'meain/vim-googler', { 'on': 'Google' }                                                   " Google from within vim
-" Plug 'justinmk/vim-sneak'                                                                      " Quickly sneak arround
+Plug 'justinmk/vim-sneak'                                                                      " Quickly sneak arround
 Plug 'wincent/loupe'                                                                           " Better search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }                              " Fzf
 Plug 'junegunn/fzf.vim'                                                                        " Fzf for vim
-" Plug 'jremmen/vim-ripgrep', { 'on': 'Rg' }                                                     " Rg with quickfix list
+Plug 'jremmen/vim-ripgrep', { 'on': 'Rg' }                                                     " Rg with quickfix list
 Plug 'christoomey/vim-tmux-navigator'                                                          " Seamless navigation between vim and tmux
 Plug 'suan/vim-instant-markdown', { 'for': 'markdown' }                                        " View markdown in browser while editing
 Plug 'ervandew/supertab'                                                                       " Autocomplete on tab
@@ -28,8 +28,8 @@ Plug 'xtal8/traces.vim'                                                         
 Plug 'vim-scripts/restore_view.vim'                                                            " Restore file pointer
 " Plug 'tpope/vim-dispatch', { 'on': 'Dispatch' }                                                " Async tasks in vim
 Plug 'airblade/vim-rooter'                                                                     " Change directory to project root
-" Plug 'editorconfig/editorconfig-vim'                                                           " Editorconfig
-" Plug 'mattn/gist-vim', { 'on': 'Gist' }                                                        " Push current buffer as gist
+Plug 'editorconfig/editorconfig-vim'                                                           " Editorconfig
+Plug 'mattn/gist-vim', { 'on': 'Gist' }                                                        " Push current buffer as gist
 " Plug 'rizzatti/dash.vim', { 'on': 'Dash' }                                                     " Search Dash docs
 " Plug 'davidbeckingsale/writegood.vim', { 'on': ['WritegoodEnable', 'WritegoodToggle'] }        " Better writing mode
 Plug 'mattn/emmet-vim', { 'for': ['html', 'javascript', 'css', 'javascript.jsx'] }             " Emmet
@@ -40,10 +40,10 @@ Plug 'Galooshi/vim-import-js', {'for': 'javascript', 'do': 'npm install -g impor
 
 " Code editing enhacements
 Plug 'tpope/vim-sleuth'                                                                        " Automatic indentation setting
-" Plug 'tpope/vim-fugitive'                                                                      " Git stuff from within vim
+Plug 'tpope/vim-fugitive'                                                                      " Git stuff from within vim
 " Plug 'majutsushi/tagbar', { 'on' : 'Tagbar' }                                                  " Class/module browser
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }                                             " Undo tree
-" Plug 'tpope/vim-vinegar'                                                                       " Simpler file browser
+Plug 'tpope/vim-vinegar'                                                                       " Simpler file browser
 Plug 'scrooloose/nerdtree', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] }         " Nerdtree
 " Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] } " Git sign for nerdtree
 
@@ -232,10 +232,12 @@ set fillchars=vert:\|
 set fillchars+=fold:-
 
 " Indent based folding
-set foldmethod=indent
-set foldignore=
-set foldlevelstart=10
-set foldnestmax=10
+set foldlevel=0
+set foldmethod=manual
+" set foldmethod=indent
+" set foldignore=
+" set foldlevelstart=10
+" set foldnestmax=10
 
 " ColorScheme change ( redblack )
 autocmd ColorScheme redblack highlight Normal guibg=#000000 ctermbg=0
@@ -727,8 +729,7 @@ let g:startify_custom_indices = ['a', 'd', 'g', 'h', 'l', 'o', 'p', 'r', 't', 'n
 let g:startify_fortune_use_unicode = 1
 let g:startify_list_order = ['dir', 'files',  'sessions']
 let g:startify_session_before_save = [
-    \ 'echo "Cleaning up before saving.."',
-    \ 'silent! NERDTreeTabsClose'
+    \ 'echo "Cleaning up before saving.."'
     \ ]
 let g:startify_skiplist = [
     \ '\.png',
@@ -940,7 +941,7 @@ autocmd BufEnter *.elm nnoremap <leader>t :ElmTest<cr>
 let NERDTreeShowHidden=1
 let NERDTreeHighlightCursorline=1
 let NERDTreeMinimalUI=1
-let NERDTreeHijackNetrw=1
+let NERDTreeHijackNetrw=0
 let NERDTreeStatusline = "         File Browser"
 nnoremap <silent><Tab> :NERDTreeToggle<cr>
 autocmd FileType nerdtree nnoremap <silent><buffer> <Tab> :NERDTreeToggle<cr>
