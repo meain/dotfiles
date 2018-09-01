@@ -46,6 +46,7 @@ Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }                              
 Plug 'tpope/vim-vinegar'                                                                       " Simpler file browser
 Plug 'scrooloose/nerdtree', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] }         " Nerdtree
 " Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] } " Git sign for nerdtree
+Plug 'meain/vim-automkdir'                                                                     " Automatically create parent dirs
 
 " Morph code
 Plug 'tpope/vim-surround'                                                                      " Surround
