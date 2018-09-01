@@ -227,6 +227,7 @@ set wildignore+=*.zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz
 set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
 set wildignore+=*.swp,*~,._*
 set wildignore+=_pycache_,.DS_Store,.vscode,.localized
+set wildignore+=.cache,node_modules,package-lock.json,yarn.lock,dist,.git
 
 " Fill chars
 set fillchars=vert:\|
@@ -943,6 +944,7 @@ let NERDTreeShowHidden=1
 let NERDTreeHighlightCursorline=1
 let NERDTreeMinimalUI=1
 let NERDTreeHijackNetrw=0
+let NERDTreeRespectWildIgnore=1
 let NERDTreeStatusline = "         File Browser"
 nnoremap <silent><Tab> :NERDTreeToggle<cr>
 autocmd FileType nerdtree nnoremap <silent><buffer> <Tab> :NERDTreeToggle<cr>
