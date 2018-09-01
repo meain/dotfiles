@@ -3,7 +3,7 @@ snippet frcc "Flow React Class Component" b
 import * as React from 'react'
 import './${2:$1}.css'
 
-type Props ={}
+type Props = {}
 type State = {}
 
 class ${1:`!v expand('%:t:r')`} extends React.Component<Props, State> {
@@ -72,11 +72,15 @@ console.log('$1:', $1)
 endsnippet
 
 snippet ecs "Export with connect and state" b
-export default connect(mapStateToProps)($1)
+export default connect(mapStateToProps)(${1:`!v expand('%:t:r')`})
 endsnippet
 
 snippet ecd "Export with connect and dispatch" b
-export default connect( (): {} => { return {} }, mapDispatchToProps)($1)
+export default connect( (): {} => { return {} }, mapDispatchToProps)(${1:`!v expand('%:t:r')`})
+endsnippet
+
+snippet ecsd "Export with connect and state" b
+export default connect(mapStateToProps, mapDispatchToProps)(${1:`!v expand('%:t:r')`})
 endsnippet
 
 snippet pp "this.props" b
