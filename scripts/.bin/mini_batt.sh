@@ -20,7 +20,7 @@ elif [ $VALUE -lt 90 ];then
   VALUE="$VALUE%"
 fi
 if [ "$SOURCE" = "AC" ]; then
-  echo "$VALUE"
+  echo "#[fg=yellow]$VALUE"
 else
   echo "$VALUE"
 fi
