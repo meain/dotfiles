@@ -51,12 +51,6 @@ snippet cim "React component import" b
 import $1 from '../$1/$1'
 endsnippet
 
-snippet conn "React component import" b
-constructor(props) {
-	super(props)
-}
-endsnippet
-
 snippet con "React component import" b
 constructor(props: Props) {
 	super(props)
@@ -83,14 +77,36 @@ snippet ecsd "Export with connect and state" b
 export default connect(mapStateToProps, mapDispatchToProps)(${1:`!v expand('%:t:r')`})
 endsnippet
 
-snippet pp "this.props" b
+snippet cn "className"
+className="$1"
+endsnippet
+
+snippet pp "this.props"
 this.props.
 endsnippet
 
-snippet d "Destructuring" b
-const {$1} = $2
+snippet pd "Props destructuring" b
+const {$1} = this.props
+endsnippet
+
+snippet sd "State destructuring" b
+const {$1} = this.state
 endsnippet
 
 snippet ls "let self" b
 let self: any = this // eslint-disable-line
+endsnippet
+
+snippet r "return"
+return ${0:result;}
+endsnippet
+
+snippet = "arrow funtion"
+($1) => {$2}
+endsnippet
+
+snippet "\.(map|filter|forEach|reduce)" "Array method with an arrow function" r
+.`!p snip.rv = match.group(1)`(${1:(c, i)} => {
+	return $2;
+});
 endsnippet
