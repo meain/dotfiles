@@ -41,7 +41,7 @@ Plug 'Galooshi/vim-import-js', {'for': 'javascript', 'do': 'npm install -g impor
 " Code editing enhacements
 Plug 'tpope/vim-sleuth'                                                                        " Automatic indentation setting
 Plug 'tpope/vim-fugitive'                                                                      " Git stuff from within vim
-" Plug 'majutsushi/tagbar', { 'on' : 'Tagbar' }                                                  " Class/module browser
+Plug 'majutsushi/tagbar', { 'on' : 'Tagbar' }                                                  " Class/module browser
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }                                             " Undo tree
 Plug 'tpope/vim-vinegar'                                                                       " Simpler file browser
 Plug 'scrooloose/nerdtree', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] }         " Nerdtree
