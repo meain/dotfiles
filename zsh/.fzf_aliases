@@ -15,7 +15,7 @@ jj() {
 
 hf(){
     COMMAND=$(history | fzf | awk '{$1=$2=$3=""; print $0}')
-    echo "$COMMAND" && echo "$COMMAND" | awk '{print $1}'| pbcopy
+    echo "$COMMAND" && echo "$COMMAND" | sed 's/^\ *//'| pbcopy
 }
 
 get_command(){
