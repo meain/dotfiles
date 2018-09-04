@@ -15,7 +15,7 @@ Plug 'ap/vim-css-color', { 'for': 'css' }                                       
 " Added functinality
 Plug 'meain/vim-startify'                                                                      " A fancy start page for vim (slow)
 Plug 'meain/vim-googler', { 'on': 'Google' }                                                   " Google from within vim
-Plug 'justinmk/vim-sneak'                                                                      " Quickly sneak arround
+" Plug 'justinmk/vim-sneak'                                                                      " Quickly sneak arround
 Plug 'wincent/loupe'                                                                           " Better search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }                              " Fzf
 Plug 'junegunn/fzf.vim'                                                                        " Fzf for vim
@@ -29,7 +29,7 @@ Plug 'vim-scripts/restore_view.vim'                                             
 " Plug 'tpope/vim-dispatch', { 'on': 'Dispatch' }                                                " Async tasks in vim
 Plug 'airblade/vim-rooter'                                                                     " Change directory to project root
 Plug 'editorconfig/editorconfig-vim'                                                           " Editorconfig
-Plug 'mattn/gist-vim', { 'on': 'Gist' }                                                        " Push current buffer as gist
+" Plug 'mattn/gist-vim', { 'on': 'Gist' }                                                        " Push current buffer as gist
 " Plug 'rizzatti/dash.vim', { 'on': 'Dash' }                                                     " Search Dash docs
 " Plug 'davidbeckingsale/writegood.vim', { 'on': ['WritegoodEnable', 'WritegoodToggle'] }        " Better writing mode
 Plug 'mattn/emmet-vim', { 'for': ['html', 'javascript', 'css', 'javascript.jsx'] }             " Emmet
