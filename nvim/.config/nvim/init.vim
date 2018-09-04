@@ -434,6 +434,9 @@ inoremap <silent> <m-l> <right>
 " Shady remaps
 imap ;; <Esc>A;
 
+" Visual star
+vnoremap * "sy/<c-r>s<CR>
+
 
 
 
