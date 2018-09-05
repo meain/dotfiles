@@ -41,8 +41,7 @@ function _git_time_since_commit() {
       commit_age="${minutes}m"
     fi
 
-    color="%{$fg[cyan]%}"
-    echo "$color$commit_age%{$reset_color%}"
+    echo "$commit_age%{$reset_color%}"
   fi
 }
 
