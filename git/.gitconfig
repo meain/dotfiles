@@ -29,6 +29,10 @@
   oldHighlight = red bold 52
   newNormal = green bold
   newHighlight = green bold 22
+[color "branch"]
+  current = green
+  local = white
+  remote = yellow
 [color "diff"]
   meta = 227
   frag = magenta bold
