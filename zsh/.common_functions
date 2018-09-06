@@ -1,13 +1,21 @@
+#! /bin/zsh
+
 # cd > cd&&ls
 function list_all() {
   emulate -L zsh
   ls
 }
-chpwd_functions=(${chpwd_functions[@]} "list_all")
+if [[ $ZSH_LOADED -ne 1 ]];then
+  chpwd_functions=(${chpwd_functions[@]} "list_all")
+fi
 
 # view README in shell
 rmd () {
-  pandoc $1 | lynx -stdin
+  if [ -z "$1" ];then
+    pandoc "README.md" | lynx -stdin
+  else
+    pandoc $1 | lynx -stdin
+  fi
 }
 
 alias readme='rmd README.md'

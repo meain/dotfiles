@@ -115,3 +115,5 @@ if [ -f '$GOOGLE_CLOUD_COMPLETIONS' ]; then source '$GOOGLE_CLOUD_COMPLETIONS'; 
 
 # source python workon
 source '/usr/local/bin/virtualenvwrapper_lazy.sh'
+
+export ZSH_LOADED=1

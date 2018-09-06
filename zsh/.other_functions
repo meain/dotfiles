@@ -1,3 +1,5 @@
+#! /bin/zsh
+
 # Function for transfer.sh
 transfer() {
     if [ $# -eq 0 ]; then

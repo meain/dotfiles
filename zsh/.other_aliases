@@ -1,3 +1,5 @@
+#! /bin/zsh
+
 alias reload='source ~/.zshrc'
 
 alias j=z

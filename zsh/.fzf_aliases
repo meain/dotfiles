@@ -1,16 +1,18 @@
+#!/bin/zsh
+
 alias cdf='cd $(ls -d */ | fzf --reverse --height "40%" --preview "ls {}")'
 
 unalias z 2> /dev/null
 z() {
     [ $# -gt 0 ] && _z "$*" && return
-    cd "$(_z -l 2>&1 | cat | sed 's/^[^ ]*\ *//' | fzf --height 40% --reverse --inline-info +s --tac --query "$*" --preview "ls {}")"
+    cd "$(_z -l 2>&1 | cat | sed 's/^[^ ]*\ *//' | fzf --height 40% --reverse --inline-info +s --tac --query "$*" --preview "ls {}")" || exit
 }
 
 jj() {
     TO_DIR_JJ=$(find . -type d -maxdepth 6 | fzf --preview "tree -L 2 {}" )
     test "" = "$TO_DIR_JJ" || {
-        cd $TO_DIR_JJ
-}
+        cd "$TO_DIR_JJ" || exit
+    }
 }
 
 hf(){
@@ -26,7 +28,7 @@ wf(){
     if ! which workon >/dev/null; then
         source /usr/local/bin/virtualenvwrapper.sh
     fi
-    workon $(workon | fzf --height 20% --layout=reverse)
+    workon "$(workon | fzf --height 20% --layout=reverse)"
 }
 
 alias h='$(get_command)'
