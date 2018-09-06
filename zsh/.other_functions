@@ -59,3 +59,14 @@ servo(){
 root(){
     . cd $(git rev-parse --show-toplevel 2> /dev/null)
 }
+
+# tree with gitignore
+function gtree {
+    git_ignore_files=("$(git config --get core.excludesfile)" .gitignore ~/.gitignore)
+    ignore_pattern="$(grep -hvE '^$|^#' "${git_ignore_files[@]}" 2>/dev/null|sed 's:/$::'|tr '\n' '\|')"
+    if git status &> /dev/null && [[ -n "${ignore_pattern}" ]]; then
+      tree -I "${ignore_pattern}" "${@}"
+    else
+      tree "${@}"
+    fi
+}
