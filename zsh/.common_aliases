@@ -1,3 +1,5 @@
+#!/bin/zsh
+
 alias ss='ls -lht'
 alias ll='ls -Alh'
 alias l='ls'
@@ -28,3 +30,5 @@ alias df='cd ~/.dotfiles'
 alias s='cd ~/Documents/Projects/work/saama'
 
 alias cleanup="find . -name '*.DS_Store' -type f -ls -delete"
+
+alias lynx='lynx -lss="~/.lynx.css"'
