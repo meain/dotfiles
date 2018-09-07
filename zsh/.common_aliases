@@ -28,6 +28,7 @@ alias pg='cd ~/.go/src/github.com'
 alias df='cd ~/.dotfiles'
 
 alias s='cd ~/Documents/Projects/work/saama'
+alias pp='cd ~/Documents/Projects/projects'
 
 alias cleanup="find . -name '*.DS_Store' -type f -ls -delete"
 

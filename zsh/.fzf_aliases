@@ -9,10 +9,7 @@ z() {
 }
 
 jj() {
-    TO_DIR_JJ=$(find . -type d -maxdepth 6 | fzf --preview "tree -L 2 {}" )
-    test "" = "$TO_DIR_JJ" || {
-        cd "$TO_DIR_JJ" || exit
-    }
+    cd "./$(fd -H -td -d5 | fzf --preview 'tree -L 2 ./{}' )"
 }
 
 hf(){
@@ -32,4 +29,3 @@ wf(){
 }
 
 alias h='$(get_command)'
-alias pp='cd $(find ~/Documents/Projects -type d -maxdepth 4 | sed "s/^\/Users\/meain\/Documents\/Projects//g" | fzf --preview "tree -L 2 ~/Documents/Projects{}" )'
