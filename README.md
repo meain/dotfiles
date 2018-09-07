@@ -71,6 +71,10 @@ stow nvim
 
 [`colorls`](https://github.com/athityakumar/colorls) Much prettier ls
 
+[`diff-so-fancy`](https://github.com/so-fancy/diff-so-fancy) Better git diffs
+
+[`spaceman-diff`](https://github.com/holman/spaceman-diff) Diff images in terminal
+
 ## Screenshots 
 
 ### Zsh
