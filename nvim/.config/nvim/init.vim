@@ -14,7 +14,7 @@ Plug 'ap/vim-css-color', { 'for': 'css' }                                       
 
 " Added functinality
 Plug 'meain/vim-startify'                                                                      " A fancy start page for vim (slow)
-Plug 'meain/vim-googler', { 'on': 'Google' }                                                   " Google from within vim
+Plug '~/Documents/Projects/others/done/_vim/vim-googler', { 'on': 'Google' }                   " Google from within vim
 " Plug 'justinmk/vim-sneak'                                                                      " Quickly sneak arround
 Plug 'wincent/loupe'                                                                           " Better search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }                              " Fzf
