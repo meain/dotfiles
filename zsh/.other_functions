@@ -58,6 +58,15 @@ servo(){
     fi
 }
 
+# if no args, upload latest screenshot
+imgur(){
+    if [ -z $1 ];then
+	command imgur "$(ls -Art -d ~/Documents/Screenshots/* | tail -n 1)"
+    else
+	command imgur $1
+    fi
+}
+
 root(){
     . cd $(git rev-parse --show-toplevel 2> /dev/null)
 }
