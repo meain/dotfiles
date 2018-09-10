@@ -75,6 +75,8 @@ stow nvim
 
 [`spaceman-diff`](https://github.com/holman/spaceman-diff) Diff images in terminal
 
+[`icdiff`](https://github.com/jeffkaufman/icdiff) Quick replacement for `diff`
+
 ## Screenshots 
 
 ### Zsh
