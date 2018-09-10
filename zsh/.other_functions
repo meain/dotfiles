@@ -67,6 +67,14 @@ imgur(){
     fi
 }
 
+notify(){
+    if [ -z $1 ];then
+	osascript -e "display notification \"Task complete!\" with title \"Notification\""
+    else
+	osascript -e "display notification \"$1\" with title \"Notification\""
+    fi
+}
+
 root(){
     . cd $(git rev-parse --show-toplevel 2> /dev/null)
 }
