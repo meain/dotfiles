@@ -2,6 +2,7 @@
 
 alias ss='ls -lht'
 alias ll='ls -Alh'
+alias llg='ls -Alh --group-directories-first'
 alias l='ls'
 alias la='ls -A'
 alias lr='ls -lRht'
