@@ -114,3 +114,31 @@ snippet "\.(map|filter|forEach|reduce)" "Array method with an arrow function" r
 	return $2;
 });
 endsnippet
+
+snippet connect "connector.js template" b
+export const mapStateToProps = state => {
+  return {}
+}
+
+export const mapDispatchToProps = dispatch => {
+  return {}
+}
+endsnippet
+
+snippet rf "react fragment"
+<React.Fragment>
+</React.Fragment>
+endsnippet
+snippet rfs "react fragment"
+<React.Fragment>
+endsnippet
+snippet rfe "react fragment"
+</React.Fragment>
+endsnippet
+
+snippet disp "dispatch"
+dispatch({
+	type: '$1',
+	payload: $2,
+})
+endsnippet
