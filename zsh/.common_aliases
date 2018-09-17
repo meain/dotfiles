@@ -31,6 +31,6 @@ alias df='cd ~/.dotfiles'
 alias s='cd ~/Documents/Projects/work/saama'
 alias pp='cd ~/Documents/Projects/projects'
 
-alias cleanup="find . -name '*.DS_Store' -type f -ls -delete"
+alias cleanup="fd '.DS_Store' --no-ignore --hidden -x rm -v"
 
 alias lynx='lynx -lss="~/.lynx.css"'
