@@ -17,6 +17,12 @@ tabspaces: 4
 
 draw_bold_text_with_bright_colors: true
 
+scrolling:
+  history: 10000
+  multiplier: 3
+  faux_multiplier: 3
+  auto_scroll: false
+
 font:
   normal:
     family: Monaco
@@ -100,7 +106,7 @@ key_bindings:
   - { key: N,        mods: Command, command: { program: "open", args: ["-n", "/Applications/Alacritty.app"] }}
   - { key: Equals,   mods: Command, action: IncreaseFontSize                                                 }
   - { key: Minus,    mods: Command, action: DecreaseFontSize                                                 }
-  - { key: Key0,     mods: Command,  action: ResetFontSize                                              }
+  - { key: Key0,     mods: Command, action: ResetFontSize                                                    }
   - { key: Home,                    chars: "\x1bOH",   mode: AppCursor                                       }
   - { key: Home,                    chars: "\x1b[H",   mode: ~AppCursor                                      }
   - { key: End,                     chars: "\x1bOF",   mode: AppCursor                                       }
@@ -149,6 +155,8 @@ key_bindings:
   - { key: Back,     mods: Alt,     chars: "\x1b\x7f"                                                        }
   - { key: Insert,                  chars: "\x1b[2~"                                                         }
   - { key: Delete,                  chars: "\x1b[3~"                                                         }
+  - { key: K,        mods: Command, action: ClearHistory                                                     }
+  - { key: K,        mods: Command, chars: "\x0c"                                                            }
   - { key: A,        mods: Alt,     chars: "\x1ba"                                                           }
   - { key: B,        mods: Alt,     chars: "\x1bb"                                                           }
   - { key: C,        mods: Alt,     chars: "\x1bc"                                                           }
