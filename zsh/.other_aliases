@@ -30,3 +30,9 @@ alias ql='qlmanage -p "$@" > /dev/null 2> /dev/null'
 alias update='bash ~/.dotfiles/install/update.sh'
 
 alias pypipublish='python3 setup.py sdist upload'
+
+alias song='spotify info'
+alias next='spotify next'
+alias prev='spotify back'
+alias play='spotify play'
+alias pause='spotify pause'

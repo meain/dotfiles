@@ -98,6 +98,7 @@ npm install -g prettier
 npm install -g http-server
 npm install -g stylelint
 npm install -g stylelint-config-standard
+npm install -g spotify-cli-mac
 
 # python2
 pip2 install requests
