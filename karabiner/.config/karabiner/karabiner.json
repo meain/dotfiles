@@ -285,40 +285,7 @@
             "name": "Default profile",
             "one_to_many_mappings": {},
             "selected": true,
-            "simple_modifications": [
-                {
-                    "from": {
-                        "key_code": "down_arrow"
-                    },
-                    "to": {
-                        "key_code": "fn"
-                    }
-                },
-                {
-                    "from": {
-                        "key_code": "left_arrow"
-                    },
-                    "to": {
-                        "key_code": "fn"
-                    }
-                },
-                {
-                    "from": {
-                        "key_code": "right_arrow"
-                    },
-                    "to": {
-                        "key_code": "fn"
-                    }
-                },
-                {
-                    "from": {
-                        "key_code": "up_arrow"
-                    },
-                    "to": {
-                        "key_code": "fn"
-                    }
-                }
-            ],
+            "simple_modifications": [],
             "virtual_hid_keyboard": {
                 "caps_lock_delay_milliseconds": 0,
                 "country_code": 0,
