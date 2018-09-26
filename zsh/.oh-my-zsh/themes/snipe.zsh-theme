@@ -63,7 +63,7 @@ _tmux_indicator='!'
 _nesting_level=""
 
 if [[ "$SHLVL" -ne 1 ]] ; then
-  _nesting_level="$SHLVL"
+  _nesting_level="$(printf '.%.0s' {1..$SHLVL})"
 fi
 
 if [[ -n "$TMUX" ]] ; then
