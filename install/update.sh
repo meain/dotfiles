@@ -5,7 +5,7 @@ brew update
 brew upgrade
 
 # update oh-my-zsh
-upgrade_oh_my_zsh
+zsh $ZSH/tools/upgrade.sh
 
 # update vim plugins
 nvim +PlugUpgrade +PlugUpdate +qall
