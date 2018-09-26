@@ -62,8 +62,15 @@ function +vi-git-untracked() {
 _tmux_indicator='!'
 _nesting_level=""
 
-if [[ "$SHLVL" -ne 1 ]] ; then
-  _nesting_level="$(printf '.%.0s' {1..$SHLVL})"
+if [[ -n "$TMUX" ]] ; then
+  local _tmux_indicator="="
+  local _nesting_count=`expr $SHLVL - 2`
+else
+  local _nesting_count=`expr $SHLVL - 1`
+fi
+
+if [[ "$_nesting_count" -ne 0 ]] ; then
+  _nesting_level="$(printf '.%.0s' {1..$_nesting_count})"
 fi
 
 if [[ -n "$TMUX" ]] ; then
