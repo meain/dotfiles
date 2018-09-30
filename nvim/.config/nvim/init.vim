@@ -795,6 +795,7 @@ let g:ale_fixers = {
 \  'typescript' : ['prettier', 'tslint'],
 \  'json' : ['fixjson'],
 \  'python' : ['black'],
+\  'rust': ['rustfmt'],
 \  'go' : ['goimports'],
 \  'css' : ['prettier'],
 \  'elm' : ['elm-format'],
@@ -883,6 +884,8 @@ autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 " Racer
+let g:deoplete#sources#rust#racer_binary="/Users/meain/.cargo/bin/racer"
+let g:deoplete#sources#rust#rust_source_path="/Users/meain/Documents/Projects/others/clones/rust/src"
 au FileType rust nnoremap <silent><leader>d <Plug>(rust-def)
 au FileType rust nnoremap K <Plug>(rust-doc)
 au FileType rust nnoremap <silent><leader>a :Dispatch cargo build<cr>
@@ -911,7 +914,7 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 " Language server protocol
 let g:LanguageClient_autoStart = 1
 let g:LanguageClient_serverCommands = {
-    \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+    \ 'rust': ['rls'],
     \ 'javascript': ['flow-language-server', '--stdio'],
     \ 'javascript.jsx': ['flow-language-server', '--stdio'],
     \ 'typescript': ['javascript-typescript-stdio'],
