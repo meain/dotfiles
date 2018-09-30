@@ -925,6 +925,7 @@ let g:LanguageClient_serverCommands = {
     \ 'zsh': ['bash-language-server', 'start'],
     \ 'dockerfile': ['docker-langserver', '--stdio']
     \ }
+nnoremap <silent><leader>l :call LanguageClient_contextMenu()<CR>
 nnoremap <silent> gh :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> gx :call LanguageClient_textDocument_rename()<CR>
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
