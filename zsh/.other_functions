@@ -13,7 +13,8 @@ transfer() {
     else
 	curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >> $tmpfile ;
     fi;
-    cat $tmpfile;
+    \cat $tmpfile | pbcopy;
+    \cat $tmpfile;
     rm -f $tmpfile;
 }
 
