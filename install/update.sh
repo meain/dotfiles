@@ -16,3 +16,6 @@ offlineimap
 # update rust build tools
 rustup update stable
 rustup update nightly
+
+# update alacritty
+cd ~/Documents/Projects/others/clones/alacritty && git pull origin master && make app && cp -r target/release/osx/Alacritty.app /Applications/ && cd -
