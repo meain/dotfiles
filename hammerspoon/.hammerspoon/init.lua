@@ -1,6 +1,6 @@
 -- Set up logger
 local logLevel = 'info'
-local log = hs.logger.new('wincent', logLevel)
+local log = hs.logger.new('hms', logLevel)
 
 
 -- Disable animations
@@ -8,12 +8,6 @@ hs.window.animationDuration = 0
 
 
 -- Simle key remaps
-hs.hotkey.bind({'alt'}, 'return', (function()
-  hs.eventtap.keyStroke({"ctrl"}, "Right")
-end))
-hs.hotkey.bind({'alt'}, 'space', (function()
-  hs.eventtap.keyStroke({"ctrl"}, "Left")
-end))
 
 -- Auto-reload config on change
 function reloadConfig(files)
