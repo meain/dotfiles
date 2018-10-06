@@ -800,7 +800,8 @@ let g:ale_fixers = {
 \  'css' : ['prettier'],
 \  'elm' : ['elm-format'],
 \  'markdown' : ['prettier'],
-\  'html' : ['tidy']
+\  'html' : ['tidy'],
+\  'sh': ['shfmt']
 \}
 let g:ale_javascript_prettier_use_local_config = 1
 
