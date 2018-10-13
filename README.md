@@ -45,7 +45,7 @@ stow nvim
 
 ## Other stuff you might wanna use
 
-[`alacritty`](https://github.com/jwilm/alacritty) The fasters terminal emulator you can get
+[`alacritty`](https://github.com/jwilm/alacritty) The fastest terminal emulator you can get
 
 [`neomutt`](https://www.neomutt.org/) why use a web browser to check mail?
 
