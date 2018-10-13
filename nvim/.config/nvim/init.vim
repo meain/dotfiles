@@ -62,6 +62,7 @@ Plug 'pangloss/vim-javascript', { 'for': 'javascript' }                         
 Plug 'HerringtonDarkholme/yats.vim', { 'for': 'typescript' }                                     " Typescript syntax highlight
 Plug 'neoclide/vim-jsx-improve', { 'for': ['javascript', 'javascript.jsx'] }                   " Inproved JSX syntax
 Plug 'tpope/vim-markdown', { 'for': ['md', 'markdown'] }                                       " Better markdown support
+Plug 'cespare/vim-toml', { 'for': 'toml' }
 " Plug 'fatih/vim-go', { 'for': ['go'] }                                                         " Golang helper
 " Plug 'sebdah/vim-delve', { 'for': 'go' }                                                       " Debugger for go
 Plug 'racer-rust/vim-racer', { 'for': 'rust' }                                                 " Rust support
