@@ -19,3 +19,7 @@ rustup update nightly
 
 # update alacritty
 cd ~/Documents/Projects/others/clones/alacritty && git pull origin master && make app && cp -r target/release/osx/Alacritty.app /Applications/ && cd -
+
+cd /Users/meain/Documents/Projects/work/saama && autogit shell 'git fetch' && cd -
+
+cd /Users/meain/Documents/Projects/projects && autogit shell 'git fetch' && cd -
