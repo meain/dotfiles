@@ -142,3 +142,10 @@ dispatch({
 	payload: $2,
 })
 endsnippet
+
+snippet stop "Stop propogation"
+if (e) {
+	e.stopPropagation()
+	if (e.nativeEvent) e.nativeEvent.stopImmediatePropagation()
+}
+endsnippet
