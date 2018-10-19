@@ -38,3 +38,4 @@ alias play='spotify play'
 alias pause='spotify pause'
 
 alias pipgrep='pip freeze | grep'
+alias tig='tig --all'
