@@ -19,7 +19,7 @@
   editor = /usr/local/bin/nvim
   pager = diff-so-fancy | less --tabs=4 -RFX
 [diff "spaceman-diff"]
-  command = /Users/abinsimon/.config/spaceman-diff/spaceman-diff
+  command = ~/.config/spaceman-diff/spaceman-diff
 [credential]
   helper = cache
 [init]
