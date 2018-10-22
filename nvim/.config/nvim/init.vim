@@ -33,7 +33,7 @@ Plug 'editorconfig/editorconfig-vim'                                            
 " Plug 'rizzatti/dash.vim', { 'on': 'Dash' }                                                     " Search Dash docs
 " Plug 'davidbeckingsale/writegood.vim', { 'on': ['WritegoodEnable', 'WritegoodToggle'] }        " Better writing mode
 Plug 'mattn/emmet-vim', { 'for': ['html', 'javascript', 'css', 'javascript.jsx'] }             " Emmet
-Plug 'jreybert/vimagit', { 'on': [ 'Magit', 'MagitOnly' ] }                                    " Even better git interface for vim
+" Plug 'jreybert/vimagit', { 'on': [ 'Magit', 'MagitOnly' ] }                                    " Even better git interface for vim
 " Plug 'metakirby5/codi.vim', { 'on': 'Codi' }                                                   " Live code preview
 " Plug 'rhysd/committia.vim'                                                                     " Better COMMIT_EDITMSG editing
 Plug 'Galooshi/vim-import-js', {'for': 'javascript', 'do': 'npm install -g import-js'}         " Easier imports for javascript
@@ -982,8 +982,8 @@ let g:indentLine_color_gui = '#303030'
 let g:UltiSnipsSnippetDirectories = ['~/.config/nvim/UltiSnips', 'UltiSnips']
 
 " Magit
-nnoremap <silent><bs> :Magit<cr>
-autocmd FileType magit nnoremap <silent><buffer> <bs> :q<cr>
+" nnoremap <silent><bs> :Magit<cr>
+" autocmd FileType magit nnoremap <silent><buffer> <bs> :q<cr>
 
 " Sneak
 let g:sneak#label = 1
