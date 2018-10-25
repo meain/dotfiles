@@ -20,8 +20,7 @@ rustup update nightly
 # update alacritty
 cd ~/Documents/Projects/others/clones/alacritty && git pull origin master && make app && cp -r target/release/osx/Alacritty.app /Applications/ && cd -
 
-npm i -g @fabiospampinato/autogit
-cd /Users/meain/Documents/Projects/work/saama && autogit shell 'git fetch' && cd -
-cd /Users/meain/Documents/Projects/projects && autogit shell 'git fetch' && cd -
+gloc "git fetch" "/Users/meain/Documents/Projects/work/saama"
+gloc "git fetch" "/Users/meain/Documents/Projects/projects"
 
 date > ~/.last_updated_time
