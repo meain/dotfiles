@@ -24,8 +24,12 @@ alias ffind='find . -name'
 alias r='lf'
 
 alias o='open .'
+
 alias p='cd ~/Documents/Projects'
 alias pg='cd ~/.go/src/github.com'
+alias pc='cd ~/Documents/Projects/others/clones'
+alias pw='cd ~/Downloads'
+alias pd='cd ~/Desktop'
 alias df='cd ~/.dotfiles'
 
 alias s='cd ~/Documents/Projects/work/saama'
