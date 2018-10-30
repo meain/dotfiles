@@ -1000,9 +1000,9 @@ nnoremap <silent><leader>s :Google <c-r><c-w><cr>
 vnoremap <leader>s y:Google <c-r>"<cr>
 
 " Comfortable motion
-let g:comfortable_motion_no_default_key_mappings = 1
-nnoremap <silent> <Up> :call comfortable_motion#flick(100)<CR>
-nnoremap <silent> <Down> :call comfortable_motion#flick(-100)<CR>
+" let g:comfortable_motion_no_default_key_mappings = 1
+" nnoremap <silent> <Up> :call comfortable_motion#flick(100)<CR>
+" nnoremap <silent> <Down> :call comfortable_motion#flick(-100)<CR>
 
 " Vim instant markdown
 let g:instant_markdown_autostart = 0
