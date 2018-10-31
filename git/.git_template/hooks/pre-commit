@@ -4,8 +4,7 @@ CHECK=$(git diff --staged | grep "^+" | grep -Ei "$SWEAR_WORDS" -c)
 
 if [[ $CHECK -gt 0 ]]
 then
-    echo "[31mAborting commmit...[00m"
+    echo "[31m   ::WARNING::[00m"
     echo "$CHECK line(s) with swear words found in the following file(s)"
     git diff --name-only -G"$SWEAR_WORDS" | sed 's/^/> /'
-    exit 1
 fi
