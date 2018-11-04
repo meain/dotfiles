@@ -77,7 +77,7 @@ notify(){
 }
 
 root(){
-    . cd $(git rev-parse --show-toplevel 2> /dev/null)
+    cd $(git rev-parse --show-toplevel 2> /dev/null)
 }
 
 # tree with gitignore
@@ -100,4 +100,10 @@ tt() {
     mkdir "$1"
     cd "$1"
     tmux attach -t $1 || tmux new-session -s $1
+}
+
+blog(){
+    DATE=`date +%Y-%m-%d`
+    NAME="$DATE-$1.md"
+    nvim $NAME
 }
