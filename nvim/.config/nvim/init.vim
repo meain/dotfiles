@@ -21,7 +21,8 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }               
 Plug 'junegunn/fzf.vim'                                                                        " Fzf for vim
 Plug 'jremmen/vim-ripgrep', { 'on': 'Rg' }                                                     " Rg with quickfix list
 Plug 'christoomey/vim-tmux-navigator'                                                          " Seamless navigation between vim and tmux
-Plug 'suan/vim-instant-markdown', { 'for': 'markdown' }                                        " View markdown in browser while editing
+" Plug 'suan/vim-instant-markdown', { 'for': 'markdown' }                                        " View markdown in browser while editing
+Plug 'iamcco/markdown-preview.vim', { 'for': 'markdown' }                                      " View markdown in browser while editing
 Plug 'ervandew/supertab'                                                                       " Autocomplete on tab
 Plug 'zirrostig/vim-schlepp'                                                                   " Better drag visuals
 Plug 'xtal8/traces.vim'                                                                        " Interactive subsititue
