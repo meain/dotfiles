@@ -289,11 +289,11 @@ highlight NonText ctermfg=238 guifg=#444444
 
 " Use italics for some text
 highlight htmlArg gui=italic
-highlight Comment gui=italic
-highlight Type    gui=italic
 highlight htmlArg cterm=italic
+highlight Comment gui=italic
 highlight Comment cterm=italic
-highlight Type    cterm=italic
+" highlight Type    gui=italic
+" highlight Type    cterm=italic
 
 " Highlight git conflict markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
