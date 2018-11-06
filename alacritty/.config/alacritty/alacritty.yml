@@ -1,13 +1,16 @@
 env:
   TERM: screen-256color-italic
 
-dimensions:
-  columns: 120
-  lines: 25
+window:
+  dimensions:
+    columns: 120
+    lines: 25
 
-padding:
-  x: 0
-  y: 0
+  padding:
+    x: 0
+    y: 0
+
+  decorations: full
 
 dpi:
   x: 128
@@ -29,7 +32,7 @@ font:
   bold:
     family: Monaco
   italic:
-    family: Monaco
+    family: MonacoB # https://github.com/mnpk/monaco-italic-iterm2
   size: 14.0
   offset:
     x: 0.0
