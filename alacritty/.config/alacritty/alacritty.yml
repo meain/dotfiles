@@ -28,12 +28,12 @@ scrolling:
 
 font:
   normal:
-    family: Monaco
+    family: Operator Mono Light
   bold:
-    family: Monaco
+    family: Operator Mono Medium
   italic:
-    family: MonacoB # https://github.com/mnpk/monaco-italic-iterm2
-  size: 14.0
+    family: Operator Mono
+  size: 18.0
   offset:
     x: 0
     y: 0
