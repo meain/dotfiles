@@ -158,7 +158,6 @@ key_bindings:
   - { key: Back,     mods: Alt,     chars: "\x1b\x7f"                                                        }
   - { key: Insert,                  chars: "\x1b[2~"                                                         }
   - { key: Delete,                  chars: "\x1b[3~"                                                         }
-  - { key: K,        mods: Command, action: ClearHistory                                                     }
   - { key: K,        mods: Command, chars: "\x0c"                                                            }
   - { key: A,        mods: Alt,     chars: "\x1ba"                                                           }
   - { key: B,        mods: Alt,     chars: "\x1bb"                                                           }
