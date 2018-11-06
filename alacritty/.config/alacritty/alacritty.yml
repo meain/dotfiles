@@ -35,14 +35,12 @@ font:
     family: MonacoB # https://github.com/mnpk/monaco-italic-iterm2
   size: 14.0
   offset:
-    x: 0.0
-    y: 0.0
+    x: 0
+    y: 0
   glyph_offset:
-    x: 0.0
-    y: 0.0
+    x: 0
+    y: 0
   use_thin_strokes: true
-
-custom_cursor_colors: false
 
 color_schemes:
   dark: &dark
@@ -202,10 +200,10 @@ mouse_bindings:
 mouse:
   double_click: { threshold: 300 }
   triple_click: { threshold: 300 }
+  hide_cursor_when_typing: false
 
 selection:
   semantic_escape_chars: ",│`|:\"' ()[]{}<>"
 
-hide_cursor_when_typing: false
 
 live_config_reload: true
