@@ -19,8 +19,6 @@ alias mkdir='mkdir -p'
 
 alias rm='trash'
 
-alias ffind='find . -name'
-
 alias r='lf'
 
 alias o='open .'
