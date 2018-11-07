@@ -28,10 +28,12 @@ alias pg='cd ~/.go/src/github.com'
 alias pc='cd ~/Documents/Projects/others/clones'
 alias pw='cd ~/Downloads'
 alias pd='cd ~/Desktop'
-alias df='cd ~/.dotfiles'
-
-alias s='cd ~/Documents/Projects/work/saama'
+alias pt='cd ~/.Trash'
+alias pm='cd ~/Documents/Media'
 alias pp='cd ~/Documents/Projects/projects'
+
+alias df='cd ~/.dotfiles'
+alias s='cd ~/Documents/Projects/work/saama'
 
 alias cleanup="fd '.DS_Store' --no-ignore --hidden -x rm -v"
 
