@@ -75,11 +75,12 @@ Plug 'racer-rust/vim-racer', { 'for': 'rust' }                                  
 Plug '~/Documents/Projects/vim-jsontogo' , { 'for': ['go'] }                                   " Convert JSON to Go struct
 
 " Linting / Checking
-Plug 'w0rp/ale'                                                                                " Linter formatter and more
+Plug '~/Documents/Projects/projects/ale'                                                                                " Linter formatter and more
 " Plug 'Chiel92/vim-autoformat', { 'on': 'Autoformat' }                                          " Beautify code
 
 " Autocomplete
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }                                  " Competion framework
+" Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
 " Plug 'Shougo/echodoc.vim'                                                                      " Show signature
 Plug 'Shougo/neco-vim', { 'for': 'vim' }                                                       " Completion for viml
 Plug 'sebastianmarkow/deoplete-rust', { 'for': ['rs', 'rust'] }                                " Rust autocompletion (slow)
@@ -103,7 +104,7 @@ Plug 'vim-scripts/mru.vim'                                                      
 " Plug 'junegunn/vim-github-dashboard', { 'on': ['GHA', 'GHD']}                                  " Github dashboard
 " Plug 'vim-scripts/loremipsum', { 'on': 'Loremipsum' }                                          " Loremipsum
 " Plug 'sotte/presenting.vim', { 'on': 'PresentingStart' }                                       " Presetation in vim
-" Plug 'junegunn/vader.vim', {'for': 'vader'}                                                    " Vimscript testing framework
+Plug 'junegunn/vader.vim', {'for': 'vader'}                                                    " Vimscript testing framework
 
 call plug#end()
 
@@ -802,7 +803,7 @@ let g:ale_fixers = {
 \  'css' : ['prettier'],
 \  'elm' : ['elm-format'],
 \  'markdown' : ['prettier'],
-\  'html' : ['tidy'],
+\  'html' : ['prettier'],
 \  'sh': ['shfmt']
 \}
 let g:ale_javascript_prettier_use_local_config = 1
