@@ -16,6 +16,6 @@ dr() {
     then
         docker run -it $(docker images --format "{{.ID}}\n{{.Repository}}" | grep -v '<none>' | sort -r | fzf)
     else
-        docker run -it $1
+        docker run -it "${@:1}"
     fi
 }
