@@ -2,8 +2,10 @@
 db() {
     if [ -z $1 ]
     then
-        echo 'Building docker imgae...'
-        docker build . | tee /dev/tty |  tail -n 1 | cut -d' ' -f3 | pbcopy
+        docker build .
+        IMG_ID=`docker images --format "{{.ID}}" | head -n1`
+        echo "$IMG_ID" | pbcopy
+        # notify "Docker build complete. ($IMG_ID)"
     else
         docker build -t $1 .
     fi
