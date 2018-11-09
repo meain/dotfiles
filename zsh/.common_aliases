@@ -37,5 +37,5 @@ alias s='cd ~/Documents/Projects/work/saama'
 
 alias cleanup="fd '.DS_Store' --no-ignore --hidden -x rm -v"
 
-alias lynx='lynx -lss="~/.lynx.css"'
+alias lynx='lynx -lss="~/.lynx.lss"'
 alias cat='bat'
