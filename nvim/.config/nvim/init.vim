@@ -335,6 +335,14 @@ autocmd BufWritePre *.css,*.js,*.html,*.cpp,*.c,*.java,*.go,*.rs,*.ts,*.cljs,*.c
 
 
 
+"                             Abbreviations                            "
+"                    ==============================                    "
+
+abbr cosnt const
+
+
+
+
 "                                Commands                              "
 "                    ==============================                    "
 
