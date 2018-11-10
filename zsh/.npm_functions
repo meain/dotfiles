@@ -1,10 +1,17 @@
+#!/bin/zsh
 npmgit() {
-    if [ -f "package.json" ]; then
-        PACKAGE=$(cat package.json | jq '.dependencies' | grep -v '{' | grep -v '}' | sed 's:..\"::' | sed 's:\"\:.*$::' | fzf)
-        GITHUB_LINK=$(npm info $PACKAGE --json | jq '.repository.url' | sed 's:^\"git\+::' | sed 's:\.git\"$::' | sed 's:\"git\://:https\://:g')
+    if [ -z $1 ];then
+        if [ -f "package.json" ]; then
+            PACKAGE=$(cat package.json | jq '.dependencies' | grep -v '{' | grep -v '}' | sed 's:..\"::' | sed 's:\"\:.*$::' | fzf)
+            GITHUB_LINK=$(npm info $PACKAGE --json | jq '.repository.url' | sed 's:^\"git\+::' | sed 's:\.git\"$::' | sed 's:\"git\://:https\://:g')
+            echo $GITHUB_LINK
+            open $GITHUB_LINK
+        else
+            echo "Not a npm repo. 'package.json' not found.\nYou could run it in a project folder or provide a package name as \$1"
+        fi
+    else
+        GITHUB_LINK=$(npm info $1 --json | jq '.repository.url' | sed 's:^\"git\+::' | sed 's:\.git\"$::' | sed 's:\"git\://:https\://:g')
         echo $GITHUB_LINK
         open $GITHUB_LINK
-    else
-        echo "Not a npm repo. 'package.json' not found"
     fi
 }
