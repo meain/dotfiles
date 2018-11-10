@@ -45,3 +45,5 @@ alias fu="open https://meain.github.io/fugi/"
 alias morning="cat ~/.datafiles/morning_pages | xargs open"
 
 alias usage="du -h -d 1 . | sort -hr"
+
+alias how='how2'
