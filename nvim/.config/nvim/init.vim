@@ -75,7 +75,7 @@ Plug 'racer-rust/vim-racer', { 'for': 'rust' }                                  
 Plug '~/Documents/Projects/vim-jsontogo' , { 'for': ['go'] }                                   " Convert JSON to Go struct
 
 " Linting / Checking
-Plug '~/Documents/Projects/projects/ale'                                                                                " Linter formatter and more
+Plug 'w0rp/ale'                                                                                " Linter formatter and more
 " Plug 'Chiel92/vim-autoformat', { 'on': 'Autoformat' }                                          " Beautify code
 
 " Autocomplete
@@ -104,7 +104,7 @@ Plug 'vim-scripts/mru.vim'                                                      
 " Plug 'junegunn/vim-github-dashboard', { 'on': ['GHA', 'GHD']}                                  " Github dashboard
 " Plug 'vim-scripts/loremipsum', { 'on': 'Loremipsum' }                                          " Loremipsum
 " Plug 'sotte/presenting.vim', { 'on': 'PresentingStart' }                                       " Presetation in vim
-Plug 'junegunn/vader.vim', {'for': 'vader'}                                                    " Vimscript testing framework
+" Plug 'junegunn/vader.vim', {'for': 'vader'}                                                    " Vimscript testing framework
 
 call plug#end()
 
@@ -812,6 +812,7 @@ let g:ale_fixers = {
 \  'elm' : ['elm-format'],
 \  'markdown' : ['prettier'],
 \  'html' : ['prettier'],
+\  'yaml': ['prettier'],
 \  'sh': ['shfmt']
 \}
 let g:ale_javascript_prettier_use_local_config = 1
