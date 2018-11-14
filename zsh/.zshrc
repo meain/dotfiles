@@ -55,7 +55,7 @@ zle -N fg-bg
 bindkey '^Z' fg-bg
 
 # Credentials
-if [-f $HOME/.credentials];then
+if [ -f $HOME/.credentials ];then
   source $HOME/.credentials
 fi
 
