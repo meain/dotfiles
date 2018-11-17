@@ -1051,6 +1051,10 @@ hi semshiErrorSign       ctermfg=231 guifg=#ffffff ctermbg=160 guibg=#d70000
 hi semshiErrorChar       ctermfg=231 guifg=#ffffff ctermbg=160 guibg=#d70000
 sign define semshiError text=E> texthl=semshiErrorSign
 
+" vim-import-cost
+let g:import_cost_disable_auto = 0
+let g:import_cost_virtualtext_prefix = ' '
+
 
 
 
