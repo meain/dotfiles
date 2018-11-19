@@ -60,8 +60,10 @@ Plug 'tomtom/tcomment_vim'                                                      
 " Plug 'sheerun/vim-polyglot'                                                                  " Multiple language support (slow)
 " Plug 'jonsmithers/experimental-lit-html-vim'                                                 " lit-html highlight
 Plug 'elzr/vim-json', { 'for': 'json' }                                                        " Json syntax highlight
-Plug 'pangloss/vim-javascript', { 'for': 'javascript' }                                        " Javascript syntax highlight
-Plug 'HerringtonDarkholme/yats.vim', { 'for': 'typescript' }                                     " Typescript syntax highlight
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }                                        " Typescript syntax highlight
+Plug 'HerringtonDarkholme/yats.vim', { 'for': [ 'typescript', 'typescript.tsx' ] }             " Typescript syntax highlight
+" lug 'leafgarland/typescript-vim', { 'for': [ 'typescript', 'typescript.tsx' ] }              " Typescript syntax highlight
+Plug 'peitalin/vim-jsx-typescript', { 'for': [ 'typescript', 'typescript.tsx' ] }              " Typescript JSX syntax highlight
 Plug 'neoclide/vim-jsx-improve', { 'for': ['javascript', 'javascript.jsx'] }                   " Inproved JSX syntax
 Plug 'tpope/vim-markdown', { 'for': ['md', 'markdown'] }                                       " Better markdown support
 Plug 'cespare/vim-toml', { 'for': 'toml' }
@@ -490,6 +492,8 @@ nnoremap <silent><leader>t :tabnew \| :Startify<cr>
 " Easier switching of quickfix list items
 nnoremap <silent><leader>n :cnext<cr>
 nnoremap <silent><leader>m :cprev<cr>
+
+nnoremap <silent><leader>cc :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") ."> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
 
 
@@ -1054,6 +1058,15 @@ sign define semshiError text=E> texthl=semshiErrorSign
 " vim-import-cost
 let g:import_cost_disable_auto = 0
 let g:import_cost_virtualtext_prefix = ' '
+
+" vim-jsx-typescript
+hi tsxTagName ctermfg=150 guifg=#afdf87
+hi tsxCloseString ctermfg=216 guifg=#ffaf87
+hi tsxCloseTag ctermfg=216 guifg=#ffaf87
+hi tsxAttributeBraces ctermfg=181 guifg=#dfafaf
+hi tsxEqual ctermfg=216 guifg=#ffaf87
+hi tsxAttrib ctermfg=115 guifg=#87dfaf
+autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
 
 
 
