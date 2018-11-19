@@ -36,7 +36,7 @@ gifup(){
     gifify $1 -o /tmp/$timestamp && imgur-uploader /tmp/$timestamp
 }
 
-rd () {
+rcd () {
     tmp="$(mktemp)"
     lf -last-dir-path="$tmp" "$@"
     if [ -f "$tmp" ]; then
