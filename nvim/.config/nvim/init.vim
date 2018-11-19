@@ -232,6 +232,10 @@ set wildignore+=*.swp,*~,._*
 set wildignore+=_pycache_,.DS_Store,.vscode,.localized
 set wildignore+=.cache,node_modules,package-lock.json,yarn.lock,dist,.git
 
+" Setting up python
+let g:python_host_prog = '/Users/meain/.pyenv/versions/2.7.11/bin/python'
+let g:python3_host_prog = '/Users/meain/.pyenv/versions/3.6.6/bin/python'
+
 " Fill chars
 set fillchars=vert:\|
 set fillchars+=fold:-
