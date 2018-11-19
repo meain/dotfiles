@@ -98,7 +98,9 @@ case "$(uname -s)" in
 esac
 
 # Github
-eval "$(hub alias -s)"
+eval "$(hub alias -s /bin/zsh)"
+
+# Source fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Use vim mode in zsh
