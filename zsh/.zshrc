@@ -120,6 +120,13 @@ if [ -f '$GOOGLE_CLOUD' ]; then source '$GOOGLE_CLOUD'; fi
 if [ -f '$GOOGLE_CLOUD_COMPLETIONS' ]; then source '$GOOGLE_CLOUD_COMPLETIONS'; fi
 
 # source python workon
-source '/usr/local/bin/virtualenvwrapper_lazy.sh'
+case "$(uname -s)" in
+  Darwin)
+    source '/usr/local/bin/virtualenvwrapper_lazy.sh'
+    ;;
+  Linux)
+    source '/usr/bin/virtualenvwrapper_lazy.sh'
+    ;;
+esac
 
 export ZSH_LOADED=1
