@@ -1,0 +1,39 @@
+#!/usr/local/bin/python3
+import os
+import time
+
+height, width = [int(c) for c in os.popen("stty size", "r").read().split()]
+meain = """
+ ███▄ ▄███▓▓█████ ▄▄▄       ██▓ ███▄    █ 
+▓██▒▀█▀ ██▒▓█   ▀▒████▄    ▓██▒ ██ ▀█   █ 
+▓██    ▓██░▒███  ▒██  ▀█▄  ▒██▒▓██  ▀█ ██▒
+▒██    ▒██ ▒▓█  ▄░██▄▄▄▄██ ░██░▓██▒  ▐▌██▒
+▒██▒   ░██▒░▒████▒▓█   ▓██▒░██░▒██░   ▓██░
+░ ▒░   ░  ░░░ ▒░ ░▒▒   ▓▒█░░▓  ░ ▒░   ▒ ▒ 
+░  ░      ░ ░ ░  ░ ▒   ▒▒ ░ ▒ ░░ ░░   ░ ▒░
+░      ░      ░    ░   ▒    ▒ ░   ░   ░ ░ 
+       ░      ░  ░     ░  ░ ░           ░ 
+""".split(
+    "\n"
+)
+
+mwidht = 42
+mheight = 9
+
+starth = int(height / 2 - mheight / 2)
+startw = int(width / 2 - mwidht / 2)
+
+turn = 0
+while True:
+    BLOCK = " "
+    if turn % 2 == 0:
+        BLOCK = " "
+    for i in range(height):
+        if i >= starth and i - starth < mheight and turn % 2 == 0:
+            initial_spacing = startw - 1
+            remaingin_space = 0
+            print(BLOCK * initial_spacing, meain[i - starth], BLOCK * remaingin_space)
+        else:
+            print(BLOCK * width)
+    turn += 1
+    time.sleep(.5)
