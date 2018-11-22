@@ -490,6 +490,9 @@ nnoremap <silent><s-left> :tabm -1<cr>
 " Only current buffer
 nnoremap <silent><leader>o :only<cr>
 
+" Quickly copy current line without extra spaces or newline
+nnoremap <silent><leader>y ^yg_
+
 " New tab
 nnoremap <silent><leader>t :tabnew \| :Startify<cr>
 
