@@ -500,8 +500,6 @@ nnoremap <silent><leader>t :tabnew \| :Startify<cr>
 nnoremap <silent><leader>n :cnext<cr>
 nnoremap <silent><leader>m :cprev<cr>
 
-nnoremap <silent><leader>cc :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") ."> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
-
 
 
 
@@ -670,6 +668,11 @@ function! s:CloseHiddenBuffers()
 endfunction
 command! Cleanup call s:CloseHiddenBuffers()
 
+" Find highlight group of char under the cursor
+function! HightlightGroup()
+  echo 'hi<' . synIDattr(synID(line('.'),col('.'),1),'name') . '> trans<' . synIDattr(synID(line('.'),col('.'),0),'name') .'> lo<' . synIDattr(synIDtrans(synID(line('.'),col('.'),1)),'name') . '>'
+endfunc
+nnoremap <silent><leader>cc :call HightlightGroup()<cr>
 
 
 
