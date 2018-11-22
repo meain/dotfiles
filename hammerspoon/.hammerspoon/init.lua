@@ -47,3 +47,7 @@ function reloadConfig(files)
 end
 hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", reloadConfig):start()
 hs.notify.new({title="Hammerspoon", informativeText="Hammerspoon config reloaded!"}):send()
+
+-- Setup anycomplete
+local anycomplete = require "anycomplete"
+anycomplete.registerDefaultBindings({"alt"}, 'G')
