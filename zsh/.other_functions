@@ -36,6 +36,7 @@ gifup(){
     gifify $1 -o /tmp/$timestamp && imgur-uploader /tmp/$timestamp
 }
 
+# cd, but use lf to choose dir
 rcd () {
     tmp="$(mktemp)"
     lf -last-dir-path="$tmp" "$@"
@@ -68,6 +69,7 @@ imgur(){
     fi
 }
 
+# Send a notification on macOS
 notify(){
     if [ -z $1 ];then
 	osascript -e "display notification \"Task complete!\" with title \"Notification\""
@@ -76,6 +78,7 @@ notify(){
     fi
 }
 
+# Go to root of project
 root(){
     cd $(git rev-parse --show-toplevel 2> /dev/null)
 }
@@ -91,6 +94,7 @@ function gtree {
     fi
 }
 
+# speed up video by 2X
 faster() {
     faster_filename=$(echo $1|sed 's/\..*/2x.mp4/g')
     ffmpeg -i $1 -filter:v "setpts=0.5*PTS" $faster_filename
@@ -106,15 +110,40 @@ tt() {
     fi
 }
 
+# Create a new blog entry. Quickly create file with date prepended
 blog(){
     DATE=`date +%Y-%m-%d`
     NAME="$DATE-$1.md"
     nvim $NAME
 }
 
+# Conver webm to mp3 ( used with spotifydl )
 webmmp3(){
     for FILE in *.webm; do
 	echo -e "Processing video '\e[32m$FILE\e[0m'";
 	ffmpeg -i "${FILE}" -vn -ab 128k -ar 44100 -y "${FILE%.webm}.mp3";
     done;
+}
+
+
+# imgurtolocal filename https://link.com(or in clipboard) png(optional) /img(prepend-optional)
+imgurtolocal(){
+    # by default use png as extention
+    if [ -z $3 ];then
+	EXTENTION=$3
+    else
+	EXTENTION='png'
+    fi
+
+    if [ -z $4 ];then
+	EXTENTION=$4
+    else
+	EXTENTION='img/'
+    fi
+
+    if [ -z $2 ]; then
+	wget "$2" -o "$1.$EXTENTION" && echo "$4$1.$EXTENTION" | pbcopy
+    else
+	wget "$(pbpaste)" -o "$1.$EXTENTION" && echo "$4$1.$EXTENTION" | pbcopy
+    fi
 }
