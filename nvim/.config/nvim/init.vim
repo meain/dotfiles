@@ -53,13 +53,13 @@ Plug '~/Documents/Projects/projects/vim-import-cost', { 'do': 'npm install' }   
 Plug 'tpope/vim-surround'                                                                      " Surround
 Plug 'jiangmiao/auto-pairs'                                                                    " Autopair
 Plug 'tomtom/tcomment_vim'                                                                     " Code commenting
-" Plug 'junegunn/vim-easy-align'                                                                 " Some prettification
+Plug 'junegunn/vim-easy-align'                                                                 " Some prettification
 
 " Language helpers
 " Plug 'sheerun/vim-polyglot'                                                                  " Multiple language support (slow)
 " Plug 'jonsmithers/experimental-lit-html-vim'                                                 " lit-html highlight
 Plug 'elzr/vim-json', { 'for': 'json' }                                                        " Json syntax highlight
-Plug 'pangloss/vim-javascript', { 'for': 'javascript' }                                        " Typescript syntax highlight
+Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }                    " Javascript syntax highlight
 Plug 'HerringtonDarkholme/yats.vim', { 'for': [ 'typescript', 'typescript.tsx' ] }             " Typescript syntax highlight
 " lug 'leafgarland/typescript-vim', { 'for': [ 'typescript', 'typescript.tsx' ] }              " Typescript syntax highlight
 Plug 'peitalin/vim-jsx-typescript', { 'for': [ 'typescript', 'typescript.tsx' ] }              " Typescript JSX syntax highlight
