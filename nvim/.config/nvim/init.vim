@@ -35,7 +35,7 @@ Plug 'editorconfig/editorconfig-vim'                                            
 Plug 'mattn/emmet-vim', { 'for': ['html', 'javascript', 'css', 'javascript.jsx'] }             " Emmet
 " Plug 'jreybert/vimagit', { 'on': [ 'Magit', 'MagitOnly' ] }                                    " Even better git interface for vim
 " Plug 'metakirby5/codi.vim', { 'on': 'Codi' }                                                   " Live code preview
-" Plug 'rhysd/committia.vim'                                                                     " Better COMMIT_EDITMSG editing
+Plug 'rhysd/committia.vim'                                                                     " Better COMMIT_EDITMSG editing
 Plug 'Galooshi/vim-import-js', {'for': 'javascript', 'do': 'npm install -g import-js'}         " Easier imports for javascript
 
 " Code editing enhacements
