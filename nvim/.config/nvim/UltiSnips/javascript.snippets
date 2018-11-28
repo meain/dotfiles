@@ -77,6 +77,10 @@ snippet ecsd "Export with connect and state" b
 export default connect(mapStateToProps, mapDispatchToProps)(${1:`!v expand('%:t:r')`})
 endsnippet
 
+snippet exp "Export with connect and state" b
+export default connect(mapStateToProps, mapDispatchToProps)(${1:`!v expand('%:t:r')`})
+endsnippet
+
 snippet cn "className"
 className="$1"
 endsnippet
@@ -116,11 +120,15 @@ snippet "\.(map|filter|forEach|reduce)" "Array method with an arrow function" r
 endsnippet
 
 snippet connect "connector.js template" b
-export const mapStateToProps = state => {
+//@flow
+import type { Dispatch } from '../../redux.js'
+import type { ReduxState } from '../../initialState'
+
+export const mapStateToProps = (state: ReduxState) => {
   return {}
 }
 
-export const mapDispatchToProps = dispatch => {
+export const mapDispatchToProps = (dispatch: Dispatch) => {
   return {}
 }
 endsnippet
@@ -148,4 +156,8 @@ if (e) {
 	e.stopPropagation()
 	if (e.nativeEvent) e.nativeEvent.stopImmediatePropagation()
 }
+endsnippet
+
+snippet flow "Flow header"
+//@flow
 endsnippet
