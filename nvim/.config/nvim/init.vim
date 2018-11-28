@@ -499,6 +499,8 @@ nnoremap <silent><leader>t :tabnew \| :Startify<cr>
 nnoremap <silent><leader>n :cnext<cr>
 nnoremap <silent><leader>m :cprev<cr>
 
+nnoremap <leader>c mc?class=<CR>ciwclassName<ESC>`c4l
+
 
 
 
@@ -671,7 +673,7 @@ command! Cleanup call s:CloseHiddenBuffers()
 function! HightlightGroup()
   echo 'hi<' . synIDattr(synID(line('.'),col('.'),1),'name') . '> trans<' . synIDattr(synID(line('.'),col('.'),0),'name') .'> lo<' . synIDattr(synIDtrans(synID(line('.'),col('.'),1)),'name') . '>'
 endfunc
-nnoremap <silent><leader>cc :call HightlightGroup()<cr>
+nnoremap <silent><leader>gh :call HightlightGroup()<cr>
 
 
 
@@ -695,7 +697,6 @@ autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
 command! -bang -nargs=* Find
       \ call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>),
       \ 1, <bang>0)
-nnoremap <leader>c :Commands<CR>
 nnoremap <leader>b :Buffers<cr>
 nnoremap <leader>f :tabnew \| :Find<cr>
 autocmd! FileType fzf
@@ -1066,8 +1067,7 @@ sign define semshiError text=E> texthl=semshiErrorSign
 
 " vim-import-cost
 nnoremap <silent><leader>a :ImportJSFix<cr>
-let g:import_cost_silent = 1
-let g:import_cost_disable_auto = 0
+let g:import_cost_virtualtext = 1
 let g:import_cost_virtualtext_prefix = ' '
 
 " vim-jsx-typescript
