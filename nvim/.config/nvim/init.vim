@@ -241,11 +241,11 @@ set fillchars+=fold:-
 
 " Indent based folding
 set foldlevel=0
-set foldmethod=manual
-" set foldmethod=indent
-" set foldignore=
-" set foldlevelstart=10
-" set foldnestmax=10
+set foldmethod=indent
+" set foldmethod=manual
+set foldignore=
+set foldlevelstart=10
+set foldnestmax=10
 
 " ColorScheme change ( redblack )
 autocmd ColorScheme redblack highlight Normal guibg=#000000 ctermbg=0
