@@ -1,8 +1,14 @@
+#!/bin/zsh
+
 gitignore() {
     LANGUAGE=$(curl -L -s https://www.gitignore.io/api/list | tr "," "\n" | fzf)
     curl -L -s https://www.gitignore.io/api/$LANGUAGE%2Cmacos > .gitignore
 }
 
-gclone() {
-    git clone https://github.com/$1.git
+gcl() {
+    if [ -z "$1" ];then
+        git clone "$(pbpaste)"
+    else
+        git clone "https://github.com/$1.git"
+    fi
 }
