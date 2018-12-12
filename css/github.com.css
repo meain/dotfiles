@@ -1,3 +1,7 @@
 .blob-code-inner, .blob-num {
     font-family: monaco;
 }
+
+pre {
+    font-family: monaco;
+}
