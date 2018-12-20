@@ -181,7 +181,7 @@ filetype indent on
 set lazyredraw
 
 " Just sync some lines of a large file
-set synmaxcol=200
+set synmaxcol=400
 syntax sync minlines=256
 
 " Make backspace great again
