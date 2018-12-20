@@ -698,7 +698,7 @@ command! -bang -nargs=* Find
       \ call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>),
       \ 1, <bang>0)
 nnoremap <leader>b :Buffers<cr>
-nnoremap <leader>f :tabnew \| :Find<cr>
+nnoremap <leader>f :Find<cr>
 autocmd! FileType fzf
 autocmd  FileType fzf set laststatus=0
   \| autocmd BufLeave <buffer> set laststatus=2
