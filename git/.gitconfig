@@ -22,6 +22,7 @@
 
   mff = merge --ff-only
 
+  undo = !"git reset --soft HEAD^ && git reset"
   # hard reset and clean (unrecoverable)
   nuke = !"git reset --hard HEAD && git clean -fd"
 [color]
