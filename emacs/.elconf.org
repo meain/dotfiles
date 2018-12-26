@@ -655,11 +655,11 @@
     #+END_SRC
 *** Wakatime
     #+BEGIN_SRC emacs-lisp
-      (use-package wakatime-mode
-          :ensure t
-          :init
-              (setq wakatime-cli-path "/usr/local/bin/wakatime" )
-              (global-wakatime-mode))
+      ;; (use-package wakatime-mode
+      ;;     :ensure t
+      ;;     :init
+      ;;         (setq wakatime-cli-path "/usr/local/bin/wakatime" )
+      ;;         (global-wakatime-mode))
     #+END_SRC
 *** Mode icons
    #+BEGIN_SRC emacs-lisp
