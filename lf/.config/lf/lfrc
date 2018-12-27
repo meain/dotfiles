@@ -28,8 +28,8 @@ map X !$f
 map <enter> shell
 map P put-async
 
-cmd trash %trash "$f"
-map D trash %trash "$f"
+cmd trash %echo "$fx" | while read -r j; do trash "$j" ; done
+map D %echo "$fx" | while read -r j; do trash "$j" ; done
 
 map f $lf -remote "send $id select $(fzf)"
 
