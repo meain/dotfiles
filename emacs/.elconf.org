@@ -203,6 +203,10 @@
    #+END_SRC
 ** Configuration
 *** Normal mode remaps
+**** Q to record macro
+     #+BEGIN_SRC emacs-lisp
+       (define-key evil-normal-state-map "Q" 'evil-record-macro)
+     #+END_SRC
 **** Vinegar memories
     #+BEGIN_SRC emacs-lisp
     ;; vinegarish
