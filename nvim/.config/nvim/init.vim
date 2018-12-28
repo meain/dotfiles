@@ -345,7 +345,7 @@ autocmd BufWritePre *.css,*.js,*.html,*.cpp,*.c,*.java,*.go,*.rs,*.ts,*.cljs,*.c
 "                    ==============================                    "
 
 abbr cosnt const
-
+abbr imprt import
 
 
 
