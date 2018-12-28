@@ -72,6 +72,9 @@
     #+BEGIN_SRC emacs-lisp
     ;; enable line numbers
     (global-linum-mode t)
+    (setq linum-format " %d ")
+    (setq-default right-fringe-width  0)
+    (set-face-attribute 'fringe nil :background "#151515")
     #+END_SRC
 ** Cursor
     #+BEGIN_SRC emacs-lisp
