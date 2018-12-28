@@ -70,8 +70,8 @@
    #+END_SRC
 ** Line numbers
     #+BEGIN_SRC emacs-lisp
-    ;; disable line numbers
-    ;; (global-linum-mode -1)
+    ;; enable line numbers
+    (global-linum-mode t)
     #+END_SRC
 ** Cursor
     #+BEGIN_SRC emacs-lisp
