@@ -410,6 +410,8 @@
         :ensure t
         :init
             (progn
+                (use-package yasnippet-snippets
+                    :ensure t)
                 (yas-global-mode 1)
                 (add-to-list 'load-path "~/.emacs.d/plugins/yasnippet")))
     #+END_SRC
