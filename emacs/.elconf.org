@@ -82,7 +82,7 @@
 *** Editor font
     #+BEGIN_SRC emacs-lisp
     ;; Set font
-    (set-frame-font "Monaco 14" nil t)
+    (set-frame-font "Operator Mono 17" nil t)
     #+END_SRC
 *** Emojis
     #+BEGIN_SRC emacs-lisp
