@@ -604,7 +604,7 @@
                "Switch between helm and fiplr based on directory."
                (interactive)
                (if (string= (shell-command-to-string (concat "git -C " default-directory " rev-parse")) "") (fiplr-find-file) (helm-recentf)))
-           (define-key evil-normal-state-map (kbd ", ,") 'recent-selector-open)))
+           (define-key evil-normal-state-map (kbd "<return>") 'recent-selector-open)))
     #+END_SRC
 *** Recentf
     #+BEGIN_SRC emacs-lisp
