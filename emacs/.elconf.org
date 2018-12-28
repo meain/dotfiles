@@ -145,6 +145,7 @@
     #+BEGIN_SRC emacs-lisp
     (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
     (add-to-list 'package-archives '("elpy" . "https://jorgenschaefer.github.io/packages/"))
+    (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
     (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
     #+END_SRC
 * Personal information
@@ -845,6 +846,13 @@
             (flyspell-mode t)
             (olivetti-mode t)
             (focus-mode t))))
+   #+END_SRC
+*** React
+   #+BEGIN_SRC emacs-lisp
+   (use-package rjsx-mode
+    :ensure t
+    :init
+        (add-to-list 'auto-mode-alist '("components\\/.*\\.js\\'" . rjsx-mode)))
    #+END_SRC
 * Configurations
 ** Visual indents
