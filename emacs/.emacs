@@ -27,6 +27,9 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+;; NOTE: If melpa install fail run
+;; (package-refresh-contents)
+
 ;; From use-package README
 (eval-when-compile
   (require 'use-package))
