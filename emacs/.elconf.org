@@ -581,14 +581,12 @@
 *** Fiplr
     #+BEGIN_SRC emacs-lisp
     (use-package fiplr
-        :ensure t
-        :init
-        (progn
-            (defun recent-selector-open ()
-                "Switch between helm and fiplr based on directory."
-                (interactive)
-                (if (string= (shell-command-to-string (concat "git -C " default-directory " rev-parse")) "") (fiplr-find-file) (helm-recentf)))
-            (define-key evil-normal-state-map (kbd ", ,") 'recent-selector-open)))
+    :ensure t
+    :config
+        (setq fiplr-root-markers '(".git" ".svn"))
+        (setq fiplr-ignored-globs '((directories (".git" ".svn" "node_modules" "build" "dist"))
+        (files ("*.jpg" "*.png" "*.zip" "*~"))))
+        (define-key evil-normal-state-map (kbd ", ,") 'recent-selector-open))
     #+END_SRC
 *** Recentf
     #+BEGIN_SRC emacs-lisp
