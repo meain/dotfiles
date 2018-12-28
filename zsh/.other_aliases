@@ -19,6 +19,8 @@ alias slack='slack-term -config ~/.slack-term.json'
 
 alias brew='HOMEBREW_NO_AUTO_UPDATE=1 brew'
 
+alias up='TERM="screen-256color" up'
+
 alias ssh='TERM="screen-256color" ssh'
 alias gcloud='TERM="screen-256color" gcloud'
 
