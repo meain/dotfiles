@@ -246,11 +246,13 @@
 **** Quit buffer
     #+BEGIN_SRC emacs-lisp
       ;; easy quitting of buffer/window
-      (evil-leader/set-key "q" (lambda()
-            (interactive)
-            (if (= (length (mapcar #'window-buffer (window-list))) 1)
-                (switch-to-buffer "*dashboard*")
-                (evil-quit))))
+      (defun kill-current-buffer-unless-dashboard()
+          (interactive)
+          (if (= (length (mapcar #'window-buffer (window-list))) 1)
+              (switch-to-buffer "*dashboard*")
+              (evil-quit)))
+      (evil-leader/set-key "q" 'kill-current-buffer-unless-dashboard)
+      (define-key evil-normal-state-map (kbd "q") 'kill-current-buffer-unless-dashboard)
     #+END_SRC
 **** Switch to scratch buffer
      #+BEGIN_SRC emacs-lisp
