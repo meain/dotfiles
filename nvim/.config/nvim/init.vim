@@ -454,6 +454,13 @@ imap ;; <Esc>A;
 " Visual star
 vnoremap * "sy/<c-r>s<CR>
 
+" Source current line
+vnoremap <silent><leader>S y:execute @@<cr>
+nnoremap <silent><leader>S ^vg_y:execute @@<cr>
+
+" vv to select line
+nnoremap vv ^vg_
+
 
 
 
