@@ -54,7 +54,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (rjsx-mode zenburn-theme yasnippet which-key web-mode wakatime-mode waher-theme vimrc-mode use-package try spaceline smooth-scrolling shell-pop seti-theme sane-term restclient rainbow-delimiters quickrun projectile popup-imenu persistent-scratch osx-clipboard org-bullets olivetti nyan-mode neotree monokai-theme monochrome-theme mode-icons material-theme markdown-mode+ magit jedi imenu-list highlight-indentation helm gruvbox-theme focus flycheck fiplr expand-region evil-surround evil-search-highlight-persist evil-leader evil-commentary emmet-mode drag-stuff diminish diff-hl dashboard cyberpunk-theme color-theme-sanityinc-tomorrow base16-theme autopair arjen-grey-theme all-the-icons-dired ag))))
+    (yasnippet-snippets rjsx-mode zenburn-theme yasnippet which-key web-mode wakatime-mode waher-theme vimrc-mode use-package try spaceline smooth-scrolling shell-pop seti-theme sane-term restclient rainbow-delimiters quickrun projectile popup-imenu persistent-scratch osx-clipboard org-bullets olivetti nyan-mode neotree monokai-theme monochrome-theme mode-icons material-theme markdown-mode+ magit jedi imenu-list highlight-indentation helm gruvbox-theme focus flycheck fiplr expand-region evil-surround evil-search-highlight-persist evil-leader evil-commentary emmet-mode drag-stuff diminish diff-hl dashboard cyberpunk-theme color-theme-sanityinc-tomorrow base16-theme autopair arjen-grey-theme all-the-icons-dired ag))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
