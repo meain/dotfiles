@@ -233,6 +233,11 @@
      #+BEGIN_SRC emacs-lisp
     (define-key evil-normal-state-map (kbd "Z") 'flyspell-auto-correct-previous-word)
      #+END_SRC
+**** Quick jump back and foreward
+     #+BEGIN_SRC emacs-lisp
+       (define-key evil-normal-state-map "\\" 'evil-jump-backward)
+       (define-key evil-normal-state-map "`" 'evil-jump-forward)
+     #+END_SRC
 *** Leader key remaps
 **** Quick save file
     #+BEGIN_SRC emacs-lisp
