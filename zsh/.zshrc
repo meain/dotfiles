@@ -111,6 +111,9 @@ bindkey '^?' backward-delete-char
 bindkey '^h' backward-delete-char
 bindkey '^w' backward-kill-word
 bindkey '^r' history-incremental-search-backward
+bindkey '^e' edit-command-line
+bindkey '^xe' edit-command-line
+bindkey '^x^e' edit-command-line
 export KEYTIMEOUT=1
 
 # updates PATH for Google Cloud SDK && add shell completion for gcloud
