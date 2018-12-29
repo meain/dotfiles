@@ -1,0 +1,15 @@
+requests
+pycodestyle
+pyflakes
+pylint
+virtualenvwrapper
+wakatime
+pytest
+mkdocs
+ipython
+googler
+ipdb
+flask
+falcon
+autopep8
+neovim

@@ -1,0 +1,62 @@
+# important ones
+htop
+tmux
+tree
+wget
+cmake
+node
+offlineimap
+neovim --HEAD
+imagemagick --with-fontconfig
+ffmpeg --with-libass --with-fontconfig
+
+# languages
+go
+ruby
+python
+python3
+
+# tools
+jq
+fd
+hub
+tig
+fzf
+ripgrep
+
+# others
+aspell
+axel
+bison
+calcurse
+coreutils
+cowsay
+ctags
+emacs
+figlet
+fish
+fontconfig
+fortune
+freetype
+gawk
+gcalcli
+giflossy
+iproute2mac
+irssi
+mongodb
+mpv
+ncurses
+neofetch
+neomutt
+newsboat
+pandoc
+redis
+sleepwatcher
+sqlite
+stow
+trash
+up
+urlview
+vifm
+w3m
+watch
