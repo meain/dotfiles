@@ -55,10 +55,6 @@ stow nvim
 
 [`bat`](https://github.com/sharkdp/bat) a cat clone with syntax highlight and stuff
 
-[`cmus`](https://cmus.github.io/) a beautiful music player in the shell
-
-[`vtop`](https://github.com/MrRio/vtop) a pretty `top` command with ascii art
-
 [`fkill`](https://github.com/sindresorhus/fkill-cli) fabulously kill processes
 
 [`thefuck`](https://github.com/nvbn/thefuck) correct your previous command
