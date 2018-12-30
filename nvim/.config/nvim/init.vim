@@ -337,6 +337,11 @@ autocmd filetype crontab setlocal nobackup nowritebackup
 " Remove whitespace at save
 autocmd BufWritePre *.css,*.js,*.html,*.cpp,*.c,*.java,*.go,*.rs,*.ts,*.cljs,*.clj :%s/\s\+$//e
 
+" Trun of syntax hilighting if huge
+autocmd BufReadPre *
+      \ if getfsize(expand("%")) > 10000000 | syntax off | endif
+autocmd BufReadPre *.min.* syntax off
+
 
 
 
