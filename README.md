@@ -6,7 +6,7 @@
   <img src="https://img.shields.io/badge/Shell-zsh-yellow.svg" />
   <img src="https://img.shields.io/badge/Font-Operator%20Mono-lightgrey.svg" />
   <img src="https://img.shields.io/badge/Mail-neomutt-red.svg" />
-  <img src="https://img.shields.io/badge/IRC-irssi-blue.svg" />
+  <img src="https://img.shields.io/badge/IRC-tiny-blue.svg" />
   <br><br>
   <img src="https://i.imgur.com/pVGr7tX.png">
 </p>
