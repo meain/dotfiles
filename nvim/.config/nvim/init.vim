@@ -432,9 +432,6 @@ tnoremap <Leader><Esc> <C-\><C-n>
 " Copy entire file content
 nnoremap yp mzggVG"+y`z
 
-" Quick suspend
-nnoremap <silent><leader>z <c-z>
-
 " Vim docs
 au FileType vim nmap K :help <c-r><c-w><cr>
 
@@ -490,6 +487,12 @@ nnoremap <silent><Leader>' <C-]>
 
 " Quick fold and unfold
 nnoremap <silent><Leader><esc> :normal!za<cr>
+
+" Quick suspend
+nnoremap <silent><leader>z <c-z>
+
+" Detect filetype
+nnoremap <silent><leader>d :filetype detect<CR>
 
 " Quick switch tabs
 nnoremap <silent><Leader>k :tabn<cr>
