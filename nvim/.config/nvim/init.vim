@@ -69,7 +69,6 @@ Plug 'cespare/vim-toml', { 'for': 'toml' }
 " Plug 'fatih/vim-go', { 'for': ['go'] }                                                         " Golang helper
 " Plug 'sebdah/vim-delve', { 'for': 'go' }                                                       " Debugger for go
 Plug 'racer-rust/vim-racer', { 'for': 'rust' }                                                 " Rust support
-" Plug 'tmhedberg/matchit', { 'for': ['html','xml', 'tex'] }                                     " Match tags for html, xml latex etc
 " Plug 'numirias/semshi', { 'for': 'python', 'do': ':UpdateRemotePlugins' }                      " Better syntax highlight for python
 " Plug 'raimon49/requirements.txt.vim', { 'for': 'requirements' }                              " Requirements file
 
