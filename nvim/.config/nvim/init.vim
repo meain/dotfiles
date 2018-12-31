@@ -348,8 +348,8 @@ autocmd BufReadPre *.min.* syntax off
 "                             Abbreviations                            "
 "                    ==============================                    "
 
-abbr cosnt const
-abbr imprt import
+iabbr cosnt const
+iabbr imprt import
 
 
 
