@@ -764,7 +764,7 @@ let g:startify_custom_header = [':meain - neovim','']
 let g:startify_relative_path = 1
 let g:startify_use_env = 1
 let g:startify_session_persistence = 1
-let g:startify_custom_indices = ['a', 'd', 'g', 'h', 'l', 'o', 'p', 'r', 't', 'n', 'm', 'b']
+let g:startify_custom_indices = ['v','a', 'd', 'g', 'h', 'l', 'o', 'p', 'r', 't', 'n', 'm', 'b']
 let g:startify_fortune_use_unicode = 1
 let g:startify_list_order = ['dir', 'files',  'sessions']
 let g:startify_session_before_save = [
@@ -789,6 +789,7 @@ let g:startify_lists = [
 let g:startify_commands = [
 \	{ 'up': [ 'Update Plugins', ':PlugUpdate' ] },
 \	{ 'ug': [ 'Upgrade Plugin Manager', ':PlugUpgrade' ] },
+\	{ 'q': [ 'Delete buffer', ':bd' ] },
 \ ]
 let g:startify_bookmarks = [
 	\ { 'c': '~/.dotfiles/nvim/.config/nvim/init.vim' },
