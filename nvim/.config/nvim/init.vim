@@ -351,6 +351,7 @@ autocmd BufReadPre *.min.* syntax off
 iabbr cosnt const
 iabbr imprt import
 
+cabbr fd filetype detect
 
 
 "                                Commands                              "
@@ -490,9 +491,6 @@ nnoremap <silent><Leader><esc> :normal!za<cr>
 
 " Quick suspend
 nnoremap <silent><leader>z <c-z>
-
-" Detect filetype
-nnoremap <silent><leader>d :filetype detect<CR>
 
 " Quick switch tabs
 nnoremap <silent><Leader>k :tabn<cr>
