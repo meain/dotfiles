@@ -15,7 +15,7 @@ Plug 'ap/vim-css-color', { 'for': 'css' }                                       
 " Added functinality
 Plug 'meain/vim-startify'                                                                      " A fancy start page for vim (slow)
 Plug '~/Documents/Projects/others/done/_vim/vim-googler', { 'on': 'Google' }                   " Google from within vim
-" Plug 'justinmk/vim-sneak'                                                                      " Quickly sneak arround
+Plug 'justinmk/vim-sneak'                                                                      " Quickly sneak arround
 Plug 'wincent/loupe'                                                                           " Better search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }                              " Fzf
 Plug 'junegunn/fzf.vim'                                                                        " Fzf for vim
@@ -1024,6 +1024,8 @@ let g:UltiSnipsSnippetDirectories = ['~/.config/nvim/UltiSnips', 'UltiSnips']
 " autocmd FileType magit nnoremap <silent><buffer> <bs> :q<cr>
 
 " Sneak
+map s <Plug>Sneak_s
+map S <Plug>Sneak_S
 let g:sneak#label = 1
 
 " AutoPair
