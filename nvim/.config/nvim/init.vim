@@ -511,7 +511,11 @@ nnoremap <silent><leader>t :tabnew \| :Startify<cr>
 nnoremap <silent><leader>n :cnext<cr>
 nnoremap <silent><leader>m :cprev<cr>
 
+" Change from class to className
 nnoremap <leader>c mc?class=<CR>ciwclassName<ESC>`c4l
+
+" quick search and replace
+nnoremap <leader>r :%s/
 
 
 
