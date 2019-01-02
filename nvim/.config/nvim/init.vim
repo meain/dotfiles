@@ -722,6 +722,17 @@ function! HightlightGroup()
 endfunc
 nnoremap <silent><leader>gh :call HightlightGroup()<cr>
 
+" Remove space after bracket on joining
+function! Join()
+  let previous_last_char = getline('.')[col('$')-2]
+  normal! J
+  let current_char = getline('.')[col('.')-1]
+  if previous_last_char =~ '(\|[\' && current_char == ' '
+    normal! x
+  endif
+endfunction
+nnoremap <silent>J :call Join()<CR>
+
 
 
 
