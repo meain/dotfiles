@@ -540,6 +540,18 @@ nnoremap <leader>r :%s/
 
 
 
+"                             Autocommands                             "
+"                    ==============================                    "
+
+augroup improved_autoread
+  autocmd!
+  autocmd FocusGained,BufEnter * silent! checktime
+augroup end
+
+
+
+
+
 "                                Code                                  "
 "                    ==============================                    "
 
