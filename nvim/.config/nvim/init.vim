@@ -717,11 +717,17 @@ endfunction
 command! Cleanup call s:CloseHiddenBuffers()
 
 " Find highlight group of char under the cursor
-function! HightlightGroup()
-  echo 'hi<' . synIDattr(synID(line('.'),col('.'),1),'name') . '> trans<' . synIDattr(synID(line('.'),col('.'),0),'name') .'> lo<' . synIDattr(synIDtrans(synID(line('.'),col('.'),1)),'name') . '>'
+function! ShowHightlightGroup()
+  if !exists("*synstack")
+    return
+  endif
+  let name = synIDattr(synID(line('.'),col('.'),1),'name')
+  let trans = synIDattr(synID(line('.'),col('.'),0),'name')
+  let lo = synIDattr(synIDtrans(synID(line('.'),col('.'),1)),'name')
+  echo 'hi[' . name . '] trans[' . trans .'] lo[' . lo . ']'
 endfunc
-nnoremap <silent><leader>gh :call HightlightGroup()<cr>
-
+nnoremap <silent><leader>gh :call ShowHightlightGroup()<cr>
+ 
 " Remove space after bracket on joining
 function! Join()
   let previous_last_char = getline('.')[col('$')-2]
