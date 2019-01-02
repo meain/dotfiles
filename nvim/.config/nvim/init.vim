@@ -1163,5 +1163,8 @@ autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
 " File manipulations
 source ~/.config/nvim/filemanip.vim
 
+" Git stuff
+source ~/.config/nvim/gitutils.vim
+
 " Statusline
 source ~/.config/nvim/statusline.vim
