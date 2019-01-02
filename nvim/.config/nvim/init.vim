@@ -314,7 +314,7 @@ highlight Comment cterm=italic
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
 " Set up leader keys
-let mapleader = '\<Space>'
+let mapleader = ' '
 let maplocalleader = '\|'
 
 " Smart colorcolumn
