@@ -1153,7 +1153,7 @@ let g:rg_highlight = 1
 let g:rg_command = 'rg --vimgrep --ignore-case --hidden --follow'
 
 " Dash
-nnoremap <silent><leader>; :Dash<cr>
+" nnoremap <silent><leader>; :Dash<cr>
 
 "Loupe
 let g:LoupeVeryMagic=0
