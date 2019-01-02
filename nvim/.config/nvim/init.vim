@@ -314,8 +314,8 @@ highlight Comment cterm=italic
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
 " Set up leader keys
-let mapleader = "\<Space>"
-let maplocalleader = "\|"
+let mapleader = '\<Space>'
+let maplocalleader = '\|'
 
 " Smart colorcolumn
 autocmd BufEnter * call matchadd('ColorColumn', '\%160v', 100)
@@ -387,7 +387,7 @@ ca h vert h
 "                             Command remaps                           "
 "                    ==============================                    "
 "
-cnoremap ss %s//<left>
+cnoremap ss %s/
 cnoremap fd filetype detect<cr>
 
 
@@ -582,9 +582,9 @@ nnoremap ,s :call SplitRunCommand()<cr>
 
 " Toggle quickfix
 function! QuickfixToggle()
-    let nr = winnr("$")
+    let nr = winnr('$')
     cwindow
-    let nr2 = winnr("$")
+    let nr2 = winnr('$')
     if nr == nr2
         cclose
     endif
@@ -618,9 +618,9 @@ nnoremap <c-q> :call MinimizeIfZoomed() \|:SSave zzz \| :qa<cr>y
 " Strip trailing whitespaces
 function! StripTrailingWhitespace()
     if !&binary && &filetype != 'diff'
-      normal mz
+      normal! mz
       %s/\s\+$//e
-      normal `z
+      normal! `z
     endif
 endfunction
 command! StripTrailingWhitespace :call StripTrailingWhitespace()
@@ -638,7 +638,7 @@ nnoremap <silent>_ :call Marks()<cr>
 
 " Json format
 function! JSONFormat() range
-  execute "%!python -m json.tool"
+  execute '%!python -m json.tool'
 endfunction
 command! -range JSONFormat <line1>,<line2>call JSONFormat()
 
@@ -652,7 +652,7 @@ function! GitignoreGenerate()
       call inputsave()
       let l:lang = input('Language: ')
       echo 'Fetching .gitignore for ' . l:lang
-      execute "%!curl -L -s https://www.gitignore.io/api/linux,macos,windows," . l:lang . " | sed '1,3d;$d' | sed '$d' | sed '$d'"
+      execute '%!curl -L -s https://www.gitignore.io/api/linux,macos,windows,' . l:lang . ' | sed "1,3d;$d" | sed "$d" | sed "$d"'
       call inputrestore()
     else
       echo ''
@@ -667,13 +667,13 @@ augroup end
 
 " Scratch buffer
 function! ScratchOpen()
-  execute "topleft new __scratch__"
-  if filereadable("/tmp/.scratchfile")
-    execute " %! cat /tmp/.scratchfile"
+  execute 'topleft new __scratch__'
+  if filereadable('/tmp/.scratchfile')
+    execute ' %! cat /tmp/.scratchfile'
   endif
   redraw
-  execute "resize 15"
-  execute "set ft=scratch"
+  execute 'resize 15'
+  execute 'set ft=scratch'
   setlocal bufhidden=hide
   setlocal buftype=nofile
   setlocal foldcolumn=0
@@ -684,13 +684,13 @@ function! ScratchOpen()
   setlocal winfixwidth
 endfunction
 function! ScratchToggle()
-  let l:bufNr = bufnr("$")
-  let l:name = "__scratch__"
+  let l:bufNr = bufnr('$')
+  let l:name = '__scratch__'
   while l:bufNr > 0
     if buflisted(l:bufNr)
-      if (matchstr(bufname(l:bufNr), l:name."$") == l:name )
-        execute "w /tmp/.scratchfile"
-        execute "bd ".l:bufNr
+      if (matchstr(bufname(l:bufNr), l:name.'$') == l:name )
+        execute 'w /tmp/.scratchfile'
+        execute 'bd '.l:bufNr
         return
       endif
     endif
@@ -708,9 +708,9 @@ function! s:CloseHiddenBuffers()
     call extend(open_buffers, tabpagebuflist(i + 1))
   endfor
 
-  for num in range(1, bufnr("$") + 1)
+  for num in range(1, bufnr('$') + 1)
     if buflisted(num) && index(open_buffers, num) == -1
-      exec "bdelete ".num
+      exec 'bdelete '.num
     endif
   endfor
 endfunction
@@ -718,7 +718,7 @@ command! Cleanup call s:CloseHiddenBuffers()
 
 " Find highlight group of char under the cursor
 function! ShowHightlightGroup()
-  if !exists("*synstack")
+  if !exists('*synstack')
     return
   endif
   let name = synIDattr(synID(line('.'),col('.'),1),'name')
@@ -956,9 +956,9 @@ let g:rooter_patterns = ['Rakefile', 'Makefile', 'package.json', '.git/', '.vsco
 " Vim go
 let g:go_fmt_autosave = 0
 let g:go_fmt_fail_silently = 1
-let g:go_list_type = "quickfix"
-let g:go_fmt_command = "goimports"
-let g:go_addtags_transform = "camelcase"
+let g:go_list_type = 'quickfix'
+let g:go_fmt_command = 'goimports'
+let g:go_addtags_transform = 'camelcase'
 autocmd BufEnter *.go nnoremap <leader>d :GoDef<cr>
 autocmd BufEnter *.go nnoremap <leader>r :GoRun<cr>
 autocmd BufEnter *.go nnoremap <leader>a :GoBuild<cr>
@@ -986,10 +986,10 @@ autocmd BufEnter *.go nnoremap <leader>t :GoTest<cr>
 " autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 " Racer
-" let g:deoplete#sources#rust#racer_binary="/Users/meain/.cargo/bin/racer"
-let g:deoplete#sources#rust#rust_source_path="/Users/meain/Documents/Projects/others/clones/rust/src"
-au FileType rust nnoremap <silent><leader>d <Plug>(rust-def)
-au FileType rust nnoremap K <Plug>(rust-doc)
+" let g:deoplete#sources#rust#racer_binary='/Users/meain/.cargo/bin/racer'
+let g:deoplete#sources#rust#rust_source_path='/Users/meain/Documents/Projects/others/clones/rust/src'
+" au FileType rust nnoremap <silent><leader>d <Plug>(rust-def)
+" au FileType rust nnoremap K <Plug>(rust-doc)
 au FileType rust nnoremap <silent><leader>a :Dispatch cargo build<cr>
 au FileType rust nnoremap <silent><leader>r :Start cargo run<cr>
 
@@ -1011,7 +1011,7 @@ let g:user_emmet_settings = {
 let g:closetag_filenames = '*.html,*.xhtml,*.xml,*.js,*.html.erb,*.md'
 
 " SuperTab
-let g:SuperTabDefaultCompletionType = "<c-n>"
+let g:SuperTabDefaultCompletionType = '<c-n>'
 
 " Language server protocol
 let g:LanguageClient_autoStart = 1
@@ -1051,20 +1051,20 @@ let NERDTreeHighlightCursorline=1
 let NERDTreeMinimalUI=1
 let NERDTreeHijackNetrw=0
 let NERDTreeRespectWildIgnore=1
-let NERDTreeStatusline = "         File Browser"
+let NERDTreeStatusline = '         File Browser'
 nnoremap <silent><Tab> :NERDTreeToggle<cr>
 autocmd FileType nerdtree nnoremap <silent><buffer> <Tab> :NERDTreeToggle<cr>
 let g:NERDTreeIndicatorMapCustom = {
-    \ "Modified"  : "!",
-    \ "Staged"    : "|",
-    \ "Untracked" : "-",
-    \ "Renamed"   : "➜",
-    \ "Unmerged"  : "═",
-    \ "Deleted"   : "✖",
-    \ "Dirty"     : "/",
-    \ "Clean"     : "",
+    \ 'Modified'  : '!',
+    \ 'Staged'    : '|',
+    \ 'Untracked' : '-',
+    \ 'Renamed'   : '➜',
+    \ 'Unmerged'  : '═',
+    \ 'Deleted'   : '✖',
+    \ 'Dirty'     : '/',
+    \ 'Clean'     : '',
     \ 'Ignored'   : '☒',
-    \ "Unknown"   : "?"
+    \ 'Unknown'   : '?'
     \ }
 
 " Use deoplete.
