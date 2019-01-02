@@ -734,6 +734,14 @@ endfunction
 nnoremap <silent>J :call Join()<CR>
 
 
+" Stratr profiling
+function! Profile()
+  profile start profile.log
+  profile func *
+  profile file *
+endfunction
+
+
 
 
 
