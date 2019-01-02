@@ -1154,5 +1154,8 @@ autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
 "                             Source External                          "
 "                    ==============================                    "
 
+" File manipulations
+source ~/.config/nvim/filemanip.vim
+
 " Statusline
 source ~/.config/nvim/statusline.vim
