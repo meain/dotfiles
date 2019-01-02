@@ -68,7 +68,7 @@ Plug 'tpope/vim-markdown', { 'for': ['md', 'markdown'] }                        
 Plug 'cespare/vim-toml', { 'for': 'toml' }
 " Plug 'fatih/vim-go', { 'for': ['go'] }                                                         " Golang helper
 " Plug 'sebdah/vim-delve', { 'for': 'go' }                                                       " Debugger for go
-Plug 'racer-rust/vim-racer', { 'for': 'rust' }                                                 " Rust support
+" Plug 'racer-rust/vim-racer', { 'for': 'rust' }                                                 " Rust support
 " Plug 'numirias/semshi', { 'for': 'python', 'do': ':UpdateRemotePlugins' }                      " Better syntax highlight for python
 " Plug 'raimon49/requirements.txt.vim', { 'for': 'requirements' }                              " Requirements file
 
@@ -986,7 +986,7 @@ autocmd BufEnter *.go nnoremap <leader>t :GoTest<cr>
 " autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 " Racer
-let g:deoplete#sources#rust#racer_binary="/Users/meain/.cargo/bin/racer"
+" let g:deoplete#sources#rust#racer_binary="/Users/meain/.cargo/bin/racer"
 let g:deoplete#sources#rust#rust_source_path="/Users/meain/Documents/Projects/others/clones/rust/src"
 au FileType rust nnoremap <silent><leader>d <Plug>(rust-def)
 au FileType rust nnoremap K <Plug>(rust-doc)
