@@ -172,6 +172,12 @@ set hlsearch
 " Smart search
 set ignorecase
 
+" Do not put two spaces after .
+set nojoinspaces
+
+" show partial commands
+set showcmd
+
 " Allow plugins by file type (required for plugins!)
 filetype plugin on
 filetype indent on
@@ -188,6 +194,9 @@ set backspace=2
 " Set split direction
 set splitbelow
 set splitright
+
+" no jumping arround
+set noshowmatch
 
 " Set updatetime
 set updatetime=2000
