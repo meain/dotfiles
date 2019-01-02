@@ -318,7 +318,10 @@ let mapleader = ' '
 let maplocalleader = '\|'
 
 " Smart colorcolumn
-autocmd BufEnter * call matchadd('ColorColumn', '\%160v', 100)
+augroup custom_colorcolum
+  autocmd!
+  autocmd BufEnter * call matchadd('ColorColumn', '\%160v', 100)
+augroup end
 
 " Better coloring for errors
 highlight clear SpellBad
@@ -328,13 +331,22 @@ highlight SpellBad cterm=underline gui=underline ctermfg=11 guifg=#ffff00
 set guicursor=
 
 " Completefunc
-autocmd BufEnter * set completefunc=cm#_completefunc
+augroup custom_completefunc
+  autocmd!
+  autocmd BufEnter * set completefunc=cm#_completefunc
+augroup end
 
 " Oh-my-zsh themes are shell.
-autocmd BufNewFile,BufRead *.zsh-theme set filetype=sh
+augroup custom_zsh_theme
+  autocmd!
+  autocmd BufNewFile,BufRead *.zsh-theme set filetype=sh
+augroup end
 
 " Resize panes whenever containing window resized.
-autocmd VimResized * wincmd =
+augroup custom_vimresize
+  autocmd!
+  autocmd VimResized * wincmd =
+augroup end
 
 " Make sure it is javascript
 augroup Filetype javascript syntax=javascript
@@ -557,11 +569,14 @@ augroup end
 
 
 " Spell checking
-autocmd BufRead,BufNewFile *.md setlocal spell
-autocmd BufRead,BufNewFile *.org setlocal spell
-autocmd BufRead,BufNewFile *.txt setlocal spell
-autocmd FileType gitcommit setlocal spell
-autocmd FileType help setlocal nospell
+augroup custom_spellcheck
+  autocmd!
+  autocmd BufRead,BufNewFile *.md setlocal spell
+  autocmd BufRead,BufNewFile *.org setlocal spell
+  autocmd BufRead,BufNewFile *.txt setlocal spell
+  autocmd FileType gitcommit setlocal spell
+  autocmd FileType help setlocal nospell
+augroup end
 set complete+=kspell
 function! FixLastSpellingError()
     normal! mz[s1z=`z
@@ -765,15 +780,18 @@ command! -bang -nargs=? -complete=dir GFiles
 command! -bang Open call fzf#run({'source': 'rg --files --hidden --follow --glob "!.git/*"', 'sink': 'e', 'down': '40%', 'options': '--preview "cat {}"'})
 nnoremap <silent><Enter> :FZF<cr>
 nnoremap <silent> <leader><Enter> :History<cr>
-autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
 command! -bang -nargs=* Find
       \ call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>),
       \ 1, <bang>0)
 nnoremap <leader>b :Buffers<cr>
 nnoremap <leader>f :Find<cr>
-autocmd! FileType fzf
-autocmd  FileType fzf set laststatus=0
-  \| autocmd BufLeave <buffer> set laststatus=2
+augroup custom_fzf
+  autocmd!
+  autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
+  autocmd FileType fzf set laststatus=0
+  autocmd BufLeave <buffer> set laststatus=2
+augroup end
+
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],
   \ 'bg':      ['bg', 'Normal'],
@@ -811,7 +829,10 @@ function! s:list_commits()
   return map(commits, '{"line": matchstr(v:val, "\\s\\zs.*"), "cmd": "'. git .' show ". matchstr(v:val, "^\\x\\+") }')
 endfunction
 nnoremap <silent>,l :Startify<cr>
-autocmd User Startified setlocal cursorline
+augroup custom_startify
+  autocmd!
+  autocmd User Startified setlocal cursorline
+augroup end
 highlight StartifyBracket ctermfg=240 guifg=#585858
 highlight StartifyFooter  ctermfg=240 guifg=#585858
 highlight StartifyHeader  ctermfg=114 guifg=#87d787
@@ -959,10 +980,13 @@ let g:go_fmt_fail_silently = 1
 let g:go_list_type = 'quickfix'
 let g:go_fmt_command = 'goimports'
 let g:go_addtags_transform = 'camelcase'
-autocmd BufEnter *.go nnoremap <leader>d :GoDef<cr>
-autocmd BufEnter *.go nnoremap <leader>r :GoRun<cr>
-autocmd BufEnter *.go nnoremap <leader>a :GoBuild<cr>
-autocmd BufEnter *.go nnoremap <leader>t :GoTest<cr>
+augroup custom_go
+  autocmd!
+  autocmd BufEnter *.go nnoremap <leader>d :GoDef<cr>
+  autocmd BufEnter *.go nnoremap <leader>r :GoRun<cr>
+  autocmd BufEnter *.go nnoremap <leader>a :GoBuild<cr>
+  autocmd BufEnter *.go nnoremap <leader>t :GoTest<cr>
+augroup end
 
 " Goyo
 " function! s:goyo_enter()
@@ -988,13 +1012,19 @@ autocmd BufEnter *.go nnoremap <leader>t :GoTest<cr>
 " Racer
 " let g:deoplete#sources#rust#racer_binary='/Users/meain/.cargo/bin/racer'
 let g:deoplete#sources#rust#rust_source_path='/Users/meain/Documents/Projects/others/clones/rust/src'
-" au FileType rust nnoremap <silent><leader>d <Plug>(rust-def)
-" au FileType rust nnoremap K <Plug>(rust-doc)
-au FileType rust nnoremap <silent><leader>a :Dispatch cargo build<cr>
-au FileType rust nnoremap <silent><leader>r :Start cargo run<cr>
+augroup custom_rust
+  autocmd!
+  " au FileType rust nnoremap <silent><leader>d <Plug>(rust-def)
+  " au FileType rust nnoremap K <Plug>(rust-doc)
+  au FileType rust nnoremap <silent><leader>a :Dispatch cargo build<cr>
+  au FileType rust nnoremap <silent><leader>r :Start cargo run<cr>
+augroup end
 
 " JSX Typescript
-autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.jsx
+augroup custom_jsx
+  autocmd!
+  autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.jsx
+augroup end
 hi xmlTagName guifg=#87d787 ctermfg=114
 hi xmlTag guifg=#87d787 ctermfg=114
 hi xmlEndTag guifg=#87d787 ctermfg=114
@@ -1040,10 +1070,13 @@ let g:github_dashboard = { 'username': 'meain' , 'password': $GITHUB_DASHBOARD_V
 let g:elm_format_autosave = 1
 let g:elm_format_fail_silently = 1
 let g:elm_setup_keybindings = 1
-autocmd BufEnter *.elm nnoremap <leader>d :ElmShowDocs<cr>
-autocmd BufEnter *.elm nnoremap <leader>r :ElmMake<cr>
-autocmd BufEnter *.elm nnoremap <leader>a :ElmMakeMain<cr>
-autocmd BufEnter *.elm nnoremap <leader>t :ElmTest<cr>
+augroup custom_elm
+  autocmd!
+  autocmd BufEnter *.elm nnoremap <leader>d :ElmShowDocs<cr>
+  autocmd BufEnter *.elm nnoremap <leader>r :ElmMake<cr>
+  autocmd BufEnter *.elm nnoremap <leader>a :ElmMakeMain<cr>
+  autocmd BufEnter *.elm nnoremap <leader>t :ElmTest<cr>
+augroup end
 
 " NerdTree
 let NERDTreeShowHidden=1
@@ -1053,7 +1086,10 @@ let NERDTreeHijackNetrw=0
 let NERDTreeRespectWildIgnore=1
 let NERDTreeStatusline = '         File Browser'
 nnoremap <silent><Tab> :NERDTreeToggle<cr>
-autocmd FileType nerdtree nnoremap <silent><buffer> <Tab> :NERDTreeToggle<cr>
+augroup custom_nerdtree
+  autocmd!
+  autocmd FileType nerdtree nnoremap <silent><buffer> <Tab> :NERDTreeToggle<cr>
+augroup end
 let g:NERDTreeIndicatorMapCustom = {
     \ 'Modified'  : '!',
     \ 'Staged'    : '|',
@@ -1083,7 +1119,10 @@ let g:UltiSnipsSnippetDirectories = ['~/.config/nvim/UltiSnips', 'UltiSnips']
 
 " Magit
 " nnoremap <silent><bs> :Magit<cr>
-" autocmd FileType magit nnoremap <silent><buffer> <bs> :q<cr>
+" augroup custom_magit
+"   autocmd!
+"   autocmd FileType magit nnoremap <silent><buffer> <bs> :q<cr>
+" augroup end
 
 " Sneak
 map s <Plug>Sneak_s
@@ -1152,7 +1191,10 @@ hi tsxCloseTag ctermfg=216 guifg=#ffaf87
 hi tsxAttributeBraces ctermfg=181 guifg=#dfafaf
 hi tsxEqual ctermfg=216 guifg=#ffaf87
 hi tsxAttrib ctermfg=115 guifg=#87dfaf
-autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
+augroup custom_tsx
+  autocmd!
+  autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
+augroup end
 
 
 
