@@ -26,7 +26,7 @@ Plug 'ervandew/supertab'                                                        
 Plug 'zirrostig/vim-schlepp'                                                                   " Better drag visuals
 Plug 'xtal8/traces.vim'                                                                        " Interactive subsititue
 Plug 'vim-scripts/restore_view.vim'                                                            " Restore file pointer
-" Plug 'tpope/vim-dispatch', { 'on': 'Dispatch' }                                                " Async tasks in vim
+Plug 'tpope/vim-dispatch', { 'on': 'Dispatch' }                                                " Async tasks in vim
 Plug 'airblade/vim-rooter'                                                                     " Change directory to project root
 Plug 'editorconfig/editorconfig-vim'                                                           " Editorconfig
 " Plug 'mattn/gist-vim', { 'on': 'Gist' }                                                        " Push current buffer as gist
@@ -93,9 +93,9 @@ Plug 'SirVer/ultisnips'                                                         
 
 " Dependencies
 Plug 'vim-scripts/mru.vim'                                                                     " Save recently used files (for v)
-" Plug 'radenling/vim-dispatch-neovim', { 'on': 'Dispatch' }                                     " Neovim support for vim-dispatch
+Plug 'radenling/vim-dispatch-neovim', { 'on': 'Dispatch' }                                     " Neovim support for vim-dispatch
 " Plug 'mattn/webapi-vim'                                                                        " Web calls
-" Plug 'tpope/vim-repeat'                                                                        " Repeat plugins with .
+Plug 'tpope/vim-repeat'                                                                        " Repeat plugins with .
 
 " Others
 " Plug 'sedm0784/vim-you-autocorrect', { 'on': 'EnableAutocorrect' }                             " Autocorrect like in phones
