@@ -351,7 +351,7 @@ autocmd BufReadPre *.min.* syntax off
 iabbr cosnt const
 iabbr imprt import
 
-cabbr fd filetype detect
+
 
 
 "                                Commands                              "
@@ -370,6 +370,16 @@ command! FixOverflow :normal! gqap
 
 " vertical help
 ca h vert h
+
+
+
+
+
+"                             Command remaps                           "
+"                    ==============================                    "
+"
+cnoremap ss %s//<left>
+cnoremap fd filetype detect<cr>
 
 
 
