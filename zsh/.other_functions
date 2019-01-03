@@ -102,7 +102,7 @@ faster() {
 
 tt() {
     if [ -z $1 ];then
-	FOLDER=$(pwd | sed 's:.*/::')
+	FOLDER=$(pwd | sed 's:.*/::' | sed 's:^\.::')
 	tmux attach -t "$FOLDER" || tmux new-session -s "$FOLDER"
     else
 	mkdir "$1"
