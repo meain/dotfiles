@@ -396,16 +396,6 @@ ca h vert h
 
 
 
-"                             Command remaps                           "
-"                    ==============================                    "
-"
-cnoremap ss %s/
-cnoremap fd filetype detect<cr>
-
-
-
-
-
 "                               Key remaps                             "
 "                    ==============================                    "
 
