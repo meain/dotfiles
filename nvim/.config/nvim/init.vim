@@ -134,6 +134,9 @@ augroup END
 " Highlight cursor line (slows down)
 set nocursorline
 
+" Show statusline
+set laststatus=1
+
 " Hidden startup messages
 set shortmess=atI
 
