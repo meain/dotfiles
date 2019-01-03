@@ -152,9 +152,9 @@ dispatch({
 endsnippet
 
 snippet stop "Stop propogation"
-if (e) {
-	e.stopPropagation()
-	if (e.nativeEvent) e.nativeEvent.stopImmediatePropagation()
+if (${1:e}) {
+  $1.stopPropagation()
+  if ($1.nativeEvent) $1.nativeEvent.stopImmediatePropagation()
 }
 endsnippet
 
