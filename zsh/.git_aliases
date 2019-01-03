@@ -49,7 +49,7 @@ alias gco='git checkout $(git branch | grep -v "\*" | sed s:^..::g | fzf --heigh
 
 # Fancy push
 alias gpu='git push origin $(git branch | grep "\*" | sed s:^..::g )'
-alias gpl='git pull origin $(git branch | grep "\*" | sed s:^..::g ) && echo "\nCommits:"&& git lg @{1}..'
+alias gpl='git pull origin $(git branch | grep "\*" | sed s:^..::g ) && echo "Use `tput setaf 2`glp`tput sgr0` and `tput setaf 2`gdp`tput sgr0` to view new commits"'
 alias gpuf='git push origin $(git branch | sort -r | sed s:^..::g | fzf --height 40% --reverse)'
 alias gplf='git pull origin $(git branch | sort -r | sed s:^..::g | fzf --height 40% --reverse)'
 
