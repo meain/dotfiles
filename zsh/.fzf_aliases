@@ -12,13 +12,13 @@ jj() {
     cd "./$(fd -H -td -d5 | fzf --preview 'tree -L 2 ./{}' )"
 }
 
-hf(){
+hc(){
     COMMAND=$(history | fzf | awk '{$1=$2=$3=""; print $0}')
     echo "$COMMAND" && echo "$COMMAND" | sed 's/^\ *//'| pbcopy
 }
 
 get_command(){
-    history | uniq | fzf | awk '{$1=$2=$3=""; print $0}'
+    history | uniq | awk '{$1=$2=$3=""; print $0}' | fzf --height 40%
 }
 
 wf(){
