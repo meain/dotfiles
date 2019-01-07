@@ -21,11 +21,4 @@ get_command(){
     history | uniq | awk '{$1=$2=$3=""; print $0}' | fzf --height 40%
 }
 
-wf(){
-    if ! which workon >/dev/null; then
-        source /usr/local/bin/virtualenvwrapper.sh
-    fi
-    workon "$(workon | fzf --height 20% --layout=reverse)"
-}
-
 alias h='$(get_command)'
