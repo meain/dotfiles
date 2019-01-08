@@ -36,6 +36,6 @@ wf(){
     fi
     VENVNAME=$(workon | fzf --height 30% --layout=reverse)
     if [ ! -z $VENVNAME ];then
-        workon "$(workon | fzf --height 30% --layout=reverse)"
+        workon "$VENVNAME"
     fi
 }
