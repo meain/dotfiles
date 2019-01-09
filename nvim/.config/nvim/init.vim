@@ -73,7 +73,7 @@ Plug 'cespare/vim-toml', { 'for': 'toml' }
 " Plug 'raimon49/requirements.txt.vim', { 'for': 'requirements' }                              " Requirements file
 
 " Language enhacements
-Plug '~/Documents/Projects/vim-jsontogo' , { 'for': ['go'] }                                   " Convert JSON to Go struct
+Plug '~/Documents/Projects/projects/vim-jsontogo' , { 'for': ['go'] }                          " Convert JSON to Go struct
 
 " Linting / Checking
 Plug 'w0rp/ale'                                                                                " Linter formatter and more
