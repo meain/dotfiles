@@ -136,7 +136,7 @@ augroup END
 set nocursorline
 
 " Show statusline
-set laststatus=1
+set laststatus=2
 
 " Hidden startup messages
 set shortmess=atI
