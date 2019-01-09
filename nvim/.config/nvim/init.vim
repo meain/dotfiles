@@ -47,7 +47,7 @@ Plug 'tpope/vim-vinegar'                                                        
 Plug 'scrooloose/nerdtree', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] }         " Nerdtree
 " Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] } " Git sign for nerdtree
 Plug 'meain/vim-automkdir'                                                                     " Automatically create parent dirs
-Plug '~/Documents/Projects/projects/vim-import-cost', { 'do': 'npm install' }                  " See import cost of javascript deps
+Plug 'yardnsm/vim-import-cost', { 'do': 'npm install', 'for': ['javascript', 'javascript.jsx', 'typescript', 'typescript.tsx']} " See import cost of javascript deps
 
 " Morph code
 Plug 'tpope/vim-surround'                                                                      " Surround
