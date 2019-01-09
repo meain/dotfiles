@@ -1,6 +1,7 @@
 "                            Plugin Management                         "
 "                    ==============================                    "
 
+let g:javascript_filetypes = ['javascript', 'javascript.jsx', 'typescript', 'typescript.tsx']
 call plug#begin('~/.local/share/nvim/plugged')
 
 " Visual enhancements
@@ -21,7 +22,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }               
 Plug 'junegunn/fzf.vim'                                                                        " Fzf for vim
 Plug 'jremmen/vim-ripgrep', { 'on': 'Rg' }                                                     " Rg with quickfix list
 Plug 'christoomey/vim-tmux-navigator'                                                          " Seamless navigation between vim and tmux
-Plug 'suan/vim-instant-markdown', { 'for': 'markdown' }                                        " View markdown in browser while editing
+Plug 'suan/vim-instant-markdown', { 'for': [ 'md', 'markdown' ] }                              " View markdown in browser while editing
 Plug 'ervandew/supertab'                                                                       " Autocomplete on tab
 Plug 'zirrostig/vim-schlepp'                                                                   " Better drag visuals
 " Plug 'xtal8/traces.vim'                                                                        " Interactive subsititue
@@ -32,11 +33,11 @@ Plug 'editorconfig/editorconfig-vim'                                            
 " Plug 'mattn/gist-vim', { 'on': 'Gist' }                                                        " Push current buffer as gist
 " Plug 'rizzatti/dash.vim', { 'on': 'Dash' }                                                     " Search Dash docs
 " Plug 'davidbeckingsale/writegood.vim', { 'on': ['WritegoodEnable', 'WritegoodToggle'] }        " Better writing mode
-Plug 'mattn/emmet-vim', { 'for': ['html', 'javascript', 'css', 'javascript.jsx'] }             " Emmet
+Plug 'mattn/emmet-vim', { 'for': ['html', 'css'] + g:javascript_filetypes }                    " Emmet
 " Plug 'jreybert/vimagit', { 'on': [ 'Magit', 'MagitOnly' ] }                                    " Even better git interface for vim
 " Plug 'metakirby5/codi.vim', { 'on': 'Codi' }                                                   " Live code preview
 Plug 'rhysd/committia.vim'                                                                     " Better COMMIT_EDITMSG editing
-Plug 'Galooshi/vim-import-js', {'for': 'javascript', 'do': 'npm install -g import-js'}         " Easier imports for javascript
+Plug 'Galooshi/vim-import-js', {'for': g:javascript_filetypes, 'do': 'npm i -g import-js'}     " Easier imports for javascript
 
 " Code editing enhacements
 Plug 'tpope/vim-sleuth'                                                                        " Automatic indentation setting
@@ -47,7 +48,7 @@ Plug 'tpope/vim-vinegar'                                                        
 Plug 'scrooloose/nerdtree', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] }         " Nerdtree
 " Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] } " Git sign for nerdtree
 Plug 'meain/vim-automkdir'                                                                     " Automatically create parent dirs
-Plug 'yardnsm/vim-import-cost', { 'do': 'npm install', 'for': ['javascript', 'javascript.jsx', 'typescript', 'typescript.tsx']} " See import cost of javascript deps
+Plug 'yardnsm/vim-import-cost', { 'do': 'npm install', 'for': g:javascript_filetypes }         " See import cost of javascript deps
 
 " Morph code
 Plug 'tpope/vim-surround'                                                                      " Surround
