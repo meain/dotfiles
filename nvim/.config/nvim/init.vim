@@ -1043,7 +1043,7 @@ let g:LanguageClient_serverCommands = {
     \ 'rust': ['rls'],
     \ 'javascript': ['flow-language-server', '--stdio'],
     \ 'javascript.jsx': ['flow-language-server', '--stdio'],
-    \ 'typescript': ['javascript-typescript-stdio'],
+    \ 'typescript': ['typescript-language-server', '--stdio'],
     \ 'go': ['go-langserver'],
     \ 'css': ['css-languageserver', '--stdio'],
     \ 'python': ['pyls'],
