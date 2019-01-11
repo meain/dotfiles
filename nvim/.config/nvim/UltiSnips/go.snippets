@@ -1,3 +1,9 @@
 snippet pl
 fmt.Println($1)
 endsnippet
+
+snippet err
+if err != nil {
+  log.Fatal(err)
+}
+endsnippet
