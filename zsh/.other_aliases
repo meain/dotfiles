@@ -52,3 +52,5 @@ alias how='how2'
 
 alias gcal='gcalcli'
 alias gq='gcalcli --calendar="abinsimon10@gmail.com" quick'
+
+alias ax="axel -a -n 10 $1"
