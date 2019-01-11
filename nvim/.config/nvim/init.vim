@@ -476,7 +476,8 @@ inoremap <silent> <m-k> <up>
 inoremap <silent> <m-l> <right>
 
 " Shady remaps
-imap ;; <Esc>A;
+autocmd FileType c,cpp,css inoremap ;; <Esc>A;
+autocmd FileType go inoremap ;; :=
 
 " Visual star
 vnoremap * "sy/<c-r>s<CR>
