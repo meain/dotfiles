@@ -54,3 +54,5 @@ alias gcal='gcalcli'
 alias gq='gcalcli --calendar="abinsimon10@gmail.com" quick'
 
 alias ax="axel -a -n 10 $1"
+
+alias lock="osascript -e 'tell application \"System Events\" to keystroke \"q\" using {command down,control down}'"
