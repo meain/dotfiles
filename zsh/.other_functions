@@ -156,3 +156,32 @@ imgurtolocal(){
 	wget "$(pbpaste)" -o "$1.$EXTENTION" && echo "$4$1.$EXTENTION" | pbcopy
     fi
 }
+
+bhead() {
+    if [ -z $2 ]; then
+	LINENUMBER=10
+	FILENAME=$1
+    else
+	LINENUMBER=$1
+	FILENAME=$2
+    fi
+    bat --decorations=never --line-range :$LINENUMBER $FILENAME
+}
+btail() {
+    if [ -z $2 ]; then
+	FILENAME=$1
+	LINES=$(wc -l $FILENAME | sed 's/ *\([0-9]\) .*/\1/' | sed 's/ *//g')
+	LINENUMBER=$(($LINES-10))
+    else
+	FILENAME=$2
+	LINES=$(wc -l $FILENAME | sed 's/ *\([0-9]\) .*/\1/' | sed 's/ *//g')
+	LINENUMBER=$(($LINES-$1))
+    fi
+
+    if (( $LINENUMBER < 0 ));then
+	LINENUMBER=0
+    fi
+    bat --decorations=never --line-range $LINENUMBER: $FILENAME
+}
+alias head='bhead' # so that \head will be the old one
+alias tail='btail' # so that \tail will be the old one
