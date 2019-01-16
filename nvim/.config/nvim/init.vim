@@ -1005,7 +1005,7 @@ augroup end
 " autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 " Racer
-" let g:deoplete#sources#rust#racer_binary='/Users/meain/.cargo/bin/racer'
+let g:deoplete#sources#rust#racer_binary='/Users/meain/.cargo/bin/racer'
 let g:deoplete#sources#rust#rust_source_path='/Users/meain/Documents/Projects/others/clones/rust/src'
 augroup custom_rust
   autocmd!
