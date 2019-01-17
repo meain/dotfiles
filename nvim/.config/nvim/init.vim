@@ -799,12 +799,10 @@ command! -bang -nargs=* Find
       \ 1, <bang>0)
 nnoremap <leader>b :Buffers<cr>
 nnoremap <leader>f :Find<cr>
-augroup custom_fzf
-  autocmd!
-  autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
-  autocmd FileType fzf set laststatus=0
-  autocmd BufLeave <buffer> set laststatus=2
-augroup end
+autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
+autocmd! FileType fzf
+autocmd  FileType fzf set laststatus=0 noshowmode noruler
+  \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],
