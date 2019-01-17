@@ -543,6 +543,14 @@ nnoremap <leader>c mc?class=<CR>ciwclassName<ESC>`c4l
 " quick search and replace
 nnoremap <leader>r :%s/
 
+" Hack until QuickPrint is a thing
+autocmd FileType javascript.jsx vnoremap <silent><leader>p "pyoconsole.log("<esc>"ppa", <esc>"ppa)<esc>
+autocmd FileType javascript.jsx nnoremap <silent><leader>p viw"pyoconsole.log("<esc>"ppa", <esc>"ppa)<esc>
+autocmd FileType javascript vnoremap <silent><leader>p "pyoconsole.log("<esc>"ppa", <esc>"ppa)<esc>
+autocmd FileType javascript nnoremap <silent><leader>p viw"pyoconsole.log("<esc>"ppa", <esc>"ppa)<esc>
+autocmd FileType python vnoremap <silent><leader>p "pyoprint("<esc>"ppa", <esc>"ppa)<esc>
+autocmd FileType python nnoremap <silent><leader>p viw"pyoprint("<esc>"ppa", <esc>"ppa)<esc>
+
 
 
 
@@ -737,7 +745,7 @@ function! ShowHightlightGroup()
   echo 'hi[' . name . '] trans[' . trans .'] lo[' . lo . ']'
 endfunc
 nnoremap <silent><leader>gh :call ShowHightlightGroup()<cr>
- 
+
 " Remove space after bracket on joining
 function! Join()
   let previous_last_char = getline('.')[col('$')-2]
@@ -748,6 +756,17 @@ function! Join()
   endif
 endfunction
 nnoremap <silent>J :call Join()<CR>
+
+" Quickly print a variable
+" function! QuickPrint()
+"   let print_format = 
+"         \{ 'javascript.jsx': 'console.log(";;;;", ;;;;)', 
+"         \'javascript': 'console.log(";;;;", ;;;;)',
+"         \'python': 'print(";;;", ;;;)'}
+"   let current_language = 'javascript.jsx'
+"   let value_to_print = @*
+" endfunction
+" vnoremap <silent><leader>p :call QuickPrint()<cr>
 
 
 " Stratr profiling
