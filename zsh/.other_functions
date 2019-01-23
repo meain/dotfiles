@@ -185,3 +185,13 @@ btail() {
 }
 alias head='bhead' # so that \head will be the old one
 alias tail='btail' # so that \tail will be the old one
+
+# Easily copy file from downloads folder
+dcp() {
+    if [ -z $1 ]; then
+	read "TOFILE?Name of destination file: "
+    else
+	TOFILE=$1
+    fi
+    ls -1 ~/Downloads/ | fzf  --height="40%" --bind="enter:execute(cp ~/Downloads/{+} $TOFILE)+abort"
+}
