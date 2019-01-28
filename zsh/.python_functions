@@ -6,7 +6,7 @@ venv() {
     else
 	VIRTUALENVNAME=$1
     fi
-    mkvirtualenv $VIRTUALENVNAME -p /Users/meain/.pyenv/versions/3.6.4/bin/python3.6
+    mkvirtualenv $VIRTUALENVNAME -p /Users/meain/.pyenv/versions/3.6.6/bin/python3.6
 }
 
 fvenv() {
