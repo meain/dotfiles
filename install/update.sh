@@ -13,6 +13,9 @@ nvim +PlugUpgrade +PlugUpdate +qall
 # update mail
 offlineimap
 
+# update poetry
+poetry self:update
+
 # update rust build tools
 rustup update stable
 rustup update nightly
