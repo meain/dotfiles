@@ -1070,6 +1070,38 @@ let g:LanguageClient_serverCommands = {
     \ 'zsh': ['bash-language-server', 'start'],
     \ 'dockerfile': ['docker-langserver', '--stdio']
     \ }
+
+
+let g:LanguageClient_diagnosticsDisplay = {
+      \1: {
+        \'name': 'Error',
+        \'texthl': 'ALEError',
+        \'signText': '✖',
+        \'signTexthl': 'ALEErrorSign',
+        \'virtualTexthl': 'Special',
+      \},
+      \2: {
+        \'name': 'Warning',
+        \'texthl': 'ALEWarning',
+        \'signText': '⚠',
+        \'signTexthl': 'ALEWarningSign',
+        \'virtualTexthl': 'Todo',
+      \},
+      \3: {
+        \'name': 'Information',
+        \'texthl': 'ALEInfo',
+        \'signText': '∴',
+        \'signTexthl': 'ALEInfoSign',
+        \'virtualTexthl': 'Todo',
+      \},
+      \4: {
+        \'name': 'Hint',
+        \'texthl': 'ALEInfo',
+        \'signText': '➤',
+        \'signTexthl': 'ALEInfoSign',
+        \'virtualTexthl': 'Todo',
+      \},
+      \}
 nnoremap <silent><leader>l :call LanguageClient_contextMenu()<CR>
 nnoremap <silent> gh :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> gx :call LanguageClient_textDocument_rename()<CR>
