@@ -1,7 +1,5 @@
 #!/bin/zsh
 
-alias start='npm start'
-
 # open the git repo of an npm dependency
 npmgit() {
     if [ -z $1 ];then
