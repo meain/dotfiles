@@ -169,3 +169,16 @@ endsnippet
 snippet rl "React.lazy"
 const $1 = React.lazy(() => import('$2'))
 endsnippet
+
+snippet ttt "rest starter"
+import React from 'react'
+import { render, cleanup } from 'react-testing-library'
+
+import ${1:`!v expand('%:t:r')`} from '../src/components/$1/$1.js'
+
+afterEach(cleanup)
+
+test('Renders <$1/>', () => {
+  const { getByText, getByTestId, container, asFragment } = render(<$1 />)
+})
+endsnippet
