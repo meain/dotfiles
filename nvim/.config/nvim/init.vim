@@ -1058,6 +1058,7 @@ let g:SuperTabDefaultCompletionType = '<c-n>'
 
 " Language server protocol
 let g:LanguageClient_autoStart = 1
+let g:LanguageClient_useVirtualText = 0
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['rls'],
     \ 'javascript': ['flow-language-server', '--stdio'],
