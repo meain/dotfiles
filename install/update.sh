@@ -14,7 +14,7 @@ nvim +PlugUpgrade +PlugUpdate +qall
 offlineimap
 
 # update poetry
-poetry self:update
+poetry self update
 
 # update rust build tools
 rustup update stable
