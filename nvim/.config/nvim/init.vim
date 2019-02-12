@@ -926,7 +926,7 @@ let g:ale_echo_msg_format = '%severity% %linter%: %s '
 let g:ale_lint_on_enter = 0
 let g:ale_fixers = {
 \  'javascript' : ['prettier'],
-\  'typescript' : ['prettier', 'tslint'],
+\  'typescript' : ['prettier'],
 \  'json' : ['fixjson'],
 \  'python' : ['black'],
 \  'rust': ['rustfmt'],
