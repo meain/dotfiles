@@ -1,14 +1,16 @@
 -- Selector for jumpcut thingy
 local settings = require("hs.settings")
+local utils = require("utils")
 
 local mod = {}
 
 -- jumpcutselect
 function mod.jumpcutselect()
     function formatChoices(choices)
+        choices = utils.reverse(choices)
         formattedChoices = hs.fnutils.imap(choices, function(result)
             return {
-                ["text"] = result,
+                ["text"] = utils.trim(result),
             }
         end)
         return formattedChoices
@@ -32,7 +34,9 @@ function mod.jumpcutselect()
         if item then
             chooser:hide()
             hs.pasteboard.setContents(item)
-            hs.alert.show(item.text, 1)
+            trimmed = utils.trim(item.text)
+            settings.set("so.meain.hs.jumpcutselect.lastselected", trimmed)
+            hs.alert.show(trimmed, 1)
         else
             hs.alert.show("Nothing to copy", 1)
         end
