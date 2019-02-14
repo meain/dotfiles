@@ -12,6 +12,7 @@ Plug 'mhinz/vim-signify'                                                        
 " Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }                                                     " Centerify
 Plug 'ap/vim-css-color', { 'for': 'css' }                                                      " Show colors
 " Plug 'yuttie/comfortable-motion.vim'                                                           " Scroll up and down
+Plug 'machakann/vim-highlightedyank'                                                           " Visually highlight yanked region
 
 " Added functinality
 Plug 'meain/vim-startify'                                                                      " A fancy start page for vim (slow)
@@ -1241,6 +1242,11 @@ augroup custom_tsx
   autocmd!
   autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
 augroup end
+
+
+" HighlightedYank
+let g:highlightedyank_highlight_duration = 200
+highlight HighlightedyankRegion cterm=underline gui=underline
 
 
 
