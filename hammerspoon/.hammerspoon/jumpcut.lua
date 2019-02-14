@@ -56,12 +56,16 @@ end
 
 function pasteboardToClipboard(item)
   -- Loop to enforce limit on qty of elements in history. Removes the oldest items
-  while (#clipboard_history >= hist_size) do
-    table.remove(clipboard_history,1)
+
+  local lastselected = settings.get("so.meain.hs.jumpcutselect.lastselected")
+  if item ~= lastselected then
+    while (#clipboard_history >= hist_size) do
+        table.remove(clipboard_history,1)
+    end
+    table.insert(clipboard_history, item)
+    settings.set("so.meain.hs.jumpcut",clipboard_history) -- updates the saved history
+    setTitle() -- updates the menu counter
   end
-  table.insert(clipboard_history, item)
-  settings.set("so.meain.hs.jumpcut",clipboard_history) -- updates the saved history
-  setTitle() -- updates the menu counter
 end
 
 -- Dynamic menu by cmsj https://github.com/Hammerspoon/hammerspoon/issues/61#issuecomment-64826257
