@@ -31,3 +31,5 @@ hs.notify.new({title="Hammerspoon", informativeText="Hammerspoon config reloaded
 -- Setup anycomplete
 local anycomplete = require "anycomplete"
 anycomplete.registerDefaultBindings({"alt"}, 'G')
+
+require "jumpcut"
