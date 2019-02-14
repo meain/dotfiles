@@ -19,11 +19,7 @@ local clipboard_history = settings.get("so.victor.hs.jumpcut") or {} --If no his
 
 -- Append a history counter to the menu
 function setTitle()
-  if (#clipboard_history == 0) then
     jumpcut:setTitle("✂") -- Unicode magic
-    else
-      jumpcut:setTitle("✂ ("..#clipboard_history..")") -- updates the menu counter
-  end
 end
 
 function putOnPaste(string,key)
