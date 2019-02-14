@@ -57,7 +57,7 @@ end
 function pasteboardToClipboard(item)
   -- Loop to enforce limit on qty of elements in history. Removes the oldest items
 
-  local lastselected = settings.get("so.meain.hs.jumpcutselect.lastselected")
+  local lastselected = settings.get("so.meain.hs.jumpcutselect.lastselected") or ""
   if item ~= lastselected then
     while (#clipboard_history >= hist_size) do
         table.remove(clipboard_history,1)
