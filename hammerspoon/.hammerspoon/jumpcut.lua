@@ -15,7 +15,7 @@ local settings = require("hs.settings") -- http://www.hammerspoon.org/docs/hs.se
 local last_change = pasteboard.changeCount() -- displays how many times the pasteboard owner has changed // Indicates a new copy has been made
 
 --Array to store the clipboard history
-local clipboard_history = settings.get("so.victor.hs.jumpcut") or {} --If no history is saved on the system, create an empty history
+local clipboard_history = settings.get("so.meain.hs.jumpcut") or {} --If no history is saved on the system, create an empty history
 
 -- Append a history counter to the menu
 function setTitle()
@@ -41,7 +41,7 @@ end
 function clearAll()
   pasteboard.clearContents()
   clipboard_history = {}
-  settings.set("so.victor.hs.jumpcut",clipboard_history)
+  settings.set("so.meain.hs.jumpcut",clipboard_history)
   now = pasteboard.changeCount()
   setTitle()
 end
@@ -49,7 +49,7 @@ end
 -- Clears the last added to the history
 function clearLastItem()
   table.remove(clipboard_history,#clipboard_history)
-  settings.set("so.victor.hs.jumpcut",clipboard_history)
+  settings.set("so.meain.hs.jumpcut",clipboard_history)
   now = pasteboard.changeCount()
   setTitle()
 end
@@ -60,7 +60,7 @@ function pasteboardToClipboard(item)
     table.remove(clipboard_history,1)
   end
   table.insert(clipboard_history, item)
-  settings.set("so.victor.hs.jumpcut",clipboard_history) -- updates the saved history
+  settings.set("so.meain.hs.jumpcut",clipboard_history) -- updates the saved history
   setTitle() -- updates the menu counter
 end
 

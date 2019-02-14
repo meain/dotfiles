@@ -33,3 +33,6 @@ local anycomplete = require "anycomplete"
 anycomplete.registerDefaultBindings({"alt"}, 'G')
 
 require "jumpcut"
+
+local jcs = require "jumpcutselect"
+jcs.registerDefaultBindings({"alt"}, 'P')
