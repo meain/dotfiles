@@ -1,5 +1,14 @@
 #!/bin/zsh
 
+export FZF_DEFAULT_OPTS='
+    -1 -0
+    --prompt=" "
+    --inline-info
+    --reverse --height "40%"
+    --color fg:242,hl:250,fg+:15,bg+:234,hl+:2
+    --color info:108,prompt:235,spinner:108,pointer:1,marker:168
+'
+
 alias cdf='cd $(ls -d */ | fzf --reverse --height "40%" --preview "ls {}")'
 
 unalias z 2> /dev/null
