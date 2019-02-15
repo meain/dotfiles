@@ -42,6 +42,8 @@ function _git_time_since_commit() {
     fi
 
     echo "$commit_age%{$reset_color%}"
+    # https://gabri.me/blog/custom-colors-in-your-zsh-prompt
+    echo "$FG[240]$commit_age%{$reset_color%}"
   fi
 }
 
