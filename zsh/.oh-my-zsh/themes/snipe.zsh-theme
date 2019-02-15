@@ -24,24 +24,20 @@ function _git_time_since_commit() {
     now=$(date +%s)
     seconds_since_last_commit=$((now-last_commit))
 
-    # Totals
-    minutes=$((seconds_since_last_commit / 60))
     hours=$((seconds_since_last_commit/3600))
-
-    # Sub-hours and sub-minutes
-    days=$((seconds_since_last_commit / 86400))
-    sub_hours=$((hours % 24))
-    sub_minutes=$((minutes % 60))
+    minutes=$((seconds_since_last_commit / 60))
 
     if [ $hours -gt 24 ]; then
+      days=$((seconds_since_last_commit / 86400))
       commit_age="${days}d"
     elif [ $minutes -gt 60 ]; then
+      sub_hours=$((hours % 24))
+      sub_minutes=$((minutes % 60))
       commit_age="${sub_hours}h${sub_minutes}m"
     else
       commit_age="${minutes}m"
     fi
 
-    echo "$commit_age%{$reset_color%}"
     # https://gabri.me/blog/custom-colors-in-your-zsh-prompt
     echo "$FG[240]$commit_age%{$reset_color%}"
   fi
