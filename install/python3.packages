@@ -10,7 +10,7 @@ ipdb
 ipython
 jedi
 keras
-neovim
+pynvim
 numpy
 Pillow
 pycodestyle
