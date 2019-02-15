@@ -65,3 +65,6 @@ alias pb='pbpaste | nc termbin.com 9999 | tee /dev/tty | pbcopy'
 alias start='./run-dev || npm start'
 
 alias updatessh="rm ~/.ssh/config && gcloud compute config-ssh --ssh-key-file='~/.ssh/gcloud_saama_common' --dry-run | sed 's:.us-central1-c.deeplearning-181416::' | sed '/^#/d' > ~/.ssh/config"
+
+# for non english code and vsliveshare
+alias ci='code-insiders'
