@@ -33,10 +33,11 @@ function mod.jumpcutselect()
         local item = choices[id]
         if item then
             chooser:hide()
-            hs.pasteboard.setContents(item)
             trimmed = utils.trim(item.text)
+            hs.pasteboard.setContents(trimmed)
             settings.set("so.meain.hs.jumpcutselect.lastselected", trimmed)
             hs.alert.show(trimmed, 1)
+            -- hs.notify.show("Jumpcut","Text copied", trimmed)
         else
             hs.alert.show("Nothing to copy", 1)
         end
