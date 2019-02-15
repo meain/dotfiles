@@ -7,8 +7,11 @@ gitignore() {
 
 gcl() {
     if [ -z "$1" ];then
-        git clone "$(pbpaste)"
+        GITURL=$(pbpaste)
     else
-        git clone "https://github.com/$1.git"
+        GITURL="https://github.com/$1.git"
     fi
+    FOLDER="$(echo $GITURL | sed 's/.*\///g' | sed 's/\..*//g')"
+    git clone "$GITURL"
+    cd "$FOLDER"
 }
