@@ -68,7 +68,7 @@ else
 fi
 
 if [[ "$_nesting_count" -ne 0 ]] ; then
-  _nesting_level="$(printf '.%.0s' {1..$_nesting_count})"
+  _nesting_level="$(printf '/%.0s' {1..$_nesting_count})"
 fi
 
 if [[ -n "$TMUX" ]] ; then
@@ -81,14 +81,14 @@ function virtualenv_info {
     [[ -n "$VIRTUAL_ENV" ]] && echo 'py:'${VIRTUAL_ENV:t}' '
 }
 
-PROMPT='
-${_return_status}${_tmux_indicator}%f%F{green}$( _vcs_info_wrapper )%F{yellow}%B%(1j.#.) '
-RPROMPT='%F{black}${_nesting_level}%F{yellow} $(virtualenv_info) %F{white}%2~ $(_git_time_since_commit)'
+PROMPT="
+${_return_status}${_tmux_indicator}%f%F{green}$( _vcs_info_wrapper )%F{yellow}%B%(1j.#.) "
+RPROMPT="$FG[237]${_nesting_level}%F{yellow} $(virtualenv_info) %F{white}%2~ $(_git_time_since_commit)"
 
 function zle-line-init zle-keymap-select {
 NORMAL_COLOR="%{$fg_bold[blue]%}"
 INSERT_COLOR="%{$fg_bold[white]%}"
-RPS1="%F{black}${_nesting_level}%F{yellow} $(virtualenv_info) ${${KEYMAP/vicmd/$NORMAL_COLOR}/(main|viins)/$INSERT_COLOR}%2~%{$reset_color%} $(_git_time_since_commit)" zle reset-prompt
+RPS1="$FG[237]${_nesting_level}%F{yellow} $(virtualenv_info) ${${KEYMAP/vicmd/$NORMAL_COLOR}/(main|viins)/$INSERT_COLOR}%2~%{$reset_color%} $(_git_time_since_commit)" zle reset-prompt
 }
 zle -N zle-line-init
 zle -N zle-keymap-select
