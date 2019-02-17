@@ -56,3 +56,6 @@ alias gplf='git pull origin $(git branch | sort -r | sed s:^..::g | fzf --height
 # Clean up merged branches
 alias gbcl='git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d'
 alias gbclr='git remote prune $(git remote | fzf --height 40% --reverse)'
+
+# Rebase with upstream
+alias grr='git pull upstream master --rebase'
