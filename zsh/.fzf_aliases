@@ -31,3 +31,5 @@ get_command(){
 }
 
 alias h='$(get_command)'
+
+alias fl='ls | fzf --preview "cat {} || ls {}" --no-select-1'
