@@ -15,3 +15,15 @@ app.get('/${1}', (req: Request, res: Response, next: NextFunction) => {
   res.json({ status: 'OK' })
 })
 endsnippet
+
+snippet cl "Simple console.log"
+console.log($1)
+endsnippet
+
+snippet c "Simple console.log"
+console.log('$1:', $1)
+endsnippet
+
+snippet ic "import component"
+import $1 from './components/$1'
+endsnippet
