@@ -108,6 +108,7 @@ Plug 'tpope/vim-repeat'                                                         
 " Plug 'vim-scripts/loremipsum', { 'on': 'Loremipsum' }                                          " Loremipsum
 " Plug 'sotte/presenting.vim', { 'on': 'PresentingStart' }                                       " Presetation in vim
 " Plug 'junegunn/vader.vim', {'for': 'vader'}                                                    " Vimscript testing framework
+Plug '~/Documents/Projects/projects/vim-colorswitch', { 'do': 'UpdateRemotePlugins' }
 
 call plug#end()
 
@@ -540,7 +541,10 @@ nnoremap <silent><leader>n :cnext<cr>
 nnoremap <silent><leader>m :cprev<cr>
 
 " Change from class to className
-nnoremap <leader>c mc?class=<CR>ciwclassName<ESC>`c4l
+autocmd FileType javascript nnoremap <buffer><leader>c mc?class=<CR>ciwclassName<ESC>`c4l
+autocmd FileType javascript.jsx nnoremap <buffer><leader>c mc?class=<CR>ciwclassName<ESC>`c4l
+autocmd FileType typescript nnoremap <buffer><leader>c mc?class=<CR>ciwclassName<ESC>`c4l
+autocmd FileType typescript.tsx nnoremap <buffer><leader>c mc?class=<CR>ciwclassName<ESC>`c4l
 
 " quick search and replace
 nnoremap <leader>r :%s/
@@ -1249,6 +1253,10 @@ augroup end
 " HighlightedYank
 let g:highlightedyank_highlight_duration = 200
 highlight HighlightedyankRegion cterm=underline gui=underline
+
+
+" Color Swap
+autocmd FileType css nnoremap <buffer><leader>c :ColorSwap<CR>
 
 
 
