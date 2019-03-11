@@ -28,12 +28,12 @@ scrolling:
 
 font:
   normal:
-    family: Operator Mono Light
+    family: Monaco for Powerline
   bold:
-    family: Operator Mono Medium
+    family: Monaco for Powerline
   italic:
     family: Operator Mono
-  size: 18.0
+  size: 16.0
   offset:
     x: 0
     y: 0
