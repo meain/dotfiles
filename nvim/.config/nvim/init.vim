@@ -918,8 +918,8 @@ highlight ALEErrorSign ctermfg=196 guifg=#ff0000 ctermbg=234 guibg=#1f1f1f
 highlight ALEWarningSign ctermfg=226 guifg=#ffff00 ctermbg=234 guibg=#1f1f1f
 let g:ale_statusline_format = ['✖ %d', '⚠ %d', '⬥ ok']
 let g:ale_linters = {
-\  'javascript': ['flow', 'eslint'],
-\  'typescript' : ['tslint', 'eslint'],
+\  'javascript': ['eslint'],
+\  'typescript' : ['eslint'],
 \  'typescript.tsx' : ['tslint', 'eslint'],
 \  'python': ['pycodestyle', 'pyflakes'],
 \  'html': ['tidy'],
