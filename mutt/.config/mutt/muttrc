@@ -1,0 +1,95 @@
+set ssl_starttls=yes
+set ssl_force_tls=yes
+
+set imap_user = 'abinsimon10@gmail.com'
+set imap_pass = $GOOGLE_PASSWORD
+
+set from='abinsimon10@gmail.com'
+set realname='Abin Simon'
+
+set folder = imaps://imap.gmail.com/
+set spoolfile = imaps://imap.gmail.com/INBOX
+set postponed="imaps://imap.gmail.com/[Gmail]/Drafts"
+
+set header_cache = "~/.mutt/cache/headers"
+set message_cachedir = "~/.mutt/cache/bodies"
+set certificate_file = "~/.mutt/certificates"
+
+set smtp_url = 'smtp://abinsimon10@gmail.com:$GOOGLE_PASSWORD@smtp.gmail.com:465/'
+
+set move = no
+set imap_keepalive = 900
+
+source muttcol
+
+set sleep_time = 0
+set sort = 'reverse-date'
+set editor = $EDITOR
+
+# set date_format="%m/%d %I:%M"
+# set index_format="%2C %?X?A& ? %D %-15.15F %s (%-4.4c)"
+set date_format="%b %d"
+set index_format="%?X?A& ? %D %-15.15F %s (%-4.4c)"
+
+set forward_format = "Fwd: %s"
+set markers = no
+set mark_old = no
+set mime_forward = yes
+set smtp_authenticators = 'gssapi:login'
+set edit_headers
+auto_view text/html
+auto_view application/pdf
+alternative_order text/plain text/enriched text/html
+
+# General remappings
+bind index,pager g noop
+bind index,pager gg noop
+
+bind editor <space> noop
+bind index G last-entry
+bind index gg first-entry
+bind pager j next-line
+bind pager k previous-line
+bind attach,index,pager \CD next-page
+bind attach,index,pager \CU previous-page
+bind pager gg top
+bind pager G bottom
+bind index d half-down
+bind index u half-up
+bind index D delete-message
+bind index U undelete-message
+bind index F search
+bind index,pager R group-reply
+macro index,pager S '<sync-mailbox>
+macro index,pager \Cu |urlview\n
+
+# Sidebar mappings
+set sidebar_visible = no  # change to yes to enable sidebar
+set sidebar_width = 20
+set sidebar_short_path = yes
+set sidebar_next_new_wrap = yes
+set mail_check_stats
+set sidebar_format = '%B%?F? [%F]?%* %?N?%N/? %?S?%S?'
+bind index,pager \Ck sidebar-prev
+bind index,pager \Cj sidebar-next
+bind index,pager \Co sidebar-open
+bind index,pager <F3> sidebar-page-up
+bind index,pager <F4> sidebar-page-down
+bind index,pager \Cp sidebar-prev-new
+bind index,pager \Cn sidebar-next-new
+bind index,pager B sidebar-toggle-visible
+
+bind index gg first-entry
+unmailboxes *
+mailboxes =gmail =------------------- =Receipts =[Google Mail].Drafts =[Gmail].Spam =Personal =INBOX =[Gmail].Important =Archive =[Gmail].Drafts =Notion Archive =Trash =Sent =done =[Gmail].Starred =[Gmail].Sent Mail =Work =[Gmail].Trash =mDone =Scheduled =Travel
+macro index,pager gi "<change-folder>=INBOX<enter>" "Go to inbox."
+macro index,pager gs "<change-folder>=Sent<enter>" "Go to sent."
+macro index,pager gd "<change-folder>=[Google Mail].Drafts<enter>" "Go to drafts."
+macro index,pager gt "<change-folder>=Trash<enter>" "Go to trash."
+macro index,pager gS "<change-folder>=[Gmail].Spam<enter>" "Go to spam."
+macro index,pager ga "<change-folder>=Archive<enter>" "Go to archive."
+macro index,pager a ":set confirmappend=no\n<save-message>=Archive<enter>" "Archived Message"
+
+set spoolfile = "+INBOX"
+set record = "+Sent"
+set postponed = "+[Google Mail].Drafts"
