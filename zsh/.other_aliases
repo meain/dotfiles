@@ -11,10 +11,8 @@ alias weather='curl -s wttr.in/thrissur | head -5 | tail -4'
 
 alias sourceworkon='source /usr/local/bin/virtualenvwrapper.sh'
 
-alias nm='neomutt'
-alias m='offlineimap -qf INBOX && neomutt'
+alias m='neomutt'
 alias qrf='qr-filetransfer'
-alias of='offlineimap'
 alias slack='slack-term -config ~/.slack-term.json'
 
 alias brew='HOMEBREW_NO_AUTO_UPDATE=1 brew'

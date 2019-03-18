@@ -10,9 +10,6 @@ zsh $ZSH/tools/upgrade.sh
 # update vim plugins
 nvim +PlugUpgrade +PlugUpdate +qall
 
-# update mail
-offlineimap
-
 # update poetry
 poetry self update
 
