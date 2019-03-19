@@ -13,7 +13,8 @@ export GOBIN=$GOPATH/bin
 PATH=$PATH:~/.cargo/bin
 
 # Python
-PATH=/Library/Frameworks/Python.framework/Versions/2.7/bin:$PATH
+PATH=/usr/local/bin:$PATH
+VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
 export WORKON_HOME=~/.virtual_envs
 
 # Latex

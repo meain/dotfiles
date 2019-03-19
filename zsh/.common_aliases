@@ -39,3 +39,6 @@ alias cleanup="fd '.DS_Store' --no-ignore --hidden -x rm -v"
 
 alias lynx='lynx -lss="~/.lynx.lss"'
 alias cat='bat'
+
+alias python='python3'
+alias pip='pip3'
