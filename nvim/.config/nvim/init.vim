@@ -50,6 +50,7 @@ Plug 'scrooloose/nerdtree', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggl
 " Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] } " Git sign for nerdtree
 Plug 'meain/vim-automkdir'                                                                     " Automatically create parent dirs
 Plug 'yardnsm/vim-import-cost', { 'do': 'npm install', 'for': g:javascript_filetypes }         " See import cost of javascript deps
+Plug 'machakann/vim-swap'                                                                      " Swap arguments
 
 " Morph code
 Plug 'tpope/vim-surround'                                                                      " Surround
@@ -109,7 +110,7 @@ Plug 'tpope/vim-repeat'                                                         
 " Plug 'sotte/presenting.vim', { 'on': 'PresentingStart' }                                       " Presetation in vim
 " Plug 'junegunn/vader.vim', {'for': 'vader'}                                                    " Vimscript testing framework
 Plug 'rhysd/git-messenger.vim', { 'on': 'GitMessenger' }                                         " Show git commit
-Plug '~/Documents/Projects/projects/vim-colorswitch', { 'do': 'UpdateRemotePlugins' }
+Plug '~/Documents/Projects/projects/vim-colorswitch', { 'do': 'UpdateRemotePlugins' }            " Cycle between color types
 
 call plug#end()
 
