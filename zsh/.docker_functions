@@ -14,7 +14,7 @@ db() {
 dr() {
     if [ -z $1 ]
     then
-        docker run -it $(docker images --format "{{.ID}}\n{{.Repository}}" | grep -v '<none>' | sort -r | fzf)
+        docker run -it $(docker images --format "{{.ID}}\n{{.Repository}}" | grep -v '<none>' | fzf)
     else
         docker run -it "${@:1}"
     fi
