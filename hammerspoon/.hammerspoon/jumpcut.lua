@@ -1,8 +1,8 @@
--- https://github.com/VFS/.hammerspoon/blob/master/tools/clipboard.lua
+local utils = require("utils")
 
 -- Feel free to change those settings
 local frequency = 0.8 -- Speed in seconds to check for clipboard changes. If you check too frequently, you will loose performance, if you check sparsely you will loose copies
-local hist_size = 50 -- How many items to keep on history
+local hist_size = 200 -- How many items to keep on history
 local label_length = 40 -- How wide (in characters) the dropdown menu should be. Copies larger than this will have their label truncated and end with "…" (unicode for elipsis ...)
 local honor_clearcontent = false --asmagill request. If any application clears the pasteboard, we also remove it from the history https://groups.google.com/d/msg/hammerspoon/skEeypZHOmM/Tg8QnEj_N68J
 local pasteOnSelect = false -- Auto-type on click
@@ -75,7 +75,7 @@ populateMenu = function(key)
   if (#clipboard_history == 0) then
     table.insert(menuData, {title="None", disabled = true}) -- If the history is empty, display "None"
   else
-    for k,v in pairs(clipboard_history) do
+    for k,v in pairs(utils.slice(clipboard_history, 0, 20)) do
       if (string.len(v) > label_length) then
         table.insert(menuData,1, {title=string.sub(v,0,label_length).."…", fn = function() putOnPaste(v,key) end }) -- Truncate long strings
       else
