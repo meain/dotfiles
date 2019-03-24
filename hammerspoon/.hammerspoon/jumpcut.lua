@@ -75,7 +75,7 @@ populateMenu = function(key)
   if (#clipboard_history == 0) then
     table.insert(menuData, {title="None", disabled = true}) -- If the history is empty, display "None"
   else
-    for k,v in pairs(utils.slice(clipboard_history, 0, 20)) do
+    for k,v in pairs(utils.slice(clipboard_history, 1, 20)) do
       if (string.len(v) > label_length) then
         table.insert(menuData,1, {title=string.sub(v,0,label_length).."…", fn = function() putOnPaste(v,key) end }) -- Truncate long strings
       else
