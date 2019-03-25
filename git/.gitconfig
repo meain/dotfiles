@@ -54,3 +54,5 @@
   whitespace = red reverse
 [github]
   user = meain
+[hub]
+  protocol = https
