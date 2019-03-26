@@ -33,7 +33,7 @@ gifup(){
     # gifigy: https://github.com/vvo/gifify
     # imgur-uploader: https://github.com/meain/imgur-uploader
     timestamp="$(date +"%T")"
-    $HOME/Documents/Projects/others/clones/gifify/bin/gifify $1 -o /tmp/$timestamp && imgur-uploader /tmp/$timestamp
+    $HOME/Documents/Projects/others/clones/gifify/bin/gifify $1 -o /tmp/$timestamp && ~/.bin/imgurupload /tmp/$timestamp
 }
 
 # cd, but use lf to choose dir
