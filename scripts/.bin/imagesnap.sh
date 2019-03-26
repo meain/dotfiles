@@ -1,3 +1,3 @@
-#!/bin/sh
+#!/bin/zsh
 DATE=$(date "+%Y-%m-%d_%H-%M-%S")
 imagesnap -w 2.00 "$HOME/.loginimages/$DATE.jpg"
