@@ -63,7 +63,7 @@ servo(){
 # if no args, upload latest screenshot
 imgur(){
     if [ -z $1 ];then
-	~/.bin/imgurupload "$(ls -Art -d ~/Documents/Screenshots/* | tail -n 1)"
+	~/.bin/imgurupload "$(\ls -Art -d ~/Documents/Screenshots/* | tail -n 1)"
     else
 	~/.bin/imgurupload $@
     fi
