@@ -23,4 +23,4 @@ cd ~/Documents/Projects/others/clones/alacritty && git pull origin master && mak
 gloc "git fetch" "/Users/meain/Documents/Projects/work/saama"
 gloc "git fetch" "/Users/meain/Documents/Projects/projects"
 
-date > ~/.last_updated_time
+date >> ~/.last_updated_time
