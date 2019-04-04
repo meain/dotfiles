@@ -62,6 +62,7 @@ Plug 'junegunn/vim-easy-align'                                                  
 " Plug 'sheerun/vim-polyglot'                                                                  " Multiple language support (slow)
 " Plug 'jonsmithers/experimental-lit-html-vim'                                                 " lit-html highlight
 Plug 'elzr/vim-json', { 'for': 'json' }                                                        " Json syntax highlight
+Plug 'chr4/nginx.vim', { 'for': 'nginx' }                                                      " Nginx config file syntax
 " Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }                    " Javascript syntax highlight
 Plug 'HerringtonDarkholme/yats.vim', { 'for': [ 'typescript', 'typescript.tsx' ] }             " Typescript syntax highlight
 " lug 'leafgarland/typescript-vim', { 'for': [ 'typescript', 'typescript.tsx' ] }              " Typescript syntax highlight
