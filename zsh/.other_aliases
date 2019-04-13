@@ -4,6 +4,7 @@ alias reload='source ~/.zshrc'
 
 alias j=z
 
+alias yd='youtube-dl'
 alias ydp='youtube-dl -o "%(playlist_index)s_%(title)s.%(ext)s"'
 
 alias map='telnet mapscii.me'
