@@ -112,6 +112,7 @@ Plug 'tpope/vim-repeat'                                                         
 " Plug 'junegunn/vader.vim', {'for': 'vader'}                                                    " Vimscript testing framework
 Plug 'rhysd/git-messenger.vim', { 'on': 'GitMessenger' }                                         " Show git commit
 Plug '~/Documents/Projects/projects/vim-colorswitch', { 'do': 'UpdateRemotePlugins' }            " Cycle between color types
+Plug '~/Documents/Projects/projects/vim-package-json', { 'do': 'UpdateRemotePlugins' }
 
 call plug#end()
 
@@ -1214,9 +1215,6 @@ let g:rg_command = 'rg --vimgrep --ignore-case --hidden --follow'
 "Loupe
 let g:LoupeVeryMagic=0
 
-" Vim javascript
-let g:javascript_plugin_flow = 1
-
 " Semshi
 let g:semshi#excluded_buffers = ['*']
 hi semshiLocal           ctermfg=209 guifg=#ff875f
@@ -1262,6 +1260,13 @@ highlight HighlightedyankRegion cterm=underline gui=underline
 autocmd FileType css nnoremap <buffer><leader>c :ColorSwap<CR>
 
 
+" Vim package json
+let g:vim_package_json_virutaltext_prefix = '  ¤ '
+
+hi VimPackageJsonPatch guifg=#8BC34A
+hi VimPackageJsonMinor guifg=#00BCD4
+hi VimPackageJsonMajor guifg=#F44336
+" let g:vim_package_json_virutaltext_highlight = 'WildMenu'
 
 
 "                             Source External                          "
