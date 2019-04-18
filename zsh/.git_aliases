@@ -57,5 +57,9 @@ alias gplf='git pull origin $(git branch | sort -r | sed s:^..::g | fzf --height
 alias gbcl='git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d'
 alias gbclr='git remote prune $(git remote | fzf --height 40% --reverse)'
 
-# Rebase with upstream
+# Rebase
 alias grr='git pull upstream master --rebase'
+alias gor='git pull origin master --rebase'
+
+alias show_current_patch='git am --show-current-patch'
+
