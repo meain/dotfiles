@@ -1,4 +1,5 @@
 #! /bin/zsh
+
 # Basic exports
 export ZSH=~/.oh-my-zsh
 export LC_ALL=en_US.UTF-8
@@ -98,9 +99,6 @@ case "$(uname -s)" in
     eval $(dircolors -b $HOME/.dircolors)
     ;;
 esac
-
-# Github
-eval "$(hub alias -s /bin/zsh)"
 
 # Source fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

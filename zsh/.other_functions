@@ -18,13 +18,6 @@ transfer() {
     rm -f $tmpfile;
 }
 
-# run prev commands
-get_prev_command(){
-    history | tail "-$1"  | head "-$2" | awk '{ $1=$2=$3=""; print $0 }' | sed s:^...::g
-}
-alias ff='$(get_prev_command 2 1)'
-alias fff='$(get_prev_command 3 2)'
-
 stdgrip() {
     grip $1 --export -
 }

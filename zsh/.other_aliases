@@ -3,6 +3,7 @@
 alias reload='source ~/.zshrc'
 
 alias j=z
+alias git=hub
 
 alias yd='youtube-dl'
 alias ydp='youtube-dl -o "%(playlist_index)s_%(title)s.%(ext)s"'
