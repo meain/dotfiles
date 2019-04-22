@@ -112,7 +112,8 @@ Plug 'tpope/vim-repeat'                                                         
 " Plug 'junegunn/vader.vim', {'for': 'vader'}                                                    " Vimscript testing framework
 Plug 'rhysd/git-messenger.vim', { 'on': 'GitMessenger' }                                         " Show git commit
 Plug '~/Documents/Projects/projects/vim-colorswitch', { 'do': 'UpdateRemotePlugins' }            " Cycle between color types
-Plug '~/Documents/Projects/projects/vim-package-json', { 'do': 'UpdateRemotePlugins' }
+Plug '~/Documents/Projects/projects/vim-package-info', { 'do': 'UpdateRemotePlugins' }
+Plug '~/Documents/Projects/projects/vim-printer'
 
 call plug#end()
 
@@ -554,12 +555,12 @@ autocmd FileType typescript.tsx nnoremap <buffer><leader>c mc?class=<CR>ciwclass
 nnoremap <leader>r :%s/
 
 " Hack until QuickPrint is a thing
-autocmd FileType javascript.jsx vnoremap <silent><leader>p "pyoconsole.log("<esc>"ppa", <esc>"ppa)<esc>
-autocmd FileType javascript.jsx nnoremap <silent><leader>p viw"pyoconsole.log("<esc>"ppa", <esc>"ppa)<esc>
-autocmd FileType javascript vnoremap <silent><leader>p "pyoconsole.log("<esc>"ppa", <esc>"ppa)<esc>
-autocmd FileType javascript nnoremap <silent><leader>p viw"pyoconsole.log("<esc>"ppa", <esc>"ppa)<esc>
-autocmd FileType python vnoremap <silent><leader>p "pyoprint("<esc>"ppa", <esc>"ppa)<esc>
-autocmd FileType python nnoremap <silent><leader>p viw"pyoprint("<esc>"ppa", <esc>"ppa)<esc>
+" autocmd FileType javascript.jsx vnoremap <silent><leader>p "pyoconsole.log("<esc>"ppa", <esc>"ppa)<esc>
+" autocmd FileType javascript.jsx nnoremap <silent><leader>p viw"pyoconsole.log("<esc>"ppa", <esc>"ppa)<esc>
+" autocmd FileType javascript vnoremap <silent><leader>p "pyoconsole.log("<esc>"ppa", <esc>"ppa)<esc>
+" autocmd FileType javascript nnoremap <silent><leader>p viw"pyoconsole.log("<esc>"ppa", <esc>"ppa)<esc>
+" autocmd FileType python vnoremap <silent><leader>p "pyoprint("<esc>"ppa", <esc>"ppa)<esc>
+" autocmd FileType python nnoremap <silent><leader>p viw"pyoprint("<esc>"ppa", <esc>"ppa)<esc>
 
 
 
@@ -1260,13 +1261,18 @@ highlight HighlightedyankRegion cterm=underline gui=underline
 autocmd FileType css nnoremap <buffer><leader>c :ColorSwap<CR>
 
 
-" Vim package json
-let g:vim_package_json_virutaltext_prefix = '  ¤ '
+" Vim package info
+let g:vim_package_info_virutaltext_prefix = '  ¤ '
+" let g:vim_package_info_virutaltext_highlight = 'WildMenu'
 
-hi VimPackageJsonPatch guifg=#8BC34A
-hi VimPackageJsonMinor guifg=#00BCD4
-hi VimPackageJsonMajor guifg=#F44336
-" let g:vim_package_json_virutaltext_highlight = 'WildMenu'
+
+" Vim printer
+let g:vim_printer_print_below_keybinding = '<leader>p'
+let g:vim_printer_print_above_keybinding = '<leader>P'
+let g:vim_printer_items = {
+      \ 'typescipt.tsx': 'console.log("{$}:", {$})',
+      \ }
+
 
 
 "                             Source External                          "
