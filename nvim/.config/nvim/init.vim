@@ -33,7 +33,7 @@ Plug 'airblade/vim-rooter'                                                      
 Plug 'editorconfig/editorconfig-vim'                                                           " Editorconfig
 " Plug 'mattn/gist-vim', { 'on': 'Gist' }                                                        " Push current buffer as gist
 " Plug 'rizzatti/dash.vim', { 'on': 'Dash' }                                                     " Search Dash docs
-" Plug 'davidbeckingsale/writegood.vim', { 'on': ['WritegoodEnable', 'WritegoodToggle'] }        " Better writing mode
+Plug 'davidbeckingsale/writegood.vim', { 'on': ['WritegoodEnable', 'WritegoodToggle'] }        " Better writing mode
 Plug 'mattn/emmet-vim', { 'for': ['html', 'css'] + g:javascript_filetypes }                    " Emmet
 " Plug 'jreybert/vimagit', { 'on': [ 'Magit', 'MagitOnly' ] }                                    " Even better git interface for vim
 " Plug 'metakirby5/codi.vim', { 'on': 'Codi' }                                                   " Live code preview
@@ -70,6 +70,7 @@ Plug 'peitalin/vim-jsx-typescript', { 'for': [ 'typescript', 'typescript.tsx' ] 
 Plug 'neoclide/vim-jsx-improve', { 'for': ['javascript', 'javascript.jsx'] }                   " Inproved JSX syntax
 Plug 'tpope/vim-markdown', { 'for': ['md', 'markdown'] }                                       " Better markdown support
 Plug 'cespare/vim-toml', { 'for': 'toml' }
+Plug 'AndrewRadev/tagalong.vim', { 'for': ['html', 'javascript', 'javascript.jsx', 'xml'] }    " Change closing tag on changing opening tag
 " Plug 'fatih/vim-go', { 'for': ['go'] }                                                         " Golang helper
 " Plug 'sebdah/vim-delve', { 'for': 'go' }                                                       " Debugger for go
 " Plug 'racer-rust/vim-racer', { 'for': 'rust' }                                                 " Rust support
@@ -112,7 +113,7 @@ Plug 'tpope/vim-repeat'                                                         
 " Plug 'junegunn/vader.vim', {'for': 'vader'}                                                    " Vimscript testing framework
 Plug 'rhysd/git-messenger.vim', { 'on': 'GitMessenger' }                                         " Show git commit
 Plug '~/Documents/Projects/projects/vim-colorswitch', { 'do': 'UpdateRemotePlugins' }            " Cycle between color types
-Plug '~/Documents/Projects/projects/vim-package-info', { 'do': 'UpdateRemotePlugins' }
+Plug '~/Documents/Projects/projects/vim-package-info'
 Plug '~/Documents/Projects/projects/vim-printer'
 
 call plug#end()
