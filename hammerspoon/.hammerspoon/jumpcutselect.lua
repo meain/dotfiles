@@ -29,8 +29,12 @@ function mod.jumpcutselect()
     chooser:choices(formatChoices(copies))
 
     copy = hs.hotkey.bind('', 'return', function()
+        local query = chooser:query()
+        local filteredChoices = hs.fnutils.filter(copies, function(result)
+            return string.match(result, query)
+        end)
         local id = chooser:selectedRow()
-        local item = choices[id]
+        local item = formatChoices(filteredChoices)[id]
         if item then
             chooser:hide()
             trimmed = utils.trim(item.text)
