@@ -42,7 +42,7 @@ Plug 'Galooshi/vim-import-js', {'for': g:javascript_filetypes, 'do': 'npm i -g i
 
 " Code editing enhacements
 Plug 'tpope/vim-sleuth'                                                                        " Automatic indentation setting
-Plug 'tpope/vim-fugitive', { 'on': [ 'Gstatus', 'Gblame' ] }                                   " Git stuff from within vim
+Plug 'tpope/vim-fugitive', { 'on': [ 'Gstatus', 'Gblame', 'Gdiff' ] }                          " Git stuff from within vim
 Plug 'majutsushi/tagbar', { 'on' : 'Tagbar' }                                                  " Class/module browser
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }                                             " Undo tree
 Plug 'tpope/vim-vinegar'                                                                       " Simpler file browser
@@ -250,6 +250,9 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
 set wildignore+=*.swp,*~,._*
 set wildignore+=_pycache_,.DS_Store,.vscode,.localized
 set wildignore+=.cache,node_modules,package-lock.json,yarn.lock,dist,.git
+
+" Vimdiff
+set diffopt+=vertical,context:3
 
 " Setting up python
 let g:python_host_prog = '/Users/meain/.pyenv/versions/2.7.11/bin/python'
