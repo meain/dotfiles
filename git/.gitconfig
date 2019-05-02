@@ -30,6 +30,10 @@
 [core]
   editor = /usr/local/bin/nvim
   pager = diff-so-fancy | less --tabs=4 -RFX
+[diff]
+  difftool = vimdiff
+  algorithm = patience
+  indentHeuristic = true
 [diff "spaceman-diff"]
   command = ~/.config/spaceman-diff/spaceman-diff
 [credential]
