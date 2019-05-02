@@ -1,25 +1,5 @@
 #! /bin/zsh
 
-venv() {
-    if [ -z $1 ]; then
-	read "VIRTUALENVNAME?Name of virtualenv: "
-    else
-	VIRTUALENVNAME=$1
-    fi
-    mkvirtualenv $VIRTUALENVNAME -p /Users/meain/.pyenv/versions/3.6.6/bin/python3.6
-}
-
-fvenv() {
-    if [ -z $1 ]; then
-	read "VIRTUALENVNAME?Name of virtualenv: "
-    else
-	VIRTUALENVNAME=$1
-    fi
-    PYVERSION=$(pyenv versions | tail -n +2  | fzf | sed 's/^ *//')
-    PYBINVERSION=$(echo "$PYVERSION" | sed 's/.[0-9]*$//')
-    mkvirtualenv $VIRTUALENVNAME -p /Users/meain/.pyenv/versions/$PYVERSION/bin/python$PYBINVERSION
-}
-
 rmvenv() {
     VENVNAME=$(workon | fzf --height 30% --layout=reverse)
     read -k 1 "sure?Remove virtualenv $VENVNAME? (y/N): "
