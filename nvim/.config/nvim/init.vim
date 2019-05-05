@@ -28,7 +28,7 @@ Plug 'ervandew/supertab'                                                        
 Plug 'zirrostig/vim-schlepp'                                                                   " Better drag visuals
 " Plug 'xtal8/traces.vim'                                                                        " Interactive subsititue
 Plug 'vim-scripts/restore_view.vim'                                                            " Restore file pointer
-Plug 'tpope/vim-dispatch', { 'on': 'Dispatch' }                                                " Async tasks in vim
+Plug 'tpope/vim-dispatch', { 'on': [ 'Dispatch', 'Start' ] }                                                " Async tasks in vim
 Plug 'airblade/vim-rooter'                                                                     " Change directory to project root
 Plug 'editorconfig/editorconfig-vim'                                                           " Editorconfig
 " Plug 'mattn/gist-vim', { 'on': 'Gist' }                                                        " Push current buffer as gist
@@ -322,8 +322,8 @@ highlight htmlArg gui=italic
 highlight htmlArg cterm=italic
 highlight Comment gui=italic
 highlight Comment cterm=italic
-" highlight Type    gui=italic
-" highlight Type    cterm=italic
+highlight Type    gui=italic
+highlight Type    cterm=italic
 
 " Highlight git conflict markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
@@ -543,7 +543,7 @@ nnoremap <silent><leader>o :only<cr>
 nnoremap <silent><leader>y ^yg_
 
 " New tab
-nnoremap <silent><leader>t :tabnew \| :Startify<cr>
+" nnoremap <silent><leader>t :tabnew \| :Startify<cr>
 
 " Easier switching of quickfix list items
 nnoremap <silent><leader>n :cnext<cr>
@@ -1045,8 +1045,9 @@ augroup custom_rust
   autocmd!
   " au FileType rust nnoremap <silent><leader>d <Plug>(rust-def)
   " au FileType rust nnoremap K <Plug>(rust-doc)
-  au FileType rust nnoremap <silent><leader>a :Dispatch cargo build<cr>
+  au FileType rust nnoremap <silent><leader>a :Dispatch! cargo build<cr>
   au FileType rust nnoremap <silent><leader>r :Start cargo run<cr>
+  au FileType rust nnoremap <silent><leader>t :Dispatch! cargo test<cr>
 augroup end
 
 " JSX Typescript
@@ -1057,6 +1058,13 @@ augroup end
 hi xmlTagName guifg=#87d787 ctermfg=114
 hi xmlTag guifg=#87d787 ctermfg=114
 hi xmlEndTag guifg=#87d787 ctermfg=114
+
+" Other art
+augroup other_art
+  au FileType javascript,typescript nnoremap <silent><leader>a :Dispatch! npm run build<cr>
+  " au FileType javascript, typescript nnoremap <silent><leader>r :Start npm start<cr>
+  au FileType javascript,typescript nnoremap <silent><leader>t :Dispatch! npm run test<cr>
+augroup end
 
 " Emmet
 let user_emmet_expandabbr_key = '<m-i>'
@@ -1275,7 +1283,6 @@ let g:vim_printer_print_below_keybinding = '<leader>p'
 let g:vim_printer_print_above_keybinding = '<leader>P'
 let g:vim_printer_items = {
       \ 'typescipt.tsx': 'console.log("{$}:", {$})',
-      \ 'sh': 'echo "{$}" "${$}"'
       \ }
 
 
