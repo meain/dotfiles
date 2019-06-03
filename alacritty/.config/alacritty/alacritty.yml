@@ -102,7 +102,7 @@ key_bindings:
   - { key: C,         mods: Command,   action: Copy                                                             }
   - { key: Q,         mods: Command,   action: Quit                                                             }
   - { key: W,         mods: Command,   action: Quit                                                             }
-  - { key: N,         mods: Command,   command: { program: "open", args: ["-n", "/Applications/Alacritty.app"] }}
+  - { key: N,         mods: Command,   action: SpawnNewInstance                                                 }
   - { key: Equals,    mods: Command,   action: IncreaseFontSize                                                 }
   - { key: Minus,     mods: Command,   action: DecreaseFontSize                                                 }
   - { key: Key0,      mods: Command,   action: ResetFontSize                                                    }
