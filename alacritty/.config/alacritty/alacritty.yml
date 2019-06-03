@@ -12,7 +12,7 @@ window:
 
   dynamic_padding: true
 
-  decorations: full
+  decorations: buttonless
 
 tabspaces: 4
 
@@ -106,6 +106,7 @@ key_bindings:
   - { key: Equals,    mods: Command,   action: IncreaseFontSize                                                 }
   - { key: Minus,     mods: Command,   action: DecreaseFontSize                                                 }
   - { key: Key0,      mods: Command,   action: ResetFontSize                                                    }
+  - { key: Return,    mods: Command,   action: ToggleFullscreen                                                 }
   - { key: Home,                       chars: "\x1bOH",   mode: AppCursor                                       }
   - { key: Home,                       chars: "\x1b[H",   mode: ~AppCursor                                      }
   - { key: End,                        chars: "\x1bOF",   mode: AppCursor                                       }
