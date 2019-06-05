@@ -1,0 +1,7 @@
+code, pre, pre span, .sidebar-links, .fqn {
+    font-family: monaco,"Code New Roman";
+ }
+
+ a, h3, .search-input {
+     font-family: "Operator Mono Book";
+ }
