@@ -82,6 +82,7 @@ source $HOME/.npm_functions
 source $HOME/.git_functions
 source $HOME/.docker_functions
 source $HOME/.python_functions
+source $HOME/.kubectl_functions
 
 # Source any changs for linux
 case "$(uname -s)" in

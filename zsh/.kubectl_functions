@@ -1,0 +1,16 @@
+#!/bin/sh
+
+
+alias kfc='kubectl create -f'
+
+kpods() {
+  kubectl get pods | cut -d' ' -f1 | tail -n +2 | fzf --query "$*"
+}
+
+klog(){
+  kubectl logs "$(kpods $*)"
+}
+
+kshell() {
+  kubectl exec -it "$(kpods $*)" /bin/sh
+}
