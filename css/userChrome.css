@@ -1,0 +1,70 @@
+/* use this font for devtools */
+@-moz-document regexp("chrome://browser/content/devtools/**/.*") {
+  * {
+    font-family: "Operator Mono Book", monospace !important;
+    font-size: 10pt !important;
+  }
+}
+
+#urlbar {
+  position: relative;
+  z-index: 1;
+  font-family: "Operator Mono Book", monospace !important;
+}
+
+/* black urlbar in private window */
+#main-window[privatebrowsingmode="temporary"] #urlbar {
+  background: black !important;
+  color: white !important;
+}
+
+/* no search with other thingy in bottom */
+.search-panel-header,
+.search-panel-one-offs {
+  display: none;
+}
+
+/* blue urls in search field */
+.ac-separator:not([selected="true"]),
+.ac-url:not([selected="true"]),
+.ac-action:not([selected="true"]) {
+  color: hsl(211, 100%, 65%) !important;
+}
+
+
+/* first completion gey background */
+.autocomplete-richlistitem[selected="true"] {
+  color: black !important;
+  background: #f1f1f1 !important;
+}
+.autocomplete-richlistitem[selected="true"] .ac-title-text {
+  color: black !important;
+}
+.autocomplete-richlistitem .ac-title-text {
+  color: #607D8B !important;
+}
+
+/* smaller comletion type icon */
+.ac-type-icon {
+    color: black !important;
+    width: 10px !important;
+}
+
+/* no extention icon for entention page */
+#urlbar[pageproxystate="valid"]
+  > #identity-box.extensionPage
+  > #extension-icon {
+  display: none !important;
+}
+
+/* .tabs-newtab-button { */
+/*   background: none !important; */
+/*   border: 1px transparent !important; */
+/*   margin-left: -1px !important; */
+/*   width: 24px !important; */
+/*   opacity: .2 !important; */
+/* } */
+/*  */
+/* .tabs-newtab-button:hover { */
+/*   opacity: 1 !important; */
+/* } */
