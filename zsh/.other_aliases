@@ -9,7 +9,7 @@ alias yd='youtube-dl'
 alias ydp='youtube-dl -o "%(playlist_index)s_%(title)s.%(ext)s"'
 
 alias map='telnet mapscii.me'
-alias weather='curl -s wttr.in/thrissur | head -5 | tail -4'
+alias weather='curl -s wttr.in | head -5'
 
 alias sourceworkon='source /usr/local/bin/virtualenvwrapper.sh'
 
