@@ -190,3 +190,8 @@ dcp() {
 get_kube_token() {
     kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | awk '/^deployment-controller-token-/{print $1}') | awk '$1=="token:"{print $2}'
 }
+
+# Decrease file size using H.264
+smallify() {
+    ffmpeg -i "$1" -vcodec libx264 -acodec aac "$1".mp4
+}
