@@ -8,11 +8,18 @@ div > .vimiumHintMarker {
     color-stop(100%, #ffc542)
   );
   border: 1px solid #e3be23;
-  font-family: "Operator Mono Book", monospace;
+  font-family: "Operator Mono", sans-serif;
 }
 
-#vomnibar * {
-  font-family: "Operator Mono Book", monospace;
+div > .vimiumHintMarker span {
+  /* linkhint text */
+  color: black;
+  font-weight: bold;
+  font-size: 12px;
+  font-family: "Operator Mono", sans-serif;
+}
+
+div > .vimiumHintMarker > .matchingCharacter {
 }
 
 #vomnibar ol,
@@ -21,14 +28,19 @@ div > .vimiumHintMarker {
   display: none;
 }
 
+#vomnibar * {
+  font-family: "Operator Mono", sans-serif !important;
+}
+
 #vomnibar {
   display: block;
   position: fixed;
   width: calc(
     100% - 20px
-  );
+  ); /* adjusted to keep border radius and box-shadow visible*/
   top: 8px;
   left: 8px;
+  font-family: "Operator Mono", sans-serif !important;
 
   background: #101010;
   text-align: left;
@@ -40,7 +52,7 @@ div > .vimiumHintMarker {
 
 #vomnibar input {
   color: #cecece;
-  font-family: "Operator Mono Book", monospace;
+  font-family: "Operator Mono", sans-serif;
   font-size: 20px;
   height: 34px;
   margin-bottom: 0;
@@ -79,6 +91,7 @@ div > .vimiumHintMarker {
   position: relative;
   display: list-item;
   margin: auto;
+  font-family: "Operator Mono", sans-serif;
 }
 
 #vomnibar li:last-of-type {
@@ -155,14 +168,4 @@ div > .vimiumHintMarker {
 
 .vomnibarNoInsertText {
   visibility: hidden;
-}
-
-div > .vimiumHintMarker span {
-  /* linkhint text */
-  color: black;
-  font-weight: bold;
-  font-size: 12px;
-}
-
-div > .vimiumHintMarker > .matchingCharacter {
 }
