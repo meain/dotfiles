@@ -195,3 +195,14 @@ get_kube_token() {
 smallify() {
     ffmpeg -i "$1" -vcodec libx264 -acodec aac "$1".mp4
 }
+
+shorten() {
+    URL="$1"
+    if [ !  $(echo "$1" | grep '^http[s]*://') ]; then
+	URL="https://$1"
+    fi
+    echo "Shortening $URL ..."
+    SURL=$(curl -s "http://tinyurl.com/api-create.php?url=$1")
+    echo "$SURL" | pbcopy
+    echo "$SURL"
+}
