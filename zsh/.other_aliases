@@ -67,3 +67,5 @@ alias start='./run-dev || npm start'
 alias updatessh="rm ~/.ssh/config && gcloud compute config-ssh --ssh-key-file='~/.ssh/gcloud_saama_common' --dry-run | sed 's:.us-central1-c.deeplearning-181416::' | sed '/^#/d' > ~/.ssh/config"
 
 alias k='kubectl'
+
+alias publicip='curl ifconfig.co'
