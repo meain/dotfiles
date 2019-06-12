@@ -6,6 +6,16 @@ local log = hs.logger.new('hms', logLevel)
 -- Disable animations
 hs.window.animationDuration = 0
 
+-- Change alert styles
+hs.alert.defaultStyle.strokeWidth = 0
+hs.alert.defaultStyle.radius = 0
+hs.alert.defaultStyle.textFont = "Operator Mono Book"
+hs.alert.defaultStyle.textSize = 25
+hs.alert.defaultStyle.fadeInDuration = 0.10
+hs.alert.defaultStyle.fadeOutDuration = 1
+hs.alert.defaultStyle.atScreenEdge = 0
+hs.alert.defaultStyle.fillColor = { white = 0, alpha = 0.95 }
+
 
 -- Simle key remaps
 local switchscreen = require "switchscreen"
