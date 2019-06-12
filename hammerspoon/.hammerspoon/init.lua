@@ -36,3 +36,9 @@ require "jumpcut"
 
 local jcs = require "jumpcutselect"
 jcs.registerDefaultBindings({"alt"}, 'P')
+
+shiftDoublePress = require("shiftDoublePress")
+shiftDoublePress.timeFrame = 2
+
+local vimouse = require('vimouse')
+vimouse('alt', ';')
