@@ -10,10 +10,10 @@
 --
 -- Pressing <space> sends left mouse down.  Releasing <space> sends left mouse
 -- up.  Holding <space> and pressing h/j/k/l is mouse dragging.  Tapping
--- <space> quickly sends double and triple clicks.  Holding ctrl sends right
+-- <space> quickly sends double and triple clicks.  Holding alt sends right
 -- mouse events.
 --
--- <c-y> and <c-e> sends the scroll wheel event.  Holding the keys will speed
+-- <a-j> and <a-k> sends the scroll wheel event.  Holding the keys will speed
 -- up the scrolling.
 --
 -- Press <esc> or the configured toggle key to end Vi Mouse mode.
@@ -135,7 +135,7 @@ return function(tmod, tkey)
         tap:stop()
         hs.mouse.setAbsolutePosition(orig_coords)
         return true
-      elseif (code == keycodes['y'] or code == keycodes['e']) and flags.ctrl then
+      elseif (code == keycodes['j'] or code == keycodes['k']) and flags.alt then
         if repeating ~= 0 then
           scrolling = scrolling + 1
         else
@@ -143,7 +143,7 @@ return function(tmod, tkey)
         end
 
         local scroll_mul = 1 + math.log(scrolling)
-        if code == keycodes['y'] then
+        if code == keycodes['j'] then
           scroll_y_delta = math.ceil(-1 * scroll_mul)
         else
           scroll_y_delta = math.floor(1 * scroll_mul)
