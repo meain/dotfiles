@@ -98,7 +98,7 @@ Plug 'SirVer/ultisnips'                                                         
 
 " Dependencies
 Plug 'vim-scripts/mru.vim'                                                                     " Save recently used files (for v)
-Plug 'radenling/vim-dispatch-neovim', { 'on': 'Dispatch' }                                     " Neovim support for vim-dispatch
+Plug 'radenling/vim-dispatch-neovim', { 'on': ['Dispatch', 'Start'] }                          " Neovim support for vim-dispatch
 " Plug 'mattn/webapi-vim'                                                                        " Web calls
 Plug 'tpope/vim-repeat'                                                                        " Repeat plugins with .
 
@@ -556,7 +556,7 @@ autocmd FileType typescript nnoremap <buffer><leader>c mc?class=<CR>ciwclassName
 autocmd FileType typescript.tsx nnoremap <buffer><leader>c mc?class=<CR>ciwclassName<ESC>`c4l
 
 " quick search and replace
-nnoremap <leader>r :%s/
+nnoremap <leader>: :%s/
 
 " Hack until QuickPrint is a thing
 " autocmd FileType javascript.jsx vnoremap <silent><leader>p "pyoconsole.log("<esc>"ppa", <esc>"ppa)<esc>
@@ -591,6 +591,7 @@ augroup custom_spellcheck
   autocmd!
   autocmd BufRead,BufNewFile *.md setlocal spell
   autocmd BufRead,BufNewFile *.org setlocal spell
+  " autocmd BufRead,BufNewFile *.txt if ('requirements.txt' == expand('%:t')) < 0 | setlocal spell
   autocmd BufRead,BufNewFile *.txt setlocal spell
   autocmd FileType gitcommit setlocal spell
   autocmd FileType help setlocal nospell
@@ -1062,7 +1063,7 @@ hi xmlEndTag guifg=#87d787 ctermfg=114
 " Other art
 augroup other_art
   au FileType javascript,typescript nnoremap <silent><leader>a :Dispatch! npm run build<cr>
-  " au FileType javascript, typescript nnoremap <silent><leader>r :Start npm start<cr>
+  au FileType javascript,typescript nnoremap <silent><leader>r :Dispatch npm start<cr>
   au FileType javascript,typescript nnoremap <silent><leader>t :Dispatch! npm run test<cr>
 augroup end
 
