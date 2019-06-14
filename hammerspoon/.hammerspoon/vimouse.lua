@@ -119,7 +119,7 @@ return function(tmod, tkey)
       end
 
       if flags.shift then
-        mul = 5
+        mul = 7
       else
         mul = 1
       end
@@ -135,7 +135,7 @@ return function(tmod, tkey)
         tap:stop()
         hs.mouse.setAbsolutePosition(orig_coords)
         return true
-      elseif (code == keycodes['j'] or code == keycodes['k']) and flags.alt then
+      elseif (code == keycodes['j'] or code == keycodes['k'] or code == keycodes['l'] or code == keycodes['h']) and flags.alt then
         if repeating ~= 0 then
           scrolling = scrolling + 1
         else
@@ -145,10 +145,15 @@ return function(tmod, tkey)
         local scroll_mul = 1 + math.log(scrolling)
         if code == keycodes['j'] then
           scroll_y_delta = math.ceil(-1 * scroll_mul)
+        elseif code == keycodes['l'] then
+          scroll_x_delta = math.ceil(-1 * scroll_mul)
+        elseif code == keycodes['h'] then
+          scroll_x_delta = math.ceil(1 * scroll_mul)
         else
           scroll_y_delta = math.floor(1 * scroll_mul)
         end
         log.d("Scrolling", scrolling, '-', scroll_y_delta)
+        log.d("Scrolling", scrolling, '-', scroll_x_delta)
       elseif code == keycodes['h'] then
         x_delta = step * mul * -1
       elseif code == keycodes['l'] then
@@ -161,6 +166,9 @@ return function(tmod, tkey)
 
       if scroll_y_delta ~= 0 then
         hs.eventtap.event.newScrollEvent({0, scroll_y_delta}, flags, 'line'):post()
+      end
+      if scroll_x_delta ~= 0 then
+        hs.eventtap.event.newScrollEvent({scroll_x_delta, 0}, flags, 'line'):post()
       end
 
       if x_delta or y_delta then
