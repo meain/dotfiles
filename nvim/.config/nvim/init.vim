@@ -1287,6 +1287,16 @@ let g:vim_printer_items = {
       \ }
 
 
+" Tagbar
+let g:tagbar_type_markdown = {
+    \ 'ctagstype' : 'markdown',
+    \ 'kinds' : [
+        \ 'h:headings'
+    \ ],
+\ 'sort' : 0,
+\ }
+
+
 
 "                             Source External                          "
 "                    ==============================                    "
