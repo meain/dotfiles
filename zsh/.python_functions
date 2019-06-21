@@ -14,7 +14,7 @@ wf(){
     if ! which workon >/dev/null; then
         source /usr/local/bin/virtualenvwrapper.sh
     fi
-    VENVNAME=$(workon | fzf --height 30% --layout=reverse)
+    VENVNAME=$(workon | fzf --height 30% --layout=reverse --query="$*")
     if [ ! -z $VENVNAME ];then
         workon "$VENVNAME"
     fi
