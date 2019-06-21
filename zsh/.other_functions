@@ -187,7 +187,7 @@ dcp() {
     ls -1 ~/Downloads/ | fzf  --height="40%" --bind="enter:execute(cp ~/Downloads/{+} $TOFILE)+abort"
 }
 
-get_kube_token() {
+kubernetes_get_token() {
     kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | awk '/^deployment-controller-token-/{print $1}') | awk '$1=="token:"{print $2}'
 }
 
@@ -205,4 +205,8 @@ shorten() {
     SURL=$(curl -s "http://tinyurl.com/api-create.php?url=$1")
     echo "$SURL" | pbcopy
     echo "$SURL"
+}
+
+gcloud_stream_latest_build_logs() {
+    gcloud builds log --stream $(gcloud builds  list | head -n2 | tail -n+2 | cut -d' ' -f1)
 }
