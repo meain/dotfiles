@@ -943,6 +943,7 @@ let g:ale_lint_on_enter = 0
 let g:ale_fixers = {
 \  'javascript' : ['prettier'],
 \  'typescript' : ['prettier'],
+\  'typescript.tsx' : ['prettier'],
 \  'json' : ['fixjson'],
 \  'python' : ['black'],
 \  'rust': ['rustfmt'],
