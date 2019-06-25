@@ -14,3 +14,7 @@ klog(){
 kshell() {
   kubectl exec -it "$(kpods $*)" /bin/sh
 }
+
+alias wk="watch kubectl get pods,service,hpa"
+alias wkp="watch kubectl get pods"
+alias wkt="watch kubectl top nodes"
