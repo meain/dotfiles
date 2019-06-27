@@ -213,5 +213,10 @@ shorten() {
 }
 
 gcloud_stream_latest_build_logs() {
-    gcloud builds log --stream $(gcloud builds  list | head -n2 | tail -n+2 | cut -d' ' -f1)
+    LATEST_WORKING_BUILD_ID=$(gcloud builds list | awk '/WORKING/ {print $1,"("$4")"}' | fzf | cut -d' ' -f1)
+    if [ -z $LATEST_WORKING_BUILD_ID ];then
+	echo "No builds running currently"
+	LATEST_WORKING_BUILD_ID=$(gcloud builds list | head -n2 | tail -n+2 | cut -d' ' -f1)
+    fi
+    gcloud builds log --stream $LATEST_WORKING_BUILD_ID
 }
