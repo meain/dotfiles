@@ -3,6 +3,9 @@ local logLevel = 'info'
 local log = hs.logger.new('hms', logLevel)
 
 
+local pasteboard = require("hs.pasteboard")
+
+
 -- Disable animations
 hs.window.animationDuration = 0
 
@@ -47,8 +50,12 @@ require "jumpcut"
 local jcs = require "jumpcutselect"
 jcs.registerDefaultBindings({"alt"}, 'P')
 
+customshellrun = require('customshellrun') 
 shiftDoublePress = require("shiftDoublePress")
 shiftDoublePress.timeFrame = 2
+shiftDoublePress.action = function()
+  customshellrun.run('/Users/meain/.bin/openorsearch "' ..  pasteboard.getContents() .. '"')
+end
 
 local vimouse = require('vimouse')
 vimouse('alt', ';')
