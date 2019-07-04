@@ -1,0 +1,13 @@
+#!/bin/bash
+
+
+SEARCH_BASE='https://www.google.com/search?q='
+
+echo "$1" | grep -E '^http[s]?://'
+if [ "$?" -eq 0 ]; then
+  open "$1"
+  echo "Open: $1"
+else
+  open "$SEARCH_BASE$1"
+  echo "Search: $1"
+fi
