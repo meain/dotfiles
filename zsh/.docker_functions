@@ -19,3 +19,9 @@ dr() {
         docker run -it "${@:1}"
     fi
 }
+
+dbr(){
+    docker build .
+    IMG_ID=`docker images --format "{{.ID}}" | head -n1`
+    docker run $@ -it $IMG_ID
+}
