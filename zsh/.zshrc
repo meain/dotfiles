@@ -25,7 +25,7 @@ PATH=/Library/TeX/texbin:$PATH
 PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
 
 # PATH
-PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/git/bin:/Users/meain/.bin:$PATH
+PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/git/bin:$HOME/.bin:$PATH
 PATH=$PATH:$GOPATH/bin
 export PATH
 
@@ -137,7 +137,7 @@ case "$(uname -s)" in
     source '/usr/local/bin/virtualenvwrapper_lazy.sh'
     ;;
   Linux)
-    source "$HOME/.local/bin/virtualenvwrapper_lazy.sh"
+    source "$HOME/.local/bin/virtualenvwrapper.sh"
     ;;
 esac
 
