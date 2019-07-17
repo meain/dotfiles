@@ -137,7 +137,7 @@ case "$(uname -s)" in
     source '/usr/local/bin/virtualenvwrapper_lazy.sh'
     ;;
   Linux)
-    source '/usr/bin/virtualenvwrapper_lazy.sh'
+    source "$HOME/.local/bin/virtualenvwrapper_lazy.sh"
     ;;
 esac
 
