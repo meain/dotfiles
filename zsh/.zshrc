@@ -15,6 +15,7 @@ PATH=$PATH:~/.cargo/bin
 
 # Python
 PATH=/usr/local/bin:$PATH
+PATH="$HOME/.pyenv/bin:$PATH"
 VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
 export WORKON_HOME=~/.virtual_envs
 
