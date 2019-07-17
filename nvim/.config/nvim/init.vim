@@ -254,8 +254,8 @@ set wildignore+=.cache,node_modules,package-lock.json,yarn.lock,dist,.git
 set diffopt+=vertical,context:3
 
 " Setting up python
-let g:python_host_prog = '/Users/meain/.pyenv/versions/2.7.11/bin/python'
-let g:python3_host_prog = '/Users/meain/.pyenv/versions/3.6.6/bin/python'
+let g:python_host_prog = $HOME . '/.pyenv/versions/2.7.11/bin/python'
+let g:python3_host_prog = $HOME . '/.pyenv/versions/3.6.6/bin/python'
 
 " Fill chars
 set fillchars=vert:\|
@@ -1040,8 +1040,8 @@ augroup end
 " autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 " Racer
-let g:deoplete#sources#rust#racer_binary='/Users/meain/.cargo/bin/racer'
-let g:deoplete#sources#rust#rust_source_path='/Users/meain/Documents/Projects/others/clones/rust/src'
+let g:deoplete#sources#rust#racer_binary= $HOME . '/.cargo/bin/racer'
+let g:deoplete#sources#rust#rust_source_path= $HOME . '/Documents/Projects/others/clones/rust/src'
 augroup custom_rust
   autocmd!
   " au FileType rust nnoremap <silent><leader>d <Plug>(rust-def)
