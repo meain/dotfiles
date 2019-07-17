@@ -21,6 +21,9 @@ export WORKON_HOME=~/.virtual_envs
 # Latex
 PATH=/Library/TeX/texbin:$PATH
 
+# Linuxbrew
+PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
+
 # PATH
 PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/git/bin:/Users/meain/.bin:$PATH
 PATH=$PATH:$GOPATH/bin
