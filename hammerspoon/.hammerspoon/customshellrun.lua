@@ -11,7 +11,6 @@ module.run = function(script)
         result = result:sub(1, -2)
     end
     alert(result)
-    hs.pasteboard.setContents(result)
 end
 
 return module
