@@ -21,7 +21,8 @@ dr() {
 }
 
 dbr(){
-    docker build .
-    IMG_ID=`docker images --format "{{.ID}}" | head -n1`
-    docker run $@ -it $IMG_ID
+    if docker build .; then
+        IMG_ID=`docker images --format "{{.ID}}" | head -n1`
+        docker run $@ -it $IMG_ID
+    fi
 }
