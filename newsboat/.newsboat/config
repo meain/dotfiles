@@ -11,7 +11,7 @@ bind-key K prev-feed articlelist
 bind-key G end
 bind-key g home
 bind-key d pagedown
-bind-key u pageup
+bind-key e pageup
 bind-key l open
 bind-key h quit
 bind-key a toggle-article-read
@@ -20,19 +20,22 @@ bind-key N prev-unread
 bind-key D pb-download
 bind-key U show-urls
 bind-key x pb-delete
+bind-key o open-in-browser-and-mark-read 
+bind-key O open-all-unread-in-browser-and-mark-read 
+bind-key u toggle-article-read 
 
-color listnormal cyan default
-color listfocus black yellow standout bold
-color listnormal_unread blue default
-color listfocus_unread yellow default bold
-color info red black bold
+color listnormal black default standout bold
+color listfocus white default standout bold
+color listnormal_unread cyan default
+color listfocus_unread green default bold
+color info yellow black standout bold
 color article cyan default
 
 browser open
 macro , open-in-browser
+macro w set browser "w3m"; open-in-browser ; set browser linkhandler
 # macro v set browser "i3 exec mpv"; open-in-browser ; set browser linkhandler
 # macro y set browser "spawndl"; open-in-browser ; set browser linkhandler
-# macro w set browser "w3m"; open-in-browser ; set browser linkhandler
 # macro p set browser "dmenuhandler"; open-in-browser ; set browser linkhandler
 
 # c copies the link to the clipboard.
