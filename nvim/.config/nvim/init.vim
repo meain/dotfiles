@@ -820,12 +820,12 @@ autocmd  FileType fzf set laststatus=0 noshowmode noruler
   \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 
 let g:fzf_colors =
-\ { 'fg':      ['fg', 'Normal'],
+\ { 'fg':      ['fg', 'Comment'],
   \ 'bg':      ['bg', 'Normal'],
-  \ 'hl':      ['fg', 'Comment'],
+  \ 'hl':      ['fg', 'Normal'],
   \ 'fg+':     ['fg', 'Identifier', 'Normal', 'Normal'],
   \ 'bg+':     ['bg', 'Normal', 'Normal'],
-  \ 'hl+':     ['fg', 'Statement'],
+  \ 'hl+':     ['fg', 'Type'],
   \ 'info':    ['fg', 'PreProc'],
   \ 'border':  ['fg', 'Ignore'],
   \ 'prompt':  ['fg', 'Conditional'],
@@ -833,7 +833,7 @@ let g:fzf_colors =
   \ 'marker':  ['fg', 'WildMenu'],
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
-let g:fzf_layout = { 'down': '~40%' }  " Default fzf layout
+let g:fzf_layout = { 'down': '~20%' }  " Default fzf layout
 
 " MRU
 let MRU_Max_Entries = 200
