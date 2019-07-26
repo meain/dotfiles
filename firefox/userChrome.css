@@ -31,7 +31,6 @@
   color: hsl(211, 100%, 65%) !important;
 }
 
-
 /* first completion gey background */
 .autocomplete-richlistitem[selected="true"] {
   color: black !important;
@@ -41,13 +40,13 @@
   color: black !important;
 }
 .autocomplete-richlistitem .ac-title-text {
-  color: #607D8B !important;
+  color: #607d8b !important;
 }
 
 /* smaller comletion type icon */
 .ac-type-icon {
-    color: black !important;
-    width: 10px !important;
+  color: black !important;
+  width: 10px !important;
 }
 
 /* no extention icon for entention page */
@@ -68,3 +67,15 @@
 /* .tabs-newtab-button:hover { */
 /*   opacity: 1 !important; */
 /* } */
+
+@-moz-document url(chrome://browser/content/browser.xul) {
+  #fullscreen-warning {
+    display: none !important;
+  }
+}
+
+/* https://github.com/nuchi/firefox-quantum-userchromejs */
+@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
+toolbarbutton#alltabs-button {
+    -moz-binding: url("userChrome.xml#js");
+}
