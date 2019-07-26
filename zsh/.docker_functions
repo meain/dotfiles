@@ -26,3 +26,9 @@ dbr(){
         docker run $@ -it $IMG_ID
     fi
 }
+
+# connect to a running docker container
+dcon(){
+    CONTAINER=$(docker ps --format 'table {{.ID}}\t{{.Status}}\t{{.Command}}' | tail -n +2 | grep -v '/portainer' | fzf | sed 's/\ .*//g')
+    docker exec -i -t $CONTAINER bash
+}
