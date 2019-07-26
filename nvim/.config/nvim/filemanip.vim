@@ -60,4 +60,4 @@ function! CreateNewFileInCurrentDir()
     call feedkeys(":file\<cr>")
   endif
 endfunction
-cnoremap eeee call CreateNewFileInCurrentDir()<cr>
+command! CreateNewFileInCurrentDir :call CreateNewFileInCurrentDir()
