@@ -1,16 +1,16 @@
-#! /bin/zsh
+#! /bin/sh
 
-function t() {
+t() {
     if [ -z "$1" ]
     then
-        if ! [ -z "$( tmux ls )" ]; then
+        if [ -n "$( tmux ls )" ]; then
             TMUX_FZF_OUTPUT=$(tmux ls | sed 's/:.*//g' | fzf --height 20% --layout=reverse --preview 'tmux ls | grep {}' --preview-window up:1 --print-query | \tail -n1)
-            if ! [ -z $TMUX_FZF_OUTPUT ]; then
-                tmux attach -t $TMUX_FZF_OUTPUT || tmux new -s $TMUX_FZF_OUTPUT
+            if [ -n "$TMUX_FZF_OUTPUT" ]; then
+                tmux attach -t "$TMUX_FZF_OUTPUT" || tmux new -s "$TMUX_FZF_OUTPUT"
             fi
         fi
     else
-        tmux attach -t $1 || tmux new-session -s $1
+        tmux attach -t "$1" || tmux new-session -s "$1"
     fi
 }
 
@@ -20,7 +20,5 @@ alias tn='tmux new-session -s'
 alias tl='tmux list-sessions'
 alias tksv='tmux kill-server'
 alias tkss='tmux kill-session -t'
-
-alias tns='tmux new-session -s "#"'
 
 alias tx='tmuxinator'

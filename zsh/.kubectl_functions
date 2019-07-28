@@ -8,11 +8,11 @@ kpods() {
 }
 
 klog(){
-  kubectl logs "$(kpods $*)"
+  kubectl logs "$(kpods "$*")"
 }
 
 kshell() {
-  kubectl exec -it "$(kpods $*)" /bin/sh
+  kubectl exec -it "$(kpods "$*")" /bin/sh
 }
 
 alias wk="watch kubectl get pods,service,hpa"

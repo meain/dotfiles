@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/sh
 
 export FZF_DEFAULT_OPTS='
     -1 -0
@@ -18,7 +18,7 @@ z() {
 }
 
 jj() {
-    cd "./$(fd -H -td -d5 | fzf --preview 'tree -L 2 ./{}' )"
+    cd "./$(fd -H -td -d5 | fzf --preview 'tree -L 2 ./{}' )" || return 1
 }
 
 hc(){

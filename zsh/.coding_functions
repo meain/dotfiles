@@ -1,8 +1,10 @@
+#!/bin/sh
+
 # Create new react component
 nrc(){
-    mkdir $1
-    cd $1
-    touch $1.{js,css}
+    mkdir "$1"
+    cd "$1" || return 1
+    touch "$1.js" "$1.css"
     cd ..
 }
 
@@ -10,16 +12,16 @@ nrc(){
 gog() {
     test "" = "$1" && { 
         echo "Enter github project path"
-        exit 1
+        return 1
     }
-    INPUT=$(echo $1 | sed 's/\/.*\//\/meain\//')
-    PROJECT=$(echo $1 | sed 's/.*\///')
-    AUTHOR=$(echo $1 | cut -d'/' -f2)
-    mkdir -p $GOPATH/src/github.com/$AUTHOR
-    cd $GOPATH/src/github.com/$AUTHOR
-    git clone https://$INPUT
-    cd $PROJECT
-    git remote add upstream https://$1
-    cd ~/Documents/Projects/projects/
-    ln -s $GOPATH/src/$1 $PROJECT 
+    INPUT=$(echo "$1" | sed 's/\/.*\//\/meain\//')
+    PROJECT=$(echo "$1" | sed 's/.*\///')
+    AUTHOR=$(echo "$1" | cut -d'/' -f2)
+    mkdir -p "$GOPATH/src/github.com/$AUTHOR"
+    cd "$GOPATH/src/github.com/$AUTHOR" || return 1
+    git clone "https://$INPUT"
+    cd "$PROJECT" || return 1
+    git remote add upstream "https://$1"
+    cd ~/Documents/Projects/projects/ || return 1
+    ln -s "$GOPATH/src/$1" "$PROJECT"
 }

@@ -1,3 +1,5 @@
+#!/bin/sh
+
 # add color to man pages
 export MANROFFOPT='-c'
 export LESS_TERMCAP_mb=$(tput bold; tput setaf 2)

@@ -1,8 +1,8 @@
-#!/bin/zsh
+#!/bin/sh
 
 gitignore() {
     LANGUAGE=$(curl -L -s https://www.gitignore.io/api/list | tr "," "\n" | fzf)
-    curl -L -s https://www.gitignore.io/api/$LANGUAGE%2Cmacos > .gitignore
+    curl -L -s "https://www.gitignore.io/api/$LANGUAGE%2Cmacos" > .gitignore
 }
 
 gcl() {
@@ -11,7 +11,7 @@ gcl() {
     else
         GITURL="https://github.com/$1.git"
     fi
-    FOLDER="$(echo $GITURL | sed 's/.*\///g' | sed 's/\..*//g')"
+    FOLDER="$(echo "$GITURL" | sed 's/.*\///g' | sed 's/\..*//g')"
     git clone "$GITURL"
-    cd "$FOLDER"
+    cd "$FOLDER" || return 1
 }

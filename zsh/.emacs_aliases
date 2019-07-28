@@ -1,3 +1,5 @@
+#!/bin/sh
+
 alias eserver='emacs --daemon'
 alias ma='emacsclient -t'
 alias eserverkill='emacsclient -e "(kill-emacs)"'

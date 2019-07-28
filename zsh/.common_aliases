@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/sh
 
 alias ls='lsd --date relative --icon never --blocks permission,size,date,name --size short'
 alias ss='ls -lht'

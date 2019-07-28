@@ -1,29 +1,19 @@
-#! /bin/zsh
-
-# cd > cd&&ls
-function list_all() {
-  emulate -L zsh
-  ls
-}
-if [[ ${chpwd_functions[(r)list_all]} != "list_all" ]];then
-  chpwd_functions=(${chpwd_functions[@]} "list_all")
-fi
-
+#! /bin/sh
 
 # view README in shell
 rmd () {
   if [ -z "$1" ];then
     pandoc "README.md" | lynx -lss="~/.lynx.lss" -stdin
   else
-    pandoc $1 | lynx -stdin
+    pandoc "$1" | lynx -stdin
   fi
 }
 
 alias readme='rmd README.md'
 
 n () {
-  cd ~/.notes/$1
+  cd ~/.notes/"$1" || return 1
 }
 no () {
-  cd ~/.notes/$1 && vim index.md
+  cd ~/.notes/"$1" && vim index.md
 }

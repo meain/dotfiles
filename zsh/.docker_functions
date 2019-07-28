@@ -1,34 +1,35 @@
-#!/bin/zsh
+#!/bin/sh
+
 db() {
-    if [ -z $1 ]
+    if [ -z "$1" ]
     then
         docker build .
-        IMG_ID=`docker images --format "{{.ID}}" | head -n1`
+        IMG_ID=$(docker images --format "{{.ID}}" | head -n1)
         echo "$IMG_ID" | pbcopy
         # notify "Docker build complete. ($IMG_ID)"
     else
-        docker build -t $1 .
+        docker build -t "$1" .
     fi
 }
 
 dr() {
-    if [ -z $1 ]
+    if [ -z "$1" ]
     then
-        docker run -it $(docker images --format "{{.ID}}\n{{.Repository}}" | grep -v '<none>' | fzf)
+        docker run -it "$(docker images --format "{{.ID}}\n{{.Repository}}" | grep -v '<none>' | fzf)"
     else
-        docker run -it "${@:1}"
+        docker run -it "$1"
     fi
 }
 
 dbr(){
     if docker build .; then
-        IMG_ID=`docker images --format "{{.ID}}" | head -n1`
-        docker run $@ -it $IMG_ID
+        IMG_ID=$(docker images --format "{{.ID}}" | head -n1)
+        docker run "$@" -it "$IMG_ID"
     fi
 }
 
 # connect to a running docker container
 dcon(){
     CONTAINER=$(docker ps --format 'table {{.ID}}\t{{.Status}}\t{{.Command}}' | tail -n +2 | grep -v '/portainer' | fzf | sed 's/\ .*//g')
-    docker exec -i -t $CONTAINER bash
+    docker exec -i -t "$CONTAINER" bash
 }

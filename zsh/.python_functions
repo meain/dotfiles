@@ -1,21 +1,23 @@
-#! /bin/zsh
+#! /bin/sh
 
 rmvenv() {
     VENVNAME=$(workon | fzf --height 30% --layout=reverse)
-    read -k 1 "sure?Remove virtualenv $VENVNAME? (y/N): "
-    echo
-    if [[ "$sure" =~ ^[Yy]$ ]]
-    then
-	    rm -rf "~/.virtual_envs/$VENVNAME" && echo "Removed $VENVNAME"
-    fi
+
+    printf '%s' "Remove virtualenv $VENVNAME? (y/N): "
+    read -r sure
+
+    case $sure in
+        [Yy]* ) rm -rf ~/.virtual_envs/"$VENVNAME" && echo "Removed $VENVNAME";;
+        * ) echo "OK, keeping it.";;
+    esac
 }
 
 wf(){
-    if ! which workon >/dev/null; then
+    if workon --help >/dev/null; then
         source /usr/local/bin/virtualenvwrapper.sh
     fi
     VENVNAME=$(workon | fzf --height 30% --layout=reverse --query="$*")
-    if [ ! -z $VENVNAME ];then
+    if [ -n "$VENVNAME" ];then
         workon "$VENVNAME"
     fi
 }

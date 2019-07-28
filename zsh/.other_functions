@@ -1,32 +1,32 @@
-#! /bin/zsh
+#! /bin/sh
 
 # Function for transfer.sh
 transfer() {
     if [ $# -eq 0 ]; then
-	echo "No arguments specified. Usage:\necho transfer /tmp/test.md\ncat /tmp/test.md | transfer test.md";
+	printf "No arguments specified. Usage:\necho transfer /tmp/test.md\ncat /tmp/test.md | transfer test.md";
 	return 1;
     fi
     tmpfile=$( mktemp -t transferXXX );
     if tty -s; then
-	basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g');
-	curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" >> $tmpfile;
+	basefile="$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g')"
+	curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" >> "$tmpfile";
     else
-	curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >> $tmpfile ;
+	curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >> "$tmpfile" ;
     fi;
-    \cat $tmpfile | pbcopy;
-    \cat $tmpfile;
-    rm -f $tmpfile;
+    pbcopy < "$tmpfile";
+    cat "$tmpfile";
+    rm -f "$tmpfile";
 }
 
 stdgrip() {
-    grip $1 --export -
+    grip "$1" --export -
 }
 
 gifup(){
     # gifigy: https://github.com/vvo/gifify
     # imgur-uploader: https://github.com/meain/imgur-uploader
     timestamp="$(date +"%T")"
-    gifify $1 -o /tmp/$timestamp && ~/.bin/imgurupload /tmp/$timestamp
+    gifify "$1" -o "/tmp/$timestamp" && ~/.bin/imgurupload "/tmp/$timestamp"
 }
 
 # cd, but use lf to choose dir
@@ -38,7 +38,7 @@ rcd () {
 	\rm -f "$tmp"
 	if [ -d "$dir" ]; then
 	    if [ "$dir" != "$(pwd)" ]; then
-		cd "$dir"
+		cd "$dir" || return 1
 	    fi
 	fi
     fi
@@ -46,25 +46,25 @@ rcd () {
 
 # ngrok alternative
 servo(){
-    if [ -z $2 ]; then
-	ssh -R 80:localhost:$1 serveo.net
+    if [ -z "$2" ]; then
+	ssh -R "80:localhost:$1" serveo.net
     else
-	ssh -R $2:80:localhost:$1 serveo.net
+	ssh -R "$2:80:localhost:$1" serveo.net
     fi
 }
 
 # if no args, upload latest screenshot
 imgur(){
-    if [ -z $1 ];then
-	~/.bin/imgurupload "$(\ls -Art -d ~/Documents/Screenshots/* | tail -n 1)"
+    if [ -z "$1" ];then
+	~/.bin/imgurupload "$(\ls -1Art -d ~/Documents/Screenshots/* | tail -n 1)"
     else
-	~/.bin/imgurupload $@
+	~/.bin/imgurupload "$@"
     fi
 }
 
 # Send a notification on macOS
 notify(){
-    if [ -z $1 ];then
+    if [ -z "$1" ];then
 	osascript -e "display notification \"Task complete!\" with title \"Notification\""
     else
 	osascript -e "display notification \"$1\" with title \"Notification\""
@@ -73,11 +73,12 @@ notify(){
 
 # Go to root of project
 root(){
-    cd $(git rev-parse --show-toplevel 2> /dev/null)
+    cd "$(git rev-parse --show-toplevel 2> /dev/null)" || return 1
 }
 
 # tree with gitignore
-function gtree {
+# FIXME: does not work with POSIX shell
+gtree() {
     git_ignore_files=("$(git config --get core.excludesfile)" .gitignore ~/.gitignore)
     ignore_pattern="$(grep -hvE '^$|^#' "${git_ignore_files[@]}" 2>/dev/null|sed 's:/$::'|tr '\n' '\|')"
     if git status &> /dev/null && [[ -n "${ignore_pattern}" ]]; then
@@ -89,26 +90,26 @@ function gtree {
 
 # speed up video by 2X
 faster() {
-    faster_filename=$(echo $1|sed 's/\..*/2x.mp4/g')
-    ffmpeg -i $1 -filter:v "setpts=0.5*PTS" $faster_filename
+    faster_filename=$(echo "$1" | sed 's/\..*/2x.mp4/g')
+    ffmpeg -i "$1" -filter:v "setpts=0.5*PTS" "$faster_filename"
 }
 
 tt() {
-    if [ -z $1 ];then
+    if [ -z "$1" ];then
 	FOLDER=$(pwd | sed 's:.*/::' | sed 's:^\.::')
 	tmux attach -t "$FOLDER" || tmux new-session -s "$FOLDER"
     else
 	mkdir "$1"
-	cd "$1"
-	tmux attach -t $1 || tmux new-session -s $1
+	cd "$1" || return 1
+	tmux attach -t "$1" || tmux new-session -s "$1"
     fi
 }
 
 # Create a new blog entry. Quickly create file with date prepended
 blog(){
-    DATE=`date +%Y-%m-%d`
+    DATE=$(date +%Y-%m-%d)
     NAME="$DATE-$1.md"
-    nvim $NAME
+    $EDITOR "$NAME"
 }
 
 # Conver webm to mp3 ( used with spotifydl )
@@ -131,65 +132,39 @@ m4amp3(){
 # imgurtolocal filename https://link.com(or in clipboard) png(optional) /img(prepend-optional)
 imgurtolocal(){
     # by default use png as extention
-    if [ -z $3 ];then
+    if [ -z "$3" ];then
 	EXTENTION=$3
     else
 	EXTENTION='png'
     fi
 
-    if [ -z $4 ];then
+    if [ -z "$4" ];then
 	EXTENTION=$4
     else
 	EXTENTION='img/'
     fi
 
-    if [ -z $2 ]; then
+    if [ -z "$2" ]; then
 	wget "$2" -o "$1.$EXTENTION" && echo "$4$1.$EXTENTION" | pbcopy
     else
 	wget "$(pbpaste)" -o "$1.$EXTENTION" && echo "$4$1.$EXTENTION" | pbcopy
     fi
 }
 
-bhead() {
-    if [ -z $2 ]; then
-	LINENUMBER=10
-	FILENAME=$1
-    else
-	LINENUMBER=$1
-	FILENAME=$2
-    fi
-    bat --decorations=never --line-range :$LINENUMBER $FILENAME
-}
-btail() {
-    if [ -z $2 ]; then
-	FILENAME=$1
-	LINES=$(wc -l $FILENAME | sed 's/ *\([0-9]\) .*/\1/' | sed 's/ *//g')
-	LINENUMBER=$(($LINES-10))
-    else
-	FILENAME=$2
-	LINES=$(wc -l $FILENAME | sed 's/ *\([0-9]\) .*/\1/' | sed 's/ *//g')
-	LINENUMBER=$(($LINES-$1))
-    fi
-
-    if (( $LINENUMBER < 0 ));then
-	LINENUMBER=0
-    fi
-    bat --decorations=never --line-range $LINENUMBER: $FILENAME
-}
-
 # Easily copy file from downloads folder
 dcp() {
-    if [ -z $1 ]; then
-	read "TOFILE?Name of destination file: "
+    if [ -z "$1" ]; then
+	printf '%s' "Name of destination file: "
+	read -r TOFILE
     else
 	TOFILE=$1
     fi
-    ls -1 ~/Downloads/ | fzf  --height="40%" --bind="enter:execute(cp ~/Downloads/{+} $TOFILE)+abort"
+    find ~/Downloads/ | fzf  --height="40%" --bind="enter:execute(cp ~/Downloads/{+} $TOFILE)+abort"
 }
 
 # Copy latest screenshot
 ssc() {
-    cp "$(\ls -Art -d ~/Documents/Screenshots/* | tail -n 1)" $1
+    cp "$(\ls -Art -d ~/Documents/Screenshots/* | tail -n 1)" "$1"
 }
 
 kubernetes_get_token() {
@@ -203,7 +178,7 @@ smallify() {
 
 shorten() {
     URL="$1"
-    if [ !  $(echo "$1" | grep '^http[s]*://') ]; then
+    if echo "$1" | grep -vq '^http[s]*://'; then
 	URL="https://$1"
     fi
     echo "Shortening $URL ..."
@@ -213,10 +188,15 @@ shorten() {
 }
 
 gcloud_stream_latest_build_logs() {
-    LATEST_WORKING_BUILD_ID=$(gcloud builds list | awk '/WORKING/ {print $1,"("$4")"}' | fzf | cut -d' ' -f1)
-    if [ -z $LATEST_WORKING_BUILD_ID ];then
+    LATEST_WORKING_BUILD_ID="$(gcloud builds list | awk '/WORKING/ {print $1,"("$4")"}' | fzf | cut -d' ' -f1)"
+    if [ -z "$LATEST_WORKING_BUILD_ID" ];then
 	echo "No builds running currently"
 	LATEST_WORKING_BUILD_ID=$(gcloud builds list | head -n2 | tail -n+2 | cut -d' ' -f1)
     fi
-    gcloud builds log --stream $LATEST_WORKING_BUILD_ID
+    gcloud builds log --stream "$LATEST_WORKING_BUILD_ID"
+}
+
+
+ql(){
+    qlmanage -p "$@" > /dev/null 2> /dev/null
 }

@@ -79,6 +79,7 @@ source $HOME/.fzf_aliases
 source $HOME/.macos_aliases
 
 # Source custom functions
+source $HOME/.zsh_mods
 source $HOME/.common_functions
 source $HOME/.other_functions
 source $HOME/.coding_functions
