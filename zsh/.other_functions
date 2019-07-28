@@ -158,7 +158,7 @@ dcp() {
 	else
 		TOFILE=$1
 	fi
-	find ~/Downloads/ | fzf --height="40%" --bind="enter:execute(cp ~/Downloads/{+} $TOFILE)+abort"
+	find ~/Downloads | fzf --height="40%" --bind="enter:execute(cp {+} $TOFILE)+abort"
 }
 
 # Copy latest screenshot
