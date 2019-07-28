@@ -2,201 +2,203 @@
 
 # Function for transfer.sh
 transfer() {
-    if [ $# -eq 0 ]; then
-	printf "No arguments specified. Usage:\necho transfer /tmp/test.md\ncat /tmp/test.md | transfer test.md";
-	return 1;
-    fi
-    tmpfile=$( mktemp -t transferXXX );
-    if tty -s; then
-	basefile="$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g')"
-	curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" >> "$tmpfile";
-    else
-	curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >> "$tmpfile" ;
-    fi;
-    pbcopy < "$tmpfile";
-    cat "$tmpfile";
-    rm -f "$tmpfile";
+	if [ $# -eq 0 ]; then
+		printf "No arguments specified. Usage:\necho transfer /tmp/test.md\ncat /tmp/test.md | transfer test.md"
+		return 1
+	fi
+	tmpfile=$(mktemp -t transferXXX)
+	if tty -s; then
+		basefile="$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g')"
+		curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" >>"$tmpfile"
+	else
+		curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >>"$tmpfile"
+	fi
+	pbcopy <"$tmpfile"
+	cat "$tmpfile"
+	rm -f "$tmpfile"
 }
 
 stdgrip() {
-    grip "$1" --export -
+	grip "$1" --export -
 }
 
-gifup(){
-    # gifigy: https://github.com/vvo/gifify
-    # imgur-uploader: https://github.com/meain/imgur-uploader
-    timestamp="$(date +"%T")"
-    gifify "$1" -o "/tmp/$timestamp" && ~/.bin/imgurupload "/tmp/$timestamp"
+gifup() {
+	# gifigy: https://github.com/vvo/gifify
+	# imgur-uploader: https://github.com/meain/imgur-uploader
+	timestamp="$(date +"%T")"
+	gifify "$1" -o "/tmp/$timestamp" && ~/.bin/imgurupload "/tmp/$timestamp"
 }
 
 # cd, but use lf to choose dir
-rcd () {
-    tmp="$(mktemp)"
-    lf -last-dir-path="$tmp" "$@"
-    if [ -f "$tmp" ]; then
-	dir="$(cat "$tmp")"
-	\rm -f "$tmp"
-	if [ -d "$dir" ]; then
-	    if [ "$dir" != "$(pwd)" ]; then
-		cd "$dir" || return 1
-	    fi
+rcd() {
+	tmp="$(mktemp)"
+	lf -last-dir-path="$tmp" "$@"
+	if [ -f "$tmp" ]; then
+		dir="$(cat "$tmp")"
+		\rm -f "$tmp"
+		if [ -d "$dir" ]; then
+			if [ "$dir" != "$(pwd)" ]; then
+				cd "$dir" || return 1
+			fi
+		fi
 	fi
-    fi
 }
 
 # ngrok alternative
-servo(){
-    if [ -z "$2" ]; then
-	ssh -R "80:localhost:$1" serveo.net
-    else
-	ssh -R "$2:80:localhost:$1" serveo.net
-    fi
+servo() {
+	if [ -z "$2" ]; then
+		ssh -R "80:localhost:$1" serveo.net
+	else
+		ssh -R "$2:80:localhost:$1" serveo.net
+	fi
 }
 
 # if no args, upload latest screenshot
-imgur(){
-    if [ -z "$1" ];then
-	~/.bin/imgurupload "$(\ls -1Art -d ~/Documents/Screenshots/* | tail -n 1)"
-    else
-	~/.bin/imgurupload "$@"
-    fi
+imgur() {
+	if [ -z "$1" ]; then
+		~/.bin/imgurupload "$(\ls -1Art -d ~/Documents/Screenshots/* | tail -n 1)"
+	else
+		~/.bin/imgurupload "$@"
+	fi
 }
 
 # Send a notification on macOS
-notify(){
-    if [ -z "$1" ];then
-	osascript -e "display notification \"Task complete!\" with title \"Notification\""
-    else
-	osascript -e "display notification \"$1\" with title \"Notification\""
-    fi
+notify() {
+	if [ -z "$1" ]; then
+		osascript -e "display notification \"Task complete!\" with title \"Notification\""
+	else
+		osascript -e "display notification \"$1\" with title \"Notification\""
+	fi
 }
 
 # Go to root of project
-root(){
-    cd "$(git rev-parse --show-toplevel 2> /dev/null)" || return 1
+root() {
+	cd "$(git rev-parse --show-toplevel 2>/dev/null)" || return 1
 }
 
 # tree with gitignore
 # FIXME: does not work with POSIX shell
 gtree() {
-    git_ignore_files=("$(git config --get core.excludesfile)" .gitignore ~/.gitignore)
-    ignore_pattern="$(grep -hvE '^$|^#' "${git_ignore_files[@]}" 2>/dev/null|sed 's:/$::'|tr '\n' '\|')"
-    if git status &> /dev/null && [[ -n "${ignore_pattern}" ]]; then
-      tree -I "${ignore_pattern}" "${@}"
-    else
-      tree "${@}"
-    fi
+	git_ignore_files=("$(git config --get core.excludesfile)" .gitignore ~/.gitignore)
+	ignore_pattern="$(grep -hvE '^$|^#' "${git_ignore_files[@]}" 2>/dev/null | sed 's:/$::' | tr '\n' '\|')"
+	if git status &>/dev/null && [[ -n "${ignore_pattern}" ]]; then
+		tree -I "${ignore_pattern}" "${@}"
+	else
+		tree "${@}"
+	fi
 }
 
 # speed up video by 2X
 faster() {
-    faster_filename=$(echo "$1" | sed 's/\..*/2x.mp4/g')
-    ffmpeg -i "$1" -filter:v "setpts=0.5*PTS" "$faster_filename"
+	faster_filename=$(echo "$1" | sed 's/\..*/2x.mp4/g')
+	ffmpeg -i "$1" -filter:v "setpts=0.5*PTS" "$faster_filename"
 }
 
 tt() {
-    if [ -z "$1" ];then
-	FOLDER=$(pwd | sed 's:.*/::' | sed 's:^\.::')
-	tmux attach -t "$FOLDER" || tmux new-session -s "$FOLDER"
-    else
-	mkdir "$1"
-	cd "$1" || return 1
-	tmux attach -t "$1" || tmux new-session -s "$1"
-    fi
+	if [ -z "$1" ]; then
+		FOLDER=$(pwd | sed 's:.*/::' | sed 's:^\.::')
+		tmux attach -t "$FOLDER" || tmux new-session -s "$FOLDER"
+	else
+		mkdir "$1"
+		cd "$1" || return 1
+		tmux attach -t "$1" || tmux new-session -s "$1"
+	fi
 }
 
 # Create a new blog entry. Quickly create file with date prepended
-blog(){
-    DATE=$(date +%Y-%m-%d)
-    NAME="$DATE-$1.md"
-    $EDITOR "$NAME"
+blog() {
+	DATE=$(date +%Y-%m-%d)
+	NAME="$DATE-$1.md"
+	$EDITOR "$NAME"
 }
 
 # Conver webm to mp3 ( used with spotifydl )
-webmmp3(){
-    for FILE in *.webm; do
-	echo -e "Processing video '\e[32m$FILE\e[0m'";
-	ffmpeg -i "${FILE}" -vn -ab 128k -ar 44100 -y "${FILE%.webm}.mp3";
-    done;
+webmmp3() {
+	for FILE in *.webm; do
+		echo -e "Processing video '\e[32m$FILE\e[0m'"
+		ffmpeg -i "${FILE}" -vn -ab 128k -ar 44100 -y "${FILE%.webm}.mp3"
+	done
 }
 
 # Conver m4a to mp3 ( used with spotifydl )
-m4amp3(){
-    for FILE in *.m4a; do
-	echo -e "Processing video '\e[32m$FILE\e[0m'";
-	ffmpeg -i "${FILE}" -vn -ab 128k -ar 44100 -y "${FILE%.m4a}.mp3";
-    done;
+m4amp3() {
+	for FILE in *.m4a; do
+		echo -e "Processing video '\e[32m$FILE\e[0m'"
+		ffmpeg -i "${FILE}" -vn -ab 128k -ar 44100 -y "${FILE%.m4a}.mp3"
+	done
 }
 
-
 # imgurtolocal filename https://link.com(or in clipboard) png(optional) /img(prepend-optional)
-imgurtolocal(){
-    # by default use png as extention
-    if [ -z "$3" ];then
-	EXTENTION=$3
-    else
-	EXTENTION='png'
-    fi
+imgurtolocal() {
+	# by default use png as extention
+	if [ -z "$3" ]; then
+		EXTENTION=$3
+	else
+		EXTENTION='png'
+	fi
 
-    if [ -z "$4" ];then
-	EXTENTION=$4
-    else
-	EXTENTION='img/'
-    fi
+	if [ -z "$4" ]; then
+		EXTENTION=$4
+	else
+		EXTENTION='img/'
+	fi
 
-    if [ -z "$2" ]; then
-	wget "$2" -o "$1.$EXTENTION" && echo "$4$1.$EXTENTION" | pbcopy
-    else
-	wget "$(pbpaste)" -o "$1.$EXTENTION" && echo "$4$1.$EXTENTION" | pbcopy
-    fi
+	if [ -z "$2" ]; then
+		wget "$2" -o "$1.$EXTENTION" && echo "$4$1.$EXTENTION" | pbcopy
+	else
+		wget "$(pbpaste)" -o "$1.$EXTENTION" && echo "$4$1.$EXTENTION" | pbcopy
+	fi
 }
 
 # Easily copy file from downloads folder
 dcp() {
-    if [ -z "$1" ]; then
-	printf '%s' "Name of destination file: "
-	read -r TOFILE
-    else
-	TOFILE=$1
-    fi
-    find ~/Downloads/ | fzf  --height="40%" --bind="enter:execute(cp ~/Downloads/{+} $TOFILE)+abort"
+	if [ -z "$1" ]; then
+		printf '%s' "Name of destination file: "
+		read -r TOFILE
+	else
+		TOFILE=$1
+	fi
+	find ~/Downloads/ | fzf --height="40%" --bind="enter:execute(cp ~/Downloads/{+} $TOFILE)+abort"
 }
 
 # Copy latest screenshot
 ssc() {
-    cp "$(\ls -Art -d ~/Documents/Screenshots/* | tail -n 1)" "$1"
+	cp "$(\ls -Art -d ~/Documents/Screenshots/* | tail -n 1)" "$1"
 }
 
 kubernetes_get_token() {
-    kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | awk '/^deployment-controller-token-/{print $1}') | awk '$1=="token:"{print $2}'
+	kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | awk '/^deployment-controller-token-/{print $1}') | awk '$1=="token:"{print $2}'
 }
 
 # Decrease file size using H.264
 smallify() {
-    ffmpeg -i "$1" -vcodec libx264 -acodec aac "$1".mp4
+	ffmpeg -i "$1" -vcodec libx264 -acodec aac "$1".mp4
 }
 
 shorten() {
-    URL="$1"
-    if echo "$1" | grep -vq '^http[s]*://'; then
-	URL="https://$1"
-    fi
-    echo "Shortening $URL ..."
-    SURL=$(curl -s "http://tinyurl.com/api-create.php?url=$1")
-    echo "$SURL" | pbcopy
-    echo "$SURL"
+	URL="$1"
+	if echo "$1" | grep -vq '^http[s]*://'; then
+		URL="https://$1"
+	fi
+	echo "Shortening $URL ..."
+	SURL=$(curl -s "http://tinyurl.com/api-create.php?url=$1")
+	echo "$SURL" | pbcopy
+	echo "$SURL"
 }
 
 gcloud_stream_latest_build_logs() {
-    LATEST_WORKING_BUILD_ID="$(gcloud builds list | awk '/WORKING/ {print $1,"("$4")"}' | fzf | cut -d' ' -f1)"
-    if [ -z "$LATEST_WORKING_BUILD_ID" ];then
-	echo "No builds running currently"
-	LATEST_WORKING_BUILD_ID=$(gcloud builds list | head -n2 | tail -n+2 | cut -d' ' -f1)
-    fi
-    gcloud builds log --stream "$LATEST_WORKING_BUILD_ID"
+	LATEST_WORKING_BUILD_ID="$(gcloud builds list | awk '/WORKING/ {print $1,"("$4")"}' | fzf | cut -d' ' -f1)"
+	if [ -z "$LATEST_WORKING_BUILD_ID" ]; then
+		echo "No builds running currently"
+		LATEST_WORKING_BUILD_ID=$(gcloud builds list | head -n2 | tail -n+2 | cut -d' ' -f1)
+	fi
+	gcloud builds log --stream "$LATEST_WORKING_BUILD_ID"
 }
 
+ql() {
+	qlmanage -p "$@" >/dev/null 2>/dev/null
+}
 
-ql(){
-    qlmanage -p "$@" > /dev/null 2> /dev/null
+stream() {
+	youtube-dl -o - "$1" | mpv -
 }
