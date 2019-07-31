@@ -55,9 +55,11 @@ local jcs = require "jumpcutselect"
 jcs.registerDefaultBindings({"alt"}, 'P')
 
 customshellrun = require('customshellrun') 
-shiftDoublePress = require("shiftDoublePress")
-shiftDoublePress.timeFrame = 2
-shiftDoublePress.action = function()
+keyMultiPress = require("keyMultiPress")
+keyMultiPress.timeFrame = 2
+keyMultiPress.clickCount = 4
+keyMultiPress.keyType = 'shift'
+keyMultiPress.action = function()
   customshellrun.run('/Users/meain/.bin/openorsearch "' ..  pasteboard.getContents() .. '"')
 end
 
