@@ -45,6 +45,10 @@ hs.notify.new({title="Hammerspoon", informativeText="Hammerspoon config reloaded
 local anycomplete = require "anycomplete"
 anycomplete.registerDefaultBindings({"alt"}, 'G')
 
+-- Emoji picker
+local emojipicker = require "emojipicker"
+emojipicker.registerDefaultBindings({"alt"}, 'E')
+
 require "jumpcut"
 
 local jcs = require "jumpcutselect"
