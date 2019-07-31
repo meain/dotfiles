@@ -6,6 +6,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 " Visual enhancements
 Plug 'mhinz/vim-janah'                                                                         " Janah colorscheme
+" Plug 'vim-scripts/Red-Black'                                                                   " Redblack colorscheme
 Plug 'Yggdroot/indentLine'                                                                     " Show indent
 Plug 'mhinz/vim-signify'                                                                       " Git diff icons in gutter
 " Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }                                           " Hyper focus editing
