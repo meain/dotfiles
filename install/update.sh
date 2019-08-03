@@ -17,9 +17,6 @@ poetry self update
 rustup update stable
 rustup update nightly
 
-# update alacritty
-cd ~/Documents/Projects/others/clones/alacritty && git pull origin master && make app && cp -r target/release/osx/Alacritty.app /Applications/ && cd -
-
 gloc "git fetch" "/Users/meain/Documents/Projects/work/saama"
 gloc "git fetch" "/Users/meain/Documents/Projects/projects"
 
