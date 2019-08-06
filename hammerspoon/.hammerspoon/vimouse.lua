@@ -119,9 +119,9 @@ return function(tmod, tkey)
       end
 
       if flags.shift then
-        mul = 7
-      else
         mul = 1
+      else
+        mul = 7
       end
 
       if is_tapkey or code == keycodes['escape'] then
