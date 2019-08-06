@@ -144,13 +144,13 @@ return function(tmod, tkey)
 
         local scroll_mul = 1 + math.log(scrolling)
         if code == keycodes['j'] then
-          scroll_y_delta = math.ceil(-1 * scroll_mul)
+          scroll_y_delta = math.ceil(1 * scroll_mul)
         elseif code == keycodes['l'] then
           scroll_x_delta = math.ceil(-1 * scroll_mul)
         elseif code == keycodes['h'] then
           scroll_x_delta = math.ceil(1 * scroll_mul)
         else
-          scroll_y_delta = math.floor(1 * scroll_mul)
+          scroll_y_delta = math.floor(-1 * scroll_mul)
         end
         log.d("Scrolling", scrolling, '-', scroll_y_delta)
         log.d("Scrolling", scrolling, '-', scroll_x_delta)
