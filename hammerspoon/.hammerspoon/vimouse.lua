@@ -135,7 +135,7 @@ return function(tmod, tkey)
         tap:stop()
         hs.mouse.setAbsolutePosition(orig_coords)
         return true
-      elseif (code == keycodes['j'] or code == keycodes['k'] or code == keycodes['l'] or code == keycodes['h']) and flags.alt then
+      elseif flags.alt and (code == keycodes['j'] or code == keycodes['k'] or code == keycodes['l'] or code == keycodes['h']) then
         if repeating ~= 0 then
           scrolling = scrolling + 1
         else
