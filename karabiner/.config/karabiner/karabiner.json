@@ -42,7 +42,37 @@
                         ]
                     },
                     {
-                        "description": "left option to sitft+option. (option if pressed alone)",
+                        "description": "Change tab to option+command+shift. (Post tab if pressed alone)  TODO: use this for mouse movemets",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "tab",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "left_option",
+                                        "modifiers": [
+                                            "left_shift",
+                                            "left_command"
+                                        ]
+                                    }
+                                ],
+                                "to_if_alone": [
+                                    {
+                                        "key_code": "tab"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "left option to sitft+option. (down_arrow if pressed alone)",
                         "manipulators": [
                             {
                                 "from": {
@@ -71,7 +101,7 @@
                         ]
                     },
                     {
-                        "description": "left option to sitft+option. (option if pressed alone)",
+                        "description": "left control to up arrow if pressed alone)",
                         "manipulators": [
                             {
                                 "from": {
