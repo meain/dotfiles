@@ -455,9 +455,6 @@ vnoremap P "+P
 vnoremap > >gv
 vnoremap < <gv
 
-" Easy buffer switching
-nnoremap <silent><Leader> :tabnew\|:Startify<cr>
-
 " Terminal split jump
 tnoremap <m-h> <C-\><C-N><C-w>h
 tnoremap <m-j> <C-\><C-N><C-w>j
@@ -543,7 +540,7 @@ nnoremap <silent><leader>o :only<cr>
 nnoremap <silent><leader>y ^yg_
 
 " New tab
-" nnoremap <silent><leader>t :tabnew \| :Startify<cr>
+nnoremap <silent><leader>t :tabnew \| :Startify<cr>
 
 " Easier switching of quickfix list items
 nnoremap <silent><leader>n :cnext<cr>
