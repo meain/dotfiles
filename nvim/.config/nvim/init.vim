@@ -543,7 +543,7 @@ nnoremap <silent><leader>o :only<cr>
 nnoremap <silent><leader>y ^yg_
 
 " New tab
-nnoremap <silent><leader>t :tabnew \| :Startify<cr>
+nnoremap <silent><leader><Tab> :tabnew \| :Startify<cr>
 
 " Easier switching of quickfix list items
 nnoremap <silent><leader>n :cnext<cr>
