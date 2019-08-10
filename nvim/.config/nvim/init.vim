@@ -795,7 +795,7 @@ endfunction
 
 " Fzf fuzzy search
 let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --glob "!.git/*"'
-let g:fzf_layout = { 'down': '~40%' }
+let g:fzf_layout = { 'down': '~20%' }  " Default fzf layout
 let g:fzf_tags_command = 'ctags -R'
 let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 command! -bang History call fzf#vim#history({'options': ['--query', '!.git/ !.vim/ ', '--no-sort', '--preview', 'cat {}']}, <bang>0)
@@ -828,7 +828,6 @@ let g:fzf_colors =
   \ 'marker':  ['fg', 'WildMenu'],
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
-let g:fzf_layout = { 'down': '~20%' }  " Default fzf layout
 
 " MRU
 let MRU_Max_Entries = 200
