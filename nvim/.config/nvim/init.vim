@@ -214,7 +214,7 @@ set noshowmatch
 set updatetime=2000
 
 " Always show signcolumns
-set signcolumn=yes
+set signcolumn=auto
 
 " Tabs config
 set expandtab
@@ -1126,6 +1126,8 @@ nnoremap <silent> gx :call LanguageClient_textDocument_rename()<CR>
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 nnoremap <silent> gr :call LanguageClient_textDocument_references()<CR>
 nnoremap <silent> gh :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> g, :call LanguageClient_textDocument_formatting()<CR>
+vnoremap <silent> g, :call LanguageClient_textDocument_rangeFormatting()<CR>
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
