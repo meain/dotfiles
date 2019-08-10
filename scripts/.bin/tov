@@ -1,3 +1,3 @@
 #!/bin/sh
 
-curl -s _X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendVideo" -F chat_id="$TELEGRAM_USER_ID" -F video="@$1" >/dev/null 2>&1 && echo "Message send"
+curl -s _X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendVideo" -F chat_id="$TELEGRAM_USER_ID" -F video="@$1" >/dev/null 2>&1 && echo "Message sent"
