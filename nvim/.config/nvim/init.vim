@@ -397,6 +397,9 @@ iabbr imoprt import
 "                                Commands                              "
 "                    ==============================                    "
 
+" vertical help
+ca h vert h
+
 " Save as sudo
 ca w!! w !sudo tee "%"
 
@@ -408,8 +411,7 @@ command! W w
 " Fix overflow ( above 80 )
 command! FixOverflow :normal! gqap
 
-" vertical help
-ca h vert h
+command! GitPush :normal! :Dispatch! git push origin $(git branch | grep "\*" | sed s:^..::g )<cr>
 
 
 
