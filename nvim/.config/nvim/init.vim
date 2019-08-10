@@ -213,6 +213,9 @@ set noshowmatch
 " Set updatetime
 set updatetime=2000
 
+" Always show signcolumns
+set signcolumn=yes
+
 " Tabs config
 set expandtab
 set smarttab
