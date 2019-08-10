@@ -560,6 +560,9 @@ autocmd FileType typescript.tsx nnoremap <buffer><leader>c mc?class=<CR>ciwclass
 " quick search and replace
 nnoremap <leader>; :%s/\v
 
+" quick edit next marker
+nnoremap ss /<++><cr>xxxx:nohls<cr>i
+
 
 
 
