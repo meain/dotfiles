@@ -18,7 +18,7 @@ Plug 'machakann/vim-highlightedyank'                                            
 " Added functinality
 Plug 'meain/vim-startify'                                                                      " A fancy start page for vim (slow)
 Plug '~/Documents/Projects/others/done/_vim/vim-googler', { 'on': 'Google' }                   " Google from within vim
-Plug 'justinmk/vim-sneak'                                                                      " Quickly sneak arround
+" Plug 'justinmk/vim-sneak'                                                                      " Quickly sneak arround
 Plug 'wincent/loupe'                                                                           " Better search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }                              " Fzf
 Plug 'junegunn/fzf.vim'                                                                        " Fzf for vim
@@ -51,13 +51,13 @@ Plug 'scrooloose/nerdtree', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggl
 " Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] } " Git sign for nerdtree
 Plug 'meain/vim-automkdir'                                                                     " Automatically create parent dirs
 Plug 'yardnsm/vim-import-cost', { 'do': 'npm install', 'for': g:javascript_filetypes }         " See import cost of javascript deps
-Plug 'machakann/vim-swap'                                                                      " Swap arguments
+" Plug 'machakann/vim-swap'                                                                      " Swap arguments
 
 " Morph code
 Plug 'tpope/vim-surround'                                                                      " Surround
 Plug 'jiangmiao/auto-pairs'                                                                    " Autopair
 Plug 'tomtom/tcomment_vim'                                                                     " Code commenting
-Plug 'junegunn/vim-easy-align'                                                                 " Some prettification
+" Plug 'junegunn/vim-easy-align'                                                                 " Some prettification
 
 " Language helpers
 " Plug 'sheerun/vim-polyglot'                                                                  " Multiple language support (slow)
@@ -65,8 +65,8 @@ Plug 'junegunn/vim-easy-align'                                                  
 Plug 'elzr/vim-json', { 'for': 'json' }                                                        " Json syntax highlight
 Plug 'chr4/nginx.vim', { 'for': 'nginx' }                                                      " Nginx config file syntax
 " Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }                    " Javascript syntax highlight
+" Plug 'leafgarland/typescript-vim', { 'for': [ 'typescript', 'typescript.tsx' ] }              " Typescript syntax highlight
 Plug 'HerringtonDarkholme/yats.vim', { 'for': [ 'typescript', 'typescript.tsx' ] }             " Typescript syntax highlight
-" lug 'leafgarland/typescript-vim', { 'for': [ 'typescript', 'typescript.tsx' ] }              " Typescript syntax highlight
 Plug 'peitalin/vim-jsx-typescript', { 'for': [ 'typescript', 'typescript.tsx' ] }              " Typescript JSX syntax highlight
 Plug 'neoclide/vim-jsx-improve', { 'for': ['javascript', 'javascript.jsx'] }                   " Inproved JSX syntax
 Plug 'tpope/vim-markdown', { 'for': ['md', 'markdown'] }                                       " Better markdown support
@@ -456,7 +456,7 @@ vnoremap > >gv
 vnoremap < <gv
 
 " Easy buffer switching
-nnoremap <silent><Leader><Tab> :tabnew\|:Startify<cr>
+nnoremap <silent><Leader> :tabnew\|:Startify<cr>
 
 " Terminal split jump
 tnoremap <m-h> <C-\><C-N><C-w>h
@@ -556,15 +556,7 @@ autocmd FileType typescript nnoremap <buffer><leader>c mc?class=<CR>ciwclassName
 autocmd FileType typescript.tsx nnoremap <buffer><leader>c mc?class=<CR>ciwclassName<ESC>`c4l
 
 " quick search and replace
-nnoremap <leader>: :%s/
-
-" Hack until QuickPrint is a thing
-" autocmd FileType javascript.jsx vnoremap <silent><leader>p "pyoconsole.log("<esc>"ppa", <esc>"ppa)<esc>
-" autocmd FileType javascript.jsx nnoremap <silent><leader>p viw"pyoconsole.log("<esc>"ppa", <esc>"ppa)<esc>
-" autocmd FileType javascript vnoremap <silent><leader>p "pyoconsole.log("<esc>"ppa", <esc>"ppa)<esc>
-" autocmd FileType javascript nnoremap <silent><leader>p viw"pyoconsole.log("<esc>"ppa", <esc>"ppa)<esc>
-" autocmd FileType python vnoremap <silent><leader>p "pyoprint("<esc>"ppa", <esc>"ppa)<esc>
-" autocmd FileType python nnoremap <silent><leader>p viw"pyoprint("<esc>"ppa", <esc>"ppa)<esc>
+nnoremap <leader>; :%s/\v
 
 
 
@@ -1225,7 +1217,7 @@ let g:rg_highlight = 1
 let g:rg_command = 'rg --vimgrep --ignore-case --hidden --follow'
 
 " Dash
-" nnoremap <silent><leader>; :Dash<cr>
+" nnoremap <silent><leader>: :Dash<cr>
 
 "Loupe
 let g:LoupeVeryMagic=0
