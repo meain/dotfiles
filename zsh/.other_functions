@@ -109,7 +109,9 @@ tt() {
 blog() {
 	DATE=$(date +%Y-%m-%d)
 	NAME="$DATE-$1.md"
-	cat ~/.datafiles/blog_template > "$NAME"
+	if [ ! -f "$NAME" ]; then
+	    cat ~/.datafiles/blog_template >> "$NAME"
+	fi
 	$EDITOR "$NAME"
 }
 
