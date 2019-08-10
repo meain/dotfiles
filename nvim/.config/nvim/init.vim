@@ -471,7 +471,7 @@ tnoremap <Leader><Esc> <C-\><C-n>
 nnoremap yp mzggVG"+y`z
 
 " Vim docs
-au FileType vim nmap K :help <c-r><c-w><cr>
+" au FileType vim nmap K :help <c-r><c-w><cr>
 
 " Don't change Enter in all buffers
 autocmd FileType help nnoremap <buffer> <Enter> <Enter>
@@ -1122,10 +1122,18 @@ let g:LanguageClient_diagnosticsDisplay = {
       \},
       \}
 nnoremap <silent><leader>l :call LanguageClient_contextMenu()<CR>
-nnoremap <silent> gh :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> gx :call LanguageClient_textDocument_rename()<CR>
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 nnoremap <silent> gr :call LanguageClient_textDocument_references()<CR>
+nnoremap <silent> gh :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call LanguageClient#textDocument_hover()
+  endif
+endfunction
 
 " Github Dashboard
 let g:github_dashboard = { 'username': 'meain' , 'password': $GITHUB_DASHBOARD_VIM_TOKEN }
