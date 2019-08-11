@@ -18,5 +18,7 @@ function! OpenCurrentFileInGithub(...)
   call system('open ' . url)
 endfunction
 
+command! OpenCurrentFileInGithub :echom "<leader>og in visual mode"<cr>
+
 nnoremap <silent> <leader>og :echom "Github link only in visual mode"<cr>
 vnoremap <silent> <leader>og :<c-u>call OpenCurrentFileInGithub()<cr>
