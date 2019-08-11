@@ -1,3 +1,10 @@
 #!/bin/sh
 
-curl -s -X POST "https://api.telegram.org/bot"$TELEGRAM_BOT_TOKEN"/sendPhoto" -F chat_id="$TELEGRAM_USER_ID" -F photo="@$1" | jq '.ok'
+if [ -z $1 ];then
+  FILE="$(\ls -Art -d ~/Documents/Screenshots/* | tail -n 1)"
+  echo "$FILE"
+else
+  FILE=$1
+fi
+
+curl -s -X POST "https://api.telegram.org/bot"$TELEGRAM_BOT_TOKEN"/sendPhoto" -F chat_id="$TELEGRAM_USER_ID" -F photo="@$FILE" | jq '.ok'

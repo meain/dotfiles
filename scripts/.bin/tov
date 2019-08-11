@@ -1,3 +1,10 @@
 #!/bin/sh
 
-curl -s _X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendVideo" -F chat_id="$TELEGRAM_USER_ID" -F video="@$1" | jq '.ok'
+if [ -z $1 ];then
+  FILE="$(\ls -Art -d ~/Documents/Screen Recordings/* | tail -n 1)"
+  echo "$FILE"
+else
+  FILE=$1
+fi
+
+curl -s _X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendVideo" -F chat_id="$TELEGRAM_USER_ID" -F video="@$FILE" | jq '.ok'
