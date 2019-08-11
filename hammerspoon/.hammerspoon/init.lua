@@ -23,7 +23,7 @@ hs.alert.defaultStyle.fillColor = { white = 0, alpha = 0.95 }
 -- Simle key remaps
 local switchscreen = require "switchscreen"
 hs.hotkey.bind({"ctrl", "cmd"}, "s", function ()
-  switchscreen.focusScreen(hs.window.focusedWindow():screen():next())
+  switchscreen.focusScreen(hs.mouse.getCurrentScreen():next())
 end)
 
 -- Auto-reload config on change
