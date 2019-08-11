@@ -125,7 +125,7 @@
                         ]
                     },
                     {
-                        "description": "Two shift to f24",
+                        "description": "Two shift to ctrl+cmd+s",
                         "manipulators": [
                             {
                                 "from": {
