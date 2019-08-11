@@ -1310,10 +1310,18 @@ let g:tagbar_type_markdown = {
 "                    ==============================                    "
 
 " File manipulations
-source ~/.config/nvim/filemanip.vim
+
+augroup load_file_manip
+    autocmd!
+    autocmd CursorHold,CursorHoldI * source ~/.config/nvim/filemanip.vim | autocmd! load_file_manip
+augroup end
 
 " Git stuff
-source ~/.config/nvim/gitutils.vim
+
+augroup load_git_utils
+    autocmd!
+    autocmd CursorHold,CursorHoldI * source ~/.config/nvim/gitutils.vim | autocmd! load_file_manip
+augroup end
 
 " Statusline
 source ~/.config/nvim/statusline.vim
