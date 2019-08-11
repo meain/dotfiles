@@ -1,0 +1,88 @@
+#!/usr/bin/env ruby
+require 'digest'
+
+module VanitySha
+  extend self
+
+  COMMITTER_PATTERN = /^committer .* \<.*\> (?<timestamp>\d+)(?<timezone>.*$)/
+
+  TIMESTAMP_DELTA_MAX = 10 * 24 * 60 * 60
+
+  DELTAS = Enumerator.new do |enumerator|
+    for i in 0..TIMESTAMP_DELTA_MAX
+      enumerator << i
+      enumerator << -i
+    end
+  end
+
+  def get_commit_info()
+    `git cat-file commit HEAD`
+  end
+
+  def extract_committer(commit_info)
+    committer = commit_info
+    .split("\n")
+    .map {|line| line.match(COMMITTER_PATTERN)}
+    .compact
+    .first
+
+    [committer.string, committer[:timestamp].to_i, committer[:timezone]]
+  end
+
+  def search(commit_info, hex_prefix)
+    committer_line, commit_ts = extract_committer(commit_info)
+
+    DELTAS.each do |delta|
+      new_committer_line = committer_line.sub(commit_ts.to_s, (commit_ts + delta).to_s)
+      new_commit = commit_info.sub(committer_line, new_committer_line)
+      new_sha = get_sha(new_commit)
+      return [delta, new_sha] if new_sha.start_with?(hex_prefix)
+    end
+    nil
+  end
+
+  def get_sha(commit_info)
+    Digest::SHA1.hexdigest "#{commit_header(commit_info)}#{commit_info}"
+  end
+
+  def amend_commit(new_ts, original_tz)
+    `LC_ALL=C GIT_COMMITTER_DATE=\"#{new_ts}#{original_tz}\" git commit --amend --no-edit`
+  end
+
+  def commit_header(commit_info)
+    "commit #{commit_info.length}\0"
+  end
+end
+
+if ARGV.length != 1 || ARGV[0].length < 1
+  puts "usage: git vanity-sha prefix"
+  puts "example: git vanity-sha CAFE"
+  exit(1)
+end
+
+target_prefix = ARGV[0].downcase
+original_commit_info = VanitySha.get_commit_info()
+_, original_ts, original_tz = VanitySha.extract_committer(original_commit_info)
+
+puts "Searching for new SHA...\n"
+
+result = VanitySha.search(original_commit_info, target_prefix)
+
+if result
+  delta, sha = result
+  new_ts = original_ts + delta
+
+  puts "SHA found: #{sha.sub(target_prefix, "\e[32m#{target_prefix}\e[0m")}"
+  puts "Change committer timestamp to #{Time.at(new_ts)}? This will amend your commit."
+  print "(y/n): "
+
+  if STDIN.gets.chomp == "y"
+    VanitySha.amend_commit(new_ts, original_tz)
+    puts "\n" + "-" * 47
+    puts `git show --quiet --format=short HEAD`
+  else
+    puts "Aborting."
+  end
+else
+  puts "Failed to generate a sha with prefix #{target_prefix}."
+end
