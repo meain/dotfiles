@@ -1,0 +1,3 @@
+#!/bin/sh
+
+ps axhc -o command,%mem -m | head
