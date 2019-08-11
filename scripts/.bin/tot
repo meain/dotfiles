@@ -1,6 +1,13 @@
 #!/bin/sh
 
-curl -X POST \
+if [ -z "$1" ];then
+  MESSAGE=$(pbpaste)
+  echo "$MESSAGE"
+else
+  MESSAGE="$*"
+fi
+
+curl -s -X POST \
      -H 'Content-Type: application/json' \
-     -d "{\"chat_id\": \"$TELEGRAM_USER_ID\", \"text\": \"$1\", \"disable_notification\": true}" \
-     "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage"
+     -d "{\"chat_id\": \"$TELEGRAM_USER_ID\", \"text\": \"$MESSAGE\", \"disable_notification\": true}" \
+     "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" | jq '.ok'
