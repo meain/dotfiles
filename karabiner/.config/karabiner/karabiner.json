@@ -168,6 +168,7 @@
                                         "key_code": "s",
                                         "modifiers": [
                                             "left_command",
+                                            "left_shift",
                                             "left_control"
                                         ],
                                         "repeat": false
