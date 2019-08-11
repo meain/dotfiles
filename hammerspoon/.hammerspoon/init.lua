@@ -26,6 +26,10 @@ hs.hotkey.bind({"ctrl", "cmd"}, "s", function ()
   switchscreen.focusScreen(hs.mouse.getCurrentScreen():next())
 end)
 
+hs.hotkey.bind({"ctrl", "cmd", "shift"}, "s", function ()
+  switchscreen.focusScreen(hs.mouse.getCurrentScreen():previous())
+end)
+
 -- Auto-reload config on change
 function reloadConfig(files)
   doReload = false
