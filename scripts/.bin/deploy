@@ -1,0 +1,8 @@
+#!/bin/sh
+
+set -e
+
+git checkout deploy
+git merge master
+git push origin deploy
+git checkout master
