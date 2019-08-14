@@ -4,7 +4,7 @@
 alias kalf='kubectl apply -f'
 
 kpods() {
-  kubectl get pods | cut -d' ' -f1 | tail -n +2 | fzf --query "$*"
+  kubectl get pods | tail -n +2 | awk '{print $3,$1}' | fzf --query "$*" | cut -d' ' -f2
 }
 
 klog(){
