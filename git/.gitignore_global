@@ -1,0 +1,17 @@
+# mac
+.DS_Store
+
+# python
+*.pyc
+__pycache__
+
+# js
+build
+dist
+.cache
+
+# general
+*.log
+
+# others
+.vscode
