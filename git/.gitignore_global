@@ -12,6 +12,7 @@ dist
 
 # general
 *.log
+*.rdb
 
 # others
 .vscode
