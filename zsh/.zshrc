@@ -9,6 +9,7 @@ export TERM=screen-256color-italic
 # Golang
 export GOPATH=~/.go
 export GOBIN=$GOPATH/bin
+PATH=$PATH:$GOPATH/bin
 
 # Rust
 PATH=$PATH:~/.cargo/bin
@@ -27,7 +28,7 @@ PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
 
 # PATH
 PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/git/bin:$HOME/.bin:$PATH
-PATH=$PATH:$GOPATH/bin
+PATH=$PATH:$HOME/.temp_bin
 export PATH
 
 echo ""
