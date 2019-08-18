@@ -15,3 +15,15 @@ gcl() {
     git clone "$GITURL"
     cd "$FOLDER" || return 1
 }
+
+git_untracked_to_gitignore() {
+    git status | grep -P \"^\\t\" | grep -vF .gitignore | sed \"s/^\\t//\" >> .gitignore
+}
+
+git_list_ignord_files() {
+    git ls-files --others -i --exclude-standard
+}
+
+git_list_unmerged_branches() {
+    git checkout master && git branch -a --no-merged
+}
