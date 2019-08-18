@@ -770,6 +770,15 @@ function! Join()
 endfunction
 nnoremap <silent>J :call Join()<CR>
 
+" Search for css defenittion
+function! s:CSSSearchForClassDef()
+  setlocal iskeyword+=-
+  let word = expand('<cword>')
+  setlocal iskeyword-=-
+  execute ':Find .' . word
+endfunction
+command! CSSSearchForClassDef :call s:CSSSearchForClassDef()
+
 " Quickly print a variable
 " function! QuickPrint()
 "   let print_format = 
@@ -801,6 +810,21 @@ let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --glob "!.git/*"'
 let g:fzf_layout = { 'down': '~20%' }  " Default fzf layout
 let g:fzf_tags_command = 'ctags -R'
 let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+let g:fzf_colors =
+      \ { 'fg':      ['fg', 'Comment'],
+      \ 'bg':      ['bg', 'Normal'],
+      \ 'hl':      ['fg', 'Normal'],
+      \ 'fg+':     ['fg', 'Identifier', 'Normal', 'Normal'],
+      \ 'bg+':     ['bg', 'Normal', 'Normal'],
+      \ 'hl+':     ['fg', 'Type'],
+      \ 'info':    ['fg', 'PreProc'],
+      \ 'border':  ['fg', 'Ignore'],
+      \ 'prompt':  ['fg', 'Conditional'],
+      \ 'pointer': ['fg', 'Exception'],
+      \ 'marker':  ['fg', 'WildMenu'],
+      \ 'spinner': ['fg', 'Label'],
+      \ 'header':  ['fg', 'Comment'] }
+
 command! -bang History call fzf#vim#history({'options': ['--query', '!.git/ !.vim/ ', '--no-sort', '--preview', 'cat {}']}, <bang>0)
 command! -bang -nargs=? -complete=dir GFiles
 \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
@@ -817,20 +841,6 @@ autocmd! FileType fzf
 autocmd  FileType fzf set laststatus=0 noshowmode noruler
   \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 
-let g:fzf_colors =
-\ { 'fg':      ['fg', 'Comment'],
-  \ 'bg':      ['bg', 'Normal'],
-  \ 'hl':      ['fg', 'Normal'],
-  \ 'fg+':     ['fg', 'Identifier', 'Normal', 'Normal'],
-  \ 'bg+':     ['bg', 'Normal', 'Normal'],
-  \ 'hl+':     ['fg', 'Type'],
-  \ 'info':    ['fg', 'PreProc'],
-  \ 'border':  ['fg', 'Ignore'],
-  \ 'prompt':  ['fg', 'Conditional'],
-  \ 'pointer': ['fg', 'Exception'],
-  \ 'marker':  ['fg', 'WildMenu'],
-  \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment'] }
 
 " MRU
 let MRU_Max_Entries = 200
