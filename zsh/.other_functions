@@ -207,7 +207,7 @@ stream() {
 }
 
 # usage: `loop <count> <command>`
-loop(){
+loop() {
     c=1
     MAX=$1
     shift
@@ -216,4 +216,9 @@ loop(){
 	$*
 	c=$((c+1))
     done
+}
+
+
+copycommand() {
+    echo "$*" | pbcopy
 }
