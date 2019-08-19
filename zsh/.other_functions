@@ -205,3 +205,15 @@ ql() {
 stream() {
 	youtube-dl -o - "$1" | mpv -
 }
+
+# usage: `loop <count> <command>`
+loop(){
+    c=1
+    MAX=$1
+    shift
+    while [ $c -le "$MAX" ]
+    do 
+	$*
+	c=$((c+1))
+    done
+}
