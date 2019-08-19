@@ -8,7 +8,7 @@ kpods() {
 }
 
 klog(){
-  kubectl logs -f "$(kpods "$*")"
+  kubectl logs --tail=130 -f "$(kpods "$*")"
 }
 
 kshell() {
