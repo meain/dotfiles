@@ -16,3 +16,6 @@ dist
 
 # others
 .vscode
+
+# personal
+run-dev
