@@ -68,8 +68,8 @@ keyMultiPress.action = function()
 end
 
 local vimouse = require('vimouse')
-vimouse('alt', '\'')
+vimouse('alt', ';')
 
-hs.hotkey.bind({'alt'}, ';', function()
+hs.hotkey.bind({'alt'}, '\'', function()
   hs.eventtap.keyStroke({}, 'delete')
 end)
