@@ -55,7 +55,6 @@ alias lock="osascript -e 'tell application \"System Events\" to keystroke \"q\" 
 
 alias mpv='mpv --sub-ass-override=strip'
 
-alias tb='nc termbin.com 9999 | tee /dev/tty | pbcopy'
 alias pb='pbpaste | nc termbin.com 9999 | tee /dev/tty | pbcopy'
 
 alias start='./run-dev || npm start'
