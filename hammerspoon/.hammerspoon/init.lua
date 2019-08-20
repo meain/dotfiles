@@ -5,6 +5,8 @@ local log = hs.logger.new('hms', logLevel)
 
 local pasteboard = require("hs.pasteboard")
 
+require("mousehighlight")
+
 
 -- Disable animations
 hs.window.animationDuration = 0
