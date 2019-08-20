@@ -1714,7 +1714,7 @@
                                 "key_code": "right_control"
                             },
                             "to": {
-                                "key_code": "left_arrow"
+                                "key_code": "right_arrow"
                             }
                         },
                         {
@@ -1722,7 +1722,7 @@
                                 "key_code": "right_option"
                             },
                             "to": {
-                                "key_code": "right_arrow"
+                                "key_code": "left_arrow"
                             }
                         }
                     ]
