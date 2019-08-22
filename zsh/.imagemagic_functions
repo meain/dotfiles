@@ -1,0 +1,28 @@
+#!/bin/sh
+
+boxen(){
+    OIFS="$IFS"
+    IFS=$'\n'
+    for file in `find . -type f -name "*.jpeg"`  
+    do
+         echo "file = $file"
+         convert "$file" -trim +repage -resize '500x500>' -gravity center -extent 500x500 "$file-converted.png"
+    done
+    IFS="$OIFS"
+}
+
+boxenblur(){
+    OIFS="$IFS"
+    IFS=$'\n'
+    for file in `find . -type f -name "*.jpeg"`  
+    do
+         echo "file = $file"
+         # convert "$file" -trim +repage -resize '500x500>' -gravity center -extent 500x500 "$file-converted.png"
+         convert -size 1024x1024 xc:skyblue \
+            "$file" -geometry 1024x768 -blur 0x25 -gravity northwest -composite \
+            "$file" -geometry 1024x1024 -blur 0x25 -gravity southeast -composite \
+            "$file" -geometry 1024x1024 -gravity center -composite \
+            "$file"-out.png
+    done
+    IFS="$OIFS"
+}
