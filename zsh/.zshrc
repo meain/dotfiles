@@ -26,6 +26,10 @@ PATH=/Library/TeX/texbin:$PATH
 # Linuxbrew
 PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
 
+# Wasmer
+export WASMER_DIR="/Users/meain/.wasmer"
+[ -s "$WASMER_DIR/wasmer.sh" ] && source "$WASMER_DIR/wasmer.sh"
+
 # PATH
 PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/git/bin:$HOME/.bin:$PATH
 PATH=$PATH:$HOME/.temp_bin
@@ -130,7 +134,7 @@ export KEYTIMEOUT=1
 
 # updates PATH for Google Cloud SDK && add shell completion for gcloud
 GOOGLE_CLOUD='/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
-GOOGLE_CLOUD_COMPLETIONS='/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc]'
+GOOGLE_CLOUD_COMPLETIONS='/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
 if [ -f '$GOOGLE_CLOUD' ]; then source '$GOOGLE_CLOUD'; fi
 if [ -f '$GOOGLE_CLOUD_COMPLETIONS' ]; then source '$GOOGLE_CLOUD_COMPLETIONS'; fi
 
