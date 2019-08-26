@@ -27,3 +27,7 @@ git_list_ignord_files() {
 git_list_unmerged_branches() {
     git checkout master && git branch -a --no-merged
 }
+
+git_delete_tag() {
+    git tag --delete "$1" && git push --delete origin "$1"
+}
