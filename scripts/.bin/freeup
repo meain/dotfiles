@@ -1,0 +1,40 @@
+#!/bin/sh
+
+usage_before=$(diskutil info / | grep "Free Space" | awk '{print $4,$11}')
+echo "Current free space: $usage_before"
+
+echo '> Homebrew cache'
+brew cleanup | logscroll
+usage_after=$(diskutil info / | grep "Free Space" | awk '{print $4,$11}')
+echo "$usage_before => $usage_after"
+
+echo '> Ruby cache'
+gem cleanup | logscroll
+usage_after=$(diskutil info / | grep "Free Space" | awk '{print $4,$11}')
+echo "$usage_before => $usage_after"
+
+echo '> CocoaPods'
+rm -rf "${HOME}/Library/Caches/CocoaPods" | logscroll
+usage_after=$(diskutil info / | grep "Free Space" | awk '{print $4,$11}')
+echo "$usage_before => $usage_after"
+
+echo '> iOS simulators'
+xcrun simctl delete unavailable | logscroll
+usage_after=$(diskutil info / | grep "Free Space" | awk '{print $4,$11}')
+echo "$usage_before => $usage_after"
+
+echo '> XCode logs'
+rm -rf ~/Library/Developer/Xcode/Archives
+rm -rf ~/Library/Developer/Xcode/DerivedData
+rm -rf "$HOME/Library/Developer/Xcode/iOS Device Logs/"
+usage_after=$(diskutil info / | grep "Free Space" | awk '{print $4,$11}')
+echo "$usage_before => $usage_after"
+
+echo '> Docker'
+docker volume prune -f | logscroll
+usage_after=$(diskutil info / | grep "Free Space" | awk '{print $4,$11}')
+echo "$usage_before => $usage_after"
+
+usage_after=$(diskutil info / | grep "Free Space" | awk '{print $4,$11}')
+printf "\n\n"
+echo "$usage_before => $usage_after"
