@@ -222,3 +222,13 @@ loop() {
 copycommand() {
     echo "$*" | pbcopy
 }
+
+start(){
+    if [ -f 'run-dev' ];then
+	./run-dev
+    elif [ -f 'package.json' ];then
+	npm start
+    else
+	echo "No 'run-dev' or 'package.json' found"
+    fi
+}
