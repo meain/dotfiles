@@ -394,6 +394,25 @@ iabbr imoprt import
 
 
 
+
+"                               inoremaps                              "
+"                    ==============================                    "
+
+nnoremap ;; <esc>/<++><cr>xxxx:nohls<cr>i
+inoremap ;; <esc>/<++><cr>xxxx:nohls<cr>i
+
+" python
+autocmd FileType python inoremap ;def def <++>(<++>):<CR><++><ESC>k$?def<CR>:nohls<CR>
+autocmd FileType python inoremap ;ipdb __import__('ipdb').set_trace()<esc>
+autocmd FileType python inoremap ;pudb __import__('pudb').set_trace()<esc>
+
+" Shady remaps
+autocmd FileType c,cpp,css inoremap ;s <Esc>A;
+autocmd FileType go inoremap ;e :=
+
+
+
+
 "                                Commands                              "
 "                    ==============================                    "
 
@@ -489,10 +508,6 @@ inoremap <silent> <m-j> <down>
 inoremap <silent> <m-k> <up>
 inoremap <silent> <m-l> <right>
 
-" Shady remaps
-autocmd FileType c,cpp,css inoremap ;; <Esc>A;
-autocmd FileType go inoremap ;; :=
-
 " Visual star
 vnoremap * "sy/<c-r>s<CR>
 
@@ -559,9 +574,6 @@ autocmd FileType typescript.tsx nnoremap <buffer><leader>c mc?class=<CR>ciwclass
 
 " quick search and replace
 nnoremap <leader>; :%s/\v
-
-" quick edit next marker
-nnoremap ss /<++><cr>xxxx:nohls<cr>i
 
 
 
@@ -778,18 +790,6 @@ function! s:CSSSearchForClassDef()
   execute ':Find .' . word
 endfunction
 command! CSSSearchForClassDef :call s:CSSSearchForClassDef()
-
-" Quickly print a variable
-" function! QuickPrint()
-"   let print_format = 
-"         \{ 'javascript.jsx': 'console.log(";;;;", ;;;;)', 
-"         \'javascript': 'console.log(";;;;", ;;;;)',
-"         \'python': 'print(";;;", ;;;)'}
-"   let current_language = 'javascript.jsx'
-"   let value_to_print = @*
-" endfunction
-" vnoremap <silent><leader>p :call QuickPrint()<cr>
-
 
 " Stratr profiling
 function! Profile()
