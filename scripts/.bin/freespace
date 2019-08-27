@@ -1,0 +1,3 @@
+#!/bin/sh
+
+diskutil info / | grep "Free Space" | awk '{print $4"GB",$11}'
