@@ -66,7 +66,18 @@
                                         "key_code": "down_arrow"
                                     }
                                 ],
-                                "type": "basic"
+                                "type": "basic",
+                                "conditions": [
+                                    {
+                                        "type": "device_if",
+                                        "identifiers": [
+                                            {
+                                                "product_id": 321,
+                                                "vendor_id": 1241
+                                            }
+                                        ]
+                                    }
+                                ]
                             }
                         ]
                     },
@@ -92,7 +103,18 @@
                                         "key_code": "up_arrow"
                                     }
                                 ],
-                                "type": "basic"
+                                "type": "basic",
+                                "conditions": [
+                                    {
+                                        "type": "device_if",
+                                        "identifiers": [
+                                            {
+                                                "product_id": 321,
+                                                "vendor_id": 1241
+                                            }
+                                        ]
+                                    }
+                                ]
                             }
                         ]
                     },
@@ -1097,7 +1119,7 @@
                                 "to": [
                                     {
                                         "mouse_key": {
-                                            "speed_multiplier": 2.0
+                                            "speed_multiplier": 2
                                         }
                                     }
                                 ],
@@ -1149,7 +1171,7 @@
                                     },
                                     {
                                         "mouse_key": {
-                                            "speed_multiplier": 2.0
+                                            "speed_multiplier": 2
                                         }
                                     }
                                 ],
