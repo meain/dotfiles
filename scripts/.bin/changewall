@@ -1,6 +1,7 @@
 #!/bin/sh
 # Version: 2.0.2
 # Description: Download a random wallpaper from wallhaven.cc.
+set -e
 
 # Name for your wallpaper image
 img="wallpaper.jpg"
