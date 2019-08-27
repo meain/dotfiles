@@ -31,7 +31,7 @@ get_command(){
 }
 
 ss(){
-    $EDITOR "$HOME"/.bin/"$(find "$HOME"/.bin/* -type f | sed "s|$HOME/.bin/||" | fzf --query "$*")"
+    $EDITOR "$HOME"/.bin/"$(find "$HOME"/.bin/* -type f | sed "s|$HOME/.bin/||" | fzf --print-query --query "$*" | tail -n 1)"
 }
 
 alias h='$(get_command)'
