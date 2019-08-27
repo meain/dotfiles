@@ -93,9 +93,6 @@ Plug 'sebastianmarkow/deoplete-rust', { 'for': ['rs', 'rust'] }                 
 " Plug 'wellle/tmux-complete.vim'                                                              " Tmux completion
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }           " Language client
 
-" Snippets
-Plug 'SirVer/ultisnips'                                                                        " Snippet manager
-
 " Dependencies
 Plug 'vim-scripts/mru.vim'                                                                     " Save recently used files (for v)
 Plug 'radenling/vim-dispatch-neovim', { 'on': ['Dispatch', 'Start'] }                          " Neovim support for vim-dispatch
@@ -398,17 +395,82 @@ iabbr imoprt import
 "                               inoremaps                              "
 "                    ==============================                    "
 
-nnoremap ;; <esc>/<++><cr>xxxx:nohls<cr>i
+" utils
+function! ExpandSnip(snip)
+  let line = getline('.')
+  call setline('.', line . a:snip)
+  redraw
+  call inputsave()
+  let expand_value = input('{++}: ')
+  call inputrestore()
+  call setline('.', line . substitute(a:snip, '{++}', expand_value, 'g'))
+endfunction
+
+" common
+nnoremap ;; /<++><cr>xxxx:nohls<cr>i
 inoremap ;; <esc>/<++><cr>xxxx:nohls<cr>i
+vnoremap ;; <esc>/<++><cr>xxxx:nohls<cr>i
 
 " python
-autocmd FileType python inoremap ;def def <++>(<++>):<CR><++><ESC>k$?def<CR>:nohls<CR>
+autocmd FileType python inoremap ;def def <++>(<++>):<cr><++><esc>k$?def<cr>:nohls<cr>
 autocmd FileType python inoremap ;ipdb __import__('ipdb').set_trace()<esc>
 autocmd FileType python inoremap ;pudb __import__('pudb').set_trace()<esc>
+autocmd FileType python inoremap ;fs f""<left>
+autocmd FileType python inoremap ;print print()<left>
+autocmd FileType python inoremap ;ld logger.debug(f"")<left><left>
+autocmd FileType python inoremap ;li logger.info(f"")<left><left>
+autocmd FileType python inoremap ;lw logger.warning(f"")<left><left>
+autocmd FileType python inoremap ;le logger.error(f"")<left><left>
+autocmd FileType python inoremap ;lc logger.critical(f"")<left><left>
+autocmd FileType python inoremap ;lx logger.exception(f"")<left><left>
+autocmd FileType python inoremap ;bang #!/usr/bin/env python3<esc>
 
-" Shady remaps
-autocmd FileType c,cpp,css inoremap ;s <Esc>A;
-autocmd FileType go inoremap ;e :=
+" vim
+autocmd FileType vim inoremap ;ag augroup custom_<cr>autocmd! <++><cr>augroup end<esc>?custom_<cr>:nohls<cr>A
+autocmd FileType vim inoremap ;afi autocmd FileType inoremap <++><esc>?FileType<cr>ea<space>
+
+" shell
+autocmd FileType sh inoremap ;bang #!/bin/sh
+autocmd FileType bash inoremap ;bang #!/bin/bash
+autocmd FileType zsh inoremap ;bang #!/bin/zsh
+
+" gitcommit
+autocmd FileType gitcommit inoremap ;bang <++>: <++>
+
+" html
+autocmd FileType html inoremap ;fa <i class="fas fa-"></i><esc>F"i
+
+" go
+autocmd FileType go inoremap ;ee :=
+autocmd FileType go inoremap ;err if err != nul {<cr>log.Fatal(err)<cr>}
+
+" css
+autocmd FileType css inoremap ;se <Esc>A;
+autocmd FileType css inoremap ;wh width: 100%;<cr>height: 100%; 
+autocmd FileType css inoremap ;bc background-color: #f5f5f5;<esc>Bvt;
+autocmd FileType css inoremap ;br border-radius: 5px;<esc>Bvt;
+autocmd FileType css inoremap ;media @media only screen and (max-width: 600px) {<cr>}<esc>O
+autocmd FileType css inoremap ;df display: flex;
+autocmd FileType css inoremap ;center justify-content: center;<cr>align-items: center; 
+autocmd FileType css inoremap ;cp cursor: pointer;<esc>Bvt;
+autocmd FileType css inoremap ;base * {<cr>box-sizing: border-box;<cr>}
+autocmd FileType css inoremap ;body body {<cr>margin: 0;<cr>padding: 0;<cr>} 
+autocmd FileType css inoremap ;shadow box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 0px 2px rgba(0, 0, 0, 0.24); 
+autocmd FileType css inoremap ;fc flex-direction: column; 
+
+" javascript
+autocmd FileType javascript inoremap ;flow // @flow 
+autocmd FileType javascript inoremap ;cn className=""<left>
+autocmd FileType javascript inoremap ;rf <React.Fragment><cr></React.Fragment>O
+autocmd FileType javascript inoremap ;rfs <React.Fragment>
+autocmd FileType javascript inoremap ;rfe </React.Fragment>
+autocmd FileType javascript inoremap ;con constructor(props: Props) {<cr>super(props)<cr>}O
+autocmd FileType javascript inoremap ;disp dispatch({<cr>type: '<++>',<cr>payload: <++><cr>})<esc>?dispatch<cr>:nohls<cr>jci'
+autocmd FileType javascript inoremap ;rl const <++> = React.lazy(() => import('<++>'))
+autocmd FileType javascript inoremap ;bind <esc>:call ExpandSnip("self.{++} = self.{++}.bind(this)")<cr>
+autocmd FileType javascript inoremap ;cim <esc>:call ExpandSnip("import {++} from '../{++}/{++}'")<cr>
+autocmd FileType javascript inoremap ;stop if (e) {<cr>e.stopPropagaion()<cr>if(e.nativeEvent) e.nativeEvent.stopImmediatePropagation()<cr>}
+
 
 
 
@@ -1202,9 +1264,6 @@ let g:echodoc#enable_at_startup = 1
 let g:indentLine_color_term = 236
 let g:indentLine_color_gui = '#303030'
 
-" Ultisnips
-let g:UltiSnipsSnippetDirectories = ['~/.config/nvim/UltiSnips', 'UltiSnips']
-
 " Magit
 " nnoremap <silent><bs> :Magit<cr>
 " augroup custom_magit
@@ -1320,14 +1379,12 @@ let g:tagbar_type_markdown = {
 "                    ==============================                    "
 
 " File manipulations
-
 augroup load_file_manip
     autocmd!
     autocmd CursorHold,CursorHoldI * source ~/.config/nvim/filemanip.vim | autocmd! load_file_manip
 augroup end
 
 " Git stuff
-
 augroup load_git_utils
     autocmd!
     autocmd CursorHold,CursorHoldI * source ~/.config/nvim/gitutils.vim | autocmd! load_file_manip
