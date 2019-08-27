@@ -1,3 +1,4 @@
-#!/bin/zsh
-COUNT=$(ls ~/Pictures/wall* | wc -l | sed 's/ *//g')
-cp /tmp/wallpaper.jpg ~/Pictures/wall$COUNT.jpg
+#!/bin/sh
+
+COUNT=$(find ~/Pictures/wall* | wc -l | sed 's/ *//g')
+cp /tmp/wallpaper.jpg "$HOME/Pictures/wall$COUNT.jpg"
