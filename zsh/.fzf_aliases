@@ -30,6 +30,10 @@ get_command(){
     history | uniq | awk '{$1=$2=$3=""; print $0}' | fzf --height 40%
 }
 
+ss(){
+    $EDITOR "$HOME"/.bin/"$(find "$HOME"/.bin/* -type f | sed "s|$HOME/.bin/||" | fzf --query "$*")"
+}
+
 alias h='$(get_command)'
 
 alias fl='ls | fzf --preview "cat {} || ls {}" --no-select-1'
