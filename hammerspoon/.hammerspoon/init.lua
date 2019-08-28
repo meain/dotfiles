@@ -21,7 +21,6 @@ hs.alert.defaultStyle.fadeOutDuration = 1
 hs.alert.defaultStyle.atScreenEdge = 0
 hs.alert.defaultStyle.fillColor = { white = 0, alpha = 0.95 }
 
-
 -- Simle key remaps
 local switchscreen = require "switchscreen"
 hs.hotkey.bind({"ctrl", "cmd"}, "s", function ()
@@ -62,7 +61,7 @@ jcs.registerDefaultBindings({"alt"}, 'P')
 
 customshellrun = require('customshellrun') 
 keyMultiPress = require("keyMultiPress")
-keyMultiPress.timeFrame = 2
+keyMultiPress.timeFrame = 1
 keyMultiPress.clickCount = 4
 keyMultiPress.keyType = 'shift'
 keyMultiPress.action = function()
