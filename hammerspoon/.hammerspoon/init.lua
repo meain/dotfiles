@@ -68,9 +68,6 @@ keyMultiPress.action = function()
   customshellrun.run('/Users/meain/.bin/openorsearch "' ..  pasteboard.getContents() .. '"')
 end
 
-local vimouse = require('vimouse')
-vimouse('alt', ';')
-
 hs.hotkey.bind({'alt'}, '\'', function()
   hs.eventtap.keyStroke({}, 'delete')
 end)
