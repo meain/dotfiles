@@ -471,6 +471,9 @@ autocmd FileType javascript inoremap ;bind <esc>:call ExpandSnip("self.{++} = se
 autocmd FileType javascript inoremap ;cim <esc>:call ExpandSnip("import {++} from '../{++}/{++}'")<cr>
 autocmd FileType javascript inoremap ;stop if (e) {<cr>e.stopPropagaion()<cr>if(e.nativeEvent) e.nativeEvent.stopImmediatePropagation()<cr>}
 
+" markdown
+autocmd FileType markdown inoremap ;lkj  <esc>Bi`<esc>Ea`<esc>A
+
 
 
 
