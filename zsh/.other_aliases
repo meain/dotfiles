@@ -32,11 +32,16 @@ alias update='zsh ~/.dotfiles/install/update.sh'
 
 alias pypipublish='python3 setup.py sdist bdist_wheel && twine upload dist/*'
 
-alias song='spotify info'
-alias next='spotify next'
-alias prev='spotify back'
-alias play='spotify play'
-alias pause='spotify pause'
+alias play='cmus-remote -p'
+alias pause='cmus-remote -u'
+alias next='cmus-remote -n'
+alias prev='cmus-remote -r'
+
+alias ssong='spotify info'
+alias snext='spotify next'
+alias sprev='spotify back'
+alias splay='spotify play'
+alias spause='spotify pause'
 
 alias pipgrep='pip freeze | grep'
 alias tig='tig --all'
