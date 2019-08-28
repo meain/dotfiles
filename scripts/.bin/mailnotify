@@ -1,6 +1,6 @@
 #!/bin/sh
 
-count=$(find "$HOME"/.local/share/mail/meain/INBOX/new/* | wc -l)
+count=$(ls "$HOME"/.local/share/mail/meain/INBOX/new | wc -l | sed 's/^\ *//')
 if [ "0" -ne "$count" ];then
     osascript -e "display notification \"$count unread emails\" with title \"New email\""
     osascript -e "say \"dum\""
