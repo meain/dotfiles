@@ -1,0 +1,4 @@
+#!/bin/sh
+
+count=$(find "$HOME"/.local/share/mail/meain/INBOX/new/* | wc -l | sed 's/^\ *//')
+echo "$count unread emails"
