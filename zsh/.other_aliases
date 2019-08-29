@@ -32,6 +32,7 @@ alias update='zsh ~/.dotfiles/install/update.sh'
 
 alias pypipublish='python3 setup.py sdist bdist_wheel && twine upload dist/*'
 
+alias song="cmus-remote -Q | grep file | sed 's|.*/||;s|[-.].*||'"
 alias play='cmus-remote -p'
 alias pause='cmus-remote -u'
 alias next='cmus-remote -n'
