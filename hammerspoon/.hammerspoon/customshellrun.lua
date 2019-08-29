@@ -10,7 +10,7 @@ module.run = function(script)
     if last_char == '\n' then
         result = result:sub(1, -2)
     end
-    alert(result)
+    return result
 end
 
 return module

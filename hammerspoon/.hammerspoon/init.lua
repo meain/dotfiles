@@ -65,9 +65,22 @@ keyMultiPress.timeFrame = 1
 keyMultiPress.clickCount = 4
 keyMultiPress.keyType = 'shift'
 keyMultiPress.action = function()
-  customshellrun.run('/Users/meain/.bin/openorsearch "' ..  pasteboard.getContents() .. '"')
+  result = customshellrun.run('/Users/meain/.bin/openorsearch "' ..  pasteboard.getContents() .. '"')
+  alert(result)
 end
 
 hs.hotkey.bind({'alt'}, '\'', function()
   hs.eventtap.keyStroke({}, 'delete')
+end)
+
+hs.hotkey.bind({'alt'}, 'right', function()
+  customshellrun.run('/usr/local/bin/cmus-remote -n')
+end)
+
+hs.hotkey.bind({'alt'}, 'left', function()
+  customshellrun.run('/usr/local/bin/cmus-remote -r')
+end)
+
+hs.hotkey.bind({'alt'}, '\\', function()
+  customshellrun.run('/usr/local/bin/cmus-remote -u')
 end)
