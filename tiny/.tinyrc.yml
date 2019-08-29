@@ -1,0 +1,58 @@
+# Servers
+servers:
+  - addr: irc.freenode.net
+    port: 6667
+    hostname: plank
+    realname: Abin Simon
+    nicks: [meain]
+    pass: "PASSWORD"
+    join:
+      - "#python"
+      - "#vim"
+      - "#neovim"
+      # - "#go-nuts"
+  - addr: irc.mozilla.org
+    port: 6667
+    hostname: plank
+    realname: Abin Simon
+    nicks: [meain]
+    join:
+      # - "#tiny"
+      # - "#rust"
+      - "#rust-beginners"
+
+# Defaults used when connecting to servers via the /connect command
+defaults:
+  nicks: [meain]
+  hostname: plank
+  realname: Abin Simon
+  auto_cmds: []
+
+# Where to put log files
+log_dir: "/tmp/tiny/.tiny_logs"
+statusline: true
+
+# Colors
+colors:
+  nick: [1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14]
+
+  exit_dialogue:
+    fg: 16
+    bg: red
+
+  statusline_normal:
+    fg: 15
+    bg: 238
+
+  statusline_left:
+    fg: 10
+    bg: 238
+
+  statusline_right:
+    fg: 8
+    bg: 238
+
+  tab_active:
+    fg: default
+    bg: black
+    attrs: [bold]
