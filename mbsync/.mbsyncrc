@@ -1,0 +1,24 @@
+IMAPStore meain-remote
+Host imap.gmail.com
+Port  993
+User abinsimon10@gmail.com
+PassCmd "echo $GOOGLE_PASSWORD"
+AuthMechs LOGIN
+SSLType IMAPS
+CertificateFile /etc/ssl/cert.pem
+
+MaildirStore meain-local
+Subfolders Verbatim
+Path ~/.local/share/mail/meain/
+Inbox ~/.local/share/mail/meain/INBOX
+Flatten .
+
+Channel meain
+Expunge Both
+Master :meain-remote:
+Slave :meain-local:
+Patterns * !"[Gmail]/All Mail"
+Create Both
+SyncState *
+ExpireUnread yes
+MaxMessages 300
