@@ -84,3 +84,7 @@ end)
 hs.hotkey.bind({'alt'}, '\\', function()
   customshellrun.run('/usr/local/bin/cmus-remote -u')
 end)
+
+hs.hotkey.bind({'alt', 'shift'}, '\\', function()
+  customshellrun.run('/Users/meain/.bin/changewall')
+end)
