@@ -1,6 +1,9 @@
 #!/bin/sh
 
-count=$(ls "$HOME"/.local/share/mail/meain/INBOX/new | wc -l | sed 's/^\ *//')
+set -e
+
+IGNORE_LIST="info@meetup.com|yo@dev.to|noreply@medium.com|noreply@newsletter.geojit.net|jobalerts-noreply@linkedin.com|no-reply@updates.bookmyshow.com|assistant-noreply@google.com"
+count=$(cat "$HOME"/.local/share/mail/meain/INBOX/new/* | grep 'From:' | egrep -v "($IGNORE_LIST)" | wc -l)
 if [ "0" -ne "$count" ];then
     osascript -e "display notification \"$count unread emails\" with title \"New email\""
     osascript -e "say \"dum\""
