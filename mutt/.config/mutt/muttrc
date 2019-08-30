@@ -27,6 +27,7 @@ set sleep_time = 0
 set sort = 'reverse-date'
 set editor = $EDITOR
 set mailcap_path = $HOME/.config/mutt/mailcap
+set query_command = "$HOME/.bin/mailcomplete '%s'"
 
 # set date_format="%m/%d %I:%M"
 # set index_format="%2C %?X?A& ? %D %-15.15F %s (%-4.4c)"
@@ -64,6 +65,8 @@ bind index F search
 bind index,pager R group-reply
 macro index,pager S '<sync-mailbox>
 macro index,pager \Cu |urlview\n
+bind editor <Tab> complete-query
+bind editor ^T complete
 
 # Sidebar mappings
 set sidebar_visible = no  # change to yes to enable sidebar
