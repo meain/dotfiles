@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cat ~/.mutt/cache/bodies/imaps_abinsimon10_gmail.com_imap.gmail.com/INBOX/* |\
+    grep -i -o '[A-Z0-9._%+-]\+@[A-Z0-9.-]\+\.[A-Z]\{2,4\}' | sort | uniq |\
+    grep "$1"
