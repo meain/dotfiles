@@ -2,10 +2,9 @@
 local logLevel = 'info'
 local log = hs.logger.new('hms', logLevel)
 
-
-local pasteboard = require("hs.pasteboard")
-
 require("mousehighlight")
+local pasteboard = require("hs.pasteboard")
+local customshellrun = require('customshellrun') 
 
 
 -- Disable animations
@@ -59,16 +58,6 @@ require "jumpcut"
 local jcs = require "jumpcutselect"
 jcs.registerDefaultBindings({"alt"}, 'P')
 
-customshellrun = require('customshellrun') 
-keyMultiPress = require("keyMultiPress")
-keyMultiPress.timeFrame = 1
-keyMultiPress.clickCount = 4
-keyMultiPress.keyType = 'shift'
-keyMultiPress.action = function()
-  result = customshellrun.run('/Users/meain/.bin/openorsearch "' ..  pasteboard.getContents() .. '"')
-  alert(result)
-end
-
 hs.hotkey.bind({'alt'}, '\'', function()
   hs.eventtap.keyStroke({}, 'delete')
 end)
@@ -95,4 +84,10 @@ end)
 
 hs.hotkey.bind({'alt', 'shift'}, '.', function()
   customshellrun.run('/usr/local/bin/cmus-remote --seek +10')
+end)
+
+
+hs.hotkey.bind({'alt', 'shift'}, 'delete', function()
+  result = customshellrun.run('/Users/meain/.bin/openorsearch "' ..  pasteboard.getContents() .. '"')
+  alert(result)
 end)
