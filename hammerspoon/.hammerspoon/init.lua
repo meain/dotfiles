@@ -88,3 +88,11 @@ end)
 hs.hotkey.bind({'alt', 'shift'}, '\\', function()
   customshellrun.run('/Users/meain/.bin/changewall')
 end)
+
+hs.hotkey.bind({'alt', 'shift'}, ',', function()
+  customshellrun.run('/usr/local/bin/cmus-remote --seek -10')
+end)
+
+hs.hotkey.bind({'alt', 'shift'}, '.', function()
+  customshellrun.run('/usr/local/bin/cmus-remote --seek +10')
+end)
