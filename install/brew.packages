@@ -17,6 +17,7 @@ python3
 
 # tools
 jq
+jid
 fd
 hub
 tig
@@ -59,3 +60,11 @@ urlview
 vifm
 w3m
 watch
+cmus
+dasht
+isync
+mps-youtube
+grip
+sshfs
+kubernetes-cli
+watchexec
