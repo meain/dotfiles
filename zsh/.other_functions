@@ -232,3 +232,10 @@ start(){
 	echo "No 'run-dev' or 'package.json' found"
     fi
 }
+
+morning(){
+    xargs open < ~/.datafiles/morning_pages
+    echo "$STOCKS" | tr ',' '\n' | sed 's|\(.*\)|https://www.screener.in/company/\1/consolidated|' | xargs open
+    open "https://www.screener.in/"
+    mbsync meain && mailnotify
+}
