@@ -17,6 +17,9 @@ poetry self update
 rustup update stable
 rustup update nightly
 
+# update dash docsets
+dasht-docsets-update
+
 gloc "git fetch" "/Users/meain/Documents/Projects/work/saama"
 gloc "git fetch" "/Users/meain/Documents/Projects/projects"
 
