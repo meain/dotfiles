@@ -2,7 +2,7 @@
 
 set -e
 
-IGNORE_LIST=$(cat .datafiles/ignored_mail_list| tr '\n' '|' | sed 's/|$//')
+IGNORE_LIST=$(cat "$HOME"/.datafiles/ignored_mail_list| tr '\n' '|' | sed 's/|$//')
 count=$(cat "$HOME"/.local/share/mail/meain/INBOX/new/* | grep 'From:' | egrep -v "($IGNORE_LIST)" | wc -l)
 if [ "0" -ne "$count" ];then
     osascript -e "display notification \"$count unread emails\" with title \"New email\""
