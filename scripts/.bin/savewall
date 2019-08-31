@@ -1,4 +1,3 @@
 #!/bin/sh
 
-COUNT=$(find ~/Pictures/wall* | wc -l | sed 's/ *//g')
-cp /tmp/wallpaper.jpg "$HOME/Pictures/wall$COUNT.jpg"
+cp /tmp/wallpaper.jpg "$HOME/Pictures/$(cat /tmp/current_wallpaper_name)"

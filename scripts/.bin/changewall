@@ -71,6 +71,7 @@ randPic=`curl -s $randPicURL | grep -oE 'src="https://w.'$site'/full/(.*)' | cut
 
 # Download it
 curl -s -o $wallpaper "$randPic"
+echo "$randPic" | sed 's|.*/||' > /tmp/current_wallpaper_name
 osascript -e 'tell application "Finder" to set desktop picture to POSIX file "/tmp/wallpaper.jpg"'
 killall Dock
 
