@@ -3,8 +3,9 @@
 set -e
 
 IGNORE_LIST=$(cat "$HOME"/.datafiles/ignored_mail_list| tr '\n' '|' | sed 's/|$//')
-count=$(cat "$HOME"/.local/share/mail/meain/INBOX/new/* | grep 'From:' | egrep -v "($IGNORE_LIST)" | wc -l)
+mails=$(cat "$HOME"/.local/share/mail/meain/INBOX/new/* | grep 'From:' | egrep -v "($IGNORE_LIST)" | grep -i -o '[A-Z0-9._%+-]\+@[A-Z0-9.-]\+\.[A-Z]\{2,4\}' | sed /^$/d | tr '\n' ',' | sed 's/,$//')
+count=$(cat "$HOME"/.local/share/mail/meain/INBOX/new/* | grep 'From:' | grep -E -v "($IGNORE_LIST)" | wc -l)
 if [ "0" -ne "$count" ];then
-    osascript -e "display notification \"$count unread emails\" with title \"New email\""
+    osascript -e "display notification \"$mails\" with title \"$count unread emails\""
     osascript -e "say \"dum\""
 fi
