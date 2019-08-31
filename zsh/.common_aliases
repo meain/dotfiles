@@ -42,3 +42,5 @@ alias cat='bat'
 
 alias python='python3'
 alias pip='pip3'
+
+alias sc='cd ~/.bin'
