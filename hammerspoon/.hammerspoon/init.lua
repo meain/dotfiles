@@ -8,6 +8,10 @@ require("mousehighlight")
 local pasteboard = require("hs.pasteboard")
 local customshellrun = require('customshellrun') 
 
+-- Variables
+local BIN = '/Users/meain/.bin/'
+local CMUSR = '/usr/local/bin/cmus-remote'
+
 
 -- Disable animations
 hs.window.animationDuration = 0
@@ -44,20 +48,30 @@ local jcs = require("jumpcutselect")
 jcs.registerDefaultBindings({"alt"}, 'P')
 
 -- Music keymaps
+showCurrentSong = function()
+  song = customshellrun.run(BIN .. 'currentsong')
+  hs.alert(song)
+end
 hs.hotkey.bind({'alt'}, 'right', function()
-  customshellrun.run('/usr/local/bin/cmus-remote -n')
+  customshellrun.run(CMUSR .. ' -n')
+  showCurrentSong()
 end)
 hs.hotkey.bind({'alt'}, 'left', function()
-  customshellrun.run('/usr/local/bin/cmus-remote -r')
+  customshellrun.run(CMUSR .. ' -r')
+  showCurrentSong()
 end)
 hs.hotkey.bind({'alt'}, '\\', function()
-  customshellrun.run('/usr/local/bin/cmus-remote -u')
+  customshellrun.run(CMUSR .. ' -u')
+  showCurrentSong()
 end)
 hs.hotkey.bind({'alt', 'shift'}, ',', function()
-  customshellrun.run('/usr/local/bin/cmus-remote --seek -10')
+  customshellrun.run(CMUSR .. ' --seek -10')
 end)
 hs.hotkey.bind({'alt', 'shift'}, '.', function()
-  customshellrun.run('/usr/local/bin/cmus-remote --seek +10')
+  customshellrun.run(CMUSR .. ' --seek +10')
+end)
+hs.hotkey.bind({'ctrl', 'alt', 'shift'}, 'm', function()
+  showCurrentSong()
 end)
 
 -- Wallpaper keymap
@@ -71,6 +85,6 @@ end)
 
 -- Open link or search for item in clipboard
 hs.hotkey.bind({'alt', 'shift'}, 'delete', function()
-  result = customshellrun.run('/Users/meain/.bin/openorsearch "' ..  pasteboard.getContents() .. '"')
-  alert(result)
+  result = customshellrun.run(BIN .. 'openorsearch "' ..  pasteboard.getContents() .. '"')
+  hs.alert(result)
 end)
