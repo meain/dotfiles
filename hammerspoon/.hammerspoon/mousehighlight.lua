@@ -23,4 +23,4 @@ function mouseHighlight()
     mouseCircleTimer = hs.timer.doAfter(1, function() mouseCircle:delete() end)
 end
 
-hs.hotkey.bind({"alt","shift"}, "M", mouseHighlight)
+hs.hotkey.bind({"ctrl","alt","shift"}, "M", mouseHighlight)

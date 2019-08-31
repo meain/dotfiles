@@ -47,6 +47,9 @@ emojipicker.registerDefaultBindings({"alt"}, 'E')
 -- Clipboard manager
 local jcs = require("jumpcutselect")
 jcs.registerDefaultBindings({"alt"}, 'P')
+hs.hotkey.bind({'alt', 'shift'}, 'P', function()
+  hs.alert("📎 " .. pasteboard.getContents())
+end)
 
 -- Music keymaps
 showCurrentSong = function()
@@ -71,7 +74,7 @@ end)
 hs.hotkey.bind({'alt', 'shift'}, '.', function()
   customshellrun.run(CMUSR .. ' --seek +10')
 end)
-hs.hotkey.bind({'ctrl', 'alt', 'shift'}, 'm', function()
+hs.hotkey.bind({'alt', 'shift'}, 'm', function()
   showCurrentSong()
 end)
 
