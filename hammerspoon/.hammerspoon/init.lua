@@ -9,7 +9,7 @@ local pasteboard = require("hs.pasteboard")
 local customshellrun = require('customshellrun') 
 
 -- Variables
-local BIN = '/Users/meain/.bin/'
+local BIN = os.getenv("HOME") .. '/.bin/'
 local CMUSR = '/usr/local/bin/cmus-remote'
 
 
