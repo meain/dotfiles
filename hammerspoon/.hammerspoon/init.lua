@@ -62,7 +62,11 @@ end)
 
 -- Wallpaper keymap
 hs.hotkey.bind({'alt', 'shift'}, '\\', function()
-  customshellrun.run('/Users/meain/.bin/changewall')
+  customshellrun.run(BIN .. 'changewall')
+end)
+hs.hotkey.bind({'ctrl', 'alt', 'shift'}, '\\', function()
+  customshellrun.run(BIN .. 'savewall')
+  hs.alert('🖼 Wallpaper saved!')
 end)
 
 -- Open link or search for item in clipboard
