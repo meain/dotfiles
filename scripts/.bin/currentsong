@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# full path needed to be executed using hammerspoon
+playing=$(/usr/local/bin/cmus-remote -Q | head -n1 | awk '{print $2}' | sed 's/playing/▶/;s/paused/⏸/')
+songName=$(/usr/local/bin/cmus-remote -Q | grep file | sed 's|.*/||;s|\.[^\.]*$||')
+echo "$playing $songName"
