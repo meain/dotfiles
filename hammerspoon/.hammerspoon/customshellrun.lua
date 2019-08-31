@@ -1,16 +1,13 @@
-local alert    = require("hs.alert")
+local utils = require("utils")
 
 local module = {}
 
 module.run = function(script)
-    local handle = io.popen(script)
-    local result = handle:read("*a")
-    handle:close()
-    local last_char = string.sub(result, -1)
-    if last_char == '\n' then
-        result = result:sub(1, -2)
-    end
-    return result
+    -- no need to specify full path in script, but just too slow
+    -- local result = hs.execute(script, '/bin/zsh')
+
+    local result = hs.execute(script)
+    return utils.trim(result)
 end
 
 return module
