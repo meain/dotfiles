@@ -1,0 +1,3 @@
+#!/bin/sh
+
+cat "$HOME"/.local/share/mail/meain/INBOX/new/* | grep -E '(From|Subject)' | sed '$!N;s/\n/ /' | sed 's/From: \(.*\)\ <.*Subject: \(.*\)/- \2 (\1)/'
