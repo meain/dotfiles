@@ -94,10 +94,17 @@ hs.hotkey.bind({'alt', 'shift'}, 'delete', function()
 end)
 
 -- Email watcher
-emailNotify = function()
+emailNotify = function(sound)
+  if type(sound) == "table" then
+    -- sound was not set
+    sound = true
+  end
+
   result = customshellrun.run(BIN .. 'unreadsenders')
-  if (string.len(result) > 0) then
+  if sound then
     hs.sound.getByName(hs.sound.systemSounds()[9]):play()
+  end
+  if (string.len(result) > 0) then
     hs.alert("📧 New emails\n" .. result)
   else
     -- useful only when called outside of pathwatcher
@@ -106,5 +113,5 @@ emailNotify = function()
 end
 hs.pathwatcher.new(os.getenv("HOME") .. "/.local/share/mail/meain/INBOX/new/", emailNotify):start()
 hs.hotkey.bind({'alt', 'shift'}, 'e', function()
-  emailNotify()
+  emailNotify(false)
 end)
