@@ -5,6 +5,7 @@ local log = hs.logger.new('hms', logLevel)
 require("jumpcut")
 require("autoreload")
 require("mousehighlight")
+local utils = require("utils")
 local pasteboard = require("hs.pasteboard")
 local customshellrun = require('customshellrun') 
 
@@ -88,3 +89,13 @@ hs.hotkey.bind({'alt', 'shift'}, 'delete', function()
   result = customshellrun.run(BIN .. 'openorsearch "' ..  pasteboard.getContents() .. '"')
   hs.alert(result)
 end)
+
+-- Email watcher
+emailNotify = function()
+  result = customshellrun.run(BIN .. 'unreadsenders')
+  if (string.len(result) > 0) then
+    hs.sound.getByName(hs.sound.systemSounds()[9]):play()
+    hs.alert("📧 New emails\n" .. result)
+  end
+end
+hs.pathwatcher.new(os.getenv("HOME") .. "/.local/share/mail/meain/INBOX/new/", emailNotify):start()
