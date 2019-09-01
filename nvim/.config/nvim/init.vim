@@ -241,6 +241,9 @@ set scrolloff=5
 set wildmenu
 set wildmode=full
 
+" Autocompletion setings
+set completeopt+=noselect
+
 " Setting up ignores
 set wildignore+=*/tmp/*,*.so,*.pyc,*.png,*.jpg,*.gif,*.jpeg,*.ico,*.pdf
 set wildignore+=*.wav,*.mp4,*.mp3
