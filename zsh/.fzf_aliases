@@ -30,8 +30,10 @@ get_command(){
     history | uniq | awk '{$1=$2=$3=""; print $0}' | fzf --height 40%
 }
 
-ss(){
-    $EDITOR "$HOME"/.bin/"$(find "$HOME"/.bin/* -type f | sed "s|$HOME/.bin/||" | fzf --print-query --query "$*" | tail -n 1)"
+ss() {
+    file=$(find "$HOME"/.bin/* -type f | sed "s|$HOME/.bin/||" | fzf --print-query --query "$*" | tail -n 1)
+    [ -z "$file" ] && return 1
+    [ -f "$HOME/.bin/$file" ] && $EDITOR "$HOME/.bin/$file" || echo '#!/bin/sh' > "$HOME/.bin/$file" && chmod +x "$HOME/.bin/$file" && $EDITOR "$HOME/.bin/$file"
 }
 
 alias h='$(get_command)'
