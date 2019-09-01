@@ -102,10 +102,10 @@ emailNotify = function(paths, flags)
   end
 
   result = customshellrun.run(BIN .. 'unreadsenders')
-  if sound then
-    hs.sound.getByName(hs.sound.systemSounds()[9]):play()
-  end
   if (string.len(result) > 0) then
+    if sound then
+      hs.sound.getByName(hs.sound.systemSounds()[9]):play()
+    end
     hs.alert("📧 Unread emails\n" .. result)
   else
     -- useful only when called outside of pathwatcher
