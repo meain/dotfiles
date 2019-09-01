@@ -1327,7 +1327,7 @@ hi semshiErrorChar       ctermfg=231 guifg=#ffffff ctermbg=160 guibg=#d70000
 sign define semshiError text=E> texthl=semshiErrorSign
 
 " vim-import-cost
-nnoremap <silent><leader>a :ImportJSFix<cr>
+nnoremap BufEnter *.js,*.jsx <silent><leader>a :ImportJSFix<cr>
 let g:import_cost_virtualtext = 1
 let g:import_cost_virtualtext_prefix = ' '
 
