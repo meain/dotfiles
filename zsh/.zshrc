@@ -5,6 +5,7 @@ export ZSH=$HOME/.oh-my-zsh
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export TERM=screen-256color-italic
+export DISABLE_AUTO_UPDATE=true
 
 source $HOME/.zsh_path
 
