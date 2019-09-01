@@ -94,9 +94,10 @@ hs.hotkey.bind({'alt', 'shift'}, 'delete', function()
 end)
 
 -- Email watcher
-emailNotify = function(sound)
-  if type(sound) == "table" then
-    -- sound was not set
+emailNotify = function(paths, flags)
+  local sound = false
+  if type(paths) == "table" then
+    -- called using filewatcher
     sound = true
   end
 
@@ -113,7 +114,7 @@ emailNotify = function(sound)
 end
 hs.pathwatcher.new(os.getenv("HOME") .. "/.local/share/mail/meain/INBOX/new/", emailNotify):start()
 hs.hotkey.bind({'alt', 'shift'}, 'e', function()
-  emailNotify(false)
+  emailNotify()
 end)
 hs.hotkey.bind({'ctrl', 'alt', 'shift'}, 'e', function()
   hs.alert('📫 Syncing email')
