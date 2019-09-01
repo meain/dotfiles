@@ -1,39 +1,12 @@
 #! /bin/zsh
 
 # Basic exports
-export ZSH=~/.oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export TERM=screen-256color-italic
 
-# Golang
-export GOPATH=~/.go
-export GOBIN=$GOPATH/bin
-PATH=$PATH:$GOPATH/bin
-
-# Rust
-PATH=$PATH:~/.cargo/bin
-
-# Python
-PATH=/usr/local/bin:$PATH
-PATH="$HOME/.pyenv/bin:$PATH"
-VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
-export WORKON_HOME=~/.virtual_envs
-
-# Latex
-PATH=/Library/TeX/texbin:$PATH
-
-# Linuxbrew
-PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
-
-# Wasmer
-export WASMER_DIR="/Users/meain/.wasmer"
-[ -s "$WASMER_DIR/wasmer.sh" ] && source "$WASMER_DIR/wasmer.sh"
-
-# PATH
-PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/git/bin:$HOME/.bin:$PATH
-PATH=$PATH:$HOME/.temp_bin
-export PATH
+source $HOME/.zsh_path
 
 echo ""
 fortune -s | fmt -c -w $COLUMNS
