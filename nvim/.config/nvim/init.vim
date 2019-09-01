@@ -348,16 +348,10 @@ highlight SpellBad cterm=underline gui=underline ctermfg=11 guifg=#ffff00
 " Don't you f'in touch my cursor
 set guicursor=
 
-" Completefunc
-augroup custom_completefunc
-  autocmd!
-  autocmd BufEnter * set completefunc=cm#_completefunc
-augroup end
-
 " Oh-my-zsh themes are shell.
 augroup custom_zsh_theme
   autocmd!
-  autocmd BufNewFile,BufRead *.zsh-theme set filetype=sh
+  autocmd BufNewFile,BufRead *.zsh-theme set filetype=zsh
 augroup end
 
 " Resize panes whenever containing window resized.
