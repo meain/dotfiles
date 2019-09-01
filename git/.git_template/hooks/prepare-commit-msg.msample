@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# prepend root folder name of most common folder with []
+test "" = "$(cat "$1" | head -n 1 | grep -v '^\[.*\]\ .*')" || {
+  FOLDER=$(git diff --name-only --cached | sed 's|/.*||' | uniq -c | sort | awk '{print $2}' | sed 1q)
+  echo "[$FOLDER] $(cat "$1")"
+  echo "[$FOLDER] $(cat "$1")" > "$1"
+}
