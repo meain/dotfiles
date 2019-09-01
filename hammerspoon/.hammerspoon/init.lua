@@ -105,7 +105,7 @@ emailNotify = function(sound)
     hs.sound.getByName(hs.sound.systemSounds()[9]):play()
   end
   if (string.len(result) > 0) then
-    hs.alert("📧 New emails\n" .. result)
+    hs.alert("📧 Unread emails\n" .. result)
   else
     -- useful only when called outside of pathwatcher
     hs.alert('📭 No unread emails')
@@ -114,4 +114,8 @@ end
 hs.pathwatcher.new(os.getenv("HOME") .. "/.local/share/mail/meain/INBOX/new/", emailNotify):start()
 hs.hotkey.bind({'alt', 'shift'}, 'e', function()
   emailNotify(false)
+end)
+hs.hotkey.bind({'ctrl', 'alt', 'shift'}, 'e', function()
+  hs.alert('📫 Syncing email')
+  customshellrun.run('/usr/local/bin/mbsync meain')
 end)
