@@ -2,7 +2,7 @@
 <p align="center"> If there is a shell, there is a way</p>
 <p align="center">
   <img src="https://img.shields.io/badge/Editor-neovim-brightgreen.svg" />
-  <img src="https://img.shields.io/badge/Terminal-Alacritty-orange.svg" />
+  <img src="https://img.shields.io/badge/Terminal-kitty-orange.svg" />
   <img src="https://img.shields.io/badge/Shell-zsh-yellow.svg" />
   <img src="https://img.shields.io/badge/Font-Operator%20Mono-lightgrey.svg" />
   <img src="https://img.shields.io/badge/Mail-neomutt-red.svg" />
@@ -31,47 +31,29 @@ stow nvim
 
 ## Dependencies
 
-[`oh-my-zsh`](https://github.com/robbyrussell/oh-my-zsh) better zsh
-
-[`pandoc`](http://pandoc.org/index.html) + [`lynx`](http://lynx.browser.org/) view markdown in shell
-
-[`fzf`](https://github.com/junegunn/fzf) the most badass fuzzy find
-
-[`mru.vim`](https://github.com/vim-scripts/mru.vim) need for `v` & `vv`
-
-[`hub`](https://hub.github.com/) git plus something else
-
-[`z`](https://github.com/rupa/z) quickly jump around folders
+- [`oh-my-zsh`](https://github.com/robbyrussell/oh-my-zsh) ZSH framework
+- [`pandoc`](http://pandoc.org/index.html) + [`lynx`](http://lynx.browser.org/) View markdown in shell
+- [`fzf`](https://github.com/junegunn/fzf) Fuzzy finder
+- [`ripgrep`](https://github.com/BurntSushi/ripgrep) Much faster ack
+- [`mru.vim`](https://github.com/vim-scripts/mru.vim) Needed for `v` & `vv`
+- [`hub`](https://hub.github.com/) Git plus something else
+- [`z`](https://github.com/rupa/z) Quickly jump around folders
+- [`bat`](https://github.com/sharkdp/bat) Cat with syntax highlight
 
 ## Other stuff you might wanna use
 
-[`alacritty`](https://github.com/jwilm/alacritty) The fastest terminal emulator you can get
-
-[`neomutt`](https://www.neomutt.org/) why use a web browser to check mail?
-
-[`tiny`](https://github.com/osa1/tiny) a simple irc client
-
-[`lf`](https://github.com/gokcehan/lf) a faster ranger like file manager
-
-[`bat`](https://github.com/sharkdp/bat) a cat clone with syntax highlight and stuff
-
-[`fkill`](https://github.com/sindresorhus/fkill-cli) fabulously kill processes
-
-[`thefuck`](https://github.com/nvbn/thefuck) correct your previous command
-
-[`jv`](https://github.com/maxzender/jv) view json in terminal
-
-[`scim`](https://github.com/andmarti1424/sc-im) excel in terminal
-
-[`ripgrep`](https://github.com/BurntSushi/ripgrep) You think ag is fast? Try this
-
-[`colorls`](https://github.com/athityakumar/colorls) Much prettier ls
-
-[`diff-so-fancy`](https://github.com/so-fancy/diff-so-fancy) Better git diffs
-
-[`spaceman-diff`](https://github.com/holman/spaceman-diff) Diff images in terminal
-
-[`icdiff`](https://github.com/jeffkaufman/icdiff) Quick replacement for `diff`
+- [`alacritty`](https://github.com/jwilm/alacritty) or [`kitty`](https://sw.kovidgoyal.net/kitty/) Best terminal emulators
+- [`lf`](https://github.com/gokcehan/lf) Ranger but faster
+- [`jv`](https://github.com/maxzender/jv) and [`jid`](https://github.com/simeji/jid) view/filter json in terminal
+- [`scim`](https://github.com/andmarti1424/sc-im) Excel in terminal
+- [`lsd`](https://github.com/Peltoche/lsd) `ls` but much more
+- [`diff-so-fancy`](https://github.com/so-fancy/diff-so-fancy) Better git diffs
+- [`spaceman-diff`](https://github.com/holman/spaceman-diff) Diff images in terminal
+- [`icdiff`](https://github.com/jeffkaufman/icdiff) Quick replacement for `diff`
+- [`dasht`](https://github.com/sunaku/dasht) Dash docs in terminal
+- [`up`](https://github.com/akavel/up) Every piper's dream
+- [`newsboat`](https://github.com/newsboat/newsboat) RSS feed in the shell
+- [`tig`](https://github.com/jonas/tig) ncurses interface for `git`
 
 ## Screenshots 
 
