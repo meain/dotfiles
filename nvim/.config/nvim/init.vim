@@ -243,6 +243,8 @@ set wildmode=full
 
 " Autocompletion setings
 set completeopt+=noselect
+set completeopt+=noinsert
+set completeopt-=preview
 
 " Setting up ignores
 set wildignore+=*/tmp/*,*.so,*.pyc,*.png,*.jpg,*.gif,*.jpeg,*.ico,*.pdf
@@ -1154,10 +1156,10 @@ let g:SuperTabDefaultCompletionType = '<c-n>'
 let g:LanguageClient_autoStart = 1
 let g:LanguageClient_useVirtualText = 0
 let g:LanguageClient_serverCommands = {
-    \ 'rust': ['rls'],
+    \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
     \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
     \ 'javascript.jsx': ['/usr/local/bin/javascript-typescript-stdio'],
-    \ 'typescript': ['typescript-language-server', '--stdio'],
+    \ 'typescript': ['/usr/local/bin/javascript-typescript-stdio'],
     \ 'go': ['go-langserver'],
     \ 'css': ['css-languageserver', '--stdio'],
     \ 'python': ['pyls'],
@@ -1255,7 +1257,8 @@ let g:NERDTreeIndicatorMapCustom = {
 
 " Use deoplete.
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
+call deoplete#custom#option('max_list', 20)
+call deoplete#custom#option('smart_case', v:true)
 
 " Echodoc
 let g:echodoc#enable_at_startup = 1
