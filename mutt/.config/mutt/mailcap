@@ -3,5 +3,4 @@ text/html; open %s ; nametemplate=%s.html
 text/html; w3m -I %{charset} -T text/html; copiousoutput;
 image/*; ql %s ; copiousoutput
 video/*; mpv --quiet %s &; copiousoutput
-application/pdf; open %s ;
-application/pgp-encrypted; gpg -d '%s'; copiousoutput;
+application/*; open %s ;
