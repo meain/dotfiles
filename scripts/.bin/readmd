@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if [ -z "$1" ];then
+    pandoc "README.md" | lynx -lss="~/.lynx.lss" -stdin
+else
+    pandoc "$1" | lynx -stdin
+fi

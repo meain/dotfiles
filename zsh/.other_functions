@@ -72,7 +72,7 @@ notify() {
 }
 
 # Go to root of project
-root() {
+rr() {
 	cd "$(git rev-parse --show-toplevel 2>/dev/null)" || return 1
 }
 

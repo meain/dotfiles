@@ -48,8 +48,7 @@ fi
 source $HOME/.exports
 
 # Source aliases
-source $HOME/.common_aliases
-source $HOME/.other_aliases
+source $HOME/.basic_aliases
 source $HOME/.vim_aliases
 source $HOME/.emacs_aliases
 source $HOME/.git_aliases
@@ -59,7 +58,6 @@ source $HOME/.macos_aliases
 
 # Source custom functions
 source $HOME/.zsh_mods
-source $HOME/.common_functions
 source $HOME/.other_functions
 source $HOME/.coding_functions
 source $HOME/.npm_functions
