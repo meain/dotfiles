@@ -7,9 +7,27 @@ alias vi='nvim'
 
 alias viml='nvim -c :SLoad\ zzz'
 
-alias v='~/.bin/nvimopeniffile $(~/.bin/checkiffile ~/.vim_mru_files | grep -v ".git" | fzf --height 40% --reverse --preview "coderay {}")'
-alias vv='nvim $(~/.bin/checkiffile ~/.vim_mru_files | grep -v ".git" | head -n 1)'
+_v_checkiffile(){
+    # filter deleted files
+    cat "$1" | while read LINE
+    do
+        file=$LINE
+        if [ -f "$file" ]
+            then
+                echo "$file"
+        fi
+    done
+}
 
-vs(){
+v() {
+    FILE="$(_v_checkiffile ~/.vim_mru_files | grep -v ".git" | fzf --height 40% --reverse --preview "coderay {}")"
+    [ -f "$FILE" ] && $EDITOR "$FILE"
+}
+
+vv() {
+    $EDITOR "$(_v_checkiffile ~/.vim_mru_files | grep -v ".git" | head -n 1)"
+}
+
+vs() {
     nvim "scp://$1/"
 }
