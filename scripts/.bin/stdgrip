@@ -1,2 +1,0 @@
-#!/bin/bash
-grip $1 --export -

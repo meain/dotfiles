@@ -1,7 +1,11 @@
 #!/bin/sh
 
 if [ -z "$1" ];then
-    pandoc "README.md" | lynx -lss="~/.lynx.lss" -stdin
+    if [ -f "README.md" ];then
+        pandoc "README.md" | lynx -lss="~/.lynx.lss" -stdin
+    else
+        echo "Usage: readmd <filename>"
+    fi
 else
     pandoc "$1" | lynx -stdin
 fi

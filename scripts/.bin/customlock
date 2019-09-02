@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/bin/sh
+
 scrot /tmp/screen_locked.png
 convert /tmp/screen_locked.png -blur 0x5 /tmp/screen_locked_blur.png
 
