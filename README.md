@@ -32,17 +32,16 @@ stow nvim
 ## Dependencies
 
 - [`oh-my-zsh`](https://github.com/robbyrussell/oh-my-zsh) ZSH framework
-- [`pandoc`](http://pandoc.org/index.html) + [`lynx`](http://lynx.browser.org/) View markdown in shell
 - [`fzf`](https://github.com/junegunn/fzf) Fuzzy finder
 - [`ripgrep`](https://github.com/BurntSushi/ripgrep) Much faster ack
 - [`mru.vim`](https://github.com/vim-scripts/mru.vim) Needed for `v` & `vv`
-- [`hub`](https://hub.github.com/) Git plus something else
-- [`z`](https://github.com/rupa/z) Quickly jump around folders
-- [`bat`](https://github.com/sharkdp/bat) Cat with syntax highlight
 
 ## Other stuff you might wanna use
 
 - [`alacritty`](https://github.com/jwilm/alacritty) or [`kitty`](https://sw.kovidgoyal.net/kitty/) Best terminal emulators
+- [`hub`](https://hub.github.com/) Git plus something else
+- [`z`](https://github.com/rupa/z) Quickly jump around folders
+- [`bat`](https://github.com/sharkdp/bat) Cat with syntax highlight
 - [`lf`](https://github.com/gokcehan/lf) Ranger but faster
 - [`jv`](https://github.com/maxzender/jv) and [`jid`](https://github.com/simeji/jid) view/filter json in terminal
 - [`scim`](https://github.com/andmarti1424/sc-im) Excel in terminal
@@ -54,6 +53,7 @@ stow nvim
 - [`up`](https://github.com/akavel/up) Every piper's dream
 - [`newsboat`](https://github.com/newsboat/newsboat) RSS feed in the shell
 - [`tig`](https://github.com/jonas/tig) ncurses interface for `git`
+- [`pandoc`](http://pandoc.org/index.html) + [`lynx`](http://lynx.browser.org/) View markdown in shell
 
 ## Screenshots 
 
