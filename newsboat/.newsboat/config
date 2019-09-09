@@ -1,7 +1,10 @@
+# basic settings
+text-width 80
+browser "open"
 auto-reload yes
+show-keymap-hint no
 
-external-url-viewer "urlview"
-
+# keybindings
 bind-key j down
 bind-key k up
 bind-key j next articlelist
@@ -24,20 +27,40 @@ bind-key o open-in-browser-and-mark-read
 bind-key O open-all-unread-in-browser-and-mark-read 
 bind-key u toggle-article-read 
 
-color listnormal black default standout bold
-color listfocus white default standout bold
-color listnormal_unread cyan default
-color listfocus_unread green default bold
+# colors
+color listnormal white default standout bold
+color listfocus white default reverse bold
+color listnormal_unread green default
+color listfocus_unread white default reverse bold
 color info yellow black standout bold
-color article cyan default
+color article white default
 
-browser open
-macro , open-in-browser
-macro w set browser "w3m"; open-in-browser ; set browser linkhandler
-# macro v set browser "i3 exec mpv"; open-in-browser ; set browser linkhandler
-# macro y set browser "spawndl"; open-in-browser ; set browser linkhandler
-# macro p set browser "dmenuhandler"; open-in-browser ; set browser linkhandler
+# highlight rules
+highlight feedlist "https?://[^ ]+" cyan default
+highlight feedlist "#[[:space:]].+$" blue default bold
+highlight articlelist "[[:digit:]]{4}-[[:digit:]]{2}-[[:digit:]]{2}" cyan default
+highlight article "https?://[^ ]+" blue default
+highlight article "^(Feed|Title|Author|Link|Date):" cyan default
 
-# c copies the link to the clipboard.
-# The line below is probably the skiddiest line I've ever written.
+# format entries display
+articlelist-format "%t %> %L  %D"
+feedlist-format "%t %> %l"
+datetime-format "%Y-%m-%d"
+
+# Format of the titles.
+feedlist-title-format "(%u/%t) Feeds"
+articlelist-title-format "(%u/%t) %T [%U]"
+searchresult-title-format "(%u/%t) Search"
+filebrowser-title-format "%f %?O?Open File&Save File?"
+help-title-format "Help"
+selecttag-title-format "Select Tag"
+selectfilter-title-format "Select Filter"
+itemview-title-format "%T"
+urlview-title-format "URLs"
+dialogs-title-format "Dialogs"
+
+# use custom renderer for displaying HTML files.
+html-renderer "w3m -dump -T text/html"
+
+# `c` copies the link to the clipboard.
 macro c set browser "copy(){ echo $1 | pbcopy ;}"; open-in-browser ; set browser linkhandler
