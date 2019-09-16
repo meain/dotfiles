@@ -43,7 +43,6 @@ alias ssh='TERM="screen-256color" ssh'
 alias gcloud='TERM="screen-256color" gcloud'
 
 alias reload='source ~/.zshrc'
-alias update='zsh ~/.dotfiles/install/update.sh'
 alias sourceworkon='source /usr/local/bin/virtualenvwrapper.sh'
 
 alias song="cmus-remote -Q | grep file | sed 's|.*/||;s|[-.].*||'"

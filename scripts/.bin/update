@@ -1,0 +1,61 @@
+#!/bin/sh
+
+_update_vim() {
+    nvim +PlugUpgrade +PlugUpdate +qall
+}
+_update_brew() {
+    brew update
+    brew upgrade
+}
+_update_ohmyzsh() {
+    zsh "$ZSH/tools/upgrade.sh"
+}
+_update_rustup() {
+    rustup update stable
+    rustup update nightly
+}
+_update_dasht() {
+    dasht-docsets-update
+}
+_update_repos() {
+    gloc "git fetch" "$HOME/Documents/Projects/work/saama"
+    gloc "git fetch" "$HOME/Documents/Projects/projects"
+}
+_update_poetry() {
+    poetry self update
+}
+
+case "$1" in
+    vim)
+        _update_vim
+        ;;
+    zsh)
+        _update_ohmyzsh
+        ;;
+    brew)
+        _update_brew
+        ;;
+    rustup)
+        _update_rustup
+        ;;
+    dasht)
+        _update_dasht
+        ;;
+    repos)
+        _update_repos
+        ;;
+    poetry)
+        _update_poetry
+        ;;
+    all)
+        _update_vim
+        _update_ohmyzsh
+        _update_brew
+        _update_rustup
+        _update_dasht
+        _update_repos
+        _update_poetry
+        ;;
+    *)
+        update "$(echo "all,vim,zsh,brew,rustup,dasht,repos,poetry" | tr ',' '\n' | fzf)"
+esac
