@@ -22,7 +22,7 @@ mono underline underline
 mono indicator reverse
 mono error bold
 color normal default default
-color indicator brightblack white
+color indicator black white
 color sidebar_highlight red default
 color sidebar_divider color8 black
 color sidebar_flagged red black
