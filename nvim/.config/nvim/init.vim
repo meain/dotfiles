@@ -50,7 +50,7 @@ Plug 'tpope/vim-vinegar'                                                        
 Plug 'scrooloose/nerdtree', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] }         " Nerdtree
 " Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] } " Git sign for nerdtree
 Plug 'meain/vim-automkdir'                                                                     " Automatically create parent dirs
-Plug 'yardnsm/vim-import-cost', { 'do': 'npm install', 'for': g:javascript_filetypes }         " See import cost of javascript deps
+" Plug 'yardnsm/vim-import-cost', { 'do': 'npm install', 'for': g:javascript_filetypes }         " See import cost of javascript deps
 " Plug 'machakann/vim-swap'                                                                      " Swap arguments
 
 " Morph code
@@ -1158,7 +1158,7 @@ let g:LanguageClient_useVirtualText = 0
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
     \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
-    \ 'javascript.jsx': ['/usr/local/bin/javascript-typescript-stdio'],
+    \ 'javascript.jsx': ['/usr/local/bin/flow', 'lsp'],
     \ 'typescript': ['/usr/local/bin/javascript-typescript-stdio'],
     \ 'go': ['go-langserver'],
     \ 'css': ['css-languageserver', '--stdio'],
