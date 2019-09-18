@@ -240,6 +240,7 @@ set scrolloff=5
 " Autocompletion of files and commands behaves like zsh
 set wildmenu
 set wildmode=full
+set wildoptions-=pum
 
 " Autocompletion setings
 set completeopt+=noselect
