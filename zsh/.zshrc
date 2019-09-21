@@ -1,11 +1,11 @@
 #! /bin/zsh
 
 # Basic exports
-export ZSH=$HOME/.oh-my-zsh
+# export ZSH=$HOME/.oh-my-zsh
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export TERM=screen-256color-italic
-export DISABLE_AUTO_UPDATE=true
+# export DISABLE_AUTO_UPDATE=true
 
 source $HOME/.zsh_path
 
@@ -18,8 +18,20 @@ export ZSH_THEME="snipe"
 export DISABLE_AUTO_TITLE="true"
 export COMPLETION_WAITING_DOTS="false"
 export HIST_STAMPS="dd.mm.yyyy"
-export plugins=(z zsh-syntax-highlighting zsh-autosuggestions)
-source $ZSH/oh-my-zsh.sh
+HISTSIZE=5000
+SAVEHIST=5000
+HISTFILE=~/.zsh_history
+setopt appendhistory
+setopt sharehistory
+setopt incappendhistory
+
+source $HOME/.bin/spectrum
+source $HOME/.oh-my-zsh/themes/snipe.zsh-theme
+source $HOME/.oh-my-zsh/plugins/z/z.plugin.zsh
+source $HOME/.oh-my-zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
+source $HOME/.oh-my-zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+# export plugins=(z zsh-syntax-highlighting zsh-autosuggestions)
+# source $ZSH/oh-my-zsh.sh
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then

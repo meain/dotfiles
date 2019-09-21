@@ -68,13 +68,13 @@ _nesting_level=""
 
 if [[ -n "$TMUX" ]] ; then
   local _tmux_indicator="="
-  local _nesting_count=`expr $SHLVL - 2`
+  local _nesting_count=`expr $SHLVL - 3`
 else
   local _nesting_count=`expr $SHLVL - 1`
 fi
 
 if [[ "$_nesting_count" -ne 0 ]] ; then
-  _nesting_level="$(printf '/%.0s' {1..$_nesting_count})"
+  _nesting_level="$(printf '.%.0s' {1..$_nesting_count})"
 fi
 
 if [[ -n "$TMUX" ]] ; then

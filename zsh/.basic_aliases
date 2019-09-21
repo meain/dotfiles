@@ -1,5 +1,11 @@
 #! /bin/sh
 
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias ......='cd ../../../../..'
+
 alias j=z
 alias r=lf
 alias f=fg
