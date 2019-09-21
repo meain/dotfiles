@@ -239,3 +239,7 @@ morning(){
     gcalcli agenda
     mbsync meain > /dev/null && mailnotify
 }
+
+take() {
+    mkdir "$1" && cd "$1" || return 1
+}

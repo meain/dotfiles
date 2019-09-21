@@ -14,7 +14,7 @@ fortune -s | fmt -c -w $COLUMNS
 echo ""
 
 # oh-my-zsh settings
-export ZSH_THEME="snipe"
+# export ZSH_THEME="snipe"
 export DISABLE_AUTO_TITLE="true"
 export COMPLETION_WAITING_DOTS="false"
 export HIST_STAMPS="dd.mm.yyyy"
@@ -25,13 +25,20 @@ setopt appendhistory
 setopt sharehistory
 setopt incappendhistory
 
-source $HOME/.bin/spectrum
+setopt auto_cd
+setopt auto_list # automatically list choices on ambiguous completion
+setopt auto_menu # automatically use menu completion
+setopt always_to_end # move cursor to end if word had one match
+setopt interactive_comments # allow comments in interactive shells
+zstyle ':completion:*' menu select # select completions with arrow keys
+zstyle ':completion:*' group-name '' # group results by category
+zstyle ':completion:::::' completer _expand _complete _ignored _approximate # enable approximate matches for completion
+
+source $HOME/.bin/spectrum  # for 256 colors
 source $HOME/.oh-my-zsh/themes/snipe.zsh-theme
-source $HOME/.oh-my-zsh/plugins/z/z.plugin.zsh
-source $HOME/.oh-my-zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
-source $HOME/.oh-my-zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
-# export plugins=(z zsh-syntax-highlighting zsh-autosuggestions)
-# source $ZSH/oh-my-zsh.sh
+source $HOME/.zsh/z/z.sh
+source $HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
+source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
@@ -100,7 +107,7 @@ case "$(uname -s)" in
     ;;
 esac
 
-# Source fzf
+#Source fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Use vim mode in zsh
