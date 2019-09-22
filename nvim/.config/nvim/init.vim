@@ -665,8 +665,6 @@ augroup custom_spellcheck
   autocmd!
   autocmd BufRead,BufNewFile *.md setlocal spell
   autocmd BufRead,BufNewFile *.org setlocal spell
-  " autocmd BufRead,BufNewFile *.txt if ('requirements.txt' == expand('%:t')) < 0 | setlocal spell
-  autocmd BufRead,BufNewFile *.txt setlocal spell
   autocmd FileType gitcommit setlocal spell
   autocmd FileType help setlocal nospell
 augroup end
