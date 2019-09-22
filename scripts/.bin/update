@@ -24,6 +24,9 @@ _update_repos() {
 _update_poetry() {
     poetry self update
 }
+_update_gcloud() {
+    gcloud components update
+}
 
 case "$1" in
     vim)
@@ -47,6 +50,9 @@ case "$1" in
     poetry)
         _update_poetry
         ;;
+    gcloud)
+        _update_gcloud
+        ;;
     all)
         _update_vim
         _update_ohmyzsh
@@ -55,6 +61,7 @@ case "$1" in
         _update_dasht
         _update_repos
         _update_poetry
+        _update_gcloud
         ;;
     *)
         update "$(echo "all,vim,zsh,brew,rustup,dasht,repos,poetry" | tr ',' '\n' | fzf)"
