@@ -11,7 +11,6 @@ local customshellrun = require('customshellrun')
 
 -- Variables
 local BIN = os.getenv("HOME") .. '/.bin/'
-local MOCP = '/usr/local/bin/mocp'
 
 
 -- Disable animations
@@ -53,26 +52,26 @@ end)
 
 -- Music keymaps
 showCurrentSong = function()
-  song = customshellrun.run(BIN .. 'currentsong')
+  song = customshellrun.run(BIN .. 'music/currentsong')
   hs.alert(song)
 end
 hs.hotkey.bind({'alt'}, 'right', function()
-  customshellrun.run(MOCP .. ' -f')
+  customshellrun.run(BIN .. 'music/next')
   showCurrentSong()
 end)
 hs.hotkey.bind({'alt'}, 'left', function()
-  customshellrun.run(MOCP .. ' -r')
+  customshellrun.run(BIN .. 'music/previous')
   showCurrentSong()
 end)
 hs.hotkey.bind({'alt'}, '\\', function()
-  customshellrun.run(MOCP .. ' -G')
+  customshellrun.run(BIN .. 'music/playpause')
   showCurrentSong()
 end)
 hs.hotkey.bind({'alt', 'shift'}, ',', function()
-  customshellrun.run(MOCP .. ' --seek -10')
+  customshellrun.run(BIN .. 'music/seekforeward')
 end)
 hs.hotkey.bind({'alt', 'shift'}, '.', function()
-  customshellrun.run(MOCP .. ' --seek +10')
+  customshellrun.run(BIN .. 'music/seekbackward')
 end)
 hs.hotkey.bind({'alt', 'shift'}, 'm', function()
   showCurrentSong()
