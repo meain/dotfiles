@@ -1,0 +1,20 @@
+#!/bin/sh
+
+output=$(~/.bin/music/currentsong)
+if [ -z "$output" ];then
+    exit
+fi
+
+color="magenta"
+if echo "$output" | grep '^S|' > /dev/null ;then
+    color="colour78"
+fi
+output=$(echo "$output" | sed 's/^...//')
+
+if echo "$output" | grep -E '^>' > /dev/null;then
+    output=$(echo "$output" | sed 's/> //')
+    echo "#[fg=$color]$output"
+else
+    output=$(echo "$output" | sed 's/: //')
+    echo "#[fg=colour240]$output"
+fi

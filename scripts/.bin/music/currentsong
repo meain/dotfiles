@@ -3,16 +3,16 @@
 # use song from spotify if available
 spotifySong=$(~/.bin/tmux/music)
 if [ -n "$spotifySong" ];then
-    echo "$spotifySong"
+    echo "S| $spotifySong"
     exit 0
 fi
 
 # full path needed to be ececuted using hammerspoon
 songName=$(/usr/local/bin/mocp --format '%(t:%t:)')
-playing=$(/usr/local/bin/mocp --format '%state'  | sed 's/PLAY/▶/;s/PAUSE/❙❙/')
+playing=$(/usr/local/bin/mocp --format '%state'  | sed 's/PLAY/>/;s/PAUSE/:/')
 fileName=$(/usr/local/bin/mocp --format '%file' | sed 's|.*/||;s|\.[^\.]*$||')
 if [ -z "$songName" ];
 then
     songName=$fileName
 fi
-echo "$playing $songName"
+echo "M| $playing $songName"

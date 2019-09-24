@@ -9,10 +9,10 @@ if application "Spotify" is running then
 
     set playerState to player state
     if playerState is playing then
-      set playIcon to "▶"
+      set playIcon to ">"
     end if
     if playerState is paused then
-      set playIcon to "❙❙"
+      set playIcon to ":"
     end if
 
     try
