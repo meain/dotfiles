@@ -11,7 +11,7 @@ local customshellrun = require('customshellrun')
 
 -- Variables
 local BIN = os.getenv("HOME") .. '/.bin/'
-local CMUSR = '/usr/local/bin/cmus-remote'
+local MOCP = '/usr/local/bin/mocp'
 
 
 -- Disable animations
@@ -57,22 +57,22 @@ showCurrentSong = function()
   hs.alert(song)
 end
 hs.hotkey.bind({'alt'}, 'right', function()
-  customshellrun.run(CMUSR .. ' -n')
+  customshellrun.run(MOCP .. ' -f')
   showCurrentSong()
 end)
 hs.hotkey.bind({'alt'}, 'left', function()
-  customshellrun.run(CMUSR .. ' -r')
+  customshellrun.run(MOCP .. ' -r')
   showCurrentSong()
 end)
 hs.hotkey.bind({'alt'}, '\\', function()
-  customshellrun.run(CMUSR .. ' -u')
+  customshellrun.run(MOCP .. ' -G')
   showCurrentSong()
 end)
 hs.hotkey.bind({'alt', 'shift'}, ',', function()
-  customshellrun.run(CMUSR .. ' --seek -10')
+  customshellrun.run(MOCP .. ' --seek -10')
 end)
 hs.hotkey.bind({'alt', 'shift'}, '.', function()
-  customshellrun.run(CMUSR .. ' --seek +10')
+  customshellrun.run(MOCP .. ' --seek +10')
 end)
 hs.hotkey.bind({'alt', 'shift'}, 'm', function()
   showCurrentSong()
