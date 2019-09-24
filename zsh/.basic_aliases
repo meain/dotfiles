@@ -51,11 +51,11 @@ alias gcloud='TERM="screen-256color" gcloud'
 alias reload='source ~/.zshrc'
 alias sourceworkon='source /usr/local/bin/virtualenvwrapper.sh'
 
-alias song="cmus-remote -Q | grep file | sed 's|.*/||;s|[-.].*||'"
-alias play='cmus-remote -p'
-alias pause='cmus-remote -u'
-alias next='cmus-remote -n'
-alias prev='cmus-remote -r'
+alias song="mocp --format '%(t:%t:)'"
+alias play='mocp -U'
+alias pause='mocp -P'
+alias next='mocp -f'
+alias prev='mocp -r'
 alias ssong='spotify info'
 alias snext='spotify next'
 alias sprev='spotify back'
