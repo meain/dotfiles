@@ -1,0 +1,4 @@
+#!/bin/sh
+
+/usr/local/bin/mocp -U
+/usr/local/bin/tmux refresh-client -S && sleep 1 && /usr/local/bin/tmux refresh-client -S
