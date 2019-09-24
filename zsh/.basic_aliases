@@ -51,11 +51,11 @@ alias gcloud='TERM="screen-256color" gcloud'
 alias reload='source ~/.zshrc'
 alias sourceworkon='source /usr/local/bin/virtualenvwrapper.sh'
 
-alias song="mocp --format '%(t:%t:)'"
-alias play='mocp -U'
-alias pause='mocp -P'
-alias next='mocp -f'
-alias prev='mocp -r'
+alias song="~/.bin/music/currentsong | sed 's/...//'"
+alias play='~/.bin/music/play'
+alias pause='~/.bin/music/pause'
+alias next='~/.bin/music/next'
+alias prev='~/.bin/music/previous'
 alias ssong='spotify info'
 alias snext='spotify next'
 alias sprev='spotify back'
