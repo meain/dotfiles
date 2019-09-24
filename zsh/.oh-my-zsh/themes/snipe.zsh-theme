@@ -83,8 +83,7 @@ function virtualenv_info {
     [[ -n "$VIRTUAL_ENV" ]] && echo 'py:'${VIRTUAL_ENV:t}' '
 }
 
-PROMPT='
-${_return_status}${_tmux_indicator}%f%F{green}$( _vcs_info_wrapper )%F{yellow}%B%(1j.#.) '
+PROMPT='${_return_status}${_tmux_indicator}%f%F{green}$( _vcs_info_wrapper )%F{yellow}%B%(1j.#.) '
 RPROMPT='$FG[237]${_nesting_level}%F{yellow} $(virtualenv_info) %F{white}%2~ $(_git_time_since_commit)%{%B%F{cyan}%}$(_hosthame_custom)'
 
 function zle-line-init zle-keymap-select {
