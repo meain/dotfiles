@@ -88,6 +88,7 @@ Plug 'w0rp/ale'                                                                 
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }                                  " Competion framework
 " Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
 " Plug 'Shougo/echodoc.vim'                                                                      " Show signature
+Plug 'kloki/deoplete-goobook'                                                                  " Email autocomplete
 Plug 'Shougo/neco-vim', { 'for': 'vim' }                                                       " Completion for viml
 Plug 'sebastianmarkow/deoplete-rust', { 'for': ['rs', 'rust'] }                                " Rust autocompletion (slow)
 " Plug 'wellle/tmux-complete.vim'                                                              " Tmux completion
@@ -1375,8 +1376,6 @@ let g:tagbar_type_markdown = {
 \ }
 
 
-" Email lookup
-imap <C-F> <ESC>:r!google-contacts-lookup <cword><CR><ESC>
 
 
 
