@@ -149,4 +149,7 @@ case "$(uname -s)" in
     ;;
 esac
 
+# to add a newline after every command, putting newline in the prompt was slowing things down
+precmd() { print "" }
+
 export ZSH_LOADED=1
