@@ -23,6 +23,7 @@ set imap_keepalive = 900
 
 source muttcol
 
+set autoedit = yes
 set sleep_time = 0
 set sort = 'reverse-date'
 set editor = $EDITOR

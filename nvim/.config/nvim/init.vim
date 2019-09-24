@@ -1375,6 +1375,10 @@ let g:tagbar_type_markdown = {
 \ }
 
 
+" Email lookup
+imap <C-F> <ESC>:r!google-contacts-lookup <cword><CR><ESC>
+
+
 
 "                             Source External                          "
 "                    ==============================                    "
