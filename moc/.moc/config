@@ -1,0 +1,42 @@
+ReadTags = yes # use tags instead of filename
+MusicDir = "~/Documents/Media/Music"
+Sort = FileName
+
+ShowStreamErrors= no
+Mp3IgnoreCRCErrors= yes
+
+Repeat = no
+Shuffle = yes
+AutoNext = yes
+
+# Default FormatString:
+# %n - Track number
+# %a - Artist
+# %A - Album
+# %t - Title
+# %(X:TRUE:FALSE) - ternary expression - if X exists, do TRUE, otherwise
+#                   FALSE. '\' - escape character (must be double, because of 
+#                   config interpreter). man zshmisc for more info.
+FormatString = "%(t:%t:)%(A: | %A:)"
+
+ShowHiddenFiles = no
+StartInMusicDir = yes
+HideFileExtension= yes
+ShowFormat = no
+ShowTime = yes
+Theme = simple_theme
+
+SavePlaylist = yes
+SyncPlaylist = yes
+
+# Choose a keymap file (relative to ~/.moc/ or absolute path).
+Keymap = keymap
+
+# FastDirs, these allow you to jump directly to a directory, the key bindings
+# are in the keymap file.
+Fastdir1 = ~/Documents/Media/Music/swoosh
+Fastdir2 = ~/Documents/Media/Music/press
+Fastdir3 = ~/Documents/Media/Music/Old songs/muSIC
+Fastdir4 = ~/Documents/Media/Music/Old songs/Old collection/Mal
+
+Layout1 = directory(0,0,100%,100%)
