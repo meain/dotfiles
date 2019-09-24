@@ -89,7 +89,7 @@ RPROMPT='%F{white}%2~ '
 function zle-line-init zle-keymap-select {
 NORMAL_COLOR="%{$fg_bold[blue]%}"
 INSERT_COLOR="%{$fg_bold[white]%}"
-RPS1="$FG[237]${_nesting_level}%F{yellow} $(virtualenv_info) %F{green}$( _vcs_info_wrapper ) ${${KEYMAP/vicmd/$NORMAL_COLOR}/(main|viins)/$INSERT_COLOR}%2~%{$reset_color%} $(_git_time_since_commit)%{%B%F{cyan}%}$(_hosthame_custom)" zle reset-prompt
+RPS1="$FG[237]${_nesting_level}%F{yellow} $(virtualenv_info)%F{green}$( _vcs_info_wrapper ) ${${KEYMAP/vicmd/$NORMAL_COLOR}/(main|viins)/$INSERT_COLOR}%2~%{$reset_color%} $(_git_time_since_commit)%{%B%F{cyan}%}$(_hosthame_custom)" zle reset-prompt
 }
 zle -N zle-line-init
 zle -N zle-keymap-select
