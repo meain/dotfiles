@@ -49,7 +49,7 @@ function _git_pushable() {
   setopt localoptions noshwordsplit
   if git rev-list --count HEAD > /dev/null 2>&1; then
     # git rev-list --left-right --count HEAD...@'{u}'
-    git rev-list --count HEAD...@'{u}' | sed 's/[1-9][0-9]*/⇡/;s/[0-9]//'
+    git rev-list --count HEAD...@'{u}' | sed 's/[1-9][0-9]*/↯/;s/[0-9]//'
   fi
 }
 
@@ -102,7 +102,7 @@ function zle-line-init zle-keymap-select {
 NORMAL_COLOR="%{$fg_bold[blue]%}"
 INSERT_COLOR="%{$fg_bold[white]%}"
 PS1="${_return_status}${_tmux_indicator}%F{green}$( _vcs_info_wrapper )%F{yellow}%B%(1j.#.) "
-RPS1="$FG[237]${_nesting_level}%F{yellow} $(virtualenv_info) $FG[153]$(_git_pushable) $FG[240]$(_git_time_since_commit)%{$reset_color%} ${${KEYMAP/vicmd/$NORMAL_COLOR}/(main|viins)/$INSERT_COLOR}%2~%{$reset_color%} %{%B%F{cyan}%}$(_hosthame_custom)" zle reset-prompt
+RPS1="$FG[237]${_nesting_level}%F{yellow} $(virtualenv_info) $FG[80]$(_git_pushable)%{$reset_color%} ${${KEYMAP/vicmd/$NORMAL_COLOR}/(main|viins)/$INSERT_COLOR}%2~%{$reset_color%} $FG[240]$(_git_time_since_commit)%{%B%F{cyan}%}$(_hosthame_custom)" zle reset-prompt
 }
 zle -N zle-line-init
 zle -N zle-keymap-select
