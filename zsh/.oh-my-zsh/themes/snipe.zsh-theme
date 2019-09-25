@@ -75,17 +75,9 @@ function _git_total_commits() {
 }
 
 _tmux_indicator='!'
-_nesting_level=""
 
 if [[ -n "$TMUX" ]] ; then
   local _tmux_indicator="="
-  local _nesting_count=`expr $SHLVL - 3`
-else
-  local _nesting_count=`expr $SHLVL - 1`
-fi
-
-if [[ "$_nesting_count" -ne 0 ]] ; then
-  _nesting_level="$(printf '.%.0s' {1..$_nesting_count})"
 fi
 
 local _return_status="%(?..%F{red})"
@@ -101,7 +93,7 @@ function zle-line-init zle-keymap-select {
 NORMAL_COLOR="%{$FG[153]%}"
 INSERT_COLOR="%{$fg_bold[white]%}"
 PS1="${_return_status}${_tmux_indicator}%F{green}$( _vcs_info_wrapper )%F{yellow}%B%(1j.#.) "
-RPS1="$FG[236]${_nesting_level}%F{yellow} $(virtualenv_info) $FG[240]$(_git_pushable)%{$reset_color%} ${${KEYMAP/vicmd/$NORMAL_COLOR}/(main|viins)/$INSERT_COLOR}%2~%{$reset_color%} %{%B%F{cyan}%}$(_hosthame_custom)" zle reset-prompt
+RPS1="%F{yellow} $(virtualenv_info) $FG[240]$(_git_pushable)%{$reset_color%} ${${KEYMAP/vicmd/$NORMAL_COLOR}/(main|viins)/$INSERT_COLOR}%2~%{$reset_color%} %{%B%F{cyan}%}$(_hosthame_custom)" zle reset-prompt
 }
 zle -N zle-line-init
 zle -N zle-keymap-select
