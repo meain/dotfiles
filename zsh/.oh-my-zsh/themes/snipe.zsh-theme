@@ -47,7 +47,7 @@ function _git_time_since_commit() {
 
 function _git_pushable() {
   setopt localoptions noshwordsplit
-  if git rev-list --count HEAD > /dev/null 2>&1; then
+  if git rev-list --count HEAD...@'{u}' > /dev/null 2>&1; then
     # git rev-list --left-right --count HEAD...@'{u}'
     git rev-list --count HEAD...@'{u}' | sed 's/[1-9][0-9]*/↯/;s/[0-9]//'
   fi
