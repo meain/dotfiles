@@ -1,5 +1,10 @@
 #!/bin/sh
 
+
+gg(){
+    echo "$(git rev-list --count HEAD) total commits" && git hm
+}
+
 gitignore() {
     LANGUAGE=$(curl -L -s https://www.gitignore.io/api/list | tr "," "\n" | fzf)
     curl -L -s "https://www.gitignore.io/api/$LANGUAGE%2Cmacos" > .gitignore
