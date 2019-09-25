@@ -3,6 +3,6 @@
 set -e
 
 git checkout deploy
-git merge master
+git merge master --ff-only
 git push origin deploy
-git checkout master
+git checkout -
