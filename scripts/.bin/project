@@ -1,0 +1,16 @@
+#!/bin/sh
+
+project=$(ls "$HOME/.bin/tmuxproject" | fzf --query "$1")
+
+red=`tput setaf 1`
+reset=`tput sgr0`
+if [ -n "$TMUX" ]; then
+    if tmux ls | grep "$project"; then
+        tmux switch-client -t "$project"
+    else
+        echo "${red}Already inside a tmux session${reset}"
+        exit 1
+    fi
+fi
+
+sh "$HOME/.bin/tmuxproject/$project"
