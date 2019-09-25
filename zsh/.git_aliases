@@ -31,7 +31,7 @@ alias gap='git add -p && git commit'
 
 # Pretty logs
 alias gl='git lg'
-alias gg='git hm'
+alias gg="echo \"$(git rev-list --count HEAD) total commits\" && git hm"
 alias ggg='git lh'
 alias gggg='git hi'
 
