@@ -39,6 +39,10 @@ ss() {
         echo '#!/bin/sh' > "$HOME/.bin/$file" && chmod +x "$HOME/.bin/$file" && $EDITOR "$HOME/.bin/$file"
     fi
 }
+sn() {
+    [ -f "$HOME/.bin/$1" ] && echo "script exists"  && return 1
+    echo '#!/bin/sh' > "$HOME/.bin/$1" && chmod +x "$HOME/.bin/$1" && $EDITOR "$HOME/.bin/$1"
+}
 
 alias h='$(get_command)'
 
