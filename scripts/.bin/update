@@ -7,9 +7,6 @@ _update_brew() {
     brew update
     brew upgrade
 }
-_update_ohmyzsh() {
-    zsh "$ZSH/tools/upgrade.sh"
-}
 _update_rustup() {
     rustup update stable
     rustup update nightly
@@ -32,9 +29,6 @@ case "$1" in
     vim)
         _update_vim
         ;;
-    zsh)
-        _update_ohmyzsh
-        ;;
     brew)
         _update_brew
         ;;
@@ -55,7 +49,6 @@ case "$1" in
         ;;
     all)
         _update_vim
-        _update_ohmyzsh
         _update_brew
         _update_rustup
         _update_dasht
@@ -64,5 +57,5 @@ case "$1" in
         _update_gcloud
         ;;
     *)
-        update "$(echo "all,vim,zsh,brew,rustup,dasht,repos,poetry" | tr ',' '\n' | fzf)"
+        update "$(echo "all,vim,brew,rustup,dasht,repos,poetry" | tr ',' '\n' | fzf)"
 esac
