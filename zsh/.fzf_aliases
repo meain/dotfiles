@@ -9,8 +9,6 @@ export FZF_DEFAULT_OPTS='
     --color info:108,prompt:235,spinner:108,pointer:1,marker:168
 '
 
-alias cdf='cd $(ls -d */ | fzf --reverse --height "40%" --preview "ls {}")'
-
 unalias z 2> /dev/null
 z() {
     [ $# -gt 0 ] && _z "$*" && return
@@ -21,13 +19,13 @@ jj() {
     cd "./$(fd -H -td -d5 | fzf --preview 'tree -L 2 ./{}' )" || return 1
 }
 
-hc(){
-    COMMAND=$(history | fzf | awk '{$1=$2=$3=""; print $0}')
-    echo "$COMMAND" && echo "$COMMAND" | sed 's/^\ *//'| pbcopy
-}
-
-get_command(){
-    history | uniq | awk '{$1=$2=$3=""; print $0}' | fzf --height 40%
+h() {
+    COMMAND=$(fzf --query "$*" < ~/.zsh_history)
+    if [ -z "$COMMAND" ];then
+        echo "No command selected"
+        return 1
+    fi
+    echo "$COMMAND" && echo "$COMMAND" | pbcopy
 }
 
 ss() {
@@ -44,6 +42,13 @@ sn() {
     echo '#!/bin/sh' > "$HOME/.bin/$1" && chmod +x "$HOME/.bin/$1" && $EDITOR "$HOME/.bin/$1"
 }
 
-alias h='$(get_command)'
-
-alias fl='ls | fzf --preview "cat {} || ls {}" --no-select-1'
+fl() {
+    RES=$(find . -depth 1 | sed 's/..//' | fzf --preview "cat {} 2> /dev/null || ls -A {}" --no-select-1)
+    if [ -z "$RES" ];then
+        return 0
+    elif [ -f "$RES" ];then
+        cat "$RES"
+    else
+        cd "$RES" || return 1
+    fi
+}
