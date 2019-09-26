@@ -1158,7 +1158,7 @@ let g:LanguageClient_autoStart = 1
 let g:LanguageClient_useVirtualText = 0
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
-    \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
+    \ 'javascript': ['/usr/local/bin/flow', 'lsp'],
     \ 'javascript.jsx': ['/usr/local/bin/flow', 'lsp'],
     \ 'typescript': ['/usr/local/bin/javascript-typescript-stdio'],
     \ 'go': ['go-langserver'],
@@ -1328,7 +1328,6 @@ hi semshiErrorChar       ctermfg=231 guifg=#ffffff ctermbg=160 guibg=#d70000
 sign define semshiError text=E> texthl=semshiErrorSign
 
 " vim-import-cost
-nnoremap BufEnter *.js,*.jsx <silent><leader>a :ImportJSFix<cr>
 let g:import_cost_virtualtext = 1
 let g:import_cost_virtualtext_prefix = ' '
 
