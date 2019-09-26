@@ -13,8 +13,15 @@ rmvenv() {
 }
 
 wf(){
-    if workon --help >/dev/null; then
-        source /usr/local/bin/virtualenvwrapper.sh
+    if ! workon --help >/dev/null; then
+        case "$(uname -s)" in
+        Darwin)
+            . /usr/local/bin/virtualenvwrapper.sh
+            ;;
+        Linux)
+            . "$HOME/.local/bin/virtualenvwrapper.sh"
+            ;;
+        esac
     fi
     VENVNAME=$(workon | fzf --height 30% --layout=reverse --query="$*")
     if [ -n "$VENVNAME" ];then
