@@ -116,9 +116,6 @@ case "$(uname -s)" in
     ;;
 esac
 
-#Source fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 # Use vim mode in zsh
 bindkey -v
 bindkey '^P' up-history
@@ -134,9 +131,7 @@ export KEYTIMEOUT=1
 
 # updates PATH for Google Cloud SDK && add shell completion for gcloud
 GOOGLE_CLOUD='/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
-GOOGLE_CLOUD_COMPLETIONS='/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
 if [ -f '$GOOGLE_CLOUD' ]; then source '$GOOGLE_CLOUD'; fi
-if [ -f '$GOOGLE_CLOUD_COMPLETIONS' ]; then source '$GOOGLE_CLOUD_COMPLETIONS'; fi
 
 # source python workon
 case "$(uname -s)" in
