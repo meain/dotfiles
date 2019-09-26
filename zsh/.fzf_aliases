@@ -43,12 +43,16 @@ sn() {
 }
 
 fl() {
-    RES=$(find . -depth 1 | sed 's/..//' | fzf --preview "cat {} 2> /dev/null || ls -A {}" --no-select-1)
+    RES=$(fd --maxdepth 1 --hidden | fzf --print-query --preview "bat --plain --color=always {} 2> /dev/null || ls -A {}" --no-select-1 | tail -n 1)
     if [ -z "$RES" ];then
         return 0
     elif [ -f "$RES" ];then
         cat "$RES"
-    else
+    elif [ "$RES" = ".." ]; then
+        cd ..
+        fl
+    else [ -d "$RES" ]
         cd "$RES" || return 1
+        fl
     fi
 }
