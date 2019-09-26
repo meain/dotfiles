@@ -24,7 +24,7 @@ For example if you need my `nvim` config clone the repo then inside the repo use
 This will symlink the necessary files.
 
 ```
-git clone https://github.com/meain/dotfiles.git ~/.dotfiles
+git clone --recursive https://github.com/meain/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
 stow nvim
 ```
