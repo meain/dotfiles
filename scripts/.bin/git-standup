@@ -17,7 +17,7 @@ Usage:
   -h      - Display this help screen
   -g      - Show if commit is GPG signed (G) or not (N)
   -f      - Fetch the latest commits beforehand
-  -s      - Silences the no activity message (useful when running in a directory having many repositories)
+  -s      - Shows the no activity message
   -r      - Generate a file with the report
   -c      - Show diffstat for every matched commit
   -A      - List commits after this date
@@ -108,7 +108,7 @@ function runStandup() {
     if [[ ! -z "$GITOUT" ]] ;  then
       echo "${BOLD}${UNDERLINE}${YELLOW}$CUR_DIR${NORMAL}"
       echo "$GITOUT"
-    elif [[ -z $option_s ]] ; then  ## Show the no activity message only if the `s` flag is not there
+    elif [[ -n $option_s ]] ; then  ## Show the no activity message only if the `s` flag is not there
       echo "${BOLD}${UNDERLINE}${YELLOW}$CUR_DIR${NORMAL}"
       if [[ ${AUTHOR} = '.*' ]] ; then
         echo "${YELLOW}No commits found during this period.${NORMAL}"
