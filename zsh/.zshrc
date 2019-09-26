@@ -1,11 +1,9 @@
 #! /bin/zsh
 
 # Basic exports
-# export ZSH=$HOME/.oh-my-zsh
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export TERM=screen-256color-italic
-# export DISABLE_AUTO_UPDATE=true
 
 source $HOME/.zsh_path
 
@@ -13,8 +11,7 @@ echo ""
 fortune -s | fmt -c -w $COLUMNS
 echo ""
 
-# oh-my-zsh settings
-# export ZSH_THEME="snipe"
+# zsh settings
 export DISABLE_AUTO_TITLE="true"
 export COMPLETION_WAITING_DOTS="false"
 export HIST_STAMPS="dd.mm.yyyy"
@@ -25,6 +22,7 @@ setopt appendhistory
 setopt sharehistory
 setopt incappendhistory
 
+# cd-ing settings
 setopt auto_cd
 setopt auto_list # automatically list choices on ambiguous completion
 setopt auto_menu # automatically use menu completion
@@ -44,11 +42,12 @@ else
   compinit -C -i
 fi
 
+# sourcing plugins & themes
 source $HOME/.bin/spectrum  # for 256 colors
-source $HOME/.oh-my-zsh/themes/snipe.zsh-theme
-source $HOME/.zsh/z/z.sh
-source $HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
-source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
+source $HOME/.zsh-custom/themes/snipe.zsh-theme
+source $HOME/.zsh-custom/plugins/z/z.sh
+source $HOME/.zsh-custom/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
+source $HOME/.zsh-custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
