@@ -21,16 +21,18 @@ state_line_color = "black"
 
 [playlist]
 playlist_display_mode = "classic"
-song_list_format = "{{%t - %a}|{%f}}{$R%l}"
-now_playing_prefix = "$b$3"
+song_list_format = "{{$3%t$9 %a}|{%f}}{$R%l}"
+song_columns_list_format = "(40)[]{t|f} (30)[]{a} (30)[]{b}"
+now_playing_prefix = "$b$2"
 now_playing_suffix = "$/b$9"
+titles_visibility = "no"
 
 [statusbar]
-progressbar_look = "─╼ "
+progressbar_look = "── "
 progressbar_color = "black"
 statusbar_visibility = "yes"
 statusbar_color = "default"
-song_status_format = "{{$3%t$9{ - $2%a$9}}|{ - $3%f$9}{ - $5%b$9{ (%y)}}}"
+song_status_format = "{{$3%t{ %a}}|{ %f}$9 |$7{ %b{ (%y)}}}$9"
 
 [library]
 song_library_format = "{{%a - %t}|{%f}}{$R%l}"
