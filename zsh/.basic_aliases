@@ -51,6 +51,7 @@ alias gcloud='TERM="screen-256color" gcloud'
 alias reload='source ~/.zshrc'
 alias sourceworkon='source /usr/local/bin/virtualenvwrapper.sh'
 
+alias music='ncmpcpp'
 alias song="~/.bin/music/currentsong | sed 's/...//'"
 alias play='~/.bin/music/play'
 alias pause='~/.bin/music/pause'
