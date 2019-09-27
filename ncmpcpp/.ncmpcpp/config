@@ -35,7 +35,7 @@ alternative_header_first_line_format = "$0$aqqu$/a {$7%a - $9}{$5%t$9}|{$8%f$9} 
 alternative_header_second_line_format = "{{$6%b$9}{ [$6%y$9]}}|{%D}"
 song_list_format = "{$3%n │ $9}{$7%a - $9}{$5%t$9}|{$8%f$9}$R{$6 │ %b$9}{$3 │ %l$9}"
 user_interface = "alternative"
-#user_interface = "classic"
+# user_interface = "classic"
 default_place_to_search_in = "database"
 
 # visualizer
@@ -45,8 +45,8 @@ visualizer_sync_interval = "12"
 visualizer_type = "wave" (spectrum/wave)
 #visualizer_type = wave
 visualizer_in_stereo = "yes"
-visualizer_look = "+|"
-# visualizer_look = "▋▋"
+# visualizer_look = "+|"
+visualizer_look = "▋▋"
 
 ## Navigation ##
 cyclic_scrolling = "yes"
@@ -71,20 +71,21 @@ header_visibility = "yes"
 statusbar_visibility = "yes"
 titles_visibility = "yes"
 
-progressbar_look = "=>-"
-#progressbar_look = "─╼─"
+# progressbar_look = "=>-"
+progressbar_look = "─╼─"
 progressbar_elapsed_color = "white"
 
-#now_playing_prefix = "> "
-now_playing_prefix = "$b$2▶ "
+now_playing_prefix = "> "
+# now_playing_prefix = "$b$2▶ "
+# now_playing_prefix = ": "
 
 song_status_format = " $2%a $4⟫$3⟫ $8%t $4⟫$3⟫ $5%b "
 autocenter_mode = "yes"
 centered_cursor = "yes"
 
 # Misc
-display_bitrate = "yes"
-# enable_window_title = "no"
+display_bitrate = "no"
+enable_window_title = "no"
 follow_now_playing_lyrics = "yes"
 ignore_leading_the = "yes"
 empty_tag_marker = ""
