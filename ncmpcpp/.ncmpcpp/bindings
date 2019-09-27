@@ -33,6 +33,26 @@ def_key "n"
 def_key "N"
     previous_found_item
 
+def_key "r"
+ toggle_repeat
+
+def_key "z"
+ toggle_random
+
+
+def_key "c"
+ stop
+def_key "p"
+ pause
+
+def_key ">"
+ next
+def_key "<"
+ previous
+
+def_key "x"
+  delete_playlist_items
+
 # not used but bound
 def_key "J"
     move_sort_order_down
@@ -69,7 +89,5 @@ def_key "f"
   show_browser
 def_key "f"
   change_browse_mode
-def_key "x"
-  delete_playlist_items
 def_key "P"
   show_playlist
