@@ -8,11 +8,6 @@ if [ -n "$spotifySong" ];then
 fi
 
 # full path needed to be ececuted using hammerspoon
-songName=$(/usr/local/bin/mocp --format '%(t:%t:)')
-playing=$(/usr/local/bin/mocp --format '%state'  | sed 's/PLAY/>/;s/PAUSE/:/')
-fileName=$(/usr/local/bin/mocp --format '%file' | sed 's|.*/||;s|\.[^\.]*$||')
-if [ -z "$songName" ];
-then
-    songName=$fileName
-fi
+songName=$(/usr/local/bin/mpc | head -n1)
+playing=$(/usr/local/bin/mpc | head -n2 | tail -n1 | cut -d' ' -f1 | sed 's/\[playing\]/>/;s/\[paused\]/:/')
 echo "M| $playing $songName"

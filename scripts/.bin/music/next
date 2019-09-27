@@ -1,4 +1,4 @@
 #!/bin/sh
 
-/usr/local/bin/mocp -f
+/usr/local/bin/mpc next
 /usr/local/bin/tmux refresh-client -S && sleep 1 && /usr/local/bin/tmux refresh-client -S
