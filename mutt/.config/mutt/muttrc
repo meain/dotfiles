@@ -25,7 +25,8 @@ source muttcol
 
 set autoedit = yes
 set sleep_time = 0
-set sort = 'reverse-date'
+set sort = 'reverse-threads'
+set sort_aux = 'last-date-received'
 set editor = $EDITOR
 set mailcap_path = $HOME/.config/mutt/mailcap
 set query_command = "$HOME/.bin/mailcomplete '%s'"
