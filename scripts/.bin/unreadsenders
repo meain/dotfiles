@@ -5,6 +5,7 @@ cat "$HOME"/.local/share/mail/meain/INBOX/new/* |
     grep -E '^(From|Subject):' |
     sed '$!N;s/\n/ /' |
     grep -E -v "$IGNORE_LIST" |
+    sed 's/\=\?UTF\-8\?Q\?//;s/\?=$//'|
     grep -E -v '(=?utf-8?|=?UTF-8?)' |
     sed 's/From: \(.*\)\ <.*Subject: \(.*\)/- \2 (\1)/' |
     sed 's/Subject: \(.*\) From: \(.*\)\ <.*/- \1 (\2)/' | # if from and subject is other inverted
