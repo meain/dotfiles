@@ -11,6 +11,7 @@ if [ -n "$TMUX" ]; then
         echo "${red}Already inside a tmux session${reset}"
         exit 1
     fi
+else
+    sh "$HOME/.bin/tmuxproject/$project"
 fi
 
-sh "$HOME/.bin/tmuxproject/$project"
