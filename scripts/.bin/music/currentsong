@@ -2,16 +2,19 @@
 
 # use song from spotify if available
 spotifySong=$(~/.bin/tmux/music)
-if [ -n "$spotifySong" ];then
+if [ -n "$spotifySong" ]; then
     echo "S| $spotifySong"
     exit 0
 fi
 
-songName=$(/usr/local/bin/mpc --format '%title%' | head -n1)
+songName=$(/usr/local/bin/mpc --format '%title%' | head -n1 | sed 's/volume\:.*//')
 playing=$(/usr/local/bin/mpc | head -n2 | tail -n1 | cut -d' ' -f1 | sed 's/\[playing\]/>/;s/\[paused\]/:/')
-fileName=$(/usr/local/bin/mpc --format '%file%' | head -n1 | sed 's|.*/||;s|\.[^\.]*$||')
-if [ -z "$songName" ];
-then
+fileName=$(/usr/local/bin/mpc --format '%file%' | head -n1 | sed 's|.*/||;s|\.[^\.]*$||' | sed 's/volume:.*//')
+if [ -z "$songName" ]; then
     songName=$fileName
 fi
-echo "M| $playing $songName"
+if [ -z "$fileName" ]; then
+    echo "M| No song in queue"
+else
+    echo "M| $playing $songName"
+fi
