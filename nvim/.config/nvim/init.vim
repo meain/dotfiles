@@ -918,6 +918,7 @@ set shortmess+=c
 
 " Fugitive
 nnoremap <silent><leader>g :Gstatus\|normal!gg7j<cr>
+nnoremap <silent>1 :norm V-<cr>
 command! Gl normal! :!git vhm<cr>
 
 " Startify
