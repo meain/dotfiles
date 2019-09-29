@@ -1,0 +1,13 @@
+#!/bin/sh
+
+LOAD=$(ps -A -o %cpu | awk '{s+=$1} END {print s}' | sed  's/\..*//')
+if [ "$LOAD" -ge 150 ];
+then
+    touch /tmp/tmux-load-displayed
+    tmux refresh-client -S
+else
+    if [ -f /tmp/tmux-load-displayed ];then
+        rm /tmp/tmux-load-displayed
+        tmux refresh-client -S
+    fi
+fi
