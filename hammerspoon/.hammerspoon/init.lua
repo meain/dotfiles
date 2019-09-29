@@ -87,7 +87,7 @@ hs.hotkey.bind({'ctrl', 'alt', 'shift'}, '\\', function()
 end)
 
 -- Open link or search for item in clipboard
-hs.hotkey.bind({'alt', 'shift'}, 'delete', function()
+hs.hotkey.bind({'alt'}, 'delete', function()
   result = customshellrun.run(BIN .. 'openorsearch "' ..  pasteboard.getContents() .. '"')
   hs.alert(result)
 end)
