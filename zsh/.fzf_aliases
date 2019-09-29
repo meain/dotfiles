@@ -48,6 +48,7 @@ fl() {
         return 0
     elif [ -f "$RES" ];then
         cat "$RES"
+        fl
     elif [ "$RES" = ".." ]; then
         cd ..
         fl
