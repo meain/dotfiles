@@ -1,0 +1,9 @@
+#!/usr/bin/env perl
+
+# https://superuser.com/questions/972233/how-do-i-convert-utf-8-special-characters-in-bash
+use open qw(:std :utf8);
+use Encode qw(decode);
+
+while (my $line = <STDIN>) {
+        print decode("MIME-Header", $line);
+}
