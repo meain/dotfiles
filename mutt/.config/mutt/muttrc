@@ -84,6 +84,8 @@ bind index,pager \Cp sidebar-prev-new
 bind index,pager \Cn sidebar-next-new
 bind index,pager B sidebar-toggle-visible
 
+bind index u toggle-new
+
 bind index gg first-entry
 unmailboxes *
 mailboxes =INBOX =[Gmail].Sent Mail =[Gmail].Drafts =[Gmail].Spam =[Gmail].Important =Archive =[Gmail].Drafts =[Gmail].Trash =[Gmail].Starred =[Gmail].Trash
