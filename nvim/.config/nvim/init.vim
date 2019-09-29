@@ -44,7 +44,7 @@ Plug 'Galooshi/vim-import-js', {'for': g:javascript_filetypes, 'do': 'npm i -g i
 " Code editing enhacements
 Plug 'tpope/vim-sleuth'                                                                        " Automatic indentation setting
 Plug 'tpope/vim-fugitive', { 'on': [ 'Gstatus', 'Gblame', 'Gdiff' ] }                          " Git stuff from within vim
-Plug 'majutsushi/tagbar', { 'on' : 'Tagbar' }                                                  " Class/module browser
+Plug 'liuchengxu/vista.vim'                                                                    " Tags viewer
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }                                             " Undo tree
 Plug 'tpope/vim-vinegar'                                                                       " Simpler file browser
 Plug 'scrooloose/nerdtree', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] }         " Nerdtree
@@ -1200,7 +1200,7 @@ let g:LanguageClient_diagnosticsDisplay = {
         \'virtualTexthl': 'Todo',
       \},
       \}
-nnoremap <silent><leader>l :call LanguageClient_contextMenu()<CR>
+nnoremap <silent><leader>: :call LanguageClient_contextMenu()<CR>
 nnoremap <silent> gx :call LanguageClient_textDocument_rename()<CR>
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 nnoremap <silent> gr :call LanguageClient_textDocument_references()<CR>
@@ -1366,15 +1366,26 @@ let g:vim_printer_items = {
       \ }
 
 
-" Tagbar
-let g:tagbar_type_markdown = {
-    \ 'ctagstype' : 'markdown',
-    \ 'kinds' : [
-        \ 'h:headings'
-    \ ],
-\ 'sort' : 0,
-\ }
-
+" Vista
+nnoremap <silent><leader>l :Vista!!<cr>
+nnoremap <silent><leader>L :Vista finder lcn<cr>
+augroup custom_vista
+  autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
+  autocmd FileType markdown nnoremap <silent><buffer><leader>l :Vista toc<cr>
+augroup end
+let g:vista_default_executive = 'lcn'
+let g:vista_echo_cursor_strategy='floating_win'
+let g:vista_close_on_jump=1
+let g:vista_blink=[3,20]
+let g:vista#renderer#enable_icon = 0
+let g:vista_icon_indent = ['▸ ', '']
+let g:vista_executive_for = {
+  \ 'markdown': 'ctags',
+  \ }
+let g:vista#renderer#icons = {
+\   'function': 'f',
+\   'variable': 'v',
+\  }
 
 
 

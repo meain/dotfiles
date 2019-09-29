@@ -29,6 +29,10 @@ function TinyFilePath()
   endif
 endfunction
 
+function! NearestMethodOrFunction() abort
+  return get(b:, 'vista_nearest_method_or_function', '')
+endfunction
+
 set statusline=                                        " Reset status line
 set statusline+=%*                                     " Reset color
 set statusline+=%{&readonly?':':!&modifiable?':':''}   " Non modifiable
@@ -36,6 +40,7 @@ set statusline+=\ \ %{TinyFilePath()}\                   " File name
 set statusline+=%{&modified?'+':''}                    " Modified
 set statusline+=\ %q                                   " Quickfix, LocList etc
 set statusline+=%#StatusLineNC#                        " Faded
+set statusline+=\ %{NearestMethodOrFunction()}
 set statusline+=%=                                     " Split
 set statusline+=%#ALEWarningSign#                      " Warning color
 set statusline+=%{LinterStatus()}                      " ALE errors and warns
