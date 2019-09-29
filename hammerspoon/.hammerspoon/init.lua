@@ -9,6 +9,11 @@ local utils = require("utils")
 local pasteboard = require("hs.pasteboard")
 local customshellrun = require('customshellrun') 
 
+
+local mailcounter = hs.menubar.new()
+mailcounter:setTooltip("No new emails")
+mailcounter:setTitle("")
+
 -- Variables
 local BIN = os.getenv("HOME") .. '/.bin/'
 
@@ -101,6 +106,12 @@ emailNotify = function(paths, flags)
   end
 
   result = customshellrun.run(BIN .. 'unreadsenders')
+  unreadcount = utils.linecount(result)
+  if (unreadcount > 0) then
+    mailcounter:setTitle(unreadcount .. ' new mail')
+  else
+    mailcounter:setTitle("")
+  end
   if (string.len(result) > 0) then
     if sound then
       hs.sound.getByName(hs.sound.systemSounds()[9]):play()

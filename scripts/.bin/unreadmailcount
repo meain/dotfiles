@@ -1,0 +1,5 @@
+#!/bin/sh
+
+set -e
+count=$(~/.bin/unreadsenders | wc -l | sed 's/^\ *//')
+echo "$count"
