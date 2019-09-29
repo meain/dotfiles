@@ -36,6 +36,7 @@ function mod.emojipicker()
         current:activate()
         hs.eventtap.keyStrokes(choosen)
     end)
+    chooser:placeholderText("Pick emoji")
     chooser:choices(formatChoices(emojis))
 
     copy = hs.hotkey.bind('', 'return', function()

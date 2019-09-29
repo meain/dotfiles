@@ -26,6 +26,7 @@ function mod.jumpcutselect()
         current:activate()
         hs.eventtap.keyStrokes(choosen)
     end)
+    chooser:placeholderText("Select clipboard item")
     chooser:choices(formatChoices(copies))
 
     copy = hs.hotkey.bind('', 'return', function()

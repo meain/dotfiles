@@ -15,6 +15,7 @@ function mod.anycomplete()
         current:activate()
         hs.eventtap.keyStrokes(choosen.text)
     end)
+    chooser:placeholderText("Type to lookup spelling")
 
     -- Removes all items in list
     function reset()
