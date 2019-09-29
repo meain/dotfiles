@@ -1,0 +1,3 @@
+#!/bin/bash
+
+mpc play "$(\cat -n <(mpc playlist | sed 's|.*/||;s|\.[^\.]*$||') | fzf | awk '{print $1}')"
