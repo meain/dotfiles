@@ -114,6 +114,7 @@ end
 hs.pathwatcher.new(os.getenv("HOME") .. "/.local/share/mail/meain/INBOX/new/", emailNotify):start()
 hs.hotkey.bind({'alt', 'shift'}, 'e', function()
   emailNotify()
+  customshellrun.run('/usr/local/bin/tmux refresh-client -S')
 end)
 hs.hotkey.bind({'ctrl', 'alt', 'shift'}, 'e', function()
   hs.alert('📫 Syncing email')
