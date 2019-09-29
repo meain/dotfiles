@@ -1,17 +1,21 @@
 -- https://github.com/nathancahill/Anycomplete
 local mod = {}
 
+local customshellrun = require('customshellrun') 
+
 -- Anycomplete
 function mod.anycomplete()
     local GOOGLE_ENDPOINT = 'https://suggestqueries.google.com/complete/search?client=firefox&q=%s'
     local current = hs.application.frontmostApplication()
     local tab = nil
     local copy = nil
+    local open = nil
     local choices = {}
 
     local chooser = hs.chooser.new(function(choosen)
         if copy then copy:delete() end
         if tab then tab:delete() end
+        if open then open:delete() end
         current:activate()
         hs.eventtap.keyStrokes(choosen.text)
     end)
@@ -41,6 +45,18 @@ function mod.anycomplete()
             hs.alert.show("Copied to clipboard", 1)
         else
             hs.alert.show("No search result to copy", 1)
+        end
+    end)
+
+    open = hs.hotkey.bind('shift', 'return', function()
+        local id = chooser:selectedRow()
+        local item = choices[id]
+        if item then
+            chooser:hide()
+            result = customshellrun.run(os.getenv("HOME") .. '/.bin/openorsearch "' ..  item.text .. '"')
+            hs.alert(result)
+        else
+            hs.alert.show("No search result", 1)
         end
     end)
 
