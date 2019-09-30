@@ -109,8 +109,10 @@ emailNotify = function(paths, flags)
   unreadcount = utils.linecount(result)
   if (unreadcount > 0) then
     mailcounter:setTitle(unreadcount .. ' new mail')
+    mailcounter:setTooltip(result)
   else
     mailcounter:setTitle("")
+    mailcounter:setTooltip("No new emails")
   end
   if (string.len(result) > 0) then
     if sound then
