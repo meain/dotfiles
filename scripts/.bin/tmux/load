@@ -3,7 +3,7 @@
 LOAD=$(ps -A -o %cpu | awk '{s+=$1} END {print s}' | sed  's/\..*//')
 if [ "$LOAD" -ge 150 ];
 then
-  PROCESS=$(ps axhc -o command -r | head -n2 | tail -n1)
+  PROCESS=$(ps axhc -o command -r | head -n2 | tail -n1 | sed 's/com\.\(.*\)\..*/\1/')
   echo "#[fg=red]$LOAD%($PROCESS)#[fg=default]"
 else
   echo ""
