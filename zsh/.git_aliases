@@ -62,3 +62,5 @@ alias grr='git pull upstream master --rebase'
 alias gor='git pull origin master --rebase'
 
 alias git_show_current_patch='git am --show-current-patch'
+alias git_ignore_changes='git update-index --skip-worktree'
+alias git_noignore_changes='git update-index --no-skip-worktree'
