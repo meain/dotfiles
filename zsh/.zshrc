@@ -160,7 +160,7 @@ precmd () {
 
     if [[ $CMD_ELAPSED_TIME -gt $CMD_NOTIFY_THRESHOLD ]]; then
       # print -n '\a'
-      osascript -e "display notification \"$CMD_NAME\" with title \"Job complete\""
+      osascript -e "display notification \"`$CMD_NAME` took $CMD_ELAPSED_TIME seconds\" with title \"Job complete\""
     fi
   fi
 }
