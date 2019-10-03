@@ -361,10 +361,11 @@ highlight SpellBad cterm=underline gui=underline ctermfg=11 guifg=#ffff00
 " Don't you f'in touch my cursor
 set guicursor=
 
-" Oh-my-zsh themes are shell.
-augroup custom_zsh_theme
+" Set filetype for custom files
+augroup custom_filetype
   autocmd!
   autocmd BufNewFile,BufRead *.zsh-theme set filetype=zsh
+  autocmd BufNewFile,BufRead Dockerfile-* set filetype=dockerfile
 augroup end
 
 " Resize panes whenever containing window resized.
