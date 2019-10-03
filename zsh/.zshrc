@@ -144,8 +144,10 @@ case "$(uname -s)" in
 esac
 
 preexec () {
-  CMD_START_DATE=$(date +%s)
-  CMD_NAME=$1
+  if ! grep "$1" < $HOME/.datafiles/long_runnable_jobs > /dev/null; then
+    CMD_START_DATE=$(date +%s)
+    CMD_NAME=$1
+  fi
 }
 
 precmd () {
@@ -161,7 +163,7 @@ precmd () {
 
     if [[ $CMD_ELAPSED_TIME -gt $CMD_NOTIFY_THRESHOLD ]]; then
       # print -n '\a'
-      osascript -e "display notification \"`$CMD_NAME` took $CMD_ELAPSED_TIME seconds\" with title \"Job complete\""
+      osascript -e "display notification \"$CMD_NAME took $CMD_ELAPSED_TIME seconds\" with title \"Job complete\""
     fi
   fi
 }
