@@ -408,9 +408,9 @@ function! ExpandSnip(snip)
 endfunction
 
 " common
-nnoremap ;; /<++><cr>xxxx:nohls<cr>a
-inoremap ;; <esc>/<++><cr>xxxx:nohls<cr>a
-vnoremap ;; <esc>/<++><cr>xxxx:nohls<cr>a
+nnoremap ;; /<++><cr>:nohls<cr>cf>
+inoremap ;; <esc>/<++><cr>:nohls<cr>cf>
+vnoremap ;; <esc>/<++><cr>:nohls<cr>cf>
 
 " python
 autocmd FileType python inoremap <silent><buffer> ;def def <++>(<++>):<cr><++><esc>k$?def<cr>:nohls<cr>
