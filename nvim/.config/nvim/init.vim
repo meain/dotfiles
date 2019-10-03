@@ -417,7 +417,7 @@ autocmd FileType python inoremap <silent><buffer> ;def def <++>(<++>):<cr><++><e
 autocmd FileType python inoremap <silent><buffer> ;ipdb __import__('ipdb').set_trace()<esc>
 autocmd FileType python inoremap <silent><buffer> ;pudb __import__('pudb').set_trace()<esc>
 autocmd FileType python inoremap <silent><buffer> ;fs f""<left>
-autocmd FileType python inoremap <silent><buffer> ;print print()<left>
+autocmd FileType python inoremap <silent><buffer> ;pr print()<left>
 autocmd FileType python inoremap <silent><buffer> ;ld logger.debug(f"")<left><left>
 autocmd FileType python inoremap <silent><buffer> ;li logger.info(f"")<left><left>
 autocmd FileType python inoremap <silent><buffer> ;lw logger.warning(f"")<left><left>
@@ -431,9 +431,10 @@ autocmd FileType vim inoremap <silent><buffer> ;ag augroup custom_<cr>autocmd!<c
 autocmd FileType vim inoremap <silent><buffer> ;afi autocmd FileType inoremap <++><esc>?FileType<cr>ea<space>
 
 " shell
-autocmd FileType sh inoremap <silent><buffer> ;bang #!/bin/sh
-autocmd FileType bash inoremap <silent><buffer> ;bang #!/bin/bash
-autocmd FileType zsh inoremap <silent><buffer> ;bang #!/bin/zsh
+autocmd FileType sh inoremap <silent><buffer> ;bang #!/bin/sh<cr><cr>
+autocmd FileType bash inoremap <silent><buffer> ;bang #!/bin/bash<cr><cr>
+autocmd FileType zsh inoremap <silent><buffer> ;bang #!/bin/zsh<cr><cr>
+autocmd BufNewFile *.sh :norm! i#!/bin/sh
 
 " gitcommit
 autocmd FileType gitcommit inoremap <silent><buffer> ;bang <++>: <++>
