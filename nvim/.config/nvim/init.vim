@@ -427,7 +427,7 @@ autocmd FileType python inoremap ;lx logger.exception(f"")<left><left>
 autocmd FileType python inoremap ;bang #!/usr/bin/env python3<esc>
 
 " vim
-autocmd FileType vim inoremap ;ag augroup custom_<cr>autocmd! <++><cr>augroup end<esc>?custom_<cr>:nohls<cr>A
+autocmd FileType vim inoremap ;ag augroup custom_<cr>autocmd!<cr><++><cr>augroup end<esc>?custom_<cr>:nohls<cr>A
 autocmd FileType vim inoremap ;afi autocmd FileType inoremap <++><esc>?FileType<cr>ea<space>
 
 " shell
