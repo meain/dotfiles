@@ -46,3 +46,7 @@ git_list_unmerged_branches() {
 git_delete_tag() {
     git tag --delete "$1" && git push --delete origin "$1"
 }
+
+edit_conflicting_files() {
+    git diff --name-only --diff-filter=U | xargs "$EDIOR"
+}
