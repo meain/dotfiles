@@ -1372,7 +1372,7 @@ let g:vim_printer_items = {
 nnoremap <silent><leader>l :Vista!!<cr>
 nnoremap <silent><leader>L :Vista finder lcn<cr>
 augroup custom_vista
-  autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
+  " autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
   autocmd FileType markdown nnoremap <silent><buffer><leader>l :Vista toc<cr>
 augroup end
 let g:vista_default_executive = 'lcn'
