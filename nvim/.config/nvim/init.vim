@@ -278,40 +278,49 @@ set foldlevelstart=10
 set foldnestmax=10
 
 " ColorScheme change ( redblack )
-autocmd ColorScheme redblack highlight Normal guibg=#000000 ctermbg=0
-autocmd ColorScheme redblack highlight SignColumn guibg=#000000 ctermbg=0
-autocmd ColorScheme redblack highlight LineNr guibg=#000000 ctermbg=0
-autocmd ColorScheme redblack highlight VertSplit guibg=#000000 ctermbg=0
-autocmd ColorScheme redblack highlight StatusLine guifg=#dadada ctermfg=253 ctermbg=NONE guibg=NONE gui=NONE cterm=NONE
-autocmd ColorScheme redblack highlight StatusLineNC guifg=#878787 ctermfg=102 ctermbg=NONE guibg=NONE gui=NONE cterm=NONE
-autocmd ColorScheme redblack highlight StartifyFile guifg=#eeeeee ctermfg=255 ctermbg=NONE gui=NONE cterm=NONE
-autocmd ColorScheme redblack highlight SignifySignAdd    cterm=bold gui=bold  ctermfg=119 guifg=#87ff5f
-autocmd ColorScheme redblack highlight SignifySignDelete cterm=bold gui=bold  ctermfg=167 guifg=#d75f5f
-autocmd ColorScheme redblack highlight SignifySignChange cterm=bold gui=bold  ctermfg=227 guifg=#ffff5f
-autocmd ColorScheme redblack highlight ColorColumn ctermbg=154 guibg=#212121
-autocmd ColorScheme redblack highlight CursorLine ctermbg=154 guibg=#212121
-autocmd ColorScheme redblack highlight CursorLineNr ctermfg=red guifg=red ctermbg=NONE guibg=NONE
-autocmd ColorScheme redblack highlight WildMenu ctermfg=red guifg=red ctermbg=NONE guibg=NONE
+augroup colorscheme_reblack
+  autocmd!
+  autocmd ColorScheme redblack highlight Normal guibg=#000000 ctermbg=0
+  autocmd ColorScheme redblack highlight SignColumn guibg=#000000 ctermbg=0
+  autocmd ColorScheme redblack highlight LineNr guibg=#000000 ctermbg=0
+  autocmd ColorScheme redblack highlight VertSplit guibg=#000000 ctermbg=0
+  autocmd ColorScheme redblack highlight StatusLine guifg=#dadada ctermfg=253 ctermbg=NONE guibg=NONE gui=NONE cterm=NONE
+  autocmd ColorScheme redblack highlight StatusLineNC guifg=#878787 ctermfg=102 ctermbg=NONE guibg=NONE gui=NONE cterm=NONE
+  autocmd ColorScheme redblack highlight StartifyFile guifg=#eeeeee ctermfg=255 ctermbg=NONE gui=NONE cterm=NONE
+  autocmd ColorScheme redblack highlight SignifySignAdd    cterm=bold gui=bold  ctermfg=119 guifg=#87ff5f
+  autocmd ColorScheme redblack highlight SignifySignDelete cterm=bold gui=bold  ctermfg=167 guifg=#d75f5f
+  autocmd ColorScheme redblack highlight SignifySignChange cterm=bold gui=bold  ctermfg=227 guifg=#ffff5f
+  autocmd ColorScheme redblack highlight ColorColumn ctermbg=154 guibg=#212121
+  autocmd ColorScheme redblack highlight CursorLine ctermbg=154 guibg=#212121
+  autocmd ColorScheme redblack highlight CursorLineNr ctermfg=red guifg=red ctermbg=NONE guibg=NONE
+  autocmd ColorScheme redblack highlight WildMenu ctermfg=red guifg=red ctermbg=NONE guibg=NONE
+augroup end
 
 " ColorScheme change ( janah )
-autocmd ColorScheme janah highlight Normal ctermbg=234 guibg=#1f1f1f
-autocmd ColorScheme janah highlight SignColumn ctermbg=234 guibg=#1f1f1f
-autocmd ColorScheme janah highlight LineNr ctermbg=234 guibg=#1f1f1f
-autocmd ColorScheme janah highlight VertSplit ctermbg=234 guibg=#1f1f1f
-autocmd ColorScheme janah highlight StatusLineNC guifg=#878787 ctermfg=102 ctermbg=NONE guibg=NONE gui=NONE cterm=NONE
-autocmd ColorScheme janah highlight StatusLine guifg=#878787 ctermfg=102 guibg=#f5f5f5 ctermfg=253 gui=NONE cterm=NONE
-autocmd ColorScheme janah highlight SignifySignAdd    cterm=bold gui=bold  ctermfg=119 guifg=#87ff5f guibg=#1f1f1f
-autocmd ColorScheme janah highlight SignifySignDelete cterm=bold gui=bold  ctermfg=167 guifg=#d75f5f guibg=#1f1f1f
-autocmd ColorScheme janah highlight SignifySignChange cterm=bold gui=bold  ctermfg=227 guifg=#ffff5f guibg=#1f1f1f
-autocmd ColorScheme janah highlight ColorColumn ctermbg=154 ctermfg=0 guibg=#474747 guifg=#ffffff
-autocmd ColorScheme janah highlight CursorLine ctermbg=154 guibg=#474747
-autocmd ColorScheme janah highlight CursorLineNr ctermbg=NONE guibg=NONE guifg=#df005f ctermfg=161
-autocmd ColorScheme janah highlight WildMenu guifg=#df005f ctermfg=161 guibg=NONE ctermbg=NONE gui=bold cterm=bold
+augroup colorscheme_janah
+  autocmd!
+  autocmd ColorScheme janah highlight Normal ctermbg=234 guibg=#1f1f1f
+  autocmd ColorScheme janah highlight SignColumn ctermbg=234 guibg=#1f1f1f
+  autocmd ColorScheme janah highlight LineNr ctermbg=234 guibg=#1f1f1f
+  autocmd ColorScheme janah highlight VertSplit ctermbg=234 guibg=#1f1f1f
+  autocmd ColorScheme janah highlight StatusLineNC guifg=#878787 ctermfg=102 ctermbg=NONE guibg=NONE gui=NONE cterm=NONE
+  autocmd ColorScheme janah highlight StatusLine guifg=#878787 ctermfg=102 guibg=#f5f5f5 ctermfg=253 gui=NONE cterm=NONE
+  autocmd ColorScheme janah highlight SignifySignAdd    cterm=bold gui=bold  ctermfg=119 guifg=#87ff5f guibg=#1f1f1f
+  autocmd ColorScheme janah highlight SignifySignDelete cterm=bold gui=bold  ctermfg=167 guifg=#d75f5f guibg=#1f1f1f
+  autocmd ColorScheme janah highlight SignifySignChange cterm=bold gui=bold  ctermfg=227 guifg=#ffff5f guibg=#1f1f1f
+  autocmd ColorScheme janah highlight ColorColumn ctermbg=154 ctermfg=0 guibg=#474747 guifg=#ffffff
+  autocmd ColorScheme janah highlight CursorLine ctermbg=154 guibg=#474747
+  autocmd ColorScheme janah highlight CursorLineNr ctermbg=NONE guibg=NONE guifg=#df005f ctermfg=161
+  autocmd ColorScheme janah highlight WildMenu guifg=#df005f ctermfg=161 guibg=NONE ctermbg=NONE gui=bold cterm=bold
+augroup end
 
 " ColorScheme change (pencil:light)
-autocmd ColorScheme pencil highlight SignifySignAdd    cterm=bold guifg=#00ff00
-autocmd ColorScheme pencil highlight SignifySignDelete cterm=bold guifg=#ff0000
-autocmd ColorScheme pencil highlight SignifySignChange cterm=bold guifg=#0000ff
+augroup colorscheme_reblack
+  autocmd!
+  autocmd ColorScheme pencil highlight SignifySignAdd    cterm=bold guifg=#00ff00
+  autocmd ColorScheme pencil highlight SignifySignDelete cterm=bold guifg=#ff0000
+  autocmd ColorScheme pencil highlight SignifySignChange cterm=bold guifg=#0000ff
+augroup end
 
 " Setting colorscheme
 " janah, base16-greyscale, redblack, seoul256, gruvbox, grb256,
