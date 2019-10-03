@@ -143,7 +143,26 @@ case "$(uname -s)" in
     ;;
 esac
 
-# to add a newline after every command, putting newline in the prompt was slowing things down
-precmd() { print "" }
+preexec () {
+  CMD_START_DATE=$(date +%s)
+  CMD_NAME=$1
+}
+
+precmd () {
+  # to add a newline after every command, putting newline in the prompt was slowing things down
+  print ""
+
+  # Proceed only if we've ran a command in the current shell.
+  if ! [[ -z $CMD_START_DATE ]]; then
+    CMD_END_DATE=$(date +%s)
+    CMD_ELAPSED_TIME=$(($CMD_END_DATE - $CMD_START_DATE))
+    CMD_NOTIFY_THRESHOLD=10
+
+    if [[ $CMD_ELAPSED_TIME -gt $CMD_NOTIFY_THRESHOLD ]]; then
+      # print -n '\a'
+      osascript -e "display notification \"$CMD_NAME\" with title \"Job complete\""
+    fi
+  fi
+}
 
 export ZSH_LOADED=1
