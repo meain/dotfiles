@@ -157,6 +157,7 @@ precmd () {
     CMD_END_DATE=$(date +%s)
     CMD_ELAPSED_TIME=$(($CMD_END_DATE - $CMD_START_DATE))
     CMD_NOTIFY_THRESHOLD=10
+    CMD_START_DATE=""
 
     if [[ $CMD_ELAPSED_TIME -gt $CMD_NOTIFY_THRESHOLD ]]; then
       # print -n '\a'
