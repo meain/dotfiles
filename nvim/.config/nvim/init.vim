@@ -162,6 +162,9 @@ set nowrap
 " Set hidden
 set hidden
 
+" No newline when using $
+set selection=exclusive
+
 " Better backup, swap and undos storage
 set backup                        " make backup files
 set undofile                      " persistent undos - undo after you re-open the file
