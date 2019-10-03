@@ -760,27 +760,10 @@ function! JSONFormat() range
 endfunction
 command! -range JSONFormat <line1>,<line2>call JSONFormat()
 
-" Generate Gitignore
-function! GitignoreGenerate()
-    call inputsave()
-    echo 'Auto generate .gitignore (y/n): '
-    let l:yesno = nr2char(getchar())
-    call inputrestore()
-    if l:yesno ==? 'y'
-      call inputsave()
-      let l:lang = input('Language: ')
-      echo 'Fetching .gitignore for ' . l:lang
-      execute '%!curl -L -s https://www.gitignore.io/api/linux,macos,windows,' . l:lang . ' | sed "1,3d;$d" | sed "$d" | sed "$d"'
-      call inputrestore()
-    else
-      echo ''
-    endif
-    redraw
-endfunction
-command! GitignoreGenerate :call GitignoreGenerate()
+" Auto populate Gitignore
 augroup GitIgnore
   au!
-  autocmd BufNewFile .gitignore call GitignoreGenerate()
+  autocmd BufNewFile .gitignore :0read !cat ~/.datafiles/sample_gitignore
 augroup end
 
 " Scratch buffer

@@ -1,0 +1,8 @@
+.DS_Store
+.cache
+buid
+dist
+*.log
+*.zip
+*.db
+tags
