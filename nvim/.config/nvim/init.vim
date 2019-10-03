@@ -497,7 +497,7 @@ command! W w
 " Fix overflow ( above 80 )
 command! FixOverflow :normal! gqap
 
-command! GitPush :normal! :Dispatch! git push origin $(git branch | grep "\*" | sed s:^..::g )<cr>
+command! GPush :normal! :Dispatch! git push origin $(git branch | grep "\*" | sed s:^..::g )<cr>
 
 
 
