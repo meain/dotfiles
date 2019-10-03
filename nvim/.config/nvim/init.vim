@@ -1349,7 +1349,10 @@ highlight HighlightedyankRegion cterm=underline gui=underline
 
 
 " Color Swap
-autocmd FileType css nnoremap <buffer><leader>c :ColorSwap<CR>
+augroup custom_css
+  autocmd!
+  autocmd FileType css nnoremap <buffer><leader>c :ColorSwap<CR>
+augroup end
 
 
 " Vim package info
