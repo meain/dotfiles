@@ -1,17 +1,25 @@
 #!/bin/sh
 
-
-gg(){
+gg() {
     echo "$(git rev-list --count HEAD) total commits" && git hm
+}
+
+gh() {
+    GIT_STAGED_FILES=$(git diff --name-only --cached)
+    if [ -z "$GIT_STAGED_FILES" ];then
+        git add -u && git commit -m "$1"
+    else
+        git commit -m "$1"
+    fi
 }
 
 gitignore() {
     LANGUAGE=$(curl -L -s https://www.gitignore.io/api/list | tr "," "\n" | fzf)
-    curl -L -s "https://www.gitignore.io/api/$LANGUAGE%2Cmacos" > .gitignore
+    curl -L -s "https://www.gitignore.io/api/$LANGUAGE%2Cmacos" >.gitignore
 }
 
 gcl() {
-    if [ -z "$1" ];then
+    if [ -z "$1" ]; then
         GITURL=$(pbpaste)
     else
         GITURL="https://github.com/$1.git"
@@ -22,7 +30,7 @@ gcl() {
 }
 
 git_untracked_to_gitignore() {
-    git status | grep -P \"^\\t\" | grep -vF .gitignore | sed \"s/^\\t//\" >> .gitignore
+    git status | grep -P \"^\\t\" | grep -vF .gitignore | sed \"s/^\\t//\" >>.gitignore
 }
 
 git_list_ignord_files() {

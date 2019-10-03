@@ -19,13 +19,11 @@ alias gau='git add -u'
 
 # Easier commits
 alias gc='git commit'
-alias gm='git commit -m'
 alias gma='git commit --amend'
 alias gca='git commit -a --amend -C HEAD'
 
 # Better commits
 alias gv='git add -u && git commit'
-alias gh="git add -u && git commit -m"
 alias gvf='git add -u && git commit -m "$(get_change_message)"'
 alias gap='git add -p && git commit'
 
