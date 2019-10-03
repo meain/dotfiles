@@ -413,67 +413,67 @@ inoremap ;; <esc>/<++><cr>xxxx:nohls<cr>a
 vnoremap ;; <esc>/<++><cr>xxxx:nohls<cr>a
 
 " python
-autocmd FileType python inoremap ;def def <++>(<++>):<cr><++><esc>k$?def<cr>:nohls<cr>
-autocmd FileType python inoremap ;ipdb __import__('ipdb').set_trace()<esc>
-autocmd FileType python inoremap ;pudb __import__('pudb').set_trace()<esc>
-autocmd FileType python inoremap ;fs f""<left>
-autocmd FileType python inoremap ;print print()<left>
-autocmd FileType python inoremap ;ld logger.debug(f"")<left><left>
-autocmd FileType python inoremap ;li logger.info(f"")<left><left>
-autocmd FileType python inoremap ;lw logger.warning(f"")<left><left>
-autocmd FileType python inoremap ;le logger.error(f"")<left><left>
-autocmd FileType python inoremap ;lc logger.critical(f"")<left><left>
-autocmd FileType python inoremap ;lx logger.exception(f"")<left><left>
-autocmd FileType python inoremap ;bang #!/usr/bin/env python3<esc>
+autocmd FileType python inoremap <silent><buffer> ;def def <++>(<++>):<cr><++><esc>k$?def<cr>:nohls<cr>
+autocmd FileType python inoremap <silent><buffer> ;ipdb __import__('ipdb').set_trace()<esc>
+autocmd FileType python inoremap <silent><buffer> ;pudb __import__('pudb').set_trace()<esc>
+autocmd FileType python inoremap <silent><buffer> ;fs f""<left>
+autocmd FileType python inoremap <silent><buffer> ;print print()<left>
+autocmd FileType python inoremap <silent><buffer> ;ld logger.debug(f"")<left><left>
+autocmd FileType python inoremap <silent><buffer> ;li logger.info(f"")<left><left>
+autocmd FileType python inoremap <silent><buffer> ;lw logger.warning(f"")<left><left>
+autocmd FileType python inoremap <silent><buffer> ;le logger.error(f"")<left><left>
+autocmd FileType python inoremap <silent><buffer> ;lc logger.critical(f"")<left><left>
+autocmd FileType python inoremap <silent><buffer> ;lx logger.exception(f"")<left><left>
+autocmd FileType python inoremap <silent><buffer> ;bang #!/usr/bin/env python3<esc>
 
 " vim
-autocmd FileType vim inoremap ;ag augroup custom_<cr>autocmd!<cr><++><cr>augroup end<esc>?custom_<cr>:nohls<cr>A
-autocmd FileType vim inoremap ;afi autocmd FileType inoremap <++><esc>?FileType<cr>ea<space>
+autocmd FileType vim inoremap <silent><buffer> ;ag augroup custom_<cr>autocmd!<cr><++><cr>augroup end<esc>?custom_<cr>:nohls<cr>A
+autocmd FileType vim inoremap <silent><buffer> ;afi autocmd FileType inoremap <++><esc>?FileType<cr>ea<space>
 
 " shell
-autocmd FileType sh inoremap ;bang #!/bin/sh
-autocmd FileType bash inoremap ;bang #!/bin/bash
-autocmd FileType zsh inoremap ;bang #!/bin/zsh
+autocmd FileType sh inoremap <silent><buffer> ;bang #!/bin/sh
+autocmd FileType bash inoremap <silent><buffer> ;bang #!/bin/bash
+autocmd FileType zsh inoremap <silent><buffer> ;bang #!/bin/zsh
 
 " gitcommit
-autocmd FileType gitcommit inoremap ;bang <++>: <++>
+autocmd FileType gitcommit inoremap <silent><buffer> ;bang <++>: <++>
 
 " html
-autocmd FileType html inoremap ;fa <i class="fas fa-"></i><esc>F"i
+autocmd FileType html inoremap <silent><buffer> ;fa <i class="fas fa-"></i><esc>F"i
 
 " go
-autocmd FileType go inoremap ;ee :=
-autocmd FileType go inoremap ;err if err != nul {<cr>log.Fatal(err)<cr>}
+autocmd FileType go inoremap <silent><buffer> ;ee :=
+autocmd FileType go inoremap <silent><buffer> ;err if err != nul {<cr>log.Fatal(err)<cr>}
 
 " css
-autocmd FileType css inoremap ;se <Esc>A;
-autocmd FileType css inoremap ;wh width: 100%;<cr>height: 100%; 
-autocmd FileType css inoremap ;bc background-color: #f5f5f5;<esc>Bvt;
-autocmd FileType css inoremap ;br border-radius: 5px;<esc>Bvt;
-autocmd FileType css inoremap ;media @media only screen and (max-width: 600px) {<cr>}<esc>O
-autocmd FileType css inoremap ;df display: flex;
-autocmd FileType css inoremap ;center justify-content: center;<cr>align-items: center; 
-autocmd FileType css inoremap ;cp cursor: pointer;<esc>Bvt;
-autocmd FileType css inoremap ;base * {<cr>box-sizing: border-box;<cr>}
-autocmd FileType css inoremap ;body body {<cr>margin: 0;<cr>padding: 0;<cr>} 
-autocmd FileType css inoremap ;shadow box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 0px 2px rgba(0, 0, 0, 0.24); 
-autocmd FileType css inoremap ;fc flex-direction: column; 
+autocmd FileType css inoremap <silent><buffer> ;se <Esc>A;
+autocmd FileType css inoremap <silent><buffer> ;wh width: 100%;<cr>height: 100%; 
+autocmd FileType css inoremap <silent><buffer> ;bc background-color: #f5f5f5;<esc>Bvt;
+autocmd FileType css inoremap <silent><buffer> ;br border-radius: 5px;<esc>Bvt;
+autocmd FileType css inoremap <silent><buffer> ;media @media only screen and (max-width: 600px) {<cr>}<esc>O
+autocmd FileType css inoremap <silent><buffer> ;df display: flex;
+autocmd FileType css inoremap <silent><buffer> ;center justify-content: center;<cr>align-items: center; 
+autocmd FileType css inoremap <silent><buffer> ;cp cursor: pointer;<esc>Bvt;
+autocmd FileType css inoremap <silent><buffer> ;base * {<cr>box-sizing: border-box;<cr>}
+autocmd FileType css inoremap <silent><buffer> ;body body {<cr>margin: 0;<cr>padding: 0;<cr>} 
+autocmd FileType css inoremap <silent><buffer> ;shadow box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 0px 2px rgba(0, 0, 0, 0.24); 
+autocmd FileType css inoremap <silent><buffer> ;fc flex-direction: column; 
 
 " javascript
-autocmd FileType javascript inoremap ;flow // @flow 
-autocmd FileType javascript inoremap ;cn className=""<left>
-autocmd FileType javascript inoremap ;rf <React.Fragment><cr></React.Fragment>O
-autocmd FileType javascript inoremap ;rfs <React.Fragment>
-autocmd FileType javascript inoremap ;rfe </React.Fragment>
-autocmd FileType javascript inoremap ;con constructor(props: Props) {<cr>super(props)<cr>}O
-autocmd FileType javascript inoremap ;disp dispatch({<cr>type: '<++>',<cr>payload: <++><cr>})<esc>?dispatch<cr>:nohls<cr>jci'
-autocmd FileType javascript inoremap ;rl const <++> = React.lazy(() => import('<++>'))
-autocmd FileType javascript inoremap ;bind <esc>:call ExpandSnip("self.{++} = self.{++}.bind(this)")<cr>
-autocmd FileType javascript inoremap ;cim <esc>:call ExpandSnip("import {++} from '../{++}/{++}'")<cr>
-autocmd FileType javascript inoremap ;stop if (e) {<cr>e.stopPropagaion()<cr>if(e.nativeEvent) e.nativeEvent.stopImmediatePropagation()<cr>}
+autocmd FileType javascript inoremap <silent><buffer> ;flow // @flow 
+autocmd FileType javascript inoremap <silent><buffer> ;cn className=""<left>
+autocmd FileType javascript inoremap <silent><buffer> ;rf <React.Fragment><cr></React.Fragment>O
+autocmd FileType javascript inoremap <silent><buffer> ;rfs <React.Fragment>
+autocmd FileType javascript inoremap <silent><buffer> ;rfe </React.Fragment>
+autocmd FileType javascript inoremap <silent><buffer> ;con constructor(props: Props) {<cr>super(props)<cr>}O
+autocmd FileType javascript inoremap <silent><buffer> ;disp dispatch({<cr>type: '<++>',<cr>payload: <++><cr>})<esc>?dispatch<cr>:nohls<cr>jci'
+autocmd FileType javascript inoremap <silent><buffer> ;rl const <++> = React.lazy(() => import('<++>'))
+autocmd FileType javascript inoremap <silent><buffer> ;bind <esc>:call ExpandSnip("self.{++} = self.{++}.bind(this)")<cr>
+autocmd FileType javascript inoremap <silent><buffer> ;cim <esc>:call ExpandSnip("import {++} from '../{++}/{++}'")<cr>
+autocmd FileType javascript inoremap <silent><buffer> ;stop if (e) {<cr>e.stopPropagaion()<cr>if(e.nativeEvent) e.nativeEvent.stopImmediatePropagation()<cr>}
 
 " markdown
-autocmd FileType markdown inoremap ;lkj  <esc>Bi`<esc>Ea`<esc>A
+autocmd FileType markdown inoremap <silent><buffer> ;lkj  <esc>Bi`<esc>Ea`<esc>A
 
 
 
