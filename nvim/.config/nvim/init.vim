@@ -267,7 +267,7 @@ let g:python3_host_prog = $HOME . '/.pyenv/versions/3.6.6/bin/python'
 
 " Fill chars
 set fillchars=vert:\|
-set fillchars+=fold:-
+set fillchars+=fold:\ 
 
 " Indent based folding
 set foldlevel=0
