@@ -461,17 +461,17 @@ autocmd FileType css inoremap <silent><buffer> ;shadow box-shadow: 0 1px 3px rgb
 autocmd FileType css inoremap <silent><buffer> ;fc flex-direction: column; 
 
 " javascript
-autocmd FileType javascript inoremap <silent><buffer> ;flow // @flow 
-autocmd FileType javascript inoremap <silent><buffer> ;cn className=""<left>
-autocmd FileType javascript inoremap <silent><buffer> ;rf <React.Fragment><cr></React.Fragment>O
-autocmd FileType javascript inoremap <silent><buffer> ;rfs <React.Fragment>
-autocmd FileType javascript inoremap <silent><buffer> ;rfe </React.Fragment>
-autocmd FileType javascript inoremap <silent><buffer> ;con constructor(props: Props) {<cr>super(props)<cr>}O
-autocmd FileType javascript inoremap <silent><buffer> ;disp dispatch({<cr>type: '<++>',<cr>payload: <++><cr>})<esc>?dispatch<cr>:nohls<cr>jci'
-autocmd FileType javascript inoremap <silent><buffer> ;rl const <++> = React.lazy(() => import('<++>'))
-autocmd FileType javascript inoremap <silent><buffer> ;bind <esc>:call ExpandSnip("self.{++} = self.{++}.bind(this)")<cr>
-autocmd FileType javascript inoremap <silent><buffer> ;cim <esc>:call ExpandSnip("import {++} from '../{++}/{++}'")<cr>
-autocmd FileType javascript inoremap <silent><buffer> ;stop if (e) {<cr>e.stopPropagaion()<cr>if(e.nativeEvent) e.nativeEvent.stopImmediatePropagation()<cr>}
+autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;flow // @flow 
+autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;cn className=""<left>
+autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;rf <React.Fragment><cr></React.Fragment>O
+autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;rfs <React.Fragment>
+autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;rfe </React.Fragment>
+autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;con constructor(props: Props) {<cr>super(props)<cr>}O
+autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;disp dispatch({<cr>type: '<++>',<cr>payload: <++><cr>})<esc>?dispatch<cr>:nohls<cr>jci'
+autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;rl const <++> = React.lazy(() => import('<++>'))
+autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;bind <esc>:call ExpandSnip("self.{++} = self.{++}.bind(this)")<cr>
+autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;cim <esc>:call ExpandSnip("import {++} from '../{++}/{++}'")<cr>
+autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;stop if (e) {<cr>e.stopPropagaion()<cr>if(e.nativeEvent) e.nativeEvent.stopImmediatePropagation()<cr>}
 
 " markdown
 autocmd FileType markdown inoremap <silent><buffer> ;lkj  <esc>Bi`<esc>Ea`<esc>A
