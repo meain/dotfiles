@@ -133,12 +133,7 @@ set encoding=utf8
 set path+=**
 
 " Turn on line numbers
-set number relativenumber
-augroup numbertoggle
-  autocmd!
-  autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu | set rnu   | endif
-  autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu | set nornu | endif
-augroup END
+set nonumber norelativenumber
 
 " Highlight cursor line (slows down)
 set nocursorline
