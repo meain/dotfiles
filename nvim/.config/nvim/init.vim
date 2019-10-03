@@ -1048,10 +1048,6 @@ augroup TerminalStuff
   autocmd TermOpen * IndentLinesDisable
 augroup END
 
-" Easy allign
-xmap ga <Plug>(EasyAlign)
-nmap ga <Plug>(EasyAlign)
-
 " Signfy
 let g:signify_sign_add               = 'ǁ'
 let g:signify_sign_delete            = 'ǁ'
