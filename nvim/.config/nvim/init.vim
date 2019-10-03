@@ -1203,6 +1203,7 @@ nnoremap <silent> gx :call LanguageClient_textDocument_rename()<CR>
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 nnoremap <silent> gr :call LanguageClient_textDocument_references()<CR>
 nnoremap <silent> gh :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> ga :call LanguageClient_textDocument_codeAction()<CR>
 nnoremap <silent> g, :call LanguageClient_textDocument_formatting()<CR>
 vnoremap <silent> g, :call LanguageClient_textDocument_rangeFormatting()<CR>
 nnoremap <silent> K :call <SID>show_documentation()<CR>
