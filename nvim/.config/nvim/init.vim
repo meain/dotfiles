@@ -160,6 +160,9 @@ set hidden
 " No newline when using $
 set selection=exclusive
 
+" Always show signcolumn
+set signcolumn=yes
+
 " Better backup, swap and undos storage
 set backup                        " make backup files
 set undofile                      " persistent undos - undo after you re-open the file
@@ -210,9 +213,6 @@ set noshowmatch
 
 " Set updatetime
 set updatetime=2000
-
-" Always show signcolumns
-set signcolumn=auto
 
 " Tabs config
 set expandtab
