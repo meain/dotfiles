@@ -1,0 +1,5 @@
+#!/bin/sh
+
+FILENAME="$(echo "$1" | sed "s|~|$HOME|")"
+bat --plain --color always $FILENAME
+
