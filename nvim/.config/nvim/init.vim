@@ -398,6 +398,7 @@ autocmd BufReadPre *.min.* syntax off
 iabbr cosnt const
 iabbr imprt import
 iabbr imoprt import
+iabbr improt import
 
 
 
