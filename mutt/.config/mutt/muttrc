@@ -29,6 +29,7 @@ set sort = 'threads'
 set sort_aux = 'reverse-last-date-received'
 set editor = $EDITOR
 set mailcap_path = $HOME/.config/mutt/mailcap
+set signature = $HOME/.config/mutt/signature
 set query_command = "$HOME/.bin/mailcomplete '%s'"
 
 # set date_format="%m/%d %I:%M"
