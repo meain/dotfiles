@@ -651,6 +651,7 @@ autocmd FileType typescript.tsx nnoremap <buffer><leader>c mc?class=<CR>ciwclass
 
 " quick search and replace
 nnoremap <leader>; :%s/\v
+vnoremap <leader>; :s/\v
 
 
 
