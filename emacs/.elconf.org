@@ -121,13 +121,15 @@
     #+BEGIN_SRC emacs-lisp
       (use-package twilight-theme
           :ensure t
-          :disabled
-          :init
-            (load-theme 'twilight t))
+          :disabled)
     #+END_SRC
 *** Set theme
     #+BEGIN_SRC emacs-lisp
-        (load-theme 'base16-classic-dark t)
+      (use-package twilight-theme
+          :ensure t
+          :disabled
+          :init
+            (load-theme 'base16-classic-dark t))
     #+END_SRC
 * Other settings
 ** Ring bell
