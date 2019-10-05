@@ -111,7 +111,7 @@ Plug 'tpope/vim-repeat'                                                         
 " Plug 'sotte/presenting.vim', { 'on': 'PresentingStart' }                                       " Presetation in vim
 " Plug 'junegunn/vader.vim', {'for': 'vader'}                                                    " Vimscript testing framework
 " Plug 'tmux-plugins/vim-tmux-focus-events'
-Plug 'voldikss/vim-floaterm', { 'on': 'FloatermToggle' }                                         " Floating terminal
+Plug '~/Documents/Projects/projects/vim-floaterm', { 'on': 'FloatermToggle' }                                         " Floating terminal
 Plug 'rhysd/git-messenger.vim', { 'on': 'GitMessenger' }                                         " Show git commit
 Plug '~/Documents/Projects/projects/vim-colorswitch', { 'do': 'UpdateRemotePlugins' }            " Cycle between color types
 Plug '~/Documents/Projects/projects/vim-package-info'
@@ -1387,6 +1387,9 @@ let g:vista#renderer#icons = {
 
 
 " Floaterm
+let g:floaterm_position='topright'
+let g:floaterm_height=winheight(0)/4
+let g:floaterm_width=winwidth(0)/2
 nnoremap <silent><M-t> :FloatermToggle<cr>i
 tnoremap <M-t> <C-\><C-n>:FloatermToggle<cr>
 
