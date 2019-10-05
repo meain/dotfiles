@@ -159,7 +159,7 @@ set nowrap
 set hidden
 
 " No newline when using $
-set selection=exclusive
+set selection=old
 
 " Always show signcolumn
 set signcolumn=yes
