@@ -569,9 +569,6 @@ tnoremap <Leader><Esc> <C-\><C-n>
 " Copy entire file content
 nnoremap yp mzggVG"+y`z
 
-" Vim docs
-" au FileType vim nmap K :help <c-r><c-w><cr>
-
 " Don't change Enter in all buffers
 autocmd FileType help nnoremap <buffer> <Enter> <Enter>
 autocmd FileType vim-plug nnoremap <buffer> <Enter> <Enter>
