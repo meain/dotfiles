@@ -189,7 +189,7 @@ set ignorecase
 set nojoinspaces
 
 " show partial commands
-set showcmd
+set noshowcmd
 
 " Allow plugins by file type (required for plugins!)
 filetype plugin on
