@@ -607,6 +607,8 @@ nnoremap <silent><Leader>q :q<cr>
 nnoremap <silent><Leader>w :w<cr>
 
 " Split like a boss
+nnoremap <silent>sv :vsplit \| :Startify<cr>
+nnoremap <silent>sh :split \| :Startify<cr>
 nnoremap <silent><Leader>v :vsplit \| :Startify<cr>
 nnoremap <silent><Leader>h :split \| :Startify<cr>
 
