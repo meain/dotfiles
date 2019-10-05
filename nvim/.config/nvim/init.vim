@@ -111,7 +111,7 @@ Plug 'tpope/vim-repeat'                                                         
 " Plug 'sotte/presenting.vim', { 'on': 'PresentingStart' }                                       " Presetation in vim
 " Plug 'junegunn/vader.vim', {'for': 'vader'}                                                    " Vimscript testing framework
 " Plug 'tmux-plugins/vim-tmux-focus-events'
-Plug '~/Documents/Projects/projects/vim-floaterm', { 'on': 'FloatermToggle' }                                         " Floating terminal
+Plug 'voldikss/vim-floaterm', { 'on': 'FloatermToggle' }                                         " Floating terminal
 Plug 'rhysd/git-messenger.vim', { 'on': 'GitMessenger' }                                         " Show git commit
 Plug '~/Documents/Projects/projects/vim-colorswitch', { 'do': 'UpdateRemotePlugins' }            " Cycle between color types
 Plug '~/Documents/Projects/projects/vim-package-info'
