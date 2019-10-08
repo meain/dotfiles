@@ -23,13 +23,14 @@ setopt sharehistory
 setopt incappendhistory
 
 # cd-ing settings
-setopt auto_cd
+setopt auto_cd # automatically cd if folder name and no command found
 setopt auto_list # automatically list choices on ambiguous completion
 setopt auto_menu # automatically use menu completion
 setopt always_to_end # move cursor to end if word had one match
 setopt interactive_comments # allow comments in interactive shells
 zstyle ':completion:*' menu select # select completions with arrow keys
 zstyle ':completion:*' group-name '' # group results by category
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}' # non case sensitive complete
 zstyle ':completion:::::' completer _expand _complete _ignored _approximate # enable approximate matches for completion
 
 
