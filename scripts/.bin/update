@@ -24,7 +24,7 @@ _update_poetry() {
     poetry self update
 }
 _update_gcloud() {
-    gcloud components update
+    gcloud components update -q
 }
 
 case "$1" in
