@@ -446,6 +446,7 @@ autocmd FileType vim inoremap <silent><buffer> ;afi autocmd FileType inoremap <+
 autocmd FileType sh inoremap <silent><buffer> ;bang #!/bin/sh<cr><cr>
 autocmd FileType bash inoremap <silent><buffer> ;bang #!/bin/bash<cr><cr>
 autocmd FileType zsh inoremap <silent><buffer> ;bang #!/bin/zsh<cr><cr>
+autocmd FileType sh,bash,zsh inoremap <silent><buffer> ;s ;;
 autocmd BufNewFile *.sh :norm! i#!/bin/sh
 
 " gitcommit
