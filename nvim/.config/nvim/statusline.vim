@@ -36,16 +36,17 @@ endfunction
 set statusline=                                        " Reset status line
 set statusline+=%*                                     " Reset color
 set statusline+=%{&readonly?':':!&modifiable?':':''}   " Non modifiable
-set statusline+=\ \ %{TinyFilePath()}\                   " File name
+set statusline+=\ \ %{TinyFilePath()}\                 " File name
 set statusline+=%{&modified?'+':''}                    " Modified
 set statusline+=\ %q                                   " Quickfix, LocList etc
-set statusline+=%#StatusLineNC#                        " Faded
 set statusline+=\ %{NearestMethodOrFunction()}
+set statusline+=%#StatusLineNC#                        " Faded
 set statusline+=%=                                     " Split
 set statusline+=%#ALEWarningSign#                      " Warning color
 set statusline+=%{LinterStatus()}                      " ALE errors and warns
 set statusline+=%#StatusLineNC#                        " Faded
 set statusline+=\ %l:%c                                " Line number and column
 set statusline+=\ %p%%                                 " Percentage
+set statusline+=\ %y                                   " Filetype
 set statusline+=\                                      " Blank
 
