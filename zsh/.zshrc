@@ -118,6 +118,8 @@ case "$(uname -s)" in
 esac
 
 # Use vim mode in zsh
+autoload -U edit-command-line
+zle -N edit-command-line
 bindkey -v
 bindkey '^P' up-history
 bindkey '^N' down-history
