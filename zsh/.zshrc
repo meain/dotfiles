@@ -130,6 +130,8 @@ bindkey '^r' history-incremental-search-backward
 bindkey '^e' edit-command-line
 bindkey '^xe' edit-command-line
 bindkey '^x^e' edit-command-line
+bindkey "\e[A" history-search-backward
+bindkey "\e[B" history-search-forward
 export KEYTIMEOUT=1
 
 # updates PATH for Google Cloud SDK && add shell completion for gcloud
