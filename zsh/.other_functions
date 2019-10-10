@@ -243,3 +243,25 @@ morning(){
 take() {
     mkdir -p "$1" && cd "$1" || return 1
 }
+
+starttunnel(){
+    # networksetup -listallnetworkservices
+    DEVICE='USB 10/100/1000 LAN'
+    PORT=8889
+    ssh -D "$PORT" -f -C -q -N meain@alexa3
+    networksetup -setsocksfirewallproxy "$DEVICE" localhost "$PORT"
+    networksetup -setsocksfirewallproxystate "$DEVICE" on
+    tmux refresh-client -S
+}
+
+stoptunnel(){
+    DEVICE='USB 10/100/1000 LAN'
+    networksetup -setsocksfirewallproxystate "$DEVICE" off
+    kill $(ps aux | grep 'ssh -D' | grep -v grep | awk '{print $2}')
+    tmux refresh-client -S
+}
+
+tunnelstatus(){
+    DEVICE='USB 10/100/1000 LAN'
+    networksetup -getsocksfirewallproxy "$DEVICE"
+}

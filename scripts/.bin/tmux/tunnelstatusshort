@@ -1,0 +1,7 @@
+#!/bin/sh
+
+DEVICE='USB 10/100/1000 LAN'
+STATUS="$(networksetup -getsocksfirewallproxy "$DEVICE" | head -n 1 | awk '{print $2}')"
+if [ "$STATUS" == "Yes" ]; then
+    echo "⇌"
+fi
