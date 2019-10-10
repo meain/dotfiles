@@ -18,6 +18,13 @@ gitignore() {
     curl -L -s "https://www.gitignore.io/api/$LANGUAGE%2Cmacos" >.gitignore
 }
 
+ga() {
+    if [ -z "$1" ];then
+        1="$(pwd)"
+    fi
+    git add "$1"
+}
+
 gcl() {
     if [ -z "$1" ]; then
         GITURL=$(pbpaste)
