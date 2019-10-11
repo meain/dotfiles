@@ -3,17 +3,17 @@
 
 SWEAR_WORDS='fuck|shit|crap|dammit|bitch|asshole' 
 CHECK=$(git diff --staged | grep "^+" | grep -Ei "$SWEAR_WORDS" -c)
-
 if [ "$CHECK" -gt 0 ]
 then
-    echo "[31mWARNING [00m $CHECK line(s) with swear words found"
+    # use ^[[31m for red foregroud
+    echo "[41m WARNING [00m $CHECK line(s) with swear words found"
     git diff --name-only -G"$SWEAR_WORDS" | sed 's/^/> /'
 fi
 
 CONFLICT_MARKERS='<<<<<<<|=======|>>>>>>>'
-CHECK2=$(git diff --staged | grep "^+" | grep -Ei "$CONFLICT_MARKERS" -c )
+CHECK2=$(git diff --staged | grep "^+" | grep -Ei "$CONFLICT_MARKERS" -c)
 if [ "$CHECK2" -gt 0 ]
 then
-    echo "[31mWARNING[00m Conflict markers sill preset"
+    echo "[41m WARNING [00m Conflict markers sill preset"
     git diff --name-only -G"$CONFLICT_MARKERS"
 fi
