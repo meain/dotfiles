@@ -10,7 +10,7 @@ then
     git diff --name-only -G"$SWEAR_WORDS" | sed 's/^/> /'
 fi
 
-CONFLICT_MARKERS='<<<<<<<|=======|>>>>>>>'
+CONFLICT_MARKERS='<<<<<<<|=======|>>>>>>>' 
 CHECK2=$(git diff --staged | grep "^+" | grep -Ei "$CONFLICT_MARKERS" -c)
 if [ "$CHECK2" -gt 0 ]
 then
