@@ -26,12 +26,12 @@ scrolling:
 
 font:
   normal:
-    family: Operator Mono Light
+    family: SpaceMono Nerd Font Mono
   bold:
-    family: Operator Mono Medium
+    family: SpaceMono Nerd Font Mono Regular
   italic:
-    family: Operator Mono
-  size: 18.0
+    family: SpaceMono Nerd Font Mono
+  size: 15.0
   offset:
     x: 0
     y: 0
