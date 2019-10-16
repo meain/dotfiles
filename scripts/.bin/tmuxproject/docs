@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd ~/Documents/Projects/work/saama/ReadTheDocs || return
+cd ~/Documents/Projects/work/saama/docs || return
 SESSION=docs
 
 # if the session is already running, just attach to it.
