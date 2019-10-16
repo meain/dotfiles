@@ -1,0 +1,22 @@
+#!/bin/sh
+
+if [ -z "$1" ];then
+    echo "Usage: ytmusicplayer <--resume|URL>"
+fi
+
+if [ ! "$1" = "--resume" ];then
+    youtube-dl -g --skip-download "$1" > /tmp/vids &
+    YDL=$(echo $!)
+
+    cleanup() {
+    echo "Cleaning up stuff.."
+    kill -9 "$YDL"
+    }
+
+    trap cleanup EXIT
+
+    echo "Waiting for download to complete..."
+    sleep 15
+fi
+
+cat /tmp/vids | xargs mpv --no-video 

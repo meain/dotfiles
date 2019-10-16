@@ -1,0 +1,5 @@
+#!/bin/sh
+
+killall mpd
+sleep 2
+mpd
