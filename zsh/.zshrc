@@ -95,6 +95,8 @@ source $HOME/.docker_functions
 source $HOME/.python_functions
 source $HOME/.kubectl_functions
 
+# Sorce fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 if [ -f $HOME/.temp_aliases ];then
   source $HOME/.temp_aliases
