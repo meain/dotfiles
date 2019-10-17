@@ -9,8 +9,8 @@ visualizer_fifo_path = "/tmp/mpd.fifo"
 visualizer_in_stereo = "no"
 visualizer_type = "spectrum"
 visualizer_output_name = "my_fifo"
-visualizer_look = "●┃"
-visualizer_color = "default"
+visualizer_look = ":|"
+visualizer_color = "blue, cyan, green, yellow, magenta, red"
 
 [header]
 header_visibility = "no"
