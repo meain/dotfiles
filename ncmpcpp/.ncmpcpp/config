@@ -21,7 +21,7 @@ state_line_color = "black"
 
 [playlist]
 playlist_display_mode = "classic"
-song_list_format = "{{$3%t $9 %a}|{%f}}{$R%l}"
+song_list_format = "{{$3%t$9}|{%f}}{$R%a}"
 song_columns_list_format = "(40)[]{t|f} (30)[]{a} (30)[]{b}"
 now_playing_prefix = "$b$2"
 now_playing_suffix = "$/b$9"
