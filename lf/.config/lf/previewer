@@ -6,5 +6,7 @@ case "$1" in
     *.rar) unrar l "$1" || file "$1";;
     *.7z) 7z l "$1";;
     *.pdf) pdftotext "$1" - || file "$1";;
+    *.png|*.jpg|*.JPG|*.jpeg|*.gif) chafa --fill=block --symbols=block -c 256 -s 80x"$2" "$1";;
+    *.mp4) echo "Video file";;
     *) bat --color=always --theme=base16 -p "$1" || cat "$1" || file "$1";;
 esac
