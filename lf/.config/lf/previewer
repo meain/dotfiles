@@ -12,6 +12,10 @@ videopreview(){
     set +e
 }
 
+audiopreview(){
+    ffmpeg -i "$1" 2>&1 | grep Duration | tr ',' '\n' | sed 's/^\ *//'
+}
+
 case "$1" in
     *.tar*) tar tf "$1";;
     *.zip) unzip -l "$1";;
@@ -20,5 +24,6 @@ case "$1" in
     *.pdf) pdftotext "$1" - || file "$1";;
     *.png|*.jpg|*.JPG|*.jpeg|*.gif) imagepreview "$1" "$2";;
     *.mp4) videopreview "$1" "$2";;
+    *.mp3) audiopreview "$1";;
     *) bat --color=always --theme=base16 -p "$1" || cat "$1" || file "$1";;
 esac
