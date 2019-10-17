@@ -1,0 +1,3 @@
+#!/bin/sh
+
+gloc --ignore-errors --recurse-into --output --ignore-empty "git lg --color=always --since='yesterday'"
