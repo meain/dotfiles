@@ -92,7 +92,7 @@ RPROMPT='%F{white}%2~ '
 function zle-line-init zle-keymap-select {
 NORMAL_COLOR="%{$FG[153]%}"
 INSERT_COLOR="%{$fg_bold[white]%}"
-PS1="${_return_status}${_tmux_indicator}%F{green}$( _vcs_info_wrapper )%F{yellow}%B%(1j.#.) "
+PS1="${_return_status}${_tmux_indicator}%F{green}$( _vcs_info_wrapper )%F{yellow}%B%(1j.#.) %{$reset_color%}"
 RPS1="%F{yellow} $(virtualenv_info) $FG[240]$(_git_pushable)%{$reset_color%} ${${KEYMAP/vicmd/$NORMAL_COLOR}/(main|viins)/$INSERT_COLOR}%2~%{$reset_color%} %{%B%F{cyan}%}$(_hosthame_custom)" zle reset-prompt
 }
 zle -N zle-line-init
