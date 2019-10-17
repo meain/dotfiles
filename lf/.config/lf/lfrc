@@ -18,6 +18,7 @@ cmd put &{{
 map e $$EDITOR "$f"
 map i $bat --paging always "$f"
 map m $qlmanage -p "$f" > /dev/null 2> /dev/null
+set previewer ~/.config/lf/previewer
 
 map S $$SHELL
 
