@@ -1,12 +1,24 @@
 #!/bin/sh
 
+imagepreview(){
+    chafa --fill=block --symbols=block -c 256 -s 80x"$2" "$1"
+}
+
+videopreview(){
+    set -e
+    ffmpeg -ss 00:00:10 -i "$1" -vframes 1 -q:v 2 /tmp/videopreview.jpg
+    chafa --fill=block --symbols=block -c 256 -s 80x"$2" /tmp/videopreview.jpg
+    rm /tmp/videopreview.jpg
+    set +e
+}
+
 case "$1" in
     *.tar*) tar tf "$1";;
     *.zip) unzip -l "$1";;
     *.rar) unrar l "$1" || file "$1";;
     *.7z) 7z l "$1";;
     *.pdf) pdftotext "$1" - || file "$1";;
-    *.png|*.jpg|*.JPG|*.jpeg|*.gif) chafa --fill=block --symbols=block -c 256 -s 80x"$2" "$1";;
-    *.mp4) echo "Video file";;
+    *.png|*.jpg|*.JPG|*.jpeg|*.gif) imagepreview "$1" "$2";;
+    *.mp4) videopreview "$1" "$2";;
     *) bat --color=always --theme=base16 -p "$1" || cat "$1" || file "$1";;
 esac
