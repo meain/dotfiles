@@ -73,7 +73,7 @@ Plug 'w0rp/ale'                                                                 
 " Autocomplete
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }                                  " Competion framework
 " Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
-" Plug 'Shougo/echodoc.vim'                                                                      " Show signature
+Plug 'Shougo/echodoc.vim'                                                                      " Show signature
 Plug '~/Documents/Projects/projects/deoplete-goobook', { 'for': 'mail' }                       " Email autocomplete
 Plug '~/Documents/Projects/projects/deoplete-notmuch', { 'for': 'mail' }                       " Email autocomplete
 Plug 'Shougo/neco-vim', { 'for': 'vim' }                                                       " Completion for viml
@@ -1262,6 +1262,7 @@ call deoplete#custom#option('smart_case', v:true)
 
 " Echodoc
 let g:echodoc#enable_at_startup = 1
+let g:echodoc#type = 'virtual'
 
 " Indentline
 let g:indentLine_color_term = 236
