@@ -1059,9 +1059,6 @@ let g:sleuth_automatic = 1
 " Vim-json
 let g:vim_json_syntax_conceal = 0
 
-" Polyglot
-" let g:polyglot_disabled = ['markdown', 'md', 'latex', 'tex', 'jsx', 'typescript']
-
 " Markdown
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
 
@@ -1268,13 +1265,6 @@ let g:echodoc#type = 'virtual'
 let g:indentLine_color_term = 236
 let g:indentLine_color_gui = '#303030'
 
-" Magit
-" nnoremap <silent><bs> :Magit<cr>
-" augroup custom_magit
-"   autocmd!
-"   autocmd FileType magit nnoremap <silent><buffer> <bs> :q<cr>
-" augroup end
-
 " Sneak
 map s <Plug>Sneak_s
 map S <Plug>Sneak_S
@@ -1291,20 +1281,12 @@ command! LoadAllPlugins call plug#load(keys(g:plugs))
 nnoremap <silent><leader>s :Google <c-r><c-w><cr>
 vnoremap <leader>s y:Google <c-r>"<cr>
 
-" Comfortable motion
-" let g:comfortable_motion_no_default_key_mappings = 1
-" nnoremap <silent> <Up> :call comfortable_motion#flick(100)<CR>
-" nnoremap <silent> <Down> :call comfortable_motion#flick(-100)<CR>
-
 " Vim instant markdown
 let g:instant_markdown_autostart = 0
 
 " Rg
 let g:rg_highlight = 1
 let g:rg_command = 'rg --vimgrep --ignore-case --hidden --follow'
-
-" Dash
-" nnoremap <silent><leader>: :Dash<cr>
 
 "Loupe
 let g:LoupeVeryMagic=0
