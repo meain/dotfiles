@@ -220,7 +220,8 @@ loop() {
 
 
 copycommand() {
-    echo "$*" | pbcopy
+    # TODO: figure out how to remove the last \n
+    history | tail -n1 | cut -d' ' -f4- | pbcopy
 }
 
 start(){
