@@ -12,13 +12,11 @@ Plug 'mhinz/vim-signify'                                                        
 " Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }                                           " Hyper focus editing
 " Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }                                                     " Centerify
 Plug 'ap/vim-css-color', { 'for': 'css' }                                                      " Show colors
-" Plug 'yuttie/comfortable-motion.vim'                                                           " Scroll up and down
 Plug 'machakann/vim-highlightedyank'                                                           " Visually highlight yanked region
 
 " Added functinality
 Plug 'meain/vim-startify'                                                                      " A fancy start page for vim (slow)
 Plug '~/Documents/Projects/others/done/_vim/vim-googler', { 'on': 'Google' }                   " Google from within vim
-" Plug 'justinmk/vim-sneak'                                                                      " Quickly sneak arround
 Plug 'wincent/loupe'                                                                           " Better search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }                              " Fzf
 Plug 'junegunn/fzf.vim'                                                                        " Fzf for vim
@@ -27,16 +25,12 @@ Plug 'christoomey/vim-tmux-navigator'                                           
 Plug 'suan/vim-instant-markdown', { 'for': [ 'md', 'markdown' ] }                              " View markdown in browser while editing
 Plug 'ervandew/supertab'                                                                       " Autocomplete on tab
 Plug 'zirrostig/vim-schlepp'                                                                   " Better drag visuals
-" Plug 'xtal8/traces.vim'                                                                        " Interactive subsititue
 Plug 'vim-scripts/restore_view.vim'                                                            " Restore file pointer
 Plug 'tpope/vim-dispatch', { 'on': [ 'Dispatch', 'Start' ] }                                                " Async tasks in vim
 Plug 'airblade/vim-rooter'                                                                     " Change directory to project root
 Plug 'editorconfig/editorconfig-vim'                                                           " Editorconfig
-" Plug 'mattn/gist-vim', { 'on': 'Gist' }                                                        " Push current buffer as gist
-" Plug 'rizzatti/dash.vim', { 'on': 'Dash' }                                                     " Search Dash docs
 Plug 'davidbeckingsale/writegood.vim', { 'on': ['WritegoodEnable', 'WritegoodToggle'] }        " Better writing mode
 Plug 'mattn/emmet-vim', { 'for': ['html', 'css'] + g:javascript_filetypes }                    " Emmet
-" Plug 'jreybert/vimagit', { 'on': [ 'Magit', 'MagitOnly' ] }                                    " Even better git interface for vim
 " Plug 'metakirby5/codi.vim', { 'on': 'Codi' }                                                   " Live code preview
 Plug 'rhysd/committia.vim'                                                                     " Better COMMIT_EDITMSG editing
 Plug 'Galooshi/vim-import-js', {'for': g:javascript_filetypes, 'do': 'npm i -g import-js'}     " Easier imports for javascript
@@ -50,39 +44,31 @@ Plug 'tpope/vim-vinegar'                                                        
 Plug 'scrooloose/nerdtree', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] }         " Nerdtree
 " Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] } " Git sign for nerdtree
 Plug 'meain/vim-automkdir'                                                                     " Automatically create parent dirs
-" Plug 'yardnsm/vim-import-cost', { 'do': 'npm install', 'for': g:javascript_filetypes }         " See import cost of javascript deps
-" Plug 'machakann/vim-swap'                                                                      " Swap arguments
+Plug 'yardnsm/vim-import-cost', { 'do': 'npm install', 'for': g:javascript_filetypes }         " See import cost of javascript deps
 
 " Morph code
 Plug 'tpope/vim-surround'                                                                      " Surround
 Plug 'jiangmiao/auto-pairs'                                                                    " Autopair
 Plug 'tomtom/tcomment_vim'                                                                     " Code commenting
-" Plug 'junegunn/vim-easy-align'                                                                 " Some prettification
 
 " Language helpers
-" Plug 'sheerun/vim-polyglot'                                                                  " Multiple language support (slow)
-" Plug 'jonsmithers/experimental-lit-html-vim'                                                 " lit-html highlight
 Plug 'elzr/vim-json', { 'for': 'json' }                                                        " Json syntax highlight
 Plug 'chr4/nginx.vim', { 'for': 'nginx' }                                                      " Nginx config file syntax
-" Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }                    " Javascript syntax highlight
-" Plug 'leafgarland/typescript-vim', { 'for': [ 'typescript', 'typescript.tsx' ] }              " Typescript syntax highlight
 Plug 'HerringtonDarkholme/yats.vim', { 'for': [ 'typescript', 'typescript.tsx' ] }             " Typescript syntax highlight
 Plug 'peitalin/vim-jsx-typescript', { 'for': [ 'typescript', 'typescript.tsx' ] }              " Typescript JSX syntax highlight
 Plug 'neoclide/vim-jsx-improve', { 'for': ['javascript', 'javascript.jsx'] }                   " Inproved JSX syntax
 Plug 'tpope/vim-markdown', { 'for': ['md', 'markdown'] }                                       " Better markdown support
 Plug 'cespare/vim-toml', { 'for': 'toml' }
+Plug 'raimon49/requirements.txt.vim', { 'for': 'requirements' }                              " Requirements file
 " Plug 'fatih/vim-go', { 'for': ['go'] }                                                         " Golang helper
 " Plug 'sebdah/vim-delve', { 'for': 'go' }                                                       " Debugger for go
 " Plug 'racer-rust/vim-racer', { 'for': 'rust' }                                                 " Rust support
-" Plug 'numirias/semshi', { 'for': 'python', 'do': ':UpdateRemotePlugins' }                      " Better syntax highlight for python
-" Plug 'raimon49/requirements.txt.vim', { 'for': 'requirements' }                              " Requirements file
 
 " Language enhacements
 Plug '~/Documents/Projects/projects/vim-jsontogo' , { 'for': ['go'] }                          " Convert JSON to Go struct
 
 " Linting / Checking
 Plug 'w0rp/ale'                                                                                " Linter formatter and more
-" Plug 'Chiel92/vim-autoformat', { 'on': 'Autoformat' }                                          " Beautify code
 
 " Autocomplete
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }                                  " Competion framework
@@ -98,19 +84,14 @@ Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.s
 " Dependencies
 Plug 'vim-scripts/mru.vim'                                                                     " Save recently used files (for v)
 Plug 'radenling/vim-dispatch-neovim', { 'on': ['Dispatch', 'Start'] }                          " Neovim support for vim-dispatch
-" Plug 'mattn/webapi-vim'                                                                        " Web calls
 Plug 'tpope/vim-repeat'                                                                        " Repeat plugins with .
 
 " Others
 " Plug 'sedm0784/vim-you-autocorrect', { 'on': 'EnableAutocorrect' }                             " Autocorrect like in phones
 " Plug 'junegunn/vim-online-thesaurus', { 'on': 'OnlineThesaurusCurrentWord' }                   " Online thesaurus
 " Plug 'kristijanhusak/vim-carbon-now-sh', { 'on': 'CarbonNowSh' }                               " Polaroid for code
-" Plug 'wakatime/vim-wakatime'                                                                   " Wakatime (slow)
 " Plug 'junegunn/vim-github-dashboard', { 'on': ['GHA', 'GHD']}                                  " Github dashboard
-" Plug 'vim-scripts/loremipsum', { 'on': 'Loremipsum' }                                          " Loremipsum
-" Plug 'sotte/presenting.vim', { 'on': 'PresentingStart' }                                       " Presetation in vim
 " Plug 'junegunn/vader.vim', {'for': 'vader'}                                                    " Vimscript testing framework
-" Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'voldikss/vim-floaterm', { 'on': 'FloatermToggle' }                                         " Floating terminal
 Plug 'rhysd/git-messenger.vim', { 'on': 'GitMessenger' }                                         " Show git commit
 Plug '~/Documents/Projects/projects/vim-colorswitch', { 'do': 'UpdateRemotePlugins' }            " Cycle between color types
