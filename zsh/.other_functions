@@ -265,3 +265,21 @@ tunnelstatus(){
     DEVICE='USB 10/100/1000 LAN'
     networksetup -getsocksfirewallproxy "$DEVICE"
 }
+
+sj() {
+    cd ~/Documents/Projects/work/saama || return 1
+    FOLDER="$(find dalia automl docs -name .git -depth 2 | sed 's/.....$//' | fzf)"
+    if [ -z "$FOLDER" ];then
+	return 1
+    fi
+    cd "$FOLDER" || return 1
+}
+
+sjj() {
+    cd ~/Documents/Projects/work/saama || return 1
+    FOLDER="$(find . -name .git -depth 3 | sed 's/.....$//' | fzf)"
+    if [ -z "$FOLDER" ];then
+	return 1
+    fi
+    cd "$FOLDER" || return 1
+}
