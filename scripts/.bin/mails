@@ -1,0 +1,6 @@
+#!/bin/sh
+
+set -e
+
+unreadsenders
+isheadphonesconnected > /dev/null && unreadsenders | sed 's/^-/*/' | sed 's/(\([^(]*\))$/from \1/' | say -v Alex --rate 400

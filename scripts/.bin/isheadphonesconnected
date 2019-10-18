@@ -1,0 +1,13 @@
+#!/bin/sh
+
+set -e
+
+HEADPHONE_NAME='PXC 550'
+system_profiler SPBluetoothDataType | # get all bluetoothe info \
+    sed "1,/     Devices (Paired, Configured, etc/d" | # delete everythig till device list \
+    grep -E '(^          [A-z]|^              Connected:)' | # grep out name and connected status \
+    sed '/Bluetooth File Transfer:/,$d' | # remove everything after device list \
+    sed -n 'N;s/\n/ /;p' | # join alternate line \
+    grep "\ $HEADPHONE_NAME:" | # select headphone \
+    grep 'Connected: Yes' > /dev/null && echo "$HEADPHONE_NAME connected" # check if connected
+
