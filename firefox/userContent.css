@@ -1,0 +1,34 @@
+/* expand width of reader container and change appearance */
+@-moz-document url-prefix("about:reader") {
+  #reader-toolbar {
+    display: none !important;
+  }
+  body.sans-serif {
+    font-family: "Operator Mono Book" !important;
+  }
+
+  body.sans-serif tt {
+    font-family: "Operator Mono" !important;
+  }
+
+  body.dark.sans-serif {
+    background-color: #13131f !important;
+    color: #bae3db !important;
+  }
+  body.dark.sans-serif #reader-domain {
+    font-style: italic !important;
+  }
+  body.dark.sans-serif h1,
+  body.dark.sans-serif h2,
+  body.dark.sans-serif h3,
+  body.dark.sans-serif h4,
+  body.dark.sans-serif h5 {
+    color: #06feb0 !important;
+  }
+  body.dark.sans-serif a:link {
+    color: #83e7ff !important;
+  }
+  body.dark.sans-serif .container {
+    max-width: 40em !important;
+  }
+}
