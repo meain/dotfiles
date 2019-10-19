@@ -10,18 +10,15 @@ notmuch tag -inbox tag:inbox
 notmuch tag +inbox 'folder:/INBOX/'
 
 #github
-notmuch tag -github tag:github  # remove ones not in inbox
 notmuch tag +github 'folder:/INBOX/' 'from:notifications@github.com'
 
 # newsletters
-notmuch tag -newsletter tag:newsletter  # remove ones not in inbox
 notmuch tag +newsletter 'folder:/INBOX/' 'from:yo@dev.to'
 notmuch tag +newsletter 'folder:/INBOX/' 'from:noreply@medium.com'
 notmuch tag +newsletter 'folder:/INBOX/' 'from:no-reply@dribbble.co'
 notmuch tag +newsletter 'folder:/INBOX/' 'from:no-reply@screener.in'
 
 # bullshit
-notmuch tag -bullshit tag:bullshit  # remove ones not in inbox
 notmuch tag +bullshit 'folder:/INBOX/' 'from:marketradar@newsletter.geojit.net'
 notmuch tag +bullshit 'folder:/INBOX/' 'from:no-reply@updates.bookmyshow.com'
 notmuch tag +bullshit 'folder:/INBOX/' 'from:assistant-noreply@google.com'
@@ -29,7 +26,7 @@ notmuch tag +bullshit 'folder:/INBOX/' 'from:informations@hdfcbank.net'
 notmuch tag +bullshit 'folder:/INBOX/' 'from:no-reply@spotify.com'
 
 # known
-notmuch tag -known tag:known  # remove ones not in inbox
 notmuch tag +known 'folder:/INBOX/' 'from:noreply@swiggy.in'
 notmuch tag +known 'folder:/INBOX/' 'from:uber.india@uber.com'
 notmuch tag +known 'folder:/INBOX/' 'from:no-reply@swiggy.in'
+notmuch tag +known 'folder:/INBOX/' 'from:rapidocare@acko.com'

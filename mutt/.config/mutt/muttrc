@@ -76,7 +76,7 @@ bind editor <Tab> complete-query
 bind editor ^T complete
 
 # Sidebar mappings
-set sidebar_visible = no  # change to yes to enable sidebar
+set sidebar_visible = yes
 set sidebar_width = 20
 set sidebar_short_path = yes
 set sidebar_next_new_wrap = yes
@@ -98,10 +98,10 @@ set virtual_spoolfile=yes  # enable virtual folders
 virtual-mailboxes \
         "inbox"      "notmuch://?query=tag:inbox and -tag:bullshit"\
         "binbox"     "notmuch://?query=tag:inbox and -tag:newsletter -tag:bullshit -tag:known"\
-        "github"      "notmuch://?query=tag:github"\
-        "newsletter" "notmuch://?query=tag:newsletter"\
-        "bullshit"   "notmuch://?query=tag:bullshit"\
-        "known"      "notmuch://?query=tag:known"
+        "github"      "notmuch://?query=tag:inbox and tag:github"\
+        "newsletter" "notmuch://?query=tag:inbox and tag:newsletter"\
+        "bullshit"   "notmuch://?query=tag:inbox and tag:bullshit"\
+        "known"      "notmuch://?query=tag:inbox and tag:known"
 
 macro index,pager gh "<change-folder>=INBOX<enter>" "Go to inbox with everything."
 macro index,pager gs "<change-folder>=[Gmail].Sent Mail<enter>" "Go to sent."
