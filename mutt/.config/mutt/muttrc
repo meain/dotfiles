@@ -32,10 +32,13 @@ set mailcap_path = $HOME/.config/mutt/mailcap
 set signature = $HOME/.config/mutt/signature
 set query_command = "$HOME/.bin/mailcomplete '%s'"
 
+timeout-hook 'exec sync-mailbox'
+shutdown-hook 'exec sync-mailbox'
+
 # set date_format="%m/%d %I:%M"
 # set index_format="%2C %?X?A& ? %D %-15.15F %s (%-4.4c)"
 set date_format="%b %d"
-set index_format="%?X?A& ? %D %-15.15F %s (%-4.4c)"
+set index_format="%C %?X?A& ? %D %-15.15F %s (%-4.4c)"
 
 set forward_format = "Fwd: %s"
 set markers = no
@@ -66,6 +69,7 @@ bind index D delete-message
 bind index U undelete-message
 bind index F search
 bind index,pager R group-reply
+bind index <Tab> collapse-all
 macro index,pager S '<sync-mailbox>
 macro index,pager \Cu |urlview\n
 bind editor <Tab> complete-query
@@ -78,24 +82,42 @@ set sidebar_short_path = yes
 set sidebar_next_new_wrap = yes
 set mail_check_stats
 set sidebar_format = '%B%?F? [%F]?%* %?N?%N/? %?S?%S?'
-bind index,pager \Ck sidebar-prev
-bind index,pager \Cj sidebar-next
-bind index,pager \Co sidebar-open
-bind index,pager \Cp sidebar-prev-new
-bind index,pager \Cn sidebar-next-new
+bind index <up> sidebar-prev   # got to previous folder in sidebar
+bind index <down> sidebar-next  # got to next folder in sidebar
+bind index <space> sidebar-open  # open selected folder from sidebar
 bind index,pager B sidebar-toggle-visible
 
 bind index u toggle-new
 bind index gg first-entry
 unmailboxes *
 mailboxes =INBOX =[Gmail].Sent Mail =[Gmail].Drafts =[Gmail].Spam =[Gmail].Important =Archive =[Gmail].Drafts =[Gmail].Trash =[Gmail].Starred =[Gmail].Trash
-macro index,pager gi "<change-folder>=INBOX<enter>" "Go to inbox."
+
+# https://notmuchmail.org/mutttips/
+set nm_default_uri="notmuch://$HOME/.local/share/mail
+set virtual_spoolfile=yes  # enable virtual folders
+virtual-mailboxes \
+        "inbox"      "notmuch://?query=tag:inbox and -tag:bullshit"\
+        "binbox"     "notmuch://?query=tag:inbox and -tag:newsletter -tag:bullshit -tag:known"\
+        "github"      "notmuch://?query=tag:github"\
+        "newsletter" "notmuch://?query=tag:newsletter"\
+        "bullshit"   "notmuch://?query=tag:bullshit"\
+        "known"      "notmuch://?query=tag:known"
+
+macro index,pager gh "<change-folder>=INBOX<enter>" "Go to inbox with everything."
 macro index,pager gs "<change-folder>=[Gmail].Sent Mail<enter>" "Go to sent."
 macro index,pager gd "<change-folder>=[Gmail].Drafts<enter>" "Go to drafts."
 macro index,pager gt "<change-folder>=[Gmail].Trash<enter>" "Go to trash."
 macro index,pager gS "<change-folder>=[Gmail].Spam<enter>" "Go to spam."
 macro index,pager ga "<change-folder>=Archive<enter>" "Go to archive."
 macro index,pager a ":set confirmappend=no\n<save-message>=Archive<enter>" "Archived Message"
+
+# https://raw.githubusercontent.com/karelzak/mutt-kz/master/README.notmuch
+macro index \\\\ "<vfolder-from-query>"  # looks up a hand made query
+macro index,pager gi "<change-vfolder>inbox<enter>" "Go to regular inbox."
+macro index,pager gj "<change-vfolder>binbox<enter>" "Go to inbox."
+macro index,pager gn "<change-vfolder>newsletter<enter>" "Go to newsletter."
+macro index,pager gb "<change-vfolder>bullshit<enter>" "Go to newsletter."
+macro index,pager gk "<change-vfolder>known<enter>" "Go to newsletter."
 
 set spoolfile = "+INBOX"
 set record = "+[Gmail].Sent Mail"
