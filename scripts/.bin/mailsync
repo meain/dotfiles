@@ -2,7 +2,10 @@
 
 set -e
 
-mbsync -a
+if [ ! "$1" = "retag" ];then
+    mbsync -a
+fi
+
 notmuch new
 
 # reindex inbox
