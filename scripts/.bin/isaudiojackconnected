@@ -1,0 +1,3 @@
+#!/bin/sh
+
+system_profiler SPAudioDataType | grep 'Output Source: Headphones' > /dev/null && echo "Audio jack in use"
