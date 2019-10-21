@@ -1,3 +1,5 @@
+#!/bin/sh
+
 VALUE=$(pmset -g batt | grep InternalBattery | awk '{print $3}' | sed 's:..$::g')
 SOURCE=$(pmset -g batt | grep 'Now drawing from' | awk '{print $4}' | sed 's:^.::g')
 
