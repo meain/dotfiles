@@ -6,7 +6,7 @@ imagepreview(){
 
 videopreview(){
     set -e
-    ffmpeg -ss 00:00:10 -i "$1" -vframes 1 -q:v 2 /tmp/videopreview.jpg
+    ffmpeg -ss 00:00:10 -i "$1" -vframes 1 -q:v 2 /tmp/videopreview.jpg || ffmpeg -ss 00:00:01 -i "$1" -vframes 1 -q:v 2 /tmp/videopreview.jpg
     chafa --fill=block --symbols=block -c 256 -s 80x"$2" /tmp/videopreview.jpg
     rm /tmp/videopreview.jpg
     set +e
@@ -16,14 +16,28 @@ audiopreview(){
     ffmpeg -i "$1" 2>&1 | grep Duration | tr ',' '\n' | sed 's/^\ *//'
 }
 
+pdfpreview(){
+    # probably try out pdftotext
+    pdftohtml "$1" -i -f 1 -l 3 -stdout > /tmp/pdfpage.html
+    w3m /tmp/pdfpage.html -dump
+}
+
+everythingelse(){
+    if file --mime "$1" | grep 'charset=binary'; then
+        file -b "$1"
+    else
+        bat --color=always --theme=base16 -p "$1" || cat "$1" || file "$1"
+    fi
+}
+
 case "$1" in
     *.tar*) tar tf "$1";;
     *.zip) unzip -l "$1";;
     *.rar) unrar l "$1" || file "$1";;
     *.7z) 7z l "$1";;
-    *.pdf) pdftotext "$1" - || file "$1";;
+    *.pdf) pdftotext "$1" - || pdfpreview "$1" || file "$1";;
     *.png|*.jpg|*.JPG|*.jpeg|*.gif) imagepreview "$1" "$2";;
-    *.mp4) videopreview "$1" "$2";;
+    *.mp4|*.mkv|*.mov|*.avi) videopreview "$1" "$2";;
     *.mp3) audiopreview "$1";;
-    *) bat --color=always --theme=base16 -p "$1" || cat "$1" || file "$1";;
+    *) everythingelse "$1";;
 esac
