@@ -6,7 +6,7 @@ imagepreview() {
 
 videopreview() {
     set -e
-    ffmpeg -ss 00:00:10 -i "$1" -vframes 1 -q:v 2 /tmp/videopreview.jpg || ffmpeg -ss 00:00:01 -i "$1" -vframes 1 -q:v 2 /tmp/videopreview.jpg
+    ffmpeg -ss 00:00:10 -i "$1" -vframes 1 -q:v 2 /tmp/videopreview.jpg
     imagepreview /tmp/videopreview.jpg "$2"
     rm /tmp/videopreview.jpg
     set +e
@@ -25,7 +25,12 @@ pdfpreview() {
 
 everythingelse() {
     if file --mime "$1" | grep 'charset=binary'; then
-        file -b "$1"
+        MIMETYPE="$(file --mime ade.sketch | cut -d' ' -f2)"
+        if echo "$MIMETYPE" | grep 'application/zip';then
+            unzip -l "$1"    
+        else
+            file -b "$1"
+        fi
     else
         bat --color=always --theme=base16 -p "$1" || cat "$1" || file "$1"
     fi
@@ -43,8 +48,8 @@ case "$1" in
 *.rar) unrar l "$1" || file "$1" ;;
 *.7z) 7z l "$1" ;;
 *.pdf) pdftotext "$1" - || pdfpreview "$1" || file "$1" ;;
-*.png | *.jpg | *.JPG | *.jpeg | *.gif) imagepreview "$1" "$2" ;;
-*.mp4 | *.mkv | *.mov | *.avi) videopreview "$1" "$2" ;;
+*.png | *.jpg | *.JPG | *.jpeg | *.gif | *.webp) imagepreview "$1" "$2" ;;
+*.mp4 | *.mkv | *.mov | *.avi | *.m4v) videopreview "$1" "$2" ;;
 *.mp3) audiopreview "$1" ;;
 *.sketch) sketchpreview "$1";;
 *) everythingelse "$1" ;;
