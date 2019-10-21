@@ -1,12 +1,4 @@
 #!/bin/sh
 
-IGNORE_LIST=$(cat "$HOME"/.datafiles/ignored_mail_list| tr '\n' '|' | sed 's/|$//')
-cat "$HOME"/.local/share/mail/meain/INBOX/new/* |
-    grep -E '^(From|Subject):' |
-    sed '$!N;s/\n/ /' |
-    grep -E -v "$IGNORE_LIST" |
-    ~/.bin/cleanuputf8email | 
-    sed 's/From: \(.*\)\ <.*Subject: \(.*\)/- \2 (\1)/' |
-    sed 's/Subject: \(.*\) From: \(.*\)\ <.*/- \1 (\2)/' | # if from and subject is other inverted
-    sed 's/From: <\(.*\)\> .*Subject: \(.*\)/- \2 (\1)/' | # if no name avaiable
-    sed 's/From: \(.*\)\ .*Subject: \(.*\)/- \2 (\1)/' # if no name avaiable, but email without <>
+notmuch search --format=text 'folder:/INBOX/' -tag:newsletter -tag:bullshit -tag:known -tag:nonimportant tag:unread |\
+    cut -d' ' -f7- | sed 's/([^(]*)$//'
