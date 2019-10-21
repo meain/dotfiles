@@ -7,7 +7,7 @@ imagepreview() {
 videopreview() {
     set -e
     ffmpeg -ss 00:00:10 -i "$1" -vframes 1 -q:v 2 /tmp/videopreview.jpg || ffmpeg -ss 00:00:01 -i "$1" -vframes 1 -q:v 2 /tmp/videopreview.jpg
-    chafa --fill=block --symbols=block -c 256 -s 80x"$2" /tmp/videopreview.jpg
+    imagepreview /tmp/videopreview.jpg "$2"
     rm /tmp/videopreview.jpg
     set +e
 }
@@ -31,6 +31,12 @@ everythingelse() {
     fi
 }
 
+sketchpreview(){
+    unzip "$1" "previews/preview.png" -d /tmp/sketch_preview >/dev/null 2>/dev/null
+    imagepreview "/tmp/sketch_preview/previews/preview.png" "$2"
+    rm -rf /tmp/sketch_preview
+}
+
 case "$1" in
 *.tar*) tar tf "$1" ;;
 *.zip) unzip -l "$1" ;;
@@ -40,5 +46,6 @@ case "$1" in
 *.png | *.jpg | *.JPG | *.jpeg | *.gif) imagepreview "$1" "$2" ;;
 *.mp4 | *.mkv | *.mov | *.avi) videopreview "$1" "$2" ;;
 *.mp3) audiopreview "$1" ;;
+*.sketch) sketchpreview "$1";;
 *) everythingelse "$1" ;;
 esac
