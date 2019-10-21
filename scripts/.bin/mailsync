@@ -18,7 +18,7 @@ notmuch tag +github 'folder:/INBOX/' 'from:notifications@github.com'
 # newsletters
 notmuch tag +newsletter 'folder:/INBOX/' 'from:yo@dev.to'
 notmuch tag +newsletter 'folder:/INBOX/' 'from:noreply@medium.com'
-notmuch tag +newsletter 'folder:/INBOX/' 'from:no-reply@dribbble.co'
+notmuch tag +newsletter 'folder:/INBOX/' 'from:no-reply@dribbble.com'
 notmuch tag +newsletter 'folder:/INBOX/' 'from:no-reply@screener.in'
 
 # bullshit
@@ -27,9 +27,17 @@ notmuch tag +bullshit 'folder:/INBOX/' 'from:no-reply@updates.bookmyshow.com'
 notmuch tag +bullshit 'folder:/INBOX/' 'from:assistant-noreply@google.com'
 notmuch tag +bullshit 'folder:/INBOX/' 'from:informations@hdfcbank.net'
 notmuch tag +bullshit 'folder:/INBOX/' 'from:no-reply@spotify.com'
+notmuch tag +bullshit 'folder:/INBOX/' 'from:fnalerts-no-reply@firstnaukri.com'
+notmuch tag +bullshit 'folder:/INBOX/' 'from:irctctourismoffers@irctc.co.in'
+notmuch tag +bullshit 'folder:/INBOX/' 'from:noreply@newsletter.geojit.net'
 
 # known
 notmuch tag +known 'folder:/INBOX/' 'from:noreply@swiggy.in'
 notmuch tag +known 'folder:/INBOX/' 'from:uber.india@uber.com'
 notmuch tag +known 'folder:/INBOX/' 'from:no-reply@swiggy.in'
 notmuch tag +known 'folder:/INBOX/' 'from:rapidocare@acko.com'
+notmuch tag +known 'folder:/INBOX/' 'from:info@meetup.com'
+notmuch tag +known 'folder:/INBOX/' 'from:no-reply@paytm.com'
+
+notmuch tag +nonimportant 'folder:/INBOX/' 'from:info@bseindia.in'
+notmuch tag +nonimportant 'folder:/INBOX/' 'from:hello@splitwise.com'
