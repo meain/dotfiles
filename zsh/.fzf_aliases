@@ -34,12 +34,12 @@ ss() {
     if [ -f "$HOME/.bin/$file" ]; then
         $EDITOR "$HOME/.bin/$file"
     else
-        echo '#!/bin/sh' > "$HOME/.bin/$file" && chmod +x "$HOME/.bin/$file" && $EDITOR "$HOME/.bin/$file"
+        printf '#!/bin/sh\n\nset -e\n\n' > "$HOME/.bin/$file" && chmod +x "$HOME/.bin/$file" && $EDITOR "$HOME/.bin/$file"
     fi
 }
 sn() {
     [ -f "$HOME/.bin/$1" ] && echo "script exists"  && return 1
-    echo '#!/bin/sh' > "$HOME/.bin/$1" && chmod +x "$HOME/.bin/$1" && $EDITOR "$HOME/.bin/$1"
+    printf '#!/bin/sh\n\nset -e\n\n' > "$HOME/.bin/$1" && chmod +x "$HOME/.bin/$1" && $EDITOR "$HOME/.bin/$1"
 }
 
 fl() {
