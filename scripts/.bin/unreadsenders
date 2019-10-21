@@ -1,4 +1,4 @@
 #!/bin/sh
 
-notmuch search --format=text 'folder:/INBOX/' -tag:newsletter -tag:bullshit -tag:known -tag:nonimportant tag:unread |\
+/usr/local/bin/notmuch search --format=text 'folder:/INBOX/' -tag:newsletter -tag:bullshit -tag:known -tag:nonimportant tag:unread |\
     cut -d' ' -f7- | sed 's/([^(]*)$//'
