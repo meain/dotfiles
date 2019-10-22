@@ -7,6 +7,3 @@
 [submodule "zsh/zsh-syntax-highlighting"]
 	path = zsh/.zsh-custom/plugins/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
-[submodule "bat/themes/gruvbox"]
-	path = bat/.config/bat/themes/gruvbox
-	url = https://github.com/peaceant/gruvbox
