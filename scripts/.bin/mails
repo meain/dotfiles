@@ -2,6 +2,11 @@
 
 set -e
 
-unreadsenders
-(isheadphonesconnected > /dev/null || isaudiojackconnected > /dev/null) && \
-    unreadsenders | sed 's/^/* /' | say -v Alex --rate 400
+NEWMAILS=$(unreadsenders)
+if [ -n "$NEWMAILS" ]; then
+    echo "$NEWMAILS"
+    echo "$(echo "$NEWMAILS" | wc -l) unread mail" | say -v Alex --rate 300
+    sleep 0.5 
+    (isheadphonesconnected >/dev/null || isaudiojackconnected >/dev/null) &&
+        unreadsenders | sed 's/^/* /' | say -v Alex --rate 300
+fi
