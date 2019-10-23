@@ -6,4 +6,4 @@ SYMBOL="NSE:${1:-BRITANNIA}"
 URL="https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=$SYMBOL&outputsize=full&apikey=$ALPHA_VANTAGE_KEY&outputsize=compact&datatype=csv"
 
 curl "$URL" 2>/dev/null |
-    tail -n1 | awk -F, '{print $1"\n\033[95m$",$5"\n\033[94m↻",$3,"\n\033[93m⇋",$9,"\033[0m\n"}'
+    tail -n1 | awk -F, '{print $1,"\033[95m₹"$5,"\033[0m(\033[93m⇋"$9"\033[0m)"}'
