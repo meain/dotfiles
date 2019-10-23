@@ -2,8 +2,29 @@
 
 set -e
 
-SYMBOL="NSE:${1:-BRITANNIA}"
-URL="https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=$SYMBOL&outputsize=full&apikey=$ALPHA_VANTAGE_KEY&outputsize=compact&datatype=csv"
+show_market() {
+    if [ -z "$1" ]; then
+        echo "No symbol provided"
+        exit 1
+    fi
+    SYMBOL="$1"
+    URL="https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=$SYMBOL&outputsize=full&apikey=$ALPHA_VANTAGE_KEY&outputsize=compact&datatype=csv"
 
-curl "$URL" 2>/dev/null |
-    tail -n1 | awk -F, '{print $1,"\033[95m₹"$5,"\033[0m(\033[93m⇋"$9"\033[0m)"}'
+    OUTPUT=$(curl "$URL" 2>/dev/null)
+    if echo "$OUTPUT" | grep "Error Message" >/dev/null; then
+        printf "\033[91m$SYMBOL\033[0m"
+    else
+        echo "$OUTPUT" |
+            tail -n1 | awk -F, '{print $1,"\033[95m₹"$5,"\033[0m(\033[93m⇋"$9"\033[0m)"}'
+    fi
+}
+
+search() {
+    URL="https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=$1&apikey=$ALPHA_VANTAGE_KEY&datatype=csv"
+    show_market "$(curl "$URL" 2>/dev/null | tail -n+2 | awk -F, '{print $2,"("$1")"}' | fzf | sed 's/.*(\(.*\))$/\1/')"
+}
+
+case "$1" in
+"search") search "$2" ;;
+*) show_market "$1" ;;
+esac

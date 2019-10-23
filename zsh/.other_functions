@@ -236,7 +236,7 @@ start(){
 
 morning(){
     xargs open < ~/.datafiles/morning_pages
-    for stock in $(echo "$STOCKS" | tr ',' '\n');do
+    for stock in $(echo "$STOCKS" | tr ',' '\n' | sed 's/^/NSE:/');do
 	tock "$stock"
     done
     gcalcli agenda
