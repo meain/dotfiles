@@ -234,6 +234,13 @@ start(){
     fi
 }
 
+
+stocks(){
+    for stock in $(echo "$STOCKS" | tr ',' '\n' | sed 's/^/NSE:/');do
+	tock "$stock"
+    done
+}
+
 morning(){
     xargs open < ~/.datafiles/morning_pages
     for stock in $(echo "$STOCKS" | tr ',' '\n' | sed 's/^/NSE:/');do
