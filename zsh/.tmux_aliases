@@ -4,7 +4,7 @@ t() {
     SESSION="$1"
     if [ -z "$1" ]; then
         if [ -n "$( tmux ls )" ]; then
-            SESSION=$(tmux ls | sed 's/:.*//g' | fzf --height 20% --layout=reverse --preview 'tmux ls | grep {}' --preview-window up:1 --print-query | \tail -n1)
+            SESSION=$(tmux ls | sed 's/:.*//g' | fzf --height 20% --layout=reverse --prompt "Session: " --preview 'tmux ls | grep {}' --preview-window up:1 --print-query | \tail -n1)
         fi
     fi
 
