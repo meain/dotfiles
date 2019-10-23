@@ -6,6 +6,7 @@ show_help(){
     echo "tock - tool to check current stock status"
     echo "Check stock: tock SYMBOL"
     echo "Search stock: tock search keyword"
+    echo "Add --may-wait to handle api rate limiting (waits until available)"
 }
 
 show_market() {
@@ -19,7 +20,16 @@ show_market() {
 
     OUTPUT=$(curl "$URL" 2>/dev/null)
     if echo "$OUTPUT" | grep "Error Message" >/dev/null; then
-        printf "\033[91m$SYMBOL\033[0m"
+        echo "\033[91mUnable to fetch info for $SYMBOL\033[0m"
+    elif echo "$OUTPUT" | grep "5 calls per minute" >/dev/null; then
+        if [ "$2" = '--may-wait' ];then
+            printf "Waiting...\r"
+            sleep 10
+            show_market "$1" "$2"
+        else
+            echo "API request limit hit. 5 calls per minute."
+            exit 1
+        fi
     else
         echo "$OUTPUT" |
             tail -n1 | awk -F, '{print $1,"\033[95m₹"$5,"\033[0m(\033[93m⇋"$9"\033[0m)"}'
@@ -32,6 +42,7 @@ search() {
 }
 
 case "$1" in
+"--help"|"-h") show_help;;
 "search") search "$2" ;;
-*) show_market "$1" ;;
+*) show_market "$1" "$2";;
 esac
