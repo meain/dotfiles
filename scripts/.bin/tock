@@ -2,9 +2,16 @@
 
 set -e
 
+show_help(){
+    echo "tock - tool to check current stock status"
+    echo "Check stock: tock SYMBOL"
+    echo "Search stock: tock search keyword"
+}
+
 show_market() {
     if [ -z "$1" ]; then
-        echo "No symbol provided"
+        printf "\033[91mNo symbol provided\n\033[0m"
+        show_help
         exit 1
     fi
     SYMBOL="$1"
