@@ -238,7 +238,7 @@ morning(){
     xargs open < ~/.datafiles/morning_pages
     echo "$STOCKS" | tr ',' '\n' | sed 's|\(.*\)|https://www.screener.in/company/\1/consolidated|' | xargs open
     gcalcli agenda
-    mbsync meain > /dev/null && mailnotify
+    mailsync > /dev/null 2> /dev/null && mails
 }
 
 take() {
