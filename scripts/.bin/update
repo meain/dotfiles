@@ -28,27 +28,13 @@ _update_gcloud() {
 }
 
 case "$1" in
-    vim)
-        _update_vim
-        ;;
-    brew)
-        _update_brew
-        ;;
-    rustup)
-        _update_rustup
-        ;;
-    dasht)
-        _update_dasht
-        ;;
-    repos)
-        _update_repos
-        ;;
-    poetry)
-        _update_poetry
-        ;;
-    gcloud)
-        _update_gcloud
-        ;;
+    vim) _update_vim ;;
+    brew) _update_brew ;;
+    rustup) _update_rustup ;;
+    dasht) _update_dasht ;;
+    repos) _update_repos ;;
+    poetry) _update_poetry ;;
+    gcloud) _update_gcloud ;;
     all)
         _update_vim
         _update_brew
