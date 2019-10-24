@@ -11,7 +11,7 @@ Plug 'Yggdroot/indentLine'                                                      
 Plug 'mhinz/vim-signify'                                                                       " Git diff icons in gutter
 " Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }                                           " Hyper focus editing
 " Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }                                                     " Centerify
-Plug 'ap/vim-css-color', { 'for': 'css' }                                                      " Show colors
+Plug 'norcalli/nvim-colorizer.lua'                                                             " Highlight color values
 Plug 'machakann/vim-highlightedyank'                                                           " Visually highlight yanked region
 
 " Added functinality
@@ -1399,6 +1399,18 @@ let g:floaterm_width=winwidth(0)/2
 nnoremap <silent><M-t> :FloatermToggle<cr>i
 tnoremap <M-t> <C-\><C-n>:FloatermToggle<cr>
 
+
+" Colorizer
+lua << EOF
+require 'colorizer'.setup ({
+  'javascript';
+  'css';
+  'html';
+}, {
+  rgb_fn = true;
+  hsl_fn = true;
+})
+EOF
 
 
 
