@@ -278,7 +278,7 @@ tunnelstatus(){
 
 sj() {
     cd ~/Documents/Projects/work/saama || return 1
-    FOLDER="$(fd --type d --hidden --no-ignore '.git' --maxdepth 2 automl dalia ./docs | sed 's/.....$//' | fzf)"
+    FOLDER="$(fd --type d --hidden --no-ignore '.git' --maxdepth 2 automl dalia ./docs | sed 's/.....$//' | fzf --query "$1")"
     if [ -z "$FOLDER" ];then
 	return 1
     fi
