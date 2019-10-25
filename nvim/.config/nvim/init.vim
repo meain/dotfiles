@@ -1403,10 +1403,12 @@ tnoremap <M-t> <C-\><C-n>:FloatermToggle<cr>
 " Colorizer
 lua << EOF
 require 'colorizer'.setup ({
-  'javascript';
-  'css';
-  'html';
+  '*';
+  css = { names = true; };
+  javascript = { names = true; };
+  html = { names = true; };
 }, {
+  names = false;
   rgb_fn = true;
   hsl_fn = true;
 })
