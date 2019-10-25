@@ -30,6 +30,7 @@ notmuch tag +bullshit 'folder:/INBOX/' 'from:no-reply@spotify.com'
 notmuch tag +bullshit 'folder:/INBOX/' 'from:fnalerts-no-reply@firstnaukri.com'
 notmuch tag +bullshit 'folder:/INBOX/' 'from:irctctourismoffers@irctc.co.in'
 notmuch tag +bullshit 'folder:/INBOX/' 'from:noreply@newsletter.geojit.net'
+notmuch tag +bullshit 'folder:/INBOX/' 'from:communications@nsdl.com'
 
 # known
 notmuch tag +known 'folder:/INBOX/' 'from:noreply@swiggy.in'
