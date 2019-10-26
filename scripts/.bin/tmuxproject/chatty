@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cd ~/Documents/Projects/work/saama/dalia || return
-SESSION=dalia
+SESSION=chatty
 
 # if the session is already running, just attach to it.
 tmux has-session -t $SESSION
