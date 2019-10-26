@@ -868,7 +868,7 @@ endfunction
 "                    ==============================                    "
 
 " Fzf fuzzy search
-let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --glob "!.git/*"'
+let $FZF_DEFAULT_COMMAND = 'fd --type f --hidden --follow'
 let $FZF_DEFAULT_OPTS=' --layout=reverse --margin=0,0,1,0'
 let g:fzf_tags_command = 'ctags -R'
 let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
