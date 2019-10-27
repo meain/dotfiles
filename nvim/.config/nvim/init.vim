@@ -58,8 +58,9 @@ Plug 'HerringtonDarkholme/yats.vim', { 'for': [ 'typescript', 'typescript.tsx' ]
 Plug 'peitalin/vim-jsx-typescript', { 'for': [ 'typescript', 'typescript.tsx' ] }              " Typescript JSX syntax highlight
 Plug 'neoclide/vim-jsx-improve', { 'for': ['javascript', 'javascript.jsx'] }                   " Inproved JSX syntax
 Plug 'tpope/vim-markdown', { 'for': ['md', 'markdown'] }                                       " Better markdown support
-Plug 'cespare/vim-toml', { 'for': 'toml' }
-Plug 'raimon49/requirements.txt.vim', { 'for': 'requirements' }                              " Requirements file
+Plug 'cespare/vim-toml', { 'for': 'toml' }                                                     " Toml highlight
+Plug 'raimon49/requirements.txt.vim', { 'for': 'requirements' }                                " Requirements file
+Plug 'jonsmithers/vim-html-template-literals', { 'for': ['javascript', 'typescript'] }         " Lit html highlight
 " Plug 'fatih/vim-go', { 'for': ['go'] }                                                         " Golang helper
 " Plug 'sebdah/vim-delve', { 'for': 'go' }                                                       " Debugger for go
 " Plug 'racer-rust/vim-racer', { 'for': 'rust' }                                                 " Rust support
