@@ -110,7 +110,7 @@ blog() {
 	DATE=$(date +%Y-%m-%d)
 	NAME="$DATE-$1.md"
 	if [ ! -f "$NAME" ]; then
-	    cat ~/.datafiles/blog_template >> "$NAME"
+		cat ~/.datafiles/blog_template >>"$NAME"
 	fi
 	$EDITOR "$NAME"
 }
@@ -155,13 +155,14 @@ imgurtolocal() {
 
 # Easily copy file from downloads folder
 dcp() {
-	if [ -z "$1" ]; then
-		printf '%s' "Name of destination file: "
-		read -r TOFILE
-	else
-		TOFILE=$1
+	FROMFILE=$(find ~/Downloads | sed "s|^$HOME/Downloads/||" | fzf --query="$1")
+	printf "Name of destination file (%s): " "$(basename "$FROMFILE")"
+	read -r TOFILE
+
+	if [ -z "$TOFILE" ];then
+	    TOFILE=$(basename "$FROMFILE")
 	fi
-	find ~/Downloads | fzf --height="40%" --bind="enter:execute(cp {+} $TOFILE)+abort"
+	cp -v "$HOME/Downloads/$FROMFILE" "$TOFILE"
 }
 
 # Copy latest screenshot
@@ -208,88 +209,85 @@ stream() {
 
 # usage: `loop <count> <command>`
 loop() {
-    c=1
-    MAX=$1
-    shift
-    while [ $c -le "$MAX" ]
-    do 
-	$*
-	c=$((c+1))
-    done
+	c=1
+	MAX=$1
+	shift
+	while [ $c -le "$MAX" ]; do
+		$*
+		c=$((c + 1))
+	done
 }
-
 
 copycommand() {
-    # TODO: figure out how to remove the last \n
-    history | tail -n1 | cut -d' ' -f4- | pbcopy
+	# TODO: figure out how to remove the last \n
+	history | tail -n1 | cut -d' ' -f4- | pbcopy
 }
 
-start(){
-    if [ -f 'run-dev' ];then
-	./run-dev
-    elif [ -f 'package.json' ];then
-	npm start
-    else
-	echo "No 'run-dev' or 'package.json' found"
-    fi
+start() {
+	if [ -f 'run-dev' ]; then
+		./run-dev
+	elif [ -f 'package.json' ]; then
+		npm start
+	else
+		echo "No 'run-dev' or 'package.json' found"
+	fi
 }
 
-
-stocks(){
-    for stock in $(echo "$STOCKS" | tr ',' '\n' | sed 's/^/NSE:/');do
-	tock "$stock" "$1"
-    done
+stocks() {
+	for stock in $(echo "$STOCKS" | tr ',' '\n' | sed 's/^/NSE:/'); do
+		tock "$stock" "$1"
+	done
 }
 
-morning(){
-    xargs open < ~/.datafiles/morning_pages
-    gcalcli agenda
-    echo "Syncing mail..." && mailsync > /dev/null 2> /dev/null
-    for stock in $(echo "$STOCKS" | tr ',' '\n' | sed 's/^/NSE:/');do
-	tock "$stock" --may-wait
-    done
+morning() {
+	xargs open <~/.datafiles/morning_pages
+	gcalcli agenda
+	echo "Syncing mail..." && mailsync >/dev/null 2>/dev/null
+	for stock in $(echo "$STOCKS" | tr ',' '\n' | sed 's/^/NSE:/'); do
+		tock "$stock" --may-wait
+	done
 }
 
 take() {
-    mkdir -p "$1" && cd "$1" || return 1
+	mkdir -p "$1" && cd "$1" || return 1
 }
 
-starttunnel(){
-    # networksetup -listallnetworkservices
-    DEVICE='USB 10/100/1000 LAN'
-    PORT=8889
-    ssh -D "$PORT" -f -C -q -N meain@alexa3
-    networksetup -setsocksfirewallproxy "$DEVICE" localhost "$PORT"
-    networksetup -setsocksfirewallproxystate "$DEVICE" on
-    tmux refresh-client -S
+starttunnel() {
+	# networksetup -listallnetworkservices
+	DEVICE='USB 10/100/1000 LAN'
+	PORT=8889
+	ssh -D "$PORT" -f -C -q -N meain@alexa3
+	networksetup -setsocksfirewallproxy "$DEVICE" localhost "$PORT"
+	networksetup -setsocksfirewallproxystate "$DEVICE" on
+	tmux refresh-client -S
 }
 
-stoptunnel(){
-    DEVICE='USB 10/100/1000 LAN'
-    networksetup -setsocksfirewallproxystate "$DEVICE" off
-    kill $(ps aux | grep 'ssh -D' | grep -v grep | awk '{print $2}')
-    tmux refresh-client -S
+stoptunnel() {
+	DEVICE='USB 10/100/1000 LAN'
+	networksetup -setsocksfirewallproxystate "$DEVICE" off
+	kill $(ps aux | grep 'ssh -D' | grep -v grep | awk '{print $2}')
+	tmux refresh-client -S
 }
 
-tunnelstatus(){
-    DEVICE='USB 10/100/1000 LAN'
-    networksetup -getsocksfirewallproxy "$DEVICE"
+tunnelstatus() {
+	DEVICE='USB 10/100/1000 LAN'
+	networksetup -getsocksfirewallproxy "$DEVICE"
 }
 
 sj() {
-    cd ~/Documents/Projects/work/saama || return 1
-    FOLDER="$(fd --type d --hidden --no-ignore '.git' --maxdepth 2 automl dalia ./docs | sed 's/.....$//' | fzf --query "$1")"
-    if [ -z "$FOLDER" ];then
-	return 1
-    fi
-    cd "$FOLDER" || return 1
+	cd ~/Documents/Projects/work/saama || return 1
+	FOLDER="$(fd --type d --hidden --no-ignore '.git' --maxdepth 2 automl dalia ./docs | sed 's/.....$//' | fzf --query "$1")"
+	if [ -z "$FOLDER" ]; then
+		return 1
+	fi
+	cd "$FOLDER" || return 1
 }
 
 sjj() {
-    cd ~/Documents/Projects/work/saama || return 1
-    FOLDER="$(fd --type d --hidden --no-ignore '.git' --maxdepth 3 | sed 's/.....$//' | fzf)"
-    if [ -z "$FOLDER" ];then
-	return 1
-    fi
-    cd "$FOLDER" || return 1
+	cd ~/Documents/Projects/work/saama || return 1
+	FOLDER="$(fd --type d --hidden --no-ignore '.git' --maxdepth 3 | sed 's/.....$//' | fzf)"
+	if [ -z "$FOLDER" ]; then
+		return 1
+	fi
+	cd "$FOLDER" || return 1
 }
