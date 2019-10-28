@@ -444,17 +444,19 @@ autocmd FileType go inoremap <silent><buffer> ;err if err != nul {<cr>log.Fatal(
 
 " css
 autocmd FileType css inoremap <silent><buffer> ;se <Esc>A;
-autocmd FileType css inoremap <silent><buffer> ;wh width: 100%;<cr>height: 100%; 
+autocmd FileType css inoremap <silent><buffer> ;wh width: 100%;<cr>height: 100%;
 autocmd FileType css inoremap <silent><buffer> ;bc background-color: #f5f5f5;<esc>Bvt;
+autocmd FileType css inoremap <silent><buffer> ;bi background-image: url("");<esc>F"i./
 autocmd FileType css inoremap <silent><buffer> ;br border-radius: 5px;<esc>Bvt;
 autocmd FileType css inoremap <silent><buffer> ;media @media only screen and (max-width: 600px) {<cr>}<esc>O
 autocmd FileType css inoremap <silent><buffer> ;df display: flex;
-autocmd FileType css inoremap <silent><buffer> ;center justify-content: center;<cr>align-items: center; 
+autocmd FileType css inoremap <silent><buffer> ;center justify-content: center;<cr>align-items: center;
 autocmd FileType css inoremap <silent><buffer> ;cp cursor: pointer;<esc>Bvt;
 autocmd FileType css inoremap <silent><buffer> ;base * {<cr>box-sizing: border-box;<cr>}
-autocmd FileType css inoremap <silent><buffer> ;body body {<cr>margin: 0;<cr>padding: 0;<cr>} 
-autocmd FileType css inoremap <silent><buffer> ;shadow box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 0px 2px rgba(0, 0, 0, 0.24); 
-autocmd FileType css inoremap <silent><buffer> ;fc flex-direction: column; 
+autocmd FileType css inoremap <silent><buffer> ;body body {<cr>margin: 0;<cr>padding: 0;<cr>}
+autocmd FileType css inoremap <silent><buffer> ;shadow box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 0px 2px rgba(0, 0, 0, 0.24);
+autocmd FileType css inoremap <silent><buffer> ;fc flex-direction: column;
+autocmd FileType css inoremap <silent><buffer> ;ta text-align: center;<esc>hviw
 
 " javascript
 autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;flow // @flow 
