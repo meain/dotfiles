@@ -769,9 +769,13 @@ endfunction
 command! -range JSONFormat <line1>,<line2>call JSONFormat()
 
 " Auto populate Gitignore
+function! LoadSampleGitignore()
+  0read !cat ~/.datafiles/sample_gitignore
+  echo 'Sample gitignore loaded'
+endfunction
 augroup GitIgnore
   au!
-  autocmd BufNewFile .gitignore :0read !cat ~/.datafiles/sample_gitignore
+  autocmd BufNewFile .gitignore :call LoadSampleGitignore()
 augroup end
 
 " Scratch buffer
