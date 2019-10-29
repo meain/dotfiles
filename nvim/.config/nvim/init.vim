@@ -778,6 +778,16 @@ augroup GitIgnore
   autocmd BufNewFile .gitignore :call LoadSampleGitignore()
 augroup end
 
+" Auto populate Html shell
+function! LoadHTMLShell()
+  0read !cat ~/.datafiles/html_starter
+  echo 'HTML shell loaded'
+endfunction
+augroup HTMLShell
+  au!
+  autocmd BufNewFile index.html :call LoadHTMLShell()
+augroup end
+
 " Scratch buffer
 function! ScratchOpen()
   execute 'topleft new __scratch__'
