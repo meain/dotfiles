@@ -1400,7 +1400,7 @@ let g:vista#renderer#icons = {
 let g:floaterm_position='topright'
 let g:floaterm_height=winheight(0)/4
 let g:floaterm_width=winwidth(0)/2
-nnoremap <silent><M-t> :FloatermToggle<cr>i
+nnoremap <silent><M-t> :FloatermToggle<cr>
 tnoremap <M-t> <C-\><C-n>:FloatermToggle<cr>
 
 
