@@ -1,8 +1,12 @@
+tags
 .DS_Store
-.cache
+
 buid
 dist
-*.log
-*.zip
+.cache
+target
+node_modules
+
 *.db
-tags
+*.zip
+*.log
