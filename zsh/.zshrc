@@ -95,6 +95,7 @@ source $HOME/.docker_functions
 source $HOME/.python_functions
 source $HOME/.kubectl_functions
 source $HOME/.ffmpeg_functions
+source $HOME/.imagemagic_functions
 
 # Sorce fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
