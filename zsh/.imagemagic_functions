@@ -1,7 +1,14 @@
 #!/bin/sh
 
+imgtrim(){
+    if [ -z "$2" ];then
+        2="trimmed-$1"
+    fi
+    convert "$1" -trim "$2"
+}
+
 boxen(){
-    convert "$1" -trim +repage -resize '1024x1024>' -gravity center -extent 1024x1024 "$1-converted.png"
+    convert "$1" -trim +repage -resize '1024x1024>' -gravity center -extent 1024x1024 "boxed-$1"
 }
 
 boxenblur(){
@@ -9,5 +16,5 @@ boxenblur(){
         "$1" -geometry 1024x1024 -blur 0x25 -gravity northwest -composite \
         "$1" -geometry 1024x1024 -blur 0x25 -gravity southeast -composite \
         "$1" -geometry 1024x1024 -gravity center -composite \
-        "$1-converted.png"
+        "blurred-$1"
 }

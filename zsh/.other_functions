@@ -109,12 +109,6 @@ gtree() {
 	fi
 }
 
-# speed up video by 2X
-faster() {
-	faster_filename=$(echo "$1" | sed 's/\..*/2x.mp4/g')
-	ffmpeg -i "$1" -filter:v "setpts=0.5*PTS" "$faster_filename"
-}
-
 tt() {
 	if [ -z "$1" ]; then
 		FOLDER=$(pwd | sed 's:.*/::' | sed 's:^\.::')
@@ -134,22 +128,6 @@ blog() {
 		cat ~/.datafiles/blog_template >>"$NAME"
 	fi
 	$EDITOR "$NAME"
-}
-
-# Conver webm to mp3 ( used with spotifydl )
-webmmp3() {
-	for FILE in *.webm; do
-		echo -e "Processing video '\e[32m$FILE\e[0m'"
-		ffmpeg -i "${FILE}" -vn -ab 128k -ar 44100 -y "${FILE%.webm}.mp3"
-	done
-}
-
-# Conver m4a to mp3 ( used with spotifydl )
-m4amp3() {
-	for FILE in *.m4a; do
-		echo -e "Processing video '\e[32m$FILE\e[0m'"
-		ffmpeg -i "${FILE}" -vn -ab 128k -ar 44100 -y "${FILE%.m4a}.mp3"
-	done
 }
 
 # imgurtolocal filename https://link.com(or in clipboard) png(optional) /img(prepend-optional)
@@ -193,11 +171,6 @@ ssc() {
 
 kubernetes_get_token() {
 	kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | awk '/^deployment-controller-token-/{print $1}') | awk '$1=="token:"{print $2}'
-}
-
-# Decrease file size using H.264
-smallify() {
-	ffmpeg -i "$1" -vcodec libx264 -acodec aac "$1".mp4
 }
 
 shorten() {
