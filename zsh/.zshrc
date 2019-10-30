@@ -31,6 +31,7 @@ setopt interactive_comments # allow comments in interactive shells
 zstyle ':completion:*' menu select # select completions with arrow keys
 zstyle ':completion:*' group-name '' # group results by category
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}' # non case sensitive complete
+zstyle ':completion:*' list-colors $LS_COLORS
 zstyle ':completion:::::' completer _expand _complete _ignored _approximate # enable approximate matches for completion
 
 
@@ -42,6 +43,11 @@ if [ $(date +'%j') != $updated_at ]; then
 else
   compinit -C -i
 fi
+
+# some settings
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=244"
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+ZSH_AUTOSUGGEST_USE_ASYNC="true"
 
 # sourcing plugins & themes
 source $HOME/.bin/spectrum  # for 256 colors
