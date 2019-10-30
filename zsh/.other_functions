@@ -76,6 +76,27 @@ rr() {
 	cd "$(git rev-parse --show-toplevel 2>/dev/null)" || return 1
 }
 
+re() {
+	# the following mess with the for loop is to sort files by time
+	FILENAME="$(for f in $(fd . "$(git rev-parse --show-toplevel 2>/dev/null)" --hidden --type f --changed-within 48h); do
+		# stat -c '%Y %n' "$f"  # linux
+		stat -f '%c %N' "$f"
+	done | sort -n -r | cut -d ' ' -f2 | fzf --query "$1")"
+	if [ -n "$FILENAME" ]; then
+		$EDITOR "$FILENAME"
+	fi
+}
+ree() {
+	# the following mess with the for loop is to sort files by time
+	FILENAME="$(for f in $(fd . "$(git rev-parse --show-toplevel 2>/dev/null)" --hidden --type f --changed-within 48h); do
+		# stat -c '%Y %n' "$f"  # linux
+		stat -f '%c %N' "$f"
+	done | sort -n -r | cut -d ' ' -f2 | head -n1)"
+	if [ -n "$FILENAME" ]; then
+		$EDITOR "$FILENAME"
+	fi
+}
+
 # tree with gitignore
 # FIXME: does not work with POSIX shell
 gtree() {
@@ -159,8 +180,8 @@ dcp() {
 	printf "Name of destination file (%s): " "$(basename "$FROMFILE")"
 	read -r TOFILE
 
-	if [ -z "$TOFILE" ];then
-	    TOFILE=$(basename "$FROMFILE")
+	if [ -z "$TOFILE" ]; then
+		TOFILE=$(basename "$FROMFILE")
 	fi
 	cp -v "$HOME/Downloads/$FROMFILE" "$TOFILE"
 }
