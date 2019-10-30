@@ -77,6 +77,10 @@ rr() {
 }
 
 re() {
+	if ! git rev-parse --show-toplevel >/dev/null 2>&1; then
+	    echo "Not a project dir" 
+	    return 1
+	fi
 	# the following mess with the for loop is to sort files by time
 	FILENAME="$(for f in $(fd . "$(git rev-parse --show-toplevel 2>/dev/null)" --hidden --type f --changed-within 48h); do
 		# stat -c '%Y %n' "$f"  # linux
@@ -87,6 +91,10 @@ re() {
 	fi
 }
 ree() {
+	if ! git rev-parse --show-toplevel >/dev/null 2>&1; then
+	    echo "Not a project dir" 
+	    return 1
+	fi
 	# the following mess with the for loop is to sort files by time
 	FILENAME="$(for f in $(fd . "$(git rev-parse --show-toplevel 2>/dev/null)" --hidden --type f --changed-within 48h); do
 		# stat -c '%Y %n' "$f"  # linux
