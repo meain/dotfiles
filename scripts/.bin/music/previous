@@ -1,4 +1,8 @@
 #!/bin/sh
 
-/usr/local/bin/mpc prev
+if pgrep "Spotify" > /dev/null 2>&1;then
+    /usr/local/bin/spotify back
+else
+    /usr/local/bin/mpc prev
+fi
 /usr/local/bin/tmux refresh-client -S
