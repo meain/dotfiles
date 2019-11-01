@@ -75,7 +75,7 @@ function _git_total_commits() {
 }
 
 function _git_repo_base(){
-  ROOT="$(git rev-parse --show-toplevel 2>/dev/null)"
+  ROOT="$(git remote get-url origin 2>/dev/null | sed 's/\.git$//')"
   if [ -n "$ROOT" ];then
     basename "$ROOT"
   fi
@@ -100,7 +100,7 @@ function zle-line-init zle-keymap-select {
 NORMAL_COLOR="%{$FG[153]%}"
 INSERT_COLOR="%{$fg_bold[white]%}"
 PS1="${_return_status}${_tmux_indicator}%F{green}$( _vcs_info_wrapper )%F{yellow}%B%(1j.#.) %{$reset_color%}"
-RPS1="%F{yellow} $(virtualenv_info) $FG[240]$(_git_pushable)%{$reset_color%} ${${KEYMAP/vicmd/$NORMAL_COLOR}/(main|viins)/$INSERT_COLOR}%2~%{$reset_color%} %F{blue}$(_git_repo_base)%{$reset_color%} %{%B%F{cyan}%}$(_hosthame_custom)" zle reset-prompt
+RPS1="%F{yellow} $(virtualenv_info) $FG[240]$(_git_pushable)%{$reset_color%} %F{244}$(_git_repo_base)%{$reset_color%} ${${KEYMAP/vicmd/$NORMAL_COLOR}/(main|viins)/$INSERT_COLOR}%2~%{$reset_color%} %{%B%F{cyan}%}$(_hosthame_custom)" zle reset-prompt
 }
 zle -N zle-line-init
 zle -N zle-keymap-select
