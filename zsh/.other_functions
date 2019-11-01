@@ -78,8 +78,8 @@ rr() {
 
 re() {
 	if ! git rev-parse --show-toplevel >/dev/null 2>&1; then
-	    echo "Not a project dir" 
-	    return 1
+		echo "Not a project dir"
+		return 1
 	fi
 	# the following mess with the for loop is to sort files by time
 	FILENAME="$(for f in $(fd . "$(git rev-parse --show-toplevel 2>/dev/null)" --hidden --type f --changed-within 48h); do
@@ -92,8 +92,8 @@ re() {
 }
 ree() {
 	if ! git rev-parse --show-toplevel >/dev/null 2>&1; then
-	    echo "Not a project dir" 
-	    return 1
+		echo "Not a project dir"
+		return 1
 	fi
 	# the following mess with the for loop is to sort files by time
 	FILENAME="$(for f in $(fd . "$(git rev-parse --show-toplevel 2>/dev/null)" --hidden --type f --changed-within 48h); do
@@ -293,3 +293,28 @@ sjj() {
 	fi
 	cd "$FOLDER" || return 1
 }
+
+cssh() {
+	if [ -z "$1" ]; then
+		HOST=$(grep -E "^Host" "$HOME/.ssh/config" | sed 's/^Host //' | fzf)
+	else
+		HOST="$1"
+	fi
+
+	if [ -z "$HOST" ]; then
+		echo "No host specified"
+		return 1
+	fi
+
+	if [ -n "$TMUX" ]; then
+		tmux selectp -P bg=colour236
+	fi
+	if [ -z "$1" ];then
+	    ssh "$HOST"
+	else
+	    ssh "$@"
+	fi
+	tmux selectp -P default
+}
+compdef _ssh cssh=ssh
+alias ssh=cssh
