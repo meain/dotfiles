@@ -6,6 +6,10 @@ else
     HOST="$1"
 fi
 
+if [ -z "$HOST" ];then
+    exit 1
+fi
+
 if [ -n "$TMUX" ]; then
     tmux selectp -P bg=colour236
 fi
