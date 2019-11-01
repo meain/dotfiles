@@ -1,0 +1,11 @@
+#!/bin/sh
+
+if [ -n "$TMUX" ]; then
+    case "$1" in
+    *.deeplearning-181416)
+        tmux selectp -P bg=colour236
+    ;;
+    esac
+fi
+ssh "$@"
+tmux selectp -P default
