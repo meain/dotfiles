@@ -99,6 +99,7 @@ virtual-mailboxes \
         "bullshit"      "notmuch://?query=folder:/INBOX/ and tag:bullshit"\
         "known"         "notmuch://?query=folder:/INBOX/ and tag:known"\
         "nonimportant"  "notmuch://?query=folder:/INBOX/ and tag:nonimportant"\
+        "archiveable"   "notmuch://?query=folder:/INBOX/ and tag:bullshit tag:known tag:nonimportant"\
 
 macro index,pager gs "<change-folder>=[Gmail].Sent Mail<enter>" "Go to sent."
 macro index,pager gd "<change-folder>=[Gmail].Drafts<enter>" "Go to drafts."
