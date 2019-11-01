@@ -74,7 +74,7 @@ alias mpv='mpv --sub-ass-override=strip'
 alias fu="open https://meain.github.io/fugi/"
 alias cleanup="fd '.DS_Store' --no-ignore --hidden -x rm -v"
 alias pypipublish='python3 setup.py sdist bdist_wheel && twine upload dist/*'
-alias updatessh="rm ~/.ssh/config && gcloud compute config-ssh --ssh-key-file='~/.ssh/gcloud_saama_common' --dry-run | sed 's:.us-central1-c.deeplearning-181416::' | sed '/^#/d' > ~/.ssh/config"
+alias updatessh="rm ~/.ssh/config && gcloud compute config-ssh --ssh-key-file='~/.ssh/gcloud_saama_common' --dry-run | sed 's:.us-[^-]*-..deeplearning-181416::' | sed '/^#/d' > ~/.ssh/config"
 alias lock="osascript -e 'tell application \"System Events\" to keystroke \"q\" using {command down,control down}'"
 
 alias publicip='curl ifconfig.co'
