@@ -29,15 +29,11 @@ cd ~/.dotfiles
 stow nvim
 ```
 
-## Dependencies
+## Stuff you might wanna use
 
-- [`oh-my-zsh`](https://github.com/robbyrussell/oh-my-zsh) ZSH framework
 - [`fzf`](https://github.com/junegunn/fzf) Fuzzy finder
 - [`ripgrep`](https://github.com/BurntSushi/ripgrep) Much faster ack
 - [`mru.vim`](https://github.com/vim-scripts/mru.vim) Needed for `v` & `vv`
-
-## Other stuff you might wanna use
-
 - [`alacritty`](https://github.com/jwilm/alacritty) or [`kitty`](https://sw.kovidgoyal.net/kitty/) Best terminal emulators
 - [`hub`](https://hub.github.com/) Git plus something else
 - [`z`](https://github.com/rupa/z) Quickly jump around folders
