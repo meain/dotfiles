@@ -1,11 +1,13 @@
 #!/bin/sh
 
-if [ -n "$TMUX" ]; then
-    case "$1" in
-    *.deeplearning-181416)
-        tmux selectp -P bg=colour236
-    ;;
-    esac
+if [ -z "$1" ];then
+    HOST=$(grep -E "^Host" "$HOME/.ssh/config" | sed 's/^Host //' | fzf)
+else
+    HOST="$1"
 fi
-ssh "$@"
+
+if [ -n "$TMUX" ]; then
+    tmux selectp -P bg=colour236
+fi
+ssh "$HOST"
 tmux selectp -P default
