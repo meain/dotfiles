@@ -79,7 +79,6 @@ Plug 'Shougo/echodoc.vim'                                                       
 Plug '~/Documents/Projects/projects/deoplete-goobook', { 'for': 'mail' }                       " Email autocomplete
 Plug '~/Documents/Projects/projects/deoplete-notmuch', { 'for': 'mail' }                       " Email autocomplete
 Plug 'Shougo/neco-vim', { 'for': 'vim' }                                                       " Completion for viml
-Plug 'sebastianmarkow/deoplete-rust', { 'for': ['rs', 'rust'] }                                " Rust autocompletion (slow)
 " Plug 'wellle/tmux-complete.vim'                                                              " Tmux completion
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }           " Language client
 
@@ -1190,7 +1189,7 @@ let g:SuperTabDefaultCompletionType = '<c-n>'
 let g:LanguageClient_autoStart = 1
 let g:LanguageClient_useVirtualText = 0
 let g:LanguageClient_serverCommands = {
-    \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+    \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
     \ 'javascript': ['/usr/local/bin/flow', 'lsp'],
     \ 'javascript.jsx': ['/usr/local/bin/flow', 'lsp'],
     \ 'typescript': ['/usr/local/bin/javascript-typescript-stdio'],
@@ -1422,7 +1421,7 @@ tnoremap <M-t> <C-\><C-n>:FloatermToggle<cr>
 " Colorizer
 lua << EOF
 require 'colorizer'.setup ({
-  '*';
+  'markdown';
   css = { names = true; };
   javascript = { names = true; };
   html = { names = true; };
