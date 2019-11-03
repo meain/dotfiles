@@ -8,7 +8,7 @@ export TERM=screen-256color-italic
 source $HOME/.zsh_path
 
 echo ""
-fortune -s | fmt -c -w $COLUMNS
+corpcrap | fmt -c -w $COLUMNS
 echo ""
 
 # zsh settings
