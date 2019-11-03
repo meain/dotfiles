@@ -96,11 +96,49 @@ function virtualenv_info {
 PROMPT='${_return_status}${_tmux_indicator}%F{yellow}%B%(1j.#.) '
 RPROMPT='%F{white}%2~ '
 
-function zle-line-init zle-keymap-select {
-NORMAL_COLOR="%{$FG[153]%}"
-INSERT_COLOR="%{$fg_bold[white]%}"
-PS1="${_return_status}${_tmux_indicator}%F{green}$( _vcs_info_wrapper )%F{yellow}%B%(1j.#.) %{$reset_color%}"
-RPS1="%F{yellow} $(virtualenv_info) $FG[240]$(_git_pushable)%{$reset_color%} %F{244}$(_git_repo_base)%{$reset_color%} ${${KEYMAP/vicmd/$NORMAL_COLOR}/(main|viins)/$INSERT_COLOR}%2~%{$reset_color%} %{%B%F{cyan}%}$(_hosthame_custom)" zle reset-prompt
+function generate_lpropmpt() {
+  echo "${_return_status}${_tmux_indicator}%F{green}$( _vcs_info_wrapper )%F{yellow}%B%(1j.#.) %{$reset_color%}"
 }
-zle -N zle-line-init
-zle -N zle-keymap-select
+
+function generate_rpropmpt() {
+  NORMAL_COLOR="%{$FG[153]%}"
+  INSERT_COLOR="%{$fg_bold[white]%}"
+  echo "%F{yellow} $(virtualenv_info) $FG[240]$(_git_pushable)%{$reset_color%} %F{244}$(_git_repo_base)%{$reset_color%} ${${KEYMAP/vicmd/$NORMAL_COLOR}/(main|viins)/$INSERT_COLOR}%2~%{$reset_color%} %{%B%F{cyan}%}$(_hosthame_custom)"
+}
+
+ASYNC_PROC=0
+function precmd() {
+  print ""  # newline before prompt
+
+  # notify for long running command
+  if ! [[ -z $CMD_START_DATE ]]; then
+    CMD_END_DATE=$(date +%s)
+    CMD_ELAPSED_TIME=$(($CMD_END_DATE - $CMD_START_DATE))
+    CMD_NOTIFY_THRESHOLD=60
+    CMD_START_DATE=""
+
+    if [[ $CMD_ELAPSED_TIME -gt $CMD_NOTIFY_THRESHOLD ]]; then
+      osascript -e "display notification \"$CMD_NAME took $CMD_ELAPSED_TIME seconds\" with title \"Job complete\""
+    fi
+  fi
+
+  function async() {
+        printf "%s" "$(generate_rpropmpt)" > "/tmp/zsh_rprompt_$$"  # save to temp file
+        printf "%s" "$(generate_lpropmpt)" > "/tmp/zsh_lprompt_$$"  # do not clear, let it persist
+        kill -s USR1 $$  # signal parent
+    }
+
+    if [[ "${ASYNC_PROC}" != 0 ]]; then  # kill child if necessary
+        kill -s HUP $ASYNC_PROC >/dev/null 2>&1 || :
+    fi
+    async &!  # start background computation
+    ASYNC_PROC=$!  # save pid
+}
+
+
+function TRAPUSR1() {
+    PS1="$(cat /tmp/zsh_lprompt_$$)"  # read from temp file
+    RPS1="$(cat /tmp/zsh_rprompt_$$)"
+    ASYNC_PROC=0  # reset proc number
+    zle && zle reset-prompt  # redisplay
+}
