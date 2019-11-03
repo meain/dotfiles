@@ -123,22 +123,31 @@ function precmd() {
   fi
 
   function async() {
-        printf "%s" "$(generate_rpropmpt)" > "/tmp/zsh_rprompt_$$"  # save to temp file
-        printf "%s" "$(generate_lpropmpt)" > "/tmp/zsh_lprompt_$$"  # do not clear, let it persist
+        mkdir -p /tmp/zp
+        printf "%s" "$(generate_rpropmpt)" > "/tmp/zp/zsh_rprompt_$$"  # save to temp file
+        printf "%s" "$(generate_lpropmpt)" > "/tmp/zp/zsh_lprompt_$$"  # do not clear, let it persist
         kill -s USR1 $$  # signal parent
     }
 
     if [[ "${ASYNC_PROC}" != 0 ]]; then  # kill child if necessary
         kill -s HUP $ASYNC_PROC >/dev/null 2>&1 || :
     fi
+
     async &!  # start background computation
     ASYNC_PROC=$!  # save pid
+
+    function zle-keymap-select {
+      async &!  # start background computation
+      ASYNC_PROC=$!  # save pid
+    }
+    zle -N zle-keymap-select
 }
 
 
+
 function TRAPUSR1() {
-    PS1="$(cat /tmp/zsh_lprompt_$$)"  # read from temp file
-    RPS1="$(cat /tmp/zsh_rprompt_$$)"
+    PS1="$(cat /tmp/zp/zsh_lprompt_$$)"  # read from temp file
+    RPS1="$(cat /tmp/zp/zsh_rprompt_$$)"
     ASYNC_PROC=0  # reset proc number
     zle && zle reset-prompt  # redisplay
 }
