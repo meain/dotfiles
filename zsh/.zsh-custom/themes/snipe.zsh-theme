@@ -108,6 +108,26 @@ function generate_rpropmpt() {
 
 ASYNC_PROC=0
 function precmd() {
+  function async() {
+      mkdir -p /tmp/zp
+      printf "%s" "$(generate_rpropmpt)" > "/tmp/zp/zsh_rprompt_$$"  # save to temp file
+      printf "%s" "$(generate_lpropmpt)" > "/tmp/zp/zsh_lprompt_$$"  # do not clear, let it persist
+      kill -s USR1 $$  # signal parent
+  }
+
+  if [[ "${ASYNC_PROC}" != 0 ]]; then  # kill child if necessary
+      kill -s HUP $ASYNC_PROC >/dev/null 2>&1 || :
+  fi
+
+  async &!  # start background computation
+  ASYNC_PROC=$!  # save pid
+
+  function zle-keymap-select {
+    async &!  # start background computation
+    ASYNC_PROC=$!  # save pid
+  }
+  zle -N zle-keymap-select
+
   print ""  # newline before prompt
 
   # notify for long running command
@@ -122,25 +142,6 @@ function precmd() {
     fi
   fi
 
-  function async() {
-        mkdir -p /tmp/zp
-        printf "%s" "$(generate_rpropmpt)" > "/tmp/zp/zsh_rprompt_$$"  # save to temp file
-        printf "%s" "$(generate_lpropmpt)" > "/tmp/zp/zsh_lprompt_$$"  # do not clear, let it persist
-        kill -s USR1 $$  # signal parent
-    }
-
-    if [[ "${ASYNC_PROC}" != 0 ]]; then  # kill child if necessary
-        kill -s HUP $ASYNC_PROC >/dev/null 2>&1 || :
-    fi
-
-    async &!  # start background computation
-    ASYNC_PROC=$!  # save pid
-
-    function zle-keymap-select {
-      async &!  # start background computation
-      ASYNC_PROC=$!  # save pid
-    }
-    zle -N zle-keymap-select
 }
 
 
