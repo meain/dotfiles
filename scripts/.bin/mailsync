@@ -42,6 +42,10 @@ notmuch tag +known 'folder:/INBOX/' 'from:no-reply@paytm.com'
 notmuch tag +known 'folder:/INBOX/' 'from:noreply@olacabs.com'
 notmuch tag +known 'folder:/INBOX/' 'from:support@vendekin.com'
 
+# not so important
 notmuch tag +nonimportant 'folder:/INBOX/' 'from:info@bseindia.in'
 notmuch tag +nonimportant 'folder:/INBOX/' 'from:hello@splitwise.com'
 notmuch tag +nonimportant 'folder:/INBOX/' 'from:notifications-noreply@linkedin.com'
+
+# python dev mailinglist
+notmuch tag +python 'folder:/INBOX/' 'subject:/^\[Python-Dev\]/' 
