@@ -49,7 +49,7 @@ function _git_pushable() {
   setopt localoptions noshwordsplit
   if git rev-list --count HEAD...@'{u}' > /dev/null 2>&1; then
     # git rev-list --left-right --count HEAD...@'{u}'
-    git rev-list --count HEAD...@'{u}' | sed 's/[1-9][0-9]*/↯/;s/[0-9]//'
+    git rev-list --count HEAD...@'{u}' | sed 's/[1-9][0-9]*/ ↯/;s/[0-9]//'
   fi
 }
 _vcs_info_wrapper() {
@@ -77,7 +77,7 @@ function _git_total_commits() {
 function _git_repo_base(){
   ROOT="$(git remote get-url origin 2>/dev/null | sed 's/\.git$//')"
   if [ -n "$ROOT" ];then
-    basename "$ROOT"
+    echo " $(basename "$ROOT")"
   fi
 }
 
@@ -90,7 +90,7 @@ fi
 local _return_status="%(?..%F{red})"
 
 function virtualenv_info {
-    [[ -n "$VIRTUAL_ENV" ]] && echo 'py:'${VIRTUAL_ENV:t}' '
+    [[ -n "$VIRTUAL_ENV" ]] && echo " py:${VIRTUAL_ENV:t}"
 }
 
 PROMPT='${_return_status}${_tmux_indicator}%F{yellow}%B%(1j.#.) '
@@ -103,7 +103,7 @@ function generate_lpropmpt() {
 function generate_rpropmpt() {
   NORMAL_COLOR="%{$FG[153]%}"
   INSERT_COLOR="%{$fg_bold[white]%}"
-  echo "%F{yellow} $(virtualenv_info) $FG[240]$(_git_pushable)%{$reset_color%} %F{244}$(_git_repo_base)%{$reset_color%} ${${KEYMAP/vicmd/$NORMAL_COLOR}/(main|viins)/$INSERT_COLOR}%2~%{$reset_color%} %{%B%F{cyan}%}$(_hosthame_custom)"
+  echo "%F{yellow}$(virtualenv_info)$FG[240]$(_git_pushable)%{$reset_color%}%F{244}$(_git_repo_base)%{$reset_color%} ${${KEYMAP/vicmd/$NORMAL_COLOR}/(main|viins)/$INSERT_COLOR}%2~%{$reset_color%}%{%B%F{cyan}%}$(_hosthame_custom)"
 }
 
 ASYNC_PROC=0
