@@ -61,7 +61,7 @@ Plug 'tpope/vim-markdown', { 'for': ['md', 'markdown'] }                        
 Plug 'cespare/vim-toml', { 'for': 'toml' }                                                     " Toml highlight
 Plug 'raimon49/requirements.txt.vim', { 'for': 'requirements' }                                " Requirements file
 Plug 'diepm/vim-rest-console', { 'for': 'rest' }                                               " Restclient
-Plug 'meain/vim-html-template-literals', { 'for': ['javascript', 'typescript'] }               " Lit html highlight
+" Plug 'meain/vim-html-template-literals', { 'for': ['javascript', 'typescript'] }               " Lit html highlight
 " Plug 'fatih/vim-go', { 'for': ['go'] }                                                         " Golang helper
 " Plug 'sebdah/vim-delve', { 'for': 'go' }                                                       " Debugger for go
 " Plug 'racer-rust/vim-racer', { 'for': 'rust' }                                                 " Rust support
