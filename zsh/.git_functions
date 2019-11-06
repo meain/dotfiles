@@ -63,6 +63,10 @@ git_delete_tag() {
     git tag --delete "$1" && git push --delete origin "$1"
 }
 
-edit_conflicting_files() {
+git_edit_conflicting_files() {
     git diff --name-only --diff-filter=U | xargs "$EDIOR"
+}
+
+git_checkout_pr(){
+    git pr checkout "$(git pr list | sed 's/^\ *//' | fzf | sed 's/.\([0-9]*\).*/\1/')"
 }
