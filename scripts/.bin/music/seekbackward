@@ -1,3 +1,5 @@
 #!/bin/sh
 
-/usr/local/bin/mpc seek -10
+if ! pgrep "Spotify" > /dev/null 2>&1;then
+    /usr/local/bin/mpc seek -10
+fi
