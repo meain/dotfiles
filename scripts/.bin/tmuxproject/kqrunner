@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd ~/Documents/Projects/work/saama/kqrunner || return
+cd ~/Documents/Projects/work/saama/automl/kqrunner || exit 1
 SESSION=kqrunner
 
 # if the session is already running, just attach to it.
@@ -36,7 +36,7 @@ tmux send-keys -t ${window}.2 'watch kubectl get jobs' Enter
 tmux send-keys -t ${window}.3 'start' Enter
 tmux send-keys -t ${window}.4 'cd test && clear' Enter
 tmux send-keys -t ${window}.4 'loop 10 python3 testjob.py'
-tmux send-keys -t ${window}.5 'kubectl port-forward redis-57fc67768d-jthbq 7000:6379' Enter
+tmux send-keys -t ${window}.5 'kubectl port-forward redis-57fc67768d-tqfl2 7000:6379' Enter
 
 tmux new-window -t $SESSION:1 -k -n cruft
 tmux send-keys -t ${window}.1 'clear && git status' Enter
