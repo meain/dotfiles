@@ -106,25 +106,37 @@ function generate_rpropmpt() {
   echo "%F{yellow}$(virtualenv_info)$FG[240]$(_git_pushable)%{$reset_color%}%F{244}$(_git_repo_base)%{$reset_color%} ${${KEYMAP/vicmd/$NORMAL_COLOR}/(main|viins)/$INSERT_COLOR}%2~%{$reset_color%}%{%B%F{cyan}%}$(_hosthame_custom)"
 }
 
-ASYNC_PROC=0
+ASYNC_LPROC=0
+ASYNC_RPROC=0
 function precmd() {
-  function async() {
+  function asyncl() {
       mkdir -p /tmp/zp
-      printf "%s" "$(generate_rpropmpt)" > "/tmp/zp/zsh_rprompt_$$"  # save to temp file
       printf "%s" "$(generate_lpropmpt)" > "/tmp/zp/zsh_lprompt_$$"  # do not clear, let it persist
       kill -s USR1 $$  # signal parent
   }
+  function asyncr() {
+      mkdir -p /tmp/zp
+      printf "%s" "$(generate_rpropmpt)" > "/tmp/zp/zsh_rprompt_$$"  # save to temp file
+      kill -s USR2 $$  # signal parent
+  }
 
-  if [[ "${ASYNC_PROC}" != 0 ]]; then  # kill child if necessary
-      kill -s HUP $ASYNC_PROC >/dev/null 2>&1 || :
+  if [[ "${ASYNC_LPROC}" != 0 ]]; then  # kill child if necessary
+      kill -s HUP $ASYNC_LPROC >/dev/null 2>&1 || :
+  fi
+  if [[ "${ASYNC_RPROC}" != 0 ]]; then  # kill child if necessary
+      kill -s HUP $ASYNC_RPROC >/dev/null 2>&1 || :
   fi
 
-  async &!  # start background computation
-  ASYNC_PROC=$!  # save pid
+  asyncl &!  # start background computation
+  ASYNC_LPROC=$!  # save pid
+  asyncr &!  # start background computation
+  ASYNC_RPROC=$!  # save pid
 
   function zle-keymap-select {
-    async &!  # start background computation
-    ASYNC_PROC=$!  # save pid
+    asyncl &!  # start background computation
+    ASYNC_LPROC=$!  # save pid
+    asyncr &!  # start background computation
+    ASYNC_RPROC=$!  # save pid
   }
   zle -N zle-keymap-select
 
@@ -148,7 +160,11 @@ function precmd() {
 
 function TRAPUSR1() {
     PS1="$(cat /tmp/zp/zsh_lprompt_$$)"  # read from temp file
+    ASYNC_LPROC=0  # reset proc number
+    zle && zle reset-prompt  # redisplay
+}
+function TRAPUSR2() {
     RPS1="$(cat /tmp/zp/zsh_rprompt_$$)"
-    ASYNC_PROC=0  # reset proc number
+    ASYNC_RPROC=0  # reset proc number
     zle && zle reset-prompt  # redisplay
 }
