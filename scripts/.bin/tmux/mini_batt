@@ -6,7 +6,7 @@ SOURCE=$(pmset -g batt | grep 'Now drawing from' | awk '{print $4}' | sed 's:^.:
 # BATTERY_ICON is only available with patched fonts
 #   i      
 BATTERY_ICON=" "
-if [ "$VALUE" -lt 10 ];then
+if [ "$VALUE" -lt 10 ] && [ ! "$SOURCE" = "AC" ];then
   VALUE="#[bg=red,fg=white] LOW BATTERY | $VALUE% #[bg=default]"
 elif [ "$VALUE" -lt 20 ];then
   BATTERY_ICON=" "
@@ -23,6 +23,7 @@ elif [ "$VALUE" -lt 90 ];then
 else
   VALUE="$VALUE%"
 fi
+
 if [ "$SOURCE" = "AC" ]; then
   echo "#[fg=yellow]$VALUE"
 else
