@@ -17,7 +17,7 @@ export COMPLETION_WAITING_DOTS="false"
 export HIST_STAMPS="dd.mm.yyyy"
 HISTSIZE=5000
 SAVEHIST=5000
-HISTFILE=~/.zsh_history
+HISTFILE=~/.cache/zsh/.zsh_history
 setopt appendhistory
 setopt sharehistory
 setopt incappendhistory

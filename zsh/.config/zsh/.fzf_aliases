@@ -20,7 +20,7 @@ jj() {
 }
 
 h() {
-    COMMAND=$(fzf --query "$*" < ~/.zsh_history)
+    COMMAND=$(fzf --query "$*" < "$HISTFILE")
     if [ -z "$COMMAND" ];then
         echo "No command selected"
         return 1
