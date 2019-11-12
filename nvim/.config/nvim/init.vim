@@ -18,7 +18,7 @@ Plug 'machakann/vim-highlightedyank'                                            
 Plug 'meain/vim-startify'                                                                      " A fancy start page for vim (slow)
 Plug '~/Documents/Projects/others/done/_vim/vim-googler', { 'on': 'Google' }                   " Google from within vim
 Plug 'wincent/loupe'                                                                           " Better search
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }                              " Fzf
+Plug '/usr/local/opt/fzf'                                                                      " Fzf
 Plug 'junegunn/fzf.vim'                                                                        " Fzf for vim
 Plug 'jremmen/vim-ripgrep', { 'on': 'Rg' }                                                     " Rg with quickfix list
 Plug 'christoomey/vim-tmux-navigator'                                                          " Seamless navigation between vim and tmux

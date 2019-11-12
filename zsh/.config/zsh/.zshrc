@@ -100,7 +100,7 @@ source $ZDOTDIR/.ffmpeg_functions
 source $ZDOTDIR/.imagemagic_functions
 
 # Sorce fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f /usr/locale/opt/.fzf.zsh ] && source /usr/locale/opt/.fzf.zsh
 
 if [ -f $HOME/.temp_aliases ];then
   source $HOME/.temp_aliases
