@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd ~/.dotfiles || return
+cd ~/.dotfiles || exit 1
 SESSION=dotfiles
 
 # if the session is already running, just attach to it.

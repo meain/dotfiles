@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd ~/Documents/Projects/work/saama/dalia || return
+cd ~/Documents/Projects/work/saama/dalia || exit 1
 SESSION=chatty
 
 # if the session is already running, just attach to it.
