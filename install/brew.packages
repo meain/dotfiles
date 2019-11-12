@@ -11,9 +11,7 @@ ffmpeg --with-libass --with-fontconfig
 
 # languages
 go
-ruby
 python
-python3
 
 # tools
 jq
@@ -27,43 +25,27 @@ ripgrep
 # others
 aspell
 axel
-bison
-calcurse
 coreutils
-cowsay
 ctags
-emacs
-figlet
-fish
-fontconfig
 fortune
-freetype
 gawk
-giflossy
-iproute2mac
-irssi
 mongodb
 mpv
 ncurses
-neofetch
 neomutt
 newsboat
 pandoc
 redis
-sleepwatcher
-sqlite
 stow
 trash
 up
 urlview
 w3m
 watch
-cmus
 dasht
 isync
-mps-youtube
+chafa
+kubernetes-cli
 grip
 sshfs
-kubernetes-cli
 watchexec
-chafa
