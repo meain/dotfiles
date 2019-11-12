@@ -1,0 +1,35 @@
+#!/bin/sh
+
+# Golang
+export GOPATH=~/.go
+export GOBIN=$GOPATH/bin
+PATH=$PATH:$GOPATH/bin
+
+# Rust
+PATH="$HOME/.cargo/bin:$PATH"
+
+# Poetry
+PATH="$HOME/.poetry/bin:$PATH"
+
+# Python
+PATH=/usr/local/bin:$PATH
+PATH="$HOME/.pyenv/bin:$PATH"
+export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
+export WORKON_HOME=~/.virtual_envs
+
+# Latex
+PATH=/Library/TeX/texbin:$PATH
+
+# Linuxbrew
+PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
+
+# Wasmer
+export WASMER_DIR="/Users/meain/.wasmer"
+[ -s "$WASMER_DIR/wasmer.sh" ] && . "$WASMER_DIR/wasmer.sh"
+
+# PATH
+PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/git/bin:$HOME/.bin:$PATH
+PATH=$PATH:$HOME/.temp_bin
+PATH="/usr/local/opt/gettext/bin:$PATH"
+
+export PATH
