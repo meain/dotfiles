@@ -33,6 +33,7 @@ tmux split-window -h -p 50
 
 tmux send-keys -t ${window}.1 'vim' Enter
 tmux send-keys -t ${window}.2 'watch kubectl get jobs' Enter
+tmux send-keys -t ${window}.3 'workon kqrunner' Enter
 tmux send-keys -t ${window}.3 'start' Enter
 tmux send-keys -t ${window}.4 'cd test && clear' Enter
 tmux send-keys -t ${window}.4 'loop 10 python3 testjob.py'
