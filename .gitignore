@@ -5,3 +5,4 @@ cache.db
 history.cmdline
 history.search
 karabiner/.config/karabiner/automatic_backups/
+.zcompdump
