@@ -367,8 +367,7 @@ autocmd filetype crontab setlocal nobackup nowritebackup
 autocmd BufWritePre *.css,*.js,*.html,*.cpp,*.c,*.java,*.go,*.rs,*.ts,*.cljs,*.clj :%s/\s\+$//e
 
 " Trun of syntax hilighting if huge
-autocmd BufReadPre *
-      \ if getfsize(expand("%")) > 10000000 | syntax off | endif
+autocmd BufReadPre * if getfsize(expand("%")) > 10000000 | syntax off | endif
 autocmd BufReadPre *.min.* syntax off
 
 
@@ -408,8 +407,8 @@ vnoremap ;; <esc>/<++><cr>:nohls<cr>cf>
 
 " python
 autocmd FileType python inoremap <silent><buffer> ;def def <++>(<++>):<cr><++><esc>k$?def<cr>:nohls<cr>
-autocmd FileType python inoremap <silent><buffer> ;ipdb __import__('ipdb').set_trace()<esc>
-autocmd FileType python inoremap <silent><buffer> ;pudb __import__('pudb').set_trace()<esc>
+autocmd FileType python inoremap <silent><buffer> ;i __import__('ipdb').set_trace()<esc>
+autocmd FileType python inoremap <silent><buffer> ;dp __import__('pudb').set_trace()<esc>
 autocmd FileType python inoremap <silent><buffer> ;fs f""<left>
 autocmd FileType python inoremap <silent><buffer> ;pr print()<left>
 autocmd FileType python inoremap <silent><buffer> ;ld logger.debug(f"")<left><left>
