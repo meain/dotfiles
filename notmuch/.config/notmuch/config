@@ -1,0 +1,16 @@
+[database]
+path=/Users/meain/.local/share/mail
+
+[user]
+name=Abin Simon
+primary_email=abinsimon10@gmail.com
+
+[new]
+tags=unread;inbox;
+ignore=
+
+[search]
+exclude_tags=deleted;spam;
+
+[maildir]
+synchronize_flags=true
