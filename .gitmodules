@@ -1,9 +1,9 @@
-[submodule "zsh/z"]
+[submodule "zsh/.config/zsh/.zsh-custom/plugins/z"]
 	path = zsh/.config/zsh/.zsh-custom/plugins/z
 	url = https://github.com/rupa/z
-[submodule "zsh/zsh-autosuggestions"]
+[submodule "zsh/.config/zsh/.zsh-custom/plugins/zsh-autosuggestions"]
 	path = zsh/.config/zsh/.zsh-custom/plugins/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions
-[submodule "zsh/zsh-syntax-highlighting"]
+[submodule "zsh/.config/zsh/.zsh-custom/plugins/zsh-syntax-highlighting"]
 	path = zsh/.config/zsh/.zsh-custom/plugins/zsh-syntax-highlighting
-	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
+	url = https://github.com/zsh-users/zsh-syntax-highlighting
