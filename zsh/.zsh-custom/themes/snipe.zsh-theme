@@ -77,7 +77,7 @@ function _git_total_commits() {
 function _git_repo_base(){
   ROOT="$(git remote get-url origin 2>/dev/null | sed 's/\.git$//')"
   if [ -n "$ROOT" ];then
-    echo " $(basename "$ROOT")"
+    echo "$(basename "$ROOT")"
   fi
 }
 
@@ -93,6 +93,39 @@ function virtualenv_info {
     [[ -n "$VIRTUAL_ENV" ]] && echo " py:${VIRTUAL_ENV:t}"
 }
 
+function _last_two_folders {
+  DIR=$(pwd)
+  if [ "$DIR" = "$HOME" ];then
+    echo "~"
+  else
+    DIR=$(pwd | sed "s|$HOME|~|")
+    D2=$(dirname "$DIR")
+    if [ -n "$D2" ] && [[ ! "$D2" == "/" ]];then
+      DIRNAME2=$(basename "$D2")/$(basename "$DIR")
+    else
+      DIRNAME2=$(basename "$DIR")
+    fi
+    echo "$DIRNAME2"
+  fi
+}
+
+function _cur_folder_with_git_base {
+  NORMAL_COLOR="%{$FG[153]%}"
+  INSERT_COLOR="%{$reset_color%}"
+  DIR=$(_last_two_folders)
+  BASE=$(_git_repo_base)
+
+  if [ -n "$BASE" ]; then
+    if [[ "$DIR" == *"$BASE"* ]];then
+      echo "${${KEYMAP/vicmd/$NORMAL_COLOR}/(main|viins)/$INSERT_COLOR}$DIR%{$reset_color%}" | sed "s/$BASE/%F{244}$BASE%{$reset_color%}${${KEYMAP/vicmd/$NORMAL_COLOR}/(main|viins)/$INSERT_COLOR}/"
+    else
+      echo "%F{244}$BASE%{$reset_color%} ${${KEYMAP/vicmd/$NORMAL_COLOR}/(main|viins)/$INSERT_COLOR}$DIR%{$reset_color%}"
+    fi
+  else
+      echo "${${KEYMAP/vicmd/$NORMAL_COLOR}/(main|viins)/$INSERT_COLOR}$DIR%{$reset_color%}"
+  fi
+}
+
 PROMPT='${_return_status}${_tmux_indicator}%F{yellow}%B%(1j.#.) '
 RPROMPT='%F{white}%2~ '
 
@@ -103,7 +136,7 @@ function generate_lpropmpt() {
 function generate_rpropmpt() {
   NORMAL_COLOR="%{$FG[153]%}"
   INSERT_COLOR="%{$fg_bold[white]%}"
-  echo "%F{yellow}$(virtualenv_info)$FG[240]$(_git_pushable)%{$reset_color%}%F{244}$(_git_repo_base)%{$reset_color%} ${${KEYMAP/vicmd/$NORMAL_COLOR}/(main|viins)/$INSERT_COLOR}%2~%{$reset_color%}%{%B%F{cyan}%}$(_hosthame_custom)"
+  echo "%F{yellow}$(virtualenv_info)$FG[240]$(_git_pushable)%{$reset_color%} $(_cur_folder_with_git_base)%{%B%F{cyan}%}$(_hosthame_custom)"
 }
 
 ASYNC_LPROC=0
