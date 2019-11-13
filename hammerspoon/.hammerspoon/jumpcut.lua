@@ -2,10 +2,11 @@ local utils = require("utils")
 
 -- Feel free to change those settings
 local frequency = 0.8 -- Speed in seconds to check for clipboard changes. If you check too frequently, you will loose performance, if you check sparsely you will loose copies
-local hist_size = 50 -- How many items to keep on history
+local hist_size = 300 -- How many items to keep on history
 local label_length = 40 -- How wide (in characters) the dropdown menu should be. Copies larger than this will have their label truncated and end with "…" (unicode for elipsis ...)
 local honor_clearcontent = false --asmagill request. If any application clears the pasteboard, we also remove it from the history https://groups.google.com/d/msg/hammerspoon/skEeypZHOmM/Tg8QnEj_N68J
 local pasteOnSelect = false -- Auto-type on click
+local hist_item_max_size = 2000 -- max length of items in history
 
 -- Don't change anything bellow this line
 local jumpcut = hs.menubar.new()
@@ -57,14 +58,16 @@ end
 function pasteboardToClipboard(item)
   -- Loop to enforce limit on qty of elements in history. Removes the oldest items
 
-  local lastselected = settings.get("so.meain.hs.jumpcutselect.lastselected") or ""
-  if item ~= lastselected then
-    while (#clipboard_history >= hist_size) do
-        table.remove(clipboard_history,1)
+  if string.len(item) < hist_item_max_size then
+    local lastselected = settings.get("so.meain.hs.jumpcutselect.lastselected") or ""
+    if item ~= lastselected then
+      while (#clipboard_history >= hist_size) do
+          table.remove(clipboard_history,1)
+      end
+      table.insert(clipboard_history, item)
+      settings.set("so.meain.hs.jumpcut",clipboard_history) -- updates the saved history
+      setTitle() -- updates the menu counter
     end
-    table.insert(clipboard_history, item)
-    settings.set("so.meain.hs.jumpcut",clipboard_history) -- updates the saved history
-    setTitle() -- updates the menu counter
   end
 end
 
@@ -113,3 +116,9 @@ timer:start()
 
 setTitle() --Avoid wrong title if the user already has something on his saved history
 jumpcut:setMenu(populateMenu)
+
+
+hs.hotkey.bind({'ctrl', 'alt', 'shift'}, 'p', function()
+  hs.alert('Cleared last item')
+  clearLastItem()
+end)
