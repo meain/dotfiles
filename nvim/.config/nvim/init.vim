@@ -1096,7 +1096,8 @@ let g:sleuth_automatic = 1
 let g:vim_json_syntax_conceal = 0
 
 " Markdown
-let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
+let g:markdown_syntax_conceal = 0
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'json', 'javascript', 'css']
 
 " Gentags
 let g:gen_tags#blacklist = ['$HOME']
