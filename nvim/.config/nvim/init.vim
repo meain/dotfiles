@@ -987,33 +987,33 @@ let g:startify_custom_indices = ['v','a', 'd', 'g', 'h', 'l', 'o', 'p', 'r', 't'
 let g:startify_fortune_use_unicode = 1
 let g:startify_list_order = ['dir', 'files',  'sessions']
 let g:startify_session_before_save = [
-    \ 'echo "Cleaning up before saving.."'
-    \ ]
+  \ 'echo "Cleaning up before saving.."'
+  \ ]
 let g:startify_skiplist = [
-    \ '\.png',
-    \ '\.jpeg',
-    \ 'COMMIT_EDITMSG',
-    \ escape(fnamemodify(resolve($VIMRUNTIME), ':p'), '\') .'doc',
-    \ 'bundle/.*/doc',
-    \ '\.vimgolf',
-    \ '^/tmp',
-    \ ]
+  \ '\.png',
+  \ '\.jpeg',
+  \ 'COMMIT_EDITMSG',
+  \ escape(fnamemodify(resolve($VIMRUNTIME), ':p'), '\') .'doc',
+  \ 'bundle/.*/doc',
+  \ '\.vimgolf',
+  \ '^/tmp',
+  \ ]
 let g:startify_lists = [
-\  { 'type': 'dir',		  'header': [ 'Files '. getcwd() ] },
-\  { 'type': function('s:list_commits'), 'header': [ 'Recent Commits' ] },
-\  { 'type': 'sessions',  'header': [ 'Sessions' ]		 },
-\  { 'type': 'bookmarks', 'header': [ 'Bookmarks' ]		 },
-\  { 'type': 'commands',  'header': [ 'Commands' ]		 },
-\ ]
+  \ { 'type': 'dir', 'header': [ 'Files [' . fnamemodify(getcwd(), ':t') . ']' ] },
+  \ { 'type': function('s:list_commits'), 'header': [ 'Recent Commits' ] },
+  \ { 'type': 'bookmarks', 'header': [ 'Bookmarks' ] },
+  \ { 'type': 'sessions',  'header': [ 'Sessions' ] },
+  \ { 'type': 'commands',  'header': [ 'Commands' ] },
+  \ ]
 let g:startify_commands = [
-\	{ 'up': [ 'Update Plugins', ':PlugUpdate' ] },
-\	{ 'ug': [ 'Upgrade Plugin Manager', ':PlugUpgrade' ] },
-\	{ 'q': [ 'Delete buffer', ':bd' ] },
-\ ]
+  \ { 'up': [ 'Update Plugins', ':PlugUpdate' ] },
+  \ { 'ug': [ 'Upgrade Plugin Manager', ':PlugUpgrade' ] },
+  \ { 'q': [ 'Delete buffer', ':bd' ] },
+  \ ]
 let g:startify_bookmarks = [
-	\ { 'c': '~/.dotfiles/nvim/.config/nvim/init.vim' },
-	\ { 'z': '~/.dotfiles/zsh/.zshrc' }
-\ ]
+  \ { 'c': '~/.dotfiles/nvim/.config/nvim/init.vim' },
+  \ { 'z': '~/.dotfiles/zsh/.zshrc' }
+  \ ]
 
 " Drag Visuals
 let g:Schlepp#reindent = 1
