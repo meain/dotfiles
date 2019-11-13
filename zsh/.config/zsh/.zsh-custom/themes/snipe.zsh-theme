@@ -7,6 +7,10 @@ export VIRTUAL_ENV_DISABLE_PROMPT=1
 autoload -U colors
 colors
 
+# variables
+INSERT_COLOR="%{$reset_color%}"
+NORMAL_COLOR="%{$BG[240]%}"
+
 # https://github.com/clvv/oh-my-zsh/blob/master/modules/git/functions/git-info
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' enable git
@@ -110,19 +114,17 @@ function _last_two_folders {
 }
 
 function _cur_folder_with_git_base {
-  NORMAL_COLOR="%{$FG[153]%}"
-  INSERT_COLOR="%{$reset_color%}"
   DIR=$(_last_two_folders)
   BASE=$(_git_repo_base)
 
   if [ -n "$BASE" ]; then
     if [[ "$DIR" == *"$BASE"* ]];then
-      echo "${${KEYMAP/vicmd/$NORMAL_COLOR}/(main|viins)/$INSERT_COLOR}$DIR%{$reset_color%}" | sed "s/$BASE/%F{244}$BASE%{$reset_color%}${${KEYMAP/vicmd/$NORMAL_COLOR}/(main|viins)/$INSERT_COLOR}/"
+      echo "$DIR" | sed "s/$BASE/%F{244}$BASE%{$reset_color%}/"
     else
-      echo "%F{244}$BASE%{$reset_color%} ${${KEYMAP/vicmd/$NORMAL_COLOR}/(main|viins)/$INSERT_COLOR}$DIR%{$reset_color%}"
+      echo "%F{244}$BASE%{$reset_color%} $DIR"
     fi
   else
-      echo "${${KEYMAP/vicmd/$NORMAL_COLOR}/(main|viins)/$INSERT_COLOR}$DIR%{$reset_color%}"
+      echo "$DIR"
   fi
 }
 
@@ -130,12 +132,10 @@ PROMPT='${_return_status}${_tmux_indicator}%F{yellow}%B%(1j.#.) '
 RPROMPT='%F{white}%2~ '
 
 function generate_lpropmpt() {
-  echo "${_return_status}${_tmux_indicator}%F{green}$( _vcs_info_wrapper )%F{yellow}%B%(1j.#.) %{$reset_color%}"
+  echo "${${KEYMAP/vicmd/$NORMAL_COLOR}/(main|viins)/$INSERT_COLOR}${_return_status}${_tmux_indicator}%F{green}$( _vcs_info_wrapper )%F{yellow}%B%(1j.#.)%{$reset_color%} "
 }
 
 function generate_rpropmpt() {
-  NORMAL_COLOR="%{$FG[153]%}"
-  INSERT_COLOR="%{$fg_bold[white]%}"
   echo "%F{yellow}$(virtualenv_info)$FG[240]$(_git_pushable)%{$reset_color%} $(_cur_folder_with_git_base)%{%B%F{cyan}%}$(_hosthame_custom)"
 }
 
@@ -188,7 +188,6 @@ function precmd() {
   fi
 
 }
-
 
 
 function TRAPUSR1() {
