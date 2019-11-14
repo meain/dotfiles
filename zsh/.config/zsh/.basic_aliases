@@ -8,7 +8,7 @@ alias .....='cd ../../../..'
 alias ......='cd ../../../../..'
 
 alias j=z
-alias r=lf
+alias rr=lf
 alias f=fg
 alias q=exit
 alias rm=trash
