@@ -20,6 +20,7 @@ notmuch tag +newsletter 'folder:/INBOX/' 'from:yo@dev.to'
 notmuch tag +newsletter 'folder:/INBOX/' 'from:noreply@medium.com'
 notmuch tag +newsletter 'folder:/INBOX/' 'from:no-reply@dribbble.com'
 notmuch tag +newsletter 'folder:/INBOX/' 'from:no-reply@screener.in'
+notmuch tag +newsletter 'folder:/INBOX/' 'from:do-not-reply@stackoverflow.email'
 
 # bullshit
 notmuch tag +bullshit 'folder:/INBOX/' 'from:marketradar@newsletter.geojit.net'
@@ -31,6 +32,7 @@ notmuch tag +bullshit 'folder:/INBOX/' 'from:fnalerts-no-reply@firstnaukri.com'
 notmuch tag +bullshit 'folder:/INBOX/' 'from:irctctourismoffers@irctc.co.in'
 notmuch tag +bullshit 'folder:/INBOX/' 'from:noreply@newsletter.geojit.net'
 notmuch tag +bullshit 'folder:/INBOX/' 'from:communications@nsdl.com'
+notmuch tag +bullshit 'folder:/INBOX/' 'from:no-reply@entertainment.bookmyshow.com'
 
 # known
 notmuch tag +known 'folder:/INBOX/' 'from:noreply@swiggy.in'
@@ -46,6 +48,11 @@ notmuch tag +known 'folder:/INBOX/' 'from:support@vendekin.com'
 notmuch tag +nonimportant 'folder:/INBOX/' 'from:info@bseindia.in'
 notmuch tag +nonimportant 'folder:/INBOX/' 'from:hello@splitwise.com'
 notmuch tag +nonimportant 'folder:/INBOX/' 'from:notifications-noreply@linkedin.com'
+notmuch tag +nonimportant 'folder:/INBOX/' 'from:linkedin@e.linkedin.com'
+notmuch tag +nonimportant 'folder:/INBOX/' 'from:alerts@ifttt.com'
+notmuch tag +nonimportant 'folder:/INBOX/' 'from:windowsinsiderprogram@e-mail.microsoft.com'
+notmuch tag +nonimportant 'folder:/INBOX/' 'from:no-reply@sampark.gov.in'
 
-# python dev mailinglist
+# others
 notmuch tag +python 'folder:/INBOX/' 'subject:/^\[Python-Dev\]/' 
+notmuch tag +bank 'folder:/INBOX/' 'from:alerts@hdfcbank.net'
