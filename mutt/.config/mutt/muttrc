@@ -94,6 +94,7 @@ set virtual_spoolfile=yes  # enable virtual folders
 virtual-mailboxes \
         "inbox"         "notmuch://?query=folder:/INBOX/ and -tag:bullshit and -tag:known and -tag:newsletter and -tag:nonimportant"\
         "fullinbox"     "notmuch://?query=folder:/INBOX/"\
+        "focused"       "notmuch://?query=folder:/INBOX/ and -tag:bullshit and -tag:known and -tag:newsletter and -tag:nonimportant and -tag:python and -tag:github"\
         "github"        "notmuch://?query=folder:/INBOX/ and tag:github"\
         "python"        "notmuch://?query=folder:/INBOX/ and tag:python"\
         "newsletter"    "notmuch://?query=folder:/INBOX/ and tag:newsletter"\
