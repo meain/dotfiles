@@ -694,8 +694,8 @@ set complete+=kspell
 function! FixLastSpellingError()
     normal! mz[s1z=`z
 endfunction
-nnoremap Z :call FixLastSpellingError()<cr>
-inoremap <c-z> :call FixLastSpellingError()<cr>
+nnoremap <silent>Z :call FixLastSpellingError()<cr>
+inoremap <silent><c-z> :call FixLastSpellingError()<cr>
 
 " Get output of shell command in vim window
 function! SplitRunCommand()
@@ -1440,7 +1440,6 @@ EOF
 
 
 " Rest console
-
 let g:vrc_curl_opts = {
   \ '-s': '',
   \ '-D': '-',
