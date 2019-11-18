@@ -5,33 +5,33 @@
     font-size: 10pt !important;
   }
 }
-
 #urlbar {
   position: relative;
-  z-index: 1;
+  z-index: 100;
   font-family: "Operator Mono Book", monospace !important;
 }
 
+/* ************************************************************ */
 /* black urlbar in private window */
+/* ************************************************************ */
 #main-window[privatebrowsingmode="temporary"] #urlbar {
   background: black !important;
   color: white !important;
 }
 
-/* no search with other thingy in bottom */
-.search-panel-header,
-.search-panel-one-offs {
-  display: none;
-}
 
+/* ************************************************************ */
 /* blue urls in search field */
+/* ************************************************************ */
 .ac-separator:not([selected="true"]),
 .ac-url:not([selected="true"]),
 .ac-action:not([selected="true"]) {
   color: hsl(211, 100%, 65%) !important;
 }
 
+/* ************************************************************ */
 /* first completion gey background */
+/* ************************************************************ */
 .autocomplete-richlistitem[selected="true"] {
   color: black !important;
   background: #f1f1f1 !important;
@@ -43,39 +43,208 @@
   color: #607d8b !important;
 }
 
+/* ************************************************************ */
 /* smaller comletion type icon */
+/* ************************************************************ */
 .ac-type-icon {
   color: black !important;
   width: 10px !important;
 }
 
+/* ************************************************************ */
 /* no extention icon for entention page */
+/* ************************************************************ */
 #urlbar[pageproxystate="valid"]
   > #identity-box.extensionPage
   > #extension-icon {
   display: none !important;
 }
 
-/* .tabs-newtab-button { */
-/*   background: none !important; */
-/*   border: 1px transparent !important; */
-/*   margin-left: -1px !important; */
-/*   width: 24px !important; */
-/*   opacity: .2 !important; */
-/* } */
-/*  */
-/* .tabs-newtab-button:hover { */
-/*   opacity: 1 !important; */
-/* } */
 
-@-moz-document url(chrome://browser/content/browser.xul) {
-  #fullscreen-warning {
-    display: none !important;
-  }
+/* ************************************************************ */
+/* Move tabs and search to bottom */
+/* ************************************************************ */
+#TabsToolbar,
+#titlebar,
+#navigator-toolbox {
+  -moz-box-ordinal-group: 999 !important;
+}
+.urlbarView {
+  bottom: 75px !important;
+  top: unset !important;
+}
+.titlebar-spacer,
+.search-one-offs {
+  display: none !important;
+}
+.titlebar-buttonbox-container {
+  -moz-box-ordinal-group: 999 !important;
+  margin-right: 10px;
 }
 
+
+/* ************************************************************ */
+/* small tab bar */
+/* ************************************************************ */
+:root {
+--tab-min-height: 25px !important;
+}
+
+
+
+
+
+/* ************************************************************ */
 /* https://github.com/nuchi/firefox-quantum-userchromejs */
+/* ************************************************************ */
 @namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
 toolbarbutton#alltabs-button {
-    -moz-binding: url("userChrome.xml#js");
+  -moz-binding: url("userChrome.xml#js");
+}
+
+
+/* ************************************************************ */
+/* Smaller urlbar */
+/* ************************************************************ */
+:root {
+  --tabs-border: transparent !important;
+  /* active tab left & right borders - not working in 58?*/
+  --toolbox-border-bottom-color: transparent !important;
+  /* 1px line under background tabs */
+  --chrome-nav-bar-controls-border-color: transparent !important;
+  /* border around url bar */
+}
+:root:-moz-lwtheme {
+  --toolbox-border-bottom-color: rgba(0, 0, 0, 0) !important;
+}
+
+:-moz-any(.tabs-newtab-button, #new-tab-button, #alltabs-button) .toolbarbutton-icon {
+  transform: scale(0.5, 0.5) !important;
+  margin-top: 1px !important;
+}
+/* Padding/border adjustements */
+#nav-bar {
+  border: none !important;
+  padding: 0px 8px !important;
+}
+/* Hide the back button unless we can actually go back. */
+#back-button[disabled="true"] {
+  display: none;
+}
+/* Hide the forward button always */
+#forward-button[disabled="true"]{
+  display: none;
+}
+#appMenu-notification-popup {
+/*   position: fixed; */
+  margin-top: 90px;
+  margin-right: 20px !important;
+}
+#appMenu-notification-popup .panel-arrowbox {
+  display: none !important;
+  visibility: collapse;
+}
+/* #PanelUI-button, */
+#customization-panel-container,
+#customization-panelWrapper .panel-arrow {
+  -moz-box-ordinal-group: 0 !important;
+  margin-right: -2px !important;
+}
+/* Tab borders stuff */
+.tabbrowser-tab::after,
+.tabbrowser-tab::before {
+  border: none !important;
+  color: grey !important;
+  opacity: .2 !important;
+}
+.tab-line {
+  display: none !important;
+}
+/* URL Bar */
+#urlbar[focused="true"],
+#urlbar:hover,
+.searchbar-textbox:hover {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  outline: none !important;
+}
+#urlbar,
+.searchbar-textbox,
+#urlbar:hover,
+.searchbar-textbox:hover {
+  background: transparent !important;
+  height: 32px !important;
+  padding: 0px !important;
+  font-size: 1.1em !important;
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  -moz-appearance: none;
+  /* margin: 4px 0px !important; */
+  /* min-height: 24px !important; */
+  cursor: default;
+}
+/* Hide bookmark button, page actions, security labels and extension icons */
+#star-button-box,
+#blocked-permissions-container,
+#identity-icon-labels,
+#pocket-button,
+#tracking-protection-icon-container,
+#extension-icon {
+  display: none !important;
+  background: transparent !important;
+}
+/* Spacing. */
+#TabsToolbar .titlebar-placeholder[type="pre-tabs"] {
+  width: 1.22em !important;
+  border-right: none !important;
+}
+.titlebar-placeholder[type="post-tabs"] {
+  width: 8px !important;
+}
+/* Hide titlebar spaces */
+.titlebar-spacer {
+  display: none;
+}
+#pageActionSeparator {
+  opacity: 0 !important;
+  margin-right: 2px !important;
+  margin-left: 2px !important;
+}
+.toolbarbutton-icon{
+  background-color: rgba(0,0,0,0) !important;
+  border: 1px solid transparent !important;
+}
+#urlbar-container, #search-container{
+  padding: unset !important;
+}
+#back-button {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  padding-inline-start: 0 !important;
+}
+
+
+
+/* ************************************************************ */
+/* Automatically hiding nav-bar */
+/* ************************************************************ */
+#titlebar {
+  margin-bottom: -32px !important;
+  transition: margin-bottom 0.2s ease-in-out !important;
+}
+:hover > #titlebar{
+  margin-bottom: 0 !important;
+}
+#nav-bar {
+  overflow-y: hidden !important;
+  min-height: 0 !important;
+  max-height: 0 !important;
+  transition: max-height 0.2s ease-in-out 0.5s, min-height 0.2s ease-in-out 0.5s !important;
+}
+:hover > #nav-bar,
+#nav-bar:focus-within {
+  max-height: 32px !important;
+  transition: max-height 0.2s ease-in-out, min-height 0.2s ease-in-out !important;
 }
