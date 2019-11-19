@@ -6,7 +6,7 @@ export GOBIN=$GOPATH/bin
 PATH=$PATH:$GOPATH/bin
 
 # Rust
-PATH="$HOME/.cache/cargo/bin:$PATH"
+PATH="$HOME/.cargo/bin:$PATH"
 
 # Poetry
 PATH="$HOME/.poetry/bin:$PATH"
