@@ -86,7 +86,8 @@ bind compose R rename-attachment
 
 bind index u toggle-new
 unmailboxes *
-mailboxes =INBOX =[Gmail].Sent Mail =[Gmail].Drafts =Archive
+# mailboxes =INBOX =[Gmail].Drafts =Archive =[Gmail].Sent Mail 
+mailboxes =INBOX
 
 # https://notmuchmail.org/mutttips/
 set nm_default_uri="notmuch://$HOME/.local/share/mail
