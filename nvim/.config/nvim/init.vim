@@ -438,7 +438,7 @@ autocmd FileType html inoremap <silent><buffer> ;bang <esc>:0read !cat ~/.datafi
 autocmd FileType html inoremap <silent><buffer> ;fa <i class="fas fa-"></i><esc>F"i
 autocmd FileType html inoremap <silent><buffer> ;css <link rel="stylesheet" href="index.css" type="text/css" /><esc>?index.css<cr>vi"
 autocmd FileType html inoremap <silent><buffer> ;js <script src="index.js"></script><esc>?index.js<cr>vi"
-autocmd FileType html inoremap <silent><buffer> ;c class=""<left>
+autocmd FileType html inoremap <silent><buffer> ;cl class=""<left>
 
 
 " go
@@ -460,6 +460,7 @@ autocmd FileType css inoremap <silent><buffer> ;body body {<cr>margin: 0;<cr>pad
 autocmd FileType css inoremap <silent><buffer> ;shadow box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 0px 2px rgba(0, 0, 0, 0.24);
 autocmd FileType css inoremap <silent><buffer> ;fc flex-direction: column;
 autocmd FileType css inoremap <silent><buffer> ;ta text-align: center;<esc>hviw
+autocmd FileType css inoremap <silent><buffer> ;cl .<esc>"*pa{<cr>}<esc>O
 
 " javascript
 autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;flow // @flow 
