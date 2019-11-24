@@ -105,10 +105,10 @@ emailNotify = function(paths, flags)
   result = customshellrun.run(BIN .. 'unreadsenders')
   unreadcount = utils.linecount(result)
   if (unreadcount > 0) then
-    mailcounter:setTitle(unreadcount .. ' new mail')
+    mailcounter:setTitle(unreadcount)
     mailcounter:setTooltip(result)
   else
-    mailcounter:setTitle("")
+    mailcounter:setTitle("M")
     mailcounter:setTooltip("No new emails")
   end
   if (string.len(result) > 0) then
