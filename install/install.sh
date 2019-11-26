@@ -29,8 +29,5 @@ bash ./non-package.sh
 # npm packages
 execcommandfrompartial 'npm install -g' './node.packages'
 
-# python2 packages
-execcommandfrompartial 'pip2' './python2.packages'
-
 # python3 packages
 execcommandfrompartial 'pip3' './python3.packages'
