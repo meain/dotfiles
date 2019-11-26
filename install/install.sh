@@ -26,9 +26,6 @@ execcommandfrompartial 'brew cask install' './brew-cask.packages'
 # install non package stuff
 bash ./non-package.sh
 
-# ruby packages
-execcommandfrompartial 'gem install' './ruby.packages'
-
 # npm packages
 execcommandfrompartial 'npm install -g' './node.packages'
 
