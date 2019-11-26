@@ -30,4 +30,4 @@ bash ./non-package.sh
 execcommandfrompartial 'npm install -g' './node.packages'
 
 # python3 packages
-execcommandfrompartial 'pip3' './python3.packages'
+execcommandfrompartial 'pip3 install' './python3.packages'
