@@ -8,9 +8,7 @@ pynvim
 pycodestyle
 pydocstyle
 pyflakes
-python-language-server
 requests
 virtualenv
 virtualenvwrapper
 yapf
-youtube-dl
