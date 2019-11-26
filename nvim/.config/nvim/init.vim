@@ -50,6 +50,7 @@ Plug 'yardnsm/vim-import-cost', { 'do': 'npm install', 'for': g:javascript_filet
 Plug 'tpope/vim-surround'                                                                      " Surround
 Plug 'jiangmiao/auto-pairs'                                                                    " Autopair
 Plug 'tomtom/tcomment_vim'                                                                     " Code commenting
+Plug 'AndrewRadev/tagalong.vim'                                                                " Automatically change closing tag
 
 " Language helpers
 Plug 'elzr/vim-json', { 'for': 'json' }                                                        " Json syntax highlight
@@ -1478,6 +1479,10 @@ require 'colorizer'.setup ({
   hsl_fn = true;
 })
 EOF
+
+
+" Tag Along
+let g:tagalong_additional_filetypes = ['javascript', 'typescript', 'javascript.jsx', 'typescript.tsx']
 
 
 " Rest console
