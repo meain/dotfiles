@@ -318,3 +318,11 @@ cssh() {
 }
 compdef _ssh cssh=ssh
 alias ssh=cssh
+
+docs() {
+	array=( $@ )
+	len=${#array[@]}
+	docset=${array[$len]}
+	querry=${array[@]:0:$len-1}
+	dasht "$querry" "$docset"
+}
