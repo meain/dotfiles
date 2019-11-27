@@ -71,7 +71,7 @@ function +vi-git-untracked() {
 }
 
 function _hosthame_custom() {
-  hostname | sed 's/\..*//g' | grep -v -E '^plank$' | sed 's/^/\ @/'
+  hostname | sed 's/\..*//g' | grep -v -E '^prop$' | sed 's/^/\ @/'
 }
 
 function _git_total_commits() {
