@@ -151,9 +151,9 @@ set signcolumn=yes
 " Better backup, swap and undos storage
 set backup                        " make backup files
 set undofile                      " persistent undos - undo after you re-open the file
-set directory=~/.vim/dirs/tmp     " directory to place swap files in
-set backupdir=~/.vim/dirs/backups " where to put backup files
-set undodir=~/.vim/dirs/undodir   " undo directory
+set directory=~/.cache/vim/dirs/tmp     " directory to place swap files in
+set backupdir=~/.cache/vim/dirs/backups " where to put backup files
+set undodir=~/.cache/vim/dirs/undodir   " undo directory
 
 " Allow mouse
 set mouse=a

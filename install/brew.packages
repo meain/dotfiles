@@ -48,3 +48,7 @@ kubernetes-cli
 grip
 sshfs
 watchexec
+lf
+mpd
+mpc
+ncmpcpp

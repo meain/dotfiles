@@ -26,8 +26,6 @@ tmux select-pane -t 2
 tmux split-window -v -p 50
 tmux select-pane -t 3
 tmux split-window -v -p 10
-tmux select-pane -t 4
-tmux split-window -h -p 50
 
 tmux send-keys -t ${window}.1 'cd dagserver' Enter
 tmux send-keys -t ${window}.1 'workon dag' Enter
@@ -39,12 +37,6 @@ tmux send-keys -t ${window}.2 'start' Enter
 
 tmux send-keys -t ${window}.3 'cd chatty' Enter
 tmux send-keys -t ${window}.3 'start' Enter
-
-tmux send-keys -t ${window}.4 'cd virtualassistant_ui' Enter
-tmux send-keys -t ${window}.4 'redis-server' Enter
-
-tmux send-keys -t ${window}.5 'cd virtualassistant_ui' Enter
-tmux send-keys -t ${window}.5 'mongod --dbpath db' Enter
 
 tmux new-window -t $SESSION:1 -k -n chatty
 tmux send-keys -t ${window}.1 'cd chatty' Enter
