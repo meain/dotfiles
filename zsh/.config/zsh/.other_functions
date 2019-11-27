@@ -163,6 +163,10 @@ imgurtolocal() {
 # Easily copy file from downloads folder
 dcp() {
 	FROMFILE=$(find ~/Downloads | sed "s|^$HOME/Downloads/||" | fzf --query="$1")
+	if [ -z $FROMFILE ];then
+		echo "No file selected"
+		return 1
+	fi
 	printf "Name of destination file (%s): " "$(basename "$FROMFILE")"
 	read -r TOFILE
 
