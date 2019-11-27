@@ -6,3 +6,6 @@ history.cmdline
 history.search
 karabiner/.config/karabiner/automatic_backups/
 .zcompdump
+mpd.db
+mpd.pid
+mpdstate
