@@ -1,4 +1,8 @@
-#!/bin/bash
+#!/bin/sh
+
+# mac settings
+defaults write com.apple.screencapture location ~/Documents/Screenshots/
+sudo nvram SystemAudioVolume="%00"
 
 execcommandfrompartial() {
     BASE=$1
