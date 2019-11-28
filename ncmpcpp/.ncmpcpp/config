@@ -44,3 +44,4 @@ main_window_color = "default"
 centered_cursor = "yes"
 enable_window_title = "yes"
 external_editor = "nvim"
+lyrics_directory = ~/.local/share/lyrics
