@@ -13,3 +13,4 @@ virtualenv
 virtualenvwrapper
 yapf
 poetry
+black
