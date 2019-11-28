@@ -47,6 +47,28 @@ gcl() {
     cd "$FOLDER" || return 1
 }
 
+git_sparse_clone() {
+	rurl="$1"
+	localdir="$(basename "$1")"
+	shift 1
+
+	mkdir -p "$localdir"
+	cd "$localdir" || return 1
+
+	git init
+	git remote add -f origin "$rurl"
+	git config core.sparseCheckout true
+
+	# Loops over remaining args
+	mkdir -p .git/info
+	touch .git/info/sparse-checkout
+	for i; do
+		echo "$i" >> .git/info/sparse-checkout
+	done
+
+	git pull origin master
+}
+
 git_untracked_to_gitignore() {
     git status | grep -P \"^\\t\" | grep -vF .gitignore | sed \"s/^\\t//\" >>.gitignore
 }
