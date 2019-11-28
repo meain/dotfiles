@@ -35,3 +35,6 @@ execcommandfrompartial 'npm install -g' './node.packages'
 
 # python3 packages
 execcommandfrompartial 'pip3 install' './python3.packages'
+
+# more setup
+defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/init.lua"
