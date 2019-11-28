@@ -20,9 +20,6 @@ _update_repos() {
     gloc "git fetch" "$HOME/Documents/Projects/work/saama"
     gloc "git fetch" "$HOME/Documents/Projects/projects"
 }
-_update_poetry() {
-    poetry self update
-}
 _update_gcloud() {
     gcloud components update -q
 }
@@ -33,7 +30,6 @@ case "$1" in
     rustup) _update_rustup ;;
     dasht) _update_dasht ;;
     repos) _update_repos ;;
-    poetry) _update_poetry ;;
     gcloud) _update_gcloud ;;
     all)
         _update_vim
