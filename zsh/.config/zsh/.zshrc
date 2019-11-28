@@ -57,7 +57,7 @@ source $ZDOTDIR/.zsh-custom/plugins/zsh-autosuggestions/zsh-autosuggestions.plug
 source $ZDOTDIR/.zsh-custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
 
 export EDITOR='nvim'
-export BROWSER='/Applications/Firefox.app/Contents/MacOS/firefox'
+export BROWSER=  # do not set browser
 
 # Make CTRL-Z background things and unbackground them.
 function fg-bg() {
