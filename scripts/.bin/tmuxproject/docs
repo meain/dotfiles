@@ -26,7 +26,6 @@ tmux select-pane -t 2
 
 tmux send-keys -t ${window}.1 'workon docs' Enter
 tmux send-keys -t ${window}.1 'start' Enter
-tmux send-keys -t ${window}.2 'g' Enter
 tmux send-keys -t ${window}.2 'gg' Enter
 
 tmux new-window -t $SESSION:1 -k -n editor
