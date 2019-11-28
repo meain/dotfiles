@@ -663,9 +663,6 @@ nnoremap <silent>sh :split \| :Startify<cr>
 nnoremap <silent><Leader>v :vsplit \| :Startify<cr>
 nnoremap <silent><Leader>h :split \| :Startify<cr>
 
-" Clear search highlight
-nnoremap <silent><Leader>/ :nohls<CR>
-
 " Easy tag navigation
 nnoremap <silent><Leader>' <C-]>
 
@@ -1370,8 +1367,11 @@ let g:instant_markdown_autostart = 0
 let g:rg_highlight = 1
 let g:rg_command = 'rg --vimgrep --ignore-case --hidden --follow'
 
-"Loupe
+" Loupe
 let g:LoupeVeryMagic=0
+let g:LoupeClearHighlightMap=1
+" nnoremap <silent><Leader>/ <Plug>LoupeClearHighlight
+nnoremap <silent><Leader>/ :nohls<cr>
 
 " Semshi
 let g:semshi#excluded_buffers = ['*']
