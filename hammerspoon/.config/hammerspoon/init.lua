@@ -94,6 +94,10 @@ hs.hotkey.bind({'alt'}, 'delete', function()
   hs.alert(result)
 end)
 
+hs.hotkey.bind({'alt', 'shift'}, 'delete', function()
+  customshellrun.run('/usr/bin/open \'https://www.google.com/search?q=' ..  pasteboard.getContents() .. '&btnI=I%27m+Feeling+Lucky\'')
+end)
+
 -- Email watcher
 emailNotify = function(paths, flags)
   local sound = false
