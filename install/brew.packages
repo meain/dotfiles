@@ -8,6 +8,7 @@ node
 neovim --HEAD
 imagemagick --with-fontconfig
 ffmpeg --with-fontconfig
+reattach-to-user-namespace
 
 # languages
 go
