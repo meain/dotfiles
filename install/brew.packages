@@ -30,7 +30,6 @@ coreutils
 ctags
 fortune
 gawk
-mpv
 ncurses
 neomutt
 newsboat
@@ -57,3 +56,4 @@ googler
 tidy-html5
 shellcheck
 shfmt
+icdiff
