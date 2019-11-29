@@ -8,6 +8,8 @@ fi
 color="magenta"
 if echo "$output" | grep '^S|' > /dev/null ;then
     color="colour78"
+elif echo "$output" | grep '^V|' > /dev/null ;then
+    color="colour81"
 fi
 output=$(echo "$output" | sed 's/^...//')
 
