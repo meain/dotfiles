@@ -5,18 +5,18 @@ if [ -z "$1" ];then
 fi
 
 if [ ! "$1" = "--resume" ];then
-    youtube-dl -g --skip-download "$1" > /tmp/vids &
+    youtube-dl --get-id "$1" -i > /tmp/vids &
     YDL=$(echo $!)
 
     cleanup() {
-    echo "Cleaning up stuff.."
+    echo "Cleaning up stuff..."
     kill -9 "$YDL"
     }
 
     trap cleanup EXIT
 
-    echo "Waiting for download to complete..."
-    sleep 15
+    echo "Waiting for song list to populate..."
+    sleep 30
 fi
 
-cat /tmp/vids | xargs mpv --no-video 
+sed 's|^|https://youtube.com/watch?v=|' /tmp/vids | xargs mpv --no-video 
