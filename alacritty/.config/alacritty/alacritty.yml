@@ -21,7 +21,6 @@ draw_bold_text_with_bright_colors: true
 scrolling:
   history: 10000
   multiplier: 3
-  faux_multiplier: 3
   auto_scroll: false
 
 font:
