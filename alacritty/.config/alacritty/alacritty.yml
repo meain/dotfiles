@@ -25,12 +25,12 @@ scrolling:
 
 font:
   normal:
-    family: SpaceMono Nerd Font Mono
+    family: Monaco
   bold:
-    family: SpaceMono Nerd Font Mono Regular
+    family: Monaco
   italic:
-    family: SpaceMono Nerd Font Mono
-  size: 15.0
+    family: Monaco
+  size: 14.5
   offset:
     x: 0
     y: 0
