@@ -20,7 +20,7 @@ _v_checkiffile(){
 }
 
 v() {
-    FILE="$(_v_checkiffile ~/.vim_mru_files | grep -v ".git" | fzf --height 40% --reverse --preview "coderay {}")"
+    FILE="$(_v_checkiffile ~/.vim_mru_files | grep -v ".git" | fzf --height 40% --reverse --preview "bat --color=always -p {}")"
     [ -f "$FILE" ] && $EDITOR "$FILE"
 }
 
