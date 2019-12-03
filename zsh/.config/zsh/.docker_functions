@@ -35,6 +35,15 @@ dcon(){
 }
 
 docker_testground(){
-    IMAGE="$1" && shift
+    GROUND="$1" && shift
+    if echo "$GROUND" | grep ':' > /dev/null 2>&1;then
+        IMAGE="$GROUND"
+    else
+        TAG="$(curl -sk "https://registry.hub.docker.com/v1/repositories/$GROUND/tags" | jq -r '.[].name' | fzf)"
+        if [ -z "$TAG" ];then
+            return 1
+        fi
+        IMAGE="$GROUND:$TAG"
+    fi
     docker run -v "$(pwd):/code" -it "$IMAGE" bash
 }
