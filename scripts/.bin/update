@@ -37,9 +37,8 @@ case "$1" in
         _update_rustup
         _update_dasht
         _update_repos
-        _update_poetry
         _update_gcloud
         ;;
     *)
-        update "$(echo "all,vim,brew,rustup,dasht,repos,poetry" | tr ',' '\n' | fzf)"
+        update "$(echo "all,vim,brew,rustup,dasht,repos" | tr ',' '\n' | fzf)"
 esac
