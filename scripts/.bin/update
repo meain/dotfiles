@@ -23,6 +23,9 @@ _update_repos() {
 _update_gcloud() {
     gcloud components update -q
 }
+_update_bw() {
+    bw sync
+}
 
 case "$1" in
     vim) _update_vim ;;
@@ -31,6 +34,7 @@ case "$1" in
     dasht) _update_dasht ;;
     repos) _update_repos ;;
     gcloud) _update_gcloud ;;
+    bw) _update_bw ;;
     all)
         _update_vim
         _update_brew
@@ -38,7 +42,8 @@ case "$1" in
         _update_dasht
         _update_repos
         _update_gcloud
+        _update_bw
         ;;
     *)
-        update "$(echo "all,vim,brew,rustup,dasht,repos" | tr ',' '\n' | fzf)"
+        update "$(echo "all,vim,brew,rustup,dasht,repos,bw" | tr ',' '\n' | fzf)"
 esac
