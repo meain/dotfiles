@@ -1,0 +1,20 @@
+#!/bin/sh
+
+set -e
+
+QUERY="$1"
+if [ -z "$1" ];then
+    printf "Enter base query: "
+    read -r QUERY
+fi
+
+# bw list items --search "$1" | jq -r '.[].id' | fzf --preview "bw list items --search {} | jq '.[0].login.username'"
+OBJ="$(bw list items --search "$QUERY")"
+USERNAME="$(echo "$OBJ"| jq -r '.[].login.username' | fzf --preview "echo '$OBJ' | jq -r '.[] | select(.login.username == \"{}\") |
+    .name,.login.uris[].uri'")"
+PASS="$(echo "$OBJ" | jq -r ".[] | select(.login.username == \"$USERNAME\") | .login.password")"
+
+PREVCLIP="$(pbpaste)"
+echo "$PASS" | perl -0pe 's/\n\Z//' | pbcopy
+echo "Password copied to clipboard. Will be cleared in 30sec."
+nohup >/dev/null 2>&1 sleep 30 && (echo "$PREVCLIP" | pbcopy) >/dev/null 2>&1 & 
