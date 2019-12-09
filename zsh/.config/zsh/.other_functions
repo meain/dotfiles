@@ -262,7 +262,7 @@ starttunnel() {
 	# networksetup -listallnetworkservices
 	DEVICE='USB 10/100/1000 LAN'
 	PORT=8889
-	ssh -D "$PORT" -f -C -q -N meain@alexa3
+	ssh -D "$PORT" -f -C -q -N meain@coffee
 	networksetup -setsocksfirewallproxy "$DEVICE" localhost "$PORT"
 	networksetup -setsocksfirewallproxystate "$DEVICE" on
 	tmux refresh-client -S
