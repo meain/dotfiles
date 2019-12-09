@@ -10,7 +10,7 @@ Plug 'mhinz/vim-janah'                                                          
 Plug 'Yggdroot/indentLine'                                                                     " Show indent
 Plug 'mhinz/vim-signify'                                                                       " Git diff icons in gutter
 " Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }                                           " Hyper focus editing
-" Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }                                                     " Centerify
+Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }                                                     " Centerify
 Plug 'norcalli/nvim-colorizer.lua'                                                             " Highlight color values
 Plug 'machakann/vim-highlightedyank'                                                           " Visually highlight yanked region
 
