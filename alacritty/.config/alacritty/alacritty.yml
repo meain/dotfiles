@@ -25,12 +25,12 @@ scrolling:
 
 font:
   normal:
-    family: Monaco
+    family: Operator Mono Book
   bold:
-    family: Monaco
+    family: Operator Mono Book
   italic:
-    family: Monaco
-  size: 14.5
+    family: Operator Mono Book
+  size: 15.0
   offset:
     x: 0
     y: 0
