@@ -27,7 +27,7 @@ show_market() {
             sleep 10
             show_market "$1" "$2"
         else
-            echo "API request limit hit. 5 calls per minute."
+            echo "API request limit hit. 5 calls per minute. Use '--may-wait' to wait."
             exit 1
         fi
     else
