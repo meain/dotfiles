@@ -36,7 +36,7 @@ color info yellow black standout bold
 color article white default
 
 # highlight rules
-highlight feedlist "https?://[^ ]+" cyan default
+highlight feedlist "\ *https?://[^ ]+" black default standout bold
 # highlight feedlist "#[[:space:]].+$" blue default bold
 highlight articlelist "[[:digit:]]{4}-[[:digit:]]{2}-[[:digit:]]{2}" cyan default
 highlight article "https?://[^ ]+" blue default
