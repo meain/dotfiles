@@ -247,7 +247,6 @@ stocks() {
 
 morning() {
 	xargs open <~/.datafiles/morning_pages
-	gcalcli agenda
 	echo "Syncing mail..." && mailsync >/dev/null 2>/dev/null
 	for stock in $(echo "$STOCKS" | tr ',' '\n' | sed 's/^/NSE:/'); do
 		tock "$stock" --may-wait
