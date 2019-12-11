@@ -1,5 +1,5 @@
 #!/bin/sh
 
 set -e
-  
-echo "$1" | perl -0pe 's/\n\Z//' | pbcopy
+
+echo "$1" | tr -d '\n' | pbcopy
