@@ -132,7 +132,7 @@ PROMPT='${_return_status}${_tmux_indicator}%F{yellow}%B%(1j.#.) '
 RPROMPT='%F{white}%2~ '
 
 function generate_lpropmpt() {
-  echo "${${KEYMAP/vicmd/$NORMAL_COLOR}/(main|viins)/$INSERT_COLOR}${_return_status}${_tmux_indicator}%F{green}$( _vcs_info_wrapper )%F{yellow}%B%(1j.#.)%{$reset_color%} "
+  echo "${${KEYMAP/vicmd/$NORMAL_COLOR}/(main|viins)/$INSERT_COLOR}${_return_status}${_tmux_indicator}%F{green}$( _vcs_info_wrapper )%F{yellow}%B%(1j.#.)%{$reset_color%}"
 }
 
 function generate_rpropmpt() {
@@ -191,7 +191,8 @@ function precmd() {
 
 
 function TRAPUSR1() {
-    PS1="$(cat /tmp/zp/zsh_lprompt_$$)"  # read from temp file
+    # to insert non breaking space in vim: <c-k> <space> <space>
+    PS1="$(cat /tmp/zp/zsh_lprompt_$$) "  # read from temp file ( uses non breaking space )
     ASYNC_LPROC=0  # reset proc number
     zle && zle reset-prompt  # redisplay
 }
