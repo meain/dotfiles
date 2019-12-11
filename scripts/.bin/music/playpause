@@ -1,10 +1,10 @@
 #!/bin/sh
 
-PATH="/usr/local/bin:/usr/bin"
+PATH="/usr/local/bin:/usr/bin:/bin"
 if pgrep "mpv" > /dev/null 2>&1;then
     /usr/local/bin/mpvc toggle
 elif pgrep "Spotify" > /dev/null 2>&1;then
-    /usr/local/bin/spotify p
+    /usr/local/bin/spotify pause
 else
     /usr/local/bin/mpc toggle
 fi

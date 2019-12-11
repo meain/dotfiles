@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PATH="/usr/local/bin:/usr/bin"
+PATH="/usr/local/bin:/usr/bin:/bin"
 if pgrep "mpv" > /dev/null 2>&1; then
     songName=$(/usr/local/bin/mpvc --format '%title%' | head -n1 | sed 's/volume\:.*//')
     playing=$(/usr/local/bin/mpvc | head -n2 | tail -n1 | cut -d' ' -f1 | sed 's/\[playing\]/>/;s/\[paused\]/:/')
