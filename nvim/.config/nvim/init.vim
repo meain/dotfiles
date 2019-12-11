@@ -215,7 +215,7 @@ set textwidth=120
 
 " Show invisibles
 set list
-set listchars=tab:\ \ ,eol:¬,trail:⋅
+set listchars=tab:\ \ ,eol:¬,trail:⋅,nbsp:ø
 
 " Show line breaks
 set showbreak=…
