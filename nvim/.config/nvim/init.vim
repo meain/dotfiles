@@ -1324,10 +1324,6 @@ let g:AutoPairsMultilineClose = 0
 " Vim Plug
 command! LoadAllPlugins call plug#load(keys(g:plugs))
 
-" Googler
-nnoremap <silent><leader>s :Google <c-r><c-w><cr>
-vnoremap <leader>s y:Google <c-r>"<cr>
-
 " Vim instant markdown
 let g:instant_markdown_autostart = 0
 
