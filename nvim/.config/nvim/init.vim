@@ -34,6 +34,7 @@ Plug 'mattn/emmet-vim', { 'for': ['html', 'css'] + g:javascript_filetypes }     
 " Plug 'metakirby5/codi.vim', { 'on': 'Codi' }                                                   " Live code preview
 Plug 'rhysd/committia.vim'                                                                     " Better COMMIT_EDITMSG editing
 Plug 'Galooshi/vim-import-js', {'for': g:javascript_filetypes, 'do': 'npm i -g import-js'}     " Easier imports for javascript
+Plug 'wellle/context.vim', { 'on': ['ContextActivate','ContextEnable', 'ContextToggle'] }
 
 " Code editing enhacements
 Plug 'tpope/vim-sleuth'                                                                        " Automatic indentation setting
@@ -968,6 +969,9 @@ augroup custom_fugitive
 augroup end
 command! Gl normal! :!git vhm<cr>
 
+" GitMessenger
+nnoremap <silent><leader>G :GitMessenger<cr>
+
 " Startify
 function! s:list_commits()
   let git = 'git -C ' . getcwd()
@@ -1456,6 +1460,10 @@ let g:vrc_curl_opts = {
   \ '-L': '',
   \ '-b': '/tmp/cookies.txt',
 \}
+
+
+" context.vim
+let g:context_enabled = 0
 
 
 
