@@ -17,6 +17,11 @@ PATH="$HOME/.pyenv/bin:$PATH"
 export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
 export WORKON_HOME=~/.virtual_envs
 
+# ruby
+export PATH="/usr/local/opt/ruby/bin:$PATH"
+export GEM_HOME=$HOME/.cache/gems
+export PATH=$HOME/.cache/gems/bin:$PATH
+
 # Latex
 PATH=/Library/TeX/texbin:$PATH
 
