@@ -96,6 +96,6 @@ git_checkout_pr(){
 git_usebranch() {
     [ -z "$1" ] && echo 'Provide branchname.' && return 1
     git branch "$1"
-    git reset --keep origin/master
+    git reset --keep HEAD~
     git checkout "$1"
 }
