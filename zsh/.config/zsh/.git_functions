@@ -92,3 +92,10 @@ git_edit_conflicting_files() {
 git_checkout_pr(){
     git pr checkout "$(git pr list | sed 's/^\ *//' | fzf | sed 's/.\([0-9]*\).*/\1/')"
 }
+
+git_usebranch() {
+    [ -z "$1" ] && echo 'Provide branchname.' && return 1
+    git branch "$1"
+    git reset --keep origin/master
+    git checkout "$1"
+}
