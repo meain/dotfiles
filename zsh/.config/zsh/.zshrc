@@ -96,6 +96,7 @@ source $ZDOTDIR/.git_functions
 source $ZDOTDIR/.docker_functions
 source $ZDOTDIR/.python_functions
 source $ZDOTDIR/.kubectl_functions
+source $ZDOTDIR/.gcloud_functions
 source $ZDOTDIR/.ffmpeg_functions
 source $ZDOTDIR/.imagemagic_functions
 
