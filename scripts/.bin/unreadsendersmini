@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 export NOTMUCH_CONFIG="$HOME/.config/notmuch/config"
 /usr/local/bin/notmuch search --format=text 'folder:/INBOX/' -tag:newsletter -tag:bullshit -tag:known -tag:nonimportant -tag:python tag:unread |\
-    cut -d']' -f2- | sed 's/([^(]*)$//'
+    cut -d']' -f2- | sed 's/([^(]*)$//' | sed 's/\([^;]*\);\(.*\)/\2;;\1/;s/^\ /- /' | cut -c-100

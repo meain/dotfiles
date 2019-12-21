@@ -106,7 +106,7 @@ emailNotify = function(paths, flags)
     sound = true
   end
 
-  result = customshellrun.run(BIN .. 'unreadsenders')
+  result = customshellrun.run(BIN .. 'unreadsendersmini')
   unreadcount = utils.linecount(result)
   if (unreadcount > 0) then
     mailcounter:setTitle(unreadcount)
