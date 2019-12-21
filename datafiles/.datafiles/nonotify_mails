@@ -28,6 +28,5 @@ from:linkedin@e.linkedin.com
 from:alerts@ifttt.com
 from:windowsinsiderprogram@e-mail.microsoft.com
 from:no-reply@sampark.gov.in
-from:customerstatements@geojit.com
 
 subject:/^\[Python-Dev\]/'

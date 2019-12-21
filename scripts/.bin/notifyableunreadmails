@@ -3,5 +3,5 @@
 set -e
 
 
-IGNORE_LIST=$(sed '/^from:/!d;s/^from\://' "$HOME/.datafiles/nonotify_mails" | tr '\n' '|' | sed 's/|$//')
+IGNORE_LIST=$(sed '/^$/d;s/^from\://;s/^subject://' "$HOME/.datafiles/nonotify_mails" | tr '\n' '|' | sed 's/|$//')
 grep -E -v "$IGNORE_LIST" /tmp/unreadmails
