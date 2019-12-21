@@ -121,7 +121,7 @@ emailNotify = function(paths, flags)
     return mailListing
   end
 
-  result = customshellrun.run(BIN .. 'unreadsendersmini')
+  result = customshellrun.run('cat /tmp/unreadmails')
   unreadcount = utils.linecount(result)
   if (unreadcount > 0) then
     mailcounter:setTitle(unreadcount)
@@ -142,7 +142,7 @@ emailNotify = function(paths, flags)
     hs.alert('📭 No unread emails')
   end
 end
-hs.pathwatcher.new(os.getenv("HOME") .. "/.local/share/mail/meain/INBOX/new/", emailNotify):start()
+hs.pathwatcher.new('/tmp/unreadmails', emailNotify):start()
 hs.hotkey.bind({'alt', 'shift'}, 'e', function()
   emailNotify()
   customshellrun.run('/usr/local/bin/tmux refresh-client -S')

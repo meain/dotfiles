@@ -3,7 +3,8 @@
 set -e
 
 
-count=$(~/.bin/unreadsenders | wc -l | sed 's/^\ *//')
+count=$(wc -l < /tmp/unreadmails | sed 's/^\ *//')
 if [ "$count" -ne "0" ];then
+    count="$((count + 1))"
     echo "#[fg=colour240]|#[fg=colour228] $count new mail "
 fi
