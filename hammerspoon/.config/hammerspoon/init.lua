@@ -12,7 +12,7 @@ local customshellrun = require('customshellrun')
 
 local mailcounter = hs.menubar.new()
 mailcounter:setTooltip("No new emails")
-mailcounter:setTitle("")
+mailcounter:setTitle("M")
 
 -- Variables
 local BIN = os.getenv("HOME") .. '/.bin/'
