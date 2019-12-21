@@ -106,14 +106,31 @@ emailNotify = function(paths, flags)
     sound = true
   end
 
+  populateMailListing = function(result)
+    mailListing = {}
+    unreadcount = utils.linecount(result)
+    if (unreadcount > 0) then
+      for k,v in pairs(utils.split(result, '\n')) do
+        table.insert(mailListing, 1, {title=v})
+      end
+      table.insert(mailListing, {title="-"})
+      table.insert(mailListing, {title=utils.linecount(result) .. ' unread mail', disabled=true})
+    else
+      table.insert(mailListing, {title='No unread mails', disabled=true})
+    end
+    return mailListing
+  end
+
   result = customshellrun.run(BIN .. 'unreadsendersmini')
   unreadcount = utils.linecount(result)
   if (unreadcount > 0) then
     mailcounter:setTitle(unreadcount)
     mailcounter:setTooltip(result)
+    mailcounter:setMenu(populateMailListing(result))
   else
     mailcounter:setTitle("M")
     mailcounter:setTooltip("No new emails")
+    mailcounter:setMenu(populateMailListing(result))
   end
   if (string.len(result) > 0) then
     if sound then
