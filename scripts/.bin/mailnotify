@@ -1,0 +1,8 @@
+#!/bin/sh
+
+set -e
+
+tmux refresh-client
+MAILS=$(~/.bin/notifyableunreadmails | cut -c-50)
+COUNT=$(echo "$MAILS" | wc -l)
+osascript -e "display notification \"$MAILS\" with title \"$COUNT unread mails\""
