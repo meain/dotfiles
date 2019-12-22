@@ -34,7 +34,8 @@ Plug 'mattn/emmet-vim', { 'for': ['html', 'css'] + g:javascript_filetypes }     
 " Plug 'metakirby5/codi.vim', { 'on': 'Codi' }                                                   " Live code preview
 Plug 'rhysd/committia.vim'                                                                     " Better COMMIT_EDITMSG editing
 Plug 'Galooshi/vim-import-js', {'for': g:javascript_filetypes, 'do': 'npm i -g import-js'}     " Easier imports for javascript
-Plug 'wellle/context.vim', { 'on': ['ContextActivate','ContextEnable', 'ContextToggle'] }
+Plug 'wellle/context.vim', { 'on': ['ContextActivate','ContextEnable', 'ContextToggle'] }      " Context
+Plug 'tweekmonster/wstrip.vim'                                                                 " Remove whitespace only on modified lines
 
 " Code editing enhacements
 Plug 'tpope/vim-sleuth'                                                                        " Automatic indentation setting
@@ -370,7 +371,7 @@ augroup Filetype javascript syntax=javascript
 autocmd filetype crontab setlocal nobackup nowritebackup
 
 " Remove whitespace at save
-autocmd BufWritePre *.css,*.js,*.html,*.cpp,*.c,*.java,*.go,*.rs,*.ts,*.cljs,*.clj :%s/\s\+$//e
+autocmd BufNewFile,BufRead *.css,*.js,*.html,*.cpp,*.c,*.java,*.go,*.rs,*.ts,*.cljs,*.clj let b:wstrip_auto = 1
 
 " Trun of syntax hilighting if huge
 autocmd BufReadPre * if getfsize(expand("%")) > 10000000 | syntax off | endif
