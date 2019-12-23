@@ -8,7 +8,12 @@ alias vi='nvim'
 alias viml='nvim -c :SLoad\ zzz'
 
 v() {
-    $EDITOR +History
+    FILE="$(git ls-files 2>/dev/null | fzf)"
+    if [ -n "$FILE" ];then
+        $EDITOR "$FILE"
+    else
+        $EDITOR
+    fi
 }
 
 vv() {
