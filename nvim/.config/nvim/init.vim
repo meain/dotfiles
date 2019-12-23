@@ -705,17 +705,6 @@ endfunction
 nnoremap <silent>Z :call FixLastSpellingError()<cr>
 inoremap <silent><c-z> :call FixLastSpellingError()<cr>
 
-" Get output of shell command in vim window
-function! SplitRunCommand()
-    call inputsave()
-    let l:cmd = input('Command: ')
-    new
-    setlocal buftype=nofile
-    call append(0, systemlist(l:cmd))
-    call inputrestore()
-endfunction
-nnoremap ,s :call SplitRunCommand()<cr>
-
 " Toggle quickfix
 function! QuickfixToggle()
     let nr = winnr('$')
