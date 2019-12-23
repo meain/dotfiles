@@ -778,24 +778,14 @@ function! JSONFormat() range
 endfunction
 command! -range JSONFormat <line1>,<line2>call JSONFormat()
 
-" Auto populate Gitignore
-function! LoadSampleGitignore()
-  0read !cat ~/.datafiles/sample_gitignore
-  echo 'Sample gitignore loaded'
+" Load shells
+function! s:LoadShell(filname)
+  execute '0read !cat '.a:filname
 endfunction
-augroup GitIgnore
-  au!
-  autocmd BufNewFile .gitignore :call LoadSampleGitignore()
-augroup end
-
-" Auto populate Html shell
-function! LoadHTMLShell()
-  0read !cat ~/.datafiles/html_starter
-  echo 'HTML shell loaded'
-endfunction
-augroup HTMLShell
-  au!
-  autocmd BufNewFile index.html :call LoadHTMLShell()
+augroup custom_shell_files
+  autocmd!
+  autocmd BufNewFile .gitignore :call s:LoadShell('~/.datafiles/sample_gitignore')
+  autocmd BufNewFile index.html :call s:LoadShell('~/.datafiles/html_starter')
 augroup end
 
 " Scratch buffer
