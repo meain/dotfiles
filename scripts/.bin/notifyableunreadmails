@@ -4,4 +4,4 @@ set -e
 
 
 IGNORE_LIST=$(grep '+nonotify' ~/.bin/mailsync | sed "s|.*'from:||;s|.*subject:/||;s|'$||;s|/$||" | tr '\n' '|' | sed 's/|$//')
-grep -E -v "$IGNORE_LIST" /tmp/unreadmails | cut -c-120
+grep -E -v "$IGNORE_LIST" /tmp/unreadmails

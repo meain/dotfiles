@@ -121,7 +121,7 @@ emailNotify = function(paths, flags)
     return mailListing
   end
 
-  result = customshellrun.run(BIN .. 'notifyableunreadmails')
+  result = customshellrun.run(BIN .. 'notifyableunreadmails | cut -c-120')
   unreadcount = utils.linecount(result)
   if (unreadcount > 0) then
     mailcounter:setTitle(unreadcount)
