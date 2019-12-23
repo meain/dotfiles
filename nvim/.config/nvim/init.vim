@@ -128,7 +128,7 @@ set nocursorline
 set laststatus=2
 
 " Hidden startup messages
-set shortmess=atIA
+set shortmess=atIAc
 
 " Auto read and write
 set autowrite
@@ -938,9 +938,6 @@ augroup custom_fzf
   autocmd!
   autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
 augroup end
-
-" Supress completion messages
-set shortmess+=c
 
 " Fugitive
 nnoremap <silent><leader>g :Gstatus\|normal!gg7j<cr>
