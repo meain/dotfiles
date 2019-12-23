@@ -18,3 +18,11 @@ boxenblur() {
         "$1" -geometry 1024x1024 -gravity center -composite \
         "blurred-$1"
 }
+
+img_stick_horiz(){
+    convert "$1" "$2" -append "${3:-output.png}"
+}
+
+img_stick_vert(){
+    convert "$1" "$2" +append "${3:-output.png}"
+}
