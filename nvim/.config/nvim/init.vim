@@ -87,7 +87,6 @@ Plug 'Shougo/neco-vim', { 'for': 'vim' }                                        
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }           " Language client
 
 " Dependencies
-Plug 'vim-scripts/mru.vim'                                                                     " Save recently used files (for v)
 Plug 'radenling/vim-dispatch-neovim', { 'on': ['Dispatch', 'Start'] }                          " Neovim support for vim-dispatch
 Plug 'tpope/vim-repeat'                                                                        " Repeat plugins with .
 
@@ -873,6 +872,14 @@ function! Join()
 endfunction
 nnoremap <silent>J :call Join()<CR>
 
+function! s:OpenLastFile()
+  let last = filter(copy(v:oldfiles), 'filereadable(v:val)')
+  if !empty(last)
+    execute 'edit' fnameescape(last[0])
+  endif
+endfunction
+command! OpenLastFile :call s:OpenLastFile()
+
 " Search for css defenittion
 function! s:CSSSearchForClassDef()
   setlocal iskeyword+=-
@@ -952,13 +959,6 @@ augroup custom_fzf
   autocmd!
   autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
 augroup end
-
-
-" MRU
-let MRU_Max_Entries = 200
-let MRU_Exclude_Files = '^/tmp/.*\|^/var/tmp/.*'
-let MRU_Auto_Close = 1
-let MRU_Max_Menu_Entries = 10
 
 " Supress completion messages
 set shortmess+=c

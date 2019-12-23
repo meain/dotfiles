@@ -7,25 +7,12 @@ alias vi='nvim'
 
 alias viml='nvim -c :SLoad\ zzz'
 
-_v_checkiffile(){
-    # filter deleted files
-    cat "$1" | while read LINE
-    do
-        file=$LINE
-        if [ -f "$file" ]
-            then
-                echo "$file"
-        fi
-    done
-}
-
 v() {
-    FILE="$(_v_checkiffile ~/.vim_mru_files | grep -v ".git" | fzf --height 40% --reverse --preview "bat --color=always -p {}")"
-    [ -f "$FILE" ] && $EDITOR "$FILE"
+    $EDITOR +History
 }
 
 vv() {
-    $EDITOR "$(_v_checkiffile ~/.vim_mru_files | grep -v ".git" | head -n 1)"
+    $EDITOR +OpenLastFile
 }
 
 vs() {
