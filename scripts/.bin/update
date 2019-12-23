@@ -3,7 +3,7 @@
 set -e
 
 _update_vim() {
-    nvim +PlugUpgrade +PlugUpdate +qall
+    nvim +"let g:plug_window  = 'enew'" +PlugUpgrade +PlugUpdate +qall
 }
 _update_brew() {
     brew update
