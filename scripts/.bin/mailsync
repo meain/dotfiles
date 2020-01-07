@@ -53,6 +53,7 @@ notmuch tag +nonimportant +nonotify 'folder:/INBOX/' 'from:linkedin@e.linkedin.c
 notmuch tag +nonimportant +nonotify 'folder:/INBOX/' 'from:alerts@ifttt.com'
 notmuch tag +nonimportant +nonotify 'folder:/INBOX/' 'from:windowsinsiderprogram@e-mail.microsoft.com'
 notmuch tag +nonimportant +nonotify 'folder:/INBOX/' 'from:no-reply@sampark.gov.in'
+notmuch tag +nonimportant +nonotify 'folder:/INBOX/' 'from:upvote-noreply@quora.com'
 
 # others
 notmuch tag +python +nonotify 'folder:/INBOX/' 'subject:/\[Python-Dev\]/'
