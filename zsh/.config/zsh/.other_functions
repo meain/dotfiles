@@ -329,3 +329,9 @@ docs() {
 	querry=${array[@]:0:$len-1}
 	dasht "$querry" "$docset"
 }
+
+temp() {
+	DIR="$(date '+%s')"
+	mkdir -p "/tmp/temp-sessions/$DIR" && cd "/tmp/temp-sessions/$DIR"
+	tmux new -s "temp-$DIR" || (tmux new -d -s "temp-$DIR" && tmux switch-client -t "temp-$DIR")
+}
