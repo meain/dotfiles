@@ -142,7 +142,7 @@ emailNotify = function(paths, flags)
     hs.alert('📭 No unread emails')
   end
 end
-hs.pathwatcher.new('/tmp/unreadmails', emailNotify):start()
+hs.pathwatcher.new('/tmp/unreadlocal', emailNotify):start()
 hs.hotkey.bind({'alt', 'shift'}, 'e', function()
   emailNotify()
   customshellrun.run('/usr/local/bin/tmux refresh-client -S')
