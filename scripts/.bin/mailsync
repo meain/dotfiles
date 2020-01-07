@@ -2,10 +2,9 @@
 
 set -e
 
-ping -c1 4.2.2.1 > /dev/null || exit 0  # ignore if no internet
 export NOTMUCH_CONFIG="$HOME/.config/notmuch/config"
 if [ ! "$1" = "retag" ];then
-    /usr/local/bin/mbsync -a
+    /usr/local/bin/mbsync -a || echo "Could not pull new emails"
 fi
 
 notmuch new 2>/dev/null
