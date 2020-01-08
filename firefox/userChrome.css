@@ -1,37 +1,35 @@
-/* use this font for devtools */
-@-moz-document regexp("chrome://browser/content/devtools/**/.*") {
-  * {
-    font-family: "Operator Mono Book", monospace !important;
-    font-size: 10pt !important;
-  }
-}
-#urlbar {
-  position: relative;
-  z-index: 100;
+/* use this font in most places */
+* {
   font-family: "Operator Mono Book", monospace !important;
+  font-size: 10pt !important;
 }
 
-/* ************************************************************ */
+
+@-moz-document url-prefix("chrome://devtools/content/"){
+* {
+  font-family: "Operator Mono Book", monospace !important;
+  font-size: 10pt !important;
+}
+}
+
+/* keep the urlbar on top */
+#urlbar {
+  z-index: 100;
+}
+
 /* black urlbar in private window */
-/* ************************************************************ */
 #main-window[privatebrowsingmode="temporary"] #urlbar {
   background: black !important;
   color: white !important;
 }
 
 
-/* ************************************************************ */
-/* blue urls in search field */
-/* ************************************************************ */
+/* cleaner url search bar colors */
 .ac-separator:not([selected="true"]),
 .ac-url:not([selected="true"]),
 .ac-action:not([selected="true"]) {
   color: hsl(211, 100%, 65%) !important;
 }
-
-/* ************************************************************ */
-/* first completion gey background */
-/* ************************************************************ */
 .autocomplete-richlistitem[selected="true"] {
   color: black !important;
   background: #f1f1f1 !important;
@@ -43,17 +41,13 @@
   color: #607d8b !important;
 }
 
-/* ************************************************************ */
-/* smaller comletion type icon */
-/* ************************************************************ */
+/* smaller comletion type-icons */
 .ac-type-icon {
   color: black !important;
   width: 10px !important;
 }
 
-/* ************************************************************ */
-/* no extention icon for entention page */
-/* ************************************************************ */
+/* hide extention icon for entention page */
 #urlbar[pageproxystate="valid"]
   > #identity-box.extensionPage
   > #extension-icon {
@@ -61,47 +55,44 @@
 }
 
 
-/* ************************************************************ */
 /* Move tabs and search to bottom */
-/* ************************************************************ */
-#TabsToolbar,
-#titlebar,
-#navigator-toolbox {
+body > box:nth-child(8) {
   -moz-box-ordinal-group: 999 !important;
 }
+
+/* move searchbars completion popup to bottom */
 .urlbarView {
-  bottom: 75px !important;
+  bottom: 63px !important;
   top: unset !important;
+  box-shadow: none !important;
+  border-bottom: none !important;
 }
+
+/* hide some stuff in urlbar for cleaner look */
 .titlebar-spacer,
 .search-one-offs {
   display: none !important;
 }
+
+/* move close, maximize etc to right */
 .titlebar-buttonbox-container {
   -moz-box-ordinal-group: 999 !important;
   margin-right: 10px;
 }
 
 
-/* ************************************************************ */
 /* https://github.com/nuchi/firefox-quantum-userchromejs */
-/* ************************************************************ */
 @namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
 toolbarbutton#alltabs-button {
   -moz-binding: url("userChrome.xml#js");
 }
 
 
-/* ************************************************************ */
 /* Smaller urlbar and tabbar */
-/* ************************************************************ */
 :root {
   --tabs-border: transparent !important;
-  /* active tab left & right borders - not working in 58?*/
   --toolbox-border-bottom-color: transparent !important;
-  /* 1px line under background tabs */
   --chrome-nav-bar-controls-border-color: transparent !important;
-  /* border around url bar */
 }
 :root:-moz-lwtheme {
   --toolbox-border-bottom-color: rgba(0, 0, 0, 0) !important;
@@ -109,26 +100,25 @@ toolbarbutton#alltabs-button {
 :root {
 --tab-min-height: 25px !important;
 }
-
 :-moz-any(.tabs-newtab-button, #new-tab-button, #alltabs-button) .toolbarbutton-icon {
   transform: scale(0.5, 0.5) !important;
   margin-top: 1px !important;
 }
+
 /* Padding/border adjustements */
 #nav-bar {
   border: none !important;
   padding: 0px 8px !important;
+  box-shadow: none !important;
 }
-/* Hide the back button unless we can actually go back. */
-#back-button[disabled="true"] {
-  display: none;
-}
-/* Hide the forward button always */
+/* Hide the back and foreward button unless we can actually go back or fwd. */
+#back-button[disabled="true"],
 #forward-button[disabled="true"]{
   display: none;
 }
+
+/* clener UI components */
 #appMenu-notification-popup {
-/*   position: fixed; */
   margin-top: 90px;
   margin-right: 20px !important;
 }
@@ -150,9 +140,9 @@ toolbarbutton#alltabs-button {
   opacity: .2 !important;
 }
 .tab-line {
-  /* display: none !important; */
-  /* -moz-box-ordinal-group: 999 !important; */
+  display: none !important;
 }
+
 /* URL Bar */
 #urlbar[focused="true"],
 #urlbar:hover,
@@ -174,10 +164,9 @@ toolbarbutton#alltabs-button {
   box-shadow: none !important;
   border: none !important;
   -moz-appearance: none;
-  /* margin: 4px 0px !important; */
-  /* min-height: 24px !important; */
   cursor: default;
 }
+
 /* Hide bookmark button, page actions, security labels and extension icons */
 #star-button-box,
 #blocked-permissions-container,
@@ -212,10 +201,13 @@ toolbarbutton#alltabs-button {
 #urlbar-container, #search-container{
   padding: unset !important;
 }
-#back-button {
+#back-button,
+#back-button:hover {
   padding-top: 0 !important;
   padding-bottom: 0 !important;
   padding-inline-start: 0 !important;
+  box-shadow: none !important;
+  border: none !important;
 }
 
 
