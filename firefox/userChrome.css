@@ -112,7 +112,6 @@ toolbarbutton#alltabs-button {
   box-shadow: none !important;
 }
 /* Hide the back and foreward button unless we can actually go back or fwd. */
-#back-button[disabled="true"],
 #forward-button[disabled="true"]{
   display: none;
 }
