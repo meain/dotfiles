@@ -4,14 +4,6 @@
   font-size: 10pt !important;
 }
 
-
-@-moz-document url-prefix("chrome://devtools/content/"){
-* {
-  font-family: "Operator Mono Book", monospace !important;
-  font-size: 10pt !important;
-}
-}
-
 /* keep the urlbar on top */
 #urlbar {
   z-index: 100;
@@ -56,6 +48,7 @@
 
 
 /* Move tabs and search to bottom */
+#titlebar,
 body > box:nth-child(8) {
   -moz-box-ordinal-group: 999 !important;
 }
