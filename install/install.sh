@@ -1,8 +1,9 @@
 #!/bin/sh
 
 # mac settings
-defaults write com.apple.screencapture location ~/Documents/Screenshots/
-sudo nvram SystemAudioVolume="%00"
+defaults write com.apple.screencapture location ~/Documents/Screenshots/  # change scresnshot dir
+defaults write com.apple.Terminal AppleShowScrollBars -string WhenScrolling  # no scrollbar in mac terminal
+sudo nvram SystemAudioVolume="%00"  # no boot bell
 
 execcommandfrompartial() {
     BASE=$1
