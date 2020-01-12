@@ -10,12 +10,14 @@ function mod.anycomplete()
     local tab = nil
     local copy = nil
     local open = nil
+    local iamfeelinglucky = nil
     local choices = {}
 
     local chooser = hs.chooser.new(function(choosen)
         if copy then copy:delete() end
         if tab then tab:delete() end
         if open then open:delete() end
+        if iamfeelinglucky then iamfeelinglucky:delete() end
         current:activate()
         hs.eventtap.keyStrokes(choosen.text)
     end)
@@ -58,6 +60,13 @@ function mod.anycomplete()
         else
             hs.alert.show("No search result", 1)
         end
+    end)
+    iamfeelinglucky = hs.hotkey.bind('alt', 'i', function()
+        local string = chooser:query()
+        -- https://www.google.com/search?btnI=I&q=%s
+        chooser:hide()
+        result = customshellrun.run('/usr/bin/open "https://www.google.com/search?btnI=I&q=' .. string .. '"')
+        hs.alert('⭐ ' .. string)
     end)
 
     function updateChooser()
