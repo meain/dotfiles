@@ -75,6 +75,10 @@ notify() {
 r() {
 	cd "$(git rev-parse --show-toplevel 2>/dev/null)" || return 1
 }
+rj() {
+	cd "$(git rev-parse --show-toplevel 2>/dev/null)" || return 1
+	cd "./$(fd -H -td -d5 | fzf --preview 'tree -L 2 ./{}' )" || return 1
+}
 
 re() {
 	if ! git rev-parse --show-toplevel >/dev/null 2>&1; then
@@ -120,11 +124,11 @@ gtree() {
 tt() {
 	if [ -z "$1" ]; then
 		FOLDER=$(pwd | sed 's:.*/::' | sed 's:^\.::')
-		tmux attach -t "$FOLDER" || tmux new-session -s "$FOLDER"
+        tmuxsession "$FOLDER"
 	else
 		mkdir "$1"
 		cd "$1" || return 1
-		tmux attach -t "$1" || tmux new-session -s "$1"
+        tmuxsession "$1"
 	fi
 }
 
@@ -333,5 +337,5 @@ docs() {
 temp() {
 	DIR="$(date '+%s')"
 	mkdir -p "/tmp/temp-sessions/$DIR" && cd "/tmp/temp-sessions/$DIR"
-	tmux new -s "temp-$DIR" || (tmux new -d -s "temp-$DIR" && tmux switch-client -t "temp-$DIR")
+	tmuxsession "temp-$DIR"
 }
