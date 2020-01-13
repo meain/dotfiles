@@ -70,6 +70,7 @@ bind index <Tab> collapse-all
 macro index,pager \Cu |urlview\n
 bind editor <Tab> complete-query
 bind editor ^T complete
+macro index,pager h "<view-attachments>/text/html<enter><enter>q" "open html version"
 
 # Sidebar mappings
 set sidebar_visible = yes
