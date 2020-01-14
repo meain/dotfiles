@@ -3,11 +3,11 @@
 set -e
 
 if [ -z "$1" ];then
-    echo "Usage: $(basename "$0") <commit to checkout>"
-    exit 1
+    CHECKOUT_LOC="$(git log --oneline | fzf | cut -d' ' -f1)"
+else
+    CHECKOUT_LOC="$1"
 fi
 
-CHECKOUT_LOC="$1"
 
 DIR="$(date '+%s')"
 FULLDIR="/tmp/howwasit/$DIR"
