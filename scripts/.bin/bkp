@@ -1,0 +1,17 @@
+#!/bin/sh
+
+set -e
+
+FILENAME="$1"
+if [ ! -f "$FILENAME" ];then
+    if [ -f "$FILENAME.bkp" ];then
+        FILENAME="$FILENAME.bkp"
+    fi
+fi
+
+if echo "$FILENAME" | sed "s|.*\.\(.*\)|\1|" | grep 'bkp' > /dev/null;then
+    BASNAME="$(echo "$FILENAME" | sed "s|\(.*\)\.bkp|\1|")"
+    mv "$FILENAME" "$BASNAME"
+else
+    mv "$FILENAME" "$FILENAME.bkp"
+fi
