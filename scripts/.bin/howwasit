@@ -1,0 +1,20 @@
+#!/bin/sh
+
+set -e
+
+if [ -z "$1" ];then
+    echo "Usage: $(basename "$0") <commit to checkout>"
+    exit 1
+fi
+
+CHECKOUT_LOC="$1"
+
+DIR="$(date '+%s')"
+FULLDIR="/tmp/howwasit/$DIR"
+mkdir -p "$FULLDIR"
+cp -r .git "$FULLDIR"
+cd "$FULLDIR"
+git reset --hard HEAD
+git checkout "$CHECKOUT_LOC"
+"$EDITOR" .
+rm -rf "$FULLDIR"
