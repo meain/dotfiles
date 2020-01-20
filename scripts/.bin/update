@@ -1,7 +1,5 @@
 #!/bin/sh
 
-set -e
-
 _update_vim() {
     nvim +"let g:plug_window  = 'enew'" +PlugUpgrade +PlugUpdate +qall
 }
