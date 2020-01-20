@@ -173,7 +173,8 @@ function precmd() {
   }
   zle -N zle-keymap-select
 
-  print ""  # newline before prompt
+  # printf '\e[38;5;235m―%.0s' {1..$COLUMNS}  # use if you need a seperator
+  echo ""  # newline before prompt
 
   # notify for long running command
   if ! [[ -z $CMD_START_DATE ]]; then
