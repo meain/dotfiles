@@ -22,6 +22,7 @@ alias pip=pip3
 alias py=python3
 alias python=python3
 alias qrf='qr-filetransfer'
+alias newsboat='newsboat -q'
 alias brew='HOMEBREW_NO_AUTO_UPDATE=1 brew'
 alias yd='youtube-dl'
 alias ydp='youtube-dl -o "%(playlist_index)s_%(title)s.%(ext)s"'
