@@ -25,11 +25,11 @@ scrolling:
 
 font:
   normal:
-    family: Operator Mono Book
+    family: Operator Mono Light
   bold:
-    family: Operator Mono Book
+    family: Operator Mono Light
   italic:
-    family: Operator Mono Book
+    family: Operator Mono Light
   size: 15.0
   offset:
     x: 0
