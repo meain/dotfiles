@@ -12,7 +12,7 @@ klog(){
 }
 
 kshell() {
-  kubectl exec -it "$(kpods "$*")" /bin/sh
+  kubectl exec -it "$(kpods "$*")" '/bin/bash || /bin/sh'
 }
 
 alias wk="watch kubectl get pods,service,hpa"
