@@ -5,7 +5,7 @@ set -e
 SHOWN=1
 while true;do
     CLIP="$(pbpaste)"
-    printf "$(ps -elf | grep 'youtube-dl' | grep -v 'grep' | wc -l | sed 's|^\ *||') active downloads\r"
+    printf "$(ls ./*.part 2>/dev/null | wc -l | sed 's|^\ *||') active downloads\r"
     if ! pgrep -f 'youtube-dl' >/dev/null;then
         if [ "$SHOWN" -eq 0 ];then
             LEFT="$(diskutil info / | grep "Free Space" | awk '{print $4"GB left"}')"
@@ -20,7 +20,7 @@ while true;do
     if echo "$CLIP" | grep -E '^https://www.youtube.com' > /dev/null;then
         SHOWN=0
         echo "Downloading: $CLIP"
-        youtube-dl "$CLIP" >/dev/null 2>&1 &
+        youtube-dl --no-playlist "$CLIP" >/dev/null 2>&1 &
     fi
     sleep 1
 done
