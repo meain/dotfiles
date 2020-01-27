@@ -33,6 +33,7 @@ set signature = $HOME/.config/mutt/signature
 set query_command = "$HOME/.bin/mailcomplete '%s'"
 
 timeout-hook 'exec sync-mailbox'
+startup-hook '`/Users/meain/.bin/mailsync > /dev/null 2>&1 &`'
 shutdown-hook '`/Users/meain/.bin/mailsync > /dev/null 2>&1 &`'
 
 # set date_format="%m/%d %I:%M"
