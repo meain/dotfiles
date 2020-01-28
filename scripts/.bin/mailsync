@@ -44,6 +44,7 @@ notmuch tag +known +nonotify 'folder:/INBOX/' 'from:info@meetup.com'
 notmuch tag +known +nonotify 'folder:/INBOX/' 'from:no-reply@paytm.com'
 notmuch tag +known +nonotify 'folder:/INBOX/' 'from:noreply@olacabs.com'
 notmuch tag +known +nonotify 'folder:/INBOX/' 'from:support@vendekin.com'
+notmuch tag +known +nonotify 'folder:/INBOX/' 'from:info@gokhana.com'
 
 # not so important
 notmuch tag +nonimportant +nonotify 'folder:/INBOX/' 'from:info@bseindia.in'
