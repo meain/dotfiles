@@ -95,6 +95,7 @@ Plug 'tpope/vim-repeat'                                                         
 " Plug 'kristijanhusak/vim-carbon-now-sh', { 'on': 'CarbonNowSh' }                               " Polaroid for code
 " Plug 'junegunn/vim-github-dashboard', { 'on': ['GHA', 'GHD']}                                  " Github dashboard
 " Plug 'junegunn/vader.vim', {'for': 'vader'}                                                    " Vimscript testing framework
+Plug 'dstein64/vim-startuptime', { 'on': 'StartupTime' }                                         " Measure startuptime
 Plug 'voldikss/vim-floaterm', { 'on': 'FloatermToggle' }                                         " Floating terminal
 Plug 'rhysd/git-messenger.vim', { 'on': 'GitMessenger' }                                         " Show git commit
 Plug '~/Documents/Projects/projects/vim-colorswitch', { 'do': 'UpdateRemotePlugins' }            " Cycle between color types
