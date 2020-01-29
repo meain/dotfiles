@@ -425,6 +425,10 @@ autocmd FileType python inoremap <silent><buffer> ;lc logger.critical(f"")<left>
 autocmd FileType python inoremap <silent><buffer> ;lx logger.exception(f"")<left><left>
 autocmd FileType python inoremap <silent><buffer> ;bang #!/usr/bin/env python3<esc>
 
+" rust
+autocmd FileType rust inoremap <silent><buffer> ;a println!("");<esc>hhi<c-r>=line(".")<cr><esc>
+autocmd FileType rust nnoremap <silent><buffer> ;a oprintln!("");<esc>hhi<c-r>=line(".")<cr><esc>
+
 " vim
 autocmd FileType vim inoremap <silent><buffer> ;ag augroup custom_<cr>autocmd!<cr><++><cr>augroup end<esc>?custom_<cr>:nohls<cr>A
 autocmd FileType vim inoremap <silent><buffer> ;af autocmd FileType inoremap <silent><buffer> <++><esc>?FileType<cr>ea<space>
