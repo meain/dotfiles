@@ -25,12 +25,12 @@ scrolling:
 
 font:
   normal:
-    family: Operator Mono Light
+    family: Fira Code Light
   bold:
-    family: Operator Mono Light
+    family: Fira Code Light
   italic:
-    family: Operator Mono Light
-  size: 15.0
+    family: Fira Code
+  size: 14.5
   offset:
     x: 0
     y: 0
