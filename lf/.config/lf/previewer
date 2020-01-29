@@ -52,5 +52,7 @@ case "$1" in
 *.mp4 | *.mkv | *.mov | *.avi | *.m4v) videopreview "$1" "$2" ;;
 *.mp3) audiopreview "$1" ;;
 *.sketch) sketchpreview "$1";;
+*.json) jq -C < "$1";;
+*.csv) xsv table "$1";;
 *) everythingelse "$1" ;;
 esac
