@@ -1182,7 +1182,7 @@ let g:SuperTabDefaultCompletionType = '<c-n>'
 
 " Language server protocol
 let g:LanguageClient_autoStart = 1
-let g:LanguageClient_useVirtualText = 0
+let g:LanguageClient_useVirtualText = "No"
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
     \ 'javascript': ['/usr/local/bin/flow', 'lsp'],
