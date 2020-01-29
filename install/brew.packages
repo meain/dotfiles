@@ -58,3 +58,5 @@ shellcheck
 shfmt
 icdiff
 shpotify
+sc-im
+xsv
