@@ -6,16 +6,8 @@ transfer() {
 		printf "No arguments specified. Usage:\necho transfer /tmp/test.md\ncat /tmp/test.md | transfer test.md"
 		return 1
 	fi
-	tmpfile=$(mktemp -t transferXXX)
-	if tty -s; then
-		basefile="$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g')"
-		curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" >>"$tmpfile"
-	else
-		curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >>"$tmpfile"
-	fi
-	pbcopy <"$tmpfile"
-	cat "$tmpfile"
-	rm -f "$tmpfile"
+	curl --progress-bar -F "file=@$1" https://file.io | tee /tmp/fileioresp | jq -r '.link' | pbcopy
+	jq -r '.link,.expiry' < /tmp/fileioresp | xargs echo
 }
 
 stdgrip() {
@@ -338,4 +330,5 @@ temp() {
 	DIR="$(date '+%s')"
 	mkdir -p "/tmp/temp-sessions/$DIR" && cd "/tmp/temp-sessions/$DIR"
 	tmuxsession "temp-$DIR"
+	cd -
 }
