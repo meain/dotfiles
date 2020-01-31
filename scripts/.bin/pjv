@@ -1,0 +1,5 @@
+#!/bin/sh
+
+set -e
+
+pbpaste | sed "s/\'/\"/g" | sed ";s/True/true/g;s/False/false/g;s/None/null/g" | jv
