@@ -29,7 +29,7 @@ gitignore() {
 
 ga() {
     if [ -z "$1" ];then
-        1="$(pwd)"
+        1="$(git status --short | fzf | cut -d' ' -f3-)"
     fi
     git add "$1"
 }
