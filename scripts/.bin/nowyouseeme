@@ -2,4 +2,5 @@
 
 set -e
 
-while true; do clear && "$@"; sleep 1; done
+R="$RANDOM"
+while true; do "$@" > /tmp/nowyouseeme-$R && clear && cat /tmp/nowyouseeme-$R; sleep 1; done
