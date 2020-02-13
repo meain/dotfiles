@@ -15,6 +15,14 @@ kshell() {
   kubectl exec -it "$(kpods "$*")" '/bin/bash || /bin/sh'
 }
 
+k_change_namespace(){
+  NAMESPCE="$(kubectl get namespace | tail -n+2 | fzf --query "$1" | cut -d' ' -f1)"
+  if [ -z "$NAMESPCE" ]; then
+    return 0
+  fi
+  kubectl config set-context "$(kubectl config current-context)" --namespace="$NAMESPCE"
+}
+
 alias wk="watch kubectl get pods,service,hpa"
 alias wkp="watch kubectl get pods"
 alias wkt="watch kubectl top nodes"
