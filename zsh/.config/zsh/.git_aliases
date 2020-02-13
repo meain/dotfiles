@@ -56,6 +56,7 @@ alias gbclr='git remote prune $(git remote | fzf --height 40% --reverse)'
 # Rebase
 alias grr='git pull upstream master --rebase'
 alias gor='git pull origin master --rebase'
+alias glr='git rebase master'
 
 alias git_show_current_patch='git am --show-current-patch'
 alias git_ignore_changes='git update-index --skip-worktree'
