@@ -475,7 +475,7 @@ autocmd FileType css inoremap <silent><buffer> ;cl .<esc>"*pa{<cr>}<esc>O
 " javascript
 autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;flow // @flow 
 autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;cn className=""<left>
-autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;rf <React.Fragment><cr></React.Fragment>O
+autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;rf <React.Fragment><cr></React.Fragment><esc>O
 autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;rfs <React.Fragment>
 autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;rfe </React.Fragment>
 autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;con constructor(props: Props) {<cr>super(props)<cr>}O
