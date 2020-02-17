@@ -60,4 +60,5 @@ notmuch tag +nonimportant +nonotify 'folder:/INBOX/' 'from:no-reply@mailer.bookm
 
 # others
 notmuch tag +python +nonotify 'folder:/INBOX/' 'subject:/\[Python-Dev\]/'
+notmuch tag +git +nonotify 'folder:/INBOX/' 'to:git@vger.kernel.org'
 notmuch tag +bank 'folder:/INBOX/' 'from:alerts@hdfcbank.net'
