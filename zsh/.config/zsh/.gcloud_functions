@@ -13,6 +13,7 @@ gcloud_start_instance() {
         return 1
     fi
     gcloud compute instances start "$INSTANCE"
+    updatessh
 }
 
 gcloud_stop_instance() {
@@ -27,4 +28,5 @@ gcloud_stop_instance() {
         return 1
     fi
     gcloud compute instances stop "$INSTANCE"
+    updatessh
 }
