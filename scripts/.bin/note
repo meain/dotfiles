@@ -1,0 +1,32 @@
+#!/bin/sh
+
+NOTES_FOLDER="$HOME/.notes"
+if [ ! -d "$NOTES_FOLDER" ]; then
+    mkdir "$NOTES_FOLDER"
+fi
+
+open_note() {
+    for file in "$NOTES_FOLDER"/*.md; do
+        basename "$file"
+        date -r "$file" | sed 's| |-|g'
+    done | sed 'N;s/\n/ /' | sort -r -k2,7 | column -t |
+        fzf --query "$*" | cut -d' ' -f1 | xargs -I{} "$EDITOR" "$NOTES_FOLDER/{}"
+}
+
+new_note() {
+    if [ -z "$1" ]; then
+        printf "Name for new note: "
+        read -r INPUT
+        NAME="$(echo "$INPUT" | sed 's| |-|g')"
+    else
+        NAME="$(echo "$*" | sed 's| |-|g')"
+    fi
+    "$EDITOR" "$NOTES_FOLDER/$NAME.md"
+}
+
+if [ "$1" = "new" ]; then
+    shift
+    new_note "$*"
+else
+    open_note "$*"
+fi
