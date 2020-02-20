@@ -96,7 +96,6 @@ Plug 'tpope/vim-repeat'                                                         
 " Plug 'junegunn/vim-github-dashboard', { 'on': ['GHA', 'GHD']}                                  " Github dashboard
 " Plug 'junegunn/vader.vim', {'for': 'vader'}                                                    " Vimscript testing framework
 Plug 'dstein64/vim-startuptime', { 'on': 'StartupTime' }                                         " Measure startuptime
-Plug 'voldikss/vim-floaterm', { 'on': 'FloatermToggle' }                                         " Floating terminal
 Plug 'rhysd/git-messenger.vim', { 'on': 'GitMessenger' }                                         " Show git commit
 Plug '~/Documents/Projects/projects/vim-colorswitch', { 'do': 'UpdateRemotePlugins' }            " Cycle between color types
 Plug '~/Documents/Projects/projects/vim-package-info'
@@ -877,6 +876,62 @@ function! s:CSSSearchForClassDef()
 endfunction
 command! CSSSearchForClassDef :call s:CSSSearchForClassDef()
 
+" Create a floating buffer
+function! Floater(...)
+  let buf = nvim_create_buf(v:false, v:true)
+  call setbufvar(buf, '&signcolumn', 'no')
+  if a:0 == 2
+    let height = a:1
+    let width = a:2
+  else
+    let height = float2nr(10)
+    let width = float2nr(80)
+  endif
+  let horizontal = float2nr((&columns - width) / 2)
+  let vertical = 0
+
+  let opts = {
+        \ 'relative': 'editor',
+        \ 'row': vertical,
+        \ 'col': horizontal,
+        \ 'width': width,
+        \ 'height': height,
+        \ 'anchor': 'NW',
+        \ 'style': 'minimal'
+        \ }
+
+  call nvim_open_win(buf, v:true, opts)
+endfunction
+
+
+" Floating Term
+let g:term_buf = 0
+function! FloatTerm(...)
+  if g:term_buf == bufnr("")
+    setlocal bufhidden=hide
+    close
+  else
+    let height=winheight(0)/2
+    let width=winwidth(0)/2
+    call Floater(height, width)
+    try
+      exec "buffer ".g:term_buf
+    catch
+      if a:0 == 0
+        terminal
+      else
+        call termopen(a:1, {"detach": 0})
+      endif
+      let g:term_buf = bufnr("")
+      autocmd TermClose * ++once :bd! | let g:term_buf = 0
+    endtry
+    startinsert!
+  endif
+endfunction
+nnoremap <silent><m-t> <C-\><C-n>:call FloatTerm()<cr>
+inoremap <silent><m-t> <C-\><C-n>:call FloatTerm()<cr>
+tnoremap <silent><m-t> <C-\><C-n>:call FloatTerm()<cr>
+
 " Stratr profiling
 function! Profile()
   profile start profile.log
@@ -910,28 +965,7 @@ let g:fzf_colors =
       \ 'marker':  ['fg', 'WildMenu'],
       \ 'spinner': ['fg', 'Label'],
       \ 'header':  ['fg', 'Comment'] }
-let g:fzf_layout = { 'window': 'call FloatingFZF()' }
-function! FloatingFZF()
-  let buf = nvim_create_buf(v:false, v:true)
-  call setbufvar(buf, '&signcolumn', 'no')
-
-  let height = float2nr(10)
-  let width = float2nr(80)
-  let horizontal = float2nr((&columns - width) / 2)
-  let vertical = 0
-
-  let opts = {
-        \ 'relative': 'editor',
-        \ 'row': vertical,
-        \ 'col': horizontal,
-        \ 'width': width,
-        \ 'height': height,
-        \ 'anchor': 'NW',
-        \ 'style': 'minimal'
-        \ }
-
-  call nvim_open_win(buf, v:true, opts)
-endfunction
+let g:fzf_layout = { 'window': 'call Floater()' }
 command! -bang History call fzf#vim#history({'options': ['--query', '!.git/ !.vim/ ', '--no-sort', '--preview', 'codepreview {}']}, <bang>0)
 command! -bang -nargs=? -complete=dir GFiles
 \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
@@ -1410,14 +1444,6 @@ let g:vista#renderer#icons = {
 \   'function': 'f',
 \   'variable': 'v',
 \  }
-
-
-" Floaterm
-let g:floaterm_position='topright'
-let g:floaterm_height=winheight(0)/2
-let g:floaterm_width=winwidth(0)/2
-nnoremap <silent><M-t> :FloatermToggle<cr>
-tnoremap <silent><M-t> <C-\><C-n>:FloatermToggle<cr>
 
 
 " Colorizer
