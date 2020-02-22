@@ -25,12 +25,12 @@ scrolling:
 
 font:
   normal:
-    family: Fira Code Light
+    family: Liga CamingoCode
   bold:
-    family: Fira Code Light
+    family: Liga CamingoCode
   italic:
-    family: Fira Code
-  size: 14.5
+    family: Liga CamingoCode
+  size: 15.0
   offset:
     x: 0
     y: 0
