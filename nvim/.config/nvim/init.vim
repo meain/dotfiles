@@ -1062,12 +1062,13 @@ let g:limelight_conceal_ctermfg=0
 
 " Ale
 nnoremap <silent>,, :ALEFix<cr>
-let g:ale_sign_column_always = 1
 let g:ale_sign_error = '✖'
 let g:ale_sign_warning = '⚠'
 " let g:ale_virtualtext_cursor = 1
 highlight ALEErrorSign ctermfg=196 guifg=#ff0000 ctermbg=234 guibg=#1f1f1f
 highlight ALEWarningSign ctermfg=226 guifg=#ffff00 ctermbg=234 guibg=#1f1f1f
+highlight clear ALEWarning
+highlight clear ALEError
 let g:ale_statusline_format = ['✖ %d', '⚠ %d', '⬥ ok']
 let g:ale_linters = {
 \  'javascript': ['eslint'],
@@ -1227,6 +1228,7 @@ let g:LanguageClient_serverCommands = {
     \ 'javascript': ['/usr/local/bin/flow', 'lsp'],
     \ 'javascript.jsx': ['/usr/local/bin/flow', 'lsp'],
     \ 'typescript': ['/usr/local/bin/javascript-typescript-stdio'],
+    \ 'typescript.tsx': ['/usr/local/bin/javascript-typescript-stdio'],
     \ 'go': ['go-langserver'],
     \ 'css': ['css-languageserver', '--stdio'],
     \ 'python': ['pyls'],
