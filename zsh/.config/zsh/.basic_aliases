@@ -44,6 +44,7 @@ alias pD='cd ~/Desktop'
 alias pt='cd /tmp'
 alias pT='cd ~/Documents/Projects/test'
 alias pm='cd ~/Documents/Media'
+alias pP='cd ~/Documents/Projects'
 alias pp='cd ~/Documents/Projects/projects'
 
 alias up='TERM="screen-256color" up'
