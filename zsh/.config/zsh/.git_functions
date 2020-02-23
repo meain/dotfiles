@@ -28,10 +28,7 @@ gitignore() {
 }
 
 ga() {
-    if [ -z "$1" ];then
-        1="$(git status --short | fzf | cut -d' ' -f3-)"
-    fi
-    git add "$1"
+    git status --short | fzf -m --preview="echo {} | awk '{print \$NF}' | xargs git diff -- " | awk '{print $NF}' | xargs git add
 }
 
 gcl() {
