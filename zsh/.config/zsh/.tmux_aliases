@@ -21,4 +21,4 @@ alias tksv='tmux kill-server'
 alias tkss='tmux kill-session -t'
 
 alias tx='tmuxinator'
-alias td="cd $HOME/.dotfiles/ && tmuxsession dotfiles"
+alias td="cd $HOME/.dotfiles/ && tmuxsession dotfiles && cd -"
