@@ -880,15 +880,22 @@ command! CSSSearchForClassDef :call s:CSSSearchForClassDef()
 function! Floater(...)
   let buf = nvim_create_buf(v:false, v:true)
   call setbufvar(buf, '&signcolumn', 'no')
-  if a:0 == 2
+  if a:0 == 4
     let height = a:1
     let width = a:2
+    let horizontal = a:3
+    let vertical = a:4
+  elseif a:0 == 2
+    let height = a:1
+    let width = a:2
+    let horizontal = float2nr((&columns - width) / 2)
+    let vertical = 0
   else
     let height = float2nr(10)
     let width = float2nr(80)
+    let horizontal = float2nr((&columns - width) / 2)
+    let vertical = 0
   endif
-  let horizontal = float2nr((&columns - width) / 2)
-  let vertical = 0
 
   let opts = {
         \ 'relative': 'editor',
@@ -911,9 +918,11 @@ function! FloatTerm(...)
     setlocal bufhidden=hide
     close
   else
-    let height=winheight(0)/2
-    let width=winwidth(0)/2
-    call Floater(height, width)
+    let height=float2nr(0.7*&lines)
+    let width=float2nr(0.8*&columns)
+    let horizontal = float2nr((&columns - width) / 2)
+    let vertical = float2nr((&lines - height) / 2)
+    call Floater(height, width, horizontal, vertical)
     try
       exec "buffer ".g:term_buf
     catch
