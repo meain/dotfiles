@@ -1286,6 +1286,7 @@ nnoremap <silent> ga :call LanguageClient_textDocument_codeAction()<CR>
 nnoremap <silent> g, :call LanguageClient_textDocument_formatting()<CR>
 vnoremap <silent> g, :call LanguageClient_textDocument_rangeFormatting()<CR>
 nnoremap <silent> K :call <SID>show_documentation()<CR>
+nnoremap <silent> <leader>I :call LanguageClient#explainErrorAtPoint()<CR>
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
