@@ -17,7 +17,6 @@ Plug 'machakann/vim-highlightedyank'                                            
 " Added functinality
 Plug 'meain/vim-startify'                                                                      " A fancy start page for vim (slow)
 Plug '~/Documents/Projects/others/done/_vim/vim-googler', { 'on': 'Google' }                   " Google from within vim
-Plug 'wincent/loupe'                                                                           " Better search
 Plug '/usr/local/opt/fzf'                                                                      " Fzf
 Plug 'junegunn/fzf.vim'                                                                        " Fzf for vim
 Plug 'jremmen/vim-ripgrep', { 'on': 'Rg' }                                                     " Rg with quickfix list
@@ -559,6 +558,11 @@ vnoremap P "+P
 " Easier indentation - does dot loose selection
 vnoremap > >gv
 vnoremap < <gv
+
+" Search
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap <silent><Leader>/ :nohls<cr>
 
 " Terminal split jump
 tnoremap <m-h> <C-\><C-N><C-w>h
@@ -1366,12 +1370,6 @@ let g:instant_markdown_autostart = 0
 " Rg
 let g:rg_highlight = 1
 let g:rg_command = 'rg --vimgrep --ignore-case --hidden --follow'
-
-" Loupe
-let g:LoupeVeryMagic=0
-let g:LoupeClearHighlightMap=1
-" nnoremap <silent><Leader>/ <Plug>LoupeClearHighlight
-nnoremap <silent><Leader>/ :nohls<cr>
 
 " Semshi
 let g:semshi#excluded_buffers = ['*']
