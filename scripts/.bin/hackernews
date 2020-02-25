@@ -1,0 +1,26 @@
+#!/bin/bash
+
+set -e
+
+SPACER=$(printf "%-300s" "")
+mkdir -p /tmp/hn/items/
+
+curl --silent 'https://hacker-news.firebaseio.com/v0/topstories.json'|jq '.[]'|head -n50 > /tmp/hn/topstories.json
+for ts in $(cat /tmp/hn/topstories.json);do
+    if [ ! -f  "/tmp/hn/items/$ts.json" ];then
+        curl --silent "https://hacker-news.firebaseio.com/v0/item/$ts.json" > "/tmp/hn/items/$ts.json" &
+        pids[${ts}]=$!
+    fi
+done
+
+# wait for all pids
+printf "Fetching stories...\r"
+for pid in ${pids[*]}; do
+    wait $pid
+done
+
+if [ -z "$HN_CACHE_ONLY" ];then
+    xargs -I{} cat '/tmp/hn/items/{}.json' </tmp/hn/topstories.json |
+        jq -r '"\(.score) \(.title) (\(.by)) ;;; \(.url)"' | sed "s|;;;|$SPACER|"|
+        sed 's/^\([0-9]\) /0\1 /' | sed 's/^\([0-9][0-9]\) /0\1 /' | sort -r | fzf -m | awk '{print $NF}' | xargs open
+fi
