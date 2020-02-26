@@ -114,6 +114,7 @@ macro index,pager gt "<change-folder>=[Gmail].Trash<enter>" "Go to trash."
 macro index,pager gS "<change-folder>=[Gmail].Spam<enter>" "Go to spam."
 macro index,pager ga "<change-folder>=Archive<enter>" "Go to archive."
 macro index,pager a ":set confirmappend=no\n<save-message>=Archive<enter>" "Archived Message"
+macro index,pager A ":set confirmappend=no\n<tag-thread><tag-prefix><save-message>=Archive<enter>" "Archive Thread"
 
 # https://raw.githubusercontent.com/karelzak/mutt-kz/master/README.notmuch
 macro index \\\\ "<vfolder-from-query>"  # looks up a hand made query
