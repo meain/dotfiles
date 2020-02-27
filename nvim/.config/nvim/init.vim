@@ -94,6 +94,7 @@ Plug 'tpope/vim-repeat'                                                         
 " Plug 'kristijanhusak/vim-carbon-now-sh', { 'on': 'CarbonNowSh' }                               " Polaroid for code
 " Plug 'junegunn/vim-github-dashboard', { 'on': ['GHA', 'GHD']}                                  " Github dashboard
 " Plug 'junegunn/vader.vim', {'for': 'vader'}                                                    " Vimscript testing framework
+" Plug 'RRethy/vim-illuminate'                                                                   " Highlight current word
 Plug 'dstein64/vim-startuptime', { 'on': 'StartupTime' }                                         " Measure startuptime
 Plug 'rhysd/git-messenger.vim', { 'on': 'GitMessenger' }                                         " Show git commit
 Plug '~/Documents/Projects/projects/vim-colorswitch', { 'do': 'UpdateRemotePlugins' }            " Cycle between color types
@@ -1474,6 +1475,9 @@ EOF
 " Tag Along
 let g:tagalong_additional_filetypes = ['javascript', 'typescript', 'javascript.jsx', 'typescript.tsx', 'html', 'xml']
 
+" Illuminate
+" let g:Illuminate_delay = 1000
+" let g:Illuminate_ftblacklist = ['nerdtree']
 
 " Rest console
 let g:vrc_curl_opts = {
