@@ -1,27 +1,11 @@
 set ssl_starttls=yes
 set ssl_force_tls=yes
 
-set imap_user = 'abinsimon10@gmail.com'
-set imap_pass = $GOOGLE_PASSWORD
-
-set from='abinsimon10@gmail.com'
-set realname='Abin Simon'
-
-set folder = $HOME/.local/share/mail/meain/
-set spoolfile = +INBOX
-set postponed=+[Gmail]/Drafts
-
-set header_cache = "~/.mutt/cache/headers"
-set message_cachedir = "~/.mutt/cache/bodies"
-set certificate_file = "~/.mutt/certificates"
-
-set smtp_url = "smtp://abinsimon10@smtp.gmail.com:587/"
-set smtp_pass=$GOOGLE_PASSWORD
-
 set move = no
 set imap_keepalive = 900
 
 source muttcol
+source personal.acc
 
 set autoedit = yes
 set sleep_time = 0
@@ -45,7 +29,6 @@ set forward_format = "Fwd: %s"
 set markers = no
 set mark_old = no
 set mime_forward = yes
-set smtp_authenticators = 'gssapi:login'
 set edit_headers
 auto_view text/html
 auto_view application/pdf
@@ -87,26 +70,6 @@ bind index,pager B sidebar-toggle-visible
 bind compose R rename-attachment
 
 bind index u toggle-new
-unmailboxes *
-# mailboxes =INBOX =[Gmail].Drafts =Archive =[Gmail].Sent Mail 
-mailboxes =INBOX
-
-# https://notmuchmail.org/mutttips/
-set nm_default_uri="notmuch://$HOME/.local/share/mail
-set virtual_spoolfile=yes  # enable virtual folders
-virtual-mailboxes \
-        "inbox"         "notmuch://?query=folder:/INBOX/ and -tag:bullshit and -tag:known and -tag:newsletter and -tag:nonimportant and -tag:python and -tag:git"\
-        "focused"       "notmuch://?query=folder:/INBOX/ and -tag:bullshit and -tag:known and -tag:newsletter and -tag:nonimportant and -tag:python and -tag:github and -tag:git"\
-        "unread"        "notmuch://?query=folder:/INBOX/ and tag:unread and -tag:bullshit and -tag:known and -tag:newsletter and -tag:nonimportant and -tag:python and -tag:git"\
-        "github"        "notmuch://?query=folder:/INBOX/ and tag:github"\
-        "python"        "notmuch://?query=folder:/INBOX/ and tag:python"\
-        "git"           "notmuch://?query=folder:/INBOX/ and tag:git"\
-        "newsletter"    "notmuch://?query=folder:/INBOX/ and tag:newsletter"\
-        "funread"        "notmuch://?query=folder:/INBOX/ and tag:unread"\
-        "bullshit"      "notmuch://?query=folder:/INBOX/ and tag:bullshit"\
-        "known"         "notmuch://?query=folder:/INBOX/ and tag:known"\
-        "nonimportant"  "notmuch://?query=folder:/INBOX/ and tag:nonimportant"\
-        "archiveable"   "notmuch://?query=folder:/INBOX/ and tag:bullshit tag:known tag:nonimportant"\
 
 macro index,pager gs "<change-folder>=[Gmail].Sent Mail<enter>" "Go to sent."
 macro index,pager gd "<change-folder>=[Gmail].Drafts<enter>" "Go to drafts."
@@ -123,7 +86,3 @@ macro index,pager gf "<change-vfolder>fullinbox<enter>" "Go to inbox with everyt
 macro index,pager gn "<change-vfolder>newsletter<enter>" "Go to newsletter."
 macro index,pager gb "<change-vfolder>bullshit<enter>" "Go to bullshit."
 macro index,pager gk "<change-vfolder>known<enter>" "Go to known."
-
-set spoolfile = "+INBOX"
-set record = "+[Gmail].Sent Mail"
-set postponed = "+[Gmail].Drafts"
