@@ -1472,7 +1472,7 @@ EOF
 
 
 " Tag Along
-let g:tagalong_additional_filetypes = ['javascript', 'typescript', 'javascript.jsx', 'typescript.tsx']
+let g:tagalong_additional_filetypes = ['javascript', 'typescript', 'javascript.jsx', 'typescript.tsx', 'html', 'xml']
 
 
 " Rest console
