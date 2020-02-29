@@ -921,37 +921,34 @@ function! Floater(...)
 endfunction
 
 
-" Floating Term
 let g:term_buf = 0
-let g:special_term_buf = 0
+let g:term_job_id = 0
 function! FloatTerm(...)
   if g:term_buf == bufnr("")
     setlocal bufhidden=hide
     close
-  elseif g:special_term_buf == bufnr("")
-    let g:special_term_buf = 0
-    bd!
   else
     let height=float2nr(0.7*&lines)
     let width=float2nr(0.8*&columns)
     let horizontal = float2nr((&columns - width) / 2)
     let vertical = float2nr((&lines - height) / 2)
     call Floater(height, width, horizontal, vertical)
-    if a:0 == 0
-      try
-        exec "buffer ".g:term_buf
-      catch
-        terminal
-        autocmd TermClose <buffer> ++once :bd! | let g:term_buf = 0
-      endtry
+    try
+      exec "buffer ".g:term_buf
+    catch
+      terminal
       let g:term_buf = bufnr("")
-    else
-      call termopen(a:1, {"detach": 0})
-      let g:special_term_buf = bufnr("")
-    endif
+      let g:term_job_id = b:terminal_job_id
+      autocmd TermClose * ++once :bd! | let g:term_buf = 0
+      autocmd BufEnter <buffer> if (winnr("$") == 1 && bufnr("") == g:term_buf) | q | endif
+    endtry
     startinsert!
+    if a:0 != 0
+      call jobsend(g:term_job_id, a:1."\n")
+    endif
   endif
 endfunction
+
 nnoremap <silent><m-t> <C-\><C-n>:call FloatTerm()<cr>
 inoremap <silent><m-t> <C-\><C-n>:call FloatTerm()<cr>
 tnoremap <silent><m-t> <C-\><C-n>:call FloatTerm()<cr>
