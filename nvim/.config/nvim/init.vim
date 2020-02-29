@@ -601,6 +601,9 @@ nnoremap <silent><leader>S ^vg_y:execute @@<cr>
 " vv to select line
 nnoremap vv ^vg_
 
+" Quick make
+nnoremap M :Dispatch! maker<cr>
+
 " Terminal colors
 let g:terminal_color_0 =  '#000000'
 let g:terminal_color_1 =  '#f7786d'
