@@ -13,6 +13,12 @@ t() {
     fi
 }
 
+tc(){
+    CURRENT_SESSION=$(tmux display-message -p "#S")
+    (cd ~/.dotfiles > /dev/null && tmuxsession dotfiles 2> /dev/null)
+    tmux kill-session -t "$CURRENT_SESSION"
+}
+
 alias tm='tmux'
 alias ta='tmux attach -t'
 alias tn='tmux new-session -s'
