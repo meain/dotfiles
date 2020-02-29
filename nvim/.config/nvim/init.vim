@@ -242,6 +242,7 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
 set wildignore+=*.swp,*~,._*
 set wildignore+=_pycache_,.DS_Store,.vscode,.localized
 set wildignore+=.cache,node_modules,package-lock.json,yarn.lock,dist,.git
+set wildignore+=.vimruncmd
 
 " Netrw
 let g:netrw_banner = 0
@@ -603,6 +604,10 @@ nnoremap vv ^vg_
 
 " Quick make
 nnoremap M :Dispatch! maker<cr>
+
+" Quick edit .vimruncmd
+nnoremap <silent><leader>r  :topleft new .vimruncmd \| resize 10<cr>
+autocmd BufEnter .vimruncmd if (winnr("$") == 1) | q | endif
 
 " Terminal colors
 let g:terminal_color_0 =  '#000000'
@@ -1055,6 +1060,7 @@ let g:startify_skiplist = [
   \ 'bundle/.*/doc',
   \ '\.vimgolf',
   \ '^/tmp',
+  \ '\.vimruncmd',
   \ ]
 let g:startify_lists = [
   \ { 'type': 'dir', 'header': [ 'Files [' . fnamemodify(getcwd(), ':t') . ']' ] },
