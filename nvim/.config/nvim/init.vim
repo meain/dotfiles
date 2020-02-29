@@ -452,7 +452,7 @@ autocmd FileType html inoremap <silent><buffer> ;cl class=""<left>
 
 " go
 autocmd FileType go inoremap <silent><buffer> ;ee :=
-autocmd FileType go inoremap <silent><buffer> ;err if err != nul {<cr>log.Fatal(err)<cr>}
+autocmd FileType go inoremap <silent><buffer> ;err if err != nil {<cr>log.Fatal(err)<cr>}
 
 " css
 autocmd FileType css inoremap <silent><buffer> ;se <Esc>A;
