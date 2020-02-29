@@ -1,0 +1,9 @@
+#!/bin/sh
+
+set -e
+
+[ -f Makefile ] && make && exit 0
+[ -f go.mod ] && go build && exit 0
+[ -f Cargo.toml ] && cargo run build && exit 0
+[ -f package.json ] && npm run build && exit 0
+exit 1
