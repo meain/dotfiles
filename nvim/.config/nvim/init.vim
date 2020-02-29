@@ -923,27 +923,32 @@ endfunction
 
 " Floating Term
 let g:term_buf = 0
+let g:special_term_buf = 0
 function! FloatTerm(...)
   if g:term_buf == bufnr("")
     setlocal bufhidden=hide
     close
+  elseif g:special_term_buf == bufnr("")
+    let g:special_term_buf = 0
+    bd!
   else
     let height=float2nr(0.7*&lines)
     let width=float2nr(0.8*&columns)
     let horizontal = float2nr((&columns - width) / 2)
     let vertical = float2nr((&lines - height) / 2)
     call Floater(height, width, horizontal, vertical)
-    try
-      exec "buffer ".g:term_buf
-    catch
-      if a:0 == 0
+    if a:0 == 0
+      try
+        exec "buffer ".g:term_buf
+      catch
         terminal
-        autocmd TermClose * ++once :bd! | let g:term_buf = 0
-      else
-        call termopen(a:1, {"detach": 0})
-      endif
+        autocmd TermClose <buffer> ++once :bd! | let g:term_buf = 0
+      endtry
       let g:term_buf = bufnr("")
-    endtry
+    else
+      call termopen(a:1, {"detach": 0})
+      let g:special_term_buf = bufnr("")
+    endif
     startinsert!
   endif
 endfunction
