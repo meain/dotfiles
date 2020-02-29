@@ -7,7 +7,7 @@ transfer() {
 		return 1
 	fi
 	curl --progress-bar -F "file=@$1" https://file.io | tee /tmp/fileioresp | jq -r '.link' | pbcopy
-	jq -r '.link,.expiry' < /tmp/fileioresp | xargs echo
+	jq -r '.link,.expiry' </tmp/fileioresp | xargs echo
 }
 
 stdgrip() {
@@ -69,7 +69,7 @@ r() {
 }
 rj() {
 	cd "$(git rev-parse --show-toplevel 2>/dev/null)" || return 1
-	cd "./$(fd -H -td -d5 | fzf --preview 'tree -L 2 ./{}' )" || return 1
+	cd "./$(fd -H -td -d5 | fzf --preview 'tree -L 2 ./{}')" || return 1
 }
 
 re() {
@@ -116,11 +116,11 @@ gtree() {
 tt() {
 	if [ -z "$1" ]; then
 		FOLDER=$(pwd | sed 's:.*/::' | sed 's:^\.::')
-        tmuxsession "$FOLDER"
+		tmuxsession "$FOLDER"
 	else
 		mkdir "$1"
 		cd "$1" || return 1
-        tmuxsession "$1"
+		tmuxsession "$1"
 	fi
 }
 
@@ -159,7 +159,7 @@ imgurtolocal() {
 # Easily copy file from downloads folder
 dcp() {
 	FROMFILE=$(find ~/Downloads | sed "s|^$HOME/Downloads/||" | fzf --query="$1")
-	if [ -z $FROMFILE ];then
+	if [ -z $FROMFILE ]; then
 		echo "No file selected"
 		return 1
 	fi
@@ -308,10 +308,10 @@ cssh() {
 	if [ -n "$TMUX" ]; then
 		tmux selectp -P bg=colour236
 	fi
-	if [ -z "$1" ];then
-	    ssh "$HOST"
+	if [ -z "$1" ]; then
+		ssh "$HOST"
 	else
-	    ssh "$@"
+		ssh "$@"
 	fi
 	tmux selectp -P default
 }
@@ -319,7 +319,7 @@ compdef _ssh cssh=ssh
 alias ssh=cssh
 
 docs() {
-	array=( $@ )
+	array=($@)
 	len=${#array[@]}
 	docset=${array[$len]}
 	querry=${array[@]:0:$len-1}
