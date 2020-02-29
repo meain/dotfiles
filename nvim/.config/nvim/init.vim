@@ -1174,18 +1174,18 @@ let g:rooter_resolve_links = 1
 let g:rooter_patterns = ['Rakefile', 'Makefile', 'package.json', '.git/', '.vscode']
 
 " Vim go
-let g:go_fmt_autosave = 0
-let g:go_fmt_fail_silently = 1
-let g:go_list_type = 'quickfix'
-let g:go_fmt_command = 'goimports'
-let g:go_addtags_transform = 'camelcase'
-augroup custom_go
-  autocmd!
-  autocmd BufEnter *.go nnoremap <leader>d :GoDef<cr>
-  autocmd BufEnter *.go nnoremap <leader>r :GoRun<cr>
-  autocmd BufEnter *.go nnoremap <leader>a :GoBuild<cr>
-  autocmd BufEnter *.go nnoremap <leader>t :GoTest<cr>
-augroup end
+" let g:go_fmt_autosave = 0
+" let g:go_fmt_fail_silently = 1
+" let g:go_list_type = 'quickfix'
+" let g:go_fmt_command = 'goimports'
+" let g:go_addtags_transform = 'camelcase'
+" augroup custom_go
+"   autocmd!
+"   autocmd BufEnter *.go nnoremap <leader>d :GoDef<cr>
+"   autocmd BufEnter *.go nnoremap <leader>r :GoRun<cr>
+"   autocmd BufEnter *.go nnoremap <leader>a :GoBuild<cr>
+"   autocmd BufEnter *.go nnoremap <leader>t :GoTest<cr>
+" augroup end
 
 " Goyo
 " function! s:goyo_enter()
