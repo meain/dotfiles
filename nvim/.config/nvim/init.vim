@@ -791,6 +791,8 @@ augroup custom_shell_files
   autocmd!
   autocmd BufNewFile .gitignore :call s:LoadShell('~/.datafiles/sample_gitignore')
   autocmd BufNewFile index.html :call s:LoadShell('~/.datafiles/html_starter')
+  autocmd BufNewFile .vimruncmd :call s:LoadShell('~/.datafiles/sh_starter') | :w | :!chmod +x %
+  autocmd BufNewFile,BufRead .vimruncmd set filetype=sh
 augroup end
 
 " Scratch buffer
@@ -936,11 +938,11 @@ function! FloatTerm(...)
     catch
       if a:0 == 0
         terminal
+        autocmd TermClose * ++once :bd! | let g:term_buf = 0
       else
         call termopen(a:1, {"detach": 0})
       endif
       let g:term_buf = bufnr("")
-      autocmd TermClose * ++once :bd! | let g:term_buf = 0
     endtry
     startinsert!
   endif
@@ -948,6 +950,9 @@ endfunction
 nnoremap <silent><m-t> <C-\><C-n>:call FloatTerm()<cr>
 inoremap <silent><m-t> <C-\><C-n>:call FloatTerm()<cr>
 tnoremap <silent><m-t> <C-\><C-n>:call FloatTerm()<cr>
+nnoremap <silent><m-r> <C-\><C-n>:call FloatTerm("./.vimruncmd")<cr>
+inoremap <silent><m-r> <C-\><C-n>:call FloatTerm("./.vimruncmd")<cr>
+tnoremap <silent><m-r> <C-\><C-n>:call FloatTerm("./.vimruncmd")<cr>
 
 " Stratr profiling
 function! Profile()
