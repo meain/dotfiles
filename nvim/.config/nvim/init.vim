@@ -606,8 +606,28 @@ nnoremap vv ^vg_
 nnoremap M :Dispatch! maker<cr>
 
 " Quick edit .vimruncmd
-nnoremap <silent><leader>r  :topleft new .vimruncmd \| resize 10<cr>
+let g:vimruncmd_editor_open = 0
+let g:vimruncmd_buffer_number = 0
+function! ToggleVimRunEditor()
+  if g:vimruncmd_editor_open == 1
+    if g:vimruncmd_buffer_number == bufnr("")
+      w
+      q
+    else
+      exec g:vimruncmd_buffer_number."bd"  
+    endif
+    let g:vimruncmd_editor_open = 0
+    return
+  endif
+  topleft new .vimruncmd
+  resize 5
+  let g:vimruncmd_editor_open = 1
+  let g:vimruncmd_buffer_number =  bufnr("")
+endfunction
+nnoremap <silent><leader>r :call ToggleVimRunEditor()<cr>
 autocmd BufEnter .vimruncmd if (winnr("$") == 1) | q | endif
+autocmd BufNewFile .vimruncmd :w | :!chmod +x %
+autocmd BufNewFile,BufRead .vimruncmd set filetype=sh
 
 " Terminal colors
 let g:terminal_color_0 =  '#000000'
@@ -796,8 +816,6 @@ augroup custom_shell_files
   autocmd!
   autocmd BufNewFile .gitignore :call s:LoadShell('~/.datafiles/sample_gitignore')
   autocmd BufNewFile index.html :call s:LoadShell('~/.datafiles/html_starter')
-  autocmd BufNewFile .vimruncmd :call s:LoadShell('~/.datafiles/sh_starter') | :w | :!chmod +x %
-  autocmd BufNewFile,BufRead .vimruncmd set filetype=sh
 augroup end
 
 " Scratch buffer
