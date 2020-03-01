@@ -8,6 +8,7 @@ require("mousehighlight")
 local utils = require("utils")
 local pasteboard = require("hs.pasteboard")
 local customshellrun = require('customshellrun') 
+local slackDrop = require('slackdrop')
 
 
 local mailcounter = hs.menubar.new()
@@ -52,7 +53,7 @@ emojipicker.registerDefaultBindings({"alt"}, 'E')
 local jcs = require("jumpcutselect")
 jcs.registerDefaultBindings({"alt"}, 'P')
 hs.hotkey.bind({'alt', 'shift'}, 'P', function()
-  hs.alert("📎 " .. pasteboard.getContents())
+  hs.alert("📎 " .. utils.trim(pasteboard.getContents()))
 end)
 
 -- Music keymaps
@@ -170,4 +171,9 @@ hs.hotkey.bind({"alt"}, ";", function()
 
   app:mainWindow():moveToUnit'[80,100,10,50]'
   app:mainWindow().setShadows(false)
+end)
+
+
+hs.hotkey.bind({"cmd"}, "d", function()
+  slackDrop(utils.trim(pasteboard.getContents()))
 end)
