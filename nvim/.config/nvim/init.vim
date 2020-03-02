@@ -624,7 +624,7 @@ function! ToggleVimRunEditor()
   let g:vimruncmd_editor_open = 1
   let g:vimruncmd_buffer_number =  bufnr("")
 endfunction
-nnoremap <silent><leader>r :call ToggleVimRunEditor()<cr>
+nnoremap <silent><leader>R :call ToggleVimRunEditor()<cr>
 autocmd BufEnter .vimruncmd if (winnr("$") == 1) | q | endif
 autocmd BufNewFile .vimruncmd :w | :!chmod +x %
 autocmd BufNewFile,BufRead .vimruncmd set filetype=sh
@@ -975,9 +975,9 @@ endfunction
 nnoremap <silent><m-t> <C-\><C-n>:call FloatTerm()<cr>
 inoremap <silent><m-t> <C-\><C-n>:call FloatTerm()<cr>
 tnoremap <silent><m-t> <C-\><C-n>:call FloatTerm()<cr>
-nnoremap <silent><m-r> <C-\><C-n>:call FloatTerm("./.vimruncmd")<cr>
-inoremap <silent><m-r> <C-\><C-n>:call FloatTerm("./.vimruncmd")<cr>
-tnoremap <silent><m-r> <C-\><C-n>:call FloatTerm("./.vimruncmd")<cr>
+nnoremap <silent><m-r> <C-\><C-n>:call FloatTerm("vimruncmd")<cr>
+inoremap <silent><m-r> <C-\><C-n>:call FloatTerm("vimruncmd")<cr>
+tnoremap <silent><m-r> <C-\><C-n>:call FloatTerm("vimruncmd")<cr>
 
 " Stratr profiling
 function! Profile()

@@ -1,0 +1,9 @@
+#!/bin/sh
+
+set -e
+
+if [ -f .vimruncmd ];then
+    ./.vimruncmd
+else
+    echo ".vimruncmd not found"
+fi
