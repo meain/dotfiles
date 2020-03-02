@@ -16,7 +16,7 @@ Plug 'machakann/vim-highlightedyank'                                            
 
 " Added functinality
 Plug 'meain/vim-startify'                                                                      " A fancy start page for vim (slow)
-Plug '~/Documents/Projects/others/done/_vim/vim-googler', { 'on': 'Google' }                   " Google from within vim
+Plug '~/Documents/Projects/others/done/_vim/vim-googler'                                       " Search from within vim
 Plug '/usr/local/opt/fzf'                                                                      " Fzf
 Plug 'junegunn/fzf.vim'                                                                        " Fzf for vim
 Plug 'jremmen/vim-ripgrep', { 'on': 'Rg' }                                                     " Rg with quickfix list
@@ -1524,6 +1524,12 @@ let g:vrc_curl_opts = {
 
 " context.vim
 let g:context_enabled = 0
+
+" Searcher
+nnoremap <silent><leader>s :Searcher <c-r><c-w><cr>
+vnoremap <silent><leader>s y:Searcher <c-r>"<cr>
+vnoremap <silent><leader>S c<C-R>=SearcherMarkdownAutoLinkGenerate(getreg('"'))<cr><esc>
+nnoremap <silent><leader>S viwc<C-R>=SearcherMarkdownAutoLinkGenerate(getreg('"'))<cr><esc>
 
 
 
