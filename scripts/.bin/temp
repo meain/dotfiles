@@ -1,0 +1,7 @@
+#!/bin/sh
+
+set -e
+
+DIR="$(date '+%s')"
+(mkdir -p "/tmp/temp-sessions/$DIR" && cd "/tmp/temp-sessions/$DIR" && tmuxsession "temp-$DIR")
+
