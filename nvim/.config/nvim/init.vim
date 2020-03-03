@@ -40,6 +40,7 @@ Plug 'tpope/vim-sleuth'                                                         
 Plug 'tpope/vim-fugitive', { 'on': [ 'Gstatus', 'Gblame', 'Gdiff' ] }                          " Git stuff from within vim
 Plug 'liuchengxu/vista.vim'                                                                    " Tags viewer
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }                                             " Undo tree
+Plug 'justinmk/vim-dirvish'
 Plug 'tpope/vim-vinegar'                                                                       " Simpler file browser
 Plug 'scrooloose/nerdtree', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] }         " Nerdtree
 " Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] } " Git sign for nerdtree
@@ -1531,6 +1532,9 @@ vnoremap <silent><leader>s y:Searcher <c-r>"<cr>
 vnoremap <silent><leader>S c<C-R>=SearcherMarkdownAutoLinkGenerate(getreg('"'))<cr><esc>
 nnoremap <silent><leader>S viwc<C-R>=SearcherMarkdownAutoLinkGenerate(getreg('"'))<cr><esc>
 
+
+" Dirvish
+let g:loaded_netrwPlugin = 'v165'  "Prevent netrw loading, maybe?
 
 
 "                             Source External                          "
