@@ -177,3 +177,7 @@ end)
 hs.hotkey.bind({"cmd"}, "d", function()
   slackDrop(utils.trim(pasteboard.getContents()))
 end)
+
+hs.hotkey.bind({"ctrl", "shift", "alt"}, "r", function()
+  hs.reload()
+end)
