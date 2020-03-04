@@ -19,6 +19,18 @@ tc(){
     tmux kill-session -t "$CURRENT_SESSION"
 }
 
+tt() {
+	if [ -z "$1" ]; then
+		FOLDER=$(pwd | xargs basename | sed 's:^\.::')
+		tmuxsession "$FOLDER"
+	else
+		mkdir "$1"
+		cd "$1" || return 1
+		tmuxsession "$1"
+	fi
+}
+
+
 alias tm='tmux'
 alias ta='tmux attach -t'
 alias tn='tmux new-session -s'

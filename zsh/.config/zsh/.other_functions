@@ -113,17 +113,6 @@ gtree() {
 	fi
 }
 
-tt() {
-	if [ -z "$1" ]; then
-		FOLDER=$(pwd | sed 's:.*/::' | sed 's:^\.::')
-		tmuxsession "$FOLDER"
-	else
-		mkdir "$1"
-		cd "$1" || return 1
-		tmuxsession "$1"
-	fi
-}
-
 # Create a new blog entry. Quickly create file with date prepended
 blog() {
 	DATE=$(date +%Y-%m-%d)
