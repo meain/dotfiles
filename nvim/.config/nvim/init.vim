@@ -42,7 +42,8 @@ Plug 'liuchengxu/vista.vim'                                                     
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }                                             " Undo tree
 Plug 'justinmk/vim-dirvish'
 Plug 'tpope/vim-vinegar'                                                                       " Simpler file browser
-Plug 'scrooloose/nerdtree', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] }         " Nerdtree
+Plug 'kyazdani42/nvim-tree.lua'
+" Plug 'scrooloose/nerdtree', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] }         " Nerdtree
 " Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] } " Git sign for nerdtree
 Plug 'meain/vim-automkdir'                                                                     " Automatically create parent dirs
 Plug 'yardnsm/vim-import-cost', { 'do': 'npm install', 'for': g:javascript_filetypes }         " See import cost of javascript deps
@@ -1350,30 +1351,39 @@ augroup custom_elm
   autocmd BufEnter *.elm nnoremap <leader>t :ElmTest<cr>
 augroup end
 
+" LuaTree
+let g:lua_tree_size = 30
+let g:lua_tree_ignore = ['.git', 'node_modules', '.cache']
+let g:lua_tree_follow = 1
+let g:lua_tree_auto_open = 0
+let g:lua_tree_show_folders = 0
+" let g:lua_tree_show_git_icons = 0
+nnoremap <silent><Tab> :LuaTreeToggle<cr>
+
 " NerdTree
-let NERDTreeShowHidden=1
-let NERDTreeHighlightCursorline=1
-let NERDTreeMinimalUI=1
-let NERDTreeHijackNetrw=0
-let NERDTreeRespectWildIgnore=1
-let NERDTreeStatusline = '         File Browser'
-nnoremap <silent><Tab> :NERDTreeToggle<cr>
-augroup custom_nerdtree
-  autocmd!
-  autocmd FileType nerdtree nnoremap <silent><buffer> <Tab> :NERDTreeToggle<cr>
-augroup end
-let g:NERDTreeIndicatorMapCustom = {
-    \ 'Modified'  : '!',
-    \ 'Staged'    : '|',
-    \ 'Untracked' : '-',
-    \ 'Renamed'   : '➜',
-    \ 'Unmerged'  : '═',
-    \ 'Deleted'   : '✖',
-    \ 'Dirty'     : '/',
-    \ 'Clean'     : '',
-    \ 'Ignored'   : '☒',
-    \ 'Unknown'   : '?'
-    \ }
+" let NERDTreeShowHidden=1
+" let NERDTreeHighlightCursorline=1
+" let NERDTreeMinimalUI=1
+" let NERDTreeHijackNetrw=0
+" let NERDTreeRespectWildIgnore=1
+" let NERDTreeStatusline = '         File Browser'
+" nnoremap <silent><Tab> :NERDTreeToggle<cr>
+" augroup custom_nerdtree
+"   autocmd!
+"   autocmd FileType nerdtree nnoremap <silent><buffer> <Tab> :NERDTreeToggle<cr>
+" augroup end
+" let g:NERDTreeIndicatorMapCustom = {
+"     \ 'Modified'  : '!',
+"     \ 'Staged'    : '|',
+"     \ 'Untracked' : '-',
+"     \ 'Renamed'   : '➜',
+"     \ 'Unmerged'  : '═',
+"     \ 'Deleted'   : '✖',
+"     \ 'Dirty'     : '/',
+"     \ 'Clean'     : '',
+"     \ 'Ignored'   : '☒',
+"     \ 'Unknown'   : '?'
+"     \ }
 
 " Use deoplete.
 let g:deoplete#enable_at_startup = 1
