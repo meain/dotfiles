@@ -9,10 +9,17 @@ if [ -z "$1" ];then
 fi
 
 # bw list items --search "$1" | jq -r '.[].id' | fzf --preview "bw list items --search {} | jq '.[0].login.username'"
+eval "$(bw unlock | grep export | cut -d' ' -f2-)"
 OBJ="$(bw list items --search "$QUERY")"
 USERNAME="$(echo "$OBJ"| jq -r '.[].login.username' | fzf --preview "echo '$OBJ' | jq -r '.[] | select(.login.username == \"{}\") |
     .name,.login.uris[].uri'")"
 PASS="$(echo "$OBJ" | jq -r ".[] | select(.login.username == \"$USERNAME\") | .login.password")"
+
+
+cleanup() {
+    bw lock
+}
+trap cleanup EXIT
 
 PREVCLIP="$(pbpaste)"
 echo "$PASS" | perl -0pe 's/\n\Z//' | pbcopy
