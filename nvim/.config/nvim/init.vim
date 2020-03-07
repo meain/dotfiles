@@ -6,7 +6,6 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 " Visual enhancements
 Plug 'mhinz/vim-janah'                                                                         " Janah colorscheme
-" Plug 'vim-scripts/Red-Black'                                                                   " Redblack colorscheme
 Plug 'Yggdroot/indentLine'                                                                     " Show indent
 Plug 'mhinz/vim-signify'                                                                       " Git diff icons in gutter
 Plug 'norcalli/nvim-colorizer.lua'                                                             " Highlight color values
@@ -246,25 +245,6 @@ set foldignore=
 set foldlevelstart=10
 set foldnestmax=10
 
-" ColorScheme change ( redblack )
-augroup colorscheme_reblack
-  autocmd!
-  autocmd ColorScheme redblack highlight Normal guibg=#000000 ctermbg=0
-  autocmd ColorScheme redblack highlight SignColumn guibg=#000000 ctermbg=0
-  autocmd ColorScheme redblack highlight LineNr guibg=#000000 ctermbg=0
-  autocmd ColorScheme redblack highlight VertSplit guibg=#000000 ctermbg=0
-  autocmd ColorScheme redblack highlight StatusLine guifg=#dadada ctermfg=253 ctermbg=NONE guibg=NONE gui=NONE cterm=NONE
-  autocmd ColorScheme redblack highlight StatusLineNC guifg=#878787 ctermfg=102 ctermbg=NONE guibg=NONE gui=NONE cterm=NONE
-  autocmd ColorScheme redblack highlight StartifyFile guifg=#eeeeee ctermfg=255 ctermbg=NONE gui=NONE cterm=NONE
-  autocmd ColorScheme redblack highlight SignifySignAdd    cterm=bold gui=bold  ctermfg=119 guifg=#87ff5f
-  autocmd ColorScheme redblack highlight SignifySignDelete cterm=bold gui=bold  ctermfg=167 guifg=#d75f5f
-  autocmd ColorScheme redblack highlight SignifySignChange cterm=bold gui=bold  ctermfg=227 guifg=#ffff5f
-  autocmd ColorScheme redblack highlight ColorColumn ctermbg=154 guibg=#212121
-  autocmd ColorScheme redblack highlight CursorLine ctermbg=154 guibg=#212121
-  autocmd ColorScheme redblack highlight CursorLineNr ctermfg=red guifg=red ctermbg=NONE guibg=NONE
-  autocmd ColorScheme redblack highlight WildMenu ctermfg=red guifg=red ctermbg=NONE guibg=NONE
-augroup end
-
 " ColorScheme change ( janah )
 augroup colorscheme_janah
   autocmd!
@@ -284,7 +264,7 @@ augroup colorscheme_janah
 augroup end
 
 " ColorScheme change (pencil:light)
-augroup colorscheme_reblack
+augroup colorscheme_pencil
   autocmd!
   autocmd ColorScheme pencil highlight SignifySignAdd    cterm=bold guifg=#00ff00
   autocmd ColorScheme pencil highlight SignifySignDelete cterm=bold guifg=#ff0000
