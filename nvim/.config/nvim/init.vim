@@ -52,7 +52,6 @@ Plug 'neoclide/vim-jsx-improve', { 'for': ['javascript', 'javascript.jsx'] }    
 Plug 'tpope/vim-markdown', { 'for': ['md', 'markdown'] }                                       " Better markdown support
 Plug 'cespare/vim-toml', { 'for': 'toml' }                                                     " Toml highlight
 Plug 'raimon49/requirements.txt.vim', { 'for': 'requirements' }                                " Requirements file
-Plug 'diepm/vim-rest-console', { 'for': 'rest' }                                               " Restclient
 Plug 'jxnblk/vim-mdx-js', { 'for': 'mdx' }
 
 " Language enhacements
@@ -168,6 +167,7 @@ syntax sync minlines=256
 
 " Make backspace great again
 set backspace=2
+
 " Set split direction
 set splitbelow
 set splitright
@@ -261,6 +261,7 @@ augroup colorscheme_janah
   autocmd ColorScheme janah highlight CursorLine ctermbg=154 guibg=#474747
   autocmd ColorScheme janah highlight CursorLineNr ctermbg=NONE guibg=NONE guifg=#df005f ctermfg=161
   autocmd ColorScheme janah highlight WildMenu guifg=#df005f ctermfg=161 guibg=NONE ctermbg=NONE gui=bold cterm=bold
+  autocmd ColorScheme janah highlight NonText ctermfg=238 guifg=#444444
 augroup end
 
 " ColorScheme change (pencil:light)
@@ -278,9 +279,6 @@ augroup end
 set termguicolors
 set background=dark
 colorscheme janah
-
-" Colors common
-highlight NonText ctermfg=238 guifg=#444444
 
 " Use italics for some text
 highlight htmlArg gui=italic
@@ -347,6 +345,7 @@ iabbr cosnt const
 iabbr imprt import
 iabbr imoprt import
 iabbr improt import
+iabbr consle console
 
 
 
@@ -410,7 +409,6 @@ autocmd FileType html inoremap <silent><buffer> ;css <link rel="stylesheet" href
 autocmd FileType html inoremap <silent><buffer> ;js <script src="index.js"></script><esc>?index.js<cr>vi"
 autocmd FileType html inoremap <silent><buffer> ;cl class=""<left>
 
-
 " go
 autocmd FileType go inoremap <silent><buffer> ;ee :=
 autocmd FileType go inoremap <silent><buffer> ;err if err != nil {<cr>log.Fatal(err)<cr>}
@@ -469,9 +467,6 @@ command! WQ wq
 command! Wq wq
 command! W w
 
-" Fix overflow ( above 80 )
-command! FixOverflow :normal! gqap
-
 command! GPush :normal! :Dispatch! git push origin $(git branch | grep "\*" | sed s:^..::g )<cr>
 
 
@@ -490,7 +485,7 @@ vnoremap k gk
 
 " Easier line navigatin
 nnoremap H g^
-nnoremap L g$
+nnoremap L g_
 
 " Eaier quit and no ex
 nnoremap <silent> q :q<cr>
@@ -534,9 +529,6 @@ tnoremap <m-l> <C-\><C-N><C-w>l
 
 " Terminal mode esc remap
 tnoremap <Leader><Esc> <C-\><C-n>
-
-" Copy entire file content
-nnoremap yp mzggVG"+y`z
 
 " Don't change Enter in all buffers
 autocmd FileType help nnoremap <buffer> <Enter> <Enter>
@@ -619,8 +611,6 @@ let g:terminal_color_foreground = '#e5e1d8'
 
 " Quick save an quit
 nnoremap <silent><leader><leader> :w<cr>
-nnoremap <silent><Leader>q :q<cr>
-nnoremap <silent><Leader>w :w<cr>
 
 " Split like a boss
 nnoremap <silent>sv :vsplit \| :Startify<cr>
@@ -628,29 +618,14 @@ nnoremap <silent>sh :split \| :Startify<cr>
 nnoremap <silent><Leader>v :vsplit \| :Startify<cr>
 nnoremap <silent><Leader>h :split \| :Startify<cr>
 
-" Easy tag navigation
-nnoremap <silent><Leader>' <C-]>
-
 " Quick fold and unfold
 nnoremap <silent><Leader><esc> :normal!za<cr>
-
-" Quick suspend
-nnoremap <silent><leader>z <c-z>
 
 " Quick switch tabs
 nnoremap <silent><Leader>k :tabn<cr>
 nnoremap <silent><Leader>j :tabp<cr>
 nnoremap <silent><s-right> :tabm +1<cr>
 nnoremap <silent><s-left> :tabm -1<cr>
-
-" Only current buffer
-nnoremap <silent><leader>o :only<cr>
-
-" Quickly copy current line without extra spaces or newline
-nnoremap <silent><leader>y ^yg_
-
-" New tab
-nnoremap <silent><leader><Tab> :tabnew \| :Startify<cr>
 
 " Easier switching of quickfix list items
 nnoremap <silent><leader>n :cnext<cr>
@@ -777,41 +752,6 @@ augroup custom_shell_files
   autocmd BufNewFile .gitignore :call s:LoadShell('~/.datafiles/sample_gitignore')
   autocmd BufNewFile index.html :call s:LoadShell('~/.datafiles/html_starter')
 augroup end
-
-" Scratch buffer
-function! ScratchOpen()
-  execute 'topleft new __scratch__'
-  if filereadable('/tmp/.scratchfile')
-    execute ' %! cat /tmp/.scratchfile'
-  endif
-  redraw
-  execute 'resize 15'
-  execute 'set ft=scratch'
-  setlocal bufhidden=hide
-  setlocal buftype=nofile
-  setlocal foldcolumn=0
-  setlocal nofoldenable
-  setlocal nonumber
-  setlocal noswapfile
-  setlocal winfixheight
-  setlocal winfixwidth
-endfunction
-function! ScratchToggle()
-  let l:bufNr = bufnr('$')
-  let l:name = '__scratch__'
-  while l:bufNr > 0
-    if buflisted(l:bufNr)
-      if (matchstr(bufname(l:bufNr), l:name.'$') == l:name )
-        execute 'w /tmp/.scratchfile'
-        execute 'bd '.l:bufNr
-        return
-      endif
-    endif
-    let l:bufNr = l:bufNr-1
-  endwhile
-  call ScratchOpen()
-endfunction
-nnoremap <silent><leader>u :call ScratchToggle()<cr>
 
 " Close unused buffers
 function! s:CloseHiddenBuffers()
@@ -994,7 +934,6 @@ nnoremap <silent><leader>g :Gstatus\|normal!gg7j<cr>
 augroup custom_fugitive
   autocmd! FileType fugitive nnoremap <silent>1 :norm V-<cr>
 augroup end
-command! Gl normal! :!git vhm<cr>
 
 " GitMessenger
 nnoremap <silent><leader>G :GitMessenger<cr>
@@ -1065,9 +1004,6 @@ vmap <left>  <Plug>SchleppLeft
 vmap <right> <Plug>SchleppRight
 vmap D <Plug>SchleppDup
 
-" Limelight
-let g:limelight_conceal_ctermfg=0
-
 " Ale
 nnoremap <silent>,, :ALEFix<cr>
 let g:ale_sign_error = '✖'
@@ -1128,9 +1064,9 @@ augroup TerminalStuff
 augroup END
 
 " Signfy
-let g:signify_sign_add               = 'ǁ'
-let g:signify_sign_delete            = 'ǁ'
-let g:signify_sign_change            = 'ǁ'
+let g:signify_sign_add = 'ǁ'
+let g:signify_sign_delete = 'ǁ'
+let g:signify_sign_change = 'ǁ'
 
 " Sleuth auto indent
 let g:sleuth_automatic = 1
@@ -1151,53 +1087,6 @@ let g:rooter_silent_chdir = 1
 let g:rooter_resolve_links = 1
 let g:rooter_patterns = ['Rakefile', 'Makefile', '.git/', '.vscode']
 
-" Vim go
-" let g:go_fmt_autosave = 0
-" let g:go_fmt_fail_silently = 1
-" let g:go_list_type = 'quickfix'
-" let g:go_fmt_command = 'goimports'
-" let g:go_addtags_transform = 'camelcase'
-" augroup custom_go
-"   autocmd!
-"   autocmd BufEnter *.go nnoremap <leader>d :GoDef<cr>
-"   autocmd BufEnter *.go nnoremap <leader>r :GoRun<cr>
-"   autocmd BufEnter *.go nnoremap <leader>a :GoBuild<cr>
-"   autocmd BufEnter *.go nnoremap <leader>t :GoTest<cr>
-" augroup end
-
-" Goyo
-" function! s:goyo_enter()
-"   silent !tmux set status off
-"   silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
-"   set noshowmode
-"   set noshowcmd
-"   set scrolloff=999
-"   Limelight
-" endfunction
-"
-" function! s:goyo_leave()
-"   silent !tmux set status on
-"   silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
-"   set showmode
-"   set showcmd
-"   set scrolloff=5
-"   Limelight!
-" endfunction
-" autocmd! User GoyoEnter nested call <SID>goyo_enter()
-" autocmd! User GoyoLeave nested call <SID>goyo_leave()
-
-" Racer
-let g:deoplete#sources#rust#racer_binary= $HOME . '/.cargo/bin/racer'
-let g:deoplete#sources#rust#rust_source_path= $HOME . '/Documents/Projects/others/clones/rust/src'
-augroup custom_rust
-  autocmd!
-  " au FileType rust nnoremap <silent><leader>d <Plug>(rust-def)
-  " au FileType rust nnoremap K <Plug>(rust-doc)
-  au FileType rust nnoremap <silent><leader>a :Dispatch! cargo build<cr>
-  au FileType rust nnoremap <silent><leader>r :Start cargo run<cr>
-  au FileType rust nnoremap <silent><leader>t :Dispatch! cargo test<cr>
-augroup end
-
 " JSX Typescript
 augroup custom_jsx
   autocmd!
@@ -1212,6 +1101,10 @@ augroup other_art
   au FileType javascript,typescript nnoremap <silent><leader>a :Dispatch! npm run build<cr>
   au FileType javascript,typescript nnoremap <silent><leader>r :Dispatch npm start<cr>
   au FileType javascript,typescript nnoremap <silent><leader>t :Dispatch! npm run test<cr>
+
+  au FileType rust nnoremap <silent><leader>a :Dispatch! cargo build<cr>
+  au FileType rust nnoremap <silent><leader>r :Start cargo run<cr>
+  au FileType rust nnoremap <silent><leader>t :Dispatch! cargo test<cr>
 augroup end
 
 " Emmet
@@ -1221,9 +1114,6 @@ let g:user_emmet_settings = {
 \      'extends' : 'jsx',
 \  },
 \}
-
-" CloseTag
-let g:closetag_filenames = '*.html,*.xhtml,*.xml,*.js,*.html.erb,*.md'
 
 " SuperTab
 let g:SuperTabDefaultCompletionType = '<c-n>'
@@ -1244,8 +1134,6 @@ let g:LanguageClient_serverCommands = {
     \ 'zsh': ['bash-language-server', 'start'],
     \ 'dockerfile': ['docker-langserver', '--stdio']
     \ }
-
-
 let g:LanguageClient_diagnosticsDisplay = {
       \1: {
         \'name': 'Error',
@@ -1294,21 +1182,6 @@ function! s:show_documentation()
   endif
 endfunction
 
-" Github Dashboard
-let g:github_dashboard = { 'username': 'meain' , 'password': $GITHUB_DASHBOARD_VIM_TOKEN }
-
-" Elm
-let g:elm_format_autosave = 1
-let g:elm_format_fail_silently = 1
-let g:elm_setup_keybindings = 1
-augroup custom_elm
-  autocmd!
-  autocmd BufEnter *.elm nnoremap <leader>d :ElmShowDocs<cr>
-  autocmd BufEnter *.elm nnoremap <leader>r :ElmMake<cr>
-  autocmd BufEnter *.elm nnoremap <leader>a :ElmMakeMain<cr>
-  autocmd BufEnter *.elm nnoremap <leader>t :ElmTest<cr>
-augroup end
-
 " LuaTree
 let g:lua_tree_size = 30
 let g:lua_tree_ignore = ['.git', 'node_modules', '.cache']
@@ -1317,31 +1190,6 @@ let g:lua_tree_auto_open = 0
 let g:lua_tree_show_folders = 0
 " let g:lua_tree_show_git_icons = 0
 nnoremap <silent><Tab> :LuaTreeToggle<cr>
-
-" NerdTree
-" let NERDTreeShowHidden=1
-" let NERDTreeHighlightCursorline=1
-" let NERDTreeMinimalUI=1
-" let NERDTreeHijackNetrw=0
-" let NERDTreeRespectWildIgnore=1
-" let NERDTreeStatusline = '         File Browser'
-" nnoremap <silent><Tab> :NERDTreeToggle<cr>
-" augroup custom_nerdtree
-"   autocmd!
-"   autocmd FileType nerdtree nnoremap <silent><buffer> <Tab> :NERDTreeToggle<cr>
-" augroup end
-" let g:NERDTreeIndicatorMapCustom = {
-"     \ 'Modified'  : '!',
-"     \ 'Staged'    : '|',
-"     \ 'Untracked' : '-',
-"     \ 'Renamed'   : '➜',
-"     \ 'Unmerged'  : '═',
-"     \ 'Deleted'   : '✖',
-"     \ 'Dirty'     : '/',
-"     \ 'Clean'     : '',
-"     \ 'Ignored'   : '☒',
-"     \ 'Unknown'   : '?'
-"     \ }
 
 " Use deoplete.
 let g:deoplete#enable_at_startup = 1
@@ -1356,11 +1204,6 @@ let g:echodoc#type = 'virtual'
 let g:indentLine_color_term = 236
 let g:indentLine_color_gui = '#303030'
 
-" Sneak
-map s <Plug>Sneak_s
-map S <Plug>Sneak_S
-let g:sneak#label = 1
-
 " AutoPair
 let g:AutoPairsShortcutToggle='<c-p>'
 let g:AutoPairsMultilineClose = 0
@@ -1370,32 +1213,6 @@ command! LoadAllPlugins call plug#load(keys(g:plugs))
 
 " Vim instant markdown
 let g:instant_markdown_autostart = 0
-
-" Rg
-let g:rg_highlight = 1
-let g:rg_command = 'rg --vimgrep --ignore-case --hidden --follow'
-
-" Semshi
-" let g:semshi#excluded_buffers = ['*']
-" hi semshiLocal           ctermfg=209 guifg=#ff875f
-" hi semshiGlobal          ctermfg=214 guifg=#ffaf00
-" hi semshiImported        ctermfg=214 guifg=#ffaf00 cterm=bold gui=bold
-" hi semshiParameter       ctermfg=75  guifg=#5fafff
-" hi semshiParameterUnused ctermfg=117 guifg=#87d7ff cterm=underline gui=underline
-" hi semshiFree            ctermfg=218 guifg=#ffafd7
-" hi semshiBuiltin         ctermfg=207 guifg=#ff5fff
-" hi semshiAttribute       ctermfg=49  guifg=#00ffaf
-" hi semshiSelf            ctermfg=249 guifg=#b2b2b2
-" hi semshiUnresolved      ctermfg=226 guifg=#ffff00 cterm=underline gui=underline
-" hi semshiSelected        ctermfg=231 guifg=#ffffff ctermbg=161 guibg=#d7005f
-"
-" hi semshiErrorSign       ctermfg=231 guifg=#ffffff ctermbg=160 guibg=#d70000
-" hi semshiErrorChar       ctermfg=231 guifg=#ffffff ctermbg=160 guibg=#d70000
-" sign define semshiError text=E> texthl=semshiErrorSign
-
-" vim-import-cost
-let g:import_cost_virtualtext = 1
-let g:import_cost_virtualtext_prefix = ' '
 
 " vim-jsx-typescript
 hi tsxTagName ctermfg=150 guifg=#afdf87
@@ -1409,11 +1226,9 @@ augroup custom_tsx
   autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
 augroup end
 
-
 " HighlightedYank
 let g:highlightedyank_highlight_duration = 200
 highlight HighlightedyankRegion cterm=underline gui=underline
-
 
 " Color Swap
 augroup custom_css
@@ -1421,11 +1236,9 @@ augroup custom_css
   autocmd FileType css nnoremap <buffer><leader>c :ColorSwap<CR>
 augroup end
 
-
 " Vim package info
 let g:vim_package_info_virutaltext_prefix = '  ¤ '
 " let g:vim_package_info_virutaltext_highlight = 'WildMenu'
-
 
 " Vim printer
 let g:vim_printer_print_below_keybinding = '<leader>p'
@@ -1459,7 +1272,6 @@ let g:vista#renderer#icons = {
 \   'variable': 'v',
 \  }
 
-
 " Colorizer
 lua << EOF
 require 'colorizer'.setup ({
@@ -1474,32 +1286,14 @@ require 'colorizer'.setup ({
 })
 EOF
 
-
 " Tag Along
 let g:tagalong_additional_filetypes = ['javascript', 'typescript', 'javascript.jsx', 'typescript.tsx', 'html', 'xml']
-
-" Illuminate
-" let g:Illuminate_delay = 1000
-" let g:Illuminate_ftblacklist = ['nerdtree']
-
-" Rest console
-let g:vrc_curl_opts = {
-  \ '-s': '',
-  \ '-D': '-',
-  \ '-L': '',
-  \ '-b': '/tmp/cookies.txt',
-\}
-
-
-" context.vim
-let g:context_enabled = 0
 
 " Searcher
 nnoremap <silent><leader>s :Searcher <c-r><c-w><cr>
 vnoremap <silent><leader>s y:Searcher <c-r>"<cr>
 vnoremap <silent><leader>S c<C-R>=SearcherMarkdownAutoLinkGenerate(getreg('"'))<cr><esc>
 nnoremap <silent><leader>S viwc<C-R>=SearcherMarkdownAutoLinkGenerate(getreg('"'))<cr><esc>
-
 
 " Dirvish
 let g:loaded_netrwPlugin = 'v165'  "Prevent netrw loading, maybe?
