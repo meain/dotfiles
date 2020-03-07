@@ -9,8 +9,6 @@ Plug 'mhinz/vim-janah'                                                          
 " Plug 'vim-scripts/Red-Black'                                                                   " Redblack colorscheme
 Plug 'Yggdroot/indentLine'                                                                     " Show indent
 Plug 'mhinz/vim-signify'                                                                       " Git diff icons in gutter
-" Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }                                           " Hyper focus editing
-Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }                                                     " Centerify
 Plug 'norcalli/nvim-colorizer.lua'                                                             " Highlight color values
 Plug 'machakann/vim-highlightedyank'                                                           " Visually highlight yanked region
 
@@ -19,34 +17,26 @@ Plug 'meain/vim-startify'                                                       
 Plug '~/Documents/Projects/others/done/_vim/vim-googler'                                       " Search from within vim
 Plug '/usr/local/opt/fzf'                                                                      " Fzf
 Plug 'junegunn/fzf.vim'                                                                        " Fzf for vim
-Plug 'jremmen/vim-ripgrep', { 'on': 'Rg' }                                                     " Rg with quickfix list
 Plug 'christoomey/vim-tmux-navigator'                                                          " Seamless navigation between vim and tmux
 Plug 'suan/vim-instant-markdown', { 'for': [ 'md', 'markdown' ] }                              " View markdown in browser while editing
 Plug 'ervandew/supertab'                                                                       " Autocomplete on tab
 Plug 'zirrostig/vim-schlepp'                                                                   " Better drag visuals
 Plug 'vim-scripts/restore_view.vim'                                                            " Restore file pointer
-Plug 'tpope/vim-dispatch', { 'on': [ 'Dispatch', 'Start' ] }                                                " Async tasks in vim
+Plug 'tpope/vim-dispatch', { 'on': [ 'Dispatch', 'Start' ] }                                   " Async tasks in vim
 Plug 'airblade/vim-rooter'                                                                     " Change directory to project root
 Plug 'editorconfig/editorconfig-vim'                                                           " Editorconfig
-Plug 'davidbeckingsale/writegood.vim', { 'on': ['WritegoodEnable', 'WritegoodToggle'] }        " Better writing mode
 Plug 'mattn/emmet-vim', { 'for': ['html', 'css'] + g:javascript_filetypes }                    " Emmet
-" Plug 'metakirby5/codi.vim', { 'on': 'Codi' }                                                   " Live code preview
 Plug 'rhysd/committia.vim'                                                                     " Better COMMIT_EDITMSG editing
-Plug 'Galooshi/vim-import-js', {'for': g:javascript_filetypes, 'do': 'npm i -g import-js'}     " Easier imports for javascript
-Plug 'wellle/context.vim', { 'on': ['ContextActivate','ContextEnable', 'ContextToggle'] }
 
 " Code editing enhacements
 Plug 'tpope/vim-sleuth'                                                                        " Automatic indentation setting
 Plug 'tpope/vim-fugitive', { 'on': [ 'Gstatus', 'Gblame', 'Gdiff' ] }                          " Git stuff from within vim
-Plug 'liuchengxu/vista.vim'                                                                    " Tags viewer
+Plug 'liuchengxu/vista.vim', { 'on': 'Vista' }                                                 " Tags viewer
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }                                             " Undo tree
 Plug 'justinmk/vim-dirvish'
 Plug 'tpope/vim-vinegar'                                                                       " Simpler file browser
-Plug 'kyazdani42/nvim-tree.lua'
-" Plug 'scrooloose/nerdtree', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] }         " Nerdtree
-" Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] } " Git sign for nerdtree
+Plug 'kyazdani42/nvim-tree.lua'                                                                " Minimal NERDTree replacement in lua
 Plug 'meain/vim-automkdir'                                                                     " Automatically create parent dirs
-Plug 'yardnsm/vim-import-cost', { 'do': 'npm install', 'for': g:javascript_filetypes }         " See import cost of javascript deps
 
 " Morph code
 Plug 'tpope/vim-surround'                                                                      " Surround
@@ -65,10 +55,6 @@ Plug 'cespare/vim-toml', { 'for': 'toml' }                                      
 Plug 'raimon49/requirements.txt.vim', { 'for': 'requirements' }                                " Requirements file
 Plug 'diepm/vim-rest-console', { 'for': 'rest' }                                               " Restclient
 Plug 'jxnblk/vim-mdx-js', { 'for': 'mdx' }
-" Plug 'meain/vim-html-template-literals', { 'for': ['javascript', 'typescript'] }               " Lit html highlight
-" Plug 'fatih/vim-go', { 'for': ['go'] }                                                         " Golang helper
-" Plug 'sebdah/vim-delve', { 'for': 'go' }                                                       " Debugger for go
-" Plug 'racer-rust/vim-racer', { 'for': 'rust' }                                                 " Rust support
 
 " Language enhacements
 Plug '~/Documents/Projects/projects/vim-jsontogo' , { 'for': ['go'] }                          " Convert JSON to Go struct
@@ -78,27 +64,19 @@ Plug 'w0rp/ale'                                                                 
 
 " Autocomplete
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }                                  " Competion framework
-" Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
 Plug 'Shougo/echodoc.vim'                                                                      " Show signature
-Plug '~/Documents/Projects/projects/deoplete-goobook', { 'for': 'mail' }                       " Email autocomplete
-Plug '~/Documents/Projects/projects/deoplete-notmuch', { 'for': 'mail' }                       " Email autocomplete
 Plug 'Shougo/neco-vim', { 'for': 'vim' }                                                       " Completion for viml
-" Plug 'wellle/tmux-complete.vim'                                                              " Tmux completion
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }           " Language client
+Plug '~/Documents/Projects/projects/deoplete-notmuch', { 'for': 'mail' }                       " Email autocomplete
 
 " Dependencies
-Plug 'radenling/vim-dispatch-neovim', { 'on': ['Dispatch', 'Start'] }                          " Neovim support for vim-dispatch
 Plug 'tpope/vim-repeat'                                                                        " Repeat plugins with .
+Plug 'radenling/vim-dispatch-neovim', { 'on': ['Dispatch', 'Start'] }                          " Neovim support for vim-dispatch
 
 " Others
-" Plug 'sedm0784/vim-you-autocorrect', { 'on': 'EnableAutocorrect' }                             " Autocorrect like in phones
-" Plug 'junegunn/vim-online-thesaurus', { 'on': 'OnlineThesaurusCurrentWord' }                   " Online thesaurus
-" Plug 'kristijanhusak/vim-carbon-now-sh', { 'on': 'CarbonNowSh' }                               " Polaroid for code
-" Plug 'junegunn/vim-github-dashboard', { 'on': ['GHA', 'GHD']}                                  " Github dashboard
-" Plug 'junegunn/vader.vim', {'for': 'vader'}                                                    " Vimscript testing framework
-" Plug 'RRethy/vim-illuminate'                                                                   " Highlight current word
 Plug 'dstein64/vim-startuptime', { 'on': 'StartupTime' }                                         " Measure startuptime
 Plug 'rhysd/git-messenger.vim', { 'on': 'GitMessenger' }                                         " Show git commit
+Plug 'davidbeckingsale/writegood.vim', { 'on': ['WritegoodEnable', 'WritegoodToggle'] }          " Better writing mode
 Plug '~/Documents/Projects/projects/vim-colorswitch', { 'do': 'UpdateRemotePlugins' }            " Cycle between color types
 Plug '~/Documents/Projects/projects/vim-package-info'
 Plug '~/Documents/Projects/projects/vim-printer'
