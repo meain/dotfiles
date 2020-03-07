@@ -372,7 +372,7 @@ augroup Filetype javascript syntax=javascript
 autocmd filetype crontab setlocal nobackup nowritebackup
 
 " Remove whitespace at save
-autocmd BufWritePre *.css,*.js,*.html,*.cpp,*.c,*.java,*.go,*.rs,*.ts,*.cljs,*.clj :%s/\s\+$//e
+autocmd BufWritePre *.css,*.html,*.cpp,*.c,*.java,*.go,*.rs,*.ts,*.cljs,*.clj :%s/\s\+$//e
 
 " Trun of syntax hilighting if huge
 autocmd BufReadPre * if getfsize(expand("%")) > 10000000 | syntax off | endif
@@ -1191,7 +1191,7 @@ let g:gen_tags#blacklist = ['$HOME']
 let g:rooter_use_lcd = 1
 let g:rooter_silent_chdir = 1
 let g:rooter_resolve_links = 1
-let g:rooter_patterns = ['Rakefile', 'Makefile', 'package.json', '.git/', '.vscode']
+let g:rooter_patterns = ['Rakefile', 'Makefile', '.git/', '.vscode']
 
 " Vim go
 " let g:go_fmt_autosave = 0
