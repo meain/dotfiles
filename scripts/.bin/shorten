@@ -22,7 +22,7 @@ $(cat _redirects)" | column -t > _redirects_new
 mv _redirects_new _redirects
 
 git add _redirects
-git commit -m "Add $URL"
+git commit -m "Add $SUB"
 git push origin master
 
 echo "links.meain.io/$SUB"
