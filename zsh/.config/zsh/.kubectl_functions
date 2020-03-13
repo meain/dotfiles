@@ -12,7 +12,7 @@ klog(){
 }
 
 kshell() {
-  kubectl exec -it "$(kpods "$*")" '/bin/bash || /bin/sh'
+  kubectl exec -it "$(kpods "$*")" /bin/bash
 }
 
 k_change_namespace(){
