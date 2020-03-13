@@ -12,7 +12,7 @@ Plug 'norcalli/nvim-colorizer.lua'                                              
 Plug 'machakann/vim-highlightedyank'                                                           " Visually highlight yanked region
 
 " Added functinality
-Plug 'meain/vim-startify'                                                                      " A fancy start page for vim (slow)
+Plug 'mhinz/vim-startify'                                                                      " A fancy start page for vim (slow)
 Plug '~/Documents/Projects/others/done/_vim/vim-googler'                                       " Search from within vim
 Plug '/usr/local/opt/fzf'                                                                      " Fzf
 Plug 'junegunn/fzf.vim'                                                                        " Fzf for vim
@@ -966,13 +966,17 @@ highlight StartifySlash   ctermfg=240 guifg=#585858
 highlight StartifySpecial ctermfg=240 guifg=#585858
 let g:startify_files_number = 5
 let g:startify_change_to_dir = 0
-let g:startify_custom_header = [':meain - neovim','']
+
+let g:startify_custom_header_quotes = [
+    \ ["^-^"], ["OoO"], ["ಠ_ಠ"], ["(ᵔᴥᵔ)"], ["(╯°□°)╯︵"], ["¯\\_(ツ)_/¯"],
+    \ ["ヾ(⌐■_■)ノ"], ["◉_◉"], ["(~˘▾˘)~"], ["⚆ _ ⚆"], ["¬_¬"], ["^̮^"]]
+let g:startify_custom_header = 'startify#center(startify#fortune#quote())'
 let g:startify_relative_path = 1
 let g:startify_use_env = 1
+let g:startify_enable_special = 0
 let g:startify_session_persistence = 1
 let g:startify_custom_indices = ['v','a', 'd', 'g', 'h', 'l', 'o', 'p', 'r', 't', 'n', 'm', 'b']
 let g:startify_fortune_use_unicode = 1
-let g:startify_list_order = ['dir', 'files',  'sessions']
 let g:startify_session_before_save = [
   \ 'echo "Cleaning up before saving.."'
   \ ]
@@ -987,20 +991,18 @@ let g:startify_skiplist = [
   \ '\.vimruncmd',
   \ ]
 let g:startify_lists = [
+  \ { 'type': 'commands' },
   \ { 'type': 'dir', 'header': [ 'Files [' . fnamemodify(getcwd(), ':t') . ']' ] },
   \ { 'type': function('s:list_commits'), 'header': [ 'Recent Commits' ] },
   \ { 'type': 'bookmarks', 'header': [ 'Bookmarks' ] },
   \ { 'type': 'sessions',  'header': [ 'Sessions' ] },
-  \ { 'type': 'commands',  'header': [ 'Commands' ] },
   \ ]
 let g:startify_commands = [
-  \ { 'up': [ 'Update Plugins', ':PlugUpdate' ] },
-  \ { 'ug': [ 'Upgrade Plugin Manager', ':PlugUpgrade' ] },
-  \ { 'q': [ 'Delete buffer', ':bd' ] },
+  \ { 'f': [ 'Fuzzy find', ':FZF' ] },
   \ ]
 let g:startify_bookmarks = [
   \ { 'c': '~/.dotfiles/nvim/.config/nvim/init.vim' },
-  \ { 'z': '~/.dotfiles/zsh/.zshrc' }
+  \ { 'z': '~/.dotfiles/zsh/.config/zsh/.zshrc' }
   \ ]
 
 " Drag Visuals
