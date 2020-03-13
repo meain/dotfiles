@@ -42,6 +42,10 @@ sn() {
     printf '#!/bin/sh\n\nset -e\n\n' > "$HOME/.bin/$1" && chmod +x "$HOME/.bin/$1" && $EDITOR "$HOME/.bin/$1"
 }
 
+snn() {
+    printf '#!/bin/sh\n\nset -e\n\n' > "$1" && chmod +x "$1" && $EDITOR "$1"
+}
+
 fl() {
     RES=$(fd --maxdepth 1 --hidden | fzf --print-query --preview "bat --plain --color=always {} 2> /dev/null || ls -A {}" --no-select-1 | tail -n 1)
     if [ -z "$RES" ];then
