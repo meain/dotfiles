@@ -22,7 +22,9 @@ _update_gcloud() {
     gcloud components update -q
 }
 _update_bw() {
+    eval "$(bw unlock | grep export | cut -d' ' -f2-)"
     bw sync
+    bw lock
 }
 
 case "$1" in
@@ -40,7 +42,6 @@ case "$1" in
         _update_dasht
         _update_repos
         _update_gcloud
-        _update_bw
         ;;
     *)
         update "$(echo "all,vim,brew,rustup,dasht,repos,bw" | tr ',' '\n' | fzf)"
