@@ -31,7 +31,7 @@ ga() {
     if [ -z "$1" ];then
 	git status --short | fzf -m --preview="echo {} | awk '{print \$NF}' | xargs git diff -- " | awk '{print $NF}' | xargs git add
     else
-	git add "$1"
+	git add "$@"
     fi
 }
 
