@@ -628,8 +628,8 @@ nnoremap <silent><s-right> :tabm +1<cr>
 nnoremap <silent><s-left> :tabm -1<cr>
 
 " Easier switching of quickfix list items
-nnoremap <silent><leader>n :cnext<cr>
-nnoremap <silent><leader>m :cprev<cr>
+nnoremap <silent><leader>m :cnext<cr>
+nnoremap <silent><leader>n :cprev<cr>
 
 " Change from class to className
 autocmd FileType javascript nnoremap <buffer><leader>c mc?class=<CR>ciwclassName<ESC>`c4l
@@ -808,6 +808,13 @@ function! s:CSSSearchForClassDef()
   execute ':Find .' . word
 endfunction
 command! CSSSearchForClassDef :call s:CSSSearchForClassDef()
+
+function! s:QuickFixPopulate(word)
+  cex system('rg --vimgrep '.a:word)
+  redraw!
+  cl
+endfunction
+command! -nargs=1 QuickFixPopulate :call s:QuickFixPopulate(<f-args>)
 
 " Create a floating buffer
 function! Floater(...)
