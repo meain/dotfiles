@@ -33,8 +33,7 @@ Plug 'tpope/vim-fugitive', { 'on': [ 'Gstatus', 'Gblame', 'Gdiff' ] }           
 Plug 'liuchengxu/vista.vim', { 'on': 'Vista' }                                                 " Tags viewer
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }                                             " Undo tree
 Plug 'justinmk/vim-dirvish'
-Plug 'tpope/vim-vinegar'                                                                       " Simpler file browser
-Plug 'kyazdani42/nvim-tree.lua'                                                                " Minimal NERDTree replacement in lua
+Plug 'scrooloose/nerdtree', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] }
 Plug 'meain/vim-automkdir'                                                                     " Automatically create parent dirs
 
 " Morph code
@@ -1191,15 +1190,6 @@ function! s:show_documentation()
   endif
 endfunction
 
-" LuaTree
-let g:lua_tree_size = 30
-let g:lua_tree_ignore = ['.git', 'node_modules', '.cache']
-let g:lua_tree_follow = 1
-let g:lua_tree_auto_open = 0
-let g:lua_tree_show_folders = 0
-" let g:lua_tree_show_git_icons = 0
-nnoremap <silent><Tab> :LuaTreeToggle<cr>
-
 " Use deoplete.
 let g:deoplete#enable_at_startup = 1
 call deoplete#custom#option('max_list', 20)
@@ -1304,8 +1294,22 @@ vnoremap <silent><leader>s y:Searcher <c-r>"<cr>
 vnoremap <silent><leader>S c<C-R>=SearcherMarkdownAutoLinkGenerate(getreg('"'))<cr><esc>
 nnoremap <silent><leader>S viwc<C-R>=SearcherMarkdownAutoLinkGenerate(getreg('"'))<cr><esc>
 
+" NerdTree
+let NERDTreeShowHidden=1
+let NERDTreeHighlightCursorline=1
+let NERDTreeMinimalUI=1
+let NERDTreeHijackNetrw=0
+let NERDTreeRespectWildIgnore=1
+let NERDTreeStatusline = '         File Browser'
+nnoremap <silent><Tab> :NERDTreeToggle<cr>
+augroup custom_nerdtree
+  autocmd!
+  autocmd FileType nerdtree nnoremap <silent><buffer> <Tab> :NERDTreeToggle<cr>
+augroup end
+
 " Dirvish
 let g:loaded_netrwPlugin = 'v165'  "Prevent netrw loading, maybe?
+nnoremap <silent>- :Dirvish %<cr>
 
 
 "                             Source External                          "
