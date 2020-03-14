@@ -4,17 +4,9 @@ alias vim='nvim'
 alias ivm='vim'
 alias vm='nvim'
 alias vi='nvim'
+alias v='nvim'
 
 alias viml='nvim -c :SLoad\ zzz'
-
-v() {
-    FILE="$(git ls-files 2>/dev/null | fzf)"
-    if [ -n "$FILE" ];then
-        $EDITOR "$FILE"
-    else
-        $EDITOR
-    fi
-}
 
 vv() {
     $EDITOR +OpenLastFile
