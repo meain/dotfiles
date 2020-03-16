@@ -314,3 +314,12 @@ docs() {
 	querry=${array[@]:0:$len-1}
 	dasht "$querry" "$docset"
 }
+
+nvm() {
+	if [ -z "$NVM_LOADED" ];then
+		[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"
+		[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"
+		export NVM_LOADED=1
+	fi
+	\nvm "$*"
+}
