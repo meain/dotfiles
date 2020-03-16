@@ -814,6 +814,7 @@ function! s:QuickFixPopulate(word)
   cl
 endfunction
 command! -nargs=1 QuickFixPopulate :call s:QuickFixPopulate(<f-args>)
+nnoremap <leader>F :QuickFixPopulate<space>
 
 " Create a floating buffer
 function! Floater(...)
