@@ -145,7 +145,7 @@ set inccommand=nosplit
 set hlsearch
 
 " Smart search
-set ignorecase
+set smartcase
 
 " Do not put two spaces after .
 set nojoinspaces
