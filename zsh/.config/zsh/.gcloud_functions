@@ -30,3 +30,14 @@ gcloud_stop_instance() {
     gcloud compute instances stop "$INSTANCE"
     updatessh
 }
+
+remote_work(){
+    EXP_VM_NAME="$(echo "$EXPERIMENT_VM" | cut -d'.' -f1)"
+    gcloud_start_instance "$EXP_VM_NAME"
+    ssh "$EXPERIMENT_VM"
+    printf "Stop instance? "
+    read
+    if [ "$REPLY" = "y" ];then
+        gcloud_stop_instance "$EXP_VM_NAME"
+    fi
+}
