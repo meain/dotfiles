@@ -21,10 +21,24 @@ dr() {
     fi
 }
 
-dbr(){
+dbr() {
     if docker build .; then
         IMG_ID=$(docker images --format "{{.ID}}" | head -n1)
         docker run "$@" -it "$IMG_ID"
+    fi
+}
+
+dbp() {
+    [ -z "$1" ] && echo "Specify tag" && return 1
+    if docker build -t "$1" .; then
+        docker push "$1"
+    fi
+}
+
+gdbp() {
+    [ -z "$1" ] && echo "Specify tag" && return 1
+    if docker build -t "$CONTAINER_REGISTERY/$1" .; then
+        docker push "$CONTAINER_REGISTERY/$1"
     fi
 }
 
@@ -35,6 +49,9 @@ dcon(){
 }
 
 docker_testground(){
+    if [ -z "$1" ];then
+        1="$(docker images | grep -v '<none>' | tail -n+2 | head | awk '{print $1":"$2}' | fzf)"
+    fi
     GROUND="$1" && shift
     if echo "$GROUND" | grep ':' > /dev/null 2>&1;then
         IMAGE="$GROUND"
