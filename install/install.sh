@@ -3,6 +3,7 @@
 # mac settings
 defaults write com.apple.screencapture location ~/Documents/Screenshots/  # change scresnshot dir
 defaults write com.apple.Terminal AppleShowScrollBars -string WhenScrolling  # no scrollbar in mac terminal
+defaults write -g ApplePressAndHoldEnabled -bool false  # enable key repeat
 sudo nvram SystemAudioVolume="%00"  # no boot bell
 
 execcommandfrompartial() {
@@ -21,7 +22,7 @@ execcommandfrompartial() {
 # homebrew packages
 if test ! "$( which brew )"; then
     echo "Installing homebrew"
-    ruby -e "$( curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install )"
+    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi
 execcommandfrompartial 'brew install' './brew.packages'
 
