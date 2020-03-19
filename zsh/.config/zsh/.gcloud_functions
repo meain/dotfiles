@@ -41,3 +41,12 @@ remote_work(){
         gcloud_stop_instance "$EXP_VM_NAME"
     fi
 }
+
+testart(){
+    EXP_VM_NAME="$(echo "$EXPERIMENT_VM" | cut -d'.' -f1)"
+    gcloud_start_instance "$EXP_VM_NAME"
+}
+testop(){
+    EXP_VM_NAME="$(echo "$EXPERIMENT_VM" | cut -d'.' -f1)"
+    gcloud_stop_instance "$EXP_VM_NAME"
+}
