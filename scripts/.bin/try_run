@@ -1,0 +1,8 @@
+#!/bin/sh
+
+set -e
+
+
+TNAME="$(pwd|xargs basename)"
+rsync -azvr . "$EXPERIMENT_VM:/tmp/$TNAME"
+ssh "$EXPERIMENT_VM" "cd /tmp/$TNAME && docker build -t gonna-run . && docker run $@ -t gonna-run"
