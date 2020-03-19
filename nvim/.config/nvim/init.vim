@@ -148,6 +148,9 @@ set hlsearch
 set ignorecase
 set smartcase
 
+" Better emoji support
+set noemoji
+
 " Do not put two spaces after .
 set nojoinspaces
 
