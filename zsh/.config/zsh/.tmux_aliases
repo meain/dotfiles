@@ -15,7 +15,7 @@ t() {
 
 tc(){
     CURRENT_SESSION=$(tmux display-message -p "#S")
-    (cd ~/.dotfiles > /dev/null && tmuxsession dotfiles 2> /dev/null)
+    tmux switch-client -l
     tmux kill-session -t "$CURRENT_SESSION"
 }
 
