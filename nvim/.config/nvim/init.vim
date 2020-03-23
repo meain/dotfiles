@@ -445,6 +445,8 @@ autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;rl const <
 autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;bind <esc>:call ExpandSnip("self.{++} = self.{++}.bind(this)")<cr>
 autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;cim <esc>:call ExpandSnip("import {++} from '../{++}/{++}'")<cr>
 autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;stop if (e) {<cr>e.stopPropagaion()<cr>if(e.nativeEvent) e.nativeEvent.stopImmediatePropagation()<cr>}
+autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;d <div className=""><++></div><esc>11hi
+autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ,. <></><left><left><left>
 
 " markdown
 autocmd FileType markdown inoremap <silent><buffer> ;lkj  <esc>Bi`<esc>Ea`<esc>A
