@@ -66,6 +66,9 @@ Plug 'Shougo/neco-vim', { 'for': 'vim' }                                        
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }           " Language client
 Plug '~/Documents/Projects/projects/deoplete-notmuch', { 'for': 'mail' }                       " Email autocomplete
 
+" Testing
+Plug 'janko/vim-test', { 'on': ['TestNearest', 'TestFile', 'TestLast', 'TestSuite'] }          " Quicky run test from vim
+
 " Dependencies
 Plug 'tpope/vim-repeat'                                                                        " Repeat plugins with .
 Plug 'radenling/vim-dispatch-neovim', { 'on': ['Dispatch', 'Start'] }                          " Neovim support for vim-dispatch
@@ -1318,6 +1321,12 @@ augroup end
 " Dirvish
 let g:loaded_netrwPlugin = 'v165'  "Prevent netrw loading, maybe?
 nnoremap <silent>- :Dirvish %<cr>
+
+" vim-test
+" maybe try creating a new strategy for running tests in a floating terminal
+let test#strategy = "dispatch"
+nnoremap <silent><leader>t :TestNearest<cr>
+nnoremap <silent><leader>T :TestFile<cr>
 
 
 "                             Source External                          "
