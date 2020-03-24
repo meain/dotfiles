@@ -77,6 +77,7 @@ Plug 'davidbeckingsale/writegood.vim', { 'on': ['WritegoodEnable', 'WritegoodTog
 Plug '~/Documents/Projects/projects/vim-colorswitch', { 'do': 'UpdateRemotePlugins' }            " Cycle between color types
 Plug '~/Documents/Projects/projects/vim-package-info'
 Plug '~/Documents/Projects/projects/vim-printer'
+Plug '~/Documents/Projects/projects/vim-mtodo'
 
 call plug#end()
 
