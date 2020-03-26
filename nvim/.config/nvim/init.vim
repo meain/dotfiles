@@ -432,7 +432,7 @@ autocmd FileType css inoremap <silent><buffer> ;center justify-content: center;<
 autocmd FileType css inoremap <silent><buffer> ;cp cursor: pointer;<esc>Bvt;
 autocmd FileType css inoremap <silent><buffer> ;base * {<cr>box-sizing: border-box;<cr>}
 autocmd FileType css inoremap <silent><buffer> ;body body {<cr>margin: 0;<cr>padding: 0;<cr>}
-autocmd FileType css inoremap <silent><buffer> ;shadow box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 0px 2px rgba(0, 0, 0, 0.24);
+autocmd FileType css inoremap <silent><buffer> ;shadow box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02), 0 0px 2px rgba(0, 0, 0, 0.12);
 autocmd FileType css inoremap <silent><buffer> ;fc flex-direction: column;
 autocmd FileType css inoremap <silent><buffer> ;ta text-align: center;<esc>hviw
 autocmd FileType css inoremap <silent><buffer> ;cl .<esc>"*pa{<cr>}<esc>O
@@ -444,12 +444,12 @@ autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;rf <React.
 autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;rfs <React.Fragment>
 autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;rfe </React.Fragment>
 autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;con constructor(props: Props) {<cr>super(props)<cr>}O
-autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;disp dispatch({<cr>type: '<++>',<cr>payload: <++><cr>})<esc>?dispatch<cr>:nohls<cr>jci'
+autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;ds dispatch({<cr>type: '<++>',<cr>payload: <++><cr>})<esc>?dispatch<cr>:nohls<cr>jci'
 autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;rl const <++> = React.lazy(() => import('<++>'))
 autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;bind <esc>:call ExpandSnip("self.{++} = self.{++}.bind(this)")<cr>
 autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;cim <esc>:call ExpandSnip("import {++} from '../{++}/{++}'")<cr>
 autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;stop if (e) {<cr>e.stopPropagaion()<cr>if(e.nativeEvent) e.nativeEvent.stopImmediatePropagation()<cr>}
-autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;d <div className=""><++></div><esc>11hi
+autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;di <div className=""><++></div><esc>11hi
 autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ,. <></><left><left><left>
 
 " markdown
