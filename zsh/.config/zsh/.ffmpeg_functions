@@ -2,7 +2,7 @@
 
 # speed up video by 2X
 faster() {
-	faster_filename=$(echo "$1" | sed 's/\..*/2x.mp4/g')
+	faster_filename=$(echo "$1" | sed 's/\..*$/2x.mp4/g')
 	ffmpeg -i "$1" -filter:v "setpts=0.5*PTS" "$faster_filename"
 }
 
@@ -25,4 +25,10 @@ m4amp3() {
 		echo -e "Processing video '\e[32m$FILE\e[0m'"
 		ffmpeg -i "${FILE}" -vn -ab 128k -ar 44100 -y "${FILE%.m4a}.mp3"
 	done
+}
+
+ffmpeg_giffify() {
+	ffmpeg -i "$1" \
+		-filter_complex "[0:v] fps=10,scale=720:-1,split [a][b];[a] palettegen [p];[b][p] paletteuse" \
+		"$1".gif
 }
