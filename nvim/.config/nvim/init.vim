@@ -1043,7 +1043,7 @@ let g:ale_linters = {
 \  'bash': ['shellcheck'],
 \  'zsh': ['shellcheck']
 \}
-let g:ale_virtualenv_dir_names = ['~/.virtual_envs']
+let g:ale_virtualenv_dir_names = [$WORKON_HOME]
 let g:ale_echo_msg_error_str = '✖'
 let g:ale_echo_msg_warning_str = '⚠'
 let g:ale_echo_msg_format = '%severity% %linter%: %s '

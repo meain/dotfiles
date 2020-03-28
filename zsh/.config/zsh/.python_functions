@@ -7,7 +7,7 @@ rmvenv() {
     read -r sure
 
     case $sure in
-        [Yy]* ) rm -rf ~/.virtual_envs/"$VENVNAME" && echo "Removed $VENVNAME";;
+        [Yy]* ) rm -rf "$WORKON_HOME/$VENVNAME" && echo "Removed $VENVNAME";;
         * ) echo "OK, Don't worry. We are keeping it.";;
     esac
 }

@@ -12,7 +12,6 @@ alias rr=lf
 alias f=fg
 alias q=exit
 alias rm=trash
-alias o='open .'
 alias mkdir='mkdir -p'
 alias clera='clear'
 alias clea='clear'
@@ -28,7 +27,6 @@ alias newsboat='newsboat -q'
 alias brew='HOMEBREW_NO_AUTO_UPDATE=1 brew'
 alias yd='youtube-dl'
 alias ydp='youtube-dl -o "%(playlist_index)s_%(title)s.%(ext)s"'
-alias gcal='gcalcli agenda'
 
 alias ls='lsd --date relative --icon never --size short'
 alias ll='ls -Alh --blocks permission,size,date,name'
@@ -53,7 +51,7 @@ alias up='TERM="screen-256color" up'
 alias ssh='TERM="screen-256color" ssh'
 alias gcloud='TERM="screen-256color" gcloud'
 
-alias reload='source ~/.zshrc'
+alias reload='source ~/.config/zsh/.zshrc'
 alias sourceworkon='source /usr/local/bin/virtualenvwrapper.sh'
 
 alias music='ncmpcpp'

@@ -1,12 +1,12 @@
 #!/bin/sh
 
 # Golang
-export GOPATH=~/.go
+export GOPATH=~/.cache/go
 export GOBIN=$GOPATH/bin
 PATH=$PATH:$GOPATH/bin
 
 # Rust
-PATH="$HOME/.cargo/bin:$PATH"
+PATH="$HOME/.cache/cargo/bin:$PATH"
 
 # Poetry
 PATH="$HOME/.poetry/bin:$PATH"
@@ -15,7 +15,7 @@ PATH="$HOME/.poetry/bin:$PATH"
 PATH=/usr/local/bin:$PATH
 PATH="$HOME/.pyenv/bin:$PATH"
 export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
-export WORKON_HOME=~/.virtual_envs
+export WORKON_HOME=~/.cache/virtual_envs
 
 # ruby
 export PATH="/usr/local/opt/ruby/bin:$PATH"
@@ -41,6 +41,10 @@ PATH=$PATH:$HOME/.temp_bin
 PATH="/usr/local/opt/gettext/bin:$PATH"
 
 export PATH
+
+# rustup and cargo
+export RUSTUP_HOME="$HOME/.cache/rustup"
+export CARGO_HOME="$HOME/.cache/cargo"
 
 # datafiles
 export DATAFILES_PATH="$HOME/.config/datafiles"
