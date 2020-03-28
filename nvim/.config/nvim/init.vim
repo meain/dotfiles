@@ -410,7 +410,7 @@ autocmd BufNewFile *.sh :norm! i#!/bin/sh
 autocmd FileType gitcommit inoremap <silent><buffer> ;bang <++>: <++>
 
 " html
-autocmd FileType html inoremap <silent><buffer> ;bang <esc>:0read !cat ~/.datafiles/html_starter<cr>gg
+autocmd FileType html inoremap <silent><buffer> ;bang <esc>:0read !cat ~/.config/datafiles/html_starter<cr>gg
 autocmd FileType html inoremap <silent><buffer> ;fa <i class="fas fa-"></i><esc>F"i
 autocmd FileType html inoremap <silent><buffer> ;css <link rel="stylesheet" href="index.css" type="text/css" /><esc>?index.css<cr>vi"
 autocmd FileType html inoremap <silent><buffer> ;js <script src="index.js"></script><esc>?index.js<cr>vi"
@@ -758,8 +758,8 @@ function! s:LoadShell(filname)
 endfunction
 augroup custom_shell_files
   autocmd!
-  autocmd BufNewFile .gitignore :call s:LoadShell('~/.datafiles/sample_gitignore')
-  autocmd BufNewFile index.html :call s:LoadShell('~/.datafiles/html_starter')
+  autocmd BufNewFile .gitignore :call s:LoadShell('~/.config/datafiles/sample_gitignore')
+  autocmd BufNewFile index.html :call s:LoadShell('~/.config/datafiles/html_starter')
 augroup end
 
 " Close unused buffers

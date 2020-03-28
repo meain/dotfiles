@@ -118,7 +118,7 @@ blog() {
 	DATE=$(date +%Y-%m-%d)
 	NAME="$DATE-$1.md"
 	if [ ! -f "$NAME" ]; then
-		cat ~/.datafiles/blog_template >>"$NAME"
+		cat "$DATAFILES_PATH/blog_template" >>"$NAME"
 	fi
 	$EDITOR "$NAME"
 }
@@ -231,7 +231,7 @@ stocks() {
 }
 
 morning() {
-	xargs open <~/.datafiles/morning_pages
+	xargs open <"$DATAFILES_PATH/morning_pages"
 	echo "Syncing mail..." && mailsync >/dev/null 2>/dev/null
 	for stock in $(echo "$STOCKS" | tr ',' '\n' | sed 's/^/NSE:/'); do
 		tock "$stock" --may-wait

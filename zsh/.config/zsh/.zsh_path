@@ -41,3 +41,6 @@ PATH=$PATH:$HOME/.temp_bin
 PATH="/usr/local/opt/gettext/bin:$PATH"
 
 export PATH
+
+# datafiles
+export DATAFILES_PATH="$HOME/.config/datafiles"
