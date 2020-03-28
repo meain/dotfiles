@@ -11,3 +11,4 @@ mpd.pid
 mpdstate
 mpv/.config/mpv/watch_later/
 mpd/.mpd/playlists/*
+*.log

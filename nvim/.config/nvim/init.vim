@@ -237,8 +237,8 @@ let g:netrw_banner = 0
 set diffopt+=vertical,context:3
 
 " Setting up python
-let g:python_host_prog = $HOME . '/.pyenv/versions/2.7.11/bin/python'
-let g:python3_host_prog = $HOME . '/.pyenv/versions/3.6.6/bin/python'
+let g:python_host_prog = $PYENV_ROOT . '/versions/2.7.11/bin/python'
+let g:python3_host_prog = $PYENV_ROOT . '/versions/3.6.6/bin/python'
 
 " Fill chars
 set fillchars=vert:\|

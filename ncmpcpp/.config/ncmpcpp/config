@@ -1,3 +1,5 @@
+ncmpcpp_directory = ~/.config/ncmpcpp
+
 [mpd]
 mpd_music_dir = "~/Documents/Media/Music"
 mpd_host = "localhost"
