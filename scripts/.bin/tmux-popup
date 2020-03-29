@@ -1,0 +1,7 @@
+#!/bin/sh
+
+set -e
+
+[ -z $height ] && height=${TMUX_POPUP_HEIGHT:-80%}
+[ -z $width ] && width=${TMUX_POPUP_WEIGHT:-80%}
+tmux popup -d '#{pane_current_path}' -xC -yC -w$width -h$height -K -E -R "${1:-zsh}"
