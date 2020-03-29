@@ -10,7 +10,6 @@ alias ......='cd ../../../../..'
 alias j=z
 alias rr=lf
 alias f=fg
-alias q=exit
 alias rm=trash
 alias mkdir='mkdir -p'
 alias clera='clear'

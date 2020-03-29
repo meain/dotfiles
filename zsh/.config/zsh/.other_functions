@@ -327,3 +327,13 @@ nvm() {
 o() {
 	[ -z "$1" ] && open . || open "$1"
 }
+
+q(){
+	[ -z "$TMUX" ] && exit
+	if [ "$(tmux list-panes | wc -l | sed 's/ //g')" = "1" ]; then
+		tmux switch-client -l || tmux switch-client -n || exit
+		exit
+	else
+		exit
+	fi
+}
