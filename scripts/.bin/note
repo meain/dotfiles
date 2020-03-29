@@ -1,6 +1,6 @@
 #!/bin/sh
 
-NOTES_FOLDER="$HOME/.cache/notes"
+NOTES_FOLDER="$HOME/.notes"
 mkdir -p "$NOTES_FOLDER/.trash"
 
 open_note() {
