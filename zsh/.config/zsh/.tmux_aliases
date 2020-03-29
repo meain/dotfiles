@@ -30,6 +30,19 @@ tt() {
 	fi
 }
 
+ttc() {
+    CURRENT_SESSION=$(tmux display-message -p "#S")
+    if [ -z "$1" ]; then
+	    FOLDER=$(pwd | xargs basename | sed 's:^\.::')
+	    tmuxsession "$FOLDER"
+    else
+	    mkdir "$1"
+	    cd "$1" || return 1
+	    tmuxsession "$1"
+    fi
+    tmux kill-session -t "$CURRENT_SESSION"
+}
+
 
 alias tm='tmux'
 alias ta='tmux attach -t'
