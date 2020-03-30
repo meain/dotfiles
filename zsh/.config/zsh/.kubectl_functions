@@ -26,3 +26,4 @@ k_change_namespace(){
 alias wk="watch kubectl get pods,service,hpa"
 alias wkp="watch kubectl get pods"
 alias wkt="watch kubectl top nodes"
+alias kns="kubectl config view --minify --output 'jsonpath={..namespace}'"
