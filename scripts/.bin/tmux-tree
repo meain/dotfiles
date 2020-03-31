@@ -1,0 +1,16 @@
+#!/bin/sh
+
+set -e
+
+tmux ls -F'#{session_id}' | while read -r s; do
+    S=$(tmux ls -F'#{session_id}#{session_name}: #{T:tree_mode_format}' | grep ^"$s")
+    session_info=${S##$s}
+    session_name=$(echo "$session_info" | cut -d ':' -f 1)
+    [ "$1" != "$session_name" ] && continue
+
+    echo "$session_info"
+    tmux lsw -t"$s" -F'#{window_id}' | while read -r w; do
+        W=$(tmux lsw -t"$s" -F'#{window_id}#{T:tree_mode_format}' | grep ^"$w")
+        echo "- ${W##$w}"
+    done
+done
