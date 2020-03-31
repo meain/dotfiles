@@ -1,0 +1,44 @@
+#!/bin/sh
+
+set -e
+
+remote_sync() {
+    IGNORE_STRING=""
+    if [ -f .dockerignore ]; then
+        IGNORE_STRING="$(sed '/^\ *$/d;s|^|--exclude |' .dockerignore | tr '\n' ' ')"
+    fi
+    rsync -azvr --exclude '.git' $IGNORE_STRING . "$EXPERIMENT_VM:/tmp/$1"
+}
+
+# get name
+ROOT="$(git remote get-url origin 2>/dev/null | sed 's/\.git$//')"
+if [ -n "$ROOT" ]; then
+    NAME="$(basename "$ROOT")"
+else
+    NAME="$(pwd | xargs basename)"
+fi
+
+printf "Enter name [%s]: " "$NAME"
+read
+[ -n "$REPLY" ] && NAME="$REPLY"
+
+REPO=""
+
+GCR_REPO="gcr.io/deeplearning-181416"
+ECR_REPO="987134842112.dkr.ecr.us-east-2.amazonaws.com"
+
+REPO="$ECR_REPO"
+[ "$1" = "--aws" ] && REPO="$ECR_REPO" && shift
+[ "$1" = "--gcp" ] && REPO="$GCR_REPO" && shift
+
+if [ -z "$1" ]; then
+    printf "Tag: "
+    TAG="$REPLY"
+else
+    TAG="$1"
+fi
+
+FREPO="$REPO/$NAME:$TAG"
+echo "Pushing to $FREPO"
+remote_sync "$NAME"
+TERM=screen-256color ssh "$EXPERIMENT_VM" -t "cd /tmp/$NAME && docker build -t '$FREPO' . && docker push '$FREPO'"
