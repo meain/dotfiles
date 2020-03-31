@@ -1,18 +1,5 @@
 #! /bin/sh
 
-t() {
-    SESSION="$1"
-    if [ -z "$1" ]; then
-        if [ -n "$( tmux ls )" ]; then
-            SESSION=$(tmux ls | sed 's/:.*//g' | fzf --height 20% --layout=reverse --prompt "Session: " --preview 'tmux ls | grep {}' --preview-window up:1 --print-query | \tail -n1)
-        fi
-    fi
-
-    if [ -n "$SESSION" ]; then
-        tmuxsession "$SESSION"
-    fi
-}
-
 tc(){
     CURRENT_SESSION=$(tmux display-message -p "#S")
     tmux switch-client -l || tmux switch-client -n
