@@ -456,7 +456,7 @@ autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ,. <></><le
 autocmd FileType markdown inoremap <silent><buffer> ;lkj  <esc>Bi`<esc>Ea`<esc>A
 
 " others
-autocmd BufReadPost *.bin/mailsync inoremap <silent><buffer> ;t notmuch tag + 'folder:/INBOX/' 'from:'<esc>"*P0kf+lyiwj0f+p
+autocmd BufReadPost *.bin/mailsync inoremap <silent><buffer> ;t <esc>k"tyy"tp$hhdi'ifrom:<esc>"*p
 
 
 
