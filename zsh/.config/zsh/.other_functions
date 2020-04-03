@@ -330,7 +330,9 @@ o() {
 
 q(){
 	[ -z "$TMUX" ] && exit
-	if [ "$(tmux list-panes | wc -l | sed 's/ //g')" = "1" ]; then
+	PANES="$(tmux list-panes | wc -l | sed 's/ //g')"
+	WINDOWS="$(tmux list-windows | wc -l | sed 's/ //g')"
+	if [ "$PANES" = "1" ] && [ "$WINDOWS" = "1" ]; then
 		tmux switch-client -l || tmux switch-client -n || exit
 		exit
 	else
