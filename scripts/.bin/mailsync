@@ -22,6 +22,8 @@ notmuch tag +newsletter +nonotify 'folder:/INBOX/' 'from:noreply@medium.com'
 notmuch tag +newsletter +nonotify 'folder:/INBOX/' 'from:no-reply@dribbble.com'
 notmuch tag +newsletter +nonotify 'folder:/INBOX/' 'from:no-reply@screener.in'
 notmuch tag +newsletter +nonotify 'folder:/INBOX/' 'from:do-not-reply@stackoverflow.email'
+notmuch tag +newsletter +nonotify 'folder:/INBOX/' 'from:jess@dev.to'
+notmuch tag +newsletter +nonotify 'folder:/INBOX/' 'from:npm@npmjs.com'
 
 # bullshit
 notmuch tag +bullshit +nonotify 'folder:/INBOX/' 'from:marketradar@newsletter.geojit.net'
