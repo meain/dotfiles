@@ -22,9 +22,9 @@ dr() {
 }
 
 dbr() {
-    if docker build .; then
-        IMG_ID=$(docker images --format "{{.ID}}" | head -n1)
-        docker run "$@" -it "$IMG_ID"
+    TAG="$RANDOM"
+    if docker build -t "$TAG" .; then
+        docker run "$@" -it "$TAG"
     fi
 }
 
