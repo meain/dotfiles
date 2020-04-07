@@ -316,7 +316,7 @@ docs() {
 }
 
 nvm() {
-	if [ -z "$NVM_LOADED" ];then
+	if [ -z "$NVM_LOADED" ]; then
 		[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"
 		[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"
 		export NVM_LOADED=1
@@ -328,14 +328,16 @@ o() {
 	[ -z "$1" ] && open . || open "$1"
 }
 
-q(){
+q() {
 	[ -z "$TMUX" ] && exit
 	PANES="$(tmux list-panes | wc -l | sed 's/ //g')"
 	WINDOWS="$(tmux list-windows | wc -l | sed 's/ //g')"
-	if [ "$PANES" = "1" ] && [ "$WINDOWS" = "1" ]; then
-		tmux switch-client -l || tmux switch-client -n || exit
-		exit
+	if ! tmux lsp -aF'#{pane_tty}' | grep -q "^$(tty)$"; then
+		# popup
+		exit 0
+	elif [ "$PANES" = "1" ] && [ "$WINDOWS" = "1" ]; then
+		tmux switch-client -l || tmux switch-client -n || exit 0
 	else
-		exit
+		exit 0
 	fi
 }
