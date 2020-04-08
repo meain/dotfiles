@@ -1,78 +1,20 @@
 #!/bin/sh
-# Version: 2.0.2
-# Description: Download a random wallpaper from wallhaven.cc.
 set -e
 
-# Name for your wallpaper image
-img="wallpaper.jpg"
-
-# Image folder location
-imgFolder="/tmp"
-
-# Set the resolution
-# All: Do not include for all
-# standard:
-#	800x600 1024x768 1280x960 1280x1024 1400x1050 1600x1200 2560x2048
-# widescreen:
-#	1024x600 1280x800 1366x768 1440x900 1600x900 1680x1050 1920x1080
-#	1920x1200 2560x1440 2560x1600
-#res=1366x768
-
-# Set the purity filter setting
-# SFW			    = 100
-# Sketchy			= 010
-# Both				= 110
-purity=100
-
-# Set the category
-# General		        = 100
-# Manga/Anime	        = 010
-# People            	= 001
-# NOTE: Can combine them
-categories=010
-
-# Set the aspect ratio of the image
-# All				= Do not include for all
-# 4:3				= 4x3
-# 5:4				= 5x4
-# 16.9				= 16x9
-# 16:10				= 16x10
-# 32:9  			= 32x9
-# 48:9				= 48x9
-# NOTE: Can combine them by seperating with ,
-#aspect=4x3,48x9
-
-# random
-# toplist
-# latest
-sorting="random"
-
-# Set the site address
 site="wallhaven.cc"
+purity=100  # SFW=100 Sketchy=010 Both=110
+categories=010  # General=100 Anime=010 People=001
+sorting="random"  # random toplist latest
 
-# Combine the two above
+img="wallpaper.jpg"
+imgFolder="/tmp"
 wallpaper="$imgFolder/$img"
 
-# Address for the wallpaper website along with all of the selected options
 wallpaperURL="https://$site/search?categories=$categories&purity=$purity&sorting=$sorting&order=desc"
-
-# Randomly selected image
 randPicURL=`curl -s "$wallpaperURL" | grep -oE '<a class="preview" href="https://'$site'/w/(.*)"' | head -1 | cut -d "\"" -f 4`
-
-# Parse out the image url
 randPic=`curl -s $randPicURL | grep -oE 'src="https://w.'$site'/full/(.*)' | cut -d "\"" -f 2`
-
-########
-# NOTE #
-########
-# If you just want to save the image avoid the whole PNG issue#1, use the following command
-# instead to save the image.
-# cd $imgFolder; wget $randPic
-
-# Download it
 curl -s -o $wallpaper "$randPic"
 echo "$randPic" | sed 's|.*/||' > /tmp/current_wallpaper_name
+
 osascript -e 'tell application "Finder" to set desktop picture to POSIX file "/tmp/wallpaper.jpg"'
 killall Dock
-
-exit 0
