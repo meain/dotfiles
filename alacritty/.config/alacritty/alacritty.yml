@@ -63,32 +63,34 @@ color_schemes:
       cyan:    '0xc2fefa'
       white:   '0xffffff'
   light: &light
-    # pencil light
+    # Papercolor
     primary:
-      background: '0xf1f1f1'
-      foreground: '0x424242'
+      background: '0xEEEEEE'
+      foreground: '0x4D4D4C'
+
     # Normal colors
     normal:
-      black:   '0x212121'
-      red:     '0xc30771'
-      green:   '0x10a778'
-      yellow:  '0xa89c14'
-      blue:    '0x008ec4'
-      magenta: '0x523c79'
-      cyan:    '0x20a5ba'
-      white:   '0xe0e0e0'
+      black:   '0xEDEDED'
+      red:     '0xD7005F'
+      green:   '0x718C00'
+      yellow:  '0xD75F00'
+      blue:    '0x4271AE'
+      magenta: '0x8959A8'
+      cyan:    '0x3E999F'
+      white:   '0x4D4D4C'
+
     # Bright colors
     bright:
-      black:   '0x212121'
-      red:     '0xfb007a'
-      green:   '0x5fd7af'
-      yellow:  '0xf3e430'
-      blue:    '0x20bbfc'
-      magenta: '0x6855de'
-      cyan:    '0x4fb8cc'
-      white:   '0xf1f1f1'
+      black:   '0x969694'
+      red:     '0xD7005F'
+      green:   '0x718C00'
+      yellow:  '0xD75F00'
+      blue:    '0x4271AE'
+      magenta: '0x8959A8'
+      cyan:    '0x3E999F'
+      white:   '0xF5F5F5'
 
-colors: *dark
+colors: *light
 
 visual_bell:
   animation: EaseOutExpo

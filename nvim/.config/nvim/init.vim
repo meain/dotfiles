@@ -6,6 +6,8 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 " Visual enhancements
 Plug 'mhinz/vim-janah'                                                                         " Janah colorscheme
+Plug 'cormacrelf/vim-colors-github'
+Plug 'logico/typewriter-vim'
 Plug 'Yggdroot/indentLine'                                                                     " Show indent
 Plug 'mhinz/vim-signify'                                                                       " Git diff icons in gutter
 Plug 'norcalli/nvim-colorizer.lua'                                                             " Highlight color values
@@ -284,8 +286,8 @@ augroup end
 " tomorrow-night, zenburn, base16-classic-light, base16-classic-dark
 " light:pencil
 set termguicolors
-set background=dark
-colorscheme janah
+set background=light
+colorscheme github
 
 " Use italics for some text
 highlight htmlArg gui=italic
