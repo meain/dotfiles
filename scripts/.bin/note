@@ -10,6 +10,9 @@ open_note() {
     done | sed 'N;s/\n/ /' | sort -r -k2,7 | column -t |
         fzf --query "$*" --preview "echo '{}' | awk '{print \$1}' | xargs -I{} bat -p --color always $NOTES_FOLDER/{}" |
         cut -d' ' -f1 | xargs -I{} "$EDITOR" "$NOTES_FOLDER/{}"
+    cd "$NOTES_FOLDER" 
+    NAME="$(git status --short | sed 's/^...//' | head -n1)"
+    git add . && git commit -m "Updated $NAME" && git push origin master
 }
 
 new_note() {
