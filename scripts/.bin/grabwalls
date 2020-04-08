@@ -1,0 +1,22 @@
+#!/bin/sh
+set -e
+
+site="wallhaven.cc"
+purity=100  # SFW=100 Sketchy=010 Both=110
+categories=010  # General=100 Anime=010 People=001
+sorting="random"  # random toplist latest
+
+imgFolder="/tmp/walls"
+mkdir -p $imgFolder
+
+wallpaperURL="https://$site/search?categories=$categories&purity=$purity&sorting=$sorting&order=desc"
+
+getPicURL() {
+    wurl=`curl -s "$1" | grep -oE 'https://w.wallhaven.cc/full/[a-z0-9_\/\.-]*'`
+    curl "$wurl" -s -o "$imgFolder/$RANDOM.png"
+}
+randPicURL=$(curl -s "$wallpaperURL" | grep -oE 'https://'$site'/w/[a-z0-9]+')
+echo "$randPicURL" |
+    while read -r u; do
+        getPicURL "$u"
+    done
