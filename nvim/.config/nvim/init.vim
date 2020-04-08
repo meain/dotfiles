@@ -591,24 +591,7 @@ autocmd BufNewFile .vimruncmd :w | :!chmod +x %
 autocmd BufNewFile,BufRead .vimruncmd set filetype=sh
 
 " Terminal colors
-let g:terminal_color_0 =  '#000000'
-let g:terminal_color_1 =  '#f7786d'
-let g:terminal_color_2 =  '#bde97c'
-let g:terminal_color_3 =  '#efdfac'
-let g:terminal_color_4 =  '#6ebaf8'
-let g:terminal_color_5 =  '#ef88ff'
-let g:terminal_color_6 =  '#90fdf8'
-let g:terminal_color_7 =  '#f5f5f5'
-let g:terminal_color_8 =  '#b4b4b4'
-let g:terminal_color_9 =  '#f99f92'
-let g:terminal_color_10 = '#e3f7a1'
-let g:terminal_color_11 = '#f2e9bf'
-let g:terminal_color_12 = '#b3d2ff'
-let g:terminal_color_13 = '#e5bdff'
-let g:terminal_color_14 = '#c2fefa'
-let g:terminal_color_15 = '#ffffff'
-let g:terminal_color_background = '#1c1c1c'
-let g:terminal_color_foreground = '#e5e1d8'
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 
 
