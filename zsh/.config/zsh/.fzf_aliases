@@ -5,7 +5,7 @@ export FZF_DEFAULT_OPTS='
     --prompt=" "
     --inline-info
     --reverse --height "40%"
-    --color fg:242,hl:250,fg+:15,bg+:234,hl+:2
+    --color fg:248,hl:250,fg+:232,bg+:231,hl+:2
     --color info:108,prompt:242,spinner:108,pointer:1,marker:168
 '
 
