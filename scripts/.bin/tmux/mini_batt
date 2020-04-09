@@ -7,7 +7,7 @@ SOURCE=$(pmset -g batt | grep 'Now drawing from' | awk '{print $4}' | sed 's:^.:
 #   i      
 BATTERY_ICON=" "
 if [ "$VALUE" -lt 10 ] && [ ! "$SOURCE" = "AC" ];then
-  VALUE="#[bg=red,fg=white] LOW BATTERY | $VALUE% #[bg=default]"
+  VALUE="#[bg=red,fg=colour231] LOW BATTERY | $VALUE% #[bg=default]"
 elif [ "$VALUE" -lt 20 ];then
   BATTERY_ICON=" "
   VALUE="$VALUE%"
