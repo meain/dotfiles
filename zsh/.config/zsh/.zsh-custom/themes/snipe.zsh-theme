@@ -9,13 +9,13 @@ colors
 
 # variables
 INSERT_COLOR="%{$reset_color%}"
-NORMAL_COLOR="%{$BG[240]%}"
+NORMAL_COLOR="%{$BG[253]%}"
 
 # https://github.com/clvv/oh-my-zsh/blob/master/modules/git/functions/git-info
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:*' stagedstr "%F{yellow}"
+zstyle ':vcs_info:*' stagedstr "%F{003}"
 zstyle ':vcs_info:*' unstagedstr "%F{red}"
 zstyle ':vcs_info:*' use-simple true
 zstyle ':vcs_info:git+set-message:*' hooks git-untracked
@@ -125,16 +125,16 @@ function _cur_folder_with_git_base {
 
   if [ -n "$BASE" ]; then
     if [[ "$DIR" == *"$BASE"* ]];then
-      echo "$DIR" | sed "s/$BASE/%F{244}$BASE%{$reset_color%}/"
+      echo "$DIR" | sed "s/$BASE/%F{240}$BASE%{$reset_color%}/"
     else
-      echo "%F{244}$BASE%{$reset_color%} $DIR"
+      echo "%F{240}$BASE%{$reset_color%} $DIR"
     fi
   else
       echo "$DIR"
   fi
 }
 
-PROMPT='${_return_status}${_tmux_indicator}%F{yellow}%B%(1j.#.) '
+PROMPT='${_return_status}${_tmux_indicator}%F{003}%B%(1j.#.) '
 RPROMPT='%F{white}%2~ '
 
 function generate_lpropmpt() {
@@ -142,7 +142,7 @@ function generate_lpropmpt() {
 }
 
 function generate_rpropmpt() {
-  echo "%F{yellow}$(virtualenv_info)%F{blue}$(_current_kubernets_namespace)$FG[240]$(_git_pushable)%{$reset_color%} $(_cur_folder_with_git_base)%{%B%F{cyan}%}$(_hosthame_custom)"
+  echo "%F{003}$(virtualenv_info)%F{blue}$(_current_kubernets_namespace)$FG[240]$(_git_pushable)%{$reset_color%} $(_cur_folder_with_git_base)%{%B%F{cyan}%}$(_hosthame_custom)"
 }
 
 ASYNC_LPROC=0
