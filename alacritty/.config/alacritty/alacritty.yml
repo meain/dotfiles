@@ -29,7 +29,7 @@ font:
   bold:
     family: Operator Mono Book
   italic:
-    family: Operator Mono
+    family: Operator Mono Book
   size: 14.5
   offset:
     x: 0
