@@ -25,11 +25,11 @@ scrolling:
 
 font:
   normal:
-    family: Liga CamingoCode
+    family: Operator Mono Book
   bold:
-    family: Liga CamingoCode
+    family: Operator Mono Book
   italic:
-    family: Liga CamingoCode
+    family: Operator Mono
   size: 14.5
   offset:
     x: 0
@@ -63,14 +63,14 @@ color_schemes:
       cyan:    '0xc2fefa'
       white:   '0xffffff'
   light: &light
-    # Papercolor
+    # Papercolor modified
     primary:
-      background: '0xEEEEEE'
+      background: '0xFFFFFF'
       foreground: '0x4D4D4C'
 
     # Normal colors
     normal:
-      black:   '0xEDEDED'
+      black:   '0x444444'
       red:     '0xD7005F'
       green:   '0x718C00'
       yellow:  '0xD75F00'
