@@ -1,0 +1,10 @@
+#!/bin/sh
+
+set -e
+
+[ -z "$1" ] && exit
+if echo "$1" | grep -qE 'https?\:\/\/[a-z0-9_\.\?\&\=#-]+';then
+   tmux popup -w90% -h90% -KE -d '#{pane_current_path}' -R "lynx -lss='~/.lynx.lss' '$1'"
+else
+   tmux popup -w90% -h90% -KE -d '#{pane_current_path}' -R "nvim '$1'"
+fi
