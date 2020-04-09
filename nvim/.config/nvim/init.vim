@@ -256,9 +256,10 @@ set foldnestmax=10
 
 augroup colorscheme_typewriter
   autocmd!
-  autocmd ColorScheme typewriter highlight Normal ctermbg=001 guibg=#ffffff
+  autocmd ColorScheme typewriter highlight Normal ctermbg=231 guibg=#ffffff
   autocmd ColorScheme typewriter highlight SignColumn ctermbg=231 guibg=#ffffff
   autocmd ColorScheme typewriter highlight LineNr ctermbg=240 guibg=#ffffff
+  autocmd ColorScheme typewriter highlight StatusLineNC ctermbg=255 guibg=#f5f5f5 gui=NONE cterm=NONE
   autocmd ColorScheme typewriter highlight VertSplit ctermbg=231 guibg=#ffffff
   autocmd ColorScheme typewriter highlight SignifySignAdd cterm=bold gui=bold ctermfg=002 guifg=#008000 guibg=#ffffff
   autocmd ColorScheme typewriter highlight SignifySignDelete cterm=bold gui=bold ctermfg=001 guifg=#800000 guibg=#ffffff
@@ -1024,8 +1025,8 @@ nnoremap <silent>,, :ALEFix<cr>
 let g:ale_sign_error = '✖'
 let g:ale_sign_warning = '⚠'
 " let g:ale_virtualtext_cursor = 1
-highlight ALEErrorSign ctermfg=196 guifg=#ff0000 ctermbg=234 guibg=#1f1f1f
-highlight ALEWarningSign ctermfg=226 guifg=#ffff00 ctermbg=234 guibg=#1f1f1f
+highlight ALEErrorSign ctermfg=196 guifg=#ff0000 ctermbg=231 guibg=#ffffff
+highlight ALEWarningSign ctermfg=226 guifg=#e75600 ctermbg=231 guibg=#ffffff
 highlight ALEError ctermfg=052 guifg=#63120c
 highlight clear ALEWarning
 let g:ale_statusline_format = ['✖ %d', '⚠ %d', '⬥ ok']
