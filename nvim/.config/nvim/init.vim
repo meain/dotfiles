@@ -69,6 +69,7 @@ Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.s
 Plug '~/Documents/Projects/projects/deoplete-notmuch', { 'for': 'mail' }                       " Email autocomplete
 
 " Testing
+Plug 'christoomey/vim-tmux-runner', { 'on': ['VtrSendCommandToRunner', 'TestNearest', 'TestFile', 'TestLast', 'TestSuite'] }
 Plug 'janko/vim-test', { 'on': ['TestNearest', 'TestFile', 'TestLast', 'TestSuite'] }          " Quicky run test from vim
 
 " Dependencies
@@ -1116,11 +1117,9 @@ hi xmlEndTag guifg=#87d787 ctermfg=114
 augroup other_art
   au FileType javascript,typescript nnoremap <silent><leader>a :Dispatch! npm run build<cr>
   au FileType javascript,typescript nnoremap <silent><leader>r :Dispatch npm start<cr>
-  au FileType javascript,typescript nnoremap <silent><leader>t :Dispatch! npm run test<cr>
 
   au FileType rust nnoremap <silent><leader>a :Dispatch! cargo build<cr>
   au FileType rust nnoremap <silent><leader>r :Start cargo run<cr>
-  au FileType rust nnoremap <silent><leader>t :Dispatch! cargo test<cr>
 augroup end
 
 " Emmet
@@ -1321,9 +1320,11 @@ nnoremap <silent>- :Dirvish %<cr>
 
 " vim-test
 " maybe try creating a new strategy for running tests in a floating terminal
-let test#strategy = "dispatch"
+let test#strategy = "vtr"
 nnoremap <silent><leader>t :TestNearest<cr>
-nnoremap <silent><leader>T :TestFile<cr>
+nnoremap <silent><leader>tn :TestNearest<cr>
+nnoremap <silent><leader>tf :TestFile<cr>
+nnoremap <silent><leader>tl :TestLast<cr>
 
 
 "                             Source External                          "
