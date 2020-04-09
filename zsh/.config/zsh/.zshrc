@@ -111,14 +111,14 @@ case "$(uname -s)" in
 esac
 
 # Source colors for ls
-case "$(uname -s)" in
-  Darwin)
-    eval $(gdircolors -b $ZDOTDIR/.dircolors)
-    ;;
-  Linux)
-    eval $(dircolors -b $ZDOTDIR/.dircolors)
-    ;;
-esac
+# case "$(uname -s)" in
+#   Darwin)
+#     eval $(gdircolors -b $ZDOTDIR/.dircolors)
+#     ;;
+#   Linux)
+#     eval $(dircolors -b $ZDOTDIR/.dircolors)
+#     ;;
+# esac
 
 # Use vim mode in zsh
 autoload -Uz edit-command-line
