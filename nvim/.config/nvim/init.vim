@@ -254,6 +254,17 @@ set foldignore=
 set foldlevelstart=10
 set foldnestmax=10
 
+augroup colorscheme_typewriter
+  autocmd!
+  autocmd ColorScheme typewriter highlight Normal ctermbg=001 guibg=#ffffff
+  autocmd ColorScheme typewriter highlight SignColumn ctermbg=231 guibg=#ffffff
+  autocmd ColorScheme typewriter highlight LineNr ctermbg=240 guibg=#ffffff
+  autocmd ColorScheme typewriter highlight VertSplit ctermbg=231 guibg=#ffffff
+  autocmd ColorScheme typewriter highlight SignifySignAdd cterm=bold gui=bold ctermfg=002 guifg=#008000 guibg=#ffffff
+  autocmd ColorScheme typewriter highlight SignifySignDelete cterm=bold gui=bold ctermfg=001 guifg=#800000 guibg=#ffffff
+  autocmd ColorScheme typewriter highlight SignifySignChange cterm=bold gui=bold ctermfg=003 guifg=#0087af guibg=#ffffff
+augroup end
+
 " ColorScheme change ( janah )
 augroup colorscheme_janah
   autocmd!
@@ -287,7 +298,7 @@ augroup end
 " light:pencil
 set termguicolors
 set background=light
-colorscheme github
+colorscheme typewriter
 
 " Use italics for some text
 highlight htmlArg gui=italic
@@ -312,7 +323,7 @@ augroup end
 
 " Better coloring for errors
 highlight clear SpellBad
-highlight SpellBad cterm=underline gui=underline ctermfg=11 guifg=#ffff00
+highlight SpellBad cterm=underline gui=underline ctermfg=11 guifg=#ffaf00
 
 " Don't you f'in touch my cursor
 set guicursor=
@@ -1015,7 +1026,7 @@ let g:ale_sign_warning = '⚠'
 " let g:ale_virtualtext_cursor = 1
 highlight ALEErrorSign ctermfg=196 guifg=#ff0000 ctermbg=234 guibg=#1f1f1f
 highlight ALEWarningSign ctermfg=226 guifg=#ffff00 ctermbg=234 guibg=#1f1f1f
-highlight ALEError ctermbg=052 guibg=#63120c
+highlight ALEError ctermfg=052 guifg=#63120c
 highlight clear ALEWarning
 let g:ale_statusline_format = ['✖ %d', '⚠ %d', '⬥ ok']
 let g:ale_linters = {
