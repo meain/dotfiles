@@ -6,6 +6,8 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 " Visual enhancements
 Plug 'mhinz/vim-janah'                                                                         " Janah colorscheme
+Plug 'cormacrelf/vim-colors-github'
+Plug 'logico/typewriter-vim'
 Plug 'Yggdroot/indentLine'                                                                     " Show indent
 Plug 'mhinz/vim-signify'                                                                       " Git diff icons in gutter
 Plug 'norcalli/nvim-colorizer.lua'                                                             " Highlight color values
@@ -67,6 +69,7 @@ Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.s
 Plug '~/Documents/Projects/projects/deoplete-notmuch', { 'for': 'mail' }                       " Email autocomplete
 
 " Testing
+Plug 'christoomey/vim-tmux-runner', { 'on': ['VtrSendCommandToRunner', 'TestNearest', 'TestFile', 'TestLast', 'TestSuite'] }
 Plug 'janko/vim-test', { 'on': ['TestNearest', 'TestFile', 'TestLast', 'TestSuite'] }          " Quicky run test from vim
 
 " Dependencies
@@ -252,6 +255,18 @@ set foldignore=
 set foldlevelstart=10
 set foldnestmax=10
 
+augroup colorscheme_typewriter
+  autocmd!
+  autocmd ColorScheme typewriter highlight Normal ctermbg=231 guibg=#ffffff
+  autocmd ColorScheme typewriter highlight SignColumn ctermbg=231 guibg=#ffffff
+  autocmd ColorScheme typewriter highlight LineNr ctermbg=240 guibg=#ffffff
+  autocmd ColorScheme typewriter highlight VertSplit guibg=#ffffff guifg=#444444 gui=NONE cterm=NONE
+  autocmd ColorScheme typewriter highlight StatusLineNC ctermbg=255 guibg=#f5f5f5 gui=NONE cterm=NONE
+  autocmd ColorScheme typewriter highlight SignifySignAdd cterm=bold gui=bold ctermfg=002 guifg=#008000 guibg=#ffffff
+  autocmd ColorScheme typewriter highlight SignifySignDelete cterm=bold gui=bold ctermfg=001 guifg=#800000 guibg=#ffffff
+  autocmd ColorScheme typewriter highlight SignifySignChange cterm=bold gui=bold ctermfg=003 guifg=#0087af guibg=#ffffff
+augroup end
+
 " ColorScheme change ( janah )
 augroup colorscheme_janah
   autocmd!
@@ -284,8 +299,8 @@ augroup end
 " tomorrow-night, zenburn, base16-classic-light, base16-classic-dark
 " light:pencil
 set termguicolors
-set background=dark
-colorscheme janah
+set background=light
+colorscheme typewriter
 
 " Use italics for some text
 highlight htmlArg gui=italic
@@ -310,7 +325,7 @@ augroup end
 
 " Better coloring for errors
 highlight clear SpellBad
-highlight SpellBad cterm=underline gui=underline ctermfg=11 guifg=#ffff00
+highlight SpellBad cterm=underline gui=underline ctermfg=11 guifg=#ffaf00
 
 " Don't you f'in touch my cursor
 set guicursor=
@@ -1011,9 +1026,9 @@ nnoremap <silent>,, :ALEFix<cr>
 let g:ale_sign_error = '✖'
 let g:ale_sign_warning = '⚠'
 " let g:ale_virtualtext_cursor = 1
-highlight ALEErrorSign ctermfg=196 guifg=#ff0000 ctermbg=234 guibg=#1f1f1f
-highlight ALEWarningSign ctermfg=226 guifg=#ffff00 ctermbg=234 guibg=#1f1f1f
-highlight ALEError ctermbg=052 guibg=#63120c
+highlight ALEErrorSign ctermfg=196 guifg=#ff0000 ctermbg=231 guibg=#ffffff
+highlight ALEWarningSign ctermfg=226 guifg=#e75600 ctermbg=231 guibg=#ffffff
+highlight ALEError ctermfg=052 guifg=#63120c
 highlight clear ALEWarning
 let g:ale_statusline_format = ['✖ %d', '⚠ %d', '⬥ ok']
 let g:ale_linters = {
@@ -1102,11 +1117,9 @@ hi xmlEndTag guifg=#87d787 ctermfg=114
 augroup other_art
   au FileType javascript,typescript nnoremap <silent><leader>a :Dispatch! npm run build<cr>
   au FileType javascript,typescript nnoremap <silent><leader>r :Dispatch npm start<cr>
-  au FileType javascript,typescript nnoremap <silent><leader>t :Dispatch! npm run test<cr>
 
   au FileType rust nnoremap <silent><leader>a :Dispatch! cargo build<cr>
   au FileType rust nnoremap <silent><leader>r :Start cargo run<cr>
-  au FileType rust nnoremap <silent><leader>t :Dispatch! cargo test<cr>
 augroup end
 
 " Emmet
@@ -1307,9 +1320,11 @@ nnoremap <silent>- :Dirvish %<cr>
 
 " vim-test
 " maybe try creating a new strategy for running tests in a floating terminal
-let test#strategy = "dispatch"
+let test#strategy = "vtr"
 nnoremap <silent><leader>t :TestNearest<cr>
-nnoremap <silent><leader>T :TestFile<cr>
+nnoremap <silent><leader>tn :TestNearest<cr>
+nnoremap <silent><leader>tf :TestFile<cr>
+nnoremap <silent><leader>tl :TestLast<cr>
 
 
 "                             Source External                          "

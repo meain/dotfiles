@@ -22,11 +22,11 @@ mono underline underline
 mono indicator reverse
 mono error bold
 color normal default default
-color indicator black white
+color indicator white color255
 color sidebar_highlight red default
-color sidebar_divider color8 black
-color sidebar_flagged red black
-color sidebar_new green black
+color sidebar_divider color8 default
+color sidebar_flagged red default
+color sidebar_new green default
 color normal brightyellow default
 color error red default
 color tilde black default
@@ -34,7 +34,7 @@ color message cyan default
 color markers red white
 color attachment white default
 color search brightmagenta default
-color status brightyellow black
+color status brightyellow default
 color hdrdefault brightgreen default
 color quoted green default
 color quoted1 blue default

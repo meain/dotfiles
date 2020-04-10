@@ -25,11 +25,11 @@ scrolling:
 
 font:
   normal:
-    family: Liga CamingoCode
+    family: Operator Mono Book
   bold:
-    family: Liga CamingoCode
+    family: Operator Mono Book
   italic:
-    family: Liga CamingoCode
+    family: Operator Mono Book
   size: 14.5
   offset:
     x: 0
@@ -63,32 +63,34 @@ color_schemes:
       cyan:    '0xc2fefa'
       white:   '0xffffff'
   light: &light
-    # pencil light
+    # Papercolor modified
     primary:
-      background: '0xf1f1f1'
-      foreground: '0x424242'
+      background: '0xFFFFFF'
+      foreground: '0x4D4D4C'
+
     # Normal colors
     normal:
-      black:   '0x212121'
-      red:     '0xc30771'
-      green:   '0x10a778'
-      yellow:  '0xa89c14'
-      blue:    '0x008ec4'
-      magenta: '0x523c79'
-      cyan:    '0x20a5ba'
-      white:   '0xe0e0e0'
+      white:   '0x444444'
+      red:     '0x9e0047'
+      green:   '0x718C00'
+      yellow:  '0xb25000'
+      blue:    '0x4271AE'
+      magenta: '0x8959A8'
+      cyan:    '0x3E999F'
+      black:   '0x4D4D4C'
+
     # Bright colors
     bright:
-      black:   '0x212121'
-      red:     '0xfb007a'
-      green:   '0x5fd7af'
-      yellow:  '0xf3e430'
-      blue:    '0x20bbfc'
-      magenta: '0x6855de'
-      cyan:    '0x4fb8cc'
-      white:   '0xf1f1f1'
+      white:   '0x969694'
+      red:     '0xff0072'
+      green:   '0x8eb200'
+      yellow:  '0xff7200'
+      blue:    '0x5ea2f9'
+      magenta: '0xa56ccc'
+      cyan:    '0x51c8d1'
+      black:   '0xF5F5F5'
 
-colors: *dark
+colors: *light
 
 visual_bell:
   animation: EaseOutExpo

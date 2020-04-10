@@ -16,7 +16,7 @@ fi
 
 FOLDER="$(echo "$GITURL" | sed 's/.*\///g' | sed 's/\..*//g')"
 if [ -n "$FOLDER" ];then
-    git clone "$GITURL"
+    git clone --depth 1 "$GITURL"
     cd "$FOLDER" || return 1
     tmuxsession "$FOLDER"
 else
