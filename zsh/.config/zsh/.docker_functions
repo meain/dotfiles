@@ -62,5 +62,5 @@ docker_testground(){
         fi
         IMAGE="$GROUND:$TAG"
     fi
-    docker run -v "$(pwd):/code" -it "$IMAGE" bash
+    docker run -v "$(pwd):/code" -it "$IMAGE" sh
 }
