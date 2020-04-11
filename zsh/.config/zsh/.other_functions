@@ -163,7 +163,9 @@ dcp() {
 
 # Copy latest screenshot
 ssc() {
-	cp "$(\ls -Art -d ~/Documents/Screenshots/* | tail -n 1)" "$1.png"
+	FILE="$(\ls -Art -d ~/Documents/Screenshots/* | tail -n 1)" 
+	[ -z "$1" ] && 1="$(basename $FILE)" || 1="$1.png"
+	cp  "$FILE" "$1"
 }
 
 kubernetes_get_token() {
