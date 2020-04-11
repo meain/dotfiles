@@ -8,6 +8,9 @@ if echo "$1" | grep -qE '^xhttps?\:\/\/[a-z0-9_\.\?\&\=#-]+';then
    tmux popup -w90% -h90% -KE -d '#{pane_current_path}' -R "lynx -lss='~/.lynx.lss' '$URL'"
 elif echo "$1" | grep -qE '^https?\:\/\/[a-z0-9_\.\?\&\=#-]+';then
    tmux popup -w90% -h90% -KE -d '#{pane_current_path}' -R "lynx -lss='~/.lynx.lss' '$1'"
-else
+elif echo "$1" | grep -qE '^E\d{4}`\.'; then
+    ERR=$(echo "$1"|cut -c1-5)
+    tmux popup -w50% -h80% -KER "rustc --explain '$ERR'"
+elif [ -f "$1" ]; then
    tmux popup -w90% -h90% -KE -d '#{pane_current_path}' -R "nvim '$1'"
 fi
