@@ -261,7 +261,7 @@ augroup colorscheme_typewriter
   autocmd ColorScheme typewriter highlight SignColumn ctermbg=231 guibg=#ffffff
   autocmd ColorScheme typewriter highlight LineNr ctermbg=240 guibg=#ffffff
   autocmd ColorScheme typewriter highlight VertSplit guibg=#ffffff guifg=#444444 gui=NONE cterm=NONE
-  autocmd ColorScheme typewriter highlight StatusLineNC ctermbg=255 guibg=#f5f5f5 gui=NONE cterm=NONE
+  autocmd ColorScheme typewriter highlight StatusLineNC ctermbg=255 guibg=#cecece gui=NONE cterm=NONE
   autocmd ColorScheme typewriter highlight SignifySignAdd cterm=bold gui=bold ctermfg=002 guifg=#008000 guibg=#ffffff
   autocmd ColorScheme typewriter highlight SignifySignDelete cterm=bold gui=bold ctermfg=001 guifg=#800000 guibg=#ffffff
   autocmd ColorScheme typewriter highlight SignifySignChange cterm=bold gui=bold ctermfg=003 guifg=#0087af guibg=#ffffff
