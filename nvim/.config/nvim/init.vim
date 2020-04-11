@@ -265,6 +265,7 @@ augroup colorscheme_typewriter
   autocmd ColorScheme typewriter highlight SignifySignAdd cterm=bold gui=bold ctermfg=002 guifg=#008000 guibg=#ffffff
   autocmd ColorScheme typewriter highlight SignifySignDelete cterm=bold gui=bold ctermfg=001 guifg=#800000 guibg=#ffffff
   autocmd ColorScheme typewriter highlight SignifySignChange cterm=bold gui=bold ctermfg=003 guifg=#0087af guibg=#ffffff
+  autocmd ColorScheme typewriter highlight CursorLine ctermbg=255 guibg=#f5f5f5 gui=NONE cterm=NONE
 augroup end
 
 " ColorScheme change ( janah )
