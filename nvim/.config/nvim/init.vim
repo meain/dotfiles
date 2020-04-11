@@ -1327,6 +1327,9 @@ nnoremap <silent><leader>tn :TestNearest<cr>
 nnoremap <silent><leader>tf :TestFile<cr>
 nnoremap <silent><leader>tl :TestLast<cr>
 
+" VTR
+nnoremap <silent>sf :VtrSendCommandToRunner<cr>
+
 
 "                             Source External                          "
 "                    ==============================                    "
