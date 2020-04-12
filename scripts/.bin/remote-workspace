@@ -14,6 +14,8 @@ rsync -azvr --exclude '.git' $IGNORE_STRING . "$EXPERIMENT_VM:/tmp/$TNAME"
 
 if [ "$1" = "run" ];then
     TERM=screen-256color ssh "$EXPERIMENT_VM" -t "cd /tmp/$TNAME && bash -c '$*'"
+elif [ "$1" = "csync" ];then
+    watchexec -- rsync -azvr --exclude '.git' $IGNORE_STRING . "$EXPERIMENT_VM:/tmp/$TNAME"
 else
     TERM=screen-256color ssh "$EXPERIMENT_VM" -t "cd /tmp/$TNAME && bash"
 fi
