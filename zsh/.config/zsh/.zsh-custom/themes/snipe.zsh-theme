@@ -58,9 +58,7 @@ function _git_pushable() {
 }
 _vcs_info_wrapper() {
   vcs_info
-  if [ -n "$vcs_info_msg_0_" ]; then
-    echo "${vcs_info_msg_0_}"
-  fi
+  echo "${vcs_info_msg_0_}"
 }
 
 function +vi-git-untracked() {
