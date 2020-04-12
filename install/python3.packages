@@ -16,3 +16,4 @@ poetry
 black
 'python-language-server[all]'
 slack-cli
+bpython
