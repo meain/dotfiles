@@ -18,9 +18,6 @@ else
     NAME="$(pwd | xargs basename)"
 fi
 
-printf "Enter name [%s]: " "$NAME"
-read
-[ -n "$REPLY" ] && NAME="$REPLY"
 
 REPO=""
 
@@ -32,14 +29,17 @@ REPO="$ECR_REPO"
 [ "$1" = "--gcp" ] && REPO="$GCR_REPO" && shift
 
 if [ -z "$1" ]; then
+    printf "Enter name [%s]: " "$NAME"
+    read
+    [ -n "$REPLY" ] && NAME="$REPLY"
     printf "Tag: "
     read
     TAG="$REPLY"
+    FREPO="$REPO/$NAME:$TAG"
 else
-    TAG="$1"
+    FREPO="$REPO/$1"
 fi
 
-FREPO="$REPO/$NAME:$TAG"
 echo "Pushing to $FREPO"
 remote_sync "$NAME"
 TERM=screen-256color ssh "$EXPERIMENT_VM" -t "cd /tmp/$NAME && docker build -t '$FREPO' . && docker push '$FREPO'"
