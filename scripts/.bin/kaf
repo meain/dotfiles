@@ -1,0 +1,21 @@
+#!/bin/sh
+
+set -e
+
+_list_yaml_file(){
+    fd --type f 'yaml'
+    fd --type f 'yml'
+}
+
+FILE=""
+[ -n "$1" ] && FILE="$1"
+[ -f "/tmp/kaf-file" ] && FILE="$(cat /tmp/kaf-file)"
+[ -z "$FILE" ] || [ "$1" = 'f' ] && FILE="$(_list_yaml_file | fzf)"
+
+echo "Applying $FILE..."
+sleep 3  # just in case they wanna revert
+
+if [ -f "$FILE" ];then
+    kubectl apply -f "$FILE"
+    echo "$FILE" > /tmp/kaf-file
+fi
