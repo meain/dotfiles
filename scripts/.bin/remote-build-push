@@ -33,6 +33,7 @@ REPO="$ECR_REPO"
 
 if [ -z "$1" ]; then
     printf "Tag: "
+    read
     TAG="$REPLY"
 else
     TAG="$1"
