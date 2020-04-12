@@ -4,5 +4,5 @@ set -e
 
 cd ~/.notes
 taskell todo.md
-git add todo.md && git commit -m 'Update todo' >/dev/null
+git add todo.md && git commit -m 'Update todo' >/dev/null || true
 nohup git push origin master >/dev/null &
