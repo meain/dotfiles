@@ -8,11 +8,11 @@ kpods() {
 }
 
 klog(){
-  kubectl logs --tail=130 -f "$(kpods "$*")"
+  kpods "$*" | xargs kubectl logs --tail=130 -f
 }
 
 kshell() {
-  kubectl exec -it "$(kpods "$*")" /bin/bash
+  kpods "$*" | xargs -I{} kubectl exec -it {} /bin/bash
 }
 
 k_change_namespace(){
@@ -23,6 +23,7 @@ k_change_namespace(){
   kubectl config set-context "$(kubectl config current-context)" --namespace="$NAMESPCE"
 }
 
+alias kp="kubectl get pods"
 alias wk="watch kubectl get pods,service,hpa"
 alias wkp="watch kubectl get pods"
 alias wkt="watch kubectl top nodes"
