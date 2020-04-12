@@ -1,0 +1,26 @@
+#!/bin/sh
+
+set -e
+
+_get_image() {
+    docker images | tail -n+2 |
+        grep -v 'none' | grep -v 'gcr.io' | grep -v 'amazonaws' | grep -vE '^\d+' |
+        awk '{print $1":"$2}' | fzf
+}
+
+GROUND="$1"
+if [ -z "$GROUND" ]; then
+    GROUND="$(_get_image)"
+fi
+
+
+if echo "$GROUND" | grep -q ':';then
+    IMAGE="$GROUND"
+else
+    TAG="$(curl -sk "https://registry.hub.docker.com/v1/repositories/$GROUND/tags" | jq -r '.[].name' | fzf)"
+    [ -z "$TAG" ] && exit 1
+    IMAGE="$GROUND:$TAG"
+fi
+echo "IMAGE: $IMAGE"
+
+docker run -v "$(pwd):/code" -it "$IMAGE" sh

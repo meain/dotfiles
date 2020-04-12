@@ -47,20 +47,3 @@ dcon(){
     CONTAINER=$(docker ps --format 'table {{.ID}}\t{{.Status}}\t{{.Command}}' | tail -n +2 | grep -v '/portainer' | fzf | sed 's/\ .*//g')
     docker exec -i -t "$CONTAINER" bash
 }
-
-docker_testground(){
-    if [ -z "$1" ];then
-        1="$(docker images | grep -v '<none>' | tail -n+2 | head | awk '{print $1":"$2}' | fzf)"
-    fi
-    GROUND="$1" && shift
-    if echo "$GROUND" | grep ':' > /dev/null 2>&1;then
-        IMAGE="$GROUND"
-    else
-        TAG="$(curl -sk "https://registry.hub.docker.com/v1/repositories/$GROUND/tags" | jq -r '.[].name' | fzf)"
-        if [ -z "$TAG" ];then
-            return 1
-        fi
-        IMAGE="$GROUND:$TAG"
-    fi
-    docker run -v "$(pwd):/code" -it "$IMAGE" sh
-}
