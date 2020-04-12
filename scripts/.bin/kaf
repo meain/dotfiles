@@ -17,5 +17,5 @@ sleep 3  # just in case they wanna revert
 
 if [ -f "$FILE" ];then
     kubectl apply -f "$FILE"
-    echo "$FILE" > /tmp/kaf-file
+    realpath "$FILE" > /tmp/kaf-file
 fi
