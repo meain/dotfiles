@@ -5,12 +5,7 @@ set -e
 SESSION="$1"
 if [ -z "$1" ]; then
     if [ -n "$(tmux ls)" ]; then
-        if [ -n "$TMUX" ] && [ -n "$TMUX_PANE" ]; then
-            SESSION=$(tmux ls |
-                sed 's/:.*//g' |
-                fzf --prompt "Session: " --preview 'tmux-tree {}' --reverse --print-query |
-                \tail -n1)
-        else
+        if [ -n "$TMUX" ] && [ -z "$TMUX_PANE" ]; then
             FZF_DEFAULT_OPTS='
             -1 -0
             --prompt=" "
@@ -19,6 +14,11 @@ if [ -z "$1" ]; then
             --color info:108,prompt:242,spinner:108,pointer:1,marker:168
             ' SESSION=$(tmux ls |
                 grep -v "$(tmux display-message -p "#S")" |
+                sed 's/:.*//g' |
+                fzf --prompt "Session: " --preview 'tmux-tree {}' --reverse --print-query |
+                \tail -n1)
+        else
+            SESSION=$(tmux ls |
                 sed 's/:.*//g' |
                 fzf --prompt "Session: " --preview 'tmux-tree {}' --reverse --print-query |
                 \tail -n1)
