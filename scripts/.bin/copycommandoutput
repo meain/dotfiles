@@ -1,0 +1,25 @@
+#!/bin/sh
+
+set -e
+
+tmux capture-pane -pS -1000 > /tmp/ee-dump
+L="$(cat /tmp/ee-dump | grep ' '| grep -vE '^.. {10}'| tac | tail -n+2 | fzf)"
+
+COPY=0
+cat /tmp/ee-dump |
+    while read -r line; do
+        if [ "$COPY" = 1 ];then
+            if echo "$line" | grep -q " ";then
+                break
+            fi
+            echo "$line"
+        fi
+        if echo "$line" | grep -q "$L";then
+            COPY=1
+        fi
+    done > /tmp/ee-content-dump
+
+{
+    echo "$L"
+    cat /tmp/ee-content-dump
+} | pbcopy
