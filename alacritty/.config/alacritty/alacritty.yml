@@ -25,11 +25,11 @@ scrolling:
 
 font:
   normal:
-    family: Operator Mono Book
+    family: CozetteVector
   bold:
-    family: Operator Mono Book
+    family: CozetteVector
   italic:
-    family: Operator Mono Book
+    family: CozetteVector
   size: 14.5
   offset:
     x: 0
