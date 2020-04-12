@@ -8,8 +8,6 @@ require("mousehighlight")
 local utils = require("utils")
 local pasteboard = require("hs.pasteboard")
 local customshellrun = require('customshellrun') 
-local slackDrop = require('slackdrop')
-
 
 local mailcounter = hs.menubar.new()
 mailcounter:setTooltip("No new emails")
@@ -173,10 +171,6 @@ hs.hotkey.bind({"alt"}, ";", function()
   app:mainWindow().setShadows(false)
 end)
 
-
-hs.hotkey.bind({"cmd"}, "d", function()
-  slackDrop(utils.trim(pasteboard.getContents()))
-end)
 
 hs.hotkey.bind({"ctrl", "shift", "alt"}, "r", function()
   hs.reload()
