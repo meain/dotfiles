@@ -1035,7 +1035,7 @@ vmap D <Plug>SchleppDup
 nnoremap <silent>,, :ALEFix<cr>
 let g:ale_sign_error = '✖'
 let g:ale_sign_warning = '⚠'
-" let g:ale_virtualtext_cursor = 1
+let g:ale_virtualtext_cursor = 1
 highlight ALEErrorSign ctermfg=196 guifg=#ff0000 ctermbg=231 guibg=#ffffff
 highlight ALEWarningSign ctermfg=226 guifg=#e75600 ctermbg=231 guibg=#ffffff
 highlight ALEError ctermfg=052 guifg=#63120c
@@ -1054,7 +1054,7 @@ let g:ale_linters = {
 let g:ale_virtualenv_dir_names = [$WORKON_HOME]
 let g:ale_echo_msg_error_str = '✖'
 let g:ale_echo_msg_warning_str = '⚠'
-let g:ale_echo_msg_format = '%severity% %linter%: %s '
+let g:ale_echo_msg_format = 'ALE: %severity% %linter%: %s '
 let g:ale_lint_on_enter = 0
 let g:ale_fixers = {
 \  'javascript' : ['prettier'],
@@ -1148,8 +1148,8 @@ let g:LanguageClient_autoStart = 1
 let g:LanguageClient_useVirtualText = "No"
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
-    \ 'javascript': ['/usr/local/bin/flow', 'lsp'],
-    \ 'javascript.jsx': ['/usr/local/bin/flow', 'lsp'],
+    \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio', 'lsp'],
+    \ 'javascript.jsx': ['/usr/local/bin/javascript-typescript-stdio', 'lsp'],
     \ 'typescript': ['/usr/local/bin/javascript-typescript-stdio'],
     \ 'typescript.tsx': ['/usr/local/bin/javascript-typescript-stdio'],
     \ 'go': ['go-langserver'],
