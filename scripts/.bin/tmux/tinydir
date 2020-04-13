@@ -1,0 +1,18 @@
+#!/bin/sh
+
+set -e
+
+DIR=$(pwd)
+[ -n "$1" ] && DIR="$1"
+if [ "$DIR" = "$HOME" ]; then
+    echo "~"
+else
+    DIR=$(pwd | sed "s|$HOME|~|")
+    D2=$(dirname "$DIR")
+    if [ -n "$D2" ] && [ ! "$D2" = "/" ]; then
+        DIRNAME2=$(basename "$D2")/$(basename "$DIR")
+    else
+        DIRNAME2=$(basename "$DIR")
+    fi
+    echo "$DIRNAME2"
+fi
