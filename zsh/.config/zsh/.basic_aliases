@@ -14,7 +14,6 @@ alias rm=trash
 alias mkdir='mkdir -p'
 alias clera='clear'
 alias clea='clear'
-alias cat=bat
 alias git=hub
 alias m=neomutt
 alias k=kubectl
