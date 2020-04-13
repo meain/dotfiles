@@ -69,7 +69,7 @@ Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.s
 Plug '~/Documents/Projects/projects/deoplete-notmuch', { 'for': 'mail' }                       " Email autocomplete
 
 " Testing
-Plug 'christoomey/vim-tmux-runner', { 'on': ['VtrSendCommandToRunner', 'TestNearest', 'TestFile', 'TestLast', 'TestSuite'] }
+Plug 'christoomey/vim-tmux-runner', { 'on': ['TestNearest', 'TestFile', 'VtrAttachToPane'] }
 Plug 'janko/vim-test', { 'on': ['TestNearest', 'TestFile', 'TestLast', 'TestSuite'] }          " Quicky run test from vim
 
 " Dependencies
@@ -1324,6 +1324,7 @@ nnoremap <silent>- :Dirvish %<cr>
 let test#strategy = "vtr"
 nnoremap <silent><leader>t :TestNearest<cr>
 nnoremap <silent><leader>tn :TestNearest<cr>
+nnoremap <silent>sn :TestNearest<cr>
 nnoremap <silent><leader>tf :TestFile<cr>
 nnoremap <silent><leader>tl :TestLast<cr>
 
