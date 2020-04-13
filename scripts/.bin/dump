@@ -1,0 +1,15 @@
+#!/bin/sh
+
+set -e
+
+# used to dump all the files I don't need in my local to a github repo
+
+DUMP_DIR="$HOME/.cache/dump"
+DUMP_REPO="https://github.com/meain/dump"
+
+[ ! -d "$DUMP_DIR/.git" ] && git clone "$DUMP_REPO" "$DUMP_DIR"
+mv -iv "$1" "$DUMP_DIR"
+cd "$DUMP_DIR"
+git add .
+git commit -m "Added $1"
+git push origin master
