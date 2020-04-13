@@ -871,7 +871,16 @@ function! FloatTerm(...)
     let width=float2nr(0.8*&columns)
     let horizontal = float2nr((&columns - width) / 2)
     let vertical = float2nr((&lines - height) / 2)
-    call Floater(height, width, horizontal, vertical)
+
+    " Terminal Drawer (Option 1)
+    botright new __fterm__
+    exec 'resize' float2nr(&lines * 0.25)
+    setlocal laststatus=0 noshowmode noruler
+    setlocal nobuflisted
+
+    " Floating Terminal (Option 2)
+    " call Floater(height, width, horizontal, vertical)
+
     try
       exec "buffer ".g:term_buf
     catch
@@ -1322,9 +1331,8 @@ nnoremap <silent>- :Dirvish %<cr>
 " vim-test
 " maybe try creating a new strategy for running tests in a floating terminal
 let test#strategy = "vtr"
-nnoremap <silent><leader>t :TestNearest<cr>
-nnoremap <silent><leader>tn :TestNearest<cr>
 nnoremap <silent>sn :TestNearest<cr>
+nnoremap <silent><leader>tn :TestNearest<cr>
 nnoremap <silent><leader>tf :TestFile<cr>
 nnoremap <silent><leader>tl :TestLast<cr>
 
