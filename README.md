@@ -53,6 +53,30 @@ stow nvim
 
 ## Screenshots 
 
+### Simple shell
+![](https://i.imgur.com/EvyYkS9.png)
+
+### Minimal vim session
+![](https://i.imgur.com/2ge6Da3.png)
+
+### Colors
+![](https://i.imgur.com/iC94NTd.png)
+
+### Busy tmux session
+![](https://i.imgur.com/2GlfOHU.png)
+
+### Getting stuff done
+![](https://i.imgur.com/0EyYmsF.png)
+
+### Kitty icat preview
+![](https://i.imgur.com/2FdPs2v.jpg)
+
+## More screenshots
+
+<details>
+<summary>Screenshots (as of `ead4c86c`)</summary>
+<br>
+
 ### Zsh
 ![zsh](https://i.imgur.com/0IIq0l3.png)
 
@@ -68,7 +92,8 @@ stow nvim
 
 ![colors](https://i.imgur.com/EB5Chnp.png)
 
-## More screenshots
+</details>
+
 <details>
 <summary>Screenshots (as of `620d4e65`)</summary>
 <br>
