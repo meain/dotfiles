@@ -2,5 +2,4 @@
 
 set -e
 
-pbpaste | tr -d '\n' | sed "s/\'/\"/g" |
-    sed "s/\"\"\([^\"]*\)\"\"/\"\1\"/g;s/True/true/g;s/False/false/g;s/None/null/g;s|datetime.datetime(\([^)]*)*\))|\"<datetime-python:datetime.datetime(\1)>\"|g" | jv
+pbpaste | fixmalformedjson | jv
