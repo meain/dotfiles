@@ -2,5 +2,5 @@
 
 set -e
 
-pbpaste | sed "s/\'/\"/g" |
-    sed ";s/True/true/g;s/False/false/g;s/None/null/g;s|datetime.datetime(\(.*\))|\"<datetime-python:datetime.datetime(\1)>\"|g" | jv
+pbpaste | tr -d '\n' | sed "s/\'/\"/g" |
+    sed ";s/True/true/g;s/False/false/g;s/None/null/g;s|datetime.datetime(\([^)]*)*\))|\"<datetime-python:datetime.datetime(\1)>\"|g" | jv
