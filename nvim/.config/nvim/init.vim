@@ -676,6 +676,7 @@ augroup custom_spellcheck
   autocmd BufRead,BufNewFile *.org setlocal spell
   autocmd FileType gitcommit setlocal spell
   autocmd FileType help setlocal nospell
+  autocmd FileType mail setlocal spell
 augroup end
 set complete+=kspell
 function! FixLastSpellingError()
