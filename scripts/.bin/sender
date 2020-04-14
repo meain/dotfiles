@@ -1,0 +1,18 @@
+#!/bin/sh
+
+set -e
+
+telegram_send() {
+    case "$1" in
+    *.png | *.jpg | *.JPG | *.jpeg | *.gif | *.webp) toi "$1" ;;
+    *.mp4 | *.mkv | *.mov | *.avi | *.m4v | *.webm) tov "$1" "$2" ;;
+    *) tof "$1" ;;
+    esac
+}
+
+printf "Platform(t/s): "
+read -r
+case "$REPLY" in
+    t*) telegram_send "$1" ;;
+    s*) slacksend "$1" ;;
+esac
