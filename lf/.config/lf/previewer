@@ -32,7 +32,7 @@ everythingelse() {
             file -b "$1"
         fi
     else
-        bat --color=always --theme=base16 -p "$1" || cat "$1" || file "$1"
+        cat "$1" || file "$1"
     fi
 }
 
