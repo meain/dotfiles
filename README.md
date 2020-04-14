@@ -51,25 +51,31 @@ stow nvim
 - [`tig`](https://github.com/jonas/tig) ncurses interface for `git`
 - [`pandoc`](http://pandoc.org/index.html) + [`lynx`](http://lynx.browser.org/) View markdown in shell
 
-## Screenshots 
+## Screenshots
 
-### Simple shell
-![](https://i.imgur.com/EvyYkS9.png)
+| ![](https://i.imgur.com/EvyYkS9.png) |
+| :----------------------------------: |
+|             Clean shell              |
 
-### Minimal vim session
-![](https://i.imgur.com/2ge6Da3.png)
+| ![](https://i.imgur.com/2ge6Da3.png) |
+| :----------------------------------: |
+|         Minimal vim session          |
 
-### Colors
-![](https://i.imgur.com/iC94NTd.png)
+| ![](https://i.imgur.com/iC94NTd.png) |
+| :----------------------------------: |
+|                Colors                |
 
-### Busy tmux session
-![](https://i.imgur.com/2GlfOHU.png)
+| ![](https://i.imgur.com/2GlfOHU.png) |
+| :----------------------------------: |
+|              Busy tmux               |
 
-### Getting stuff done
-![](https://i.imgur.com/0EyYmsF.png)
+| ![](https://i.imgur.com/0EyYmsF.png) |
+| :----------------------------------: |
+|            Pseudo working            |
 
-### Kitty icat preview
-![](https://i.imgur.com/2FdPs2v.jpg)
+| ![](https://i.imgur.com/2FdPs2v.jpg) |
+| :----------------------------------: |
+|          Kitty icat preview          |
 
 ## More screenshots
 
@@ -78,6 +84,7 @@ stow nvim
 <br>
 
 ### Zsh
+
 ![zsh](https://i.imgur.com/0IIq0l3.png)
 
 ### Vim
@@ -99,17 +106,23 @@ stow nvim
 <br>
 
 ### Zsh
+
 ![](https://i.imgur.com/oh4DY5e.png)
 
 ### Vim
+
 ![](https://i.imgur.com/sPVLbzI.png)
 
 ### Tmux
+
 ![](https://i.imgur.com/YBTlVjK.png)
 
 ### irssi
+
 ![](https://i.imgur.com/08iF4Ts.png)
 
 ### Colors
+
 ![](https://i.imgur.com/E9qgsHj.png)
+
 </details>
