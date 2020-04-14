@@ -16,14 +16,14 @@ cmd put &{{
 # map <enter> toggle
 
 map e $$EDITOR "$f"
-map i $bat --paging always "$f"
-map i $bat --paging always "$f"
-map m $qlmanage -p "$f" > /dev/null 2> /dev/null
+map i $less "$f"
+map I $qlmanage -p "$f" > /dev/null 2> /dev/null
 map P $echo "$f" | pbcopy
 set previewer ~/.config/lf/previewer
 set color256
 
 map S $$SHELL
+map L $sender "$f"
 
 # execute current file (must be executable)
 map x $$f
