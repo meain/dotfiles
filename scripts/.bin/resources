@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -e
+
+
+RFILE="resources"
+
+[ "$1" = l ] && cat $RFILE && exit 0
+[ "$1" = o ] && fzf < $RFILE | xargs -I{} open "{}" && exit 0
+echo "$1" | grep -qE "^http" && echo "$1" >> $RFILE && exit 0
+
+grep -q "$(pbpaste)" $RFILE && echo "Already available: $(pbpaste)" && exit 1
+echo "Adding $(pbpaste)"
+echo "$(pbpaste)" >> $RFILE
