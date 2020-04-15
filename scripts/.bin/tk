@@ -3,7 +3,9 @@
 set -e
 
 cd ~/.notes
+FILE="todo.md"
+[ -n "$1" ] && FILE="$1"
 
-taskell todo.md
-git add . && git commit -m 'Update todo' >/dev/null
+taskell "$FILE"
+git add . && git commit -m "Update $FILE" >/dev/null
 nohup git push origin master >/dev/null &
