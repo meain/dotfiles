@@ -10,9 +10,6 @@ open_note() {
     done | sed 'N;s/\n/ /' | sort -r -k2,7 | column -t |
         fzf --query "$*" --preview "echo '{}' | awk '{print \$1}' | xargs -I{} bat -p --color always $NOTES_FOLDER/{}" |
         cut -d' ' -f1 | xargs -I{} "$EDITOR" "$NOTES_FOLDER/{}"
-    cd "$NOTES_FOLDER"
-    NAME="$(git status --short | sed 's/^...//' | head -n1)"
-    git add . && git commit -m "Updated $NAME" && nohup git push origin master &
 }
 
 new_note() {
@@ -24,7 +21,6 @@ new_note() {
         NAME="$(echo "$*" | sed 's| |-|g')"
     fi
     "$EDITOR" "$NOTES_FOLDER/$NAME.md"
-    cd "$NOTES_FOLDER" && git add . && git commit -m "Added $NAME" && nohup git push origin master &
 }
 
 trash_note() {
@@ -33,8 +29,7 @@ trash_note() {
         date -r "$file" | sed 's| |-|g'
     done | sed 'N;s/\n/ /' | sort -r -k2,7 | column -t |
         fzf --query "$*" --preview "echo '{}' | awk '{print \$1}' | xargs -I{} bat -p --color always $NOTES_FOLDER/{}" | cut -d' ' -f1)"
-    mv "$NOTES_FOLDER/$NAME" "$NOTES_FOLDER/.trash/$NAME" &&
-        cd "$NOTES_FOLDER" && git add . && git commit -m "Removed $NAME" && nohup git push origin master &
+    mv "$NOTES_FOLDER/$NAME" "$NOTES_FOLDER/.trash/$NAME"
 }
 
 if [ "$1" = "new" ]; then
@@ -43,6 +38,9 @@ if [ "$1" = "new" ]; then
 elif [ "$1" = "rm" ]; then
     shift
     trash_note "$*"
+elif [ "$1" = "sync" ]; then
+    cd "$NOTES_FOLDER" &&
+    git add . && git commit -m '[autocommit] updating notes' && git push origin master
 else
     open_note "$*"
 fi

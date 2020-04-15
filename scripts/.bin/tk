@@ -7,5 +7,3 @@ FILE="todo.md"
 [ -n "$1" ] && FILE="$1"
 
 taskell "$FILE"
-git add . && git commit -m "Update $FILE" >/dev/null
-nohup git push origin master >/dev/null &
