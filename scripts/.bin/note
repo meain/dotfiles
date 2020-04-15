@@ -2,14 +2,19 @@
 
 NOTES_FOLDER="$HOME/.notes"
 mkdir -p "$NOTES_FOLDER/.trash"
+mkdir -p "$NOTES_FOLDER/stash"
 
-open_note() {
+get_file_name() {
     for file in "$NOTES_FOLDER"/*.md; do
         basename "$file"
         date -r "$file" | sed 's| |-|g'
     done | sed 'N;s/\n/ /' | sort -r -k2,7 | column -t |
-        fzf --query "$*" --preview "echo '{}' | awk '{print \$1}' | xargs -I{} bat -p --color always $NOTES_FOLDER/{}" |
-        cut -d' ' -f1 | xargs -I{} "$EDITOR" "$NOTES_FOLDER/{}"
+        fzf --multi --query "$*" --preview "echo '{}' | awk '{print \$1}' | xargs -I{} bat -p --color always $NOTES_FOLDER/{}" |
+        cut -d' ' -f1
+}
+
+open_note() {
+    get_file_name "$@" | xargs -L1 -I{} "$EDITOR" "$NOTES_FOLDER/{}"
 }
 
 new_note() {
@@ -24,23 +29,39 @@ new_note() {
 }
 
 trash_note() {
-    NAME="$(for file in "$NOTES_FOLDER"/*.md; do
-        basename "$file"
-        date -r "$file" | sed 's| |-|g'
-    done | sed 'N;s/\n/ /' | sort -r -k2,7 | column -t |
-        fzf --query "$*" --preview "echo '{}' | awk '{print \$1}' | xargs -I{} bat -p --color always $NOTES_FOLDER/{}" | cut -d' ' -f1)"
-    mv "$NOTES_FOLDER/$NAME" "$NOTES_FOLDER/.trash/$NAME"
+    NAME="$(get_file_name "$@")"
+    for n in $NAME;do
+        mv "$NOTES_FOLDER/$n" "$NOTES_FOLDER/.trash/$n"
+    done
+}
+
+stash_note() {
+    NAME="$(get_file_name "$@")"
+    for n in $NAME;do
+        mv "$NOTES_FOLDER/$n" "$NOTES_FOLDER/stash/$n"
+    done
 }
 
 if [ "$1" = "new" ]; then
     shift
     new_note "$*"
+    cd "$NOTES_FOLDER" && git status --short
 elif [ "$1" = "rm" ]; then
     shift
     trash_note "$*"
+    cd "$NOTES_FOLDER" && git status --short
+elif [ "$1" = "stash" ]; then
+    # stash away fies that are always needed
+    shift
+    stash_note "$*"
+    cd "$NOTES_FOLDER" && git status --short
 elif [ "$1" = "sync" ]; then
     cd "$NOTES_FOLDER" &&
-    git add . && git commit -m '[autocommit] updating notes' && git push origin master
+        git add . && git commit -m '[autocommit] updating notes' && git push origin master
+elif [ "$1" = "status" ]; then
+    cd "$NOTES_FOLDER" &&
+        git status --short
 else
     open_note "$*"
+    cd "$NOTES_FOLDER" && git status --short
 fi
