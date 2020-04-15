@@ -1,78 +1,7 @@
-/* use this font in most places */
 * {
-  font-family: "Operator Mono Book", monospace !important;
+  font-family: "CozetteVector", monospace !important;
   font-size: 10pt !important;
 }
-
-/* keep the urlbar on top */
-#urlbar {
-  z-index: 100;
-}
-
-/* black urlbar in private window */
-#main-window[privatebrowsingmode="temporary"] #urlbar {
-  background: black !important;
-  color: white !important;
-}
-
-
-/* cleaner url search bar colors */
-.ac-separator:not([selected="true"]),
-.ac-url:not([selected="true"]),
-.ac-action:not([selected="true"]) {
-  color: hsl(211, 100%, 65%) !important;
-}
-.autocomplete-richlistitem[selected="true"] {
-  color: black !important;
-  background: #f1f1f1 !important;
-}
-.autocomplete-richlistitem[selected="true"] .ac-title-text {
-  color: black !important;
-}
-.autocomplete-richlistitem .ac-title-text {
-  color: #607d8b !important;
-}
-
-/* smaller comletion type-icons */
-.ac-type-icon {
-  color: black !important;
-  width: 10px !important;
-}
-
-/* hide extention icon for entention page */
-#urlbar[pageproxystate="valid"]
-  > #identity-box.extensionPage
-  > #extension-icon {
-  display: none !important;
-}
-
-
-/* Move tabs and search to bottom */
-#titlebar,
-body > box:nth-child(8) {
-  -moz-box-ordinal-group: 999 !important;
-}
-
-/* move searchbars completion popup to bottom */
-.urlbarView {
-  bottom: 63px !important;
-  top: unset !important;
-  box-shadow: none !important;
-  border-bottom: none !important;
-}
-
-/* hide some stuff in urlbar for cleaner look */
-.titlebar-spacer,
-.search-one-offs {
-  display: none !important;
-}
-
-/* move close, maximize etc to right */
-.titlebar-buttonbox-container {
-  -moz-box-ordinal-group: 999 !important;
-  margin-right: 10px;
-}
-
 
 /* https://github.com/nuchi/firefox-quantum-userchromejs */
 @namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
@@ -80,22 +9,24 @@ toolbarbutton#alltabs-button {
   -moz-binding: url("userChrome.xml#js");
 }
 
+#titlebar,
+.titlebar-buttonbox-container,
+body > box:nth-child(8) {
+  -moz-box-ordinal-group: 999 !important;
+}
 
-/* Smaller urlbar and tabbar */
+#home-button,
+#identity-icon-labels,
+#tracking-protection-icon-container,
+#star-button,
+#pocket-button,
+.search-one-offs,
+.titlebar-spacer {
+  display: none !important;;
+}
+
 :root {
-  --tabs-border: transparent !important;
-  --toolbox-border-bottom-color: transparent !important;
-  --chrome-nav-bar-controls-border-color: transparent !important;
-}
-:root:-moz-lwtheme {
-  --toolbox-border-bottom-color: rgba(0, 0, 0, 0) !important;
-}
-:root {
---tab-min-height: 25px !important;
-}
-:-moz-any(.tabs-newtab-button, #new-tab-button, #alltabs-button) .toolbarbutton-icon {
-  transform: scale(0.5, 0.5) !important;
-  margin-top: 1px !important;
+  --tab-min-height: 25px !important;
 }
 
 /* Padding/border adjustements */
@@ -104,124 +35,83 @@ toolbarbutton#alltabs-button {
   padding: 0px 8px !important;
   box-shadow: none !important;
 }
-/* Hide the back and foreward button unless we can actually go back or fwd. */
-#forward-button[disabled="true"]{
-  display: none;
+
+/* move close button to right */
+.titlebar-buttonbox-container {
+  margin-right: 10px;
 }
 
-/* clener UI components */
-#appMenu-notification-popup {
-  margin-top: 90px;
-  margin-right: 20px !important;
+/* tab configs */
+.tab-line {
+  opacity: 0.5 !important;
+  --tab-line-color: black;
+  -moz-box-ordinal-group: 999 !important;
 }
-#appMenu-notification-popup .panel-arrowbox {
-  display: none !important;
-  visibility: collapse;
-}
-/* #PanelUI-button, */
-#customization-panel-container,
-#customization-panelWrapper .panel-arrow {
-  -moz-box-ordinal-group: 0 !important;
-  margin-right: -2px !important;
-}
-/* Tab borders stuff */
 .tabbrowser-tab::after,
 .tabbrowser-tab::before {
   border: none !important;
   color: grey !important;
   opacity: .2 !important;
 }
-.tab-line {
-  display: none !important;
-}
 
-/* URL Bar */
-#urlbar[focused="true"],
-#urlbar:hover,
-.searchbar-textbox:hover {
-  background: transparent !important;
-  box-shadow: none !important;
-  border: none !important;
-  outline: none !important;
-}
-#urlbar,
-.searchbar-textbox,
-#urlbar:hover,
-.searchbar-textbox:hover {
-  background: transparent !important;
-  height: 32px !important;
-  padding: 0px !important;
-  font-size: 1.1em !important;
-  outline: none !important;
-  box-shadow: none !important;
-  border: none !important;
-  -moz-appearance: none;
-  cursor: default;
-}
 
-/* Hide bookmark button, page actions, security labels and extension icons */
-#star-button-box,
-#blocked-permissions-container,
-#identity-icon-labels,
-#pocket-button,
-#tracking-protection-icon-container,
-#extension-icon {
-  display: none !important;
-  background: transparent !important;
+#back-button{
+  background: none !important;
 }
-/* Spacing. */
-#TabsToolbar .titlebar-placeholder[type="pre-tabs"] {
-  width: 1.22em !important;
-  border-right: none !important;
-}
-.titlebar-placeholder[type="post-tabs"] {
-  width: 8px !important;
-}
-/* Hide titlebar spaces */
-.titlebar-spacer {
-  display: none;
-}
-#pageActionSeparator {
-  opacity: 0 !important;
-  margin-right: 2px !important;
-  margin-left: 2px !important;
-}
-.toolbarbutton-icon{
-  background-color: rgba(0,0,0,0) !important;
+#back-button > .toolbarbutton-icon {
   border: 1px solid transparent !important;
-}
-#urlbar-container, #search-container{
-  padding: unset !important;
-}
-#back-button,
-#back-button:hover {
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-  padding-inline-start: 0 !important;
   box-shadow: none !important;
-  border: none !important;
+  background-color: none !important;
 }
 
+/* black urlbar in private window */
+#main-window[privatebrowsingmode="temporary"] #urlbar {
+  background: black !important;
+  color: white !important;
+}
 
+#urlbar {
+  top: 5px !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 80% !important;
+}
 
-/* ************************************************************ */
-/* Automatically hiding nav-bar */
-/* ************************************************************ */
-/* #titlebar { */
-/*   margin-bottom: -32px !important; */
-/*   transition: margin-bottom 0.2s ease-in-out !important; */
-/* } */
-/* :hover > #titlebar{ */
-/*   margin-bottom: 0 !important; */
-/* } */
-/* #nav-bar { */
-/*   overflow-y: hidden !important; */
-/*   min-height: 0 !important; */
-/*   max-height: 0 !important; */
-/*   transition: max-height 0.2s ease-in-out 0.5s, min-height 0.2s ease-in-out 0.5s !important; */
-/* } */
-/* :hover > #nav-bar, */
-/* #nav-bar:focus-within { */
-/*   max-height: 32px !important; */
-/*   transition: max-height 0.2s ease-in-out, min-height 0.2s ease-in-out !important; */
-/* } */
+#urlbar-input-container {
+	height: 100% !important;
+	padding-block: 0 !important;
+	padding-inline: 0 !important;
+}
+
+.urlbarView {
+  bottom: 30px !important;
+  top: unset !important;
+  position: absolute !important;
+  background: white;
+  width: 100% !important;
+  margin-inline: 0 !important;
+  border-radius: 5px 5px 0 0 !important;
+  padding: 0 7px !important;
+  border-top: 1px solid #ccc;
+}
+
+.urlbarView.megabar .urlbarView-body-inner{
+  border-top: none !important;
+}
+
+#urlbar-background{
+  border: none !important;
+  box-shadow: none !important;
+}
+
+#urlbar-results {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+/* smaller comletion type-icons */
+.ac-type-icon {
+  color: black !important;
+  width: 10px !important;
+}
+
