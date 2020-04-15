@@ -876,8 +876,8 @@ function! FloatTerm(...)
     " Terminal Drawer (Option 1)
     botright new __fterm__
     exec 'resize' float2nr(&lines * 0.25)
-    setlocal laststatus=0 noshowmode noruler
-    setlocal nobuflisted
+    " setlocal laststatus=0 noshowmode noruler
+    " setlocal nobuflisted
 
     " Floating Terminal (Option 2)
     " call Floater(height, width, horizontal, vertical)
