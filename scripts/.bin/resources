@@ -15,4 +15,4 @@ echo "$1" | grep -qE "^http" && echo "$1" >> "$RFILE" && exit 0
 
 grep -q "$(pbpaste)" "$RFILE" && echo "Already available: $(pbpaste)" && exit 1
 echo "$RFILE < $(pbpaste)"
-pbpaste >> "$RFILE"
+echo "$(pbpaste)" >> "$RFILE"  # echo is kept is so that it inserts a newline
