@@ -73,6 +73,10 @@ stow nvim
 | :----------------------------------: |
 |            Pseudo working            |
 
+| ![](https://i.imgur.com/Jp2sUf0.png) |
+| :----------------------------------: |
+|                 IRC                  |
+
 | ![](https://i.imgur.com/2FdPs2v.jpg) |
 | :----------------------------------: |
 |          Kitty icat preview          |
