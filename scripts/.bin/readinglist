@@ -2,4 +2,4 @@
 
 set -e
 
-tk read.md
+tk todo-read.md
