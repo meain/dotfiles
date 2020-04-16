@@ -13,6 +13,6 @@ fi
 [ "$1" = o ] && fzf < "$RFILE" | xargs -I{} open "{}" && exit 0
 echo "$1" | grep -qE "^http" && echo "$1" >> "$RFILE" && exit 0
 
-grep -q "$(pbpaste)" "$RFILE" && echo "Already available: $(pbpaste)" && exit 1
+grep -q "$(pbpaste)" "$RFILE" && echo "$(tput setaf 1)[Already available]$(tput sgr0) $(pbpaste)" && exit 1
 echo "$RFILE < $(pbpaste)"
 echo "$(pbpaste)" >> "$RFILE"  # echo is kept is so that it inserts a newline
