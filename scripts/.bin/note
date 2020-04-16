@@ -4,11 +4,17 @@ NOTES_FOLDER="$HOME/.notes"
 mkdir -p "$NOTES_FOLDER/.trash"
 mkdir -p "$NOTES_FOLDER/stash"
 
+get_dated_file() {
+    files=$(cat /dev/stdin)
+    for file in $files; do
+        echo "$(basename "$file") $(date -r "$file" | sed 's| |-|g')"
+    done
+}
+
 get_file_name() {
     for file in "$NOTES_FOLDER"/*.md; do
-        basename "$file"
-        date -r "$file" | sed 's| |-|g'
-    done | sed 'N;s/\n/ /' | sort -r -k2,7 | column -t |
+        echo "$file"
+    done | grep -vE '/todo[^/]*$' | xargs ls -t1 | get_dated_file | column -t |
         fzf --multi --query "$*" --preview "echo '{}' | awk '{print \$1}' | xargs -I{} bat -p --color always $NOTES_FOLDER/{}" |
         cut -d' ' -f1
 }
@@ -30,14 +36,14 @@ new_note() {
 
 trash_note() {
     NAME="$(get_file_name "$@")"
-    for n in $NAME;do
+    for n in $NAME; do
         mv "$NOTES_FOLDER/$n" "$NOTES_FOLDER/.trash/$n"
     done
 }
 
 stash_note() {
     NAME="$(get_file_name "$@")"
-    for n in $NAME;do
+    for n in $NAME; do
         mv "$NOTES_FOLDER/$n" "$NOTES_FOLDER/stash/$n"
     done
 }
