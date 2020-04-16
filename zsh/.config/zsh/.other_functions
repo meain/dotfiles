@@ -298,7 +298,7 @@ cssh() {
 	fi
 
 	if [ -n "$TMUX" ]; then
-		tmux selectp -P bg=colour236
+		tmux select-pane -P bg=colour195
 	fi
 	if [ -z "$1" ]; then
 		ssh "$HOST"
