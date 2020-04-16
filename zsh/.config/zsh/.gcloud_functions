@@ -31,15 +31,8 @@ gcloud_stop_instance() {
     updatessh
 }
 
-remote_work(){
-    EXP_VM_NAME="$(echo "$EXPERIMENT_VM" | cut -d'.' -f1)"
-    gcloud_start_instance "$EXP_VM_NAME"
+remote-work(){
     ssh "$EXPERIMENT_VM"
-    printf "Stop instance? "
-    read
-    if [ "$REPLY" = "y" ];then
-        gcloud_stop_instance "$EXP_VM_NAME"
-    fi
 }
 
 testart(){
