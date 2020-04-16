@@ -10,9 +10,9 @@ servers:
       - "#python"
       - "#vim"
       - "#neovim"
-      # - "#go-nuts"
+      - "#go-nuts"
   - addr: irc.mozilla.org
-    port: 6667
+    port: 6697
     hostname: plank
     realname: Abin Simon
     nicks: [meain]
@@ -55,4 +55,17 @@ colors:
   tab_active:
     fg: default
     bg: black
+    attrs: [bold]
+
+  tab_normal:
+    fg: white
+    bg: default
+
+  tab_new_msg:
+    fg: purple
+    bg: default
+
+  tab_highlight:
+    fg: red
+    bg: default
     attrs: [bold]
