@@ -2,7 +2,7 @@
 
 set -e
 
-cd ~/.notes
+cd ~/.notes/todo
 FILE="todo.md"
 [ -n "$1" ] && FILE="$1"
 

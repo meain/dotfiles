@@ -4,6 +4,10 @@ set -e
 
 
 RFILE="resources"
+if [ ! -f "$RFILE" ];then
+    cd ~/.notes/resources
+    RFILE=$(fzf)
+fi
 
 [ "$1" = l ] && cat $RFILE && exit 0
 [ "$1" = o ] && fzf < $RFILE | xargs -I{} open "{}" && exit 0
