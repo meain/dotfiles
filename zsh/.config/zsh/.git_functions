@@ -14,9 +14,9 @@ gg() {
 gh() {
     GIT_STAGED_FILES=$(git diff --name-only --cached)
     if [ -z "$GIT_STAGED_FILES" ];then
-        git add -u && git commit -m "$1"
+        git add -u && git commit -m "$*"
     else
-        git commit -m "$1"
+        git commit -m "$*"
     fi
 }
 
