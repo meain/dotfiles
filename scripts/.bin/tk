@@ -5,5 +5,6 @@ set -e
 cd ~/.notes/todo
 FILE="todo.md"
 [ -n "$1" ] && FILE="$1"
+[ "$1" = "f" ] && FILE="$(fzf)"
 
 taskell "$FILE"
