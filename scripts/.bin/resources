@@ -8,7 +8,7 @@ if [ "$1" = "new" ]; then
     cd ~/.notes/resources
     printf "Name: "
     read -r
-    RFILE="$(echo "$REPLY" | tr ' ' '-').md"
+    RFILE="$(echo "$REPLY" | tr ' ' '-')"
     touch "$RFILE"
     exit
 else
