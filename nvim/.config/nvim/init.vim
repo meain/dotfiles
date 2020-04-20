@@ -582,30 +582,6 @@ nnoremap vv ^vg_
 " Quick make
 nnoremap M :Dispatch! maker<cr>
 
-" Quick edit .vimruncmd
-let g:vimruncmd_editor_open = 0
-let g:vimruncmd_buffer_number = 0
-function! ToggleVimRunEditor()
-  if g:vimruncmd_editor_open == 1
-    if g:vimruncmd_buffer_number == bufnr("")
-      w
-      q
-    else
-      exec g:vimruncmd_buffer_number."bd"  
-    endif
-    let g:vimruncmd_editor_open = 0
-    return
-  endif
-  topleft new .vimruncmd
-  resize 5
-  let g:vimruncmd_editor_open = 1
-  let g:vimruncmd_buffer_number =  bufnr("")
-endfunction
-nnoremap <silent><leader>R :call ToggleVimRunEditor()<cr>
-autocmd BufEnter .vimruncmd if (winnr("$") == 1) | q | endif
-autocmd BufNewFile .vimruncmd :w | :!chmod +x %
-autocmd BufNewFile,BufRead .vimruncmd set filetype=sh
-
 " Terminal colors
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
@@ -897,13 +873,36 @@ function! FloatTerm(...)
     endif
   endif
 endfunction
-
 nnoremap <silent><m-t> <C-\><C-n>:call FloatTerm()<cr>
 inoremap <silent><m-t> <C-\><C-n>:call FloatTerm()<cr>
 tnoremap <silent><m-t> <C-\><C-n>:call FloatTerm()<cr>
 nnoremap <silent><m-r> <C-\><C-n>:call FloatTerm("vimruncmd")<cr>
 inoremap <silent><m-r> <C-\><C-n>:call FloatTerm("vimruncmd")<cr>
 tnoremap <silent><m-r> <C-\><C-n>:call FloatTerm("vimruncmd")<cr>
+
+" Quick edit .vimruncmd
+let g:vimruncmd_editor_open = 0
+let g:vimruncmd_buffer_number = 0
+function! ToggleVimRunEditor()
+  if g:vimruncmd_editor_open == 1
+    if g:vimruncmd_buffer_number == bufnr("")
+      w
+      q
+    else
+      exec g:vimruncmd_buffer_number."bd"  
+    endif
+    let g:vimruncmd_editor_open = 0
+    return
+  endif
+  topleft new .vimruncmd
+  resize 5
+  let g:vimruncmd_editor_open = 1
+  let g:vimruncmd_buffer_number =  bufnr("")
+endfunction
+nnoremap <silent><leader>R :call ToggleVimRunEditor()<cr>
+autocmd BufEnter .vimruncmd if (winnr("$") == 1) | q | endif
+autocmd BufNewFile .vimruncmd :w | :!chmod +x %
+autocmd BufNewFile,BufRead .vimruncmd set filetype=sh
 
 " Stratr profiling
 function! Profile()
