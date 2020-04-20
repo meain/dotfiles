@@ -7,16 +7,16 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 " Visual enhancements
 Plug 'mhinz/vim-janah'                                                                         " Janah colorscheme
-Plug 'cormacrelf/vim-colors-github'
-Plug 'logico/typewriter-vim'
+Plug 'cormacrelf/vim-colors-github'                                                            " Light colorschrme
+Plug 'logico/typewriter-vim'                                                                   " Minimal light colorscheme
 Plug 'Yggdroot/indentLine'                                                                     " Show indent
-Plug 'mhinz/vim-signify', { 'on': 'LazyLoadPlugins' }                                                                      " Git diff icons in gutter
+Plug 'mhinz/vim-signify', { 'on': 'LazyLoadPlugins' }                                          " Git diff icons in gutter
 Plug 'norcalli/nvim-colorizer.lua'                                                             " Highlight color values
-Plug 'machakann/vim-highlightedyank', { 'on': 'LazyLoadPlugins' }                                                           " Visually highlight yanked region
+Plug 'machakann/vim-highlightedyank', { 'on': 'LazyLoadPlugins' }                              " Visually highlight yanked region
 
 " Added functinality
 Plug 'mhinz/vim-startify'                                                                      " A fancy start page for vim (slow)
-Plug '~/Documents/Projects/others/done/_vim/vim-googler', { 'on': 'LazyLoadPlugins' }                                       " Search from within vim
+Plug '~/Documents/Projects/others/done/_vim/vim-googler', { 'on': ['LazyLoadPlugins', 'Searcher'] } " Search from within vim
 Plug '/usr/local/opt/fzf'                                                                      " Fzf
 Plug 'junegunn/fzf.vim'                                                                        " Fzf for vim
 Plug 'christoomey/vim-tmux-navigator'                                                          " Seamless navigation between vim and tmux
@@ -35,15 +35,15 @@ Plug 'tpope/vim-sleuth'                                                         
 Plug 'tpope/vim-fugitive', { 'on': [ 'Gstatus', 'Gblame', 'Gdiff' ] }                          " Git stuff from within vim
 Plug 'liuchengxu/vista.vim', { 'on': 'Vista' }                                                 " Tags viewer
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }                                             " Undo tree
-Plug 'justinmk/vim-dirvish', { 'on': 'LazyLoadPlugins' }
-Plug 'scrooloose/nerdtree', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] }
+Plug 'justinmk/vim-dirvish', { 'on': 'LazyLoadPlugins' }                                       " File browser
+Plug 'scrooloose/nerdtree', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] }         " Nerdtree
 Plug 'meain/vim-automkdir'                                                                     " Automatically create parent dirs
 
 " Morph code
-Plug 'tpope/vim-surround', { 'on': 'LazyLoadPlugins' }                                                                      " Surround
+Plug 'tpope/vim-surround', { 'on': 'LazyLoadPlugins' }                                         " Surround
 Plug 'jiangmiao/auto-pairs'                                                                    " Autopair
-Plug 'tomtom/tcomment_vim', { 'on': 'LazyLoadPlugins' }                                                                     " Code commenting
-Plug 'AndrewRadev/tagalong.vim', { 'on': 'LazyLoadPlugins' }                                                                " Automatically change closing tag
+Plug 'tomtom/tcomment_vim'                                                                     " Code commenting
+Plug 'AndrewRadev/tagalong.vim', { 'on': 'LazyLoadPlugins' }                                   " Automatically change closing tag
 
 " Language helpers
 Plug 'elzr/vim-json', { 'for': 'json' }                                                        " Json syntax highlight
@@ -54,37 +54,37 @@ Plug 'neoclide/vim-jsx-improve', { 'for': ['javascript', 'javascript.jsx'] }    
 Plug 'tpope/vim-markdown', { 'for': ['md', 'markdown'] }                                       " Better markdown support
 Plug 'cespare/vim-toml', { 'for': 'toml' }                                                     " Toml highlight
 Plug 'raimon49/requirements.txt.vim', { 'for': 'requirements' }                                " Requirements file
-Plug 'jxnblk/vim-mdx-js', { 'for': 'mdx' }
+Plug 'jxnblk/vim-mdx-js', { 'for': 'mdx' }                                                     " MDX stuff
 
 " Language enhacements
 Plug '~/Documents/Projects/projects/vim-jsontogo' , { 'for': ['go'] }                          " Convert JSON to Go struct
 
 " Linting / Checking
-Plug 'w0rp/ale', { 'on': 'LazyLoadPlugins' }                                                                                " Linter formatter and more
+Plug 'w0rp/ale', { 'on': 'LazyLoadPlugins' }                                                   " Linter formatter and more
 
 " Autocomplete
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }                                  " Competion framework
-Plug 'Shougo/echodoc.vim', { 'on': 'LazyLoadPlugins' }                                                                      " Show signature
+Plug 'Shougo/echodoc.vim', { 'on': 'LazyLoadPlugins' }                                         " Show signature
 Plug 'Shougo/neco-vim', { 'for': 'vim' }                                                       " Completion for viml
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }           " Language client
 Plug '~/Documents/Projects/projects/deoplete-notmuch', { 'for': 'mail' }                       " Email autocomplete
 
 " Testing
-Plug 'christoomey/vim-tmux-runner', { 'on': ['TestNearest', 'TestFile', 'VtrAttachToPane'] }
+Plug 'christoomey/vim-tmux-runner', { 'on': ['TestNearest', 'TestFile', 'VtrAttachToPane'] }   " Easy switching between vim and tmux
 Plug 'janko/vim-test', { 'on': ['TestNearest', 'TestFile', 'TestLast', 'TestSuite'] }          " Quicky run test from vim
 
 " Dependencies
-Plug 'tpope/vim-repeat', { 'on': 'LazyLoadPlugins' }                                                                        " Repeat plugins with .
+Plug 'tpope/vim-repeat', { 'on': 'LazyLoadPlugins' }                                           " Repeat plugins with .
 Plug 'radenling/vim-dispatch-neovim', { 'on': ['Dispatch', 'Start'] }                          " Neovim support for vim-dispatch
 
 " Others
-Plug 'dstein64/vim-startuptime', { 'on': 'StartupTime' }                                         " Measure startuptime
-Plug 'rhysd/git-messenger.vim', { 'on': 'GitMessenger' }                                         " Show git commit
-Plug 'davidbeckingsale/writegood.vim', { 'on': ['WritegoodEnable', 'WritegoodToggle'] }          " Better writing mode
-Plug '~/Documents/Projects/projects/vim-colorswitch', { 'do': 'UpdateRemotePlugins' }            " Cycle between color types
-Plug '~/Documents/Projects/projects/vim-package-info', { 'on': 'LazyLoadPlugins' }
-Plug '~/Documents/Projects/projects/vim-printer', { 'on': 'LazyLoadPlugins' }
-Plug '~/Documents/Projects/projects/vim-mtodo'
+Plug 'dstein64/vim-startuptime', { 'on': 'StartupTime' }                                       " Measure startuptime
+Plug 'rhysd/git-messenger.vim', { 'on': 'GitMessenger' }                                       " Show git commit
+Plug 'davidbeckingsale/writegood.vim', { 'on': ['WritegoodEnable', 'WritegoodToggle'] }        " Better writing mode
+Plug '~/Documents/Projects/projects/vim-colorswitch', { 'do': 'UpdateRemotePlugins' }          " Cycle between color types
+Plug '~/Documents/Projects/projects/vim-package-info', { 'on': 'LazyLoadPlugins' }             " Show infor about packages
+Plug '~/Documents/Projects/projects/vim-printer', { 'on': 'LazyLoadPlugins' }                  " Quick debug print
+Plug '~/Documents/Projects/projects/vim-mtodo', { 'for': 'mtodo' }                             " Custom Todo
 
 call plug#end()
 
@@ -1334,6 +1334,7 @@ nnoremap <silent><leader>tl :TestLast<cr>
 nnoremap <silent>sf :VtrSendCommandToRunner<cr>
 
 
+
 "                             Source External                          "
 "                    ==============================                    "
 
@@ -1349,7 +1350,7 @@ augroup load_git_utils
     autocmd CursorHold,CursorHoldI * source ~/.config/nvim/gitutils.vim | autocmd! load_git_utils
 augroup end
 
-augroup load_additional_plugins
+augroup load_additional_plugins_onwrite
     autocmd!
     autocmd CursorHold,CursorHoldI * call plug#load('vim-signify') |
           \ call plug#load('vim-package-info') | 
@@ -1359,14 +1360,13 @@ augroup load_additional_plugins
           \ call plug#load('vim-dirvish') |
           \ call plug#load('vim-surround') |
           \ call plug#load('auto-pairs') |
-          \ call plug#load('tcomment_vim') |
           \ call plug#load('tagalong.vim') |
           \ call plug#load('ale') |
           \ call plug#load('echodoc.vim') |
           \ call plug#load('vim-repeat') |
           \ call plug#load('vim-package-info') |
           \ call plug#load('vim-printer') |
-          \ autocmd! load_additional_plugins
+          \ autocmd! load_additional_plugins_onwrite
 augroup end
 
 augroup load_additional_plugins
@@ -1379,7 +1379,6 @@ augroup load_additional_plugins
           \ call plug#load('vim-dirvish') |
           \ call plug#load('vim-surround') |
           \ call plug#load('auto-pairs') |
-          \ call plug#load('tcomment_vim') |
           \ call plug#load('tagalong.vim') |
           \ call plug#load('ale') |
           \ call plug#load('echodoc.vim') |
