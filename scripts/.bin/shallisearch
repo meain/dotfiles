@@ -1,0 +1,12 @@
+#!/bin/sh
+
+set -e
+
+LEN="$(echo "$1" | wc -c | tr -d ' ')"
+[ "$LEN" -gt 50 ] && exit 0
+printf "Search for \`%s\`? (Y/n): " "$1"
+read -r
+if [ "$REPLY" = y ] || [ -z "$REPLY" ]; then
+    open "https://duckduckgo.com/?q=$1"
+fi
+
