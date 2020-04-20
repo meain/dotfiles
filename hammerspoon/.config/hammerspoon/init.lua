@@ -15,6 +15,7 @@ mailcounter:setTitle("M")
 
 -- Variables
 local BIN = os.getenv("HOME") .. '/.bin/'
+local prev_foreground_app = nil
 
 
 -- Disable animations
@@ -153,12 +154,17 @@ end)
 
 hs.hotkey.bind({"alt"}, ";", function()
   local app = hs.application.get("kitty")
+  if prev_foreground_app == nil then
+    prev_foreground_app = hs.window.focusedWindow()
+  end
 
   if app then
       if not app:mainWindow() then
           app:selectMenuItem({"kitty", "New OS window"})
       elseif app:isFrontmost() then
           app:hide()
+          prev_foreground_app:focus()
+          prev_foreground_app = nil
       else
           app:activate()
       end
