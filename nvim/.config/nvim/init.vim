@@ -9,7 +9,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'mhinz/vim-janah'                                                                         " Janah colorscheme
 Plug 'cormacrelf/vim-colors-github'
 Plug 'logico/typewriter-vim'
-Plug 'Yggdroot/indentLine', { 'on': 'LazyLoadPlugins' }                                        " Show indent
+Plug 'Yggdroot/indentLine'                                                                     " Show indent
 Plug 'mhinz/vim-signify', { 'on': 'LazyLoadPlugins' }                                                                      " Git diff icons in gutter
 Plug 'norcalli/nvim-colorizer.lua'                                                             " Highlight color values
 Plug 'machakann/vim-highlightedyank', { 'on': 'LazyLoadPlugins' }                                                           " Visually highlight yanked region
@@ -41,7 +41,7 @@ Plug 'meain/vim-automkdir'                                                      
 
 " Morph code
 Plug 'tpope/vim-surround', { 'on': 'LazyLoadPlugins' }                                                                      " Surround
-Plug 'jiangmiao/auto-pairs', { 'on': 'LazyLoadPlugins' }                                                                    " Autopair
+Plug 'jiangmiao/auto-pairs'                                                                    " Autopair
 Plug 'tomtom/tcomment_vim', { 'on': 'LazyLoadPlugins' }                                                                     " Code commenting
 Plug 'AndrewRadev/tagalong.vim', { 'on': 'LazyLoadPlugins' }                                                                " Automatically change closing tag
 
