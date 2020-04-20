@@ -9,7 +9,5 @@ profile func *
 profile file *
 ' > /tmp/init-temp
 cat ~/.config/nvim/init.vim >> /tmp/init-temp
-cat /tmp/init-temp > ~/.config/nvim/init.vim
-nvim "$@" +q
-cat /tmp/init-backup > ~/.config/nvim/init.vim
+nvim -u /tmp/init-temp "$@" +q
 cat /tmp/vimprofile.log | grep -E '^(Total time:|SCRIPT)' | sed 'N;s/\n/ /' | grep -E '^SCRIPT' | awk '{print $5,$2}' | sort -r | less
