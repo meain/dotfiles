@@ -16,6 +16,6 @@ echo "Applying $FILE..."
 sleep 3  # just in case they wanna revert
 
 if [ -f "$FILE" ];then
-    kubectl apply -f "$FILE"
     realpath "$FILE" > /tmp/kaf-file
+    kubectl apply -f "$FILE"
 fi
