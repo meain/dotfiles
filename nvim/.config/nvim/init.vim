@@ -964,12 +964,6 @@ augroup end
 nnoremap <silent><leader>G :GitMessenger<cr>
 
 " Startify
-function! s:list_commits()
-  let git = 'git -C ' . getcwd()
-  let commits = systemlist(git . ' log --oneline | head -n5')
-  let git = 'G' . git[1:]
-  return map(commits, '{"line": matchstr(v:val, "\\s\\zs.*"), "cmd": "'. git .' show ". matchstr(v:val, "^\\x\\+") }')
-endfunction
 nnoremap <silent>,l :Startify<cr>
 augroup custom_startify
   autocmd!
@@ -1011,7 +1005,6 @@ let g:startify_skiplist = [
 let g:startify_lists = [
   \ { 'type': 'commands' },
   \ { 'type': 'dir', 'header': [ 'Files [' . fnamemodify(getcwd(), ':t') . ']' ] },
-  \ { 'type': function('s:list_commits'), 'header': [ 'Recent Commits' ] },
   \ { 'type': 'bookmarks', 'header': [ 'Bookmarks' ] },
   \ { 'type': 'sessions',  'header': [ 'Sessions' ] },
   \ ]
