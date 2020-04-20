@@ -2,6 +2,7 @@
 
 rmvenv() {
     VENVNAME=$(workon | fzf --height 30% --layout=reverse --query "$*")
+    [ -z "$VENVNAME" ] && echo "No virtualenv mentioned" && return 1
 
     printf '%s' "Remove virtualenv $VENVNAME? (y/N): "
     read -r sure
