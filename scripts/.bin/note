@@ -67,6 +67,9 @@ elif [ "$1" = "sync" ]; then
 elif [ "$1" = "status" ]; then
     cd "$NOTES_FOLDER" &&
         git status --short
+elif [ "$1" = "view" ]; then
+    shift
+    lf "$NOTES_FOLDER"
 else
     open_note "$*"
     cd "$NOTES_FOLDER" && git status --short
