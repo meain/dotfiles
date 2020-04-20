@@ -27,6 +27,14 @@ _update_bw() {
     bw lock
 }
 
+_update_helm() {
+    helm repo update
+}
+
+_update_poetry() {
+    poetry self update
+}
+
 case "$1" in
     vim) _update_vim ;;
     brew) _update_brew ;;
@@ -35,6 +43,8 @@ case "$1" in
     repos) _update_repos ;;
     gcloud) _update_gcloud ;;
     bw) _update_bw ;;
+    helm) _update_helm ;;
+    poetry) _update_poetry ;;
     all)
         _update_vim
         _update_brew
@@ -43,6 +53,17 @@ case "$1" in
         _update_repos
         _update_gcloud
         ;;
+    allall)
+        _update_vim
+        _update_brew
+        _update_rustup
+        _update_dasht
+        _update_repos
+        _update_gcloud
+        _update_helm
+        _update_poetry
+        ;;
     *)
-        update "$(echo "all,vim,brew,rustup,dasht,repos,bw" | tr ',' '\n' | fzf)"
+        CANDIDATE="$(echo "all,allall,vim,brew,rustup,dasht,repos,bw,helm,poetry" | tr ',' '\n' | fzf)"
+        [ -n "$CANDIDATE" ] && update "$CANDIDATE"
 esac
