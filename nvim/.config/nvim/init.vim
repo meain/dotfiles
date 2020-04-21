@@ -905,6 +905,28 @@ autocmd BufEnter .vimruncmd if (winnr("$") == 1) | q | endif
 autocmd BufNewFile .vimruncmd :w | :!chmod +x %
 autocmd BufNewFile,BufRead .vimruncmd set filetype=sh
 
+
+function! RrgOpen()
+  let l:filename = matchstr(getline('.'), '\v^[^:]*:[^:]*:[^:]*')
+  let l:items = split(l:filename, ":")
+  execute "normal \<c-w>\<c-w>"
+  exec 'e +'. l:items[1].' '.l:items[0]
+  exec 'normal 'l:items[2].'|'
+endfunction
+
+function! Rrg(term)
+  " Not using quickfix list because ale always rewrites qf
+  botright new
+  resize 5
+  exec '0read!rg --vimgrep ' . a:term
+  normal gg
+  set ft=ripgrep
+  setlocal buftype=nofile
+  setlocal nowrap
+  nnoremap <buffer><enter> :call RrgOpen()<cr>
+endfunction
+command! -nargs=1 Rrg :call Rrg(<f-args>)
+
 " Stratr profiling
 function! Profile()
   profile start profile.log
