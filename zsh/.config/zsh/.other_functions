@@ -17,8 +17,8 @@ stdgrip() {
 gifup() {
 	# gifigy: https://github.com/vvo/gifify
 	# imgur-uploader: https://github.com/meain/imgur-uploader
-	timestamp="$(date +"%T")"
-	gifify "$1" -o "/tmp/$timestamp" && ~/.bin/imgurupload "/tmp/$timestamp"
+	gifname="gif-$(date +"%s")"
+	gifify "$1" -o "/tmp/$gifname" && ~/.bin/imgurupload "/tmp/$gifname"
 }
 
 # cd, but use lf to choose dir
