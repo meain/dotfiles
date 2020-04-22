@@ -65,7 +65,7 @@ body > box:nth-child(8) {
 }
 
 /* black urlbar in private window */
-#main-window[privatebrowsingmode="temporary"] #urlbar {
+#main-window[privatebrowsingmode="temporary"] #urlbar-input-container {
   background: black !important;
   color: white !important;
 }
