@@ -225,6 +225,8 @@ copycommand() {
 start() {
 	if [ -f 'run-dev' ]; then
 		./run-dev
+	elif [ -f 'scripts/run-dev' ]; then
+		./scripts/run-dev
 	elif [ -f 'package.json' ]; then
 		npm start
 	else
