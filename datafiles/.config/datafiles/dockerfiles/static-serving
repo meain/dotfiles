@@ -1,0 +1,11 @@
+FROM node:lts-slim as builder
+COPY package.json /code/package.json
+COPY package-lock.json /code/package-lock.json
+WORKDIR /code
+RUN npm ci
+
+COPY . /code
+RUN npm run build
+
+FROM nginx:alpine
+COPY --from=builder /code/dist /usr/share/nginx/html

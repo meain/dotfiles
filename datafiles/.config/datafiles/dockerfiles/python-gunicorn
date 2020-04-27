@@ -1,0 +1,16 @@
+FROM python:3.8
+
+# env variables
+ENV PYTHONUNBUFFERED 1
+
+# requirements
+RUN pip install gunicorn
+COPY ./requirements.txt /tmp/requirements.txt
+RUN pip install -r requirements.txt
+
+# add source code
+COPY . /app
+WORKDIR /app
+
+EXPOSE 80
+CMD gunicorn app:app -w 1 --threads 1 -b 0.0.0.0:80
