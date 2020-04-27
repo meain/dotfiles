@@ -169,6 +169,11 @@ ssc() {
 	cp  "$FILE" "$1"
 }
 
+sso() {
+	FILE="$(\ls -Art -d ~/Documents/Screenshots/* | tail -n 1)" 
+	OPEN "$FILE"
+}
+
 kubernetes_get_token() {
 	kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | awk '/^deployment-controller-token-/{print $1}') | awk '$1=="token:"{print $2}'
 }
