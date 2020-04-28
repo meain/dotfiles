@@ -1,0 +1,5 @@
+#!/bin/sh
+
+set -e
+
+grep -vE '^!_TAG' tags | grep -vE '[i|v]$' | awk '{print $1}' | fzf | xargs nvim -t
