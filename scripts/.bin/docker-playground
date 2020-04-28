@@ -23,4 +23,4 @@ else
 fi
 echo "IMAGE: $IMAGE"
 
-docker run --rm -v "$(pwd):/code" -it "$IMAGE" sh
+docker run --rm -v "$(pwd):/code" --workdir /code -it "$IMAGE" sh
