@@ -25,15 +25,18 @@ scrolling:
 
 font:
   normal:
-    family: CozetteVector
+    family: SpaceMono Nerd Font Mono
+    style: Regular
   bold:
-    family: CozetteVector
+    family: SpaceMono Nerd Font Mono
+    style: Regular
   italic:
-    family: CozetteVector
-  size: 14.5
+    family: SpaceMono Nerd Font Mono
+    style: Italic
+  size: 14.0
   offset:
     x: 0
-    y: 0
+    y: -5
   glyph_offset:
     x: 0
     y: 0
