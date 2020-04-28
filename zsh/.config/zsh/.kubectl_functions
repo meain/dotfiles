@@ -11,7 +11,7 @@ klog() {
 }
 
 kshell() {
-  kubectl exec -it "$(kpods "$*")" /bin/bash
+  kubectl exec -it "$(kpods "$*")" --  sh -c 'clear; (bash || ash || sh)'
 }
 
 kall() {
