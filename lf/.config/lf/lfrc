@@ -19,7 +19,7 @@ map e $$EDITOR "$f"
 map i $less "$f"
 map I $qlmanage -p "$f" > /dev/null 2> /dev/null
 map P $echo "$f" | pbcopy
-set previewer ~/.config/lf/previewer
+set previewer preview
 set color256
 
 map S $$SHELL
