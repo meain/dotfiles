@@ -30,7 +30,9 @@ pdfpreview() {
 }
 
 everythingelse() {
-    if file --mime "$1" | grep 'charset=binary'; then
+    if [ -d "$1" ];then
+        ls -A "$1"
+    elif file --mime "$1" | grep 'charset=binary'; then
         MIMETYPE="$(file --mime ade.sketch | cut -d' ' -f2)"
         if echo "$MIMETYPE" | grep 'application/zip';then
             unzip -l "$1"    
