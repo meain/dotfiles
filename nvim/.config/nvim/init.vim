@@ -928,6 +928,24 @@ function! Rrg(term)
 endfunction
 command! -nargs=1 Rrg :call Rrg(<f-args>)
 
+function! GHOpen() abort
+    let l:git_origin = system('git config --get remote.origin.url')
+    let l:git_branch = system('git rev-parse --abbrev-ref HEAD')
+    let l:current_file = expand('%')
+    let l:line_start = getpos("'<")[1]
+    let l:line_end = getpos("'>")[1]
+    let l:current_line = line('.')
+    if l:line_start != 0
+      let l:url = trim(l:git_origin) . '/blob/' . trim(l:git_branch) . '/' . trim(l:current_file) . '#L' . trim(l:line_start) . '-#L' . trim(l:line_end)
+    else
+      let l:url = trim(l:git_origin) . '/blob/' . trim(l:git_branch) . '/' . trim(l:current_file) . '#L' . trim(l:current_line)
+    endif
+    echo l:url
+    " We can open this thing in firefox if `open` just did not replace # with %23
+    call system("echo '". l:url . "' | pbcopy")
+endfunction
+command! -range GhOpen :call GHOpen()
+
 " Stratr profiling
 function! Profile()
   profile start profile.log
