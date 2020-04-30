@@ -6,4 +6,4 @@ WALL_GIT_DIR="$HOME/Documents/Projects/others/non-code/wallpapers"
 git --git-dir="$WALL_GIT_DIR" --work-tree="$HOME/Pictures" ls-files --other --modified --exclude-standard| fzf -m | 
     xargs git --git-dir="$WALL_GIT_DIR" --work-tree="$HOME/Pictures" add
 git --git-dir="$WALL_GIT_DIR" --work-tree="$HOME/Pictures" commit -m '[autocommit] addall'
-git push origin master
+git --git-dir="$WALL_GIT_DIR" --work-tree="$HOME/Pictures" push origin master
