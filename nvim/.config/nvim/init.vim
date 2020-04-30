@@ -29,6 +29,7 @@ Plug 'airblade/vim-rooter'                                                      
 Plug 'editorconfig/editorconfig-vim'                                                           " Editorconfig
 Plug 'mattn/emmet-vim', { 'for': ['html', 'css'] + g:javascript_filetypes }                    " Emmet
 Plug 'rhysd/committia.vim'                                                                     " Better COMMIT_EDITMSG editing
+Plug 'shinglyu/vim-codespell', { 'on': ['CodeSpell'] }                                         " Spellchecking in code
 
 " Code editing enhacements
 Plug 'tpope/vim-sleuth'                                                                        " Automatic indentation setting
