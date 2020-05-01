@@ -36,7 +36,7 @@ Plug 'tpope/vim-sleuth'                                                         
 Plug 'tpope/vim-fugitive', { 'on': [ 'Gstatus', 'Gblame', 'Gdiff' ] }                          " Git stuff from within vim
 Plug 'liuchengxu/vista.vim', { 'on': 'Vista' }                                                 " Tags viewer
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }                                             " Undo tree
-Plug 'justinmk/vim-dirvish', { 'on': 'LazyLoadPlugins' }                                       " File browser
+Plug 'justinmk/vim-dirvish', { 'on': ['Dirvish', 'LazyLoadPlugins'] }                          " File browser
 Plug 'scrooloose/nerdtree', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] }         " Nerdtree
 Plug 'meain/vim-automkdir'                                                                     " Automatically create parent dirs
 
