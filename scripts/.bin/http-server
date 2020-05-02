@@ -4,4 +4,4 @@ set -e
 
 URL='https://gist.githubusercontent.com/meain/e07fde58fda2da5c51a7b04094c2b9f5/raw/9b96a514feee0785939d894836e3576cbbf7b7b1/server-cors.py'
 [ -f "/tmp/http_server.py" ] || curl --silent "$URL" > /tmp/http_server.py
-python3 /tmp/http_server.py
+python3 /tmp/http_server.py "$1"
