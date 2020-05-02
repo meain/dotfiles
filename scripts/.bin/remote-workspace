@@ -8,12 +8,15 @@ if [ -f .dockerignore ];then
     IGNORE_STRING="$(sed '/^\ *$/d;s|^|--exclude |' .dockerignore | tr '\n' ' ')"
 fi
 
-rsync -azvr --exclude '.git' $IGNORE_STRING . "$EXPERIMENT_VM:/tmp/$TNAME"
+[ "$1" != "cnys" ] && rsync -azvr --exclude '.git' $IGNORE_STRING . "$EXPERIMENT_VM:/tmp/$TNAME"
 
 [ "$1" = "sync" ] && exit 0
 
 if [ "$1" = "run" ];then
     TERM=screen-256color ssh "$EXPERIMENT_VM" -t "cd /tmp/$TNAME && bash -c '$*'"
+elif [ "$1" = "cnys" ];then
+    # sync in reverse
+    rsync -azvr --exclude '.git' $IGNORE_STRING "$EXPERIMENT_VM:/tmp/$TNAME/" .
 elif [ "$1" = "csync" ];then
     watchexec -- rsync -azvr --exclude '.git' $IGNORE_STRING . "$EXPERIMENT_VM:/tmp/$TNAME"
 else
