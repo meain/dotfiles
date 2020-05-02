@@ -614,8 +614,24 @@ nnoremap <silent><s-right> :tabm +1<cr>
 nnoremap <silent><s-left> :tabm -1<cr>
 
 " Easier switching of quickfix list items
-nnoremap <silent><leader>m :cnext<cr>
-nnoremap <silent><leader>n :cprev<cr>
+function! QfNext() abort
+  let l:qflen = len(getqflist())
+  if l:qflen > 0
+    cnext
+  else
+    ALENext
+  endif
+endfunction
+function! QfPrev() abort
+  let l:qflen = len(getqflist())
+  if l:qflen > 0
+    cprevious
+  else
+    ALEPrevious
+  endif
+endfunction
+nnoremap <silent><leader>m :call QfNext()<cr>
+nnoremap <silent><leader>n :call QfPrev()<cr>
 
 " Change from class to className
 autocmd FileType javascript nnoremap <buffer><leader>c mc?class=<CR>ciwclassName<ESC>`c4l
@@ -1084,7 +1100,8 @@ let g:ale_linters = {
 \  'html': ['tidy'],
 \  'css': ['stylelint'],
 \  'bash': ['shellcheck'],
-\  'zsh': ['shellcheck']
+\  'zsh': ['shellcheck'],
+\  'vim': ['vint'],
 \}
 let g:ale_virtualenv_dir_names = [$WORKON_HOME]
 let g:ale_echo_msg_error_str = '✖'
