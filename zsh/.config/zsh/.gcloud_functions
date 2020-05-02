@@ -28,7 +28,6 @@ gcloud_stop_instance() {
         return 1
     fi
     gcloud compute instances stop "$INSTANCE"
-    updatessh
 }
 
 remote-work(){
