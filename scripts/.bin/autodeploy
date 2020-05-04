@@ -1,0 +1,24 @@
+#!/bin/sh
+
+set -e
+
+if [ -f .autodeploy ]; then
+    NAME="$(cat .autodeploy)"
+else
+    NAME="$(pwd | xargs basename)"
+    printf "Name [%s]: " "$NAME"
+    read -r
+    [ -n "$REPLY" ] && NAME="$REPLY"
+    echo "$NAME" >.autodeploy
+fi
+
+TAG="autodeploy-$(git rev-parse HEAD | cut -c 1-13)"
+IMAGE="$CONTAINER_REGISTERY/$NAME:$TAG"
+echo "$IMAGE"
+if gcloud container images list-tags "$CONTAINER_REGISTERY/$NAME" | grep -q "$TAG"; then
+    echo "Image already available"
+else
+    gcloud builds submit --tag "$IMAGE"
+fi
+gcloud run deploy --allow-unauthenticated --platform=managed \
+    --region=us-central1 "$NAME" --image "$IMAGE" --port 80
