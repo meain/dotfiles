@@ -18,6 +18,7 @@ export HIST_STAMPS="dd.mm.yyyy"
 HISTSIZE=5000
 SAVEHIST=5000
 HISTFILE=~/.cache/zsh/.zsh_history
+setopt HIST_IGNORE_SPACE
 setopt appendhistory
 setopt sharehistory
 setopt incappendhistory

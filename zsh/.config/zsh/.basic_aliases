@@ -66,6 +66,7 @@ alias spause='spotify pause'
 
 alias ax="axel -a -n 10"
 alias tig='tig --all'
+alias jrnl=" jrnl"  # so as to ignore zsh_history
 alias pipgrep='pip freeze | grep'
 alias lynx='lynx -lss="~/.lynx.lss"'
 alias usage="du -h -d 1 . | sort -hr"
