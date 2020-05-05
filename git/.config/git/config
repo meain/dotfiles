@@ -29,7 +29,7 @@
   ui = true
 [core]
   editor = /usr/local/bin/nvim
-  pager = diff-so-fancy | less --tabs=4 -RFX --pattern='^(added|modified)'
+  pager = diff-so-fancy | less --tabs=4 -RFX
   excludesfile = ~/.config/git/.gitignore_global
 [diff]
   difftool = vimdiff
