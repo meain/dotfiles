@@ -964,14 +964,14 @@ function! StartPage()
   let l:oldfiles = v:oldfiles[:30]
   let g:cur_dir = getcwd()
   let g:cur_dir_len = len(getcwd()) + 1
-  function! Pad(s)
-      return repeat(' ', winwidth('%')/2 - len(a:s)/2) . a:s
+  function! Pad(s, amt)
+      return repeat(' ', a:amt/2 - len(a:s)/2 - 1) . a:s
   endfunction
   function! Ffn(idx, val)
     return a:val =~# g:cur_dir && filereadable(a:val) && !(a:val =~# '\.git')
   endfunction
   function! NameCleanUp(idx, val)
-    return Pad(a:val[g:cur_dir_len:])
+    return Pad(a:val[g:cur_dir_len:], winwidth('%'))
   endfunction
   function! FileOpen()
     let l:filename = split(getline('.'), ' ')
@@ -997,7 +997,7 @@ function! StartPage()
       \ nonumber
       \ noswapfile
       \ norelativenumber
-  call append('^', Pad('__'))
+  call append('^', Pad('__', winwidth('%')))
   call append('$', l:oldfiles[:10])
   normal! gg
   nnoremap <buffer><silent> e :enew<CR>
