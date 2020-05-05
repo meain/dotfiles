@@ -42,6 +42,7 @@ alias pD='cd ~/Desktop'
 alias pt='cd /tmp'
 alias pT='cd ~/Documents/Projects/test'
 alias pm='cd ~/Documents/Media'
+alias pn='cd ~/Desktop/newsboat-downloads'
 alias pP='cd ~/Documents/Projects'
 alias pp='cd ~/Documents/Projects/projects'
 
