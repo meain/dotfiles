@@ -9,7 +9,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'mhinz/vim-janah'                                                                         " Janah colorscheme
 Plug 'cormacrelf/vim-colors-github'                                                            " Light colorschrme
 Plug 'logico/typewriter-vim'                                                                   " Minimal light colorscheme
-Plug 'Yggdroot/indentLine', { 'on': 'LazyLoadPlugins' }                                        " Show indent
+Plug 'Yggdroot/indentLine'                                                                     " Show indent
 Plug 'mhinz/vim-signify', { 'on': 'LazyLoadPlugins' }                                          " Git diff icons in gutter
 Plug 'norcalli/nvim-colorizer.lua'                                                             " Highlight color values
 Plug 'machakann/vim-highlightedyank', { 'on': 'LazyLoadPlugins' }                              " Visually highlight yanked region
@@ -975,10 +975,10 @@ function! StartPage()
   endfunction
   function! FileOpen()
     let l:filename = split(getline('.'), ' ')
-    if l:filename ==# '__'
-      FZF
-    else
-      if len(l:filename) == 1
+    if len(l:filename) == 1
+      if l:filename[0] == '__'
+          FZF
+      else
         silent exec 'e '. l:filename[0]
       endif
     endif
@@ -1007,6 +1007,9 @@ function! StartPage()
   setlocal
     \ nomodifiable
     \ nomodified
+  try
+    IndentLinesDisable
+  endtry
 endfunction
 if argc() == 0
   autocmd VimEnter * call StartPage()
