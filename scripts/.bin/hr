@@ -1,0 +1,6 @@
+#!/bin/sh
+
+set -e
+
+# https://en.wikipedia.org/wiki/Box-drawing_character
+printf "%$(tput cols)s\n"|tr ' ' "${1:-─}"
