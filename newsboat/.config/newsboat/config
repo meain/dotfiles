@@ -1,7 +1,7 @@
 # basic settings
 text-width 80
 browser "open"
-auto-reload yes
+auto-reload no
 show-keymap-hint no
 
 # keybindings
@@ -17,7 +17,6 @@ bind-key d pagedown
 bind-key e pageup
 bind-key l open
 bind-key h quit
-bind-key a toggle-article-read
 bind-key n next-unread
 bind-key N prev-unread
 bind-key D pb-download
@@ -28,15 +27,17 @@ bind-key O open-all-unread-in-browser-and-mark-read
 bind-key u toggle-article-read 
 
 # colors
-color listnormal white default standout bold
-color listfocus white default reverse bold
+color listnormal white default
+color listfocus white default reverse
 color listnormal_unread green default
-color listfocus_unread white default reverse bold
+color listfocus_unread white default reverse
 color info yellow black standout bold
 color article white default
 
 # highlight rules
-highlight feedlist "\ *https?://[^ ]+" black default standout bold
+highlight feedlist "\ *https?://[^ ]+" black default
+# highlight feedlist "\^Blog" blue default
+# highlight feedlist "\^Podcast" yellow default
 # highlight feedlist "#[[:space:]].+$" blue default bold
 highlight articlelist "[[:digit:]]{4}-[[:digit:]]{2}-[[:digit:]]{2}" cyan default
 highlight article "https?://[^ ]+" blue default
@@ -44,7 +45,7 @@ highlight article "^(Feed|Title|Author|Link|Date):" cyan default
 
 # format entries display
 articlelist-format "%t %> %L  %D"
-feedlist-format "%t %> %l"
+feedlist-format "%t %u %> %l"
 datetime-format "%Y-%m-%d"
 
 # Format of the titles.
@@ -62,5 +63,6 @@ dialogs-title-format "Dialogs"
 # use custom renderer for displaying HTML files.
 html-renderer "w3m -dump -T text/html"
 
-# `c` copies the link to the clipboard.
 macro c set browser "copy(){ echo $1 | pbcopy ;}"; open-in-browser ; set browser linkhandler
+macro v set browser "playinmpv"; open-in-browser ; set browser linkhandler
+macro p set browser "downloadvideo"; open-in-browser ; set browser linkhandler
