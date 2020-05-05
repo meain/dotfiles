@@ -39,6 +39,7 @@ highlight feedlist "\ *https?://[^ ]+" white default bold
 highlight feedlist "Blog:" blue default
 highlight feedlist "Podcast:" yellow default
 highlight feedlist "Youtube:" red default
+highlight feedlist "Comics:" magenta default
 # highlight feedlist "#[[:space:]].+$" blue default bold
 highlight articlelist "[[:digit:]]{4}-[[:digit:]]{2}-[[:digit:]]{2}" cyan default
 highlight article "https?://[^ ]+" blue default
