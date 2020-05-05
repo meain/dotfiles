@@ -965,7 +965,7 @@ command! -range GhOpen :call GHOpen()
 
 " Startpage
 function! StartPage()
-  let l:oldfiles = v:oldfiles[:30]
+  let l:oldfiles = v:oldfiles
   let g:cur_dir = getcwd()
   let g:cur_dir_len = len(getcwd()) + 1
   function! Ffn(idx, val)
@@ -1051,7 +1051,8 @@ let g:fzf_colors =
       \ 'marker':  ['fg', 'WildMenu'],
       \ 'spinner': ['fg', 'Label'],
       \ 'header':  ['fg', 'Comment'] }
-let g:fzf_layout = { 'window': 'call Floater()' }
+" let g:fzf_layout = { 'window': "call Floater(winheight('%')/2, winwidth('%')/4*3)" }
+let g:fzf_layout = { 'window': "call Floater()" }
 command! -bang History call fzf#vim#history({'options': ['--query', '!.git/ !.vim/ ', '--no-sort', '--preview', 'codepreview {}']}, <bang>0)
 command! -bang -nargs=? -complete=dir GFiles
 \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
