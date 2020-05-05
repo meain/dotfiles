@@ -6,12 +6,14 @@ alias vm='nvim'
 alias vi='nvim'
 alias v='nvim'
 
-alias viml='nvim "+source /tmp/vim-prev"'
-
 vv() {
     $EDITOR +OpenLastFile
 }
 
 vs() {
     nvim "scp://$1/"
+}
+viml() {
+    [ ! -f /tmp/vim-prev ] && echo 'No previous session available' && return 0
+    nvim "+source /tmp/vim-prev"
 }
