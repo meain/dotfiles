@@ -1,0 +1,7 @@
+#!/bin/sh
+
+set -e
+
+cd /tmp
+mkdir -p newsboat-downloads
+ts youtube-dl "$1" --output "$HOME/Desktop/youtube-downloads/%(title)s.%(ext)s"
