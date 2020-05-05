@@ -9,7 +9,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'mhinz/vim-janah'                                                                         " Janah colorscheme
 Plug 'cormacrelf/vim-colors-github'                                                            " Light colorschrme
 Plug 'logico/typewriter-vim'                                                                   " Minimal light colorscheme
-Plug 'Yggdroot/indentLine'                                                                     " Show indent
+Plug 'Yggdroot/indentLine', { 'on': 'LazyLoadPlugins' }                                        " Show indent
 Plug 'mhinz/vim-signify', { 'on': 'LazyLoadPlugins' }                                          " Git diff icons in gutter
 Plug 'norcalli/nvim-colorizer.lua'                                                             " Highlight color values
 Plug 'machakann/vim-highlightedyank', { 'on': 'LazyLoadPlugins' }                              " Visually highlight yanked region
@@ -964,22 +964,23 @@ function! StartPage()
   let l:oldfiles = v:oldfiles[:30]
   let g:cur_dir = getcwd()
   let g:cur_dir_len = len(getcwd()) + 1
+  function! Pad(s)
+      return repeat(' ', winwidth('%')/2 - len(a:s)/2) . a:s
+  endfunction
   function! Ffn(idx, val)
-    return a:val =~# g:cur_dir && !(a:val =~# '\.git')
+    return a:val =~# g:cur_dir && filereadable(a:val) && !(a:val =~# '\.git')
   endfunction
   function! NameCleanUp(idx, val)
-    return '- '.a:val[g:cur_dir_len:]
+    return Pad(a:val[g:cur_dir_len:])
   endfunction
   function! FileOpen()
-    let l:filename = matchstr(getline('.'), '\v.*')
-    if l:filename == '+ lookup'
+    let l:filename = split(getline('.'), ' ')
+    if l:filename ==# '__'
       FZF
-      return
-    endif
-    let l:filename = split(getline('.'), '- ')
-    echo l:filename
-    if len(l:filename) == 1
-      silent exec 'e '. l:filename[0]
+    else
+      if len(l:filename) == 1
+        silent exec 'e '. l:filename[0]
+      endif
     endif
   endfunction
 
@@ -996,10 +997,8 @@ function! StartPage()
       \ nonumber
       \ noswapfile
       \ norelativenumber
-  " set filetype=startpage
-  " put =l:oldfiles[:5]
-  call append('^', '+ lookup')
-  call append('$', l:oldfiles[:5])
+  call append('^', Pad('__'))
+  call append('$', l:oldfiles[:10])
   normal! gg
   nnoremap <buffer><silent> e :enew<CR>
   nnoremap <buffer><silent> i :enew <bar> startinsert<CR>
