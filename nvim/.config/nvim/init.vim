@@ -1004,6 +1004,7 @@ function! StartPage()
   nnoremap <buffer><silent> e :enew<CR>
   nnoremap <buffer><silent> i :enew <bar> startinsert<CR>
   nnoremap <buffer><silent> o :enew <bar> startinsert<CR>
+  nnoremap <buffer><silent> v :OpenLastFile<CR>
   nnoremap <buffer><silent> <enter> :call FileOpen()<CR>
   setlocal
     \ nomodifiable
