@@ -15,7 +15,6 @@ Plug 'norcalli/nvim-colorizer.lua'                                              
 Plug 'machakann/vim-highlightedyank', { 'on': 'LazyLoadPlugins' }                              " Visually highlight yanked region
 
 " Added functinality
-Plug 'mhinz/vim-startify'                                                                      " A fancy start page for vim (slow)
 Plug '~/Documents/Projects/others/done/_vim/vim-googler', { 'on': ['LazyLoadPlugins', 'Searcher'] } " Search from within vim
 Plug '/usr/local/opt/fzf'                                                                      " Fzf
 Plug 'junegunn/fzf.vim'                                                                        " Fzf for vim
@@ -599,10 +598,8 @@ let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 nnoremap <silent><leader><leader> :w<cr>
 
 " Split like a boss
-nnoremap <silent>sv :vsplit \| :Startify<cr>
-nnoremap <silent>sh :split \| :Startify<cr>
-nnoremap <silent><Leader>v :vsplit \| :Startify<cr>
-nnoremap <silent><Leader>h :split \| :Startify<cr>
+nnoremap <silent><Leader>v :vsplit<cr>
+nnoremap <silent><Leader>h :split<cr>
 
 " Quick fold and unfold
 nnoremap <silent><Leader><esc> :normal!za<cr>
@@ -962,6 +959,61 @@ function! GHOpen() abort
 endfunction
 command! -range GhOpen :call GHOpen()
 
+" Startpage
+function! StartPage()
+  let l:oldfiles = v:oldfiles[:30]
+  let g:cur_dir = getcwd()
+  let g:cur_dir_len = len(getcwd()) + 1
+  function! Ffn(idx, val)
+    return a:val =~# g:cur_dir && !(a:val =~# '\.git')
+  endfunction
+  function! NameCleanUp(idx, val)
+    return '- '.a:val[g:cur_dir_len:]
+  endfunction
+  function! FileOpen()
+    let l:filename = matchstr(getline('.'), '\v.*')
+    if l:filename == '+ lookup'
+      FZF
+      return
+    endif
+    let l:filename = split(getline('.'), '- ')
+    echo l:filename
+    if len(l:filename) == 1
+      silent exec 'e '. l:filename[0]
+    endif
+  endfunction
+
+  let l:filterd_files = filter(l:oldfiles, function('Ffn'))
+  let l:cleaned_files = map(l:filterd_files, function('NameCleanUp'))
+  enew
+  setlocal
+      \ bufhidden=wipe
+      \ buftype=nofile
+      \ nobuflisted
+      \ nocursorcolumn
+      \ cursorline
+      \ nolist
+      \ nonumber
+      \ noswapfile
+      \ norelativenumber
+  " set filetype=startpage
+  " put =l:oldfiles[:5]
+  call append('^', '+ lookup')
+  call append('$', l:oldfiles[:5])
+  normal! gg
+  nnoremap <buffer><silent> e :enew<CR>
+  nnoremap <buffer><silent> i :enew <bar> startinsert<CR>
+  nnoremap <buffer><silent> o :enew <bar> startinsert<CR>
+  nnoremap <buffer><silent> <enter> :call FileOpen()<CR>
+  setlocal
+    \ nomodifiable
+    \ nomodified
+endfunction
+if argc() == 0
+  autocmd VimEnter * call StartPage()
+endif
+nnoremap <silent>,l :call StartPage()<cr>
+
 " Stratr profiling
 function! Profile()
   profile start profile.log
@@ -1020,59 +1072,6 @@ augroup end
 
 " GitMessenger
 nnoremap <silent><leader>G :GitMessenger<cr>
-
-" Startify
-nnoremap <silent>,l :Startify<cr>
-augroup custom_startify
-  autocmd!
-  autocmd User Startified setlocal cursorline
-augroup end
-highlight StartifyBracket ctermfg=240 guifg=#585858
-highlight StartifyFooter  ctermfg=240 guifg=#585858
-highlight StartifyHeader  ctermfg=114 guifg=#87d787
-highlight StartifyNumber  ctermfg=215 guifg=#ffaf5f
-highlight StartifyPath    ctermfg=245 guifg=#8a8a8a
-highlight StartifySlash   ctermfg=240 guifg=#585858
-highlight StartifySpecial ctermfg=240 guifg=#585858
-let g:startify_files_number = 5
-let g:startify_change_to_dir = 0
-
-let g:startify_custom_header_quotes = [
-    \ ["^-^"], ["OoO"], ["ಠ_ಠ"], ["(ᵔᴥᵔ)"], ["(╯°□°)╯︵"], ["¯\\_(ツ)_/¯"],
-    \ ["ヾ(⌐■_■)ノ"], ["◉_◉"], ["(~˘▾˘)~"], ["⚆ _ ⚆"], ["¬_¬"], ["^̮^"]]
-let g:startify_custom_header = 'startify#center(startify#fortune#quote())'
-let g:startify_relative_path = 1
-let g:startify_use_env = 1
-let g:startify_enable_special = 0
-let g:startify_session_persistence = 1
-let g:startify_custom_indices = ['v','a', 'd', 'g', 'h', 'l', 'o', 'p', 'r', 't', 'n', 'm', 'b']
-let g:startify_fortune_use_unicode = 1
-let g:startify_session_before_save = [
-  \ 'echo "Cleaning up before saving.."'
-  \ ]
-let g:startify_skiplist = [
-  \ '\.png',
-  \ '\.jpeg',
-  \ 'COMMIT_EDITMSG',
-  \ escape(fnamemodify(resolve($VIMRUNTIME), ':p'), '\') .'doc',
-  \ 'bundle/.*/doc',
-  \ '\.vimgolf',
-  \ '^/tmp',
-  \ '\.vimruncmd',
-  \ ]
-let g:startify_lists = [
-  \ { 'type': 'commands' },
-  \ { 'type': 'dir', 'header': [ 'Files [' . fnamemodify(getcwd(), ':t') . ']' ] },
-  \ { 'type': 'bookmarks', 'header': [ 'Bookmarks' ] },
-  \ { 'type': 'sessions',  'header': [ 'Sessions' ] },
-  \ ]
-let g:startify_commands = [
-  \ { 'f': [ 'Fuzzy find', ':FZF' ] },
-  \ ]
-let g:startify_bookmarks = [
-  \ { 'c': '~/.dotfiles/nvim/.config/nvim/init.vim' },
-  \ { 'z': '~/.dotfiles/zsh/.config/zsh/.zshrc' }
-  \ ]
 
 " Drag Visuals
 let g:Schlepp#reindent = 1
