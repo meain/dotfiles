@@ -640,6 +640,10 @@ autocmd FileType typescript.tsx nnoremap <buffer><leader>c mc?class=<CR>ciwclass
 nnoremap <leader>; :%s/\v
 vnoremap <leader>; :s/\v
 
+" quick edits
+nnoremap sec :e ~/.dotfiles/nvim/.config/nvim/init.vim<cr>
+nnoremap sez :e ~/.dotfiles/zsh/.config/zsh/.zshrc<cr>
+
 
 
 
