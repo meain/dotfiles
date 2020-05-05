@@ -318,6 +318,7 @@ compdef _ssh cssh=ssh
 alias ssh=cssh
 
 docs() {
+	[ -z "$1" ] && echo "usage: docs search terms docset" && return 0
 	array=($@)
 	len=${#array[@]}
 	docset=${array[$len]}
