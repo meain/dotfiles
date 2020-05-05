@@ -713,7 +713,7 @@ function! MinimizeIfZoomed()
         let t:zoomed = 0
     endif
 endfunction
-nnoremap <c-q> :call MinimizeIfZoomed() \|:SSave zzz \| :qa<cr>y
+nnoremap <c-q> :call MinimizeIfZoomed() \|:mksession! /tmp/vim-prev \| :qa<cr>y
 
 " Strip trailing whitespaces
 function! StripTrailingWhitespace()
