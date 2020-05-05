@@ -964,7 +964,10 @@ endfunction
 command! -range GhOpen :call GHOpen()
 
 " Startpage
-function! StartPage()
+function! StartPage(force)
+  if !(argc() == 0 && &filetype == '') && !a:force
+    return
+  endif
   let l:oldfiles = v:oldfiles
   let g:cur_dir = getcwd()
   let g:cur_dir_len = len(getcwd()) + 1
@@ -1014,9 +1017,9 @@ function! StartPage()
   endtry
 endfunction
 if argc() == 0
-  autocmd VimEnter * call StartPage()
+  autocmd VimEnter * call StartPage(v:false)
 endif
-nnoremap <silent>,l :call StartPage()<cr>
+nnoremap <silent>,l :call StartPage(v:true)<cr>
 
 " Stratr profiling
 function! Profile()
