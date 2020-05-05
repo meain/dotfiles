@@ -29,7 +29,7 @@
   ui = true
 [core]
   editor = /usr/local/bin/nvim
-  pager = diff-so-fancy | less --tabs=4 -RFX
+  pager = diff-so-fancy | less --tabs=4 -RFX --pattern='^(added|modified)'
   excludesfile = ~/.config/git/.gitignore_global
 [diff]
   difftool = vimdiff
@@ -42,9 +42,9 @@
 [init]
   templatedir = ~/.config/git/.git_template
 [color "diff-highlight"]
-  oldNormal = red bold
+  oldNormal = red
   oldHighlight = 231 bold red
-  newNormal = green bold
+  newNormal = green
   newHighlight = 231 bold green
 [color "branch"]
   current = green
@@ -52,10 +52,10 @@
   remote = yellow
 [color "diff"]
   meta = 11
-  frag = magenta bold
-  commit = yellow bold
-  old = red bold
-  new = green bold
+  frag = magenta
+  commit = yellow
+  old = red
+  new = green
   whitespace = red reverse
 [github]
   user = meain
