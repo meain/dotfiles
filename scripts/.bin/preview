@@ -19,7 +19,7 @@ videopreview() {
 }
 
 audiopreview() {
-    ffmpeg -i "$1" 2>&1 | grep Duration | tr ',' '\n' | sed 's/^\ *//'
+    ffprobe "$1" 2>&1 | grep -E '^\ *(artist|album|title|genre|Duration)\ *:.*' | sed 's| *\(:\) *|: |g;s|,.*||;s|^ *||;s|^a|A|;s|^t|T|;s|^g|G|'
 }
 
 pdfpreview() {
