@@ -1,0 +1,5 @@
+#!/bin/sh
+
+set -e
+
+ts youtube-dl "$1" --output "$HOME/Desktop/newsboat-downloads/%(title)s.%(ext)s" || open "$1"
