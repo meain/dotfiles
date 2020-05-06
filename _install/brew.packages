@@ -22,6 +22,7 @@ hub
 tig
 fzf
 ripgrep
+task-spooler
 
 # others
 aspell
