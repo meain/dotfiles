@@ -2,4 +2,10 @@
 
 set -e
 
-ts youtube-dl "$1" --output "$HOME/Desktop/newsboat-downloads/%(title)s.%(ext)s" || open "$1"
+ITEM="$(youtube-dl "$1" -F | grep -v 'video only' | awk '{print $1,$4}' | grep '720p' | head -n1 | awk '{print $1}')"
+if [ -n "$ITEM" ]; then
+    ts youtube-dl "$1" -f "$ITEM" --output "$HOME/Desktop/newsboat-downloads/%(title)s.%(ext)s"
+else
+    ts youtube-dl "$1" --output "$HOME/Desktop/newsboat-downloads/%(title)s.%(ext)s" ||
+        open "$1"
+fi
