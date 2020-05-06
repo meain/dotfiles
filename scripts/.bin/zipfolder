@@ -1,0 +1,5 @@
+#!/bin/sh
+
+set -e
+
+zip -r "$1.zip" "$1"
