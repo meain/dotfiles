@@ -1,0 +1,22 @@
+#!/bin/sh
+
+set -e
+
+fetch_oatmeal(){
+    IMAGE_URL="$(curl -L "$1" | pup 'img' | grep -o 'https://s3.amazonaws.com/theoatmeal-img/comics/[^"]*')"
+    curl -L "$IMAGE_URL" > /tmp/image
+    mpv --loop-file /tmp/image
+}
+
+fetch_xkcd(){
+    IMAGE_URL="$(curl "$1" | pup '#comic' | pup img | grep -o '//imgs.xkcd.com[^"]*' | head -n1)"
+    curl -L "https://xkcd.com$IMAGE_URL" > /tmp/image
+    mpv --loop-file /tmp/image
+}
+
+echo "$1" >> /tmp/newsboat-preview
+case "$1" in
+    *theoatmeal.com*) fetch_oatmeal "$1";;
+    *xkcd.com*) fetch_xkcd "$1";;
+    *) open "$1";;
+esac
