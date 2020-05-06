@@ -2,7 +2,7 @@
 text-width 80
 browser "open"
 auto-reload no
-show-keymap-hint no
+show-keymap-hint yes
 
 # keybindings
 bind-key j down
@@ -13,8 +13,7 @@ bind-key J next-feed articlelist
 bind-key K prev-feed articlelist
 bind-key G end
 bind-key g home
-bind-key d pagedown
-bind-key e pageup
+bind-key e enqueue
 bind-key l open
 bind-key h quit
 bind-key n next-unread
@@ -31,7 +30,7 @@ color listnormal white default
 color listfocus white default reverse
 color listnormal_unread green default
 color listfocus_unread white default reverse
-color info yellow black standout bold
+color info black blue bold
 color article white default
 
 # highlight rules
@@ -40,13 +39,17 @@ highlight feedlist "Blog:" blue default
 highlight feedlist "Podcast:" yellow default
 highlight feedlist "Youtube:" red default
 highlight feedlist "Comics:" magenta default
+highlight articlelist "Blog:" blue default
+highlight articlelist "Podcast:" yellow default
+highlight articlelist "Youtube:" red default
+highlight articlelist "Comics:" magenta default
 # highlight feedlist "#[[:space:]].+$" blue default bold
 highlight articlelist "[[:digit:]]{4}-[[:digit:]]{2}-[[:digit:]]{2}" cyan default
 highlight article "https?://[^ ]+" blue default
 highlight article "^(Feed|Title|Author|Link|Date):" cyan default
 
 # format entries display
-articlelist-format "%t %> %L  %D"
+articlelist-format "%t ... %T %> %L  %D"
 feedlist-format "%t %u %> %l"
 datetime-format "%Y-%m-%d"
 
@@ -62,9 +65,15 @@ itemview-title-format "%T"
 urlview-title-format "URLs"
 dialogs-title-format "Dialogs"
 
+# podboat
+download-path "~/Desktop/newsboat-downloads/podcasts/"
+player "mpv"
+max-downloads 2
+
 # use custom renderer for displaying HTML files.
 html-renderer "w3m -dump -T text/html"
 
 macro c set browser "copy(){ echo $1 | pbcopy ;}"; open-in-browser ; set browser linkhandler
 macro v set browser "playinmpv"; open-in-browser ; set browser linkhandler
-macro p set browser "downloadvideo"; open-in-browser ; set browser linkhandler
+macro f set browser "newsboatdownload"; open-in-browser ; set browser linkhandler
+macro p set browser "newsboatpreview"; open-in-browser ; set browser linkhandler
