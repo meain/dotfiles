@@ -69,7 +69,8 @@ nf() {
     NEWSBOAT_FOLDER="$HOME/Desktop/newsboat-downloads"
     FILE_NAME="$(find "$NEWSBOAT_FOLDER" -type f | 
         sed "s|$NEWSBOAT_FOLDER/||"  | fzf --print0 --preview "preview $NEWSBOAT_FOLDER/{}" | xargs -0 -I{} echo "$NEWSBOAT_FOLDER/{}")"
-    nohup mpv "$FILE_NAME"
+    [ -z "$FILE_NAME" ] && return 0
+    (cd /tmp && nohup mpv "$FILE_NAME")
 }
 
 nfr() {
