@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -e
+
+PATH="$PATH:$HOME/.bin"
+NAME="$(ts -t "$1" | grep Destination | cut -d: -f2 | xargs basename | xargs echo)"
+if [ -n "$NAME" ];then
+    osascript -e "display notification \"$NAME complted\" with title \"Task Spooler\""
+else
+    osascript -e "display notification \"$4 complted\" with title \"Task Spooler\""
+fi

@@ -6,6 +6,9 @@ PATH="$PATH:$HOME/.bin"
 echo "$1" >> /tmp/newsboat-preview
 osascript -e "display notification \"Adding $1 to queue\" with title \"Newsboat\""
 
+export TS_MAXFINISHED="13"
+export TS_ONFINISH="tscomplete"
+
 case "$1" in
 *theoatmeal.com*) ts newsboatpreview "$1" "#comic img attr{src}" "{}" ;;
 *xkcd.com*) ts newsboatpreview "$1" "#comic img attr{src}" "https:{}" ;;
