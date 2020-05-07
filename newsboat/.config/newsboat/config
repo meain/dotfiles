@@ -68,6 +68,8 @@ dialogs-title-format "Dialogs"
 # podboat
 download-path "~/Desktop/newsboat-downloads/podcasts/%h/%n"
 download-filename-format %F-%t.%e
+delete-played-files yes
+podlist-format "%2i [%3dMB/%3tMB] %-10S %F → %u"
 player "mpv"
 max-downloads 2
 
