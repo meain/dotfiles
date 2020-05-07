@@ -1,6 +1,6 @@
 # basic settings
 text-width 80
-browser "ts newsboatpreview"
+browser "newsboatbrowser"
 auto-reload no
 show-keymap-hint yes
 
@@ -77,3 +77,4 @@ macro c set browser "copy(){ echo $1 | pbcopy ;}"; open-in-browser ; set browser
 macro v set browser "playinmpv"; open-in-browser ; set browser linkhandler
 macro y set browser "ts newsboatdownload"; open-in-browser ; set browser linkhandler
 macro p set browser "ts newsboatpreview"; open-in-browser ; set browser linkhandler
+macro o set browser "open"; open-in-browser ; set browser linkhandler
