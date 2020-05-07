@@ -2,6 +2,7 @@ set ssl_starttls=yes
 set ssl_force_tls=yes
 
 set move = no
+set wait_key = no
 set imap_keepalive = 900
 
 source muttcol
@@ -47,11 +48,11 @@ bind attach,index,pager \CD next-page
 bind attach,index,pager \CU previous-page
 bind pager gg top
 bind pager G bottom
-bind index D delete-message
-bind index U undelete-message
+# bind index D delete-message
+# bind index U undelete-message
 bind index,pager R group-reply
 bind index <Tab> collapse-all
-macro index,pager \Cu |urlview\n
+macro index,pager U |fzfurlopen\n
 bind editor <Tab> complete-query
 bind editor ^T complete
 macro index,pager h "<view-attachments>/text/html<enter><enter>q" "open html version"
