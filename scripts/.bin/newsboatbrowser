@@ -10,12 +10,12 @@ export TS_MAXFINISHED="13"
 export TS_ONFINISH="tscomplete"
 
 case "$1" in
-*theoatmeal.com*) TS_SOCKET="/tmp/comic" ts newsboatpreview "$1" "#comic img attr{src}" "{}" ;;
-*xkcd.com*) TS_SOCKET="/tmp/comic" ts newsboatpreview "$1" "#comic img attr{src}" "https:{}" ;;
-*commitstrip.com*) TS_SOCKET="/tmp/comic" ts newsboatpreview "$1" ".entry-content img attr{src}" "{}" ;;
-*explosm.net*) TS_SOCKET="/tmp/comic" ts newsboatpreview "$1" "#comic-wrap img attr{src}" "https:{}" ;;
-*feed.dilbert.com*) TS_SOCKET="/tmp/comic" ts newsboatpreview "$1" ".img-comic attr{src}" "https:{}" ;;
-*PoorlyDrawnLines*) TS_SOCKET="/tmp/comic" ts newsboatpreview "$1" ".content.comic .post img attr{src}" "{}";;
+*theoatmeal.com*) TS_SOCKET="/tmp/quick" ts newsboatpreview "$1" "#comic img attr{src}" "{}" ;;
+*xkcd.com*) TS_SOCKET="/tmp/quick" ts newsboatpreview "$1" "#comic img attr{src}" "https:{}" ;;
+*commitstrip.com*) TS_SOCKET="/tmp/quick" ts newsboatpreview "$1" ".entry-content img attr{src}" "{}" ;;
+*explosm.net*) TS_SOCKET="/tmp/quick" ts newsboatpreview "$1" "#comic-wrap img attr{src}" "https:{}" ;;
+*feed.dilbert.com*) TS_SOCKET="/tmp/quick" ts newsboatpreview "$1" ".img-comic attr{src}" "https:{}" ;;
+*PoorlyDrawnLines*) TS_SOCKET="/tmp/quick" ts newsboatpreview "$1" ".content.comic .post img attr{src}" "{}";;
 *youtube.com*) ts newsboatdownload "$1" ;;
 *) open "$1"
 esac
