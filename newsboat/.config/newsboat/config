@@ -49,7 +49,7 @@ highlight article "https?://[^ ]+" blue default
 highlight article "^(Feed|Title|Author|Link|Date):" cyan default
 
 # format entries display
-articlelist-format "%t ... %T %> %L  %D"
+articlelist-format "%t ... %T %> %F %L  %D"  # use %f if you only need an indication as to if it is flagged
 feedlist-format "%t %u %> %l"
 datetime-format "%Y-%m-%d"
 
