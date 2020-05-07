@@ -12,7 +12,7 @@ export FZF_DEFAULT_OPTS='
 unalias z 2>/dev/null
 z() {
     [ $# -gt 0 ] && _z "$*" && return
-    cd "$(_z -l 2>&1 | cat | sed 's/^[^ ]*\ *//' | fzf --height 40% --reverse --inline-info +s --tac --query "$*" --preview "ls {}")" || exit
+    cd "$(_z -l 2>&1 | cat | sed 's/^[^ ]*\ *//' | fzf --height 40% --reverse --inline-info +s --tac --query "$*" --preview "ls {}")" || return
 }
 
 jj() {
@@ -39,7 +39,7 @@ ss() {
 }
 
 sn() {
-    [ -z "$1" ] && echo "Pass script name" && exit 1
+    [ -z "$1" ] && echo "Pass script name" && return 1
     [ -f "$HOME/.bin/$1" ] && echo "script exists" && return 1
     printf '#!/bin/sh\n\nset -e\n\n' >"$HOME/.bin/$1" && chmod +x "$HOME/.bin/$1" && $EDITOR "$HOME/.bin/$1"
 }
