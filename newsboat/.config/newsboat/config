@@ -3,6 +3,7 @@ text-width 80
 browser "newsboatbrowser"
 auto-reload no
 show-keymap-hint yes
+prepopulate-query-feeds yes
 
 # keybindings
 bind-key j down
