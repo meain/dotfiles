@@ -39,4 +39,3 @@ alias tksv='tmux kill-server'
 alias tkss='tmux kill-session -t'
 
 alias tx='tmuxinator'
-alias td="(cd ~/.dotfiles > /dev/null && tmuxsession dotfiles 2> /dev/null)"
