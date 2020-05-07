@@ -2,8 +2,6 @@
 
 set -e
 
-PATH="$PATH:$HOME/.bin"
-
 fetch_and_show(){
     mkdir -p /tmp/newsboatpreviews
     temp="/tmp/newsboatpreviews/$(xxd -l7 -ps /dev/urandom)"
@@ -11,7 +9,6 @@ fetch_and_show(){
     open "$temp"
 }
 
-echo "$1" >> /tmp/newsboat-preview
 case "$1" in
 *theoatmeal.com*) fetch_and_show "$1" "#comic img attr{src}" "{}" ;;
 *xkcd.com*) fetch_and_show "$1" "#comic img attr{src}" "https:{}" ;;
@@ -19,5 +16,5 @@ case "$1" in
 *explosm.net*) fetch_and_show "$1" "#comic-wrap img attr{src}" "https:{}" ;;
 *feed.dilbert.com*) fetch_and_show "$1" ".img-comic attr{src}" "https:{}" ;;
 *PoorlyDrawnLines*) fetch_and_show "$1" ".content.comic .post img attr{src}" "{}";;
-*) newsboatdownload "$1" ;;  # handles youtube and the rest
+*) open "$1"
 esac
