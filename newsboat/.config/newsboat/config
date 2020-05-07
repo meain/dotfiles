@@ -75,5 +75,5 @@ html-renderer "w3m -dump -T text/html"
 
 macro c set browser "copy(){ echo $1 | pbcopy ;}"; open-in-browser ; set browser linkhandler
 macro v set browser "playinmpv"; open-in-browser ; set browser linkhandler
-macro f set browser "newsboatdownload"; open-in-browser ; set browser linkhandler
+macro y set browser "ts newsboatdownload"; open-in-browser ; set browser linkhandler
 macro p set browser "ts newsboatpreview"; open-in-browser ; set browser linkhandler
