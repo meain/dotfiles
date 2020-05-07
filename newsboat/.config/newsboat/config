@@ -40,10 +40,14 @@ highlight feedlist "Blog:" blue default
 highlight feedlist "Podcast:" yellow default
 highlight feedlist "Youtube:" red default
 highlight feedlist "Comics:" magenta default
+highlight feedlist "Twitter:" color14 default
+highlight feedlist "Reddit:" color196 default
 highlight articlelist "Blog:" blue default
+highlight articlelist "Twitter:" color14 default
 highlight articlelist "Podcast:" yellow default
 highlight articlelist "Youtube:" red default
 highlight articlelist "Comics:" magenta default
+highlight articlelist "Reddit:" color196 default
 # highlight feedlist "#[[:space:]].+$" blue default bold
 highlight articlelist "[[:digit:]]{4}-[[:digit:]]{2}-[[:digit:]]{2}" cyan default
 highlight article "https?://[^ ]+" blue default
@@ -82,3 +86,7 @@ macro v set browser "playinmpv"; open-in-browser ; set browser linkhandler
 macro y set browser "ts newsboatdownload"; open-in-browser ; set browser linkhandler
 macro p set browser "ts newsboatpreview"; open-in-browser ; set browser linkhandler
 macro o set browser "open"; open-in-browser ; set browser linkhandler
+macro l set browser "lynx -lss='~/.lynx.lss'"; open-in-browser ; set browser linkhandler
+
+# define-filter "Vim stuff" "content =~ \"Vim\""
+# highlight-article "content =~ \"Vim\"" magenta default
