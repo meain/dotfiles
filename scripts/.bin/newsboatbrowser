@@ -1,0 +1,18 @@
+#!/bin/sh
+
+set -e
+
+PATH="$PATH:$HOME/.bin"
+echo "$1" >> /tmp/newsboat-preview
+osascript -e "display notification \"Adding $1 to queue\" with title \"Newsboat\""
+
+case "$1" in
+*theoatmeal.com*) ts newsboatpreview "$1" "#comic img attr{src}" "{}" ;;
+*xkcd.com*) ts newsboatpreview "$1" "#comic img attr{src}" "https:{}" ;;
+*commitstrip.com*) ts newsboatpreview "$1" ".entry-content img attr{src}" "{}" ;;
+*explosm.net*) ts newsboatpreview "$1" "#comic-wrap img attr{src}" "https:{}" ;;
+*feed.dilbert.com*) ts newsboatpreview "$1" ".img-comic attr{src}" "https:{}" ;;
+*PoorlyDrawnLines*) ts newsboatpreview "$1" ".content.comic .post img attr{src}" "{}";;
+*youtube.com*) ts newsboatdownload "$1" ;;
+*) open "$1"
+esac
