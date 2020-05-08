@@ -12,9 +12,9 @@ imagepreview() {
 
 videopreview() {
     set -e
+    [ -f /tmp/videopreview.jpg ] && rm /tmp/videopreview.jpg
     ffmpeg -ss 00:00:10 -i "$1" -vframes 1 -q:v 2 /tmp/videopreview.jpg 2>/dev/null
     imagepreview /tmp/videopreview.jpg "$2"
-    rm /tmp/videopreview.jpg
     set +e
 }
 
