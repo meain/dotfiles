@@ -1,0 +1,9 @@
+#!/bin/sh
+
+set -eo pipefail  # need pipefail for grep to fail
+
+cd "${1:-.}"
+fd '.DS_Store' --no-ignore --hidden -x rm 
+while find . -type d -links 2 | grep -E '.*' | xargs rm -rfv; do
+    :  # repeat to recurse backward
+done
