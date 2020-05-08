@@ -1,8 +1,6 @@
 #!/bin/sh
 
-if [ -n "$KITTY_WINDOW_ID" ]; then
-    kitty +kitten icat --clear --transfer-mode file --silent
-fi
+icatclear
 imagepreview() {
     if [ -n "$KITTY_WINDOW_ID" ]; then
         kitty +kitten icat --clear --transfer-mode file --silent
