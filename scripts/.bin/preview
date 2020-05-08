@@ -1,9 +1,11 @@
 #!/bin/sh
 
-
+if [ -n "$KITTY_WINDOW_ID" ]; then
+    kitty +kitten icat --clear --transfer-mode file --silent
+fi
 imagepreview() {
-    if [ -n "$KITTY_WINDOW_ID" ];then
-        kitty +kitten icat --clear  --transfer-mode file --silent
+    if [ -n "$KITTY_WINDOW_ID" ]; then
+        kitty +kitten icat --clear --transfer-mode file --silent
         kitty +kitten icat --place 60x"$2"@65x2 --transfer-mode file --silent "$1"
     else
         chafa --fill=block --symbols=block -c 256 -s 80x"$2" "$1"
@@ -12,7 +14,7 @@ imagepreview() {
 
 videopreview() {
     set -e
-    ffmpeg -ss 00:00:10 -i "$1" -vframes 1 -q:v 2 /tmp/videopreview.jpg 2> /dev/null
+    ffmpeg -ss 00:00:10 -i "$1" -vframes 1 -q:v 2 /tmp/videopreview.jpg 2>/dev/null
     imagepreview /tmp/videopreview.jpg "$2"
     rm /tmp/videopreview.jpg
     set +e
@@ -30,12 +32,12 @@ pdfpreview() {
 }
 
 everythingelse() {
-    if [ -d "$1" ];then
+    if [ -d "$1" ]; then
         ls -A "$1"
     elif file --mime "$1" | grep 'charset=binary'; then
         MIMETYPE="$(file --mime ade.sketch | cut -d' ' -f2)"
-        if echo "$MIMETYPE" | grep 'application/zip';then
-            unzip -l "$1"    
+        if echo "$MIMETYPE" | grep 'application/zip'; then
+            unzip -l "$1"
         else
             file -b "$1"
         fi
@@ -44,7 +46,7 @@ everythingelse() {
     fi
 }
 
-sketchpreview(){
+sketchpreview() {
     unzip "$1" "previews/preview.png" -d /tmp/sketch_preview >/dev/null 2>/dev/null
     imagepreview "/tmp/sketch_preview/previews/preview.png" "$2"
     rm -rf /tmp/sketch_preview
@@ -61,8 +63,8 @@ case "$1" in
 *.png | *.jpg | *.JPG | *.jpeg | *.gif | *.webp | *.svg) imagepreview "$1" "$WIDTH" ;;
 *.mp4 | *.mkv | *.mov | *.avi | *.m4v | *.webm) videopreview "$1" "$WIDTH" ;;
 *.mp3) audiopreview "$1" ;;
-*.sketch) sketchpreview "$1";;
-*.json) jq -C < "$1";;
-*.csv) xsv table "$1";;
+*.sketch) sketchpreview "$1" ;;
+*.json) jq -C <"$1" ;;
+*.csv) xsv table "$1" ;;
 *) everythingelse "$1" ;;
 esac
