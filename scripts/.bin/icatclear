@@ -2,4 +2,4 @@
 
 set -e
 
-kitty +kitten icat --clear --transfer-mode file --silent || true
+[ -n "$KITTY_WINDOW_ID" ] && kitty +kitten icat --transfer-mode file --silent --clear
