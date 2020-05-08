@@ -1,0 +1,6 @@
+#!/bin/sh
+
+set -e
+
+CONFIG_LIST="$HOME/.config/datafiles/config_files"
+fzf < "$CONFIG_LIST" | cut -d' ' -f2- | sed 's|~|/Users/meain|' | xargs "$EDITOR"
