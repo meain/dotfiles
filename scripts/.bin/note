@@ -7,70 +7,96 @@ mkdir -p "$NOTES_FOLDER/stash"
 get_dated_file() {
     files=$(cat /dev/stdin)
     for file in $files; do
-        echo "$(basename "$file") $(date -r "$file" | sed 's| |-|g')"
+        echo "$(echo "$file" | sed "s|^$NOTES_FOLDER/||") $(date -r "$file" | sed 's| |-|g')"
     done
 }
 
 get_file_name() {
-    for file in "$NOTES_FOLDER"/*.md; do
-        echo "$file"
-    done | grep -vE '/todo[^/]*$' | xargs ls -t1 | get_dated_file | column -t |
+    IGNORE_PATTERN="$1"
+    shift
+    find "$NOTES_FOLDER" -name '*.md' |
+        while read -r file; do
+            echo "$file"
+        done | grep -vE "/($IGNORE_PATTERN)/" | xargs ls -t1 | get_dated_file | column -t |
         fzf --multi --query "$*" --preview "echo '{}' | awk '{print \$1}' | xargs -I{} bat -p --color always $NOTES_FOLDER/{}" |
         cut -d' ' -f1
 }
 
 open_note() {
-    get_file_name "$@" | xargs -L1 -I{} "$EDITOR" "$NOTES_FOLDER/{}"
+    get_file_name 'todo|.trash|temp' "$@" # | xargs -L1 -I{} "$EDITOR" "$NOTES_FOLDER/{}"
 }
 
-new_note() {
-    if [ -z "$1" ]; then
-        printf "Name for new note: "
-        read -r INPUT
-        NAME="$(echo "$INPUT" | sed 's| |-|g')"
-    else
-        NAME="$(echo "$*" | sed 's| |-|g')"
-    fi
-    "$EDITOR" "$NOTES_FOLDER/$NAME.md"
+open_note_all() {
+    get_file_name '.trash' "$@" # | xargs -L1 -I{} "$EDITOR" "$NOTES_FOLDER/{}"
+}
+
+move_note() {
+    [ -z "$1" ] && echo "Mention folder to move to" && exit 1
+    TO="$1"
+    echo "Select files to move to $1"
+    get_file_name "$TO|todo|.trash|temp" |
+        while read -r file; do
+            mv "$NOTES_FOLDER/$file" "$NOTES_FOLDER/$TO/$(basename "$file")"
+        done
 }
 
 trash_note() {
-    NAME="$(get_file_name "$@")"
-    for n in $NAME; do
-        mv "$NOTES_FOLDER/$n" "$NOTES_FOLDER/.trash/$n"
-    done
+    get_file_name ".trash" "$@" |
+        while read -r n; do
+            echo "$NOTES_FOLDER/.trash/$(dirname "$n")"
+            mkdir -p "$NOTES_FOLDER/.trash/$(dirname "$n")"
+            mv "$NOTES_FOLDER/$n" "$NOTES_FOLDER/.trash/$n"
+        done
 }
 
-stash_note() {
-    NAME="$(get_file_name "$@")"
-    for n in $NAME; do
-        mv "$NOTES_FOLDER/$n" "$NOTES_FOLDER/stash/$n"
-    done
+create_note() {
+    DIR="$1"
+    mkdir -p "$NOTES_FOLDER/$DIR"
+    shift
+    if [ -n "$1" ]; then
+        NAME="$(echo "$*" | sed 's| |-|g')"
+    else
+        printf "Note name: "
+        read -r
+        NAME="$(echo "$REPLY" | sed 's| |-|g')"
+    fi
+    "$EDITOR" "$NOTES_FOLDER/$DIR/$NAME.md"
 }
 
 if [ "$1" = "new" ]; then
     shift
-    new_note "$*"
-    cd "$NOTES_FOLDER" && git status --short
+    create_note "note" "$*" # basic
+elif [ "$1" = "stash" ]; then
+    create_note "$*"
+elif [ "$1" = "idea" ]; then
+    create_note "$*"
+elif [ "$1" = "temp" ]; then
+    temp="$(xxd -l5 -ps /dev/urandom)"
+    create_note "temp" "$temp"
 elif [ "$1" = "rm" ]; then
     shift
     trash_note "$*"
-    cd "$NOTES_FOLDER" && git status --short
-elif [ "$1" = "stash" ]; then
-    # stash away fies that are always needed
+elif [ "$1" = "move" ]; then
     shift
-    stash_note "$*"
-    cd "$NOTES_FOLDER" && git status --short
+    move_note "$*"
 elif [ "$1" = "sync" ]; then
+    cd "$NOTES_FOLDER" || exit 1
+    git add . && git commit -m '[autocommit] updating notes'
+    git push origin master
+elif [ "$1" = "commit" ]; then
     cd "$NOTES_FOLDER" &&
-        git add . && git commit -m '[autocommit] updating notes' && git push origin master
+        git add . && git commit -m '[autocommit] updating notes'
 elif [ "$1" = "status" ]; then
     cd "$NOTES_FOLDER" &&
         git status --short
 elif [ "$1" = "view" ]; then
     shift
     lf "$NOTES_FOLDER"
+elif [ "$1" = "open" ]; then
+    shift
+    open_note_all "$*"
 else
     open_note "$*"
-    cd "$NOTES_FOLDER" && git status --short
 fi
+
+cd "$NOTES_FOLDER" && git status --short
