@@ -1,0 +1,4 @@
+#!/bin/sh
+
+tmux -2 new-session -d -s podboat 'podboat -a && td'
+tmux switch-client -t 'podboat'
