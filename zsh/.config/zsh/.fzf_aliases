@@ -69,6 +69,7 @@ nf() {
     NEWSBOAT_FOLDER="$HOME/Desktop/newsboat-downloads"
     FILE_NAME="$(find "$NEWSBOAT_FOLDER" -type f |  grep -v '.DS_Store' |
         sed "s|$NEWSBOAT_FOLDER/||"  | fzf --print0 --preview "preview $NEWSBOAT_FOLDER/{}" | xargs -0 -I{} echo "$NEWSBOAT_FOLDER/{}")"
+    icatclear
     [ -z "$FILE_NAME" ] && return 0
     (cd /tmp && nohup mpv "$FILE_NAME")
 }
@@ -76,6 +77,7 @@ nf() {
 nr() {
     NEWSBOAT_FOLDER="$HOME/Desktop/newsboat-downloads"
     lf "$NEWSBOAT_FOLDER"
+    icatclear
 }
 
 nfr() {
@@ -83,4 +85,5 @@ nfr() {
     FILE_NAME="$(find "$NEWSBOAT_FOLDER" -type f | grep -v '.DS_Store' |
         sed "s|$NEWSBOAT_FOLDER/||" | fzf -m --print0 | xargs -0 -L1 -I{} rm "$NEWSBOAT_FOLDER/{}")"
     cleanupemptydirs "$NEWSBOAT_FOLDER"
+    icatclear
 }
