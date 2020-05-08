@@ -1,8 +1,7 @@
 #!/bin/sh
+
 set -e
 
-randPic="$(find "$HOME/Pictures" | grep -E '.(png|jpg|jpeg)$' | shuf -n1)"
-mv "$randPic" /tmp/wallpaper
-
-osascript -e 'tell application "Finder" to set desktop picture to POSIX file "/tmp/wallpaper"'
+randPic="$(find "/Users/meain/Pictures" | grep -E '.(png|jpg|jpeg)$' | shuf -n1)"
+osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \"$randPic\""
 killall Dock
