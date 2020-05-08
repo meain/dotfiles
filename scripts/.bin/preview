@@ -3,10 +3,9 @@
 icatclear
 imagepreview() {
     if [ -n "$KITTY_WINDOW_ID" ]; then
-        kitty +kitten icat --clear --transfer-mode file --silent
-        kitty +kitten icat --place 60x"$2"@65x2 --transfer-mode file --silent "$1"
+        timeout 4 kitty +kitten icat --place 60x"$2"@65x2 --transfer-mode file --silent "$1"
     else
-        chafa --fill=block --symbols=block -c 256 -s 80x"$2" "$1"
+        timeout 4 chafa --fill=block --symbols=block -c 256 -s 80x"$2" "$1"
     fi
 }
 
