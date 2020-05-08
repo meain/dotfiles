@@ -1,0 +1,5 @@
+#!/bin/sh
+
+set -e
+
+kitty +kitten icat --clear --transfer-mode file --silent || true
