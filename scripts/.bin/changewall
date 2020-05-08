@@ -1,20 +1,8 @@
 #!/bin/sh
 set -e
 
-site="wallhaven.cc"
-purity=100  # SFW=100 Sketchy=010 Both=110
-categories=010  # General=100 Anime=010 People=001
-sorting="random"  # random toplist latest
+randPic="$(find "$HOME/Pictures" | grep -E '.(png|jpg|jpeg)$' | shuf -n1)"
+mv "$randPic" /tmp/wallpaper
 
-img="wallpaper.jpg"
-imgFolder="/tmp"
-wallpaper="$imgFolder/$img"
-
-wallpaperURL="https://$site/search?categories=$categories&purity=$purity&sorting=$sorting&order=desc"
-randPicURL=`curl -s "$wallpaperURL" | grep -oE '<a class="preview" href="https://'$site'/w/(.*)"' | head -1 | cut -d "\"" -f 4`
-randPic=`curl -s $randPicURL | grep -oE 'src="https://w.'$site'/full/(.*)' | cut -d "\"" -f 2`
-curl -s -o $wallpaper "$randPic"
-echo "$randPic" | sed 's|.*/||' > /tmp/current_wallpaper_name
-
-osascript -e 'tell application "Finder" to set desktop picture to POSIX file "/tmp/wallpaper.jpg"'
+osascript -e 'tell application "Finder" to set desktop picture to POSIX file "/tmp/wallpaper"'
 killall Dock
