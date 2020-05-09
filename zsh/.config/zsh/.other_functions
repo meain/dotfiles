@@ -54,15 +54,6 @@ imgur() {
 	fi
 }
 
-# Send a notification on macOS
-notify() {
-	if [ -z "$1" ]; then
-		osascript -e "display notification \"Task complete!\" with title \"Notification\""
-	else
-		osascript -e "display notification \"$1\" with title \"Notification\""
-	fi
-}
-
 # Go to root of project
 r() {
 	cd "$(git rev-parse --show-toplevel 2>/dev/null)" || return 1

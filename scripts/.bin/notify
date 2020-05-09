@@ -1,0 +1,7 @@
+#!/bin/sh
+
+set -e
+
+# Send a notification on macOS
+osascript -e "display notification \"${2-'Task complete!'}\" with title \"${1:-'Notification'}\""
+
