@@ -1,0 +1,13 @@
+#!/bin/sh
+
+set -e
+
+cuttoff_len="$(userinput "Cuttoff value" "8" "$1")"
+for file in *.mp3;do
+    duration="$(ffprobe "$file" 2>&1 | grep 'Duration' | awk '{print $2}')"
+    mins="$(echo "$duration" | cut -d: -f2)"
+    if [ "$mins" -ge "$cuttoff_len" ];then
+        echo "$file: $mins"
+        rm  "$file"
+    fi
+done
