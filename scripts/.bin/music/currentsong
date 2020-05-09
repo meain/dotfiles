@@ -6,7 +6,11 @@ if pgrep "mpv" > /dev/null 2>&1; then
     songName="$(echo "$mpvoutput" | head -n1 | sed 's|^error - ||')"
     playing="$(echo "$mpvoutput" | head -n2 | tail -n1 | cut -d' ' -f1 | sed 's/\[playing\]/>/;s/\[paused\]/:/')"
     speed="$(echo "$mpvoutput" | grep 'speed' | cut -d' ' -f 2)"
-    echo "V| $playing $songName ($speed)"
+    if [ "$speed" = "1.00x" ];then
+        echo "V| $playing $songName"
+    else
+        echo "V| $playing $songName ($speed)"
+    fi
     exit 0
 fi
 
