@@ -2,9 +2,12 @@
 
 set -e
 
+NEWSBOAT_DIR="$HOME/.local/share/newsboat"
+cp "$NEWSBOAT_DIR/queue" "$NEWSBOAT_DIR/queue.backup"
 fixpodpath |
     while read -r line; do
         url="$(echo "$line" | cut -d'"' -f1 | sed 's| $||')"
         path="$(echo "$line" | cut -d'"' -f2)"
         [ ! -f "$path" ] && basename "$path" && ts downloader "$url" "$path" > /dev/null
     done
+rm "$NEWSBOAT_DIR/queue"
