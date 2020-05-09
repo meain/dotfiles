@@ -2,7 +2,9 @@
 
 set -e
 
-
+# 1 = Query string
+# 2 = Default value
+# 3 = Possible input from stdin
 input="$3"
 if [ -z "$3" ];then
     printf "%s(%s): " "$1" "$2" 1>&2
