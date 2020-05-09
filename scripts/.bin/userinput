@@ -1,0 +1,16 @@
+#!/bin/sh
+
+set -e
+
+
+input="$3"
+if [ -z "$3" ];then
+    printf "%s(%s): " "$1" "$2" 1>&2
+    read -r
+    if [ -z "$REPLY" ]; then
+        input="$2"
+    else
+        input="$REPLY"
+    fi
+fi
+echo "$input"
