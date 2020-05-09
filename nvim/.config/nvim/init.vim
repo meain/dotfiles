@@ -1216,7 +1216,8 @@ let g:LanguageClient_serverCommands = {
     \ 'python': ['pyls'],
     \ 'sh': ['bash-language-server', 'start'],
     \ 'zsh': ['bash-language-server', 'start'],
-    \ 'dockerfile': ['docker-langserver', '--stdio']
+    \ 'dockerfile': ['docker-langserver', '--stdio'],
+    \ 'lua': ['lua-lsp']
     \ }
 let g:LanguageClient_diagnosticsDisplay = {
       \1: {
