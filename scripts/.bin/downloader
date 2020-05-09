@@ -5,3 +5,4 @@ set -e
 echo "'$1' >>> '$2'" >> /tmp/downloaderqueue
 mkdir -p "$(dirname "$2")"
 curl -L "$1" > "$2"
+notify "Download complete" "$2\n\n$1"
