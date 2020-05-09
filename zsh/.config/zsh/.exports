@@ -16,4 +16,4 @@ export LESS_TERMCAP_mh=$(tput dim)
 
 # task spooler
 export TS_MAXFINISHED="13"
-export TS_ONFINISH="tscomplete"
+# export TS_ONFINISH="tscomplete"
