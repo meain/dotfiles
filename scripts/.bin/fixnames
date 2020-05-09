@@ -2,11 +2,11 @@
 
 fix_name() {
     file="$1"
-    title="$(ffprobe "$file" 2>&1 | grep 'title' | grep -o '[^:]*$' | sed 's| ||')"
+    title="$(ffprobe "$file" 2>&1 | grep 'title' | grep -o '[^:]*$' | sed 's| ||' | head -n1)"
     artist_or_album="$(ffprobe "$file" 2>&1 | grep -E '^\ *(album|artist)' | head -n1 | grep -o '[^:]*$' | sed 's| ||')"
     [ -z "$title" ] && [ -z "$artist_or_album" ] && return
     [ "$file" = "./$title - $artist_or_album.mp3" ] && return
-    mv -v "$file" "$title - $artist_or_album.mp3"
+    mv -v "$file" "$(dirname "$file")/$title - $artist_or_album.mp3"
 }
 
 [ -f "$1" ] && fix_name "$1" && exit 0
