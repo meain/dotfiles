@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# icatclear
+[ "$1" = "with-clear" ] && shift && icatclear
 imagepreview() {
     if [ -n "$KITTY_WINDOW_ID" ]; then
         timeout 4 kitty +kitten icat --place 60x"$2"@65x2 --transfer-mode file --silent "$1"
