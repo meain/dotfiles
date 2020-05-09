@@ -66,7 +66,7 @@ filebrowser-title-format "%f %?O?Open File&Save File?"
 help-title-format "Help"
 selecttag-title-format "Select Tag"
 selectfilter-title-format "Select Filter"
-itemview-title-format "%T"
+itemview-title-format "%F - %T"
 urlview-title-format "URLs"
 dialogs-title-format "Dialogs"
 
