@@ -1,0 +1,26 @@
+#!/bin/sh
+
+set -e
+
+convertsecs() {
+    h=$(( $1 / 3600 ))
+    m=$(( $1 % 3600 / 60 ))
+    s=$(( $1 % 60 ))
+    printf "%02d:%02d:%02d\n" $h $m $s
+}
+
+FOLDER="/tmp/ytthumbtime/$(date +%s)"
+mkdir -p "$FOLDER"
+cd "$FOLDER"
+youtube-dl "$1" --write-info-json --write-thumbnail --skip-download
+FILENAME="$(ls ./*.info.json)"
+THUMB="$(ls ./*.jpg)"
+RUNTIME="$(jq -r .duration <"$FILENAME")"
+LIKES="$(jq -r .like_count <"$FILENAME")"
+VIEWS="$(jq -r .view_count <"$FILENAME")"
+CR="$(convertsecs "$RUNTIME")"
+LABEL="Runtime: $CR | Likes: $LIKES | Views: $VIEWS"
+convert "$THUMB" -background Khaki label:"$LABEL" \
+    -gravity Center -append labelled.jpg
+open "labelled.jpg"
+# rm -rf "$FOLDER"
