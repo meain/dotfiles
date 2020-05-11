@@ -80,6 +80,7 @@ Plug 'radenling/vim-dispatch-neovim', { 'on': ['Dispatch', 'Start'] }           
 " Others
 Plug 'dstein64/vim-startuptime', { 'on': 'StartupTime' }                                       " Measure startuptime
 Plug 'rhysd/git-messenger.vim', { 'on': 'GitMessenger' }                                       " Show git commit
+Plug 'kristijanhusak/vim-carbon-now-sh', { 'on': 'CarbonNowSh' }                               " CarbonNow
 Plug 'davidbeckingsale/writegood.vim', { 'on': ['WritegoodEnable', 'WritegoodToggle'] }        " Better writing mode
 Plug '~/Documents/Projects/projects/vim-colorswitch', { 'do': 'UpdateRemotePlugins' }          " Cycle between color types
 Plug '~/Documents/Projects/projects/vim-package-info', { 'on': 'LazyLoadPlugins' }             " Show infor about packages
@@ -1399,6 +1400,26 @@ nnoremap <silent><leader>tl :TestLast<cr>
 " VTR
 nnoremap <silent>sf :VtrSendCommandToRunner<cr>
 
+" CarbonNowSh
+let g:carbon_now_sh_options =
+  \ {'bg':'rgba(187,187,187,1)',
+  \ 't':'solarized light',
+  \ 'wt':'sharp',
+  \ 'ds':'true',
+  \ 'dsyoff':'3px',
+  \ 'dsblur':'13px',
+  \ 'wc':'false',
+  \ 'wa':'true',
+  \ 'pv':'58px',
+  \ 'ph':'56px',
+  \ 'ln':'false',
+  \ 'fl':'1',
+  \ 'fm':'Inconsolata',
+  \ 'fs':'16px',
+  \ 'lh':'122%25',
+  \ 'si':'false',
+  \ 'es':'2x',
+  \ 'wm':'false' }
 
 
 "                             Source External                          "
