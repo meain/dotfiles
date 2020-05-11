@@ -11,6 +11,8 @@ Plug 'cormacrelf/vim-colors-github'                                             
 Plug 'logico/typewriter-vim'                                                                   " Minimal light colorscheme
 Plug 'Yggdroot/indentLine'                                                                     " Show indent
 Plug 'mhinz/vim-signify', { 'on': 'LazyLoadPlugins' }                                          " Git diff icons in gutter
+Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }                                           " Hyper focus editing
+Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }                                                     " Centerify
 Plug 'norcalli/nvim-colorizer.lua'                                                             " Highlight color values
 Plug 'machakann/vim-highlightedyank', { 'on': 'LazyLoadPlugins' }                              " Visually highlight yanked region
 
@@ -1421,6 +1423,26 @@ let g:carbon_now_sh_options =
   \ 'es':'2x',
   \ 'wm':'false' }
 
+" Goyo
+function! s:goyo_enter()
+  silent !tmux set status off
+  silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
+  set noshowmode
+  set noshowcmd
+  set scrolloff=999
+  Limelight
+endfunction
+
+function! s:goyo_leave()
+  silent !tmux set status on
+  silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
+  set showmode
+  set showcmd
+  set scrolloff=5
+  Limelight!
+endfunction
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 "                             Source External                          "
 "                    ==============================                    "
