@@ -1400,7 +1400,7 @@ nnoremap <silent><leader>tf :TestFile<cr>
 nnoremap <silent><leader>tl :TestLast<cr>
 
 " VTR
-nnoremap <silent>sf :VtrSendCommandToRunner<cr>
+nnoremap <silent>sf :VtrAttachToPane 2 <bar> VtrSendCommandToRunner<cr>
 
 " CarbonNowSh
 let g:carbon_now_sh_options =
