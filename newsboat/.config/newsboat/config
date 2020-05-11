@@ -81,12 +81,12 @@ max-downloads 2
 # use custom renderer for displaying HTML files.
 html-renderer "w3m -dump -T text/html"
 
-macro c set browser "copy(){ echo $1 | pbcopy ;}"; open-in-browser ; set browser linkhandler
-macro v set browser "playinmpv"; open-in-browser ; set browser linkhandler
-macro y set browser "ts newsboatdownload"; open-in-browser ; set browser linkhandler
-macro p set browser "ts newsboatpreview"; open-in-browser ; set browser linkhandler
-macro o set browser "open"; open-in-browser ; set browser linkhandler
-macro l set browser "lynx -lss='~/.lynx.lss'"; open-in-browser ; set browser linkhandler
+macro c set browser "copy(){ echo $1 | pbcopy ;}"; open-in-browser ; set browser "newsboatbrowser"
+macro v set browser "playinmpv"; open-in-browser ; set browser "newsboatbrowser"
+macro y set browser "ts newsboatdownload"; open-in-browser ; set browser "newsboatbrowser"
+macro p set browser "youtubepreview"; open-in-browser ; set browser "newsboatbrowser"
+macro o set browser "open"; open-in-browser ; set browser "newsboatbrowser"
+macro l set browser "lynx -lss='~/.lynx.lss'"; open-in-browser ; set browser "newsboatbrowser"
 
 # define-filter "Vim stuff" "content =~ \"Vim\""
 # highlight-article "content =~ \"Vim\"" magenta default
