@@ -10,7 +10,7 @@ get_change_message(){
     echo "($(get_git_files_changed)):" | vipe | cat
 } 
 # Fast was to check status
-alias g='git status -s'
+alias g='git status -sb'
 alias gs='git status'
 
 # Quickly add files
