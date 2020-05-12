@@ -87,8 +87,7 @@ elif [ "$1" = "commit" ]; then
     cd "$NOTES_FOLDER" &&
         git add . && git commit -m '[autocommit] updating notes'
 elif [ "$1" = "status" ]; then
-    cd "$NOTES_FOLDER" &&
-        git status --short
+    : # this is will happen down below, just have to have this here
 elif [ "$1" = "view" ]; then
     shift
     lf "$NOTES_FOLDER"
