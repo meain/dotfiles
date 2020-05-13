@@ -17,3 +17,6 @@ black
 'python-language-server[all]'
 slack-cli
 bpython
+bandit
+mypy
+isort
