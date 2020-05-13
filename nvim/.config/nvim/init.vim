@@ -373,7 +373,17 @@ iabbr imprt import
 iabbr imoprt import
 iabbr improt import
 iabbr consle console
-
+augroup custom_iabbr_javascript
+  autocmd!
+  autocmd FileType javascript inoreab <buffer> fn function
+  autocmd FileType javascript inoreab <buffer> cn className=
+augroup end
+augroup custom_iabbr_python
+  autocmd!
+  autocmd FileType python inoreab <buffer> im import
+  autocmd FileType python inoreab <buffer> ipdb __import__('ipdb').set_trace()
+  autocmd FileType python inoreab <buffer> pudb __import__('pudb').set_trace()
+augroup end
 
 
 
