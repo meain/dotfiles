@@ -348,3 +348,10 @@ q() {
 cdf() {  # short for cdfinder
   cd "`osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)'`"
 }
+
+tnp(){
+  LINK="$1"
+  [ -z "$1" ] && LINK="$(pbpaste)"
+  echo "Adding $LINK"
+  ts newsboatpreview "$LINK"
+}
