@@ -23,7 +23,7 @@ get_file_name() {
 }
 
 open_note() {
-    get_file_name 'todo|.trash|temp' "$@" # | xargs -L1 -I{} "$EDITOR" "$NOTES_FOLDER/{}"
+    get_file_name 'todo|.trash|temp' "$@" | xargs -L1 -I{} "$EDITOR" "$NOTES_FOLDER/{}"
 }
 
 open_note_all() {
