@@ -12,3 +12,4 @@ mpdstate
 mpv/.config/mpv/watch_later/
 mpd/.mpd/playlists/*
 *.log
+.mypy_cache
