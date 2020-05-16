@@ -67,7 +67,7 @@ fl() {
 
 nf() {
     NEWSBOAT_FOLDER="$HOME/Desktop/newsboat-downloads"
-    FILE_NAME="$(find "$NEWSBOAT_FOLDER" -type f |  grep -v '.DS_Store' |
+    FILE_NAME="$(find "$NEWSBOAT_FOLDER" -type f |  grep -vE '(.DS_Store|.stfolder)' |
         sed "s|$NEWSBOAT_FOLDER/||"  | fzf --print0 --preview "preview 'with-clear' $NEWSBOAT_FOLDER/{}" | xargs -0 -I{} echo "$NEWSBOAT_FOLDER/{}")"
     icatclear
     [ -z "$FILE_NAME" ] && return 0
