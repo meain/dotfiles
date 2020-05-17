@@ -66,7 +66,7 @@ fl() {
 }
 
 nf() {
-    NEWSBOAT_FOLDER="$HOME/Desktop/newsboat-downloads"
+    NEWSBOAT_FOLDER="$HOME/Desktop/newsboat"
     FILE_NAME="$(find "$NEWSBOAT_FOLDER" -type f |  grep -vE '(.DS_Store|.stfolder)' |
         sed "s|$NEWSBOAT_FOLDER/||"  | fzf --print0 --preview "preview 'with-clear' $NEWSBOAT_FOLDER/{}" | xargs -0 -I{} echo "$NEWSBOAT_FOLDER/{}")"
     icatclear
@@ -75,13 +75,13 @@ nf() {
 }
 
 nr() {
-    NEWSBOAT_FOLDER="$HOME/Desktop/newsboat-downloads"
+    NEWSBOAT_FOLDER="$HOME/Desktop/newsboat"
     lf "$NEWSBOAT_FOLDER"
     icatclear
 }
 
 nfr() {
-    NEWSBOAT_FOLDER="$HOME/Desktop/newsboat-downloads"
+    NEWSBOAT_FOLDER="$HOME/Desktop/newsboat"
     FILE_NAME="$(find "$NEWSBOAT_FOLDER" -type f | grep -v '.DS_Store' |
         sed "s|$NEWSBOAT_FOLDER/||" | fzf -m --print0 | xargs -0 -L1 -I{} rm "$NEWSBOAT_FOLDER/{}")"
     cleanupemptydirs "$NEWSBOAT_FOLDER"
