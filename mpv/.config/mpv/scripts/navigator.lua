@@ -10,6 +10,7 @@ SEPARATOR_WINDOWS = "\\"
 SEPARATOR = "/"
 
 local windows_desktop = ON_WINDOWS and utils.join_path(os.getenv("USERPROFILE"), "Desktop"):gsub(SEPARATOR, SEPARATOR_WINDOWS)..SEPARATOR_WINDOWS or nil
+local global_dir_state = {}
 
 local settings = {
   --navigation keybinds override arrowkeys and enter when activating navigation menu, false means keys are always actíve
@@ -194,6 +195,7 @@ end
 --moves into selected directory, or appends to playlist incase of file
 function childdir()
   local item = dir[cursor]
+  global_dir_state[path] = cursor
 
   -- windows only
   if ON_WINDOWS then
@@ -275,7 +277,11 @@ function changepath(args)
     path = WINDOWS_ROOT_DESC
   end
   dir,length = scandirectory(path)
-  cursor=0
+  if global_dir_state[path] ~= nil then
+    cursor=global_dir_state[path]
+  else
+    cursor=0
+  end
   handler()
 end
 
