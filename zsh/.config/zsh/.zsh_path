@@ -48,6 +48,11 @@ export PATH
 # rustup and cargo
 export RUSTUP_HOME="$HOME/.cache/rustup"
 export CARGO_HOME="$HOME/.cache/cargo"
+if rustc --print sysroot;then
+    export RUST_SRC_PATH="$(rustc --print sysroot)"
+else
+    export RUST_SRC_PATH="/usr/local/Cellar/rust/1.43.0"
+fi
 
 # datafiles
 export DATAFILES_PATH="$HOME/.config/datafiles"
