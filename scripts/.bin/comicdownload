@@ -1,0 +1,19 @@
+#!/bin/sh
+
+set -e
+
+fetch_and_show(){
+    mkdir -p /tmp/newsboatpreviews
+    temp="/tmp/newsboatpreviews/$(xxd -l7 -ps /dev/urandom)"
+    curl -L "$1" | pup "$2" | xargs -I{} curl -L "$3" > "$temp"
+    open "$temp"
+}
+
+case "$1" in
+*theoatmeal.com*) fetch_and_show "$1" "#comic img attr{src}" "{}" ;;
+*xkcd.com*) fetch_and_show "$1" "#comic img attr{src}" "https:{}" ;;
+*commitstrip.com*) fetch_and_show "$1" ".entry-content img attr{src}" "{}" ;;
+*explosm.net*) fetch_and_show "$1" "#comic-wrap img attr{src}" "https:{}" ;;
+*feed.dilbert.com*) fetch_and_show "$1" ".img-comic attr{src}" "https:{}" ;;
+*PoorlyDrawnLines*) fetch_and_show "$1" ".content.comic .post img attr{src}" "{}";;
+esac

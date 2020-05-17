@@ -1,0 +1,20 @@
+#!/bin/sh
+
+set -e
+
+
+download_youtube() {
+    ITEM="$(youtube-dl "$1" -F | grep -v 'video only' | awk '{print $1,$4}' | grep '720p' | head -n1 | awk '{print $1}')"
+    if [ -n "$ITEM" ]; then
+        youtube-dl "$1" -f "$ITEM" --output "$HOME/Desktop/newsboat/youtube/%(uploader)s/%(title)s.%(ext)s" &&
+            notify "Download complete" "$(youtube-dl --get-title "$1")"
+    else
+        youtube-dl "$1" --output "$HOME/Desktop/newsboat/youtube/%(uploader)s/%(title)s.%(ext)s" &&
+            notify "Download complete" "$(youtube-dl --get-title "$1")"
+    fi
+}
+
+case "$1" in
+*youtube.com*) download_youtube "$1" || open "$1" ;;
+*) exit 1 # add more later
+esac

@@ -3,34 +3,24 @@
 set -e
 
 export TS_MAXFINISHED="13"
-echo "$1" >> /tmp/newsboat-preview
+echo "$1" >>/tmp/newsboat-preview
 osascript -e "display notification \"Adding $1 to queue\" with title \"Newsboat\""
 
-fetch_and_show(){
-    mkdir -p /tmp/newsboatpreviews
-    temp="/tmp/newsboatpreviews/$(xxd -l7 -ps /dev/urandom)"
-    curl -L "$1" | pup "$2" | xargs -I{} curl -L "$3" > "$temp"
-    open "$temp"
+comicdownload() {
+    TS_SOCKET="/tmp/quick" ts comicdownload "$1"
 }
 
-download_youtube() {
-    ITEM="$(youtube-dl "$1" -F | grep -v 'video only' | awk '{print $1,$4}' | grep '720p' | head -n1 | awk '{print $1}')"
-    if [ -n "$ITEM" ]; then
-        youtube-dl "$1" -f "$ITEM" --output "$HOME/Desktop/newsboat-downloads/youtube/%(uploader)s/%(title)s.%(ext)s" &&
-            notify "Download complete" "$(youtube-dl --get-title "$1")"
-    else
-        youtube-dl "$1" --output "$HOME/Desktop/newsboat-downloads/youtube/%(uploader)s/%(title)s.%(ext)s" &&
-            notify "Download complete" "$(youtube-dl --get-title "$1")"
-    fi
+youtubedownload() {
+    ts youtubedownload "$1"
 }
 
 case "$1" in
-*theoatmeal.com*) fetch_and_show "$1" "#comic img attr{src}" "{}" ;;
-*xkcd.com*) fetch_and_show "$1" "#comic img attr{src}" "https:{}" ;;
-*commitstrip.com*) fetch_and_show "$1" ".entry-content img attr{src}" "{}" ;;
-*explosm.net*) fetch_and_show "$1" "#comic-wrap img attr{src}" "https:{}" ;;
-*feed.dilbert.com*) fetch_and_show "$1" ".img-comic attr{src}" "https:{}" ;;
-*PoorlyDrawnLines*) fetch_and_show "$1" ".content.comic .post img attr{src}" "{}";;
-*youtube.com*) download_youtube "$1" || open "$1" ;;
-*) open "$1"
+*theoatmeal.com*) comicdownload "$1" ;;
+*xkcd.com*) comicdownload "$1" ;;
+*commitstrip.com*) comicdownload "$1" ;;
+*explosm.net*) comicdownload "$1" ;;
+*feed.dilbert.com*) comicdownload "$1" ;;
+*PoorlyDrawnLines*) comicdownload "$1" ;;
+*youtube.com*) youtubedownload "$1" ;;
+*) open "$1" ;;
 esac
