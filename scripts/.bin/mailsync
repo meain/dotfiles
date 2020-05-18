@@ -59,6 +59,8 @@ notmuch tag +nonimportant +nonotify 'folder:/INBOX/' 'from:no-reply@sampark.gov.
 notmuch tag +nonimportant +nonotify 'folder:/INBOX/' 'from:upvote-noreply@quora.com'
 notmuch tag +nonimportant +nonotify 'folder:/INBOX/' 'from:pro@codecademy.com'
 notmuch tag +nonimportant +nonotify 'folder:/INBOX/' 'from:no-reply@mailer.bookmyshow.com'
+notmuch tag +nonimportant +nonotify 'folder:/INBOX/' 'from:post.bookmyshow.com'
+
 
 # others
 notmuch tag +python +nonotify 'folder:/INBOX/' 'subject:/\[Python-Dev\]/'
