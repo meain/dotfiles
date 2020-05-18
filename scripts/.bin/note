@@ -27,7 +27,7 @@ open_note() {
 }
 
 open_note_all() {
-    get_file_name '.trash' "$@" # | xargs -L1 -I{} "$EDITOR" "$NOTES_FOLDER/{}"
+    get_file_name '.trash' "$@" | xargs -L1 -I{} "$EDITOR" "$NOTES_FOLDER/{}"
 }
 
 move_note() {
