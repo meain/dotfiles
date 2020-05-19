@@ -25,18 +25,18 @@ scrolling:
 
 font:
   normal:
-    family: SpaceMono Nerd Font Mono
+    family: IBM Plex Mono
     style: Regular
   bold:
-    family: SpaceMono Nerd Font Mono
+    family: IBM Plex Mono
     style: Regular
   italic:
-    family: SpaceMono Nerd Font Mono
+    family: IBM Plex Mono
     style: Italic
-  size: 14.0
+  size: 13.5
   offset:
     x: 0
-    y: -5
+    y: -2
   glyph_offset:
     x: 0
     y: 0
