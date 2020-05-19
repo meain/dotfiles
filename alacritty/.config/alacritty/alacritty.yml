@@ -73,25 +73,25 @@ color_schemes:
 
     # Normal colors
     normal:
-      white:   '0x444444'
+      black:   '0x444444'
       red:     '0x9e0047'
       green:   '0x718C00'
       yellow:  '0xb25000'
       blue:    '0x4271AE'
       magenta: '0x8959A8'
       cyan:    '0x3E999F'
-      black:   '0x4D4D4C'
+      white:   '0x939393'
 
     # Bright colors
     bright:
-      white:   '0x969694'
+      black:   '0x969694'
       red:     '0xff0072'
       green:   '0x8eb200'
       yellow:  '0xff7200'
       blue:    '0x5ea2f9'
       magenta: '0xa56ccc'
       cyan:    '0x51c8d1'
-      black:   '0xF5F5F5'
+      white:   '0xbcbcbc'
 
 colors: *light
 
