@@ -260,6 +260,22 @@ set foldignore=
 set foldlevelstart=10
 set foldnestmax=10
 
+augroup colorscheme_github
+  autocmd!
+  autocmd ColorScheme github highlight Normal ctermbg=231 guibg=#ffffff
+  autocmd ColorScheme github highlight SignColumn ctermbg=231 guibg=#ffffff
+  autocmd ColorScheme github highlight LineNr ctermbg=240 guibg=#ffffff
+  autocmd ColorScheme github highlight VertSplit guibg=#ffffff guifg=#444444 gui=NONE cterm=NONE
+  autocmd ColorScheme github highlight StatusLineNC ctermbg=255 guibg=#cecece gui=NONE cterm=NONE
+  autocmd ColorScheme github highlight SignifySignAdd cterm=bold gui=bold ctermfg=002 guifg=#008000 guibg=#ffffff
+  autocmd ColorScheme github highlight SignifySignDelete cterm=bold gui=bold ctermfg=001 guifg=#800000 guibg=#ffffff
+  autocmd ColorScheme github highlight SignifySignChange cterm=bold gui=bold ctermfg=003 guifg=#0087af guibg=#ffffff
+  autocmd ColorScheme github highlight CursorLine ctermbg=255 guibg=#f5f5f5 gui=NONE cterm=NONE
+  autocmd ColorScheme github highlight ALEErrorSign ctermfg=196 guifg=#ff0000 ctermbg=231 guibg=#ffffff
+  autocmd ColorScheme github highlight ALEWarningSign ctermfg=226 guifg=#e75600 ctermbg=231 guibg=#ffffff
+  autocmd ColorScheme github highlight ALEError ctermfg=052 guifg=#63120c
+augroup end
+
 augroup colorscheme_typewriter
   autocmd!
   autocmd ColorScheme typewriter highlight Normal ctermbg=231 guibg=#ffffff
