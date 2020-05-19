@@ -27,12 +27,12 @@ bind-key O open-all-unread-in-browser-and-mark-read
 bind-key u toggle-article-read 
 
 # colors
-color listnormal white default
-color listfocus white default reverse
+color listnormal default default
+color listfocus default default reverse
 color listnormal_unread green default
-color listfocus_unread white default reverse
-color info black blue bold
-color article white default
+color listfocus_unread default default reverse
+color info blue default reverse
+color article default default
 
 # highlight rules
 highlight feedlist "\ *https?://[^ ]+" white default bold
