@@ -16,5 +16,6 @@ download_youtube() {
 
 case "$1" in
 *youtube.com*) download_youtube "$1" || open "$1" ;;
+*youtu.be*) download_youtube "$1" || open "$1" ;;
 *) exit 1 # add more later
 esac

@@ -22,5 +22,6 @@ case "$1" in
 *feed.dilbert.com*) comicdownload "$1" ;;
 *PoorlyDrawnLines*) comicdownload "$1" ;;
 *youtube.com*) youtubedownload "$1" ;;
+*youtu.be*) youtubedownload "$1" ;;
 *) open "$1" ;;
 esac
