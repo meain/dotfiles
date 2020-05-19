@@ -160,4 +160,5 @@ preexec () {
   fi
 }
 
+setdarkmode quiet  # set dark or light mode
 export ZSH_LOADED=1
