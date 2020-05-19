@@ -44,9 +44,9 @@
   templatedir = ~/.config/git/.git_template
 [color "diff-highlight"]
   oldNormal = red
-  oldHighlight = 231 bold red
+  oldHighlight = red reverse
   newNormal = green
-  newHighlight = 231 bold green
+  newHighlight = green reverse
 [color "branch"]
   current = green
   local = white
