@@ -271,6 +271,25 @@ augroup colorscheme_typewriter
   autocmd ColorScheme typewriter highlight SignifySignDelete cterm=bold gui=bold ctermfg=001 guifg=#800000 guibg=#ffffff
   autocmd ColorScheme typewriter highlight SignifySignChange cterm=bold gui=bold ctermfg=003 guifg=#0087af guibg=#ffffff
   autocmd ColorScheme typewriter highlight CursorLine ctermbg=255 guibg=#f5f5f5 gui=NONE cterm=NONE
+  autocmd ColorScheme typewriter highlight ALEErrorSign ctermfg=196 guifg=#ff0000 ctermbg=231 guibg=#ffffff
+  autocmd ColorScheme typewriter highlight ALEWarningSign ctermfg=226 guifg=#e75600 ctermbg=231 guibg=#ffffff
+  autocmd ColorScheme typewriter highlight ALEError ctermfg=052 guifg=#63120c
+augroup end
+
+augroup colorscheme_typewriter-night
+  autocmd!
+  autocmd ColorScheme typewriter-night highlight Normal ctermbg=233 guibg=#1C1C1C
+  autocmd ColorScheme typewriter-night highlight SignColumn ctermbg=233 guibg=#1C1C1C
+  autocmd ColorScheme typewriter-night highlight LineNr ctermbg=233 guibg=#1C1C1C
+  autocmd ColorScheme typewriter-night highlight VertSplit guibg=#1C1C1C guifg=#f5f5f5 gui=NONE cterm=NONE
+  autocmd ColorScheme typewriter-night highlight StatusLineNC ctermbg=255 guibg=#1C1C1C gui=NONE cterm=NONE
+  autocmd ColorScheme typewriter-night highlight SignifySignAdd cterm=bold gui=bold ctermfg=119 guifg=#87ff5f guibg=#1C1C1C
+  autocmd ColorScheme typewriter-night highlight SignifySignDelete cterm=bold gui=bold ctermfg=167 guifg=#d75f5f guibg=#1C1C1C
+  autocmd ColorScheme typewriter-night highlight SignifySignChange cterm=bold gui=bold ctermfg=227 guifg=#ffff5f guibg=#1C1C1C
+  autocmd ColorScheme typewriter-night highlight CursorLine ctermbg=255 guibg=#f5f5f5 gui=NONE cterm=NONE
+  autocmd ColorScheme typewriter-night highlight ALEErrorSign ctermfg=196 guifg=#ff0000 ctermbg=231 guibg=#1C1C1C
+  autocmd ColorScheme typewriter-night highlight ALEWarningSign ctermfg=226 guifg=#e75600 ctermbg=231 guibg=#1C1C1C
+  autocmd ColorScheme typewriter-night highlight ALEError ctermfg=052 guifg=#63120c
 augroup end
 
 " ColorScheme change ( janah )
@@ -305,8 +324,13 @@ augroup end
 " tomorrow-night, zenburn, base16-classic-light, base16-classic-dark
 " light:pencil
 set termguicolors
-set background=light
-colorscheme typewriter
+if $DARK_MODE
+  set background=dark
+  colorscheme typewriter-night
+else
+  set background=light
+  colorscheme typewriter
+endif
 
 " Use italics for some text
 highlight htmlArg gui=italic
@@ -1108,9 +1132,6 @@ nnoremap <silent>,, :ALEFix<cr>
 let g:ale_sign_error = '✖'
 let g:ale_sign_warning = '⚠'
 let g:ale_virtualtext_cursor = 1
-highlight ALEErrorSign ctermfg=196 guifg=#ff0000 ctermbg=231 guibg=#ffffff
-highlight ALEWarningSign ctermfg=226 guifg=#e75600 ctermbg=231 guibg=#ffffff
-highlight ALEError ctermfg=052 guifg=#63120c
 highlight clear ALEWarning
 let g:ale_statusline_format = ['✖ %d', '⚠ %d', '⬥ ok']
 let g:ale_linters = {
