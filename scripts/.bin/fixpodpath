@@ -11,5 +11,5 @@ while read -r line; do
     pod_name="$(echo 'select enclosure_url,url,feedurl,title from rss_item' | sqlite3 "$DB_PATH" | grep "$link" | cut -d'|' -f4)"
     [ -z "$pod_url" ] && echo "Could not find $link" && continue
     pod_channel="$(echo 'select rssurl,title from rss_feed' | sqlite3 "$DB_PATH" | grep "$pod_url" | cut -d'|' -f2)"
-    echo "$link \"$HOME/Desktop/newsboat-downloads/podcasts/$pod_channel/$pod_name.mp3\""
+    echo "$link \"$HOME/Desktop/newsboat/podcasts/$pod_channel/$pod_name.mp3\""
 done < "$QUEUE_FILE"
