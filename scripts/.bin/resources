@@ -19,6 +19,7 @@ else
 fi
 
 [ "$1" = l ] && cat "$RFILE" && exit 0
+[ "$1" = 'list' ] && cat "$RFILE" && exit 0
 [ "$1" = o ] && fzf -m <"$RFILE" | xargs -L1 -I{} open "{}" && exit 0
 echo "$1" | grep -qE "^http" && echo "$1" >>"$RFILE" && exit 0
 
