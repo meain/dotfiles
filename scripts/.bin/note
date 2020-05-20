@@ -93,9 +93,9 @@ elif [ "$1" = "view" ]; then
     lf "$NOTES_FOLDER"
 elif [ "$1" = "open" ]; then
     shift
-    open_note_all "$*"
-else
     open_note "$*"
+else
+    open_note_all "$*"
 fi
 
 cd "$NOTES_FOLDER" && git status -sb
