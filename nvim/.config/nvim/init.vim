@@ -1167,7 +1167,7 @@ let g:ale_linters = {
 \  'javascript': ['eslint'],
 \  'typescript' : ['eslint'],
 \  'typescript.tsx' : ['tslint', 'eslint'],
-\  'python': ['pycodestyle', 'pyflakes', 'mypy', 'bandit'],
+\  'python': ['pycodestyle', 'mypy', 'bandit'],
 \  'html': ['tidy'],
 \  'css': ['stylelint'],
 \  'bash': ['shellcheck'],
