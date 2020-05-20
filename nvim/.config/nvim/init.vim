@@ -1322,7 +1322,7 @@ nnoremap <silent> gh :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> ga :call LanguageClient_textDocument_codeAction()<CR>
 nnoremap <silent> g, :call LanguageClient_textDocument_formatting()<CR>
 vnoremap <silent> g, :call LanguageClient_textDocument_rangeFormatting()<CR>
-nnoremap <silent><leader>L :call LanguageClient_textDocument_documentSymbol()<CR>
+nnoremap <silent><leader>l :call LanguageClient_textDocument_documentSymbol()<CR>
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 nnoremap <silent> <leader>I :call LanguageClient#explainErrorAtPoint()<CR>
 function! s:show_documentation()
@@ -1394,7 +1394,7 @@ let g:vim_printer_items = {
 
 
 " Vista
-nnoremap <silent><leader>l :Vista!!<cr>
+nnoremap <silent><leader>L :Vista!!<cr>
 augroup custom_vista
   " autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
   autocmd FileType markdown nnoremap <silent><buffer><leader>l :Vista toc<cr>
