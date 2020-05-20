@@ -3,8 +3,14 @@
 set -e
 
 cd ~/.notes/todo
-FILE="todo.md"
-[ -n "$1" ] && FILE="$1"
-[ "$1" = "f" ] && FILE="$(fzf)"
+
+export FZF_DEFAULT_OPTS='
+    -1 -0
+    --prompt=" "
+    --inline-info
+    --color fg:-1,hl:4,fg+:1,bg+:-1,hl+:4
+    --color info:108,prompt:242,spinner:108,pointer:1,marker:168
+'
+FILE="$(fzf --preview "cat ./{}")"
 
 taskell "$FILE"
