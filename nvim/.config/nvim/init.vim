@@ -823,6 +823,21 @@ augroup custom_shell_files
   autocmd BufNewFile index.html :call s:LoadShell('~/.config/datafiles/html_starter')
 augroup end
 
+" Auto add note header
+function! s:AddNoteHeader()
+  call setline(1, '---')
+  call setline(2, 'name: '.trim(expand('%:t')))
+  call setline(3, 'created-at: '.trim(system('date')))
+  call setline(4, '---')
+  call setline(5, '')
+  call setline(6, '<++>')
+  normal! G
+endfunction
+augroup custom_note_header
+  autocmd!
+  autocmd BufNewFile ~/.notes/* :call <SID>AddNoteHeader()
+augroup end
+
 " Close unused buffers
 function! s:CloseHiddenBuffers()
   let open_buffers = []
