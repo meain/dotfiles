@@ -103,6 +103,9 @@ call plug#end()
 " Set encoding to utf8
 set encoding=utf8
 
+" set scriptencoding
+scriptencoding utf-8
+
 " Make autocomplete for filenames work
 set path+=**
 
@@ -451,86 +454,90 @@ nnoremap ;; /<++><cr>:nohls<cr>cf>
 inoremap ;; <esc>/<++><cr>:nohls<cr>cf>
 vnoremap ;; <esc>/<++><cr>:nohls<cr>cf>
 
-" python
-autocmd FileType python inoremap <silent><buffer> ;def def <++>(<++>):<cr><++><esc>k$?def<cr>:nohls<cr>
-autocmd FileType python inoremap <silent><buffer> ;i __import__('ipdb').set_trace()<esc>
-autocmd FileType python inoremap <silent><buffer> ;dp __import__('pudb').set_trace()<esc>
-autocmd FileType python inoremap <silent><buffer> ;fs f""<left>
-autocmd FileType python inoremap <silent><buffer> ;pr print()<left>
-autocmd FileType python inoremap <silent><buffer> ;ld logger.debug(f"")<left><left>
-autocmd FileType python inoremap <silent><buffer> ;li logger.info(f"")<left><left>
-autocmd FileType python inoremap <silent><buffer> ;lw logger.warning(f"")<left><left>
-autocmd FileType python inoremap <silent><buffer> ;le logger.error(f"")<left><left>
-autocmd FileType python inoremap <silent><buffer> ;lc logger.critical(f"")<left><left>
-autocmd FileType python inoremap <silent><buffer> ;lx logger.exception(f"")<left><left>
-autocmd FileType python inoremap <silent><buffer> ;bang #!/usr/bin/env python3<esc>
+augroup custom_inormaps
+  autocmd!
 
-" rust
-autocmd FileType rust inoremap <silent><buffer> ;a println!("");<esc>hhi<c-r>=line(".")<cr><esc>
-autocmd FileType rust nnoremap <silent><buffer> ;a oprintln!("");<esc>hhi<c-r>=line(".")<cr><esc>
+  " python
+  autocmd FileType python inoremap <silent><buffer> ;def def <++>(<++>):<cr><++><esc>k$?def<cr>:nohls<cr>
+  autocmd FileType python inoremap <silent><buffer> ;i __import__('ipdb').set_trace()<esc>
+  autocmd FileType python inoremap <silent><buffer> ;dp __import__('pudb').set_trace()<esc>
+  autocmd FileType python inoremap <silent><buffer> ;fs f""<left>
+  autocmd FileType python inoremap <silent><buffer> ;pr print()<left>
+  autocmd FileType python inoremap <silent><buffer> ;ld logger.debug(f"")<left><left>
+  autocmd FileType python inoremap <silent><buffer> ;li logger.info(f"")<left><left>
+  autocmd FileType python inoremap <silent><buffer> ;lw logger.warning(f"")<left><left>
+  autocmd FileType python inoremap <silent><buffer> ;le logger.error(f"")<left><left>
+  autocmd FileType python inoremap <silent><buffer> ;lc logger.critical(f"")<left><left>
+  autocmd FileType python inoremap <silent><buffer> ;lx logger.exception(f"")<left><left>
+  autocmd FileType python inoremap <silent><buffer> ;bang #!/usr/bin/env python3<esc>
 
-" vim
-autocmd FileType vim inoremap <silent><buffer> ;ag augroup custom_<cr>autocmd!<cr><++><cr>augroup end<esc>?custom_<cr>:nohls<cr>A
-autocmd FileType vim inoremap <silent><buffer> ;af autocmd FileType inoremap <silent><buffer> <++><esc>?FileType<cr>ea<space>
+  " rust
+  autocmd FileType rust inoremap <silent><buffer> ;a println!("");<esc>hhi<c-r>=line(".")<cr><esc>
+  autocmd FileType rust nnoremap <silent><buffer> ;a oprintln!("");<esc>hhi<c-r>=line(".")<cr><esc>
 
-" shell
-autocmd FileType sh inoremap <silent><buffer> ;bang #!/bin/sh<cr><cr>
-autocmd FileType bash inoremap <silent><buffer> ;bang #!/bin/bash<cr><cr>
-autocmd FileType zsh inoremap <silent><buffer> ;bang #!/bin/zsh<cr><cr>
-autocmd FileType sh,bash,zsh inoremap <silent><buffer> ;s ;;
-autocmd BufNewFile *.sh :norm! i#!/bin/sh
+  " vim
+  autocmd FileType vim inoremap <silent><buffer> ;ag augroup custom_<cr>autocmd!<cr><++><cr>augroup end<esc>?custom_<cr>:nohls<cr>A
+  autocmd FileType vim inoremap <silent><buffer> ;af autocmd FileType inoremap <silent><buffer> <++><esc>?FileType<cr>ea<space>
 
-" gitcommit
-autocmd FileType gitcommit inoremap <silent><buffer> ;bang <++>: <++>
+  " shell
+  autocmd FileType sh inoremap <silent><buffer> ;bang #!/bin/sh<cr><cr>
+  autocmd FileType bash inoremap <silent><buffer> ;bang #!/bin/bash<cr><cr>
+  autocmd FileType zsh inoremap <silent><buffer> ;bang #!/bin/zsh<cr><cr>
+  autocmd FileType sh,bash,zsh inoremap <silent><buffer> ;s ;;
+  autocmd BufNewFile *.sh :norm! i#!/bin/sh
 
-" html
-autocmd FileType html inoremap <silent><buffer> ;bang <esc>:0read !cat ~/.config/datafiles/html_starter<cr>gg
-autocmd FileType html inoremap <silent><buffer> ;fa <i class="fas fa-"></i><esc>F"i
-autocmd FileType html inoremap <silent><buffer> ;css <link rel="stylesheet" href="index.css" type="text/css" /><esc>?index.css<cr>vi"
-autocmd FileType html inoremap <silent><buffer> ;js <script src="index.js"></script><esc>?index.js<cr>vi"
-autocmd FileType html inoremap <silent><buffer> ;cl class=""<left>
+  " gitcommit
+  autocmd FileType gitcommit inoremap <silent><buffer> ;bang <++>: <++>
 
-" go
-autocmd FileType go inoremap <silent><buffer> ;ee :=
-autocmd FileType go inoremap <silent><buffer> ;err if err != nil {<cr>log.Fatal(err)<cr>}
+  " html
+  autocmd FileType html inoremap <silent><buffer> ;bang <esc>:0read !cat ~/.config/datafiles/html_starter<cr>gg
+  autocmd FileType html inoremap <silent><buffer> ;fa <i class="fas fa-"></i><esc>F"i
+  autocmd FileType html inoremap <silent><buffer> ;css <link rel="stylesheet" href="index.css" type="text/css" /><esc>?index.css<cr>vi"
+  autocmd FileType html inoremap <silent><buffer> ;js <script src="index.js"></script><esc>?index.js<cr>vi"
+  autocmd FileType html inoremap <silent><buffer> ;cl class=""<left>
 
-" css
-autocmd FileType css inoremap <silent><buffer> ;se <Esc>A;
-autocmd FileType css inoremap <silent><buffer> ;wh width: 100%;<cr>height: 100%;
-autocmd FileType css inoremap <silent><buffer> ;bc background-color: #f5f5f5;<esc>Bvt;
-autocmd FileType css inoremap <silent><buffer> ;bi background-image: url("");<esc>F"i./
-autocmd FileType css inoremap <silent><buffer> ;br border-radius: 5px;<esc>Bvt;
-autocmd FileType css inoremap <silent><buffer> ;media @media only screen and (max-width: 600px) {<cr>}<esc>O
-autocmd FileType css inoremap <silent><buffer> ;df display: flex;
-autocmd FileType css inoremap <silent><buffer> ;center justify-content: center;<cr>align-items: center;
-autocmd FileType css inoremap <silent><buffer> ;cp cursor: pointer;<esc>Bvt;
-autocmd FileType css inoremap <silent><buffer> ;base * {<cr>box-sizing: border-box;<cr>}
-autocmd FileType css inoremap <silent><buffer> ;body body {<cr>margin: 0;<cr>padding: 0;<cr>}
-autocmd FileType css inoremap <silent><buffer> ;shadow box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02), 0 0px 2px rgba(0, 0, 0, 0.12);
-autocmd FileType css inoremap <silent><buffer> ;fc flex-direction: column;
-autocmd FileType css inoremap <silent><buffer> ;ta text-align: center;<esc>hviw
-autocmd FileType css inoremap <silent><buffer> ;cl .<esc>"*pa{<cr>}<esc>O
+  " go
+  autocmd FileType go inoremap <silent><buffer> ;ee :=
+  autocmd FileType go inoremap <silent><buffer> ;err if err != nil {<cr>log.Fatal(err)<cr>}
 
-" javascript
-autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;flow // @flow 
-autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;cn className=""<left>
-autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;rf <React.Fragment><cr></React.Fragment><esc>O
-autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;rfs <React.Fragment>
-autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;rfe </React.Fragment>
-autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;con constructor(props: Props) {<cr>super(props)<cr>}O
-autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;ds dispatch({<cr>type: '<++>',<cr>payload: <++><cr>})<esc>?dispatch<cr>:nohls<cr>jci'
-autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;rl const <++> = React.lazy(() => import('<++>'))
-autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;bind <esc>:call ExpandSnip("self.{++} = self.{++}.bind(this)")<cr>
-autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;cim <esc>:call ExpandSnip("import {++} from '../{++}/{++}'")<cr>
-autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;stop if (e) {<cr>e.stopPropagaion()<cr>if(e.nativeEvent) e.nativeEvent.stopImmediatePropagation()<cr>}
-autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;di <div className=""><++></div><esc>11hi
-autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ,. <></><left><left><left>
+  " css
+  autocmd FileType css inoremap <silent><buffer> ;se <Esc>A;
+  autocmd FileType css inoremap <silent><buffer> ;wh width: 100%;<cr>height: 100%;
+  autocmd FileType css inoremap <silent><buffer> ;bc background-color: #f5f5f5;<esc>Bvt;
+  autocmd FileType css inoremap <silent><buffer> ;bi background-image: url("");<esc>F"i./
+  autocmd FileType css inoremap <silent><buffer> ;br border-radius: 5px;<esc>Bvt;
+  autocmd FileType css inoremap <silent><buffer> ;media @media only screen and (max-width: 600px) {<cr>}<esc>O
+  autocmd FileType css inoremap <silent><buffer> ;df display: flex;
+  autocmd FileType css inoremap <silent><buffer> ;center justify-content: center;<cr>align-items: center;
+  autocmd FileType css inoremap <silent><buffer> ;cp cursor: pointer;<esc>Bvt;
+  autocmd FileType css inoremap <silent><buffer> ;base * {<cr>box-sizing: border-box;<cr>}
+  autocmd FileType css inoremap <silent><buffer> ;body body {<cr>margin: 0;<cr>padding: 0;<cr>}
+  autocmd FileType css inoremap <silent><buffer> ;shadow box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02), 0 0px 2px rgba(0, 0, 0, 0.12);
+  autocmd FileType css inoremap <silent><buffer> ;fc flex-direction: column;
+  autocmd FileType css inoremap <silent><buffer> ;ta text-align: center;<esc>hviw
+  autocmd FileType css inoremap <silent><buffer> ;cl .<esc>"*pa{<cr>}<esc>O
 
-" markdown
-autocmd FileType markdown inoremap <silent><buffer> ;lkj  <esc>Bi`<esc>Ea`<esc>A
+  " javascript
+  autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;flow // @flow 
+  autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;cn className=""<left>
+  autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;rf <React.Fragment><cr></React.Fragment><esc>O
+  autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;rfs <React.Fragment>
+  autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;rfe </React.Fragment>
+  autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;con constructor(props: Props) {<cr>super(props)<cr>}O
+  autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;ds dispatch({<cr>type: '<++>',<cr>payload: <++><cr>})<esc>?dispatch<cr>:nohls<cr>jci'
+  autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;rl const <++> = React.lazy(() => import('<++>'))
+  autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;bind <esc>:call ExpandSnip("self.{++} = self.{++}.bind(this)")<cr>
+  autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;cim <esc>:call ExpandSnip("import {++} from '../{++}/{++}'")<cr>
+  autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;stop if (e) {<cr>e.stopPropagaion()<cr>if(e.nativeEvent) e.nativeEvent.stopImmediatePropagation()<cr>}
+  autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ;di <div className=""><++></div><esc>11hi
+  autocmd FileType javascript,javascript.jsx inoremap <silent><buffer> ,. <></><left><left><left>
 
-" others
-autocmd BufReadPost *.bin/mailsync inoremap <silent><buffer> ;t <esc>k"tyy"tp$hhdi'ifrom:<esc>"*p
+  " markdown
+  autocmd FileType markdown inoremap <silent><buffer> ;lkj  <esc>Bi`<esc>Ea`<esc>A
+
+  " others
+  autocmd BufReadPost *.bin/mailsync inoremap <silent><buffer> ;t <esc>k"tyy"tp$hhdi'ifrom:<esc>"*p
+augroup end
 
 
 
@@ -614,8 +621,11 @@ tnoremap <m-l> <C-\><C-N><C-w>l
 tnoremap <Leader><Esc> <C-\><C-n>
 
 " Don't change Enter in all buffers
-autocmd FileType help nnoremap <buffer> <Enter> <Enter>
-autocmd FileType vim-plug nnoremap <buffer> <Enter> <Enter>
+augroup custom_enter_remaps
+  autocmd!
+  autocmd FileType help nnoremap <buffer> <Enter> <Enter>
+  autocmd FileType vim-plug nnoremap <buffer> <Enter> <Enter>
+augroup end
 
 " Go back and fwd smoother
 nnoremap <silent>\ <c-o>
@@ -688,10 +698,13 @@ nnoremap <silent><leader>m :call QfNext()<cr>
 nnoremap <silent><leader>n :call QfPrev()<cr>
 
 " Change from class to className
-autocmd FileType javascript nnoremap <buffer><leader>c mc?class=<CR>ciwclassName<ESC>`c4l
-autocmd FileType javascript.jsx nnoremap <buffer><leader>c mc?class=<CR>ciwclassName<ESC>`c4l
-autocmd FileType typescript nnoremap <buffer><leader>c mc?class=<CR>ciwclassName<ESC>`c4l
-autocmd FileType typescript.tsx nnoremap <buffer><leader>c mc?class=<CR>ciwclassName<ESC>`c4l
+augroup custom_classtocalssname
+  autocmd!
+  autocmd FileType javascript nnoremap <buffer><leader>c mc?class=<CR>ciwclassName<ESC>`c4l
+  autocmd FileType javascript.jsx nnoremap <buffer><leader>c mc?class=<CR>ciwclassName<ESC>`c4l
+  autocmd FileType typescript nnoremap <buffer><leader>c mc?class=<CR>ciwclassName<ESC>`c4l
+  autocmd FileType typescript.tsx nnoremap <buffer><leader>c mc?class=<CR>ciwclassName<ESC>`c4l
+augroup end
 
 " quick search and replace
 nnoremap <leader>; :%s/\v
@@ -774,7 +787,7 @@ nnoremap <c-q> :call MinimizeIfZoomed() \|:mksession! /tmp/vim-prev \| :qa<cr>y
 
 " Strip trailing whitespaces
 function! StripTrailingWhitespace()
-    if !&binary && &filetype != 'diff'
+    if !&binary && &filetype !=# 'diff'
       normal! mz
       %s/\s\+$//e
       normal! `z
@@ -800,7 +813,7 @@ function! JSONFormat() range
   :%s/True/true/g
   :%s/False/false/g
   execute '%!python -m json.tool'
-  set ft=json
+  set filetype=json
 endfunction
 command! -range JSONFormat <line1>,<line2>call JSONFormat()
 
@@ -847,7 +860,7 @@ function! Join()
   let previous_last_char = getline('.')[col('$')-2]
   normal! J
   let current_char = getline('.')[col('.')-1]
-  if previous_last_char =~ '(\|[\' && current_char == ' '
+  if previous_last_char =~# '(\|[\' && current_char ==# ' '
     normal! x
   endif
 endfunction
@@ -916,7 +929,7 @@ endfunction
 let g:term_buf = 0
 let g:term_job_id = 0
 function! FloatTerm(...)
-  if g:term_buf == bufnr("")
+  if g:term_buf == bufnr('')
     setlocal bufhidden=hide
     close
   else
@@ -935,13 +948,16 @@ function! FloatTerm(...)
     " call Floater(height, width, horizontal, vertical)
 
     try
-      exec "buffer ".g:term_buf
+      exec 'buffer '.g:term_buf
     catch
       terminal
-      let g:term_buf = bufnr("")
+      let g:term_buf = bufnr('')
       let g:term_job_id = b:terminal_job_id
-      autocmd TermClose * ++once :bd! | let g:term_buf = 0
-      autocmd BufEnter <buffer> if (winnr("$") == 1 && bufnr("") == g:term_buf) | q | endif
+      augroup custom_floatterm
+        autocmd!
+        autocmd TermClose * ++once :bd! | let g:term_buf = 0
+        autocmd BufEnter <buffer> if (winnr('$') == 1 && bufnr('') == g:term_buf) | q | endif
+      augroup end
     endtry
     startinsert!
     if a:0 != 0
@@ -961,11 +977,11 @@ let g:vimruncmd_editor_open = 0
 let g:vimruncmd_buffer_number = 0
 function! ToggleVimRunEditor()
   if g:vimruncmd_editor_open == 1
-    if g:vimruncmd_buffer_number == bufnr("")
+    if g:vimruncmd_buffer_number == bufnr('')
       w
       q
     else
-      exec g:vimruncmd_buffer_number."bd"  
+      exec g:vimruncmd_buffer_number.'bd'  
     endif
     let g:vimruncmd_editor_open = 0
     return
@@ -973,17 +989,20 @@ function! ToggleVimRunEditor()
   topleft new .vimruncmd
   resize 5
   let g:vimruncmd_editor_open = 1
-  let g:vimruncmd_buffer_number =  bufnr("")
+  let g:vimruncmd_buffer_number =  bufnr('')
 endfunction
 nnoremap <silent><leader>R :call ToggleVimRunEditor()<cr>
-autocmd BufEnter .vimruncmd if (winnr("$") == 1) | q | endif
-autocmd BufNewFile .vimruncmd :w | :!chmod +x %
-autocmd BufNewFile,BufRead .vimruncmd set filetype=sh
+augroup custom_vimruncmd
+  autocmd!
+  autocmd BufEnter .vimruncmd if (winnr("$") == 1) | q | endif
+  autocmd BufNewFile .vimruncmd :w | :!chmod +x %
+  autocmd BufNewFile,BufRead .vimruncmd set filetype=sh
+augroup end
 
 
 function! RrgOpen()
   let l:filename = matchstr(getline('.'), '\v^[^:]*:[^:]*:[^:]*')
-  let l:items = split(l:filename, ":")
+  let l:items = split(l:filename, ':')
   execute "normal \<c-w>\<c-w>"
   exec 'e +'. l:items[1].' '.l:items[0]
   exec 'normal 'l:items[2].'|'
@@ -994,8 +1013,8 @@ function! Rrg(term)
   botright new
   resize 5
   exec '0read!rg --vimgrep ' . a:term
-  normal gg
-  set ft=ripgrep
+  normal! gg
+  set filetype=ripgrep
   setlocal buftype=nofile
   setlocal nowrap
   nnoremap <buffer><enter> :call RrgOpen()<cr>
@@ -1022,7 +1041,7 @@ command! -range GhOpen :call GHOpen()
 
 " Startpage
 function! StartPage(force)
-  if !(argc() == 0 && &filetype == '') && !a:force
+  if !(argc() == 0 && &filetype ==# '') && !a:force
     return
   endif
   let l:oldfiles = v:oldfiles
@@ -1037,7 +1056,7 @@ function! StartPage(force)
   function! FileOpen()
     let l:filename = split(getline('.'), ' ')
     if len(l:filename) == 1
-      if l:filename[0] == '__'
+      if l:filename[0] ==# '__'
           FZF
       else
         silent exec 'e '. l:filename[0]
@@ -1074,7 +1093,10 @@ function! StartPage(force)
   endtry
 endfunction
 if argc() == 0
-  autocmd VimEnter * call StartPage(v:false)
+  augroup custom_startpage
+    autocmd!
+    autocmd VimEnter * call StartPage(v:false)
+  augroup end
 endif
 nnoremap <silent>,l :call StartPage(v:true)<cr>
 
@@ -1120,7 +1142,7 @@ let g:fzf_colors =
       \ 'spinner': ['fg', 'Label'],
       \ 'header':  ['fg', 'Comment'] }
 " let g:fzf_layout = { 'window': "call Floater(winheight('%')/2, winwidth('%')/4*3)" }
-let g:fzf_layout = { 'window': "call Floater()" }
+let g:fzf_layout = { 'window': 'call Floater()' }
 command! -bang History call fzf#vim#history({'options': ['--query', '!.git/ !.vim/ ', '--no-sort', '--preview', 'codepreview {}']}, <bang>0)
 command! -bang -nargs=? -complete=dir GFiles
 \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
@@ -1455,7 +1477,7 @@ nnoremap <silent>- :Dirvish %<cr>
 
 " vim-test
 " maybe try creating a new strategy for running tests in a floating terminal
-let test#strategy = "vtr"
+let test#strategy = 'vtr'
 nnoremap <silent>sn :TestNearest<cr>
 nnoremap <silent><leader>tn :TestNearest<cr>
 nnoremap <silent><leader>tf :TestFile<cr>
@@ -1508,8 +1530,11 @@ function! s:goyo_leave()
   set scrolloff=5
   Limelight!
 endfunction
-autocmd! User GoyoEnter nested call <SID>goyo_enter()
-autocmd! User GoyoLeave nested call <SID>goyo_leave()
+augroup custom_goyo
+  autocmd!
+  autocmd! User GoyoEnter nested call <SID>goyo_enter()
+  autocmd! User GoyoLeave nested call <SID>goyo_leave()
+augroup end
 
 "                             Source External                          "
 "                    ==============================                    "
