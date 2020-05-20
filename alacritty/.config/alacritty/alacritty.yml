@@ -19,18 +19,15 @@ scrolling:
 
 font:
   normal:
-    family: IBM Plex Mono
-    style: Regular
+    family: Fairfax HD
   bold:
-    family: IBM Plex Mono
-    style: Regular
+    family: Fairfax HD
   italic:
-    family: IBM Plex Mono
-    style: Italic
-  size: 13.5
+    family: Fairfax HD
+  size: 16.0
   offset:
     x: 0
-    y: -2
+    y: 0
   glyph_offset:
     x: 0
     y: 0
