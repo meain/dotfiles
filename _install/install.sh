@@ -11,7 +11,7 @@ execcommandfrompartial() {
     FILENAME=$2
 
     # comments and blank lines will be removed
-    CONTENT="$(sed 's/\s*#.*//g; /^$/d' $FILENAME)"
+    CONTENT="$(sed 's/\s*#.*//g; /^$/d' "$FILENAME")"
 
     while read -r item; do
         COMMAND="$BASE $item"
@@ -41,5 +41,8 @@ execcommandfrompartial 'pip3 install' './python3.packages'
 # go packages
 execcommandfrompartial 'go get -vu' './go.packages'
 
+# tex packages
+execcommandfrompartial 'sudo tlmgr install' './go.packages'
+
 # more setup
-defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/init.lua"
+defaults write org.hammerspoon.Hammerspoon MJConfigFile "$HOME/.config/hammerspoon/init.lua"
