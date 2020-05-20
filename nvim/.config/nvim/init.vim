@@ -826,8 +826,8 @@ augroup end
 " Auto add note header
 function! s:AddNoteHeader()
   call setline(1, '---')
-  call setline(2, 'name: '.trim(expand('%:t')))
-  call setline(3, 'created-at: '.trim(system('date')))
+  call setline(2, 'title: '.trim(expand('%:t')))
+  call setline(3, 'created: '.trim(system('date')))
   call setline(4, '---')
   call setline(5, '')
   call setline(6, '<++>')
