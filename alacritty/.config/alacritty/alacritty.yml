@@ -5,23 +5,17 @@ window:
   dimensions:
     columns: 120
     lines: 25
-
   padding:
     x: 0
     y: 0
-
   dynamic_padding: true
-
   decorations: buttonless
-
-tabspaces: 4
 
 draw_bold_text_with_bright_colors: true
 
 scrolling:
   history: 10000
   multiplier: 3
-  auto_scroll: false
 
 font:
   normal:
@@ -92,7 +86,6 @@ color_schemes:
       magenta: '0xa56ccc'
       cyan:    '0x51c8d1'
       white:   '0xbcbcbc'
-
 colors: *light
 
 visual_bell:
@@ -251,6 +244,5 @@ mouse:
 
 selection:
   semantic_escape_chars: ",│`|:\"' ()[]{}<>"
-
 
 live_config_reload: true
