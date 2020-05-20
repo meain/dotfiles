@@ -98,4 +98,4 @@ else
     open_note "$*"
 fi
 
-cd "$NOTES_FOLDER" && git status --short
+cd "$NOTES_FOLDER" && git status -sb
