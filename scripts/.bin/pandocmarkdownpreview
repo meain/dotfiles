@@ -10,6 +10,7 @@ pandoc -f gfm\
     --highlight-style=espresso\
     --pdf-engine=lualatex\
     -V mainfont:fairfaxhd\
+    -V monofont:firacodelight\
     -V documentclass:extarticle\
     -V fontsize:14pt -o "$filename" "$1"
 qlmanage -p "$filename" >/dev/null 2>&1
