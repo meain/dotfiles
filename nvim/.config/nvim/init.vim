@@ -109,6 +109,9 @@ set path+=**
 " Turn on line numbers
 set nonumber norelativenumber
 
+" I don't need syntax
+syntax off
+
 " Highlight cursor line (slows down)
 set nocursorline
 
