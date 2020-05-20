@@ -1,0 +1,21 @@
+#!/usr/bin/env texlua
+
+-- luaotfload-tool -u -vvv  --- run this to cache new fonts
+-- https://github.com/jgm/pandoc/wiki/Trials-and-Tribulations:-How-to-find-correct-font-names-for-Pandoc%27s-use-with-LuaLaTeX%3F
+
+kpse.set_program_name("listluatexfonts")
+
+cachefile  = "/Users/meain/Library/texlive/2020basic/texmf-var/luatex-cache/generic-dev/names/luaotfload-names.luc"
+fontlist = dofile(cachefile)
+assert(fontlist,"Could not load font name database")
+
+local tmp = {}
+
+for _,font in ipairs(fontlist.mappings) do
+  tmp[#tmp + 1] = font.fontname
+end
+table.sort(tmp)
+
+for _,fontname in ipairs(tmp) do
+  print(fontname)
+end
