@@ -1075,6 +1075,14 @@ if argc() == 0
 endif
 nnoremap <silent>,l :call StartPage(v:true)<cr>
 
+" Markdown preview
+function! s:MarkdownPreview()
+  call jobstart('pandocmarkdownpreview '.expand('%'))
+  echo 'Generating preview...'
+endfunction
+nnoremap <silent><leader>M :silent call <SID>MarkdownPreview()<CR>
+
+
 " Stratr profiling
 function! Profile()
   profile start profile.log
