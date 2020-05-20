@@ -808,11 +808,7 @@ nnoremap <silent>_ :call Marks()<cr>
 
 " Json format
 function! JSONFormat() range
-  :%s/\v'/"/g
-  :%s/None/null/g
-  :%s/True/true/g
-  :%s/False/false/g
-  execute '%!python -m json.tool'
+  execute '%!fixmalformedjson | jq'
   set filetype=json
 endfunction
 command! -range JSONFormat <line1>,<line2>call JSONFormat()
