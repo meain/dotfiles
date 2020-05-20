@@ -1148,9 +1148,11 @@ nnoremap <silent>,, :ALEFix<cr>
 let g:ale_sign_error = '✖'
 let g:ale_sign_warning = '⚠'
 let g:ale_virtualtext_cursor = 1
+let g:ale_virtualtext_prefix = ' ¤'
 highlight clear ALEWarning
 let g:ale_statusline_format = ['✖ %d', '⚠ %d', '⬥ ok']
 let g:ale_linters = {
+\  'rust': [],
 \  'javascript': ['eslint'],
 \  'typescript' : ['eslint'],
 \  'typescript.tsx' : ['tslint', 'eslint'],
@@ -1255,7 +1257,8 @@ let g:SuperTabDefaultCompletionType = '<c-n>'
 
 " Language server protocol
 let g:LanguageClient_autoStart = 1
-let g:LanguageClient_useVirtualText = "No"
+let g:LanguageClient_useVirtualText = 'Diagnostics'
+let g:LanguageClient_virtualTextPrefix = ' ¤ '
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
     \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio', 'lsp'],
@@ -1268,7 +1271,7 @@ let g:LanguageClient_serverCommands = {
     \ 'sh': ['bash-language-server', 'start'],
     \ 'zsh': ['bash-language-server', 'start'],
     \ 'dockerfile': ['docker-langserver', '--stdio'],
-    \ 'lua': ['lua-lsp']
+    \ 'lua': ['lua-lsp'],
     \ }
 let g:LanguageClient_diagnosticsDisplay = {
       \1: {
@@ -1276,28 +1279,28 @@ let g:LanguageClient_diagnosticsDisplay = {
         \'texthl': 'ALEError',
         \'signText': '✖',
         \'signTexthl': 'ALEErrorSign',
-        \'virtualTexthl': 'Special',
+        \'virtualTexthl': 'LineNr',
       \},
       \2: {
         \'name': 'Warning',
         \'texthl': 'ALEWarning',
         \'signText': '⚠',
         \'signTexthl': 'ALEWarningSign',
-        \'virtualTexthl': 'Todo',
+        \'virtualTexthl': 'LineNr',
       \},
       \3: {
         \'name': 'Information',
         \'texthl': 'ALEInfo',
         \'signText': '∴',
         \'signTexthl': 'ALEInfoSign',
-        \'virtualTexthl': 'Todo',
+        \'virtualTexthl': 'LineNr',
       \},
       \4: {
         \'name': 'Hint',
         \'texthl': 'ALEInfo',
         \'signText': '➤',
         \'signTexthl': 'ALEInfoSign',
-        \'virtualTexthl': 'Todo',
+        \'virtualTexthl': 'LineNr',
       \},
       \}
 nnoremap <silent><leader>: :call LanguageClient_contextMenu()<CR>
@@ -1308,6 +1311,7 @@ nnoremap <silent> gh :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> ga :call LanguageClient_textDocument_codeAction()<CR>
 nnoremap <silent> g, :call LanguageClient_textDocument_formatting()<CR>
 vnoremap <silent> g, :call LanguageClient_textDocument_rangeFormatting()<CR>
+nnoremap <silent><leader>L :call LanguageClient_textDocument_documentSymbol()<CR>
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 nnoremap <silent> <leader>I :call LanguageClient#explainErrorAtPoint()<CR>
 function! s:show_documentation()
@@ -1380,7 +1384,6 @@ let g:vim_printer_items = {
 
 " Vista
 nnoremap <silent><leader>l :Vista!!<cr>
-nnoremap <silent><leader>L :Vista finder lcn<cr>
 augroup custom_vista
   " autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
   autocmd FileType markdown nnoremap <silent><buffer><leader>l :Vista toc<cr>
