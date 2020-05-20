@@ -1083,7 +1083,7 @@ function! s:MarkdownPreview()
   call jobstart('pandocmarkdownpreview '.expand('%'))
   echo 'Generating preview...'
 endfunction
-nnoremap <silent><leader>M :silent call <SID>MarkdownPreview()<CR>
+nnoremap <silent><leader>M :call <SID>MarkdownPreview()<CR>
 
 
 " Stratr profiling
