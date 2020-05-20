@@ -1290,28 +1290,28 @@ let g:LanguageClient_diagnosticsDisplay = {
         \'texthl': 'ALEError',
         \'signText': '✖',
         \'signTexthl': 'ALEErrorSign',
-        \'virtualTexthl': 'LineNr',
+        \'virtualTexthl': 'ALEErrorSign',
       \},
       \2: {
         \'name': 'Warning',
         \'texthl': 'ALEWarning',
         \'signText': '⚠',
         \'signTexthl': 'ALEWarningSign',
-        \'virtualTexthl': 'LineNr',
+        \'virtualTexthl': 'ALEWarningSign',
       \},
       \3: {
         \'name': 'Information',
         \'texthl': 'ALEInfo',
         \'signText': '∴',
         \'signTexthl': 'ALEInfoSign',
-        \'virtualTexthl': 'LineNr',
+        \'virtualTexthl': 'ALEInfo',
       \},
       \4: {
         \'name': 'Hint',
         \'texthl': 'ALEInfo',
         \'signText': '➤',
         \'signTexthl': 'ALEInfoSign',
-        \'virtualTexthl': 'LineNr',
+        \'virtualTexthl': 'ALEInfo',
       \},
       \}
 nnoremap <silent><leader>: :call LanguageClient_contextMenu()<CR>
