@@ -30,6 +30,11 @@ open_note_all() {
     get_file_name '.trash' "$@" | xargs -L1 -I{} "$EDITOR" "$NOTES_FOLDER/{}"
 }
 
+open_last_temp() {
+    \ls -t1 "$NOTES_FOLDER/temp" | head -n1 |
+        xargs -L1 -I{} "$EDITOR" "$NOTES_FOLDER/temp/{}"
+}
+
 move_note() {
     [ -z "$1" ] && echo "Mention folder to move to" && exit 1
     TO="$1"
@@ -91,6 +96,8 @@ elif [ "$1" = "status" ]; then
 elif [ "$1" = "view" ]; then
     shift
     lf "$NOTES_FOLDER"
+elif [ "$1" = "templ" ]; then
+    open_last_temp
 elif [ "$1" = "open" ]; then
     shift
     open_note_all "$*"
