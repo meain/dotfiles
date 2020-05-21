@@ -3,7 +3,8 @@
 set -e
 
 export TS_MAXFINISHED="13"
-echo "$1" >>/tmp/newsboat-preview
+mkdir -p "$HOME/.cache/newsboat"
+echo "$1" >>"$HOME/.cache/newsboat/preview"
 osascript -e "display notification \"Adding $1 to queue\" with title \"Newsboat\""
 
 comicdownload() {
