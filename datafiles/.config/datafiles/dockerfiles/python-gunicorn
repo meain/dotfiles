@@ -6,7 +6,7 @@ ENV PYTHONUNBUFFERED 1
 # requirements
 RUN pip install gunicorn
 COPY ./requirements.txt /tmp/requirements.txt
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # add source code
 COPY . /app
