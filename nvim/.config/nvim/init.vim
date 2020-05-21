@@ -825,13 +825,14 @@ augroup end
 
 " Auto add note header
 function! s:AddNoteHeader()
+  let l:note_title = substitute(substitute(trim(expand('%:t')), '.md$', '', ''), '_', ' ', 'g')
   call setline(1, '---')
-  call setline(2, 'title: '.trim(expand('%:t')))
+  call setline(2, 'title: '.l:note_title)
   call setline(3, 'created: '.trim(system('date')))
   call setline(4, '---')
   call setline(5, '')
   call setline(6, '<++>')
-  normal! G
+  normal! ggjf:llv$
 endfunction
 augroup custom_note_header
   autocmd!
