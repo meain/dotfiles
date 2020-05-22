@@ -4,13 +4,26 @@ set -e
 
 cd ~/.notes/todo
 
-export FZF_DEFAULT_OPTS='
-    -1 -0
-    --prompt=" "
-    --inline-info
-    --color fg:-1,hl:4,fg+:1,bg+:-1,hl+:4
-    --color info:108,prompt:242,spinner:108,pointer:1,marker:168
-'
-FILE="$(fzf --preview "cat ./{}")"
+if [ "$1" = "new" ];then
+    printf "Name: "
+    read -r
+    [ -z "$REPLY" ] && exit 1
+    echo "$HOME/.notes/todo/$REPLY" > /tmp/tk-file
+    taskell "$HOME/.notes/todo/$REPLY"
+    exit 0
+elif [ "$1" = "f" ] || [ ! -f /tmp/tk-file ] ;then
+    export FZF_DEFAULT_OPTS='
+        -1 -0
+        --prompt=" "
+        --inline-info
+        --color fg:-1,hl:4,fg+:1,bg+:-1,hl+:4
+        --color info:108,prompt:242,spinner:108,pointer:1,marker:168
+    '
+    FILE="$(fzf --preview "cat ./{}")"
+    [ -z "$FILE" ] && exit 0
+    echo "$FILE" > /tmp/tk-file
+    taskell "$FILE"
+else
+    taskell "$HOME/.notes/todo/$(cat /tmp/tk-file)"
+fi
 
-taskell "$FILE"
