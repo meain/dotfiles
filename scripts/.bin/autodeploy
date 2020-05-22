@@ -21,4 +21,4 @@ else
     gcloud builds submit --tag "$IMAGE"
 fi
 gcloud run deploy --allow-unauthenticated --platform=managed \
-    --region=us-central1 "$NAME" --image "$IMAGE" --port 80
+    --region=us-central1 "$NAME" --image "$IMAGE" --port 8080
