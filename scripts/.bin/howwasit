@@ -16,5 +16,5 @@ cp -r .git "$FULLDIR"
 cd "$FULLDIR"
 git reset --hard HEAD
 git checkout "$CHECKOUT_LOC"
-"$EDITOR" .
+zsh -i
 rm -rf "$FULLDIR"
