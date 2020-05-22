@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd ~/Documents/Projects/others/done/_personal/blog || exit 1
+cd ~/Documents/Projects/projects/blog || exit 1
 SESSION=blog
 
 # if the session is already running, just attach to it.
@@ -24,7 +24,7 @@ tmux new-window -t $SESSION:0 -k -n servers
 tmux split-window -h -p 50
 tmux select-pane -t 2
 
-tmux send-keys -t ${window}.1 'start' Enter
+tmux send-keys -t ${window}.1 'npm run serve' Enter
 
 tmux new-window -t $SESSION:1 -k -n editor
 
