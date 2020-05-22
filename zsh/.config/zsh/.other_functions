@@ -106,11 +106,13 @@ gtree() {
 
 # Create a new blog entry. Quickly create file with date prepended
 blog() {
+	cd "$HOME/Documents/Projects/projects/blog"
 	DATE=$(date +%Y-%m-%d)
-	NAME="$DATE-$1.md"
-	[ -d "_posts" ] && NAME="_posts/$NAME"
+	FIXED="$(echo "$*" | sed 's/ /-/g')"
+	NAME="$DATE-$FIXED.md"
+	[ -d "posts" ] && NAME="posts/$NAME"
 	if [ ! -f "$NAME" ]; then
-		cat "$DATAFILES_PATH/blog_template" >>"$NAME"
+		sed "s|REPLACE_DATE|$DATE|" "$DATAFILES_PATH/blog_template" >>"$NAME"
 	fi
 	$EDITOR "$NAME"
 }
