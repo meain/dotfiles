@@ -8,8 +8,8 @@ if [ "$1" = "new" ];then
     printf "Name: "
     read -r
     [ -z "$REPLY" ] && exit 1
-    echo "$HOME/.notes/todo/$REPLY" > /tmp/tk-file
-    taskell "$HOME/.notes/todo/$REPLY"
+    echo "$REPLY.md" > /tmp/tk-file
+    taskell "$HOME/.notes/todo/$REPLY.md"
     exit 0
 elif [ "$1" = "f" ] || [ ! -f /tmp/tk-file ] ;then
     export FZF_DEFAULT_OPTS='
