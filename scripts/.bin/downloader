@@ -2,7 +2,20 @@
 
 set -e
 
-echo "'$1' >>> '$2'" >> /tmp/downloaderqueue
-mkdir -p "$(dirname "$2")"
-curl -L "$1" > "$2"
-notify "Download complete" "$2\n\n$1"
+url="$1"
+filepath=$2
+
+echo "downloading '$url' >>> '$filepath'" >>/tmp/downloaderqueue
+
+cleanup() {
+    # if file exists but download fails, error not reported
+    [ -f "$filepath" ] || echo "failed '$url' >>> '$filepath'" >>/tmp/downloaderqueue
+}
+trap cleanup EXIT
+
+temp="$(mktemp)"
+curl -L "$1" >"$temp"
+mkdir -p "$(dirname "$filepath")"
+mv "$temp" "$filepath"
+echo "complete '$url' >>> '$filepath'" >>/tmp/downloaderqueue
+notify "Download complete" "$filepath\n\n$url"
