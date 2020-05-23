@@ -91,6 +91,8 @@ elif [ "$1" = "sync" ]; then
 elif [ "$1" = "commit" ]; then
     cd "$NOTES_FOLDER" &&
         git add . && git commit -m '[autocommit] updating notes'
+elif [ "$1" = "diff" ]; then
+    cd "$NOTES_FOLDER" && git diff
 elif [ "$1" = "status" ]; then
     : # this is will happen down below, just have to have this here
 elif [ "$1" = "view" ]; then
