@@ -14,7 +14,6 @@ Plug 'mhinz/vim-signify', { 'on': 'LazyLoadPlugins' }                           
 Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }                                           " Hyper focus editing
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }                                                     " Centerify
 Plug 'norcalli/nvim-colorizer.lua'                                                             " Highlight color values
-Plug 'machakann/vim-highlightedyank', { 'on': 'LazyLoadPlugins' }                              " Visually highlight yanked region
 
 " Added functinality
 Plug '~/Documents/Projects/others/done/_vim/vim-googler', { 'on': ['LazyLoadPlugins', 'Searcher'] } " Search from within vim
@@ -408,6 +407,11 @@ autocmd BufWritePre *.css,*.html,*.cpp,*.c,*.java,*.go,*.rs,*.ts,*.cljs,*.clj :%
 autocmd BufReadPre * if getfsize(expand("%")) > 10000000 | syntax off | endif
 autocmd BufReadPre *.min.* syntax off
 
+" Hightlighted yank
+augroup highlight_yank
+  autocmd!
+  autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank("IncSearch", 200)
+augroup END
 
 
 
@@ -1402,10 +1406,6 @@ augroup custom_tsx
   autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
 augroup end
 
-" HighlightedYank
-let g:highlightedyank_highlight_duration = 200
-highlight HighlightedyankRegion cterm=underline gui=underline
-
 " Color Swap
 augroup custom_css
   autocmd!
@@ -1568,7 +1568,6 @@ augroup load_additional_plugins_onwrite
     autocmd CursorHold,CursorHoldI * call plug#load('vim-signify') |
           \ call plug#load('vim-package-info') | 
           \ call plug#load('vim-signify') |
-          \ call plug#load('vim-highlightedyank') |
           \ call plug#load('vim-googler') |
           \ call plug#load('vim-dirvish') |
           \ call plug#load('vim-surround') |
@@ -1587,7 +1586,6 @@ augroup load_additional_plugins
     autocmd BufWritePost * call plug#load('indentLine') |
           \ call plug#load('vim-package-info') | 
           \ call plug#load('vim-signify') |
-          \ call plug#load('vim-highlightedyank') |
           \ call plug#load('vim-googler') |
           \ call plug#load('vim-dirvish') |
           \ call plug#load('vim-surround') |
