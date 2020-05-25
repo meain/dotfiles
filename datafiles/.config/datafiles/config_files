@@ -4,3 +4,4 @@ newsboat ~/.config/newsboat/config
 newsboat-urls ~/.config/newsboat/urls
 alacritty ~/.config/alacritty/alacritty.yml
 hammerspoon ~/.config/hammerspoon/init.lua
+mailsync ~/.bin/mailsync
