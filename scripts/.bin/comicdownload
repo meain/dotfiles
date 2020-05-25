@@ -4,12 +4,11 @@ set -e
 
 fetch_and_show(){
     mkdir -p /tmp/newsboatpreviews
-    temp="/tmp/newsboatpreviews/$(xxd -l7 -ps /dev/urandom)"
+    mkdir -p /tmp/comics
     output="$(curl -L "$1")"
-    echo "$output" | pup "$3" | xargs -I{} curl -L "$4" > "$temp"
-    convert "$temp" -background Khaki label:"$(echo "$output" | pup "$2" | head -n1)" \
-        -gravity Center -append "$temp-labelled.jpg"
-    open "$temp-labelled.jpg"
+    name="/tmp/comics/$(echo "$output" | pup "$2" | head -n1)"
+    echo "$output" | pup "$3" | xargs -I{} curl -L "$4" > "$name"
+    open -g -a /Applications/Preview.app "$name"
 }
 
 case "$1" in
