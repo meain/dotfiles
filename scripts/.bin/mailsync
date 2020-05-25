@@ -34,6 +34,8 @@ notmuch tag +bullshit +nonotify 'folder:/INBOX/' 'from:no-reply@spotify.com'
 notmuch tag +bullshit +nonotify 'folder:/INBOX/' 'from:fnalerts-no-reply@firstnaukri.com'
 notmuch tag +bullshit +nonotify 'folder:/INBOX/' 'from:irctctourismoffers@irctc.co.in'
 notmuch tag +bullshit +nonotify 'folder:/INBOX/' 'from:noreply@newsletter.geojit.net'
+notmuch tag +bullshit +nonotify 'folder:/INBOX/' 'from:no-reply@hello.geojitconnect.com'
+notmuch tag +bullshit +nonotify 'folder:/INBOX/' 'from:info@geojit.com'
 notmuch tag +bullshit +nonotify 'folder:/INBOX/' 'from:communications@nsdl.com'
 notmuch tag +bullshit +nonotify 'folder:/INBOX/' 'from:no-reply@entertainment.bookmyshow.com'
 
