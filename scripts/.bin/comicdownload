@@ -19,4 +19,5 @@ case "$1" in
 *explosm.net*) fetch_and_show "$1" "title text{}" "#comic-wrap img attr{src}" "https:{}" ;;
 *feed.dilbert.com*) fetch_and_show "$1" "title text{}" ".img-comic attr{src}" "https:{}" ;;
 *PoorlyDrawnLines*) fetch_and_show "$1" "title text{}" ".content.comic .post img attr{src}" "{}";;
+*taleas.com*) fetch_and_show "$1" "title text{}" "#main_img attr{src}" "{}";;
 esac
