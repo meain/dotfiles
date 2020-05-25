@@ -2,7 +2,7 @@
 
 set -e
 
-SESSION="$1"
+SESSION="$(echo "$1" | sed 's| |-|g')"
 
 if [ -z "$TMUX" ];then
     tmux attach -t "$SESSION" || tmux new -s "$SESSION"
