@@ -54,6 +54,12 @@ trash_note() {
         done
 }
 
+oneliner() {
+    temp="$(xxd -l5 -ps /dev/urandom)"
+    NAME="$(echo "$temp" | sed 's| |-|g')"
+    mkdir -p "$NOTES_FOLDER/$1"
+    echo "$2" > "$NOTES_FOLDER/$1/$NAME.md"
+}
 create_note() {
     DIR="$1"
     mkdir -p "$NOTES_FOLDER/$DIR"
@@ -75,6 +81,8 @@ elif [ "$1" = "stash" ]; then
     create_note "$*"
 elif [ "$1" = "idea" ]; then
     create_note "$*"
+elif [ "$1" = "quote" ]; then
+    oneliner "quote" "$2"
 elif [ "$1" = "temp" ]; then
     temp="$(xxd -l5 -ps /dev/urandom)"
     create_note "temp" "$temp"
