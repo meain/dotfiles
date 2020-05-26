@@ -1,0 +1,5 @@
+#!/bin/sh
+
+set -e
+
+open -a /Applications/zoom.us.app "$STANDUP_ZOOM_LINK"
