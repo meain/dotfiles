@@ -46,3 +46,6 @@ execcommandfrompartial 'sudo tlmgr install' './go.packages'
 
 # more setup
 defaults write org.hammerspoon.Hammerspoon MJConfigFile "$HOME/.config/hammerspoon/init.lua"
+
+# enable at (https://superuser.com/questions/43678/mac-os-x-at-command-not-working)
+sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.atrun.plist
