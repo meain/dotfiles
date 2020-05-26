@@ -18,7 +18,7 @@ videopreview() {
 }
 
 audiopreview() {
-    ffprobe "$1" 2>&1 | grep -E '^\ *(artist|album|title|genre|Duration)\ *:.*' | sed 's| *\(:\) *|: |g;s|,.*||;s|^ *||;s|^a|A|;s|^t|T|;s|^g|G|'
+    ffprobe "$1" 2>&1 | grep -E '^\ *(artist|album|title|genre|Duration)\ *:.*' | sed 's| *\(:\) *|: |g;s|^ *||;s|^a|A|;s|^t|T|;s|^g|G|'
 }
 
 pdfpreview() {
