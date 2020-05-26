@@ -1,0 +1,10 @@
+#!/bin/sh
+
+set -e
+
+# http://www.dict.org/rfc2229.txt
+if ! curl -s "dict://dict.org/d:$1" | grep -Ev '^\d{3}' | grep -v '^\.';then
+    words="$(curl -s "dict://dict.org/m:$1" | grep -E '^gcide' | cut -d'"' -f 2 | tr '\n' ',' | sed 's|,$||')"
+    echo "Could not find '$1'."
+    echo "Options: $words"
+fi
