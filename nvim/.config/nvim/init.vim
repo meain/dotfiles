@@ -1435,7 +1435,9 @@ augroup custom_vista
 augroup end
 let g:vista_default_executive = 'lcn'
 let g:vista_echo_cursor_strategy='floating_win'
-let g:vista_close_on_jump=1
+let g:vista_close_on_jump=0
+let g:vista_echo_cursor=1
+let g:vista_cursor_delay=100
 let g:vista_blink=[3,20]
 let g:vista#renderer#enable_icon = 0
 let g:vista_icon_indent = ['▸ ', '']
