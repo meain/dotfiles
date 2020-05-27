@@ -1,0 +1,12 @@
+#!/bin/sh
+
+set -e
+
+if [ -f "Cargo.toml" ]; then
+    version="$(tojson Cargo.toml | jq -r '.package.version')"
+    git tag -l | grep -q "$version" && echo "Update crate version first." && exit 1
+    echo "Using tag $version"
+    git tag "$version"
+    git push --tags
+    exit 0
+fi
