@@ -1309,7 +1309,7 @@ let g:LanguageClient_autoStart = 1
 let g:LanguageClient_useVirtualText = 'Diagnostics'
 let g:LanguageClient_virtualTextPrefix = ' ¤ '
 let g:LanguageClient_serverCommands = {
-    \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+    \ 'rust': ['rust-analyzer'],
     \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio', 'lsp'],
     \ 'javascript.jsx': ['/usr/local/bin/javascript-typescript-stdio', 'lsp'],
     \ 'typescript': ['/usr/local/bin/javascript-typescript-stdio'],
