@@ -66,8 +66,7 @@ message["Subject"] = headers.get("Subject", "No subject")
 
 # attach the message parts
 message.attach(MIMEText(markdown_content, "plain"))
-if headers["Markdown"] == "true":
-    message.attach(MIMEText(html_content, "html"))
+message.attach(MIMEText(html_content, "html"))
 if args.preview:
     open("/tmp/preview.eml", "w").write(message.as_string())
     os.system("open -a Mail /tmp/preview.eml")
