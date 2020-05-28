@@ -1,0 +1,93 @@
+#!/usr/bin/env python3
+
+import argparse
+import json
+import os
+import smtplib
+import subprocess
+import sys
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
+try:
+    import pygments  # used to ensure pygmentize cli exists
+    import markdown
+except ImportError:
+    print("This script requires pygements and markdown to be installed.")
+    print("Please:")
+    print("   pip install pygments markdown")
+    sys.exit(0)
+
+# define arguments
+parser = argparse.ArgumentParser(
+    description="Format and send markdown-based emails.",
+    formatter_class=argparse.RawDescriptionHelpFormatter,
+    epilog=__doc__,
+)
+parser.add_argument(
+    "-p", "--preview", action="store_true", help="Preview the email in Apple Mail."
+)
+parser.add_argument(
+    "-s", "--send", action="store_true", help="Send the email using your configuration."
+)
+args = parser.parse_args()
+
+# read in raw message content
+raw_content = sys.stdin.read()
+
+# split out the headers from the markdown message body
+header_content = []
+markdown_content = []
+flag = False
+for line in raw_content.split('\n'):
+    if len(line.strip()) == 0:
+        flag = True
+    if flag:
+        markdown_content.append(line)
+    else:
+        header_content.append(line)
+markdown_content = "\n".join(markdown_content)
+header_content = "\n".join(header_content)
+
+# header_content, markdown_content = raw_content.split("--", 1)
+
+# render the markdown into HTML
+css = subprocess.check_output(["pygmentize", "-S", "default", "-f", "html"])
+markdown_content = markdown_content.strip()
+html_content = markdown.markdown(markdown_content, ["extra", "codehilite"])
+html_content = '<style type="text/css">' + str(css) + "</style>" + html_content
+
+# create a multipart email message
+message = MIMEMultipart("alternative")
+
+# parse the headers
+headers = {}
+for line in header_content.strip().split("\n"):
+    key, value = line.split(":", 1)
+    headers[key.strip()] = value.strip()
+
+# set the headers
+message["To"] = headers.get("To", "")
+message["From"] = headers.get("From", "")
+message["Subject"] = headers.get("Subject", "No subject")
+
+# attach the message parts
+message.attach(MIMEText(markdown_content, "plain"))
+if headers['Markdown'] == "true":
+    message.attach(MIMEText(html_content, "html"))
+
+if args.send:
+    to = message["To"].split(", ")
+
+    with open(os.path.expanduser("~/.markdown-to-email.json"), "rb") as f:
+        config = json.loads(f.read())
+        server = smtplib.SMTP(config["smtp"])
+        server.starttls()
+        server.login(config["username"], config["password"])
+        server.sendmail(message["From"], to, message.as_string())
+        server.quit()
+elif args.preview:
+    open("/tmp/preview.eml", "w").write(message.as_string())
+    os.system("open -a Mail /tmp/preview.eml")
+else:
+    print(message.as_string())
