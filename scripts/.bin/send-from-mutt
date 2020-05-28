@@ -1,0 +1,21 @@
+#!/bin/sh
+
+set -e
+
+config="$HOME/.config/msmtp/config"
+message="$(cat -)"
+echo "$message"  # will only show if sending fails
+
+case "$1" in
+    "personal") account="personal"; shift ;;
+    "work") account="work"; shift ;;
+    *) account="personal"; ;;
+esac
+
+cleanHeaders(){
+    cat - | sed '0,/^$/{/^Markdown: /d;}'  # delete the extra markdown header
+}
+
+echo "$message" | sed '/^$/q' | grep -q 'Markdown: true' \
+    && echo "$message" | cleanHeaders | markdown-to-email | msmtp --file="$config" --account="$account" "$@" \
+    || echo "$message" | cleanHeaders | msmtp --file="$config" --account="$account" "$@"
