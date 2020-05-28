@@ -1,6 +1,3 @@
-set imap_user = 'abinsimon10@gmail.com'
-set imap_pass = `pass show google/abinsimon10`
-
 set from='mail@meain.io'
 set realname='Abin Simon'
 
@@ -12,11 +9,9 @@ set header_cache = "~/.mutt/cache/headers"
 set message_cachedir = "~/.mutt/cache/bodies"
 set certificate_file = "~/.mutt/certificates"
 
-set smtp_url = "smtp://abinsimon10@smtp.gmail.com:587/"
-set smtp_pass=`pass show google/abinsimon10`
-
-set smtp_authenticators = 'gssapi:login'
-
+set sendmail = "send-from-mutt personal"
+set edit_headers=yes
+my_hdr Markdown: false
 
 unmailboxes *
 # mailboxes =INBOX =[Gmail].Drafts =Archive =[Gmail].Sent Mail 
