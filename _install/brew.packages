@@ -34,6 +34,7 @@ fortune
 gawk
 ncurses
 neomutt
+msmtp
 newsboat
 pandoc
 redis
