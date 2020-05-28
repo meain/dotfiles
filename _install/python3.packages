@@ -20,3 +20,5 @@ bpython
 bandit
 mypy
 isort
+pygments
+markdown
