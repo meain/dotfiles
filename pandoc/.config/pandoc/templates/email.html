@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="ProgId" content="Word.Document">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+$for(author-meta)$
+  <meta name="author" content="$author-meta$" />
+$endfor$
+$if(date-meta)$
+  <meta name="date" content="$date-meta$" />
+$endif$
+$if(keywords)$
+  <meta name="keywords" content="$for(keywords)$$keywords$$sep$, $endfor$" />
+$endif$
+  <title>$if(title-prefix)$$title-prefix$ – $endif$$pagetitle$</title>
+  <style type="text/css">
+  body, table, td, a {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+  }
+
+  table, td {
+    mso-table-lspace: 0pt;
+    mso-table-rspace: 0pt;
+  }
+
+  img {
+    -ms-interpolation-mode: bicubic;
+  }
+
+  img {
+    border: 0;
+    height: auto;
+    line-height: 100%;
+    outline: none;
+    text-decoration: none;
+  }
+
+  body {
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
+
+  figure {
+    margin: 0;
+    padding: 0;
+  }
+
+  article, aside, details, figcaption, figure,footer, header, hgroup, menu, nav, section {
+    display: block;
+  }
+
+  a[x-apple-data-detectors] {
+    color: inherit !important;
+    text-decoration: none !important;
+    font-size: inherit !important;
+    font-family: inherit !important;
+    font-weight: inherit !important;
+    line-height: inherit !important;
+  }
+
+  div[style*="margin: 16px 0;"] {
+    margin: 0 !important;
+  }
+
+  table,td,div,a {
+    box-sizing: border-box;
+  }
+
+  img {
+    -ms-interpolation-mode: bicubic;
+    max-width: 100%;
+    display: inline-block;
+    padding-top: 7px;
+  }
+
+  body, .body {
+    font-family: Georgia, "Times New Roman", Times, serif;
+    font-size: 14px;
+    line-height: 1.2;
+    height: 100% !important;
+    width: 100% !important;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  table {
+    border-collapse: separate !important;
+    mso-table-lspace: 0pt;
+    mso-table-rspace: 0pt;
+    width: 100%;
+  }
+
+  table td {
+    font-family: Georgia, "Times New Roman", Times, serif;
+    font-size: 14px;
+    vertical-align: top;
+  }
+
+  .ExternalClass {
+    width: 100%;
+  }
+
+  .ExternalClass,.ExternalClass p,.ExternalClass span,.ExternalClass font,.ExternalClass td,.ExternalClass div {
+    line-height: 100%;
+  }
+
+  strong, b {
+    font-weight: bold;
+  }
+
+  .ajT {
+    height: none;
+    padding-top: none;
+  }
+
+  body {
+    background-color: #ffffff;
+  }
+
+  .body {
+    background-color: #ffffff;
+    width: 100%;
+  }
+
+  .container {
+    display: block;
+    Margin: 0 auto !important;
+    max-width: 800px;
+    padding: 10px;
+    width: 100% !important;
+  }
+
+  .content {
+    display: block;
+    margin: 0 auto;
+    max-width: 800px;
+    padding: 10px;
+  }
+
+  .main {
+    background: #ffffff;
+    border: none;
+    border-radius: 4px;
+    width: 100%;
+  }
+
+  .wrapper {
+    padding: 10px;
+  }
+
+  .content-block {
+    padding: 0 0 10px;
+  }
+
+  .header {
+    margin-bottom: 10px;
+    margin-top: 0px;
+    width: 100%;
+  }
+
+  .footer {
+    clear: both;
+    width: 100%;
+  }
+
+  .footer * {
+    color: #7F7F7F;
+    font-size: 12px;
+  }
+
+  .footer td {
+    padding: 20px 0;
+  }
+
+  h1,h2,h3,h4,h5,h6 {
+    color: #222222 !important;
+    font-family: "Roboto", "Helvetica Neue", "Segoe UI", Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    line-height: 1.2;
+    margin: 0;
+    margin-bottom: 7px;
+    margin-top: 10.5px;
+  }
+
+  h1, h2 {
+    margin-bottom: 10.5px;
+    margin-top: 14px;
+  }
+
+  h1 {
+    font-size: 22.4px;
+    text-transform: capitalize;
+  }
+
+  h2 {
+    font-size: 19.6px;
+  }
+
+  h3 {
+    font-size: 16.8px;
+  }
+
+  h4 {
+    font-size: 15.4px;
+  }
+
+  h5 {
+    font-size: 14px;
+  }
+
+  h6 {
+    font-size: 12.6px;
+  }
+
+  p,ul,ol {
+    font-family: Georgia, "Times New Roman", Times, serif;
+    font-size: 14px;
+    font-weight: normal;
+    margin: 0;
+    padding-top: 7px;
+    color: #111111;
+  }
+
+  ul, ol {
+    margin: 0;
+    margin-bottom: 7.5px;
+    padding-left: 25px;
+  }
+
+  ul li, ol li {
+    list-style-position: outside;
+    margin-left: 5px;
+    margin-bottom: 1px;
+  }
+
+  li > ul, li > ol {
+    margin-top: 7.5px;
+  }
+
+  a {
+    color: #348eda;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  pre > a, code > a {
+    color: none;
+    font-weight: normal;
+  }
+
+  code,pre,.word-wrap {
+    word-break: break-word;
+    word-wrap: break-word;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    hyphens: auto;
+  }
+
+  pre, code {
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    font-size: 11.9px;
+  }
+
+  pre {
+    display: block;
+    width: 96%;
+    margin: 1em 0;
+    margin-bottom: 9px;
+    background: #f8f8f8;
+    padding: 1%;
+    white-space: pre-wrap;
+    border-radius: 4px;
+  }
+
+  p > code {
+    color: #111111;
+    background: none;
+  }
+
+  blockquote {
+    padding: 0 7px 0 7px;
+    border-left: 2px solid #cccccc;
+    border-top: 4.2px solid transparent;
+    font-style: italic;
+    margin: 0 0 7px 3px;
+  }
+
+  blockquote p {
+    padding: 0;
+  }
+
+  mark {
+    background: #ff0;
+  }
+
+  dl dt {
+    font-weight: bold;
+  }
+
+  dl dd {
+    margin-left: 28px;
+  }
+
+  .et-btn {
+    width: 100%;
+    font-family: "Roboto", "Helvetica Neue", "Segoe UI", Helvetica, Arial, sans-serif;
+    margin-bottom: 10px;
+  }
+
+  .et-btn table {
+    width: auto;
+  }
+
+  .et-btn table td {
+    background-color: #ffffff;
+    border-radius: 4px;
+    text-align: center;
+  }
+
+  .et-btn a {
+    background-color: #ffffff;
+    border: solid 1px #348eda;
+    border-radius: 4px;
+    color: #348eda;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0;
+    padding: 8px 18px;
+    text-decoration: none;
+    text-transform: capitalize;
+    font-family: "Roboto", "Helvetica Neue", "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+
+  .et-btn-primary table td {
+    background-color: #348eda;
+  }
+
+  .et-btn-primary a {
+    background-color: #348eda;
+    border-color: #348eda;
+    color: #ffffff;
+  }
+
+  .et-btn-secondary table td {
+    background-color: transparent;
+  }
+
+  .et-btn-secondary a {
+    background-color: transparent;
+    border-color: #348eda;
+    color: #348eda;
+  }
+
+  .et-notice {
+    border-collapse: separate;
+  }
+
+  .et-notice-spacer {
+    padding: 10px 0;
+  }
+
+  .et-notice td {
+    line-height: 1.2;
+    font-size: 14px;
+    font-weight: normal;
+    font-family: "Roboto", "Helvetica Neue", "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+
+  .et-notice td p {
+    margin: 0;
+    padding: 0;
+  }
+
+  .et-notice-info td {
+    background: #f0f6fb;
+    border: 1px solid #b7d3ed;
+    border-radius: 4px;
+    color: #2c6eac;
+    padding: 6px 10px;
+  }
+
+  .et-notice-success td {
+    background: #e1f2bd;
+    border: 1px solid #c6e682;
+    border-radius: 4px;
+    color: #61821a;
+    padding: 6px 10px;
+  }
+
+  .et-notice-warning td {
+    background: #f7eed0;
+    border: 1px solid #edd993;
+    border-radius: 4px;
+    color: #9a7d1a;
+    padding: 6px 10px;
+  }
+
+  .et-notice-danger td {
+    background: #f5d5d5;
+    border: 1px solid #e89b9b;
+    border-radius: 4px;
+    color: #952222;
+    padding: 6px 10px;
+  }
+
+  .et-notice-lg td {
+    font-size: 16.8px;
+    line-height: 1.2;
+  }
+
+  .divider {
+    border-collapse: separate;
+  }
+
+  .divider-spacer {
+    padding: 14px 0;
+  }
+
+  .divider td {
+    border-top: 1px solid #ccc;
+    line-height: 0;
+    font-size: 0;
+    height: 1px;
+    margin: 0;
+    padding: 0;
+  }
+
+  hr {
+    margin: 28px 0;
+    border: none;
+    border-top: 1px solid #cccccc;
+    color: #ffffff;
+  }
+
+  .last {
+    margin-bottom: 0;
+  }
+
+  .first {
+    margin-top: 0;
+  }
+
+  .align-center {
+    text-align: center;
+  }
+
+  .align-right {
+    text-align: right;
+  }
+
+  .align-left {
+    text-align: left;
+  }
+
+  .clear {
+    clear: both;
+  }
+
+  .mt0 {
+    margin-top: 0;
+  }
+
+  .mb0 {
+    margin-bottom: 0;
+  }
+
+  .preheader {
+    color: transparent;
+    display: none;
+    height: 0;
+    max-height: 0;
+    max-width: 0;
+    opacity: 0;
+    overflow: hidden;
+    mso-hide: all;
+    visibility: hidden;
+    width: 0;
+  }
+
+  @media only screen and (max-width: 840px) {
+    table[class=body] {
+      font-size: 12px !important;
+    }
+
+    table[class=body] p,table[class=body] ul,table[class=body] ol {
+      font-size: 12px !important;
+    }
+
+    table[class=body] .et-btn {
+      margin-bottom: 15px;
+    }
+
+    table[class=body] h1 {
+      font-size: 18.2px !important;
+    }
+
+    table[class=body] h2 {
+      font-size: 16.8px !important;
+    }
+
+    table[class=body] h3 {
+      font-size: 15.4px !important;
+    }
+
+    table[class=body] h4 {
+      font-size: 14.7px !important;
+    }
+
+    table[class=body] h5 {
+      font-size: 12.6px !important;
+    }
+
+    table[class=body] h6 {
+      font-size: 11.9px !important;
+    }
+
+    table[class=body] h1, table[class=body] h2 {
+      margin-bottom: 14px !important;
+      margin-top: 14px !important;
+    }
+
+    table[class=body] .container, table[class=body] .content {
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+
+    table[class=body] .content,table[class=body] .wrapper {
+      padding: 10px !important;
+    }
+
+    table[class=body] .container {
+      padding: 0 !important;
+      width: 100% !important;
+    }
+
+    table[class=body] .btn table,table[class=body] .btn a {
+      width: 100% !important;
+    }
+  }
+  </style>
+$if(quotes)$
+  <style type="text/css">q { quotes: "“" "”" "‘" "’"; }</style>
+$endif$
+$if(highlighting-css)$
+  <style type="text/css">
+$highlighting-css$
+  </style>
+$endif$
+$for(css)$
+  <link rel="stylesheet" href="$css$" type="text/css" />
+$endfor$
+$if(math)$
+  $math$
+$endif$
+$for(header-includes)$
+  $header-includes$
+$endfor$
+</head>
+<body>
+$for(include-before)$
+$include-before$
+$endfor$
+$if(title)$
+<div id="$idprefix$header">
+<h1 class="title">$title$</h1>
+$if(subtitle)$
+<h1 class="subtitle">$subtitle$</h1>
+$endif$
+$for(author)$
+<h2 class="author">$author$</h2>
+$endfor$
+$if(date)$
+<h3 class="date">$date$</h3>
+$endif$
+</div>
+$endif$
+$if(toc)$
+<div id="$idprefix$TOC">
+$toc$
+</div>
+$endif$
+$body$
+$for(include-after)$
+$include-after$
+$endfor$
+</body>
+</html>
