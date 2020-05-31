@@ -11,15 +11,6 @@ servers:
       - "#vim"
       - "#neovim"
       - "#go-nuts"
-  - addr: irc.mozilla.org
-    port: 6697
-    hostname: plank
-    realname: Abin Simon
-    nicks: [meain]
-    join:
-      # - "#tiny"
-      # - "#rust"
-      - "#rust-beginners"
 
 # Defaults used when connecting to servers via the /connect command
 defaults:
