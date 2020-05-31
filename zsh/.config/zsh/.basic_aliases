@@ -80,6 +80,7 @@ alias cleanup="fd '.DS_Store' --no-ignore --hidden -x rm -v"
 alias pypipublish='python3 setup.py sdist bdist_wheel && twine upload dist/*'
 alias updatessh="gcloud compute config-ssh --ssh-key-file='~/.ssh/gcloud_saama_common'"
 alias lock="osascript -e 'tell application \"System Events\" to keystroke \"q\" using {command down,control down}'"
+alias bm='resources'
 
 alias publicip='curl ifconfig.co'
 alias map='telnet mapscii.me'
