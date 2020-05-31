@@ -60,3 +60,7 @@ colors:
     fg: red
     bg: default
     attrs: [bold]
+
+  exit_dialogue:
+    fg: 16
+    bg: red
