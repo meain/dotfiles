@@ -1,0 +1,23 @@
+#!/bin/sh
+
+PATH="/usr/local/bin:/usr/bin:/bin"
+if pgrep "mpv" > /dev/null 2>&1; then
+    echo ":player mpv"
+    mpvc | sed 's|^error - ||'
+    exit 0
+fi
+
+# use song from spotify if available
+spotifySong=$(~/.bin/tmux/music)
+if [ -n "$spotifySong" ]; then
+    echo ":player spotify"
+    echo "$spotifySong"
+    exit 0
+fi
+
+if mpc 2>/dev/null ; then
+    echo ":player mpd"
+    mpc
+else
+    echo "M| No song in queue"
+fi

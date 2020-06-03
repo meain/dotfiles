@@ -57,7 +57,7 @@ end)
 
 -- Music keymaps
 showCurrentSong = function()
-  song = customshellrun.run(BIN .. 'music/currentsong')
+  song = customshellrun.run(BIN .. 'music/currentsongfull')
   hs.alert(song)
 end
 hs.hotkey.bind({'alt'}, 'right', function()
