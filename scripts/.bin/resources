@@ -14,7 +14,7 @@ if [ "$1" = "new" ]; then
 else
     if [ ! -f "$RFILE" ]; then
         cd ~/.notes/resources
-        RFILE=$(command ls -t1 | fzf)
+        RFILE=$(command ls -t1 | fzf --preview "cat {}")
     fi
 fi
 
