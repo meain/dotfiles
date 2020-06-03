@@ -69,3 +69,6 @@ notmuch tag +nonimportant +nonotify 'folder:/INBOX/' 'from:post.bookmyshow.com'
 notmuch tag +python +nonotify 'folder:/INBOX/' 'subject:/\[Python-Dev\]/'
 notmuch tag +git +nonotify 'folder:/INBOX/' 'to:git@vger.kernel.org'
 notmuch tag +bank 'folder:/INBOX/' 'from:alerts@hdfcbank.net'
+
+# refresh tmux
+tmux refresh-client -S
