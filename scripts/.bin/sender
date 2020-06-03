@@ -2,6 +2,10 @@
 
 set -e
 
+FILE="$1"
+[ -z "$1" ] && echo "Using latest screenshot" \
+    && FILE="$(\ls -Art -d ~/Documents/Screenshots/* | tail -n 1)" 
+
 telegram_send() {
     case "$1" in
     *.png | *.jpg | *.JPG | *.jpeg | *.gif | *.webp) toi "$1" ;;
@@ -13,6 +17,6 @@ telegram_send() {
 printf "Platform(t/s): "
 read -r
 case "$REPLY" in
-    t*) telegram_send "$1" ;;
-    s*) slacksend "$1" ;;
+    t*) telegram_send "$FILE" ;;
+    s*) slacksend "$FILE" ;;
 esac
