@@ -3,7 +3,11 @@
 set -e
 
 
+FAIL=""
+[ -f /tmp/mailpullfailed ] && FAIL="#[fg=colour250]|#[fg=colour240] [pull failed] "
 count=$(~/.bin/unreadsenders | wc -l | sed 's/^\ *//')
 if [ "$count" -ne "0" ];then
-    echo "#[fg=colour250]|#[fg=colour240] $count new mail "
+    echo "#[fg=colour250]|#[fg=colour240] $count new mail $FAIL"
+else
+    echo "$FAIL"
 fi

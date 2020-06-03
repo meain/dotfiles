@@ -4,7 +4,8 @@ set -e
 
 export NOTMUCH_CONFIG="$HOME/.config/notmuch/config"
 if [ ! "$1" = "retag" ];then
-    /usr/local/bin/mbsync -a || echo "Could not pull new emails"
+    /usr/local/bin/mbsync -a || (touch /tmp/mailpullfailed && exit 1)
+    [ -f /tmp/mailpullfailed ] && rm /tmp/mailpullfailed
 fi
 
 notmuch new 2>/dev/null
