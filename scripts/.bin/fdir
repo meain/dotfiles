@@ -1,0 +1,6 @@
+#!/usr/bin/osascript
+#
+# Get path of the topmost fider window
+
+tell application "Finder" to set currentDir to target of Finder window 1 as alias
+log POSIX path of currentDir
