@@ -14,7 +14,7 @@ else
     GITURL="https://github.com/meain/$1.git"
 fi
 
-FOLDER="$(basename "$GITURL")"
+FOLDER="$(basename "$GITURL" | sed 's|.git$||')"
 if [ -d "$FOLDER" ];then
     cd "$FOLDER" && git pull
 else
