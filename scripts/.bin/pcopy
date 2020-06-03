@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# copy the last opened file to current dir
+
+set -e
+
+
+FILE="$(osascript -e 'tell application "Preview" to return path of back document')"
+printf "New filename(%s): " "$(basename "$FILE")"
+read -r
+[ -n "$REPLY" ] && NEW="$REPLY" || NEW="$(basename "$FILE")"
+cp "$FILE" "$NEW"
