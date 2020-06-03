@@ -20,7 +20,7 @@ fi
 
 [ "$1" = l ] && cat "$RFILE" && exit 0
 [ "$1" = 'list' ] && cat "$RFILE" && exit 0
-[ "$1" = o ] && fzf -m <"$RFILE" | xargs -L1 -I{} open "{}" && exit 0
+[ "$1" = o ] && fzf -m <"$RFILE" | awk '{print $1}' | xargs -L1 -I{} open "{}" && exit 0
 
 if echo "$1" | grep -qE "^http";then
     LINK="$1"
