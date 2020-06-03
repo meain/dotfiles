@@ -10,8 +10,8 @@ if [ "$1" = "new" ];then
     [ -z "$REPLY" ] && exit 1
     echo "$REPLY.md" > /tmp/tk-file
     taskell "$HOME/.notes/todo/$REPLY.md"
-elif [ "$1" = "today" ];then
-    taskell "$HOME/.notes/todo/todo-today-$(date +%d-%m-%Y).md"
+elif [ "$1" = "todo" ];then
+    taskell "$HOME/.notes/todo/todo-$(date +%d-%m-%Y).md"
 elif [ "$1" = "f" ] || [ ! -f /tmp/tk-file ] ;then
     export FZF_DEFAULT_OPTS='
         -1 -0
