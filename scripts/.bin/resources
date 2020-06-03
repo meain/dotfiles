@@ -21,8 +21,20 @@ fi
 [ "$1" = l ] && cat "$RFILE" && exit 0
 [ "$1" = 'list' ] && cat "$RFILE" && exit 0
 [ "$1" = o ] && fzf -m <"$RFILE" | xargs -L1 -I{} open "{}" && exit 0
-echo "$1" | grep -qE "^http" && echo "$1" >>"$RFILE" && exit 0
 
-grep -q "$(pbpaste)" "$RFILE" && echo "$(tput setaf 1)[Already available]$(tput sgr0) $(pbpaste)" && exit 1
+if echo "$1" | grep -qE "^http";then
+    LINK="$1"
+elif  echo "$(pbpaste)" | grep -qE "^http";then
+    LINK="$(pbpaste)"
+else
+    echo "No link passed or found in clipboard" && exit 1
+fi
+grep -q "^$LINK" "$RFILE" && echo "$(tput setaf 1)[Already available]$(tput sgr0) $(pbpaste)" && exit 1
 echo "$RFILE < $(pbpaste)"
-echo "$(pbpaste)" >>"$RFILE" # echo is kept is so that it inserts a newline
+printf "Comments(empty for none): "
+read -r
+if [ -n "$REPLY" ];then
+    echo "$(pbpaste) '$REPLY'" >>"$RFILE"
+else
+    echo "$(pbpaste)" >>"$RFILE" # echo is kept is so that it inserts a newline
+fi
