@@ -37,8 +37,7 @@ remote-work(){
 testart(){
     EXP_VM_NAME="$(echo "$EXPERIMENT_VM" | cut -d'.' -f1)"
     gcloud_start_instance "$EXP_VM_NAME"
-    ssh "$EXPERIMENT_VM" &
-    disown 
+    ssh "$EXPERIMENT_VM"
 }
 testop(){
     EXP_VM_NAME="$(echo "$EXPERIMENT_VM" | cut -d'.' -f1)"
