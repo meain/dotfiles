@@ -435,6 +435,10 @@ augroup custom_iabbr_python
   autocmd FileType python inoreab <buffer> ipdb __import__('ipdb').set_trace()
   autocmd FileType python inoreab <buffer> pudb __import__('pudb').set_trace()
 augroup end
+augroup custom_iabbr_rust
+  autocmd!
+  autocmd FileType rust inoreab <buffer> xxx iter().map(\|x\|
+augroup end
 
 
 
