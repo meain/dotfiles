@@ -2,9 +2,9 @@
 
 set -e
 
-DIR="$(date '+%s')"
-mkdir -p "/tmp/temp-sessions/$DIR"
-cd "/tmp/temp-sessions/$DIR"
+DIR="/Users/meain/Documents/Projects/others/clones"
+
+cd "$DIR"
 
 if [ -z "$1" ]; then
     GITURL=$(pbpaste)
@@ -14,11 +14,12 @@ else
     GITURL="https://github.com/meain/$1.git"
 fi
 
-FOLDER="$(echo "$GITURL" | sed 's/.*\///g' | sed 's/\..*//g')"
-if [ -n "$FOLDER" ];then
+FOLDER="$(basename "$GITURL")"
+if [ -d "$FOLDER" ];then
+    cd "$FOLDER" && git pull
+else
     git clone --depth 1 "$GITURL"
     cd "$FOLDER" || return 1
-    tmuxsession "temp-$FOLDER"
-else
-    tmuxsession "temp-$DIR"
 fi
+
+tmuxsession "$FOLDER"
