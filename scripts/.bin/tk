@@ -20,7 +20,7 @@ elif [ "$1" = "f" ] || [ ! -f /tmp/tk-file ] ;then
         --color fg:-1,hl:4,fg+:1,bg+:-1,hl+:4
         --color info:108,prompt:242,spinner:108,pointer:1,marker:168
     '
-    FILE="$(fzf --preview "cat ./{}")"
+    FILE="$(\ls -t | fzf --preview "cat ./{}")"
     [ -z "$FILE" ] && exit 0
     echo "$FILE" > /tmp/tk-file
     taskell "$FILE"
