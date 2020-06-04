@@ -31,6 +31,7 @@ Plug 'mattn/emmet-vim', { 'for': ['html', 'css'] + g:javascript_filetypes }     
 Plug 'rhysd/committia.vim'                                                                     " Better COMMIT_EDITMSG editing
 Plug 'AndrewRadev/splitjoin.vim'                                                               " Split and join lines
 Plug 'shinglyu/vim-codespell', { 'on': ['CodeSpell'] }                                         " Spellchecking in code
+Plug 'wellle/targets.vim'                                                                      " Adds quite a few text objects
 
 " Code editing enhacements
 Plug 'tpope/vim-sleuth'                                                                        " Automatic indentation setting
