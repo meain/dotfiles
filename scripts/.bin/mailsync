@@ -4,7 +4,7 @@ set -e
 
 export NOTMUCH_CONFIG="$HOME/.config/notmuch/config"
 if [ ! "$1" = "retag" ];then
-    ping -c1 '1.1.1.1' || exit 0
+    ping -c1 '1.1.1.1' >/dev/null 2>&1 || exit 0
     /usr/local/bin/mbsync -a || (touch /tmp/mailpullfailed && exit 1)
     [ -f /tmp/mailpullfailed ] && rm /tmp/mailpullfailed
 fi
