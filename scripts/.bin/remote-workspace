@@ -8,8 +8,9 @@ if [ -f .dockerignore ];then
     IGNORE_STRING="$(sed '/^\ *$/d;s|^|--exclude |' .dockerignore | tr '\n' ' ')"
 fi
 
+[ "$1" = "web" ] && sed -n "/Host $EXPERIMENT_VM/,/^$/p"  ~/.ssh/config | 
+    grep HostName | awk '{print $2}' | xargs -I{} open "http://{}" && exit 0
 [ "$1" != "cnys" ] && rsync -azvr --exclude '.git' $IGNORE_STRING . "$EXPERIMENT_VM:/tmp/$TNAME"
-
 [ "$1" = "sync" ] && exit 0
 
 if [ "$1" = "run" ];then
