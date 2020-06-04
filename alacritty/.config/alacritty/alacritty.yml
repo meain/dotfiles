@@ -31,7 +31,7 @@ font:
   glyph_offset:
     x: 0
     y: 0
-  use_thin_strokes: true
+  use_thin_strokes: false
 
 color_schemes:
   dark: &dark
