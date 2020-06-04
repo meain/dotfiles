@@ -1490,7 +1490,8 @@ augroup custom_nerdtree
 augroup end
 
 " Dirvish
-let g:loaded_netrwPlugin = 'v165'  "Prevent netrw loading, maybe?
+let g:loaded_netrwPlugin = 'v165'  " Prevent loading netrw
+let g:dirvish_relative_paths = 1  " Needed with syntax off as conceal gets disabled
 nnoremap <silent>- :Dirvish %<cr>
 
 " vim-test
