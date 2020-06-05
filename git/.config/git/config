@@ -64,5 +64,6 @@
   protocol = https
 [commit]
   gpgsign = false
+  verbose = true
 [gpg]
   program = gpg2
