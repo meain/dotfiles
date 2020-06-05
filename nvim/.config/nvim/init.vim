@@ -6,9 +6,7 @@ let g:schlepp_triggers = ['<Plug>SchleppUp', '<Plug>SchleppDown', '<Plug>Schlepp
 call plug#begin('~/.local/share/nvim/plugged')
 
 " Visual enhancements
-Plug 'mhinz/vim-janah'                                                                         " Janah colorscheme
-Plug 'cormacrelf/vim-colors-github'                                                            " Light colorschrme
-Plug 'logico/typewriter-vim'                                                                   " Minimal light colorscheme
+Plug '~/Documents/Projects/projects/hima-vim'
 Plug 'Yggdroot/indentLine'                                                                     " Show indent
 Plug 'mhinz/vim-signify', { 'on': 'LazyLoadPlugins' }                                          " Git diff icons in gutter
 Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }                                           " Hyper focus editing
@@ -111,8 +109,8 @@ set path+=**
 " Turn on line numbers
 set nonumber norelativenumber
 
-" I don't need syntax
-syntax off
+" I do need syntax
+syntax on
 
 " Highlight cursor line (slows down)
 set nocursorline
@@ -265,101 +263,13 @@ set foldignore=
 set foldlevelstart=10
 set foldnestmax=10
 
-augroup colorscheme_github
-  autocmd!
-  autocmd ColorScheme github highlight Normal ctermbg=231 guibg=#ffffff
-  autocmd ColorScheme github highlight SignColumn ctermbg=231 guibg=#ffffff
-  autocmd ColorScheme github highlight LineNr ctermbg=240 guibg=#ffffff
-  autocmd ColorScheme github highlight VertSplit guibg=#ffffff guifg=#444444 gui=NONE cterm=NONE
-  autocmd ColorScheme github highlight StatusLineNC ctermbg=255 guibg=#cecece gui=NONE cterm=NONE
-  autocmd ColorScheme github highlight SignifySignAdd cterm=bold gui=bold ctermfg=002 guifg=#008000 guibg=#ffffff
-  autocmd ColorScheme github highlight SignifySignDelete cterm=bold gui=bold ctermfg=001 guifg=#800000 guibg=#ffffff
-  autocmd ColorScheme github highlight SignifySignChange cterm=bold gui=bold ctermfg=003 guifg=#0087af guibg=#ffffff
-  autocmd ColorScheme github highlight CursorLine ctermbg=255 guibg=#f5f5f5 gui=NONE cterm=NONE
-  autocmd ColorScheme github highlight ALEErrorSign ctermfg=196 guifg=#ff0000 ctermbg=231 guibg=#ffffff
-  autocmd ColorScheme github highlight ALEWarningSign ctermfg=226 guifg=#e75600 ctermbg=231 guibg=#ffffff
-  autocmd ColorScheme github highlight ALEError ctermfg=052 guifg=#63120c
-augroup end
-
-augroup colorscheme_typewriter
-  autocmd!
-  autocmd ColorScheme typewriter highlight Normal ctermbg=231 guibg=#ffffff
-  autocmd ColorScheme typewriter highlight SignColumn ctermbg=231 guibg=#ffffff
-  autocmd ColorScheme typewriter highlight LineNr ctermbg=240 guibg=#ffffff
-  autocmd ColorScheme typewriter highlight VertSplit guibg=#ffffff guifg=#444444 gui=NONE cterm=NONE
-  autocmd ColorScheme typewriter highlight StatusLineNC ctermbg=255 guibg=#cecece gui=NONE cterm=NONE
-  autocmd ColorScheme typewriter highlight SignifySignAdd cterm=bold gui=bold ctermfg=002 guifg=#008000 guibg=#ffffff
-  autocmd ColorScheme typewriter highlight SignifySignDelete cterm=bold gui=bold ctermfg=001 guifg=#800000 guibg=#ffffff
-  autocmd ColorScheme typewriter highlight SignifySignChange cterm=bold gui=bold ctermfg=003 guifg=#0087af guibg=#ffffff
-  autocmd ColorScheme typewriter highlight CursorLine ctermbg=255 guibg=#f5f5f5 gui=NONE cterm=NONE
-  autocmd ColorScheme typewriter highlight ALEErrorSign ctermfg=196 guifg=#ff0000 ctermbg=231 guibg=#ffffff
-  autocmd ColorScheme typewriter highlight ALEWarningSign ctermfg=226 guifg=#e75600 ctermbg=231 guibg=#ffffff
-  autocmd ColorScheme typewriter highlight ALEError ctermfg=052 guifg=#63120c
-augroup end
-
-augroup colorscheme_typewriter-night
-  autocmd!
-  autocmd ColorScheme typewriter-night highlight Normal ctermbg=233 guibg=#1C1C1C
-  autocmd ColorScheme typewriter-night highlight SignColumn ctermbg=233 guibg=#1C1C1C
-  autocmd ColorScheme typewriter-night highlight LineNr ctermbg=233 guibg=#1C1C1C
-  autocmd ColorScheme typewriter-night highlight VertSplit guibg=#1C1C1C guifg=#f5f5f5 gui=NONE cterm=NONE
-  autocmd ColorScheme typewriter-night highlight StatusLineNC ctermbg=255 guibg=#1C1C1C gui=NONE cterm=NONE
-  autocmd ColorScheme typewriter-night highlight SignifySignAdd cterm=bold gui=bold ctermfg=119 guifg=#87ff5f guibg=#1C1C1C
-  autocmd ColorScheme typewriter-night highlight SignifySignDelete cterm=bold gui=bold ctermfg=167 guifg=#d75f5f guibg=#1C1C1C
-  autocmd ColorScheme typewriter-night highlight SignifySignChange cterm=bold gui=bold ctermfg=227 guifg=#ffff5f guibg=#1C1C1C
-  autocmd ColorScheme typewriter-night highlight CursorLine ctermbg=255 guibg=#f5f5f5 gui=NONE cterm=NONE
-  autocmd ColorScheme typewriter-night highlight ALEErrorSign ctermfg=196 guifg=#ff0000 ctermbg=231 guibg=#1C1C1C
-  autocmd ColorScheme typewriter-night highlight ALEWarningSign ctermfg=226 guifg=#e75600 ctermbg=231 guibg=#1C1C1C
-  autocmd ColorScheme typewriter-night highlight ALEError ctermfg=052 guifg=#63120c
-augroup end
-
-" ColorScheme change ( janah )
-augroup colorscheme_janah
-  autocmd!
-  autocmd ColorScheme janah highlight Normal ctermbg=234 guibg=#1f1f1f
-  autocmd ColorScheme janah highlight SignColumn ctermbg=234 guibg=#1f1f1f
-  autocmd ColorScheme janah highlight LineNr ctermbg=234 guibg=#1f1f1f
-  autocmd ColorScheme janah highlight VertSplit ctermbg=234 guibg=#1f1f1f
-  autocmd ColorScheme janah highlight StatusLineNC guifg=#878787 ctermfg=102 ctermbg=NONE guibg=NONE gui=NONE cterm=NONE
-  autocmd ColorScheme janah highlight StatusLine guifg=#878787 ctermfg=102 guibg=#f5f5f5 ctermfg=253 gui=NONE cterm=NONE
-  autocmd ColorScheme janah highlight SignifySignAdd    cterm=bold gui=bold  ctermfg=119 guifg=#87ff5f guibg=#1f1f1f
-  autocmd ColorScheme janah highlight SignifySignDelete cterm=bold gui=bold  ctermfg=167 guifg=#d75f5f guibg=#1f1f1f
-  autocmd ColorScheme janah highlight SignifySignChange cterm=bold gui=bold  ctermfg=227 guifg=#ffff5f guibg=#1f1f1f
-  autocmd ColorScheme janah highlight ColorColumn ctermbg=154 ctermfg=0 guibg=#474747 guifg=#ffffff
-  autocmd ColorScheme janah highlight CursorLine ctermbg=154 guibg=#474747
-  autocmd ColorScheme janah highlight CursorLineNr ctermbg=NONE guibg=NONE guifg=#df005f ctermfg=161
-  autocmd ColorScheme janah highlight WildMenu guifg=#df005f ctermfg=161 guibg=NONE ctermbg=NONE gui=bold cterm=bold
-  autocmd ColorScheme janah highlight NonText ctermfg=238 guifg=#444444
-augroup end
-
-" ColorScheme change (pencil:light)
-augroup colorscheme_pencil
-  autocmd!
-  autocmd ColorScheme pencil highlight SignifySignAdd    cterm=bold guifg=#00ff00
-  autocmd ColorScheme pencil highlight SignifySignDelete cterm=bold guifg=#ff0000
-  autocmd ColorScheme pencil highlight SignifySignChange cterm=bold guifg=#0000ff
-augroup end
-
 " Setting colorscheme
 " janah, base16-greyscale, redblack, seoul256, gruvbox, grb256,
 " tomorrow-night, zenburn, base16-classic-light, base16-classic-dark
 " light:pencil
 set termguicolors
-if $DARK_MODE
-  set background=dark
-  colorscheme typewriter-night
-else
-  set background=light
-  colorscheme typewriter
-endif
-
-" Use italics for some text
-highlight htmlArg gui=italic
-highlight htmlArg cterm=italic
-highlight Comment gui=italic
-highlight Comment cterm=italic
-highlight Type    gui=italic
-highlight Type    cterm=italic
+set background=light
+colorscheme hima
 
 " Highlight git conflict markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
@@ -373,10 +283,6 @@ augroup custom_colorcolum
   autocmd!
   autocmd BufEnter * call matchadd('ColorColumn', '\%160v', 100)
 augroup end
-
-" Better coloring for errors
-highlight clear SpellBad
-highlight SpellBad cterm=underline gui=underline ctermfg=11 guifg=#ffaf00
 
 " Don't you f'in touch my cursor
 set guicursor=
@@ -1151,7 +1057,7 @@ let g:fzf_colors =
       \ { 'fg':      ['fg', 'Comment'],
       \ 'bg':      ['bg', 'Normal'],
       \ 'hl':      ['fg', 'Normal'],
-      \ 'fg+':     ['fg', 'Identifier', 'Normal', 'Normal'],
+      \ 'fg+':     ['fg', 'Normal'],
       \ 'bg+':     ['bg', 'Normal', 'Normal'],
       \ 'hl+':     ['fg', 'Type'],
       \ 'info':    ['fg', 'PreProc'],
@@ -1460,6 +1366,7 @@ require 'colorizer'.setup ({
   css = { names = true; };
   javascript = { names = true; };
   html = { names = true; };
+  vim = { names = true; };
 }, {
   names = false;
   rgb_fn = true;
