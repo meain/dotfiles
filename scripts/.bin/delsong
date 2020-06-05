@@ -1,0 +1,8 @@
+#!/bin/sh
+
+set -e
+
+
+name="$(mpc --format '%file%' | head -n1)"
+cd "$HOME/Documents/Media/Music"
+echo "$name" && trash "$name"
