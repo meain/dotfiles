@@ -1,0 +1,9 @@
+#!/bin/sh
+
+set -e
+
+case "$1" in
+    start) pg_ctl -D /Users/meain/.cache/postgres/data -l /tmp/pglogfile start;;
+    stop) pg_ctl -D /Users/meain/.cache/postgres/data -l /tmp/pglogfile stop;;
+    *) echo "Not sure what you are going for yet."
+esac
