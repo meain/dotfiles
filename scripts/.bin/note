@@ -14,10 +14,8 @@ get_dated_file() {
 get_file_name() {
     IGNORE_PATTERN="$1"
     shift
-    find "$NOTES_FOLDER" -name '*.md' |
-        while read -r file; do
-            echo "$file"
-        done | grep -vE "/($IGNORE_PATTERN)/" | xargs ls -t1 | get_dated_file | column -t |
+    find "$NOTES_FOLDER" -name '*.md' -mindepth 2 | grep -vE '.notes\/[a-zA-Z0-9 _-].md$' |
+        grep -vE "/($IGNORE_PATTERN)/" | xargs -I{} ls -t1 "{}" | column -t |
         fzf --multi --query "$*" --preview "echo '{}' | awk '{print \$1}' | xargs -I{} bat -p --color always $NOTES_FOLDER/{}" |
         cut -d' ' -f1
 }
