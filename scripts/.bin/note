@@ -2,20 +2,12 @@
 
 NOTES_FOLDER="$HOME/.notes"
 mkdir -p "$NOTES_FOLDER/.trash"
-mkdir -p "$NOTES_FOLDER/stash"
-
-get_dated_file() {
-    files=$(cat /dev/stdin)
-    for file in $files; do
-        echo "$(echo "$file" | sed "s|^$NOTES_FOLDER/||") $(date -r "$file" | sed 's| |-|g')"
-    done
-}
 
 get_file_name() {
     IGNORE_PATTERN="$1"
     shift
     find "$NOTES_FOLDER" -name '*.md' -mindepth 2 | grep -vE '.notes\/[a-zA-Z0-9 _-].md$' |
-        grep -vE "/($IGNORE_PATTERN)/" | xargs -I{} ls -t1 "{}" | column -t |
+        grep -vE "/($IGNORE_PATTERN)/" | xargs -I{} ls -t1 "{}" | sed "s|^$NOTES_FOLDER/||" | column -t |
         fzf --multi --query "$*" --preview "echo '{}' | awk '{print \$1}' | xargs -I{} bat -p --color always $NOTES_FOLDER/{}" |
         cut -d' ' -f1
 }
