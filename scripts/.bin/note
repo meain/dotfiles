@@ -101,6 +101,7 @@ elif [ "$1" = "sync" ]; then
 elif [ "$1" = "commit" ]; then
     cd "$NOTES_FOLDER" &&
         git add . && git commit -m '[semiautocommit] updating notes'
+    exit 0
 elif [ "$1" = "diff" ]; then
     cd "$NOTES_FOLDER" && git diff
 elif [ "$1" = "status" ]; then
