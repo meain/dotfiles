@@ -27,4 +27,4 @@ elif [ "$1" = "f" ] || [ ! -f /tmp/tk-file ] ;then
 else
     taskell "$HOME/.notes/todo/$(cat /tmp/tk-file)"
 fi
-
+note status  # this will show the status, but create an autocommit as well
