@@ -96,11 +96,11 @@ elif [ "$1" = "move" ]; then
     move_note "$*"
 elif [ "$1" = "sync" ]; then
     cd "$NOTES_FOLDER" || exit 1
-    git add . && git commit -m '[autocommit] updating notes'
+    git add . && git commit -m '[syncautocommit] updating notes'
     git push origin master
 elif [ "$1" = "commit" ]; then
     cd "$NOTES_FOLDER" &&
-        git add . && git commit -m '[autocommit] updating notes'
+        git add . && git commit -m '[semiautocommit] updating notes'
 elif [ "$1" = "diff" ]; then
     cd "$NOTES_FOLDER" && git diff
 elif [ "$1" = "status" ]; then
@@ -118,3 +118,4 @@ else
 fi
 
 cd "$NOTES_FOLDER" && git status -sb
+(git add . && git commit -m '[autocommit] updating notes') 1>/dev/null 2>&1|| true
