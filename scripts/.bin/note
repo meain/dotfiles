@@ -45,6 +45,11 @@ trash_note() {
         done
 }
 
+trash_base() {
+    mkdir -p ".trash/base"
+    mv "$1" ".trash/base/$1"
+}
+
 oneliner() {
     LINE="$REPLY"
     [ -z "$2" ] && printf "Note: " && read -r && LINE="$REPLY"
@@ -101,7 +106,12 @@ elif [ "$1" = "view" ]; then
 elif [ "$1" = "templ" ]; then
     open_last_temp
 elif [ "$1" = "base" ]; then
-    \ls -t1 *.md | fzf -m --preview 'bat {}' | xargs -I{} "$EDITOR" "{}"
+    FILE="$(\ls -t1 *.md | fzf -m --preview 'bat {}')"
+    if [ "$2" = "rm" ];then
+        trash_base "$FILE"
+    else
+        "$EDITOR" "$FILE"
+    fi
 elif [ "$1" = "open" ]; then
     shift
     open_note_all "$*"
