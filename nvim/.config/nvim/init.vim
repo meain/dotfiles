@@ -1058,7 +1058,7 @@ let g:fzf_colors =
       \ 'bg':      ['bg', 'Normal'],
       \ 'hl':      ['fg', 'Normal'],
       \ 'fg+':     ['fg', 'Normal'],
-      \ 'bg+':     ['bg', 'Normal', 'Normal'],
+      \ 'bg+':     ['bg', 'Normal'],
       \ 'hl+':     ['fg', 'Type'],
       \ 'info':    ['fg', 'PreProc'],
       \ 'border':  ['fg', 'Ignore'],
