@@ -2,27 +2,28 @@
 
 NOTES_FOLDER="$HOME/.notes"
 mkdir -p "$NOTES_FOLDER/.trash"
+cd "$NOTES_FOLDER" || echo "Notes folder does not seem to exist" || exit 1
 
 get_file_name() {
     IGNORE_PATTERN="$1"
     shift
-    find "$NOTES_FOLDER" -name '*.md' -mindepth 2 | grep -vE '.notes\/[a-zA-Z0-9 _-].md$' |
-        grep -vE "/($IGNORE_PATTERN)/" | xargs -I{} ls -t1 "{}" | sed "s|^$NOTES_FOLDER/||" | column -t |
-        fzf --multi --query "$*" --preview "echo '{}' | awk '{print \$1}' | xargs -I{} bat -p --color always $NOTES_FOLDER/{}" |
+    find . -name '*.md' -mindepth 2 | grep -vE '.notes\/[a-zA-Z0-9 _-].md$' |
+        grep -vE "/($IGNORE_PATTERN)/" | xargs -I{} ls -t1 "{}" | sed "s|^./||" | column -t |
+        fzf --multi --query "$*" --preview "cat '{}'" |
         cut -d' ' -f1
 }
 
 open_note() {
-    get_file_name 'todo|.trash' "$@" | xargs -L1 -I{} "$EDITOR" "$NOTES_FOLDER/{}"
+    get_file_name 'todo|.trash' "$@" | xargs -L1 -I{} "$EDITOR" "{}"
 }
 
 open_note_all() {
-    get_file_name '.trash' "$@" | xargs -L1 -I{} "$EDITOR" "$NOTES_FOLDER/{}"
+    get_file_name '.trash' "$@" | xargs -L1 -I{} "$EDITOR" "{}"
 }
 
 open_last_temp() {
-    \ls -t1 "$NOTES_FOLDER/temp" | head -n1 |
-        xargs -L1 -I{} "$EDITOR" "$NOTES_FOLDER/temp/{}"
+    \ls -t1 "temp" | head -n1 |
+        xargs -L1 -I{} "$EDITOR" "temp/{}"
 }
 
 move_note() {
@@ -31,16 +32,16 @@ move_note() {
     echo "Select files to move to $1"
     get_file_name "$TO|todo|.trash|temp" |
         while read -r file; do
-            mv "$NOTES_FOLDER/$file" "$NOTES_FOLDER/$TO/$(basename "$file")"
+            mv "$file" "$TO/$(basename "$file")"
         done
 }
 
 trash_note() {
     get_file_name ".trash" "$@" |
         while read -r n; do
-            echo "$NOTES_FOLDER/.trash/$(dirname "$n")"
-            mkdir -p "$NOTES_FOLDER/.trash/$(dirname "$n")"
-            mv "$NOTES_FOLDER/$n" "$NOTES_FOLDER/.trash/$n"
+            echo ".trash/$(dirname "$n")"
+            mkdir -p ".trash/$(dirname "$n")"
+            mv "$n" ".trash/$n"
         done
 }
 
@@ -49,12 +50,12 @@ oneliner() {
     [ -z "$2" ] && printf "Note: " && read -r && LINE="$REPLY"
     temp="$(xxd -l5 -ps /dev/urandom)"
     NAME="$(echo "$temp" | sed 's| |-|g')"
-    mkdir -p "$NOTES_FOLDER/$1"
-    echo "$LINE" > "$NOTES_FOLDER/$1/$NAME.md"
+    mkdir -p "$1"
+    echo "$LINE" > "$1/$NAME.md"
 }
 create_note() {
     DIR="$1"
-    mkdir -p "$NOTES_FOLDER/$DIR"
+    mkdir -p "$DIR"
     shift
     if [ -n "$1" ]; then
         NAME="$(echo "$*" | sed 's| |-|g')"
@@ -63,7 +64,7 @@ create_note() {
         read -r
         NAME="$(echo "$REPLY" | sed 's| |-|g')"
     fi
-    "$EDITOR" "$NOTES_FOLDER/$DIR/$NAME.md"
+    "$EDITOR" "$DIR/$NAME.md"
 }
 
 if [ "$1" = "new" ]; then
@@ -85,20 +86,18 @@ elif [ "$1" = "move" ]; then
     shift
     move_note "$*"
 elif [ "$1" = "sync" ]; then
-    cd "$NOTES_FOLDER" || exit 1
     git add . && git commit -m '[syncautocommit] updating notes'
     git push origin master
 elif [ "$1" = "commit" ]; then
-    cd "$NOTES_FOLDER" &&
-        git add . && git commit -m '[semiautocommit] updating notes'
+    git add . && git commit -m '[semiautocommit] updating notes'
     exit 0
 elif [ "$1" = "diff" ]; then
-    cd "$NOTES_FOLDER" && git diff
+    git diff
 elif [ "$1" = "status" ]; then
     : # this is will happen down below, just have to have this here
 elif [ "$1" = "view" ]; then
     shift
-    lf "$NOTES_FOLDER"
+    lf
 elif [ "$1" = "templ" ]; then
     open_last_temp
 elif [ "$1" = "open" ]; then
