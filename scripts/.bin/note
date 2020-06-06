@@ -55,10 +55,12 @@ trash_note() {
 }
 
 oneliner() {
+    LINE="$REPLY"
+    [ -z "$2" ] && printf "Note: " && read -r && LINE="$REPLY"
     temp="$(xxd -l5 -ps /dev/urandom)"
     NAME="$(echo "$temp" | sed 's| |-|g')"
     mkdir -p "$NOTES_FOLDER/$1"
-    echo "$2" > "$NOTES_FOLDER/$1/$NAME.md"
+    echo "$LINE" > "$NOTES_FOLDER/$1/$NAME.md"
 }
 create_note() {
     DIR="$1"
