@@ -11,7 +11,7 @@ Plug 'Yggdroot/indentLine'                                                      
 Plug 'mhinz/vim-signify', { 'on': 'LazyLoadPlugins' }                                          " Git diff icons in gutter
 Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }                                           " Hyper focus editing
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }                                                     " Centerify
-Plug 'norcalli/nvim-colorizer.lua'                                                             " Highlight color values
+Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }                                      " Highlight color values
 
 " Added functinality
 Plug '~/Documents/Projects/others/done/_vim/vim-googler', { 'on': ['LazyLoadPlugins', 'Searcher'] } " Search from within vim
@@ -1359,20 +1359,8 @@ let g:vista#renderer#icons = {
 \   'variable': 'v',
 \  }
 
-" Colorizer
-lua << EOF
-require 'colorizer'.setup ({
-  'markdown';
-  css = { names = true; };
-  javascript = { names = true; };
-  html = { names = true; };
-  vim = { names = true; };
-}, {
-  names = false;
-  rgb_fn = true;
-  hsl_fn = true;
-})
-EOF
+" Color hex codes
+let g:Hexokinase_highlighters = ['backgroundfull']
 
 " Tag Along
 let g:tagalong_additional_filetypes = ['javascript', 'typescript', 'javascript.jsx', 'typescript.tsx', 'html', 'xml']
