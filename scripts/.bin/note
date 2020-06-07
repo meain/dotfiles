@@ -106,7 +106,7 @@ elif [ "$1" = "view" ]; then
 elif [ "$1" = "templ" ]; then
     open_last_temp
 elif [ "$1" = "base" ]; then
-    FILE="$(\ls -t1 *.md | fzf -m --preview 'bat {}')"
+    FILE="$(\ls -t1 *.md | fzf --preview 'bat {}')"
     if [ "$2" = "rm" ];then
         trash_base "$FILE"
     else
