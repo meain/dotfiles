@@ -1,13 +1,8 @@
 #!/bin/sh
 
 gg() {
-    git status >/dev/null || return 0
-    [ -z "$(git branch)" ] && return 0
-    _G_BRANCH="$(git branch | grep '*' | sed 's/^..//')"
-    UNPUSHED="$(git rev-list --count "origin/$_G_BRANCH.." 2>/dev/null)"
-    if [ -n "$UNPUSHED" ];then
-	UNPUSHED="$(tput setaf 245)($UNPUSHED unpushed)"
-    fi
+    UNPUSHED="$(git rev-list --count "origin..")" || return 1
+    [ -n "$UNPUSHED" ] && UNPUSHED="$(tput setaf 245)($UNPUSHED unpushed)"
     echo "$(git rev-list --count HEAD) total commits $UNPUSHED" && git hm
 }
 
