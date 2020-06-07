@@ -41,3 +41,4 @@ if [ -n "$REPLY" ];then
 else
     echo "$(pbpaste)" >>"$RFILE" # echo is kept is so that it inserts a newline
 fi
+note status
