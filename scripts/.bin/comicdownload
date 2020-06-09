@@ -6,7 +6,7 @@ fetch_and_show(){
     mkdir -p /tmp/newsboatpreviews
     mkdir -p /tmp/comics
     output="$(curl -L "$1")"
-    name="/tmp/comics/$(echo "$output" | pup "$2" | head -n1)"
+    name="/tmp/comics/$(echo "$output" | pup "$2" | head -n1) - $(xxd -l2 -ps /dev/urandom)"
     echo "$output" | pup "$3" | xargs -I{} curl -L "$4" > "$name"
     open -g -a /Applications/Preview.app "$name"
 }
