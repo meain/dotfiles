@@ -19,15 +19,18 @@ scrolling:
 
 font:
   normal:
-    family: DankMono Nerd Font
+    family: SpaceMono Nerd Font Mono
+    style: Regular
   bold:
-    family: DankMono Nerd Font
+    family: SpaceMono Nerd Font Mono
+    style: Regular
   italic:
-    family: DankMono Nerd Font
-  size: 15.0
+    family: SpaceMono Nerd Font Mono
+    style: Italic
+  size: 14.0
   offset:
     x: 0
-    y: -1
+    y: -7
   glyph_offset:
     x: 0
     y: 0
