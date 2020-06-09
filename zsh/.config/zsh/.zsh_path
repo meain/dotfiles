@@ -55,3 +55,7 @@ export DATAFILES_PATH="$HOME/.config/datafiles"
 
 # grip
 export GRIPHOME="$HOME/.cache/grip"
+
+# android
+export ANDROID_HOME="$HOME/.local/share/android"
+export PATH="$PATH:$ANDROID_HOME/cmdline-tools/tools/bin"
