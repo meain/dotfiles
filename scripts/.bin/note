@@ -1,7 +1,7 @@
 #!/bin/sh
 
 NOTES_FOLDER="$HOME/.notes"
-mkdir -p "$NOTES_FOLDER/.trash"
+mkdir -p "$NOTES_FOLDER/archive"
 cd "$NOTES_FOLDER" || echo "Notes folder does not seem to exist" || exit 1
 
 get_file_name() {
@@ -14,11 +14,11 @@ get_file_name() {
 }
 
 open_note() {
-    get_file_name 'todo|.trash' "$@" | xargs -L1 -I{} "$EDITOR" "{}"
+    get_file_name 'todo|archive' "$@" | xargs -L1 -I{} "$EDITOR" "{}"
 }
 
 open_note_all() {
-    get_file_name '.trash' "$@" | xargs -L1 -I{} "$EDITOR" "{}"
+    get_file_name 'archive' "$@" | xargs -L1 -I{} "$EDITOR" "{}"
 }
 
 open_last_temp() {
@@ -30,24 +30,24 @@ move_note() {
     [ -z "$1" ] && echo "Mention folder to move to" && exit 1
     TO="$1"
     echo "Select files to move to $1"
-    get_file_name "$TO|todo|.trash|temp" |
+    get_file_name "$TO|todo|archive|temp" |
         while read -r file; do
             mv "$file" "$TO/$(basename "$file")"
         done
 }
 
-trash_note() {
-    get_file_name ".trash" "$@" |
+archive_note() {
+    get_file_name "archive" "$@" |
         while read -r n; do
-            echo ".trash/$(dirname "$n")"
-            mkdir -p ".trash/$(dirname "$n")"
-            mv "$n" ".trash/$n"
+            echo "archive/$(dirname "$n")"
+            mkdir -p "archive/$(dirname "$n")"
+            mv "$n" "archive/$n"
         done
 }
 
-trash_base() {
-    mkdir -p ".trash/base"
-    mv "$1" ".trash/base/$1"
+archive_base() {
+    mkdir -p "archive/base"
+    mv "$1" "archive/base/$1"
 }
 
 oneliner() {
@@ -79,14 +79,16 @@ elif [ "$1" = "stash" ]; then
     create_note "$*"
 elif [ "$1" = "idea" ]; then
     create_note "$*"
+elif [ "$1" = "readinglist" ]; then
+    create_note "$*"
 elif [ "$1" = "quote" ]; then
     oneliner "quote" "$2"
 elif [ "$1" = "temp" ]; then
     temp="$(xxd -l5 -ps /dev/urandom)"
     create_note "temp" "$temp"
-elif [ "$1" = "rm" ]; then
+elif [ "$1" = "archive" ]; then
     shift
-    trash_note "$*"
+    archive_note "$*"
 elif [ "$1" = "move" ]; then
     shift
     move_note "$*"
@@ -107,8 +109,8 @@ elif [ "$1" = "templ" ]; then
     open_last_temp
 elif [ "$1" = "base" ]; then
     FILE="$(\ls -t1 *.md | fzf --preview 'bat {}')"
-    if [ "$2" = "rm" ];then
-        trash_base "$FILE"
+    if [ "$2" = "archive" ];then
+        archive_base "$FILE"
     else
         "$EDITOR" "$FILE"
     fi
