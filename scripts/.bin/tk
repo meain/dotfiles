@@ -4,6 +4,22 @@ set -e
 
 cd ~/.notes/todo
 
+getcount(){
+    TOTAL="$(grep -cE '^-' "$1")"
+    COMPLETE="$(grep -v '^$' "$1" |sed -n "/## Done/,/^$/p"|grep -cE '^-')" || true
+    if [ -n "$COMPLETE" ];then
+        echo "($(( $TOTAL - $COMPLETE ))/$TOTAL)"
+    else
+        echo "($TOTAL/$TOTAL)"
+    fi
+}
+
+getnames() {
+    \ls -t | while read -r file;do
+        echo "$file $(getcount "$file")"
+    done
+}
+
 if [ "$1" = "new" ];then
     printf "Name: "
     read -r
@@ -20,7 +36,7 @@ elif [ "$1" = "f" ] || [ ! -f /tmp/tk-file ] ;then
         --color fg:-1,hl:4,fg+:1,bg+:-1,hl+:4
         --color info:108,prompt:242,spinner:108,pointer:1,marker:168
     '
-    FILE="$(\ls -t | fzf --preview "cat ./{}")"
+    FILE="$(getnames | fzf --preview "echo {} | cut -d'(' -f1 | xargs cat" | cut -d'(' -f1 | sed 's| $||')"
     [ -z "$FILE" ] && exit 0
     echo "$FILE" > /tmp/tk-file
     taskell "$FILE"
