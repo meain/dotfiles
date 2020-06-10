@@ -14,15 +14,15 @@ get_file_name() {
 }
 
 open_note() {
-    get_file_name 'todo|archive' "$@" | xargs -L1 -I{} "$EDITOR" "{}"
+    get_file_name 'todo|archive|temp' "$@" | xargs -L1 -I{} "$EDITOR" "{}"
 }
 
 open_note_all() {
     get_file_name 'archive' "$@" | xargs -L1 -I{} "$EDITOR" "{}"
 }
 
-open_last_temp() {
-    \ls -t1 "temp" | head -n1 |
+open_temp() {
+    \ls -t1 "temp" | fzf --multi --query "$*" --preview "bat 'temp/{}'" |
         xargs -L1 -I{} "$EDITOR" "temp/{}"
 }
 
@@ -106,7 +106,7 @@ elif [ "$1" = "view" ]; then
     shift
     lf
 elif [ "$1" = "templ" ]; then
-    open_last_temp
+    open_temp
 elif [ "$1" = "base" ]; then
     FILE="$(\ls -t1 *.md | fzf --preview 'bat {}')"
     if [ "$2" = "archive" ];then
