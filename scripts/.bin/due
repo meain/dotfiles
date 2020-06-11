@@ -1,0 +1,21 @@
+#!/bin/sh
+
+set -e
+
+
+NOTES_FOLDER="$HOME/.notes/todo"
+cd "$NOTES_FOLDER"
+
+red="$(tput setaf 1)"
+blue="$(tput setaf 4)"
+reset="$(tput sgr0)"
+
+grep -E '\ +@' -B 1 ./* |
+    grep -vE '^\-\-' |
+    sed 's|^./||' |
+    sed 's|^[A-z0-9_-]*\.md:    @ ||' |
+    sed 'N;s|\n| |' |
+    sed 's|.md--||' |
+    awk '{ print $NF, $0 }' | sort -k1 | sed 's|^\([0-9 :-]*\)|- |' | # sort by date (https://stackoverflow.com/a/3832236/2724649)
+    sed "s|\([0-9 :-]*\)$|$red\1$reset|" |
+    sed "s|^- \([A-z0-9-]*\)|- $blue\1$reset|"
