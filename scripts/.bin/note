@@ -14,11 +14,11 @@ get_file_name() {
 }
 
 open_note() {
-    get_file_name 'todo|archive|temp' "$@" | xargs -L1 -I{} "$EDITOR" "{}"
+    get_file_name 'todo|archive|temp|todo-txt' "$@" | xargs -L1 -I{} "$EDITOR" "{}"
 }
 
 open_note_all() {
-    get_file_name 'archive' "$@" | xargs -L1 -I{} "$EDITOR" "{}"
+    get_file_name 'archive|todo-txt' "$@" | xargs -L1 -I{} "$EDITOR" "{}"
 }
 
 open_temp() {
