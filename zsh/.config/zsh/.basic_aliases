@@ -27,6 +27,7 @@ alias brew='HOMEBREW_NO_AUTO_UPDATE=1 brew'
 alias yd='youtube-dl'
 alias ydp='youtube-dl -o "%(playlist_index)s_%(title)s.%(ext)s"'
 alias s='task'
+alias a='todo.sh'
 
 alias ls='lsd --date relative --icon never --size short --color-theme minimal'
 alias ll='ls -Alh --blocks permission,size,date,name'
