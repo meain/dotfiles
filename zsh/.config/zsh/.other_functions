@@ -367,3 +367,8 @@ setdarkmode() {
       export DARK_MODE=0
   fi
 }
+
+a(){
+  todo.sh "$@"
+  (note commit) >/dev/null 2>&1
+}
