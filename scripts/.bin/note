@@ -9,7 +9,7 @@ get_file_name() {
     shift
     find . -name '*.md' -mindepth 2 |
         grep -vE "/($IGNORE_PATTERN)/" | xargs ls -td1 | sed "s|^./||" | column -t |
-        fzf --multi --query "$*" --preview "bat '{}'" |
+        fzf --no-sort --multi --query "$*" --preview "bat '{}'" |
         cut -d' ' -f1
 }
 
@@ -22,7 +22,7 @@ open_note_all() {
 }
 
 open_temp() {
-    \ls -t1 "temp" | fzf --multi --query "$*" --preview "bat 'temp/{}'" |
+    \ls -t1 "temp" | fzf --no-sort --multi --query "$*" --preview "bat 'temp/{}'" |
         xargs -L1 -I{} "$EDITOR" "temp/{}"
 }
 
@@ -108,7 +108,7 @@ elif [ "$1" = "view" ]; then
 elif [ "$1" = "templ" ]; then
     open_temp
 elif [ "$1" = "base" ]; then
-    FILE="$(\ls -t1 *.md | fzf --preview 'bat {}')"
+    FILE="$(\ls -t1 *.md | fzf --no-sort --preview 'bat {}')"
     if [ "$2" = "archive" ];then
         archive_base "$FILE"
     else
