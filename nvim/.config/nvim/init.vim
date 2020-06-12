@@ -967,7 +967,7 @@ command! -range GhOpen :call GHOpen()
 
 " Startpage
 function! StartPage(force)
-  if !(argc() == 0 && &filetype ==# '') && !a:force
+  if !(argc() == 0 && &filetype ==# '' && line2byte('$') == -1) && !a:force
     return
   endif
   let l:oldfiles = v:oldfiles
