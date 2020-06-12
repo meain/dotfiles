@@ -1,7 +1,7 @@
 #!/bin/sh
 
 gg() {
-    UNPUSHED="$(git rev-list --count "origin/HEAD..")" || return 1
+    UNPUSHED="$(git rev-list --count "origin/$(git rev-parse --abbrev-ref HEAD)..")" || return 1
     [ -n "$UNPUSHED" ] && UNPUSHED="$(tput setaf 245)($UNPUSHED unpushed)"
     echo "$(git rev-list --count HEAD) total commits $UNPUSHED" && git hm
 }
