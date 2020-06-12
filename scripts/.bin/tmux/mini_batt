@@ -3,11 +3,24 @@
 VALUE=$(pmset -g batt | grep InternalBattery | awk '{print $3}' | sed 's:..$::g')
 SOURCE=$(pmset -g batt | grep 'Now drawing from' | awk '{print $4}' | sed 's:^.::g')
 
+messages="DEATH IS NEAR
+DON'T LET ME DIE
+I DON'T WANNA DIE
+SHOW ME SOME CHARGE
+WHY YOU NO PLUG ME
+FIND A PLUG, HUMAN
+MORE PWR, NOW
+I DON'T FEEL GOOD
+WHERE IS THE CHARGER
+DUDE, CHARGE ME
+GIVE ME PWR"
+
 # BATTERY_ICON is only available with patched fonts
 #   i      
 BATTERY_ICON=" "
 if [ "$VALUE" -lt 10 ] && [ ! "$SOURCE" = "AC" ];then
-  VALUE="#[bg=red,fg=colour231] LOW BATTERY | $VALUE% #[bg=default]"
+  message="$(echo "$messages"|shuf -n1)"
+  VALUE="#[bg=red,fg=colour231] $message | $VALUE% #[bg=default]"
 elif [ "$VALUE" -lt 20 ];then
   BATTERY_ICON=" "
   VALUE="$VALUE%"
