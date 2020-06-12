@@ -18,4 +18,5 @@ curl -L "$1" >"$temp"
 mkdir -p "$(dirname "$filepath")"
 mv "$temp" "$filepath"
 echo "complete '$url' >>> '$filepath'" >>/tmp/downloaderqueue
-notify "Download complete" "$filepath\n\n$url"
+minpath="$(dirname "$filepath"): $(basename "$filepath")"
+notify "Download complete" "$minpath\n\n$url"
