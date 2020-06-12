@@ -45,11 +45,6 @@ archive_note() {
         done
 }
 
-archive_base() {
-    mkdir -p "archive/base"
-    mv "$1" "archive/base/$1"
-}
-
 oneliner() {
     LINE="$REPLY"
     [ -z "$2" ] && printf "Note: " && read -r && LINE="$REPLY"
@@ -107,13 +102,6 @@ elif [ "$1" = "view" ]; then
     lf
 elif [ "$1" = "templ" ]; then
     open_temp
-elif [ "$1" = "base" ]; then
-    FILE="$(\ls -t1 *.md | fzf --no-sort --preview 'bat {}')"
-    if [ "$2" = "archive" ];then
-        archive_base "$FILE"
-    else
-        "$EDITOR" "$FILE"
-    fi
 elif [ "$1" = "open" ]; then
     shift
     open_note_all "$*"
