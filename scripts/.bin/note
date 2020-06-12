@@ -22,7 +22,7 @@ open_note_all() {
 }
 
 open_temp() {
-    \ls -t1 "temp" | fzf --no-sort --multi --query "$*" --preview "bat 'temp/{}'" |
+    \ls -t1 "temp" | fzf --no-sort --multi --preview "bat 'temp/{}'" |
         xargs -L1 -I{} "$EDITOR" "temp/{}"
 }
 
