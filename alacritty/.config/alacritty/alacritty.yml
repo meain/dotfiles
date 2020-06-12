@@ -19,18 +19,15 @@ scrolling:
 
 font:
   normal:
-    family: SpaceMono Nerd Font Mono
-    style: Regular
+    family: Fairfax HD
   bold:
-    family: SpaceMono Nerd Font Mono
-    style: Regular
+    family: Fairfax HD
   italic:
-    family: SpaceMono Nerd Font Mono
-    style: Italic
-  size: 14.0
+    family: Fairfax HD
+  size: 16.5
   offset:
     x: 0
-    y: -7
+    y: 0
   glyph_offset:
     x: 0
     y: 0
