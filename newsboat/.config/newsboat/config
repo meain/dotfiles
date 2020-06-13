@@ -1,6 +1,6 @@
 # basic settings
 text-width 80
-browser "newsboatpreview"
+browser "open -g"
 auto-reload no
 show-keymap-hint yes
 prepopulate-query-feeds yes
@@ -81,10 +81,12 @@ max-downloads 2
 # use custom renderer for displaying HTML files.
 html-renderer "w3m -dump -T text/html"
 
+bind-key ; macro-prefix
+# unbind-key ,
 macro c set browser "copy(){ echo $1 | pbcopy ;}"; open-in-browser ; set browser "newsboatpreview"
 macro v set browser "playinmpv"; open-in-browser ; set browser  "newsboatpreview"
 macro y set browser "youtubepreview"; open-in-browser ; set browser  "newsboatpreview"
-macro o set browser "open -g"; open-in-browser ; set browser  "newsboatpreview"
+macro d set browser "newsboatpreview"; open-in-browser ; set browser  "newsboatpreview"
 macro l set browser "lynx -lss='~/.lynx.lss'"; open-in-browser ; set browser  "newsboatpreview"
 
 # define-filter "Vim stuff" "content =~ \"Vim\""
