@@ -4,7 +4,9 @@ set -e
 
 export NOTMUCH_CONFIG="$HOME/.config/notmuch/config"
 if [ ! "$1" = "retag" ];then
-    /usr/local/bin/mbsync -a || (touch /tmp/mailpullfailed && exit 1)
+    GPASS="${GOOGLE_PASSWORD:-$(keypuller)}"
+    GOOGLE_PASSWORD="$GPASS" mbsync -a || 
+        (touch /tmp/mailpullfailed && exit 1)
     [ -f /tmp/mailpullfailed ] && rm /tmp/mailpullfailed
 fi
 

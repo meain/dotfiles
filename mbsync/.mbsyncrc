@@ -2,7 +2,7 @@ IMAPStore meain-remote
 Host imap.gmail.com
 Port  993
 User abinsimon10@gmail.com
-PassCmd "keypuller"
+PassCmd "echo $GOOGLE_PASSWORD"
 AuthMechs LOGIN
 SSLType IMAPS
 CertificateFile /etc/ssl/cert.pem
