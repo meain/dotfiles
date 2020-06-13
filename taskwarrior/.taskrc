@@ -1,0 +1,83 @@
+# [Created by task 2.5.1 6/9/2020 22:24:57]
+# Taskwarrior program configuration file.
+# For more documentation, see http://taskwarrior.org or try 'man task', 'man task-color',
+# 'man task-sync' or 'man taskrc'
+
+# Here is an example of entries that use the default, override and blank values
+#   variable=foo   -- By specifying a value, this overrides the default
+#   variable=      -- By specifying no value, this means no default
+#   #variable=foo  -- By commenting out the line, or deleting it, this uses the default
+
+# Use the command 'task show' to see all defaults and overrides
+
+# Files
+data.location=~/.local/share/task
+
+# Color theme (uncomment one to use)
+#include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/light-16.theme
+include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/light-256.theme
+#include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/dark-16.theme
+#include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/dark-256.theme
+#include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/dark-red-256.theme
+#include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/dark-green-256.theme
+#include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/dark-blue-256.theme
+#include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/dark-violets-256.theme
+#include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/dark-yellow-green.theme
+#include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/dark-gray-256.theme
+#include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/dark-gray-blue-256.theme
+#include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/solarized-dark-256.theme
+#include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/solarized-light-256.theme
+#include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/no-color.theme
+
+uda.priority.values=S,H,M,,L
+urgency.uda.priority.S.coefficient=20
+urgency.uda.priority.L.coefficient=-0.5
+urgency.annotations.coefficient=0.2
+urgency.uda.tags.fun.coefficient=-1.0
+urgency.uda.tags.shelved.coefficient=-2.0
+urgency.uda.project.personal.explore.coefficient=-0.5
+urgency.uda.project.youtube.talk.coefficient=-0.8
+
+# alias.@=context
+context.work=+work
+context.code=+code
+context.weekend=-work
+
+# default report
+default.command=tiny
+
+report.work.columns=id,status.short,depends,project,tags.count,description.count,due.relative
+report.work.description=Work stuff
+report.work.filter=(status:pending or status:waiting) and (project:work)
+report.work.labels=ID,S,D,Project,Tags,Description,Due
+report.work.sort=urgency-
+
+report.workk.columns=id,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due.relative,until.remaining,description,urgency
+report.workk.description=Detailed work stuff
+report.workk.filter=(status:pending or status:waiting) and (project:work) and (limit:page)
+report.workk.labels=ID,Active,Age,Deps,P,Project,Tag,Recur,S,Due,Until,Description,Urg
+report.workk.sort=urgency-
+
+report.code.columns=id,depends,project,tags.count,description.count
+report.code.description=Personal projects
+report.code.filter=(status:pending or status:waiting) and (project:code)
+report.code.labels=ID,D,Project,Tags,Description
+report.code.sort=urgency-
+
+report.codee.columns=id,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due.relative,until.remaining,description,urgency
+report.codee.description=Detailed code stuff
+report.codee.filter=(status:pending or status:waiting) and (project:code) and (limit:page)
+report.codee.labels=ID,Active,Age,Deps,P,Project,Tag,Recur,S,Due,Until,Description,Urg
+report.codee.sort=urgency-
+
+report.min.columns=id,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due.relative,until.remaining,description.count,urgency
+report.min.description=Default report
+report.min.filter=status:pending limit:7 urgency>=1.0
+report.min.labels=ID,Active,Age,Deps,P,Project,Tag,Recur,S,Due,Until,Description,Urg
+report.min.sort=urgency-
+
+report.tiny.columns=id,project,priority,description.count,due.relative
+report.tiny.description=Work stuff
+report.tiny.filter=status:pending and limit:7
+report.tiny.labels=Id,Project,P,Description,Du
+report.tiny.sort=urgency-
