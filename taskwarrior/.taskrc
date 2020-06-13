@@ -50,6 +50,12 @@ context.inbox=project:inbox
 default.command=tiny
 default.project=inbox
 
+report.recur.columns=id,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due.relative,until.remaining,description,urgency
+report.recur.description=Detailed work stuff
+report.recur.filter=status:recurring
+report.recur.labels=ID,Active,Age,Deps,P,Project,Tag,Recur,S,Due,Until,Description,Urg
+report.recur.sort=urgency-
+
 report.work.columns=id,status.short,depends,project,tags.count,description.count,due.relative
 report.work.description=Work stuff
 report.work.filter=(status:pending or status:waiting) and (+work)
