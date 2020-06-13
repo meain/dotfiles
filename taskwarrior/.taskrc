@@ -32,7 +32,8 @@ include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/light-256.theme
 uda.priority.values=S,H,M,,L
 urgency.uda.priority.S.coefficient=20
 urgency.uda.priority.L.coefficient=-0.5
-urgency.annotations.coefficient=0.2
+urgency.annotations.coefficient=0.1
+urgency.uda.tags.explore.coefficient=-0.5
 urgency.uda.tags.fun.coefficient=-1.0
 urgency.uda.tags.shelved.coefficient=-2.0
 urgency.uda.project.personal.explore.coefficient=-0.5
@@ -48,25 +49,25 @@ default.command=tiny
 
 report.work.columns=id,status.short,depends,project,tags.count,description.count,due.relative
 report.work.description=Work stuff
-report.work.filter=(status:pending or status:waiting) and (project:work)
+report.work.filter=(status:pending or status:waiting) and (+work)
 report.work.labels=ID,S,D,Project,Tags,Description,Due
 report.work.sort=urgency-
 
 report.workk.columns=id,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due.relative,until.remaining,description,urgency
 report.workk.description=Detailed work stuff
-report.workk.filter=(status:pending or status:waiting) and (project:work) and (limit:page)
+report.workk.filter=(status:pending or status:waiting) and (+work) and (limit:page)
 report.workk.labels=ID,Active,Age,Deps,P,Project,Tag,Recur,S,Due,Until,Description,Urg
 report.workk.sort=urgency-
 
 report.code.columns=id,depends,project,tags.count,description.count
 report.code.description=Personal projects
-report.code.filter=(status:pending or status:waiting) and (project:code)
+report.code.filter=(status:pending or status:waiting) and (+code)
 report.code.labels=ID,D,Project,Tags,Description
 report.code.sort=urgency-
 
 report.codee.columns=id,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due.relative,until.remaining,description,urgency
 report.codee.description=Detailed code stuff
-report.codee.filter=(status:pending or status:waiting) and (project:code) and (limit:page)
+report.codee.filter=(status:pending or status:waiting) and (+code) and (limit:page)
 report.codee.labels=ID,Active,Age,Deps,P,Project,Tag,Recur,S,Due,Until,Description,Urg
 report.codee.sort=urgency-
 
