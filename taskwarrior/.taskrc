@@ -44,9 +44,11 @@ urgency.uda.project.youtube.talk.coefficient=-0.8
 context.work=+work
 context.code=+code
 context.weekend=-work
+context.inbox=project:inbox
 
-# default report
+# default entires
 default.command=tiny
+default.project=inbox
 
 report.work.columns=id,status.short,depends,project,tags.count,description.count,due.relative
 report.work.description=Work stuff
