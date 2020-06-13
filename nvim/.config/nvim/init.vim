@@ -739,7 +739,10 @@ augroup end
 
 " Auto add note header
 function! s:AddNoteHeader()
-  let l:note_title = substitute(substitute(trim(expand('%:t')), '.md$', '', ''), '_', ' ', 'g')
+  let l:note_title = $NOTE_TITLE
+  if len(l:note_title) == 0
+    let l:note_title = substitute(substitute(trim(expand('%:t')), '.md$', '', ''), '_', ' ', 'g')
+  endif
   call setline(1, '---')
   call setline(2, 'title: '.l:note_title)
   call setline(3, 'created: '.trim(system('date')))
