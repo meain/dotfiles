@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# notes for taskwarrior
+# usage: taskn <taskid>
+
 set -e
 
 
