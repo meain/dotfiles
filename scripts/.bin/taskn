@@ -1,0 +1,16 @@
+#!/bin/sh
+
+set -e
+
+
+NOTES_FOLDER="$HOME/.notes"
+mkdir -p "$NOTES_FOLDER/task-notes"
+
+[ -z "$1" ] && echo "Pass task ID" && exit 1
+
+id="$1"
+uuid="$(task _get "$id.uuid")"
+desc="$(task _get "$id.description")"
+echo "Note: $desc"
+NOTE_TITLE="$desc" "$EDITOR" "$NOTES_FOLDER/task-notes/$uuid.md"
+note commit
