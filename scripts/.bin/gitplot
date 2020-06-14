@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# Graphs number of commits basic on various measures
+
+set -e
+
+plot(){
+    cat /dev/stdin | sort | uniq -c | 
+    awk '{print $2,$1}' | gnuplot -p -e "plot '<cat' using 2:xticlabels(1) with lines font 'Helvetica,10'" 2>/dev/null
+}
+case "$1" in
+    toh) git log --date local | grep Date | awk '{print $5}' | cut -d: -f1 | plot;;  # time of hour
+    tom) git log --date local | grep Date | awk '{print $5}' | cut -d: -f2 | plot;;  # time of minute
+    tos) git log --date local | grep Date | awk '{print $5}' | cut -d: -f3 | plot;;  # time of second
+    dow) git log --date local | grep Date | awk '{print $2}' | plot;;  # day of week
+    moy) git log --date local | grep Date | awk '{print $3}' | plot;;  # month of year
+    dom) git log --date local | grep Date | awk '{print $4}' | plot;;  # day of month
+    y) git log --date local | grep Date | awk '{print $6}' | plot;;  # by year
+esac
+
