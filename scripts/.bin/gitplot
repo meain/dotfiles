@@ -6,7 +6,7 @@ set -e
 
 plot(){
     cat /dev/stdin | sort | uniq -c | 
-    awk '{print $2,$1}' | gnuplot -p -e "plot '<cat' using 2:xticlabels(1) with lines font 'Helvetica,10'" 2>/dev/null
+    awk '{print $2,$1}' | sort -h | gnuplot -p -e "plot '<cat' using 2:xticlabels(1) with lines" 2>/dev/null
 }
 case "$1" in
     toh) git log --date local | grep Date | awk '{print $5}' | cut -d: -f1 | plot;;  # time of hour
