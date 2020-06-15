@@ -1,5 +1,7 @@
 #! /bin/zsh
 
+[ -n "$ZPROF" ] && zmodload zsh/zprof
+
 # Basic exports
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
@@ -162,3 +164,5 @@ preexec () {
 
 setdarkmode quiet  # set dark or light mode
 export ZSH_LOADED=1
+
+[ -n "$ZPROF" ] && zprof

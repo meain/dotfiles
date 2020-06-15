@@ -1,0 +1,5 @@
+#!/bin/sh
+
+set -e
+
+ZPROF=1 zsh -ic exit
