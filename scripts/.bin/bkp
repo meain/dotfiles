@@ -11,7 +11,7 @@ fi
 
 if echo "$FILENAME" | sed "s|.*\.\(.*\)|\1|" | grep 'bkp' > /dev/null;then
     BASNAME="$(echo "$FILENAME" | sed "s|\(.*\)\.bkp|\1|")"
-    mv "$FILENAME" "$BASNAME"
+    mv -iv "$FILENAME" "$BASNAME"
 else
-    mv "$FILENAME" "$FILENAME.bkp"
+    mv -iv "$FILENAME" "$FILENAME.bkp"
 fi
