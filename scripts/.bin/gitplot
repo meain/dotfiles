@@ -4,6 +4,11 @@
 
 set -e
 
+help(){
+    echo "Usage: gitplot <option>"
+    echo "Options available: toh, tom, tos, dow, moy, dom, y , my"
+}
+
 plot() {
     [ -z "$1" ] &&
         cat /dev/stdin | sort | uniq -c |
@@ -13,6 +18,7 @@ plot() {
         awk '{print $2,$1}' | tac | gnuplot -p -e "plot '<cat' using 2:xticlabels(1) with lines" 2>/dev/null
 }
 case "$1" in
+help|-h|--help) help;;
 toh) git log --date local | grep Date | awk '{print $5}' | cut -d: -f1 | plot ;; # time of hour
 tom) git log --date local | grep Date | awk '{print $5}' | cut -d: -f2 | plot ;; # time of minute
 tos) git log --date local | grep Date | awk '{print $5}' | cut -d: -f3 | plot ;; # time of second
@@ -20,5 +26,6 @@ dow) git log --date local | grep Date | awk '{print $2}' | plot ;;              
 moy) git log --date local | grep Date | awk '{print $3}' | plot ;;               # month of year
 dom) git log --date local | grep Date | awk '{print $4}' | plot ;;               # day of month
 y) git log --date local | grep Date | awk '{print $6}' | plot ;;                 # by year
+my) git log --date local | grep Date | awk '{print $3$6}' | plot nosort;;         # by year and month
 *) git log --date local | grep Date | awk '{print $3$6}' | plot nosort;;         # by year and month
 esac
