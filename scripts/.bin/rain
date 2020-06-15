@@ -10,4 +10,4 @@ youtube-dl -c --extract-audio --audio-quality 0 \
               --audio-format vorbis --prefer-ffmpeg \
               --no-playlist "$url" -o "$file"
 
-exec mpv "$file"
+exec mpv "$file" --loop-file=inf
