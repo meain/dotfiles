@@ -268,8 +268,20 @@ set foldnestmax=10
 " tomorrow-night, zenburn, base16-classic-light, base16-classic-dark
 " light:pencil
 set termguicolors
-set background=light
-colorscheme hima
+
+function! SetColorscheme(...)
+  let l:mode = trim(system('setdarkmode query'))
+  echo l:mode
+  if l:mode ==? 'dark'
+    set background=dark
+    colorscheme hima-dark
+  else
+    set background=light
+    colorscheme hima
+  endif
+endfunction
+call SetColorscheme()
+let timer = timer_start(2000, 'SetColorscheme',{'repeat':-1})
 
 " Highlight git conflict markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
