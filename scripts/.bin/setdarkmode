@@ -1,0 +1,26 @@
+#!/bin/sh
+
+set -e
+
+if [ -n "$1" ]; then
+    if [ "$1" = "light" ]; then
+        sed -ibk 's/^colors: \*dark$/colors: *light/' "$HOME/.config/alacritty/alacritty.yml"
+        rm "$HOME/.config/alacritty/alacritty.ymlbk"
+    elif [ "$1" = "dark" ]; then
+        sed -ibk 's/^colors: \*light$/colors: *dark/' "$HOME/.config/alacritty/alacritty.yml"
+        rm "$HOME/.config/alacritty/alacritty.ymlbk"
+    elif [ "$1" = "quiet" ] || [ "$1" = "query" ]; then
+        :
+    else
+        echo "Not shure what you are talking about bruh." && return 1
+    fi
+fi
+if grep -q 'colors: \*dark' "$HOME/.config/alacritty/alacritty.yml"; then
+    [ "$1" = "query" ] && echo "dark" && exit 0
+    [ "$1" != "quiet" ] && echo "Joining the dark side"
+    export DARK_MODE=1
+else
+    [ "$1" = "query" ] && echo "light" && exit 0
+    [ "$1" != "quiet" ] && echo "Prakasham parakkatte"
+    export DARK_MODE=0
+fi

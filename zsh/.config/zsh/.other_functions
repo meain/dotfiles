@@ -358,16 +358,6 @@ tnp(){
   ts newsboatpreview "$LINK"
 }
 
-setdarkmode() {
-  if grep -q 'colors: \*dark' "$HOME/.config/alacritty/alacritty.yml"; then
-      [ -z "$1" ] && echo "Joining the dark side"
-      export DARK_MODE=1
-  else
-      [ -z "$1" ] && echo "Prakasham parakkatte"
-      export DARK_MODE=0
-  fi
-}
-
 a(){
   todo.sh "$@"
   (note commit) >/dev/null 2>&1
