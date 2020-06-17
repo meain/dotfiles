@@ -271,7 +271,6 @@ set termguicolors
 
 function! SetColorscheme(...)
   let l:mode = trim(system('setdarkmode query'))
-  echo l:mode
   if l:mode ==? 'dark'
     set background=dark
     colorscheme hima-dark
