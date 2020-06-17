@@ -44,6 +44,9 @@ execcommandfrompartial 'go get -vu' './go.packages'
 # tex packages
 execcommandfrompartial 'sudo tlmgr install' './go.packages'
 
+# rust packages
+execcommandfrompartial 'cargo install' './cargo.packages'
+
 # more setup
 defaults write org.hammerspoon.Hammerspoon MJConfigFile "$HOME/.config/hammerspoon/init.lua"
 
