@@ -269,15 +269,20 @@ set foldnestmax=10
 " light:pencil
 set termguicolors
 
+let g:light_or_dark = ""
 function! SetColorscheme(...)
-  let l:mode = trim(system('setdarkmode query'))
-  if l:mode ==? 'dark'
+  let l:light_or_dark = trim(system('setdarkmode query'))
+  if l:light_or_dark ==? g:light_or_dark
+    return
+  endif
+  if l:light_or_dark ==? 'dark'
     set background=dark
     colorscheme hima-dark
   else
     set background=light
     colorscheme hima
   endif
+  let g:light_or_dark = l:light_or_dark
 endfunction
 call SetColorscheme()
 let timer = timer_start(2000, 'SetColorscheme',{'repeat':-1})
