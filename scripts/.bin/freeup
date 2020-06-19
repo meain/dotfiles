@@ -4,22 +4,22 @@ usage_before=$(diskutil info / | grep "Free Space" | awk '{print $4,$11}')
 echo "Current free space: $usage_before"
 
 echo '> Homebrew cache'
-brew cleanup | logscroll
+brew cleanup
 usage_after=$(diskutil info / | grep "Free Space" | awk '{print $4,$11}')
 echo "$usage_before => $usage_after"
 
 echo '> Ruby cache'
-gem cleanup | logscroll
+gem cleanup
 usage_after=$(diskutil info / | grep "Free Space" | awk '{print $4,$11}')
 echo "$usage_before => $usage_after"
 
 echo '> CocoaPods'
-rm -rf "${HOME}/Library/Caches/CocoaPods" | logscroll
+rm -rf "${HOME}/Library/Caches/CocoaPods"
 usage_after=$(diskutil info / | grep "Free Space" | awk '{print $4,$11}')
 echo "$usage_before => $usage_after"
 
 echo '> iOS simulators'
-xcrun simctl delete unavailable | logscroll
+xcrun simctl delete unavailable
 usage_after=$(diskutil info / | grep "Free Space" | awk '{print $4,$11}')
 echo "$usage_before => $usage_after"
 
@@ -31,7 +31,7 @@ usage_after=$(diskutil info / | grep "Free Space" | awk '{print $4,$11}')
 echo "$usage_before => $usage_after"
 
 echo '> Docker'
-docker volume prune -f | logscroll
+docker volume prune -f
 usage_after=$(diskutil info / | grep "Free Space" | awk '{print $4,$11}')
 echo "$usage_before => $usage_after"
 
