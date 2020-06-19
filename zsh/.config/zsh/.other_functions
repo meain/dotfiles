@@ -201,13 +201,11 @@ stream() {
 
 # usage: `loop <count> <command>`
 loop() {
-	c=1
+
 	MAX=$1
 	shift
-	while [ $c -le "$MAX" ]; do
-		$*
-		c=$((c + 1))
-	done
+	seq "$MAX" |
+	  while read -r line; do eval "$@"; done
 }
 
 copycommand() {
