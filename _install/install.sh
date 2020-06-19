@@ -45,6 +45,8 @@ execcommandfrompartial 'go get -vu' './go.packages'
 execcommandfrompartial 'sudo tlmgr install' './go.packages'
 
 # rust packages
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+rustup component add rust-src
 execcommandfrompartial 'cargo install' './cargo.packages'
 
 # more setup
