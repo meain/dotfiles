@@ -2,3 +2,4 @@ cargo-edit
 cargo-tree
 cargo-bloat
 cargo-udeps
+cargo-watch
