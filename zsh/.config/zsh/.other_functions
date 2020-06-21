@@ -358,5 +358,9 @@ tnp(){
 
 a(){
   todo.sh "$@"
-  (note commit) >/dev/null 2>&1
+  (cd "$HOME/.cache/todo-txt" && 
+    git add . && 
+    git commit -m 'autocommit' &&
+    git push origin master &) >/dev/null 2>&1
+  true
 }
