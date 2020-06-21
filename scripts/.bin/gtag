@@ -12,5 +12,6 @@ fi
 
 git tag -l | grep -q "$version" && echo "Update version first." && exit 1
 echo "Using tag $version"
+git push
 git tag "$version"
 git push --tags
