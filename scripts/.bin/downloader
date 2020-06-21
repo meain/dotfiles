@@ -14,7 +14,7 @@ cleanup() {
 trap cleanup EXIT
 
 temp="$(mktemp)"
-curl -L "$1" >"$temp"
+curl -L "$1" >"$temp" || curl -L "$1" >"$temp" || curl -L "$1" >"$temp"  # try 3 times
 mkdir -p "$(dirname "$filepath")"
 mv "$temp" "$filepath"
 echo "complete '$url' >>> '$filepath'" >>/tmp/downloaderqueue
