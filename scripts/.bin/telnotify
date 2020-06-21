@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# kind of a hacky way to send my todos to telegram
+
+set -e
+
+send_text(){
+    tot "$(task tot 2>/dev/null | tail -n+4 | grep -vE '^ .*' | 
+        head -n10 | sed 's|  *|: |;s|^|* |')"
+}
+send_image(){
+    task tot 2>/dev/null | tail -n+4 | grep -vE '^ .*' | 
+        head -n10 | sed 's|  *|: |;s|^|* |' | 
+        silicon --output /tmp/taskws.png --language md --font 'Fairfax HD' --no-line-number --no-window-controls --pad-horiz 0 --pad-vert 0 --no-round-corner
+    toi /tmp/taskws.png
+}
+
+case "$1" in
+    image) send_image;;
+    *) send_text
+esac
