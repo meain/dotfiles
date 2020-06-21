@@ -31,11 +31,14 @@ include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/light-256.theme
 
 uda.priority.values=S,H,M,,L
 urgency.uda.priority.S.coefficient=20
-urgency.uda.priority.L.coefficient=-0.5
+urgency.uda.priority.L.coefficient=-2.5
+urgency.blocking.coefficient=0.5
 urgency.annotations.coefficient=0.1
 urgency.uda.tags.explore.coefficient=-1.0
 urgency.uda.tags.dotfiles.coefficient=0.5
 urgency.uda.tags.fun.coefficient=-1.0
+urgency.uda.tags.work.coefficient=5.0
+urgency.uda.tags.ew.coefficient=-5.0  # external waiting (waiting on someone to respond or a issue to close etc)
 urgency.uda.tags.shelved.coefficient=-2.0
 urgency.uda.project.personal.explore.coefficient=-0.5
 urgency.uda.project.youtube.talk.coefficient=-0.8
@@ -43,7 +46,7 @@ urgency.uda.project.youtube.talk.coefficient=-0.8
 # alias.@=context
 context.work=+work
 context.code=+code
-context.weekend=-work
+context.weekend=-work or project:chore
 context.inbox=project:inbox
 
 # default entires
@@ -55,6 +58,12 @@ report.recur.description=Detailed work stuff
 report.recur.filter=status:recurring
 report.recur.labels=ID,Active,Age,Deps,P,Project,Tag,Recur,S,Due,Until,Description,Urg
 report.recur.sort=urgency-
+
+report.inbox.columns=id,status.short,depends,project,tags.count,description.count,due.relative
+report.inbox.description=Untagged stuff
+report.inbox.filter=(status:pending or status:waiting) and (proj:inbox)
+report.inbox.labels=ID,S,D,Project,Tags,Description,Due
+report.inbox.sort=urgency-
 
 report.work.columns=id,status.short,depends,project,tags.count,description.count,due.relative
 report.work.description=Work stuff
@@ -87,7 +96,21 @@ report.min.labels=ID,Active,Age,Deps,P,Project,Tag,Recur,S,Due,Until,Description
 report.min.sort=urgency-
 
 report.tiny.columns=id,project,priority,description.count,due.relative
-report.tiny.description=Work stuff
+report.tiny.description=Quick short list
 report.tiny.filter=status:pending and limit:7
 report.tiny.labels=Id,Project,P,Description,Du
 report.tiny.sort=urgency-
+
+report.ew.columns=id,project,priority,description.count,due.relative
+report.ew.description=ew list
+report.ew.filter=+ew and status:pending
+report.ew.labels=Id,Project,P,Description,Du
+report.ew.sort=urgency-
+
+report.wait.columns=id,project,priority,description.count,due.relative
+report.wait.description=ew list
+report.wait.filter=status:waiting
+report.wait.labels=Id,Project,P,Description,Du
+report.wait.sort=urgency-
+
+report.ls.sort=urgency-
