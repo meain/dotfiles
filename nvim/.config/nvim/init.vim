@@ -1003,6 +1003,8 @@ function! StartPage(force)
     if len(l:filename) == 1
       if l:filename[0] ==# '__'
           FZF
+      elseif l:filename[0] ==# '##'
+          Dirvish
       else
         silent exec 'e '. l:filename[0]
       endif
@@ -1022,6 +1024,7 @@ function! StartPage(force)
       \ nonumber
       \ noswapfile
       \ norelativenumber
+  call append('^', '##')
   call append('^', l:oldfiles[:10])
   call append('^', '__')
   normal! Gddgg
