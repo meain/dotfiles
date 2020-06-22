@@ -18,7 +18,7 @@ open_note() {
 }
 
 open_note_all() {
-    get_file_name 'archive|todo-txt' "$@" | xargs -L1 -I{} "$EDITOR" "{}"
+    get_file_name 'archive|todo-txt|temp' "$@" | xargs -L1 -I{} "$EDITOR" "{}"
 }
 
 open_temp() {
