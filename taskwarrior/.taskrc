@@ -97,7 +97,7 @@ report.min.sort=urgency-
 
 report.tiny.columns=id,project,priority,description.count,due.relative
 report.tiny.description=Quick short list
-report.tiny.filter=status:pending and limit:7
+report.tiny.filter=status:pending and limit:7 +UNBLOCKED
 report.tiny.labels=Id,Project,P,Description,Du
 report.tiny.sort=urgency-
 
