@@ -1,0 +1,7 @@
+#!/bin/sh
+
+set -e
+
+ip="$(curl -s ifconfig.co)"
+echo "$ip"|pbcopy
+echo "$ip"
