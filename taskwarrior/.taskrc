@@ -113,4 +113,10 @@ report.wait.filter=status:waiting
 report.wait.labels=Id,Project,P,Description,Du
 report.wait.sort=urgency-
 
+report.tot.columns=project,description.count
+report.tot.description=For tot
+report.tot.filter=status:pending and limit:10
+report.tot.labels=Project,Description
+report.tot.sort=urgency-
+
 report.ls.sort=urgency-
