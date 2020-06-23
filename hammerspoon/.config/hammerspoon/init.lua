@@ -181,13 +181,13 @@ hs.hotkey.bind({"alt"}, ";", function()
 end)
 
 
-hs.hotkey.bind({"cmd", "shift"}, "s", function()
+hs.hotkey.bind({"cmd", "shift"}, "j", function()
   hs.application.launchOrFocus("slack")
 end)
-hs.hotkey.bind({"cmd", "shift"}, "f", function()
+hs.hotkey.bind({"cmd", "shift"}, "k", function()
   hs.application.launchOrFocus("firefox")
 end)
-hs.hotkey.bind({"cmd", "shift"}, "t", function()
+hs.hotkey.bind({"cmd", "shift"}, "l", function()
   hs.application.launchOrFocus("alacritty")
 end)
 
