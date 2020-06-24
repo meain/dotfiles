@@ -1,0 +1,107 @@
+[
+	{
+		"enabled": true,
+		"updateUrl": null,
+		"md5Url": null,
+		"url": null,
+		"originalMd5": null,
+		"installDate": 1592899610165,
+		"name": "youtube.com",
+		"sections": [
+			{
+				"code": ".ytp-title-text,\nyt-formatted-string.ytd-video-primary-info-renderer:first-child {\n    opacity: 0;\n}\n\n.ytp-title-text:hover,\nyt-formatted-string.ytd-video-primary-info-renderer:hover {\n    opacity: 1;\n}",
+				"domains": [
+					"youtube.com"
+				]
+			}
+		],
+		"updateDate": 1592899610165,
+		"_id": "4b0337ef-830d-4cc3-94a6-6b555cf916dc",
+		"_rev": 1592899610165,
+		"id": 1
+	},
+	{
+		"enabled": true,
+		"updateUrl": null,
+		"md5Url": null,
+		"url": null,
+		"originalMd5": null,
+		"installDate": 1592899983454,
+		"name": "ycombinator.com",
+		"sections": [
+			{
+				"code": "* {\n    font-family: monaco;\n    font-size: 14px;\n}\nbody {\n    margin: 0;\n}\n.votearrow {\n    margin: 0 5px;\n    margin-top: 13px;\n    zoom: 1.3;\n}\n.rank {\n    margin-left: 20px;\n}\n.title {\n    padding-right: 10px;\n    padding-top: 13px;\n}\n.storylink {\n    font-size: 17px;\n    margin-right: 10px;\n}\n.storylink:hover {\n    color: #ef6437;\n}\n.subtext {\n    padding-bottom: 10px;\n    padding-top: 3px;\n}\n#hnmain {\n    max-width: 900px;\n}",
+				"domains": [
+					"ycombinator.com"
+				]
+			}
+		],
+		"updateDate": 1592899985287,
+		"_id": "e61af352-5040-4fac-bed2-e4d8808c1e4f",
+		"_rev": 1592899985287,
+		"id": 2
+	},
+	{
+		"enabled": true,
+		"updateUrl": null,
+		"md5Url": null,
+		"url": null,
+		"originalMd5": null,
+		"installDate": 1592979780159,
+		"name": "github.com",
+		"sections": [
+			{
+				"code": ".Box,\n.form-control,\n.btn {\n    border-radius: 3px !important;\n}\n\ndiv.border-bottom:nth-child(1) {\n    border-bottom: none !important;\n}",
+				"domains": [
+					"github.com"
+				]
+			}
+		],
+		"updateDate": 1592980743797,
+		"_id": "e00290c2-7e69-490e-90f8-a1b26c289e24",
+		"_rev": 1592980743797,
+		"id": 3
+	},
+	{
+		"enabled": true,
+		"updateUrl": null,
+		"md5Url": null,
+		"url": null,
+		"originalMd5": null,
+		"installDate": 1592979979093,
+		"name": "jameshfisher.com",
+		"sections": [
+			{
+				"code": ".highlight {\n    padding: 5px 10px;\n}\npre.highlight * {\n    font-family: 'Operator Mono' !important;\n    font-weight: 300 !important;\n}",
+				"domains": [
+					"jameshfisher.com"
+				]
+			}
+		],
+		"updateDate": 1592979979093,
+		"_id": "c203a70d-d8cc-4391-b7e7-17127fba4d52",
+		"_rev": 1592979979093,
+		"id": 4
+	},
+	{
+		"enabled": true,
+		"updateUrl": null,
+		"md5Url": null,
+		"url": null,
+		"originalMd5": null,
+		"installDate": 1592980028017,
+		"name": "dev.to",
+		"sections": [
+			{
+				"code": "pre * {\n    font-family: \"Monaco\" !important;\n    font-weight: 100 !important;\n}",
+				"urlPrefixes": [
+					"https://dev.to/promode/how-to-set-your-selenium-grid-using-zalenium-in-5-mins-28ob"
+				]
+			}
+		],
+		"updateDate": 1592980028017,
+		"_id": "25df1d04-3606-47d0-aea8-70f02f4429b8",
+		"_rev": 1592980028017,
+		"id": 5
+	}
+]
