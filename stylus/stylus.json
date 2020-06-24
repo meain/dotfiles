@@ -51,15 +51,15 @@
 		"name": "github.com",
 		"sections": [
 			{
-				"code": ".Box,\n.form-control,\n.btn {\n    border-radius: 3px !important;\n}\n\ndiv.border-bottom:nth-child(1) {\n    border-bottom: none !important;\n}",
+				"code": ".Box,\n.State,\n.Label,\n.form-control,\n.signed-commit-badge-large,\n.signed-commit-badge-medium,\n.signed-commit-badge-small,\n.btn {\n    border-radius: 3px !important;\n}\n\ndiv.border-bottom:nth-child(1) {\n    border-bottom: none !important;\n}\n\n.Box-row {\n    border-bottom: 1px solid #f1f1f1;\n    padding-top: 6px !important;\n    padding-bottom: 6px !important;\n}",
 				"domains": [
 					"github.com"
 				]
 			}
 		],
-		"updateDate": 1592980743797,
+		"updateDate": 1592981795546,
 		"_id": "e00290c2-7e69-490e-90f8-a1b26c289e24",
-		"_rev": 1592980743797,
+		"_rev": 1592981795546,
 		"id": 3
 	},
 	{
