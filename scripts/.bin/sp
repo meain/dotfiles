@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# quicker way to add taskwarrior entries
+
+set -e
+
+project="$1"
+shift
+echo task add proj:"$project" "$@"
+task add proj:"$project" "$@"
