@@ -2,6 +2,7 @@
 
 set -e
 
+clear  # imoprtant, do not remove
 SESSION="$(echo "$1" | sed 's| |-|g')"
 
 if [ -z "$TMUX" ];then
