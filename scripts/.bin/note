@@ -111,3 +111,4 @@ fi
 
 cd "$NOTES_FOLDER" && git status -sb
 (git add . && git commit -m '[autocommit] updating notes') 1>/dev/null 2>&1|| true
+(git push origin master &) 1>/dev/null 2>&1|| true
