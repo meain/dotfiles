@@ -17,6 +17,7 @@ Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }                       
 Plug '~/Documents/Projects/others/done/_vim/vim-googler', { 'on': ['LazyLoadPlugins', 'Searcher'] } " Search from within vim
 Plug '/usr/local/opt/fzf'                                                                      " Fzf
 Plug 'junegunn/fzf.vim'                                                                        " Fzf for vim
+Plug 'yuki-ycino/fzf-preview.vim'
 Plug 'christoomey/vim-tmux-navigator'                                                          " Seamless navigation between vim and tmux
 Plug 'suan/vim-instant-markdown', { 'for': [ 'md', 'markdown' ] }                              " View markdown in browser while editing
 Plug 'ervandew/supertab'                                                                       " Autocomplete on tab
@@ -834,7 +835,7 @@ function! s:QuickFixPopulate(word)
   cl
 endfunction
 command! -nargs=1 QuickFixPopulate :call s:QuickFixPopulate(<f-args>)
-nnoremap <leader>F :QuickFixPopulate<space>
+nnoremap <leader>Q :QuickFixPopulate<space>
 
 " Create a floating buffer
 function! Floater(...)
@@ -1108,6 +1109,11 @@ augroup custom_fzf
   autocmd!
   autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
 augroup end
+
+" fzf-preview
+nnoremap <leader>F :FzfPreviewProjectGrep<space>
+nnoremap <leader>u :FzfPreviewProjectGrep <c-r><c-w><cr>
+nnoremap <leader>q :FzfPreviewQuickFix<cr>
 
 " Fugitive
 nnoremap <silent><leader>g :Gstatus\|normal!gg7j<cr>
