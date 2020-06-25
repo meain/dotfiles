@@ -983,6 +983,8 @@ function! GHOpen() abort
     call system("echo '". l:url . "' | pbcopy")
 endfunction
 command! -range GhOpen :call GHOpen()
+command! -range GithubOpen :call GHOpen()
+command! -range OpenInGithub :call GHOpen()
 
 " Startpage
 function! StartPage(force)
