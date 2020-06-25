@@ -191,7 +191,7 @@ end)
 hs.hotkey.bind({"cmd", "shift"}, "l", function()
   focusandback("alacritty")
 end)
-hs.hotkey.bind({"cmd", "shift"}, "i", function()
+hs.hotkey.bind({"cmd", "shift"}, "n", function()
   focusandback("insomnia")
 end)
 
