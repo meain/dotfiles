@@ -1,0 +1,15 @@
+#!/bin/sh
+
+set -e
+
+[ -z "$1" ] && echo "Please provide filename" && exit 1
+
+cat /dev/stdin |
+silicon --output $1 \
+    --language ${2:-md} \
+    --font 'Fairfax HD' \
+    --no-line-number \
+    --no-window-controls \
+    --pad-horiz 0 \
+    --pad-vert 0 \
+    --no-round-corner
