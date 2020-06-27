@@ -41,7 +41,7 @@ Plug 'scrooloose/nerdtree', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggl
 Plug 'meain/vim-automkdir'                                                                     " Automatically create parent dirs
 
 " Morph code
-Plug 'tpope/vim-surround', { 'on': 'LazyLoadPlugins' }                                         " Surround
+Plug 'tpope/vim-surround'                                                                      " Surround
 Plug 'jiangmiao/auto-pairs'                                                                    " Autopair
 Plug 'tomtom/tcomment_vim'                                                                     " Code commenting
 " Plug 'AndrewRadev/tagalong.vim', { 'on': 'LazyLoadPlugins' }                                   " Automatically change closing tag
@@ -1502,10 +1502,9 @@ augroup load_additional_plugins_onwrite
           \ call plug#load('vim-signify') |
           \ call plug#load('vim-googler') |
           \ call plug#load('vim-dirvish') |
-          \ call plug#load('vim-surround') |
           \ call plug#load('auto-pairs') |
           " \ call plug#load('tagalong.vim') |
-          \ call plug#load('ale') |
+          \ call plug#load('w0rp/ale') |
           \ call plug#load('echodoc.vim') |
           \ call plug#load('vim-repeat') |
           \ call plug#load('vim-package-info') |
@@ -1520,10 +1519,9 @@ augroup load_additional_plugins
           \ call plug#load('vim-signify') |
           \ call plug#load('vim-googler') |
           \ call plug#load('vim-dirvish') |
-          \ call plug#load('vim-surround') |
           \ call plug#load('auto-pairs') |
           " \ call plug#load('tagalong.vim') |
-          \ call plug#load('ale') |
+          \ call plug#load('w0rp/ale') |
           \ call plug#load('echodoc.vim') |
           \ call plug#load('vim-repeat') |
           \ call plug#load('vim-package-info') |
