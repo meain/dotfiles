@@ -141,7 +141,7 @@ imgurtolocal() {
 
 # Easily copy file from downloads folder
 dcp() {
-	FROMFILE=$(find ~/Downloads | sed "s|^$HOME/Downloads/||" | fzf --query="$1")
+	FROMFILE=$(\ls -t ~/Downloads | fzf --query="$1")
 	if [ -z $FROMFILE ]; then
 		echo "No file selected"
 		return 1
