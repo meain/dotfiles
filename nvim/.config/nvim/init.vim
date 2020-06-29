@@ -44,7 +44,6 @@ Plug 'meain/vim-automkdir'                                                      
 Plug 'tpope/vim-surround'                                                                      " Surround
 Plug 'jiangmiao/auto-pairs'                                                                    " Autopair
 Plug 'tomtom/tcomment_vim'                                                                     " Code commenting
-" Plug 'AndrewRadev/tagalong.vim', { 'on': 'LazyLoadPlugins' }                                   " Automatically change closing tag
 
 " Language helpers
 Plug 'elzr/vim-json', { 'for': 'json' }                                                        " Json syntax highlight
@@ -1503,7 +1502,6 @@ augroup load_additional_plugins_onwrite
           \ call plug#load('vim-googler') |
           \ call plug#load('vim-dirvish') |
           \ call plug#load('auto-pairs') |
-          " \ call plug#load('tagalong.vim') |
           \ call plug#load('echodoc.vim') |
           \ call plug#load('vim-repeat') |
           \ call plug#load('vim-package-info') |
@@ -1519,7 +1517,6 @@ augroup load_additional_plugins
           \ call plug#load('vim-googler') |
           \ call plug#load('vim-dirvish') |
           \ call plug#load('auto-pairs') |
-          " \ call plug#load('tagalong.vim') |
           \ call plug#load('echodoc.vim') |
           \ call plug#load('vim-repeat') |
           \ call plug#load('vim-package-info') |
