@@ -158,30 +158,18 @@ hs.hotkey.bind({'ctrl', 'alt', 'shift'}, 'e', function()
 end)
 
 hs.hotkey.bind({"alt"}, ";", function()
-  local app = hs.application.get("kitty")
-  if prev_foreground_app == nil then
-    prev_foreground_app = hs.window.focusedWindow()
-  end
-
-  if app then
-      if not app:mainWindow() then
-          app:selectMenuItem({"kitty", "New OS window"})
-      elseif app:isFrontmost() then
-          app:hide()
-          prev_foreground_app:focus()
-          prev_foreground_app = nil
-      else
-          app:activate()
-      end
-  else
-      hs.application.launchOrFocus("kitty")
-      app = hs.application.get("kitty")
-  end
-
-  app:mainWindow():moveToUnit'[80,100,10,50]'
-  app:mainWindow().setShadows(false)
+    local toopen = hs.application('kitty')
+    if toopen and toopen:isFrontmost() then
+        toopen:hide()
+        prev_foreground_app:focus()
+        prev_foreground_app = null
+    else
+        prev_foreground_app = hs.window.focusedWindow()
+        hs.application.launchOrFocus('kitty')
+        toopen:mainWindow():moveToUnit'[80,100,10,50]'
+        toopen:mainWindow().setShadows(false)
+    end
 end)
-
 
 hs.hotkey.bind({"cmd", "shift"}, "j", function()
   focusandback("slack")
