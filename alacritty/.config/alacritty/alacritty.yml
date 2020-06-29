@@ -19,19 +19,19 @@ scrolling:
 
 font:
   normal:
-    family: Fairfax HD
+    family: agave Nerd Font Mono
   bold:
-    family: Fairfax HD
+    family: agave Nerd Font Mono
   italic:
-    family: Fairfax HD
-  size: 17.0
+    family: agave Nerd Font Mono
+  size: 16.0
   offset:
     x: 0
     y: 0
   glyph_offset:
     x: 0
     y: 0
-  use_thin_strokes: false
+  use_thin_strokes: true
 
 color_schemes:
   dark: &dark
