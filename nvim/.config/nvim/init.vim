@@ -61,7 +61,7 @@ Plug 'jxnblk/vim-mdx-js', { 'for': 'mdx' }                                      
 Plug '~/Documents/Projects/projects/vim-jsontogo' , { 'for': ['go'] }                          " Convert JSON to Go struct
 
 " Linting / Checking
-Plug 'w0rp/ale', { 'on': 'LazyLoadPlugins' }                                                   " Linter formatter and more
+Plug 'w0rp/ale'                                                                                " Linter formatter and more
 
 " Autocomplete
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }                                  " Competion framework
@@ -1504,7 +1504,6 @@ augroup load_additional_plugins_onwrite
           \ call plug#load('vim-dirvish') |
           \ call plug#load('auto-pairs') |
           " \ call plug#load('tagalong.vim') |
-          \ call plug#load('w0rp/ale') |
           \ call plug#load('echodoc.vim') |
           \ call plug#load('vim-repeat') |
           \ call plug#load('vim-package-info') |
@@ -1521,7 +1520,6 @@ augroup load_additional_plugins
           \ call plug#load('vim-dirvish') |
           \ call plug#load('auto-pairs') |
           " \ call plug#load('tagalong.vim') |
-          \ call plug#load('w0rp/ale') |
           \ call plug#load('echodoc.vim') |
           \ call plug#load('vim-repeat') |
           \ call plug#load('vim-package-info') |
