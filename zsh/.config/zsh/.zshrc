@@ -10,7 +10,7 @@ export TERM=screen-256color-italic
 source $ZDOTDIR/.zsh_path
 
 echo ""
-corpcrap | fmt -c -w $COLUMNS
+randomidea | fmt -c -w $COLUMNS
 echo ""
 
 # zsh settings
