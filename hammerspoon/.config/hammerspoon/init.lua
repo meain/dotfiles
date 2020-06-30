@@ -26,8 +26,8 @@ hs.window.animationDuration = 0
 -- Change alert styles
 hs.alert.defaultStyle.strokeWidth = 0
 hs.alert.defaultStyle.radius = 0
-hs.alert.defaultStyle.textFont = "Operator Mono Book"
-hs.alert.defaultStyle.textSize = 20
+hs.alert.defaultStyle.textFont = "DankMono Nerd Font"
+hs.alert.defaultStyle.textSize = 15
 hs.alert.defaultStyle.fadeInDuration = 0.10
 hs.alert.defaultStyle.fadeOutDuration = 1
 hs.alert.defaultStyle.atScreenEdge = 2
