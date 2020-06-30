@@ -166,7 +166,7 @@ hs.hotkey.bind({"alt"}, ";", function()
     else
         prev_foreground_app = hs.window.focusedWindow()
         hs.application.launchOrFocus('kitty')
-        toopen:mainWindow():moveToUnit'[80,100,10,50]'
+        toopen:mainWindow():moveToUnit'[90,0,10,50]'
         toopen:mainWindow().setShadows(false)
     end
 end)
