@@ -157,19 +157,19 @@ hs.hotkey.bind({'ctrl', 'alt', 'shift'}, 'e', function()
   customshellrun.run(BIN .. 'mailsync')
 end)
 
-hs.hotkey.bind({"alt"}, ";", function()
-    local toopen = hs.application('kitty')
-    if toopen and toopen:isFrontmost() then
-        toopen:hide()
-        prev_foreground_app:focus()
-        prev_foreground_app = null
-    else
-        prev_foreground_app = hs.window.focusedWindow()
-        hs.application.launchOrFocus('kitty')
-        toopen:mainWindow():moveToUnit'[90,0,10,50]'
-        toopen:mainWindow().setShadows(false)
-    end
-end)
+-- hs.hotkey.bind({"alt"}, ";", function()
+--     local toopen = hs.application('kitty')
+--     if toopen and toopen:isFrontmost() then
+--         toopen:hide()
+--         prev_foreground_app:focus()
+--         prev_foreground_app = null
+--     else
+--         prev_foreground_app = hs.window.focusedWindow()
+--         hs.application.launchOrFocus('kitty')
+--         toopen:mainWindow():moveToUnit'[90,0,10,50]'
+--         toopen:mainWindow().setShadows(false)
+--     end
+-- end)
 
 hs.hotkey.bind({"cmd", "shift"}, "j", function()
   focusandback("slack")
