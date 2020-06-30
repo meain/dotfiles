@@ -27,6 +27,7 @@ alias brew='HOMEBREW_NO_AUTO_UPDATE=1 brew'
 alias yd='youtube-dl'
 alias ydp='youtube-dl -o "%(playlist_index)s_%(title)s.%(ext)s"'
 alias s='task'
+alias sl='task +LATEST'
 alias cs='clear && task'
 alias ca='clear && a'
 
