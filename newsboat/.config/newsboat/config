@@ -4,6 +4,7 @@ browser "open -g"
 auto-reload no
 show-keymap-hint yes
 prepopulate-query-feeds yes
+max-items 50  # max-items per feed (perf reasons)
 
 # keybindings
 bind-key j down
