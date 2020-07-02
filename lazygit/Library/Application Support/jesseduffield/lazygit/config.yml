@@ -1,0 +1,141 @@
+confirmonquit: false
+git:
+  autofetch: false
+  merging:
+    args: ""
+    manualcommit: false
+  paging:
+    colorarg: always
+    useconfig: false
+  skiphookprefix: WIP
+gui:
+  commitlength:
+    show: true
+  mouseevents: true
+  scrollheight: 2
+  scrollpastbottom: true
+  sidepanelwidth: 0.3333
+  skipstashwarning: true
+  skipunstagelinewarning: false
+  theme:
+    activebordercolor:
+    - white
+    - bold
+    inactivebordercolor:
+    - green
+    lighttheme: false
+    optionstextcolor:
+    - blue
+    selectedlinebgcolor:
+    - reverse
+    selectedrangebgcolor:
+    - blue
+keybinding:
+  branches:
+    checkoutbranchbyname: c
+    createpullrequest: o
+    fastforward: f
+    fetchremote: f
+    forcecheckoutbranch: F
+    mergeintocurrentbranch: M
+    pushtag: P
+    rebasebranch: r
+    setupstream: u
+    viewgitflowoptions: i
+  commitfiles:
+    checkoutcommitfile: c
+  commits:
+    amendtocommit: A
+    checkoutcommit: <space>
+    cherrypickcopy: c
+    cherrypickcopyrange: C
+    createfixupcommit: F
+    markcommitasfixup: f
+    movedowncommit: <c-j>
+    moveupcommit: <c-k>
+    pastecommits: v
+    pickcommit: p
+    renamecommit: r
+    renamecommitwitheditor: R
+    resetcherrypick: <c-R>
+    revertcommit: t
+    squashabovecommits: S
+    squashdown: s
+    tagcommit: T
+    viewresetoptions: g
+  files:
+    amendlastcommit: A
+    commitchanges: c
+    commitchangeswitheditor: C
+    commitchangeswithouthook: w
+    fetch: f
+    ignorefile: i
+    refreshfiles: r
+    stashallchanges: s
+    togglestagedall: a
+    viewresetoptions: D
+    viewstashoptions: S
+  main:
+    pickbothhunks: b
+    toggledragselect: v
+    toggledragselect-alt: V
+    toggleselecthunk: a
+  stash:
+    popstash: g
+  status:
+    checkforupdate: u
+    recentrepos: <enter>
+  universal:
+    copytoclipboard: <c-o>
+    createpatchoptionsmenu: <c-p>
+    createrebaseoptionsmenu: m
+    diffingmenu: <c-e>
+    edit: e
+    executecustomcommand: ':'
+    filteringmenu: <c-s>
+    gointo: <enter>
+    gotobottom: '>'
+    gototop: <
+    new: "n"
+    nextblock: <right>
+    nextblock-alt: l
+    nextitem: <down>
+    nextitem-alt: j
+    nextmatch: "n"
+    nextpage: .
+    nextscreenmode: +
+    nexttab: ']'
+    openfile: o
+    optionmenu: x
+    optionmenu-alt1: '?'
+    prevblock: <left>
+    prevblock-alt: h
+    previtem: <up>
+    previtem-alt: k
+    prevmatch: "N"
+    prevpage: ','
+    prevscreenmode: _
+    prevtab: '['
+    pullfiles: p
+    pushfiles: P
+    quit: q
+    quit-alt1: <c-c>
+    quitwithoutchangingdirectory: Q
+    redo: <c-z>
+    refresh: R
+    remove: d
+    return: <esc>
+    scrolldownmain: <pgdown>
+    scrolldownmain-alt1: J
+    scrolldownmain-alt2: <c-d>
+    scrollupmain: <pgup>
+    scrollupmain-alt1: K
+    scrollupmain-alt2: <c-u>
+    select: <space>
+    togglepanel: <tab>
+    undo: z
+reporting: "off"
+startuppopupversion: 1
+update:
+  days: 14
+  method: prompt
