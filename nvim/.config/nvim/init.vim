@@ -48,6 +48,7 @@ Plug 'tomtom/tcomment_vim'                                                      
 " Language helpers
 Plug 'elzr/vim-json', { 'for': 'json' }                                                        " Json syntax highlight
 Plug 'chr4/nginx.vim', { 'for': 'nginx' }                                                      " Nginx config file syntax
+Plug 'Glench/Vim-Jinja2-Syntax', { 'for': 'jinja' }                                            " Jinja templates syntax highlight
 Plug 'HerringtonDarkholme/yats.vim', { 'for': [ 'typescript', 'typescript.tsx' ] }             " Typescript syntax highlight
 Plug 'peitalin/vim-jsx-typescript', { 'for': [ 'typescript', 'typescript.tsx' ] }              " Typescript JSX syntax highlight
 Plug 'neoclide/vim-jsx-improve', { 'for': ['javascript', 'javascript.jsx'] }                   " Inproved JSX syntax
