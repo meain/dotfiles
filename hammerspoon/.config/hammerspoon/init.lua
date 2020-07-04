@@ -104,14 +104,12 @@ hs.hotkey.bind({'alt', 'shift'}, 'delete', function()
 end)
 
 -- Email watcher
-emailNotify = function(paths, flags)
-  local sound = false
-  if type(paths) == "table" then
-    -- called using filewatcher
-    sound = true
+emailNotify = function(alert)
+  if type(alert) == "table" then
+    alert = false
   end
 
-  populateMailListing = function(result)
+  populateMailListing = function()
     mailListing = {}
     unreadcount = utils.linecount(result)
     if (unreadcount > 0) then
@@ -137,19 +135,17 @@ emailNotify = function(paths, flags)
     mailcounter:setTooltip("No new emails")
     mailcounter:setMenu(populateMailListing(result))
   end
-  if (string.len(result) > 0) then
-    if sound then
-      hs.sound.getByName(hs.sound.systemSounds()[9]):play()
+  if alert then
+    if (string.len(result) > 0) then
+      hs.alert("📧 Unread emails\n" .. result)
+    else
+      hs.alert('📭 No unread emails')
     end
-    hs.alert("📧 Unread emails\n" .. result)
-  else
-    -- useful only when called outside of pathwatcher
-    hs.alert('📭 No unread emails')
   end
 end
 hs.pathwatcher.new('/tmp/unreadlocal', emailNotify):start()
 hs.hotkey.bind({'alt', 'shift'}, 'e', function()
-  emailNotify()
+  emailNotify(true)
   customshellrun.run('/usr/local/bin/tmux refresh-client -S')
 end)
 hs.hotkey.bind({'ctrl', 'alt', 'shift'}, 'e', function()
