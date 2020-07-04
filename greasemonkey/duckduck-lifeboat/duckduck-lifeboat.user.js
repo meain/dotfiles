@@ -2,6 +2,7 @@
 // @name     duckduck-lifeboat
 // @version  1
 // @grant    none
+// @match    https://duckduckgo.com/*
 // ==/UserScript==
 
 he = document.getElementsByClassName("header__search-wrap")[0];
