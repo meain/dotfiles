@@ -51,15 +51,15 @@
 		"name": "github.com",
 		"sections": [
 			{
-				"code": ".Box,\n.State,\n.Label,\n.form-control,\n.signed-commit-badge-large,\n.signed-commit-badge-medium,\n.signed-commit-badge-small,\n.btn {\n    border-radius: 3px !important;\n}\n\ndiv.border-bottom:nth-child(1) {\n    border-bottom: none !important;\n}\n\n.Box-row {\n    border-bottom: 1px solid #f1f1f1;\n    padding-top: 6px !important;\n    padding-bottom: 6px !important;\n}",
+				"code": ".Box,\n.State,\n.Label,\n.IssueLabel,\n.timeline-comment-label,\n.form-control,\n.signed-commit-badge-large,\n.signed-commit-badge-medium,\n.signed-commit-badge-small,\n.btn {\n    border-radius: 3px !important;\n}\n\ndiv.border-bottom:nth-child(1) {\n    border-bottom: none !important;\n}\n\n.Box-row {\n    border-bottom: 1px solid #f1f1f1;\n    padding-top: 6px !important;\n    padding-bottom: 6px !important;\n}\n\n.BorderGrid-cell,\n.Box-header {\n    padding-top: 7px !important;\n    padding-bottom: 7px !important;\n    border: none !important;\n}\n\n.BorderGrid {\n    margin-top: 10px;\n}\n\nli.mb-2,\np.mt-3,\ndiv.mt-3 {\n    margin: 2px !important;\n}\n\nli.mb-2 > a:nth-child(1) {\n    display: none;\n}\n\n\nh2.mb-3 {\n    margin-top: 20px !important;\n    margin-bottom: 2px !important;\n}\n\n.btn.ml-2 {\n    padding: 4px 16px !important;\n}\n\ndiv.px-3:nth-child(1) {\n    margin-bottom: 5px !important;\n}\n\ndiv[aria-label=\"Issues\"] > div:first-child > div {\n    padding: 0 !important;\n}\n.pb-3 {\n    padding-top: 15px;\n}",
 				"domains": [
 					"github.com"
 				]
 			}
 		],
-		"updateDate": 1592981795546,
+		"updateDate": 1593421316123,
 		"_id": "e00290c2-7e69-490e-90f8-a1b26c289e24",
-		"_rev": 1592981795546,
+		"_rev": 1593421316124,
 		"id": 3
 	},
 	{
@@ -103,5 +103,44 @@
 		"_id": "25df1d04-3606-47d0-aea8-70f02f4429b8",
 		"_rev": 1592980028017,
 		"id": 5
+	},
+	{
+		"enabled": false,
+		"updateUrl": null,
+		"md5Url": null,
+		"url": null,
+		"originalMd5": null,
+		"installDate": 1593521227418,
+		"name": "invert images",
+		"sections": [
+			{
+				"code": "video,\n.ytp-cued-thumbnail-overlay-image,\nsvg,\nimg {\n    -webkit-filter: invert(1);\n    filter: invert(1);\n    opacity: 0.8;\n}"
+			}
+		],
+		"updateDate": 1593522463673,
+		"_id": "814c8282-a53e-444c-bfd5-f75a05d28500",
+		"_rev": 1593526840749,
+		"id": 6
+	},
+	{
+		"enabled": true,
+		"updateUrl": null,
+		"md5Url": null,
+		"url": null,
+		"originalMd5": null,
+		"installDate": 1593867256845,
+		"name": "searx.lukesmith.xyz",
+		"sections": [
+			{
+				"code": "input,\npre,\nbutton,\nbody {\n    font-family: 'DankMono Nerd Font';\n    font-size: 1.1rem;\n}\n#urls {\n    width: 600px;\n}\n#sidebar {\n    opacity: 0.8;\n    margin: 3rem 0;\n}\n#sidebar input[type=\"submit\"] {\n    background: none;\n    color: black;\n    padding: 0;\n}\n.selectable_url {\n    border-radius: 5px;\n}\n\n#backToTop,\nfooter,\n.search_filters,\n.title {\n    display: none !important;\n}\n\n\n.index {\n    width: 100vw;\n    height: 100vh;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n\n#q {\n    border-radius: 5px 0 0 5px;\n}\n#send_search {\n    border-radius: 0 5px 5px 0;\n}\n#search {\n    padding: 1em 2em;\n}\n\n#pagination button {\n    padding: 10px 100px !important;\n    margin: 2em !important;\n    background: none !important;\n    color: black !important;\n    text-decoration: underline;\n}\n\n#pagination .ion-chevron-right {\n    display: none;\n}\n\n/*\n.content {\n    max-height: 50px;\n    overflow: hidden;\n} */",
+				"domains": [
+					"searx.lukesmith.xyz"
+				]
+			}
+		],
+		"updateDate": 1593870530379,
+		"_id": "4cb4c581-df1e-4879-84ea-9006e85610c1",
+		"_rev": 1593870530379,
+		"id": 7
 	}
 ]
