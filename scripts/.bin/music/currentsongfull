@@ -15,7 +15,7 @@ if [ -n "$spotifySong" ]; then
     exit 0
 fi
 
-if mpc 2>/dev/null ; then
+if mpc >/dev/null 2>&1 ; then
     echo ":player mpd"
     mpc
 else
