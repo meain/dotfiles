@@ -15,6 +15,11 @@ local mailcounter = hs.menubar.new()
 mailcounter:setTooltip("No new emails")
 mailcounter:setTitle("M")
 
+hs.loadSpoon("MicMute")
+spoon.MicMute:bindHotkeys({
+  toggle = { { "ctrl", "shift", "alt" }, "m" }
+})
+
 -- Variables
 local BIN = os.getenv("HOME") .. '/.bin/'
 local prev_foreground_app = nil
