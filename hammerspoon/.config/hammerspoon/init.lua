@@ -15,6 +15,7 @@ local mailcounter = hs.menubar.new()
 mailcounter:setTooltip("No new emails")
 mailcounter:setTitle("M")
 
+-- mute and unmute mic
 hs.loadSpoon("MicMute")
 spoon.MicMute:bindHotkeys({
   toggle = { { "ctrl", "shift", "alt" }, "m" }
