@@ -1,0 +1,10 @@
+#!/bin/sh
+
+set -e
+
+[ -z "$3" ] && echo "Usage: memeify <file> <top-text> <bottom-text>" && exit 1
+
+convert "$1" \
+    -font impact -fill white -pointsize 84 -stroke black -strokewidth 3 \
+    -gravity north -annotate +0+20 "$2" \
+    -gravity south -annotate +0+20 "$3" "memeified-$1"
