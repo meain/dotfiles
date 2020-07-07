@@ -159,6 +159,11 @@ hs.hotkey.bind({'ctrl', 'alt', 'shift'}, 'e', function()
   customshellrun.run(BIN .. 'mailsync')
 end)
 
+hs.hotkey.bind({'alt', 'shift'}, 's', function()
+  result = customshellrun.run('/usr/local/bin/task tot|tail -n+4|head -n5')
+  hs.alert("🔨 Tasks\n" .. result)
+end)
+
 hs.hotkey.bind({"cmd", "shift"}, "j", function()
   focusandback("slack")
 end)
