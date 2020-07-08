@@ -309,6 +309,7 @@ augroup custom_filetype
   autocmd!
   autocmd BufNewFile,BufRead *.zsh-theme set filetype=zsh
   autocmd BufNewFile,BufRead Dockerfile-* set filetype=dockerfile
+  autocmd BufNewFile,BufRead *.jsql set filetype=jinja
 augroup end
 
 " Resize panes whenever containing window resized.
