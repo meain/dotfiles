@@ -164,6 +164,10 @@ hs.hotkey.bind({'alt', 'shift'}, 's', function()
   hs.alert("🔨 Tasks\n" .. result)
 end)
 
+hs.hotkey.bind({'ctrl', 'alt', 'shift'}, 's', function()
+  customshellrun.run(BIN .. 'ssq')
+end)
+
 hs.hotkey.bind({"cmd", "shift"}, "j", function()
   focusandback("slack")
 end)
