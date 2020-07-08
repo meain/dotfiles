@@ -2,7 +2,10 @@
 
 SEARCH_BASE='https://duckduckgo.com/?q='
 
-if echo "$1" | grep -E '^http[s]?://' > /dev/null; then
+if echo "$1" | grep -E '^https://[A-z]+.zoom.us/j/' > /dev/null; then
+  open -a /Applications/zoom.us.app "$1"
+  echo "📞 $1"
+elif echo "$1" | grep -E '^http[s]?://' > /dev/null; then
   open "$1"
   echo "🔗 $1"
 else
