@@ -18,7 +18,7 @@ mailcounter:setTitle("M")
 -- mute and unmute mic
 hs.loadSpoon("MicMute")
 spoon.MicMute:bindHotkeys({
-  toggle = { { "ctrl", "shift", "alt" }, "m" }
+  toggle = { { "shift", "alt" }, "z" }
 })
 
 -- Variables
