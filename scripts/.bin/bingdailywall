@@ -1,0 +1,21 @@
+#!/bin/bash
+# https://gist.github.com/pedrosland/10464302
+
+set -e
+
+bing="http://www.bing.com"
+xmlURL="http://www.bing.com/HPImageArchive.aspx?format=xml&idx=0&n=1&mkt=en-WW"
+saveDir='/tmp/bing-images/'
+
+picOpts="zoom"
+picRes="_1920x1200"
+picExt=".jpg"
+tempName="$(date +%y%m%d)$picExt"
+
+mkdir -p $saveDir
+
+if [ ! -f "$saveDir$tempName" ];then
+    picURL="$bing""$(echo $(curl -s "$xmlURL") | grep -o "<urlBase>\(.*\)</urlBase>" | cut -d ">" -f 2 | cut -d "<" -f 1)$picRes$picExt"
+    curl -s -o "$saveDir$tempName" "$picURL"
+fi
+echo "$saveDir$tempName"
