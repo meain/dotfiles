@@ -152,7 +152,7 @@ dcp() {
 	if [ -z "$TOFILE" ]; then
 		TOFILE=$(basename "$FROMFILE")
 	fi
-	cp -iv "$HOME/Downloads/$FROMFILE" "$TOFILE"
+	cp -riv "$HOME/Downloads/$FROMFILE" "$TOFILE"
 }
 
 # Copy latest screenshot
