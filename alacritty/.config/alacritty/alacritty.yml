@@ -19,11 +19,11 @@ scrolling:
 
 font:
   normal:
-    family: agave Nerd Font Mono
+    family: Fantasque Sans Mono
   bold:
-    family: agave Nerd Font Mono
+    family: Fantasque Sans Mono
   italic:
-    family: agave Nerd Font Mono
+    family: Fantasque Sans Mono
   size: 16.0
   offset:
     x: 0
