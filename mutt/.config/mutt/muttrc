@@ -83,7 +83,10 @@ macro index,pager A ":set confirmappend=no\n<tag-thread><tag-prefix><save-messag
 # https://raw.githubusercontent.com/karelzak/mutt-kz/master/README.notmuch
 macro index \\\\ "<vfolder-from-query>"  # looks up a hand made query
 macro index,pager gi "<change-vfolder>inbox<enter>" "Go to regular inbox."
-macro index,pager gf "<change-vfolder>fullinbox<enter>" "Go to inbox with everything."
+macro index,pager gf "<change-vfolder>funread<enter>" "All unread."
 macro index,pager gn "<change-vfolder>newsletter<enter>" "Go to newsletter."
 macro index,pager gb "<change-vfolder>bullshit<enter>" "Go to bullshit."
 macro index,pager gk "<change-vfolder>known<enter>" "Go to known."
+macro index,pager gm "<change-vfolder>meain<enter>" "Go to meain."
+macro index,pager gp "<change-vfolder>python<enter>" "Go to python."
+macro index,pager gr "<change-vfolder>archiveable<enter>" "Go to archiveable."
