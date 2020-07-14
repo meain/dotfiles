@@ -2,6 +2,13 @@
 
 set -e
 
-randPic="$(find "/Users/meain/Pictures" | grep -E '.(png|jpg|jpeg)$' | shuf -n1)"
-osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \"$randPic\""
-killall Dock
+if [ -n "$1" ];then
+    randPic="$1"
+else
+    randPic="$(find "/Users/meain/Pictures" | grep -E '.(png|jpg|jpeg)$' | shuf -n1)"
+fi
+
+newname="$HOME/Pictures/$(basename "$randPic")"
+mv "$randPic" "$newname"
+osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \"$newname\""
+rm "$newname"
