@@ -1,0 +1,5 @@
+#!/bin/sh
+
+set -e
+
+watch -d -t "task $* 2>/dev/null|tail -n+4|sed '$ d'"
