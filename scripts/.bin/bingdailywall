@@ -13,5 +13,6 @@ tempName="$(date +%y%m%d)$picExt"
 mkdir -p $saveDir
 
 picURL="http://www.bing.com$(curl -s "$xmlURL" | grep -o '<urlBase>\(.*\)</urlBase>' | cut -d '>' -f 2 | cut -d '<' -f 1)$picRes$picExt"
-[ "$picURL" = "$(cat /tmp/bing-images/picurl)" ] || (curl -s -o "$saveDir$tempName" "$picURL" && echo "$picURL" > /tmp/bing-images/picurl)
+[ "$picURL" == "$(cat /tmp/bing-images/picurl)" ] || curl -s -o "$saveDir$tempName" "$picURL"
+echo "$picURL" > /tmp/bing-images/picurl
 echo "$saveDir$tempName"
