@@ -8,7 +8,7 @@ else
     randPic="$(find "/Users/meain/Pictures" | grep -E '.(png|jpg|jpeg)$' | shuf -n1)"
 fi
 
-newname="$HOME/Pictures/$(basename "$randPic")"
-mv "$randPic" "$newname"
+newname="$HOME/Pictures/temp_$(date +%s)"
+cp "$randPic" "$newname"
 osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \"$newname\""
 rm "$newname"
