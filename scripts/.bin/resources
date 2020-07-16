@@ -2,43 +2,67 @@
 
 set -e
 
-RFILE="resources"
-[ "$1" = 'all' ] && find ~/.notes/resources -type f -depth 1 | while read -r file;do
-    sed "s|$| #$(basename "$file")|" "$file"
-done| fzf -m | awk '{print $1}' | xargs -L1 -I{} open "{}" && exit 0
+NOTES_FOLDER="$HOME/.notes/resources"
 
-if [ "$1" = "new" ]; then
-    cd ~/.notes/resources
+get_file(){
+    [ -f "resources" ] && echo "resources" && return
+    FILE="$(command ls -t1 "$NOTES_FOLDER" | fzf --preview "cat $NOTES_FOLDER/{}" --query "$1")"
+    echo "$NOTES_FOLDER/$FILE"
+}
+
+list(){
+    cat "$(get_file "$*")"
+}
+get(){
+    fzf -m <"$(get_file "$*")" | awk '{print $1}'
+}
+open(){
+    fzf -m <"$(get_file "$*")" | awk '{print $1}' | xargs open
+}
+new(){
     printf "Name: "
     read -r
     RFILE="$(echo "$REPLY" | tr ' ' '-')"
-    touch "$RFILE"
-    exit
-else
-    if [ ! -f "$RFILE" ]; then
-        cd ~/.notes/resources
-        RFILE=$(command ls -t1 | fzf --preview "cat {}")
+    touch "$NOTES_FOLDER/$RFILE"
+}
+add(){
+    RFILE="$(get_file)"
+    if echo "$1" | grep -qE "^http";then
+        LINK="$1"
+    elif  echo "$(pbpaste)" | grep -qE "^http";then
+        LINK="$(pbpaste)"
+    else
+        echo "No link passed or found in clipboard" && exit 1
     fi
-fi
+    grep -q "^$LINK" "$RFILE" && echo "$(tput setaf 1)[Already available]$(tput sgr0) $(pbpaste)" && exit 1
+    echo "$RFILE < $(pbpaste)"
+    printf "Comments(empty for none): "
+    read -r
+    if [ -n "$REPLY" ];then
+        echo "$(pbpaste) '$REPLY'" >>"$RFILE"
+    else
+        echo "$(pbpaste)" >>"$RFILE" # echo is kept is so that it inserts a newline
+    fi
+}
+all(){
+    find "$NOTES_FOLDER" -type f -depth 1 | while read -r file;do
+        sed "s|$| #$(basename "$file")|" "$file"
+    done| fzf -m | awk '{print $1}'
+}
 
-[ "$1" = l ] && cat "$RFILE" && exit 0
-[ "$1" = 'list' ] && cat "$RFILE" && exit 0
-[ "$1" = o ] && fzf -m <"$RFILE" | awk '{print $1}' | xargs -L1 -I{} open "{}" && exit 0
+if [ -n "$1" ];then
+    OPTION="$1"
+    shift
+else
+    OPTION="add"
+fi
+case "$OPTION" in
+    "list")  list "$*";;
+    "get")  get "$*";;
+    "open") open "$*";;
+    "new") new "$*";;
+    "add") add "$*";;
+    "all") all "$*";;
+esac
 
-if echo "$1" | grep -qE "^http";then
-    LINK="$1"
-elif  echo "$(pbpaste)" | grep -qE "^http";then
-    LINK="$(pbpaste)"
-else
-    echo "No link passed or found in clipboard" && exit 1
-fi
-grep -q "^$LINK" "$RFILE" && echo "$(tput setaf 1)[Already available]$(tput sgr0) $(pbpaste)" && exit 1
-echo "$RFILE < $(pbpaste)"
-printf "Comments(empty for none): "
-read -r
-if [ -n "$REPLY" ];then
-    echo "$(pbpaste) '$REPLY'" >>"$RFILE"
-else
-    echo "$(pbpaste)" >>"$RFILE" # echo is kept is so that it inserts a newline
-fi
-note status
+note status  # commit changes
