@@ -24,7 +24,7 @@ tr:hover {background-color: #ddd;}
 </style>'
 echo '<table>'
 items="$(sqlite3 --html  /Users/meain/.local/share/newsboat/cache.db "$QUERY" |
-  sed 's|\(https://[^<]*\)|<a href="\1">\1</a>|')"
+  sed 's|\(https://[^<]*\)|<a targe="_blank" href="\1">\1</a>|')"
 [ -z "$items" ] && echo "No unread articles" || echo "$items"
 echo '</table>'
 echo '<script>window.onload = () => {setInterval(() => {location.reload()}, 60000)}</script>'
