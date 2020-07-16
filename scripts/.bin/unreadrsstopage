@@ -1,0 +1,26 @@
+#!/bin/sh
+
+# cron entry: 5 * * * * unreadrsstopage > /tmp/rss.html
+
+set -e
+
+QUERY="
+select
+  rss_feed.title,
+  rss_item.title,
+  rss_item.author,
+  rss_item.url
+from
+  rss_feed
+  cross join rss_item on rss_feed.rssurl = rss_item.feedurl
+where
+  rss_item.unread = 1
+limit
+  50
+"
+
+echo '<table>'
+sqlite3 --html  /Users/meain/.local/share/newsboat/cache.db "$QUERY" |
+  sed 's|\(https://[^<]*\)|<a href="\1">\1</a>|'
+echo '</table>'
+echo '<script>window.onload = () => {setInterval(() => {location.reload()}, 10000)}</script>'
