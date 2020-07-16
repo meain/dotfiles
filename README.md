@@ -4,7 +4,6 @@
   <img src="https://img.shields.io/badge/Editor-neovim-brightgreen.svg" />
   <img src="https://img.shields.io/badge/Terminal-alacritty-orange.svg" />
   <img src="https://img.shields.io/badge/Shell-zsh-yellow.svg" />
-  <img src="https://img.shields.io/badge/Font-SpaceMono-lightgrey.svg" />
   <img src="https://img.shields.io/badge/Mail-neomutt-red.svg" />
   <img src="https://img.shields.io/badge/IRC-tiny-blue.svg" />
   <br><br>
