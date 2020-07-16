@@ -1,18 +1,12 @@
 #!/bin/bash
-# https://gist.github.com/pedrosland/10464302
 
 set -e
 
-xmlURL="http://www.bing.com/HPImageArchive.aspx?format=xml&idx=0&n=1&mkt=en-WW"
-saveDir='/tmp/bing-images/'
+url="$(curl -s https://www.bing.com|pup '.img_cont'|grep -o 'url([^)]*'|sed 's|url(|https://www.bing.com|')"
+dir='/tmp/bing-images/'
+pic="$dir$(date +%y%m%d).jpg"
 
-picRes="_1920x1200"
-picExt=".jpg"
-tempName="$(date +%y%m%d)$picExt"
-
-mkdir -p $saveDir
-
-picURL="http://www.bing.com$(curl -s "$xmlURL" | grep -o '<urlBase>\(.*\)</urlBase>' | cut -d '>' -f 2 | cut -d '<' -f 1)$picRes$picExt"
-[ "$picURL" == "$(cat /tmp/bing-images/picurl)" ] || curl -s -o "$saveDir$tempName" "$picURL"
-echo "$picURL" > /tmp/bing-images/picurl
-echo "$saveDir$tempName"
+mkdir -p $dir
+[ "$url" == "$(cat /tmp/bing-images/picurl)" ] || curl -so "$pic" "$url"
+echo "$url" > /tmp/bing-images/picurl
+echo "$pic"
