@@ -19,12 +19,12 @@ scrolling:
 
 font:
   normal:
-    family: Fantasque Sans Mono
+    family: Monaco
   bold:
-    family: Fantasque Sans Mono
+    family: Monaco
   italic:
-    family: Fantasque Sans Mono
-  size: 16.0
+    family: Monaco
+  size: 13.0
   offset:
     x: 0
     y: 0
