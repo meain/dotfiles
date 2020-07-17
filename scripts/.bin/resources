@@ -65,4 +65,4 @@ case "$OPTION" in
     "all") all "$*";;
 esac
 
-note status  # commit changes
+note status >/dev/null 2>&1 # commit changes
