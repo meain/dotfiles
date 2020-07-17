@@ -6,11 +6,11 @@ if [ -n "$1" ]; then
     if [ "$1" = "light" ]; then
         sed -ibk 's/^colors: \*dark$/colors: *light/' "$HOME/.config/alacritty/alacritty.yml"
         rm "$HOME/.config/alacritty/alacritty.ymlbk"
-        kitty @ set-colors --all --configured ~/.config/kitty/light.conf
+        [ -z "$KITTY_WINDOW_ID" ] || kitty @ set-colors --all --configured ~/.config/kitty/light.conf
     elif [ "$1" = "dark" ]; then
         sed -ibk 's/^colors: \*light$/colors: *dark/' "$HOME/.config/alacritty/alacritty.yml"
         rm "$HOME/.config/alacritty/alacritty.ymlbk"
-        kitty @ set-colors --all --configured ~/.config/kitty/dark.conf
+        [ -z "$KITTY_WINDOW_ID" ] || kitty @ set-colors --all --configured ~/.config/kitty/dark.conf
     elif [ "$1" = "quiet" ] || [ "$1" = "query" ]; then
         :
     else
