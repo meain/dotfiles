@@ -19,19 +19,19 @@ scrolling:
 
 font:
   normal:
-    family: Monaco
+    family: TerminessTTF NF
   bold:
-    family: Monaco
+    family: TerminessTTF NF
   italic:
-    family: Monaco
-  size: 13.0
+    family: TerminessTTF NF
+  size: 17.5
   offset:
-    x: 0
-    y: 0
+    x: -1
+    y: -3
   glyph_offset:
     x: 0
     y: 0
-  use_thin_strokes: true
+  use_thin_strokes: false
 
 color_schemes:
   dark: &dark
