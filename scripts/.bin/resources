@@ -4,32 +4,35 @@ set -e
 
 NOTES_FOLDER="$HOME/.notes/resources"
 
-get_file(){
+get_file() {
     [ -f "resources" ] && echo "resources" && return
     FILE="$(command ls -t1 "$NOTES_FOLDER" | fzf --preview "cat $NOTES_FOLDER/{}" --query "$1")"
     echo "$NOTES_FOLDER/$FILE"
 }
 
-list(){
+list() {
     cat "$(get_file "$*")"
 }
-get(){
+get() {
     fzf -m <"$(get_file "$*")" | awk '{print $1}'
 }
-open(){
+copy() {
+    fzf -m <"$(get_file "$*")" | awk '{print $1}' | pbcopy
+}
+open() {
     fzf -m <"$(get_file "$*")" | awk '{print $1}' | xargs open
 }
-new(){
+new() {
     printf "Name: "
     read -r
     RFILE="$(echo "$REPLY" | tr ' ' '-')"
     touch "$NOTES_FOLDER/$RFILE"
 }
-add(){
+add() {
     RFILE="$(get_file)"
-    if echo "$1" | grep -qE "^http";then
+    if echo "$1" | grep -qE "^http"; then
         LINK="$1"
-    elif  echo "$(pbpaste)" | grep -qE "^http";then
+    elif echo "$(pbpaste)" | grep -qE "^http"; then
         LINK="$(pbpaste)"
     else
         echo "No link passed or found in clipboard" && exit 1
@@ -38,31 +41,33 @@ add(){
     echo "$RFILE < $(pbpaste)"
     printf "Comments(empty for none): "
     read -r
-    if [ -n "$REPLY" ];then
+    if [ -n "$REPLY" ]; then
         echo "$(pbpaste) '$REPLY'" >>"$RFILE"
     else
         echo "$(pbpaste)" >>"$RFILE" # echo is kept is so that it inserts a newline
     fi
 }
-all(){
-    find "$NOTES_FOLDER" -type f -depth 1 | while read -r file;do
+all() {
+    find "$NOTES_FOLDER" -type f -depth 1 | while read -r file; do
         sed "s|$| #$(basename "$file")|" "$file"
-    done| fzf -m | awk '{print $1}'
+    done | fzf -m | awk '{print $1}'
 }
 
-if [ -n "$1" ];then
+if [ -n "$1" ]; then
     OPTION="$1"
     shift
 else
     OPTION="add"
 fi
 case "$OPTION" in
-    "list")  list "$*";;
-    "get")  get "$*";;
-    "open") open "$*";;
-    "new") new "$*";;
-    "add") add "$*";;
-    "all") all "$*";;
+"list") list "$*" ;;
+"print") get "$*" ;;
+"copy") copy "$*" ;;
+"open") open "$*" ;;
+"new") new "$*" ;;
+"add") add "$*" ;;
+"all") all "$*" ;;
+*) echo "Options are: list print copy open new add all" ;;
 esac
 
 note status >/dev/null 2>&1 # commit changes
