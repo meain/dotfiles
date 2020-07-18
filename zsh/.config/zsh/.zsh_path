@@ -5,9 +5,6 @@ export GOPATH=~/.cache/go
 export GOBIN=$GOPATH/bin
 PATH=$PATH:$GOPATH/bin
 
-# Rust
-PATH="$HOME/.cache/cargo/bin:$PATH"
-
 # Poetry
 PATH="$HOME/.poetry/bin:$PATH"
 
@@ -59,3 +56,6 @@ export GRIPHOME="$HOME/.cache/grip"
 # android
 export ANDROID_HOME="$HOME/.local/share/android"
 export PATH="$PATH:$ANDROID_HOME/cmdline-tools/tools/bin"
+
+# Rust
+PATH="$HOME/.cache/cargo/bin:$PATH"
