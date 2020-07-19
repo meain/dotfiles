@@ -355,12 +355,3 @@ tnp(){
   echo "Adding $LINK"
   ts newsboatpreview "$LINK"
 }
-
-a(){
-  todo.sh "$@"
-  (cd "$HOME/.cache/todo-txt" && 
-    git add . && 
-    git commit -m 'autocommit' &&
-    git push origin master &) >/dev/null 2>&1
-  true
-}

@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# cron: 1 */3 * * * tasksync
+
+# taskwarrior
+cd "$HOME/.local/share/task" &&
+    git add pending.data completed.data &&
+    git commit -m '[autocommit] updating data' &&
+    git push origin master
+
+# todo.txt
+cd "$HOME/.cache/todo-txt" &&
+    git add . &&
+    git commit -m '[autocommit] updateing data' &&
+    git push origin master
