@@ -20,7 +20,7 @@ new() {
     if [ "$FOLDER" = "quote" ]; then
         printf "Content: "
         read -r
-        echo "$REPLOY" >"$FOLDER/$NAME.md"
+        echo "$REPLY" >"$FOLDER/$NAME.md"
     else
         "$EDITOR" "$FOLDER/$NAME.md"
     fi
