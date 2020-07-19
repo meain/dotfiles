@@ -2,4 +2,4 @@
 
 set -e
 
-watch -d -t "task $* 2>/dev/null|tail -n+4|sed '$ d'"
+watch -d -t "TASKWATCH=1 task $* 2>/dev/null|tail -n+4|sed '$ d'"
