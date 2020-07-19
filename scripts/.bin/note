@@ -4,40 +4,46 @@ NOTES_FOLDER="$HOME/.notes"
 mkdir -p "$NOTES_FOLDER/archive"
 cd "$NOTES_FOLDER" || echo "Notes folder does not seem to exist" || exit 1
 
-get_file_name() {
-    IGNORE_PATTERN="$1"
-    shift
-    find . -name '*.md' -mindepth 2 |
-        grep -vE "/($IGNORE_PATTERN)/" | xargs ls -td1 | sed "s|^./||" | column -t |
-        fzf --no-sort --multi --query "$*" --preview "bat '{}'" |
-        cut -d' ' -f1
+new() {
+    FOLDER="note"
+    [ -n "$1" ] && FOLDER="$1"
+    mkdir -p "$FOLDER"
+
+    if [ -n "$2" ]; then
+        NAME="$(echo "$2" | sed 's| |-|g')"
+    else
+        printf "New %s: " "$FOLDER"
+        read -r
+        NAME="$(echo "$REPLY" | sed 's| |-|g')"
+    fi
+
+    if [ "$FOLDER" = "quote" ]; then
+        printf "Content: "
+        read -r
+        echo "$REPLOY" >"$FOLDER/$NAME.md"
+    else
+        "$EDITOR" "$FOLDER/$NAME.md"
+    fi
 }
 
-open_note() {
-    get_file_name 'todo|archive|temp|todo-txt|idea|stash|quote|task-notes' "$@" | xargs -L1 -I{} "$EDITOR" "{}"
+pick() {
+    if [ -z "$1" ]; then
+        IGNORE_PATTERN="archive|temp|task-notes|resources|todo"
+        find . -name '*.md' -mindepth 2 |
+            grep -vE "/($IGNORE_PATTERN)/" | xargs ls -td1 | sed "s|^./||" |
+            fzf --no-sort --multi --query "$2" --preview "bat '{}'"
+    else
+        ls -t "$1"/*.md |
+            fzf --no-sort --multi --query "$2" --preview "bat '{}'"
+    fi
 }
 
-open_note_all() {
-    get_file_name 'archive|todo-txt' "$@" | xargs -L1 -I{} "$EDITOR" "{}"
+list() {
+    pick "$1" "$2" | xargs "$EDITOR"
 }
 
-open_temp() {
-    \ls -t1 "temp" | fzf --no-sort --multi --preview "bat 'temp/{}'" |
-        xargs -L1 -I{} "$EDITOR" "temp/{}"
-}
-
-move_note() {
-    [ -z "$1" ] && echo "Mention folder to move to" && exit 1
-    TO="$1"
-    echo "Select files to move to $1"
-    get_file_name "$TO|todo|archive|temp" |
-        while read -r file; do
-            mv "$file" "$TO/$(basename "$file")"
-        done
-}
-
-archive_note() {
-    get_file_name "archive|temp" "$@" |
+archive() {
+    pick "$1" "$2" |
         while read -r n; do
             echo "archive/$(dirname "$n")"
             mkdir -p "archive/$(dirname "$n")"
@@ -45,70 +51,17 @@ archive_note() {
         done
 }
 
-oneliner() {
-    LINE="$REPLY"
-    [ -z "$2" ] && printf "Note: " && read -r && LINE="$REPLY"
-    temp="$(xxd -l5 -ps /dev/urandom)"
-    NAME="$(echo "$temp" | sed 's| |-|g')"
-    mkdir -p "$1"
-    echo "$LINE" > "$1/$NAME.md"
-}
-create_note() {
-    DIR="$1"
-    mkdir -p "$DIR"
-    shift
-    if [ -n "$1" ]; then
-        NAME="$(echo "$*" | sed 's| |-|g')"
-    else
-        printf "Note name: "
-        read -r
-        NAME="$(echo "$REPLY" | sed 's| |-|g')"
-    fi
-    "$EDITOR" "$DIR/$NAME.md"
-}
+case "$1" in
+"new") new "$2" ;;
+"temp") new temp "$(xxd -l5 -ps /dev/urandom)" ;;
+"stash") new stash "$2" ;;
+"quote") new quote "$(xxd -l5 -ps /dev/urandom)" ;;
+"list") list "$2" "$3" ;;
+"view") lf "$2" ;;
+"archive") archive "$2" "$3" ;;
+"sync") ;;  # just for backwards compatability
+*) list note ;;
+esac
 
-if [ "$1" = "new" ]; then
-    shift
-    create_note "note" "$*" # basic
-elif [ "$1" = "stash" ]; then
-    create_note "$*"
-elif [ "$1" = "idea" ]; then
-    create_note "$*"
-elif [ "$1" = "readinglist" ]; then
-    create_note "$*"
-elif [ "$1" = "quote" ]; then
-    oneliner "quote" "$2"
-elif [ "$1" = "temp" ]; then
-    temp="$(xxd -l5 -ps /dev/urandom)"
-    create_note "temp" "$temp"
-elif [ "$1" = "archive" ]; then
-    shift
-    archive_note "$*"
-elif [ "$1" = "move" ]; then
-    shift
-    move_note "$*"
-elif [ "$1" = "sync" ]; then
-    git add . && git commit -m '[syncautocommit] updating notes'
-    git push origin master
-elif [ "$1" = "commit" ]; then
-    git add . && git commit -m '[semiautocommit] updating notes'
-    exit 0
-elif [ "$1" = "diff" ]; then
-    git diff
-elif [ "$1" = "status" ]; then
-    : # this is will happen down below, just have to have this here
-elif [ "$1" = "view" ]; then
-    shift
-    lf
-elif [ "$1" = "templ" ]; then
-    open_temp
-elif [ "$1" = "open" ]; then
-    shift
-    open_note_all "$*"
-else
-    open_note "$*"
-fi
-
-cd "$NOTES_FOLDER" && git status -sb
-(git add . && git commit -m '[autocommit] updating notes') 1>/dev/null 2>&1|| true
-(git push origin master &) 1>/dev/null 2>&1|| true
+(git add . && git commit -m '[autocommit] updating notes') 1>/dev/null 2>&1 || true
+(git push origin master &) 1>/dev/null 2>&1 || true
