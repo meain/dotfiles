@@ -15,6 +15,4 @@ elif [ -f "$1" ]; then
    tmux popup -w90% -h90% -KE -d '#{pane_current_path}' -R "nvim '$1'"
 elif [ -d "$1" ]; then
    tmux popup -w90% -h90% -KE -d '#{pane_current_path}' -R "lf '$1'"
-else
-   tmux popup -w50% -h3 -KE -d '#{pane_current_path}' -R "shallisearch '$1'"
 fi
