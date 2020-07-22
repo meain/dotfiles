@@ -2,7 +2,4 @@
 
 set -e
 
-while true; do
-    task "$*" rc._forcecolor:yes 2>/dev/null | tail -n+4 | sed '$ d'
-    sleep 2
-done
+watch -d -t "task $* 2>/dev/null|tail -n+4|sed '$ d'"
