@@ -16,6 +16,7 @@ alias clera='clear'
 alias clea='clear'
 alias chmox='chmod +x'
 alias git=hub
+alias n=newsboat
 alias m=neomutt
 alias k=kubectl
 alias pip=pip3
