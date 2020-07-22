@@ -19,15 +19,18 @@ scrolling:
 
 font:
   normal:
-    family: TerminessTTF NF
+    family: Letter Gothic Std
+    style: Bold
   bold:
-    family: TerminessTTF NF
+    family: Letter Gothic Std
+    style: Bold
   italic:
-    family: TerminessTTF NF
-  size: 16.5
+    family: Letter Gothic Std
+    style: Bold Slanted
+  size: 14.0
   offset:
-    x: -1
-    y: -3
+    x: 0
+    y: 0 
   glyph_offset:
     x: 0
     y: 0
