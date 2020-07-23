@@ -4,7 +4,7 @@ set -e
 
 url="$(curl -s https://www.bing.com|pup '.img_cont'|
     grep -o 'url([^)]*'|
-    sed 's|url(|https://www.bing.com|;s|_1920x1080|_1920x1200|g;s|&amp;.*||')"
+    sed 's|url(|https://www.bing.com|')"
 dir='/tmp/bing-images/'
 pic="$dir$(date +%y%m%d).jpg"
 
