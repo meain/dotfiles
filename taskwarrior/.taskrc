@@ -38,6 +38,7 @@ urgency.uda.tags.explore.coefficient=-1.0
 urgency.uda.tags.dotfiles.coefficient=0.5
 urgency.uda.tags.fun.coefficient=-1.0
 urgency.uda.tags.work.coefficient=5.0
+urgency.uda.tags.quick.coefficient=5.0
 urgency.uda.tags.ew.coefficient=-5.0  # external waiting (waiting on someone to respond or a issue to close etc)
 urgency.uda.tags.shelved.coefficient=-2.0
 urgency.uda.project.personal.explore.coefficient=-0.5
