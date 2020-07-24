@@ -19,15 +19,15 @@ scrolling:
 
 font:
   normal:
-    family: Letter Gothic Std
-    style: Bold
+    family: DankMono Nerd Font
+    style: Regular
   bold:
-    family: Letter Gothic Std
-    style: Bold
+    family: DankMono Nerd Font
+    style: Regular
   italic:
-    family: Letter Gothic Std
-    style: Bold Slanted
-  size: 14.0
+    family: DankMono Nerd Font
+    style: Regular
+  size: 15.0
   offset:
     x: 0
     y: 0 
