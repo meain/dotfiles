@@ -88,6 +88,7 @@ color_schemes:
       white:   '0xbcbcbc'
 colors: *light
 
+# https://github.com/alacritty/alacritty/issues/2950
 visual_bell:
   animation: EaseOutExpo
   duration: 0
