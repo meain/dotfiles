@@ -11,4 +11,4 @@ cat "/dev/stdin" |
     --inline-info
     --color fg:248,hl:250,fg+:232,bg+:231,hl+:2
     --color info:108,prompt:242,spinner:108,pointer:1,marker:168
-' fzf | xargs open -a
+' fzf | xargs open -g
