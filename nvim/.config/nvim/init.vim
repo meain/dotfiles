@@ -1509,6 +1509,7 @@ augroup load_additional_plugins_onwrite
           \ call plug#load('vim-repeat') |
           \ call plug#load('vim-package-info') |
           \ call plug#load('vim-printer') |
+          \ call plug#load('vista.vim') |
           \ autocmd! load_additional_plugins_onwrite
 augroup end
 
@@ -1524,6 +1525,7 @@ augroup load_additional_plugins
           \ call plug#load('vim-repeat') |
           \ call plug#load('vim-package-info') |
           \ call plug#load('vim-printer') |
+          \ call plug#load('vista.vim') |
           \ autocmd! load_additional_plugins
 augroup end
 
