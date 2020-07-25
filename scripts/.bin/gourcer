@@ -1,0 +1,12 @@
+#!/bin/sh
+
+set -e
+
+printf "Repo: "
+read -r
+
+cd '/Users/meain/Documents/Projects/projects/gourcer' || exit 1
+echo "$REPLY" > repo
+git add repo
+git commit -m 'update repo'
+git push origin master
