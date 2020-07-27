@@ -67,3 +67,5 @@
   verbose = true
 [gpg]
   program = gpg2
+[push]
+  default = current
