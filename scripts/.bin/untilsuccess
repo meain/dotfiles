@@ -1,0 +1,8 @@
+#!/bin/sh
+
+set -e
+
+while true;do
+    eval "$*" && exit 0
+    sleep 1
+done
