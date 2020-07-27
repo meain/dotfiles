@@ -48,12 +48,20 @@ highlight feedlist "Youtube:" red default
 highlight feedlist "Comics:" magenta default
 highlight feedlist "Twitter:" color14 default
 highlight feedlist "Reddit:" color196 default
+highlight feedlist "Github:" color88 default
+highlight feedlist "Feed:" cyan default
+highlight feedlist "Twitch:" color56 default
+highlight feedlist "Peertube:" color202 default
 highlight articlelist "Blog:" blue default
 highlight articlelist "Twitter:" color14 default
 highlight articlelist "Podcast:" yellow default
 highlight articlelist "Youtube:" red default
 highlight articlelist "Comics:" magenta default
 highlight articlelist "Reddit:" color196 default
+highlight articlelist "Github:" color88 default
+highlight articlelist "Feed:" cyan default
+highlight articlelist "Twitch:" color56 default
+highlight articlelist "Peertube:" color202 default
 # highlight feedlist "#[[:space:]].+$" blue default bold
 highlight articlelist "[[:digit:]]{4}-[[:digit:]]{2}-[[:digit:]]{2}" cyan default
 highlight article "https?://[^ ]+" blue default
