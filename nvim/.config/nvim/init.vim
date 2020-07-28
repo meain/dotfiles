@@ -983,6 +983,7 @@ function! GHOpen() abort
     echo l:url
     " We can open this thing in firefox if `open` just did not replace # with %23
     call system("echo '". l:url . "' | pbcopy")
+    call system("open '". l:url . "'")
 endfunction
 command! -range GhOpen :call GHOpen()
 command! -range GithubOpen :call GHOpen()
