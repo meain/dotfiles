@@ -5,9 +5,9 @@ set -e
 [ -z "$1" ] && exit
 if echo "$1" | grep -qE '^xhttps?\:\/\/[a-z0-9_\.\?\&\=#-]+';then
    URL="$(echo "$1"|cut -c2-)"  # this is from the seperator in neomutt
-   tmux popup -w90% -h90% -KE -d '#{pane_current_path}' -R "lynx -lss='~/.lynx.lss' '$URL'"
+   tmux popup -w90% -h90% -KE -d '#{pane_current_path}' -R "open '$URL'"
 elif echo "$1" | grep -qE '^https?\:\/\/[a-z0-9_\.\?\&\=#-]+';then
-   tmux popup -w90% -h90% -KE -d '#{pane_current_path}' -R "lynx -lss='~/.lynx.lss' '$1'"
+   tmux popup -w90% -h90% -KE -d '#{pane_current_path}' -R "open '$1'"
 elif echo "$1" | grep -qE '^E\d{4}`\.'; then
     ERR=$(echo "$1"|cut -c1-5)
     tmux popup -w50% -h80% -KER "rustc --explain '$ERR'"
