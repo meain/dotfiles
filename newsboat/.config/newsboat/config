@@ -28,7 +28,7 @@ bind-key P open-all-unread-in-browser
 bind-key o open-in-browser-and-mark-read 
 bind-key O open-all-unread-in-browser-and-mark-read 
 bind-key u toggle-article-read 
-bind-key T toggle-show-read-feeds
+bind-key SPACE toggle-show-read-feeds
 bind-key s sort
 bind-key S rev-sort
 
