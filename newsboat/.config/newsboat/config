@@ -2,6 +2,7 @@
 text-width 80
 browser "open -g"
 auto-reload no
+show-read-feeds no
 show-keymap-hint yes
 prepopulate-query-feeds yes
 max-items 50  # max-items per feed (perf reasons)
