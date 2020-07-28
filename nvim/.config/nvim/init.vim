@@ -1489,13 +1489,13 @@ augroup end
 " File manipulations
 augroup load_file_manip
     autocmd!
-    autocmd CursorHold,CursorHoldI * source ~/.config/nvim/filemanip.vim | autocmd! load_file_manip
+    autocmd CursorHold,CursorHoldI,BufWritePost * source ~/.config/nvim/filemanip.vim | autocmd! load_file_manip
 augroup end
 
 " Git stuff
 augroup load_git_utils
     autocmd!
-    autocmd CursorHold,CursorHoldI * source ~/.config/nvim/gitutils.vim | autocmd! load_git_utils
+    autocmd CursorHold,CursorHoldI,BufWritePost * source ~/.config/nvim/gitutils.vim | autocmd! load_git_utils
 augroup end
 
 augroup load_additional_plugins_onwrite
