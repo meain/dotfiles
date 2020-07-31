@@ -132,6 +132,10 @@ set confirm
 " Disable wrapping
 set nowrap
 
+" Disable hard wrapping
+set textwidth=0 
+set wrapmargin=0
+
 " Set hidden
 set hidden
 
