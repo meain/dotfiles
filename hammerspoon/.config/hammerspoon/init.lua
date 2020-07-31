@@ -17,7 +17,7 @@ mailcounter:setTitle("M")
 
 
 local taskwarrior = require("taskwarrior")
-hs.hotkey.bind({"shift", "alt"}, "space", function()
+hs.hotkey.bind({"shift", "alt"}, "t", function()
   taskwarrior.run()
 end)
 
