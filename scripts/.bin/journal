@@ -1,0 +1,35 @@
+#!/bin/sh
+
+set -e
+
+DIR="$HOME/.local/share/journal"
+mkdir -p "$DIR"
+
+FILE="$DIR/$(date '+%Y-%m-%d').md"
+
+# encrypt if available
+if [ -f "$FILE.asc" ]; then
+    gpg --decrypt "$FILE.asc" >"$FILE"
+    cat "$FILE" >"$FILE.bkp"
+fi
+
+# create new if no entry for today available
+if [ -f "$FILE" ]; then
+    echo "" >>"$FILE"
+else
+    touch "$FILE" "$FILE.bkp"
+fi
+
+# open with current time prefilled
+echo "== $(date) ==" >>"$FILE"
+"$EDITOR" "$FILE" +'normal! G'
+
+# save only if file changed
+if ! diff "$FILE" "$FILE.bkp"; then
+    rm "$FILE.asc"
+    gpg --encrypt --sign --armor -r abinsimon10@gmail.com "$FILE"
+    cd "$DIR" && git add ./*.asc &&
+        git commit -m '[autocommit] update journal'
+fi
+
+rm "$FILE" "$FILE.bkp"
