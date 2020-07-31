@@ -13,3 +13,6 @@ cd "$HOME/.cache/todo-txt" &&
     git add . &&
     git commit -m '[autocommit] updateing data' &&
     git push origin master
+
+cd "$HOME/.local/share/journal" &&
+    git push origin master
