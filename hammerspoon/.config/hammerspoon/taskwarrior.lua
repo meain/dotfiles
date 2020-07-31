@@ -33,14 +33,14 @@ function obj.run()
             styledtext.new(
             words[3]:gsub("%s+", "", 1),
             {
-                font = {name = "SpaceMonoNerdFontCompleteM-Regular", size = 13}
+                font = {size = 17}
             }
         )
         local subtext =
             styledtext.new(
             words[1] .. " " .. words[2],
             {
-                font = {name = "SpaceMonoNerdFontCompleteM-Regular", size = 13}
+                font = {size = 13}
             }
         )
         table.insert(
