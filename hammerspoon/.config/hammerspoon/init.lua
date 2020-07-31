@@ -15,6 +15,12 @@ local mailcounter = hs.menubar.new()
 mailcounter:setTooltip("No new emails")
 mailcounter:setTitle("M")
 
+
+local taskwarrior = require("taskwarrior")
+hs.hotkey.bind({"shift", "alt"}, "space", function()
+  taskwarrior.run()
+end)
+
 -- mute and unmute mic
 hs.loadSpoon("MicMute")
 spoon.MicMute:bindHotkeys({
