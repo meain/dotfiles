@@ -659,6 +659,13 @@ augroup improved_autoread
   autocmd FocusGained,BufEnter * silent! checktime
 augroup end
 
+augroup custom_mail_config
+  autocmd!
+  autocmd FileType mail setlocal wrap
+  autocmd FileType mail setlocal textwidth=0 
+  autocmd FileType mail setlocal wrapmargin=0
+augroup end
+
 
 
 
