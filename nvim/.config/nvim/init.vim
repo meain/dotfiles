@@ -212,9 +212,6 @@ set shiftround
 " Don't show --INSERT-- at bottom
 set noshowmode
 
-" Set textwidth
-set textwidth=120
-
 " Show invisibles
 set list
 set listchars=tab:\ \ ,eol:¬,trail:⋅,nbsp:ø
