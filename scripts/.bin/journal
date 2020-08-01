@@ -25,7 +25,7 @@ echo "== $(date) ==" >>"$FILE"
 "$EDITOR" "$FILE" +'normal! G'
 
 # save only if file changed
-if ! diff "$FILE" "$FILE.bkp"; then
+if ! diff -q "$FILE" "$FILE.bkp"; then
     [ -f "$FILE.asc" ] && rm "$FILE.asc"
     gpg --encrypt --sign --armor -r abinsimon10@gmail.com "$FILE"
     cd "$DIR" && git add ./*.asc &&
