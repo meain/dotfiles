@@ -38,6 +38,9 @@ font:
 
 color_schemes:
   dark: &dark
+    cursor:
+      text: '0x1c1c1c'
+      cursor: '0xF1F1F1'
     primary:
       background: '0x1c1c1c'
       foreground: '0xe5e1d8'
@@ -60,6 +63,9 @@ color_schemes:
       cyan:    '0xc2fefa'
       white:   '0xffffff'
   light: &light
+    cursor:
+      text: '0xFFFFFF'
+      cursor: '0xa1a1a1'
     # Papercolor modified
     primary:
       background: '0xFFFFFF'
@@ -86,12 +92,14 @@ color_schemes:
       magenta: '0xa56ccc'
       cyan:    '0x51c8d1'
       white:   '0xbcbcbc'
+
 colors: *light
 
 # https://github.com/alacritty/alacritty/issues/2950
-visual_bell:
+bell:
   animation: EaseOutExpo
   duration: 0
+  command: None
 
 background_opacity: 1.0
 
@@ -247,3 +255,4 @@ selection:
   semantic_escape_chars: ",│`|:\"' ()[]{}<>"
 
 live_config_reload: true
+alt_send_esc: false
