@@ -26,7 +26,7 @@ echo "== $(date) ==" >>"$FILE"
 
 # save only if file changed
 if ! diff "$FILE" "$FILE.bkp"; then
-    rm "$FILE.asc"
+    [ -f "$FILE.asc" ] && rm "$FILE.asc"
     gpg --encrypt --sign --armor -r abinsimon10@gmail.com "$FILE"
     cd "$DIR" && git add ./*.asc &&
         git commit -m '[autocommit] update journal'
