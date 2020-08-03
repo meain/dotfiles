@@ -30,10 +30,11 @@ include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/light-256.theme
 #include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/no-color.theme
 
 uda.priority.values=S,H,M,,L
-urgency.uda.priority.S.coefficient=20
+urgency.uda.priority.S.coefficient=10
 urgency.uda.priority.L.coefficient=-2.5
 urgency.blocking.coefficient=0.5
 urgency.annotations.coefficient=0.1
+urgency.uda.tags.next.coefficient=20
 urgency.uda.tags.explore.coefficient=-1.0
 urgency.uda.tags.dotfiles.coefficient=0.5
 urgency.uda.tags.fun.coefficient=-1.0
