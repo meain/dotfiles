@@ -36,7 +36,9 @@ if ! diff -q "$FILE" "$FILE.bkp" >/dev/null 2>&1; then
     gpg --encrypt --sign --armor -r abinsimon10@gmail.com "$FILE" 2>/dev/null
     git add ./*.asc &&
         git commit -m '[autocommit] update journal' >/dev/null 2>&1
+    echo "Journal updated."
+else
+    echo "No updates."
 fi
 
 rm "$FILE" "$FILE.bkp"
-echo "Journal updated."
