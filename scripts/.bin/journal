@@ -5,7 +5,13 @@ set -e
 DIR="$HOME/.local/share/journal"
 mkdir -p "$DIR"
 
-FILE="$DIR/$(date '+%Y-%m-%d').md"
+if [ -z "$1" ];then
+    cd "$DIR"
+    FILE="$DIR/$(date '+%Y/%m/%d').md"
+    mkdir -p "$(dirname "$FILE")"
+else
+    FILE="$(echo "$1"|sed 's|.asc$||')"
+fi
 
 # encrypt if available
 if [ -f "$FILE.asc" ]; then
