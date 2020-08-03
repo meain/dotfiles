@@ -27,7 +27,7 @@ else
 fi
 
 # open with current time prefilled
-echo "== $(date) ==" >>"$FILE"
+echo "== $(date '+%T') ==" >>"$FILE"
 "$EDITOR" "$FILE" +'normal! G'
 
 # save only if file changed
