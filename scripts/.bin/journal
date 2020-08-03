@@ -15,7 +15,7 @@ fi
 
 # encrypt if available
 if [ -f "$FILE.asc" ]; then
-    gpg --decrypt "$FILE.asc" >"$FILE"
+    gpg --decrypt "$FILE.asc" >"$FILE" 2>/dev/null
     cat "$FILE" >"$FILE.bkp"
 fi
 
@@ -31,11 +31,12 @@ echo "== $(date) ==" >>"$FILE"
 "$EDITOR" "$FILE" +'normal! G'
 
 # save only if file changed
-if ! diff -q "$FILE" "$FILE.bkp"; then
+if ! diff -q "$FILE" "$FILE.bkp" >/dev/null 2>&1; then
     [ -f "$FILE.asc" ] && rm "$FILE.asc"
-    gpg --encrypt --sign --armor -r abinsimon10@gmail.com "$FILE"
-    cd "$DIR" && git add ./*.asc &&
-        git commit -m '[autocommit] update journal'
+    gpg --encrypt --sign --armor -r abinsimon10@gmail.com "$FILE" 2>/dev/null
+    git add ./*.asc &&
+        git commit -m '[autocommit] update journal' >/dev/null 2>&1
 fi
 
 rm "$FILE" "$FILE.bkp"
+echo "Journal updated."
