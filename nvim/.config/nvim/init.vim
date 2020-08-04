@@ -56,6 +56,7 @@ Plug 'tpope/vim-markdown', { 'for': ['md', 'markdown'] }                        
 Plug 'cespare/vim-toml', { 'for': 'toml' }                                                     " Toml highlight
 Plug 'raimon49/requirements.txt.vim', { 'for': 'requirements' }                                " Requirements file
 Plug 'jxnblk/vim-mdx-js', { 'for': 'mdx' }                                                     " MDX stuff
+Plug 'pechorin/any-jump.vim'
 
 " Language enhacements
 Plug '~/Documents/Projects/projects/vim-jsontogo' , { 'for': ['go'] }                          " Convert JSON to Go struct
@@ -1490,6 +1491,12 @@ augroup custom_goyo
   autocmd! User GoyoEnter nested call <SID>goyo_enter()
   autocmd! User GoyoLeave nested call <SID>goyo_leave()
 augroup end
+
+" Anyjump
+let g:any_jump_disable_default_keybindings = 1
+nnoremap <leader>J :AnyJump<CR>
+xnoremap <leader>J :AnyJumpVisual<CR>
+
 
 "                             Source External                          "
 "                    ==============================                    "
