@@ -45,7 +45,7 @@ alias gco='git checkout $(git branch | grep -v "\*" | sed s:^..::g | fzf --heigh
 alias gbd='git branch | grep -v "\*" | sed s:^..::g | fzf -m --height 40% --reverse | xargs git branch -D'
 
 # Fancy push
-alias gpu='git push origin $(git branch | grep "\*" | sed s:^..::g )'
+alias gpu='git push origin $(git branch | grep "\*" | sed s:^..::g ); sleep 2 && tsquick gitcistatus >/dev/null'
 alias gpuf='git push origin $(git branch | grep "\*" | sed s:^..::g ) --force-with-lease'
 alias gpl='git pull origin $(git branch | grep "\*" | sed s:^..::g ) && echo "Use `tput setaf 2`glp`tput sgr0` and `tput setaf 2`gdp`tput sgr0` to view new commits"'
 

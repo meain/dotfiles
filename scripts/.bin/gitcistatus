@@ -1,0 +1,12 @@
+#!/bin/sh
+
+set -e
+
+log="$(git log --pretty=format:%s -1)"
+while sleep 5; do
+    case "$(hub ci-status)" in
+        "no status") break;;
+        "success") break;;
+        "error") notify "💥 CI failed: $(git remote get-url origin|xargs basename|sed 's|.git$||')" "$log"; break;;
+    esac
+done
