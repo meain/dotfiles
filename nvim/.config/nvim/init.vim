@@ -977,7 +977,7 @@ function! Rrg(term)
 endfunction
 command! -nargs=1 Rrg :call Rrg(<f-args>)
 
-function! GHOpen() abort
+function! GHOpen(open) abort
     let l:git_origin = system('git config --get remote.origin.url')
     let l:git_branch = system('git rev-parse --abbrev-ref HEAD')
     let l:current_file = expand('%')
@@ -992,11 +992,14 @@ function! GHOpen() abort
     echo l:url
     " We can open this thing in firefox if `open` just did not replace # with %23
     call system("echo '". l:url . "' | pbcopy")
-    call system("open '". l:url . "'")
+    if a:open
+      call system("open '". l:url . "'")
+    endif
 endfunction
-command! -range GhOpen :call GHOpen()
-command! -range GithubOpen :call GHOpen()
-command! -range OpenInGithub :call GHOpen()
+command! -range GhOpen :call GHOpen(v:true)
+command! -range GithubOpen :call GHOpen(v:true)
+command! -range OpenInGithub :call GHOpen(v:true)
+command! -range GhCopy :call GHOpen(v:false)
 
 " Startpage
 function! StartPage(force)
