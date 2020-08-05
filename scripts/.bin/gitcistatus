@@ -9,5 +9,7 @@ while sleep 5; do
         "no status") break;;
         "success") notify "✅ CI successful: $(git remote get-url origin|xargs basename|sed 's|.git$||')" "$log"; break;;
         "failure") notify "💥 CI failed: $(git remote get-url origin|xargs basename|sed 's|.git$||')" "$log"; break;;
+        "running") echo "Running...";;
+        *) break;;
     esac
 done
