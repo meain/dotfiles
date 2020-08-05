@@ -8,6 +8,6 @@ while sleep 5; do
     case "$(hub ci-status "$id")" in
         "no status") break;;
         "success") notify "✅ CI successful: $(git remote get-url origin|xargs basename|sed 's|.git$||')" "$log"; break;;
-        "error") notify "💥 CI failed: $(git remote get-url origin|xargs basename|sed 's|.git$||')" "$log"; break;;
+        "failure") notify "💥 CI failed: $(git remote get-url origin|xargs basename|sed 's|.git$||')" "$log"; break;;
     esac
 done
