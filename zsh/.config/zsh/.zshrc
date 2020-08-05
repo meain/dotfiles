@@ -10,7 +10,11 @@ export TERM=screen-256color-italic
 source $ZDOTDIR/.zsh_path
 
 echo ""
-randomidea | fmt -c -w $COLUMNS
+if ! onacall;then
+  randomidea | fmt -c -w $COLUMNS
+else
+  corpcrap | fmt -c -w $COLUMNS
+fi
 echo ""
 
 # zsh settings
