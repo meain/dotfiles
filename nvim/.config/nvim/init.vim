@@ -1233,7 +1233,7 @@ let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'json', 'javascr
 let g:gen_tags#blacklist = ['$HOME']
 
 " Vim Router
-let g:rooter_use_lcd = 1
+let g:rooter_cd_cmd="lcd"
 let g:rooter_silent_chdir = 1
 let g:rooter_resolve_links = 1
 let g:rooter_patterns = ['Rakefile', 'Makefile', '.git/', '.vscode']
