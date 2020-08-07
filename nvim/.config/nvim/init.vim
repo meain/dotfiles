@@ -6,7 +6,7 @@ let g:schlepp_triggers = ['<Plug>SchleppUp', '<Plug>SchleppDown', '<Plug>Schlepp
 call plug#begin('~/.local/share/nvim/plugged')
 
 " Visual enhancements
-Plug '~/Documents/Projects/projects/hima-vim'
+Plug '~/Documents/Projects/projects/hima-vim'                                                  " Minmal light colorschme
 Plug 'Yggdroot/indentLine'                                                                     " Show indent
 Plug 'mhinz/vim-signify', { 'on': 'LazyLoadPlugins' }                                          " Git diff icons in gutter
 Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }                                           " Hyper focus editing
