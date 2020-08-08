@@ -1,54 +1,54 @@
 #!/bin/sh
 
 gg() {
-    UNPUSHED="$(git rev-list --count "origin/$(git rev-parse --abbrev-ref HEAD 2>/dev/null).." 2>/dev/null)"
-    [ -n "$UNPUSHED" ] && UNPUSHED="$(tput setaf 245)($UNPUSHED unpushed)" &&
-    echo "$(git rev-list --count HEAD 2>/dev/null) total commits $UNPUSHED"
-    git hm
+	UNPUSHED="$(git rev-list --count "origin/$(git rev-parse --abbrev-ref HEAD 2>/dev/null).." 2>/dev/null)"
+	[ -n "$UNPUSHED" ] && UNPUSHED="$(tput setaf 245)($UNPUSHED unpushed)" &&
+		echo "$(git rev-list --count HEAD 2>/dev/null) total commits $UNPUSHED"
+	git hm
 }
 
 gh() {
-    GIT_STAGED_FILES=$(git diff --name-only --cached)
-    if [ -z "$GIT_STAGED_FILES" ];then
-        git add -u && git commit -m "$*"
-    else
-        git commit -m "$*"
-    fi
+	GIT_STAGED_FILES=$(git diff --name-only --cached)
+	if [ -z "$GIT_STAGED_FILES" ]; then
+		git add -u && git commit -m "$*"
+	else
+		git commit -m "$*"
+	fi
 }
 
-gca(){
-    GIT_STAGED_FILES=$(git diff --name-only --cached)
-    if [ -z "$GIT_STAGED_FILES" ];then
-        git commit -a --amend -C HEAD
-    else
-        git commit --amend -C HEAD
-    fi
+gca() {
+	GIT_STAGED_FILES=$(git diff --name-only --cached)
+	if [ -z "$GIT_STAGED_FILES" ]; then
+		git commit -a --amend -C HEAD
+	else
+		git commit --amend -C HEAD
+	fi
 }
 
 gitignore() {
-    LANGUAGE=$(curl -L -s https://www.gitignore.io/api/list | tr "," "\n" | fzf)
-    curl -L -s "https://www.gitignore.io/api/$LANGUAGE%2Cmacos" >.gitignore
+	LANGUAGE=$(curl -L -s https://www.gitignore.io/api/list | tr "," "\n" | fzf)
+	curl -L -s "https://www.gitignore.io/api/$LANGUAGE%2Cmacos" >.gitignore
 }
 
 ga() {
-    if [ -z "$1" ];then
-	git status --short | fzf -m --preview="echo {} | awk '{print \$NF}' | xargs git diff -- " | awk '{print $NF}' | xargs git add
-    else
-	git add "$@"
-    fi
+	if [ -z "$1" ]; then
+		git status --short | fzf -m --preview="echo {} | awk '{print \$NF}' | xargs git diff -- " | awk '{print $NF}' | xargs git add
+	else
+		git add "$@"
+	fi
 }
 
 gcl() {
-    if [ -z "$1" ]; then
-        GITURL=$(pbpaste)
-    elif echo "$1" | grep '/' > /dev/null; then
-        GITURL="https://github.com/$1.git"
-    else
-        GITURL="https://github.com/meain/$1.git"
-    fi
-    FOLDER="$(echo "$GITURL" | sed 's/.*\///g' | sed 's/\..*//g')"
-    git clone "$GITURL"
-    cd "$FOLDER" || return 1
+	if [ -z "$1" ]; then
+		GITURL=$(pbpaste)
+	elif echo "$1" | grep '/' >/dev/null; then
+		GITURL="https://github.com/$1.git"
+	else
+		GITURL="https://github.com/meain/$1.git"
+	fi
+	FOLDER="$(echo "$GITURL" | sed 's/.*\///g' | sed 's/\..*//g')"
+	git clone "$GITURL"
+	cd "$FOLDER" || return 1
 }
 
 git_sparse_clone() {
@@ -67,47 +67,47 @@ git_sparse_clone() {
 	mkdir -p .git/info
 	touch .git/info/sparse-checkout
 	for i; do
-		echo "$i" >> .git/info/sparse-checkout
+		echo "$i" >>.git/info/sparse-checkout
 	done
 
 	git pull origin master
 }
 
 git_untracked_to_gitignore() {
-    git status | grep -P \"^\\t\" | grep -vF .gitignore | sed \"s/^\\t//\" >>.gitignore
+	git status | grep -P \"^\\t\" | grep -vF .gitignore | sed \"s/^\\t//\" >>.gitignore
 }
 
 git_list_ignord_files() {
-    git ls-files --others -i --exclude-standard
+	git ls-files --others -i --exclude-standard
 }
 
 git_list_unmerged_branches() {
-    git checkout master && git branch -a --no-merged
+	git checkout master && git branch -a --no-merged
 }
 
 git_delete_tag() {
-    git tag --delete "$1" && git push --delete origin "$1"
+	git tag --delete "$1" && git push --delete origin "$1"
 }
 
 git_edit_conflicting_files() {
-    git diff --name-only --diff-filter=U | xargs "$EDIOR"
+	git diff --name-only --diff-filter=U | xargs "$EDIOR"
 }
 
-git_checkout_pr(){
-    git pr checkout "$(git pr list | sed 's/^\ *//' | fzf | sed 's/.\([0-9]*\).*/\1/')"
+git_checkout_pr() {
+	git pr checkout "$(git pr list | sed 's/^\ *//' | fzf | sed 's/.\([0-9]*\).*/\1/')"
 }
 
 git_usebranch() {
-    [ -z "$1" ] && echo 'Provide branchname.' && return 1
-    git branch "$1"
-    git reset --keep HEAD~
-    git checkout "$1"
+	[ -z "$1" ] && echo 'Provide branchname.' && return 1
+	git branch "$1"
+	git reset --keep HEAD~
+	git checkout "$1"
 }
 
-gpu(){
-    branch="$(git branch | grep '\*' | sed s:^..::g )"
-    [ "$1" = "-f" ] && [ "$branch" = "master" ] && printf "Are you sure you wanna force push to master?" && read -r
-    [ "$REPLY" = 'y' ] || return 0
-    git push origin "$branch"
-    (gitcistatus >/dev/null &)
+gpu() {
+	branch="$(git branch | grep '\*' | sed s:^..::g)"
+	[ "$1" = "-f" ] && [ "$branch" = "master" ] && printf "Are you sure you wanna force push to master?" && read -r
+	[ "$REPLY" = 'y' ] || return 0
+	git push origin "$branch"
+	(gitcistatus >/dev/null &)
 }
