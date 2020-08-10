@@ -106,8 +106,11 @@ git_usebranch() {
 
 gpu() {
 	branch="$(git branch | grep '\*' | sed s:^..::g)"
-	[ "$1" = "-f" ] && [ "$branch" = "master" ] && printf "Are you sure you wanna force push to master?" && read -r
-	[ "$REPLY" = 'y' ] || return 0
+	if [ "$1" = "-f" ] && [ "$branch" = "master" ];then 
+	    printf "Are you sure you wanna force push to master?"
+	    read -r
+	    [ "$REPLY" = 'y' ] || return 0
+	fi
 	git push origin "$branch"
 	(gitcistatus >/dev/null &)
 }
