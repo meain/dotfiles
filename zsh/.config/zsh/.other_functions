@@ -294,6 +294,16 @@ compdef _ssh cssh=ssh
 alias ssh=cssh
 
 
+cmosh() {
+	[ -z "$1" ] && HOST=$(grep -E "^Host" "$HOME/.ssh/config" | sed 's/^Host //' | fzf) || HOST="$1"
+	[ -z "$HOST" ] && echo "No host specified" && return 1
+	[ -n "$TMUX" ] && tmux select-pane -P bg=colour195
+	[ -z "$1" ] && mosh "$HOST" || mosh "$@"
+	tmux selectp -P default
+}
+compdef _mosh cmosh=mosh
+alias mosh=cmosh
+
 docs() {
 	[ -z "$1" ] && echo "usage: docs search terms docset" && return 0
 	array=($@)
