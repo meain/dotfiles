@@ -284,29 +284,15 @@ sjj() {
 }
 
 cssh() {
-	if [ -z "$1" ]; then
-		HOST=$(grep -E "^Host" "$HOME/.ssh/config" | sed 's/^Host //' | fzf)
-	else
-		HOST="$1"
-	fi
-
-	if [ -z "$HOST" ]; then
-		echo "No host specified"
-		return 1
-	fi
-
-	if [ -n "$TMUX" ]; then
-		tmux select-pane -P bg=colour195
-	fi
-	if [ -z "$1" ]; then
-		ssh "$HOST"
-	else
-		ssh "$@"
-	fi
+	[ -z "$1" ] && HOST=$(grep -E "^Host" "$HOME/.ssh/config" | sed 's/^Host //' | fzf) || HOST="$1"
+	[ -z "$HOST" ] && echo "No host specified" && return 1
+	[ -n "$TMUX" ] && tmux select-pane -P bg=colour195
+	[ -z "$1" ] && ssh "$HOST" || ssh "$@"
 	tmux selectp -P default
 }
 compdef _ssh cssh=ssh
 alias ssh=cssh
+
 
 docs() {
 	[ -z "$1" ] && echo "usage: docs search terms docset" && return 0
