@@ -111,6 +111,6 @@ gpu() {
 	    read -r
 	    [ "$REPLY" = 'y' ] || return 0
 	fi
-	git push origin "$branch"
+	git push origin "$branch" "$*"
 	(gitcistatus >/dev/null &)
 }
