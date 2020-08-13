@@ -36,7 +36,7 @@ pdfpreview() {
 
 everythingelse() {
     if [ -d "$1" ]; then
-        ls -A "$1"
+        tree -L 1 -a "$1"
     elif file --mime "$1" | grep 'charset=binary'; then
         MIMETYPE="$(file --mime ade.sketch | cut -d' ' -f2)"
         if echo "$MIMETYPE" | grep 'application/zip'; then
