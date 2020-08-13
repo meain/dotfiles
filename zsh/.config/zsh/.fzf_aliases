@@ -48,21 +48,15 @@ snn() {
     printf '#!/bin/sh\n\nset -e\n\n' >"$1" && chmod +x "$1" && $EDITOR "$1"
 }
 
+iopen(){
+    file --mime "$1" | grep 'charset=binary' && open "$1" || "$EDITOR" "$1"
+}
 fl() {
-    RES=$(fd --maxdepth 1 --hidden | fzf --print-query --preview "bat --plain --color=always {} 2> /dev/null || ls -A {}" --no-select-1 | tail -n 1)
-    if [ -z "$RES" ]; then
-        return 0
-    elif [ -f "$RES" ]; then
-        cat "$RES"
-        fl
-    elif [ "$RES" = ".." ]; then
-        cd ..
-        fl
-    else
-        [ -d "$RES" ]
-        cd "$RES" || return 1
-        fl
-    fi
+    RES=$(fd --maxdepth 1 --hidden | fzf --print-query --preview "preview {}" --no-select-1 | tail -n 1)
+    [ -z "$RES" ] && return 0
+    [ -f "$RES" ] && iopen "$RES" && fl
+    [ "$RES" = ".." ] && cd .. && fl
+    [ -d "$RES" ] && cd "$RES" && fl
 }
 
 nf() {
