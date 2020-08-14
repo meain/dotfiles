@@ -978,7 +978,7 @@ endfunction
 command! -nargs=1 Rrg :call Rrg(<f-args>)
 
 function! GHOpen(open) abort
-    let l:git_origin = system('git config --get remote.origin.url')
+    let l:git_origin = system("git config --get remote.origin.url|sed 's|git@github.com:|https://github.com/|;s|.git$||'")
     let l:git_branch = system('git rev-parse --abbrev-ref HEAD')
     let l:current_file = expand('%')
     let l:line_start = getpos("'<")[1]
