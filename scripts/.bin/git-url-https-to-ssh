@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -e
+
+remote="$1"
+[ -z "$1" ] && remote='origin'
+url="$(git remote get-url "$remote")"
+sshurl="$(echo "$url"|sed 's|https://github.com/|git@github.com:|;s|.git$||;s|$|.git|')"
+echo Changing "$url" to "$sshurl"
+git remote remove "$remote"
+git remote add "$remote" "$sshurl"
