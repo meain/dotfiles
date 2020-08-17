@@ -41,7 +41,6 @@ alias glp="gl @{1}.."
 # Easier checkout
 alias gcom='git checkout master'
 alias gcob='git checkout -b'
-alias gco='git checkout $(git branch | grep -v "\*" | sed s:^..::g | fzf --height 40% --reverse)'
 alias gbd='git branch | grep -v "\*" | sed s:^..::g | fzf -m --height 40% --reverse | xargs git branch -D'
 
 # Fancy push

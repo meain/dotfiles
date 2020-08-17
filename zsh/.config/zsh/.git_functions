@@ -106,11 +106,32 @@ git_usebranch() {
 
 gpu() {
 	branch="$(git branch | grep '\*' | sed s:^..::g)"
-	if [ "$1" = "-f" ] && [ "$branch" = "master" ];then 
-	    printf "Are you sure you wanna force push to master?"
-	    read -r
-	    [ "$REPLY" = 'y' ] || return 0
+	if [ "$1" = '--force-with-lease' ]; then
+		printf "Are you sure you wanna force push to master?"
+		read -r
+		[ "$REPLY" = 'y' ] || return 0
+	fi
+	if [ "$1" = "-f" ] && [ "$branch" = "master" ]; then
+		printf "Are you sure you wanna force push to master?"
+		printf "How about --force-with-lease"
+		printf "Are you really sure?"
+		read -r
+		[ "$REPLY" = 'y' ] || return 0
 	fi
 	git push origin "$branch" "$*"
 	(gitcistatus >/dev/null &)
+}
+
+gco() {
+	if [ "$1" = "-a" ]; then
+		branches="$(git branch -a)"
+	else
+		branches="$(git branch)"
+	fi
+	echo "$branches" |
+		grep -v '*' |
+		awk '{print $1}' |
+		fzf --height 40% --reverse |
+		xargs basename |
+		xargs git checkout
 }
