@@ -16,6 +16,9 @@ list() {
 get() {
     fzf -m <"$(get_file "$*")" | awk '{print $1}'
 }
+edit() {
+    "$EDITOR" "$(get_file "$*")"
+}
 copy() {
     fzf -m <"$(get_file "$*")" | awk '{print $1}' | pbcopy
 }
@@ -67,6 +70,7 @@ case "$OPTION" in
 "new") new "$*" ;;
 "add") add "$*" ;;
 "all") all "$*" ;;
+"edit") edit "$*" ;;
 *) echo "Options are: list print copy open new add all" ;;
 esac
 
