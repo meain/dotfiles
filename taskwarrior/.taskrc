@@ -103,12 +103,6 @@ report.tiny.filter=status:pending and limit:7 +UNBLOCKED
 report.tiny.labels=Id,Project,P,Description,Du
 report.tiny.sort=urgency-
 
-report.ew.columns=id,project,priority,description.count,due.relative
-report.ew.description=ew list
-report.ew.filter=+ew and status:pending
-report.ew.labels=Id,Project,P,Description,Du
-report.ew.sort=urgency-
-
 report.wait.columns=id,project,priority,description.count,due.relative
 report.wait.description=ew list
 report.wait.filter=status:waiting
