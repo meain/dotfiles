@@ -45,7 +45,7 @@ list() {
 archive() {
     pick "$1" "$2" |
         while read -r n; do
-            echo "archive/$(dirname "$n")"
+            echo "Archiving $n"
             mkdir -p "archive/$(dirname "$n")"
             mv "$n" "archive/$n"
         done
