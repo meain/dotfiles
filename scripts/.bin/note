@@ -28,7 +28,7 @@ new() {
 
 pick() {
     if [ -z "$1" ]; then
-        IGNORE_PATTERN="archive|temp|task-notes|resources|todo"
+        IGNORE_PATTERN="archive|temp|task-notes|resources|todo|vault"
         find . -name '*.md' -mindepth 2 |
             grep -vE "/($IGNORE_PATTERN)/" | xargs ls -td1 | sed "s|^./||" |
             fzf --no-sort --multi --query "$2" --preview "bat '{}'"
