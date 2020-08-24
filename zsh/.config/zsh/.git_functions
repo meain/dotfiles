@@ -112,8 +112,8 @@ gpu() {
 		[ "$REPLY" = 'y' ] || return 0
 	fi
 	if [ "$1" = "-f" ] && [ "$branch" = "master" ]; then
-		printf "Are you sure you wanna force push to master?"
-		printf "How about --force-with-lease"
+		echo "Are you sure you wanna force push to master?"
+		echo "How about --force-with-lease"
 		printf "Are you really sure?"
 		read -r
 		[ "$REPLY" = 'y' ] || return 0
