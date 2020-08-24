@@ -131,7 +131,7 @@ gco() {
 	echo "$branches" |
 		grep -v '*' |
 		awk '{print $1}' |
-		fzf --height 40% --reverse |
+		fzf --height 40% --reverse --preview 'git log --oneline -20 {}' |
 		xargs basename |
 		xargs git checkout
 }
