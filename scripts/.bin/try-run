@@ -4,9 +4,5 @@ set -e
 
 
 TNAME="$(pwd|xargs basename)"
-IGNORE_STRING=""
-if [ -f .dockerignore ];then
-    IGNORE_STRING="$(sed '/^\ *$/d;s|^|--exclude |' .dockerignore | tr '\n' ' ')"
-fi
-rsync -azvr --exclude '.git' $IGNORE_STRING . "$EXPERIMENT_VM:/tmp/$TNAME"
-ssh "$EXPERIMENT_VM" -t "cd /tmp/$TNAME && docker build -t gonna-run . && docker run $@ -it gonna-run"
+rsync -azvr --exclude-from='.dockerignore' --exclude-from='.gitignore' --exclude .git . "$EXPERIMENT_VM:/tmp/$TNAME"
+ssh "$EXPERIMENT_VM" -t "cd /tmp/$TNAME && docker build -t gonna-run . && docker run $* -it gonna-run"
