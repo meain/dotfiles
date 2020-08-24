@@ -336,7 +336,7 @@ autocmd BufReadPre *.min.* syntax off
 " Hightlighted yank
 augroup highlight_yank
   autocmd!
-  autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank("IncSearch", 200)
+  autocmd TextYankPost * silent! lua vim.highlight.on_yank({higroup="IncSearch", timeout=200})
 augroup END
 
 
