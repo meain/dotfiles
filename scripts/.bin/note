@@ -26,6 +26,27 @@ new() {
     fi
 }
 
+_print_name_and_title() {
+    while read -r line; do
+        title="$(grep '^title' "$line" | head -n1 | sed 's|title: ||')"
+        echo "$line  $title"
+    done </dev/stdin
+}
+
+pick_with_title() {
+    if [ -z "$1" ]; then
+        IGNORE_PATTERN="archive|temp|task-notes|resources|todo|vault"
+        find . -name '*.md' -mindepth 2 |
+            grep -vE "/($IGNORE_PATTERN)/" | xargs ls -td1 | sed "s|^./||" |
+            _print_name_and_title |
+            fzf --no-sort --multi --query "$2" --preview "echo '{}'| awk '{print \$1}'|xargs bat" |
+            awk '{print $1}'
+    else
+        ls -t "$1"/*.md | _print_name_and_title |
+            fzf --no-sort --multi --query "$2" --preview "echo '{}'| awk '{print \$1}'|xargs bat" | awk '{print $1}'
+    fi
+}
+
 pick() {
     if [ -z "$1" ]; then
         IGNORE_PATTERN="archive|temp|task-notes|resources|todo|vault"
@@ -39,7 +60,11 @@ pick() {
 }
 
 list() {
-    pick "$1" "$2" | xargs "$EDITOR"
+    if [ "$1" = "temp" ]; then
+        pick_with_title "$1" "$2" | xargs "$EDITOR"
+    else
+        pick "$1" "$2" | xargs "$EDITOR"
+    fi
 }
 
 archive() {
@@ -60,7 +85,7 @@ case "$1" in
 "list") list "$2" "$3" ;;
 "view") lf "$2" ;;
 "archive") archive "$2" "$3" ;;
-"commit") ;;  # just for backwards compatability
+"commit") ;; # just for backwards compatability
 *) list note ;;
 esac
 
