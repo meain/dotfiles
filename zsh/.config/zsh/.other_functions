@@ -356,3 +356,9 @@ termbin(){
   [ -n "$1" ] && echo "$*" | nc termbin.com 9999 | tee /dev/tty | pbcopy
   [ -z "$1" ] && nc termbin.com 9999 < /dev/stdin | tee /dev/tty | pbcopy
 }
+
+pb() {
+  filename="_$(xxd -l10 -ps /dev/urandom)"
+  pbpaste > "$HOME/Documents/Projects/projects/snippets/quick/$filename"
+  (cd "$HOME/Documents/Projects/projects/snippets" && git add "quick/$filename" && git commit -m "[auto] Added $filename" && git push origin master)
+}
