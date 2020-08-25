@@ -19,14 +19,14 @@ scrolling:
 
 font:
   normal:
-    family: DankMono Nerd Font
-    style: Regular
+    family: Iosevka
+    style: Light
   bold:
-    family: DankMono Nerd Font
-    style: Regular
+    family: Iosevka
+    style: Light
   italic:
-    family: DankMono Nerd Font
-    style: Regular
+    family: Iosevka
+    style: Light
   size: 15.0
   offset:
     x: 0
