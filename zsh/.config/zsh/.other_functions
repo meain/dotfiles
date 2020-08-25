@@ -359,5 +359,11 @@ termbin() {
 pb() {
 	filename="_$(xxd -l10 -ps /dev/urandom)"
 	pbpaste >"$HOME/Documents/Projects/projects/snippets/quick/$filename"
-	(cd "$HOME/Documents/Projects/projects/snippets" && git add "quick/$filename" && git commit -m "[auto] Added $filename" && git push origin master)
+	echo "https://snippets.meain.io/$filename"
+	echo "https://snippets.meain.io/$filename"|pbcopy
+	echo "Pushing changes..."
+	cd "$HOME/Documents/Projects/projects/snippets" >/dev/null 2>&1 &&
+		git add "quick/$filename" >/dev/null 2>&1 &&
+		git commit -m "[auto] $filename" >/dev/null 2>&1 &&
+		git push origin master >/dev/null 2>&1
 }
