@@ -157,13 +157,13 @@ dcp() {
 
 # Copy latest screenshot
 ssc() {
-	FILE="$(\ls -Art -d ~/Documents/Screenshots/* | tail -n 1)" 
+	FILE="$(\ls -Art -d ~/Documents/Screenshots/* | tail -n 1)"
 	[ -z "$1" ] && 1="$(basename $FILE)" || 1="$1.png"
-	cp  "$FILE" "$1"
+	cp "$FILE" "$1"
 }
 
 sso() {
-	FILE="$(\ls -Art -d ~/Documents/Screenshots/* | tail -n 1)" 
+	FILE="$(\ls -Art -d ~/Documents/Screenshots/* | tail -n 1)"
 	OPEN "$FILE"
 }
 
@@ -205,7 +205,7 @@ loop() {
 	MAX=$1
 	shift
 	seq "$MAX" |
-	  while read -r line; do eval "$@"; done
+		while read -r line; do eval "$@"; done
 }
 
 copycommand() {
@@ -293,7 +293,6 @@ cssh() {
 compdef _ssh cssh=ssh
 alias ssh=cssh
 
-
 cmosh() {
 	[ -z "$1" ] && HOST=$(grep -E "^Host" "$HOME/.ssh/config" | sed 's/^Host //' | fzf) || HOST="$1"
 	[ -z "$HOST" ] && echo "No host specified" && return 1
@@ -330,8 +329,8 @@ q() {
 	[ -z "$TMUX" ] && exit
 	PANES="$(tmux list-panes | wc -l | sed 's/ //g')"
 	WINDOWS="$(tmux list-windows | wc -l | sed 's/ //g')"
-	[ -z "$TMUX_PANE" ] && exit  # tmux popup
-	[ -n "$NVIM_LISTEN_ADDRESS" ] && exit  # nvim popup
+	[ -z "$TMUX_PANE" ] && exit           # tmux popup
+	[ -n "$NVIM_LISTEN_ADDRESS" ] && exit # nvim popup
 	if [ "$PANES" = "1" ] && [ "$WINDOWS" = "1" ]; then
 		tmux switch-client -l || tmux switch-client -n
 		exit
@@ -341,24 +340,24 @@ q() {
 }
 
 # cd into whatever is the forefront Finder window.
-cdf() {  # short for cdfinder
-  cd "`osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)'`"
+cdf() { # short for cdfinder
+	cd "$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')"
 }
 
-tnp(){
-  LINK="$1"
-  [ -z "$1" ] && LINK="$(pbpaste)"
-  echo "Adding $LINK"
-  ts newsboatpreview "$LINK"
+tnp() {
+	LINK="$1"
+	[ -z "$1" ] && LINK="$(pbpaste)"
+	echo "Adding $LINK"
+	ts newsboatpreview "$LINK"
 }
 
-termbin(){
-  [ -n "$1" ] && echo "$*" | nc termbin.com 9999 | tee /dev/tty | pbcopy
-  [ -z "$1" ] && nc termbin.com 9999 < /dev/stdin | tee /dev/tty | pbcopy
+termbin() {
+	[ -n "$1" ] && echo "$*" | nc termbin.com 9999 | tee /dev/tty | pbcopy
+	[ -z "$1" ] && nc termbin.com 9999 </dev/stdin | tee /dev/tty | pbcopy
 }
 
 pb() {
-  filename="_$(xxd -l10 -ps /dev/urandom)"
-  pbpaste > "$HOME/Documents/Projects/projects/snippets/quick/$filename"
-  (cd "$HOME/Documents/Projects/projects/snippets" && git add "quick/$filename" && git commit -m "[auto] Added $filename" && git push origin master)
+	filename="_$(xxd -l10 -ps /dev/urandom)"
+	pbpaste >"$HOME/Documents/Projects/projects/snippets/quick/$filename"
+	(cd "$HOME/Documents/Projects/projects/snippets" && git add "quick/$filename" && git commit -m "[auto] Added $filename" && git push origin master)
 }
