@@ -43,6 +43,10 @@ pick() {
         fzf --no-sort --multi --query "$2" --preview "bat '{}'"
 }
 
+types() {
+    ls -t -1
+}
+
 list() {
     if [ "$1" = "temp" ]; then
         pick_with_title "$1" "$2" | xargs "$EDITOR"
@@ -69,6 +73,7 @@ case "$1" in
 "list") list "$2" "$3" ;;
 "view") lf "$2" ;;
 "archive") archive "$2" "$3" ;;
+"types") types ;;
 "commit") ;; # just for backwards compatability
 *) list note ;;
 esac
