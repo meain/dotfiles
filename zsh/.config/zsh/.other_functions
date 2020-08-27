@@ -363,10 +363,11 @@ pb() {
 	echo "https://snippets.meain.io/$filename" | pbcopy
 	printf "Pushing"
 	(cd "$HOME/Documents/Projects/projects/snippets" >/dev/null 2>&1 &&
-		git pull origin master --rebase >/dev/null 2>&1 &&
 		git add "quick/$filename" >/dev/null 2>&1 &&
 		git commit -m "[auto] $filename" >/dev/null 2>&1 &&
-		git push origin master >/dev/null 2>&1)
+		(git push origin master >/dev/null 2>&1 ||
+			(git pull origin master --rebase >/dev/null 2>&1 &&
+				git push origin master >/dev/null 2>&1)))
 	printf " > Publishing"
 	while [ "$(curl -s -o /dev/null -w "%{http_code}" "https://snippets.meain.io/$filename")" = "404" ]; do
 		sleep 0.5
