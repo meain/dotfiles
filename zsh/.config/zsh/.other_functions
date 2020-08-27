@@ -357,19 +357,19 @@ termbin() {
 }
 
 pb() {
-	filename="_$(xxd -l10 -ps /dev/urandom)"
-	pbpaste >"$HOME/Documents/Projects/projects/snippets/quick/$filename"
-	echo "https://snippets.meain.io/$filename"
-	echo "https://snippets.meain.io/$filename" | pbcopy
+	filename="$(xxd -l10 -ps /dev/urandom)"
+	pbpaste >"$HOME/Documents/Projects/projects/snippets/entries/pb/$filename"
+	echo "https://snippets.meain.io/pb/$filename"
+	echo "https://snippets.meain.io/pb/$filename" | pbcopy
 	printf "Pushing"
 	(cd "$HOME/Documents/Projects/projects/snippets" >/dev/null 2>&1 &&
-		git add "quick/$filename" >/dev/null 2>&1 &&
+		git add "entries/pb/$filename" >/dev/null 2>&1 &&
 		git commit -m "[auto] $filename" >/dev/null 2>&1 &&
 		(git push origin master >/dev/null 2>&1 ||
 			(git pull origin master --rebase >/dev/null 2>&1 &&
 				git push origin master >/dev/null 2>&1)))
 	printf " > Publishing"
-	while [ "$(curl -s -o /dev/null -w "%{http_code}" "https://snippets.meain.io/$filename")" = "404" ]; do
+	while [ "$(curl -s -o /dev/null -w "%{http_code}" "https://snippets.meain.io/pb/$filename")" = "404" ]; do
 		sleep 0.5
 	done
 	printf " > Done\n"
