@@ -75,7 +75,7 @@ case "$1" in
 "archive") archive "$2" "$3" ;;
 "types") types ;;
 "commit") ;; # just for backwards compatability
-*) list note ;;
+*) list note "$1";;
 esac
 
 (git add . && git commit -m '[autocommit] updating notes') 1>/dev/null 2>&1 || true
