@@ -1,0 +1,31 @@
+#!/bin/sh
+
+set -e
+
+duration="${1:-5m}"
+
+count="$(echo "$duration" | sed -E 's|^([0-9]+)[hms]$|\1|')"
+unit="$(echo "$duration" | sed -E 's|^[0-9]+([hms]?)$|\1|')"
+
+multiplier=""
+case "$unit" in
+"s") multiplier="" ;;
+"m") multiplier=" * 60" ;;
+"") multiplier=" * 60" ;; # empty is also minutes
+"h") multiplier=" * 60 * 60" ;;
+*) echo "Unknown unit" && exit 1 ;;
+esac
+
+seconds="$(($count$multiplier))"
+tick="$seconds"
+while [ "$tick" -ge "1" ]; do
+    printf "\r%s seconds left" "$tick"
+    tick="$(($tick - 1))"
+    sleep 1
+done
+printf "\rTime up (%s)     \n" "$duration" # extra space to clean up line
+notify "Time up" "Timer you set for $duration complete"
+while true; do
+    afplay /System/Library/Sounds/Tink.aiff
+    sleep 0.2
+done
