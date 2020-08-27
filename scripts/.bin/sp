@@ -4,7 +4,25 @@
 
 set -e
 
-project="$1"
-shift
-echo task add proj:"$project" "$@"
-task add proj:"$project" "$@"
+project="$1" && shift
+
+projectsintag() {
+    task +"$1" proj |
+        tail -n+4 |
+        grep -E '^[A-z]' |
+        awk '{print $1}' |
+        grep -v chore |
+        tr '\n' '|' |
+        sed 's/|$//'
+}
+
+workprojects="$(projectsintag work)"
+codeprojects="$(projectsintag code)"
+
+if projectsintag work | grep -q "$project"; then
+    echo task add proj:"$project" +work "$@"
+    task add proj:"$project" +work "$@"
+elif projectsintag code | grep -q "$project"; then
+    echo task add proj:"$project" +code "$@"
+    task add proj:"$project" +code "$@"
+fi

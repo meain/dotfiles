@@ -1,7 +1,0 @@
-#!/bin/sh
-
-set -e
-
-project="$1"
-shift
-task add proj:"$project" +code "$@"
