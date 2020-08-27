@@ -34,36 +34,20 @@ _print_name_and_title() {
 }
 
 pick_with_title() {
-    if [ -z "$1" ]; then
-        IGNORE_PATTERN="archive|temp|task-notes|resources|todo|vault"
-        find . -name '*.md' -mindepth 2 |
-            grep -vE "/($IGNORE_PATTERN)/" | xargs ls -td1 | sed "s|^./||" |
-            _print_name_and_title |
-            fzf --no-sort --multi --query "$2" --preview "echo '{}'| awk '{print \$1}'|xargs bat" |
-            awk '{print $1}'
-    else
-        ls -t "$1"/*.md | _print_name_and_title |
-            fzf --no-sort --multi --query "$2" --preview "echo '{}'| awk '{print \$1}'|xargs bat" | awk '{print $1}'
-    fi
+    ls -t "$1"/*.md | _print_name_and_title |
+        fzf --no-sort --multi --query "$2" --preview "echo '{}'| awk '{print \$1}'|xargs bat" | awk '{print $1}'
 }
 
 pick() {
-    if [ -z "$1" ]; then
-        IGNORE_PATTERN="archive|temp|task-notes|resources|todo|vault"
-        find . -name '*.md' -mindepth 2 |
-            grep -vE "/($IGNORE_PATTERN)/" | xargs ls -td1 | sed "s|^./||" |
-            fzf --no-sort --multi --query "$2" --preview "bat '{}'"
-    else
-        ls -t "$1"/*.md |
-            fzf --no-sort --multi --query "$2" --preview "bat '{}'"
-    fi
+    ls -t "$1"/*.md |
+        fzf --no-sort --multi --query "$2" --preview "bat '{}'"
 }
 
 list() {
     if [ "$1" = "temp" ]; then
         pick_with_title "$1" "$2" | xargs "$EDITOR"
     else
-        pick "$1" "$2" | xargs "$EDITOR"
+        pick "${1:-note}" "$2" | xargs "$EDITOR"
     fi
 }
 
