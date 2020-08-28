@@ -1514,6 +1514,12 @@ let g:any_jump_disable_default_keybindings = 1
 nnoremap <leader>J :AnyJump<CR>
 xnoremap <leader>J :AnyJumpVisual<CR>
 
+" vim-mtodo
+highlight default link MTODOTitle SpecialKey
+highlight default link MTODOPending Normal
+highlight default link MTODODone Comment
+highlight default link MTODOImportant Question
+
 
 "                             Source External                          "
 "                    ==============================                    "
