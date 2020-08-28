@@ -17,7 +17,6 @@ Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }                       
 Plug '~/Documents/Projects/others/done/_vim/vim-googler', { 'on': ['LazyLoadPlugins', 'Searcher'] } " Search from within vim
 Plug '/usr/local/opt/fzf'                                                                      " Fzf
 Plug 'junegunn/fzf.vim'                                                                        " Fzf for vim
-Plug 'yuki-ycino/fzf-preview.vim', { 'branch': 'release', 'do': ':UpdateRemotePlugins' }
 Plug 'christoomey/vim-tmux-navigator'                                                          " Seamless navigation between vim and tmux
 Plug 'suan/vim-instant-markdown', { 'for': [ 'md', 'markdown' ] }                              " View markdown in browser while editing
 Plug 'ervandew/supertab'                                                                       " Autocomplete on tab
@@ -298,9 +297,14 @@ let mapleader = ' '
 let maplocalleader = '\|'
 
 " Smart colorcolumn
+function SmartColorcolumn() abort
+  if &buftype !=# 'terminal'
+    call matchadd('ColorColumn', '\%160v', 100)
+  endif
+endfunction
 augroup custom_colorcolum
   autocmd!
-  autocmd BufEnter * call matchadd('ColorColumn', '\%160v', 100)
+  autocmd BufEnter * call SmartColorcolumn()
 augroup end
 
 " Don't you f'in touch my cursor
@@ -1128,15 +1132,16 @@ command! -bang -nargs=* Find
       \ 1, <bang>0)
 nnoremap <leader>b :Buffers<cr>
 nnoremap <leader>f :Find<cr>
+function s:OpenInBuffer(lines) abort
+  execute 'e +'.split(a:lines[0], ':')[1].' '.split(a:lines[0], ':')[0]
+endfunction
+command! -bang -nargs=* FindInProject call fzf#run({'source': 'rg --vimgrep --hidden --follow --glob "!.git/*" '.shellescape(<q-args>), 'sink*': function('s:OpenInBuffer'), 'down': '80%', 
+      \ 'options': ["--delimiter", ":", "--preview", "bat --color always --theme GitHub {1} --highlight-line {2}","--preview-window", "+{2}-".winheight('%')/3]})
 augroup custom_fzf
   autocmd!
   autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
 augroup end
-
-" fzf-preview
-nnoremap <leader>F :FzfPreviewProjectGrep<space>
-nnoremap <leader>u :FzfPreviewProjectGrep <c-r><c-w><cr>
-nnoremap <leader>q :FzfPreviewQuickFix<cr>
+nnoremap <leader>F :FindInProject<space>
 
 " Fugitive
 nnoremap <silent><leader>g :Gstatus\|normal!gg7j<cr>
