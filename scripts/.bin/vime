@@ -2,9 +2,12 @@
 
 set -e
 
-mkdir -p /tmp/notes
+DIR="$HOME/.cache/vime"
+mkdir -p "$DIR"
 if [ "$1" = "list" ]; then
-    ls -t /tmp/notes | fzf --header "Select file" --preview "cat /tmp/notes/{}" | xargs $EDITOR
+    ls -t "$DIR" | fzf --header "Select file" --preview "cat '$DIR/{}'" | xargs -I{} "$EDITOR" "$DIR/{}"
+elif [ "$1" = "last" ]; then
+    ls -t "$DIR" | head -n1 | xargs -I{} "$EDITOR" "$DIR/{}"
 else
-    $EDITOR "/tmp/notes/$(xxd -l2 -ps /dev/urandom)" "+set ft=$1"
+    $EDITOR "$DIR/$(xxd -l2 -ps /dev/urandom)" "+set ft=$1"
 fi
