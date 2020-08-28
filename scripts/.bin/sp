@@ -25,4 +25,7 @@ if projectsintag work | grep -q "$project"; then
 elif projectsintag code | grep -q "$project"; then
     echo task add proj:"$project" +code "$@"
     task add proj:"$project" +code "$@"
+else
+    echo task add proj:"$project" "$@"
+    task add proj:"$project" "$@"
 fi
