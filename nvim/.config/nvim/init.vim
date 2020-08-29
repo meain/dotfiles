@@ -1360,7 +1360,7 @@ let g:AutoPairsMultilineClose = 0
 command! LoadAllPlugins call plug#load(keys(g:plugs))
 
 " Vim instant markdown
-let g:instant_markdown_autostart = 0
+let g:instant_markdown_autostart = 1
 
 " vim-jsx-typescript
 hi tsxTagName ctermfg=150 guifg=#afdf87
