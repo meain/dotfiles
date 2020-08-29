@@ -21,4 +21,4 @@ Patterns * !"[Gmail]/All Mail"
 Create Both
 SyncState *
 ExpireUnread yes
-MaxMessages 300
+MaxMessages 1000
