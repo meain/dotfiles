@@ -1519,6 +1519,7 @@ highlight default link MTODOTitle SpecialKey
 highlight default link MTODOPending Normal
 highlight default link MTODODone Comment
 highlight default link MTODOImportant Question
+let g:vim_mtodo_move_done_to_bottom=1
 
 
 "                             Source External                          "
