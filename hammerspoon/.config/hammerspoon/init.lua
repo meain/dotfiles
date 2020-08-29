@@ -2,7 +2,6 @@
 local logLevel = 'info'
 local log = hs.logger.new('hms', logLevel)
 
-require("jumpcut")
 require("autoreload")
 require("mousehighlight")
 local utils = require("utils")
@@ -181,6 +180,10 @@ hs.hotkey.bind({"cmd", "shift"}, "n", function()
 end)
 hs.hotkey.bind({"cmd", "shift"}, "g", function()
   focusandback("telegram")
+end)
+
+hs.hotkey.bind({'alt', 'shift'}, 'P', function()
+  hs.alert("📎 " .. utils.trim(pasteboard.getContents()))
 end)
 
 hs.hotkey.bind({"ctrl", "shift", "alt"}, "r", function()
