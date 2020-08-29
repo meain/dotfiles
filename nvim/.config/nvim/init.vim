@@ -1447,6 +1447,7 @@ augroup end
 let g:loaded_netrwPlugin = 'v165'  " Prevent loading netrw
 let g:dirvish_relative_paths = 0  " Needed with syntax off as conceal gets disabled
 nnoremap <silent>- :Dirvish %<cr>
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) | exe 'Dirvish' argv()[0] | endif
 
 " vim-test
 " maybe try creating a new strategy for running tests in a floating terminal
