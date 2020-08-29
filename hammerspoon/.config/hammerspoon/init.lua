@@ -62,13 +62,6 @@ anycomplete.registerDefaultBindings({"alt"}, 'G')
 local emojipicker = require("emojipicker")
 emojipicker.registerDefaultBindings({"alt"}, 'E')
 
--- Clipboard manager
-local jcs = require("jumpcutselect")
-jcs.registerDefaultBindings({"alt"}, 'P')
-hs.hotkey.bind({'alt', 'shift'}, 'P', function()
-  hs.alert("📎 " .. utils.trim(pasteboard.getContents()))
-end)
-
 -- Music keymaps
 showCurrentSong = function()
   song = customshellrun.run(BIN .. 'music/currentsongfull')
