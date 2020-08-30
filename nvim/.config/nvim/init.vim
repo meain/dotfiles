@@ -855,7 +855,7 @@ nnoremap <leader>Q :QuickFixPopulate<space>
 function! Floater(...)
   let buf = nvim_create_buf(v:false, v:true)
   call setbufvar(buf, '&signcolumn', 'no')
-  if a:0 == 4
+  if a:0 >= 4
     let height = a:1
     let width = a:2
     let horizontal = a:3
@@ -883,6 +883,9 @@ function! Floater(...)
         \ }
 
   call nvim_open_win(buf, v:true, opts)
+  if a:0 == 5
+    execute 'set winblend='.a:5
+  endif
 endfunction
 
 
