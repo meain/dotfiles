@@ -8,6 +8,6 @@ fixpodpath |
     while read -r line; do
         url="$(echo "$line" | cut -d'"' -f1 | sed 's| $||')"
         path="$(echo "$line" | cut -d'"' -f2)"
-        [ ! -f "$path" ] && basename "$path" && ts downloader "$url" "$path" > /dev/null
+        basename "$path" && ts downloader "$url" "$path" > /dev/null
     done
 rm "$NEWSBOAT_DIR/queue"
