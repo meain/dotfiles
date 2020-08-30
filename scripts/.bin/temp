@@ -21,6 +21,16 @@ javascript_project() {
     tmuxsession "temp-$REPLY"
 }
 
+python_project(){
+    DIR="$(date '+%s')"
+    printf "Python project name: "
+    read -r
+    mkdir -p "/tmp/temp-sessions/$DIR" && cd "/tmp/temp-sessions/$DIR"
+    virtualenv --python="$(which python3)" venv
+    mkdir "$REPLY" && cd "$REPLY"
+    tmuxsession "temp-$REPLY" "source ../venv/bin/activate"
+}
+
 quick_project() {
     DIR="$1"
     mkdir -p "/tmp/temp-sessions/$DIR" && cd "/tmp/temp-sessions/$DIR" &&
@@ -31,6 +41,7 @@ if [ -n "$1" ]; then
     case "$1" in
     "rust") rust_project ;;
     "js"|"Javascript"|"npm") javascript_project ;;
+    "python"|"py") python_project ;;
     *) quick_project "$@" ;;
     esac
 else
