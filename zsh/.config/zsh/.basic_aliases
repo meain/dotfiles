@@ -76,7 +76,7 @@ alias ax="axel -a -n 10"
 alias tig='tig --all'
 alias jrnl=" jrnl"  # so as to ignore zsh_history
 alias pipgrep='pip freeze | grep'
-alias lynx='lynx -lss="~/.lynx.lss"'
+alias lynx='lynx -lss="~/.config/lynx/.lynx.lss" -cfg="~/.config/lynx/.lynx.cfg"'
 alias usage="du -h -d 1 . | sort -hr"
 alias c='clear && echo "" && pwd && ls'
 alias mpv='mpv --sub-ass-override=strip'
