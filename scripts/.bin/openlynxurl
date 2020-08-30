@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -e
+
+url=$LYNX_PRINT_URL
+title=$LYNX_PRINT_TITLE 
+
+# other variables exist like the date etc... look them up :)
+# http://osr600doc.sco.com/en/INT_lynxDoc/keystrokes/environments.html
+
+"$1" "$url"
