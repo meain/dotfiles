@@ -2,4 +2,8 @@
 
 set -e
 
-watch -d -t "task limit:100 $* 2>/dev/null|tail -n+4|sed '$ d'"
+watch -c -d -t "task limit:100 $* 2>/dev/null|tail -n+4|sed '$ d'"
+# while sleep 2; do
+#     task limit:100 rc._forcecolor=on "$@" 2>/dev/null | tail -n+4 | sed '$ d' >/tmp/taskcontent
+#     clear && head -n"$(($(tput lines) - 1))" /tmp/taskcontent
+# done
