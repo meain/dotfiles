@@ -5,18 +5,17 @@ set -e
 url="$1"
 filepath=$2
 
-echo "downloading '$url' >>> '$filepath'" >>/tmp/downloaderqueue
+echo "downloading '$url' >>> '$filepath'" | tee -a /tmp/downloaderqueue
 
-cleanup() {
-    # if file exists but download fails, error not reported
-    [ -f "$filepath" ] || echo "failed '$url' >>> '$filepath'" >>/tmp/downloaderqueue
-}
-trap cleanup EXIT
+temp="/tmp/downloads/$(xxd -l13 -ps /dev/urandom)" &&
+    mkdir -p "$(dirname "$temp")" && cd "$(dirname "$temp")"
 
-temp="$(mktemp)"
-for i in 1 2 3 4 5; do curl -L "$1" >"$temp" && break || sleep 15; done
-mkdir -p "$(dirname "$filepath")"
-mv "$temp" "$filepath"
-echo "complete '$url' >>> '$filepath'" >>/tmp/downloaderqueue
+# try 10 times
+for _ in seq 10; do curl -L "$url" >"$temp" && break || sleep 15; done
+
+mkdir -p "$(dirname "$filepath")" &&
+    mv "$temp" "$filepath" &&
+    echo "complete '$url' >>> '$filepath'" | tee -a /tmp/downloaderqueue
+
 minpath="$(dirname "$filepath"): $(basename "$filepath")"
 notify "Download complete" "$minpath\n\n$url"
