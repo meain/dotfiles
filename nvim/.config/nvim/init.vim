@@ -1138,8 +1138,10 @@ nnoremap <leader>f :Find<cr>
 function s:OpenInBuffer(lines) abort
   execute 'e +'.split(a:lines[0], ':')[1].' '.split(a:lines[0], ':')[0]
 endfunction
-command! -bang -nargs=* FindInProject call fzf#run({'source': 'rg --vimgrep --hidden --follow --glob "!.git/*" '.shellescape(<q-args>), 'sink*': function('s:OpenInBuffer'), 'down': '80%', 
-      \ 'options': ["--delimiter", ":", "--preview", "bat --color always --theme GitHub {1} --highlight-line {2}","--preview-window", "+{2}-".winheight('%')/3]})
+command! -bang -nargs=* FindInProject call fzf#run({'source': 'rg --vimgrep --hidden --follow --glob "!.git/*" '.shellescape(<q-args>), 'sink*': function('s:OpenInBuffer'),
+      \ 'window': 'call Floater(&lines - 10, &columns - 10, 5, 5, 10)',
+      \ 'options': ["--delimiter", ":", "--preview", "bat --color always --theme GitHub {1} --highlight-line {2}","--preview-window", "+{2}-".winheight('%')/3,
+      \ '--color', 'fg:-1,hl:4,fg+:1,bg+:-1,hl+:4,info:108,prompt:242,spinner:108,pointer:1,marker:168']})
 augroup custom_fzf
   autocmd!
   autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
