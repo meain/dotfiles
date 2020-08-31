@@ -1,12 +1,7 @@
-;;; package -- meain's emacs config
+;;; .emacs -- meain's emacs config
 
 ;;; Commentary:
-;;; Well, this is a vimmer's Emacs config.  Nothing fancy though.
-
-;; TODO:
-;; - yank highlight
-;; - figure out using terminal
-;; - flyspell auto correct last word
+;; Well, this is a vimmer's Emacs config.  Nothing fancy though.
 
 ;;; Code:
 
@@ -30,6 +25,12 @@
 
 ;; Cursor blink
 (blink-cursor-mode -1)
+
+;; Follow symlinks for vc
+(setq vc-follow-symlinks nil)
+
+;; Backup somewhere else
+(setq backup-directory-alist `((".*" . "/tmp/emacsbackup")))
 
 ;; Quit out of everythign with esc
 (defun meain/keyboard-quit ()
@@ -60,13 +61,17 @@
   :ensure t
   :init (load-theme 'modus-operandi t))
 
+;; Diminish
+(use-package diminish :ensure t)
+
 ;; Persistant undo
 (use-package undo-tree
   :ensure t
-  :init (progn
-	  (global-undo-tree-mode)
-	  (setq undo-tree-auto-save-history t)
-	  (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))))
+  :diminish :init
+  (progn
+    (global-undo-tree-mode)
+    (setq undo-tree-auto-save-history t)
+    (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))))
 
 ;;; [evil packages] =================================================
 
@@ -98,33 +103,35 @@
 ;; Company for autocompletions
 (use-package company
   :ensure t
-  :init (company-mode))
+  :diminish :init
+  (global-company-mode))
 
 ;; Ivy && Counsel
 (use-package counsel :ensure t)
 (use-package flx :ensure t)
 (use-package ivy
   :ensure t
-  :config (progn
-	    (ivy-mode 1)
-	    (setq ivy-use-virtual-buffers t) ; extend searching to bookmarks and
-	    (setq ivy-height 10) ; Set height of the ivy window
-	    (setq ivy-count-format "(%d/%d) ") ; count format, from the ivy help page
-	    (setq ivy-display-style 'fancy)
-	    (setq ivy-format-functions-alist '((t . ivy-format-function-line))) ; Make highlight extend all the way to the right
-	    (setq ivy-re-builders-alist '((ivy-switch-buffer . ivy--regex-plus)
-					  (t . ivy--regex-fuzzy)))
-	    (evil-leader/set-key "f" 'counsel-rg)
-	    (evil-leader/set-key "b" 'ivy-switch-buffer)
-	    (evil-leader/set-key "s" 'counsel-git)
-	    (evil-leader/set-key "r" 'counsel-recentf)
-	    (define-key evil-normal-state-map (kbd "C-d f") 'counsel-describe-function)
-	    (define-key evil-normal-state-map (kbd "C-d v") 'counsel-describe-variable)
-	    (define-key evil-normal-state-map (kbd "C-d o") 'counsel-describe-symbol)
-	    (define-key evil-normal-state-map (kbd "C-d l") 'counsel-find-library)
-	    (define-key evil-normal-state-map (kbd "C-d i") 'counsel-info-lookup-symbol)
-	    (evil-leader/set-key "l" 'counsel-M-x)
-	    (define-key evil-normal-state-map (kbd "M-f") 'counsel-M-x)))
+  :diminish :config
+  (progn
+    (ivy-mode 1)
+    (setq ivy-use-virtual-buffers t) ; extend searching to bookmarks and
+    (setq ivy-height 10) ; Set height of the ivy window
+    (setq ivy-count-format "(%d/%d) ") ; count format, from the ivy help page
+    (setq ivy-display-style 'fancy)
+    (setq ivy-format-functions-alist '((t . ivy-format-function-line))) ; Make highlight extend all the way to the right
+    (setq ivy-re-builders-alist '((ivy-switch-buffer . ivy--regex-plus)
+				  (t . ivy--regex-fuzzy)))
+    (evil-leader/set-key "f" 'counsel-rg)
+    (evil-leader/set-key "b" 'ivy-switch-buffer)
+    (evil-leader/set-key "s" 'counsel-git)
+    (evil-leader/set-key "S" 'counsel-recentf)
+    (evil-leader/set-key "l" 'counsel-M-x)
+    (define-key evil-normal-state-map (kbd "C-d f") 'counsel-describe-function)
+    (define-key evil-normal-state-map (kbd "C-d v") 'counsel-describe-variable)
+    (define-key evil-normal-state-map (kbd "C-d o") 'counsel-describe-symbol)
+    (define-key evil-normal-state-map (kbd "C-d l") 'counsel-find-library)
+    (define-key evil-normal-state-map (kbd "C-d i") 'counsel-info-lookup-symbol)
+    (define-key evil-normal-state-map (kbd "M-f") 'counsel-M-x)))
 
 ;; ivy-rich
 (use-package ivy-rich
@@ -135,7 +142,7 @@
 (use-package dumb-jump
   :ensure t
   :config (progn
-	    (evil-leader/set-key "J" 'dumb-jump-go)))
+	    (evil-leader/set-key "j" 'dumb-jump-go)))
 
 
 ;; Window mappings
@@ -210,6 +217,7 @@
 (define-key evil-normal-state-map (kbd "``") `meain/toggle-maximize-buffer)
 
 ;; Eval region
+;; Figure out a way to auto exit normal mode after eval
 (define-key evil-visual-state-map (kbd ";") 'eval-region)
 
 ;;; [Non evel packages] =================================================
@@ -227,32 +235,17 @@
     (format-all-buffer)))
 (define-key evil-normal-state-map (kbd ",,") 'meain/auto-format)
 
-;; Yank highlights
-(use-package volatile-highlights
-  :ensure t
-  :init (progn
-	  (volatile-highlights-mode t)
-	  (vhl/define-extension 'evil 'evil-yank 'evil-yank-line
-				'evil-delete 'evil-paste-after)
-	  (vhl/install-extension 'evil)))
-
 ;; Projectile
-;; (use-package projectile
-;;   :ensure t
-;;   :config (progn
-;; 	    (defun meain/fuzzy-file-open ()
-;; 	      "Switch between helm and projectil based on directory."
-;; 	      (interactive)
-;; 	      (if (string= (shell-command-to-string (concat "git -C " default-directory " rev-parse"))
-;; 			   "")
-;; 		  (projectile-find-file)
-;; 		(helm-recentf)))
-;; 	    (evil-leader/set-key "f" 'meain/fuzzy-file-open)))
+(use-package projectile
+  :ensure t
+  :diminish :init
+  (projectile-mode +1))
 
 ;; Magit
 ;; (use-package magit
 ;;   :ensure t
-;;   :init (evil-leader/set-key "g" 'magit-status))
+;;   :init
+;;   (evil-leader/set-key "g" 'magit-status))
 
 ;; Flycheck
 (use-package flycheck
@@ -263,17 +256,20 @@
 	  (evil-leader/set-key "k" 'flycheck-previous-error)
 	  (evil-leader/set-key "j" 'flycheck-next-error)))
 
-;; drag-stuff
-(use-package drag-stuff
+;; LSP
+(use-package eglot
   :ensure t
-  :init (progn
-	  (drag-stuff-mode t)
-	  (drag-stuff-global-mode 1)):config
-  (progn
-    (define-key evil-visual-state-map (kbd "<up>") 'drag-stuff-up)
-    (define-key evil-visual-state-map (kbd "<down>") 'drag-stuff-down)
-    (define-key evil-visual-state-map (kbd "<left>") 'drag-stuff-left)
-    (define-key evil-visual-state-map (kbd "<right>") 'drag-stuff-right)))
+  :hook ((python-mode . eglot-ensure)
+	 (rust-mode . eglot-ensure)))
+;;(use-package lsp-mode
+;;  :ensure t
+;;  :hook ((python-mode . lsp-deferred)
+;;	 (rust-mode . lsp-deferred)):commands
+;;  (lsp lsp-deferred))
+;;(use-package lsp-ui :ensure t
+;;  :commands lsp-ui-mode)
+;;(use-package lsp-ivy :ensure t
+;;  :commands lsp-ivy-workspace-symbol)
 
 ;;; [Language pugins] ===============================================
 
@@ -284,6 +280,19 @@
 (use-package lua-mode :ensure t)
 
 ;;; [Other plugins] ================================================
+
+;; drag-stuff
+(use-package drag-stuff
+  :ensure t
+  :diminish :init
+  (progn
+    (drag-stuff-mode t)
+    (drag-stuff-global-mode 1))
+  :config (progn
+	    (define-key evil-visual-state-map (kbd "<up>") 'drag-stuff-up)
+	    (define-key evil-visual-state-map (kbd "<down>") 'drag-stuff-down)
+	    (define-key evil-visual-state-map (kbd "<left>") 'drag-stuff-left)
+	    (define-key evil-visual-state-map (kbd "<right>") 'drag-stuff-right)))
 
 ;; Try
 (use-package try :ensure t)
@@ -302,6 +311,13 @@
 	  (save-place-mode t)
 	  (setq save-place-file "~/.emacs.d/saveplace")))
 
+;; Neotree
+(use-package neotree
+  :ensure t
+  :bind (("<return>" . 'neotree-enter)):init
+  (progn
+    (define-key evil-normal-state-map (kbd "<tab>") 'neotree-toggle)))
+
 
 
 ;; Emacs dump
@@ -315,7 +331,8 @@
 			default))
  '(flycheck-checker-error-threshold 1000)
  '(helm-completion-style 'emacs)
- '(package-selected-packages '(company flx lua-mode counsel ivy projectile
+ '(package-selected-packages '(neotree diminish lsp-ivy lsp-ui lsp-mode
+				       company flx lua-mode counsel ivy projectile
 				       sane-term try drag-stuff diff-hl flycheck
 				       magit evil-surround volatile-highlights shell-pop
 				       evil-commentary rust-mode modus-operandi-theme
