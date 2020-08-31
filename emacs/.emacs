@@ -32,6 +32,9 @@
 ;; Backup somewhere else
 (setq backup-directory-alist `((".*" . "/tmp/emacsbackup")))
 
+;; Don't create lockfiles
+(setq create-lockfiles nil)
+
 ;; Show matching paran
 (setq show-paran-mode 1)
 
@@ -117,7 +120,7 @@
     (evil-leader/set-key "f" 'counsel-rg)
     (evil-leader/set-key "b" 'ivy-switch-buffer)
     (evil-leader/set-key "s" 'counsel-git)
-    (evil-leader/set-key "S" 'counsel-recentf)
+    (evil-leader/set-key "r" 'counsel-recentf)
     (evil-leader/set-key "l" 'counsel-M-x)
     (define-key evil-normal-state-map (kbd "C-d f") 'counsel-describe-function)
     (define-key evil-normal-state-map (kbd "C-d v") 'counsel-describe-variable)
@@ -155,7 +158,10 @@
 (use-package projectile
   :ensure t
   :diminish :init
-  (projectile-mode +1))
+  (projectile-mode 1)
+  (evil-leader/set-key "p" 'projectile-switch-project)
+  (setq projectile-completion-system 'ivy)
+  (setq projectile-sort-order 'recently-active))
 
 ;; Flycheck
 (use-package flycheck
@@ -324,6 +330,9 @@
 ;; Eval region
 ;; Figure out a way to auto exit normal mode after eval
 (define-key evil-visual-state-map (kbd ";") 'eval-region)
+
+;; Rename buffer
+(evil-leader/set-key "R" 'rename-buffer)
 
 
 ;; Emacs dump
