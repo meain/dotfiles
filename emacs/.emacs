@@ -253,6 +253,11 @@
 	  (setq neo-theme 'ascii)
 	  (add-hook 'neotree-mode-hook 'meain/neotree-mode-hook)))
 
+;; Magit
+(use-package magit
+  :ensure t
+  :init (evil-leader/set-key "g" 'magit-status))
+
 
 ;;; [Extra keybindings] ===============================================================
 
