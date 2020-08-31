@@ -55,7 +55,7 @@ end)
 
 -- Setup anycomplete
 local anycomplete = require("anycomplete")
-anycomplete.registerDefaultBindings({"alt"}, 'G')
+anycomplete.registerDefaultBindings({"alt", "shift"}, 'G')
 
 -- Emoji picker
 local emojipicker = require("emojipicker")
