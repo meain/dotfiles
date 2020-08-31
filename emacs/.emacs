@@ -1,4 +1,4 @@
-;;; .emacs -- meain's emacs config
+;;; .emacs -- meain's Emacs config
 
 ;;; Commentary:
 ;; Well, this is a vimmer's Emacs config.  Nothing fancy though.
@@ -257,6 +257,17 @@
 (use-package magit
   :ensure t
   :init (evil-leader/set-key "g" 'magit-status))
+
+;; notmuch
+(use-package notmuch
+  :ensure t
+  :init (setq message-auto-save-directory "/Users/meain/.local/share/mail"))
+
+;; elfeed
+(use-package elfeed
+  :ensure t
+  :init (setq elfeed-feeds '(("http://nullprogram.com/feed/" blog emacs) "http://www.50ply.com/atom.xml"
+			     ("http://nedroid.com/feed/" webcomic))))
 
 
 ;;; [Extra keybindings] ===============================================================
