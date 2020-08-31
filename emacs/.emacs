@@ -7,7 +7,7 @@
 
 ;;; [Basic config] =============================================
 
-;; Disable ugly stuff
+;; Disable useless stuff
 (when window-system
   (tool-bar-mode -1)
   (scroll-bar-mode -1)
@@ -31,6 +31,9 @@
 
 ;; Backup somewhere else
 (setq backup-directory-alist `((".*" . "/tmp/emacsbackup")))
+
+;; Show matching paran
+(setq show-paran-mode 1)
 
 ;; Quit out of everythign with esc
 (defun meain/keyboard-quit ()
@@ -64,16 +67,7 @@
 ;; Diminish
 (use-package diminish :ensure t)
 
-;; Persistant undo
-(use-package undo-tree
-  :ensure t
-  :diminish :init
-  (progn
-    (global-undo-tree-mode)
-    (setq undo-tree-auto-save-history t)
-    (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))))
-
-;;; [evil packages] =================================================
+;;; [Evil packages] =================================================
 
 ;; Evil mode
 (use-package evil
@@ -97,8 +91,7 @@
   :ensure t
   :init (global-evil-surround-mode 1))
 
-;; Evil keybindings
-;; (define-key evil-normal-state-map (kbd "q") 'bury-buffer)
+;;; [Non evil packages] =================================================
 
 ;; Company for autocompletions
 (use-package company
@@ -144,6 +137,118 @@
   :config (progn
 	    (evil-leader/set-key "j" 'dumb-jump-go)))
 
+
+;; Code formatting
+(use-package format-all :ensure t)
+(use-package srefactor
+  :ensure t
+  :init (require 'srefactor-lisp))
+(defun meain/auto-format ()
+  "Custom auto-format based on filetype."
+  (interactive)
+  (if (eq major-mode 'emacs-lisp-mode)
+      (srefactor-lisp-format-buffer)
+    (format-all-buffer)))
+(define-key evil-normal-state-map (kbd ",,") 'meain/auto-format)
+
+;; Projectile
+(use-package projectile
+  :ensure t
+  :diminish :init
+  (projectile-mode +1))
+
+;; Flycheck
+(use-package flycheck
+  :ensure t
+  :init (progn
+	  (global-flycheck-mode)
+	  (setq flycheck-checker-error-threshold 1500)
+	  (evil-leader/set-key "k" 'flycheck-previous-error)
+	  (evil-leader/set-key "j" 'flycheck-next-error)))
+
+;; LSP
+(use-package eglot
+  :ensure t
+  :hook ((python-mode . eglot-ensure)
+	 (rust-mode . eglot-ensure)))
+;;(use-package lsp-mode
+;;  :ensure t
+;;  :hook ((python-mode . lsp-deferred)
+;;	 (rust-mode . lsp-deferred)):commands
+;;  (lsp lsp-deferred))
+;;(use-package lsp-ui :ensure t
+;;  :commands lsp-ui-mode)
+;;(use-package lsp-ivy :ensure t
+;;  :commands lsp-ivy-workspace-symbol)
+
+;;; [Language pugins] ===============================================
+
+;; Rust
+(use-package rust-mode :ensure t)
+
+;; Lua
+(use-package lua-mode :ensure t)
+
+;;; [Other plugins] ================================================
+
+;; drag-stuff
+(use-package drag-stuff
+  :ensure t
+  :diminish :init
+  (progn
+    (drag-stuff-mode t)
+    (drag-stuff-global-mode 1))
+  :config (progn
+	    (define-key evil-visual-state-map (kbd "<up>") 'drag-stuff-up)
+	    (define-key evil-visual-state-map (kbd "<down>") 'drag-stuff-down)
+	    (define-key evil-visual-state-map (kbd "<left>") 'drag-stuff-left)
+	    (define-key evil-visual-state-map (kbd "<right>") 'drag-stuff-right)))
+
+;; Try
+(use-package try :ensure t)
+
+;; Sane term
+(use-package sane-term
+  :ensure t
+  :init (progn
+	  (global-set-key (kbd "M-t")
+			  'sane-term)))
+
+;; Saveplace
+(use-package saveplace
+  :ensure t
+  :init (progn
+	  (save-place-mode t)
+	  (setq save-place-file "~/.emacs.d/saveplace")))
+
+;; Persistant undo using undo-tree
+(use-package undo-tree
+  :ensure t
+  :diminish :init
+  (progn
+    (global-undo-tree-mode)
+    (setq undo-tree-auto-save-history t)
+    (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))))
+
+;; Neotree
+(use-package neotree
+  :ensure t
+  :init (progn
+	  (define-key evil-normal-state-map (kbd "<tab>") 'neotree-toggle)
+	  (defun meain/neotree-mode-hook ()
+	    (define-key neotree-mode-map (kbd "k") 'neotree-previous-line)
+	    (define-key neotree-mode-map (kbd "j") 'neotree-next-line)
+	    (define-key neotree-mode-map (kbd "<return>") 'neotree-enter)
+	    (define-key neotree-mode-map (kbd "<spc>") 'neotree-quick-look)
+	    (define-key neotree-mode-map (kbd "R") 'neotree-refresh)
+	    (define-key neotree-mode-map (kbd "r") 'neotree-rename-node)
+	    (define-key neotree-mode-map (kbd "c") 'neotree-create-node)
+	    (define-key neotree-mode-map (kbd "d") 'neotree-delete-node))
+	  (setq neo-theme 'ascii)
+	  (add-hook 'neotree-mode-hook 'meain/neotree-mode-hook)))
+
+
+;;; [Extra keybindings] ===============================================================
 
 ;; Window mappings
 (global-set-key (kbd "M-l")
@@ -219,105 +324,6 @@
 ;; Eval region
 ;; Figure out a way to auto exit normal mode after eval
 (define-key evil-visual-state-map (kbd ";") 'eval-region)
-
-;;; [Non evel packages] =================================================
-
-;; Code formatting
-(use-package format-all :ensure t)
-(use-package srefactor
-  :ensure t
-  :init (require 'srefactor-lisp))
-(defun meain/auto-format ()
-  "Custom auto-format based on filetype."
-  (interactive)
-  (if (eq major-mode 'emacs-lisp-mode)
-      (srefactor-lisp-format-buffer)
-    (format-all-buffer)))
-(define-key evil-normal-state-map (kbd ",,") 'meain/auto-format)
-
-;; Projectile
-(use-package projectile
-  :ensure t
-  :diminish :init
-  (projectile-mode +1))
-
-;; Magit
-;; (use-package magit
-;;   :ensure t
-;;   :init
-;;   (evil-leader/set-key "g" 'magit-status))
-
-;; Flycheck
-(use-package flycheck
-  :ensure t
-  :init (progn
-	  (global-flycheck-mode)
-	  (setq flycheck-checker-error-threshold 1500)
-	  (evil-leader/set-key "k" 'flycheck-previous-error)
-	  (evil-leader/set-key "j" 'flycheck-next-error)))
-
-;; LSP
-(use-package eglot
-  :ensure t
-  :hook ((python-mode . eglot-ensure)
-	 (rust-mode . eglot-ensure)))
-;;(use-package lsp-mode
-;;  :ensure t
-;;  :hook ((python-mode . lsp-deferred)
-;;	 (rust-mode . lsp-deferred)):commands
-;;  (lsp lsp-deferred))
-;;(use-package lsp-ui :ensure t
-;;  :commands lsp-ui-mode)
-;;(use-package lsp-ivy :ensure t
-;;  :commands lsp-ivy-workspace-symbol)
-
-;;; [Language pugins] ===============================================
-
-;; Rust
-(use-package rust-mode :ensure t)
-
-;; Lua
-(use-package lua-mode :ensure t)
-
-;;; [Other plugins] ================================================
-
-;; drag-stuff
-(use-package drag-stuff
-  :ensure t
-  :diminish :init
-  (progn
-    (drag-stuff-mode t)
-    (drag-stuff-global-mode 1))
-  :config (progn
-	    (define-key evil-visual-state-map (kbd "<up>") 'drag-stuff-up)
-	    (define-key evil-visual-state-map (kbd "<down>") 'drag-stuff-down)
-	    (define-key evil-visual-state-map (kbd "<left>") 'drag-stuff-left)
-	    (define-key evil-visual-state-map (kbd "<right>") 'drag-stuff-right)))
-
-;; Try
-(use-package try :ensure t)
-
-;; Sane term
-(use-package sane-term
-  :ensure t
-  :init (progn
-	  (global-set-key (kbd "M-t")
-			  'sane-term)))
-
-;; Saveplace
-(use-package saveplace
-  :ensure t
-  :init (progn
-	  (save-place-mode t)
-	  (setq save-place-file "~/.emacs.d/saveplace")))
-
-;; Neotree
-(use-package neotree
-  :ensure t
-  :bind (("<return>" . 'neotree-enter)):init
-  (progn
-    (define-key evil-normal-state-map (kbd "<tab>") 'neotree-toggle)))
-
 
 
 ;; Emacs dump
