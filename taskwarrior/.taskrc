@@ -18,7 +18,8 @@ urgency.uda.project.personal.explore.coefficient=-0.5
 
 context.work=+work
 context.code=+code
-context.weekend=-work or project:chore
+context.nowork=-work or project:chore
+context.nocode=-code
 context.inbox=project:inbox
 
 # default entires
