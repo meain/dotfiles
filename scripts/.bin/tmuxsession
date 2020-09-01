@@ -12,4 +12,4 @@ else
         tmux switch-client -t "$SESSION"
 fi
 
-[ -n "$2" ] && tmux send -t "$SESSION" "$2" ENTER
+[ -n "$2" ] && tmux send -t "$SESSION" "$2" ENTER || exit 0
