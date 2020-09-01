@@ -1,5 +1,6 @@
 set ssl_starttls=yes
 set ssl_force_tls=yes
+set hostname="prop"
 
 set move = no
 set wait_key = no
