@@ -92,3 +92,4 @@ alias map='telnet mapscii.me'
 alias weather='curl -s wttr.in | head -5'
 alias tsquick='TS_SOCKET="/tmp/quick" ts'
 alias zoom="open -a /Applications/zoom.us.app"
+alias navi="NAVI_PATH=/Users/meain/Documents/Projects/projects/cheats navi"
