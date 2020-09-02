@@ -160,7 +160,7 @@ case "$(uname -s)" in
 esac
 
 preexec () {
-  if ! grep "$1" < "$DATAFILES_PATH/long_runnable_jobs" > /dev/null; then
+  if ! grep -q "$1" "$DATAFILES_PATH/long_runnable_jobs" ; then
     CMD_START_DATE=$(date +%s)
     CMD_NAME=$1
   fi
