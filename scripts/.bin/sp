@@ -11,13 +11,8 @@ projectsintag() {
         tail -n+4 |
         grep -E '^[A-z]' |
         awk '{print $1}' |
-        grep -v chore |
-        tr '\n' '|' |
-        sed 's/|$//'
+        grep -v chore
 }
-
-workprojects="$(projectsintag work)"
-codeprojects="$(projectsintag code)"
 
 if projectsintag work | grep -q "$project"; then
     echo task add proj:"$project" +work "$@"
