@@ -8,6 +8,12 @@ if [ "$1" = "list" ]; then
     ls -t "$DIR" | fzf --header "Select file" --preview "cat '$DIR/{}'" | xargs -I{} "$EDITOR" "$DIR/{}"
 elif [ "$1" = "last" ]; then
     ls -t "$DIR" | head -n1 | xargs -I{} "$EDITOR" "$DIR/{}"
+elif [ "$1" = "rename" ]; then
+    printf "New name: "
+    read -r
+    ls -t "$DIR" |
+        fzf --header "Select file" --preview "cat '$DIR/{}'" |
+        xargs -I{} mv "$DIR/{}" "$DIR/$REPLY"
 else
-    $EDITOR "$DIR/$(xxd -l2 -ps /dev/urandom)" "+set ft=$1"
+    $EDITOR "$DIR/_$(xxd -l2 -ps /dev/urandom)" "+set ft=$1"
 fi
