@@ -591,6 +591,9 @@ nnoremap M :Dispatch! maker<cr>
 " Terminal colors
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
+" Fixed I/A for visual
+xnoremap <expr> I mode() ==# 'v' ? "\<c-v>I" : mode() ==# 'V' ? "\<c-v>^o^I" : "I"
+xnoremap <expr> A mode() ==# 'v' ? "\<c-v>A" : mode() ==# 'V' ? "\<c-v>Oo$A" : "A"
 
 
 
