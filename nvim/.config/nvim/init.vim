@@ -1546,25 +1546,9 @@ augroup load_git_utils
     autocmd CursorHold,CursorHoldI,BufWritePost * source ~/.config/nvim/gitutils.vim | autocmd! load_git_utils
 augroup end
 
-augroup load_additional_plugins_onwrite
-    autocmd!
-    autocmd CursorHold,CursorHoldI * call plug#load('vim-signify') |
-          \ call plug#load('vim-package-info') | 
-          \ call plug#load('vim-signify') |
-          \ call plug#load('vim-googler') |
-          \ call plug#load('vim-dirvish') |
-          \ call plug#load('auto-pairs') |
-          \ call plug#load('echodoc.vim') |
-          \ call plug#load('vim-repeat') |
-          \ call plug#load('vim-package-info') |
-          \ call plug#load('vim-printer') |
-          \ call plug#load('vista.vim') |
-          \ autocmd! load_additional_plugins_onwrite
-augroup end
-
 augroup load_additional_plugins
     autocmd!
-    autocmd BufWritePost * call plug#load('indentLine') |
+    autocmd CursorHold,CursorHoldI,BufWritePost * call plug#load('vim-signify') |
           \ call plug#load('vim-package-info') | 
           \ call plug#load('vim-signify') |
           \ call plug#load('vim-googler') |
