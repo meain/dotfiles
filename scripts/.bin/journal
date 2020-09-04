@@ -5,12 +5,21 @@ set -e
 DIR="$HOME/.local/share/journal"
 mkdir -p "$DIR"
 
-if [ -z "$1" ];then
+view=0
+
+[ "$1" = 'view' ] && view=1 && shift
+if [ -z "$1" ]; then
     cd "$DIR"
     FILE="$DIR/$(date '+%Y/%m/%d').md"
     mkdir -p "$(dirname "$FILE")"
 else
-    FILE="$(echo "$1"|sed 's|.asc$||')"
+    FILE="$(echo "$1" | sed 's|.asc$||')"
+fi
+
+# view and exit if view
+if [ "$view" = 1 ]; then
+    gpg --decrypt "$FILE.asc" 2>/dev/null
+    exit 0
 fi
 
 # encrypt if available
