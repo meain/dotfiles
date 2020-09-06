@@ -47,6 +47,15 @@ function! NearestMethodOrFunction() abort
   return get(b:, 'vista_nearest_method_or_function', '')
 endfunction
 
+function! TreesitterStatus() abort
+  let ts = nvim_treesitter#statusline(30)
+  if ts ==# 'null'
+    return ''
+  else
+    return ts
+  endif
+endfunction
+
 set statusline=                                           " Reset status line
 set statusline+=%*                                        " Reset color
 set statusline+=%{&readonly?':':!&modifiable?':':''}      " Non modifiable
@@ -54,7 +63,7 @@ set statusline+=\ \ %{TinyFilePath()}\                    " File name
 set statusline+=%{&modified?'+':''}                       " Modified
 set statusline+=\ %q                                      " Quickfix, LocList etc
 set statusline+=%#Comment#                                " Faded
-set statusline+=\ %{nvim_treesitter#statusline(30)}       " Treesitter path
+set statusline+=\ %{TreesitterStatus()}       " Treesitter path
 set statusline+=%#Normal#                                 " Normal
 " set statusline+=\ %{NearestMethodOrFunction()}            " Vista method
 set statusline+=%=                                        " Split
