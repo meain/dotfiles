@@ -39,6 +39,7 @@ Plug 'justinmk/vim-dirvish'                                                     
 Plug 'scrooloose/nerdtree', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] }         " Nerdtree
 Plug 'meain/vim-automkdir'                                                                     " Automatically create parent dirs
 Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'nvim-treesitter/playground', { 'on': 'TSPlaygroundToggle' }
 
 " Morph code
 Plug 'tpope/vim-surround'                                                                      " Surround
@@ -1561,8 +1562,15 @@ require'nvim-treesitter.configs'.setup {
       },
     },
   },
+  playground = {
+    enable = true,
+    disable = {},
+    updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
+    persist_queries = false -- Whether the query persists across vim sessions
+  }
 }
 EOF
+
 
 "                             Source External                          "
 "                    ==============================                    "
