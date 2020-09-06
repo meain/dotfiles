@@ -1401,6 +1401,7 @@ let g:vim_printer_items = {
       \ 'sh': 'echo "{$}: ${$}"',
       \ 'bash': 'echo "{$}: ${$}"',
       \ 'zsh': 'echo "{$}: ${$}"',
+      \ 'lua': 'print("{$}:",{$})'
       \ }
 
 
