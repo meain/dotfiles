@@ -1206,7 +1206,8 @@ let g:ale_fixers = {
 \  'markdown' : ['prettier'],
 \  'html' : ['prettier'],
 \  'yaml': ['prettier'],
-\  'sh': ['shfmt']
+\  'sh': ['shfmt'],
+\  'dart': ['dartfmt']
 \}
 let g:ale_javascript_prettier_use_local_config = 1
 
