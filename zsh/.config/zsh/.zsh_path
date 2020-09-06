@@ -60,5 +60,7 @@ export PATH="$PATH:$ANDROID_HOME/cmdline-tools/tools/bin"
 # Rust
 PATH="$HOME/.cache/cargo/bin:$PATH"
 
-# Flutter
+# Flutter & Dart
 PATH="$PATH:$HOME/.local/share/flutter/bin"
+PATH="$PATH:$HOME/.local/share/flutter/bin/cache/dart-sdk/bin"
+export PATH="$PATH":"$HOME/.pub-cache/bin"
