@@ -38,6 +38,7 @@ Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }                              
 Plug 'justinmk/vim-dirvish'                                                                    " File browser
 Plug 'scrooloose/nerdtree', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] }         " Nerdtree
 Plug 'meain/vim-automkdir'                                                                     " Automatically create parent dirs
+Plug 'nvim-treesitter/nvim-treesitter'
 
 " Morph code
 Plug 'tpope/vim-surround'                                                                      " Surround
@@ -259,7 +260,9 @@ set fillchars+=fold:\
 
 " Indent based folding
 set foldlevel=0
-set foldmethod=indent
+" set foldmethod=indent
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
 " set foldmethod=manual
 set foldignore=
 set foldlevelstart=10
@@ -1532,6 +1535,34 @@ highlight default link MTODODone Comment
 highlight default link MTODOImportant Question
 let g:vim_mtodo_move_done_to_bottom=1
 
+" nvim-treesitter
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = "all",
+  highlight = { 
+    enable = true,
+    custom_captures = {
+      ["attribute.identifier"] = "Normal",
+      ["keyword_argument.identifier"] = "Normal",
+    },
+  },
+  refactor = {
+      highlight_definitions = { enable = true },
+      highlight_current_scope = { enable = false },
+    },
+  textobjects = {
+    select = {
+      enable = true,
+      keymaps = {
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner",
+      },
+    },
+  },
+}
+EOF
 
 "                             Source External                          "
 "                    ==============================                    "
