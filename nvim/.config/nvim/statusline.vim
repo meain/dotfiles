@@ -53,8 +53,10 @@ set statusline+=%{&readonly?':':!&modifiable?':':''}      " Non modifiable
 set statusline+=\ \ %{TinyFilePath()}\                    " File name
 set statusline+=%{&modified?'+':''}                       " Modified
 set statusline+=\ %q                                      " Quickfix, LocList etc
-set statusline+=%#Normal#                                 " Faded
-set statusline+=\ %{NearestMethodOrFunction()}            " Vista method
+set statusline+=%#Comment#                                " Faded
+set statusline+=\ %{nvim_treesitter#statusline(30)}       " Treesitter path
+set statusline+=%#Normal#                                 " Normal
+" set statusline+=\ %{NearestMethodOrFunction()}            " Vista method
 set statusline+=%=                                        " Split
 set statusline+=%#ALEWarningSign#                         " Warning color
 set statusline+=%{LinterStatus()}                         " ALE errors and warns
