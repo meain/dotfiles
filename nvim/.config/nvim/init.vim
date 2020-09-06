@@ -298,7 +298,7 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
 " Set up leader keys
 let mapleader = ' '
-let maplocalleader = '\|'
+let maplocalleader = ','
 
 " Smart colorcolumn
 function SmartColorcolumn() abort
