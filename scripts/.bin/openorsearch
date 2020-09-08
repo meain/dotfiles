@@ -2,11 +2,14 @@
 
 SEARCH_BASE='https://duckduckgo.com/?q='
 
-if echo "$1" | grep -E '^https://[A-z]+.zoom.us/j/' > /dev/null; then
+if echo "$1" | grep -qE '^https://[A-z]+.zoom.us/j/'; then
   echo "$1" | xargs open -a /Applications/zoom.us.app
   echo "📞 $1"
-elif echo "$1" | grep -E '^http[s]?://' > /dev/null; then
-  echo "$1"| xargs open  # just open has issues with url formatting
+elif echo "$1" | grep -qE '^http[s]?://'; then
+  echo "$1" | xargs open # just open has issues with url formatting
+  echo "🔗 $1"
+elif echo "$1" | grep -qE '^git@github.com:'; then
+  echo "$1" | sed 's|^git@github.com:|https://github.com/|;s|.git$||' | xargs open
   echo "🔗 $1"
 else
   echo "$SEARCH_BASE$1" | xargs open
