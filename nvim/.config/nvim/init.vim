@@ -624,17 +624,23 @@ nnoremap <silent><s-left> :tabm -1<cr>
 
 " Easier switching of quickfix list items
 function! QfNext() abort
-  let l:qflen = len(getqflist())
-  if l:qflen > 0
-    cnext
+  if len(getqflist()) != 0
+    try
+      cnext
+    catch
+      echo "Reached last item"
+    endtry
   else
     ALENext
   endif
 endfunction
 function! QfPrev() abort
-  let l:qflen = len(getqflist())
-  if l:qflen > 0
-    cprevious
+  if len(getqflist()) != 0
+    try
+      cprevious
+    catch
+      echo "Reached first item"
+    endtry
   else
     ALEPrevious
   endif
