@@ -1137,11 +1137,12 @@ command! -bang -nargs=? -complete=dir GFiles
 command! -bang Open call fzf#run({'source': 'rg --files --hidden --follow --glob "!.git/*"', 'sink': 'e', 'down': '40%', 'options': '--preview "codepreview {}"'})
 nnoremap <silent><Enter> :FZF<cr>
 nnoremap <silent> <leader><Enter> :History<cr>
-command! -bang -nargs=* Find
+command! -bang -range -nargs=* Find
       \ call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>),
       \ 1, <bang>0)
 nnoremap <leader>b :Buffers<cr>
 nnoremap <leader>f :Find<cr>
+vnoremap <leader>f :Find <c-r><c-w><cr>
 function s:OpenInBuffer(lines) abort
   execute 'e +'.split(a:lines[0], ':')[1].' '.split(a:lines[0], ':')[0]
 endfunction
@@ -1154,6 +1155,7 @@ augroup custom_fzf
   autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
 augroup end
 nnoremap <leader>F :FindInProject<space>
+vnoremap <leader>F :FindInProject <c-r><c-w>
 
 " Fugitive
 nnoremap <silent><leader>g :Gstatus\|normal!gg7j<cr>
