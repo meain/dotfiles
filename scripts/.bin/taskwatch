@@ -3,7 +3,7 @@
 set -e
 
 if command -v watchexec; then
-    watchexec -c --force-poll 500 -w "$HOME/.local/share/task" "task limit:100 $* 2>/dev/null|tail -n+4|sed '$ d'|head -n$(($(tput lines) - 2))"
+    watchexec -c -w "$HOME/.local/share/task" "task limit:100 $* 2>/dev/null|tail -n+4|sed '$ d'|head -n$(($(tput lines) - 2))"
 else
     watch -c -d -t "task limit:100 $* 2>/dev/null|tail -n+4|sed '$ d'"
 fi
