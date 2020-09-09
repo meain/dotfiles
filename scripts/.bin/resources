@@ -13,17 +13,20 @@ get_file() {
 list() {
     cat "$(get_file "$*")"
 }
+fzf_items() {
+    fzf -m --preview-window up:1 --preview 'echo {} | sed "s|^.[^ ]* ||"' <"$(get_file "$*")"
+}
 get() {
-    fzf -m <"$(get_file "$*")" | awk '{print $1}'
+    fzf_items "$*" | awk '{print $1}'
 }
 edit() {
     "$EDITOR" "$(get_file "$*")"
 }
 copy() {
-    fzf -m <"$(get_file "$*")" | awk '{print $1}' | pbcopy
+    fzf_items "$*" | awk '{print $1}' | pbcopy
 }
 open() {
-    fzf -m <"$(get_file "$*")" | awk '{print $1}' | xargs open
+    fzf_items "$*" | awk '{print $1}' | xargs open
 }
 new() {
     printf "Name: "
@@ -53,7 +56,9 @@ add() {
 all() {
     find "$NOTES_FOLDER" -type f -depth 1 | while read -r file; do
         sed "s|$| #$(basename "$file")|" "$file"
-    done | fzf -m | awk '{print $1}'
+    done |
+        fzf -m --preview-window up:1 --preview 'echo {} | sed "s|^.[^ ]* ||"' |
+        awk '{print $1}'
 }
 
 if [ -n "$1" ]; then
