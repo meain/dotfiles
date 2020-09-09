@@ -48,6 +48,9 @@ function! NearestMethodOrFunction() abort
 endfunction
 
 function! TreesitterStatus() abort
+  if get(g:, 'enable_treesitter_status', 0) ==# 0
+    return ' '
+  endif
   let ts = nvim_treesitter#statusline(30)
   if ts ==# 'null'
     return ''
@@ -63,11 +66,12 @@ set statusline+=\ \ %{TinyFilePath()}\                    " File name
 set statusline+=%{&modified?'+':''}                       " Modified
 set statusline+=\ %q                                      " Quickfix, LocList etc
 set statusline+=%#Comment#                                " Faded
-set statusline+=\ %{TreesitterStatus()}       " Treesitter path
+set statusline+=\ %{TreesitterStatus()}                   " Treesitter path
 set statusline+=%#Normal#                                 " Normal
 " set statusline+=\ %{NearestMethodOrFunction()}            " Vista method
 set statusline+=%=                                        " Split
 set statusline+=%#ALEWarningSign#                         " Warning color
+" set statusline+=QF:%{len(getqflist())}\                   " Number of items in qflist
 set statusline+=%{LinterStatus()}                         " ALE errors and warns
 set statusline+=%#Normal#                                 " Faded
 set statusline+=\ %l:%c                                   " Line number and column
