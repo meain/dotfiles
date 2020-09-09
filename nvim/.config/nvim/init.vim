@@ -261,9 +261,9 @@ set fillchars+=fold:\
 
 " Indent based folding
 set foldlevel=0
-" set foldmethod=indent
-set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
+set foldmethod=indent
+" set foldmethod=expr
+" set foldexpr=nvim_treesitter#foldexpr()
 " set foldmethod=manual
 set foldignore=
 set foldlevelstart=10
