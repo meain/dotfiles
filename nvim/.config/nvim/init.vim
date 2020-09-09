@@ -38,8 +38,8 @@ Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }                              
 Plug 'justinmk/vim-dirvish'                                                                    " File browser
 Plug 'scrooloose/nerdtree', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] }         " Nerdtree
 Plug 'meain/vim-automkdir'                                                                     " Automatically create parent dirs
-Plug 'nvim-treesitter/nvim-treesitter'
-Plug 'nvim-treesitter/playground', { 'on': 'TSPlaygroundToggle' }
+Plug 'nvim-treesitter/nvim-treesitter'                                                         " Treesitter integration and highlight
+Plug 'nvim-treesitter/playground', { 'on': 'TSPlaygroundToggle' }                              " Treesitter debugger
 
 " Morph code
 Plug 'tpope/vim-surround'                                                                      " Surround
@@ -1548,13 +1548,7 @@ let g:vim_mtodo_move_done_to_bottom=1
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
   ensure_installed = "all",
-  highlight = { 
-    enable = true,
-    custom_captures = {
-      ["attribute.identifier"] = "Normal",
-      ["keyword_argument.identifier"] = "Normal",
-    },
-  },
+  highlight = { enable = true },
   refactor = {
       highlight_definitions = { enable = true },
       highlight_current_scope = { enable = false },
