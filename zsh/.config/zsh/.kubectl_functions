@@ -11,7 +11,7 @@ klog() {
 }
 
 kshell() {
-  kubectl exec -it "$(kpods "$*")" --  sh -c 'clear; (bash || ash || sh)'
+  kubectl exec -it "$(kpods "$*")" -- sh -c 'clear; (bash || ash || sh)'
 }
 
 kall() {
@@ -28,6 +28,11 @@ k_change_namespace() {
     return 0
   fi
   kubectl config set-context "$(kubectl config current-context)" --namespace="$NAMESPCE"
+}
+
+k_change_context() {
+  kubectl config get-contexts | grep -v '^*' | tail -n+2 | awk '{print $1,"   ",$4}' |
+    fzf | awk '{print $1}' | xargs kubectl config use-context
 }
 
 alias kp="kubectl get pods"
