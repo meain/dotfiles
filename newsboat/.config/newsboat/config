@@ -104,6 +104,7 @@ macro y set browser "youtubepreview"; open-in-browser ; set browser  "newsboatpr
 macro d set browser "newsboatpreview"; open-in-browser ; set browser  "newsboatpreview"
 macro l set browser "lynx -lss='~/.lynx.lss'"; open-in-browser ; set browser  "newsboatpreview"
 macro b set browser "resources add"; open-in-browser ; set browser  "newsboatpreview"
+macro g set browser "add-to-gourcer"; open-in-browser ; set browser  "newsboatpreview"
 
 # define-filter "Vim stuff" "content =~ \"Vim\""
 # highlight-article "content =~ \"Vim\"" magenta default
