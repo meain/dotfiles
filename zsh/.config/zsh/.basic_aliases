@@ -85,7 +85,6 @@ alias cleanup="fd '.DS_Store' --no-ignore --hidden -x rm -v"
 alias pypipublish='python3 setup.py sdist bdist_wheel && twine upload dist/*'
 alias updatessh="gcloud compute config-ssh --ssh-key-file='~/.ssh/gcloud_saama_common'"
 alias lock="osascript -e 'tell application \"System Events\" to keystroke \"q\" using {command down,control down}'"
-alias bm='resources'
 
 alias publicip='curl ifconfig.co'
 alias map='telnet mapscii.me'
@@ -93,3 +92,6 @@ alias weather='curl -s wttr.in | head -5'
 alias tsquick='TS_SOCKET="/tmp/quick" ts'
 alias zoom="open -a /Applications/zoom.us.app"
 alias navi="NAVI_PATH=/Users/meain/Documents/Projects/projects/cheats navi"
+alias bm='resources'
+alias bmof='resources open frequent'
+alias bmcf='resources copy frequent'

@@ -74,6 +74,14 @@ case "$OPTION" in
 "open") open "$*" ;;
 "new") new "$*" ;;
 "add") add "$*" ;;
+
+"l") list "$*" ;;
+"p") get "$*" ;;
+"c") copy "$*" ;;
+"o") open "$*" ;;
+"n") new "$*" ;;
+"a") add "$*" ;;
+
 "all") all "$*" ;;
 "edit") edit "$*" ;;
 *) echo "Options are: list print copy open new add all" ;;
