@@ -46,6 +46,7 @@ if ! diff -q "$FILE" "$FILE.bkp" >/dev/null 2>&1; then
     git add ./*.asc &&
         git commit -m '[autocommit] update journal' >/dev/null 2>&1
     echo "Journal updated."
+    task '/add journal entry/ status:pending' 'done'
 else
     echo "No updates."
 fi
