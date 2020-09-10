@@ -1,0 +1,10 @@
+#!/bin/sh
+
+set -e
+
+if ! grep -q "$1" ~/.cache/vime/gourcer; then
+    echo "- $1" >>~/.cache/vime/gourcer
+else
+    echo "[Already available] $1"
+    # exit 1 will mess with newsboat
+fi
