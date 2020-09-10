@@ -20,7 +20,11 @@ function mod.clipdo()
     local chooser = hs.chooser.new(function(chosen)
         hs.alert("🧧 " .. chosen.text .. " '" .. link .. "'")
         result = customshellrun.run(chosen.text .. " '" .. link .. "'", true)
-        hs.alert(result)
+        if (result == nil or result == '') then
+            hs.alert('-- no output --')
+        else
+            hs.alert(result)
+        end
     end)
     chooser:placeholderText(link)
     chooser:choices(formatChoices(doables))

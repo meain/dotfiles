@@ -15,17 +15,6 @@ mailcounter:setTooltip("No new emails")
 mailcounter:setTitle("M")
 
 
-local taskwarrior = require("taskwarrior")
-hs.hotkey.bind({"shift", "alt"}, "t", function()
-  taskwarrior.run()
-end)
-
--- mute and unmute mic
-hs.loadSpoon("MicMute")
-spoon.MicMute:bindHotkeys({
-  toggle = { { "shift", "alt" }, "z" }
-})
-
 -- Variables
 local BIN = os.getenv("HOME") .. '/.bin/'
 local prev_foreground_app = nil
@@ -41,8 +30,20 @@ hs.alert.defaultStyle.textFont = "DankMono Nerd Font"
 hs.alert.defaultStyle.textSize = 15
 hs.alert.defaultStyle.fadeInDuration = 0.10
 hs.alert.defaultStyle.fadeOutDuration = 1
-hs.alert.defaultStyle.atScreenEdge = 2
+-- hs.alert.defaultStyle.atScreenEdge = 2  -- need multiple items
 hs.alert.defaultStyle.fillColor = { white = 0, alpha = 0.95 }
+
+-- taskwarrior
+local taskwarrior = require("taskwarrior")
+hs.hotkey.bind({"shift", "alt"}, "t", function()
+  taskwarrior.run()
+end)
+
+-- mute and unmute mic
+hs.loadSpoon("MicMute")
+spoon.MicMute:bindHotkeys({
+  toggle = { { "shift", "alt" }, "z" }
+})
 
 -- Scren switcher
 local switchscreen = require("switchscreen")
