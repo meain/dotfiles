@@ -20,10 +20,10 @@ function obj:updateMicMute(muted)
 	end
 	if muted then
 		obj.mute_menu:setTitle("><")
-		hs.alert("📵 Mic muted")
+		hs.alert(" ><")
 	else
 		obj.mute_menu:setTitle("<>")
-		hs.alert("🎙 Mic on")
+		hs.alert(" <>")
 	end
 end
 
