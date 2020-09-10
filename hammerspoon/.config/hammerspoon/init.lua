@@ -61,6 +61,10 @@ anycomplete.registerDefaultBindings({"alt", "shift"}, 'G')
 local emojipicker = require("emojipicker")
 emojipicker.registerDefaultBindings({"alt"}, 'E')
 
+
+local clipdo = require("clipdo")
+clipdo.registerDefaultBindings({"alt", "shift"}, "L")
+
 -- Music keymaps
 showCurrentSong = function()
   song = customshellrun.run(BIN .. 'music/currentsongfull')
