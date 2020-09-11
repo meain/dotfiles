@@ -1,14 +1,10 @@
--- Set up logger
-local logLevel = 'info'
-local log = hs.logger.new('hms', logLevel)
-
 require("autoreload")
 require("mousehighlight")
 local utils = require("utils")
 local pasteboard = require("hs.pasteboard")
-local customshellrun = require('customshellrun') 
-local focusandback = require('focusandback') 
-local typeout = require('typeout') 
+local customshellrun = require('customshellrun')
+local focusandback = require('focusandback')
+local typeout = require('typeout')
 
 local mailcounter = hs.menubar.new()
 mailcounter:setTooltip("No new emails")
@@ -17,7 +13,6 @@ mailcounter:setTitle("M")
 
 -- Variables
 local BIN = os.getenv("HOME") .. '/.bin/'
-local prev_foreground_app = nil
 
 
 -- Disable animations
@@ -67,8 +62,8 @@ local clipdo = require("clipdo")
 clipdo.registerDefaultBindings({"ctrl", "alt", "shift"}, "L")
 
 -- Music keymaps
-showCurrentSong = function()
-  song = customshellrun.run(BIN .. 'music/currentsongfull')
+local showCurrentSong = function()
+  local song = customshellrun.run(BIN .. 'music/currentsongfull')
   hs.alert(song)
 end
 hs.hotkey.bind({'alt'}, 'right', function()
@@ -104,25 +99,27 @@ end)
 
 -- Open link or search for item in clipboard
 hs.hotkey.bind({'alt'}, 'delete', function()
-  result = customshellrun.run(BIN .. 'openorsearch "' ..  pasteboard.getContents() .. '"')
+  local result = customshellrun.run(BIN .. 'openorsearch "' ..  pasteboard.getContents() .. '"')
   hs.alert(result)
 end)
 
 hs.hotkey.bind({'alt', 'shift'}, 'delete', function()
-  customshellrun.run('/usr/bin/open \'https://www.google.com/search?q=' ..  pasteboard.getContents() .. '&btnI=I%27m+Feeling+Lucky\'')
+  customshellrun.run(
+    '/usr/bin/open \'https://www.google.com/search?q=' ..  pasteboard.getContents() .. '&btnI=I%27m+Feeling+Lucky\''
+  )
 end)
 
 -- Email watcher
-emailNotify = function(alert)
+local emailNotify = function(alert)
   if type(alert) == "table" then
     alert = false
   end
 
-  populateMailListing = function()
-    mailListing = {}
-    unreadcount = utils.linecount(result)
+  local populateMailListing = function(result)
+    local mailListing = {}
+    local unreadcount = utils.linecount(result)
     if (unreadcount > 0) then
-      for k,v in pairs(utils.split(result, '\n')) do
+      for _,v in pairs(utils.split(result, '\n')) do
         table.insert(mailListing, 1, {title=v})
       end
       table.insert(mailListing, {title="-"})
@@ -133,8 +130,8 @@ emailNotify = function(alert)
     return mailListing
   end
 
-  result = customshellrun.run(BIN .. 'unreadsenders | cut -c-120')
-  unreadcount = utils.linecount(result)
+  local result = customshellrun.run(BIN .. 'unreadsenders | cut -c-120')
+  local unreadcount = utils.linecount(result)
   if (unreadcount > 0) then
     mailcounter:setTitle(unreadcount)
     mailcounter:setTooltip(result)
@@ -163,7 +160,7 @@ hs.hotkey.bind({'ctrl', 'alt', 'shift'}, 'e', function()
 end)
 
 hs.hotkey.bind({'alt', 'shift'}, 's', function()
-  result = customshellrun.run('/usr/local/bin/task tot|tail -n+4|head -n5')
+  local result = customshellrun.run('/usr/local/bin/task tot|tail -n+4|head -n5')
   hs.alert("🔨 Tasks\n" .. result)
 end)
 
