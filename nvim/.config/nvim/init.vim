@@ -1545,6 +1545,7 @@ highlight default link MTODOImportant Question
 let g:vim_mtodo_move_done_to_bottom=1
 
 " nvim-treesitter
+nnoremap <leader>ts :write <bar> edit <bar> TSBufEnable highlight<cr>
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
   ensure_installed = "all",
