@@ -7,7 +7,7 @@ if ! task '/add gourcer entries/'; then
     echo "Looks like we already did it. Bye" && exit 0
 fi
 items="$(grep -E '^-' ~/.cache/vime/gourcer | head -n4 | awk '{print $2}')"
-echo "$items" | xargs -L1 echo gourcer
+echo "$items" | xargs -L1 gourcer
 
 changes="$(echo "$items" | awk '{print "s|- "$1"|x "$1"|;"}' | tr -d '\n')"
 sed -ibk "$changes" ~/.cache/vime/gourcer
