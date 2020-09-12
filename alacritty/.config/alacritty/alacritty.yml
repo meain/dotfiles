@@ -19,22 +19,22 @@ scrolling:
 
 font:
   normal:
-    family: DankMono Nerd Font
+    family: ProFont for Powerline
     style: Regular
   bold:
-    family: DankMono Nerd Font
+    family: ProFont for Powerline
     style: Regular
   italic:
-    family: DankMono Nerd Font
-    style: Regular
-  size: 15.0
+    family: ProFont for Powerline
+    style: Bold
+  size: 17.0
   offset:
     x: 0
     y: 0 
   glyph_offset:
     x: 0
     y: 0
-  use_thin_strokes: false
+  use_thin_strokes: true
 
 color_schemes:
   dark: &dark
