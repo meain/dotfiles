@@ -10,7 +10,7 @@ tput civis
 
 # use `rc._forcecolor=on` for colors
 if command -v watchexec; then
-    watchexec -c -w "$HOME/.local/share/task" \
+    watchexec -c -w "$HOME/.local/share/task" -w "$HOME/.taskrc" \
         "tput civis && task limit:$(($(tput lines) - 1)) $*|tail -n+4|sed '/^$/d'|perl -pe 'chomp if eof'"
 else
     watch -c -d -t "task limit:100 $* | tail -n+4|sed '$ d'"
