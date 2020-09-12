@@ -29,7 +29,7 @@ h() {
 }
 
 ss() {
-    file=$(find "$HOME"/.bin/* -type f | sed "s|$HOME/.bin/||" | fzf --print-query --query "$*" | tail -n 1)
+    file=$(find "$HOME"/.bin/* -type f | sed "s|$HOME/.bin/||" | fzf --preview "cat $HOME/.bin/{}" --print-query --query "$*" | tail -n 1)
     [ -z "$file" ] && return 1
     if [ -f "$HOME/.bin/$file" ]; then
         $EDITOR "$HOME/.bin/$file"
