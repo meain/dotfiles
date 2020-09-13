@@ -67,9 +67,10 @@ Plug 'w0rp/ale'                                                                 
 
 " Autocomplete
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }                                  " Competion framework
+Plug 'neovim/nvim-lspconfig'
 Plug 'Shougo/echodoc.vim', { 'on': 'LazyLoadPlugins' }                                         " Show signature
-Plug 'Shougo/neco-vim', { 'for': 'vim' }                                                       " Completion for viml
-Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }           " Language client
+" Plug 'Shougo/neco-vim', { 'for': 'vim' }                                                       " Completion for viml
+" Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }           " Language client
 Plug '~/Documents/Projects/projects/deoplete-notmuch', { 'for': 'mail' }                       " Email autocomplete
 
 " Testing
@@ -1294,71 +1295,71 @@ let g:user_emmet_settings = {
 let g:SuperTabDefaultCompletionType = '<c-n>'
 
 " Language server protocol
-let g:LanguageClient_autoStart = 1
-let g:LanguageClient_useVirtualText = 'Diagnostics'
-let g:LanguageClient_virtualTextPrefix = ' ¤ '
-let g:LanguageClient_serverCommands = {
-    \ 'rust': ['rust-analyzer'],
-    \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio', 'lsp'],
-    \ 'javascript.jsx': ['/usr/local/bin/javascript-typescript-stdio', 'lsp'],
-    \ 'typescript': ['/usr/local/bin/javascript-typescript-stdio'],
-    \ 'typescript.tsx': ['/usr/local/bin/javascript-typescript-stdio'],
-    \ 'go': ['go-langserver'],
-    \ 'css': ['css-languageserver', '--stdio'],
-    \ 'python': ['pyls'],
-    \ 'sh': ['bash-language-server', 'start'],
-    \ 'zsh': ['bash-language-server', 'start'],
-    \ 'dockerfile': ['docker-langserver', '--stdio'],
-    \ 'lua': ['lua-lsp'],
-    \ }
-let g:LanguageClient_diagnosticsDisplay = {
-      \1: {
-        \'name': 'Error',
-        \'texthl': 'ALEError',
-        \'signText': '✖',
-        \'signTexthl': 'ALEErrorSign',
-        \'virtualTexthl': 'ALEErrorSign',
-      \},
-      \2: {
-        \'name': 'Warning',
-        \'texthl': 'ALEWarning',
-        \'signText': '⚠',
-        \'signTexthl': 'ALEWarningSign',
-        \'virtualTexthl': 'ALEWarningSign',
-      \},
-      \3: {
-        \'name': 'Information',
-        \'texthl': 'ALEInfo',
-        \'signText': '∴',
-        \'signTexthl': 'ALEInfoSign',
-        \'virtualTexthl': 'ALEInfo',
-      \},
-      \4: {
-        \'name': 'Hint',
-        \'texthl': 'ALEInfo',
-        \'signText': '➤',
-        \'signTexthl': 'ALEInfoSign',
-        \'virtualTexthl': 'ALEInfo',
-      \},
-      \}
-nnoremap <silent><leader>: :call LanguageClient_contextMenu()<CR>
-nnoremap <silent> gx :call LanguageClient_textDocument_rename()<CR>
-nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-nnoremap <silent> gr :call LanguageClient_textDocument_references()<CR>
-nnoremap <silent> gh :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> ga :call LanguageClient_textDocument_codeAction()<CR>
-nnoremap <silent> g, :call LanguageClient_textDocument_formatting()<CR>
-vnoremap <silent> g, :call LanguageClient_textDocument_rangeFormatting()<CR>
-nnoremap <silent><leader>l :call LanguageClient_textDocument_documentSymbol()<CR>
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-nnoremap <silent> <leader>I :call LanguageClient#explainErrorAtPoint()<CR>
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call LanguageClient#textDocument_hover()
-  endif
-endfunction
+" let g:LanguageClient_autoStart = 1
+" let g:LanguageClient_useVirtualText = 'Diagnostics'
+" let g:LanguageClient_virtualTextPrefix = ' ¤ '
+" let g:LanguageClient_serverCommands = {
+"     \ 'rust': ['rust-analyzer'],
+"     \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio', 'lsp'],
+"     \ 'javascript.jsx': ['/usr/local/bin/javascript-typescript-stdio', 'lsp'],
+"     \ 'typescript': ['/usr/local/bin/javascript-typescript-stdio'],
+"     \ 'typescript.tsx': ['/usr/local/bin/javascript-typescript-stdio'],
+"     \ 'go': ['go-langserver'],
+"     \ 'css': ['css-languageserver', '--stdio'],
+"     \ 'python': ['pyls'],
+"     \ 'sh': ['bash-language-server', 'start'],
+"     \ 'zsh': ['bash-language-server', 'start'],
+"     \ 'dockerfile': ['docker-langserver', '--stdio'],
+"     \ 'lua': ['lua-lsp'],
+"     \ }
+" let g:LanguageClient_diagnosticsDisplay = {
+"       \1: {
+"         \'name': 'Error',
+"         \'texthl': 'ALEError',
+"         \'signText': '✖',
+"         \'signTexthl': 'ALEErrorSign',
+"         \'virtualTexthl': 'ALEErrorSign',
+"       \},
+"       \2: {
+"         \'name': 'Warning',
+"         \'texthl': 'ALEWarning',
+"         \'signText': '⚠',
+"         \'signTexthl': 'ALEWarningSign',
+"         \'virtualTexthl': 'ALEWarningSign',
+"       \},
+"       \3: {
+"         \'name': 'Information',
+"         \'texthl': 'ALEInfo',
+"         \'signText': '∴',
+"         \'signTexthl': 'ALEInfoSign',
+"         \'virtualTexthl': 'ALEInfo',
+"       \},
+"       \4: {
+"         \'name': 'Hint',
+"         \'texthl': 'ALEInfo',
+"         \'signText': '➤',
+"         \'signTexthl': 'ALEInfoSign',
+"         \'virtualTexthl': 'ALEInfo',
+"       \},
+"       \}
+" nnoremap <silent><leader>: :call LanguageClient_contextMenu()<CR>
+" nnoremap <silent> gx :call LanguageClient_textDocument_rename()<CR>
+" nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+" nnoremap <silent> gr :call LanguageClient_textDocument_references()<CR>
+" nnoremap <silent> gh :call LanguageClient_textDocument_hover()<CR>
+" nnoremap <silent> ga :call LanguageClient_textDocument_codeAction()<CR>
+" nnoremap <silent> g, :call LanguageClient_textDocument_formatting()<CR>
+" vnoremap <silent> g, :call LanguageClient_textDocument_rangeFormatting()<CR>
+" nnoremap <silent><leader>l :call LanguageClient_textDocument_documentSymbol()<CR>
+" nnoremap <silent> K :call <SID>show_documentation()<CR>
+" nnoremap <silent> <leader>I :call LanguageClient#explainErrorAtPoint()<CR>
+" function! s:show_documentation()
+"   if (index(['vim','help'], &filetype) >= 0)
+"     execute 'h '.expand('<cword>')
+"   else
+"     call LanguageClient#textDocument_hover()
+"   endif
+" endfunction
 
 " Use deoplete.
 let g:deoplete#enable_at_startup = 1
@@ -1581,4 +1582,12 @@ augroup end
 " Statusline
 source ~/.config/nvim/statusline.vim
 
-
+nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+" nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+" nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+" nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
