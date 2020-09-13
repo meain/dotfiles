@@ -108,3 +108,5 @@ macro g set browser "add-to-gourcer"; open-in-browser ; set browser  "newsboatpr
 
 # define-filter "Vim stuff" "content =~ \"Vim\""
 # highlight-article "content =~ \"Vim\"" magenta default
+
+ignore-article "https://github.com/neovim/neovim/commits.atom" "title !~ \"treesitter\""
