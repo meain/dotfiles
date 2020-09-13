@@ -27,7 +27,8 @@ require'nvim-treesitter.configs'.setup {
 
 -- lsp
 require'nvim_lsp'.pyls.setup{}
--- require'nvim_lsp'.pyls_ms.setup{}  -- export PATH="$PATH":"$HOME/.dotnet"
+-- require'nvim_lsp'.pyls_ms.setup{}
+-- require'nvim_lsp'.jedi_language_server.setup{}
 require'nvim_lsp'.rust_analyzer.setup{}
 require'nvim_lsp'.html.setup{}  -- npm install -g vscode-html-languageserver-bin
 require'nvim_lsp'.tsserver.setup{}
