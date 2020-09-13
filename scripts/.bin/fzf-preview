@@ -1,0 +1,5 @@
+#!/bin/sh
+
+set -e
+
+fzf -m --height '100%' --preview "preview {}"
