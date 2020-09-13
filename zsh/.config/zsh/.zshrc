@@ -61,6 +61,7 @@ source $ZDOTDIR/.zsh-custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlight
 
 export EDITOR='nvim'
 export BROWSER=  # do not set browser
+export DIFFTOOL='icdiff'
 
 # Make CTRL-Z background things and unbackground them.
 function fg-bg() {
