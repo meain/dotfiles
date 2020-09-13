@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# diff last two yanks using maccy(brew cask install maccy) as the source
+
+set -e
+
+rdir="$(xxd -l2 -ps /dev/urandom)"
+mkdir -p "/tmp/$rdir"
+
+DB=~/Library/Containers/org.p0deje.Maccy/Data/Library/Application\ Support/Maccy/Storage.sqlite
+SQL="select   distinct ZVALUE
+     from     ZHISTORYITEMCONTENT
+     where    ZTYPE like '%text%'
+     order by Z_PK desc"
+
+sqlite3 "$DB" "$SQL limit 1" > "/tmp/$rdir/left"
+sqlite3 "$DB" "$SQL limit 1 offset 1" > "/tmp/$rdir/right"
+"${DIFFTOOL:-diff}" "/tmp/$rdir/left" "/tmp/$rdir/right"
