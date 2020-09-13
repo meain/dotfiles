@@ -64,3 +64,6 @@ PATH="$HOME/.cache/cargo/bin:$PATH"
 PATH="$PATH:$HOME/.local/share/flutter/bin"
 PATH="$PATH:$HOME/.local/share/flutter/bin/cache/dart-sdk/bin"
 export PATH="$PATH":"$HOME/.pub-cache/bin"
+
+# dotnet
+export PATH="$PATH":"$HOME/.dotnet"
