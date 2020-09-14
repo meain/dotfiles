@@ -1,0 +1,24 @@
+#!/bin/sh
+
+set -e
+
+dir="$HOME/.cache/chills"
+mkdir -p "$dir" && cd "$dir"
+
+download() {
+    name="$(echo "$1" | awk '{print $1}')"
+    url="$(echo "$1" | awk '{print $2}')"
+    [ ! -f "$name" ] && youtube-dl -f 'bestaudio[ext=m4a]' --output "$name" "$url"
+}
+
+if [ "$1" = "cache" ]; then
+    while read -r line; do
+        download "$line"
+    done <"/Users/meain/.config/datafiles/chills"
+    exit 0
+fi
+
+item="$(fzf <"/Users/meain/.config/datafiles/chills")"
+download "$item"
+name="$(echo "$item" | awk '{print $1}')"
+open "$name" # using open instead of mpv to start gui and detach
