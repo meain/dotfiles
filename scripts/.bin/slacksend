@@ -5,5 +5,6 @@ set -e
 [ -z "$1" ] && echo "Pass file to send" && exit 1
 [ ! -f "$1" ] && echo "Unknown file $1" && exit 1
 
-SEND_TO="$(slack-cli -L | fzf)"
-slack-cli -f "$1" -d "$SEND_TO"
+[ ! -f /tmp/.slack-threads ] && slack-cli -L >/tmp/.slack-threads
+fzf </tmp/.slack-threads |
+    xargs slack-cli -f "$1" -d

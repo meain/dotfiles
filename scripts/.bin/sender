@@ -3,8 +3,8 @@
 set -e
 
 FILE="$1"
-[ -z "$1" ] && echo "Using latest screenshot" \
-    && FILE="$(\ls -Art -d ~/Documents/Screenshots/* | tail -n 1)" 
+[ -z "$1" ] && echo "Using latest screenshot" &&
+    FILE="$(\ls -Art -d ~/Documents/Screenshots/* | tail -n 1)"
 
 telegram_send() {
     case "$1" in
@@ -14,9 +14,9 @@ telegram_send() {
     esac
 }
 
-printf "Platform(t/s): "
+printf "Platform(t[elegram]/s[slack]): "
 read -r
 case "$REPLY" in
-    t*) telegram_send "$FILE" ;;
-    s*) slacksend "$FILE" ;;
+t*) telegram_send "$FILE" ;;
+s*) slacksend "$FILE" ;;
 esac
