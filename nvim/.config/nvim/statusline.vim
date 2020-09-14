@@ -49,7 +49,7 @@ endfunction
 
 function! TreesitterStatus() abort
   if get(g:, 'enable_treesitter_status', 0) ==# 0
-    return ' '
+    return ''
   endif
   let ts = nvim_treesitter#statusline(30)
   if ts ==# 'null'
@@ -76,6 +76,10 @@ function! LSPStatus() abort
       \)
 endfunction
 
+function! LSPCurrentFunction() abort
+  return printf('%s', get(b:, 'lsp_current_function', ''))
+endfunction
+
 set statusline=                                           " Reset status line
 set statusline+=%*                                        " Reset color
 set statusline+=%{&readonly?':':!&modifiable?':':''}      " Non modifiable
@@ -83,6 +87,7 @@ set statusline+=\ \ %{TinyFilePath()}\                    " File name
 set statusline+=%{&modified?'+':''}                       " Modified
 set statusline+=\ %q                                      " Quickfix, LocList etc
 set statusline+=%#Comment#                                " Faded
+set statusline+=\ %{LSPCurrentFunction()}
 set statusline+=\ %{TreesitterStatus()}                   " Treesitter path
 set statusline+=%#Normal#                                 " Normal
 " set statusline+=\ %{NearestMethodOrFunction()}            " Vista method

@@ -207,7 +207,7 @@ set splitright
 set noshowmatch
 
 " Set updatetime
-set updatetime=2000
+set updatetime=500
 
 " Tabs config
 set expandtab
@@ -1627,4 +1627,8 @@ nnoremap <silent>sn :PrevDiagnosticCycle<cr>
 augroup custom_lua_formatting
   autocmd!
   autocmd BufNewFile,BufRead *.lua nnoremap <silent>,, :!luafmt -i 2 -w replace %<cr>:e!<cr>
+augroup end
+augroup custom_lsp_status
+  autocmd!
+  autocmd CursorHold,BufEnter * lua require('lsp-status').update_current_function()
 augroup end
