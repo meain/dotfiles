@@ -71,6 +71,8 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
 Plug 'nvim-lua/diagnostic-nvim'
 Plug 'nvim-lua/lsp-status.nvim'
+Plug 'steelsojka/completion-buffers'
+Plug 'nvim-treesitter/completion-treesitter'
 Plug 'Shougo/echodoc.vim', { 'on': 'LazyLoadPlugins' }                                         " Show signature
 " Plug 'Shougo/neco-vim', { 'for': 'vim' }                                                       " Completion for viml
 " Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }           " Language client
@@ -236,6 +238,7 @@ set wildoptions-=pum
 " Autocompletion setings
 set completeopt+=noselect
 set completeopt+=noinsert
+set completeopt+=menuone
 set completeopt-=preview
 
 " Setting up ignores
@@ -1600,9 +1603,17 @@ nnoremap <silent> ga    <cmd>lua vim.lsp.buf.code_action()<CR>
 nnoremap <silent> gR    <cmd><cmd>lua vim.lsp.buf.rename()<CR>
 
 " nvim-completions
-" autocmd BufEnter * lua require'completion'.on_attach()
+autocmd BufEnter * lua require'completion'.on_attach()
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <silent><expr> <c-l> completion#trigger_completion()
+let g:completion_chain_complete_list = {
+    \'default' : [
+    \    {'complete_items': ['lsp', 'ts', 'buffers']},
+    \    {'mode': '<c-p>'},
+    \    {'mode': '<c-n>'}
+    \]
+    \}
 
 " diagnostics
 " autocmd BufEnter * lua require'diagnostic'.on_attach()

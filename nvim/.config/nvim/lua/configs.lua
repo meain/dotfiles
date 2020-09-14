@@ -27,7 +27,7 @@ require "nvim-treesitter.configs".setup {
 
 -- lsp
 local lsp_attach = function(client)
-  require "completion".on_attach(client)
+  -- require "completion".on_attach(client)
   require "diagnostic".on_attach(client)
   require "lsp-status".on_attach(client)
 end
