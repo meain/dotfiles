@@ -1600,7 +1600,11 @@ nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
 " nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
 nnoremap <silent> g,    <cmd>lua vim.lsp.buf.formatting_sync(nil, 1000)<CR>
 nnoremap <silent> ga    <cmd>lua vim.lsp.buf.code_action()<CR>
-nnoremap <silent> gR    <cmd><cmd>lua vim.lsp.buf.rename()<CR>
+nnoremap <silent> gR    <cmd>lua vim.lsp.buf.rename()<CR>
+nnoremap <silent> gi    <cmd>lua print(require'custom_functions'.get_current_diagnostics())<CR>
+" autocmd CursorMoved <buffer> <cmd>lua print(require'custom_functions'.get_current_diagnostics())<CR>
+" nnoremap <silent> gi    <cmd>lua print(vim.inspect(require'custom_functions'))<CR>
+
 
 " nvim-completions
 autocmd BufEnter * lua require'completion'.on_attach()
@@ -1626,9 +1630,9 @@ nnoremap <silent>sn :PrevDiagnosticCycle<cr>
 " npm install -g lua-fmt
 augroup custom_lua_formatting
   autocmd!
-  autocmd BufNewFile,BufRead *.lua nnoremap <silent>,, :!luafmt -i 2 -w replace %<cr>:e!<cr>
+  autocmd BufNewFile,BufRead *.lua nnoremap <buffer><silent>,, :!luafmt -i 2 -w replace %<cr>:e!<cr>
 augroup end
 augroup custom_lsp_status
   autocmd!
-  autocmd CursorHold,BufEnter * lua require('lsp-status').update_current_function()
+  autocmd CursorHold,BufEnter <buffer> lua require('lsp-status').update_current_function()
 augroup end
