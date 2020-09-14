@@ -66,12 +66,15 @@ Plug '~/Documents/Projects/projects/vim-jsontogo' , { 'for': ['go'] }           
 Plug 'w0rp/ale'                                                                                " Linter formatter and more
 
 " Autocomplete
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }                                  " Competion framework
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }                                  " Competion framework
 Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/completion-nvim'
+Plug 'nvim-lua/diagnostic-nvim'
+Plug 'nvim-lua/lsp-status.nvim'
 Plug 'Shougo/echodoc.vim', { 'on': 'LazyLoadPlugins' }                                         " Show signature
 " Plug 'Shougo/neco-vim', { 'for': 'vim' }                                                       " Completion for viml
 " Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }           " Language client
-Plug '~/Documents/Projects/projects/deoplete-notmuch', { 'for': 'mail' }                       " Email autocomplete
+" Plug '~/Documents/Projects/projects/deoplete-notmuch', { 'for': 'mail' }                       " Email autocomplete
 
 " Testing
 Plug 'christoomey/vim-tmux-runner', { 'on': ['TestNearest', 'TestFile', 'VtrAttachToPane'] }   " Easy switching between vim and tmux
@@ -1091,7 +1094,7 @@ function! s:MarkdownPreview()
   call jobstart('pandocmarkdownpreview '.expand('%'))
   echo 'Generating preview...'
 endfunction
-nnoremap <silent><leader>M :call <SID>MarkdownPreview()<CR>
+command! MarkdownPreview :call <SID>MarkdownPreview<CR>
 
 " Copy all matching string
 function! CopyMatches(reg)
@@ -1362,9 +1365,9 @@ let g:SuperTabDefaultCompletionType = '<c-n>'
 " endfunction
 
 " Use deoplete.
-let g:deoplete#enable_at_startup = 1
-call deoplete#custom#option('max_list', 20)
-call deoplete#custom#option('smart_case', v:true)
+" let g:deoplete#enable_at_startup = 1
+" call deoplete#custom#option('max_list', 20)
+" call deoplete#custom#option('smart_case', v:true)
 
 " Echodoc
 let g:echodoc#enable_at_startup = 1
@@ -1582,6 +1585,7 @@ augroup end
 " Statusline
 source ~/.config/nvim/statusline.vim
 
+" lsp-config
 nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
 " nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
@@ -1592,5 +1596,24 @@ nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
 nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
 " nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
 nnoremap <silent> g,    <cmd>lua vim.lsp.buf.formatting_sync(nil, 1000)<CR>
+nnoremap <silent> ga    <cmd>lua vim.lsp.buf.code_action()<CR>
+nnoremap <silent> gR    <cmd><cmd>lua vim.lsp.buf.rename()<CR>
+
+" nvim-completions
+" autocmd BufEnter * lua require'completion'.on_attach()
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" diagnostics
+" autocmd BufEnter * lua require'diagnostic'.on_attach()
+let g:diagnostic_enable_virtual_text = 0
+nnoremap <silent>sm :NextDiagnosticCycle<cr>
+nnoremap <silent>sn :PrevDiagnosticCycle<cr>
+
+" status
+" autocmd BufEnter * lua require'lsp-status'.on_attach()
+" npm install -g lua-fmt
+augroup custom_lua_formatting
+  autocmd!
+  autocmd BufNewFile,BufRead *.lua nnoremap <silent>,, :!luafmt -i 2 -w replace %<cr>:e!<cr>
+augroup end

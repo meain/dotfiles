@@ -1,11 +1,11 @@
 -- nvim-treesitter
-require'nvim-treesitter.configs'.setup {
+require "nvim-treesitter.configs".setup {
   ensure_installed = "all",
-  highlight = { enable = true },
+  highlight = {enable = true},
   refactor = {
-      highlight_definitions = { enable = true },
-      highlight_current_scope = { enable = false },
-    },
+    highlight_definitions = {enable = true},
+    highlight_current_scope = {enable = false}
+  },
   textobjects = {
     select = {
       enable = true,
@@ -13,9 +13,9 @@ require'nvim-treesitter.configs'.setup {
         ["af"] = "@function.outer",
         ["if"] = "@function.inner",
         ["ac"] = "@class.outer",
-        ["ic"] = "@class.inner",
-      },
-    },
+        ["ic"] = "@class.inner"
+      }
+    }
   },
   playground = {
     enable = true,
@@ -25,19 +25,34 @@ require'nvim-treesitter.configs'.setup {
   }
 }
 
+-- lsp status
+local lsp_status = require("lsp-status")
+lsp_status.register_progress()
+
+-- utils
+local lsp_attach = function(client)
+  require "completion".on_attach(client)
+  require "diagnostic".on_attach(client)
+  require "lsp-status".on_attach(client)
+end
+
 -- lsp
-require'nvim_lsp'.pyls.setup{}
+require "nvim_lsp".pyls.setup {on_attach = lsp_attach}
 -- require'nvim_lsp'.pyls_ms.setup{}
 -- require'nvim_lsp'.jedi_language_server.setup{}
-require'nvim_lsp'.rust_analyzer.setup{}
-require'nvim_lsp'.html.setup{}  -- npm install -g vscode-html-languageserver-bin
-require'nvim_lsp'.tsserver.setup{}
-require'nvim_lsp'.vimls.setup{}  -- npm install -g vim-language-server
-require'nvim_lsp'.gopls.setup{}
-require'nvim_lsp'.bashls.setup{ filetypes = {'sh', 'zsh'}; }
-require'nvim_lsp'.cssls.setup{}  -- npm install -g vscode-css-languageserver-bin
-require'nvim_lsp'.dockerls.setup{}  -- npm install -g dockerfile-language-server-nodejs
-require'nvim_lsp'.sumneko_lua.setup{
-    cmd = { "/Users/meain/.cache/nvim/nvim_lsp/sumneko_lua/lua-language-server/bin/macOS/lua-language-server",
-        "-E", "/Users/meain/.cache/nvim/nvim_lsp/sumneko_lua/lua-language-server/main.lua" };
+require "nvim_lsp".rust_analyzer.setup {on_attach = lsp_attach}
+require "nvim_lsp".html.setup {on_attach = lsp_attach} -- npm install -g vscode-html-languageserver-bin
+require "nvim_lsp".tsserver.setup {on_attach = lsp_attach}
+require "nvim_lsp".vimls.setup {on_attach = lsp_attach} -- npm install -g vim-language-server
+require "nvim_lsp".gopls.setup {on_attach = lsp_attach}
+require "nvim_lsp".bashls.setup {filetypes = {"sh", "zsh"}, on_attach = lsp_attach}
+require "nvim_lsp".cssls.setup {on_attach = lsp_attach} -- npm install -g vscode-css-languageserver-bin
+require "nvim_lsp".dockerls.setup {on_attach = lsp_attach} -- npm install -g dockerfile-language-server-nodejs
+require "nvim_lsp".sumneko_lua.setup {
+  on_attach = lsp_attach,
+  cmd = {
+    "/Users/meain/.cache/nvim/nvim_lsp/sumneko_lua/lua-language-server/bin/macOS/lua-language-server",
+    "-E",
+    "/Users/meain/.cache/nvim/nvim_lsp/sumneko_lua/lua-language-server/main.lua"
+  }
 }
