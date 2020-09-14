@@ -25,18 +25,12 @@ require "nvim-treesitter.configs".setup {
   }
 }
 
--- lsp status
-local lsp_status = require("lsp-status")
-lsp_status.register_progress()
-
--- utils
+-- lsp
 local lsp_attach = function(client)
   require "completion".on_attach(client)
   require "diagnostic".on_attach(client)
   require "lsp-status".on_attach(client)
 end
-
--- lsp
 require "nvim_lsp".pyls.setup {on_attach = lsp_attach}
 -- require'nvim_lsp'.pyls_ms.setup{}
 -- require'nvim_lsp'.jedi_language_server.setup{}
@@ -56,3 +50,6 @@ require "nvim_lsp".sumneko_lua.setup {
     "/Users/meain/.cache/nvim/nvim_lsp/sumneko_lua/lua-language-server/main.lua"
   }
 }
+
+-- lsp status
+require "lsp-status".register_progress()
