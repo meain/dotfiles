@@ -66,10 +66,10 @@ function! LSPStatus() abort
   endif
   let l:errors = l:counts.errors
   let l:warnings = l:counts.warnings
-  let l:hints = l:counts.hints
-  let l:info = l:counts.info
+  " let l:hints = l:counts.hints
+  " let l:info = l:counts.info
 
-  return printf(
+  return l:errors + l:warnings == 0 ? '!' : printf(
       \   '%dW %dE',
       \   l:warnings,
       \   l:errors
