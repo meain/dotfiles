@@ -19,7 +19,7 @@ Plug '/usr/local/opt/fzf'                                                       
 Plug 'junegunn/fzf.vim'                                                                        " Fzf for vim
 Plug 'christoomey/vim-tmux-navigator'                                                          " Seamless navigation between vim and tmux
 Plug 'suan/vim-instant-markdown', { 'for': [ 'md', 'markdown' ] }                              " View markdown in browser while editing
-Plug 'ervandew/supertab'                                                                       " Autocomplete on tab
+" Plug 'ervandew/supertab'                                                                       " Autocomplete on tab
 Plug 'zirrostig/vim-schlepp', { 'on': g:schlepp_triggers }                                     " Better drag visuals
 Plug 'vim-scripts/restore_view.vim'                                                            " Restore file pointer
 Plug 'tpope/vim-dispatch', { 'on': [ 'Dispatch', 'Start' ] }                                   " Async tasks in vim
@@ -1592,3 +1592,5 @@ nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
 nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
 " nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
 nnoremap <silent> g,    <cmd>lua vim.lsp.buf.formatting_sync(nil, 1000)<CR>
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
