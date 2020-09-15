@@ -376,3 +376,8 @@ pb() {
 	done
 	printf " > Done\n"
 }
+
+rrr() {
+	[ -n "$TMUX" ] &&
+		cd "$(tmux display-message -p -F "#{session_path}")"
+}
