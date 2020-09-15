@@ -119,7 +119,7 @@ gpu() {
 		[ "$REPLY" = 'y' ] || return 0
 	fi
 	git push origin "$branch" "$*"
-	(gitcistatus >/dev/null &)
+	# (gitcistatus >/dev/null &)
 }
 
 gco() {
