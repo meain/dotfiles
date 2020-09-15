@@ -9,6 +9,4 @@ mod.get_current_diagnostics = function()
   return table.concat(diagnostics_outputs, ' :: ')
 end
 
--- print(vim.inspect(mod))
-
 return mod

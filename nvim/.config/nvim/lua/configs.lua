@@ -27,13 +27,10 @@ require "nvim-treesitter.configs".setup {
 
 -- lsp
 local lsp_attach = function(client)
-  -- require "completion".on_attach(client)
   require "diagnostic".on_attach(client)
   require "lsp-status".on_attach(client)
 end
 require "nvim_lsp".pyls.setup {on_attach = lsp_attach}
--- require'nvim_lsp'.pyls_ms.setup{}
--- require'nvim_lsp'.jedi_language_server.setup{}
 require "nvim_lsp".rust_analyzer.setup {on_attach = lsp_attach}
 require "nvim_lsp".html.setup {on_attach = lsp_attach} -- npm install -g vscode-html-languageserver-bin
 require "nvim_lsp".tsserver.setup {on_attach = lsp_attach}
