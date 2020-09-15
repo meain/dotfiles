@@ -366,7 +366,9 @@ pb() {
 		git add "entries/pb/$filename" >/dev/null 2>&1 &&
 		git commit -m "[auto] $filename" >/dev/null 2>&1 &&
 		(git push origin master >/dev/null 2>&1 ||
-			(git pull origin master --rebase >/dev/null 2>&1 &&
+			(printf " ... woops ... Pulling" &&
+				git pull origin master --rebase >/dev/null 2>&1 &&
+				printf " > Pushing" &&
 				git push origin master >/dev/null 2>&1)))
 	printf " > Publishing"
 	while [ "$(curl -s -o /dev/null -w "%{http_code}" "https://snippets.meain.io/pb/$filename")" = "404" ]; do
