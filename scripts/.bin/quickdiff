@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# parses git diff into a clean colorful output
+
+set -e
+
+grep -vE '^(index|\-\-\-|\+\+\+) ' |
+    sed "s|^diff --git .* b/\(.*\)|                                   $(tput setaf 4)[\1]$(tput sgr0)|" |
+    # sed "s|^@@ [0-9, \+-]* @@ \(.*\)|$(tput setaf 3)\1$(tput sgr0)'|" |
+    sed "s|^@@ \(.*\)|$(tput setaf 3)\1$(tput sgr0)'|" |
+    sed "s|^+\(.*\)| $(tput setaf 2)\1$(tput sgr0)|" |
+    sed "s|^-\(.*\)| $(tput setaf 1)\1$(tput sgr0)|" 
