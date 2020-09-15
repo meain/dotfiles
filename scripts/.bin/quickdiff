@@ -5,7 +5,7 @@
 set -e
 
 grep -vE '^(index|\-\-\-|\+\+\+) ' |
-    sed "s|^diff --git .* b/\(.*\)|$(tput setaf 4)■■ [\1]$(tput sgr0)|" |
+    sed "s|^diff --git .* b/\(.*\)|$(tput setaf 4)█$(tput setaf 0)$(tput setab 15) [\1] $(tput sgr0)|" |
     # sed "s|^@@ [0-9, \+-]* @@ \(.*\)|$(tput setaf 3)\1$(tput sgr0)'|" |
     sed "s|^@@ \(.*\)|   $(tput setaf 7)\1$(tput sgr0)'|" |
     sed "s|^+\(.*\)| $(tput setaf 2)\1$(tput sgr0)|" |
