@@ -1553,40 +1553,6 @@ let g:vim_mtodo_move_done_to_bottom=1
 
 " nvim-treesitter
 nnoremap <leader>ts :write <bar> edit <bar> TSBufEnable highlight<cr>
-lua require('configs')
-
-"                             Source External                          "
-"                    ==============================                    "
-
-" File manipulations
-augroup load_file_manip
-    autocmd!
-    autocmd CursorHold,CursorHoldI,BufWritePost * source ~/.config/nvim/filemanip.vim | autocmd! load_file_manip
-augroup end
-
-" Git stuff
-augroup load_git_utils
-    autocmd!
-    autocmd CursorHold,CursorHoldI,BufWritePost * source ~/.config/nvim/gitutils.vim | autocmd! load_git_utils
-augroup end
-
-augroup load_additional_plugins
-    autocmd!
-    autocmd CursorHold,CursorHoldI,BufWritePost * call plug#load('vim-signify') |
-          \ call plug#load('vim-package-info') | 
-          \ call plug#load('vim-signify') |
-          \ call plug#load('vim-googler') |
-          \ call plug#load('auto-pairs') |
-          \ call plug#load('echodoc.vim') |
-          \ call plug#load('vim-repeat') |
-          \ call plug#load('vim-package-info') |
-          \ call plug#load('vim-printer') |
-          \ call plug#load('vista.vim') |
-          \ autocmd! load_additional_plugins
-augroup end
-
-" Statusline
-source ~/.config/nvim/statusline.vim
 
 " lsp-config
 nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
@@ -1636,3 +1602,40 @@ augroup custom_lsp_status
   autocmd!
   autocmd CursorHold,BufEnter <buffer> lua require('lsp-status').update_current_function()
 augroup end
+
+
+"                             Source External                          "
+"                    ==============================                    "
+
+" File manipulations
+augroup load_file_manip
+    autocmd!
+    autocmd CursorHold,CursorHoldI,BufWritePost * source ~/.config/nvim/filemanip.vim | autocmd! load_file_manip
+augroup end
+
+" Git stuff
+augroup load_git_utils
+    autocmd!
+    autocmd CursorHold,CursorHoldI,BufWritePost * source ~/.config/nvim/gitutils.vim | autocmd! load_git_utils
+augroup end
+
+augroup load_additional_plugins
+    autocmd!
+    autocmd CursorHold,CursorHoldI,BufWritePost * call plug#load('vim-signify') |
+          \ call plug#load('vim-package-info') | 
+          \ call plug#load('vim-signify') |
+          \ call plug#load('vim-googler') |
+          \ call plug#load('auto-pairs') |
+          \ call plug#load('echodoc.vim') |
+          \ call plug#load('vim-repeat') |
+          \ call plug#load('vim-package-info') |
+          \ call plug#load('vim-printer') |
+          \ call plug#load('vista.vim') |
+          \ autocmd! load_additional_plugins
+augroup end
+
+" Statusline
+source ~/.config/nvim/statusline.vim
+
+" lua stuff
+lua require('configs')
