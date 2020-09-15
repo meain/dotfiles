@@ -49,7 +49,10 @@ venv() {
     }
 
     activate() {
-        VENVNAME=$(\ls -t "$VENV_HOME" | fzf --height 30% --layout=reverse --query="$*")
+        VENVNAME=$({
+            \ls -t "$VENV_HOME" | grep "$(basename "$(pwd)")"
+            \ls -t "$VENV_HOME" | grep -v "$(basename "$(pwd)")"
+        } | fzf --height 30% --layout=reverse --query="$*")
         [ -n "$VENVNAME" ] && . "$VENV_HOME/$VENVNAME/bin/activate"
     }
 
