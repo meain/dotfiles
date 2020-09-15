@@ -1613,7 +1613,7 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <silent><expr> <c-l> completion#trigger_completion()
 let g:completion_chain_complete_list = {
     \'default' : [
-    \    {'complete_items': ['lsp', 'ts', 'buffers']},
+    \    {'complete_items': ['lsp', 'ts', 'path', 'buffers']},
     \    {'mode': '<c-p>'},
     \    {'mode': '<c-n>'}
     \]
