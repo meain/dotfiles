@@ -150,16 +150,6 @@ export KEYTIMEOUT=1
 GOOGLE_CLOUD='/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
 if [ -f '$GOOGLE_CLOUD' ]; then source '$GOOGLE_CLOUD'; fi
 
-# source python workon
-case "$(uname -s)" in
-  Darwin)
-    source '/usr/local/bin/virtualenvwrapper_lazy.sh'
-    ;;
-  Linux)
-    source "$HOME/.local/bin/virtualenvwrapper.sh"
-    ;;
-esac
-
 preexec () {
   if ! grep -q "$1" "$DATAFILES_PATH/long_runnable_jobs" ; then
     CMD_START_DATE=$(date +%s)

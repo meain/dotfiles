@@ -14,7 +14,6 @@ PATH="$PYENV_ROOT/bin:$PATH"
 
 # Python
 PATH=/usr/local/bin:$PATH
-export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
 export WORKON_HOME=~/.cache/virtual_envs
 
 # ruby

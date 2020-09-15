@@ -10,7 +10,6 @@ pydocstyle
 pyflakes
 requests
 virtualenv
-virtualenvwrapper
 yapf
 poetry
 black
