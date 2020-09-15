@@ -3,7 +3,7 @@
 set -e
 
 grep -q "$1" ~/.cache/vime/gourcer && echo "[Already available] $1" && exit 0
-if echo "$1" | grep -qE "^http";then
+if echo "$1" | grep -qE "^http"; then
     echo "- $1" >>~/.cache/vime/gourcer
 else
     echo "[Invalid url] $1"
