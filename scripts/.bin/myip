@@ -2,6 +2,6 @@
 
 set -e
 
-ip="$(curl -s ifconfig.co)"
+ip="$(dig +short myip.opendns.com @resolver1.opendns.com)"
 echo "$ip"|tr -d '\n'|pbcopy
 echo "$ip"
