@@ -2,6 +2,6 @@
 
 set -e
 
-ip="$(curl -s l2.io/ip)"
-echo "$ip"|pbcopy
+ip="$(curl -s ifconfig.co)"
+echo "$ip"|tr -d '\n'|pbcopy
 echo "$ip"
