@@ -74,6 +74,9 @@ venv() {
     "create") create "$*" ;;
     "activate") activate "$*" ;;
     "remove") remove "$*" ;;
+    "c") create "$*" ;;
+    "a") activate "$*" ;;
+    "r") remove "$*" ;;
     *) help ;;
     esac
 }
