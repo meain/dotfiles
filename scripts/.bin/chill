@@ -8,7 +8,9 @@ mkdir -p "$dir" && cd "$dir"
 download() {
     name="$(echo "$1" | awk '{print $1}')"
     url="$(echo "$1" | awk '{print $2}')"
-    [ ! -f "$name" ] && youtube-dl -f 'bestaudio[ext=m4a]' --output "$name" "$url"
+    if [ ! -f "$name" ]; then
+        youtube-dl -f 'bestaudio[ext=m4a]' --output "$name" "$url"
+    fi
 }
 
 if [ "$1" = "cache" ]; then
