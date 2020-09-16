@@ -268,6 +268,11 @@ set foldignore=
 set foldlevelstart=10
 set foldnestmax=10
 
+" Use rg for grep
+if executable('rg')
+  set grepprg=rg\ --vimgrep
+endif
+
 " Setting colorscheme
 " janah, base16-greyscale, redblack, seoul256, gruvbox, grb256,
 " tomorrow-night, zenburn, base16-classic-light, base16-classic-dark
