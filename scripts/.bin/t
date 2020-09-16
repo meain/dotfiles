@@ -15,6 +15,7 @@ if [ -z "$1" ]; then
             ' SESSION=$(tmux ls |
                 grep -v "$(tmux display-message -p "#S")" |
                 grep -v 'floating' |
+                grep -v 'popup' |
                 sed 's/:.*//g' |
                 fzf --prompt "Session: " --preview 'tmux-tree {}' --reverse --print-query |
                 \tail -n1)
