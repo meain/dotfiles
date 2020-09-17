@@ -13,9 +13,9 @@ if [ -z "$1" ]; then
             --color fg:248,hl:250,fg+:232,bg+:231,hl+:2
             --color info:108,prompt:242,spinner:108,pointer:1,marker:168
             ' SESSION=$(tmux ls |
-                grep -v "$(tmux display-message -p "#S")" |
-                grep -v 'floating' |
-                grep -v 'popup' |
+                grep -v "^$(tmux display-message -p "#S")$" |
+                grep -v '^floating' |
+                grep -v '^popup-.*' |
                 sed 's/:.*//g' |
                 fzf --prompt "Session: " --preview 'tmux-tree {}' --reverse --print-query |
                 \tail -n1)
