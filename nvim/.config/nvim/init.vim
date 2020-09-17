@@ -295,7 +295,7 @@ function! SetColorscheme(...)
   let g:light_or_dark = l:light_or_dark
 endfunction
 call SetColorscheme()
-let timer = timer_start(2000, 'SetColorscheme',{'repeat':-1})
+" let timer = timer_start(2000, 'SetColorscheme',{'repeat':-1})
 
 " Highlight git conflict markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
