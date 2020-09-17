@@ -95,3 +95,4 @@ alias navi="NAVI_PATH=/Users/meain/Documents/Projects/projects/cheats navi"
 alias bm='resources'
 alias bmof='resources open frequent'
 alias bmcf='resources copy frequent'
+alias wf='venv activate'
