@@ -2,9 +2,8 @@
 
 set -e
 
-width=${2:-80%}
 if [ "$(tmux display-message -p -F "#{session_name}")" = "popup" ];then
     tmux detach-client
 else
-    tmux popup -d '#{pane_current_path}' -xC -yC -w$width -h80% -K -E -R "tmux attach -t popup || tmux new -s popup" || true
+    tmux popup -d '#{pane_current_path}' -x100% -y0% -w50% -h50% -K -E -R "tmux attach -t popup || tmux new -s popup" || true
 fi
