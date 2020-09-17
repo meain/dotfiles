@@ -22,5 +22,6 @@ done
 if [ -z "$HN_CACHE_ONLY" ];then
     xargs -I{} cat '/tmp/hn/items/{}.json' </tmp/hn/topstories.json |
         jq -r '"\(.score) \(.title) (\(.by)) ;;; \(.url)"' | sed "s|;;;|$SPACER|"|
-        sed 's/^\([0-9]\) /0\1 /' | sed 's/^\([0-9][0-9]\) /0\1 /' | sort -r | fzf -m | awk '{print $NF}' | xargs open
+        sed 's/^\([0-9]\) /0\1 /' | sed 's/^\([0-9][0-9]\) /0\1 /' | sort -r | fzf -m | tee /tmp/hn/last-open | awk '{print $NF}' | xargs open
+    sed 's|    ||g;s|^|- |' /tmp/hn/last-open
 fi

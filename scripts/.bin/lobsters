@@ -4,5 +4,6 @@ set -e
 
 SPACER=$(printf "%-300s" "")
 curl --silent 'https://lobste.rs/hottest.json' |
-    jq -rc '.[]|"\(.score) \(.title) (\(.submitter_user.username)) ;;; \(.url)"' | sed "s|;;;|$SPACER|"|
-    sed 's/^\([1-9]\) /0\1 /' | sort -r | fzf -m | awk '{print $NF}' | xargs open
+    jq -rc '.[]|"\(.score) \(.title) (\(.submitter_user.username)) ;;; \(.url)"' | sed "s|;;;|$SPACER|" |
+    sed 's/^\([1-9]\) /0\1 /' | sort -r | fzf -m | tee /tmp/last-lobsters-open | awk '{print $NF}' | xargs open
+sed 's|    ||g;s|^|- |' /tmp/last-lobsters-open
