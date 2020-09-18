@@ -49,7 +49,6 @@
   newHighlight = green reverse
 [color "branch"]
   current = green
-  local = white
   remote = yellow
 [color "diff"]
   meta = 11
