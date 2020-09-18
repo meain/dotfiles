@@ -11,7 +11,7 @@ projectsintag() {
         tail -n+4 |
         grep -E '^[A-z]' |
         awk '{print $1}' |
-        grep -v chore
+        grep -vE '^(chore|inbox)$'
 }
 
 if projectsintag work | grep -q "$project"; then
