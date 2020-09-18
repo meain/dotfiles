@@ -8,7 +8,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 " Visual enhancements
 Plug '~/Documents/Projects/projects/hima-vim'                                                  " Minmal light colorschme
 Plug 'Yggdroot/indentLine'                                                                     " Show indent
-Plug 'mhinz/vim-signify'                                                                       " Git diff icons in gutter
+Plug 'airblade/vim-gitgutter', { 'on': 'LazyLoadPlugins' }                                     " Git diff icons in gutter
 Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }                                           " Hyper focus editing
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }                                                     " Centerify
 Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }                                      " Highlight color values
@@ -1244,10 +1244,13 @@ augroup TerminalStuff
   autocmd TermOpen * IndentLinesDisable
 augroup END
 
-" Signfy
-let g:signify_sign_add = 'ǁ'
-let g:signify_sign_delete = 'ǁ'
-let g:signify_sign_change = 'ǁ'
+" gitgutter
+let g:gitgutter_sign_added = '|'
+let g:gitgutter_sign_modified = '|'
+let g:gitgutter_sign_removed = '|'
+let g:gitgutter_sign_removed_first_line = '^'
+let g:gitgutter_sign_removed_above_and_below = '{'
+let g:gitgutter_sign_modified_removed = 'w'
 
 " Sleuth auto indent
 let g:sleuth_automatic = 1
@@ -1539,6 +1542,7 @@ augroup end
 augroup load_additional_plugins
     autocmd!
     autocmd CursorHold,CursorHoldI,BufWritePost * call plug#load('vim-googler') |
+          \ call plug#load('vim-gitgutter') |
           \ call plug#load('vim-package-info') | 
           \ call plug#load('auto-pairs') |
           \ call plug#load('echodoc.vim') |
