@@ -42,7 +42,7 @@ color info blue default reverse
 color article default default
 
 # highlight rules
-highlight feedlist "\ *https?://[^ ]+" white default bold
+highlight feedlist "\ *https?://[^ ]+" color8 default bold
 highlight feedlist "Blog:" blue default
 highlight feedlist "Podcast:" yellow default
 highlight feedlist "Youtube:" red default
