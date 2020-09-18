@@ -8,7 +8,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 " Visual enhancements
 Plug '~/Documents/Projects/projects/hima-vim'                                                  " Minmal light colorschme
 Plug 'Yggdroot/indentLine'                                                                     " Show indent
-Plug 'mhinz/vim-signify', { 'on': 'LazyLoadPlugins' }                                          " Git diff icons in gutter
+Plug 'mhinz/vim-signify'                                                                       " Git diff icons in gutter
 Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }                                           " Hyper focus editing
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }                                                     " Centerify
 Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }                                      " Highlight color values
@@ -1538,10 +1538,8 @@ augroup end
 
 augroup load_additional_plugins
     autocmd!
-    autocmd CursorHold,CursorHoldI,BufWritePost * call plug#load('vim-signify') |
+    autocmd CursorHold,CursorHoldI,BufWritePost * call plug#load('vim-googler') |
           \ call plug#load('vim-package-info') | 
-          \ call plug#load('vim-signify') |
-          \ call plug#load('vim-googler') |
           \ call plug#load('auto-pairs') |
           \ call plug#load('echodoc.vim') |
           \ call plug#load('vim-repeat') |
