@@ -69,7 +69,7 @@ function! LSPStatus() abort
   " let l:hints = l:counts.hints
   " let l:info = l:counts.info
 
-  return l:errors + l:warnings == 0 ? '!' : printf(
+  return l:errors + l:warnings == 0 ? '' : printf(
       \   '%dW %dE',
       \   l:warnings,
       \   l:errors
