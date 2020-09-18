@@ -4,7 +4,10 @@ alias vim='nvim'
 alias ivm='vim'
 alias vm='nvim'
 alias vi='nvim'
-alias v='nvim'
+
+v() {
+    git ls-files | fzf -m --preview "cat {}" | xargs nvim
+}
 
 vv() {
     $EDITOR +OpenLastFile
