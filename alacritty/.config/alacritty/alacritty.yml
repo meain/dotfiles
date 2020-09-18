@@ -80,7 +80,7 @@ color_schemes:
       blue:    '0x4271AE'
       magenta: '0x8959A8'
       cyan:    '0x3E999F'
-      white:   '0x939393'
+      white:   '0xf5f5f5'
 
     # Bright colors
     bright:
@@ -91,7 +91,7 @@ color_schemes:
       blue:    '0x5ea2f9'
       magenta: '0xa56ccc'
       cyan:    '0x51c8d1'
-      white:   '0xbcbcbc'
+      white:   '0xffffff'
 
 colors: *light
 
