@@ -19,11 +19,11 @@ gui:
   skipunstagelinewarning: false
   theme:
     activebordercolor:
-    - white
+    - red
     - bold
     inactivebordercolor:
     - green
-    lighttheme: false
+    lighttheme: true
     optionstextcolor:
     - blue
     selectedlinebgcolor:
