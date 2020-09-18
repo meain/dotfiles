@@ -1,12 +1,14 @@
 #!/bin/sh
 
 PATH="/usr/local/bin:/usr/bin:/bin"
-if pgrep "mpv" > /dev/null 2>&1; then
+if pgrep "mpv" >/dev/null 2>&1; then
     mpvoutput="$(/usr/local/bin/mpvc)"
     songName="$(echo "$mpvoutput" | head -n1 | sed 's|^error - ||')"
     playing="$(echo "$mpvoutput" | head -n2 | tail -n1 | cut -d' ' -f1 | sed 's/\[playing\]/>/;s/\[paused\]/:/')"
     speed="$(echo "$mpvoutput" | grep 'speed' | cut -d' ' -f 2)"
-    if [ "$speed" = "1.00x" ];then
+    if echo "$songName" | grep -q "No files added to";then
+        echo "V| No item in mpv"
+    elif [ -z "$speed" ] || [ "$speed" = "1.00x" ]; then
         echo "V| $playing $songName"
     else
         echo "V| $playing $songName ($speed)"
