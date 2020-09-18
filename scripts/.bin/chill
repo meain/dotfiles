@@ -23,4 +23,4 @@ fi
 item="$(fzf <"$HOME/.config/datafiles/chills")"
 download "$item"
 name="$(echo "$item" | awk '{print $1}')"
-open "$name" # using open instead of mpv to start gui and detach
+mpv --loop-file "$name"
