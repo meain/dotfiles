@@ -1500,9 +1500,15 @@ autocmd BufEnter * lua require'completion'.on_attach()
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <silent><expr> <c-l> completion#trigger_completion()
+lua require'completion'.addCompletionSource('email', require'emailcomplete'.complete_item)
 let g:completion_chain_complete_list = {
     \'default' : [
     \    {'complete_items': ['lsp', 'ts', 'path', 'buffers']},
+    \    {'mode': '<c-p>'},
+    \    {'mode': '<c-n>'}
+    \],
+    \'mail' : [
+    \    {'complete_items': ['email', 'path', 'buffers']},
     \    {'mode': '<c-p>'},
     \    {'mode': '<c-n>'}
     \]
