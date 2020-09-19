@@ -42,7 +42,7 @@ Plug 'nvim-treesitter/playground', { 'on': 'TSPlaygroundToggle' }               
 
 " Morph code
 Plug 'tpope/vim-surround'                                                                      " Surround
-Plug 'jiangmiao/auto-pairs'                                                                    " Autopair
+Plug 'tmsvg/pear-tree'                                                                         " Autopair
 Plug 'tomtom/tcomment_vim'                                                                     " Code commenting
 
 " Language helpers
@@ -1550,7 +1550,6 @@ augroup load_additional_plugins
     autocmd CursorHold,CursorHoldI,BufWritePost * call plug#load('vim-googler') |
           \ call plug#load('vim-gitgutter') |
           \ call plug#load('vim-package-info') | 
-          \ call plug#load('auto-pairs') |
           \ call plug#load('echodoc.vim') |
           \ call plug#load('vim-repeat') |
           \ call plug#load('vim-package-info') |
