@@ -1270,9 +1270,6 @@ let g:vista#renderer#icons = {
 " Color hex codes
 let g:Hexokinase_highlighters = ['backgroundfull']
 
-" Tag Along
-let g:tagalong_additional_filetypes = ['javascript', 'typescript', 'javascript.jsx', 'typescript.tsx', 'html', 'xml']
-
 " Searcher
 nnoremap <silent><leader>s :Searcher <c-r><c-w><cr>
 vnoremap <silent><leader>s y:Searcher <c-r>"<cr>
