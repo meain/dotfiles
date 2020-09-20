@@ -40,6 +40,13 @@ function M.getCompletionItems(prefix)
   -- find matches items and put them into complete_items
   for _, email in ipairs(split(abook_result, "\n")) do
     email = trim(email)
+    local splits = {}
+    for k in string.gmatch(email, "%S+") do
+      table.insert(splits, k)
+    end
+    local address = table.remove(splits, 1)
+    email = table.concat(splits, ' ') .. ' <' .. address .. '>'
+
     -- no need for extra string match check here
     table.insert(
       complete_items,
