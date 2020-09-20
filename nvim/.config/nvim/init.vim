@@ -1245,6 +1245,11 @@ augroup TerminalStuff
 augroup END
 
 " gitgutter
+let g:gitgutter_map_keys = 0
+nmap ghn <Plug>(GitGutterNextHunk)
+nmap ghp <Plug>(GitGutterPrevHunk)
+nmap ghs <Plug>(GitGutterStageHunk)
+nmap ghu <Plug>(GitGutterUndoHunk)
 let g:gitgutter_sign_added = '|'
 let g:gitgutter_sign_modified = '|'
 let g:gitgutter_sign_removed = '|'
