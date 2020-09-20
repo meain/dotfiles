@@ -1165,9 +1165,6 @@ let g:vim_json_syntax_conceal = 0
 let g:markdown_syntax_conceal = 0
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'json', 'javascript', 'css']
 
-" Gentags
-let g:gen_tags#blacklist = ['$HOME']
-
 " Vim Router
 let g:rooter_cd_cmd="lcd"
 let g:rooter_silent_chdir = 1
