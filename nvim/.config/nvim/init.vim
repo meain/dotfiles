@@ -979,28 +979,7 @@ augroup custom_vimruncmd
   autocmd BufNewFile,BufRead .vimruncmd set filetype=sh
 augroup end
 
-
-function! RrgOpen()
-  let l:filename = matchstr(getline('.'), '\v^[^:]*:[^:]*:[^:]*')
-  let l:items = split(l:filename, ':')
-  execute "normal \<c-w>\<c-w>"
-  exec 'e +'. l:items[1].' '.l:items[0]
-  exec 'normal 'l:items[2].'|'
-endfunction
-
-function! Rrg(term)
-  " Not using quickfix list because ale always rewrites qf
-  botright new
-  resize 5
-  exec '0read!rg --vimgrep ' . a:term
-  normal! gg
-  set filetype=ripgrep
-  setlocal buftype=nofile
-  setlocal nowrap
-  nnoremap <buffer><enter> :call RrgOpen()<cr>
-endfunction
-command! -nargs=1 Rrg :call Rrg(<f-args>)
-
+" Github link copy
 function! GHOpen(open) abort
     let l:git_origin = system("git config --get remote.origin.url|sed 's|git@github.com:|https://github.com/|;s|.git$||'")
     let l:git_branch = system('git rev-parse --abbrev-ref HEAD')
