@@ -1197,9 +1197,6 @@ let g:user_emmet_settings = {
 \  },
 \}
 
-" SuperTab
-let g:SuperTabDefaultCompletionType = '<c-n>'
-
 " Echodoc
 let g:echodoc#enable_at_startup = 1
 let g:echodoc#type = 'virtual'
