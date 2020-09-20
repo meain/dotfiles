@@ -843,6 +843,7 @@ function! Join()
 endfunction
 nnoremap <silent>J :call Join()<CR>
 
+" For use with vv
 function! s:OpenLastFile()
   let last = filter(copy(v:oldfiles), 'filereadable(v:val)')
   if !empty(last)
@@ -859,14 +860,6 @@ function! s:CSSSearchForClassDef()
   execute ':Find .' . word
 endfunction
 command! CSSSearchForClassDef :call s:CSSSearchForClassDef()
-
-function! s:QuickFixPopulate(word)
-  cex system('rg --vimgrep '.a:word)
-  redraw!
-  cl
-endfunction
-command! -nargs=1 QuickFixPopulate :call s:QuickFixPopulate(<f-args>)
-nnoremap <leader>Q :QuickFixPopulate<space>
 
 " Create a floating buffer
 function! Floater(...)
