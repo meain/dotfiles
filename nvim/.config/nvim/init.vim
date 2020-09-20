@@ -1308,10 +1308,6 @@ let g:echodoc#type = 'virtual'
 let g:indentLine_color_term = 236
 let g:indentLine_color_gui = '#303030'
 
-" AutoPair
-let g:AutoPairsShortcutToggle='<c-p>'
-let g:AutoPairsMultilineClose = 0
-
 " Vim Plug
 command! LoadAllPlugins call plug#load(keys(g:plugs))
 
