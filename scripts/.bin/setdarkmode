@@ -3,11 +3,11 @@
 set -e
 
 if [ -n "$1" ]; then
-    if [ "$1" = "light" ]; then
+    if [ "$1" = "light" ] || [ "$1" == "off" ]; then
         sed -ibk 's/^colors: \*dark$/colors: *light/' "$HOME/.config/alacritty/alacritty.yml"
         rm "$HOME/.config/alacritty/alacritty.ymlbk"
         [ -z "$KITTY_WINDOW_ID" ] || kitty @ set-colors --all --configured ~/.config/kitty/light.conf
-    elif [ "$1" = "dark" ]; then
+    elif [ "$1" = "dark" ] || [ "$1"  = "on" ]; then
         sed -ibk 's/^colors: \*light$/colors: *dark/' "$HOME/.config/alacritty/alacritty.yml"
         rm "$HOME/.config/alacritty/alacritty.ymlbk"
         [ -z "$KITTY_WINDOW_ID" ] || kitty @ set-colors --all --configured ~/.config/kitty/dark.conf
