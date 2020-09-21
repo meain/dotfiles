@@ -41,6 +41,11 @@ require "nvim_lsp".cssls.setup {on_attach = lsp_attach} -- npm install -g vscode
 require "nvim_lsp".dockerls.setup {on_attach = lsp_attach} -- npm install -g dockerfile-language-server-nodejs
 require "nvim_lsp".sumneko_lua.setup {
   on_attach = lsp_attach,
+  settings = {
+    Lua = {
+      diagnostics = {enable = true, globals = {"hs", "vim", "describe", "it", "before_each", "after_each"}}
+    }
+  },
   cmd = {
     "/Users/meain/.cache/nvim/nvim_lsp/sumneko_lua/lua-language-server/bin/macOS/lua-language-server",
     "-E",
