@@ -12,6 +12,6 @@ elif echo "$1" | grep -qE '^git@github.com:'; then
   echo "$1" | sed 's|^git@github.com:|https://github.com/|;s|.git$||' | xargs open
   echo "🔗 $1"
 else
-  echo "$SEARCH_BASE$1" | xargs open
+  echo "$SEARCH_BASE$1" | sed 's| |+|g' | xargs open
   echo "🔍 $1"
 fi
