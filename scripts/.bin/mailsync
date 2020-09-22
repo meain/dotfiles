@@ -27,6 +27,9 @@ notmuch tag +newsletter +nonotify 'folder:/INBOX/' 'from:no-reply@screener.in'
 notmuch tag +newsletter +nonotify 'folder:/INBOX/' 'from:do-not-reply@stackoverflow.email'
 notmuch tag +newsletter +nonotify 'folder:/INBOX/' 'from:jess@dev.to'
 notmuch tag +newsletter +nonotify 'folder:/INBOX/' 'from:npm@npmjs.com'
+notmuch tag +newsletter +nonotify 'folder:/INBOX/' 'from:erik@learnui.design'
+notmuch tag +newsletter +nonotify 'folder:/INBOX/' 'from:jobs-listings@linkedin.com'
+notmuch tag +newsletter +nonotify 'folder:/INBOX/' 'from:hello@uxdesign.cc'
 
 # bullshit
 notmuch tag +bullshit +nonotify 'folder:/INBOX/' 'from:marketradar@newsletter.geojit.net'
@@ -65,7 +68,6 @@ notmuch tag +nonimportant +nonotify 'folder:/INBOX/' 'from:upvote-noreply@quora.
 notmuch tag +nonimportant +nonotify 'folder:/INBOX/' 'from:pro@codecademy.com'
 notmuch tag +nonimportant +nonotify 'folder:/INBOX/' 'from:no-reply@mailer.bookmyshow.com'
 notmuch tag +nonimportant +nonotify 'folder:/INBOX/' 'from:post.bookmyshow.com'
-
 
 # others
 notmuch tag +python +nonotify 'folder:/INBOX/' 'subject:/\[Python-Dev\]/'
