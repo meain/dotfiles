@@ -1159,7 +1159,8 @@ nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
 nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
 nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-nnoremap <silent> g,    <cmd>lua vim.lsp.buf.formatting_sync(nil, 1000)<CR>
+nnoremap <silent> g,    <cmd>lua vim.lsp.buf.formatting(nil, 1000)<CR>
+vnoremap <silent> g,    <cmd>lua vim.lsp.buf.range_formatting()<CR>
 nnoremap <silent> ga    <cmd>lua vim.lsp.buf.code_action()<CR>
 nnoremap <silent> gR    <cmd>lua vim.lsp.buf.rename()<CR>
 nnoremap <silent> gi    <cmd>lua print(require'custom_functions'.get_current_diagnostics())<CR>
