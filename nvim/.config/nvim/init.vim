@@ -1030,9 +1030,9 @@ let g:vim_printer_items = {
 " Vista
 nnoremap <silent><leader>L :Vista!!<cr>
 augroup custom_vista
-  autocmd FileType markdown nnoremap <silent><buffer><leader>l :Vista toc<cr>
+  autocmd FileType markdown nnoremap <silent><buffer><leader>L :Vista toc<cr>
 augroup end
-let g:vista_default_executive = 'lcn'
+let g:vista_default_executive = 'nvim_lsp'
 let g:vista_echo_cursor_strategy='floating_win'
 let g:vista_close_on_jump=0
 let g:vista_echo_cursor=1
