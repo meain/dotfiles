@@ -10,6 +10,8 @@ download() {
     url="$(echo "$1" | awk '{print $2}')"
     if [ ! -f "$name" ]; then
         youtube-dl -f 'bestaudio[ext=m4a]' --output "$name" "$url"
+    else
+        echo "$name" available
     fi
 }
 
