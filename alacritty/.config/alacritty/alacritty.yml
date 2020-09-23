@@ -19,15 +19,15 @@ scrolling:
 
 font:
   normal:
-    family: ProFont for Powerline
+    family: DankMono Nerd Font
     style: Regular
   bold:
-    family: ProFont for Powerline
+    family: DankMono Nerd Font
     style: Regular
   italic:
-    family: ProFont for Powerline
-    style: Bold
-  size: 17.0
+    family: DankMono Nerd Font
+    style: Regular
+  size: 15.5
   offset:
     x: 0
     y: 0 
