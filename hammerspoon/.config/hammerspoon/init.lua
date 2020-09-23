@@ -149,7 +149,7 @@ local emailNotify = function(alert)
     end
   end
 end
-hs.pathwatcher.new('/tmp/unreadlocal', emailNotify):start()
+hs.pathwatcher.new('/Users/meain/.local/share/mail', emailNotify):start()
 hs.hotkey.bind({'alt', 'shift'}, 'e', function()
   emailNotify(true)
   customshellrun.run('/usr/local/bin/tmux refresh-client -S')
