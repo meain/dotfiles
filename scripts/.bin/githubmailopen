@@ -4,11 +4,9 @@ set -e
 
 urls="$(cat "/dev/stdin" |
     grep -oE '(https?|ftp|file):/?//[-A-Za-z0-9+&@#/%?=~_|!:,.;]*[-A-Za-z0-9+&@#/%~_|]' |
-    tee /tmp/githubmailopen-presort |
+    tee /tmp/githubmailopen |
     sort -u)"
-echo "$urls" >/tmp/githubmailopen
 
-# check for issuecommnet
 if [ "$(echo "$urls" | grep "#issuecomment-[0-9][0-9]*" | wc -l | sed 's|^ *||')" = "1" ]; then
     echo "$urls" | grep "#issuecomment-[0-9][0-9]*" | xargs open
 elif [ "$(echo "$urls" | grep "/pull/[0-9][0-9]*/files/" | wc -l | sed 's|^ *||')" = "1" ]; then
@@ -21,6 +19,8 @@ elif [ "$(echo "$urls" | grep "#event-[0-9][0-9]*" | wc -l | sed 's|^ *||')" = "
     echo "$urls" | grep "#event-[0-9][0-9]*" | xargs open
 elif [ "$(echo "$urls" | grep "#commitcomment-[0-9][0-9]*" | wc -l | sed 's|^ *||')" = "1" ]; then
     echo "$urls" | grep "#commitcomment-[0-9][0-9]*" | xargs open
+elif [ "$(echo "$urls" | grep "/actions/runs/[0-9][0-9]*" | wc -l | sed 's|^ *||')" = "1" ]; then
+    echo "$urls" | grep "/actions/runs/[0-9][0-9]*" | xargs open
 else
     echo "$urls" | FZF_DEFAULT_OPTS='
     -1 -0
