@@ -1165,6 +1165,7 @@ nnoremap <silent> ga    <cmd>lua vim.lsp.buf.code_action()<CR>
 nnoremap <silent> gR    <cmd>lua vim.lsp.buf.rename()<CR>
 nnoremap <silent> gi    <cmd>lua print(require'custom_functions'.get_current_diagnostics())<CR>
 " autocmd CursorMoved <buffer> <cmd>lua print(require'custom_functions'.get_current_diagnostics())<CR>
+command! LanguageclientStop <cmd>lua vim.lsp.stop_client(vim.lsp.get_active_clients())<cr>
 
 
 " nvim-completions
