@@ -166,6 +166,7 @@
 ;; Flycheck
 (use-package flycheck
   :ensure t
+  :diminish
   :init (progn
 	  (global-flycheck-mode)
 	  (setq flycheck-checker-error-threshold 1500)
