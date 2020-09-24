@@ -30,14 +30,14 @@
     (invert-face 'header-line-highlight frame)
     (invert-face 'mode-line frame)
     (invert-face 'mode-line-inactive frame)
-    (run-with-timer
-     0.1 nil
-     #'(lambda (frame)
-         (invert-face 'header-line frame)
-         (invert-face 'header-line-highlight frame)
-         (invert-face 'mode-line frame)
-         (invert-face 'mode-line-inactive frame))
-     frame)))
+    (run-with-timer 0.1
+		    nil
+		    #'(lambda (frame)
+			(invert-face 'header-line frame)
+			(invert-face 'header-line-highlight frame)
+			(invert-face 'mode-line frame)
+			(invert-face 'mode-line-inactive frame))
+		    frame)))
 
 ;; Disable line wrapping
 (setq-default truncate-lines 1)
@@ -185,12 +185,12 @@
 ;; Flycheck
 (use-package flycheck
   :ensure t
-  :diminish
-  :init (progn
-	  (global-flycheck-mode)
-	  (setq flycheck-checker-error-threshold 1500)
-	  (evil-leader/set-key "k" 'flycheck-previous-error)
-	  (evil-leader/set-key "j" 'flycheck-next-error)))
+  :diminish :init
+  (progn
+    (global-flycheck-mode)
+    (setq flycheck-checker-error-threshold 1500)
+    (evil-leader/set-key "k" 'flycheck-previous-error)
+    (evil-leader/set-key "j" 'flycheck-next-error)))
 
 ;; LSP
 (use-package eglot
@@ -371,6 +371,28 @@
 ;; Rename buffer
 (evil-leader/set-key "R" 'rename-buffer)
 
+;; vime functionality within emacs
+(use-package uuid :ensure t)
+(defun meain/vime ()
+  "Load a random file inside ~/.cache/vime dir.  Used as a temp notes dir."
+  (interactive)
+  (find-file (concat "~/.cache/vime/_"
+		     (substring (uuid-string)
+				0
+				4))))
+(defun meain/vime-open ()
+  "Show fuzzy findable list of vime items and open one of them."
+  (interactive)
+  (ivy-read "Choose file: "
+	    (mapcar #'car
+		    (sort (directory-files-and-attributes "~/.cache/vime")
+			  #'(lambda (x y)
+			      (time-less-p (nth 6 x)
+					   (nth 6 y)))))
+	    :preselect (ivy-thing-at-point):require-match
+	    t
+	    :action (lambda (x)
+		      (describe-function (intern x))):caller'meain/vime-open))
 
 ;; Emacs dump
 (custom-set-variables
