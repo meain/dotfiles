@@ -373,26 +373,28 @@
 
 ;; vime functionality within emacs
 (use-package uuid :ensure t)
-(defun meain/vime ()
-  "Load a random file inside ~/.cache/vime dir.  Used as a temp notes dir."
-  (interactive)
-  (find-file (concat "~/.cache/vime/_"
-		     (substring (uuid-string)
-				0
-				4))))
-(defun meain/vime-open ()
-  "Show fuzzy findable list of vime items and open one of them."
-  (interactive)
-  (ivy-read "Choose file: "
-	    (mapcar #'car
-		    (sort (directory-files-and-attributes "~/.cache/vime")
-			  #'(lambda (x y)
-			      (time-less-p (nth 6 x)
-					   (nth 6 y)))))
-	    :preselect (ivy-thing-at-point):require-match
-	    t
-	    :action (lambda (x)
-		      (describe-function (intern x))):caller'meain/vime-open))
+(defun meain/vime (&optional createnew)
+  "Load a random file inside ~/.cache/vime dir.  Used as a temp notes dir.
+Pass in `CREATENEW to decide if you wanna create a new item or search for existing items."
+  (interactive "P")
+  (if createnew
+      (find-file (concat "~/.cache/vime/_"
+			 (substring (uuid-string)
+				    0
+				    4)))
+    (ivy-read "Choose file: "
+	      (mapcar #'car
+		      (sort (remove-if-not #'(lambda (x)
+					       (eq (nth 1 x) nil))
+					   (directory-files-and-attributes "~/.cache/vime"))
+			    #'(lambda (x y)
+				(time-less-p (nth 6 y)
+					     (nth 6 x)))))
+	      :preselect (ivy-thing-at-point):require-match
+	      t
+	      :action (lambda (x)
+			(find-file (concat "~/.cache/vime/" x))):caller'meain/vime-open)))
+(evil-leader/set-key "e" 'meain/vime)
 
 ;; Emacs dump
 (custom-set-variables
