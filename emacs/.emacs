@@ -20,6 +20,25 @@
 ;; Quicker yes or no
 (fset 'yes-or-no-p 'y-or-n-p)
 
+;; Bell: audio -> visual
+(setq visible-bell nil)
+(setq ring-bell-function 'meain/mode-line-flash)
+(defun meain/mode-line-flash ()
+  "Flash the modeline, used for visual bell."
+  (let ((frame (selected-frame)))
+    (invert-face 'header-line frame)
+    (invert-face 'header-line-highlight frame)
+    (invert-face 'mode-line frame)
+    (invert-face 'mode-line-inactive frame)
+    (run-with-timer
+     0.1 nil
+     #'(lambda (frame)
+         (invert-face 'header-line frame)
+         (invert-face 'header-line-highlight frame)
+         (invert-face 'mode-line frame)
+         (invert-face 'mode-line-inactive frame))
+     frame)))
+
 ;; Disable line wrapping
 (setq-default truncate-lines 1)
 
