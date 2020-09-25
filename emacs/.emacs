@@ -330,6 +330,17 @@
 (global-set-key (kbd "M-w")
 		'evil-window-delete)
 
+;; Shrink and enlarge windows (not contextual as of now)
+;; https://www.emacswiki.org/emacs/WindowResize
+(global-set-key (kbd "M-H")
+		'shrink-window-horizontally)
+(global-set-key (kbd "M-L")
+		'enlarge-window-horizontally)
+(global-set-key (kbd "M-K")
+		'shrink-window)
+(global-set-key (kbd "M-J")
+		'enlarge-window)
+
 ;; File manipulation mappings
 (evil-leader/set-key "<SPC>" 'save-buffer)
 
