@@ -194,19 +194,25 @@
     (evil-leader/set-key "j" 'flycheck-next-error)))
 
 ;; LSP
-(use-package eglot
+;; (use-package eglot
+;;   :ensure t
+;;   :hook ((python-mode . eglot-ensure)
+;; 	 (rust-mode . eglot-ensure)))
+(use-package lsp-mode
   :ensure t
-  :hook ((python-mode . eglot-ensure)
-	 (rust-mode . eglot-ensure)))
-;;(use-package lsp-mode
-;;  :ensure t
-;;  :hook ((python-mode . lsp-deferred)
-;;	 (rust-mode . lsp-deferred)):commands
-;;  (lsp lsp-deferred))
-;;(use-package lsp-ui :ensure t
-;;  :commands lsp-ui-mode)
-;;(use-package lsp-ivy :ensure t
-;;  :commands lsp-ivy-workspace-symbol)
+  :hook ((python-mode . lsp-deferred)
+	 (rust-mode . lsp-deferred)):commands
+  (lsp lsp-deferred)
+  :init (progn
+	  (define-key evil-normal-state-map (kbd "g d") 'lsp-find-definition)
+	  (define-key evil-normal-state-map (kbd "g r") 'lsp-find-references)
+	  (define-key evil-normal-state-map (kbd "g R") 'lsp-rename)
+	  (define-key evil-normal-state-map (kbd "g ,") 'lsp-format-buffer)
+	  (define-key evil-normal-state-map (kbd "g a") 'lsp-execute-code-action)))
+(use-package lsp-ui :ensure t
+  :commands lsp-ui-mode)
+(use-package lsp-ivy :ensure t
+  :commands lsp-ivy-workspace-symbol)
 
 ;;; [Language pugins] ===============================================
 
