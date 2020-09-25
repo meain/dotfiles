@@ -352,6 +352,13 @@
 (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
 (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
 
+;; folding
+(use-package origami
+  :ensure t
+  :init (progn
+	  (global-origami-mode)
+	  (evil-leader/set-key "o" 'evil-toggle-fold)))
+
 ;; Quick open config file
 (evil-leader/set-key "c"
   (defun meain/load-config ()
