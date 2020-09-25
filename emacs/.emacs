@@ -106,6 +106,7 @@
 ;; Evil commentary
 (use-package evil-commentary
   :ensure t
+  :diminish
   :init (evil-commentary-mode))
 
 ;; Evil surround
