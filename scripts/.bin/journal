@@ -6,8 +6,10 @@ DIR="$HOME/.local/share/journal"
 mkdir -p "$DIR"
 
 view=0
+search=0
 
 [ "$1" = 'view' ] && view=1 && shift
+[ "$1" = 'search' ] && search=1 && shift
 if [ -z "$1" ]; then
     cd "$DIR"
     FILE="$DIR/$(date '+%Y/%m/%d').md"
@@ -19,6 +21,13 @@ fi
 # view and exit if view
 if [ "$view" = 1 ]; then
     gpg --decrypt "$FILE.asc" 2>/dev/null
+    exit 0
+fi
+
+# Search through items
+if [ "$search" = 1 ]; then
+    find "$DIR" -name '*.md.asc' | sed "s|^$DIR/||;s|.md.asc$||" | sort |
+        fzf --preview "gpg --decrypt $DIR/{}.md.asc 2>/dev/null" --preview-window 90% --height 100%
     exit 0
 fi
 
