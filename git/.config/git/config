@@ -68,3 +68,5 @@
   program = gpg2
 [push]
   default = current
+[pull]
+  ff = only
