@@ -106,8 +106,8 @@
 ;; Evil commentary
 (use-package evil-commentary
   :ensure t
-  :diminish
-  :init (evil-commentary-mode))
+  :diminish :init
+  (evil-commentary-mode))
 
 ;; Evil surround
 (use-package evil-surround
@@ -294,8 +294,16 @@
 ;; elfeed
 (use-package elfeed
   :ensure t
-  :init (setq elfeed-feeds '(("http://nullprogram.com/feed/" blog emacs) "http://www.50ply.com/atom.xml"
-			     ("http://nedroid.com/feed/" webcomic))))
+  :init (setq elfeed-feeds (with-temp-buffer
+			     (insert-file-contents "~/.config/newsboat/urls")
+			     (mapcar (lambda (x)
+				       (car (split-string x)))
+				     (remove-if-not #'(lambda (x)
+							(string-match-p "^https://" x))
+						    (split-string (buffer-string)
+								  "\n"
+								  t))))))
+
 
 
 ;;; [Extra keybindings] ===============================================================
@@ -427,12 +435,18 @@ Pass in `CREATENEW to decide if you wanna create a new item or search for existi
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   '("928ffa547ce426cdcea1f3ea8b5a25fd4808ca2bc2ab2f964621a8691406d94c" "0423ec89db11589d86cbd6f0c9e5417594a4506cf26e29ff400797fdcb25732b" default))
+ '(custom-safe-themes '("928ffa547ce426cdcea1f3ea8b5a25fd4808ca2bc2ab2f964621a8691406d94c"
+			"0423ec89db11589d86cbd6f0c9e5417594a4506cf26e29ff400797fdcb25732b"
+			default))
  '(flycheck-checker-error-threshold 1000)
  '(helm-completion-style 'emacs)
- '(package-selected-packages
-   '(vterm-toggle vterm neotree diminish lsp-ivy lsp-ui lsp-mode company flx lua-mode counsel ivy projectile sane-term try drag-stuff diff-hl flycheck magit evil-surround volatile-highlights shell-pop evil-commentary rust-mode modus-operandi-theme modus-vivendi-theme helm dumb-jump srefactor use-package evil)))
+ '(package-selected-packages '(vterm-toggle vterm neotree diminish lsp-ivy
+					    lsp-ui lsp-mode company flx lua-mode counsel
+					    ivy projectile sane-term try drag-stuff diff-hl
+					    flycheck magit evil-surround volatile-highlights
+					    shell-pop evil-commentary rust-mode modus-operandi-theme
+					    modus-vivendi-theme helm dumb-jump srefactor
+					    use-package evil)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
