@@ -29,7 +29,7 @@ virtual-mailboxes \
         "python"        "notmuch://?query=folder:/INBOX/ and tag:python"\
         "git"           "notmuch://?query=folder:/INBOX/ and tag:git"\
         "newsletter"    "notmuch://?query=folder:/INBOX/ and tag:newsletter"\
-        "funread"       "notmuch://?query=folder:/INBOX/ and tag:unread"\
+        "funread"       "notmuch://?query=folder:/INBOX/ and tag:unread and -tag:python and -tag:bullshit"\
         "bullshit"      "notmuch://?query=folder:/INBOX/ and tag:bullshit"\
         "known"         "notmuch://?query=folder:/INBOX/ and tag:known"\
         "nonimportant"  "notmuch://?query=folder:/INBOX/ and tag:nonimportant"\
