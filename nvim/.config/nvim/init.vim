@@ -779,7 +779,7 @@ endif
 nnoremap <silent>,l :call functions#StartPage(v:true)<cr>
 
 " Markdown preview
-command! MarkdownPreview :call functions#MarkdownPreview<CR>
+command! MarkdownPreview :call functions#MarkdownPreview()<CR>
 
 " Copy all matching string
 command! -register CopyMatches call functions#CopyMatches(<q-reg>)
