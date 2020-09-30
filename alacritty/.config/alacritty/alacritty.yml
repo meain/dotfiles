@@ -19,18 +19,18 @@ scrolling:
 
 font:
   normal:
-    family: DankMono Nerd Font
+    family: Iosevka
     style: Regular
   bold:
-    family: DankMono Nerd Font
+    family: Iosevka
     style: Regular
   italic:
-    family: DankMono Nerd Font
-    style: Regular
-  size: 15.5
+    family: Iosevka
+    style: Italic
+  size: 16.0
   offset:
     x: 0
-    y: 0 
+    y:  -3
   glyph_offset:
     x: 0
     y: 0
