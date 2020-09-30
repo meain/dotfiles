@@ -35,7 +35,6 @@ notmuch tag +newsletter +nonotify 'folder:/INBOX/' 'from:hello@uxdesign.cc'
 notmuch tag +bullshit +nonotify 'folder:/INBOX/' 'from:marketradar@newsletter.geojit.net'
 notmuch tag +bullshit +nonotify 'folder:/INBOX/' 'from:no-reply@updates.bookmyshow.com'
 notmuch tag +bullshit +nonotify 'folder:/INBOX/' 'from:assistant-noreply@google.com'
-notmuch tag +bullshit +nonotify 'folder:/INBOX/' 'from:informations@hdfcbank.net'
 notmuch tag +bullshit +nonotify 'folder:/INBOX/' 'from:no-reply@spotify.com'
 notmuch tag +bullshit +nonotify 'folder:/INBOX/' 'from:fnalerts-no-reply@firstnaukri.com'
 notmuch tag +bullshit +nonotify 'folder:/INBOX/' 'from:irctctourismoffers@irctc.co.in'
@@ -68,6 +67,7 @@ notmuch tag +nonimportant +nonotify 'folder:/INBOX/' 'from:upvote-noreply@quora.
 notmuch tag +nonimportant +nonotify 'folder:/INBOX/' 'from:pro@codecademy.com'
 notmuch tag +nonimportant +nonotify 'folder:/INBOX/' 'from:no-reply@mailer.bookmyshow.com'
 notmuch tag +nonimportant +nonotify 'folder:/INBOX/' 'from:post.bookmyshow.com'
+notmuch tag +nonimportant +nonotify 'folder:/INBOX/' 'from:informations@hdfcbank.net'
 
 # others
 notmuch tag +python +nonotify 'folder:/INBOX/' 'subject:/\[Python-Dev\]/'
