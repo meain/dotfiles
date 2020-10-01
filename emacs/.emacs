@@ -273,6 +273,8 @@
 ;; Lua
 (use-package lua-mode :ensure t)
 
+(use-package jinja2-mode :ensure t)
+
 ;;; [Other plugins] ================================================
 
 ;; drag-stuff
