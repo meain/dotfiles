@@ -59,8 +59,9 @@
 ;; Follow symlinks for vc
 (setq vc-follow-symlinks nil)
 
-;; Backup somewhere else
+;; Backup and autosave somewhere else
 (setq backup-directory-alist `((".*" . "/tmp/emacsbackup")))
+(setq auto-save-file-name-transforms `((".*" "/tmp/emacsautosave" t)))
 
 ;; Don't create lockfiles
 (setq create-lockfiles nil)
