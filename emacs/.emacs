@@ -170,6 +170,11 @@
   :ensure t
   :init (ivy-rich-mode))
 
+;; amx (better mx)
+(use-package amx
+  :ensure t
+  :init (amx-mode))
+
 ;; dumb-jump
 (use-package dumb-jump
   :ensure t
