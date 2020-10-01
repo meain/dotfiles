@@ -465,13 +465,27 @@
 
 ;; vime functionality within emacs
 (use-package uuid :ensure t)
+(defun meain/vime-name-append (filename)
+  (with-temp-buffer
+    (insert-file-contents (concatenate 'string "~/.cache/vime/" filename))
+    (concatenate 'string
+		 filename
+		 (if (s-starts-with-p ":name"
+				      (car (split-string (buffer-string)
+							 "\n")))
+		     (replace-regexp-in-string (regexp-quote ":name")
+					       ""
+					       (car (split-string (buffer-string)
+								  "\n")))
+		   ""))))
 (defun meain/vime (&optional listitems)
   "Load a random file inside ~/.cache/vime dir.  Used as a temp notes dir.
-Pass in `CREATENEW to decide if you wanna create a new item or search for existing items."
+Pass in `LISTITEMS to decide if you wanna create a new item or search for existing items."
   (interactive "P")
   (if listitems
       (ivy-read "Choose file: "
-		(mapcar #'car
+		(mapcar (lambda (x)
+			  (meain/vime-name-append (car x)))
 			(sort (remove-if-not #'(lambda (x)
 						 (eq (nth 1 x) nil))
 					     (directory-files-and-attributes "~/.cache/vime"))
@@ -481,7 +495,8 @@ Pass in `CREATENEW to decide if you wanna create a new item or search for existi
 		:preselect (ivy-thing-at-point):require-match
 		t
 		:action (lambda (x)
-			  (find-file (concat "~/.cache/vime/" x))):caller'meain/vime-open)
+			  (find-file (concat "~/.cache/vime/"
+					     (car (split-string x))))):caller'meain/vime-open)
     (find-file (concat "~/.cache/vime/_"
 		       (substring (uuid-string)
 				  0
