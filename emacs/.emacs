@@ -466,6 +466,7 @@
 ;; vime functionality within emacs
 (use-package uuid :ensure t)
 (defun meain/vime-name-append (filename)
+  "Util function used to parse :name block for vime entries.  FILENAME is the name of the vime file."
   (with-temp-buffer
     (insert-file-contents (concatenate 'string "~/.cache/vime/" filename))
     (concatenate 'string
@@ -517,8 +518,7 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 
 ;; Better modeline
 (defun simple-mode-line-render (left right)
-  "Return a string of `window-width' length containing LEFT, and RIGHT
- aligned respectively."
+  "Return a string of `window-width' length containing LEFT, and RIGHT aligned respectively."
   (let* ((available-width (- (window-width)
 			     (length left)
 			     2)))
@@ -551,7 +551,7 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 										      (string-width mode-name))))))))
 				     (propertize "%l" 'face 'font-lock-constant-face) ;; position in file
 				     (propertize " %m " 'face 'font-lock-string-face) ;; current mode
-				     )) 
+				     ))
 
 ;; Emacs dump
 (custom-set-variables
