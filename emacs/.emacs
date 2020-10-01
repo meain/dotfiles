@@ -23,6 +23,10 @@
 ;; Use cl-lib
 (require 'cl-lib)
 
+;; Diminish default modes
+(diminish 'eldoc-mode)
+(diminish 'auto-revert-mode)
+
 ;; Show open and closing brackets
 (show-paren-mode t)
 (setq show-paren-delay 0)
