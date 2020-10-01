@@ -532,9 +532,9 @@ Pass in `CREATENEW to decide if you wanna create a new item or search for existi
 							 'display
 							 `((space :align-to (- (+ right right-fringe right-margin)
 									       ,(+ 3
-										   (+ (string-width (format-mode-line "%p"))
+										   (+ (string-width (format-mode-line "%l"))
 										      (string-width mode-name))))))))
-				     (propertize "%p" 'face 'font-lock-constant-face) ;; position in file
+				     (propertize "%l" 'face 'font-lock-constant-face) ;; position in file
 				     (propertize " %m " 'face 'font-lock-string-face) ;; current mode
 				     )) 
 
