@@ -401,6 +401,9 @@
 (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
 (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
 
+;; Remap macro recoring key
+(define-key evil-normal-state-map "Q" 'evil-record-macro)
+
 ;; folding
 (use-package origami
   :ensure t
