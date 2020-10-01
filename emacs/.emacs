@@ -470,6 +470,17 @@ Pass in `CREATENEW to decide if you wanna create a new item or search for existi
 				  4)))))
 (evil-leader/set-key "e" 'meain/vime)
 
+;; Quick quit
+(defun meain/kill-current-buffer-unless-scratch ()
+  "Kill current buffer if it is not scratch."
+  (interactive)
+  (if (= (length (mapcar #'window-buffer
+			 (window-list))) 1)
+      (switch-to-buffer "*scratch*")
+    (evil-quit)))
+(evil-leader/set-key "q" 'meain/kill-current-buffer-unless-scratch)
+(define-key evil-normal-state-map (kbd "q") 'meain/kill-current-buffer-unless-scratch)
+
 ;; Emacs dump
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
