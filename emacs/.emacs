@@ -23,6 +23,10 @@
 ;; Use cl-lib
 (require 'cl-lib)
 
+;; Show open and closing brackets
+(show-paren-mode t)
+(setq show-paren-delay 0)
+
 ;; Bell: audio -> visual
 (setq visible-bell nil)
 (setq ring-bell-function 'meain/mode-line-flash)
