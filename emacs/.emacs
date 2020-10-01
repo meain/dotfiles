@@ -20,6 +20,9 @@
 ;; Quicker yes or no
 (fset 'yes-or-no-p 'y-or-n-p)
 
+;; Use cl-lib
+(require 'cl-lib)
+
 ;; Bell: audio -> visual
 (setq visible-bell nil)
 (setq ring-bell-function 'meain/mode-line-flash)
