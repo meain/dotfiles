@@ -511,8 +511,8 @@ Pass in `CREATENEW to decide if you wanna create a new item or search for existi
 	    left
 	    right)))
 (setq-default mode-line-format (list '(:eval (if (eq 'emacs evil-state)
-						 " E "
-					       " V ")) ;; vim or emacs mode
+						 "! "
+					       ": ")) ;; vim or emacs mode
 
 				     ;; the buffer name; the file name as a tool tip
 				     (propertize "%b"
