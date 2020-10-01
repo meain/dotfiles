@@ -229,25 +229,32 @@
 			     :error-list-face 'flycheck-error-list-info)
 
 ;; LSP
-;; (use-package eglot
-;;   :ensure t
-;;   :hook ((python-mode . eglot-ensure)
-;; 	 (rust-mode . eglot-ensure)))
-(use-package lsp-mode
+(flymake-mode-off)
+(use-package eglot
   :ensure t
-  :hook ((python-mode . lsp-deferred)
-	 (rust-mode . lsp-deferred)):commands
-  (lsp lsp-deferred)
-  :init (progn
-	  (define-key evil-normal-state-map (kbd "g d") 'lsp-find-definition)
-	  (define-key evil-normal-state-map (kbd "g r") 'lsp-find-references)
-	  (define-key evil-normal-state-map (kbd "g R") 'lsp-rename)
-	  (define-key evil-normal-state-map (kbd "g ,") 'lsp-format-buffer)
-	  (define-key evil-normal-state-map (kbd "g a") 'lsp-execute-code-action)))
-(use-package lsp-ui :ensure t
-  :commands lsp-ui-mode)
-(use-package lsp-ivy :ensure t
-  :commands lsp-ivy-workspace-symbol)
+  :hook ((python-mode . eglot-ensure)
+	 (rust-mode . eglot-ensure)):init
+  (progn
+    (define-key evil-normal-state-map (kbd "g d") 'xref-find-definitions)
+    (define-key evil-normal-state-map (kbd "g r") 'xref-find-references)
+    (define-key evil-normal-state-map (kbd "g R") 'eglot-rename)
+    (define-key evil-normal-state-map (kbd "g ,") 'eglot-format-buffer)
+    (define-key evil-normal-state-map (kbd "g a") 'eglot-code-actions)))
+;; (use-package lsp-mode
+;;   :ensure t
+;;   :hook ((python-mode . lsp-deferred)
+;; 	 (rust-mode . lsp-deferred)):commands
+;;   (lsp lsp-deferred)
+;;   :init (progn
+;; 	  (define-key evil-normal-state-map (kbd "g d") 'lsp-find-definition)
+;; 	  (define-key evil-normal-state-map (kbd "g r") 'lsp-find-references)
+;; 	  (define-key evil-normal-state-map (kbd "g R") 'lsp-rename)
+;; 	  (define-key evil-normal-state-map (kbd "g ,") 'lsp-format-buffer)
+;; 	  (define-key evil-normal-state-map (kbd "g a") 'lsp-execute-code-action)))
+;; (use-package lsp-ui :ensure t
+;;   :commands lsp-ui-mode)
+;; (use-package lsp-ivy :ensure t
+;;   :commands lsp-ivy-workspace-symbol)
 
 ;;; [Language pugins] ===============================================
 
