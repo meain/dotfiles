@@ -488,6 +488,45 @@ Pass in `CREATENEW to decide if you wanna create a new item or search for existi
 (evil-leader/set-key "q" 'meain/kill-current-buffer-unless-scratch)
 (define-key evil-normal-state-map (kbd "q") 'meain/kill-current-buffer-unless-scratch)
 
+
+;; Better modeline
+(defun simple-mode-line-render (left right)
+  "Return a string of `window-width' length containing LEFT, and RIGHT
+ aligned respectively."
+  (let* ((available-width (- (window-width)
+			     (length left)
+			     2)))
+    (format (format " %%s %%%ds " available-width)
+	    left
+	    right)))
+(setq-default mode-line-format (list '(:eval (if (eq 'emacs evil-state)
+						 " E "
+					       " V ")) ;; vim or emacs mode
+
+				     ;; the buffer name; the file name as a tool tip
+				     (propertize "%b"
+						 'face
+						 'font-lock-type-face
+						 'help-echo
+						 (buffer-file-name))
+				     '(:eval (when-let (vc vc-mode) ;; git branch
+					       (list " @"
+						     (propertize (substring vc 5)
+								 'face
+								 'font-lock-comment-face)
+						     " ")))
+				     ;; spacer
+
+				     '(:eval (propertize " "
+							 'display
+							 `((space :align-to (- (+ right right-fringe right-margin)
+									       ,(+ 3
+										   (+ (string-width (format-mode-line "%p"))
+										      (string-width mode-name))))))))
+				     (propertize "%p" 'face 'font-lock-constant-face) ;; position in file
+				     (propertize " %m " 'face 'font-lock-string-face) ;; current mode
+				     )) 
+
 ;; Emacs dump
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -499,13 +538,13 @@ Pass in `CREATENEW to decide if you wanna create a new item or search for existi
 			default))
  '(flycheck-checker-error-threshold 1000)
  '(helm-completion-style 'emacs)
- '(package-selected-packages '(vterm-toggle vterm neotree diminish lsp-ivy
-					    lsp-ui lsp-mode company flx lua-mode counsel
-					    ivy projectile sane-term try drag-stuff diff-hl
-					    flycheck magit evil-surround volatile-highlights
-					    shell-pop evil-commentary rust-mode modus-operandi-theme
-					    modus-vivendi-theme helm dumb-jump srefactor
-					    use-package evil)))
+ '(package-selected-packages '(eldoc-overlay vterm-toggle vterm neotree
+					     diminish lsp-ivy lsp-ui lsp-mode company flx
+					     lua-mode counsel ivy projectile sane-term
+					     try drag-stuff diff-hl flycheck magit evil-surround
+					     volatile-highlights shell-pop evil-commentary
+					     rust-mode modus-operandi-theme modus-vivendi-theme
+					     helm dumb-jump srefactor use-package evil)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
