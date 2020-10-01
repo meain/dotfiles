@@ -386,6 +386,9 @@
 ;; Open dired
 (define-key evil-normal-state-map (kbd "-") 'counsel-find-file)
 
+;; Open dired
+(define-key evil-normal-state-map (kbd "<RET>") 'projectile-find-file)
+
 ;; Fullscreen current buffer
 (defun meain/toggle-maximize-buffer ()
   "Maximize the current buffer."
