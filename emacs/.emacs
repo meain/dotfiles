@@ -31,6 +31,10 @@
 (show-paren-mode t)
 (setq show-paren-delay 0)
 
+;; vim like scroll behaviour
+(setq scroll-step 1)
+(setq scroll-margin 3)
+
 ;; Bell: audio -> visual
 (setq visible-bell nil)
 (setq ring-bell-function 'meain/mode-line-flash)
