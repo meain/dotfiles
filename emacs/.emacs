@@ -514,6 +514,21 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 		       (substring (uuid-string)
 				  0
 				  4)))))
+(defun meain/scratch-to-vime ()
+  "Copy contents of current *scratch* to vime."
+  (interactive)
+  (with-current-buffer "*scratch*"
+    (append-to-file (concatenate 'string
+				 ":name *scratch* on "
+				 (format-time-string "%Y-%m-%d %H:%m")
+				 "\n"
+				 (buffer-string))
+		    nil
+		    (concat "~/.cache/vime/_"
+			    (substring (uuid-string)
+				       0
+				       4)))
+    (erase-buffer)))
 (evil-leader/set-key "e" 'meain/vime)
 
 ;; Quick quit
@@ -576,13 +591,14 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 			default))
  '(flycheck-checker-error-threshold 1000)
  '(helm-completion-style 'emacs)
- '(package-selected-packages '(eldoc-overlay vterm-toggle vterm neotree
-					     diminish lsp-ivy lsp-ui lsp-mode company flx
-					     lua-mode counsel ivy projectile sane-term
-					     try drag-stuff diff-hl flycheck magit evil-surround
-					     volatile-highlights shell-pop evil-commentary
-					     rust-mode modus-operandi-theme modus-vivendi-theme
-					     helm dumb-jump srefactor use-package evil)))
+ '(package-selected-packages '(ivy-historian eldoc-overlay vterm-toggle
+					     vterm neotree diminish lsp-ivy lsp-ui lsp-mode
+					     company flx lua-mode counsel ivy projectile
+					     sane-term try drag-stuff diff-hl flycheck
+					     magit evil-surround volatile-highlights shell-pop
+					     evil-commentary rust-mode modus-operandi-theme
+					     modus-vivendi-theme helm dumb-jump srefactor
+					     use-package evil)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
