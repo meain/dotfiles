@@ -305,14 +305,6 @@
 ;; Try
 (use-package try :ensure t)
 
-;; vterm
-(use-package vterm :ensure t)
-(use-package vterm-toggle
-  :ensure t
-  :init (progn
-	  (global-set-key (kbd "M-t")
-			  'vterm-toggle)))
-
 ;; Saveplace
 (use-package saveplace
   :ensure t
