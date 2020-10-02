@@ -266,6 +266,17 @@
 ;; (use-package lsp-ivy :ensure t
 ;;   :commands lsp-ivy-workspace-symbol)
 
+
+;; Better eldoc (still has issues in macos full screen)
+;; (use-package eldoc-box
+;;   :ensure t
+;;   :init (eldoc-box-hover-at-point-mode))
+
+;; Eldoc overlay
+;; (use-package eldoc-overlay
+;;   :ensure t
+;;   :init (eldoc-overlay-mode t))
+
 ;;; [Language pugins] ===============================================
 
 ;; Rust
