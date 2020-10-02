@@ -33,9 +33,9 @@ alias sl='task +LATEST'
 alias cs='clear && task'
 alias ca='clear && a'
 
-alias ls='lsd --date relative --icon never --size short --color-theme minimal'
-alias ll='ls -Alh --blocks permission,size,date,name'
-alias llg='ls -Alh --group-directories-first --blocks permission,size,date,name '
+alias ls='lsd'
+alias ll='ls -Alh'
+alias llg='ls -Alh --group-directories-first'
 alias l='ls'
 alias la='ls -A'
 

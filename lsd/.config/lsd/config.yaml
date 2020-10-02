@@ -1,0 +1,15 @@
+color:
+    when: auto
+    theme: minimal
+size: short
+total-size: false
+indicators: false
+no-symlink: false
+icons:
+    when: never
+date: relative
+blocks:
+    - permission
+    - size
+    - date
+    - name
