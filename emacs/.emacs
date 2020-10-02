@@ -154,8 +154,8 @@
     (setq ivy-re-builders-alist '((ivy-switch-buffer . ivy--regex-plus)
 				  (t . ivy--regex-fuzzy)))
     (evil-leader/set-key "f" 'counsel-rg)
-    (evil-leader/set-key "b" 'ivy-switch-buffer)
-    (evil-leader/set-key "s" 'counsel-git)
+    (evil-leader/set-key "b" 'ibuffer-other-window)
+    (evil-leader/set-key "s" 'ivy-switch-buffer)
     (evil-leader/set-key "r" 'counsel-recentf)
     (evil-leader/set-key "l" 'counsel-M-x)
     (define-key evil-normal-state-map (kbd "C-d f") 'counsel-describe-function)
@@ -244,6 +244,7 @@
   :hook ((python-mode . eglot-ensure)
 	 (rust-mode . eglot-ensure)):init
   (progn
+    (define-key evil-normal-state-map (kbd "K") 'eldoc)
     (define-key evil-normal-state-map (kbd "g d") 'xref-find-definitions)
     (define-key evil-normal-state-map (kbd "g r") 'xref-find-references)
     (define-key evil-normal-state-map (kbd "g R") 'eglot-rename)
