@@ -267,25 +267,11 @@
 ;;   :commands lsp-ivy-workspace-symbol)
 
 
-;; Better eldoc (still has issues in macos full screen)
-;; (use-package eldoc-box
-;;   :ensure t
-;;   :init (eldoc-box-hover-at-point-mode))
-
-;; Eldoc overlay
-;; (use-package eldoc-overlay
-;;   :ensure t
-;;   :init (eldoc-overlay-mode t))
-
 ;;; [Language pugins] ===============================================
 
-;; Rust
-(use-package rust-mode :ensure t)
-
-;; Lua
-(use-package lua-mode :ensure t)
-
-(use-package jinja2-mode :ensure t)
+(use-package rust-mode :ensure t)  ;; rust
+(use-package lua-mode :ensure t)  ;; lua
+(use-package jinja2-mode :ensure t)  ;; jinja2
 
 ;;; [Other plugins] ================================================
 
