@@ -251,7 +251,6 @@
     (evil-leader/set-key "k" 'flycheck-next-error)))
 
 ;; LSP
-(flymake-mode-off)
 (use-package eglot
   :ensure t
   :hook ((python-mode . eglot-ensure)
@@ -281,6 +280,24 @@
 ;;   :commands lsp-ui-mode)
 ;; (use-package lsp-ivy :ensure t
 ;;   :commands lsp-ivy-workspace-symbol)
+
+;; xref changes
+(evil-define-key 'normal
+  xref--xref-buffer-mode-map
+  (kbd "j")
+  'xref-next-line)
+(evil-define-key 'normal
+  xref--xref-buffer-mode-map
+  (kbd "k")
+  'xref-prev-line)
+(evil-define-key 'normal
+  xref--xref-buffer-mode-map
+  (kbd "<RET>")
+  'xref-quit-and-goto-xref)
+(evil-define-key 'normal
+  xref--xref-buffer-mode-map
+  (kbd "<SPC>")
+  'xref-goto-xref)
 
 
 ;;; [Language pugins] ===============================================
