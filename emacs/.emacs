@@ -167,11 +167,11 @@
     (evil-leader/set-key "s" 'ivy-switch-buffer)
     (evil-leader/set-key "r" 'counsel-recentf)
     (evil-leader/set-key "l" 'counsel-M-x)
-    (define-key evil-normal-state-map (kbd "C-d f") 'counsel-describe-function)
-    (define-key evil-normal-state-map (kbd "C-d v") 'counsel-describe-variable)
-    (define-key evil-normal-state-map (kbd "C-d o") 'counsel-describe-symbol)
-    (define-key evil-normal-state-map (kbd "C-d l") 'counsel-find-library)
-    (define-key evil-normal-state-map (kbd "C-d i") 'counsel-info-lookup-symbol)
+    (evil-leader/set-key "h f" 'counsel-describe-function)
+    (evil-leader/set-key "h v" 'counsel-describe-variable)
+    (evil-leader/set-key "h o" 'counsel-describe-symbol)
+    (evil-leader/set-key "h l" 'counsel-find-library)
+    (evil-leader/set-key "h i" 'counsel-info-lookup-symbol)
     (define-key evil-normal-state-map (kbd "M-f") 'counsel-M-x)))
 
 ;; ivy-rich
