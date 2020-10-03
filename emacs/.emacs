@@ -5,6 +5,9 @@
 
 ;;; Code:
 
+;; increase gc threshold (speeds up initial load)
+(setq gc-cons-threshold 400000000)
+
 ;;; [Basic config] =============================================
 
 ;; Disable useless stuff
@@ -557,6 +560,9 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 				     (propertize "%l" 'face 'font-lock-constant-face) ;; position in file
 				     (propertize " %m " 'face 'font-lock-string-face) ;; current mode
 				     ))
+
+;; drop gc threshold back
+(setq gc-cons-threshold 800000)
 
 (provide '.emacs)
 ;;; .emacs ends here
