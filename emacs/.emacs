@@ -518,7 +518,7 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 				       0
 				       4)))
     (erase-buffer)))
-(evil-leader/set-key "e" 'meain/vime)
+(evil-leader/set-key "v" 'meain/vime)
 
 ;; Quick quit
 (defun meain/kill-current-buffer-unless-scratch ()
