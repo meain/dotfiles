@@ -18,8 +18,7 @@
 (setq inhibit-startup-screen t)
 
 ;; Font
-(set-frame-font "DankMono Nerd Font 15" nil
-		t)
+(set-frame-font "VictorMono Nerd Font 14" nil t)
 
 ;; Quicker yes or no
 (fset 'yes-or-no-p 'y-or-n-p)
