@@ -55,7 +55,7 @@ bind pager G bottom
 bind index,pager R group-reply
 bind index <Tab> collapse-all
 macro index,pager U |fzfurlopen\n
-macro index,pager G |githubmailopen\n
+macro index,pager H |githubmailopen\n
 bind editor <Tab> complete-query
 bind editor ^T complete
 macro index,pager h "<view-attachments>/text/html<enter><enter>q" "open html version"
