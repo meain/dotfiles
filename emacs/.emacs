@@ -83,6 +83,14 @@
 ;; Show matching paran
 (setq show-paran-mode 1)
 
+;; emoji support
+(let ((font (if (= emacs-major-version 25)
+		"Symbola"
+	      (cond
+	       ((string-equal system-type "darwin") "Apple Color Emoji")
+	       ((string-equal system-type "gnu/linux") "Symbola")))))
+  (set-fontset-font t 'unicode font nil 'prepend))
+
 ;; Quit out of everythign with esc
 (defun meain/keyboard-quit ()
   "Quit out of whatever."
