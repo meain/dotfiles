@@ -18,7 +18,8 @@
 (setq inhibit-startup-screen t)
 
 ;; Font
-(set-frame-font "CozetteVector 16" nil t)
+(set-frame-font "DankMono Nerd Font 15" nil
+		t)
 
 ;; Quicker yes or no
 (fset 'yes-or-no-p 'y-or-n-p)
