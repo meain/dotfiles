@@ -429,7 +429,7 @@
 	  (evil-leader/set-key "o" 'evil-toggle-fold)))
 
 ;; Quick open config file
-(evil-leader/set-key "c"
+(evil-leader/set-key "e"
   (defun meain/load-config ()
     (interactive)
     (find-file "~/.emacs")))
