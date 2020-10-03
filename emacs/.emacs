@@ -357,6 +357,9 @@
 
 ;;; [Extra keybindings] ===============================================================
 
+;; Hit universal arg without ctrl
+(evil-leader/set-key "u" 'universal-argument)
+
 ;; Window mappings
 (global-set-key (kbd "M-l")
 		(defun meain/window-right ()
