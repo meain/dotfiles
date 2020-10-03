@@ -47,13 +47,12 @@
 
 ;; Bell: audio -> visual
 (setq visible-bell nil)
-(setq ring-bell-function
-      (lambda ()
-	(unless (memq this-command
-		      '(isearch-abort abort-recursive-edit
-				      exit-minibuffer keyboard-quit))
-	  (invert-face 'mode-line)
-	  (run-with-timer 0.1 nil 'invert-face 'mode-line))))
+(setq ring-bell-function (lambda ()
+			   (unless (memq this-command
+					 '(isearch-abort abort-recursive-edit exit-minibuffer
+							 keyboard-quit))
+			     (invert-face 'mode-line)
+			     (run-with-timer 0.1 nil 'invert-face 'mode-line))))
 
 ;; Disable line wrapping
 (setq-default truncate-lines 1)
