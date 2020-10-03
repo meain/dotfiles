@@ -180,7 +180,8 @@
     (evil-leader/set-key "h o" 'counsel-describe-symbol)
     (evil-leader/set-key "h l" 'counsel-find-library)
     (evil-leader/set-key "h i" 'counsel-info-lookup-symbol)
-    (define-key evil-normal-state-map (kbd "M-f") 'counsel-M-x)))
+    (define-key evil-normal-state-map (kbd "M-f") 'counsel-M-x)
+    (define-key evil-normal-state-map (kbd "-") 'counsel-find-file)))
 
 ;; ivy-rich
 (use-package ivy-rich
@@ -219,7 +220,8 @@
   (projectile-mode 1)
   (evil-leader/set-key "p" 'projectile-switch-project)
   (setq projectile-completion-system 'ivy)
-  (setq projectile-sort-order 'recently-active))
+  (setq projectile-sort-order 'recently-active)
+  (define-key evil-normal-state-map (kbd "<RET>") 'projectile-find-file))
 
 ;; Flycheck
 (use-package flycheck
@@ -485,12 +487,6 @@
 ;; Full screen emacs
 (global-set-key (kbd "<s-return>")
 		'toggle-frame-fullscreen)
-
-;; Open dired
-(define-key evil-normal-state-map (kbd "-") 'counsel-find-file)
-
-;; Open dired
-(define-key evil-normal-state-map (kbd "<RET>") 'projectile-find-file)
 
 ;; Fullscreen current buffer
 (use-package emacs
