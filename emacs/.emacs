@@ -445,15 +445,17 @@
 (define-key evil-normal-state-map (kbd "<RET>") 'projectile-find-file)
 
 ;; Fullscreen current buffer
-(defun meain/toggle-maximize-buffer ()
-  "Maximize the current buffer."
-  (interactive)
-  (if (= 1 (length (window-list)))
-      (jump-to-register '_)
-    (progn
-      (window-configuration-to-register '_)
-      (delete-other-windows))))
-(define-key evil-normal-state-map (kbd "``") `meain/toggle-maximize-buffer)
+(use-package emacs
+  :config (defvar meain/window-configuration nil)(define-minor-mode meain/monacle-mode
+						   "Zoom in and out of single window."
+						   :lighter " [M]"
+						   :global nil
+						   (if (one-window-p)
+						       (when meain/window-configuration
+							 (set-window-configuration meain/window-configuration))
+						     (setq meain/window-configuration (current-window-configuration))
+						     (delete-other-windows))))
+(define-key evil-normal-state-map (kbd "``") `meain/monacle-mode)
 
 ;; Eval region
 ;; Figure out a way to auto exit normal mode after eval
