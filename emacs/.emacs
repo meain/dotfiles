@@ -394,7 +394,7 @@
 		  (split-window-right)
 		  (windmove-right)))
 (global-set-key (kbd "M-w")
-		'evil-window-delete)
+		'kill-buffer-and-window)
 
 ;; Shrink and enlarge windows (not contextual as of now)
 ;; https://www.emacswiki.org/emacs/WindowResize
