@@ -532,6 +532,23 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 (define-key evil-normal-state-map (kbd "q") 'meain/kill-current-buffer-unless-scratch)
 
 
+;; Fancier tab managerment
+(use-package tab-bar
+  :config (setq tab-bar-close-button-show nil)(setq tab-bar-close-last-tab-choice 'tab-bar-mode-disable)(setq tab-bar-close-tab-select 'recent)(setq tab-bar-new-tab-choice t)(setq tab-bar-new-tab-to 'right)(setq tab-bar-position nil)(setq tab-bar-show nil)(setq tab-bar-tab-hints nil)(setq tab-bar-tab-name-function 'tab-bar-tab-name-all)(tab-bar-mode -1)(tab-bar-history-mode -1)(defun meain/switch-tab-dwim ()
+																																															      "Switch between available tabs"
+																																															      (interactive)
+																																															      (let ((tabs (mapcar (lambda (tab)
+																																																		    (alist-get 'name tab))
+																																																		  (tab-bar--tabs-recent))))
+																																																(cond
+																																																 ((eq tabs nil)
+																																																  (tab-new))
+																																																 ((eq (length tabs) 1)
+																																																  (tab-next))
+																																																 (t (ivy-read "Select tab: " tabs :require t
+																																																	      :action 'tab-bar-switch-to-tab))))):init
+  (evil-leader/set-key "t" 'meain/switch-tab-dwim))
+
 ;; Better modeline
 (defun simple-mode-line-render (left right)
   "Return a string of `window-width' length containing LEFT, and RIGHT aligned respectively."
