@@ -144,7 +144,8 @@
 (use-package company
   :ensure t
   :diminish :init
-  (global-company-mode))
+  (global-company-mode)
+  :config (setq company-idle-delay 0))
 
 ;; Ivy && Counsel
 (use-package counsel :ensure t)
