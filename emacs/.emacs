@@ -558,28 +558,5 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 				     (propertize " %m " 'face 'font-lock-string-face) ;; current mode
 				     ))
 
-;; Emacs dump
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes '("928ffa547ce426cdcea1f3ea8b5a25fd4808ca2bc2ab2f964621a8691406d94c"
-			"0423ec89db11589d86cbd6f0c9e5417594a4506cf26e29ff400797fdcb25732b"
-			default))
- '(flycheck-checker-error-threshold 1000)
- '(helm-completion-style 'emacs)
- '(package-selected-packages '(ivy-historian eldoc-overlay vterm-toggle
-					     vterm neotree diminish lsp-ivy lsp-ui lsp-mode
-					     company flx lua-mode counsel ivy projectile
-					     sane-term try drag-stuff diff-hl flycheck
-					     magit evil-surround volatile-highlights shell-pop
-					     evil-commentary rust-mode modus-operandi-theme
-					     modus-vivendi-theme helm dumb-jump srefactor
-					     use-package evil)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+(provide '.emacs)
+;;; .emacs ends here
