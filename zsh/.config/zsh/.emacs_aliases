@@ -1,5 +1,5 @@
 #!/bin/sh
 
-alias eserver='emacs --daemon'
-alias ma='emacsclient -t'
-alias eserverkill='emacsclient -e "(kill-emacs)"'
+alias eserver='emacs --bg-daemon'
+alias ec='emacsclient --no-wait -c'
+alias ekillserver='emacsclient -e "(kill-emacs)"'
