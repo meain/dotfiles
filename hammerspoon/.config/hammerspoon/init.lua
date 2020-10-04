@@ -164,6 +164,11 @@ hs.hotkey.bind({'alt', 'shift'}, 's', function()
   hs.alert("🔨 Tasks\n" .. result)
 end)
 
+-- quick launch emacs
+hs.hotkey.bind({'alt', 'shift'}, 'c', function()
+  customshellrun.run('/usr/local/bin/emacsclient --no-wait -c')
+end)
+
 hs.hotkey.bind({'ctrl', 'alt', 'shift'}, 's', function()
   customshellrun.run(BIN .. 'ssq')
 end)
