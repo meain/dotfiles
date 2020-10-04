@@ -226,27 +226,31 @@
 ;; Flycheck
 (use-package flycheck
   :ensure t
-  :config (define-fringe-bitmap 'flycheck-fringe-bitmap-empty
-	    (vector #b00000000 #b00000000 #b00000000 #b00000000
-		    #b00000000 #b00000000 #b00000000 #b00000000
-		    #b00000000 #b00000000 #b00000000 #b00000000
-		    #b00000000 #b00000000 #b00000000 #b00000000
-		    #b00000000))(flycheck-define-error-level 'error :severity 100
-	    :compilation-level 2
-	    :overlay-category 'flycheck-error-overlay
-	    :fringe-bitmap 'flycheck-fringe-bitmap-empty
-	    :fringe-face 'flycheck-fringe-error
-	    :error-list-face 'flycheck-error-list-error)(flycheck-define-error-level 'warning :severity 10
-	    :compilation-level 1
-	    :overlay-category 'flycheck-warning-overlay
-	    :fringe-bitmap 'flycheck-fringe-bitmap-empty
-	    :fringe-face 'flycheck-fringe-warning
-	    :error-list-face 'flycheck-error-list-warning)(flycheck-define-error-level 'info :severity -10
-	    :compilation-level 0
-	    :overlay-category 'flycheck-info-overlay
-	    :fringe-bitmap 'flycheck-fringe-bitmap-empty
-	    :fringe-face 'flycheck-fringe-info
-	    :error-list-face 'flycheck-error-list-info):init
+  :config (progn
+	    (define-fringe-bitmap 'flycheck-fringe-bitmap-empty
+	      (vector #b00000000 #b00000000 #b00000000 #b00000000
+		      #b00000000 #b00000000 #b00000000 #b00000000
+		      #b00000000 #b00000000 #b00000000 #b00000000
+		      #b00000000 #b00000000 #b00000000 #b00000000
+		      #b00000000))
+	    (flycheck-define-error-level 'error :severity 100
+					 :compilation-level 2
+					 :overlay-category 'flycheck-error-overlay
+					 :fringe-bitmap 'flycheck-fringe-bitmap-empty
+					 :fringe-face 'flycheck-fringe-error
+					 :error-list-face 'flycheck-error-list-error)
+	    (flycheck-define-error-level 'warning :severity 10
+					 :compilation-level 1
+					 :overlay-category 'flycheck-warning-overlay
+					 :fringe-bitmap 'flycheck-fringe-bitmap-empty
+					 :fringe-face 'flycheck-fringe-warning
+					 :error-list-face 'flycheck-error-list-warning)
+	    (flycheck-define-error-level 'info :severity -10
+					 :compilation-level 0
+					 :overlay-category 'flycheck-info-overlay
+					 :fringe-bitmap 'flycheck-fringe-bitmap-empty
+					 :fringe-face 'flycheck-fringe-info
+					 :error-list-face 'flycheck-error-list-info)):init
   (progn
     (global-flycheck-mode)
     (setq flycheck-checker-error-threshold 1500)
@@ -490,15 +494,17 @@
 
 ;; Fullscreen current buffer
 (use-package emacs
-  :config (defvar meain/window-configuration nil)(define-minor-mode meain/monacle-mode
-						   "Zoom in and out of single window."
-						   :lighter " [M]"
-						   :global nil
-						   (if (one-window-p)
-						       (when meain/window-configuration
-							 (set-window-configuration meain/window-configuration))
-						     (setq meain/window-configuration (current-window-configuration))
-						     (delete-other-windows))))
+  :config (progn
+	    (defvar meain/window-configuration nil)
+	    (define-minor-mode meain/monacle-mode
+	      "Zoom in and out of single window."
+	      :lighter " [M]"
+	      :global nil
+	      (if (one-window-p)
+		  (when meain/window-configuration
+		    (set-window-configuration meain/window-configuration))
+		(setq meain/window-configuration (current-window-configuration))
+		(delete-other-windows)))))
 (define-key evil-normal-state-map (kbd "``") `meain/monacle-mode)
 
 ;; Eval region
@@ -578,19 +584,31 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 
 ;; Fancier tab managerment
 (use-package tab-bar
-  :config (setq tab-bar-close-button-show nil)(setq tab-bar-close-last-tab-choice 'tab-bar-mode-disable)(setq tab-bar-close-tab-select 'recent)(setq tab-bar-new-tab-choice t)(setq tab-bar-new-tab-to 'right)(setq tab-bar-position nil)(setq tab-bar-show nil)(setq tab-bar-tab-hints nil)(setq tab-bar-tab-name-function 'tab-bar-tab-name-all)(tab-bar-mode -1)(tab-bar-history-mode -1)(defun meain/switch-tab-dwim ()
-																																															      "Switch between available tabs"
-																																															      (interactive)
-																																															      (let ((tabs (mapcar (lambda (tab)
-																																																		    (alist-get 'name tab))
-																																																		  (tab-bar--tabs-recent))))
-																																																(cond
-																																																 ((eq tabs nil)
-																																																  (tab-new))
-																																																 ((eq (length tabs) 1)
-																																																  (tab-next))
-																																																 (t (ivy-read "Select tab: " tabs :require t
-																																																	      :action 'tab-bar-switch-to-tab))))):init
+  :config (progn
+	    (setq tab-bar-close-button-show nil)
+	    (setq tab-bar-close-last-tab-choice 'tab-bar-mode-disable)
+	    (setq tab-bar-close-tab-select 'recent)
+	    (setq tab-bar-new-tab-choice t)
+	    (setq tab-bar-new-tab-to 'right)
+	    (setq tab-bar-position nil)
+	    (setq tab-bar-show nil)
+	    (setq tab-bar-tab-hints nil)
+	    (setq tab-bar-tab-name-function 'tab-bar-tab-name-all)
+	    (tab-bar-mode -1)
+	    (tab-bar-history-mode -1)
+	    (defun meain/switch-tab-dwim ()
+	      "Switch between available tabs"
+	      (interactive)
+	      (let ((tabs (mapcar (lambda (tab)
+				    (alist-get 'name tab))
+				  (tab-bar--tabs-recent))))
+		(cond
+		 ((eq tabs nil)
+		  (tab-new))
+		 ((eq (length tabs) 1)
+		  (tab-next))
+		 (t (ivy-read "Select tab: " tabs :require t
+			      :action 'tab-bar-switch-to-tab)))))):init
   (evil-leader/set-key "t" 'meain/switch-tab-dwim))
 
 ;; Better modeline
@@ -630,6 +648,7 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 				     (propertize "%l" 'face 'font-lock-constant-face) ;; position in file
 				     (propertize " %m " 'face 'font-lock-string-face) ;; current mode
 				     ))
+
 
 ;; drop gc threshold back
 (setq gc-cons-threshold 800000)
