@@ -17,7 +17,8 @@
 (setq inhibit-startup-screen t)
 
 ;; Font
-(set-frame-font "VictorMono Nerd Font 14" nil t)
+(set-frame-font "VictorMono Nerd Font 14"
+		nil t)
 
 ;; Quicker yes or no
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -606,11 +607,12 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 					       ": ")) ;; vim or emacs mode
 
 				     ;; the buffer name; the file name as a tool tip
-				     (propertize "%b"
-						 'face
-						 'font-lock-type-face
-						 'help-echo
-						 (buffer-file-name))
+
+				     '(:eval (propertize "%b"
+							 'face
+							 'font-lock-type-face
+							 'help-echo
+							 (buffer-file-name)))
 				     '(:eval (when-let (vc vc-mode) ;; git branch
 					       (list " @"
 						     (propertize (substring vc 5)
