@@ -33,6 +33,7 @@ virtual-mailboxes \
         "bullshit"      "notmuch://?query=folder:/INBOX/ and tag:bullshit"\
         "known"         "notmuch://?query=folder:/INBOX/ and tag:known"\
         "nonimportant"  "notmuch://?query=folder:/INBOX/ and tag:nonimportant"\
+        "chat"          "notmuch://?query=folder:/INBOX/ and tag:chat"\
         "archiveable"   "notmuch://?query=folder:/INBOX/ and tag:bullshit tag:known tag:nonimportant"\
 
 
