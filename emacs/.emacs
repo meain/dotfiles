@@ -171,6 +171,7 @@
     (evil-leader/set-key "f" 'counsel-rg)
     (evil-leader/set-key "b" 'ibuffer-other-window)
     (evil-leader/set-key "s" 'ivy-switch-buffer)
+    (define-key evil-normal-state-map (kbd "<SPC> <SPC>") 'ivy-switch-buffer)
     (evil-leader/set-key "r" 'counsel-recentf)
     (evil-leader/set-key "l" 'counsel-M-x)
     (evil-leader/set-key "h f" 'counsel-describe-function)
