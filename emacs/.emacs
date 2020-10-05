@@ -265,7 +265,8 @@
   (progn
     (add-hook 'eglot-managed-mode-hook
 	      (lambda ()
-		(flymake-mode -1))) ;; TODO: figure out a better way
+		(flymake-mode -1) ;; TODO: figure out a better way
+		(eldoc-mode -1)))
     (define-key evil-normal-state-map (kbd "K") 'eldoc)
     (define-key evil-normal-state-map (kbd "g d") 'xref-find-definitions)
     (define-key evil-normal-state-map (kbd "g r") 'xref-find-references)
