@@ -608,9 +608,10 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 		  (tab-new))
 		 ((eq (length tabs) 1)
 		  (tab-next))
-		 (t (ivy-read "Select tab: " tabs :require t
+		 (t (ivy-read "Select tab: " tabs
 			      :action 'tab-bar-switch-to-tab)))))):init
-  (evil-leader/set-key "t" 'meain/switch-tab-dwim))
+  (evil-leader/set-key "t" 'meain/switch-tab-dwim)
+  (evil-leader/set-key "T" 'tab-new))
 
 ;; Better modeline
 (defun simple-mode-line-render (left right)
