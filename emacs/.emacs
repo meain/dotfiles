@@ -607,10 +607,14 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 		  (tab-new))
 		 ((eq (length tabs) 1)
 		  (tab-next))
-		 (t (ivy-read "Select tab: " tabs
-			      :action 'tab-bar-switch-to-tab)))))):init
+		 (t (ivy-read "Select tab: " tabs :action 'tab-bar-switch-to-tab)))))):init
   (evil-leader/set-key "t" 'meain/switch-tab-dwim)
   (evil-leader/set-key "T" 'tab-new))
+
+;; which-key mode (until I fully figure out emacs)
+(use-package which-key
+  :ensure t
+  :config (which-key-mode))
 
 ;; Better modeline
 (defun simple-mode-line-render (left right)
