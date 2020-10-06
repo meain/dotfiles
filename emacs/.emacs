@@ -600,18 +600,24 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 	    (setq tab-bar-tab-name-function 'tab-bar-tab-name-all)
 	    (tab-bar-mode -1)
 	    (tab-bar-history-mode -1)
-	    (defun meain/switch-tab-dwim ()
-	      "Switch between available tabs"
-	      (interactive)
+	    (defun meain/switch-tab-dwim (&optional close)
+	      "Switch between available tabs.  Pass CLOSE as t to close the current tab if it is not the last one."
+	      (interactive "P")
 	      (let ((tabs (mapcar (lambda (tab)
 				    (alist-get 'name tab))
 				  (tab-bar--tabs-recent))))
-		(cond
-		 ((eq tabs nil)
-		  (tab-new))
-		 ((eq (length tabs) 1)
-		  (tab-next))
-		 (t (ivy-read "Select tab: " tabs :action 'tab-bar-switch-to-tab)))))):init
+		(if close
+		    (if (eq tabs nil)
+			(message "Not closing last tab")
+		      (tab-close))
+		  (cond
+		   ((eq tabs nil)
+		    (message (concat "Only one tab present. Use `"
+				     (substitute-command-keys "\\[tab-new]")
+				     "` to create another tab.")))
+		   ((eq (length tabs) 1)
+		    (tab-next))
+		   (t (ivy-read "Select tab: " tabs :action 'tab-bar-switch-to-tab))))))):init
   (evil-leader/set-key "t" 'meain/switch-tab-dwim)
   (evil-leader/set-key "T" 'tab-new))
 
