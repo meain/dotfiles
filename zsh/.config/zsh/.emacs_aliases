@@ -3,3 +3,4 @@
 alias eserver='emacs --bg-daemon'
 alias ec='emacsclient --no-wait -c'
 alias ekillserver='emacsclient -e "(kill-emacs)"'
+alias erestart='emacsclient -e "(kill-emacs)";emacs --bg-daemon'
