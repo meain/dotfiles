@@ -17,7 +17,9 @@
 (setq inhibit-startup-screen t)
 
 ;; Font
-(set-frame-font "mononoki 15" nil t)
+(add-to-list 'default-frame-alist
+	     '(font . "mononoki 15"))
+(set-face-attribute 'default t :font "mononoki 15")
 
 ;; Quicker yes or no
 (fset 'yes-or-no-p 'y-or-n-p)
