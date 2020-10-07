@@ -625,6 +625,26 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
   :ensure t
   :config (which-key-mode))
 
+;; we need vterm
+(use-package vterm :ensure t)
+(use-package vterm-toggle
+  :ensure t
+  :config (progn
+	    (setq vterm-toggle-scope 'projectile)
+	    (setq vterm-toggle-projectile-root t)
+ 	    (setq vterm-toggle-fullscreen-p nil)
+	    ;; always open vterm in a bottom window
+	    (add-to-list 'display-buffer-alist
+			 '((lambda (bufname _)
+			     (with-current-buffer bufname
+			       (equal major-mode 'vterm-mode)))
+			   (display-buffer-reuse-window display-buffer-at-bottom)
+			   (reusable-frames . visible)
+			   (window-height . 0.3)))
+	    (global-set-key (kbd "M-t")
+			    'vterm-toggle)
+	    (define-key vterm-mode-map (kbd "M-t") 'vterm-toggle)))
+
 ;; Better modeline
 (defun simple-mode-line-render (left right)
   "Return a string of `window-width' length containing LEFT, and RIGHT aligned respectively."
