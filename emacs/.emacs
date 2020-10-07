@@ -632,7 +632,7 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
   :config (progn
 	    (setq vterm-toggle-scope 'projectile)
 	    (setq vterm-toggle-projectile-root t)
- 	    (setq vterm-toggle-fullscreen-p nil)
+	    (setq vterm-toggle-fullscreen-p nil)
 	    ;; always open vterm in a bottom window
 	    (add-to-list 'display-buffer-alist
 			 '((lambda (bufname _)
@@ -641,9 +641,9 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 			   (display-buffer-reuse-window display-buffer-at-bottom)
 			   (reusable-frames . visible)
 			   (window-height . 0.3)))
-	    (global-set-key (kbd "M-t")
+	    (global-set-key (kbd "M-;")
 			    'vterm-toggle)
-	    (define-key vterm-mode-map (kbd "M-t") 'vterm-toggle)))
+	    (define-key vterm-mode-map (kbd "M-;") 'vterm-toggle)))
 
 ;; Better modeline
 (defun simple-mode-line-render (left right)
