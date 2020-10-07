@@ -638,14 +638,20 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 (setq-default mode-line-format (list '(:eval (if (eq 'emacs evil-state)
 						 "! "
 					       ": ")) ;; vim or emacs mode
-
+				     ;; (car (cdr (reverse (split-string (buffer-file-name) "/"))))
 				     ;; the buffer name; the file name as a tool tip
 
-				     '(:eval (propertize "%b"
-							 'face
-							 'font-lock-type-face
-							 'help-echo
-							 (buffer-file-name)))
+				     '(:eval (list (if (eq buffer-file-name nil)
+						       ""
+						     (concatenate 'string
+								  (car (cdr (reverse (split-string (buffer-file-name)
+												   "/"))))
+								  "/"))
+						   (propertize "%b"
+							       'face
+							       'font-lock-type-face
+							       'help-echo
+							       (buffer-file-name))))
 				     '(:eval (when-let (vc vc-mode) ;; git branch
 					       (list " @"
 						     (propertize (substring vc 5)
