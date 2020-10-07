@@ -34,10 +34,6 @@
 (set-selection-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
 
-;; Diminish default modes
-(diminish 'eldoc-mode)
-(diminish 'auto-revert-mode)
-
 ;; Show open and closing brackets
 (show-paren-mode t)
 (setq show-paren-delay 0)
@@ -112,7 +108,10 @@
   :init (load-theme 'modus-operandi t))
 
 ;; Diminish
-(use-package diminish :ensure t)
+(use-package diminish
+  :ensure t
+  :config ((diminish 'eldoc-mode)
+	   (diminish 'auto-revert-mode)))
 
 ;;; [Evil packages] =================================================
 
