@@ -164,6 +164,12 @@
   :ensure t
   :diminish :config
   (progn
+    (defun meain/buffer-switcher (&optional alternate)
+      "Choose between ivy-switch-buffer or ibuffer-other-window based on ALTERNATE."
+      (interactive "P")
+      (if alternate
+	  (ibuffer-other-window)
+	(ivy-switch-buffer)))
     (ivy-mode 1)
     (setq ivy-use-virtual-buffers t) ; extend searching to bookmarks and
     (setq ivy-height 10) ; Set height of the ivy window
@@ -172,10 +178,8 @@
     (setq ivy-format-functions-alist '((t . ivy-format-function-line))) ; Make highlight extend all the way to the right
     (setq ivy-re-builders-alist '((ivy-switch-buffer . ivy--regex-plus)
 				  (t . ivy--regex-fuzzy)))
-    (evil-leader/set-key "f" 'counsel-rg)
-    (evil-leader/set-key "b" 'ibuffer-other-window)
     (evil-leader/set-key "s" 'ivy-switch-buffer)
-    (define-key evil-normal-state-map (kbd "<SPC> <SPC>") 'ivy-switch-buffer)
+    (define-key evil-normal-state-map (kbd "<SPC> <SPC>") 'meain/buffer-switcher)
     (evil-leader/set-key "r" 'counsel-recentf)
     (evil-leader/set-key "l" 'counsel-M-x)
     (evil-leader/set-key "h f" 'counsel-describe-function)
