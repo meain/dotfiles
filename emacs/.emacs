@@ -518,7 +518,8 @@
 (evil-leader/set-key "e"
   (defun meain/load-config ()
     (interactive)
-    (find-file "~/.emacs")))
+    (find-file "~/.dotfiles/emacs/.emacs")
+    (setq projectile-project-root "~/.dotfiles")))
 
 ;; Full screen emacs
 (global-set-key (kbd "<s-return>")
