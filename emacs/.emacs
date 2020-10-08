@@ -42,6 +42,9 @@
 (setq scroll-step 1)
 (setq scroll-margin 3)
 
+;; Keep files in sync with filesystem
+(global-auto-revert-mode t)
+
 ;; Bell: audio -> visual
 (setq visible-bell nil)
 (setq ring-bell-function (lambda ()
