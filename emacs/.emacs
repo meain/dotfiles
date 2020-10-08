@@ -584,7 +584,9 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
   (if (= (length (mapcar #'window-buffer
 			 (window-list))) 1)
       (switch-to-buffer "*scratch*")
-    (evil-quit)))
+    (if (derived-mode-p 'prog-mode)
+	(evil-quit)
+      (previous-buffer))))
 (evil-leader/set-key "q" 'meain/kill-current-buffer-unless-scratch)
 (define-key evil-normal-state-map (kbd "q") 'meain/kill-current-buffer-unless-scratch)
 
