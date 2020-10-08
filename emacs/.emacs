@@ -221,6 +221,18 @@
 					  project-relative-file)))))
 
 
+;; rg.el
+(use-package rg
+  :ensure t
+  :config (progn
+	    (defun meain/rg-search (&optional alternate)
+	      "Choose between counsel-rg or rg based on ALTERNATE."
+	      (interactive "P")
+	      (if alternate
+		  (call-interactively 'rg)
+		(counsel-rg)))
+	    (evil-leader/set-key "f" 'meain/rg-search)))
+
 ;; dumb-jump
 (use-package dumb-jump
   :ensure t
