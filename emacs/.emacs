@@ -451,6 +451,10 @@
   (evil-leader/set-key "c" 'scratch))
 
 
+;; highlight color codes
+(use-package rainbow-mode
+  :ensure t
+  :init (rainbow-mode 1))
 
 
 ;;; [Extra keybindings] ===============================================================
