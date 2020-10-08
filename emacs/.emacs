@@ -346,7 +346,9 @@
   xref--xref-buffer-mode-map
   (kbd "<SPC>")
   'xref-goto-xref)
-
+;; start in insert mode for xref buffers
+(evil-set-initial-state 'xref--xref-buffer-mode
+			'insert)
 
 ;;; [Language pugins] ===============================================
 
