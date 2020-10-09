@@ -707,6 +707,7 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 			   (display-buffer-reuse-window display-buffer-at-bottom)
 			   (reusable-frames . visible)
 			   (window-height . 0.3)))
+	    (evil-set-initial-state 'vterm-mode 'insert)
 	    (global-set-key (kbd "M-;")
 			    'vterm-toggle)
 	    (define-key vterm-mode-map (kbd "M-;") 'vterm-toggle)))
