@@ -194,8 +194,8 @@
     (setq ivy-display-style 'fancy)
     (setq ivy-format-functions-alist '((t . ivy-format-function-line))) ; Make highlight extend all the way to the right
     (setq ivy-re-builders-alist '((ivy-switch-buffer . ivy--regex-plus)
+				  (counsel-rg . ivy--regex-plus)
 				  (t . ivy--regex-fuzzy)))
-    (evil-leader/set-key "s" 'ivy-switch-buffer)
     (define-key evil-normal-state-map (kbd "<SPC> <SPC>") 'meain/buffer-switcher)
     (evil-leader/set-key "r" 'counsel-recentf)
     (evil-leader/set-key "l" 'counsel-M-x)
