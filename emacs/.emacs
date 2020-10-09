@@ -552,8 +552,9 @@
 ;; Quick open config file
 (evil-leader/set-key "e"
   (defun meain/load-config ()
+    "Load emacs config for editing."
     (interactive)
-    (find-file "~/.emacs")))
+    (find-file "~/.dotfiles/emacs/.emacs")))
 
 ;; Full screen emacs
 (global-set-key (kbd "<s-return>")
