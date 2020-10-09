@@ -125,6 +125,11 @@
 	  (diminish 'eldoc-mode)
 	  (diminish 'auto-revert-mode)))
 
+;;; [Builtin packages] =================================================
+
+;; auto-pair
+(electric-pair-mode t)
+
 
 ;;; [Evil packages] =================================================
 
