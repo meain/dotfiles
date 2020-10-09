@@ -130,6 +130,8 @@
 ;; auto-pair
 (electric-pair-mode t)
 
+;; eldoc load
+(require 'eldoc)
 
 ;;; [Evil packages] =================================================
 
