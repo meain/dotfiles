@@ -121,8 +121,10 @@
 ;; Diminish
 (use-package diminish
   :ensure t
-  :config ((diminish 'eldoc-mode)
-	   (diminish 'auto-revert-mode)))
+  :init (progn
+	  (diminish 'eldoc-mode)
+	  (diminish 'auto-revert-mode)))
+
 
 ;;; [Evil packages] =================================================
 
