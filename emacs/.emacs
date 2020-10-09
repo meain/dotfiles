@@ -74,12 +74,20 @@
 (setq show-paran-mode 1)
 
 ;; emoji support
-(let ((font (if (= emacs-major-version 25)
-		"Symbola"
-	      (cond
+(defun meain/set-emoji-font ()
+  "Setup proper emoji font."
+  (let ((font (cond
 	       ((string-equal system-type "darwin") "Apple Color Emoji")
-	       ((string-equal system-type "gnu/linux") "Symbola")))))
-  (set-fontset-font t 'unicode font nil 'prepend))
+	       ((string-equal system-type "gnu/linux") "Symbola"))))
+    (set-fontset-font t 'unicode font nil 'prepend)))
+(defun meain/set-emoji-font-in-frame (frame)
+  "Hook to be called for setting emoji font in FRAME."
+  (with-selected-frame frame
+    (meain/set-emoji-font))
+  (remove-hook 'after-make-frame-functions 'meain/set-emoji-font-in-frame))
+(if (daemonp)
+    (add-hook 'after-make-frame-functions 'meain/set-emoji-font-in-frame)
+  (meain/set-emoji-font))
 
 ;; Quit out of everythign with esc
 (defun meain/keyboard-quit ()
