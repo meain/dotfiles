@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Just becasue q was already take up for quit
+
+set -e
+
+q "$@"
