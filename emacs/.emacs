@@ -39,6 +39,7 @@
 (setq show-paren-delay 0)
 
 ;; vim like scroll behaviour
+(setq scroll-conservatively 100)
 (setq scroll-step 1)
 (setq scroll-margin 3)
 
