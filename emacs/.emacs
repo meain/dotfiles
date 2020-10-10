@@ -71,9 +71,6 @@
 ;; Don't create lockfiles
 (setq create-lockfiles nil)
 
-;; Show matching paran
-(setq show-paran-mode 1)
-
 ;; emoji support
 (defun meain/set-emoji-font ()
   "Setup proper emoji font."
