@@ -252,7 +252,7 @@
 (use-package dumb-jump
   :ensure t
   :config (progn
-	    (evil-leader/set-key "j" 'dumb-jump-go)))
+	    (evil-leader/set-key "J" 'dumb-jump-go)))
 
 
 ;; Code formatting
