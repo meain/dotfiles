@@ -131,6 +131,22 @@
 ;; eldoc load
 (require 'eldoc)
 
+;; flymake
+(require 'flymake)
+(use-package flymake-diagnostic-at-point
+  :ensure t
+  :after flymake
+  :config (progn
+	    (setq flymake-diagnostic-at-point-error-prefix
+		  "! ")
+	    (setq flymake-diagnostic-at-point-display-diagnostic-function
+		  'flymake-diagnostic-at-point-display-minibuffer)
+	    (add-hook 'flymake-mode-hook #'flymake-diagnostic-at-point-mode)))
+(add-hook 'find-file-hook 'flymake-find-file-hook)
+(evil-leader/set-key "j" 'flymake-goto-next-error)
+(evil-leader/set-key "k" 'flymake-goto-prev-error)
+(define-key evil-normal-state-map (kbd "g i") 'meain/show-flymake-err-at-point)
+
 ;;; [Evil packages] =================================================
 
 ;; Evil mode
@@ -278,40 +294,6 @@
   (setq projectile-sort-order 'recently-active)
   (define-key evil-normal-state-map (kbd "<RET>") 'projectile-find-file))
 
-;; Flycheck
-(use-package flycheck
-  :ensure t
-  :config (progn
-	    (define-fringe-bitmap 'flycheck-fringe-bitmap-empty
-	      (vector #b00000000 #b00000000 #b00000000 #b00000000
-		      #b00000000 #b00000000 #b00000000 #b00000000
-		      #b00000000 #b00000000 #b00000000 #b00000000
-		      #b00000000 #b00000000 #b00000000 #b00000000
-		      #b00000000))
-	    (flycheck-define-error-level 'error :severity 100
-					 :compilation-level 2
-					 :overlay-category 'flycheck-error-overlay
-					 :fringe-bitmap 'flycheck-fringe-bitmap-empty
-					 :fringe-face 'flycheck-fringe-error
-					 :error-list-face 'flycheck-error-list-error)
-	    (flycheck-define-error-level 'warning :severity 10
-					 :compilation-level 1
-					 :overlay-category 'flycheck-warning-overlay
-					 :fringe-bitmap 'flycheck-fringe-bitmap-empty
-					 :fringe-face 'flycheck-fringe-warning
-					 :error-list-face 'flycheck-error-list-warning)
-	    (flycheck-define-error-level 'info :severity -10
-					 :compilation-level 0
-					 :overlay-category 'flycheck-info-overlay
-					 :fringe-bitmap 'flycheck-fringe-bitmap-empty
-					 :fringe-face 'flycheck-fringe-info
-					 :error-list-face 'flycheck-error-list-info)):init
-  (progn
-    (global-flycheck-mode)
-    (setq flycheck-checker-error-threshold 1500)
-    (evil-leader/set-key "j" 'flycheck-previous-error)
-    (evil-leader/set-key "k" 'flycheck-next-error)))
-
 ;; LSP
 (use-package eglot
   :ensure t
@@ -320,7 +302,6 @@
   (progn
     (add-hook 'eglot-managed-mode-hook
 	      (lambda ()
-		(flymake-mode -1) ;; TODO: figure out a better way
 		(eldoc-mode -1)))
     (define-key evil-normal-state-map (kbd "K") 'eldoc)
     (define-key evil-normal-state-map (kbd "g d") 'xref-find-definitions)
