@@ -337,6 +337,7 @@
 (use-package lua-mode :ensure t)  ;; lua
 (use-package jinja2-mode :ensure t)  ;; jinja2
 (use-package json-mode :ensure t)  ;; json
+(use-package config-general-mode :ensure t)  ;; config files
 
 ;;; [Other plugins] ================================================
 
