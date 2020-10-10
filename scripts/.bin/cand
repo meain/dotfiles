@@ -1,0 +1,5 @@
+#!/bin/sh
+
+set -e
+
+todo.sh nav "$1" && todo.sh do "$1" && clear && todo.sh
