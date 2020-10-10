@@ -167,7 +167,7 @@ end)
 -- quick launch emacs
 hs.hotkey.bind({'alt', 'shift'}, 'c', function()
   hs.alert("🛠 Starting Emacs")
-  customshellrun.run('pgrep Emacs || /usr/local/bin/emacs --bg-daemon;/usr/local/bin/emacsclient --no-wait -c')
+  customshellrun.run('pgrep Emacs || Emacs --bg-daemon;emacsclient --no-wait -c', true)
 end)
 
 hs.hotkey.bind({'ctrl', 'alt', 'shift'}, 's', function()
