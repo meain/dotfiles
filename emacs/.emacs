@@ -746,9 +746,9 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 				     '(:eval (propertize " "
 							 'display
 							 `((space :align-to (- (+ right right-fringe right-margin)
-									       ,(+ 3
+									       ,(+ 2
 										   (+ (string-width (format-mode-line "%l"))
-										      (string-width mode-name))))))))
+										      (string-width (format-mode-line "%m")))))))))
 				     (propertize "%l" 'face 'font-lock-constant-face) ;; position in file
 				     (propertize " %m " 'face 'font-lock-string-face) ;; current mode
 				     ))
