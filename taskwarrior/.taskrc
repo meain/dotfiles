@@ -1,4 +1,5 @@
 data.location=~/.local/share/task
+confirmation=no  # no confirmation for delete
 
 include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/light-256.theme
 
