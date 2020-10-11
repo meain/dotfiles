@@ -631,21 +631,6 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 		       (substring (uuid-string)
 				  0
 				  4)))))
-(defun meain/scratch-to-vime ()
-  "Copy contents of current *scratch* to vime."
-  (interactive)
-  (with-current-buffer "*scratch*"
-    (append-to-file (concatenate 'string
-				 ":name *scratch* on "
-				 (format-time-string "%Y-%m-%d %H:%m")
-				 "\n"
-				 (buffer-string))
-		    nil
-		    (concat "~/.cache/vime/_"
-			    (substring (uuid-string)
-				       0
-				       4)))
-    (erase-buffer)))
 (evil-leader/set-key "v" 'meain/vime)
 
 ;; Quick quit
