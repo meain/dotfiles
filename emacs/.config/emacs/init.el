@@ -372,6 +372,12 @@
 				  (imenu-list-smart-toggle)
 				(call-interactively 'imenu))))))
 
+;; Flat imenu
+(use-package flimenu
+  :ensure t
+  :after imenu
+  :config (flimenu-global-mode 1))
+
 ;;; [Language pugins] ===============================================
 
 (use-package rust-mode :ensure t)  ;; rust
