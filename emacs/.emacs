@@ -172,13 +172,6 @@
   :ensure t
   :init (global-evil-surround-mode 1))
 
-;; Delete in evil-mode does not write to clipboard
-;; (defun meain/evil-delete-advice (orig-fn beg end &optional type _ &rest args)
-;;     "Make d, c, x to not write to clipboard.  And ORIG-FN, BEG, END, TYPE, ARGS should appear in docstring."
-;;     (apply orig-fn beg end type ?_ args))
-;; (advice-add 'evil-delete :around 'meain/evil-delete-advice)
-;; (advice-add 'evil-change :around 'meain/evil-delete-advice)
-
 ;; Y to y$
 (defun meain/yank-till-line-end ()
   "Yank till end of line."
