@@ -688,6 +688,16 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
   :config (global-set-key (kbd "M-i")
 			  'er/expand-region))
 
+;; Narrow region
+(defun meain/narrow-region-dwim ()
+  "Narrow or widen the region (dwim)."
+  (interactive)
+  (if (eq evil-state 'visual)
+      (call-interactively 'narrow-to-region)
+    (call-interactively 'widen)))
+(global-set-key (kbd "M-N")
+		'meain/narrow-region-dwim)
+
 ;; we need vterm
 (use-package vterm :ensure t)
 (use-package vterm-toggle
