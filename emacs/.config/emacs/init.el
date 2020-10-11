@@ -730,6 +730,12 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 						    (interactive)
 						    (evil-ex "'<,'>s/")))
 
+;; drdt (atuo find indend setting)
+(use-package dtrt-mode
+  :quelpa (dtrt-mode :fetcher github
+		     :repo "jscheid/dtrt-indent"):init
+  (dtrt-indent-global-mode))
+
 ;; we need vterm
 (use-package vterm :ensure t)
 (use-package vterm-toggle
