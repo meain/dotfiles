@@ -243,7 +243,7 @@
     (evil-leader/set-key "h l" 'counsel-find-library)
     (evil-leader/set-key "h i" 'counsel-info-lookup-symbol)
     (define-key evil-normal-state-map (kbd "M-f") 'counsel-M-x)
-    (define-key evil-normal-state-map (kbd "-") 'counsel-find-file)
+    (define-key evil-normal-state-map (kbd "-") 'dired-jump)
     (define-key ivy-minibuffer-map (kbd "C-j") 'ivy-immediate-done)))
 
 ;; ivy-rich
