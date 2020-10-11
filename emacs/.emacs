@@ -154,6 +154,10 @@
 (evil-leader/set-key "k" 'flymake-goto-prev-error)
 (define-key evil-normal-state-map (kbd "g i") 'meain/show-flymake-err-at-point)
 
+;; dired
+(require 'dired)
+(define-key dired-mode-map (kbd "-") 'dired-up-directory)
+
 ;;; [Evil packages] =================================================
 
 ;; Evil mode
