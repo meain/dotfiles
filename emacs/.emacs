@@ -676,6 +676,12 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
   :ensure t
   :config (which-key-mode))
 
+;; Expand region
+(use-package expand-region
+  :ensure t
+  :config (global-set-key (kbd "M-i")
+			  'er/expand-region))
+
 ;; we need vterm
 (use-package vterm :ensure t)
 (use-package vterm-toggle
