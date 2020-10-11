@@ -17,9 +17,20 @@
 (setq inhibit-startup-screen t)
 
 ;; Font
-(add-to-list 'default-frame-alist
-	     '(font . "mononoki 15"))
-(set-face-attribute 'default t :font "mononoki 15")
+(defun meain/set-font (font)
+  "Set Emacs font to FONT."
+  (set-frame-font font) ;; For updating current frame
+  (add-to-list 'default-frame-alist
+	       '(font . font))
+  (set-face-attribute 'default t :font font))
+(defun meain/select-font ()
+  "Set font after selection using ivy."
+  (interactive)
+  (ivy-read "Choose font:"
+	    (font-family-list)
+	    :action (lambda (x)
+		      (meain/set-font x))))
+(meain/set-font "Profont for Powerline 16")
 
 ;; Quicker yes or no
 (fset 'yes-or-no-p 'y-or-n-p)
