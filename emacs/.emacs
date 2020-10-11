@@ -179,6 +179,18 @@
 ;; (advice-add 'evil-delete :around 'meain/evil-delete-advice)
 ;; (advice-add 'evil-change :around 'meain/evil-delete-advice)
 
+;; Y to y$
+(defun meain/yank-till-line-end ()
+  "Yank till end of line."
+  (interactive)
+  (evil-yank (point)
+	     ;; subtracting 1 for newline
+	     (- (save-excursion
+		  (forward-line)
+		  (point))
+		1)))
+(define-key evil-normal-state-map (kbd "Y") 'meain/yank-till-line-end)
+
 ;;; [Non evil packages] =================================================
 
 ;; Company for autocompletions
