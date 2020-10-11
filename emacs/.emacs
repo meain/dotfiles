@@ -350,6 +350,12 @@
 (use-package jinja2-mode :ensure t)  ;; jinja2
 (use-package json-mode :ensure t)  ;; json
 (use-package config-general-mode :ensure t)  ;; config files
+(use-package markdown-mode
+  :ensure t
+  :config (progn
+	    (setq markdown-enable-html -1)
+	    (setq markdown-fontify-code-blocks-natively
+		  t)))
 
 ;;; [Other plugins] ================================================
 
