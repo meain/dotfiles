@@ -72,8 +72,8 @@
 (setq vc-follow-symlinks t)
 
 ;; Backup and autosave somewhere else
-(setq backup-directory-alist `((".*" . "/tmp/emacsbackup")))
-(setq auto-save-file-name-transforms `((".*" "/tmp/emacsautosave" t)))
+(setq backup-directory-alist `((".*" . "~/.cache/emacs/backup")))
+(setq auto-save-file-name-transforms `((".*" "~/.cache/emacs/autosave" t)))
 
 ;; Don't create lockfiles
 (setq create-lockfiles nil)
@@ -138,22 +138,6 @@
 ;; eldoc load
 (require 'eldoc)
 
-;; flymake
-(require 'flymake)
-(use-package flymake-diagnostic-at-point
-  :ensure t
-  :after flymake
-  :config (progn
-	    (setq flymake-diagnostic-at-point-error-prefix
-		  "! ")
-	    (setq flymake-diagnostic-at-point-display-diagnostic-function
-		  'flymake-diagnostic-at-point-display-minibuffer)
-	    (add-hook 'flymake-mode-hook #'flymake-diagnostic-at-point-mode)))
-(add-hook 'find-file-hook 'flymake-find-file-hook)
-(evil-leader/set-key "j" 'flymake-goto-next-error)
-(evil-leader/set-key "k" 'flymake-goto-prev-error)
-(define-key evil-normal-state-map (kbd "g i") 'meain/show-flymake-err-at-point)
-
 ;; dired
 (require 'dired)
 (define-key dired-mode-map (kbd "-") 'dired-up-directory)
@@ -197,6 +181,22 @@
 
 ;;; [Non evil packages] =================================================
 
+;; flymake
+(require 'flymake)
+(use-package flymake-diagnostic-at-point
+  :ensure t
+  :after flymake
+  :config (progn
+	    (setq flymake-diagnostic-at-point-error-prefix
+		  "! ")
+	    (setq flymake-diagnostic-at-point-display-diagnostic-function
+		  'flymake-diagnostic-at-point-display-minibuffer)
+	    (add-hook 'flymake-mode-hook #'flymake-diagnostic-at-point-mode)))
+(add-hook 'find-file-hook 'flymake-find-file-hook)
+(evil-leader/set-key "j" 'flymake-goto-next-error)
+(evil-leader/set-key "k" 'flymake-goto-prev-error)
+(define-key evil-normal-state-map (kbd "g i") 'meain/show-flymake-err-at-point)
+
 ;; Company for autocompletions
 (use-package company
   :ensure t
@@ -235,7 +235,8 @@
     (evil-leader/set-key "h l" 'counsel-find-library)
     (evil-leader/set-key "h i" 'counsel-info-lookup-symbol)
     (define-key evil-normal-state-map (kbd "M-f") 'counsel-M-x)
-    (define-key evil-normal-state-map (kbd "-") 'counsel-find-file)))
+    (define-key evil-normal-state-map (kbd "-") 'counsel-find-file)
+    (define-key ivy-minibuffer-map (kbd "C-j") 'ivy-immediate-done)))
 
 ;; ivy-rich
 (use-package ivy-rich
@@ -399,7 +400,7 @@
   :ensure t
   :init (progn
 	  (save-place-mode t)
-	  (setq save-place-file "~/.emacs.d/saveplace")))
+	  (setq save-place-file "~/.cache/emacs/saveplace")))
 
 ;; Persistant undo using undo-tree
 (use-package undo-tree
@@ -408,7 +409,7 @@
   (progn
     (global-undo-tree-mode)
     (setq undo-tree-auto-save-history t)
-    (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))))
+    (setq undo-tree-history-directory-alist '(("." . "~/.cache/emacs/undo")))))
 
 ;; Neotree
 (use-package neotree
@@ -568,7 +569,7 @@
   (defun meain/load-config ()
     "Load emacs config for editing."
     (interactive)
-    (find-file "~/.dotfiles/emacs/.emacs")))
+    (find-file "~/.dotfiles/emacs/.config/emacs/init.el")))
 
 ;; Full screen emacs
 (global-set-key (kbd "<s-return>")
