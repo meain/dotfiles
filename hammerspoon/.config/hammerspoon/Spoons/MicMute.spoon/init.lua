@@ -14,16 +14,20 @@ obj.author = "dctucker <dctucker@github.com>"
 obj.homepage = "https://dctucker.com"
 obj.license = "MIT - https://opensource.org/licenses/MIT"
 
-function obj:updateMicMute(muted)
+function obj:updateMicMute(muted, showNotification)
 	if muted == -1 then
 		muted = hs.audiodevice.defaultInputDevice():muted()
 	end
 	if muted then
 		obj.mute_menu:setTitle("><")
-		hs.alert(" ><")
+		if showNotification then
+		    hs.alert(" ><")
+		end
 	else
 		obj.mute_menu:setTitle("<>")
-		hs.alert(" <>")
+		if showNotification then
+		    hs.alert(" <>")
+		end
 	end
 end
 
@@ -55,7 +59,7 @@ function obj:toggleMicMute()
 			end
 		end
 	end
-	obj:updateMicMute(-1)
+	obj:updateMicMute(-1, true)
 end
 
 --- MicMute:bindHotkeys(mapping, latch_timeout)
@@ -98,11 +102,11 @@ function obj:init()
 	obj.mute_menu:setClickCallback(function()
 		obj:toggleMicMute()
 	end)
-	obj:updateMicMute(-1)
+	obj:updateMicMute(-1, false)
 
 	hs.audiodevice.watcher.setCallback(function(arg)
 		if string.find(arg, "dIn ") then
-			obj:updateMicMute(-1)
+			obj:updateMicMute(-1, false)
 		end
 	end)
 	hs.audiodevice.watcher.start()
