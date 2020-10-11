@@ -118,6 +118,14 @@
   (package-install 'use-package))
 (eval-when-compile (require 'use-package))
 
+;; Setup quelpa
+(use-package quelpa
+  :ensure t
+  :init (progn
+	  (quelpa '(quelpa-use-package :fetcher git
+				       :url "https://github.com/quelpa/quelpa-use-package.git"))
+	  (require 'quelpa-use-package)))
+
 ;; Theme
 (use-package modus-operandi-theme
   :ensure t
