@@ -658,6 +658,8 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
     (cond
      ((derived-mode-p 'prog-mode)
       (evil-quit))
+     ((equal major-mode 'imenu-list-major-mode)
+      (evil-quit))
      ((equal major-mode 'vterm-mode)
       (vterm-toggle))
      (t (previous-buffer)))))
