@@ -343,6 +343,21 @@
 (evil-set-initial-state 'xref--xref-buffer-mode
 			'insert)
 
+;; Tagbar alternative
+(require 'imenu)
+(use-package imenu-list
+  :ensure t
+  :config (progn
+	    (setq imenu-list-focus-after-activation t)
+	    (setq imenu-list-after-jump-hook nil)
+	    (setq imenu-list-auto-resize t)
+	    (global-set-key (kbd "M--")
+			    (lambda (&optional alternate)
+			      (interactive "P")
+			      (if alternate
+				  (imenu-list-smart-toggle)
+				(call-interactively 'imenu))))))
+
 ;;; [Language pugins] ===============================================
 
 (use-package rust-mode :ensure t)  ;; rust
