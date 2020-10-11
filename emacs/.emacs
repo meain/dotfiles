@@ -698,6 +698,14 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 (global-set-key (kbd "M-N")
 		'meain/narrow-region-dwim)
 
+;; Quick replace
+(define-key evil-normal-state-map (kbd "<SPC> ;") (lambda ()
+						    (interactive)
+						    (evil-ex "%s/")))
+(define-key evil-visual-state-map (kbd "<SPC> ;") (lambda ()
+						    (interactive)
+						    (evil-ex "'<,'>s/")))
+
 ;; we need vterm
 (use-package vterm :ensure t)
 (use-package vterm-toggle
