@@ -62,7 +62,7 @@
 (blink-cursor-mode -1)
 
 ;; Follow symlinks for vc
-(setq vc-follow-symlinks nil)
+(setq vc-follow-symlinks t)
 
 ;; Backup and autosave somewhere else
 (setq backup-directory-alist `((".*" . "/tmp/emacsbackup")))
