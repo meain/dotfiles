@@ -645,6 +645,7 @@
 	    (setq markdown-enable-html -1)
 	    (setq markdown-fontify-code-blocks-natively
 		  t)))
+(use-package grip-mode :ensure t) ;; markdown preview
 
 ;;; [EXTRA PLUGINS] =================================================
 
