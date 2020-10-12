@@ -682,6 +682,9 @@
 								  "\n"
 								  t))))))
 
+;; command log
+(use-package command-log-mode :ensure t)
+
 ;;; [CUSTOM FUNCTIONS] ==============================================
 
 (defun meain/window-split-toggle ()
