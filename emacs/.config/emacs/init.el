@@ -167,6 +167,13 @@
   :ensure t
   :init (global-evil-surround-mode 1))
 
+;; Evil number increment
+(quelpa '(evil-numbers :repo "janpath/evil-numbers"
+		       :fetcher github))
+;; cannot directly use C-x (in use by emacs)
+(define-key evil-normal-state-map (kbd "g C-a") 'evil-numbers/inc-at-pt-incremental)
+(define-key evil-normal-state-map (kbd "g C-x") 'evil-numbers/dec-at-pt-incremental)
+
 ;; Save buffer
 (define-key evil-normal-state-map (kbd "<SPC> <SPC>") 'evil-write)
 
