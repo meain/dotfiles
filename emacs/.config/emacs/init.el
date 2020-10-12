@@ -324,7 +324,6 @@
 
 ;; Ivy && Counsel
 (use-package counsel :ensure t)
-(use-package flx :ensure t)
 (use-package ivy
   :ensure t
   :diminish :config
