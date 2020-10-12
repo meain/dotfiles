@@ -653,6 +653,11 @@
 	    (setq markdown-fontify-code-blocks-natively
 		  t)))
 (use-package grip-mode :ensure t) ;; markdown preview
+(use-package csv-mode
+  :ensure t
+  :config (set-face-attribute 'csv-separator-face nil
+			      :background "gray100"
+			      :foreground "#000000"))
 
 ;;; [EXTRA PLUGINS] =================================================
 
