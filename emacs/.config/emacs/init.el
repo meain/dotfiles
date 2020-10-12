@@ -562,6 +562,8 @@
   :diminish :init
   (progn
     (global-undo-tree-mode)
+    (setq evil-want-fine-undo nil)
+    (setq evil-undo-system 'undo-tree)
     (setq undo-tree-auto-save-history t)
     (setq undo-tree-history-directory-alist '(("." . "~/.cache/emacs/undo")))))
 
