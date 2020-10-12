@@ -34,6 +34,7 @@
 (use-package evil
   :ensure t
   :init (progn
+	  (setq evil-undo-system 'undo-tree)
 	  (evil-mode t)
 	  (defalias #'forward-evil-word #'forward-evil-symbol)
 	  (setq-default evil-symbol-word-search t)))
@@ -569,7 +570,6 @@
   (progn
     (global-undo-tree-mode)
     (setq evil-want-fine-undo nil)
-    (setq evil-undo-system 'undo-tree)
     (setq undo-tree-auto-save-history t)
     (setq undo-tree-history-directory-alist '(("." . "~/.cache/emacs/undo")))))
 
