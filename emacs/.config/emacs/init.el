@@ -30,6 +30,7 @@
 ;;; [BASE EVIL] =================================================
 
 ;; Evil mode (set this up first)
+(setq evil-want-C-u-scroll t)
 (use-package evil
   :ensure t
   :init (evil-mode t))
