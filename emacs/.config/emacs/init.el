@@ -754,6 +754,10 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 (global-set-key (kbd "M-N")
 		'meain/narrow-region-dwim)
 
+;; Buffer keybinds
+(evil-leader/set-key "b k" 'kill-buffer)
+(evil-leader/set-key "b o" 'previous-buffer)
+
 ;; Better modeline
 (setq-default mode-line-format (list '(:eval (if (eq 'emacs evil-state)
 						 "! "
