@@ -639,7 +639,7 @@
 			    'vterm-toggle)
 	    (define-key vterm-mode-map (kbd "M-;") 'vterm-toggle)))
 
-;;; [LANGUAGE PUGINS] ===============================================
+;;; [FILETYPE PUGINS] ===============================================
 
 (use-package rust-mode :ensure t)
 (use-package lua-mode :ensure t)
