@@ -324,7 +324,9 @@
 
 ;; Ivy && Counsel
 (use-package counsel :ensure t)
+(use-package flx :ensure t) ;; ivy--regex-plus uses this
 (use-package ivy
+  :after flx
   :ensure t
   :diminish :config
   (progn
