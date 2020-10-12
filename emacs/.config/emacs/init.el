@@ -682,7 +682,14 @@
 								  t))))))
 
 ;; command log
-(use-package command-log-mode :ensure t)
+(use-package command-log-mode
+  :ensure t
+  :config (progn
+	    (defun meain/command-log-mode ()
+	      "Enable command-log-mode and open command-log buffer."
+	      (interactive)
+	      (global-command-log-mode)
+	      (clm/open-command-log-buffer))))
 
 ;;; [CUSTOM FUNCTIONS] ==============================================
 
