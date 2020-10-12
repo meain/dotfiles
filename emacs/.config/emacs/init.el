@@ -182,6 +182,9 @@
 (global-set-key (kbd "M-u")
 		'universal-argument)
 
+;; Eval last sexp
+(evil-leader/set-key "x" 'eval-last-sexp)
+
 ;; Window mappings
 (global-set-key (kbd "M-l")
 		(lambda ()
