@@ -822,10 +822,10 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 							 'display
 							 `((space :align-to (- (+ right right-fringe right-margin)
 									       ,(+ 2
-										   (+ (string-width (format-mode-line "%l"))
+										   (+ (string-width (format-mode-line "%l:%c"))
 										      (string-width (format-mode-line "%m")))))))))
-				     (propertize "%l" 'face 'font-lock-constant-face) ;; position in file
-				     (propertize " %m " 'face 'font-lock-string-face) ;; current mode
+				     (propertize "%l:%c" 'face 'font-lock-variable-name-face) ;; position in file
+				     (propertize " %m " 'face 'font-lock-constant-face) ;; current mode
 				     ))
 
 
