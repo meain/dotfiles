@@ -625,7 +625,9 @@
 (dtrt-indent-global-mode)
 
 ;; we need vterm
-(use-package vterm :ensure t)
+(use-package vterm
+  :ensure t
+  :config (setq vterm-max-scrollback 100000))
 (use-package vterm-toggle
   :ensure t
   :config (progn
