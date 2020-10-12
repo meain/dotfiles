@@ -30,10 +30,10 @@
 ;;; [BASE EVIL] =================================================
 
 ;; Evil mode (set this up first)
-(setq evil-want-C-u-scroll t)
 (use-package evil
   :ensure t
   :init (progn
+	  (setq evil-want-C-u-scroll t)
 	  (setq evil-undo-system 'undo-tree)
 	  (evil-mode t)
 	  (defalias #'forward-evil-word #'forward-evil-symbol)
