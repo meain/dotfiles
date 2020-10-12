@@ -320,7 +320,9 @@
   :ensure t
   :diminish :init
   (global-company-mode)
-  :config (setq company-idle-delay 0))
+  :config (progn
+	    (setq company-dabbrev-downcase nil) ;; Do not lowercase my completions
+	    (setq company-idle-delay 0)))
 
 ;; Ivy && Counsel
 (use-package counsel :ensure t)
