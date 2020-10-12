@@ -166,6 +166,9 @@
   :ensure t
   :init (global-evil-surround-mode 1))
 
+;; Save buffer
+(define-key evil-normal-state-map (kbd "<SPC> <SPC>") 'evil-write)
+
 ;; Hit universal arg without ctrl
 (evil-leader/set-key "u" 'universal-argument)
 (global-set-key (kbd "M-u")
