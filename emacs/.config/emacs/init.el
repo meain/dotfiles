@@ -722,7 +722,7 @@
 	(set-window-configuration meain/window-configuration))
     (setq meain/window-configuration (current-window-configuration))
     (delete-other-windows)))
-(define-key evil-normal-state-map (kbd "``") `meain/monacle-mode)
+(evil-leader/set-key "m" 'meain/monacle-mode)
 
 ;; vime functionality within emacs
 (use-package uuid :ensure t)
