@@ -33,7 +33,10 @@
 (setq evil-want-C-u-scroll t)
 (use-package evil
   :ensure t
-  :init (evil-mode t))
+  :init (progn
+	  (evil-mode t)
+	  (defalias #'forward-evil-word #'forward-evil-symbol)
+	  (setq-default evil-symbol-word-search t)))
 
 ;; Evil leader
 (use-package evil-leader
