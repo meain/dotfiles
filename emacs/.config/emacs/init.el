@@ -1,4 +1,4 @@
-;;; .emacs -- meain's Emacs config
+;;; init -- meain's Emacs config
 
 ;;; Commentary:
 ;; Well, this is a vimmer's Emacs config.  Nothing fancy though.
@@ -8,7 +8,67 @@
 ;; increase gc threshold (speeds up initial load)
 (setq gc-cons-threshold 400000000)
 
-;;; [Basic config] =============================================
+;;; [PACKAGE SETUP] =============================================
+
+;; Set up package & melpa
+(require 'package)
+(add-to-list 'package-archives
+	     '("melpa" . "http://melpa.org/packages/")
+	     t)
+(package-initialize)
+
+;; Set up use-package
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+(eval-when-compile (require 'use-package))
+
+;; Setup quelpa
+(use-package quelpa :ensure t)
+
+
+;;; [BASE EVIL] =================================================
+
+;; Evil mode (set this up first)
+(use-package evil
+  :ensure t
+  :init (evil-mode t))
+
+;; Evil leader
+(use-package evil-leader
+  :ensure t
+  :init (progn
+	  (global-evil-leader-mode)
+	  (evil-leader/set-leader "s")))
+
+;;; [BASIC SETTINGS] =============================================
+
+;; Quicker yes or no
+(fset 'yes-or-no-p 'y-or-n-p)
+
+;; UTF-8 please
+(setq locale-coding-system 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-selection-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
+
+;; vim like scroll behaviour
+(setq scroll-conservatively 100)
+(setq scroll-step 1)
+(setq scroll-margin 3)
+
+;; Use cl-lib
+(require 'cl-lib)
+
+;; Backup and autosave somewhere else
+(setq backup-directory-alist `((".*" . "~/.cache/emacs/backup")))
+(setq auto-save-file-name-transforms `((".*" "~/.cache/emacs/autosave" t)))
+
+;; Don't create lockfiles
+(setq create-lockfiles nil)
+
+;;; [VISUAL CONFIG] ==============================================
 
 ;; Disable useless stuff
 (tool-bar-mode -1)
@@ -28,31 +88,6 @@
 	    :action (lambda (x)
 		      (set-frame-font x))))
 
-;; Quicker yes or no
-(fset 'yes-or-no-p 'y-or-n-p)
-
-;; Use cl-lib
-(require 'cl-lib)
-
-;; UTF-8 please
-(setq locale-coding-system 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
-(set-selection-coding-system 'utf-8)
-(prefer-coding-system 'utf-8)
-
-;; Show open and closing brackets
-(show-paren-mode t)
-(setq show-paren-delay 0)
-
-;; vim like scroll behaviour
-(setq scroll-conservatively 100)
-(setq scroll-step 1)
-(setq scroll-margin 3)
-
-;; Keep files in sync with filesystem
-(global-auto-revert-mode t)
-
 ;; Bell: audio -> visual
 (setq visible-bell nil)
 (setq ring-bell-function (lambda ()
@@ -61,22 +96,6 @@
 							 keyboard-quit))
 			     (invert-face 'mode-line)
 			     (run-with-timer 0.1 nil 'invert-face 'mode-line))))
-
-;; Disable line wrapping
-(setq-default truncate-lines 1)
-
-;; Cursor blink
-(blink-cursor-mode -1)
-
-;; Follow symlinks for vc
-(setq vc-follow-symlinks t)
-
-;; Backup and autosave somewhere else
-(setq backup-directory-alist `((".*" . "~/.cache/emacs/backup")))
-(setq auto-save-file-name-transforms `((".*" "~/.cache/emacs/autosave" t)))
-
-;; Don't create lockfiles
-(setq create-lockfiles nil)
 
 ;; emoji support
 (defun meain/set-emoji-font ()
@@ -94,38 +113,6 @@
     (add-hook 'after-make-frame-functions 'meain/set-emoji-font-in-frame)
   (meain/set-emoji-font))
 
-;; Quit out of everythign with esc
-(defun meain/keyboard-quit ()
-  "Quit out of whatever."
-  (interactive)
-  (minibuffer-keyboard-quit)
-  (keyboard-quit))
-(global-set-key [escape]
-		'meain/keyboard-quit)
-
-;;; [Package setup] ============================================
-
-;; Set up package & melpa
-(require 'package)
-(add-to-list 'package-archives
-	     '("melpa" . "http://melpa.org/packages/")
-	     t)
-(package-initialize)
-
-;; Set up use-package
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-(eval-when-compile (require 'use-package))
-
-;; Setup quelpa
-(use-package quelpa
-  :ensure t
-  :init (progn
-	  (quelpa '(quelpa-use-package :fetcher git
-				       :url "https://github.com/quelpa/quelpa-use-package.git"))
-	  (require 'quelpa-use-package)))
-
 ;; Theme
 (use-package modus-operandi-theme
   :ensure t
@@ -138,7 +125,23 @@
 	  (diminish 'eldoc-mode)
 	  (diminish 'auto-revert-mode)))
 
-;;; [Builtin packages] =================================================
+;;; [BASIC BUILTINS] ===========================================
+
+;; Show open and closing brackets
+(show-paren-mode t)
+(setq show-paren-delay 0)
+
+;; Keep files in sync with filesystem
+(global-auto-revert-mode t)
+
+;; Disable line wrapping
+(setq-default truncate-lines 1)
+
+;; Cursor blink
+(blink-cursor-mode -1)
+
+;; Follow symlinks for vc
+(setq vc-follow-symlinks t)
 
 ;; auto-pair
 (electric-pair-mode t)
@@ -150,19 +153,7 @@
 (require 'dired)
 (define-key dired-mode-map (kbd "-") 'dired-up-directory)
 
-;;; [Evil packages] =================================================
-
-;; Evil mode
-(use-package evil
-  :ensure t
-  :init (evil-mode t))
-
-;; Evil leader
-(use-package evil-leader
-  :ensure t
-  :init (progn
-	  (global-evil-leader-mode)
-	  (evil-leader/set-leader "s")))
+;;; [EVIL CONFIG] ================================================
 
 ;; Evil commentary
 (use-package evil-commentary
@@ -174,6 +165,95 @@
 (use-package evil-surround
   :ensure t
   :init (global-evil-surround-mode 1))
+
+;; Hit universal arg without ctrl
+(evil-leader/set-key "u" 'universal-argument)
+(global-set-key (kbd "M-u")
+		'universal-argument)
+
+;; Window mappings
+(global-set-key (kbd "M-l")
+		(lambda ()
+		  (interactive)
+		  (evil-force-normal-state)
+		  (evil-window-right 1)))
+(global-set-key (kbd "M-h")
+		(lambda ()
+		  (interactive)
+		  (evil-force-normal-state)
+		  (evil-window-left 1)))
+(global-set-key (kbd "M-k")
+		(lambda ()
+		  (interactive)
+		  (evil-force-normal-state)
+		  (evil-window-up 1)))
+(global-set-key (kbd "M-j")
+		(lambda ()
+		  (interactive)
+		  (evil-force-normal-state)
+		  (evil-window-down 1)))
+(global-set-key (kbd "M-b")
+		(lambda ()
+		  (interactive)
+		  (evil-force-normal-state)
+		  (split-window-below)
+		  (windmove-down)))
+(global-set-key (kbd "M-v")
+		(lambda ()
+		  (interactive)
+		  (evil-force-normal-state)
+		  (split-window-right)
+		  (windmove-right)))
+(global-set-key (kbd "M-w")
+		'delete-window)
+(global-set-key (kbd "M-o")
+		'other-window)
+
+;; Shrink and enlarge windows (not contextual as of now)
+;; https://www.emacswiki.org/emacs/WindowResize
+(global-set-key (kbd "M-H")
+		'shrink-window-horizontally)
+(global-set-key (kbd "M-L")
+		'enlarge-window-horizontally)
+(global-set-key (kbd "M-K")
+		'shrink-window)
+(global-set-key (kbd "M-J")
+		'enlarge-window)
+
+;; File manipulation mappings
+(evil-leader/set-key "<SPC>" 'save-buffer)
+
+;; Other keybindings
+(define-key evil-normal-state-map (kbd "\\") 'evil-jump-backward)
+(define-key evil-normal-state-map (kbd "~") 'evil-jump-forward)
+
+;; Up/Down don't bother wrap
+(define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
+(define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
+
+;; Remap macro recoring key
+(define-key evil-normal-state-map "Q" 'evil-record-macro)
+
+;; Eval region
+;; Figure out a way to auto exit normal mode after eval
+(define-key evil-visual-state-map (kbd ";") 'eval-region)
+
+;; Quick quit
+(defun meain/kill-current-buffer-unless-scratch ()
+  "Kill current buffer if it is not scratch."
+  (interactive)
+  (if (= (length (mapcar #'window-buffer
+			 (window-list))) 1)
+      (switch-to-buffer "*scratch*")
+    (cond
+     ((derived-mode-p 'prog-mode)
+      (evil-quit))
+     ((equal major-mode 'imenu-list-major-mode)
+      (evil-quit))
+     ((equal major-mode 'vterm-mode)
+      (vterm-toggle))
+     (t (previous-buffer)))))
+(define-key evil-normal-state-map (kbd "q") 'meain/kill-current-buffer-unless-scratch)
 
 ;; Y to y$
 (defun meain/yank-till-line-end ()
@@ -187,7 +267,24 @@
 		1)))
 (define-key evil-normal-state-map (kbd "Y") 'meain/yank-till-line-end)
 
-;;; [Non evil packages] =================================================
+;; Quit out of everythign with esc
+(defun meain/keyboard-quit ()
+  "Quit out of whatever."
+  (interactive)
+  (minibuffer-keyboard-quit)
+  (keyboard-quit))
+(global-set-key [escape]
+		'meain/keyboard-quit)
+
+;; Quick replace
+(define-key evil-normal-state-map (kbd "<SPC> ;") (lambda ()
+						    (interactive)
+						    (evil-ex "%s/")))
+(define-key evil-visual-state-map (kbd "<SPC> ;") (lambda ()
+						    (interactive)
+						    (evil-ex "'<,'>s/")))
+
+;;; [OTHER PACKAGES] =============================================
 
 ;; flymake
 (require 'flymake)
@@ -203,7 +300,6 @@
 (add-hook 'find-file-hook 'flymake-find-file-hook)
 (evil-leader/set-key "j" 'flymake-goto-next-error)
 (evil-leader/set-key "k" 'flymake-goto-prev-error)
-(define-key evil-normal-state-map (kbd "g i") 'meain/show-flymake-err-at-point)
 
 ;; Company for autocompletions
 (use-package company
@@ -298,17 +394,20 @@
 
 
 ;; Code formatting
-(use-package format-all :ensure t)
 (use-package srefactor
   :ensure t
   :init (require 'srefactor-lisp))
-(defun meain/auto-format ()
-  "Custom auto-format based on filetype."
-  (interactive)
-  (if (eq major-mode 'emacs-lisp-mode)
-      (srefactor-lisp-format-buffer)
-    (format-all-buffer)))
-(define-key evil-normal-state-map (kbd ",,") 'meain/auto-format)
+(use-package format-all
+  :ensure t
+  :after srefactor
+  :config (progn
+	    (defun meain/auto-format ()
+	      "Custom auto-format based on filetype."
+	      (interactive)
+	      (if (eq major-mode 'emacs-lisp-mode)
+		  (srefactor-lisp-format-buffer)
+		(format-all-buffer)))
+	    (define-key evil-normal-state-map (kbd ",,") 'meain/auto-format)))
 
 ;; Projectile
 (use-package projectile
@@ -378,54 +477,6 @@
   :after imenu
   :config (flimenu-global-mode 1))
 
-;;; [Language pugins] ===============================================
-
-(use-package rust-mode :ensure t)  ;; rust
-(use-package lua-mode :ensure t)  ;; lua
-(use-package jinja2-mode :ensure t)  ;; jinja2
-(use-package json-mode :ensure t)  ;; json
-(use-package config-general-mode :ensure t)  ;; config files
-(use-package markdown-mode
-  :ensure t
-  :config (progn
-	    (setq markdown-enable-html -1)
-	    (setq markdown-fontify-code-blocks-natively
-		  t)))
-
-;;; [Other plugins] ================================================
-
-;; drag-stuff
-(use-package drag-stuff
-  :ensure t
-  :diminish :init
-  (progn
-    (drag-stuff-mode t)
-    (drag-stuff-global-mode 1))
-  :config (progn
-	    (define-key evil-visual-state-map (kbd "<up>") 'drag-stuff-up)
-	    (define-key evil-visual-state-map (kbd "<down>") 'drag-stuff-down)
-	    (define-key evil-visual-state-map (kbd "<left>") 'drag-stuff-left)
-	    (define-key evil-visual-state-map (kbd "<right>") 'drag-stuff-right)))
-
-;; Try
-(use-package try :ensure t)
-
-;; Saveplace
-(use-package saveplace
-  :ensure t
-  :init (progn
-	  (save-place-mode t)
-	  (setq save-place-file "~/.cache/emacs/saveplace")))
-
-;; Persistant undo using undo-tree
-(use-package undo-tree
-  :ensure t
-  :diminish :init
-  (progn
-    (global-undo-tree-mode)
-    (setq undo-tree-auto-save-history t)
-    (setq undo-tree-history-directory-alist '(("." . "~/.cache/emacs/undo")))))
-
 ;; Neotree
 (use-package neotree
   :ensure t
@@ -448,24 +499,6 @@
   :ensure t
   :init (evil-leader/set-key "g" 'magit-status))
 
-;; notmuch
-(use-package notmuch
-  :ensure t
-  :init (setq message-auto-save-directory "/Users/meain/.local/share/mail"))
-
-;; elfeed
-(use-package elfeed
-  :ensure t
-  :init (setq elfeed-feeds (with-temp-buffer
-			     (insert-file-contents "~/.config/newsboat/urls")
-			     (mapcar (lambda (x)
-				       (car (split-string x)))
-				     (remove-if-not #'(lambda (x)
-							(string-match-p "^https://" x))
-						    (split-string (buffer-string)
-								  "\n"
-								  t))))))
-
 ;; Quick open scratch buffers
 (use-package scratch
   :ensure :config
@@ -486,191 +519,46 @@
   (evil-leader/set-key "c" 'scratch))
 
 
-;; highlight color codes
+;; Highlight color codes
 (use-package rainbow-mode
   :ensure t
   :init (rainbow-mode 1))
 
-(defun meain/window-split-toggle ()
-  "Toggle between horizontal and vertical split with two windows."
-  (interactive)
-  (if (> (length (window-list)) 2)
-      (error "Can't toggle with more than 2 windows!")
-    (let ((func (if (window-full-height-p)
-		    #'split-window-vertically
-		  #'split-window-horizontally)))
-      (delete-other-windows)
-      (funcall func)
-      (save-selected-window (other-window 1)
-			    (switch-to-buffer (other-buffer))))))
-
-;; Hit universal arg without ctrl
-(evil-leader/set-key "u" 'universal-argument)
-(global-set-key (kbd "M-u")
-		'universal-argument)
-
-;; Window mappings
-(global-set-key (kbd "M-l")
-		(lambda ()
-		  (interactive)
-		  (evil-force-normal-state)
-		  (evil-window-right 1)))
-(global-set-key (kbd "M-h")
-		(lambda ()
-		  (interactive)
-		  (evil-force-normal-state)
-		  (evil-window-left 1)))
-(global-set-key (kbd "M-k")
-		(lambda ()
-		  (interactive)
-		  (evil-force-normal-state)
-		  (evil-window-up 1)))
-(global-set-key (kbd "M-j")
-		(lambda ()
-		  (interactive)
-		  (evil-force-normal-state)
-		  (evil-window-down 1)))
-(global-set-key (kbd "M-b")
-		(lambda ()
-		  (interactive)
-		  (evil-force-normal-state)
-		  (split-window-below)
-		  (windmove-down)))
-(global-set-key (kbd "M-v")
-		(lambda ()
-		  (interactive)
-		  (evil-force-normal-state)
-		  (split-window-right)
-		  (windmove-right)))
-(global-set-key (kbd "M-w")
-		'delete-window)
-(global-set-key (kbd "M-o")
-		'other-window)
-
-;; Shrink and enlarge windows (not contextual as of now)
-;; https://www.emacswiki.org/emacs/WindowResize
-(global-set-key (kbd "M-H")
-		'shrink-window-horizontally)
-(global-set-key (kbd "M-L")
-		'enlarge-window-horizontally)
-(global-set-key (kbd "M-K")
-		'shrink-window)
-(global-set-key (kbd "M-J")
-		'enlarge-window)
-
-;; File manipulation mappings
-(evil-leader/set-key "<SPC>" 'save-buffer)
-
-;; Other keybindings
-(define-key evil-normal-state-map (kbd "\\") 'evil-jump-backward)
-(define-key evil-normal-state-map (kbd "~") 'evil-jump-forward)
-
-;; Up/Down don't bother wrap
-(define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
-(define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
-
-;; Remap macro recoring key
-(define-key evil-normal-state-map "Q" 'evil-record-macro)
-
-;; folding
+;; Code folding
 (use-package origami
   :ensure t
   :init (progn
 	  (global-origami-mode)
 	  (evil-leader/set-key "o" 'evil-toggle-fold)))
 
-;; Quick open config file
-(evil-leader/set-key "e"
-  (defun meain/load-config ()
-    "Load emacs config for editing."
-    (interactive)
-    (find-file "~/.dotfiles/emacs/.config/emacs/init.el")))
-
-;; Full screen emacs
-(global-set-key (kbd "<s-return>")
-		'toggle-frame-fullscreen)
-
-;; Fullscreen current buffer
-(use-package emacs
+;; drag-stuff
+(use-package drag-stuff
+  :ensure t
+  :diminish :init
+  (progn
+    (drag-stuff-mode t)
+    (drag-stuff-global-mode 1))
   :config (progn
-	    (defvar meain/window-configuration nil)
-	    (define-minor-mode meain/monacle-mode
-	      "Zoom in and out of single window."
-	      :lighter " [M]"
-	      :global nil
-	      (if (one-window-p)
-		  (when meain/window-configuration
-		    (set-window-configuration meain/window-configuration))
-		(setq meain/window-configuration (current-window-configuration))
-		(delete-other-windows)))))
-(define-key evil-normal-state-map (kbd "``") `meain/monacle-mode)
+	    (define-key evil-visual-state-map (kbd "<up>") 'drag-stuff-up)
+	    (define-key evil-visual-state-map (kbd "<down>") 'drag-stuff-down)
+	    (define-key evil-visual-state-map (kbd "<left>") 'drag-stuff-left)
+	    (define-key evil-visual-state-map (kbd "<right>") 'drag-stuff-right)))
 
-;; Eval region
-;; Figure out a way to auto exit normal mode after eval
-(define-key evil-visual-state-map (kbd ";") 'eval-region)
+;; Saveplace
+(use-package saveplace
+  :ensure t
+  :init (progn
+	  (save-place-mode t)
+	  (setq save-place-file "~/.cache/emacs/saveplace")))
 
-;; Rename buffer
-(evil-leader/set-key "R" 'rename-buffer)
-
-;; vime functionality within emacs
-(use-package uuid :ensure t)
-(defun meain/vime-name-append (filename)
-  "Util function used to parse :name block for vime entries.  FILENAME is the name of the vime file."
-  (with-temp-buffer
-    (insert-file-contents (concatenate 'string "~/.cache/vime/" filename))
-    (concatenate 'string
-		 filename
-		 (if (s-starts-with-p ":name"
-				      (car (split-string (buffer-string)
-							 "\n")))
-		     (replace-regexp-in-string (regexp-quote ":name")
-					       ""
-					       (car (split-string (buffer-string)
-								  "\n")))
-		   ""))))
-(defun meain/vime (&optional listitems)
-  "Load a random file inside ~/.cache/vime dir.  Used as a temp notes dir.
-Pass in `LISTITEMS to decide if you wanna create a new item or search for existing items."
-  (interactive "P")
-  (if listitems
-      (ivy-read "Choose file: "
-		(mapcar (lambda (x)
-			  (meain/vime-name-append (car x)))
-			(sort (remove-if-not #'(lambda (x)
-						 (eq (nth 1 x) nil))
-					     (directory-files-and-attributes "~/.cache/vime"))
-			      #'(lambda (x y)
-				  (time-less-p (nth 6 y)
-					       (nth 6 x)))))
-		:preselect (ivy-thing-at-point):require-match
-		t
-		:action (lambda (x)
-			  (find-file (concat "~/.cache/vime/"
-					     (car (split-string x))))):caller'meain/vime-open)
-    (find-file (concat "~/.cache/vime/_"
-		       (substring (uuid-string)
-				  0
-				  4)))))
-(evil-leader/set-key "v" 'meain/vime)
-
-;; Quick quit
-(defun meain/kill-current-buffer-unless-scratch ()
-  "Kill current buffer if it is not scratch."
-  (interactive)
-  (if (= (length (mapcar #'window-buffer
-			 (window-list))) 1)
-      (switch-to-buffer "*scratch*")
-    (cond
-     ((derived-mode-p 'prog-mode)
-      (evil-quit))
-     ((equal major-mode 'imenu-list-major-mode)
-      (evil-quit))
-     ((equal major-mode 'vterm-mode)
-      (vterm-toggle))
-     (t (previous-buffer)))))
-(evil-leader/set-key "q" 'meain/kill-current-buffer-unless-scratch)
-(define-key evil-normal-state-map (kbd "q") 'meain/kill-current-buffer-unless-scratch)
-
+;; Persistant undo using undo-tree
+(use-package undo-tree
+  :ensure t
+  :diminish :init
+  (progn
+    (global-undo-tree-mode)
+    (setq undo-tree-auto-save-history t)
+    (setq undo-tree-history-directory-alist '(("." . "~/.cache/emacs/undo")))))
 
 ;; Fancier tab managerment
 (use-package tab-bar
@@ -718,29 +606,10 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
   :config (global-set-key (kbd "M-i")
 			  'er/expand-region))
 
-;; Narrow region
-(defun meain/narrow-region-dwim ()
-  "Narrow or widen the region (dwim)."
-  (interactive)
-  (if (eq evil-state 'visual)
-      (call-interactively 'narrow-to-region)
-    (call-interactively 'widen)))
-(global-set-key (kbd "M-N")
-		'meain/narrow-region-dwim)
-
-;; Quick replace
-(define-key evil-normal-state-map (kbd "<SPC> ;") (lambda ()
-						    (interactive)
-						    (evil-ex "%s/")))
-(define-key evil-visual-state-map (kbd "<SPC> ;") (lambda ()
-						    (interactive)
-						    (evil-ex "'<,'>s/")))
-
-;; drdt (atuo find indend setting)
-(use-package dtrt-mode
-  :quelpa (dtrt-mode :fetcher github
-		     :repo "jscheid/dtrt-indent"):init
-  (dtrt-indent-global-mode))
+;; dtrt (atuo find indend setting)
+(quelpa '(dtrt :repo "jscheid/dtrt-indent"
+	       :fetcher github))
+(dtrt-indent-global-mode)
 
 ;; we need vterm
 (use-package vterm :ensure t)
@@ -763,15 +632,134 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 			    'vterm-toggle)
 	    (define-key vterm-mode-map (kbd "M-;") 'vterm-toggle)))
 
+;;; [LANGUAGE PUGINS] ===============================================
+
+(use-package rust-mode :ensure t)
+(use-package lua-mode :ensure t)
+(use-package jinja2-mode :ensure t)
+(use-package json-mode :ensure t)
+(use-package config-general-mode :ensure t)  ;; config files
+(use-package markdown-mode
+  :ensure t
+  :config (progn
+	    (setq markdown-enable-html -1)
+	    (setq markdown-fontify-code-blocks-natively
+		  t)))
+
+;;; [EXTRA PLUGINS] =================================================
+
+;; Try
+(use-package try :ensure t)
+
+;; notmuch
+(use-package notmuch
+  :ensure t
+  :init (setq message-auto-save-directory "/Users/meain/.local/share/mail"))
+
+;; elfeed
+(use-package elfeed
+  :ensure t
+  :init (setq elfeed-feeds (with-temp-buffer
+			     (insert-file-contents "~/.config/newsboat/urls")
+			     (mapcar (lambda (x)
+				       (car (split-string x)))
+				     (remove-if-not #'(lambda (x)
+							(string-match-p "^https://" x))
+						    (split-string (buffer-string)
+								  "\n"
+								  t))))))
+
+;;; [CUSTOM FUNCTIONS] ==============================================
+
+(defun meain/window-split-toggle ()
+  "Toggle between horizontal and vertical split with two windows."
+  (interactive)
+  (if (> (length (window-list)) 2)
+      (error "Can't toggle with more than 2 windows!")
+    (let ((func (if (window-full-height-p)
+		    #'split-window-vertically
+		  #'split-window-horizontally)))
+      (delete-other-windows)
+      (funcall func)
+      (save-selected-window (other-window 1)
+			    (switch-to-buffer (other-buffer))))))
+
+;; Quick open config file
+(evil-leader/set-key "e"
+  (defun meain/load-config ()
+    "Load emacs config for editing."
+    (interactive)
+    (find-file "~/.dotfiles/emacs/.config/emacs/init.el")))
+
+;; Full screen emacs
+(global-set-key (kbd "<s-return>")
+		'toggle-frame-fullscreen)
+
+;; Fullscreen current buffer
+(defvar meain/window-configuration nil)
+(define-minor-mode meain/monacle-mode
+  "Zoom in and out of single window."
+  :lighter " [M]"
+  :global nil
+  (if (one-window-p)
+      (when meain/window-configuration
+	(set-window-configuration meain/window-configuration))
+    (setq meain/window-configuration (current-window-configuration))
+    (delete-other-windows)))
+(define-key evil-normal-state-map (kbd "``") `meain/monacle-mode)
+
+;; vime functionality within emacs
+(use-package uuid :ensure t)
+(defun meain/vime-name-append (filename)
+  "Util function used to parse :name block for vime entries.  FILENAME is the name of the vime file."
+  (with-temp-buffer
+    (insert-file-contents (concatenate 'string "~/.cache/vime/" filename))
+    (concatenate 'string
+		 filename
+		 (if (s-starts-with-p ":name"
+				      (car (split-string (buffer-string)
+							 "\n")))
+		     (replace-regexp-in-string (regexp-quote ":name")
+					       ""
+					       (car (split-string (buffer-string)
+								  "\n")))
+		   ""))))
+(defun meain/vime (&optional listitems)
+  "Load a random file inside ~/.cache/vime dir.  Used as a temp notes dir.
+Pass in `LISTITEMS to decide if you wanna create a new item or search for existing items."
+  (interactive "P")
+  (if listitems
+      (ivy-read "Choose file: "
+		(mapcar (lambda (x)
+			  (meain/vime-name-append (car x)))
+			(sort (remove-if-not #'(lambda (x)
+						 (eq (nth 1 x) nil))
+					     (directory-files-and-attributes "~/.cache/vime"))
+			      #'(lambda (x y)
+				  (time-less-p (nth 6 y)
+					       (nth 6 x)))))
+		:preselect (ivy-thing-at-point):require-match
+		t
+		:action (lambda (x)
+			  (find-file (concat "~/.cache/vime/"
+					     (car (split-string x))))):caller'meain/vime-open)
+    (find-file (concat "~/.cache/vime/_"
+		       (substring (uuid-string)
+				  0
+				  4)))))
+(evil-leader/set-key "v" 'meain/vime)
+
+;; Narrow region
+(defun meain/narrow-region-dwim ()
+  "Narrow or widen the region (dwim)."
+  (interactive)
+  (if (eq evil-state 'visual)
+      (call-interactively 'narrow-to-region)
+    (call-interactively 'widen)))
+(global-set-key (kbd "M-N")
+		'meain/narrow-region-dwim)
+
 ;; Better modeline
-(defun simple-mode-line-render (left right)
-  "Return a string of `window-width' length containing LEFT, and RIGHT aligned respectively."
-  (let* ((available-width (- (window-width)
-			     (length left)
-			     2)))
-    (format (format " %%s %%%ds " available-width)
-	    left
-	    right)))
 (setq-default mode-line-format (list '(:eval (if (eq 'emacs evil-state)
 						 "! "
 					       ": ")) ;; vim or emacs mode
@@ -811,5 +799,5 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 ;; drop gc threshold back
 (setq gc-cons-threshold 800000)
 
-(provide '.emacs)
-;;; .emacs ends here
+(provide 'init)
+;;; init ends here
