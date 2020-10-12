@@ -350,7 +350,7 @@
     (setq ivy-re-builders-alist '((ivy-switch-buffer . ivy--regex-plus)
 				  (counsel-rg . ivy--regex-plus)
 				  (t . ivy--regex-fuzzy)))
-    (evil-leader/set-key "s" 'meain/buffer-switcher)
+    (evil-leader/set-key "b b" 'meain/buffer-switcher)
     (evil-leader/set-key "r" 'counsel-recentf)
     (evil-leader/set-key "l" 'counsel-M-x)
     (evil-leader/set-key "h f" 'counsel-describe-function)
