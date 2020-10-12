@@ -12,7 +12,7 @@ cmd put &{{
     lf -remote 'send sync'
 }}
 
-map <esc> $qlmanage -p "$f" > /dev/null 2> /dev/null
+map Q $qlmanage -p "$f" > /dev/null 2> /dev/null
 # map <enter> toggle
 
 map e $$EDITOR "$f"
