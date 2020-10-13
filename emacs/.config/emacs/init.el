@@ -701,6 +701,11 @@
 	      (global-command-log-mode)
 	      (clm/open-command-log-buffer))))
 
+;; Beacon mode
+(use-package beacon
+  :ensure t
+  :init (beacon-mode t))
+
 ;;; [CUSTOM FUNCTIONS] ==============================================
 
 (defun meain/window-split-toggle ()
