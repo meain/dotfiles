@@ -669,6 +669,7 @@
 	    (set-face-attribute 'csv-separator-face nil
 				:background "gray100"
 				:foreground "#000000")))
+(use-package yaml-mode :ensure t)
 
 ;;; [EXTRA PLUGINS] =================================================
 
