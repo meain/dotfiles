@@ -566,12 +566,13 @@
 ;; Persistant undo using undo-tree
 (use-package undo-tree
   :ensure t
-  :diminish :init
+  :diminish :config
   (progn
-    (global-undo-tree-mode)
+    (setq undo-limit 80000000)
     (setq evil-want-fine-undo nil)
     (setq undo-tree-auto-save-history t)
-    (setq undo-tree-history-directory-alist '(("." . "~/.cache/emacs/undo")))))
+    (setq undo-tree-history-directory-alist '(("." . "~/.cache/emacs/undo"))))
+  :init (global-undo-tree-mode t))
 
 ;; Fancier tab managerment
 (use-package tab-bar
