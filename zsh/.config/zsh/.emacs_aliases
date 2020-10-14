@@ -1,5 +1,6 @@
 #!/bin/sh
 
+alias emacs='Emacs'
 alias eserver='Emacs --bg-daemon'
 alias ec='pgrep Emacs || Emacs --bg-daemon;emacsclient --no-wait -c'
 alias et='pgrep Emacs || Emacs --bg-daemon;emacsclient -t'
