@@ -172,6 +172,10 @@
   :ensure t
   :init (global-evil-surround-mode 1))
 
+;; Evil text objects
+(use-package evil-textobj-line :ensure t)
+(use-package evil-textobj-syntax :ensure t)
+
 ;; Evil number increment
 
 (unless (package-installed-p 'evil-numbers)
