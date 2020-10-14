@@ -760,6 +760,8 @@
   :commands writeroom-mode)
 
 ;; tramp dired
+(setq vc-ignore-dir-regexp (format "\\(%s\\)\\|\\(%s\\)" vc-ignore-dir-regexp
+				   tramp-file-name-regexp))
 (use-package tramp
   :ensure t
   :init (defun meain/ssh-access ()
