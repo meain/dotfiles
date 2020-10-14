@@ -759,6 +759,17 @@
 (use-package writeroom-mode :ensure t
   :commands writeroom-mode)
 
+;; tramp dired
+(use-package tramp
+  :ensure t
+  :init (defun meain/ssh-access ()
+	  "Opern dired in a server by selcting a host via autocomplete."
+	  (interactive)
+	  (dired (concatenate 'string
+			      "/sshx:"
+			      (meain/ssh-host-picker)
+			      ":"))))
+
 ;;; [CUSTOM FUNCTIONS] ==============================================
 
 (defun meain/window-split-toggle ()
