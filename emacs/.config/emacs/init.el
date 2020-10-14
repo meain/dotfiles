@@ -536,6 +536,10 @@
   :commands magit-status
   :init (evil-leader/set-key "g" 'magit-status))
 
+;; Git messenger
+(use-package git-messenger :ensure t
+  :commands git-messenger:popup-message)
+
 ;; Quick open scratch buffers
 (use-package scratch
   :ensure t
