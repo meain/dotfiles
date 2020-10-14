@@ -772,8 +772,36 @@
 			      (meain/ssh-host-picker)
 			      ":"))))
 
+;; tramp-term
+(use-package tramp-term
+  :ensure t
+  :commands tramp-term
+  :init (defun meain/ssh-term ()
+	  "SSH into a server by selcting a host via autocomplete."
+	  (interactive)
+	  (tramp-term (list (meain/ssh-host-picker)))))
+
 ;;; [CUSTOM FUNCTIONS] ==============================================
 
+;; host picker
+(defun meain/ssh-host-picker ()
+  "Interactively pick ssh host."
+  (with-temp-buffer
+    (insert-file-contents "~/.ssh/config")
+    (ivy-read "Choose host: "
+	      (mapcar (lambda (x)
+			(replace-regexp-in-string (regexp-quote "Host ")
+						  ""
+						  x))
+		      (remove-if-not #'(lambda (x)
+					 (s-starts-with-p "Host" x))
+				     (split-string (buffer-string)
+						   "\n")))
+	      :require-match t
+	      :action (lambda (x)
+			(format "%s" x)))))
+
+;; split between hirizontal and vertical
 (defun meain/window-split-toggle ()
   "Toggle between horizontal and vertical split with two windows."
   (interactive)
