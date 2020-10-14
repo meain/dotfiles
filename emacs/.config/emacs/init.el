@@ -746,6 +746,11 @@
   :defer t
   :init (beacon-mode t))
 
+;; Writing mode
+(use-package writeroom-mode
+  :ensure t
+  :commands writeroom-mode)
+
 ;;; [CUSTOM FUNCTIONS] ==============================================
 
 (defun meain/window-split-toggle ()
