@@ -166,7 +166,13 @@ end)
 
 -- quick launch emacs
 hs.hotkey.bind({'alt', 'shift'}, 'c', function()
-  hs.alert("🛠 Starting Emacs")
+  local output = customshellrun.run('pgrep Emacs', true)
+  if string.len(output) > 0 then
+    output = "Attaching to existing server"
+  else
+    output = "Starting new server process"
+  end
+  hs.notify.new({title="Starting Emacs", informativeText=output}):send()
   customshellrun.run('pgrep Emacs || Emacs --bg-daemon;emacsclient --no-wait -c', true)
 end)
 
