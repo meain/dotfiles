@@ -446,6 +446,7 @@
   :diminish :commands
   (projectile-switch-project projectile-find-file)
   :config (progn
+	    (setq projectile-mode-line "Projectile") ; might speed up tramp
 	    (projectile-mode 1)
 	    (evil-leader/set-key "p" 'projectile-switch-project)
 	    (setq projectile-completion-system 'ivy)
@@ -760,17 +761,19 @@
   :commands writeroom-mode)
 
 ;; tramp dired
-(setq vc-ignore-dir-regexp (format "\\(%s\\)\\|\\(%s\\)" vc-ignore-dir-regexp
-				   tramp-file-name-regexp))
 (use-package tramp
   :ensure t
-  :init (defun meain/ssh-access ()
-	  "Opern dired in a server by selcting a host via autocomplete."
-	  (interactive)
-	  (dired (concatenate 'string
-			      "/sshx:"
-			      (meain/ssh-host-picker)
-			      ":"))))
+  :init (progn
+	  (setq remote-file-name-inhibit-cache nil)
+	  (setq vc-ignore-dir-regexp (format "%s\\|%s" vc-ignore-dir-regexp tramp-file-name-regexp))
+	  (setq tramp-verbose 1)
+	  (defun meain/ssh-access ()
+	    "Opern dired in a server by selcting a host via autocomplete."
+	    (interactive)
+	    (dired (concatenate 'string
+				"/ssh:"
+				(meain/ssh-host-picker)
+				":")))))
 
 ;; tramp-term
 (use-package tramp-term
