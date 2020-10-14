@@ -6,7 +6,7 @@
 ;;; Code:
 
 ;; increase gc threshold (speeds up initial load)
-(setq gc-cons-threshold 400000000)
+(setq gc-cons-threshold (* 50 1000 1000))
 
 ;;; [PACKAGE SETUP] =============================================
 
@@ -126,6 +126,7 @@
 ;; Diminish
 (use-package diminish
   :ensure t
+  :defer t
   :init (progn
 	  (diminish 'eldoc-mode)
 	  (diminish 'auto-revert-mode)))
@@ -172,8 +173,10 @@
   :init (global-evil-surround-mode 1))
 
 ;; Evil number increment
-(quelpa '(evil-numbers :repo "janpath/evil-numbers"
-		       :fetcher github))
+
+(unless (package-installed-p 'evil-numbers)
+  (quelpa '(evil-numbers :repo "janpath/evil-numbers"
+			 :fetcher github)))
 ;; cannot directly use C-x (in use by emacs)
 (define-key evil-normal-state-map (kbd "g C-a") 'evil-numbers/inc-at-pt-incremental)
 (define-key evil-normal-state-map (kbd "g C-x") 'evil-numbers/dec-at-pt-incremental)
@@ -305,7 +308,8 @@
 ;;; [OTHER PACKAGES] =============================================
 
 ;; flymake
-(require 'flymake)
+(use-package flymake
+  :init (add-hook 'find-file-hook 'flymake-find-file-hook))
 (use-package flymake-diagnostic-at-point
   :ensure t
   :after flymake
@@ -314,10 +318,9 @@
 		  "! ")
 	    (setq flymake-diagnostic-at-point-display-diagnostic-function
 		  'flymake-diagnostic-at-point-display-minibuffer)
-	    (add-hook 'flymake-mode-hook #'flymake-diagnostic-at-point-mode)))
-(add-hook 'find-file-hook 'flymake-find-file-hook)
-(evil-leader/set-key "j" 'flymake-goto-next-error)
-(evil-leader/set-key "k" 'flymake-goto-prev-error)
+	    (add-hook 'flymake-mode-hook #'flymake-diagnostic-at-point-mode)
+	    (evil-leader/set-key "j" 'flymake-goto-next-error)
+	    (evil-leader/set-key "k" 'flymake-goto-prev-error)))
 
 ;; Company for autocompletions
 (use-package company
@@ -398,50 +401,55 @@
 ;; rg.el
 (use-package rg
   :ensure t
-  :config (progn
-	    (defun meain/rg-search (&optional alternate)
-	      "Choose between counsel-rg or rg based on ALTERNATE."
-	      (interactive "P")
-	      (if alternate
-		  (call-interactively 'rg)
-		(counsel-rg)))
-	    (evil-leader/set-key "f" 'meain/rg-search)))
+  :commands rg
+  :init (progn
+	  (defun meain/rg-search (&optional alternate)
+	    "Choose between counsel-rg or rg based on ALTERNATE."
+	    (interactive "P")
+	    (if alternate
+		(call-interactively 'rg)
+	      (counsel-rg)))
+	  (evil-leader/set-key "f" 'meain/rg-search)))
 
 ;; dumb-jump
 (use-package dumb-jump
   :ensure t
-  :config (progn
-	    (evil-leader/set-key "J" 'dumb-jump-go)))
+  :commands dumb-jumb-go
+  :init (evil-leader/set-key "J" 'dumb-jump-go))
 
 
 ;; Code formatting
 (use-package srefactor
+  :commands srefactor-lisp-format-buffer
   :ensure t
   :init (require 'srefactor-lisp))
 (use-package format-all
+  :commands format-all-buffer
   :ensure t
-  :after srefactor
-  :config (progn
-	    (defun meain/auto-format ()
-	      "Custom auto-format based on filetype."
-	      (interactive)
-	      (if (eq major-mode 'emacs-lisp-mode)
-		  (srefactor-lisp-format-buffer)
-		(format-all-buffer)))
-	    (define-key evil-normal-state-map (kbd ",,") 'meain/auto-format)))
+  :init (progn
+	  (defun meain/auto-format ()
+	    "Custom auto-format based on filetype."
+	    (interactive)
+	    (if (eq major-mode 'emacs-lisp-mode)
+		(srefactor-lisp-format-buffer)
+	      (format-all-buffer)))
+	  (define-key evil-normal-state-map (kbd ",,") 'meain/auto-format)))
 
 ;; Projectile
 (use-package projectile
   :ensure t
-  :diminish :init
-  (projectile-mode 1)
-  (evil-leader/set-key "p" 'projectile-switch-project)
-  (setq projectile-completion-system 'ivy)
-  (setq projectile-sort-order 'recently-active)
-  (define-key evil-normal-state-map (kbd "<RET>") 'projectile-find-file))
+  :diminish :commands
+  (projectile-switch-project projectile-find-file)
+  :config (progn
+	    (projectile-mode 1)
+	    (evil-leader/set-key "p" 'projectile-switch-project)
+	    (setq projectile-completion-system 'ivy)
+	    (setq projectile-sort-order 'recently-active)
+	    (define-key evil-normal-state-map (kbd "<RET>") 'projectile-find-file)))
 
 ;; LSP
 (use-package eglot
+  :commands eglot-ensure
   :ensure t
   :hook ((python-mode . eglot-ensure)
 	 (rust-mode . eglot-ensure)):init
@@ -478,29 +486,32 @@
 			'insert)
 
 ;; Tagbar alternative
-(require 'imenu)
+(use-package imenu :ensure t
+  :commands imenu)
 (use-package imenu-list
   :ensure t
-  :config (progn
-	    (setq imenu-list-focus-after-activation t)
-	    (setq imenu-list-after-jump-hook nil)
-	    (setq imenu-list-auto-resize t)
-	    (global-set-key (kbd "M--")
-			    (lambda (&optional alternate)
-			      (interactive "P")
-			      (if alternate
-				  (imenu-list-smart-toggle)
-				(call-interactively 'imenu))))))
+  :commands imenu-list-smart-toggle
+  :init (global-set-key (kbd "M--")
+			(lambda (&optional alternate)
+			  (interactive "P")
+			  (if alternate
+			      (imenu-list-smart-toggle)
+			    (call-interactively 'imenu)))):config
+  (progn
+    (setq imenu-list-focus-after-activation t)
+    (setq imenu-list-after-jump-hook nil)
+    (setq imenu-list-auto-resize t)))
 
 ;; Flat imenu
 (use-package flimenu
   :ensure t
-  :after imenu
+  :after imenu-list
   :config (flimenu-global-mode 1))
 
 ;; Neotree
 (use-package neotree
   :ensure t
+  :commands neotree-toggle
   :init (progn
 	  (define-key evil-normal-state-map (kbd "<tab>") 'neotree-toggle)
 	  (defun meain/neotree-mode-hook ()
@@ -518,27 +529,31 @@
 ;; Magit
 (use-package magit
   :ensure t
+  :commands magit-status
   :init (evil-leader/set-key "g" 'magit-status))
 
 ;; Quick open scratch buffers
 (use-package scratch
   :ensure t
-  :config (progn
-	    (defun meain/scratch (&optional alternate)
-	      (interactive "P")
-	      (if alternate
-		  (call-interactively 'scratch)
-		(switch-to-buffer "*scratch*")))
-	    (evil-leader/set-key "c" 'meain/scratch)))
+  :commands scratch
+  :init (progn
+	  (defun meain/scratch (&optional alternate)
+	    (interactive "P")
+	    (if alternate
+		(call-interactively 'scratch)
+	      (switch-to-buffer "*scratch*")))
+	  (evil-leader/set-key "c" 'meain/scratch)))
 
 ;; Highlight color codes
 (use-package rainbow-mode
   :ensure t
+  :defer t
   :init (rainbow-mode 1))
 
 ;; Code folding
 (use-package origami
   :ensure t
+  :commands evil-toggle-fold
   :init (progn
 	  (global-origami-mode)
 	  (evil-leader/set-key "o" 'evil-toggle-fold)))
@@ -546,15 +561,17 @@
 ;; drag-stuff
 (use-package drag-stuff
   :ensure t
-  :diminish :init
+  :diminish :commands
+  (drag-stuff-up drag-stuff-down drag-stuff-left
+		 drag-stuff-right)
+  :init (progn
+	  (define-key evil-visual-state-map (kbd "<up>") 'drag-stuff-up)
+	  (define-key evil-visual-state-map (kbd "<down>") 'drag-stuff-down)
+	  (define-key evil-visual-state-map (kbd "<left>") 'drag-stuff-left)
+	  (define-key evil-visual-state-map (kbd "<right>") 'drag-stuff-right)):config
   (progn
     (drag-stuff-mode t)
-    (drag-stuff-global-mode 1))
-  :config (progn
-	    (define-key evil-visual-state-map (kbd "<up>") 'drag-stuff-up)
-	    (define-key evil-visual-state-map (kbd "<down>") 'drag-stuff-down)
-	    (define-key evil-visual-state-map (kbd "<left>") 'drag-stuff-left)
-	    (define-key evil-visual-state-map (kbd "<right>") 'drag-stuff-right)))
+    (drag-stuff-global-mode 1)))
 
 ;; Saveplace
 (use-package saveplace
@@ -576,6 +593,29 @@
 
 ;; Fancier tab managerment
 (use-package tab-bar
+  :ensure t
+  :commands (tab-close tab-new tab-next):init
+  (progn
+    (defun meain/switch-tab-dwim (&optional close)
+      "Switch between available tabs.  Pass CLOSE as t to close the current tab if it is not the last one."
+      (interactive "P")
+      (let ((tabs (mapcar (lambda (tab)
+			    (alist-get 'name tab))
+			  (tab-bar--tabs-recent))))
+	(if close
+	    (if (eq tabs nil)
+		(message "Not closing last tab")
+	      (tab-close))
+	  (cond
+	   ((eq tabs nil)
+	    (message (concat "Only one tab present. Use `"
+			     (substitute-command-keys "\\[tab-new]")
+			     "` to create another tab.")))
+	   ((eq (length tabs) 1)
+	    (tab-next))
+	   (t (ivy-read "Select tab: " tabs :action 'tab-bar-switch-to-tab))))))
+    (evil-leader/set-key "t" 'meain/switch-tab-dwim)
+    (evil-leader/set-key "T" 'tab-new))
   :config (progn
 	    (setq tab-bar-close-button-show nil)
 	    (setq tab-bar-close-last-tab-choice 'tab-bar-mode-disable)
@@ -587,27 +627,7 @@
 	    (setq tab-bar-tab-hints nil)
 	    (setq tab-bar-tab-name-function 'tab-bar-tab-name-all)
 	    (tab-bar-mode -1)
-	    (tab-bar-history-mode -1)
-	    (defun meain/switch-tab-dwim (&optional close)
-	      "Switch between available tabs.  Pass CLOSE as t to close the current tab if it is not the last one."
-	      (interactive "P")
-	      (let ((tabs (mapcar (lambda (tab)
-				    (alist-get 'name tab))
-				  (tab-bar--tabs-recent))))
-		(if close
-		    (if (eq tabs nil)
-			(message "Not closing last tab")
-		      (tab-close))
-		  (cond
-		   ((eq tabs nil)
-		    (message (concat "Only one tab present. Use `"
-				     (substitute-command-keys "\\[tab-new]")
-				     "` to create another tab.")))
-		   ((eq (length tabs) 1)
-		    (tab-next))
-		   (t (ivy-read "Select tab: " tabs :action 'tab-bar-switch-to-tab))))))):init
-  (evil-leader/set-key "t" 'meain/switch-tab-dwim)
-  (evil-leader/set-key "T" 'tab-new))
+	    (tab-bar-history-mode -1)))
 
 ;; which-key mode (until I fully figure out emacs)
 (use-package which-key
@@ -621,69 +641,84 @@
 			  'er/expand-region))
 
 ;; dtrt (atuo find indend setting)
-(quelpa '(dtrt :repo "jscheid/dtrt-indent"
-	       :fetcher github))
-(dtrt-indent-global-mode)
+(use-package dtrt-indent
+  :ensure t
+  :config (dtrt-indent-global-mode))
 
 ;; we need vterm
 (use-package vterm
   :ensure t
+  :commands vterm
   :config (setq vterm-max-scrollback 100000))
 (use-package vterm-toggle
   :ensure t
-  :config (progn
-	    (setq vterm-toggle-scope 'projectile)
-	    (setq vterm-toggle-projectile-root t)
-	    (setq vterm-toggle-fullscreen-p nil)
-	    ;; always open vterm in a bottom window
-	    (add-to-list 'display-buffer-alist
-			 '((lambda (bufname _)
-			     (with-current-buffer bufname
-			       (equal major-mode 'vterm-mode)))
-			   (display-buffer-reuse-window display-buffer-at-bottom)
-			   (reusable-frames . visible)
-			   (window-height . 0.5)))
-	    (evil-set-initial-state 'vterm-mode 'insert)
-	    (global-set-key (kbd "M-;")
-			    'vterm-toggle)
-	    (define-key vterm-mode-map (kbd "M-;") 'vterm-toggle)))
+  :commands vterm-toggle
+  :init (progn
+	  (global-set-key (kbd "M-;")
+			  'vterm-toggle)):config
+  (progn
+    (setq vterm-toggle-scope 'projectile)
+    (setq vterm-toggle-projectile-root t)
+    (setq vterm-toggle-fullscreen-p nil)
+    ;; always open vterm in a bottom window
+    (add-to-list 'display-buffer-alist
+		 '((lambda (bufname _)
+		     (with-current-buffer bufname
+		       (equal major-mode 'vterm-mode)))
+		   (display-buffer-reuse-window display-buffer-at-bottom)
+		   (reusable-frames . visible)
+		   (window-height . 0.5)))
+    (evil-set-initial-state 'vterm-mode 'insert)
+    (define-key vterm-mode-map (kbd "M-;") 'vterm-toggle)))
 
 ;;; [FILETYPE PUGINS] ===============================================
 
-(use-package rust-mode :ensure t)
-(use-package lua-mode :ensure t)
-(use-package jinja2-mode :ensure t)
-(use-package json-mode :ensure t)
-(use-package config-general-mode :ensure t)  ;; config files
+(use-package rust-mode :ensure t
+  :defer t)
+(use-package lua-mode :ensure t
+  :defer t)
+(use-package jinja2-mode :ensure t
+  :defer t)
+(use-package json-mode :ensure t
+  :defer t)
+(use-package config-general-mode :ensure t
+  :defer t)  ;; config files
 (use-package markdown-mode
   :ensure t
+  :defer t
   :config (progn
 	    (setq markdown-enable-html -1)
 	    (setq markdown-fontify-code-blocks-natively
 		  t)))
-(use-package grip-mode :ensure t) ;; markdown preview
+(use-package grip-mode :ensure t
+  :commands grip-mode) ;; markdown preview
 (use-package csv-mode
   :ensure t
+  :defer t
   :config (progn
 	    (setq csv-align-mode t)
 	    (set-face-attribute 'csv-separator-face nil
 				:background "gray100"
 				:foreground "#000000")))
-(use-package yaml-mode :ensure t)
+(use-package yaml-mode :ensure t
+  :defer t)
 
 ;;; [EXTRA PLUGINS] =================================================
 
 ;; Try
-(use-package try :ensure t)
+(use-package try :ensure t
+  :commands try)
 
 ;; notmuch
 (use-package notmuch
   :ensure t
+  :commands notmuch
   :init (setq message-auto-save-directory "/Users/meain/.local/share/mail"))
 
 ;; elfeed
 (use-package elfeed
   :ensure t
+  :commands elfeed
   :init (setq elfeed-feeds (with-temp-buffer
 			     (insert-file-contents "~/.config/newsboat/urls")
 			     (mapcar (lambda (x)
@@ -696,17 +731,19 @@
 
 ;; command log
 (use-package command-log-mode
+  :commands global-command-log-mode
   :ensure t
-  :config (progn
-	    (defun meain/command-log-mode ()
-	      "Enable command-log-mode and open command-log buffer."
-	      (interactive)
-	      (global-command-log-mode)
-	      (clm/open-command-log-buffer))))
+  :init (progn
+	  (defun meain/command-log-mode ()
+	    "Enable command-log-mode and open command-log buffer."
+	    (interactive)
+	    (global-command-log-mode)
+	    (clm/open-command-log-buffer))))
 
 ;; Beacon mode
 (use-package beacon
   :ensure t
+  :defer t
   :init (beacon-mode t))
 
 ;;; [CUSTOM FUNCTIONS] ==============================================
@@ -749,7 +786,8 @@
 (evil-leader/set-key "m" 'meain/monacle-mode)
 
 ;; vime functionality within emacs
-(use-package uuid :ensure t)
+(use-package uuid :ensure t
+  :commands uuid-string)
 (defun meain/vime-name-append (filename)
   "Util function used to parse :name block for vime entries.  FILENAME is the name of the vime file."
   (with-temp-buffer
@@ -839,6 +877,13 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 				     (propertize " %m " 'face 'font-lock-constant-face) ;; current mode
 				     ))
 
+;; Print emacs startup time
+(add-hook 'emacs-startup-hook
+	  (lambda ()
+	    (message "Emacs ready in %s with %d garbage collections."
+		     (format "%.2f seconds"
+			     (float-time (time-subtract after-init-time before-init-time)))
+		     gcs-done)))
 
 ;; drop gc threshold back
 (setq gc-cons-threshold 800000)
