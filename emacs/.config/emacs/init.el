@@ -22,6 +22,7 @@
   (package-refresh-contents)
   (package-install 'use-package))
 (eval-when-compile (require 'use-package))
+(setq use-package-always-demand (daemonp)) ;; eager load if daemon
 
 ;; Setup quelpa
 (use-package quelpa :ensure t)
