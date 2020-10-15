@@ -10,6 +10,9 @@
 
 ;;; [PACKAGE SETUP] =============================================
 
+(setq user-mail-address "mail@meain.io" user-full-name
+      "Abin Simon")
+
 ;; Set up package & melpa
 (require 'package)
 (add-to-list 'package-archives
