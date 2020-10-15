@@ -96,9 +96,9 @@
 ;; Font (set-frame-font  "Profont for Powerline 16")
 (add-to-list 'default-frame-alist
 	     '(font . "Profont for Powerline 16"))
-(set-face-attribute 'default t :font "Profont for Powerline 16")
-(set-face-attribute 'fixed-pitch t :font "Profont for Powerline 16")
-(set-face-attribute 'variable-pitch t :font "Profont for Powerline 16")
+(set-face-attribute 'default nil :font "Profont for Powerline 16")
+(set-face-attribute 'fixed-pitch nil :font "Profont for Powerline 16")
+(set-face-attribute 'variable-pitch nil :font "Profont for Powerline 16")
 (defun meain/select-font ()
   "Set font after selection using ivy."
   (interactive)
