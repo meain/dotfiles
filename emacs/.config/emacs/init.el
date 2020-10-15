@@ -786,6 +786,10 @@
 	    (kbd "o")
 	    'elfeed-search-browse-url)
 	  (setq-default elfeed-search-filter "@2-months-ago +unread ")
+	  (setq elfeed-use-curl t)
+	  (setq elfeed-curl-max-connections 10)
+	  (setq elfeed-db-directory "~/.config/emacs/elfeed/")
+	  (setq elfeed-enclosure-default-dir "~/Downloads/")
 	  (add-hook 'elfeed-new-entry-hook
 		    (elfeed-make-tagger :feed-url "youtube\\.com"
 					:add '(video youtube)))
