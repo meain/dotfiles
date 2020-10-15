@@ -781,6 +781,10 @@
   :ensure t
   :defer t
   :init (progn
+	  (evil-define-key 'normal
+	    elfeed-search-mode-map
+	    (kbd "o")
+	    'elfeed-search-browse-url)
 	  (setq-default elfeed-search-filter "@2-months-ago +unread ")
 	  (add-hook 'elfeed-new-entry-hook
 		    (elfeed-make-tagger :feed-url "youtube\\.com"
