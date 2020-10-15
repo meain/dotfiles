@@ -704,6 +704,14 @@
     (define-key vterm-mode-map (kbd "M-;") 'vterm-toggle)
     (define-key vterm-mode-map (kbd "M-k") 'previous-window-any-frame)))
 
+;; ranger in emacs
+(use-package ranger
+  :ensure t
+  :commands ranger
+  :config (use-package image-dired+
+	    :ensure t
+	    :config (image-diredx-async-mode)))
+
 ;;; [FILETYPE PUGINS] ===============================================
 
 (use-package rust-mode :ensure t
