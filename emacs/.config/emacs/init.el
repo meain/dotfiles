@@ -665,8 +665,12 @@
 ;; Expand region
 (use-package expand-region
   :ensure t
-  :config (global-set-key (kbd "M-i")
-			  'er/expand-region))
+  :config (progn
+	    ;; make evil jump list work with expand-region
+	    (evil-set-command-property 'er/expand-region
+				       :jump t)
+	    (global-set-key (kbd "M-i")
+			    'er/expand-region)))
 
 ;; dtrt (atuo find indend setting)
 (use-package dtrt-indent
