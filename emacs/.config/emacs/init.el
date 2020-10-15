@@ -736,7 +736,36 @@
 (use-package notmuch
   :ensure t
   :commands notmuch
-  :init (setq message-auto-save-directory "/Users/meain/.local/share/mail"))
+  :init (progn
+	  (setq notmuch-search-oldest-first nil)
+	  (setq message-auto-save-directory "/Users/meain/.local/share/mail")
+	  (setq notmuch-saved-searches (quote ((:name "imbox" :query "tag:imbox AND tag:inbox"
+						      :key "i"
+						      :sort-order newest-first)
+					       (:name "meain" :query "query=to:mail@meain.io AND tag:inbox"
+						      :key "m"
+						      :sort-order oldest-first)
+					       (:name "github" :query "tag:github AND tag:inbox"
+						      :key "g"
+						      :sort-order oldest-first)
+					       (:name "sent" :query "tag:sent"
+						      :key "s"
+						      :sort-order newest-first)
+					       (:name "drafts" :query "tag:draft AND tag:inbox"
+						      :key "d")
+					       (:name "unread" :query "tag:unread AND tag:inbox"
+						      :key "u")
+					       (:name "python" :query "tag:python AND tag:inbox"
+						      :key "p")
+					       (:name "newsletter" :query "tag:newsletter AND tag:inbox"
+						      :key "n")
+					       (:name "known" :query "tag:known AND tag:inbox"
+						      :key "k")
+					       (:name "archiveable" :query "tag:bullshit AND tag:known AND tag:nonimportant AND tag:inbox"
+						      :key "a")
+					       (:name "all mail" :query "*"
+						      :key "A"
+						      :sort-order newest-first))))))
 
 ;; elfeed
 (use-package elfeed
