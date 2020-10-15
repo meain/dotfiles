@@ -755,6 +755,10 @@
   :ensure t
   :commands notmuch
   :init (progn
+	  (evil-define-key 'normal
+	    notmuch-search-mode-map
+	    (kbd "u")
+	    'evil-collection-notmuch-search-toggle-unread)
 	  (setq notmuch-search-oldest-first nil)
 	  (setq message-auto-save-directory "/Users/meain/.local/share/mail")
 	  (setq notmuch-saved-searches (quote ((:name "imbox" :query "tag:imbox AND tag:inbox"
