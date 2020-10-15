@@ -13,8 +13,11 @@ fi
 notmuch new 2>/dev/null
 
 # reindex inbox
-notmuch tag -inbox tag:inbox
-notmuch tag +inbox +imbox 'folder:/INBOX/'
+# notmuch tag -inbox tag:inbox
+# notmuch tag +inbox +imbox 'folder:/INBOX/'
+
+# start with everything in imbox
+notmuch tag +imbox tag:inbox
 
 #github
 notmuch tag +github 'folder:/INBOX/' 'from:notifications@github.com'
