@@ -37,11 +37,14 @@
 (use-package evil
   :ensure t
   :init (progn
+	  (setq evil-want-integration t)
+	  (setq evil-want-keybinding nil)
 	  (setq evil-want-C-u-scroll t)
 	  (setq evil-undo-system 'undo-tree)
-	  (evil-mode t)
-	  (defalias #'forward-evil-word #'forward-evil-symbol)
-	  (setq-default evil-symbol-word-search t)))
+	  (setq-default evil-symbol-word-search t)):config
+  (progn
+    (evil-mode t)
+    (defalias #'forward-evil-word #'forward-evil-symbol)))
 
 ;; Evil leader
 (use-package evil-leader
@@ -49,6 +52,11 @@
   :init (progn
 	  (global-evil-leader-mode)
 	  (evil-leader/set-leader "s")))
+
+(use-package evil-collection
+  :ensure t
+  :after evil
+  :config (evil-collection-init))
 
 ;;; [BASIC SETTINGS] =============================================
 
