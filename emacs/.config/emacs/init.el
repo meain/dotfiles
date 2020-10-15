@@ -792,43 +792,43 @@
 ;; elfeed
 (use-package elfeed
   :ensure t
-  :defer t
-  :init (progn
-	  (evil-define-key 'normal
-	    elfeed-search-mode-map
-	    (kbd "o")
-	    'elfeed-search-browse-url)
-	  (setq-default elfeed-search-filter "@2-months-ago +unread ")
-	  (setq elfeed-use-curl t)
-	  (setq elfeed-curl-max-connections 10)
-	  (setq elfeed-db-directory "~/.config/emacs/elfeed/")
-	  (setq elfeed-enclosure-default-dir "~/Downloads/")
-	  (setq elfeed-show-entry-switch #'meain/elfeed-display-buffer)
-	  (add-to-list 'display-buffer-alist
-		       '((lambda (bufname _)
-			   (with-current-buffer bufname
-			     (equal major-mode 'elfeed-show-mode)))
-			 (display-buffer-reuse-window display-buffer-at-bottom)
-			 (reusable-frames . visible)
-			 (window-height . 0.7)))
-	  (defun meain/elfeed-display-buffer (buf &optional act)
-	    (pop-to-buffer buf)
-	    (set-window-text-height (get-buffer-window)
-				    (round (* 0.7
-					      (frame-height)))
-				    (previous-window-any-frame)))
-	  (add-hook 'elfeed-new-entry-hook
-		    (elfeed-make-tagger :feed-url "youtube\\.com"
-					:add '(video youtube)))
-	  (setq elfeed-feeds (with-temp-buffer
-			       (insert-file-contents "~/.config/newsboat/urls")
-			       (mapcar (lambda (x)
-					 (car (split-string x)))
-				       (remove-if-not #'(lambda (x)
-							  (string-match-p "^https://" x))
-						      (split-string (buffer-string)
-								    "\n"
-								    t)))))))
+  :commands (elfeed elfeed-update):config
+  (progn
+    (evil-define-key 'normal
+      elfeed-search-mode-map
+      (kbd "o")
+      'elfeed-search-browse-url)
+    (setq-default elfeed-search-filter "@2-months-ago +unread ")
+    (setq elfeed-use-curl t)
+    (setq elfeed-curl-max-connections 10)
+    (setq elfeed-db-directory "~/.config/emacs/elfeed/")
+    (setq elfeed-enclosure-default-dir "~/Downloads/")
+    (setq elfeed-show-entry-switch #'meain/elfeed-display-buffer)
+    (add-to-list 'display-buffer-alist
+		 '((lambda (bufname _)
+		     (with-current-buffer bufname
+		       (equal major-mode 'elfeed-show-mode)))
+		   (display-buffer-reuse-window display-buffer-at-bottom)
+		   (reusable-frames . visible)
+		   (window-height . 0.7)))
+    (defun meain/elfeed-display-buffer (buf &optional act)
+      (pop-to-buffer buf)
+      (set-window-text-height (get-buffer-window)
+			      (round (* 0.7
+					(frame-height)))
+			      (previous-window-any-frame)))
+    (add-hook 'elfeed-new-entry-hook
+	      (elfeed-make-tagger :feed-url "youtube\\.com"
+				  :add '(video youtube)))
+    (setq elfeed-feeds (with-temp-buffer
+			 (insert-file-contents "~/.config/newsboat/urls")
+			 (mapcar (lambda (x)
+				   (car (split-string x)))
+				 (remove-if-not #'(lambda (x)
+						    (string-match-p "^https://" x))
+						(split-string (buffer-string)
+							      "\n"
+							      t)))))))
 
 ;; command log
 (use-package command-log-mode
