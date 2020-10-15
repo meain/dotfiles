@@ -732,16 +732,6 @@
   :ensure t
   :defer t
   :init (progn
-	  (evil-set-initial-state 'elfeed-show-mode 'normal)
-	  (evil-set-initial-state 'elfeed-search-mode 'normal)
-	  (evil-define-key 'normal elfeed-search-mode-map (kbd "o") 'elfeed-search-browse-url)
-	  (evil-define-key 'normal elfeed-search-mode-map (kbd "<RET>") 'elfeed-search-show-entry)
-	  (evil-define-key 'normal elfeed-search-mode-map (kbd "r") 'elfeed-search-untag-all-unread)
-	  (evil-define-key 'visual elfeed-search-mode-map (kbd "r") 'elfeed-search-untag-all-unread)
-	  (evil-define-key 'normal elfeed-search-mode-map (kbd "u") 'elfeed-search-tag-all-unread)
-	  (evil-define-key 'visual elfeed-search-mode-map (kbd "u") 'elfeed-search-tag-all-unread)
-	  (evil-define-key 'normal elfeed-search-mode-map (kbd "s") 'elfeed-search-live-filter)
-	  (evil-define-key 'normal elfeed-show-mode-map (kbd "q") 'elfeed-kill-buffer)
 	  (setq-default elfeed-search-filter "@2-months-ago +unread ")
 	  (add-hook 'elfeed-new-entry-hook
 		    (elfeed-make-tagger :feed-url "youtube\\.com"
