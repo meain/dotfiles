@@ -701,7 +701,8 @@
 		   (reusable-frames . visible)
 		   (window-height . 0.5)))
     (evil-set-initial-state 'vterm-mode 'insert)
-    (define-key vterm-mode-map (kbd "M-;") 'vterm-toggle)))
+    (define-key vterm-mode-map (kbd "M-;") 'vterm-toggle)
+    (define-key vterm-mode-map (kbd "M-k") 'previous-window-any-frame)))
 
 ;;; [FILETYPE PUGINS] ===============================================
 
