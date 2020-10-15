@@ -728,16 +728,31 @@
 ;; elfeed
 (use-package elfeed
   :ensure t
-  :commands elfeed
-  :init (setq elfeed-feeds (with-temp-buffer
-			     (insert-file-contents "~/.config/newsboat/urls")
-			     (mapcar (lambda (x)
-				       (car (split-string x)))
-				     (remove-if-not #'(lambda (x)
-							(string-match-p "^https://" x))
-						    (split-string (buffer-string)
-								  "\n"
-								  t))))))
+  :defer t
+  :init (progn
+	  (evil-set-initial-state 'elfeed-show-mode 'normal)
+	  (evil-set-initial-state 'elfeed-search-mode 'normal)
+	  (evil-define-key 'normal elfeed-search-mode-map (kbd "o") 'elfeed-search-browse-url)
+	  (evil-define-key 'normal elfeed-search-mode-map (kbd "<RET>") 'elfeed-search-show-entry)
+	  (evil-define-key 'normal elfeed-search-mode-map (kbd "r") 'elfeed-search-untag-all-unread)
+	  (evil-define-key 'visual elfeed-search-mode-map (kbd "r") 'elfeed-search-untag-all-unread)
+	  (evil-define-key 'normal elfeed-search-mode-map (kbd "u") 'elfeed-search-tag-all-unread)
+	  (evil-define-key 'visual elfeed-search-mode-map (kbd "u") 'elfeed-search-tag-all-unread)
+	  (evil-define-key 'normal elfeed-search-mode-map (kbd "s") 'elfeed-search-live-filter)
+	  (evil-define-key 'normal elfeed-show-mode-map (kbd "q") 'elfeed-kill-buffer)
+	  (setq-default elfeed-search-filter "@2-months-ago +unread ")
+	  (add-hook 'elfeed-new-entry-hook
+		    (elfeed-make-tagger :feed-url "youtube\\.com"
+					:add '(video youtube)))
+	  (setq elfeed-feeds (with-temp-buffer
+			       (insert-file-contents "~/.config/newsboat/urls")
+			       (mapcar (lambda (x)
+					 (car (split-string x)))
+				       (remove-if-not #'(lambda (x)
+							  (string-match-p "^https://" x))
+						      (split-string (buffer-string)
+								    "\n"
+								    t)))))))
 
 ;; command log
 (use-package command-log-mode
