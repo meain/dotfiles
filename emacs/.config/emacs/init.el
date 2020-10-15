@@ -109,8 +109,8 @@
 (defun meain/set-emoji-font ()
   "Setup proper emoji font."
   (let ((font (cond
-	       ((string-equal system-type "darwin") "Apple Color Emoji")
-	       ((string-equal system-type "gnu/linux") "Symbola"))))
+	       ((string-equal system-type "darwin") "Apple Color Emoji 10")
+	       ((string-equal system-type "gnu/linux") "Symbola 10"))))
     (set-fontset-font t 'unicode font nil 'prepend)))
 (defun meain/set-emoji-font-in-frame (frame)
   "Hook to be called for setting emoji font in FRAME."
