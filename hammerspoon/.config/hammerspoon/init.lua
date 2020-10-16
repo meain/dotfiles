@@ -196,6 +196,30 @@ hs.hotkey.bind({"cmd", "shift"}, "g", function()
   focusandback("telegram")
 end)
 
+-- cmd+t from anywhere to open a new tab in browser
+browsernewtab = hs.hotkey.bind({"cmd"}, "t", function()
+    local current_app = hs.application("firefox")
+    if not current_app:isFrontmost() then
+        hs.application.launchOrFocus("firefox")
+    end
+    browsernewtab:disable()
+    hs.eventtap.keyStroke({"cmd"}, 't')
+    browsernewtab:enable()
+end)
+commande = hs.hotkey.bind({"cmd"}, "e", function()
+    -- remap cmd+e to cmd+t for slack
+    local slack = hs.application("slack")
+    if slack:isFrontmost() then
+      browsernewtab:disable()
+      hs.eventtap.keyStroke({"cmd"}, 't')
+      browsernewtab:enable()
+    else
+      commande:disable()
+      hs.eventtap.keyStroke({"cmd"}, 'e')
+      commande:enable()
+    end
+end)
+
 hs.hotkey.bind({'alt', 'shift'}, 'P', function()
   hs.alert("📎 " .. utils.trim(pasteboard.getContents()))
 end)
