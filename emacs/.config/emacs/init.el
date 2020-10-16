@@ -989,6 +989,11 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 (evil-leader/set-key "b k" 'kill-buffer)
 (evil-leader/set-key "b o" 'previous-buffer)
 
+;; Bookmarks
+(setq bookmark-save-flag 1)
+(evil-leader/set-key "b m" 'bookmark-jump)
+(evil-leader/set-key "b M" 'bookmark-set)
+
 ;; Better modeline
 (setq-default mode-line-format (list '(:eval (if (eq 'emacs evil-state)
 						 "! "
