@@ -817,6 +817,46 @@
 		   (display-buffer-reuse-window display-buffer-at-bottom)
 		   (reusable-frames . visible)
 		   (window-height . 0.7)))
+    (defun meain/elfeed-search-print (entry)
+      "Print ENTRY to the buffer."
+      (let* ((feed-width 25)
+	     (tags-width 25)
+	     (title (or (elfeed-meta entry :title)
+			(elfeed-entry-title entry)
+			""))
+	     (title-faces (elfeed-search--faces (elfeed-entry-tags entry)))
+	     (feed (elfeed-entry-feed entry))
+	     (feed-title (when feed
+			   (or (elfeed-meta feed :title)
+			       (elfeed-feed-title feed))))
+	     (tags (mapcar #'symbol-name
+			   (elfeed-entry-tags entry)))
+	     (tags-str (concat "("
+			       (mapconcat 'identity tags ",")
+			       ")"))
+	     (title-width (- (window-width)
+			     feed-width
+			     tags-width
+			     4))
+	     (title-column (elfeed-format-column title
+						 (elfeed-clamp elfeed-search-title-min-width
+							       title-width elfeed-search-title-max-width)
+						 :left))
+	     (tag-column (elfeed-format-column tags-str
+					       (elfeed-clamp (length tags-str)
+							     tags-width
+							     tags-width)
+					       :left))
+	     (feed-column (elfeed-format-column feed-title
+						(elfeed-clamp feed-width feed-width feed-width)
+						:left)))
+	(insert (propertize feed-column 'face 'elfeed-search-feed-face)
+		" ")
+	(insert (propertize title 'face title-faces 'kbd-help
+			    title))
+	(insert (propertize tag-column 'face 'elfeed-search-tag-face)
+		" ")))
+    (setq elfeed-search-print-entry-function 'meain/elfeed-search-print)
     (defun meain/elfeed-display-buffer (buf &optional act)
       (pop-to-buffer buf)
       (set-window-text-height (get-buffer-window)
