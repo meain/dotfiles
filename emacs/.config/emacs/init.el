@@ -315,6 +315,7 @@
 (defun meain/keyboard-quit ()
   "Quit out of whatever."
   (interactive)
+  (keyboard-escape-quit)
   (minibuffer-keyboard-quit)
   (keyboard-quit))
 (global-set-key [escape]
