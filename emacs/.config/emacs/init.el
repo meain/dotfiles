@@ -863,18 +863,7 @@
 			      (round (* 0.7
 					(frame-height)))
 			      (previous-window-any-frame)))
-    (add-hook 'elfeed-new-entry-hook
-	      (elfeed-make-tagger :feed-url "youtube\\.com"
-				  :add '(video youtube)))
-    (setq elfeed-feeds (with-temp-buffer
-			 (insert-file-contents "~/.config/newsboat/urls")
-			 (mapcar (lambda (x)
-				   (car (split-string x)))
-				 (remove-if-not #'(lambda (x)
-						    (string-match-p "^https://" x))
-						(split-string (buffer-string)
-							      "\n"
-							      t)))))))
+    (load-file "~/.config/emacs/elfeed-feeds.el"))))
 
 ;; command log
 (use-package command-log-mode
