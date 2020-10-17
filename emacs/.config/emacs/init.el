@@ -384,7 +384,6 @@
     (evil-leader/set-key "h o" 'counsel-describe-symbol)
     (evil-leader/set-key "h l" 'counsel-find-library)
     (evil-leader/set-key "h i" 'counsel-info-lookup-symbol)
-    (evil-leader/set-key "h k" 'describe-key)
     (define-key evil-normal-state-map (kbd "M-f") 'counsel-M-x)
     (define-key evil-normal-state-map (kbd "_") 'dired-jump)
     (define-key evil-normal-state-map (kbd "-") 'counsel-find-file)
@@ -399,6 +398,16 @@
 (use-package amx
   :ensure t
   :init (amx-mode))
+
+;; Helpful package
+(use-package helpful
+  :ensure t
+  :commands (helpful-callable helpful-variable):config
+  (progn
+    (evil-leader/set-key "h p" 'helpful-at-point)
+    (evil-leader/set-key "h k" 'helpful-key)
+    (setq counsel-describe-function-function #'helpful-callable)
+    (setq counsel-describe-variable-function #'helpful-variable)))
 
 ;; ibuffer-projectile
 (use-package ibuffer-projectile
