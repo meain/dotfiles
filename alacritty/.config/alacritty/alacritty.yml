@@ -19,18 +19,18 @@ scrolling:
 
 font:
   normal:
-    family: Iosevka
+    family: Profont for Powerline
     style: Regular
   bold:
-    family: Iosevka
+    family: Profont for Powerline
     style: Regular
   italic:
-    family: Iosevka
+    family: Profont for Powerline
     style: Italic
   size: 16.0
   offset:
     x: 0
-    y:  -3
+    y: 0
   glyph_offset:
     x: 0
     y: 0
