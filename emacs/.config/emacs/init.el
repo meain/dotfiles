@@ -170,8 +170,13 @@
 (require 'eldoc)
 
 ;; dired
-(require 'dired)
-(define-key dired-mode-map (kbd "-") 'dired-up-directory)
+(use-package dired
+  :config (progn
+	    (setq delete-by-moving-to-trash t)
+	    (setq dired-listing-switches "-AGFhl")
+	    (setq dired-dwim-target t)
+	    (define-key dired-mode-map (kbd "-") 'dired-up-directory)
+	    (add-hook 'dired-mode-hook 'hl-line-mode)))
 
 ;;; [EVIL CONFIG] ================================================
 
