@@ -863,7 +863,7 @@
 			      (round (* 0.7
 					(frame-height)))
 			      (previous-window-any-frame)))
-    (load-file "~/.config/emacs/elfeed-feeds.el"))))
+    (load-file "~/.config/emacs/elfeed-feeds.el")))
 
 ;; command log
 (use-package command-log-mode
