@@ -547,24 +547,6 @@
   :after imenu-list
   :config (flimenu-global-mode 1))
 
-;; Neotree
-(use-package neotree
-  :ensure t
-  :commands neotree-toggle
-  :init (progn
-	  (define-key evil-normal-state-map (kbd "<tab>") 'neotree-toggle)
-	  (defun meain/neotree-mode-hook ()
-	    (define-key neotree-mode-map (kbd "k") 'neotree-previous-line)
-	    (define-key neotree-mode-map (kbd "j") 'neotree-next-line)
-	    (define-key neotree-mode-map (kbd "<return>") 'neotree-enter)
-	    (define-key neotree-mode-map (kbd "<spc>") 'neotree-quick-look)
-	    (define-key neotree-mode-map (kbd "R") 'neotree-refresh)
-	    (define-key neotree-mode-map (kbd "r") 'neotree-rename-node)
-	    (define-key neotree-mode-map (kbd "c") 'neotree-create-node)
-	    (define-key neotree-mode-map (kbd "d") 'neotree-delete-node))
-	  (setq neo-theme 'ascii)
-	  (add-hook 'neotree-mode-hook 'meain/neotree-mode-hook)))
-
 ;; Magit
 (use-package magit
   :ensure t
