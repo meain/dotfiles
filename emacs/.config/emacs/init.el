@@ -564,8 +564,10 @@
 			      nil)))
 
 ;; Git messenger
-(use-package git-messenger :ensure t
-  :commands git-messenger:popup-message)
+(use-package git-messenger
+  :ensure t
+  :commands git-messenger:popup-message
+  :init (evil-leader/set-key "G" 'git-messenger:popup-message))
 
 ;; Quick open scratch buffers
 (use-package scratch
