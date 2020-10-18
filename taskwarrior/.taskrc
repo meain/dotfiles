@@ -12,14 +12,14 @@ urgency.uda.tags.next.coefficient=20
 urgency.uda.tags.explore.coefficient=-1.0
 urgency.uda.project.dotfiles.coefficient=0.5
 urgency.uda.tags.fun.coefficient=-1.0
-urgency.uda.tags.work.coefficient=5.0
+urgency.uda.tags.saama.coefficient=5.0
 urgency.uda.tags.quick.coefficient=5.0
 urgency.uda.tags.shelved.coefficient=-2.0
 urgency.uda.project.personal.explore.coefficient=-0.5
 
-context.work=+work
+context.saama=+saama
 context.code=+code
-context.nowork=-work or project:chore
+context.nosaama=-saama or project:chore
 context.nocode=-code
 context.inbox=project:inbox
 
@@ -28,7 +28,7 @@ default.command=tiny
 default.project=inbox
 
 report.recur.columns=id,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due.relative,until.remaining,description,urgency
-report.recur.description=Detailed work stuff
+report.recur.description=Detailed saama stuff
 report.recur.filter=status:recurring
 report.recur.labels=ID,Active,Age,Deps,P,Project,Tag,Recur,S,Due,Until,Description,Urg
 report.recur.sort=urgency-
@@ -39,17 +39,17 @@ report.inbox.filter=(status:pending or status:waiting) and (proj:inbox)
 report.inbox.labels=ID,S,D,Project,Tags,Description,Due
 report.inbox.sort=urgency-
 
-report.work.columns=id,status.short,depends,project,tags.count,description.count,due.relative
-report.work.description=Work stuff
-report.work.filter=(status:pending or status:waiting) and (+work)
-report.work.labels=ID,S,D,Project,Tags,Description,Due
-report.work.sort=urgency-
+report.saama.columns=id,status.short,depends,project,tags.count,description.count,due.relative
+report.saama.description=Saama stuff
+report.saama.filter=(status:pending or status:waiting) and (+saama)
+report.saama.labels=ID,S,D,Project,Tags,Description,Due
+report.saama.sort=urgency-
 
-report.workk.columns=id,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due.relative,until.remaining,description,urgency
-report.workk.description=Detailed work stuff
-report.workk.filter=(status:pending or status:waiting) and (+work) and (limit:page)
-report.workk.labels=ID,Active,Age,Deps,P,Project,Tag,Recur,S,Due,Until,Description,Urg
-report.workk.sort=urgency-
+report.saamaa.columns=id,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due.relative,until.remaining,description,urgency
+report.saamaa.description=Detailed saama stuff
+report.saamaa.filter=(status:pending or status:waiting) and (+saama) and (limit:page)
+report.saamaa.labels=ID,Active,Age,Deps,P,Project,Tag,Recur,S,Due,Until,Description,Urg
+report.saamaa.sort=urgency-
 
 report.code.columns=id,depends,project,tags.count,description.count
 report.code.description=Personal projects
