@@ -782,7 +782,7 @@
 						      :sort-order newest-first)
 					       (:name "drafts" :query "tag:draft AND tag:inbox"
 						      :key "d")
-					       (:name "unread" :query "tag:unread AND tag:inbox"
+					       (:name "unread" :query "tag:unread AND tag:inbox AND -tag:python"
 						      :key "u")
 					       (:name "python" :query "tag:python AND tag:inbox"
 						      :key "p")
