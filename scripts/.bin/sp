@@ -14,9 +14,9 @@ projectsintag() {
         grep -vE '^(chore|inbox)$'
 }
 
-if projectsintag work | grep -q "$project"; then
-    echo task add proj:"$project" +work "$@"
-    task add proj:"$project" +work "$@"
+if projectsintag saama | grep -q "$project"; then
+    echo task add proj:"$project" +saama "$@"
+    task add proj:"$project" +saama "$@"
 elif projectsintag code | grep -q "$project"; then
     echo task add proj:"$project" +code "$@"
     task add proj:"$project" +code "$@"
