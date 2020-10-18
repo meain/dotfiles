@@ -7,3 +7,7 @@ alias et='pgrep Emacs || Emacs --bg-daemon;emacsclient -t'
 alias eclose='emacsclient -e "(save-buffers-kill-terminal)"'
 alias ekillserver='emacsclient -e "(kill-emacs)"'
 alias erestart='emacsclient -e "(save-buffers-kill-terminal)";Emacs --bg-daemon'
+
+
+alias m='pgrep Emacs || Emacs --bg-daemon;emacsclient -te "(notmuch)"'
+alias n='pgrep Emacs || Emacs --bg-daemon;emacsclient -te "(elfeed)"'
