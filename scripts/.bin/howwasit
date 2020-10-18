@@ -2,6 +2,8 @@
 
 set -e
 
+# Checkout `git worktree` btw.
+
 if [ -z "$1" ];then
     CHECKOUT_LOC="$(git log --oneline | fzf | cut -d' ' -f1)"
 else
