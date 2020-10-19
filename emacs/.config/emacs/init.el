@@ -88,7 +88,7 @@
 ;; Don't clutter my emacs conf
 ;; Will have to call load-file in case I actually need this on next startup
 ;; Just keeping it as a file so that I can copy paste
-(setq custom-file "~/.config/emacs/cusom-config.el")
+(setq custom-file "~/.config/emacs/custom-config.el")
 
 ;;; [VISUAL CONFIG] ==============================================
 
