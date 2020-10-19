@@ -11,7 +11,7 @@ tput civis
 # use `rc._forcecolor=on` for colors
 if command -v on-change; then
     on-change -c -t 5m "$HOME/.local/share/task" "$HOME/.taskrc" \
-        "tput civis && task limit:$(($(tput lines) - 1)) $*|tail -n+4|sed '/^$/d'|perl -pe 'chomp if eof'"
+        "tput civis && task limit:$(($(tput lines) - 1)) $* 2>/dev/null|tail -n+4|sed '/^$/d'|perl -pe 'chomp if eof'"
 else
-    watch -c -d -t "task limit:100 $* | tail -n+4|sed '$ d'"
+    watch -c -d -t "task limit:100 $* 2>/dev/null | tail -n+4|sed '$ d'"
 fi
