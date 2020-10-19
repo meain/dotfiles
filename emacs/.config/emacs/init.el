@@ -497,7 +497,7 @@
   :commands eglot-ensure
   :ensure t
   :hook ((python-mode . eglot-ensure)
-	 (rust-mode . eglot-ensure)):config
+	 (rust-mode . eglot-ensure)):init
   (progn
     (add-hook 'eglot-managed-mode-hook
 	      (lambda ()
