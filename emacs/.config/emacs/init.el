@@ -85,6 +85,11 @@
 ;; Don't create lockfiles
 (setq create-lockfiles nil)
 
+;; Don't clutter my emacs conf
+;; Will have to call load-file in case I actually need this on next startup
+;; Just keeping it as a file so that I can copy paste
+(setq custom-file "~/.config/emacs/cusom-config.el")
+
 ;;; [VISUAL CONFIG] ==============================================
 
 ;; Disable useless stuff
