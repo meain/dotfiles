@@ -713,7 +713,7 @@
 		       (equal major-mode 'vterm-mode)))
 		   (display-buffer-reuse-window display-buffer-at-bottom)
 		   (reusable-frames . visible)
-		   (window-height . 0.5)))
+		   (window-height . 0.8)))
     (evil-set-initial-state 'vterm-mode 'insert)
     (define-key vterm-mode-map (kbd "M-;") 'vterm-toggle)
     (define-key vterm-mode-map (kbd "M-k") 'previous-window-any-frame)))
