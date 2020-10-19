@@ -828,7 +828,7 @@
     (defun meain/elfeed-search-print (entry)
       "Print ENTRY to the buffer."
       (let* ((feed-width 25)
-	     (tags-width 25)
+	     (tags-width 35)
 	     (title (or (elfeed-meta entry :title)
 			(elfeed-entry-title entry)
 			""))
@@ -839,7 +839,7 @@
 			       (elfeed-feed-title feed))))
 	     (tags (mapcar #'symbol-name
 			   (elfeed-entry-tags entry)))
-	     (tags-str (concat "("
+	     (tags-str (concat " ("
 			       (mapconcat 'identity tags ",")
 			       ")"))
 	     (title-width (- (window-width)
