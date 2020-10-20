@@ -17,9 +17,8 @@ urgency.uda.tags.quick.coefficient=5.0
 urgency.uda.tags.shelved.coefficient=-2.0
 urgency.uda.project.personal.explore.coefficient=-0.5
 
-context.saama=+saama
 context.code=+code
-context.nosaama=-saama or project:chore
+context.nowork=-saama or project:chore
 context.nocode=-code
 context.inbox=project:inbox
 
