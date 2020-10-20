@@ -693,14 +693,16 @@
   :config (dtrt-indent-global-mode))
 
 (use-package indent-guide
-  :commands (indent-guide-global-mode indent-guide-mode):ensure
-  t
-  :init (progn
-	  (setq indent-guide-delay nil)
-	  (setq indent-guide-char "¦") ; Other chars │
-	  (setq indent-guide-recursive t)):config
+  :ensure t
+  :commands (indent-guide-global-mode indent-guide-mode):init
   (progn
-    (set-face-attribute 'indent-guide-face nil :foreground "#DDD")))
+    (setq indent-guide-delay nil)
+    (setq indent-guide-char "¦") ; Other chars │
+    (setq indent-guide-recursive t)
+    (evil-leader/set-key "b I" 'indent-guide-global-mode))
+  :config (progn
+	    (set-face-attribute 'indent-guide-face nil
+				:foreground "#DDD")))
 
 ;; we need vterm
 (use-package vterm
