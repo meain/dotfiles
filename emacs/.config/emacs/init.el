@@ -97,6 +97,7 @@
 (scroll-bar-mode -1)
 (menu-bar-mode -1)
 (setq inhibit-startup-screen t)
+;; (set-frame-parameter nil 'undecorated t)
 
 ;; Font (set-frame-font  "Profont for Powerline 16")
 (add-to-list 'default-frame-alist
