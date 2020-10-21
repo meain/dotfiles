@@ -827,6 +827,33 @@
       elfeed-search-mode-map
       (kbd "o")
       'elfeed-search-browse-url)
+    (evil-define-key 'visual
+      elfeed-search-mode-map
+      (kbd "o")
+      'elfeed-search-browse-url)
+    (evil-define-key 'normal
+      elfeed-search-mode-map
+      (kbd "d")
+      'meain/elfeed-search-filter)
+    (evil-define-key 'normal
+      elfeed-search-mode-map
+      (kbd "D")
+      (lambda ()
+	(interactive)
+	(setq elfeed-search-filter "@2-months-ago +unread")
+	(elfeed-search-update :force)))
+    (evil-define-key 'normal
+      elfeed-search-mode-map
+      (kbd "q")
+      'elfeed-db-unload)
+    (defun meain/elfeed-search-filter ()
+      (interactive)
+      (ivy-read "Apply tag: "
+		(elfeed-db-get-all-tags)
+		:action (lambda (x)
+			  (setq elfeed-search-filter (concatenate 'string "@2-months-ago +unread +"
+								  x))
+			  (elfeed-search-update :force))))
     (setq-default elfeed-search-filter "@2-months-ago +unread ")
     (setq elfeed-use-curl t)
     (setq elfeed-curl-max-connections 10)
