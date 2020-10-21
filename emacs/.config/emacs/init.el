@@ -786,6 +786,7 @@
 	    notmuch-search-mode-map
 	    (kbd "u")
 	    'evil-collection-notmuch-search-toggle-unread)
+	  (evil-leader/set-key "a n" 'notmuch)
 	  (setq notmuch-search-oldest-first nil)
 	  (setq message-auto-save-directory "/Users/meain/.local/share/mail")
 	  (setq notmuch-saved-searches (quote ((:name "imbox" :query "tag:imbox AND tag:inbox"
@@ -821,6 +822,7 @@
   :ensure t
   :commands (elfeed elfeed-update):config
   (progn
+    (evil-leader/set-key "a e" 'elfeed)
     (evil-define-key 'normal
       elfeed-search-mode-map
       (kbd "o")
