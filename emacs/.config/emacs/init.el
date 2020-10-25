@@ -257,7 +257,11 @@
 (global-set-key (kbd "M-w")
 		'delete-window)
 (global-set-key (kbd "M-o")
-		'other-window)
+		(lambda (&optional alternate)
+		  (interactive "P")
+		  (if alternate
+		      (call-interactively 'delete-other-windows)
+		    (other-window 1))))
 
 ;; Shrink and enlarge windows (not contextual as of now)
 ;; https://www.emacswiki.org/emacs/WindowResize
