@@ -947,7 +947,7 @@
   :commands global-command-log-mode
   :ensure t
   :init (progn
-	  (defun meain/command-log-mode ()
+	  (defun meain/command-log-start ()
 	    "Enable command-log-mode and open command-log buffer."
 	    (interactive)
 	    (global-command-log-mode)
