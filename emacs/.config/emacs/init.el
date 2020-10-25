@@ -1105,6 +1105,7 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 (evil-leader/set-key "b k" 'kill-buffer)
 (evil-leader/set-key "b o" 'previous-buffer)
 (evil-leader/set-key "b f" 'find-file)
+(evil-leader/set-key "b c" 'server-edit)
 
 ;; Bookmarks
 (setq bookmark-save-flag 1)
