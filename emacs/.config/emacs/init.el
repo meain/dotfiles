@@ -1104,6 +1104,7 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 ;; Buffer keybinds
 (evil-leader/set-key "b k" 'kill-buffer)
 (evil-leader/set-key "b o" 'previous-buffer)
+(evil-leader/set-key "b f" 'find-file)
 
 ;; Bookmarks
 (setq bookmark-save-flag 1)
