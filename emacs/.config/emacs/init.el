@@ -834,10 +834,18 @@
 		   (elfeed-db-save))))
   :config (progn
 	    (evil-leader/set-key "a e" 'elfeed)
+	    (setq browse-url-generic-program "open")
+	    (setq browse-url-generic-args (list "-g"))
 	    (evil-define-key 'normal
 	      elfeed-search-mode-map
 	      (kbd "o")
-	      'elfeed-search-browse-url)
+	      (lambda (&optional alternate)
+		(interactive)
+		(elfeed-search-browse-url t)))
+	    (evil-define-key 'normal
+	      elfeed-search-mode-map
+	      (kbd "O")
+		'elfeed-search-browse-url)
 	    (evil-define-key 'visual
 	      elfeed-search-mode-map
 	      (kbd "o")
