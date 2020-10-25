@@ -359,7 +359,8 @@
   (global-company-mode)
   :config (progn
 	    (setq company-dabbrev-downcase nil) ;; Do not lowercase my completions
-	    (setq company-idle-delay 0)))
+	    (setq company-idle-delay 0)
+	    (setq company-minimum-prefix-length 3)))
 
 ;; Ivy && Counsel
 (use-package counsel :ensure t)
