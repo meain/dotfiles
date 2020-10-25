@@ -46,7 +46,7 @@ fi
 
 # open with current time prefilled
 echo "== $(date '+%T') ==" >>"$FILE"
-"$EDITOR" "$FILE" +'normal! G'
+"$EDITOR" "$FILE"
 
 # save only if file changed
 if ! diff -q "$FILE" "$FILE.bkp" >/dev/null 2>&1; then
