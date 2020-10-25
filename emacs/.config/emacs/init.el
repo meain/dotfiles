@@ -920,6 +920,28 @@
 				      (round (* 0.7
 						(frame-height)))
 				      (previous-window-any-frame)))
+	    (defun meain/elfeed-enclosure-download (base-dir extension)
+	      "Download podcast to `BASE-DIR' with proper heirary using feed and title using `EXTENSION'"
+	      (start-process "*elfeed-enclosure-download*"
+			     "*elfeed-enclosure-download*"
+			     "/usr/local/bin/ts"
+			     "echo"
+			     "downloader"
+			     (elt (car (elfeed-entry-enclosures elfeed-show-entry))
+				  0)
+			     (format "%s/%s/%s%s"
+				     base-dir
+				     (elfeed-feed-title (elfeed-entry-feed elfeed-show-entry))
+				     (elfeed-entry-title elfeed-show-entry)
+				     extension))
+	      (message "Download started for %s - %s"
+		       (elfeed-feed-title (elfeed-entry-feed elfeed-show-entry))
+		       (elfeed-entry-title elfeed-show-entry)))
+	    (defun meain/elfeed-podcast-download-to-local ()
+	      "Download current feed(podcast) to usual dir."
+	      (interactive)
+	      (meain/elfeed-enclosure-download "/Users/meain/Desktop/newsboat/podcasts"
+					       ".mp3"))
 	    (load-file "~/.config/emacs/elfeed-feeds.el")))
 
 ;; command log
