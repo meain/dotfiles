@@ -924,8 +924,6 @@
 	      "Download podcast to `BASE-DIR' with proper heirary using feed and title using `EXTENSION'"
 	      (start-process "*elfeed-enclosure-download*"
 			     "*elfeed-enclosure-download*"
-			     "/usr/local/bin/ts"
-			     "echo"
 			     "downloader"
 			     (elt (car (elfeed-entry-enclosures elfeed-show-entry))
 				  0)
