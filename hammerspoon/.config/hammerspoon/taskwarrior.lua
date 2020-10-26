@@ -39,7 +39,7 @@ function obj.run()
 
     for i = #tasks - 1, 3, -1 do
         local words = {}
-        words[1], words[2], words[3] = tasks[i]:match(" ?(%d-) (%w+)(.+)")
+        words[1], words[2], words[3] = tasks[i]:match(" ?(%d-) ([^ ]+)(.+)")
 
         local text =
             styledtext.new(
