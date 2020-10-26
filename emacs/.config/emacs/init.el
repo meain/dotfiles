@@ -744,6 +744,12 @@
 	    :ensure t
 	    :config (image-diredx-async-mode)))
 
+;; outline mode settings (code folding)
+(use-package outline
+  :config (progn
+	    (add-hook 'prog-mode-hook 'outline-minor-mode)
+	    (evil-leader/set-key "d" 'outline-toggle-children)))
+
 ;;; [FILETYPE PUGINS] ===============================================
 
 (use-package rust-mode :ensure t
