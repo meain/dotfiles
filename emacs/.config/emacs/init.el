@@ -1148,6 +1148,27 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 				  4)))))
 (evil-leader/set-key "v" 'meain/vime)
 
+;; dasht docs
+(defun meain/dasht-docs (start end)
+  "Look up word at point in dasht.
+START and END comes from it being interactive."
+  (interactive "r")
+  (let ((thing (if (use-region-p)
+		   (buffer-substring start end)
+		 (thing-at-point 'symbol))))
+    (if (eq (length thing) 0)
+	(message "Nothing to look up.")
+      (progn
+	(meain/run-in-vterm (concatenate 'string
+					 "docs "
+					 thing
+					 " "
+					 (car (split-string (message "%s" major-mode)
+							    "-"))
+					 "||sleep 5"))
+	(message "Searching for %s" thing)))))
+(evil-leader/set-key "a d" 'meain/dasht-docs)
+
 ;; Narrow region
 (defun meain/narrow-region-dwim ()
   "Narrow or widen the region (dwim)."
