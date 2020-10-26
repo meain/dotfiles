@@ -851,7 +851,7 @@
 	    (evil-define-key 'normal
 	      elfeed-search-mode-map
 	      (kbd "O")
-		'elfeed-search-browse-url)
+	      'elfeed-search-browse-url)
 	    (evil-define-key 'visual
 	      elfeed-search-mode-map
 	      (kbd "o")
