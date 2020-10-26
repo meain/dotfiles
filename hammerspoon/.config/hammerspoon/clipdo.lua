@@ -6,7 +6,7 @@ local customshellrun = require('customshellrun')
 local utils = require("utils")
 
 -- TODO: move this to 'datafiles' dir and read from there
-local doables = {'add-to-gourcer', 'open', 'openorsearch', 'gource', 'tempg'}
+local doables = {'add-to-gourcer', 'open', 'openorsearch', 'gource', 'tempg', 'search melpa', 'search github', 'search npm'}
 
 function mod.clipdo()
     local function formatChoices(choices)
