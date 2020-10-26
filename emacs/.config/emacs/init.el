@@ -503,7 +503,8 @@
   :commands eglot-ensure
   :ensure t
   :hook ((python-mode . eglot-ensure)
-	 (rust-mode . eglot-ensure)):init
+	 (rust-mode . eglot-ensure)
+	 (go-mode . eglot-ensure)):init
   (progn
     (add-hook 'eglot-managed-mode-hook
 	      (lambda ()
@@ -753,6 +754,8 @@
 ;;; [FILETYPE PUGINS] ===============================================
 
 (use-package rust-mode :ensure t
+  :defer t)
+(use-package go-mode :ensure t
   :defer t)
 (use-package lua-mode :ensure t
   :defer t)
