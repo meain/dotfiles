@@ -714,7 +714,9 @@
 (use-package vterm
   :ensure t
   :commands vterm
-  :config (setq vterm-max-scrollback 100000))
+  :config (progn
+	    (setq vterm-max-scrollback 100000)
+	    (setq vterm-kill-buffer-on-exit t)))
 (use-package vterm-toggle
   :ensure t
   :commands vterm-toggle
@@ -725,6 +727,8 @@
     (setq vterm-toggle-scope 'projectile)
     (setq vterm-toggle-projectile-root t)
     (setq vterm-toggle-fullscreen-p nil)
+    (setq vterm-toggle-reset-window-configration-after-exit
+	  nil)
     ;; always open vterm in a bottom window
     (add-to-list 'display-buffer-alist
 		 '((lambda (bufname _)
@@ -735,7 +739,43 @@
 		   (window-height . 0.8)))
     (evil-set-initial-state 'vterm-mode 'insert)
     (define-key vterm-mode-map (kbd "M-;") 'vterm-toggle)
-    (define-key vterm-mode-map (kbd "M-k") 'previous-window-any-frame)))
+    (define-key vterm-mode-map (kbd "M-k") 'previous-window-any-frame)
+    ;; single use vterm
+    (defun meain/run-in-vterm-kill (process event)
+      "A process sentinel. Kills PROCESS's buffer if it is live."
+      (let ((b (process-buffer process)))
+	(and (buffer-live-p b)
+	     (kill-buffer b)
+	     (delete-window))))
+    (defun meain/run-in-vterm (command)
+      "Execute string COMMAND in a new vterm.
+
+Interactively, prompt for COMMAND with the current buffer's file
+name supplied. When called from Dired, supply the name of the
+file at point.
+
+Like `async-shell-command`, but run in a vterm for full terminal features.
+
+The new vterm buffer is named in the form `*foo bar.baz*`, the
+command and its arguments in earmuffs.
+
+When the command terminates, the shell remains open, but when the
+shell exits, the buffer is killed."
+      (interactive (list (let* ((f (cond
+				    (buffer-file-name)
+				    ((eq major-mode 'dired-mode)
+				     (dired-get-filename nil t))))
+				(filename (concat " "
+						  (shell-quote-argument (and f
+									     (file-relative-name f))))))
+			   (read-shell-command "Terminal command: "
+					       (cons filename 0)
+					       (cons 'shell-command-history 1)
+					       (list filename)))))
+      (with-current-buffer (vterm (concat "*" command "*"))
+	(set-process-sentinel vterm--process #'meain/run-in-vterm-kill)
+	(vterm-send-string (concatenate 'string command ";exit 0"))
+	(vterm-send-return)))))
 
 ;; ranger in emacs
 (use-package ranger
