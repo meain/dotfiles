@@ -30,7 +30,7 @@ hs.alert.defaultStyle.fillColor = { white = 0, alpha = 0.95 }
 
 -- taskwarrior
 local taskwarrior = require("taskwarrior")
-hs.hotkey.bind({"shift", "alt"}, "t", function()
+hs.hotkey.bind({"alt"}, "t", function()
   taskwarrior.run()
 end)
 
