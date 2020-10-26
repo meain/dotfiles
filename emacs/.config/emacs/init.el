@@ -1118,11 +1118,12 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 (global-set-key (kbd "M-N")
 		'meain/narrow-region-dwim)
 
-;; Buffer keybinds
+;; Buffer/Frame/Editing keybinds
 (evil-leader/set-key "b k" 'kill-buffer)
 (evil-leader/set-key "b o" 'previous-buffer)
 (evil-leader/set-key "b f" 'find-file)
 (evil-leader/set-key "b c" 'server-edit)
+(evil-leader/set-key "b d" 'delete-frame)
 
 ;; Bookmarks
 (setq bookmark-save-flag 1)
