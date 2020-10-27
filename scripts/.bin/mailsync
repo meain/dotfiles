@@ -46,6 +46,7 @@ notmuch tag +bullshit +nonotify -imbox 'folder:/INBOX/' 'from:no-reply@hello.geo
 notmuch tag +bullshit +nonotify -imbox 'folder:/INBOX/' 'from:info@geojit.com'
 notmuch tag +bullshit +nonotify -imbox 'folder:/INBOX/' 'from:communications@nsdl.com'
 notmuch tag +bullshit +nonotify -imbox 'folder:/INBOX/' 'from:no-reply@entertainment.bookmyshow.com'
+notmuch tag +bullshit +nonotify -imbox 'folder:/INBOX/' 'from:newsletter@incrediindia.in'
 
 # known
 notmuch tag +known +nonotify -imbox 'folder:/INBOX/' 'from:noreply@swiggy.in'
