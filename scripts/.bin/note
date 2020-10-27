@@ -68,6 +68,7 @@ case "$1" in
 "new") new "$2" ;;
 "temp") new temp "$(xxd -l5 -ps /dev/urandom)" ;;
 "stash") list stash "$2" ;;
+"vault") list vault "$2" ;;
 "idea") list idea "$2" ;;
 "quote") list quote "$(xxd -l5 -ps /dev/urandom)" ;;
 "list") list "$2" "$3" ;;
