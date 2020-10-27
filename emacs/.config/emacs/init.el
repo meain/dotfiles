@@ -343,7 +343,12 @@
 
 ;; flymake
 (use-package flymake
-  :init (add-hook 'find-file-hook 'flymake-find-file-hook))
+  :init (add-hook 'find-file-hook 'flymake-find-file-hook):config
+  (progn
+    (evil-set-command-property 'flymake-goto-next-error
+			       :jump t)
+    (evil-set-command-property 'flymake-goto-prev-error
+			       :jump t)))
 (use-package flymake-diagnostic-at-point
   :ensure t
   :after flymake
