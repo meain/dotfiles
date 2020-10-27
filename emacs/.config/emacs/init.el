@@ -1177,6 +1177,14 @@ START and END comes from it being interactive."
 	(message "Searching for %s" thing)))))
 (evil-leader/set-key "a d" 'meain/dasht-docs)
 
+;; Function to close Emacs in a more "proper" way
+(defun meain/kill-all-buffers ()
+  "Kill all active buffers."
+  (interactive)
+  (mapcar 'kill-buffer
+	  (buffer-list))
+  (delete-other-windows))
+
 ;; Narrow region
 (defun meain/narrow-region-dwim ()
   "Narrow or widen the region (dwim)."
