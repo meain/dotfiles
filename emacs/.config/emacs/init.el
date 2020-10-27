@@ -1182,11 +1182,11 @@ START and END comes from it being interactive."
 (global-set-key (kbd "M-N")
 		'meain/narrow-region-dwim)
 
-;; Buffer/Frame/Editing keybinds
+;; Buffer/Frame/Window keybinds
 (evil-leader/set-key "b k" 'kill-buffer)
 (evil-leader/set-key "b o" 'previous-buffer)
 (evil-leader/set-key "b f" 'find-file)
-(evil-leader/set-key "b c" 'server-edit)
+(evil-leader/set-key "s" 'server-edit)
 (evil-leader/set-key "b d" 'delete-frame)
 
 ;; Bookmarks
