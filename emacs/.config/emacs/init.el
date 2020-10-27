@@ -788,6 +788,9 @@ shell exits, the buffer is killed."
 ;; outline mode settings (code folding)
 (use-package outline
   :config (progn
+	    (set-display-table-slot standard-display-table
+				    'selective-display
+				    (string-to-vector " ..."))
 	    (add-hook 'prog-mode-hook 'outline-minor-mode)
 	    (evil-leader/set-key "d" 'outline-toggle-children)))
 
