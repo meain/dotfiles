@@ -28,5 +28,5 @@ elif [ "$1" = "rename" ]; then
         fzf --header "Select file" --preview "cat '$DIR/{1}'" |
         awk '{print $1}' | xargs -I{} mv "$DIR/{}" "$DIR/$REPLY"
 else
-    $EDITOR "$DIR/_$(xxd -l2 -ps /dev/urandom)" "+set ft=$1"
+    $EDITOR "$DIR/_$(xxd -l2 -ps /dev/urandom)"
 fi
