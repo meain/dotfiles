@@ -305,7 +305,9 @@
      ((equal major-mode 'imenu-list-major-mode)
       (evil-quit))
      ((equal major-mode 'vterm-mode)
-      (vterm-toggle))
+      (progn
+	(evil-insert 1)
+	(vterm-reset-cursor-point)))
      (t (previous-buffer)))))
 (define-key evil-normal-state-map (kbd "q") 'meain/kill-current-buffer-unless-scratch)
 
