@@ -46,7 +46,11 @@ notmuch tag +bullshit +nonotify -imbox 'tag:inbox' 'from:no-reply@hello.geojitco
 notmuch tag +bullshit +nonotify -imbox 'tag:inbox' 'from:info@geojit.com'
 notmuch tag +bullshit +nonotify -imbox 'tag:inbox' 'from:communications@nsdl.com'
 notmuch tag +bullshit +nonotify -imbox 'tag:inbox' 'from:no-reply@entertainment.bookmyshow.com'
-notmuch tag +bullshit +nonotify -imbox 'tag:inbox' 'from:newsletter@incrediindia.in'
+notmuch tag +bullshit +nonotify -imbox 'tag:inbox' 'from:uber@uber.com'
+
+# spam
+notmuch tag +spam +nonotify -imbox 'tag:inbox' 'from:newsletter@incrediindia.in'
+notmuch tag +spam +nonotify -imbox 'tag:inbox' 'from:newsletter@vedikindia.in'
 
 # known
 notmuch tag +known +nonotify -imbox 'tag:inbox' 'from:noreply@swiggy.in'
