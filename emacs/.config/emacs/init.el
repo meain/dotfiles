@@ -883,6 +883,20 @@ shell exits, the buffer is killed."
 	    notmuch-show-mode-map
 	    (kbd "u")
 	    'notmuch-show-browse-urls)
+	  (evil-define-key 'normal
+	    notmuch-show-mode-map
+	    (kbd "M-k")
+	    (lambda ()
+	      (interactive)
+	      (evil-force-normal-state)
+	      (evil-window-up 1)))
+	  (evil-define-key 'normal
+	    notmuch-show-mode-map
+	    (kbd "M-j")
+	    (lambda ()
+	      (interactive)
+	      (evil-force-normal-state)
+	      (evil-window-down 1)))
 	  (evil-leader/set-key "a n" 'notmuch)
 	  (setq notmuch-search-oldest-first nil)
 	  (setq message-auto-save-directory "/Users/meain/.local/share/mail")
