@@ -720,71 +720,57 @@
 ;; vterm setup
 (use-package vterm
   :ensure t
-  :commands vterm
-  :config (progn
-	    (setq vterm-max-scrollback 100000)
-	    (setq vterm-kill-buffer-on-exit t)
-	    (evil-set-initial-state 'vterm-mode 'insert)
-	    (defun meain/shell-name ()
-	      (format "*popup-shell-%s*"
-		      (projectile-project-name)))
-	    (defun meain/shell-toggle ()
-	      (interactive)
-	      (let ((shell-buffers (remove-if-not (lambda (x)
-						    (s-starts-with-p (meain/shell-name)
-								     (buffer-name x)))
-						  (buffer-list))))
-		(cond
-		 ((equal major-mode 'vterm-mode)
-		  (progn
-		    (delete-window)))
-		 ((eq (length shell-buffers) 0)
-		  (vterm (meain/shell-name)))
-		 (t (pop-to-buffer (car shell-buffers))))))
-	    (defun meain/shell-new ()
-	      (interactive)
-	      (delete-window)
-	      (vterm (meain/shell-name)))
-	    (defun meain/shell-other (&optional alternate)
-	      (interactive "P")
-	      (let ((shell-buffers (remove-if-not (lambda (x)
-						    (s-starts-with-p (meain/shell-name)
-								     (buffer-name x)))
-						  (buffer-list))))
-		(cond
-		 ((equal (length shell-buffers) 0)
-		  (message "No shells bruh!"))
-		 ((equal (length shell-buffers) 1)
-		  (message "Only one shell"))
-		 (alternate (ivy-read "Choose shell: "
-				      (mapcar (lambda (x)
-						(buffer-name x))
-					      shell-buffers)
-				      :action (lambda (x)
-						(switch-to-buffer x))))
-		 (t (switch-to-buffer (car (cdr shell-buffers)))))))
-	    (global-set-key (kbd "M-;")
-			    'meain/shell-toggle)
-	    (define-key vterm-mode-map (kbd "M-c") 'meain/shell-new)
-	    (define-key vterm-mode-map (kbd "M-m") 'meain/shell-other)
-	    (define-key vterm-mode-map (kbd "M-w") 'delete-window)
-	    (define-key vterm-mode-map (kbd "M-u") 'universal-argument)
-	    (define-key vterm-mode-map (kbd "M-;") 'vterm-toggle)
-	    (define-key vterm-mode-map (kbd "M-k") 'previous-window-any-frame)
-	    (add-to-list 'display-buffer-alist
-			 '((lambda (bufname _)
-			     (s-starts-with-p "*popup-shell" bufname))
-			   (display-buffer-reuse-window display-buffer-at-bottom)
-			   (reusable-frames . visible)
-			   (window-height . 0.8)))
-	    (defun meain/run-in-vterm-kill (process event)
-	      "A process sentinel. Kills PROCESS's buffer if it is live."
-	      (let ((b (process-buffer process)))
-		(and (buffer-live-p b)
-		     (kill-buffer b)
-		     (delete-window))))
-	    (defun meain/run-in-vterm (command)
-	      "Execute string COMMAND in a new vterm.
+  :init (progn
+	  (setq vterm-max-scrollback 100000)
+	  (setq vterm-kill-buffer-on-exit t)
+	  (global-set-key (kbd "M-;")
+			  'meain/shell-toggle)
+	  (defun meain/shell-name ()
+	    (format "*popup-shell-%s*"
+		    (projectile-project-name)))
+	  (defun meain/shell-toggle ()
+	    (interactive)
+	    (let ((shell-buffers (remove-if-not (lambda (x)
+						  (s-starts-with-p (meain/shell-name)
+								   (buffer-name x)))
+						(buffer-list))))
+	      (cond
+	       ((equal major-mode 'vterm-mode)
+		(progn
+		  (delete-window)))
+	       ((eq (length shell-buffers) 0)
+		(vterm (meain/shell-name)))
+	       (t (pop-to-buffer (car shell-buffers))))))
+	  (defun meain/shell-new ()
+	    (interactive)
+	    (delete-window)
+	    (vterm (meain/shell-name)))
+	  (defun meain/shell-other (&optional alternate)
+	    (interactive "P")
+	    (let ((shell-buffers (remove-if-not (lambda (x)
+						  (s-starts-with-p (meain/shell-name)
+								   (buffer-name x)))
+						(buffer-list))))
+	      (cond
+	       ((equal (length shell-buffers) 0)
+		(message "No shells bruh!"))
+	       ((equal (length shell-buffers) 1)
+		(message "Only one shell"))
+	       (alternate (ivy-read "Choose shell: "
+				    (mapcar (lambda (x)
+					      (buffer-name x))
+					    shell-buffers)
+				    :action (lambda (x)
+					      (switch-to-buffer x))))
+	       (t (switch-to-buffer (car (cdr shell-buffers)))))))
+	  (defun meain/run-in-vterm-kill (process event)
+	    "A process sentinel. Kills PROCESS's buffer if it is live."
+	    (let ((b (process-buffer process)))
+	      (and (buffer-live-p b)
+		   (kill-buffer b)
+		   (delete-window))))
+	  (defun meain/run-in-vterm (command)
+	    "Execute string COMMAND in a new vterm.
 
 Interactively, prompt for COMMAND with the current buffer's file
 name supplied. When called from Dired, supply the name of the
@@ -797,21 +783,34 @@ command and its arguments in earmuffs.
 
 When the command terminates, the shell remains open, but when the
 shell exits, the buffer is killed."
-	      (interactive (list (let* ((f (cond
-					    (buffer-file-name)
-					    ((eq major-mode 'dired-mode)
-					     (dired-get-filename nil t))))
-					(filename (concat " "
-							  (shell-quote-argument (and f
-										     (file-relative-name f))))))
-				   (read-shell-command "Terminal command: "
-						       (cons filename 0)
-						       (cons 'shell-command-history 1)
-						       (list filename)))))
-	      (with-current-buffer (vterm (concat "*popup-shell" command "*"))
-		(set-process-sentinel vterm--process #'meain/run-in-vterm-kill)
-		(vterm-send-string (concatenate 'string command ";exit 0"))
-		(vterm-send-return)))))
+	    (interactive (list (let* ((f (cond
+					  (buffer-file-name)
+					  ((eq major-mode 'dired-mode)
+					   (dired-get-filename nil t))))
+				      (filename (concat " "
+							(shell-quote-argument (and f
+										   (file-relative-name f))))))
+				 (read-shell-command "Terminal command: "
+						     (cons filename 0)
+						     (cons 'shell-command-history 1)
+						     (list filename)))))
+	    (with-current-buffer (vterm (concat "*popup-shell" command "*"))
+	      (set-process-sentinel vterm--process #'meain/run-in-vterm-kill)
+	      (vterm-send-string (concatenate 'string command ";exit 0"))
+	      (vterm-send-return)))):config
+  (progn
+    (evil-set-initial-state 'vterm-mode 'insert)
+    (define-key vterm-mode-map (kbd "M-c") 'meain/shell-new)
+    (define-key vterm-mode-map (kbd "M-m") 'meain/shell-other)
+    (define-key vterm-mode-map (kbd "M-w") 'delete-window)
+    (define-key vterm-mode-map (kbd "M-u") 'universal-argument)
+    (define-key vterm-mode-map (kbd "M-k") 'previous-window-any-frame)
+    (add-to-list 'display-buffer-alist
+		 '((lambda (bufname _)
+		     (s-starts-with-p "*popup-shell" bufname))
+		   (display-buffer-reuse-window display-buffer-at-bottom)
+		   (reusable-frames . visible)
+		   (window-height . 0.8)))))
 
 ;; ranger in emacs
 (use-package ranger
