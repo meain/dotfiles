@@ -879,6 +879,10 @@ shell exits, the buffer is killed."
 	    notmuch-search-mode-map
 	    (kbd "u")
 	    'evil-collection-notmuch-search-toggle-unread)
+	  (evil-define-key 'normal
+	    notmuch-show-mode-map
+	    (kbd "u")
+	    'notmuch-show-browse-urls)
 	  (evil-leader/set-key "a n" 'notmuch)
 	  (setq notmuch-search-oldest-first nil)
 	  (setq message-auto-save-directory "/Users/meain/.local/share/mail")
