@@ -511,17 +511,17 @@
   :ensure t
   :hook ((python-mode . eglot-ensure)
 	 (rust-mode . eglot-ensure)
-	 (go-mode . eglot-ensure)):init
+	 (go-mode . eglot-ensure)):config
   (progn
     (add-hook 'eglot-managed-mode-hook
 	      (lambda ()
-		(eldoc-mode -1)
-		(define-key evil-normal-state-map (kbd "K") 'eldoc-print-current-symbol-info)
-		(define-key evil-normal-state-map (kbd "g d") 'xref-find-definitions)
-		(define-key evil-normal-state-map (kbd "g r") 'xref-find-references)
-		(define-key evil-normal-state-map (kbd "g R") 'eglot-rename)
-		(define-key evil-normal-state-map (kbd "g ,") 'eglot-format-buffer)
-		(define-key evil-normal-state-map (kbd "g a") 'eglot-code-actions)))))
+		(eldoc-mode -1)))
+    (define-key evil-normal-state-map (kbd "K") 'eldoc-print-current-symbol-info)
+    (define-key evil-normal-state-map (kbd "g d") 'xref-find-definitions)
+    (define-key evil-normal-state-map (kbd "g r") 'xref-find-references)
+    (define-key evil-normal-state-map (kbd "g R") 'eglot-rename)
+    (define-key evil-normal-state-map (kbd "g ,") 'eglot-format-buffer)
+    (define-key evil-normal-state-map (kbd "g a") 'eglot-code-actions)))
 
 ;; xref changes
 (evil-define-key 'normal
