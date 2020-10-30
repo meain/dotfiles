@@ -750,7 +750,8 @@
 	  (defun meain/shell-new ()
 	    "Create a new shell for the current project."
 	    (interactive)
-	    (delete-window)
+	    (if (equal major-mode 'vterm-mode)
+		(delete-window))
 	    (vterm (meain/shell-name)))
 	  (defun meain/shell-other (&optional alternate)
 	    "Switch to previous shell in current project. Use ALTERNATE to get a list of shell in current project."
