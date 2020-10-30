@@ -726,9 +726,11 @@
 	  (global-set-key (kbd "M-;")
 			  'meain/shell-toggle)
 	  (defun meain/shell-name ()
+	    "Get the name of the shell based on project info."
 	    (format "*popup-shell-%s*"
 		    (projectile-project-name)))
 	  (defun meain/shell-toggle ()
+	    "Create/toggle shell for current project."
 	    (interactive)
 	    (let ((shell-buffers (remove-if-not (lambda (x)
 						  (s-starts-with-p (meain/shell-name)
@@ -742,10 +744,12 @@
 		(vterm (meain/shell-name)))
 	       (t (pop-to-buffer (car shell-buffers))))))
 	  (defun meain/shell-new ()
+	    "Create a new shell for the current project."
 	    (interactive)
 	    (delete-window)
 	    (vterm (meain/shell-name)))
 	  (defun meain/shell-other (&optional alternate)
+	    "Switch to previous shell in current project. Use ALTERNATE to get a list of shell in current project."
 	    (interactive "P")
 	    (let ((shell-buffers (remove-if-not (lambda (x)
 						  (s-starts-with-p (meain/shell-name)
