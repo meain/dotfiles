@@ -744,8 +744,8 @@
 	       ((equal major-mode 'vterm-mode)
 		(progn
 		  (delete-window)))
-	       ((eq (length shell-buffers) 0)
-		(vterm (meain/shell-name)))
+	       ((equal (length shell-buffers) 0)
+		(meain/shell-new))
 	       (t (pop-to-buffer (car shell-buffers))))))
 	  (defun meain/shell-new ()
 	    "Create a new shell for the current project."
