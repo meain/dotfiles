@@ -851,10 +851,12 @@
 (use-package markdown-mode
   :ensure t
   :defer t
-  :config (progn
-            (setq markdown-enable-html -1)
-            (setq markdown-fontify-code-blocks-natively
-                  t)))
+  :mode ("\\.md\\'" . gfm-mode):config
+  (progn
+    (setq markdown-enable-html -1)
+    (setq markdown-command "pandoc -t html5")
+    (setq markdown-fontify-code-blocks-natively
+          t)))
 (use-package csv-mode
   :ensure t
   :defer t
@@ -1139,6 +1141,32 @@
 (use-package wakatime-mode
   :ensure t
   :config (global-wakatime-mode))
+
+;; Markdown preivew
+(use-package simple-httpd
+  :ensure t
+  :config (setq httpd-port 7070)(setq httpd-host "localhost"))
+(use-package impatient-mode :ensure t
+  :commands impatient-mode)
+(defun meain/markdown-filter (buffer)
+  "Tempate for making pandoc output of BUFFER to markdown page."
+  (princ (with-temp-buffer
+           (let ((tmp (buffer-name)))
+             (set-buffer buffer)
+             (set-buffer (markdown tmp))
+             (format "<!DOCTYPE html><html><title>Markdown preview</title><link rel=\"stylesheet\" href = \"https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/3.0.1/github-markdown.min.css\"/>
+<body><article class=\"markdown-body\" style=\"box-sizing: border-box;min-width: 200px;max-width: 980px;margin: 0 auto;padding: 45px;\">%s</article></body></html>"
+                     (buffer-string))))
+         (current-buffer)))
+(defun meain/markdown-preview ()
+  "Preview markdown file in browser."
+  (interactive)
+  (unless (process-status "httpd")
+    (httpd-start))
+  (impatient-mode)
+  (imp-set-user-filter 'meain/markdown-filter)
+  (imp-visit-buffer))
+
 
 ;;; [CUSTOM FUNCTIONS] ==============================================
 
