@@ -107,12 +107,13 @@
 (setq inhibit-startup-screen t)
 ;; (set-frame-parameter nil 'undecorated t)
 
-;; Font (set-frame-font  "Profont for Powerline 16")
+;; Font (set-frame-font  "agave Nerd Font Mono 16")
+(setq font-family-default "agave Nerd Font Mono 16")
 (add-to-list 'default-frame-alist
-	     '(font . "Profont for Powerline 16"))
-(set-face-attribute 'default nil :font "Profont for Powerline 16")
-(set-face-attribute 'fixed-pitch nil :font "Profont for Powerline 16")
-(set-face-attribute 'variable-pitch nil :font "Profont for Powerline 16")
+             `(font . ,font-family-default))
+(set-face-attribute 'default nil :font font-family-default)
+(set-face-attribute 'fixed-pitch nil :font font-family-default)
+(set-face-attribute 'variable-pitch nil :font font-family-default)
 (defun meain/select-font ()
   "Set font after selection using ivy."
   (interactive)
