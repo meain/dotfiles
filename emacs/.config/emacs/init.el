@@ -770,19 +770,7 @@
 		   (kill-buffer b)
 		   (delete-window))))
 	  (defun meain/run-in-vterm (command)
-	    "Execute string COMMAND in a new vterm.
-
-Interactively, prompt for COMMAND with the current buffer's file
-name supplied. When called from Dired, supply the name of the
-file at point.
-
-Like `async-shell-command`, but run in a vterm for full terminal features.
-
-The new vterm buffer is named in the form `*foo bar.baz*`, the
-command and its arguments in earmuffs.
-
-When the command terminates, the shell remains open, but when the
-shell exits, the buffer is killed."
+	    "Execute string COMMAND in a new vterm and kill the shell once done.  Useful for interactive items."
 	    (interactive (list (let* ((f (cond
 					  (buffer-file-name)
 					  ((eq major-mode 'dired-mode)
