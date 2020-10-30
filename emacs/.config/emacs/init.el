@@ -94,6 +94,10 @@
 ;; Just keeping it as a file so that I can copy paste
 (setq custom-file "~/.config/emacs/custom-config.el")
 
+;; Tab settings
+(setq-default tab-width 4)
+(setq-default indent-tabs-mode nil)
+
 ;;; [VISUAL CONFIG] ==============================================
 
 ;; Disable useless stuff
