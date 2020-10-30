@@ -1284,7 +1284,9 @@ START and END comes from it being interactive."
 								  "/"))
 						   (propertize "%b"
 							       'face
-							       'font-lock-type-face
+							       (if (buffer-modified-p)
+								   'font-lock-string-face
+								 'font-lock-type-face)
 							       'help-echo
 							       (buffer-file-name))))
 				     '(:eval (when-let (vc vc-mode) ;; git branch
