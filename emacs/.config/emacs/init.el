@@ -44,7 +44,11 @@
 	  (setq-default evil-symbol-word-search t)):config
   (progn
     (evil-mode t)
-    (defalias #'forward-evil-word #'forward-evil-symbol)))
+    (defalias #'forward-evil-word #'forward-evil-symbol)
+    (evil-set-command-property 'evil-visual-char
+			       :jump t)
+    (evil-set-command-property 'evil-visual-line
+			       :jump t)))
 
 ;; Evil leader
 (use-package evil-leader
