@@ -854,8 +854,6 @@
 	    (setq markdown-enable-html -1)
 	    (setq markdown-fontify-code-blocks-natively
 		  t)))
-(use-package grip-mode :ensure t
-  :commands grip-mode) ;; markdown preview
 (use-package csv-mode
   :ensure t
   :defer t
