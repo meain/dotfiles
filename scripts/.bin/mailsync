@@ -76,6 +76,7 @@ notmuch tag +nonimportant +nonotify -imbox 'tag:inbox' 'from:pro@codecademy.com'
 notmuch tag +nonimportant +nonotify -imbox 'tag:inbox' 'from:no-reply@mailer.bookmyshow.com'
 notmuch tag +nonimportant +nonotify -imbox 'tag:inbox' 'from:post.bookmyshow.com'
 notmuch tag +nonimportant +nonotify -imbox 'tag:inbox' 'from:informations@hdfcbank.net'
+notmuch tag +nonimportant +nonotify -imbox 'tag:inbox' 'from:info@e.atlassian.com'
 
 # high volume chat like stuff
 notmuch tag +chat +nonotify -imbox 'tag:inbox' 'from:noreply@zulip.com'
