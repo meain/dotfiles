@@ -794,7 +794,7 @@
 						     (cons filename 0)
 						     (cons 'shell-command-history 1)
 						     (list filename)))))
-	    (with-current-buffer (vterm (concat "*popup-shell" command "*"))
+	    (with-current-buffer (vterm (concat "*popup-shell-" command "*"))
 	      (set-process-sentinel vterm--process #'meain/run-in-vterm-kill)
 	      (vterm-send-string (concatenate 'string command ";exit 0"))
 	      (vterm-send-return)))):config
