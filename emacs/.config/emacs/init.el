@@ -897,6 +897,19 @@
 	      (evil-force-normal-state)
 	      (evil-window-down 1)))
 	  (evil-leader/set-key "a n" 'notmuch)
+	  (defun meain/notmuch-show-close-all-but-unread ()
+	    "Close all messages until the first unread item."
+	    (interactive)
+	    (save-excursion
+	      (goto-char (point-min))
+	      (cl-loop do
+		       (notmuch-show-message-visible (notmuch-show-get-message-properties)
+						     nil)
+		       until
+		       (or (not (notmuch-show-goto-message-next))
+			   (member "unread" (plist-get (notmuch-show-get-message-properties)
+						       :tags)))))
+	    (force-window-update))
 	  (setq notmuch-search-oldest-first nil)
 	  (setq notmuch-message-headers-visible nil)
 	  (setq message-auto-save-directory "/Users/meain/.local/share/mail")
