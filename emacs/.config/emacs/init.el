@@ -228,7 +228,16 @@
                 'universal-argument)
 
 ;; Eval last sexp
-(evil-leader/set-key "x" 'eval-last-sexp)
+(defun meain/eval-last-sexp (&optional alternate)
+  "Do `eval-last-sexp'.  Pass ALTERNATE to go to end of line and do the same."
+  (interactive "P")
+  (if alternate
+      (save-excursion
+        (end-of-line)
+        (eval-last-sexp nil))
+    (eval-last-sexp nil)))
+(evil-leader/set-key ";" 'meain/eval-last-sexp)
+
 
 ;; Window mappings
 (global-set-key (kbd "M-l")
