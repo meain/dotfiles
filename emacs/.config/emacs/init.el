@@ -707,7 +707,8 @@
 ;; which-key mode (until I fully figure out emacs)
 (use-package which-key
   :ensure t
-  :config (which-key-mode))
+  :diminish :config
+  (which-key-mode))
 
 ;; Expand region
 (use-package expand-region
@@ -722,7 +723,8 @@
 ;; dtrt (atuo find indend setting)
 (use-package dtrt-indent
   :ensure t
-  :config (dtrt-indent-global-mode))
+  :diminish :config
+  (dtrt-indent-global-mode))
 
 (use-package indent-guide
   :ensure t
@@ -837,12 +839,13 @@
 
 ;; outline mode settings (code folding)
 (use-package outline
-  :config (progn
-            (set-display-table-slot standard-display-table
-                                    'selective-display
-                                    (string-to-vector " ..."))
-            (add-hook 'prog-mode-hook 'outline-minor-mode)
-            (evil-leader/set-key "d" 'outline-toggle-children)))
+  :diminish :config
+  (progn
+    (set-display-table-slot standard-display-table
+                            'selective-display
+                            (string-to-vector " ..."))
+    (add-hook 'prog-mode-hook 'outline-minor-mode)
+    (evil-leader/set-key "d" 'outline-toggle-children)))
 
 ;;; [FILETYPE PUGINS] ===============================================
 
@@ -1179,7 +1182,8 @@
 (use-package beacon
   :ensure t
   :defer t
-  :init (beacon-mode t))
+  :diminish :init
+  (beacon-mode t))
 
 ;; Writing mode
 (use-package writeroom-mode :ensure t
@@ -1212,7 +1216,8 @@
 ;; wakatime
 (use-package wakatime-mode
   :ensure t
-  :config (global-wakatime-mode))
+  :diminish :config
+  (global-wakatime-mode))
 
 ;; Markdown preivew
 (use-package simple-httpd
