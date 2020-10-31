@@ -445,7 +445,7 @@
 (use-package helpful
   :ensure t
   :commands (helpful-callable helpful-variable helpful-at-point
-                              helpful-key):config
+                              helpful-key):init
   (progn
     (evil-leader/set-key "h p" 'helpful-at-point)
     (evil-leader/set-key "h k" 'helpful-key)
