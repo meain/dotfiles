@@ -18,6 +18,11 @@ else
     FILE="$(echo "$1" | sed 's|.asc$||')"
 fi
 
+cleanup() {
+    rm "$FILE" "$FILE.bkp"
+}
+trap cleanup EXIT
+
 # view and exit if view
 if [ "$view" = 1 ]; then
     gpg --decrypt "$FILE.asc" 2>/dev/null
@@ -59,5 +64,3 @@ if ! diff -q "$FILE" "$FILE.bkp" >/dev/null 2>&1; then
 else
     echo "No updates."
 fi
-
-rm "$FILE" "$FILE.bkp"
