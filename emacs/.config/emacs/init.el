@@ -171,6 +171,7 @@
 
 ;; Disable line wrapping
 (setq-default truncate-lines 1)
+(evil-leader/set-key "b W" 'toggle-truncate-lines)
 
 ;; Cursor blink
 (blink-cursor-mode -1)
