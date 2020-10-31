@@ -1,6 +1,8 @@
 #!/bin/sh
 
+# super simple watch replacement
+
 set -e
 
 R="$RANDOM"
-while true; do "$@" > /tmp/nowyouseeme-$R && clear && cat /tmp/nowyouseeme-$R; sleep 1; done
+while true; do eval "$@" > /tmp/nowyouseeme-$R && clear && cat /tmp/nowyouseeme-$R; sleep 1; done
