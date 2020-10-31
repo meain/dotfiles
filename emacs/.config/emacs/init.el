@@ -1366,6 +1366,37 @@ START and END comes from it being interactive."
         (message "Searching for %s" thing)))))
 (evil-leader/set-key "a d" 'meain/dasht-docs)
 
+;; vim-printer remake in elisp
+(defun meain/quick-print (&optional print-above)
+  "Quickly print the variable your cursor is under.  Pass PRINT-ABOVE to print above current line."
+  (interactive "P")
+  (let ((thing-to-print (symbol-at-point)))
+    (if print-above
+        (progn
+          (beginning-of-line)
+          (newline-and-indent)
+          (previous-line)
+          (indent-relative))
+      (progn
+        (end-of-line)
+        (newline-and-indent)))
+    (insert (cond
+             ((equal major-mode 'emacs-lisp-mode)
+              (format "(message \"%s: %%s\" %s)" thing-to-print
+                      thing-to-print thing-to-print))
+             ((equal major-mode 'rust-mode)
+              (format "println!(\"%s: {:?}\", %s)" thing-to-print
+                      thing-to-print))
+             ((equal major-mode 'go-mode)
+              (format "fmt.Println(\"%s:\", %s);" thing-to-print
+                      thing-to-print))
+             ((equal major-mode 'shell-script-mode)
+              (format "echo \"%s:\" %s" thing-to-print thing-to-print))
+             ((equal major-mode 'python-mode)
+              (format "print(\"%s:\", %s)" thing-to-print
+                      thing-to-print))))))
+(define-key evil-normal-state-map (kbd "g p") 'meain/quick-print)
+
 ;; More shell "apps"
 (evil-leader/set-key "a H"
   (lambda ()
