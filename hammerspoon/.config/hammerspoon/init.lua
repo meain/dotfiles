@@ -196,6 +196,11 @@ hs.hotkey.bind({"cmd", "shift"}, "g", function()
   focusandback("telegram")
 end)
 
+-- quick window switching
+hs.hotkey.bind({"alt"}, "'", function()
+  hs.eventtap.keyStroke({"cmd"}, 'tab')
+end)
+
 -- cmd+t from anywhere to open a new tab in browser
 browsernewtab = hs.hotkey.bind({"cmd"}, "t", function()
     local current_app = hs.application("firefox")
