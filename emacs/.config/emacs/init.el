@@ -1326,7 +1326,8 @@
         (set-window-configuration meain/window-configuration))
     (setq meain/window-configuration (current-window-configuration))
     (delete-other-windows)))
-(global-set-key (kbd "M-m") 'meain/monacle-mode)
+(global-set-key (kbd "M-m")
+                'meain/monacle-mode)
 (evil-leader/set-key "m" 'meain/monacle-mode)
 
 ;; vime functionality within emacs
