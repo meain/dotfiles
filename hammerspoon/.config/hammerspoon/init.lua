@@ -198,7 +198,17 @@ end)
 
 -- quick window switching
 hs.hotkey.bind({"alt"}, "'", function()
-  hs.eventtap.keyStroke({"cmd"}, 'tab')
+    local emacs = hs.application.find("Emacs")
+    local current_app = hs.window.focusedWindow()
+    if emacs == nil then
+      hs.application.launchOrFocus("firefox")
+      return
+    end
+    if current_app:title() == "Emacs" then
+      hs.application.launchOrFocus("firefox")
+    else
+      emacs:getWindow("Emacs"):focus()
+    end
 end)
 
 -- cmd+t from anywhere to open a new tab in browser
