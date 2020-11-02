@@ -12,6 +12,19 @@ venv() {
     fi
 
     create() {
+        # get name first
+        if [ -z "$1" ]; then
+            printf "Virtualenv name (%s): " "$(basename "$(pwd)")"
+            read -r
+            if [ -z "$REPLY" ]; then
+                VIRTUALENVNAME="$(basename "$(pwd)")"
+            else
+                VIRTUALENVNAME="$REPLY"
+            fi
+        else
+            VIRTUALENVNAME=$1
+        fi
+
         # select from available versions
         PYVERSION=$(pyenv versions | {
             echo "  Default ($DEFAULT_VENV_PYTHON_VERSION)"
@@ -31,17 +44,6 @@ venv() {
         PYNAME=$(readlink "$PYENV_ROOT/versions/$PYVERSION/bin/python")
 
         [ -z "$PYVERSION" ] && return 0
-        if [ -z "$1" ]; then
-            printf "Virtualenv name (%s): " "$(basename "$(pwd)")"
-            read -r
-            if [ -z "$REPLY" ]; then
-                VIRTUALENVNAME="$(basename "$(pwd)")"
-            else
-                VIRTUALENVNAME="$REPLY"
-            fi
-        else
-            VIRTUALENVNAME=$1
-        fi
 
         echo "Creating new virtualenv at $VENV_HOME/$VIRTUALENVNAME"
         virtualenv "$VENV_HOME/$VIRTUALENVNAME" -p "$PYENV_ROOT/versions/$PYVERSION/bin/$PYNAME" &&
