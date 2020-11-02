@@ -64,6 +64,9 @@
 
 ;;; [BASIC SETTINGS] =============================================
 
+;; Consistent window title
+(setq frame-title-format '("Emacs")) ; needed by hammerspoon
+
 ;; Quicker yes or no
 (fset 'yes-or-no-p 'y-or-n-p)
 
