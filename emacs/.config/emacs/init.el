@@ -1257,6 +1257,16 @@
   (imp-visit-buffer))
 
 
+;; Persistent scratch
+;; need defer to not mess with statusline update
+(use-package persistent-scratch
+  :ensure t
+  :defer 1
+  :config (progn
+            (persistent-scratch-setup-default)
+            (persistent-scratch-autosave-mode 1)))
+
+
 ;;; [CUSTOM FUNCTIONS] ==============================================
 
 ;; host picker
