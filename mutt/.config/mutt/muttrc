@@ -18,6 +18,7 @@ set mailcap_path = $HOME/.config/mutt/mailcap
 set signature = $HOME/.config/mutt/signature
 set query_command = "$HOME/.bin/mailcomplete '%s'"
 set attach_save_dir = "$HOME/Downloads"
+set collapse_all = yes
 
 timeout-hook 'exec sync-mailbox'
 startup-hook '`/Users/meain/.bin/mailsync > /dev/null 2>&1 &`'
