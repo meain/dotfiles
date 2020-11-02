@@ -241,7 +241,9 @@
       (save-excursion
         (end-of-line)
         (eval-last-sexp nil))
-    (eval-last-sexp nil)))
+    (save-excursion
+      (search-forward ")")
+      (eval-last-sexp nil))))
 (evil-leader/set-key ";" 'meain/eval-last-sexp)
 
 
