@@ -1376,8 +1376,10 @@ START and END comes from it being interactive."
                     :preselect (car (split-string (message "%s" major-mode)
                                                   "-")):action
                     (lambda (ds)
+                      (message "Looking up %s in %s" lookup-term
+                               ds)
                       (meain/run-in-vterm (concatenate 'string "docs " lookup-term " "
-                                                       ds "||sleep 5")))))))))
+                                                       ds)))))))))
 (evil-leader/set-key "a d" 'meain/dasht-docs)
 
 ;; vim-printer remake in elisp
