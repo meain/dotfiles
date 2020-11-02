@@ -3,11 +3,11 @@
 set -e
 
 export NOTMUCH_CONFIG="$HOME/.config/notmuch/config"
-if [ ! "$1" = "retag" ];then
-    GPASS="${GOOGLE_PASSWORD:-$(keypuller)}"
-    GOOGLE_PASSWORD="$GPASS" mbsync -a || 
-        (touch /tmp/mailpullfailed && exit 1)
-    [ -f /tmp/mailpullfailed ] && rm /tmp/mailpullfailed
+if [ ! "$1" = "retag" ]; then
+	GPASS="${GOOGLE_PASSWORD:-$(keypuller)}"
+	GOOGLE_PASSWORD="$GPASS" mbsync -a ||
+		(touch /tmp/mailpullfailed && exit 1)
+	[ -f /tmp/mailpullfailed ] && rm /tmp/mailpullfailed
 fi
 
 notmuch new 2>/dev/null
@@ -18,6 +18,11 @@ notmuch new 2>/dev/null
 
 # start with everything in imbox
 notmuch tag +imbox tag:inbox
+
+# tag all known spams with +spam and drop imbox label
+notmuch address --output address tag:spam |
+	sort | uniq |
+	xargs -I{} notmuch tag -imbox +spam 'from:{}'
 
 #github
 notmuch tag +github 'tag:inbox' 'from:notifications@github.com'
