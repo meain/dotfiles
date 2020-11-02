@@ -204,7 +204,7 @@ hs.hotkey.bind({"alt"}, "'", function()
       hs.application.launchOrFocus("firefox")
       return
     end
-    if current_app:title() == "Emacs" then
+    if string.match(current_app:title(), "Emacs") then
       hs.application.launchOrFocus("firefox")
     else
       emacs:activate()
