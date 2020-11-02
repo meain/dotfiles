@@ -1363,14 +1363,15 @@ START and END comes from it being interactive."
     (if (eq (length thing) 0)
         (message "Nothing to look up.")
       (progn
-        (meain/run-in-vterm (concatenate 'string
-                                         "docs "
-                                         thing
-                                         " "
-                                         (car (split-string (message "%s" major-mode)
-                                                            "-"))
-                                         "||sleep 5"))
-        (message "Searching for %s" thing)))))
+        (let ((lookup-term (read-from-minibuffer "Lookup term: " thing)))
+          (ivy-read "Docset: "
+                    (split-string (shell-command-to-string "dasht-docsets"))
+                    :require-match t
+                    :preselect (car (split-string (message "%s" major-mode)
+                                                  "-")):action
+                    (lambda (ds)
+                      (meain/run-in-vterm (concatenate 'string "docs " lookup-term " "
+                                                       ds "||sleep 5")))))))))
 (evil-leader/set-key "a d" 'meain/dasht-docs)
 
 ;; vim-printer remake in elisp
