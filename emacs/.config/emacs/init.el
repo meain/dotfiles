@@ -757,9 +757,9 @@
             "Get the name of the shell based on project info."
             (format "*popup-shell-%s*"
                     (projectile-project-name)))
-          (defun meain/shell-toggle ()
+          (defun meain/shell-toggle (&optional rerun-previous)
             "Create/toggle shell for current project."
-            (interactive)
+            (interactive "P")
             (let ((shell-buffers (remove-if-not (lambda (x)
                                                   (s-starts-with-p (meain/shell-name)
                                                                    (buffer-name x)))
@@ -770,7 +770,12 @@
                   (delete-window)))
                ((equal (length shell-buffers) 0)
                 (meain/shell-new))
-               (t (pop-to-buffer (car shell-buffers))))))
+               (t (progn
+                    (pop-to-buffer (car shell-buffers))
+                    (if rerun-previous
+                        (progn
+                          (vterm-send-up)
+                          (vterm-send-return))))))))
           (defun meain/shell-new ()
             "Create a new shell for the current project."
             (interactive)
