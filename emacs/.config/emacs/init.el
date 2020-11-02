@@ -489,6 +489,10 @@
   :ensure t
   :commands rg
   :init (progn
+          (setq counsel-rg-base-command '("rg" "-M" "240" "--with-filename" "--no-heading"
+                                          "--line-number" "--color" "never" "--hidden"
+                                          "--follow" "--glob" "!.git/*" "%s"))
+          (setq rg-command-line-flags '("--hidden" "--follow"))
           (defun meain/rg-search (&optional alternate)
             "Choose between counsel-rg or rg based on ALTERNATE."
             (interactive "P")
