@@ -168,6 +168,11 @@
 
 ;; Keep files in sync with filesystem
 (global-auto-revert-mode t)
+(setq auto-revert-interval 2)
+(setq auto-revert-check-vc-info t)
+(setq global-auto-revert-non-file-buffers
+      t)
+(setq auto-revert-verbose t)
 
 ;; Disable line wrapping
 (setq-default truncate-lines 1)
