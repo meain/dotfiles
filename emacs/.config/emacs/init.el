@@ -107,8 +107,8 @@
 (setq inhibit-startup-screen t)
 ;; (set-frame-parameter nil 'undecorated t)
 
-;; Font (set-frame-font  "agave Nerd Font Mono 16")
-(setq font-family-default "agave Nerd Font Mono 16")
+;; Font (set-frame-font  "DankMono Nerd Font 15")
+(setq font-family-default "DankMono Nerd Font 15")
 (add-to-list 'default-frame-alist
              `(font . ,font-family-default))
 (set-face-attribute 'default nil :font font-family-default)
