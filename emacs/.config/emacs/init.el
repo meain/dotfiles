@@ -979,8 +979,12 @@
             'evil-collection-notmuch-search-toggle-unread)
           (evil-define-key 'normal
             notmuch-show-mode-map
-            (kbd "u")
+            (kbd "U")
             'notmuch-show-browse-urls)
+          (evil-define-key 'normal
+            notmuch-show-mode-map
+            (kbd "u")
+            'meain/notmuch-show-close-all-but-unread)
           (evil-define-key 'normal
             notmuch-show-mode-map
             (kbd "M-k")
