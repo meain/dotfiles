@@ -1381,10 +1381,14 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
                 :action (lambda (x)
                           (find-file (concat "~/.cache/vime/"
                                              (car (split-string x))))):caller'meain/vime-open)
-    (find-file (concat "~/.cache/vime/_"
-                       (substring (uuid-string)
-                                  0
-                                  4)))))
+    (progn
+      (find-file (concat "~/.cache/vime/_"
+                         (substring (uuid-string)
+                                    0
+                                    4)))
+      (insert (format ":date %s\n:name "
+                      (format-time-string "%d/%m/%Y")))
+      (evil-insert 1))))
 (evil-leader/set-key "v" 'meain/vime)
 
 ;; dasht docs
