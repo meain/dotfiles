@@ -1003,15 +1003,14 @@
           (defun meain/notmuch-show-close-all-but-unread ()
             "Close all messages until the first unread item."
             (interactive)
-            (save-excursion
-              (goto-char (point-min))
-              (cl-loop do
-                       (notmuch-show-message-visible (notmuch-show-get-message-properties)
-                                                     nil)
-                       until
-                       (or (not (notmuch-show-goto-message-next))
-                           (member "unread" (plist-get (notmuch-show-get-message-properties)
-                                                       :tags)))))
+            (goto-char (point-min))
+            (cl-loop do
+                     (notmuch-show-message-visible (notmuch-show-get-message-properties)
+                                                   nil)
+                     until
+                     (or (not (notmuch-show-goto-message-next))
+                         (member "unread" (plist-get (notmuch-show-get-message-properties)
+                                                     :tags))))
             (force-window-update))
           ;; (add-hook 'notmuch-show-mode-hook 'meain/notmuch-show-close-all-but-unread)
           (setq notmuch-search-oldest-first nil)
