@@ -437,7 +437,6 @@
     (evil-leader/set-key "h o" 'counsel-describe-symbol)
     (evil-leader/set-key "h l" 'counsel-find-library)
     (evil-leader/set-key "h i" 'counsel-info-lookup-symbol)
-    (define-key evil-normal-state-map (kbd "M-f") 'counsel-M-x)
     (define-key evil-normal-state-map (kbd "_") 'dired-jump)
     (define-key evil-normal-state-map (kbd "-") 'counsel-find-file)
     (define-key ivy-minibuffer-map (kbd "C-j") 'ivy-immediate-done)))
@@ -1478,6 +1477,11 @@ START and END comes from it being interactive."
 (setq bookmark-save-flag 1)
 (evil-leader/set-key "b m" 'bookmark-jump)
 (evil-leader/set-key "b M" 'bookmark-set)
+
+;; Meta-f keybinds
+(global-unset-key (kbd "M-f")) ; have to unset first
+(global-set-key (kbd "M-f M-b")
+                'meain/buffer-switcher)
 
 ;; Better modeline
 (setq-default mode-line-format (list '(:eval (if (eq 'emacs evil-state)
