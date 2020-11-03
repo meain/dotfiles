@@ -1492,6 +1492,38 @@ START and END comes from it being interactive."
 (global-set-key (kbd "M-f M-b")
                 'meain/buffer-switcher)
 
+;; Open current file in Github
+(defun meain/github-url (&optional no-linenumber)
+  "Open the Github page for the current file.  Pass NO-LINENUMBER to not add a line number."
+  (interactive "P")
+  (let* ((git-url (replace-regexp-in-string "\.git$"
+                                            ""
+                                            (string-replace "git@github.com:"
+                                                            "https://github.com/"
+                                                            (car (split-string (shell-command-to-string "git config --get remote.origin.url")
+                                                                               "\n")))))
+         (git-branch (car (split-string (shell-command-to-string "git rev-parse --abbrev-ref HEAD")
+                                        "\n")))
+         (web-url (format "%s/blob/%s/%s%s"
+                          git-url
+                          git-branch
+                          (string-replace default-directory
+                                          ""
+                                          (buffer-file-name))
+                          (if no-linenumber
+                              ""
+                            (format "#L%s"
+                                    (line-number-at-pos))))))
+    (progn
+      (message "%s coped to clipboard." web-url)
+      (start-process-shell-command "pbcopy-gh"
+                                   "*pbcopy-gh*"
+                                   (format "echo '%s'|pbcopy" web-url))
+      (start-process-shell-command "gh"
+                                   "*gh*"
+                                   (format "open '%s'" web-url)))))
+(evil-leader/set-key "b G" 'meain/github-url)
+
 ;; Better modeline
 (setq-default mode-line-format (list '(:eval (if (eq 'emacs evil-state)
                                                  "! "
