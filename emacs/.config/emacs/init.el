@@ -400,7 +400,16 @@
   :config (progn
             (setq company-dabbrev-downcase nil) ;; Do not lowercase my completions
             (setq company-idle-delay 0)
-            (setq company-minimum-prefix-length 3)))
+            (setq company-tooltip-maximum-width 35)
+            (setq company-tooltip-align-annotations t)
+            (setq company-minimum-prefix-length 2)))
+
+;; Company quickhelp
+(use-package company-quickhelp ; Show help in tooltip
+  :ensure t
+  :defer t
+  :after company
+  :init (company-quickhelp-mode))
 
 ;; Ivy && Counsel
 (use-package counsel :ensure t)
