@@ -552,6 +552,7 @@
   :ensure t
   :hook ((python-mode . eglot-ensure)
          (rust-mode . eglot-ensure)
+         (js-mod . eglot-ensure)
          (go-mode . eglot-ensure)):config
   (progn
     (add-hook 'eglot-managed-mode-hook
@@ -1441,6 +1442,9 @@ START and END comes from it being interactive."
                       thing-to-print))
              ((equal major-mode 'lua-mode)
               (format "print(\"%s:\", %s)" thing-to-print
+                      thing-to-print))
+             ((equal major-mode 'js-mode)
+              (format "console.log(\"%s:\", %s)" thing-to-print
                       thing-to-print))
              ((equal major-mode 'shell-script-mode)
               (format "echo \"%s:\" %s" thing-to-print thing-to-print))
