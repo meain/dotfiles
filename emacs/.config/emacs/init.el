@@ -1054,12 +1054,12 @@
                                                       :sort-order newest-first))))))
 
 ;; sending emails
-;; (setq message-kill-buffer-on-exit t) ; kill buffer after sending mail
-;; (setq mail-specify-envelope-from t) ; Settings to work with msmtp
-;; (setq message-sendmail-envelope-from 'header)
-;; (setq mail-envelope-from 'header)
-;; (setq notmuch-fcc-dirs "G/[Gmail]Sent Mail") ; stores sent mail to the specified directory
-;; (setq message-directory "G/[Gmail]Drafts") ; stores postponed messages to the specified directory
+(setq message-kill-buffer-on-exit t) ; kill buffer after sending mail
+(setq mail-specify-envelope-from t) ; Settings to work with msmtp
+(setq message-sendmail-envelope-from 'header)
+(setq mail-envelope-from 'header)
+(setq notmuch-fcc-dirs "[Gmail].Sent Mail") ; stores sent mail to the specified directory
+(setq message-directory "[Gmail].Drafts") ; stores postponed messages to the specified directory
 (setq sendmail-program "msmtp")
 (setq send-mail-function 'smtpmail-send-it)
 (setq message-sendmail-f-is-evil t)
