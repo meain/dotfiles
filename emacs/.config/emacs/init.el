@@ -372,6 +372,10 @@
 
 ;;; [OTHER PACKAGES] =============================================
 
+;; abbrev mode
+(use-package abbrev
+  :init (setq-default abbrev-mode t))
+
 ;; flymake
 (use-package flymake
   :init (add-hook 'find-file-hook 'flymake-find-file-hook):config
