@@ -790,6 +790,8 @@
                     (pop-to-buffer (car shell-buffers))
                     (if rerun-previous
                         (progn
+                          (vterm-clear)
+                          (vterm-clear-scrollback)
                           (vterm-send-up)
                           (vterm-send-return))))))))
           (defun meain/shell-new ()
