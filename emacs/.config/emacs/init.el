@@ -331,7 +331,7 @@
     (cond
      ((derived-mode-p 'prog-mode)
       (evil-quit))
-     ((equal major-mode 'imenu-list-major-mode)
+     ((member major-mode '(imenu-list-major-mode magit-mode))
       (evil-quit))
      ((equal major-mode 'vterm-mode)
       (progn
