@@ -1,28 +1,32 @@
 #!/bin/sh
 
 imgtrim() {
-    if [ -z "$2" ]; then
-        2="trimmed-$1"
-    fi
-    convert "$1" -trim "$2"
+	if [ -z "$2" ]; then
+		2="trimmed-$1"
+	fi
+	convert "$1" -trim "$2"
 }
 
 boxen() {
-    convert "$1" -trim +repage -resize '1024x1024>' -gravity center -extent 1024x1024 "boxed-$1"
+	convert "$1" -trim +repage -resize '1024x1024>' -gravity center -extent 1024x1024 "boxed-$1"
 }
 
 boxenblur() {
-    convert -size 1024x1024 xc:skyblue \
-        "$1" -geometry 1024x1024 -blur 0x25 -gravity northwest -composite \
-        "$1" -geometry 1024x1024 -blur 0x25 -gravity southeast -composite \
-        "$1" -geometry 1024x1024 -gravity center -composite \
-        "blurred-$1"
+	convert -size 1024x1024 xc:skyblue \
+		"$1" -geometry 1024x1024 -blur 0x25 -gravity northwest -composite \
+		"$1" -geometry 1024x1024 -blur 0x25 -gravity southeast -composite \
+		"$1" -geometry 1024x1024 -gravity center -composite \
+		"blurred-$1"
 }
 
-img_stick_horiz(){
-    convert "$1" "$2" -append "${3:-output.png}"
+img_stick_horiz() {
+	convert "$1" "$2" -append "${3:-output.png}"
 }
 
-img_stick_vert(){
-    convert "$1" "$2" +append "${3:-output.png}"
+img_stick_vert() {
+	convert "$1" "$2" +append "${3:-output.png}"
+}
+
+smallify_image() {
+	convert "$1" -sampling-factor 4:2:0 -strip -quality 30 -interlace JPEG -colorspace RGB "${2:-small-${1%.*}.jpg}"
 }
