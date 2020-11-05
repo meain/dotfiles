@@ -1387,8 +1387,7 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
                          (substring (uuid-string)
                                     0
                                     4)))
-      (insert (format ":date %s\n:name "
-                      (format-time-string "%d/%m/%Y")))
+      (insert ":name ")
       (evil-insert 1))))
 (evil-leader/set-key "v" 'meain/vime)
 
