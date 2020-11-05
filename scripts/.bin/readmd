@@ -8,5 +8,5 @@ if [ -z "$1" ]; then
         echo "Usage: readmd <filename>"
     fi
 else
-    pandoc "$1" | lynx -lss="~/.lynx.lss" -stdin
+    pandoc "$1" | lynx -lss="~/.config/lynx/.lynx.lss" -stdin
 fi
