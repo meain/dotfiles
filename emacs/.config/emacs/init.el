@@ -1367,7 +1367,7 @@
     (delete-other-windows)))
 (global-set-key (kbd "M-m")
                 'meain/monacle-mode)
-(evil-leader/set-key "m" 'meain/monacle-mode)
+(evil-leader/set-key "b m" 'meain/monacle-mode)
 
 ;; vime functionality within emacs
 (use-package uuid :ensure t
@@ -1514,8 +1514,8 @@ START and END comes from it being interactive."
 
 ;; Bookmarks
 (setq bookmark-save-flag 1)
-(evil-leader/set-key "b m" 'bookmark-jump)
-(evil-leader/set-key "b M" 'bookmark-set)
+(evil-leader/set-key "m" 'bookmark-jump)
+(evil-leader/set-key "M" 'bookmark-set)
 
 ;; Meta-f keybinds
 (global-unset-key (kbd "M-f")) ; have to unset first
