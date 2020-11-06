@@ -110,8 +110,8 @@
 (setq inhibit-startup-screen t)
 ;; (set-frame-parameter nil 'undecorated t)
 
-;; Font (set-frame-font  "Hermit 13")
-(setq font-family-default "Hermit 13")
+;; Font (set-frame-font  "JetBrains Mono 14")
+(setq font-family-default "JetBrains Mono 14")
 (add-to-list 'default-frame-alist
              `(font . ,font-family-default))
 (set-face-attribute 'default nil :font font-family-default)
