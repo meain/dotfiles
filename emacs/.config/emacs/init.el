@@ -476,6 +476,10 @@
     (setq counsel-describe-function-function #'helpful-callable)
     (setq counsel-describe-variable-function #'helpful-variable)))
 
+;; ibuffer
+(use-package ibuffer
+  :init (setq ibuffer-expert t))
+
 ;; ibuffer-projectile
 (use-package ibuffer-projectile
   :ensure t
