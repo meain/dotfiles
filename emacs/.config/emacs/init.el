@@ -195,12 +195,13 @@
 
 ;; dired
 (use-package dired
-  :config (progn
-            (setq delete-by-moving-to-trash t)
-            (setq dired-listing-switches "-AGFhl")
-            (setq dired-dwim-target t)
-            (define-key dired-mode-map (kbd "-") 'dired-up-directory)
-            (add-hook 'dired-mode-hook 'hl-line-mode)))
+  :hook (dired-mode . dired-hide-details-mode):config
+  (progn
+    (setq delete-by-moving-to-trash t)
+    (setq dired-listing-switches "-AGFhl")
+    (setq dired-dwim-target t)
+    (define-key dired-mode-map (kbd "-") 'dired-up-directory)
+    (add-hook 'dired-mode-hook 'hl-line-mode)))
 
 ;;; [EVIL CONFIG] ================================================
 
