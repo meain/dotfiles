@@ -1303,6 +1303,11 @@
             (persistent-scratch-setup-default)
             (persistent-scratch-autosave-mode 1)))
 
+;; Git info in dired buffer
+(use-package dired-git-info
+  :ensure t
+  :commands (dired-git-info-mode))
+
 
 ;;; [CUSTOM FUNCTIONS] ==============================================
 
