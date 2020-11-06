@@ -794,7 +794,11 @@
               (cond
                ((equal major-mode 'vterm-mode)
                 (progn
-                  (delete-window)))
+                  (if rerun-previous
+                      (progn
+                        (vterm-clear)
+                        (vterm-clear-scrollback))
+                    (delete-window))))
                ((equal (length shell-buffers) 0)
                 (meain/shell-new))
                (t (progn
