@@ -781,7 +781,9 @@
           (defun meain/shell-name ()
             "Get the name of the shell based on project info."
             (format "*popup-shell-%s*"
-                    (projectile-project-name)))
+                    (if (projectile-project-p)
+                        (projectile-project-name)
+                      "-")))
           (defun meain/shell-toggle (&optional rerun-previous)
             "Create/toggle shell for current project."
             (interactive "P")
@@ -809,8 +811,9 @@
             (if (equal major-mode 'vterm-mode)
                 (delete-window))
             (setq default-directory (cond
-                                     ((equal projectile-project-name "-") "~/")
-                                     (t (projectile-project-root))))
+                                     ((projectile-project-p)
+                                      (projectile-project-root))
+                                     (t "~/")))
             (vterm (meain/shell-name)))
           (defun meain/shell-other (&optional alternate)
             "Switch to previous shell in current project. Use ALTERNATE to get a list of shell in current project."
