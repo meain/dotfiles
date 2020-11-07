@@ -198,7 +198,7 @@
   :hook (dired-mode . dired-hide-details-mode):config
   (progn
     (setq delete-by-moving-to-trash t)
-    (setq dired-listing-switches "-AGFhl")
+    (setq dired-listing-switches "-AGFhlgo")
     (setq dired-dwim-target t)
     (define-key dired-mode-map (kbd "-") 'dired-up-directory)
     (add-hook 'dired-mode-hook 'hl-line-mode)))
