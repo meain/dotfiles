@@ -198,6 +198,7 @@
   :hook (dired-mode . dired-hide-details-mode):config
   (progn
     (setq delete-by-moving-to-trash t)
+    (setq trash-directory "~/.Trash")
     (setq dired-listing-switches "-AGFhlgo")
     (setq dired-dwim-target t)
     (define-key dired-mode-map (kbd "-") 'dired-up-directory)
