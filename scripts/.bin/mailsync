@@ -53,6 +53,7 @@ notmuch tag +bullshit +nonotify -imbox 'tag:inbox' 'from:info@geojit.com'
 notmuch tag +bullshit +nonotify -imbox 'tag:inbox' 'from:communications@nsdl.com'
 notmuch tag +bullshit +nonotify -imbox 'tag:inbox' 'from:no-reply@entertainment.bookmyshow.com'
 notmuch tag +bullshit +nonotify -imbox 'tag:inbox' 'from:uber@uber.com'
+notmuch tag +bullshit +nonotify -imbox 'tag:inbox' 'from:info@mailer.netflix.com'
 
 # spam
 notmuch tag +spam +nonotify -imbox 'tag:inbox' 'from:newsletter@incrediindia.in'
