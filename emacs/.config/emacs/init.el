@@ -563,8 +563,13 @@
   :hook ((python-mode . eglot-ensure)
          (rust-mode . eglot-ensure)
          (js-mod . eglot-ensure)
-         (go-mode . eglot-ensure)):config
+         (lua-mode . eglot-ensure)
+         (go-mode . eglot-ensure)):init
   (progn
+    (add-to-list 'eglot-server-programs
+                 '(lua-mode . ("lua-lsp")))
+    (add-to-list 'eglot-server-programs
+                 '(rust-mode . ("rust-analyzer")))
     (add-hook 'eglot-managed-mode-hook
               (lambda ()
                 (eldoc-mode -1)))
