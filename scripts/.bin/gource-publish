@@ -11,4 +11,5 @@ cat ~/.cache/vime/gourcer >>pending
 git add pending
 [ -f repo ] && rm repo && git add repo
 rm ~/.cache/vime/gourcer && touch ~/.cache/vime/gourcer
+git commit -m 'Update pending items'
 git push origin master
