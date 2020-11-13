@@ -198,6 +198,13 @@ hs.hotkey.bind({"cmd", "shift"}, "g", function()
   focusandback("telegram")
 end)
 
+function moveMouseToCurrentWindowScreen()
+    local currentApp = hs.window.focusedWindow()
+    local screen = currentApp:screen()
+    local pt = hs.geometry.rectMidPoint(screen:fullFrame())
+    hs.mouse.setAbsolutePosition(pt)
+end
+
 -- quick window switching
 hs.hotkey.bind({"alt"}, "'", function()
     local emacs = hs.application.find("Emacs")
@@ -211,6 +218,7 @@ hs.hotkey.bind({"alt"}, "'", function()
     else
       emacs:activate()
     end
+    moveMouseToCurrentWindowScreen()
 end)
 
 -- cmd+t from anywhere to open a new tab in browser
