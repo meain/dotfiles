@@ -2,15 +2,13 @@
 
 set -e
 
-# task '/add gourcer entries/' && gource-publish
-if ! task '/add gourcer entries/'; then
-    echo "Looks like we already did it. Bye" && exit 0
-fi
-items="$(grep -E '^-' ~/.cache/vime/gourcer | head -n4 | awk '{print $2}')"
-echo "$items" | xargs -L1 gourcer
+# check if we have items to push
+grep -qE '^-' ~/.cache/vime/gourcer || exit 0
 
-changes="$(echo "$items" | awk '{print "s|- "$1"|x "$1"|;"}' | tr -d '\n')"
-sed -ibk "$changes" ~/.cache/vime/gourcer
-rm ~/.cache/vime/gourcerbk
-
-task '/add gourcer entries/ status:pending' 'done'
+cd ~/Documents/Projects/projects/gourcer
+git pull origin master --rebase
+cat ~/.cache/vime/gourcer >>pending
+git add pending
+[ -f repo ] && rm repo && git add repo
+rm ~/.cache/vime/gourcer && touch ~/.cache/vime/gourcer
+git push origin master
