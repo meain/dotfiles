@@ -1136,7 +1136,15 @@
             (defun meain/elfeed-search-filter ()
               (interactive)
               (ivy-read "Apply tag: "
-                        (elfeed-db-get-all-tags)
+                        (remove-if (lambda (x)
+                                     (equalp x 'unread))
+                                   (delete-dups (flatten-list (cl-list* (with-current-buffer "*elfeed-search*"
+                                                                          (cl-loop for
+                                                                                   entry
+                                                                                   in
+                                                                                   elfeed-search-entries
+                                                                                   collect
+                                                                                   (elfeed-entry-tags entry)))))))
                         :action (lambda (x)
                                   (setq elfeed-search-filter (concatenate 'string "@2-months-ago +unread +"
                                                                           x))
