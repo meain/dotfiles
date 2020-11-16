@@ -1135,6 +1135,8 @@
               'elfeed-db-unload)
             (defun meain/elfeed-search-filter ()
               (interactive)
+              (setq elfeed-search-filter "@2-months-ago +unread")
+              (elfeed-search-update :force)
               (ivy-read "Apply tag: "
                         (remove-if (lambda (x)
                                      (equalp x 'unread))
