@@ -64,6 +64,6 @@ case "$1" in
         _update_poetry
         ;;
     *)
-        CANDIDATE="$(echo "all,allall,vim,brew,rustup,dasht,repos,bw,helm,poetry" | tr ',' '\n' | fzf)"
+        CANDIDATE="$(echo "all,allall,vim,brew,rustup,dasht,repos,bw,helm,poetry,gcloud" | tr ',' '\n' | fzf)"
         [ -n "$CANDIDATE" ] && update "$CANDIDATE"
 esac
