@@ -147,8 +147,8 @@ bindkey "\e[B" history-search-forward
 export KEYTIMEOUT=1
 
 # updates PATH for Google Cloud SDK && add shell completion for gcloud
-GOOGLE_CLOUD='/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
-if [ -f '$GOOGLE_CLOUD' ]; then source '$GOOGLE_CLOUD'; fi
+export CLOUDSDK_PYTHON="/usr/local/opt/python@3.8/libexec/bin/python"
+source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
 
 preexec () {
   if ! grep -q "$1" "$DATAFILES_PATH/long_runnable_jobs" ; then
