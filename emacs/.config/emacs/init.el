@@ -1150,7 +1150,8 @@
                         :action (lambda (x)
                                   (setq elfeed-search-filter (concatenate 'string "@2-months-ago +unread +"
                                                                           x))
-                                  (elfeed-search-update :force))))
+                                  (elfeed-search-update :force)
+                                  (evil-goto-first-line))))
             (setq-default elfeed-search-filter "@2-months-ago +unread ")
             (setq elfeed-use-curl t)
             (setq elfeed-curl-max-connections 10)
