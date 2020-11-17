@@ -67,7 +67,7 @@ Plug 'w0rp/ale'                                                                 
 " Autocomplete
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
-Plug 'nvim-lua/diagnostic-nvim'
+" Plug 'nvim-lua/diagnostic-nvim'
 Plug 'nvim-lua/lsp-status.nvim'
 Plug 'steelsojka/completion-buffers'
 Plug 'nvim-treesitter/completion-treesitter'
@@ -1189,8 +1189,8 @@ let g:completion_chain_complete_list = {
 
 " diagnostics
 let g:diagnostic_enable_virtual_text = 0
-nnoremap <silent>sm :NextDiagnosticCycle<cr>
-nnoremap <silent>sn :PrevDiagnosticCycle<cr>
+nnoremap <silent>sm <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
+nnoremap <silent>sn <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
 
 " status
 augroup custom_lua_formatting
@@ -1199,7 +1199,7 @@ augroup custom_lua_formatting
 augroup end
 augroup custom_lsp_status
   autocmd!
-  autocmd CursorHold,BufEnter <buffer> lua require('lsp-status').update_current_function()
+  autocmd CursorHold <buffer> lua require('lsp-status').update_current_function()
 augroup end
 
 
