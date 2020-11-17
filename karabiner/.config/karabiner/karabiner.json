@@ -46,12 +46,7 @@
                         "manipulators": [
                             {
                                 "from": {
-                                    "key_code": "return_or_enter",
-                                    "modifiers": {
-                                        "optional": [
-                                            "any"
-                                        ]
-                                    }
+                                    "key_code": "return_or_enter"
                                 },
                                 "to": [
                                     {
@@ -98,12 +93,7 @@
                         "manipulators": [
                             {
                                 "from": {
-                                    "key_code": "quote",
-                                    "modifiers": {
-                                        "optional": [
-                                            "any"
-                                        ]
-                                    }
+                                    "key_code": "quote"
                                 },
                                 "to": [
                                     {
