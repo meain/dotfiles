@@ -27,19 +27,18 @@ require "nvim-treesitter.configs".setup {
 
 -- lsp
 local lsp_attach = function(client)
-  require "diagnostic".on_attach(client)
   require "lsp-status".on_attach(client)
 end
-require "nvim_lsp".pyls.setup {on_attach = lsp_attach}
-require "nvim_lsp".rust_analyzer.setup {on_attach = lsp_attach}
-require "nvim_lsp".html.setup {on_attach = lsp_attach} -- npm install -g vscode-html-languageserver-bin
-require "nvim_lsp".tsserver.setup {on_attach = lsp_attach}
-require "nvim_lsp".vimls.setup {on_attach = lsp_attach} -- npm install -g vim-language-server
-require "nvim_lsp".gopls.setup {on_attach = lsp_attach}
-require "nvim_lsp".bashls.setup {filetypes = {"sh", "zsh"}, on_attach = lsp_attach}
-require "nvim_lsp".cssls.setup {on_attach = lsp_attach} -- npm install -g vscode-css-languageserver-bin
-require "nvim_lsp".dockerls.setup {on_attach = lsp_attach} -- npm install -g dockerfile-language-server-nodejs
-require "nvim_lsp".sumneko_lua.setup {
+require "lspconfig".pyls.setup {on_attach = lsp_attach}
+require "lspconfig".rust_analyzer.setup {on_attach = lsp_attach}
+require "lspconfig".html.setup {on_attach = lsp_attach} -- npm install -g vscode-html-languageserver-bin
+require "lspconfig".tsserver.setup {on_attach = lsp_attach}
+require "lspconfig".vimls.setup {on_attach = lsp_attach} -- npm install -g vim-language-server
+require "lspconfig".gopls.setup {on_attach = lsp_attach}
+require "lspconfig".bashls.setup {filetypes = {"sh", "zsh"}, on_attach = lsp_attach}
+require "lspconfig".cssls.setup {on_attach = lsp_attach} -- npm install -g vscode-css-languageserver-bin
+require "lspconfig".dockerls.setup {on_attach = lsp_attach} -- npm install -g dockerfile-language-server-nodejs
+require "lspconfig".sumneko_lua.setup {
   on_attach = lsp_attach,
   settings = {
     Lua = {
