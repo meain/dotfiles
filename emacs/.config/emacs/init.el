@@ -913,6 +913,7 @@
   :defer t)
 (use-package config-general-mode :ensure t
   :defer t)  ;; config files
+(use-package vimrc-mode :ensure t)
 (use-package markdown-mode
   :ensure t
   :defer t
