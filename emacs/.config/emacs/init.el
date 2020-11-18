@@ -900,6 +900,11 @@
     (add-hook 'prog-mode-hook 'outline-minor-mode)
     (evil-leader/set-key "d" 'outline-toggle-children)))
 
+;; editorconfig
+(use-package editorconfig
+  :ensure t
+  :config (editorconfig-mode 1))
+
 ;;; [FILETYPE PUGINS] ===============================================
 
 (use-package rust-mode :ensure t
