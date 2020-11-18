@@ -22,7 +22,7 @@ notmuch tag +imbox tag:inbox
 # tag all known spams with +spammer and drop imbox label
 notmuch address --output address tag:spammer |
 	sort | uniq |
-	xargs -I{} notmuch tag -imbox +spammer 'from:{}'
+	xargs -I{} notmuch tag -imbox +spam 'from:{}'
 notmuch address --output address tag:nope|
 	sort | uniq |
 	xargs -I{} notmuch tag -imbox +nonotify 'from:{}'
