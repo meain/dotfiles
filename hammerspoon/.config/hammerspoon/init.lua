@@ -149,10 +149,14 @@ local emailNotify = function(alert)
     end
   end
 end
-hs.pathwatcher.new('/Users/meain/.local/share/mail/.notmuch/xapian', emailNotify):start()
+local emailPathWatcher = hs.pathwatcher.new('/Users/meain/.local/share/mail/.notmuch/xapian', emailNotify)
+emailPathWatcher:start()
 hs.hotkey.bind({'alt', 'shift'}, 'e', function()
   emailNotify(true)
   customshellrun.run('/usr/local/bin/tmux refresh-client -S')
+  emailPathWatcher:stop()
+  emailPathWatcher = hs.pathwatcher.new('/Users/meain/.local/share/mail/.notmuch/xapian', emailNotify)
+  emailPathWatcher:start()
 end)
 hs.hotkey.bind({'ctrl', 'alt', 'shift'}, 'e', function()
   hs.alert('📫 Marking all emails as read')
