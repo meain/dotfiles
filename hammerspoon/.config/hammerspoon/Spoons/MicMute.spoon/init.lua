@@ -21,12 +21,12 @@ function obj:updateMicMute(muted, showNotification)
 	if muted then
 		obj.mute_menu:setTitle("><")
 		if showNotification then
-		    hs.alert(" ><")
+		    hs.alert(" >< ")
 		end
 	else
 		obj.mute_menu:setTitle("<>")
 		if showNotification then
-		    hs.alert(" <>")
+		    hs.alert(" <> ")
 		end
 	end
 end
