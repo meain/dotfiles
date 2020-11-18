@@ -192,6 +192,7 @@
 
 ;; eldoc load
 (require 'eldoc)
+(global-eldoc-mode nil)
 
 ;; dired
 (use-package dired
@@ -564,7 +565,7 @@
          (rust-mode . eglot-ensure)
          (js-mod . eglot-ensure)
          (lua-mode . eglot-ensure)
-         (go-mode . eglot-ensure)):init
+         (go-mode . eglot-ensure)):config
   (progn
     (add-to-list 'eglot-server-programs
                  '(lua-mode . ("lua-lsp")))
@@ -572,8 +573,8 @@
                  '(rust-mode . ("rust-analyzer")))
     (add-hook 'eglot-managed-mode-hook
               (lambda ()
-                (eldoc-mode -1)))
-    (define-key evil-normal-state-map (kbd "K") 'eldoc-print-current-symbol-info)
+                (eldoc-mode -1)
+                (define-key evil-normal-state-map (kbd "K") 'eldoc-print-current-symbol-info)))
     (define-key evil-normal-state-map (kbd "g d") 'xref-find-definitions)
     (define-key evil-normal-state-map (kbd "g r") 'xref-find-references)
     (define-key evil-normal-state-map (kbd "g R") 'eglot-rename)
