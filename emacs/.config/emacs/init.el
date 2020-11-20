@@ -373,6 +373,14 @@
                                                     (interactive)
                                                     (evil-ex "'<,'>s/")))
 
+;; Highlight yanked region
+(defun meain/evil-yank-advice (orig-fn beg end &rest args)
+  "Advice to be added to `evil-yank' to highlight yanked region.  Pass ORIG-FN, BEG, END, TYPE, ARGS."
+  (pulse-momentary-highlight-region beg end
+                                    'company-template-field)
+  (apply orig-fn beg end args))
+(advice-add 'evil-yank :around 'meain/evil-yank-advice)
+
 ;;; [OTHER PACKAGES] =============================================
 
 ;; abbrev mode
