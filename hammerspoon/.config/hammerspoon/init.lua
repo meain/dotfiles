@@ -210,6 +210,35 @@ function moveMouseToCurrentWindowScreen()
     hs.mouse.setAbsolutePosition(pt)
 end
 
+-- Quick edit
+local quick_edit_app = nil
+hs.hotkey.bind({"alt"}, "`", function()
+    local emacs = hs.application.find("Emacs")
+    local current_app = hs.window.focusedWindow()
+    if current_app:title() == "Emacs" then
+      if quick_edit_app == nil then
+        hs.alert("🤔 Not edit in progress")
+        return
+      end
+      hs.eventtap.keyStroke({"cmd"}, 'a')
+      hs.eventtap.keyStroke({"cmd"}, 'c')
+      hs.eventtap.keyStroke({}, 'escape')
+      hs.eventtap.keyStroke({}, 'q')
+      quick_edit_app:focus()
+      hs.eventtap.keyStroke({"cmd"}, 'a')
+      hs.eventtap.keyStroke({"cmd"}, 'v')
+      quick_edit_app = nil
+    else
+      quick_edit_app = hs.window.focusedWindow()
+      hs.eventtap.keyStroke({"cmd"}, 'a')
+      hs.eventtap.keyStroke({"cmd"}, 'c')
+      emacs:activate()
+      hs.eventtap.keyStroke({"alt", "shift"}, ';')
+      hs.eventtap.keyStrokes("(meain/quick-edit)")
+      hs.eventtap.keyStroke({}, 'return')
+    end
+end)
+
 -- quick window switching
 hs.hotkey.bind({"alt"}, "'", function()
     local emacs = hs.application.find("Emacs")

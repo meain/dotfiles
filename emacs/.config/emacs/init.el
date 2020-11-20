@@ -1475,6 +1475,20 @@ START and END comes from it being interactive."
                                                        ds)))))))))
 (evil-leader/set-key "a d" 'meain/dasht-docs)
 
+;; Quick edit (for use with hammerspoon quick edit)
+(defun meain/quick-edit ()
+  "Util function for use with hammerspoon quick edit functionality."
+  (interactive)
+  (let ((qed-buffer-name (concatenate 'string
+                                      "qed-"
+                                      (substring (uuid-string)
+                                                 0
+                                                 4))))
+    (generate-new-buffer qed-buffer-name)
+    (switch-to-buffer qed-buffer-name)
+    (evil-paste-after 1)
+    (gfm-mode)))
+
 ;; vim-printer remake in elisp
 (defun meain/quick-print (&optional print-above)
   "Quickly print the variable your cursor is under.  Pass PRINT-ABOVE to print above current line."
