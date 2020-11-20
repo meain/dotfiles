@@ -5,7 +5,7 @@ set -e
 
 FAIL=""
 [ -f /tmp/mailpullfailed ] && FAIL="[pull failed]"
-count=$(notmuch count tag:inbox and tag:unread and '-tag:nonotify')
+count=$(notmuch count tag:inbox and tag:unread and '-tag:nonotify' and '-tag:notified')
 if [ "$count" -ne "0" ];then
     echo "#[fg=colour250]|#[fg=colour240] $count new mail $FAIL"
 else
