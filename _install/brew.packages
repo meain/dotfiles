@@ -5,6 +5,7 @@ tree
 wget
 cmake
 node
+task --HEAD
 neovim --HEAD
 imagemagick --with-fontconfig
 ffmpeg --with-fontconfig
