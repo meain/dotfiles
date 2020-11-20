@@ -1,7 +1,7 @@
 data.location=~/.local/share/task
 confirmation=no  # no confirmation for delete
 
-include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/light-256.theme
+include /usr/local/share/doc/task/rc/light-256.theme
 
 uda.priority.values=S,H,M,,L
 urgency.uda.priority.S.coefficient=10
