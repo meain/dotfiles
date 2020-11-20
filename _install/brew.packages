@@ -24,6 +24,7 @@ fzf
 ripgrep
 task-spooler
 surfraw
+choose-gui
 
 # others
 aspell
