@@ -31,6 +31,7 @@ hs.alert.defaultStyle.fillColor = { white = 0, alpha = 0.95 }
 -- taskwarrior
 local taskwarrior = require("taskwarrior")
 hs.hotkey.bind({"alt"}, "t", function()
+  -- hs.alert(customshellrun.run(BIN .. 'task-choose', true))
   taskwarrior.run()
 end)
 
