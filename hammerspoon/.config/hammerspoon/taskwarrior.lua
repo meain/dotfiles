@@ -43,26 +43,12 @@ function obj.run()
 
         local text =
             styledtext.new(
-            words[3]:gsub("%s+", "", 1),
+            words[2] .. "> " .. words[3]:gsub("%s+", "", 1),
             {
-                font = {size = 17, name = "DankMonoNerdFontComplete-Regular"}
+                font = {size = 16, name = "DankMonoNerdFontComplete-Regular"}
             }
         )
-        local subtext =
-            styledtext.new(
-            words[1] .. " " .. words[2],
-            {
-                font = {size = 12, name = "DankMonoNerdFontComplete-Regular"},
-                paragraphStyle = {
-                    paragraphSpacing = 10.0
-                }
-            }
-        )
-        table.insert(
-            choices,
-            1,
-            {["text"] = text, ["subText"] = subtext, ["id"] = words[1], ["task"] = words[3], ["project"] = words[2]}
-        )
+        table.insert(choices, 1, {["text"] = text, ["id"] = words[1], ["task"] = words[3], ["project"] = words[2]})
     end
     table.insert(
         choices,
@@ -74,7 +60,6 @@ function obj.run()
                     font = {size = 17, name = "DankMonoNerdFontComplete-Regular"}
                 }
             ),
-            ["subText"] = "",
             ["id"] = "new",
             ["task"] = "",
             ["project"] = ""
