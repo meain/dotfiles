@@ -1,0 +1,13 @@
+#!/bin/sh
+
+set -e
+
+mkdir -p /tmp/page-title
+FILE=/tmp/page-title/"$(echo "$1" | md5sum | cut -d' ' -f1)"
+if [ ! -f "$FILE" ]; then
+	TITLE="$(curl -Ls "$1" | pup 'title text{}')"
+	echo "$TITLE" >"$FILE"
+	echo "$TITLE"
+else
+	cat "$FILE"
+fi
