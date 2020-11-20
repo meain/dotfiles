@@ -940,6 +940,10 @@
                                 :foreground "#000000")))
 (use-package yaml-mode :ensure t
   :defer t)
+(use-package dockerfile-mode :ensure t
+  :defer t)
+(use-package docker-compose-mode :ensure t
+  :defer t)
 (use-package org
   :init (progn
           (evil-define-key 'normal
