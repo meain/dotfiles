@@ -23,91 +23,119 @@ function setTitle()
     jumpcut:setTitle("✂") -- Unicode magic
 end
 
-function putOnPaste(string,key)
-  if (pasteOnSelect) then
-    hs.eventtap.keyStrokes(string)
-    pasteboard.setContents(string)
-    last_change = pasteboard.changeCount()
-  else
-    if (key.alt == true) then -- If the option/alt key is active when clicking on the menu, perform a "direct paste", without changing the clipboard
-      hs.eventtap.keyStrokes(string) -- Defeating paste blocking http://www.hammerspoon.org/go/#pasteblock
+function putOnPaste(string, key)
+    if (pasteOnSelect) then
+        hs.eventtap.keyStrokes(string)
+        pasteboard.setContents(string)
+        last_change = pasteboard.changeCount()
     else
-      pasteboard.setContents(string)
-      last_change = pasteboard.changeCount() -- Updates last_change to prevent item duplication when putting on paste
+        if (key.alt == true) then -- If the option/alt key is active when clicking on the menu, perform a "direct paste", without changing the clipboard
+            hs.eventtap.keyStrokes(string) -- Defeating paste blocking http://www.hammerspoon.org/go/#pasteblock
+        else
+            pasteboard.setContents(string)
+            last_change = pasteboard.changeCount() -- Updates last_change to prevent item duplication when putting on paste
+        end
     end
-  end
 end
 
 -- Clears the clipboard and history
 function clearAll()
-  pasteboard.clearContents()
-  clipboard_history = {}
-  settings.set("so.meain.hs.jumpcut",clipboard_history)
-  now = pasteboard.changeCount()
-  setTitle()
+    pasteboard.clearContents()
+    clipboard_history = {}
+    settings.set("so.meain.hs.jumpcut", clipboard_history)
+    now = pasteboard.changeCount()
+    setTitle()
 end
 
 -- Clears the last added to the history
 function clearLastItem()
-  table.remove(clipboard_history,#clipboard_history)
-  settings.set("so.meain.hs.jumpcut",clipboard_history)
-  now = pasteboard.changeCount()
-  setTitle()
+    table.remove(clipboard_history, #clipboard_history)
+    settings.set("so.meain.hs.jumpcut", clipboard_history)
+    now = pasteboard.changeCount()
+    setTitle()
 end
 
 function pasteboardToClipboard(item)
-  -- Loop to enforce limit on qty of elements in history. Removes the oldest items
+    -- Loop to enforce limit on qty of elements in history. Removes the oldest items
 
-  if string.len(item) < hist_item_max_size then
-    local lastselected = settings.get("so.meain.hs.jumpcutselect.lastselected") or ""
-    if item ~= lastselected then
-      while (#clipboard_history >= hist_size) do
-          table.remove(clipboard_history,1)
-      end
-      table.insert(clipboard_history, item)
-      settings.set("so.meain.hs.jumpcut",clipboard_history) -- updates the saved history
-      setTitle() -- updates the menu counter
+    if string.len(item) < hist_item_max_size then
+        local lastselected = settings.get("so.meain.hs.jumpcutselect.lastselected") or ""
+        if item ~= lastselected then
+            while (#clipboard_history >= hist_size) do
+                table.remove(clipboard_history, 1)
+            end
+            table.insert(clipboard_history, item)
+            settings.set("so.meain.hs.jumpcut", clipboard_history) -- updates the saved history
+            setTitle() -- updates the menu counter
+        end
     end
-  end
 end
 
 -- Dynamic menu by cmsj https://github.com/Hammerspoon/hammerspoon/issues/61#issuecomment-64826257
 populateMenu = function(key)
-  setTitle() -- Update the counter every time the menu is refreshed
-  menuData = {}
-  if (#clipboard_history == 0) then
-    table.insert(menuData, {title="None", disabled = true}) -- If the history is empty, display "None"
-  else
-    for k,v in pairs(utils.slice(clipboard_history, 1, 20)) do
-      if (string.len(v) > label_length) then
-        table.insert(menuData,1, {title=string.sub(v,0,label_length).."…", fn = function() putOnPaste(v,key) end }) -- Truncate long strings
-      else
-        table.insert(menuData,1, {title=v, fn = function() putOnPaste(v,key) end })
-      end -- end if else
-    end-- end for
-  end-- end if else
-  -- footer
-  table.insert(menuData, {title="-"})
-  table.insert(menuData, {title="Clear All", fn = function() clearAll() end })
-  if (key.alt == true or pasteOnSelect) then
-    table.insert(menuData, {title="Direct Paste Mode ✍", disabled=true})
-  end
-  return menuData
+    setTitle() -- Update the counter every time the menu is refreshed
+    menuData = {}
+    if (#clipboard_history == 0) then
+        table.insert(menuData, {title = "None", disabled = true}) -- If the history is empty, display "None"
+    else
+        -- end for
+        for k, v in pairs(utils.slice(clipboard_history, 1, 20)) do
+            if (string.len(v) > label_length) then
+                table.insert(
+                    menuData,
+                    1,
+                    {
+                        title = string.sub(v, 0, label_length) .. "…",
+                        fn = function()
+                            putOnPaste(v, key)
+                        end
+                    }
+                ) -- Truncate long strings
+            else
+                table.insert(
+                    menuData,
+                    1,
+                    {
+                        title = v,
+                        fn = function()
+                            putOnPaste(v, key)
+                        end
+                    }
+                )
+            end -- end if else
+        end
+    end
+    -- end if else
+    -- footer
+    table.insert(menuData, {title = "-"})
+    table.insert(
+        menuData,
+        {
+            title = "Clear All",
+            fn = function()
+                clearAll()
+            end
+        }
+    )
+    if (key.alt == true or pasteOnSelect) then
+        table.insert(menuData, {title = "Direct Paste Mode ✍", disabled = true})
+    end
+    return menuData
 end
 
 -- If the pasteboard owner has changed, we add the current item to our history and update the counter.
 function storeCopy()
-  now = pasteboard.changeCount()
-  if (now > last_change) then
-    current_clipboard = pasteboard.getContents()
-    -- asmagill requested this feature. It prevents the history from keeping items removed by password managers
-    if (current_clipboard == nil and honor_clearcontent) then
-      clearLastItem()
-    else
-      pasteboardToClipboard(current_clipboard)
+    now = pasteboard.changeCount()
+    if (now > last_change) then
+        current_clipboard = pasteboard.getContents()
+        -- asmagill requested this feature. It prevents the history from keeping items removed by password managers
+        if (current_clipboard == nil and honor_clearcontent) then
+            clearLastItem()
+        else
+            pasteboardToClipboard(current_clipboard)
+        end
+        last_change = now
     end
-    last_change = now
-  end
 end
 
 --Checks for changes on the pasteboard. Is it possible to replace with eventtap?
@@ -117,8 +145,11 @@ timer:start()
 setTitle() --Avoid wrong title if the user already has something on his saved history
 jumpcut:setMenu(populateMenu)
 
-
-hs.hotkey.bind({'ctrl', 'alt', 'shift'}, 'p', function()
-  hs.alert('Cleared last item')
-  clearLastItem()
-end)
+hs.hotkey.bind(
+    {"ctrl", "alt", "shift"},
+    "p",
+    function()
+        hs.alert("Cleared last item")
+        clearLastItem()
+    end
+)

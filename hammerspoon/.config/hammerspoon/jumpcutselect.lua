@@ -8,11 +8,15 @@ local mod = {}
 function mod.jumpcutselect()
     function formatChoices(choices)
         choices = utils.reverse(choices)
-        formattedChoices = hs.fnutils.imap(choices, function(result)
-            return {
-                ["text"] = utils.trim(result),
-            }
-        end)
+        formattedChoices =
+            hs.fnutils.imap(
+            choices,
+            function(result)
+                return {
+                    ["text"] = utils.trim(result)
+                }
+            end
+        )
         return formattedChoices
     end
 
@@ -21,38 +25,56 @@ function mod.jumpcutselect()
     local copies = settings.get("so.meain.hs.jumpcut") or {}
     local choices = formatChoices(copies)
 
-    local chooser = hs.chooser.new(function(choosen)
-        if copy then copy:delete() end
-        current:activate()
-        hs.eventtap.keyStrokes(choosen)
-    end)
+    local chooser =
+        hs.chooser.new(
+        function(choosen)
+            if copy then
+                copy:delete()
+            end
+            current:activate()
+            hs.eventtap.keyStrokes(choosen)
+        end
+    )
     chooser:placeholderText("Select clipboard item")
     chooser:choices(formatChoices(copies))
 
-    copy = hs.hotkey.bind('', 'return', function()
-        local query = chooser:query()
-        local filteredChoices = hs.fnutils.filter(copies, function(result)
-            return string.match(string.lower(result), query)
-        end)
-        local id = chooser:selectedRow()
-        local item = formatChoices(filteredChoices)[id]
-        if item then
-            chooser:hide()
-            trimmed = utils.trim(item.text)
-            hs.pasteboard.setContents(trimmed)
-            settings.set("so.meain.hs.jumpcutselect.lastselected", trimmed)
-            hs.alert.show(trimmed, 1)
-            -- hs.notify.show("Jumpcut","Text copied", trimmed)
-        else
-            hs.alert.show("Nothing to copy", 1)
+    copy =
+        hs.hotkey.bind(
+        "",
+        "return",
+        function()
+            local query = chooser:query()
+            local filteredChoices =
+                hs.fnutils.filter(
+                copies,
+                function(result)
+                    return string.match(string.lower(result), query)
+                end
+            )
+            local id = chooser:selectedRow()
+            local item = formatChoices(filteredChoices)[id]
+            if item then
+                -- hs.notify.show("Jumpcut","Text copied", trimmed)
+                chooser:hide()
+                trimmed = utils.trim(item.text)
+                hs.pasteboard.setContents(trimmed)
+                settings.set("so.meain.hs.jumpcutselect.lastselected", trimmed)
+                hs.alert.show(trimmed, 1)
+            else
+                hs.alert.show("Nothing to copy", 1)
+            end
         end
-    end)
+    )
 
     function updateChooser()
         local query = chooser:query()
-        local filteredChoices = hs.fnutils.filter(copies, function(result)
-            return string.match(string.lower(result), query)
-        end)
+        local filteredChoices =
+            hs.fnutils.filter(
+            copies,
+            function(result)
+                return string.match(string.lower(result), query)
+            end
+        )
         chooser:choices(formatChoices(filteredChoices))
     end
 

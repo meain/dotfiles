@@ -2,35 +2,50 @@ local mod = {}
 
 local pasteboard = require("hs.pasteboard")
 
-local customshellrun = require('customshellrun')
+local customshellrun = require("customshellrun")
 local utils = require("utils")
 
 -- TODO: move this to 'datafiles' dir and read from there
-local doables = {'add-to-gourcer', 'open', 'openorsearch', 'gource', 'tempg', 'search melpa', 'search github', 'search npm'}
+local doables = {
+    "add-to-gourcer",
+    "open",
+    "openorsearch",
+    "gource",
+    "tempg",
+    "search melpa",
+    "search github",
+    "search npm"
+}
 
 function mod.clipdo()
     local function formatChoices(choices)
-        local formattedChoices = hs.fnutils.imap(choices, function(item)
-            return { ["text"] = utils.trim(item) }
-        end)
+        local formattedChoices =
+            hs.fnutils.imap(
+            choices,
+            function(item)
+                return {["text"] = utils.trim(item)}
+            end
+        )
         return formattedChoices
     end
 
     local link = utils.trim(pasteboard.getContents())
-    local chooser = hs.chooser.new(function(chosen)
-        hs.alert("🧧 " .. chosen.text .. " '" .. link .. "'")
-        local result = customshellrun.run(chosen.text .. " '" .. link .. "'", true)
-        if (result == nil or result == '') then
-            hs.alert('-- no output --')
-        else
-            hs.alert(result)
+    local chooser =
+        hs.chooser.new(
+        function(chosen)
+            hs.alert("🧧 " .. chosen.text .. " '" .. link .. "'")
+            local result = customshellrun.run(chosen.text .. " '" .. link .. "'", true)
+            if (result == nil or result == "") then
+                hs.alert("-- no output --")
+            else
+                hs.alert(result)
+            end
         end
-    end)
+    )
     chooser:placeholderText(link)
     chooser:choices(formatChoices(doables))
     chooser:show()
 end
-
 
 function mod.registerDefaultBindings(mods, key)
     mods = mods or {"alt"}
