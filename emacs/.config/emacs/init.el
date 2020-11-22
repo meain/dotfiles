@@ -579,6 +579,8 @@
                  '(lua-mode . ("lua-lsp")))
     (add-to-list 'eglot-server-programs
                  '(rust-mode . ("rust-analyzer")))
+    (add-to-list 'eglot-server-programs
+                 '(python-mode . ("~/.bin/vpyls")))
     (add-hook 'eglot-managed-mode-hook
               (lambda ()
                 (eldoc-mode -1)
