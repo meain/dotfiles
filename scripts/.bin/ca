@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if [ -n "$1" ]; then
+	todo.sh nav "$1"
+	todo.sh "do" "$1"
+fi
+clear && todo.sh

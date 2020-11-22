@@ -28,8 +28,6 @@ alias ydp='youtube-dl -o "%(playlist_index)s_%(title)s.%(ext)s"'
 alias a='todo.sh'
 alias s='task'
 alias sl='task +LATEST'
-alias cs='clear && task'
-alias ca='clear && a'
 
 alias ls='lsd'
 alias ll='ls -Alh'
