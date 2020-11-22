@@ -61,26 +61,6 @@
             ]
           },
           {
-            "description": "left option to sitft+option.",
-            "manipulators": [
-              {
-                "from": {
-                  "key_code": "left_option",
-                  "modifiers": {
-                    "optional": ["any"]
-                  }
-                },
-                "to": [
-                  {
-                    "key_code": "left_option",
-                    "modifiers": ["left_shift"]
-                  }
-                ],
-                "type": "basic"
-              }
-            ]
-          },
-          {
             "description": "left option to sitft+option. (down_arrow if pressed alone)",
             "manipulators": [
               {
@@ -101,18 +81,7 @@
                     "key_code": "down_arrow"
                   }
                 ],
-                "type": "basic",
-                "conditions": [
-                  {
-                    "type": "device_if",
-                    "identifiers": [
-                      {
-                        "product_id": 321,
-                        "vendor_id": 1241
-                      }
-                    ]
-                  }
-                ]
+                "type": "basic"
               }
             ]
           },
@@ -136,18 +105,7 @@
                     "key_code": "up_arrow"
                   }
                 ],
-                "type": "basic",
-                "conditions": [
-                  {
-                    "type": "device_if",
-                    "identifiers": [
-                      {
-                        "product_id": 321,
-                        "vendor_id": 1241
-                      }
-                    ]
-                  }
-                ]
+                "type": "basic"
               }
             ]
           },
