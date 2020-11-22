@@ -63,32 +63,6 @@
                         ]
                     },
                     {
-                        "description": "Change tab to ctrl. (Post tab if pressed alone)",
-                        "manipulators": [
-                            {
-                                "from": {
-                                    "key_code": "tab",
-                                    "modifiers": {
-                                        "optional": [
-                                            "any"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "left_control"
-                                    }
-                                ],
-                                "to_if_alone": [
-                                    {
-                                        "key_code": "tab"
-                                    }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
                         "description": "Change quote to ctrl. (Post quote if pressed alone)",
                         "manipulators": [
                             {
