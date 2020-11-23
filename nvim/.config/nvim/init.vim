@@ -1197,10 +1197,10 @@ augroup custom_lua_formatting
   autocmd!
   autocmd BufNewFile,BufRead *.lua nnoremap <buffer><silent>,, :!luafmt -i 2 -w replace %<cr>:e!<cr>
 augroup end
-augroup custom_lsp_status
-  autocmd!
-  autocmd CursorHold <buffer> lua require('lsp-status').update_current_function()
-augroup end
+" augroup custom_lsp_status
+"   autocmd!
+"   autocmd CursorHold <buffer> lua require('lsp-status').update_current_function()
+" augroup end
 
 
 "                             Source External                          "
