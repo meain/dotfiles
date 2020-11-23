@@ -583,8 +583,8 @@
                  '(python-mode . ("~/.bin/vpyls")))
     (add-hook 'eglot-managed-mode-hook
               (lambda ()
-                (eldoc-mode -1)
-                (define-key evil-normal-state-map (kbd "K") 'eldoc-print-current-symbol-info)))
+                (eldoc-mode -1)))
+    (define-key evil-normal-state-map (kbd "K") 'eldoc-print-current-symbol-info)
     (define-key evil-normal-state-map (kbd "g d") 'xref-find-definitions)
     (define-key evil-normal-state-map (kbd "g r") 'xref-find-references)
     (define-key evil-normal-state-map (kbd "g R") 'eglot-rename)
