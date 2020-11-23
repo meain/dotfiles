@@ -68,7 +68,7 @@ anycomplete.registerDefaultBindings({"alt", "shift"}, "G")
 
 -- Emoji picker
 local emojipicker = require("emojipicker")
-emojipicker.registerDefaultBindings({"alt"}, "E")
+emojipicker.registerDefaultBindings({"alt", "shift"}, "E")
 
 local clipdo = require("clipdo")
 clipdo.registerDefaultBindings({"ctrl", "alt", "shift"}, "L")
@@ -209,7 +209,7 @@ end
 local emailPathWatcher = hs.pathwatcher.new("/Users/meain/.local/share/mail/.notmuch/xapian", emailNotify)
 emailPathWatcher:start()
 hs.hotkey.bind(
-    {"alt", "shift"},
+    {"alt"},
     "e",
     function()
         emailNotify(true)
@@ -220,7 +220,7 @@ hs.hotkey.bind(
     end
 )
 hs.hotkey.bind(
-    {"ctrl", "alt", "shift"},
+    {"ctrl", "alt"},
     "e",
     function()
         hs.alert("📫 Marking all emails as read")
