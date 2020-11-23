@@ -299,6 +299,15 @@ hs.hotkey.bind(
     end
 )
 
+hs.hotkey.bind(
+    {"ctrl", "alt", "shift"},
+    "z",
+    function()
+        hs.application.launchOrFocus("zoom.us")
+        hs.eventtap.keyStroke({"cmd", "ctrl"}, "v")
+    end
+)
+
 function moveMouseToCurrentWindowScreen()
     local currentApp = hs.window.focusedWindow()
     local screen = currentApp:screen()
