@@ -68,6 +68,9 @@
 ;; Consistent window title
 (setq frame-title-format '("Emacs")) ; needed by hammerspoon
 
+;; Scratch initial content
+(setq initial-scratch-message "; scratch")
+
 ;; Quicker yes or no
 (fset 'yes-or-no-p 'y-or-n-p)
 
