@@ -54,9 +54,9 @@
 ;; Evil leader
 (use-package evil-leader
   :ensure t
-  :init (progn
-          (global-evil-leader-mode)
-          (evil-leader/set-leader "s")))
+  :config (progn
+            (global-evil-leader-mode)
+            (evil-leader/set-leader "s")))
 
 (use-package evil-collection
   :ensure t
