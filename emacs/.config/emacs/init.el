@@ -1603,9 +1603,8 @@ START and END comes from it being interactive."
          (web-url (format "%s/blob/%s/%s%s"
                           git-url
                           git-branch
-                          (string-replace default-directory
-                                          ""
-                                          (buffer-file-name))
+                          (file-relative-name buffer-file-name
+                                              (projectile-project-root))
                           (if no-linenumber
                               ""
                             (format "#L%s"
