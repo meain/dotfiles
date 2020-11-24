@@ -6,7 +6,7 @@
 ;;; Code:
 
 ;; increase gc threshold (speeds up initial load)
-(setq gc-cons-threshold (* 50 1000 1000))
+(setq gc-cons-threshold (* 100 1000 1000))
 
 ;;; [PACKAGE SETUP] =============================================
 
@@ -28,7 +28,8 @@
 ;; (setq use-package-always-demand (daemonp)) ;; eager load if daemon
 
 ;; Setup quelpa
-(use-package quelpa :ensure t)
+(use-package quelpa :ensure t
+  :defer t)
 
 
 ;;; [BASE EVIL] =================================================
@@ -389,14 +390,16 @@
 
 ;; flymake
 (use-package flymake
-  :init (add-hook 'find-file-hook 'flymake-find-file-hook):config
-  (progn
-    (evil-set-command-property 'flymake-goto-next-error
-                               :jump t)
-    (evil-set-command-property 'flymake-goto-prev-error
-                               :jump t)))
+  :defer t
+  :config (progn
+            (add-hook 'find-file-hook 'flymake-find-file-hook)
+            (evil-set-command-property 'flymake-goto-next-error
+                                       :jump t)
+            (evil-set-command-property 'flymake-goto-prev-error
+                                       :jump t)))
 (use-package flymake-diagnostic-at-point
   :ensure t
+  :defer t
   :after flymake
   :config (progn
             (setq flymake-diagnostic-at-point-error-prefix
@@ -432,43 +435,43 @@
 (use-package ivy
   :after flx
   :ensure t
-  :diminish :config
-  (progn
-    (defun meain/buffer-switcher (&optional alternate)
-      "Choose between ivy-switch-buffer or ibuffer-other-window based on ALTERNATE."
-      (interactive "P")
-      (if alternate
-          (ibuffer-other-window)
-        (ivy-switch-buffer)))
-    (ivy-mode 1)
-    (setq ivy-use-virtual-buffers t) ; extend searching to bookmarks and
-    (setq ivy-height 10) ; Set height of the ivy window
-    (setq ivy-count-format "(%d/%d) ") ; count format, from the ivy help page
-    (setq ivy-display-style 'fancy)
-    (setq ivy-format-functions-alist '((t . ivy-format-function-line))) ; Make highlight extend all the way to the right
-    (setq ivy-re-builders-alist '((ivy-switch-buffer . ivy--regex-plus)
-                                  (counsel-rg . ivy--regex-plus)
-                                  (t . ivy--regex-fuzzy)))
-    (global-set-key (kbd "M-c")
-                    'meain/buffer-switcher)
-    (evil-leader/set-key "b b" 'meain/buffer-switcher)
-    (evil-leader/set-key "r" 'counsel-recentf)
-    (global-set-key (kbd "M-x")
-                    'counsel-M-x)
-    (evil-leader/set-key "l" 'counsel-M-x)
-    (evil-leader/set-key "h f" 'counsel-describe-function)
-    (evil-leader/set-key "h v" 'counsel-describe-variable)
-    (evil-leader/set-key "h o" 'counsel-describe-symbol)
-    (evil-leader/set-key "h l" 'counsel-find-library)
-    (evil-leader/set-key "h i" 'counsel-info-lookup-symbol)
-    (define-key evil-normal-state-map (kbd "_") 'dired-jump)
-    (define-key evil-normal-state-map (kbd "-") 'counsel-find-file)
-    (define-key ivy-minibuffer-map (kbd "C-j") 'ivy-immediate-done)))
+  :diminish t
+  :config (progn
+            (defun meain/buffer-switcher (&optional alternate)
+              "Choose between ivy-switch-buffer or ibuffer-other-window based on ALTERNATE."
+              (interactive "P")
+              (if alternate
+                  (ibuffer-other-window)
+                (ivy-switch-buffer)))
+            (ivy-mode 1)
+            (setq ivy-use-virtual-buffers t) ; extend searching to bookmarks and
+            (setq ivy-height 10) ; Set height of the ivy window
+            (setq ivy-count-format "(%d/%d) ") ; count format, from the ivy help page
+            (setq ivy-display-style 'fancy)
+            (setq ivy-format-functions-alist '((t . ivy-format-function-line))) ; Make highlight extend all the way to the right
+            (setq ivy-re-builders-alist '((ivy-switch-buffer . ivy--regex-plus)
+                                          (counsel-rg . ivy--regex-plus)
+                                          (t . ivy--regex-fuzzy)))
+            (global-set-key (kbd "M-c")
+                            'meain/buffer-switcher)
+            (evil-leader/set-key "b b" 'meain/buffer-switcher)
+            (evil-leader/set-key "r" 'counsel-recentf)
+            (global-set-key (kbd "M-x")
+                            'counsel-M-x)
+            (evil-leader/set-key "l" 'counsel-M-x)
+            (evil-leader/set-key "h f" 'counsel-describe-function)
+            (evil-leader/set-key "h v" 'counsel-describe-variable)
+            (evil-leader/set-key "h o" 'counsel-describe-symbol)
+            (evil-leader/set-key "h l" 'counsel-find-library)
+            (evil-leader/set-key "h i" 'counsel-info-lookup-symbol)
+            (define-key evil-normal-state-map (kbd "_") 'dired-jump)
+            (define-key evil-normal-state-map (kbd "-") 'counsel-find-file)
+            (define-key ivy-minibuffer-map (kbd "C-j") 'ivy-immediate-done)))
 
 ;; ivy-rich
 (use-package ivy-rich
   :ensure t
-  :init (ivy-rich-mode))
+  :config (ivy-rich-mode))
 
 ;; amx (better mx)
 (use-package amx
@@ -790,6 +793,7 @@
 ;; vterm setup
 (use-package vterm
   :ensure t
+  :defer t
   :init (progn
           (setq vterm-max-scrollback 100000)
           (setq vterm-kill-buffer-on-exit t)
@@ -955,6 +959,7 @@
 (use-package docker-compose-mode :ensure t
   :defer t)
 (use-package org
+  :defer t
   :init (progn
           (evil-define-key 'normal
             org-mode-map
@@ -1279,6 +1284,7 @@
 
 ;; tramp dired
 (use-package tramp
+  :defer t
   :ensure t
   :init (progn
           (setq remote-file-name-inhibit-cache nil)
