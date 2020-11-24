@@ -349,6 +349,22 @@ hs.hotkey.bind(
     end
 )
 
+-- floating terminal/emacs
+floatingterm = hs.hotkey.bind(
+    {"alt"},
+    ";",
+    function()
+        local current_app = hs.window.focusedWindow()
+        if string.match(current_app:title(), "Emacs") then
+            floatingterm:disable()
+            hs.eventtap.keyStroke({"alt"}, ";")
+            floatingterm:enable()
+        else
+            hs.eventtap.keyStroke({"cmd"}, ";")
+        end
+    end
+)
+
 -- quick window switching
 hs.hotkey.bind(
     {"alt"},
