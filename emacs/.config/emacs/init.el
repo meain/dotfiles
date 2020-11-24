@@ -243,20 +243,6 @@
 (global-set-key (kbd "M-u")
                 'universal-argument)
 
-;; Eval last sexp
-(defun meain/eval-last-sexp (&optional alternate)
-  "Do `eval-last-sexp'.  Pass ALTERNATE to go to end of line and do the same."
-  (interactive "P")
-  (if alternate
-      (save-excursion
-        (end-of-line)
-        (eval-last-sexp nil))
-    (save-excursion
-      (search-forward ")")
-      (eval-last-sexp nil))))
-(evil-leader/set-key ";" 'meain/eval-last-sexp)
-
-
 ;; Window mappings
 (global-set-key (kbd "M-l")
                 (lambda ()
@@ -922,6 +908,23 @@
 (use-package editorconfig
   :ensure t
   :config (editorconfig-mode 1))
+
+(use-package eros
+  :ensure t
+  :commands (eros-eval-last-sexp):init
+  (progn
+    (defun meain/eval-last-sexp (&optional alternate)
+      "Do `eval-last-sexp'.  Pass ALTERNATE to go to end of line and do the same."
+      (interactive "P")
+      (if alternate
+          (save-excursion
+            (end-of-line)
+            (eros-eval-last-sexp nil))
+        (save-excursion
+          (search-forward ")")
+          (eros-eval-last-sexp nil))))
+    (evil-leader/set-key ";" 'meain/eval-last-sexp))
+  :config (eros-mode))
 
 ;;; [FILETYPE PUGINS] ===============================================
 
