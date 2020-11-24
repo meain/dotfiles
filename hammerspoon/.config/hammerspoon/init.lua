@@ -325,7 +325,7 @@ hs.hotkey.bind(
         local current_app = hs.window.focusedWindow()
         if current_app:title() == "Emacs" then
             if quick_edit_app == nil then
-                hs.alert("🤔 Not edit in progress")
+                hs.alert("🤔 No edit in progress")
                 return
             end
             hs.eventtap.keyStroke({"cmd"}, "a")
