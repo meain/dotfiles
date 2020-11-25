@@ -530,7 +530,7 @@
 (use-package srefactor
   :commands srefactor-lisp-format-buffer
   :ensure t
-  :init (require 'srefactor-lisp))
+  :config (require 'srefactor-lisp))
 (use-package format-all
   :commands format-all-buffer
   :ensure t
