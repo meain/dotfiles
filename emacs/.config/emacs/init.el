@@ -114,8 +114,8 @@
 (setq inhibit-startup-screen t)
 ;; (set-frame-parameter nil 'undecorated t)
 
-;; Font (set-frame-font  "Conta 14")
-(setq font-family-default "Conta 14")
+;; Font (set-frame-font  "Fairfax HD 16")
+(setq font-family-default "Fairfax HD 16")
 (add-to-list 'default-frame-alist
              `(font . ,font-family-default))
 (set-face-attribute 'default nil :font font-family-default)
@@ -388,7 +388,6 @@
                                        :jump t)))
 (use-package flymake-diagnostic-at-point
   :ensure t
-  :defer t
   :after flymake
   :config (progn
             (setq flymake-diagnostic-at-point-error-prefix
