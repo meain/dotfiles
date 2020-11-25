@@ -908,6 +908,7 @@
   :ensure t
   :config (editorconfig-mode 1))
 
+;; eros for eval
 (use-package eros
   :ensure t
   :commands (eros-eval-last-sexp):init
