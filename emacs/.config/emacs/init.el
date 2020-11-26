@@ -1360,6 +1360,12 @@
   :ensure t
   :commands (dired-git-info-mode))
 
+;; Restclient
+(use-package restclient
+  :ensure t
+  :defer t
+  :mode (("\\.rest\\'" . restclient-mode)))
+
 
 ;;; [CUSTOM FUNCTIONS] ==============================================
 
