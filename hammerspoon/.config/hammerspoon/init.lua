@@ -45,6 +45,11 @@ spoon.MicMute:bindHotkeys(
     }
 )
 
+-- pomodoro
+local pomodoro = require("pomodoro")
+local menu = hs.menubar.new(true)
+pomodoro.setup(menu)
+
 -- Scren switcher
 local switchscreen = require("switchscreen")
 hs.hotkey.bind(
@@ -350,7 +355,8 @@ hs.hotkey.bind(
 )
 
 -- floating terminal/emacs
-floatingterm = hs.hotkey.bind(
+floatingterm =
+    hs.hotkey.bind(
     {"alt"},
     ";",
     function()
