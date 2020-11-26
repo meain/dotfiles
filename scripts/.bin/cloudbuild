@@ -1,0 +1,16 @@
+#!/bin/sh
+
+set -e
+
+if [ -z "$1" ]; then
+    NAME="$(pwd | xargs basename)"
+    printf "Name [%s]: " "$NAME"
+    read -r
+    [ -n "$REPLY" ] && NAME="$REPLY"
+else
+    NAME="$1"
+fi
+
+IMAGE="$CONTAINER_REGISTERY/$NAME"
+echo "$IMAGE"
+gcloud builds submit --tag "$IMAGE"
