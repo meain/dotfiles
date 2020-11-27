@@ -1472,6 +1472,45 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
       (evil-insert 1))))
 (evil-leader/set-key "v" 'meain/vime)
 
+;; Open note
+(defun meain/nested-list-dir (directory)
+  "List items two level deep in DIRECTORY."
+  (apply 'concatenate
+         'list
+         (mapcar (lambda (x)
+                   (mapcar (lambda (y)
+                             (concatenate 'string
+                                          (car x)
+                                          "/"
+                                          (car y)))
+                           (remove-if #'(lambda (x)
+                                          (or (eq (nth 1 x) t)
+                                              (equal (substring (nth 0 x)
+                                                                0
+                                                                1) ".")))
+                                      (directory-files-and-attributes (concatenate 'string
+                                                                                   directory
+                                                                                   "/"
+                                                                                   (car x))))))
+                 (remove-if #'(lambda (x)
+                                (or (eq (nth 1 x) nil)
+                                    (equal (substring (nth 0 x)
+                                                      0
+                                                      1) ".")
+                                    (equal (nth 0 x) "archive")
+                                    (equal (nth 0 x) "temp")))
+                            (directory-files-and-attributes directory)))))
+
+(defun meain/open-note ()
+  "Quick open a note from `.notes` directory."
+  (interactive)
+  (ivy-read "Choose note: "
+            (meain/nested-list-dir "~/.notes")
+            :require-match t
+            :action (lambda (x)
+                      (find-file (concatenate 'string "~/.notes/" x)))))
+(evil-leader/set-key "a N" 'meain/open-note)
+
 ;; dasht docs
 (defun meain/dasht-docs (start end)
   "Look up word at point in dasht.
