@@ -542,7 +542,7 @@
             (interactive)
             (if (eq major-mode 'emacs-lisp-mode)
                 (srefactor-lisp-format-buffer)
-              (format-all-buffer)))
+              (call-interactively 'format-all-buffer)))
           (define-key evil-normal-state-map (kbd ",,") 'meain/auto-format)))
 
 ;; Projectile
