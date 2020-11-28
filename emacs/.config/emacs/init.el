@@ -1721,6 +1721,9 @@ START and END comes from it being interactive."
                              (float-time (time-subtract after-init-time before-init-time)))
                      gcs-done)))
 
+;; Start emacs server
+(server-start)
+
 ;; drop gc threshold back
 (setq gc-cons-threshold 800000)
 
