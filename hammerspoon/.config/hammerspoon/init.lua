@@ -255,7 +255,7 @@ hs.hotkey.bind(
             customshellrun.run("emacsclient --no-wait -c", true)
         else
             hs.notify.new({title = "Starting Emacs", informativeText = "Starting new server process"}):send()
-            customshellrun.run("Emacs --bg-daemon;emacsclient --no-wait -c", true)
+            customshellrun.run("emacsclient -a '' --no-wait -c", true)
         end
     end
 )
