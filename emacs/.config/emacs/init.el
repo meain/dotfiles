@@ -5,6 +5,8 @@
 
 ;;; Code:
 
+;; native comp stuff
+(setq comp-speed 2)
 ;; increase gc threshold (speeds up initial load)
 (setq gc-cons-threshold (* 100 1000 1000))
 
