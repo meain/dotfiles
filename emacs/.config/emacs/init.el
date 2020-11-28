@@ -1635,6 +1635,15 @@ START and END comes from it being interactive."
 (global-set-key (kbd "M-f M-b")
                 'meain/buffer-switcher)
 
+;; setting proper default-dir
+(defun meain/set-proper-default-dir ()
+  (interactive)
+  (setq default-directory (cond
+                           ((projectile-project-p)
+                            (projectile-project-root))
+                           (t "~/"))))
+(add-hook 'find-file-hook 'meain/set-proper-default-dir)
+
 ;; Open current file in Github
 (defun meain/github-url (&optional no-linenumber)
   "Open the Github page for the current file.  Pass NO-LINENUMBER to not add a line number."
