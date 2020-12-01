@@ -1570,7 +1570,7 @@ START and END comes from it being interactive."
               (format "(message \"%s: %%s\" %s)" thing-to-print
                       thing-to-print thing-to-print))
              ((equal major-mode 'rust-mode)
-              (format "println!(\"%s: {:?}\", %s)" thing-to-print
+              (format "println!(\"%s: {:?}\", %s);" thing-to-print
                       thing-to-print))
              ((equal major-mode 'go-mode)
               (format "fmt.Println(\"%s:\", %s);" thing-to-print
