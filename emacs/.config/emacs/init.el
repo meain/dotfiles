@@ -1637,6 +1637,7 @@ START and END comes from it being interactive."
 
 ;; setting proper default-dir
 (defun meain/set-proper-default-dir ()
+  "Function to set the `default-directory' value as the project root if available."
   (interactive)
   (setq default-directory (cond
                            ((projectile-project-p)
