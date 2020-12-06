@@ -68,4 +68,4 @@ export PATH="$PATH":"$HOME/.pub-cache/bin"
 export PATH="$PATH":"$HOME/.dotnet"
 
 # emacs
-export PATH="$PATH:/Applications/GCCEmacs.app/Contents/MacOS:/Applications/GCCEmacs.app/Contents/MacOS/bin"
+export PATH="$PATH:/Applications/Emacs.app/Contents/MacOS:/Applications/Emacs.app/Contents/MacOS/bin"
