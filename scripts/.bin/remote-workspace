@@ -2,24 +2,27 @@
 
 set -e
 
-TNAME="$(pwd|xargs basename)"
+TNAME="$(pwd | xargs basename)"
 IGNORE_STRING=""
-if [ -f .dockerignore ];then
-    IGNORE_STRING="$(sed '/^\ *$/d;s|^|--exclude |' .dockerignore | tr '\n' ' ')"
+if [ -f .dockerignore ]; then
+	IGNORE_STRING="$(sed '/^\ *$/d;s|^|--exclude |' .dockerignore | tr '\n' ' ')"
 fi
 
-[ "$1" = "web" ] && sed -n "/Host $EXPERIMENT_VM/,/^$/p"  ~/.ssh/config | 
-    grep HostName | awk '{print $2}' | xargs -I{} open "http://{}" && exit 0
+[ "$1" = "shell" ] &&
+	TERM=screen-256color ssh "$EXPERIMENT_VM" -t "cd /tmp/$TNAME && bash" && exit 0
+
+[ "$1" = "web" ] && sed -n "/Host $EXPERIMENT_VM/,/^$/p" ~/.ssh/config |
+	grep HostName | awk '{print $2}' | xargs -I{} open "http://{}" && exit 0
 [ "$1" != "cnys" ] && rsync -azvr --exclude '.git' $IGNORE_STRING . "$EXPERIMENT_VM:/tmp/$TNAME"
 [ "$1" = "sync" ] && exit 0
 
-if [ "$1" = "run" ];then
-    TERM=screen-256color ssh "$EXPERIMENT_VM" -t "cd /tmp/$TNAME && bash -c '$*'"
-elif [ "$1" = "cnys" ];then
-    # sync in reverse
-    rsync -azvr --exclude '.git' $IGNORE_STRING "$EXPERIMENT_VM:/tmp/$TNAME/" .
-elif [ "$1" = "csync" ];then
-    watchexec -- rsync -azvr --exclude '.git' $IGNORE_STRING . "$EXPERIMENT_VM:/tmp/$TNAME"
+if [ "$1" = "run" ]; then
+	TERM=screen-256color ssh "$EXPERIMENT_VM" -t "cd /tmp/$TNAME && bash -c '$*'"
+elif [ "$1" = "cnys" ]; then
+	# sync in reverse
+	rsync -azvr --exclude '.git' $IGNORE_STRING "$EXPERIMENT_VM:/tmp/$TNAME/" .
+elif [ "$1" = "csync" ]; then
+	watchexec -- rsync -azvr --exclude '.git' $IGNORE_STRING . "$EXPERIMENT_VM:/tmp/$TNAME"
 else
-    TERM=screen-256color ssh "$EXPERIMENT_VM" -t "cd /tmp/$TNAME && bash"
+	TERM=screen-256color ssh "$EXPERIMENT_VM" -t "cd /tmp/$TNAME && bash"
 fi
