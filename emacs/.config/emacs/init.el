@@ -945,6 +945,23 @@
   :init (setq venv-location "~/.cache/virtual_envs"))
 
 ;; Quick run current test
+(defun meain/test-runner-full ()
+  "Run the full test suite using toffee."
+  (interactive)
+  (compile (shell-command-to-string (format "toffee --full '%s' 2>/tmp/toffee-emacs-error || echo 'cat /tmp/toffee-emacs-error && exit 1'"
+                                            (buffer-file-name)))))
+(defun meain/test-runner (&optional full-file)
+  "Run the nearest test using toffee.  Pass `FULL-FILE' to run all test in file."
+  (interactive "P")
+  (compile (shell-command-to-string (if full-file
+                                        (format "toffee '%s' 2>/tmp/toffee-emacs-error || echo 'cat /tmp/toffee-emacs-error && exit 1'"
+                                                (buffer-file-name))
+                                      (format "toffee '%s' '%s' 2>/tmp/toffee-emacs-error || echo 'cat /tmp/toffee-emacs-error && exit 1'"
+                                              (buffer-file-name)
+                                              (line-number-at-pos))))))
+(evil-leader/set-key "d" 'meain/test-runner)
+(evil-leader/set-key "D" 'meain/test-runner-full)
+
 ;;; [FILETYPE PUGINS] ===============================================
 
 (use-package rust-mode :ensure t
