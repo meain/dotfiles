@@ -374,6 +374,15 @@
   (apply orig-fn beg end args))
 (advice-add 'evil-yank :around 'meain/evil-yank-advice)
 
+;; Recompile binding
+(defun meain/recompile-or-compile (&optional arg)
+  "Compile or recompile based on universal `ARG'."
+  (interactive "P")
+  (if arg
+      (call-interactively 'compile)
+    (recompile)))
+(evil-leader/set-key "r" 'meain/recompile-or-compile)
+
 ;;; [OTHER PACKAGES] =============================================
 
 ;; abbrev mode
@@ -446,7 +455,7 @@
             (global-set-key (kbd "M-c")
                             'meain/buffer-switcher)
             (evil-leader/set-key "b b" 'meain/buffer-switcher)
-            (evil-leader/set-key "r" 'counsel-recentf)
+            (evil-leader/set-key "R" 'counsel-recentf)
             (global-set-key (kbd "M-x")
                             'counsel-M-x)
             (evil-leader/set-key "l" 'counsel-M-x)
