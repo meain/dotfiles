@@ -938,6 +938,13 @@
     (evil-leader/set-key ";" 'meain/eval-last-sexp))
   :config (eros-mode))
 
+;; Virtualenv
+(use-package virtualenvwrapper
+  :ensure t
+  :command venv-workon
+  :init (setq venv-location "~/.cache/virtual_envs"))
+
+;; Quick run current test
 ;;; [FILETYPE PUGINS] ===============================================
 
 (use-package rust-mode :ensure t
