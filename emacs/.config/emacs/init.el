@@ -1444,6 +1444,13 @@
     (interactive)
     (find-file "~/.dotfiles/emacs/.config/emacs/init.el")))
 
+;; Quick open today file
+(evil-leader/set-key "a t"
+  (defun meain/load-today ()
+    "Load emacs config for editing."
+    (interactive)
+    (find-file "~/.cache/today.org")))
+
 ;; Full screen emacs
 (global-set-key (kbd "<s-return>")
                 'toggle-frame-fullscreen)
