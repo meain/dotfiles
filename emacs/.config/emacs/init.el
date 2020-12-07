@@ -391,7 +391,7 @@
 
 ;; flymake
 (use-package flymake
-  :defer t
+  :defer 1
   :config (progn
             (add-hook 'find-file-hook 'flymake-find-file-hook)
             (evil-set-command-property 'flymake-goto-next-error
@@ -401,14 +401,14 @@
 (use-package flymake-diagnostic-at-point
   :ensure t
   :after flymake
-  :config (progn
-            (setq flymake-diagnostic-at-point-error-prefix
-                  "! ")
-            (setq flymake-diagnostic-at-point-display-diagnostic-function
-                  'flymake-diagnostic-at-point-display-minibuffer)
-            (add-hook 'flymake-mode-hook #'flymake-diagnostic-at-point-mode)
-            (evil-leader/set-key "j" 'flymake-goto-next-error)
-            (evil-leader/set-key "k" 'flymake-goto-prev-error)))
+  :init (progn
+          (setq flymake-diagnostic-at-point-error-prefix
+                "! ")
+          (setq flymake-diagnostic-at-point-display-diagnostic-function
+                'flymake-diagnostic-at-point-display-minibuffer)
+          (evil-leader/set-key "j" 'flymake-goto-next-error)
+          (evil-leader/set-key "k" 'flymake-goto-prev-error)):config
+  (add-hook 'flymake-mode-hook #'flymake-diagnostic-at-point-mode))
 
 ;; Company for autocompletions
 (use-package company
