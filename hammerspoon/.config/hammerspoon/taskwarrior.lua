@@ -25,13 +25,13 @@ completionFn = function(choice)
     else
         hs.focus() -- this is needed for the textPrompt to have focus
         local button, message =
-            dialog.textPrompt("Complete/Annotate task", "Enter message", "", "Done", "Annotate")
+            dialog.textPrompt("Complete/Annotate task", "Enter message", "", "Done", "Exec")
         if button == "Done" then
             hs.alert("✔ " .. choice["project"] .. ": " .. choice["task"]:gsub("%s+", "", 1))
             customshellrun.run("/usr/local/bin/task " .. choice["id"] .. " done " .. message)
         else
             hs.alert("📃 " .. choice["project"] .. ": " .. choice["task"]:gsub("%s+", "", 1) .. "\n" .. message)
-            customshellrun.run("/usr/local/bin/task " .. choice["id"] .. " annotate " .. message)
+            customshellrun.run("/usr/local/bin/task " .. choice["id"] .. " " .. message)
         end
     end
     -- customshellrun.run("/usr/local/bin/task sync &")
