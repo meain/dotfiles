@@ -949,7 +949,7 @@
 ;; Virtualenv
 (use-package virtualenvwrapper
   :ensure t
-  :command venv-workon
+  :commands venv-workon
   :init (setq venv-location "~/.cache/virtual_envs"))
 
 ;; Quick run current test
