@@ -1,0 +1,8 @@
+#!/bin/sh
+
+set -e
+
+echo Searching "$1" "$2 |keys|@sh"
+tee /tmp/jq-query | jq -Me "$1 |select (.!=null)" 2>/dev/null ||
+	jq -M "$2 |keys|@sh" /tmp/jq-query 2>/dev/null | tr -s ' ' '\n' |
+	sed "s|^\"||;s|\"$||;s|^'||;s|'$||"
