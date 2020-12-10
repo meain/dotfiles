@@ -23,6 +23,8 @@
 
   mff = merge --ff-only
 
+  wip = for-each-ref --sort='authordate:iso8601' --format=' %(color:green)%(authordate:relative)%09%(color:reset)%(refname:short)' refs/heads
+
   undo = !"git reset --soft HEAD^ && git reset"
   # hard reset and clean (unrecoverable)
   nuke = !"git reset --hard HEAD && git clean -fd"
