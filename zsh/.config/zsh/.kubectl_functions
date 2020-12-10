@@ -24,10 +24,8 @@ kdesc() {
 
 k_change_namespace() {
   NAMESPCE="$(kubectl get namespace | tail -n+2 | fzf --query "$1" | cut -d' ' -f1)"
-  if [ -z "$NAMESPCE" ]; then
-    return 0
-  fi
-  kubectl config set-context "$(kubectl config current-context)" --namespace="$NAMESPCE"
+  [ -z "$NAMESPCE" ] && return 0
+  kubectl config set-context --current --namespace="$NAMESPCE"
 }
 
 k_change_context() {
