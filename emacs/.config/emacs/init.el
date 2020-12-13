@@ -953,19 +953,19 @@
 (defun meain/test-runner (&optional full-file)
   "Run the nearest test using toffee.  Pass `FULL-FILE' to run all test in file."
   (interactive "P")
-  (message "%s" (if full-file
-                                        (format "toffee '%s' || exit 1"
-                                                (buffer-file-name))
-                                      (format "toffee '%s' '%s' || exit 1"
-                                              (buffer-file-name)
-                                              (line-number-at-pos))))
+  (message "%s"
+           (if full-file
+               (format "toffee '%s' || exit 1"
+                       (buffer-file-name))
+             (format "toffee '%s' '%s' || exit 1"
+                     (buffer-file-name)
+                     (line-number-at-pos))))
   (compile (shell-command-to-string (if full-file
                                         (format "toffee '%s' || exit 1"
                                                 (buffer-file-name))
                                       (format "toffee '%s' '%s' || exit 1"
                                               (buffer-file-name)
-                                              (line-number-at-pos)))))
-  )
+                                              (line-number-at-pos))))))
 (evil-leader/set-key "d" 'meain/test-runner)
 (evil-leader/set-key "D" 'meain/test-runner-full)
 
