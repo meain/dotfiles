@@ -61,11 +61,6 @@
             (global-evil-leader-mode)
             (evil-leader/set-leader "s")))
 
-(use-package evil-collection
-  :ensure t
-  :after evil
-  :config (evil-collection-init))
-
 ;;; [BASIC SETTINGS] =============================================
 
 ;; Consistent window title
@@ -960,6 +955,13 @@
                                               (line-number-at-pos))))))
 (evil-leader/set-key "d" 'meain/test-runner)
 (evil-leader/set-key "D" 'meain/test-runner-full)
+
+;; Evil keybindings for a lot of things
+(use-package evil-collection
+  :ensure t
+  :after evil
+  :config (evil-collection-init))
+
 
 ;;; [FILETYPE PUGINS] ===============================================
 
