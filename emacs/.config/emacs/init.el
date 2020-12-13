@@ -1351,11 +1351,11 @@
           (interactive)
           (tramp-term (list (meain/ssh-host-picker)))))
 
-;; wakatime
-(use-package wakatime-mode
+;; timing stuff
+(use-package activity-watch-mode
   :ensure t
   :diminish :config
-  (global-wakatime-mode))
+  (global-activity-watch-mode))
 
 ;; Markdown preivew
 (use-package simple-httpd
