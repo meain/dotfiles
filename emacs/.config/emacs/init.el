@@ -305,6 +305,12 @@
 ;; File manipulation mappings
 (evil-leader/set-key "<SPC>" 'save-buffer)
 
+;; Easier C-c C-c
+(evil-leader/set-key "i"
+  '(lambda ()
+     (interactive)
+     (execute-kbd-macro (kbd "C-c C-c"))))
+
 ;; Other keybindings
 (define-key evil-normal-state-map (kbd "\\") 'evil-jump-backward)
 (define-key evil-normal-state-map (kbd "~") 'evil-jump-forward)
