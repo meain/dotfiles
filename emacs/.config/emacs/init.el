@@ -1742,7 +1742,7 @@ START and END comes from it being interactive."
                                                                'face
                                                                (if (buffer-modified-p)
                                                                    'font-lock-builtin-face
-                                                                 'font-lock-type-face)
+                                                                 'minibuffer-prompt)
                                                                'help-echo
                                                                (buffer-file-name))))
                                      '(:eval (when-let (vc vc-mode) ;; git branch
