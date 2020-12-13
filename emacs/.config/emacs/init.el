@@ -652,15 +652,6 @@
   :ensure t
   :commands magit-status
   :init (evil-leader/set-key "g" 'magit-status))
-(use-package evil-magit
-  :ensure t
-  :after magit
-  :config (progn
-            (evil-magit-init)
-            (evil-define-key* evil-magit-state
-                              magit-mode-map
-                              [escape]
-                              nil)))
 
 ;; Git messenger
 (use-package git-messenger
