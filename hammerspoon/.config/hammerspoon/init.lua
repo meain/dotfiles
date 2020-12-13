@@ -423,7 +423,7 @@ slackchat =
 )
 
 hs.hotkey.bind(
-    {"alt", "shift"},
+    {"ctrl", "shift"},
     "P",
     function()
         hs.alert("📎 " .. utils.trim(pasteboard.getContents()))
