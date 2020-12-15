@@ -308,6 +308,16 @@ hs.hotkey.bind(
     {"ctrl", "alt", "shift"},
     "z",
     function()
+        for line in io.lines('/Users/meain/.credentials') do
+            local first_split = utils.split(line, " ")[2]
+            if first_split ~= nil then
+                local second_split = utils.split(first_split, "=")[1]
+                if second_split == "PERSONAL_ZOOM_LINK" then
+                    hs.alert("📞 "..utils.split(first_split, "'")[2])
+                    pasteboard.setContents(utils.split(first_split, "'")[2])
+                end
+            end
+        end
         hs.application.launchOrFocus("zoom.us")
         hs.eventtap.keyStroke({"cmd", "ctrl"}, "v")
     end
