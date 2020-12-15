@@ -974,6 +974,10 @@
 (evil-leader/set-key "d" 'meain/test-runner)
 (evil-leader/set-key "D" 'meain/test-runner-full)
 
+;; Neotree
+(use-package neotree :ensure t
+  :commands neotree)
+
 ;; Evil keybindings for a lot of things
 (use-package evil-collection
   :ensure t
