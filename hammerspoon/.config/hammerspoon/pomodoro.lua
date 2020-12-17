@@ -1,5 +1,5 @@
 local mod = {}
-mod.timeinteral = 1
+mod.timeinteral = 30
 
 function switchTime()
     if mod.timeinteral == 1 then
