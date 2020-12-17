@@ -456,3 +456,12 @@ hs.hotkey.bind(
         typeout(pasteboard.getContents())
     end
 )
+
+hs.hotkey.bind(
+    {"alt", "shift"},
+    "w",
+    function()
+        local currentWindow = hs.window.focusedWindow()
+        currentWindow:move(hs.geometry(1470, -160, 1540, 800))
+    end
+)
