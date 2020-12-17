@@ -425,10 +425,11 @@ slackchat =
         local slack = hs.application("slack")
         if not slack:isFrontmost() then
             hs.application.launchOrFocus("slack")
+        else
+            browsernewtab:disable()
+            hs.eventtap.keyStroke({"cmd"}, "t")
+            browsernewtab:enable()
         end
-        browsernewtab:disable()
-        hs.eventtap.keyStroke({"cmd"}, "t")
-        browsernewtab:enable()
     end
 )
 
