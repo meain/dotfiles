@@ -19,12 +19,12 @@ function obj:updateMicMute(muted, showNotification)
 		muted = hs.audiodevice.defaultInputDevice():muted()
 	end
 	if muted then
-		obj.mute_menu:setTitle("><")
+		obj.mute_menu:setTitle("OFF")
 		if showNotification then
 		    hs.alert(" >< ")
 		end
 	else
-		obj.mute_menu:setTitle("<>")
+		obj.mute_menu:setTitle("ON")
 		if showNotification then
 		    hs.alert(" <> ")
 		end
