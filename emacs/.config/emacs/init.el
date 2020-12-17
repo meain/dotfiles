@@ -658,7 +658,31 @@
 (use-package magit
   :ensure t
   :commands magit-status
-  :init (evil-leader/set-key "g" 'magit-status))
+  :init (evil-leader/set-key "gg" 'magit-status))
+
+;; Diff hl
+(use-package diff-hl
+  :ensure t
+  :defer 1
+  :config (progn
+            (custom-set-faces '(diff-hl-change ((t (:background "#ede5cb"))))
+                              '(diff-hl-insert ((t (:background "#c7ddc7"))))
+                              '(diff-hl-delete ((t (:background "#edc4c4")))))
+            (let* ((height (frame-char-height))
+                   (width 2)
+                   (ones (1- (expt 2 width)))
+                   (bits (make-vector height ones)))
+              (define-fringe-bitmap 'my-diff-hl-bitmap bits
+                height width))
+            (setq diff-hl-fringe-bmp-function (lambda (type pos)
+                                                'my-diff-hl-bitmap))
+            (diff-hl-flydiff-mode)
+            (global-diff-hl-mode)
+            (evil-leader/set-key "gr" 'diff-hl-revert-hunk)
+            (evil-leader/set-key "gj" 'diff-hl-next-hunk)
+            (evil-leader/set-key "gk" 'diff-hl-previous-hunk)
+            (evil-leader/set-key "gn" 'diff-hl-next-hunk)
+            (evil-leader/set-key "gp" 'diff-hl-previous-hunk)))
 
 ;; Git messenger
 (use-package git-messenger
