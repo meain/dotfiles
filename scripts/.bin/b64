@@ -1,0 +1,12 @@
+#!/bin/sh
+
+set -e
+
+# script to be used in clipdo.lua hammerspoon
+
+case "$1" in
+    "encode") echo "$2" | base64 | tee /tmp/c | pbcopy ;;
+    "decode") echo "$2" | base64 -d | tee /tmp/c | pbcopy ;;
+esac
+
+cat /tmp/c
