@@ -594,7 +594,7 @@
          (go-mode . eglot-ensure)):config
   (progn
     (add-to-list 'eglot-server-programs
-                 '(lua-mode . ("lua-lsp")))
+                 '(lua-mode . ("~/.luarocks/bin/lua-lsp")))
     (add-to-list 'eglot-server-programs
                  '(rust-mode . ("rust-analyzer")))
     (add-to-list 'eglot-server-programs
