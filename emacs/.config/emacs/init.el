@@ -422,19 +422,20 @@
 ;; Company for autocompletions
 (use-package company
   :ensure t
-  :diminish :init
-  (global-company-mode)
-  :config (progn
-            (setq company-dabbrev-downcase nil) ;; Do not lowercase my completions
-            (setq company-auto-complete t)
-            (setq company-idle-delay 0)
-            (setq company-tooltip-maximum-width 35)
-            (setq company-tooltip-align-annotations t)
-            (setq company-minimum-prefix-length 2)
-            (define-key company-active-map (kbd "TAB") 'company-complete-common-or-cycle)
-            (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle)
-            (define-key company-active-map (kbd "S-TAB") 'company-select-previous)
-            (define-key company-active-map (kbd "<backtab>") 'company-select-previous)))
+  :defer 1
+  :diminish :config
+  (progn
+    (setq company-dabbrev-downcase nil) ;; Do not lowercase my completions
+    (setq company-auto-complete t)
+    (setq company-idle-delay 0)
+    (setq company-tooltip-maximum-width 35)
+    (setq company-tooltip-align-annotations t)
+    (setq company-minimum-prefix-length 2)
+    (define-key company-active-map (kbd "TAB") 'company-complete-common-or-cycle)
+    (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle)
+    (define-key company-active-map (kbd "S-TAB") 'company-select-previous)
+    (define-key company-active-map (kbd "<backtab>") 'company-select-previous)
+    (global-company-mode)))
 
 ;; Company quickhelp
 (use-package company-quickhelp ; Show help in tooltip
