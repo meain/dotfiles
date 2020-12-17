@@ -1,31 +1,38 @@
 local mod = {}
 
 local pasteboard = require("hs.pasteboard")
+local styledtext = require("hs.styledtext")
 
 local customshellrun = require("customshellrun")
 local utils = require("utils")
 
--- TODO: move this to 'datafiles' dir and read from there
 local doables = {
-    "add-to-gourcer",
-    "open",
-    "openorsearch",
-    "gource",
-    "tempg",
-    "search melpa",
-    "search github",
-    "search npm"
+    {"Add item to grourcer list", "add-to-gourcer"},
+    {"Base64 encode text", "b64 encode"},
+    {"Base64 decode text", "b64 decode"},
+    {"Submit gource entry", "gource"},
+    {"Clone folder and start tempg session", "tempg"},
+    {"Search text on melpa", "search melpa"},
+    {"Search text on github", "search github"},
+    {"Search text on npm", "search npm"},
+    {"Open file or url", "open"},
+    {"Open or search for file/url", "openorsearch"}
 }
 
 function mod.clipdo()
     local function formatChoices(choices)
-        local formattedChoices =
-            hs.fnutils.imap(
-            choices,
-            function(item)
-                return {["text"] = utils.trim(item)}
-            end
-        )
+        print("choices:", choices)
+        local formattedChoices = {}
+        for _, item in pairs(choices) do
+            local text =
+                styledtext.new(
+                item[1],
+                {
+                    font = {size = 16, name = "DankMonoNerdFontComplete-Regular"}
+                }
+            )
+            table.insert(formattedChoices, {["text"] = text, ["command"] = item[2]})
+        end
         return formattedChoices
     end
 
@@ -34,7 +41,8 @@ function mod.clipdo()
         hs.chooser.new(
         function(chosen)
             hs.alert("🧧 " .. chosen.text .. " '" .. link .. "'")
-            local result = customshellrun.run(chosen.text .. " '" .. link .. "'", true)
+            print(chosen.command .. " '" .. link .. "'")
+            local result = customshellrun.run(chosen.command .. " '" .. link .. "'", true)
             if (result == nil or result == "") then
                 hs.alert("-- no output --")
             else
