@@ -389,7 +389,7 @@
   (interactive "P")
   (if arg
       (call-interactively 'compile)
-    (recompile)))
+    (compile compile-command t)))
 (evil-leader/set-key "r" 'meain/recompile-or-compile)
 
 ;;; [OTHER PACKAGES] =============================================
