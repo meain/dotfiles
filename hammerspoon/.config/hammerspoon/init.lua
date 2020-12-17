@@ -371,7 +371,7 @@ floatingterm =
     ";",
     function()
         local current_app = hs.window.focusedWindow()
-        if current_app:title() == "Emacs" then
+        if current_app:title():sub(1, 5) == "Emacs" then
             floatingterm:disable()
             hs.eventtap.keyStroke({"alt"}, ";")
             floatingterm:enable()
