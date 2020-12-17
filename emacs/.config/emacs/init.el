@@ -678,6 +678,8 @@
                                                 'my-diff-hl-bitmap))
             (diff-hl-flydiff-mode)
             (global-diff-hl-mode)
+            (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
+            (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
             (evil-leader/set-key "gr" 'diff-hl-revert-hunk)
             (evil-leader/set-key "gj" 'diff-hl-next-hunk)
             (evil-leader/set-key "gk" 'diff-hl-previous-hunk)
