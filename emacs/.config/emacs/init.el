@@ -692,6 +692,12 @@
   :commands git-messenger:popup-message
   :init (evil-leader/set-key "G" 'git-messenger:popup-message))
 
+;; Matchit
+(use-package evil-matchit
+  :ensure t
+  :defer 1
+  :config (global-evil-matchit-mode 1))
+
 ;; Quick open scratch buffers
 (use-package scratch
   :ensure t
