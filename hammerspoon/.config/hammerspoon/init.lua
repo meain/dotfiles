@@ -338,7 +338,7 @@ hs.hotkey.bind(
     function()
         local emacs = hs.application.find("Emacs")
         local current_app = hs.window.focusedWindow()
-        if current_app:title() == "Emacs" then
+        if current_app:title():sub(1, 5) == "Emacs" then
             if quick_edit_app == nil then
                 hs.alert("🤔 No edit in progress")
                 return
