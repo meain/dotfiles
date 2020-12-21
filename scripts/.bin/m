@@ -1,0 +1,9 @@
+#!/bin/sh
+
+set -e
+
+notmuch search tag:inbox and tag:imbox and tag:unread |
+	sed 's|\([^ ]*\) \(.*\)|\2 \1|' |
+	fzf --preview 'notmuch show {-1}|sed -n "/text\/plain/,/part\}/p"|tail -n+2' \
+		--preview-window bottom:90% --height 100% --multi --no-select-1 |
+	awk '{print $NF}' | xargs -n1 notmuch tag -unread
