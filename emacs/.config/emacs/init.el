@@ -439,11 +439,11 @@
     (setq company-tooltip-maximum-width 35)
     (setq company-tooltip-align-annotations t)
     (setq company-minimum-prefix-length 2)
+    (global-company-mode)
     (define-key company-active-map (kbd "TAB") 'company-complete-common-or-cycle)
     (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle)
     (define-key company-active-map (kbd "S-TAB") 'company-select-previous)
-    (define-key company-active-map (kbd "<backtab>") 'company-select-previous)
-    (global-company-mode)))
+    (define-key company-active-map (kbd "<backtab>") 'company-select-previous)))
 
 ;; Company quickhelp
 (use-package company-quickhelp ; Show help in tooltip
