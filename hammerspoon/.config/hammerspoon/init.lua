@@ -318,8 +318,15 @@ hs.hotkey.bind(
                 end
             end
         end
+        local currentApp = hs.window.focusedWindow()
+        hs.eventtap.keyStroke({"cmd"}, "v")
         hs.application.launchOrFocus("zoom.us")
         hs.eventtap.keyStroke({"cmd", "ctrl"}, "v")
+        currentApp:focus()
+        os.execute("sleep " .. tonumber(2))
+        currentApp:focus()
+        os.execute("sleep " .. tonumber(2))
+        currentApp:focus()
     end
 )
 
