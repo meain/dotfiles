@@ -116,9 +116,17 @@
 (setq font-family-default "Fairfax HD 16")
 (add-to-list 'default-frame-alist
              `(font . ,font-family-default))
-(set-face-attribute 'default nil :font font-family-default)
-(set-face-attribute 'fixed-pitch nil :font font-family-default)
-(set-face-attribute 'variable-pitch nil :font font-family-default)
+(defun meain/setup-fonts ()
+  "Setup all the proper fonts for everything."
+  (set-face-attribute 'default nil :font font-family-default)
+  (set-face-attribute 'fixed-pitch nil :font font-family-default)
+  (set-face-attribute 'variable-pitch nil :font font-family-default))
+(if (daemonp)
+    (add-hook 'after-make-frame-functions
+              (lambda (frame)
+                (with-selected-frame frame
+                  (meain/setup-fonts))))
+  (meain/setup-fonts))
 (defun meain/select-font ()
   "Set font after selection using ivy."
   (interactive)
