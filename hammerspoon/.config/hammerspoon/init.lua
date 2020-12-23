@@ -474,7 +474,11 @@ hs.hotkey.bind(
         elseif currentWindow:title():sub(1, 5) == "Slack" then
             currentWindow:move(hs.geometry(30, 400, 895, 475))
         else
-            currentWindow:move(hs.geometry(1470, -160, 1540, 800))
+            if (#hs.screen.allScreens() == 1) then
+                currentWindow:move(hs.geometry(16,44,1411,835))
+            else
+                currentWindow:move(hs.geometry(1470, -160, 1540, 800))
+            end
         end
     end
 )
@@ -484,8 +488,11 @@ hs.hotkey.bind(
     "w",
     function()
         local currentWindow = hs.window.focusedWindow()
-        print(currentWindow:title())
-        print(currentWindow:frame())
-        currentWindow:move(hs.geometry(184.0,184.0,1077.0,512.0))
+        print(currentWindow:title(), currentWindow:frame())
+        if currentWindow:title() == "Alacritty" then
+            currentWindow:move(hs.geometry(31,40,893,347))
+        else
+            currentWindow:move(hs.geometry(184,184,1077,512))
+        end
     end
 )
