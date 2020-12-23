@@ -1231,7 +1231,7 @@
   :commands (elfeed elfeed-update):init
   (progn
     (run-at-time nil
-                 (* 3 60 60)
+                 (* 6 60 60)
                  (lambda ()
                    (elfeed-update)
                    (elfeed-db-save))))
