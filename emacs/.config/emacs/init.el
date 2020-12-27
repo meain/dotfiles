@@ -434,16 +434,13 @@
   :diminish :config
   (progn
     (setq company-dabbrev-downcase nil) ;; Do not lowercase my completions
-    (setq company-auto-complete t)
     (setq company-idle-delay 0)
     (setq company-tooltip-maximum-width 35)
     (setq company-tooltip-align-annotations t)
-    (setq company-minimum-prefix-length 2)
+    (setq company-minimum-prefix-length 0)
     (global-company-mode)
-    (define-key company-active-map (kbd "TAB") 'company-complete-common-or-cycle)
-    (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle)
-    (define-key company-active-map (kbd "S-TAB") 'company-select-previous)
-    (define-key company-active-map (kbd "<backtab>") 'company-select-previous)))
+    ;; company-tng-mode provides better autocomplete behaviour
+    (company-tng-mode)))
 
 ;; Company quickhelp
 (use-package company-quickhelp ; Show help in tooltip
