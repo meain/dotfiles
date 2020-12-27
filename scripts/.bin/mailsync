@@ -42,6 +42,7 @@ notmuch tag +newsletter +nonotify -imbox 'tag:inbox' 'from:erik@learnui.design'
 notmuch tag +newsletter +nonotify -imbox 'tag:inbox' 'from:jobs-listings@linkedin.com'
 notmuch tag +newsletter +nonotify -imbox 'tag:inbox' 'from:hello@uxdesign.cc'
 notmuch tag +newsletter +nonotify -imbox 'tag:inbox' 'from:vimtricks@substack.com'
+notmuch tag +newsletter +nonotify -imbox 'tag:inbox' 'from:hi@vimtricks.com'
 
 # bullshit
 notmuch tag +bullshit +nonotify -imbox 'tag:inbox' 'from:marketradar@newsletter.geojit.net'
