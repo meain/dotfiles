@@ -1314,138 +1314,138 @@
                  (lambda ()
                    (elfeed-update)
                    (elfeed-db-save))))
-  :config (progn
-            (evil-leader/set-key "a e" 'elfeed)
-            (setq browse-url-generic-program "open")
-            (setq browse-url-generic-args (list "-g"))
-            (evil-define-key 'normal
-              elfeed-search-mode-map
-              (kbd "o")
-              (lambda (&optional alternate)
-                (interactive)
-                (elfeed-search-browse-url t)))
-            (evil-define-key 'normal
-              elfeed-search-mode-map
-              (kbd "O")
-              'elfeed-search-browse-url)
-            (evil-define-key 'visual
-              elfeed-search-mode-map
-              (kbd "o")
-              'elfeed-search-browse-url)
-            (evil-define-key 'normal
-              elfeed-search-mode-map
-              (kbd "d")
-              'meain/elfeed-search-filter)
-            (evil-define-key 'normal
-              elfeed-search-mode-map
-              (kbd "D")
-              (lambda ()
-                (interactive)
-                (setq elfeed-search-filter "@2-months-ago +unread")
-                (elfeed-search-update :force)))
-            (evil-define-key 'normal
-              elfeed-search-mode-map
-              (kbd "q")
-              'elfeed-db-unload)
-            (defun meain/elfeed-search-filter ()
-              (interactive)
-              (setq elfeed-search-filter "@2-months-ago +unread")
-              (elfeed-search-update :force)
-              (ivy-read "Apply tag: "
-                        (remove-if (lambda (x)
-                                     (equalp x 'unread))
-                                   (delete-dups (flatten-list (cl-list* (with-current-buffer "*elfeed-search*"
-                                                                          (cl-loop for
-                                                                                   entry
-                                                                                   in
-                                                                                   elfeed-search-entries
-                                                                                   collect
-                                                                                   (elfeed-entry-tags entry)))))))
-                        :action (lambda (x)
-                                  (setq elfeed-search-filter (concatenate 'string "@2-months-ago +unread +"
-                                                                          x))
-                                  (elfeed-search-update :force)
-                                  (evil-goto-first-line))))
-            (setq-default elfeed-search-filter "@2-months-ago +unread ")
-            (setq elfeed-use-curl t)
-            (setq elfeed-curl-max-connections 10)
-            (setq elfeed-db-directory "~/.config/emacs/elfeed/")
-            (setq elfeed-enclosure-default-dir "~/Downloads/")
-            (setq elfeed-show-entry-switch #'meain/elfeed-display-buffer)
-            (add-to-list 'display-buffer-alist
-                         '((lambda (bufname _)
-                             (with-current-buffer bufname
-                               (equal major-mode 'elfeed-show-mode)))
-                           (display-buffer-reuse-window display-buffer-at-bottom)
-                           (reusable-frames . visible)
-                           (window-height . 0.7)))
-            (defun meain/elfeed-search-print (entry)
-              "Print ENTRY to the buffer."
-              (let* ((feed-width 25)
-                     (tags-width 35)
-                     (title (or (elfeed-meta entry :title)
-                                (elfeed-entry-title entry)
-                                ""))
-                     (title-faces (elfeed-search--faces (elfeed-entry-tags entry)))
-                     (feed (elfeed-entry-feed entry))
-                     (feed-title (when feed
-                                   (or (elfeed-meta feed :title)
-                                       (elfeed-feed-title feed))))
-                     (tags (mapcar #'symbol-name
-                                   (elfeed-entry-tags entry)))
-                     (tags-str (concat " ("
-                                       (mapconcat 'identity tags ",")
-                                       ")"))
-                     (title-width (- (window-width)
-                                     feed-width
-                                     tags-width
-                                     4))
-                     (title-column (elfeed-format-column title
-                                                         (elfeed-clamp elfeed-search-title-min-width
-                                                                       title-width elfeed-search-title-max-width)
-                                                         :left))
-                     (tag-column (elfeed-format-column tags-str
-                                                       (elfeed-clamp (length tags-str)
-                                                                     tags-width
-                                                                     tags-width)
-                                                       :left))
-                     (feed-column (elfeed-format-column feed-title
-                                                        (elfeed-clamp feed-width feed-width feed-width)
-                                                        :left)))
-                (insert (propertize feed-column 'face 'elfeed-search-feed-face)
-                        " ")
-                (insert (propertize title 'face title-faces 'kbd-help
-                                    title))
-                (insert (propertize tag-column 'face 'elfeed-search-tag-face)
-                        " ")))
-            (setq elfeed-search-print-entry-function 'meain/elfeed-search-print)
-            (defun meain/elfeed-display-buffer (buf &optional act)
-              (pop-to-buffer buf)
-              (set-window-text-height (get-buffer-window)
-                                      (round (* 0.7
-                                                (frame-height)))
-                                      (previous-window-any-frame)))
-            (defun meain/elfeed-enclosure-download (base-dir extension)
-              "Download podcast to `BASE-DIR' with proper heirary using feed and title using `EXTENSION'"
-              (start-process "*elfeed-enclosure-download*"
-                             "*elfeed-enclosure-download*"
-                             "downloader"
-                             (elt (car (elfeed-entry-enclosures elfeed-show-entry))
-                                  0)
-                             (format "%s/%s/%s%s"
-                                     base-dir
-                                     (elfeed-feed-title (elfeed-entry-feed elfeed-show-entry))
-                                     (elfeed-entry-title elfeed-show-entry)
-                                     extension))
-              (message "Download started for %s - %s"
-                       (elfeed-feed-title (elfeed-entry-feed elfeed-show-entry))
-                       (elfeed-entry-title elfeed-show-entry)))
-            (defun meain/elfeed-podcast-download-to-local ()
-              "Download current feed(podcast) to usual dir."
-              (interactive)
-              (meain/elfeed-enclosure-download "/Users/meain/Desktop/newsboat/podcasts"
-                                               ".mp3"))
-            (load-file "~/.config/emacs/elfeed-feeds.el")))
+  :init (evil-leader/set-key "a e" 'elfeed):config
+  (progn
+    (setq browse-url-generic-program "open")
+    (setq browse-url-generic-args (list "-g"))
+    (evil-define-key 'normal
+      elfeed-search-mode-map
+      (kbd "o")
+      (lambda (&optional alternate)
+        (interactive)
+        (elfeed-search-browse-url t)))
+    (evil-define-key 'normal
+      elfeed-search-mode-map
+      (kbd "O")
+      'elfeed-search-browse-url)
+    (evil-define-key 'visual
+      elfeed-search-mode-map
+      (kbd "o")
+      'elfeed-search-browse-url)
+    (evil-define-key 'normal
+      elfeed-search-mode-map
+      (kbd "d")
+      'meain/elfeed-search-filter)
+    (evil-define-key 'normal
+      elfeed-search-mode-map
+      (kbd "D")
+      (lambda ()
+        (interactive)
+        (setq elfeed-search-filter "@2-months-ago +unread")
+        (elfeed-search-update :force)))
+    (evil-define-key 'normal
+      elfeed-search-mode-map
+      (kbd "q")
+      'elfeed-db-unload)
+    (defun meain/elfeed-search-filter ()
+      (interactive)
+      (setq elfeed-search-filter "@2-months-ago +unread")
+      (elfeed-search-update :force)
+      (ivy-read "Apply tag: "
+                (remove-if (lambda (x)
+                             (equalp x 'unread))
+                           (delete-dups (flatten-list (cl-list* (with-current-buffer "*elfeed-search*"
+                                                                  (cl-loop for
+                                                                           entry
+                                                                           in
+                                                                           elfeed-search-entries
+                                                                           collect
+                                                                           (elfeed-entry-tags entry)))))))
+                :action (lambda (x)
+                          (setq elfeed-search-filter (concatenate 'string "@2-months-ago +unread +"
+                                                                  x))
+                          (elfeed-search-update :force)
+                          (evil-goto-first-line))))
+    (setq-default elfeed-search-filter "@2-months-ago +unread ")
+    (setq elfeed-use-curl t)
+    (setq elfeed-curl-max-connections 10)
+    (setq elfeed-db-directory "~/.config/emacs/elfeed/")
+    (setq elfeed-enclosure-default-dir "~/Downloads/")
+    (setq elfeed-show-entry-switch #'meain/elfeed-display-buffer)
+    (add-to-list 'display-buffer-alist
+                 '((lambda (bufname _)
+                     (with-current-buffer bufname
+                       (equal major-mode 'elfeed-show-mode)))
+                   (display-buffer-reuse-window display-buffer-at-bottom)
+                   (reusable-frames . visible)
+                   (window-height . 0.7)))
+    (defun meain/elfeed-search-print (entry)
+      "Print ENTRY to the buffer."
+      (let* ((feed-width 25)
+             (tags-width 35)
+             (title (or (elfeed-meta entry :title)
+                        (elfeed-entry-title entry)
+                        ""))
+             (title-faces (elfeed-search--faces (elfeed-entry-tags entry)))
+             (feed (elfeed-entry-feed entry))
+             (feed-title (when feed
+                           (or (elfeed-meta feed :title)
+                               (elfeed-feed-title feed))))
+             (tags (mapcar #'symbol-name
+                           (elfeed-entry-tags entry)))
+             (tags-str (concat " ("
+                               (mapconcat 'identity tags ",")
+                               ")"))
+             (title-width (- (window-width)
+                             feed-width
+                             tags-width
+                             4))
+             (title-column (elfeed-format-column title
+                                                 (elfeed-clamp elfeed-search-title-min-width
+                                                               title-width elfeed-search-title-max-width)
+                                                 :left))
+             (tag-column (elfeed-format-column tags-str
+                                               (elfeed-clamp (length tags-str)
+                                                             tags-width
+                                                             tags-width)
+                                               :left))
+             (feed-column (elfeed-format-column feed-title
+                                                (elfeed-clamp feed-width feed-width feed-width)
+                                                :left)))
+        (insert (propertize feed-column 'face 'elfeed-search-feed-face)
+                " ")
+        (insert (propertize title 'face title-faces 'kbd-help
+                            title))
+        (insert (propertize tag-column 'face 'elfeed-search-tag-face)
+                " ")))
+    (setq elfeed-search-print-entry-function 'meain/elfeed-search-print)
+    (defun meain/elfeed-display-buffer (buf &optional act)
+      (pop-to-buffer buf)
+      (set-window-text-height (get-buffer-window)
+                              (round (* 0.7
+                                        (frame-height)))
+                              (previous-window-any-frame)))
+    (defun meain/elfeed-enclosure-download (base-dir extension)
+      "Download podcast to `BASE-DIR' with proper heirary using feed and title using `EXTENSION'"
+      (start-process "*elfeed-enclosure-download*"
+                     "*elfeed-enclosure-download*"
+                     "downloader"
+                     (elt (car (elfeed-entry-enclosures elfeed-show-entry))
+                          0)
+                     (format "%s/%s/%s%s"
+                             base-dir
+                             (elfeed-feed-title (elfeed-entry-feed elfeed-show-entry))
+                             (elfeed-entry-title elfeed-show-entry)
+                             extension))
+      (message "Download started for %s - %s"
+               (elfeed-feed-title (elfeed-entry-feed elfeed-show-entry))
+               (elfeed-entry-title elfeed-show-entry)))
+    (defun meain/elfeed-podcast-download-to-local ()
+      "Download current feed(podcast) to usual dir."
+      (interactive)
+      (meain/elfeed-enclosure-download "/Users/meain/Desktop/newsboat/podcasts"
+                                       ".mp3"))
+    (load-file "~/.config/emacs/elfeed-feeds.el")))
 
 ;; command log
 (use-package command-log-mode
