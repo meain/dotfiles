@@ -519,6 +519,7 @@
 ;; ibuffer-projectile
 (use-package ibuffer-projectile
   :ensure t
+  :defer 1
   :config (progn
             (add-hook 'ibuffer-hook
                       (lambda ()
