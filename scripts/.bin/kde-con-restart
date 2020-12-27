@@ -1,0 +1,4 @@
+#!/bin/sh
+
+pkill -9 kdeconnect-indicator
+open /Applications/kdeconnect-indicator.app
