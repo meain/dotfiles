@@ -475,7 +475,11 @@ hs.hotkey.bind(
             currentWindow:move(hs.geometry(30, 400, 895, 475))
         else
             if (#hs.screen.allScreens() == 1) then
-                currentWindow:move(hs.geometry(16,44,1411,835))
+                if (hs.screen.allScreens()[1]:name() == "SMB2030") then
+                    currentWindow:move(hs.geometry(14,44,1567,810))
+                else
+                    currentWindow:move(hs.geometry(16, 44, 1411, 835))
+                end
             else
                 currentWindow:move(hs.geometry(1470, -160, 1540, 800))
             end
@@ -490,9 +494,9 @@ hs.hotkey.bind(
         local currentWindow = hs.window.focusedWindow()
         print(currentWindow:title(), currentWindow:frame())
         if currentWindow:title() == "Alacritty" then
-            currentWindow:move(hs.geometry(31,40,893,347))
+            currentWindow:move(hs.geometry(31, 40, 893, 347))
         else
-            currentWindow:move(hs.geometry(184,184,1077,512))
+            currentWindow:move(hs.geometry(184, 184, 1077, 512))
         end
     end
 )
