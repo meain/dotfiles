@@ -239,14 +239,8 @@ hs.hotkey.bind(
     {"alt", "shift"},
     "c",
     function()
-        local output = customshellrun.run("pgrep Emacs", true)
-        if string.len(output) > 0 then
-            hs.notify.new({title = "Starting Emacs", informativeText = "Attaching to existing server"}):send()
-            customshellrun.run("emacsclient --no-wait -c", true)
-        else
-            hs.notify.new({title = "Starting Emacs", informativeText = "Starting new server process"}):send()
-            customshellrun.run("emacsclient -a '' --no-wait -c", true)
-        end
+        hs.alert("Starting emacs!")
+        customshellrun.run("emacsclient -a '' --no-wait -c", true)
     end
 )
 
