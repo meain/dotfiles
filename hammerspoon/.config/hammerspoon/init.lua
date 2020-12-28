@@ -76,7 +76,7 @@ local emojipicker = require("emojipicker")
 emojipicker.registerDefaultBindings({"alt", "shift"}, "E")
 
 local clipdo = require("clipdo")
-clipdo.registerDefaultBindings({"alt", "shift"}, "L")
+clipdo.registerDefaultBindings({"alt", "shift"}, "I")
 
 -- Music keymaps
 local showCurrentSong = function()
