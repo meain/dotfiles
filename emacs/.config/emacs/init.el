@@ -1728,6 +1728,13 @@ START and END comes from it being interactive."
                                                        ds)))))))))
 (evil-leader/set-key "a d" 'meain/dasht-docs)
 
+;; cheat.sh
+(use-package cheat-sh
+  :ensure t
+  :commands cheat-sh-maybe-region
+  cheat-sh
+  :init (evil-leader/set-key "a c" 'cheat-sh-maybe-region))
+
 ;; Quick edit (for use with hammerspoon quick edit)
 (defun meain/quick-edit ()
   "Util function for use with hammerspoon quick edit functionality."
