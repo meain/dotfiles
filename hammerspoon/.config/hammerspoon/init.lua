@@ -379,6 +379,9 @@ hs.hotkey.bind(
     function()
         local emacs = hs.application.find("Emacs")
         local current_app = hs.window.focusedWindow()
+        if current_app == nil then
+            emacs:activate()
+        end
         if emacs == nil then
             hs.application.launchOrFocus("firefox")
             return
