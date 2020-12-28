@@ -461,12 +461,12 @@ hs.hotkey.bind(
         print(currentWindow:title())
         if currentWindow:title() == "Alacritty" then
             currentWindow:move(hs.geometry(940, 40, 480, 835))
-        elseif currentWindow:title():sub(1, 5) == "Slack" then
+        elseif currentWindow:title():sub(1, 5) == "Slack" or currentWindow:title():sub(1, 7) == "Element" then
             currentWindow:move(hs.geometry(30, 400, 895, 475))
         else
             if (#hs.screen.allScreens() == 1) then
                 if (hs.screen.allScreens()[1]:name() == "SMB2030") then
-                    currentWindow:move(hs.geometry(14,44,1567,810))
+                    currentWindow:move(hs.geometry(14, 44, 1567, 810))
                 else
                     currentWindow:move(hs.geometry(16, 44, 1411, 835))
                 end
