@@ -581,6 +581,8 @@
       (if (eq major-mode 'emacs-lisp-mode)
           (srefactor-lisp-format-buffer)
         (call-interactively 'format-all-buffer)))
+    (add-hook 'prog-mode-hook 'format-all-ensure-formatter) ;; setup dfault formatter
+    (define-key evil-normal-state-map (kbd ",,") 'meain/auto-format)))
 
 ;; Projectile
 (use-package projectile
