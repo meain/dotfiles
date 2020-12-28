@@ -5,6 +5,7 @@ local pasteboard = require("hs.pasteboard")
 local customshellrun = require("customshellrun")
 local focusandback = require("focusandback")
 local typeout = require("typeout")
+local dialog = require("hs.dialog")
 
 local mailcounter = hs.menubar.new()
 mailcounter:setTooltip("No new emails")
@@ -25,17 +26,6 @@ hs.alert.defaultStyle.fadeInDuration = 0.10
 hs.alert.defaultStyle.fadeOutDuration = 1
 -- hs.alert.defaultStyle.atScreenEdge = 2  -- need multiple items
 hs.alert.defaultStyle.fillColor = {white = 0, alpha = 0.95}
-
--- taskwarrior
-local taskwarrior = require("taskwarrior")
-hs.hotkey.bind(
-    {"alt"},
-    "t",
-    function()
-        -- hs.alert(customshellrun.run(BIN .. 'task-choose', true))
-        taskwarrior.run()
-    end
-)
 
 -- mute and unmute mic
 hs.loadSpoon("MicMute")
@@ -239,7 +229,7 @@ hs.hotkey.bind(
     {"alt", "shift"},
     "s",
     function()
-        local result = customshellrun.run("/usr/local/bin/task tot|tail -n+4|head -n5")
+        local result = customshellrun.run("/usr/local/bin/task totn|tail -n+4|head -n5")
         hs.alert("🔨 Tasks\n" .. result)
     end
 )
@@ -498,5 +488,85 @@ hs.hotkey.bind(
         else
             currentWindow:move(hs.geometry(184, 184, 1077, 512))
         end
+    end
+)
+
+hs.hotkey.bind(
+    {"cmd", "shift"},
+    ";",
+    function()
+        hs.focus() -- this is needed for the textPrompt to have focus
+        local button, command = dialog.textPrompt("Command", "Enter command to exec", "", "Run", "Cancel")
+        if button == "Run" then
+            customshellrun.run("tmux send-keys -t master:1 C-c", true)
+            customshellrun.run("tmux send-keys -t master:1 '" .. command .. "'", true)
+            customshellrun.run("tmux send-keys -t master:1 Enter", true)
+        end
+    end
+)
+
+local canvas = nil
+local canvascommand = "/usr/local/bin/task tot | tail -n+4 | sed '$ d'"
+function showOutputInCanvas()
+    local hcaltitlecolor = {red = 1, blue = 1, green = 1, alpha = 0.5}
+    local cscreen = hs.screen.mainScreen()
+    local cres = cscreen:fullFrame()
+    if canvas ~= nil then
+        canvas:hide()
+    end
+    canvas =
+        hs.canvas.new(
+        {
+            x = 30,
+            y = 50,
+            w = 1000,
+            h = 500
+        }
+    )
+
+    canvas:behavior(hs.canvas.windowBehaviors.canJoinAllSpaces)
+    canvas:level(hs.canvas.windowLevels.desktopIcon)
+
+    local result = customshellrun.run(canvascommand)
+    canvas[1] = {
+        id = "hcal_title",
+        type = "text",
+        text = result,
+        textFont = "DankMono Nerd Font",
+        textSize = 10,
+        textColor = hcaltitlecolor,
+        textAlignment = "left"
+    }
+    canvas:show()
+end
+function updateOutputCanvas(result)
+    local result = customshellrun.run(canvascommand)
+    canvas[1].text = result
+end
+showOutputInCanvas()
+
+-- taskwarrior
+local taskwarrior = require("taskwarrior")
+local canvastimer = nil
+hs.hotkey.bind(
+    {"alt"},
+    "t",
+    function()
+        updateOutputCanvas()
+        if canvastimer == nil then
+            canvastimer =
+                hs.timer.doEvery(
+                100,
+                function()
+                    updateOutputCanvas()
+                end
+            )
+            canvastimer:setNextTrigger(10)
+        else
+            canvastimer:start()
+            canvastimer:setNextTrigger(10)
+        end
+        -- hs.alert(customshellrun.run(BIN .. 'task-choose', true))
+        taskwarrior.run()
     end
 )
