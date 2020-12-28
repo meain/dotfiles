@@ -1867,6 +1867,29 @@ START and END comes from it being interactive."
                                    (format "open '%s'" web-url)))))
 (evil-leader/set-key "b G" 'meain/github-url)
 
+;; Upgrade a single package
+(use-package package
+  :config (defun package-menu-upgrade-package ()
+            "Mark current package for upgrading (i.e. also mark obsolete version for deletion.)"
+            (interactive)
+            (when-let ((upgrades (package-menu--find-upgrades))
+                       (description (tabulated-list-get-id))
+                       (name (package-desc-name description))
+                       (upgradable (cdr (assq name upgrades))))
+              ;; Package is upgradable
+              (save-excursion
+                (goto-char (point-min))
+                (while (not (eobp))
+                  (let* ((current-description (tabulated-list-get-id))
+                         (current-name (package-desc-name current-description)))
+                    (when (equal current-name name)
+                      (cond
+                       ((equal description current-description)
+                        (package-menu-mark-install)
+                        (forward-line -1))
+                       (t (package-menu-mark-delete)))))
+                  (forward-line 1)))))(define-key package-menu-mode-map (kbd "t") #'package-menu-upgrade-package))
+
 ;; Better modeline
 (setq-default mode-line-format (list '(:eval (if (eq 'emacs evil-state)
                                                  "! "
