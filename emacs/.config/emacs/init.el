@@ -567,14 +567,20 @@
 (use-package format-all
   :commands format-all-buffer
   :ensure t
-  :init (progn
-          (defun meain/auto-format ()
-            "Custom auto-format based on filetype."
-            (interactive)
-            (if (eq major-mode 'emacs-lisp-mode)
-                (srefactor-lisp-format-buffer)
-              (call-interactively 'format-all-buffer)))
-          (define-key evil-normal-state-map (kbd ",,") 'meain/auto-format)))
+  :config (define-format-all-formatter gofmt
+            ;; Use goimport for formatting go files
+            (:executable "goimports")
+            (:install (macos "brew install go")
+                      (windows "scoop install go"))
+            (:languages "Go")
+            (:format (format-all--buffer-easy executable))):init
+  (progn
+    (defun meain/auto-format ()
+      "Custom auto-format based on filetype."
+      (interactive)
+      (if (eq major-mode 'emacs-lisp-mode)
+          (srefactor-lisp-format-buffer)
+        (call-interactively 'format-all-buffer)))
 
 ;; Projectile
 (use-package projectile
