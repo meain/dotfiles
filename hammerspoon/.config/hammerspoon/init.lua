@@ -256,7 +256,7 @@ hs.hotkey.bind(
     {"cmd", "shift"},
     "j",
     function()
-        focusandback("slack")
+        focusandback("Emacs")
     end
 )
 hs.hotkey.bind(
