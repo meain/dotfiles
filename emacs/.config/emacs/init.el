@@ -565,15 +565,17 @@
   :ensure t
   :config (require 'srefactor-lisp))
 (use-package format-all
-  :commands format-all-buffer
+  :defer 1
   :ensure t
-  :config (define-format-all-formatter gofmt
-            ;; Use goimport for formatting go files
-            (:executable "goimports")
-            (:install (macos "brew install go")
-                      (windows "scoop install go"))
-            (:languages "Go")
-            (:format (format-all--buffer-easy executable))):init
+  :config (progn
+            (add-hook 'prog-mode-hook 'format-all-ensure-formatter) ;; setup dfault formatter
+            (define-format-all-formatter gofmt
+              ;; Use goimport for formatting go files
+              (:executable "goimports")
+              (:install (macos "brew install go")
+                        (windows "scoop install go"))
+              (:languages "Go")
+              (:format (format-all--buffer-easy executable)))):init
   (progn
     (defun meain/auto-format ()
       "Custom auto-format based on filetype."
@@ -581,7 +583,6 @@
       (if (eq major-mode 'emacs-lisp-mode)
           (srefactor-lisp-format-buffer)
         (call-interactively 'format-all-buffer)))
-    (add-hook 'prog-mode-hook 'format-all-ensure-formatter) ;; setup dfault formatter
     (define-key evil-normal-state-map (kbd ",,") 'meain/auto-format)))
 
 ;; Projectile
