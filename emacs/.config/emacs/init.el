@@ -437,7 +437,7 @@
     (setq company-idle-delay 0)
     (setq company-tooltip-maximum-width 35)
     (setq company-tooltip-align-annotations t)
-    (setq company-minimum-prefix-length 0)
+    (setq company-minimum-prefix-length 2)
     (global-company-mode)
     ;; company-tng-mode provides better autocomplete behaviour
     (company-tng-mode)))
