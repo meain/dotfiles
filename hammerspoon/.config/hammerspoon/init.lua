@@ -492,12 +492,16 @@ hs.hotkey.bind(
     {"cmd", "shift"},
     ";",
     function()
+        local prev_window = hs.window.focusedWindow()
         hs.focus() -- this is needed for the textPrompt to have focus
-        local button, command = dialog.textPrompt("Command", "Enter command to exec", "", "Run", "Cancel")
+        local button, command = dialog.textPrompt("Command input", "Enter command to exec in master window", "", "Run", "Cancel")
         if button == "Run" then
             customshellrun.run("tmux send-keys -t master:1 C-c", true)
             customshellrun.run("tmux send-keys -t master:1 '" .. command .. "'", true)
             customshellrun.run("tmux send-keys -t master:1 Enter", true)
+        end
+        if prev_window then
+            prev_window:focus()
         end
     end
 )
