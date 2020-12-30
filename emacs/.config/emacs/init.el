@@ -754,7 +754,9 @@
 (use-package magit
   :ensure t
   :commands magit-status
-  :init (evil-leader/set-key "gg" 'magit-status))
+  :init (progn
+          (evil-leader/set-key "gg" 'magit-status)
+          (define-key magit-mode-map (kbd "M-w") 'delete-window)))
 
 ;; Diff hl
 (use-package diff-hl
