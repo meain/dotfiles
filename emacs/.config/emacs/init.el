@@ -567,16 +567,10 @@
 (use-package format-all
   :defer 1
   :ensure t
-  :config (progn
-            (add-hook 'prog-mode-hook 'format-all-ensure-formatter) ;; setup dfault formatter
-            (define-format-all-formatter gofmt
-              ;; Use goimport for formatting go files
-              (:executable "goimports")
-              (:install (macos "brew install go")
-                        (windows "scoop install go"))
-              (:languages "Go")
-              (:format (format-all--buffer-easy executable)))):init
+  :config (add-hook 'prog-mode-hook 'format-all-ensure-formatter):init
   (progn
+    (setq format-all-formatters '(("HTML" prettier)
+                                  ("Go" goimports)))
     (defun meain/auto-format ()
       "Custom auto-format based on filetype."
       (interactive)
