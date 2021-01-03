@@ -68,4 +68,13 @@ function utils.file_exists(name)
     end
 end
 
+function utils.isin(list, item)
+    for _,li in ipairs(list) do
+        if li == item then
+            return true
+        end
+    end
+    return false
+end
+
 return utils
