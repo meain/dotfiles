@@ -6,6 +6,7 @@ local customshellrun = require("customshellrun")
 local focusandback = require("focusandback")
 local typeout = require("typeout")
 local dialog = require("hs.dialog")
+local json = require("json")
 
 local mailcounter = hs.menubar.new()
 mailcounter:setTooltip("No new emails")
@@ -167,12 +168,46 @@ local emailNotify = function(alert)
         alert = false
     end
 
+    function table.slice(tbl, first, last, step)
+        local sliced = {}
+        for i = first or 1, last or #tbl, step or 1 do
+            sliced[#sliced + 1] = tbl[i]
+        end
+        return sliced
+    end
+
     local populateMailListing = function(result)
         local mailListing = {}
         local unreadcount = utils.linecount(result)
         if (unreadcount > 0) then
             for _, v in pairs(utils.split(result, "\n")) do
-                table.insert(mailListing, 1, {title = v})
+                local eid = utils.split(v, " ")[2]
+                local vv = table.concat(table.slice(utils.split(v, " "), 3, #utils.split(v, " "), 1), " ")
+                table.insert(
+                    mailListing,
+                    1,
+                    {
+                        title = vv,
+                        fn = function()
+                            local jout = customshellrun.run("/usr/local/bin/notmuch show --format json " .. eid, true)
+                            local jse = json.decode(jout)
+                            local messages = jse[1][1][2]
+                            local mailcontent = ""
+                            local unreadcount = 0
+                            for i, message in ipairs(messages) do
+                                if utils.isin(message[1]["tags"], "unread") then
+                                    unreadcount = unreadcount + 1
+                                    mailcontent = mailcontent .. message[1]["body"][1]["content"][1]["content"]
+                                    mailcontent = mailcontent .. "\n         ==========================\n"
+                                end
+                            end
+                            local pressedButton = hs.dialog.blockAlert(vv .. "(" .. unreadcount .. " unread)", mailcontent, "Mark Read", "OK")
+                            if pressedButton == "Mark Read" then
+                                customshellrun.run("/usr/local/bin/notmuch tag -unread ".. eid, true)
+                            end
+                        end
+                    }
+                )
             end
             table.insert(mailListing, {title = "-"})
             table.insert(mailListing, {title = utils.linecount(result) .. " unread mail", disabled = true})
@@ -455,7 +490,6 @@ hs.hotkey.bind(
     "w",
     function()
         local currentWindow = hs.window.focusedWindow()
-        print(currentWindow:title())
         if currentWindow:title() == "Alacritty" then
             currentWindow:move(hs.geometry(940, 40, 480, 835))
         elseif currentWindow:title():sub(1, 5) == "Slack" or currentWindow:title():sub(1, 7) == "Element" then
