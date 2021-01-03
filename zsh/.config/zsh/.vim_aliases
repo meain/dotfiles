@@ -10,7 +10,7 @@ v() {
 }
 
 vv() {
-    $EDITOR +OpenLastFile
+    vim +OpenLastFile
 }
 
 vs() {
