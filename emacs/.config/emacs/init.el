@@ -752,6 +752,11 @@
           (evil-leader/set-key "gg" 'magit-status)
           (define-key magit-mode-map (kbd "M-w") 'delete-window)))
 
+;; Magit forge
+(use-package forge
+  :ensure t
+  :after magit)
+
 ;; Diff hl
 (use-package diff-hl
   :ensure t
