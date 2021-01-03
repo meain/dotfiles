@@ -700,27 +700,6 @@
     (define-key evil-normal-state-map (kbd "g ,") 'eglot-format-buffer)
     (define-key evil-normal-state-map (kbd "g a") 'eglot-code-actions)))
 
-;; xref changes
-(evil-define-key 'normal
-  xref--xref-buffer-mode-map
-  (kbd "j")
-  'xref-next-line)
-(evil-define-key 'normal
-  xref--xref-buffer-mode-map
-  (kbd "k")
-  'xref-prev-line)
-(evil-define-key 'normal
-  xref--xref-buffer-mode-map
-  (kbd "<RET>")
-  'xref-quit-and-goto-xref)
-(evil-define-key 'normal
-  xref--xref-buffer-mode-map
-  (kbd "<SPC>")
-  'xref-goto-xref)
-;; start in insert mode for xref buffers
-(evil-set-initial-state 'xref--xref-buffer-mode
-                        'insert)
-
 ;; Tagbar alternative
 (use-package imenu :ensure t
   :commands imenu)
