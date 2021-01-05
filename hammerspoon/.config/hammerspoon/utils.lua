@@ -77,4 +77,16 @@ function utils.isin(list, item)
     return false
 end
 
+function utils.dropEmailFooter(content)
+    newContents = ""
+    for _, line in ipairs(utils.split(content, '\n')) do
+        if line == "-- " then
+            break
+        else
+            newContents = newContents .. line .. "\n"
+        end
+    end
+    return newContents
+end
+
 return utils
