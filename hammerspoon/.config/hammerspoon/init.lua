@@ -191,14 +191,16 @@ local emailNotify = function(alert)
                         fn = function()
                             local jout = customshellrun.run("/usr/local/bin/notmuch show --format json " .. eid, true)
                             local jse = json.decode(jout)
-                            local messages = jse[1][1][2]
                             local mailcontent = ""
                             local unreadcount = 0
+                            mailcontent = mailcontent .. utils.dropEmailFooter(jse[1][1][1]["body"][1]["content"][1]["content"])
+                            mailcontent = mailcontent .. "\n         ==========================\n"
+                            local messages = jse[1][1][2]
                             for i, message in ipairs(messages) do
                                 if utils.isin(message[1]["tags"], "unread") then
                                     unreadcount = unreadcount + 1
-                                    mailcontent = mailcontent .. message[1]["body"][1]["content"][1]["content"]
-                                    mailcontent = mailcontent .. "\n         ==========================\n"
+                                    mailcontent = mailcontent .. utils.dropEmailFooter(message[1]["body"][1]["content"][1]["content"])
+                                    mailcontent = mailcontent .. "\n         --------------------------\n"
                                 end
                             end
                             local pressedButton = hs.dialog.blockAlert(vv .. "(" .. unreadcount .. " unread)", mailcontent, "Mark Read", "OK")
