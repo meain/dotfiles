@@ -1004,7 +1004,30 @@
     (define-key vterm-mode-map (kbd "M-m") 'meain/shell-other)
     (define-key vterm-mode-map (kbd "M-w") 'delete-window)
     (define-key vterm-mode-map (kbd "M-u") 'universal-argument)
-    (define-key vterm-mode-map (kbd "M-k") 'previous-window-any-frame)
+    (define-key
+      vterm-mode-map
+      (kbd "M-l")
+      (lambda ()
+        (interactive)
+        (evil-window-right 1)))
+    (define-key
+      vterm-mode-map
+      (kbd "M-h")
+      (lambda ()
+        (interactive)
+        (evil-window-left 1)))
+    (define-key
+      vterm-mode-map
+      (kbd "M-k")
+      (lambda ()
+        (interactive)
+        (evil-window-up 1)))
+    (define-key
+      vterm-mode-map
+      (kbd "M-j")
+      (lambda ()
+        (interactive)
+        (evil-window-down 1)))
     (add-to-list 'display-buffer-alist
                  '((lambda (bufname _)
                      (s-starts-with-p "*popup-shell" bufname))
