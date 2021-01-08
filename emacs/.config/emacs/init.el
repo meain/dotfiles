@@ -402,9 +402,30 @@
 
 ;;; [OTHER PACKAGES] =============================================
 
-;; abbrev mode
-(use-package abbrev
-  :init (setq-default abbrev-mode t))
+;; Auto activating snippets (abbrev alternative)
+(unless (package-installed-p 'auto-activating-snippets)
+  (quelpa '(auto-activating-snippets :repo "ymarco/auto-activating-snippets"
+                                     :fetcher github)))
+(use-package auto-activating-snippets
+  :defer 1
+  :hook (text-mode . auto-activating-snippets-mode):hook
+  (prog-mode . auto-activating-snippets-mode)
+  :hook (python-mode . auto-activating-snippets-mode):config
+  (progn
+    (aas-set-snippets 'text-mode
+                      ;; expand unconditionally
+                      ";date"
+                      (lambda ()
+                        (interactive)
+                        (insert (format-time-string "%Y-%m-%d"))))
+    (aas-set-snippets 'prog-mode
+                      ;; expand unconditionally
+                      ";date"
+                      (lambda ()
+                        (interactive)
+                        (insert (format-time-string "%Y-%m-%d"))))
+    (aas-set-snippets 'python-mode ";ip" "__import__('ipdb').set_trace()")))
+
 
 ;; flymake
 (use-package flymake
