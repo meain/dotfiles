@@ -1858,6 +1858,28 @@ START and END comes from it being interactive."
                            (t "~/"))))
 (add-hook 'find-file-hook 'meain/set-proper-default-dir)
 
+;; Quikly add markdown links to document
+(defun meain/linkify-thing (start end)
+  "Function to search and add markdown links to document.  START and END for position."
+  (interactive "r")
+  (let* ((thang (if (use-region-p)
+                    (buffer-substring start end)
+                  (thing-at-point 'symbol)))
+         (json-object-type 'plist)
+         (json-array-type 'list)
+         (lurl (car (split-string (completing-read (format "Choose URL (%s): " thang)
+                                                   (mapcar (lambda (entry)
+                                                             (string-join (list (plist-get entry :url)
+                                                                                " :: "
+                                                                                (plist-get entry :title))))
+                                                           (json-read-from-string (shell-command-to-string (string-join (list "ddgr --json '" thang "'"))))))
+                                  " "))))
+    (save-excursion
+      (if (use-region-p)
+          (kill-region start end)
+        (kill-region (beginning-of-thing 'symbol) (end-of-thing 'symbol)))
+      (insert (format "[%s](%s)" thang lurl)))))
+
 ;; Open current file in Github
 (defun meain/github-url (&optional no-linenumber)
   "Open the Github page for the current file.  Pass NO-LINENUMBER to not add a line number."
