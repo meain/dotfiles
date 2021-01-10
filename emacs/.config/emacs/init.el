@@ -418,13 +418,13 @@
                       ";date"
                       (lambda ()
                         (interactive)
-                        (insert (format-time-string "%Y-%m-%d"))))
+                        (insert (format-time-string "%a, %d %b %Y %T %z"))))
     (aas-set-snippets 'prog-mode
                       ;; expand unconditionally
                       ";date"
                       (lambda ()
                         (interactive)
-                        (insert (format-time-string "%Y-%m-%d"))))
+                        (insert (format-time-string "%a, %d %b %Y %T %z"))))
     (aas-set-snippets 'python-mode ";ip" "__import__('ipdb').set_trace()")))
 
 
