@@ -1131,6 +1131,8 @@
   :defer t)
 (use-package lua-mode :ensure t
   :defer t)
+(use-package web-mode :ensure t
+  :defer t)
 (use-package jinja2-mode :ensure t
   :defer t)
 (use-package json-mode :ensure t
