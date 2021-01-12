@@ -581,7 +581,7 @@ function showOutputInCanvas()
         type = "text",
         text = result,
         textFont = "DankMono Nerd Font",
-        textSize = 10,
+        textSize = 13,
         textColor = hcaltitlecolor,
         textAlignment = "left"
     }
