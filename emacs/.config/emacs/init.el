@@ -29,6 +29,7 @@
   (package-install 'use-package))
 (eval-when-compile (require 'use-package))
 ;; (setq use-package-always-demand (daemonp)) ;; eager load if daemon
+(setq use-package-always-demand (getenv "LOAD_FULL_EMACS"))
 
 ;; Setup quelpa
 (use-package quelpa :ensure t
