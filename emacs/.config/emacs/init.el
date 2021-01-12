@@ -893,7 +893,9 @@
             (setq tab-bar-tab-hints nil)
             (setq tab-bar-tab-name-function 'tab-bar-tab-name-all)
             (tab-bar-mode -1)
-            (tab-bar-history-mode -1)))
+            (tab-bar-history-mode -1)
+            (global-set-key (kbd "M-f ,")
+                            'tab-bar-rename-tab)))
 
 ;; which-key mode (until I fully figure out emacs)
 (use-package which-key
