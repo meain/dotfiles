@@ -1871,11 +1871,6 @@ START and END comes from it being interactive."
 (evil-leader/set-key "m" 'bookmark-jump)
 (evil-leader/set-key "M" 'bookmark-set)
 
-;; Meta-f keybinds
-(global-unset-key (kbd "M-f")) ; have to unset first
-(global-set-key (kbd "M-f M-b")
-                'meain/buffer-switcher)
-
 ;; setting proper default-dir
 (defun meain/set-proper-default-dir ()
   "Function to set the `default-directory' value as the project root if available."
