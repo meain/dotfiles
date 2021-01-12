@@ -1500,9 +1500,23 @@
   :diminish :init
   (beacon-mode t))
 
+;; Focus mode
+(use-package focus :ensure t
+  :commands focus-mode)
+
 ;; Writing mode
-(use-package writeroom-mode :ensure t
-  :commands writeroom-mode)
+(use-package writeroom-mode
+  :ensure t
+  :commands writeroom-mode
+  :config (progn
+            (add-hook 'writeroom-mode-enable-hook
+                      (lambda ()
+                        (interactive)
+                        (focus-mode t)))
+            (add-hook 'writeroom-mode-disable-hook
+                      (lambda ()
+                        (interactive)
+                        (focus-mode -1)))))
 
 ;; tramp dired
 (use-package tramp
