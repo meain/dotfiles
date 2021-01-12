@@ -104,6 +104,9 @@
 (setq-default tab-width 4)
 (setq-default indent-tabs-mode nil)
 
+;; Meta-f keybinds (tmux memmories)
+(global-unset-key (kbd "M-f")) ; have to unset first
+
 ;;; [VISUAL CONFIG] ==============================================
 
 ;; Disable useless stuff
