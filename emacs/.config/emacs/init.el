@@ -467,9 +467,8 @@
 ;; Company quickhelp
 (use-package company-quickhelp ; Show help in tooltip
   :ensure t
-  :defer t
   :after company
-  :init (company-quickhelp-mode))
+  :config (company-quickhelp-mode))
 
 ;; Ivy && Counsel
 (use-package counsel :ensure t)
