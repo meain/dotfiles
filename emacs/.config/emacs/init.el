@@ -950,7 +950,8 @@
                                                                    (buffer-name x)))
                                                 (buffer-list))))
               (cond
-               ((equal major-mode 'vterm-mode)
+               ((s-starts-with-p (meain/shell-name)
+                                 (buffer-name (current-buffer)))
                 (progn
                   (if rerun-previous
                       (progn
@@ -1025,10 +1026,14 @@
     (define-key vterm-mode-map (kbd "M-m") 'meain/shell-other)
     (define-key vterm-mode-map (kbd "M-w") 'delete-window)
     (define-key vterm-mode-map (kbd "M-u") 'universal-argument)
-    (define-key vterm-mode-map (kbd "M-l") 'evil-window-right 1)
-    (define-key vterm-mode-map (kbd "M-h") 'evil-window-left 1)
-    (define-key vterm-mode-map (kbd "M-k") 'evil-window-up 1)
-    (define-key vterm-mode-map (kbd "M-j") 'evil-window-down 1)
+    (define-key vterm-mode-map (kbd "M-l") 'evil-window-right
+      1)
+    (define-key vterm-mode-map (kbd "M-h") 'evil-window-left
+      1)
+    (define-key vterm-mode-map (kbd "M-k") 'evil-window-up
+      1)
+    (define-key vterm-mode-map (kbd "M-j") 'evil-window-down
+      1)
     (define-key vterm-mode-map (kbd "M-H") 'shrink-window-horizontally)
     (define-key vterm-mode-map (kbd "M-L") 'enlarge-window-horizontally)
     (define-key vterm-mode-map (kbd "M-K") 'shrink-window)
