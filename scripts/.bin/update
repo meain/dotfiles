@@ -22,8 +22,8 @@ _update_gcloud() {
     gcloud components update -q
 }
 _update_bw() {
-    eval "$(bw unlock | grep export | cut -d' ' -f2-)"
-    bw sync
+    eval "$(bw unlock | grep export | cut -d' ' -f2-)" &&
+    bw sync &&
     bw lock
 }
 
