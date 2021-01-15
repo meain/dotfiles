@@ -1517,7 +1517,8 @@
             (add-hook 'writeroom-mode-disable-hook
                       (lambda ()
                         (interactive)
-                        (focus-mode -1)))))
+                        (focus-mode -1)))
+            (remove 'writeroom-set-fullscreen writeroom-global-effects)))
 
 ;; tramp dired
 (use-package tramp
