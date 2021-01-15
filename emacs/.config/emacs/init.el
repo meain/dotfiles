@@ -1397,6 +1397,7 @@
                                                                            elfeed-search-entries
                                                                            collect
                                                                            (elfeed-entry-tags entry)))))))
+                :initial-input "."
                 :action (lambda (x)
                           (setq elfeed-search-filter (concatenate 'string "@2-months-ago +unread +"
                                                                   x))
