@@ -397,6 +397,7 @@
 (advice-add 'evil-yank :around 'meain/evil-yank-advice)
 
 ;; Recompile binding
+(evil-set-initial-state 'comint-mode 'normal)
 (defun meain/recompile-or-compile (&optional arg)
   "Compile or recompile based on universal `ARG'."
   (interactive "P")
