@@ -1939,6 +1939,18 @@ START and END comes from it being interactive."
                                    (format "open '%s'" web-url)))))
 (evil-leader/set-key "b G" 'meain/github-url)
 
+;; Generate pdf from markdown document
+(defun meain/markdown-pdf ()
+  "Generate pdf from markdown document."
+  (interactive)
+  (message "Generating markdown for %s. Just give it a moment.."
+           (buffer-file-name))
+  (start-process-shell-command "*markdown-pdf*"
+                               "*markdown-pdf*"
+                               (concatenate 'string
+                                            "pandocmarkdownpreview "
+                                            (buffer-file-name))))
+
 ;; Upgrade a single package
 (defun package-menu-upgrade-package ()
   "Mark current package for upgrading (also mark obsolete version for deletion)."
