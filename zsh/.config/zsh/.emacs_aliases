@@ -7,3 +7,10 @@ alias et='emacsclient -a "" -t'
 alias eclose='emacsclient -e "(save-buffers-kill-terminal)"'
 alias ekillserver='emacsclient -e "(kill-emacs)"'
 alias erestart='emacsclient -e "(save-buffers-kill-terminal)";Emacs --bg-daemon'
+
+e() {
+    emacsclient -a "" --no-wait "${1:-$(fzf)}"
+}
+ed() {
+    emacsclient -a "" "${1:-$(fzf)}"
+}
