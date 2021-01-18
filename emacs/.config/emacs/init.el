@@ -420,22 +420,26 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package auto-activating-snippets
   :defer 1
   :hook (text-mode . auto-activating-snippets-mode):hook
-  (prog-mode . auto-activating-snippets-mode)
-  :hook (python-mode . auto-activating-snippets-mode):config
-  (progn
-    (aas-set-snippets 'text-mode
-                      ;; expand unconditionally
-                      ";date"
-                      (lambda ()
-                        (interactive)
-                        (insert (format-time-string "%a, %d %b %Y %T %z"))))
-    (aas-set-snippets 'prog-mode
-                      ;; expand unconditionally
-                      ";date"
-                      (lambda ()
-                        (interactive)
-                        (insert (format-time-string "%a, %d %b %Y %T %z"))))
-    (aas-set-snippets 'python-mode ";ip" "__import__('ipdb').set_trace()")))
+  (org-mode . auto-activating-snippets-mode)
+  :hook (prog-mode . auto-activating-snippets-mode):hook
+  (python-mode . auto-activating-snippets-mode)
+  :config (progn
+            (aas-set-snippets 'text-mode
+                              ;; expand unconditionally
+                              ";date"
+                              (lambda ()
+                                (interactive)
+                                (insert (format-time-string "%a, %d %b %Y %T %z"))))
+            (aas-set-snippets 'prog-mode
+                              ;; expand unconditionally
+                              ";date"
+                              (lambda ()
+                                (interactive)
+                                (insert (format-time-string "%a, %d %b %Y %T %z"))))
+            (aas-set-snippets 'python-mode ";ip" "__import__('ipdb').set_trace()")
+            (aas-set-snippets 'org-mode ";el" "#+BEGIN_SRC emacs-lisp\n\n#+END_SRC"
+                              ";py" "#+BEGIN_SRC python\n\n#+END_SRC" ";co"
+                              "#+BEGIN_SRC\n\n#+END_SRC")))
 
 
 ;; flymake
