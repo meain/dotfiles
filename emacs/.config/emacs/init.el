@@ -220,6 +220,14 @@
     (define-key dired-mode-map (kbd "-") 'dired-up-directory)
     (add-hook 'dired-mode-hook 'hl-line-mode)))
 
+;; macro for alternate pattern
+(defmacro meain/with-alternate (original alternate)
+  "Macro for easily creating commands with alternate on `universal-argument'.
+Pass ORIGINAL and ALTERNATE options."
+  `(lambda (&optional use-alternate)
+     (interactive "P")
+     (if use-alternate ,alternate ,original)))
+
 ;;; [EVIL CONFIG] ================================================
 
 ;; Evil commentary
@@ -298,11 +306,8 @@
 (global-set-key (kbd "M-w")
                 'delete-window)
 (global-set-key (kbd "M-o")
-                (lambda (&optional alternate)
-                  (interactive "P")
-                  (if alternate
-                      (call-interactively 'delete-other-windows)
-                    (other-window 1))))
+                (meain/with-alternate (other-window 1)
+                                      (call-interactively 'delete-other-windows)))
 
 ;; Shrink and enlarge windows (not contextual as of now)
 ;; https://www.emacswiki.org/emacs/WindowResize
@@ -483,12 +488,6 @@
   :ensure t
   :diminish t
   :config (progn
-            (defun meain/buffer-switcher (&optional alternate)
-              "Choose between ivy-switch-buffer or ibuffer-other-window based on ALTERNATE."
-              (interactive "P")
-              (if alternate
-                  (ibuffer-other-window)
-                (ivy-switch-buffer)))
             (ivy-mode 1)
             (setq ivy-use-virtual-buffers t) ; extend searching to bookmarks and
             (setq ivy-height 10) ; Set height of the ivy window
@@ -499,8 +498,11 @@
                                           (counsel-rg . ivy--regex-plus)
                                           (t . ivy--regex-fuzzy)))
             (global-set-key (kbd "M-c")
-                            'meain/buffer-switcher)
-            (evil-leader/set-key "b b" 'meain/buffer-switcher)
+                            (meain/with-alternate (ivy-switch-buffer)
+                                                  (ibuffer-other-window)))
+            (evil-leader/set-key "b b"
+              (meain/with-alternate (ivy-switch-buffer)
+                                    (ibuffer-other-window)))
             (evil-leader/set-key "R" 'counsel-recentf)
             (global-set-key (kbd "M-x")
                             'counsel-M-x)
@@ -570,13 +572,9 @@
                                           "--line-number" "--color" "never" "--hidden"
                                           "--follow" "--glob" "!.git/*" "%s"))
           (setq rg-command-line-flags '("--hidden" "--follow"))
-          (defun meain/rg-search (&optional alternate)
-            "Choose between counsel-rg or rg based on ALTERNATE."
-            (interactive "P")
-            (if alternate
-                (call-interactively 'rg)
-              (counsel-rg)))
-          (evil-leader/set-key "f" 'meain/rg-search)))
+          (evil-leader/set-key "f"
+            (meain/with-alternate (counsel-rg)
+                                  (call-interactively 'rg)))))
 
 ;; dumb-jump
 (use-package dumb-jump
@@ -733,11 +731,8 @@
   :ensure t
   :commands imenu-list-smart-toggle
   :init (global-set-key (kbd "M--")
-                        (lambda (&optional alternate)
-                          (interactive "P")
-                          (if alternate
-                              (imenu-list-smart-toggle)
-                            (call-interactively 'imenu)))):config
+                        (meain/with-alternate (call-interactively 'imenu)
+                                              (imenu-list-smart-toggle))):config
   (progn
     (setq imenu-list-focus-after-activation t)
     (setq imenu-list-after-jump-hook nil)
@@ -804,12 +799,9 @@
   :ensure t
   :commands scratch
   :init (progn
-          (defun meain/scratch (&optional alternate)
-            (interactive "P")
-            (if alternate
-                (call-interactively 'scratch)
-              (switch-to-buffer "*scratch*")))
-          (evil-leader/set-key "c" 'meain/scratch)))
+          (evil-leader/set-key "c"
+            (meain/with-alternate (switch-to-buffer "*scratch*")
+                                  (call-interactively 'scratch)))))
 
 ;; Highlight color codes
 (use-package rainbow-mode
@@ -1357,7 +1349,7 @@
     (evil-define-key 'normal
       elfeed-search-mode-map
       (kbd "o")
-      (lambda (&optional alternate)
+      (lambda ()
         (interactive)
         (elfeed-search-browse-url t)))
     (evil-define-key 'normal
