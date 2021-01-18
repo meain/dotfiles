@@ -30,7 +30,9 @@ dbr() {
 
 dbp() {
     [ -z "$1" ] && echo "Specify tag" && return 1
-    if docker build -t "$1" .; then
+    DOCKERFILE="$(fd Dockerfile|fzf|head -n1)"
+    echo "Building using: $DOCKERFILE"
+    if docker build -f "$DOCKERFILE" -t "$1" .; then
         docker push "$1"
     fi
 }
