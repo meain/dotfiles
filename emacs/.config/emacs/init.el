@@ -1301,8 +1301,8 @@ Pass ORIGINAL and ALTERNATE options."
           (setq notmuch-saved-searches (quote ((:name "imbox" :query "tag:imbox AND tag:inbox"
                                                       :key "i"
                                                       :sort-order newest-first)
-                                               (:name "inbox" :query "tag:inbox AND -tag:imbox AND -tag:newsletter AND -tag:python"
-                                                      :key "I"
+                                               (:name "read" :query "tag:inbox AND -tag:imbox AND -tag:newsletter AND -tag:python and -tag:unread"
+                                                      :key "r"
                                                       :sort-order oldest-first)
                                                (:name "meain" :query "query=to:mail@meain.io AND tag:inbox"
                                                       :key "m"
