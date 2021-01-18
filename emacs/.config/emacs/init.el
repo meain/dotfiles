@@ -1170,8 +1170,14 @@ Pass ORIGINAL and ALTERNATE options."
                                 :foreground "#000000")))
 (use-package yaml-mode :ensure t
   :defer t)
-(use-package dockerfile-mode :ensure t
-  :defer t)
+(use-package dockerfile-mode
+  :ensure t
+  :defer t
+  :init (add-hook 'find-file-hook
+                  (lambda ()
+                    (if (s-starts-with-p "Dockerfile"
+                                         (file-name-nondirectory (buffer-file-name)))
+                        (dockerfile-mode)))))
 (use-package docker-compose-mode :ensure t
   :defer t)
 (use-package org
