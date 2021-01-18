@@ -13,4 +13,27 @@ fi
 
 IMAGE="$CONTAINER_REGISTERY/$NAME"
 echo "$IMAGE"
-gcloud builds submit --tag "$IMAGE"
+
+DOCKERFILE="$(fd Dockerfile|fzf|head -n1)"
+echo "Using dockerfile: $DOCKERFILE"
+echo "steps:
+- name: 'gcr.io/cloud-builders/docker'
+  id: Build
+  args:
+  - 'build'
+  - '-f'
+  - '$DOCKERFILE'
+  - '-t'
+  - '$IMAGE'
+  - '.'
+- name: 'gcr.io/cloud-builders/docker'
+  id: Push
+  args:
+  - 'push'
+  - '$IMAGE'
+timeout: '10000s'
+" | sed "s|\$DOCKERFILE|$DOCKERFILE|;s|\$IMAGE|$IMAGE|" > /tmp/cloudbuildconfig
+
+# cat /tmp/cloudbuildconfig 
+# gcloud builds submit --tag "$IMAGE"
+gcloud builds submit --config /tmp/cloudbuildconfig
