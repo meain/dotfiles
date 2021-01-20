@@ -1600,6 +1600,13 @@ Pass ORIGINAL and ALTERNATE options."
   :defer t
   :mode (("\\.rest\\'" . restclient-mode)))
 
+;; Link opening
+(use-package ace-link
+  :ensure t
+  :commands ace-link
+  :init (global-set-key (kbd "M-f l")
+                        'ace-link))
+
 
 ;;; [CUSTOM FUNCTIONS] ==============================================
 
