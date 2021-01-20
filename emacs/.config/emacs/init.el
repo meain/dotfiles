@@ -350,7 +350,7 @@ Pass ORIGINAL and ALTERNATE options."
   (interactive)
   (if (= (length (mapcar #'window-buffer
                          (window-list))) 1)
-      (switch-to-buffer "*scratch*")
+      (find-file "~/.cache/master.org")
     (cond
      ((derived-mode-p 'prog-mode)
       (evil-quit))
