@@ -798,15 +798,6 @@ Pass ORIGINAL and ALTERNATE options."
   :defer 1
   :config (global-evil-matchit-mode 1))
 
-;; Quick open scratch buffers
-(use-package scratch
-  :ensure t
-  :commands scratch
-  :init (progn
-          (evil-leader/set-key "c"
-            (meain/with-alternate (switch-to-buffer "*scratch*")
-                                  (call-interactively 'scratch)))))
-
 ;; Highlight color codes
 (use-package rainbow-mode
   :ensure t
@@ -1674,6 +1665,24 @@ Pass ORIGINAL and ALTERNATE options."
 (global-set-key (kbd "M-m")
                 'meain/monacle-mode)
 (evil-leader/set-key "b m" 'meain/monacle-mode)
+
+;; Quick open scratch buffers
+(defun meain/scratchy ()
+  "Open scratch buffer in a specific mode."
+  (interactive "P")
+  (let ((scratch-major-mode (completing-read "Choose mode:"
+                                             '(text-mode python-mode json-mode rust-mode
+                                                         emacs-lisp-mode)))
+        (scratch-file-name (concatenate 'string
+                                        "~/.cache/scratch/"
+                                        (substring (uuid-string)
+                                                   0
+                                                   4))))
+    (find-file scratch-file-name)
+    (funcall (intern scratch-major-mode))))
+(evil-leader/set-key "c"
+  (meain/with-alternate (switch-to-buffer "*scratch*")
+                        (meain/scratchy)))
 
 ;; vime functionality within emacs
 (use-package uuid :ensure t
