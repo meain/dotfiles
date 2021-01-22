@@ -869,6 +869,8 @@ Pass ORIGINAL and ALTERNATE options."
             (tab-next))
            (t (ivy-read "Select tab: " tabs :action 'tab-bar-switch-to-tab))))))
     (evil-leader/set-key "t" 'meain/switch-tab-dwim)
+    (global-set-key (kbd "M-f s")
+                    'meain/switch-tab-dwim)
     (evil-leader/set-key "T" 'tab-new))
   :config (progn
             (setq tab-bar-close-button-show nil)
