@@ -1173,67 +1173,68 @@ Pass ORIGINAL and ALTERNATE options."
   :defer t)
 (use-package org
   :defer t
-  :init (progn
-          (evil-define-key 'normal
-            org-mode-map
-            (kbd "M-l")
-            (lambda ()
-              (interactive)
-              (evil-force-normal-state)
-              (evil-window-right 1)))
-          (evil-define-key 'normal
-            org-mode-map
-            (kbd "M-h")
-            (lambda ()
-              (interactive)
-              (evil-force-normal-state)
-              (evil-window-left 1)))
-          (evil-define-key 'normal
-            org-mode-map
-            (kbd "M-k")
-            (lambda ()
-              (interactive)
-              (evil-force-normal-state)
-              (evil-window-up 1)))
-          (evil-define-key 'normal
-            org-mode-map
-            (kbd "M-j")
-            (lambda ()
-              (interactive)
-              (evil-force-normal-state)
-              (evil-window-down 1)))
-          (evil-define-key 'normal
-            org-mode-map
-            (kbd "gk")
-            'org-backward-heading-same-level)
-          (evil-define-key 'normal
-            org-mode-map
-            (kbd "gj")
-            'org-forward-heading-same-level)
-          (evil-define-key 'normal
-            org-mode-map
-            (kbd "gK")
-            'org-move-subtree-up)
-          (evil-define-key 'normal
-            org-mode-map
-            (kbd "gJ")
-            'org-move-subtree-down)
-          (evil-define-key 'normal
-            org-mode-map
-            (kbd "gL")
-            'org-promote-subtree)
-          (evil-define-key 'normal
-            org-mode-map
-            (kbd "gH")
-            'org-demote-subtree)
-          (evil-define-key 'normal
-            org-mode-map
-            (kbd "gt")
-            'org-todo)
-          (evil-define-key 'normal
-            org-mode-map
-            (kbd "gr")
-            'org-ctrl-c-ctrl-c)))
+  :config (progn
+            (setq org-agenda-files (list "~/.cache/master.org"))
+            (evil-define-key 'normal
+              org-mode-map
+              (kbd "M-l")
+              (lambda ()
+                (interactive)
+                (evil-force-normal-state)
+                (evil-window-right 1)))
+            (evil-define-key 'normal
+              org-mode-map
+              (kbd "M-h")
+              (lambda ()
+                (interactive)
+                (evil-force-normal-state)
+                (evil-window-left 1)))
+            (evil-define-key 'normal
+              org-mode-map
+              (kbd "M-k")
+              (lambda ()
+                (interactive)
+                (evil-force-normal-state)
+                (evil-window-up 1)))
+            (evil-define-key 'normal
+              org-mode-map
+              (kbd "M-j")
+              (lambda ()
+                (interactive)
+                (evil-force-normal-state)
+                (evil-window-down 1)))
+            (evil-define-key 'normal
+              org-mode-map
+              (kbd "gk")
+              'org-backward-heading-same-level)
+            (evil-define-key 'normal
+              org-mode-map
+              (kbd "gj")
+              'org-forward-heading-same-level)
+            (evil-define-key 'normal
+              org-mode-map
+              (kbd "gK")
+              'org-move-subtree-up)
+            (evil-define-key 'normal
+              org-mode-map
+              (kbd "gJ")
+              'org-move-subtree-down)
+            (evil-define-key 'normal
+              org-mode-map
+              (kbd "gL")
+              'org-promote-subtree)
+            (evil-define-key 'normal
+              org-mode-map
+              (kbd "gH")
+              'org-demote-subtree)
+            (evil-define-key 'normal
+              org-mode-map
+              (kbd "gt")
+              'org-todo)
+            (evil-define-key 'normal
+              org-mode-map
+              (kbd "gr")
+              'org-ctrl-c-ctrl-c)))
 
 ;;; [EXTRA PLUGINS] =================================================
 
