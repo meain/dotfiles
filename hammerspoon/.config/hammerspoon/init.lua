@@ -496,26 +496,32 @@ hs.hotkey.bind(
     end
 )
 
+function getMainWindowPosition()
+    local mainScreen = hs.screen.allScreens()[1]
+    if (#hs.screen.allScreens() == 2) then
+        mainScreen = hs.screen.allScreens()[2]
+    end
+    local position = mainScreen:frame()
+    if (mainScreen:name() == "SMB2030") then
+        return hs.geometry(position.x + 10, position.y + 10, position.w - 20, position.h - 50)
+    else
+        return hs.geometry(position.x + 10, position.y + 10, position.w - 20, position.h - 20)
+    end
+end
+
 hs.hotkey.bind(
     {"alt", "shift"},
     "w",
     function()
         local currentWindow = hs.window.focusedWindow()
         -- Master is iTerm
+        local wPosition = getMainWindowPosition()
         if (currentWindow:title() == "Alacritty" or currentWindow:title() == "Master") then
             currentWindow:move(hs.geometry(940, 40, 480, 835))
         elseif currentWindow:title():sub(1, 5) == "Slack" or currentWindow:title():sub(1, 7) == "Element" then
             currentWindow:move(hs.geometry(30, 400, 895, 475))
         else
-            if (#hs.screen.allScreens() == 1) then
-                if (hs.screen.allScreens()[1]:name() == "SMB2030") then
-                    currentWindow:move(hs.geometry(14, 44, 1567, 810))
-                else
-                    currentWindow:move(hs.geometry(16, 44, 1411, 835))
-                end
-            else
-                currentWindow:move(hs.geometry(1470, -160, 1540, 800))
-            end
+            currentWindow:move(wPosition)
         end
     end
 )
