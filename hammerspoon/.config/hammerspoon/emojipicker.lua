@@ -45,6 +45,7 @@ function mod.emojipicker()
             hs.eventtap.keyStrokes(choosen)
         end
     )
+    chooser:width(69)
     chooser:placeholderText("Pick emoji")
     chooser:choices(formatChoices(emojis))
 
