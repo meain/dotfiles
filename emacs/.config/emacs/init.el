@@ -1178,6 +1178,10 @@ Pass ORIGINAL and ALTERNATE options."
   :config (progn
             (setq org-agenda-files (list "~/.cache/master.org"))
             (setq org-log-done 'time)
+            (evil-leader/set-key "m"
+              (lambda ()
+                (interactive)
+                (find-file "~/.cache/master.org")))
             (evil-define-key 'normal
               org-mode-map
               (kbd "M-l")
@@ -1893,8 +1897,10 @@ START and END comes from it being interactive."
 
 ;; Bookmarks
 (setq bookmark-save-flag 1)
-(evil-leader/set-key "m" 'bookmark-jump)
-(evil-leader/set-key "M" 'bookmark-set)
+(global-set-key (kbd "M-f m")
+                'bookmark-jump)
+(global-set-key (kbd "M-f M")
+                'bookmark-set)
 
 ;; setting proper default-dir
 (defun meain/set-proper-default-dir ()
