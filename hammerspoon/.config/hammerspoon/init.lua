@@ -516,9 +516,14 @@ hs.hotkey.bind(
         local currentWindow = hs.window.focusedWindow()
         -- Master is iTerm
         local wPosition = getMainWindowPosition()
-        if (currentWindow:title() == "Alacritty" or currentWindow:title() == "Master") then
+        local title = currentWindow:title()
+        print(title:sub(title:len() - 6, title:len()))
+        if (title == "Alacritty" or title == "Master") then
             currentWindow:move(hs.geometry(940, 40, 480, 835))
-        elseif currentWindow:title():sub(1, 5) == "Slack" or currentWindow:title():sub(1, 7) == "Element" then
+        elseif
+            title:sub(1, 5) == "Slack" or title:sub(1, 7) == "Element" or
+                title:sub(title:len() - 6, title:len()) == "Discord"
+         then
             currentWindow:move(hs.geometry(30, 400, 895, 475))
         else
             currentWindow:move(wPosition)
