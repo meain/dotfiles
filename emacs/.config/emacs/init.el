@@ -1228,11 +1228,11 @@ Pass ORIGINAL and ALTERNATE options."
               'org-move-subtree-down)
             (evil-define-key 'normal
               org-mode-map
-              (kbd "gL")
+              (kbd "gH")
               'org-promote-subtree)
             (evil-define-key 'normal
               org-mode-map
-              (kbd "gH")
+              (kbd "gL")
               'org-demote-subtree)
             (evil-define-key 'normal
               org-mode-map
