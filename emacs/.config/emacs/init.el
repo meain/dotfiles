@@ -2081,6 +2081,14 @@ START and END comes from it being interactive."
                              (float-time (time-subtract after-init-time before-init-time)))
                      gcs-done)))
 
+;; Window decoraations
+(add-to-list 'default-frame-alist
+             '(ns-transparent-titlebar . t))
+;; (setq default-frame-alist '((undecorated . t)))
+;; (add-to-list 'default-frame-alist '(drag-internal-border . 10))
+;; (add-to-list 'default-frame-alist '(internal-border-width . 10))
+;; (add-to-list 'default-frame-alist '(ns-appearance . dark))
+
 ;; drop gc threshold back
 (setq gc-cons-threshold 800000)
 
