@@ -514,10 +514,9 @@ hs.hotkey.bind(
     "w",
     function()
         local currentWindow = hs.window.focusedWindow()
-        -- Master is iTerm
         local wPosition = getMainWindowPosition()
         local title = currentWindow:title()
-        print(title:sub(title:len() - 6, title:len()))
+        -- "Master" is iTerm
         if (title == "Alacritty" or title == "Master") then
             currentWindow:move(hs.geometry(940, 40, 480, 835))
         elseif
