@@ -1177,6 +1177,7 @@ Pass ORIGINAL and ALTERNATE options."
   :defer t
   :config (progn
             (setq org-agenda-files (list "~/.cache/master.org"))
+            (setq org-log-done 'time)
             (evil-define-key 'normal
               org-mode-map
               (kbd "M-l")
