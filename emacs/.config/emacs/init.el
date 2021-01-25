@@ -1178,6 +1178,8 @@ Pass ORIGINAL and ALTERNATE options."
   :config (progn
             (setq org-agenda-files (list "~/.cache/master.org"))
             (setq org-log-done 'time)
+            (global-set-key (kbd "M-f j")
+                            'org-agenda-list)
             (evil-leader/set-key "m"
               (lambda ()
                 (interactive)
