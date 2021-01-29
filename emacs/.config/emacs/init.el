@@ -1609,15 +1609,6 @@ Pass ORIGINAL and ALTERNATE options."
   :init (global-set-key (kbd "M-f l")
                         'ace-link))
 
-;; Org Roam
-(use-package org-roam
-  :ensure t
-  :defer t
-  :after org
-  :config (progn
-            (setq org-roam-directory "~/.local/share/org")
-            (org-roam-mode)))
-
 
 ;;; [CUSTOM FUNCTIONS] ==============================================
 
