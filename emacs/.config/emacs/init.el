@@ -350,7 +350,7 @@ Pass ORIGINAL and ALTERNATE options."
   (interactive)
   (if (= (length (mapcar #'window-buffer
                          (window-list))) 1)
-      (find-file "~/.cache/master.org")
+      (find-file "~/.local/share/org/master.org")
     (cond
      ((derived-mode-p 'prog-mode)
       (evil-quit))
@@ -1176,14 +1176,15 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package org
   :defer t
   :config (progn
-            (setq org-agenda-files (list "~/.cache/master.org"))
+            (setq org-agenda-files (list "~/.local/share/org/master.org"))
             (setq org-log-done 'time)
+            (setq org-todo-keywords '((sequence "TODO" "|" "DONE" "CANCELLED")))
             (global-set-key (kbd "M-f j")
                             'org-agenda-list)
             (evil-leader/set-key "m"
               (lambda ()
                 (interactive)
-                (find-file "~/.cache/master.org")))
+                (find-file "~/.local/share/org/master.org")))
             (evil-define-key 'normal
               org-mode-map
               (kbd "M-l")
@@ -1607,6 +1608,15 @@ Pass ORIGINAL and ALTERNATE options."
   :commands ace-link
   :init (global-set-key (kbd "M-f l")
                         'ace-link))
+
+;; Org Roam
+(use-package org-roam
+  :ensure t
+  :defer t
+  :after org
+  :config (progn
+            (setq org-roam-directory "~/.local/share/org")
+            (org-roam-mode)))
 
 
 ;;; [CUSTOM FUNCTIONS] ==============================================
