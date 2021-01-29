@@ -62,10 +62,10 @@ report.codee.filter=(status:pending or status:waiting) and (+code) and (limit:pa
 report.codee.labels=ID,Active,Age,Deps,P,Project,Tag,Recur,S,Due,Until,Description,Urg
 report.codee.sort=urgency-
 
-report.tiny.columns=id,project,priority,description.count,due.relative
+report.tiny.columns=id,project,priority,description.count,due.relative,tags
 report.tiny.description=Quick short list
 report.tiny.filter=status:pending and limit:15 +UNBLOCKED
-report.tiny.labels=Id,Project,P,Description,Du
+report.tiny.labels=Id,Project,P,Description,Du,Tags
 report.tiny.sort=urgency-
 
 report.tot.columns=project,description.count
@@ -74,10 +74,10 @@ report.tot.filter=status:pending and limit:10
 report.tot.labels=Project,Description
 report.tot.sort=urgency-
 
-report.totn.columns=id,project,description.count
+report.totn.columns=id,project,description.count,tags
 report.totn.description=For tot
 report.totn.filter=status:pending
-report.totn.labels=Id,Project,Description
+report.totn.labels=Id,Project,Description,Tags
 report.totn.sort=urgency-
 
 report.ls.sort=urgency-
