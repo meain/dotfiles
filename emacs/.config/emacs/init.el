@@ -1341,6 +1341,7 @@ Pass ORIGINAL and ALTERNATE options."
 (setq sendmail-program "msmtp")
 (setq send-mail-function 'smtpmail-send-it)
 (setq message-sendmail-f-is-evil t)
+(setq message-default-mail-headers "Cc: \nBcc: \n")
 (setq message-sendmail-extra-arguments '("--read-envelope-from"))
 (setq message-send-mail-function 'message-send-mail-with-sendmail)
 
