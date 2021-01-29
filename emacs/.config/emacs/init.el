@@ -329,10 +329,6 @@ Pass ORIGINAL and ALTERNATE options."
      (interactive)
      (execute-kbd-macro (kbd "C-c C-c"))))
 
-;; Other keybindings
-(define-key evil-normal-state-map (kbd "\\") 'evil-jump-backward)
-(define-key evil-normal-state-map (kbd "~") 'evil-jump-forward)
-
 ;; Up/Down don't bother wrap
 (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
 (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
