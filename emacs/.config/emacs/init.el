@@ -1764,7 +1764,6 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
   (interactive)
   (ivy-read "Choose note: "
             (meain/nested-list-dir "~/.notes")
-            :require-match t
             :action (lambda (x)
                       (find-file (concatenate 'string "~/.notes/" x)))))
 (evil-leader/set-key "a N" 'meain/open-note)
