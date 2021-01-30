@@ -76,7 +76,7 @@ report.tot.sort=urgency-
 
 report.totn.columns=id,project,description.count,tags
 report.totn.description=For tot
-report.totn.filter=status:pending
+report.totn.filter=status:pending +UNBLOCKED
 report.totn.labels=Id,Project,Description,Tags
 report.totn.sort=urgency-
 
