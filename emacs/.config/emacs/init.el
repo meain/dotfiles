@@ -607,14 +607,21 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package projectile
   :ensure t
   :diminish :commands
-  (projectile-switch-project projectile-find-file)
-  :config (progn
-            (setq projectile-mode-line "Projectile") ; might speed up tramp
-            (projectile-mode 1)
-            (evil-leader/set-key "p" 'projectile-switch-project)
-            (setq projectile-completion-system 'ivy)
-            (setq projectile-sort-order 'recently-active)
-            (define-key evil-normal-state-map (kbd "<RET>") 'projectile-find-file)))
+  (projectile-switch-project projectile-find-file
+                             +projectile-find-file)
+  :init (progn
+          (evil-leader/set-key "p" 'projectile-switch-project)
+          (define-key evil-normal-state-map (kbd "<RET>") (lambda ()
+                                                            (interactive)
+                                                            (if (projectile-project-p)
+                                                                (+projectile-find-file)
+                                                              (projectile-switch-project))))):config
+  (progn
+    (setq projectile-mode-line "Projectile") ; might speed up tramp
+    (projectile-mode 1)
+    (setq projectile-completion-system 'ivy)
+    (setq projectile-sort-order 'recently-active)
+    (load-file "~/.config/emacs/projectile-find-file-plus.el")))
 
 ;; LSP
 (use-package eglot
