@@ -520,7 +520,7 @@ hs.hotkey.bind(
         if (title == "Alacritty" or title == "Master") then
             currentWindow:move(hs.geometry(940, 40, 480, 835))
         elseif
-            title:sub(1, 5) == "Slack" or title:sub(1, 7) == "Element" or
+            title:sub(1, 5) == "Slack" or title:sub(1, 7) == "Element" or title:sub(1, 8) == "Hydrogen" or
                 title:sub(title:len() - 6, title:len()) == "Discord"
          then
             currentWindow:move(hs.geometry(30, 400, 895, 475))
