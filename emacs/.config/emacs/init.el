@@ -1648,10 +1648,6 @@ Pass ORIGINAL and ALTERNATE options."
     (interactive)
     (find-file "~/.dotfiles/emacs/.config/emacs/init.el")))
 
-;; Full screen emacs
-(global-set-key (kbd "<s-return>")
-                'toggle-frame-fullscreen)
-
 ;; Fullscreen current buffer
 (defvar meain/window-configuration nil)
 (define-minor-mode meain/monacle-mode
