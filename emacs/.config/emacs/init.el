@@ -1676,7 +1676,7 @@ Pass ORIGINAL and ALTERNATE options."
   (interactive "P")
   (let ((scratch-major-mode (completing-read "Choose mode:"
                                              '(text-mode python-mode json-mode rust-mode
-                                                         emacs-lisp-mode)))
+                                                         emacs-lisp-mode web-mode javascript-mode)))
         (scratch-file-name (concatenate 'string
                                         "~/.cache/scratch/"
                                         (substring (uuid-string)
