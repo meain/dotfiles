@@ -15,6 +15,7 @@ urgency.uda.tags.fun.coefficient=-1.0
 urgency.uda.tags.saama.coefficient=5.0
 urgency.uda.tags.quick.coefficient=5.0
 urgency.uda.tags.shelved.coefficient=-2.0
+urgency.uda.tags.phone.coefficient=-2.0
 urgency.uda.project.personal.explore.coefficient=-0.5
 
 context.code=+code
@@ -63,10 +64,16 @@ report.codee.labels=ID,Active,Age,Deps,P,Project,Tag,Recur,S,Due,Until,Descripti
 report.codee.sort=urgency-
 
 report.tiny.columns=id,project,priority,description.count,due.relative,tags
-report.tiny.description=Quick short list
+report.tiny.description=Quick short list (tiny)
 report.tiny.filter=status:pending and limit:15 +UNBLOCKED
 report.tiny.labels=Id,Project,P,Description,Du,Tags
 report.tiny.sort=urgency-
+
+report.small.columns=id,project,priority,description,due.relative,tags
+report.small.description=Quick short list (small)
+report.small.filter=status:pending and limit:15 +UNBLOCKED
+report.small.labels=Id,Project,P,Description,Du,Tags
+report.small.sort=urgency-
 
 report.tot.columns=project,description.count
 report.tot.description=For tot
