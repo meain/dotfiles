@@ -1050,7 +1050,7 @@ Pass ORIGINAL and ALTERNATE options."
                      (s-starts-with-p "*popup-shell" bufname))
                    (display-buffer-reuse-window display-buffer-at-bottom)
                    (reusable-frames . visible)
-                   (window-height . 0.8)))))
+                   (window-height . 0.6)))))
 
 ;; ranger in emacs
 (use-package ranger
