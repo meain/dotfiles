@@ -733,9 +733,15 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; Tagbar alternative
 (use-package imenu :ensure t
+  :defer t
   :commands imenu)
+(use-package flimenu
+  :ensure t
+  :after imenu
+  :config (flimenu-global-mode 1))
 (use-package imenu-list
   :ensure t
+  :defer t
   :commands imenu-list-smart-toggle
   :init (global-set-key (kbd "M--")
                         (meain/with-alternate (call-interactively 'imenu)
