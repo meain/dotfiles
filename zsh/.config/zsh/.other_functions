@@ -354,8 +354,7 @@ tnp() {
 }
 
 termbin() {
-	[ -n "$1" ] && echo "$*" | nc termbin.com 9999 | tee /dev/tty | pbcopy
-	[ -z "$1" ] && nc termbin.com 9999 </dev/stdin | tee /dev/tty | pbcopy
+	nc termbin.com 9999 | tee /dev/tty | pbcopy
 }
 
 pb() {
