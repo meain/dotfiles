@@ -1869,7 +1869,7 @@ START and END comes from it being interactive."
     "Start writing journal entry.  `journal' invokes emacsclient and gives control back over to Emacs."
     (interactive)
     (start-process-shell-command "journal" "*journal*"
-                                 "journal")))
+                                 "EDITOR='emacsclient' journal")))
 
 ;; Function to close Emacs in a more "proper" way
 (defun meain/kill-all-buffers ()
