@@ -61,9 +61,9 @@ venv() {
     remove() {
         VENVNAME=$(\ls -t "$VENV_HOME" | fzf --height 30% --layout=reverse --query="$*")
         [ -z "$VENVNAME" ] && return 0
-        printf "Remove %s (y/N): " "$VENV_HOME/$VIRTUALENVNAME"
+        printf "Remove %s (y/N): " "$VENV_HOME/$VENVNAME"
         read -r
-        [ "y" = "$REPLY" ] && rm -rf "$VENV_HOME/$VIRTUALENVNAME"
+        [ "y" = "$REPLY" ] && rm -rf "$VENV_HOME/$VENVNAME"
     }
 
     help() {
