@@ -939,6 +939,11 @@ Pass ORIGINAL and ALTERNATE options."
           (setq vterm-kill-buffer-on-exit t)
           (global-set-key (kbd "M-;")
                           'meain/shell-toggle)
+          (defun meain/clear-and-exec ()
+            (interactive)
+            (vterm-clear)
+            (vterm-send-return))
+          (define-key vterm-mode-map [(S-return)] 'meain/clear-and-exec)
           (defun meain/shell-name ()
             "Get the name of the shell based on project info."
             (format "*popup-shell-%s*"
