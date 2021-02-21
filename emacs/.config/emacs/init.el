@@ -1682,14 +1682,16 @@ Pass ORIGINAL and ALTERNATE options."
   (interactive "P")
   (let ((scratch-major-mode (completing-read "Choose mode:"
                                              '(text-mode python-mode json-mode rust-mode
-                                                         emacs-lisp-mode web-mode javascript-mode)))
+                                                         emacs-lisp-mode web-mode javascript-mode artist-mode)))
         (scratch-file-name (concatenate 'string
                                         "~/.cache/scratch/"
                                         (substring (uuid-string)
                                                    0
                                                    4))))
     (find-file scratch-file-name)
-    (funcall (intern scratch-major-mode))))
+    (funcall (intern scratch-major-mode))
+    (if (eq (intern scratch-major-mode) 'artist-mode)
+        (evil-local-mode -1))))
 (evil-leader/set-key "c"
   (meain/with-alternate (switch-to-buffer "*scratch*")
                         (meain/scratchy)))
