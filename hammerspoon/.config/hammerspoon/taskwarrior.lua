@@ -28,7 +28,14 @@ completionFn = function(choice)
             dialog.textPrompt("Process task", choice["task"]:gsub("%s+", "", 1), "done", "Run", "Cancel")
         if button == "Run" then
             hs.alert("✔ " .. choice["project"] .. ": " .. choice["task"]:gsub("%s+", "", 1))
-            customshellrun.run("/usr/local/bin/task " .. choice["id"] .. " " .. message)
+            if message == "open" then
+                customshellrun.run(
+                    "/usr/local/bin/task " ..
+                        choice["id"] .. " | grep -Eo 'https?://[a-zA-Z0-9./?=_%:-]*' | xargs -L 1 open"
+                )
+            else
+                customshellrun.run("/usr/local/bin/task " .. choice["id"] .. " " .. message)
+            end
         end
     end
     -- customshellrun.run("/usr/local/bin/task sync &")
