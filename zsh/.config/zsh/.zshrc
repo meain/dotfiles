@@ -59,7 +59,7 @@ source $ZDOTDIR/.zsh-custom/plugins/z/z.sh
 source $ZDOTDIR/.zsh-custom/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
 source $ZDOTDIR/.zsh-custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
 
-export EDITOR='et'  # emacsclient -t
+export EDITOR='emacsclient'
 export BROWSER=  # do not set browser
 export DIFFTOOL='icdiff'
 
