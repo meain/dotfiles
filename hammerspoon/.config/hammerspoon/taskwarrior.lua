@@ -31,7 +31,7 @@ completionFn = function(choice)
             if message == "open" then
                 customshellrun.run(
                     "/usr/local/bin/task " ..
-                        choice["id"] .. " | grep -Eo 'https?://[a-zA-Z0-9./?=_%:-]*' | xargs -L 1 open"
+                        choice["id"] .. " | grep -Eo 'https?://[a-zA-Z0-9./?=_%:-]*' | sort -u | xargs -L 1 open"
                 )
             else
                 customshellrun.run("/usr/local/bin/task " .. choice["id"] .. " " .. message)
