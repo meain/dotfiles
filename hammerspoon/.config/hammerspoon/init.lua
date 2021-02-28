@@ -309,23 +309,9 @@ hs.hotkey.bind(
 )
 hs.hotkey.bind(
     {"cmd", "shift"},
-    "l",
-    function()
-        focusandback("alacritty")
-    end
-)
-hs.hotkey.bind(
-    {"cmd", "shift"},
     "n",
     function()
         focusandback("insomnia")
-    end
-)
-hs.hotkey.bind(
-    {"cmd", "shift"},
-    "g",
-    function()
-        focusandback("telegram")
     end
 )
 
