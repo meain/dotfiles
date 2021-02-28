@@ -32,3 +32,8 @@ ffmpeg_giffify() {
 		-filter_complex "[0:v] fps=10,scale=720:-1,split [a][b];[a] palettegen [p];[b][p] paletteuse" \
 		"$1".gif
 }
+
+ffmpeg_grainify() {
+	convert "$1" -resize 1920x1080^ -gravity center -extent 1920x1080 -quality 90 /tmp/grainify.jpg
+	ffmpeg -y -loop 1 -i /tmp/grainify.jpg -f lavfi -i color=s=3840x2160 -filter_complex "[0]scale=3840x2160,fps=60[a];[a]unsharp=3:3:-1.7,noise=alls=85:allf=t+u[b];[1][b]scale2ref,overlay=y='if(mod(t,16), 2)':x='if(mod(t,8), 3)'[c];[c]scale=1920x1080" -c:v libx264 -qp 30 -t 60 grainified-"$1".mp4
+}
