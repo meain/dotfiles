@@ -1,0 +1,46 @@
+#!/bin/sh
+
+set -e
+
+[ -z $8 ] && echo "Usage: dbclone <fhost> <fport> <fdb> <fuser> <thost> <tport> <tdb> <tuser>" && exit 1
+
+# Example: ./dbclone localhost 5432 postgres meain localhost 5432 newtestdb meain
+
+fhost="$1"
+fport="$2"
+fdb="$3"
+fuser="$4"
+
+thost="$5"
+tport="$6"
+tdb="$7"
+tuser="$8"
+
+echo "Pulling from: $fhost:$fport/$fdb"
+
+list_tables="SELECT table_schema,table_name FROM information_schema.tables"
+tables_to_copy="$(echo "$list_tables" | psql -h $fhost -p $fport $fdb -U "$fuser" | tail -n+3 |
+	sed 's/^ //' |
+	grep -vE '^information_schema' | grep -vE '^pg_catalog' |
+	sed 's/|//' | awk '{print $1,$2}' | column -t |
+	fzf -m --header 'Select tables to copy (multiple)')"
+echo "Tables being copied:"
+echo "$tables_to_copy" | awk '{print $1"."$2}' | xargs echo
+
+pgdump_cmd="-h $fhost -p $fport -U $fuser"
+pgdump_cmd="$(echo "$tables_to_copy" | awk '{print "-t \\\"\""$1"\"\\\".\\\"\""$2"\"\\\""}' | xargs echo "$pgdump_cmd") $fdb"
+echo "Command: pg_dump $pgdump_cmd"
+
+backupfile="/tmp/db-backup-$(date +%s)"
+echo "Pulling data to $backupfile ..."
+
+pg_dump $pgdump_cmd >$backupfile
+echo
+echo "DB pulled to $backupfile. Updating destination db."
+printf "Hit return to start."
+read
+
+createdb -T template0 "$tdb" -U "$tuser" -h "$thost" -p "$tport" 2>/dev/null || echo "DB exists, skipping initial creation."
+echo "$tables_to_copy" | cut -f1 -d' ' | sort -u | awk '{print "create schema if not exists \""$1"\";"}' |
+	psql -h "$thost" -p "$tport" -U "$tuser" "$tdb"
+psql -h "$thost" -p "$tport" -U "$tuser" "$tdb" <"$backupfile"
