@@ -2071,8 +2071,18 @@ START and END comes from it being interactive."
                                                (list " @"
                                                      (propertize (substring vc 5)
                                                                  'face
-                                                                 'font-lock-comment-face)
-                                                     " ")))
+                                                                 'font-lock-comment-face))))
+                                     '(:eval (list " "
+                                                   (propertize (let* ((explicit (cdr (car (cdr (cdr (tab-bar--current-tab))))))
+                                                                      (name (cdr (car (cdr (tab-bar--current-tab)))))
+                                                                      (out-name (if explicit
+                                                                                    (concatenate 'string ":" name)
+                                                                                  (if (projectile-project-p)
+                                                                                      (concatenate 'string ";" (projectile-project-name))
+                                                                                    ""))))
+                                                                 (format "%s" out-name))
+                                                               'face
+                                                               'font-lock-comment-face)))
                                      ;; spacer
 
                                      '(:eval (propertize " "
