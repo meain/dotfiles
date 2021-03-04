@@ -5,6 +5,7 @@ set -e
 [ -z $8 ] && echo "Usage: dbclone <fhost> <fport> <fdb> <fuser> <thost> <tport> <tdb> <tuser>" && exit 1
 
 # Example: ./dbclone localhost 5432 postgres meain localhost 5432 newtestdb meain
+# Hint: Setup ~/.pgpass so that you don't get asked for password every time
 
 fhost="$1"
 fport="$2"
