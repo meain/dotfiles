@@ -589,6 +589,10 @@ Pass ORIGINAL and ALTERNATE options."
 
 
 ;; Code formatting
+(use-package srefactor
+  :commands srefactor-lisp-format-buffer
+  :ensure t
+  :config (require 'srefactor-lisp))
 (use-package format-all
   :defer 1
   :ensure t
@@ -596,7 +600,13 @@ Pass ORIGINAL and ALTERNATE options."
   (progn
     (setq format-all-formatters '(("HTML" prettier)
                                   ("Go" goimports)))
-    (define-key evil-normal-state-map (kbd ",,") 'format-all-buffer)))
+    (defun meain/auto-format ()
+      "Custom auto-format based on filetype."
+      (interactive)
+      (if (eq major-mode 'emacs-lisp-mode)
+          (srefactor-lisp-format-buffer)
+        (call-interactively 'format-all-buffer)))
+    (define-key evil-normal-state-map (kbd ",,") 'meain/auto-format)))
 
 ;; Projectile
 (use-package projectile
