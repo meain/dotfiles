@@ -65,9 +65,14 @@ report.codee.sort=urgency-
 
 report.tiny.columns=id,project,priority,description.count,due.relative,tags
 report.tiny.description=Quick short list (tiny)
-report.tiny.filter=status:pending and limit:15 +UNBLOCKED
+report.tiny.filter=status:pending and limit:10 +UNBLOCKED
 report.tiny.labels=Id,Project,P,Description,Du,Tags
 report.tiny.sort=urgency-
+
+report.treview.columns=uuid
+report.treview.description=Review list
+report.treview.filter=status:pending and limit:100 +UNBLOCKED
+report.treview.sort=urgency-
 
 report.small.columns=id,project,priority,description,due.relative,tags
 report.small.description=Quick short list (small)
