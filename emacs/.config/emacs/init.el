@@ -7,6 +7,7 @@
 
 ;; native comp stuff
 (setq comp-speed 2)
+(setq package-native-compile t)
 
 ;; increase gc threshold (speeds up initial load)
 (setq gc-cons-threshold (* 100 1000 1000))
