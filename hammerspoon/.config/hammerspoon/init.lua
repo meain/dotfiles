@@ -558,7 +558,7 @@ function showOutputInCanvas()
         {
             x = 30,
             y = 50,
-            w = 1000,
+            w = 2000,
             h = 500
         }
     )
