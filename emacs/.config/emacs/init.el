@@ -2066,6 +2066,39 @@ START and END comes from it being interactive."
   (kbd "t")
   'package-menu-upgrade-package)
 
+;; Run markdown code blocks (forest.el)
+(defun meain/run-markdown-code-block ()
+  "Run markdown code block under curosr."
+  (interactive)
+  (let* ((start (nth 0
+                     (markdown-get-enclosing-fenced-block-construct)))
+         (end (nth 1
+                   (markdown-get-enclosing-fenced-block-construct)))
+         (snippet-with-markers (buffer-substring start end))
+         (snippet (string-join (cdr (butlast (split-string snippet-with-markers "\n")))
+                               "\n"))
+         (snippet-runner (car (last (split-string (car (split-string snippet-with-markers "\n"))
+                                                  "[ `]+")))))
+    (message "%s" start)
+    (message "%s" end)
+    (pulse-momentary-highlight-region start end
+                                      'company-template-field)
+    (message "%s"
+             (markdown-get-enclosing-fenced-block-construct))
+    (message "%s" snippet-with-markers)
+    (message "Code: %s" snippet)
+    (message "Runner: %s" snippet-runner)
+    (goto-char end)
+    (end-of-line)
+    (newline)
+    (insert "\n```output\n")
+    (append-to-file snippet nil "/tmp/thing-to-run")
+    (message "%s"
+             (format "%s '/tmp/thing-to-run'" snippet-runner))
+    (insert (shell-command-to-string (format "%s '/tmp/thing-to-run'" snippet-runner)))
+    (insert "```")
+    (delete-file "/tmp/thing-to-run" t)))
+
 ;; Better modeline
 (setq-default mode-line-format (list '(:eval (if (eq 'emacs evil-state)
                                                  "! "
