@@ -637,6 +637,10 @@ Pass ORIGINAL and ALTERNATE options."
   (progn
     (add-to-list 'eglot-server-programs
                  '(lua-mode . ("~/.luarocks/bin/lua-lsp")))
+    ;; Can be enabled on fiction like things
+    (add-to-list 'eglot-server-programs
+                 '(markdown-mode . ("unified-language-server" "--parser=remark-parse"
+                                    "--stdio")))
     (add-to-list 'eglot-server-programs
                  '(rust-mode . ("rust-analyzer")))
     (add-to-list 'eglot-server-programs
