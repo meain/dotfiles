@@ -299,7 +299,7 @@ Pass ORIGINAL and ALTERNATE options."
                   (split-window-below)
                   (windmove-down)
                   (when open-term
-                    (vterm))))
+                    (vterm t))))
 (global-set-key (kbd "M-v")
                 (lambda (&optional open-term)
                   (interactive "P")
@@ -307,7 +307,7 @@ Pass ORIGINAL and ALTERNATE options."
                   (split-window-right)
                   (windmove-right)
                   (when open-term
-                    (vterm))))
+                    (vterm t))))
 (global-set-key (kbd "M-w")
                 'delete-window)
 (global-set-key (kbd "M-o")
@@ -1045,13 +1045,13 @@ Pass ORIGINAL and ALTERNATE options."
                                              (split-window-below)
                                              (windmove-down)
                                              (when open-term
-                                               (vterm))))
+                                               (vterm t))))
     (define-key vterm-mode-map (kbd "M-v") (lambda (&optional open-term)
                                              (interactive "P")
                                              (split-window-right)
                                              (windmove-right)
                                              (when open-term
-                                               (vterm))))
+                                               (vterm t))))
     (add-to-list 'display-buffer-alist
                  '((lambda (bufname _)
                      (s-starts-with-p "*popup-shell" bufname))
