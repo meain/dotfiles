@@ -280,7 +280,7 @@ hs.hotkey.bind(
     {"alt", "shift"},
     "c",
     function()
-        hs.alert("Starting emacs!")
+        hs.notify.new({title = "Emacs", informativeText = "Starting Emacs."}):send()
         customshellrun.run("emacsclient -a '' --no-wait -c", true)
     end
 )
