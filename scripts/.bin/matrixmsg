@@ -1,0 +1,7 @@
+#!/bin/sh
+
+set -e
+
+# https://gist.github.com/RickCogley/69f430d4418ae5498e8febab44d241c9
+curl -XPOST -d "{\"msgtype\":\"m.text\", \"body\":\"$*\"}" \
+	"https://matrix.org/_matrix/client/r0/rooms/!$MATRIX_CHANNEL/send/m.room.message?access_token=$MATRIX_ACCESS_TOKEN"
