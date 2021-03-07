@@ -1063,7 +1063,6 @@ Pass ORIGINAL and ALTERNATE options."
       (vterm-clear)
       (vterm-send-return))
     (define-key vterm-mode-map [(S-return)] 'meain/clear-and-exec)
-
     (defun meain/vterm--kill-vterm-buffer-and-window (process event)
       "Kill buffer and window on vterm PROCESS termination.  EVENT is the close event."
       (when (not (process-live-p process))
@@ -1073,12 +1072,10 @@ Pass ORIGINAL and ALTERNATE options."
               (kill-buffer)
               (ignore-errors (delete-window))
               (message "VTerm closed."))))))
-
     (add-hook 'vterm-mode-hook
               (lambda ()
                 (set-process-sentinel (get-buffer-process (buffer-name))
-                                      #'meain/vterm--kill-vterm-buffer-and-window)))
-    ))
+                                      #'meain/vterm--kill-vterm-buffer-and-window)))))
 
 ;; ranger in emacs
 (use-package ranger
@@ -2131,7 +2128,9 @@ START and END comes from it being interactive."
                                                                       (out-name (if explicit
                                                                                     (concatenate 'string ":" name)
                                                                                   (if (projectile-project-p)
-                                                                                      (concatenate 'string ";" (projectile-project-name))
+                                                                                      (concatenate 'string
+                                                                                                   ";"
+                                                                                                   (projectile-project-name))
                                                                                     ""))))
                                                                  (format "%s" out-name))
                                                                'face
