@@ -1163,6 +1163,18 @@ Pass ORIGINAL and ALTERNATE options."
   :after evil
   :config (evil-collection-init))
 
+;; Highlight TODO items
+(use-package hl-todo
+  :ensure t
+  :defer 1
+  :config (progn
+            (setq hl-todo-keyword-faces '(("TODO" . "#FF0000")
+                                          ("FIXME" . "#FF0000")
+                                          ("DEBUG" . "#A020F0")
+                                          ("GOTCHA" . "#FF4500")
+                                          ("STUB" . "#1E90FF")))
+            (global-hl-todo-mode)))
+
 
 ;;; [FILETYPE PUGINS] ===============================================
 
