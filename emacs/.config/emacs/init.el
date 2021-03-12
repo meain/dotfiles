@@ -1065,6 +1065,7 @@ Pass ORIGINAL and ALTERNATE options."
     (defun meain/clear-and-exec ()
       (interactive)
       (vterm-clear)
+      (vterm-clear-scrollback)
       (vterm-send-return))
     (define-key vterm-mode-map [(S-return)] 'meain/clear-and-exec)
     (defun meain/vterm--kill-vterm-buffer-and-window (process event)
