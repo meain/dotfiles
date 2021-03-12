@@ -868,9 +868,11 @@ Pass ORIGINAL and ALTERNATE options."
     (defun meain/switch-tab-dwim (&optional close)
       "Switch between available tabs.  Pass CLOSE as t to close the current tab if it is not the last one."
       (interactive "P")
-      (let ((tabs (mapcar (lambda (tab)
-                            (alist-get 'name tab))
-                          (tab-bar--tabs-recent))))
+      (let ((tabs (cl-remove-if (lambda (x)
+                                  (equal x "scratch"))
+                                (mapcar (lambda (tab)
+                                          (alist-get 'name tab))
+                                        (tab-bar--tabs-recent)))))
         (if close
             (if (eq tabs nil)
                 (message "Not closing last tab")
@@ -881,9 +883,14 @@ Pass ORIGINAL and ALTERNATE options."
                              (substitute-command-keys "\\[tab-new]")
                              "` to create another tab.")))
            ((eq (length tabs) 1)
-            (tab-next))
+            (tab-bar-switch-to-tab (car tabs)))
            (t (ivy-read "Select tab: " tabs :action 'tab-bar-switch-to-tab))))))
     (evil-leader/set-key "t" 'meain/switch-tab-dwim)
+    (evil-leader/set-key "C"
+      (lambda ()
+        (interactive)
+        ;; TODO: make notmuch and elfeed automatically open up in scratch tab
+        (tab-bar-switch-to-tab "scratch")))
     (global-set-key (kbd "M-f s")
                     'meain/switch-tab-dwim)
     (evil-leader/set-key "T" 'tab-new))
