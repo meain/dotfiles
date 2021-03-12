@@ -1632,16 +1632,6 @@ Pass ORIGINAL and ALTERNATE options."
   (imp-set-user-filter 'meain/markdown-filter)
   (imp-visit-buffer))
 
-
-;; Persistent scratch
-;; need defer to not mess with statusline update
-(use-package persistent-scratch
-  :ensure t
-  :defer 1
-  :config (progn
-            (persistent-scratch-setup-default)
-            (persistent-scratch-autosave-mode 1)))
-
 ;; Git info in dired buffer
 (use-package dired-git-info
   :ensure t
