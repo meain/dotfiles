@@ -62,7 +62,7 @@
 [github]
   user = meain
 [hub]
-  protocol = https
+  protocol = ssh
 [commit]
   gpgsign = false
   verbose = true
