@@ -1608,6 +1608,11 @@ Pass ORIGINAL and ALTERNATE options."
           (interactive)
           (tramp-term (list (meain/ssh-host-picker)))))
 
+;; connect to docker via tramp
+(use-package docker-tramp :ensure t
+  :defer t
+  :after tramp)
+
 ;; timing stuff
 (use-package activity-watch-mode
   :ensure t
