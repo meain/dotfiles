@@ -14,20 +14,12 @@
   vhm = log --pretty=format:'%h -%d %s' --abbrev-commit --date=relative -20
 
   st = status -sb -uno --ignore-submodules=untracked
-
-  patch = add -p
-
   ba = branch --all -vv
-
   su = submodule update --init --recursive
-
   mff = merge --ff-only
-
   wip = for-each-ref --sort='authordate:iso8601' --format=' %(color:green)%(authordate:relative)%09%(color:reset)%(refname:short)' refs/heads
-
   undo = !"git reset --soft HEAD^ && git reset"
-  # hard reset and clean (unrecoverable)
-  nuke = !"git reset --hard HEAD && git clean -fd"
+  nuke = !"git reset --hard HEAD && git clean -fd"  # hard reset and clean (unrecoverable)
 [color]
   ui = true
 [core]
