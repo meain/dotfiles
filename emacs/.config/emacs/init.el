@@ -1662,6 +1662,14 @@ Pass ORIGINAL and ALTERNATE options."
   :init (global-set-key (kbd "M-f l")
                         'ace-link))
 
+;; Docker
+(use-package docker :ensure t
+  :defer t)
+
+;; Kubernetes
+(use-package kubel :ensure t
+  :defer t)
+
 
 ;;; [CUSTOM FUNCTIONS] ==============================================
 
