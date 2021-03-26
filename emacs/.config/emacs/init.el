@@ -220,6 +220,10 @@
     (setq dired-listing-switches "-AGFhlgo")
     (setq dired-dwim-target t)
     (define-key dired-mode-map (kbd "-") 'dired-up-directory)
+    (evil-define-key 'normal
+      dired-mode-map
+      (kbd "+")
+      'dired-create-empty-file)
     (add-hook 'dired-mode-hook 'hl-line-mode)))
 
 ;; macro for alternate pattern
