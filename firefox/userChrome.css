@@ -11,7 +11,7 @@ toolbarbutton#alltabs-button {
 
 #titlebar,
 .titlebar-buttonbox-container,
-body > box:nth-child(8) {
+body > box:nth-child(10) {
   -moz-box-ordinal-group: 999 !important;
 }
 
@@ -22,7 +22,7 @@ body > box:nth-child(8) {
 #pocket-button,
 .search-one-offs,
 .titlebar-spacer {
-  display: none !important;;
+  display: none !important;
 }
 
 :root {
@@ -51,11 +51,10 @@ body > box:nth-child(8) {
 .tabbrowser-tab::before {
   border: none !important;
   color: grey !important;
-  opacity: .2 !important;
+  opacity: 0.2 !important;
 }
 
-
-#back-button{
+#back-button {
   background: none !important;
 }
 #back-button > .toolbarbutton-icon {
@@ -78,9 +77,9 @@ body > box:nth-child(8) {
 }
 
 #urlbar-input-container {
-	height: 100% !important;
-	padding-block: 0 !important;
-	padding-inline: 0 !important;
+  height: 100% !important;
+  padding-block: 0 !important;
+  padding-inline: 0 !important;
 }
 
 .urlbarView {
@@ -95,11 +94,11 @@ body > box:nth-child(8) {
   border-top: 1px solid #ccc;
 }
 
-.urlbarView.megabar .urlbarView-body-inner{
+.urlbarView.megabar .urlbarView-body-inner {
   border-top: none !important;
 }
 
-#urlbar-background{
+#urlbar-background {
   border: none !important;
   box-shadow: none !important;
 }
@@ -114,4 +113,3 @@ body > box:nth-child(8) {
   color: black !important;
   width: 10px !important;
 }
-
