@@ -207,8 +207,9 @@
 (electric-pair-mode t)
 
 ;; eldoc load
-(require 'eldoc)
-(global-eldoc-mode nil)
+(use-package eldoc
+  :init (setq eldoc-echo-area-use-multiline-p nil):config
+  (global-eldoc-mode nil))
 
 ;; dired
 (use-package dired
