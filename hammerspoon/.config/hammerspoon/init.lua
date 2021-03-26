@@ -578,11 +578,11 @@ function showOutputInCanvas()
     }
     canvas:show()
 end
-function updateOutputCanvas(result)
+function UpdateOutputCanvas()
     local result = customshellrun.run(canvascommand)
     canvas[1].text = result
 end
-showOutputInCanvas()
+ShowOutputInCanvas()
 
 -- taskwarrior
 local taskwarrior = require("taskwarrior")
@@ -591,13 +591,13 @@ hs.hotkey.bind(
     {"alt"},
     "t",
     function()
-        updateOutputCanvas()
+        UpdateOutputCanvas()
         if canvastimer == nil then
             canvastimer =
                 hs.timer.doEvery(
                 100,
                 function()
-                    updateOutputCanvas()
+                    UpdateOutputCanvas()
                 end
             )
             canvastimer:setNextTrigger(10)
