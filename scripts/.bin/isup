@@ -7,3 +7,4 @@ while ! ping -c1 meain.io 2>/dev/null; do
     sleep 1
 done
 notify "You are now connected."
+say "You are now connected." -v Kyoko
