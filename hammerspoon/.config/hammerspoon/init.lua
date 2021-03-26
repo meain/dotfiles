@@ -546,10 +546,8 @@ hs.hotkey.bind(
 
 local canvas = nil
 local canvascommand = "/usr/local/bin/task tiny | tail -n+4 | sed '$ d'"
-function showOutputInCanvas()
     local hcaltitlecolor = {red = 1, blue = 1, green = 1, alpha = 0.5}
-    local cscreen = hs.screen.mainScreen()
-    local cres = cscreen:fullFrame()
+function ShowOutputInCanvas()
     if canvas ~= nil then
         canvas:hide()
     end
