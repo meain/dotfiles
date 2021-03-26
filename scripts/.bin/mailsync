@@ -44,6 +44,11 @@ notmuch tag +newsletter +nonotify -imbox 'tag:inbox' 'from:jobs-listings@linkedi
 notmuch tag +newsletter +nonotify -imbox 'tag:inbox' 'from:hello@uxdesign.cc'
 notmuch tag +newsletter +nonotify -imbox 'tag:inbox' 'from:vimtricks@substack.com'
 notmuch tag +newsletter +nonotify -imbox 'tag:inbox' 'from:hi@vimtricks.com'
+notmuch tag +newsletter +nonotify -imbox 'tag:inbox' 'from:noreply@ses.diff.blog'
+
+# jhunt
+notmuch tag +jobhunt +nonotify -imbox 'tag:inbox' 'from:jobalerts-noreply@linkedin.com'
+notmuch tag +jobhunt +nonotify -imbox 'tag:inbox' 'from:talent@marketing.angel.co'
 
 # bullshit
 notmuch tag +bullshit +nonotify -imbox 'tag:inbox' 'from:marketradar@newsletter.geojit.net'
