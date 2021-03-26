@@ -1,0 +1,3 @@
+207 Multi-Status
+Successful response
+Conveys information about multiple resources, for situations where multiple status codes might be appropriate.

@@ -1,0 +1,3 @@
+103 Early Hints
+Information response
+This status code is primarily intended to be used with the "Link" header, letting the user agent start preloading resources while the server prepares a response

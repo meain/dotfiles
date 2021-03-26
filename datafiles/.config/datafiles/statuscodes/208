@@ -1,0 +1,3 @@
+208 Already Reported
+Successful response
+Used inside a <dav:propstat> response element to avoid repeatedly enumerating the internal members of multiple bindings to the same collection.

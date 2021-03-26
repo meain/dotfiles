@@ -1,0 +1,3 @@
+414 URI Too Long
+The URI requested by the client is longer than the server is willing to interpret.
+The media format of the requested data is not supported by the server, so the server is rejecting the request.

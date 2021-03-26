@@ -1,0 +1,3 @@
+412 Precondition Failed
+Client error response
+The client has indicated preconditions in its headers which the server does not meet.

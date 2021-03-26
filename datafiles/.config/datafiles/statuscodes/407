@@ -1,0 +1,3 @@
+407 Proxy Authentication Required
+Client error response
+This is similar to 401 but authentication is needed to be done by a proxy.

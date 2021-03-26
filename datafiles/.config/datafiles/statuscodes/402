@@ -1,0 +1,3 @@
+402 Payment Required
+Client error response
+This response code is reserved for future use. The initial aim for creating this code was using it for digital payment systems, however this status code is used very rarely and no standard convention exists.

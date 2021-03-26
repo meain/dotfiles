@@ -1,0 +1,3 @@
+302 Found
+Redirection message
+This response code means that the URI of requested resource has been changed temporarily. Further changes in the URI might be made in the future. Therefore, this same URI should be used by the client in future requests.
