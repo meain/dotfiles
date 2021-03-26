@@ -27,7 +27,7 @@ fi
 execcommandfrompartial 'brew install' './brew.packages'
 
 # homebrew cask
-execcommandfrompartial 'brew cask install' './brew-cask.packages'
+execcommandfrompartial 'brew install --cask' './brew-cask.packages'
 
 # install non package stuff
 bash ./non-package.sh
