@@ -1318,80 +1318,83 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package notmuch
   :ensure t
   :commands notmuch
-  :init (progn
-          (evil-define-key 'normal
-            notmuch-search-mode-map
-            (kbd "u")
-            'evil-collection-notmuch-search-toggle-unread)
-          (evil-define-key 'normal
-            notmuch-show-mode-map
-            (kbd "U")
-            'notmuch-show-browse-urls)
-          (evil-define-key 'normal
-            notmuch-show-mode-map
-            (kbd "u")
-            'meain/notmuch-show-close-all-but-unread)
-          (evil-define-key 'normal
-            notmuch-show-mode-map
-            (kbd "M-k")
-            (lambda ()
+  :config (progn
+            (evil-define-key 'normal
+              notmuch-search-mode-map
+              (kbd "u")
+              'evil-collection-notmuch-search-toggle-unread)
+            (evil-define-key 'normal
+              notmuch-show-mode-map
+              (kbd "U")
+              'notmuch-show-browse-urls)
+            (evil-define-key 'normal
+              notmuch-show-mode-map
+              (kbd "u")
+              'meain/notmuch-show-close-all-but-unread)
+            (evil-define-key 'normal
+              notmuch-show-mode-map
+              (kbd "M-k")
+              (lambda ()
+                (interactive)
+                (evil-force-normal-state)
+                (evil-window-up 1)))
+            (evil-define-key 'normal
+              notmuch-show-mode-map
+              (kbd "M-j")
+              (lambda ()
+                (interactive)
+                (evil-force-normal-state)
+                (evil-window-down 1)))
+            (evil-leader/set-key "a n" 'notmuch)
+            (defun meain/notmuch-show-close-all-but-unread ()
+              "Close all messages until the first unread item."
               (interactive)
-              (evil-force-normal-state)
-              (evil-window-up 1)))
-          (evil-define-key 'normal
-            notmuch-show-mode-map
-            (kbd "M-j")
-            (lambda ()
-              (interactive)
-              (evil-force-normal-state)
-              (evil-window-down 1)))
-          (evil-leader/set-key "a n" 'notmuch)
-          (defun meain/notmuch-show-close-all-but-unread ()
-            "Close all messages until the first unread item."
-            (interactive)
-            (goto-char (point-min))
-            (cl-loop do
-                     (notmuch-show-message-visible (notmuch-show-get-message-properties)
-                                                   nil)
-                     until
-                     (or (not (notmuch-show-goto-message-next))
-                         (member "unread" (plist-get (notmuch-show-get-message-properties)
-                                                     :tags))))
-            (force-window-update))
-          ;; (add-hook 'notmuch-show-mode-hook 'meain/notmuch-show-close-all-but-unread)
-          (setq notmuch-search-oldest-first nil)
-          (setq notmuch-message-headers-visible nil)
-          (setq message-auto-save-directory "/Users/meain/.local/share/mail")
-          (setq notmuch-saved-searches (quote ((:name "imbox" :query "tag:imbox AND tag:inbox"
-                                                      :key "i"
-                                                      :sort-order newest-first)
-                                               (:name "read" :query "tag:inbox AND -tag:imbox AND -tag:newsletter AND -tag:python and -tag:unread"
-                                                      :key "r"
-                                                      :sort-order oldest-first)
-                                               (:name "meain" :query "query=to:mail@meain.io AND tag:inbox"
-                                                      :key "m"
-                                                      :sort-order oldest-first)
-                                               (:name "github" :query "tag:github AND tag:inbox"
-                                                      :key "g"
-                                                      :sort-order oldest-first)
-                                               (:name "sent" :query "tag:sent"
-                                                      :key "s"
-                                                      :sort-order newest-first)
-                                               (:name "drafts" :query "tag:draft AND tag:inbox"
-                                                      :key "d")
-                                               (:name "unread" :query "tag:unread AND tag:inbox AND -tag:python AND -tag:newsletter"
-                                                      :key "u")
-                                               (:name "python" :query "tag:python AND tag:inbox"
-                                                      :key "p")
-                                               (:name "newsletter" :query "tag:newsletter AND tag:inbox"
-                                                      :key "n")
-                                               (:name "known" :query "tag:known AND tag:inbox"
-                                                      :key "k")
-                                               (:name "archiveable" :query "tag:bullshit AND tag:known AND tag:nonimportant AND tag:inbox"
-                                                      :key "a")
-                                               (:name "all mail" :query "*"
-                                                      :key "A"
-                                                      :sort-order newest-first))))))
+              (goto-char (point-min))
+              (cl-loop do
+                       (notmuch-show-message-visible (notmuch-show-get-message-properties)
+                                                     nil)
+                       until
+                       (or (not (notmuch-show-goto-message-next))
+                           (member "unread" (plist-get (notmuch-show-get-message-properties)
+                                                       :tags))))
+              (force-window-update))
+            ;; (add-hook 'notmuch-show-mode-hook 'meain/notmuch-show-close-all-but-unread)
+            :init (progn
+                    (setq notmuch-search-oldest-first nil)
+                    (setq notmuch-message-headers-visible nil)
+                    (setq message-auto-save-directory "/Users/meain/.local/share/mail")
+                    (setq notmuch-saved-searches (quote ((:name "imbox" :query "tag:imbox AND tag:inbox"
+                                                                :key "i"
+                                                                :sort-order newest-first)
+                                                         (:name "read" :query "tag:inbox AND -tag:imbox AND -tag:newsletter AND -tag:python and -tag:unread AND -tag:jobhunt"
+                                                                :key "r"
+                                                                :sort-order oldest-first)
+                                                         (:name "meain" :query "query=to:mail@meain.io AND tag:inbox"
+                                                                :key "m"
+                                                                :sort-order oldest-first)
+                                                         (:name "github" :query "tag:github AND tag:inbox"
+                                                                :key "g"
+                                                                :sort-order oldest-first)
+                                                         (:name "sent" :query "tag:sent"
+                                                                :key "s"
+                                                                :sort-order newest-first)
+                                                         (:name "drafts" :query "tag:draft AND tag:inbox"
+                                                                :key "d")
+                                                         (:name "unread" :query "tag:unread AND tag:inbox AND -tag:python AND -tag:newsletter AND -tag:jobhunt"
+                                                                :key "u")
+                                                         (:name "python" :query "tag:python AND tag:inbox"
+                                                                :key "p")
+                                                         (:name "newsletter" :query "tag:newsletter AND tag:inbox"
+                                                                :key "n")
+                                                         (:name "jobhunt" :query "tag:jobhunt AND tag:inbox"
+                                                                :key "j")
+                                                         (:name "known" :query "tag:known AND tag:inbox"
+                                                                :key "k")
+                                                         (:name "archiveable" :query "tag:bullshit AND tag:known AND tag:nonimportant AND tag:inbox"
+                                                                :key "a")
+                                                         (:name "all mail" :query "*"
+                                                                :key "A"
+                                                                :sort-order newest-first)))))))
 
 ;; sending emails
 (setq message-kill-buffer-on-exit t) ; kill buffer after sending mail
