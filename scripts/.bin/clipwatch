@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# watch clipboard and output clipboard on change
+# Sample usecase: clipwatch|parallel --ungroup youtube-dl (download video urls copied to clipboard)
+# The above usecase is a simpler version of meain/ytdd
+
+set -e
+
+clip="$(pbpaste)"
+prevclip="$clip" # ignore initial clipboard entry
+while sleep 0.3; do
+	clip="$(pbpaste)"
+	[ "$prevclip" != "$clip" ] && [ "$clip" != "" ] && echo "$clip"
+	prevclip="$clip"
+done
