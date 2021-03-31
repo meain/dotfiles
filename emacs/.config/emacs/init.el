@@ -1971,11 +1971,19 @@ START and END comes from it being interactive."
                       thing-to-print))))))
 (define-key evil-normal-state-map (kbd "g p") 'meain/quick-print)
 
-;; More shell "apps"
+;; Quick launch htop
 (evil-leader/set-key "a H"
   (lambda ()
     (interactive)
     (meain/run-in-vterm "htop")))
+
+;; Journal entry
+(add-hook 'find-file-hook
+          (lambda ()
+            (if (string-prefix-p (concat (expand-file-name "~")
+                                         "/.local/share/journal")
+                                 default-directory)
+                (auto-fill-mode))))
 (evil-leader/set-key "a J"
   (lambda ()
     "Start writing journal entry.  `journal' invokes emacsclient and gives control back over to Emacs."
