@@ -368,7 +368,13 @@ Pass ORIGINAL and ALTERNATE options."
   (interactive)
   (if (= (length (mapcar #'window-buffer
                          (window-list))) 1)
-      (switch-to-buffer "*scratch*")
+      (cond
+       ((get-buffer "*scratch*")
+        (switch-to-buffer "*scratch*"))
+       (t (progn
+            (switch-to-buffer "*scratch*")
+            (lisp-interaction-mode)
+            (insert (meain/get-scratch-message)))))
     (cond
      ((derived-mode-p 'prog-mode)
       (evil-quit))
