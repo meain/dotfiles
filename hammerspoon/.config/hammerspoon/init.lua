@@ -275,12 +275,12 @@ hs.hotkey.bind(
     end
 )
 
--- quick launch emacs
+-- quick launch text editor
 hs.hotkey.bind(
     {"alt", "shift"},
     "c",
     function()
-        hs.notify.new({title = "Emacs", informativeText = "Starting Emacs."}):send()
+        hs.notify.new({title = "Starting editor", informativeText = "Just give it a moment while we pick the best editor"}):send()
         customshellrun.run("emacsclient -a '' --no-wait -c", true)
     end
 )
