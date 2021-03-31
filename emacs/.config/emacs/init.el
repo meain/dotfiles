@@ -67,6 +67,9 @@
 
 ;;; [BASIC SETTINGS] =============================================
 
+;; Use cl-lib
+(require 'cl-lib)
+
 ;; Consistent window title
 (setq frame-title-format '("Emacs")) ; needed by hammerspoon
 
@@ -87,9 +90,6 @@
 (setq scroll-conservatively 100)
 (setq scroll-step 1)
 (setq scroll-margin 3)
-
-;; Use cl-lib
-(require 'cl-lib)
 
 ;; Backup and autosave somewhere else
 (setq backup-directory-alist `((".*" . "~/.cache/emacs/backup")))
