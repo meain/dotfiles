@@ -74,7 +74,18 @@
 (setq frame-title-format '("Emacs")) ; needed by hammerspoon
 
 ;; Scratch initial content
-(setq initial-scratch-message "; scratch")
+(defun meain/get-scratch-message ()
+  "Pull a random fortue entry and format it for `lisp-interaction' mode as a comment."
+  (concat (mapconcat 'identity
+                     (mapcar (lambda (x)
+                               (cl-concatenate 'string ";; " x))
+                             (cl-remove-if (lambda (x)
+                                             (equal x ""))
+                                           (split-string (shell-command-to-string "fortune -s")
+                                                         "\n")))
+                     "\n")
+          "\n"))
+(setq initial-scratch-message (meain/get-scratch-message))
 
 ;; Quicker yes or no
 (fset 'yes-or-no-p 'y-or-n-p)
