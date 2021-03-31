@@ -1458,6 +1458,10 @@ Pass ORIGINAL and ALTERNATE options."
       'meain/elfeed-search-filter)
     (evil-define-key 'normal
       elfeed-search-mode-map
+      (kbd "c")
+      'meain/elfeed-search-filter-by-name)
+    (evil-define-key 'normal
+      elfeed-search-mode-map
       (kbd "D")
       (lambda ()
         (interactive)
@@ -1485,6 +1489,38 @@ Pass ORIGINAL and ALTERNATE options."
                 :action (lambda (x)
                           (setq elfeed-search-filter (concatenate 'string "@2-months-ago +unread +"
                                                                   x))
+                          (elfeed-search-update :force)
+                          (evil-goto-first-line))))
+    (defun meain/elfeed-search-filter-by-name ()
+      (interactive)
+      (setq elfeed-search-filter (mapconcat 'identity
+                                            (remove-if-not (lambda (x)
+                                                             (or (string-prefix-p "+" x)
+                                                                 (string-prefix-p "@" x)))
+                                                           (split-string elfeed-search-filter))
+                                            " "))
+      (elfeed-search-update :force)
+      (ivy-read "Look for: "
+                (remove-if (lambda (x)
+                             (equalp x 'unread))
+                           (delete-dups (flatten-list (cl-list* (with-current-buffer "*elfeed-search*"
+                                                                  (cl-loop for
+                                                                           entry
+                                                                           in
+                                                                           elfeed-search-entries
+                                                                           collect
+                                                                           (cl-struct-slot-value (type-of (elfeed-entry-feed (car elfeed-search-entries)))
+                                                                                                 'title
+                                                                                                 (elfeed-entry-feed entry))))))))
+                :initial-input ""
+                :action (lambda (x)
+                          ;; Need \s- insted of just a simple space because elfeed has issues with space in title
+                          (setq elfeed-search-filter (concatenate 'string
+                                                                  elfeed-search-filter
+                                                                  " ="
+                                                                  (mapconcat 'identity
+                                                                             (split-string x)
+                                                                             "\s-")))
                           (elfeed-search-update :force)
                           (evil-goto-first-line))))
     (setq-default elfeed-search-filter "@2-months-ago +unread ")
