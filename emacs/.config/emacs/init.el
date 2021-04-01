@@ -1980,8 +1980,7 @@ START and END comes from it being interactive."
 ;; Journal entry
 (add-hook 'find-file-hook
           (lambda ()
-            (if (string-prefix-p (concat (expand-file-name "~")
-                                         "/.local/share/journal")
+            (if (string-prefix-p (expand-file-name "~/.local/share/journal")
                                  default-directory)
                 (auto-fill-mode))))
 (evil-leader/set-key "a J"
