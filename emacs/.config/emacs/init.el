@@ -363,18 +363,21 @@ Pass ORIGINAL and ALTERNATE options."
 (define-key evil-visual-state-map (kbd ";") 'eval-region)
 
 ;; Quick quit
+(defun meain/create-or-switch-to-scratch ()
+  "Switch to scratch buffer if exists, else create a scratch buffer with our config."
+  (cond
+   ((get-buffer "*scratch*")
+    (switch-to-buffer "*scratch*"))
+   (t (progn
+        (switch-to-buffer "*scratch*")
+        (lisp-interaction-mode)
+        (insert (meain/get-scratch-message))))))
 (defun meain/kill-current-buffer-unless-scratch ()
   "Kill current buffer if it is not scratch."
   (interactive)
   (if (= (length (mapcar #'window-buffer
                          (window-list))) 1)
-      (cond
-       ((get-buffer "*scratch*")
-        (switch-to-buffer "*scratch*"))
-       (t (progn
-            (switch-to-buffer "*scratch*")
-            (lisp-interaction-mode)
-            (insert (meain/get-scratch-message)))))
+      (meain/create-or-switch-to-scratch)
     (cond
      ((derived-mode-p 'prog-mode)
       (evil-quit))
