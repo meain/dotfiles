@@ -1806,7 +1806,7 @@ Pass ORIGINAL and ALTERNATE options."
     (if (eq (intern scratch-major-mode) 'artist-mode)
         (evil-local-mode -1))))
 (evil-leader/set-key "c"
-  (meain/with-alternate (switch-to-buffer "*scratch*")
+  (meain/with-alternate (meain/create-or-switch-to-scratch)
                         (meain/scratchy)))
 
 ;; vime functionality within emacs
