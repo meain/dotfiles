@@ -1120,16 +1120,6 @@ Pass ORIGINAL and ALTERNATE options."
             :ensure t
             :config (image-diredx-async-mode)))
 
-;; outline mode settings (code folding)
-(use-package outline
-  :diminish :config
-  (progn
-    (set-display-table-slot standard-display-table
-                            'selective-display
-                            (string-to-vector " ..."))
-    (add-hook 'prog-mode-hook 'outline-minor-mode)
-    (evil-leader/set-key "d" 'outline-toggle-children)))
-
 ;; editorconfig
 (use-package editorconfig
   :ensure t
