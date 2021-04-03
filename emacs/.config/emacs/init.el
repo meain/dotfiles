@@ -622,7 +622,9 @@ Pass ORIGINAL and ALTERNATE options."
 
 
 ;; Code formatting
-(use-package srefactor-lisp :commands srefactor-lisp-format-buffer)
+(use-package srefactor
+  :ensure t
+  :config (require 'srefactor-lisp))
 (use-package format-all
   :defer 1
   :ensure t
