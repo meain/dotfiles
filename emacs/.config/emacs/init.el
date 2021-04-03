@@ -1732,6 +1732,14 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package kubel :ensure t
   :defer t)
 
+;; Window layout changer
+(unless (package-installed-p 'rotate)
+  (quelpa '(rotate :repo "daichirata/emacs-rotate"
+                   :fetcher github)))
+(use-package rotate
+  :commands (rotate-layout rotate-window):init
+  (define-key evil-normal-state-map (kbd "M-f <SPC>") 'rotate-layout))
+
 
 ;;; [CUSTOM FUNCTIONS] ==============================================
 
@@ -1753,7 +1761,7 @@ Pass ORIGINAL and ALTERNATE options."
               :action (lambda (x)
                         (format "%s" x)))))
 
-;; split between hirizontal and vertical
+;; split between hirizontal and vertical (simpler emacs-rotate)
 (defun meain/window-split-toggle ()
   "Toggle between horizontal and vertical split with two windows."
   (interactive)
