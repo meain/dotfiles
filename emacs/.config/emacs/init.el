@@ -74,6 +74,10 @@
 ;; Use cl-lib
 (require 'cl-lib)
 
+(use-package exec-path-from-shell
+  :ensure t
+  :config (exec-path-from-shell-initialize))
+
 ;; Consistent window title
 (setq frame-title-format '("Emacs")) ; needed by hammerspoon
 
