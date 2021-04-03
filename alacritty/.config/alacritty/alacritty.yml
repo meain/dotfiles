@@ -19,14 +19,14 @@ scrolling:
 
 font:
   normal:
-    family: Profont for Powerline
+    family: Inconsolata
     style: Regular
   bold:
-    family: Profont for Powerline
+    family: Inconsolata
     style: Regular
   italic:
-    family: Profont for Powerline
-    style: Italic
+    family: Inconsolata
+    style: Regular
   size: 16.0
   offset:
     x: 0
