@@ -816,8 +816,7 @@ Pass ORIGINAL and ALTERNATE options."
                               '(diff-hl-delete ((t (:background "#edc4c4")))))
             (let* ((height (frame-char-height))
                    (width 2)
-                   (ones (1- (expt 2 width)))
-                   (bits (make-vector height ones)))
+                   (bits (make-vector height 0)))
               (define-fringe-bitmap 'my-diff-hl-bitmap bits
                 height width))
             (setq diff-hl-fringe-bmp-function (lambda (type pos)
