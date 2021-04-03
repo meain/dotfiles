@@ -857,6 +857,7 @@ Pass ORIGINAL and ALTERNATE options."
   :commands evil-toggle-fold
   :init (progn
           (global-origami-mode)
+          (define-key evil-normal-state-map (kbd "<SPC> TAB") 'evil-toggle-fold)
           (evil-leader/set-key "o" 'evil-toggle-fold)))
 
 ;; drag-stuff
