@@ -23,7 +23,7 @@
 [color]
   ui = true
 [core]
-  editor = /Applications/Emacs.app/Contents/MacOS/bin/emacsclient
+  editor = emacsclient
   pager = diff-so-fancy | less --tabs=4 -RFX
   excludesfile = ~/.config/git/.gitignore_global
 [diff]
