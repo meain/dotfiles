@@ -1387,7 +1387,7 @@ Pass ORIGINAL and ALTERNATE options."
                                                 :key "m"
                                                 :sort-order oldest-first)
                                          (:name "github" :query "tag:github AND tag:inbox"
-                                                :key "g"
+                                                :key "h"
                                                 :sort-order oldest-first)
                                          (:name "sent" :query "tag:sent"
                                                 :key "s"
@@ -1398,6 +1398,8 @@ Pass ORIGINAL and ALTERNATE options."
                                                 :key "u")
                                          (:name "python" :query "tag:python AND tag:inbox"
                                                 :key "p")
+                                         (:name "git" :query "tag:git AND tag:inbox"
+                                                :key "g")
                                          (:name "newsletter" :query "tag:newsletter AND tag:inbox"
                                                 :key "n")
                                          (:name "jobhunt" :query "tag:jobhunt AND tag:inbox"
