@@ -10,6 +10,10 @@
 (setq package-native-compile t)
 (setq comp-async-report-warnings-errors nil)
 
+;; Use alt as meta on macOS
+(setq mac-option-modifier 'meta)
+(setq mac-command-modifier 'super)
+
 ;; increase gc threshold (speeds up initial load)
 (setq gc-cons-threshold (* 100 1000 1000))
 
