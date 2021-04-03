@@ -450,16 +450,13 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;;; [OTHER PACKAGES] =============================================
 
-;; Auto activating snippets (abbrev alternative)
-(unless (package-installed-p 'auto-activating-snippets)
-  (quelpa '(auto-activating-snippets :repo "ymarco/auto-activating-snippets"
-                                     :fetcher github)))
-(use-package auto-activating-snippets
+(use-package aas
+  :ensure t
   :defer 1
-  :hook (text-mode . auto-activating-snippets-mode):hook
-  (org-mode . auto-activating-snippets-mode)
-  :hook (prog-mode . auto-activating-snippets-mode):hook
-  (python-mode . auto-activating-snippets-mode)
+  :hook (text-mode . ass-activate-for-major-mode):hook
+  (org-mode . ass-activate-for-major-mode)
+  :hook (prog-mode . ass-activate-for-major-mode):hook
+  (python-mode . ass-activate-for-major-mode)
   :config (progn
             (aas-set-snippets 'text-mode
                               ;; expand unconditionally
