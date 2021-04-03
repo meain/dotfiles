@@ -2259,5 +2259,8 @@ START and END comes from it being interactive."
 ;; drop gc threshold back
 (setq gc-cons-threshold 800000)
 
+;; Start server once we have emacs running
+(server-start)
+
 (provide 'init)
 ;;; init ends here
