@@ -380,3 +380,9 @@ rrr() {
 	[ -n "$TMUX" ] &&
 		cd "$(tmux display-message -p -F "#{session_path}")"
 }
+
+rfc() {
+	[ -z "$1" ] && echo "Usage rfc <rfc-no>" && exit 1
+	echo "Reading RFC $1"
+	w3m "https://tools.ietf.org/html/rfc$1"
+}
