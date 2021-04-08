@@ -460,17 +460,55 @@ Pass ORIGINAL and ALTERNATE options."
   (python-mode . ass-activate-for-major-mode)
   :config (progn
             (aas-set-snippets 'text-mode
-                              ;; expand unconditionally
+                              ";isodate"
+                              (lambda ()
+                                (interactive)
+                                (insert (format-time-string "%a, %d %b %Y %T %z")))
                               ";date"
                               (lambda ()
                                 (interactive)
-                                (insert (format-time-string "%a, %d %b %Y %T %z"))))
+                                (insert (format-time-string "%a %d %b %Y")))
+                              ";sdate"
+                              (lambda ()
+                                (interactive)
+                                (insert (format-time-string "%d %b %Y")))
+                              ";d/"
+                              (lambda ()
+                                (interactive)
+                                (insert (format-time-string "%D")))
+                              ";time"
+                              (lambda ()
+                                (interactive)
+                                (insert (format-time-string "%T")))
+                              ";filename"
+                              (lambda ()
+                                (interactive)
+                                (insert (buffer-file-name))))
             (aas-set-snippets 'prog-mode
-                              ;; expand unconditionally
+                              ";isodate"
+                              (lambda ()
+                                (interactive)
+                                (insert (format-time-string "%a, %d %b %Y %T %z")))
                               ";date"
                               (lambda ()
                                 (interactive)
-                                (insert (format-time-string "%a, %d %b %Y %T %z"))))
+                                (insert (format-time-string "%a %d %b %Y")))
+                              ";sdate"
+                              (lambda ()
+                                (interactive)
+                                (insert (format-time-string "%d %b %Y")))
+                              ";d/"
+                              (lambda ()
+                                (interactive)
+                                (insert (format-time-string "%D")))
+                              ";time"
+                              (lambda ()
+                                (interactive)
+                                (insert (format-time-string "%T")))
+                              ";filename"
+                              (lambda ()
+                                (interactive)
+                                (insert (buffer-file-name))))
             (aas-set-snippets 'python-mode ";ip" "__import__('ipdb').set_trace()")
             (aas-set-snippets 'org-mode ";el" "#+BEGIN_SRC emacs-lisp\n\n#+END_SRC"
                               ";py" "#+BEGIN_SRC python\n\n#+END_SRC" ";co"
