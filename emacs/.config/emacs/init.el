@@ -1779,6 +1779,13 @@ Pass ORIGINAL and ALTERNATE options."
   :commands (rotate-layout rotate-window):init
   (define-key evil-normal-state-map (kbd "M-f <SPC>") 'rotate-layout))
 
+(use-package remember
+  :commands remember
+  :config (setq remember-data-file "~/.config/emacs/remember-notes"
+                remember-notes-initial-major-mode 'org-mode
+                remember-notes-auto-save-visited-file-name
+                t))
+
 
 ;;; [CUSTOM FUNCTIONS] ==============================================
 
