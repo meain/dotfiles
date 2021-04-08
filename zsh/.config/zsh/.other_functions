@@ -226,9 +226,7 @@ start() {
 }
 
 stocks() {
-	for stock in $(echo "$STOCKS" | tr ',' '\n' | sed 's/^/NSE:/'); do
-		tock "$stock" "$1"
-	done
+	echo "$STOCKS"|tr ',' '\n'|xargs -n1 -I{} tock '{}' "$1"
 }
 
 morning() {
