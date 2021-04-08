@@ -403,6 +403,9 @@ vnoremap ;; <esc>/<++><cr>:nohls<cr>cf>
 augroup custom_inormaps
   autocmd!
 
+  " general
+  autocmd FileType * inoremap <silent><buffer> ;date <esc>:r!date "+\%a \%b \%d \%Y"<cr>kJ$
+
   " python
   autocmd FileType python inoremap <silent><buffer> ;def def <++>(<++>):<cr><++><esc>k$?def<cr>:nohls<cr>
   autocmd FileType python inoremap <silent><buffer> ;i __import__('ipdb').set_trace()<esc>
