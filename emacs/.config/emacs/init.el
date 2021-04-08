@@ -1563,7 +1563,7 @@ Pass ORIGINAL and ALTERNATE options."
                                                                   " ="
                                                                   (mapconcat 'identity
                                                                              (split-string x)
-                                                                             "\s-")))
+                                                                             "\\s-")))
                           (elfeed-search-update :force)
                           (evil-goto-first-line))))
     (setq-default elfeed-search-filter "@2-months-ago +unread ")
