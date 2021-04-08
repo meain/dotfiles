@@ -1850,7 +1850,12 @@ Pass ORIGINAL and ALTERNATE options."
   (let ((scratch-major-mode (completing-read "Choose mode:"
                                              '(text-mode python-mode json-mode rust-mode
                                                          markdown-mode emacs-lisp-mode web-mode javascript-mode
-                                                         artist-mode)))
+                                                         artist-mode)
+                                             nil
+                                             t
+                                             nil
+                                             nil
+                                             (format "%s" major-mode)))
         (scratch-file-name (concatenate 'string
                                         "~/.cache/scratch/"
                                         (substring (uuid-string)
