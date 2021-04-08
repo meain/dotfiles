@@ -380,6 +380,7 @@ Pass ORIGINAL and ALTERNATE options."
     (switch-to-buffer "*scratch*"))
    (t (progn
         (switch-to-buffer "*scratch*")
+        (setq default-directory "~/")
         (lisp-interaction-mode)
         (insert (meain/get-scratch-message))))))
 (defun meain/kill-current-buffer-unless-scratch ()
