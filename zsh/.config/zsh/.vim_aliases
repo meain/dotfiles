@@ -20,3 +20,6 @@ viml() {
     [ ! -f /tmp/vim-prev ] && echo 'No previous session available' && return 0
     nvim "+source /tmp/vim-prev"
 }
+vvime() {
+    EDITOR=nvim vime
+}
