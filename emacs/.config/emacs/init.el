@@ -41,6 +41,10 @@
 (use-package quelpa :ensure t
   :defer t)
 
+;; Get proper PATH
+(use-package exec-path-from-shell
+  :ensure t
+  :config (exec-path-from-shell-initialize))
 
 ;;; [BASE EVIL] =================================================
 
@@ -73,10 +77,6 @@
 
 ;; Use cl-lib
 (require 'cl-lib)
-
-(use-package exec-path-from-shell
-  :ensure t
-  :config (exec-path-from-shell-initialize))
 
 ;; Consistent window title
 (setq frame-title-format '("Emacs")) ; needed by hammerspoon
