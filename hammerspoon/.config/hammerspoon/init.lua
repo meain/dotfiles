@@ -14,6 +14,8 @@ mailcounter:setTitle("M")
 
 -- Variables
 local BIN = os.getenv("HOME") .. "/.bin/"
+local browser = "firefox nightly"
+local editor = "Emacs"
 
 -- Disable animations
 hs.window.animationDuration = 0
@@ -280,7 +282,9 @@ hs.hotkey.bind(
     {"alt", "shift"},
     "c",
     function()
-        hs.notify.new({title = "Starting editor", informativeText = "Just give it a moment while we pick the best editor"}):send()
+        hs.notify.new(
+            {title = "Starting editor", informativeText = "Just give it a moment while we pick the best editor"}
+        ):send()
         customshellrun.run("emacsclient -a '' --no-wait -c", true)
     end
 )
@@ -297,14 +301,14 @@ hs.hotkey.bind(
     {"cmd", "shift"},
     "j",
     function()
-        focusandback("Emacs")
+        focusandback(editor)
     end
 )
 hs.hotkey.bind(
     {"cmd", "shift"},
     "k",
     function()
-        focusandback("firefox")
+        focusandback(browser)
     end
 )
 hs.hotkey.bind(
@@ -354,9 +358,9 @@ hs.hotkey.bind(
     {"alt"},
     "`",
     function()
-        local emacs = hs.application.find("Emacs")
+        local emacs = hs.application.find(editor)
         local current_app = hs.window.focusedWindow()
-        if current_app:title():sub(1, 5) == "Emacs" then
+        if current_app:title():sub(1, 5) == editor then
             if quick_edit_app == nil then
                 hs.alert("🤔 No edit in progress")
                 return
@@ -389,7 +393,7 @@ floatingterm =
     ";",
     function()
         local current_app = hs.window.focusedWindow()
-        if current_app:title():sub(1, 5) == "Emacs" then
+        if current_app:title():sub(1, 5) == editor then
             floatingterm:disable()
             hs.eventtap.keyStroke({"alt"}, ";")
             floatingterm:enable()
@@ -404,17 +408,17 @@ hs.hotkey.bind(
     {"alt"},
     "'",
     function()
-        local emacs = hs.application.find("Emacs")
+        local emacs = hs.application.find(editor)
         local current_app = hs.window.focusedWindow()
         if current_app == nil then
             emacs:activate()
         end
         if emacs == nil then
-            hs.application.launchOrFocus("firefox")
+            hs.application.launchOrFocus(browser)
             return
         end
-        if string.match(current_app:title(), "Emacs") then
-            hs.application.launchOrFocus("firefox")
+        if string.match(current_app:title(), editor) then
+            hs.application.launchOrFocus(browser)
         else
             emacs:activate()
         end
@@ -428,9 +432,9 @@ browsernewtab =
     {"cmd"},
     "t",
     function()
-        local firefox = hs.application("firefox")
+        local firefox = hs.application(browser)
         if not firefox:isFrontmost() then
-            hs.application.launchOrFocus("firefox")
+            hs.application.launchOrFocus(browser)
         end
         browsernewtab:disable()
         hs.eventtap.keyStroke({"cmd"}, "t")
