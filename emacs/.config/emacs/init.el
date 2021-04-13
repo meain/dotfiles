@@ -81,6 +81,9 @@
 ;; Consistent window title
 (setq frame-title-format '("Emacs")) ; needed by hammerspoon
 
+;; Fix cmd-v (paste in macOS)
+(global-set-key (kbd "s-v") 'yank)
+
 ;; Scratch initial content
 (defun meain/get-scratch-message ()
   "Pull a random fortue entry and format it for `lisp-interaction' mode as a comment."
