@@ -1,0 +1,6 @@
+#!/bin/sh
+
+set -e
+
+cp ~/.config/datafiles/terminal-to-html-template.html ~/.cache/mobdump/index.html
+task rc._forcecolor:on widget|terminal-to-html >> ~/.cache/mobdump/index.html
