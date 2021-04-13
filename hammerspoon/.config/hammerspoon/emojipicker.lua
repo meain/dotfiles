@@ -1,5 +1,6 @@
 local utils = require("utils")
 local settings = require("hs.settings")
+local styledtext = require("hs.styledtext")
 
 local mod = {}
 
@@ -23,8 +24,15 @@ function mod.emojipicker()
             hs.fnutils.imap(
             choices,
             function(result)
+                local text =
+                    styledtext.new(
+                    utils.trim(result),
+                    {
+                        font = {size = 16, name = "DankMonoNerdFontComplete-Regular"}
+                    }
+                )
                 return {
-                    ["text"] = utils.trim(result)
+                    ["text"] = text
                 }
             end
         )
