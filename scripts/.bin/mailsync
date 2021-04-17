@@ -26,6 +26,9 @@ notmuch address --output address tag:spammer |
 notmuch address --output address tag:nope|
 	sort | uniq |
 	xargs -I{} notmuch tag -imbox +nonotify 'from:{}'
+notmuch address --output address tag:silent|
+	sort | uniq |
+	xargs -I{} notmuch tag +nonotify 'from:{}'
 
 #github
 notmuch tag +github 'tag:inbox' 'from:notifications@github.com'
