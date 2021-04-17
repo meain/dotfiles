@@ -32,7 +32,8 @@ function mod.emojipicker()
                     }
                 )
                 return {
-                    ["text"] = text
+                    ["text"] = text,
+                    ["raw"] = result
                 }
             end
         )
@@ -74,10 +75,10 @@ function mod.emojipicker()
             local item = formatChoices(filteredChoices)[id]
             if item then
                 chooser:hide()
-                trimmed = utf8.sub(item.text, 1, 1)
+                trimmed = utf8.sub(item.raw, 1, 1)
                 hs.pasteboard.setContents(trimmed)
                 settings.set("so.meain.hs.jumpcutselect.lastselected", trimmed) -- need to make sure it does not get copied to clipboard
-                hs.alert.show(item.text, 1)
+                hs.alert.show(item.raw, 1)
             else
                 hs.alert.show("Nothing to copy", 1)
             end
