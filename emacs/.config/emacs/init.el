@@ -14,9 +14,6 @@
 (setq mac-option-modifier 'meta)
 (setq mac-command-modifier 'super)
 
-;; increase gc threshold (speeds up initial load)
-(setq gc-cons-threshold (* 100 1000 1000))
-
 ;;; [PACKAGE SETUP] =============================================
 
 (setq user-mail-address "mail@meain.io" user-full-name
@@ -134,19 +131,7 @@
 
 ;;; [VISUAL CONFIG] ==============================================
 
-;; Disable useless stuff
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-(menu-bar-mode 1)  ;; causes focus issue if disabled in railwaycat/homebrew-emacsmacport
-(setq inhibit-startup-screen t)
-;; (set-frame-parameter nil 'undecorated t)
-
-;; iA Writer Mono S 14 | Inconsolata 16 | Fantasque Sans Mono 16 | Fira Code 15 | Noto Sans Mono 15 | DankMono Nerd Font 15
-;; Font (set-frame-font  "DankMono Nerd Font 15")
-(setq font-family-default "DankMono Nerd Font 15")
-(setq line-spacing nil) ;; .1 for Inconsolata
-(add-to-list 'default-frame-alist
-             `(font . ,font-family-default))
+;; Change font everywhere
 (defun meain/setup-fonts ()
   "Setup all the proper fonts for everything."
   (set-face-attribute 'default nil :font font-family-default)
@@ -2311,17 +2296,6 @@ START and END comes from it being interactive."
                      (format "%.2f seconds"
                              (float-time (time-subtract after-init-time before-init-time)))
                      gcs-done)))
-
-;; Window decoraations
-(add-to-list 'default-frame-alist
-             '(ns-transparent-titlebar . t))
-;; (setq default-frame-alist '((undecorated . t)))
-;; (add-to-list 'default-frame-alist '(drag-internal-border . 10))
-;; (add-to-list 'default-frame-alist '(internal-border-width . 10))
-;; (add-to-list 'default-frame-alist '(ns-appearance . dark))
-
-;; drop gc threshold back
-(setq gc-cons-threshold 800000)
 
 ;; Start server once we have emacs running
 (server-start)
