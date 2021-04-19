@@ -2143,37 +2143,6 @@ START and END comes from it being interactive."
                                             "pandocmarkdownpreview "
                                             (buffer-file-name))))
 
-;; Grip preview for markdown file
-(defun meain/markdown-toggle-grip-preview ()
-  "Grip preview for markdown files."
-  (interactive)
-  (let* ((file-hash (md5 (buffer-file-name)))
-         (grip-buffer-name (format "*grip-%s*" file-hash))
-         (grip-buffer (car (seq-filter (lambda (buf)
-                                         (string-prefix-p "*grip-"
-                                                          (buffer-name buf)))
-                                       (buffer-list)))))
-    (if grip-buffer
-        (kill-buffer grip-buffer)
-      (progn
-        (message "Starting grip preview for %s"
-                 (buffer-file-name))
-        (start-process-shell-command grip-buffer-name
-                                     grip-buffer-name
-                                     (format "grip %s"
-                                             (buffer-file-name)))
-        (run-at-time "2 sec"
-                     nil
-                     (lambda (gbn)
-                       (with-current-buffer gbn
-                         (beginning-of-buffer)
-                         (re-search-forward "http://localhost[^ ]*")
-                         (start-process-shell-command "*open*"
-                                                      "*open*"
-                                                      (format "open %s"
-                                                              (match-string 0)))))
-                     grip-buffer-name)))))
-
 ;; Upgrade a single package
 (defun package-menu-upgrade-package ()
   "Mark current package for upgrading (also mark obsolete version for deletion)."
