@@ -1778,6 +1778,16 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;;; [CUSTOM FUNCTIONS] ==============================================
 
+;; Font size changes
+(global-set-key (kbd "s-=")
+                'text-scale-increase)
+(global-set-key (kbd "s--")
+                'text-scale-decrease)
+(global-set-key (kbd "s-0")
+                (lambda ()
+                  (interactive)
+                  (text-scale-set 0)))
+
 ;; host picker
 (defun meain/ssh-host-picker ()
   "Interactively pick ssh host."
