@@ -79,7 +79,8 @@
 (setq frame-title-format '("Emacs")) ; needed by hammerspoon
 
 ;; Fix cmd-v (paste in macOS)
-(global-set-key (kbd "s-v") 'yank)
+(global-set-key (kbd "s-v")
+                'yank)
 
 ;; Scratch initial content
 (defun meain/get-scratch-message ()
