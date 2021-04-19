@@ -1,0 +1,7 @@
+#!/bin/sh
+
+set -e
+
+filename="/tmp/$(xxd -l2 -ps /dev/urandom).html"
+cat ~/.config/datafiles/pandoc-github-template.html > "$filename" && open "$filename"
+on-change "$1" "pandoc --template ~/.config/datafiles/pandoc-github-template.html  --output \"$filename\" -t html5 --metadata title=\"$1 - Preview\" \"$1\""
