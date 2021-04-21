@@ -826,9 +826,11 @@ Pass ORIGINAL and ALTERNATE options."
 ;; Magit
 (use-package magit
   :ensure t
-  :commands magit-status
-  :init (evil-leader/set-key "gg" 'magit-status):config
-  (define-key magit-mode-map (kbd "M-w") 'delete-window))
+  :commands (magit-status magit-commit-create):init
+  (progn
+    (evil-leader/set-key "gg" 'magit-status)
+    (evil-leader/set-key "gc" 'magit-commit-create))
+  :config (define-key magit-mode-map (kbd "M-w") 'delete-window))
 
 ;; Magit forge
 (use-package forge :ensure t
