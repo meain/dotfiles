@@ -2106,10 +2106,10 @@ START and END comes from it being interactive."
   (interactive "P")
   (let* ((git-url (replace-regexp-in-string "\.git$"
                                             ""
-                                            (string-replace "git@github.com:"
-                                                            "https://github.com/"
-                                                            (car (split-string (shell-command-to-string "git config --get remote.origin.url")
-                                                                               "\n")))))
+                                            (s-replace "git@github\.com:"
+                                                       "https://github.com/"
+                                                       (car (split-string (shell-command-to-string "git config --get remote.origin.url")
+                                                                          "\n")))))
          (git-branch (car (split-string (shell-command-to-string "git rev-parse --abbrev-ref HEAD")
                                         "\n")))
          (web-url (format "%s/blob/%s/%s%s"
