@@ -2170,6 +2170,17 @@ START and END comes from it being interactive."
   (kbd "t")
   'package-menu-upgrade-package)
 
+;; Some util functions to filter package-menu items
+(defun package-menu-filter-by-marks ()
+  "Find packages marked for action in *Packages*."
+  (interactive)
+  (occur "^[A-Z]"))
+(defun package-menu-filter-by-status (status)
+  "Filter the *Packages* buffer by STATUS."
+  (interactive (list (completing-read "Status: "
+                                      '("new" "installed" "dependency" "obsolete"))))
+  (package-menu-filter (concat "status:" status)))
+
 ;; Run markdown code blocks (forest.el)
 (defun meain/run-markdown-code-block ()
   "Run markdown code block under curosr."
