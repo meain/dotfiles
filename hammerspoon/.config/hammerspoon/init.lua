@@ -14,7 +14,7 @@ mailcounter:setTitle("M")
 
 -- Variables
 local BIN = os.getenv("HOME") .. "/.bin/"
-local browser = "firefox nightly"
+local browser = "firefox"
 local editor = "Emacs"
 
 -- Disable animations
