@@ -588,8 +588,8 @@ Pass ORIGINAL and ALTERNATE options."
   :bind (:map minibuffer-local-map
               ("C-b" . marginalia-cycle)):config
   (progn
-    (setq marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light
-                                                              nil))
+    ;; (setq marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
+    (setq marginalia-annotators '(marginalia-annotators-heavy))
     (marginalia-mode)))
 
 ;; Helpful package
