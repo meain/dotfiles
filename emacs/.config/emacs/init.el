@@ -555,28 +555,34 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; Completions
 ;; (use-package counsel :ensure t)
-(use-package icomplete
-  :custom (read-file-name-completion-ignore-case t)(read-buffer-completion-ignore-case t)(completion-ignore-case t):config
-  (setq icomplete-show-matches-on-no-input t)
-  :init (icomplete-mode):bind
-  (:map icomplete-minibuffer-map
-        ("<tab>" . icomplete-forward-completions)
-        ("C-n" . icomplete-forward-completions)
-        ("<backtab>" . icomplete-backward-completions)
-        ("C-p" . icomplete-backward-completions)
-        ("RET" . icomplete-force-complete-and-exit)))
-(use-package icomplete-vertical
+(use-package selectrum
   :ensure t
-  :bind (:map icomplete-minibuffer-map
-              ("C-v" . icomplete-vertical-toggle)))
-(use-package orderless
-  :ensure t
-  :custom (completion-styles '(partial-completion substring initials orderless flex)))
-(use-package prescient
+  :init (setq selectrum-complete-in-buffer nil):config
+  (progn
+    (setq selectrum-should-sort nil)
+    (setq read-file-name-completion-ignore-case
+          t)
+    (setq read-buffer-completion-ignore-case t)
+    (setq completion-ignore-case t)
+    (setq selectrum-display-style '(horizontal))
+    (selectrum-mode +1)
+    ;; Optional performance optimization by highlighting only the visible candidates.
+    (setq orderless-skip-highlighting (lambda ()
+                                        selectrum-is-active))
+    (setq selectrum-highlight-candidates-function
+          #'orderless-highlight-matches))
+  :bind (:map selectrum-minibuffer-map
+              ("<S-backspace>" . selectrum-backward-kill-sexp)))
+(use-package selectrum-prescient
   :ensure t
   :config (progn
-            (setq prescient-aggressive-file-save t)
-            (prescient-persist-mode t)))
+            (selectrum-prescient-mode +1)
+            (prescient-persist-mode +1)))
+(use-package orderless
+  :ensure t
+  :config (progn
+            ;; (setq completion-styles '(partial-completion substring initials orderless flex))
+            (setq completion-styles '(orderless))))
 (use-package marginalia
   :ensure t
   :bind (:map minibuffer-local-map
@@ -1864,7 +1870,6 @@ Pass ORIGINAL and ALTERNATE options."
                                                (car (split-string (buffer-string)
                                                                   "\n")))
                    ""))))
-;; TODO: Fxi ordering (issue caused after switching to icomplete)
 (defun meain/vime (&optional listitems)
   "Load a random file inside ~/.cache/vime dir.  Used as a temp notes dir.
 Pass in `LISTITEMS to decide if you wanna create a new item or search for existing items."
