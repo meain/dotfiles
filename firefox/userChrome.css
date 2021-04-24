@@ -1,5 +1,5 @@
 * {
-  font-family: "CozetteVector", monospace !important;
+  font-family: "Operator Mono Book" !important;
   font-size: 10pt !important;
 }
 
@@ -43,9 +43,13 @@ body > box:nth-child(10) {
 
 /* tab configs */
 .tab-line {
-  opacity: 0.5 !important;
+  opacity: 0.1 !important;
   --tab-line-color: black;
   -moz-box-ordinal-group: 999 !important;
+}
+.tab-background[selected="true"] {
+	background-color: #9AB2B5 !important;
+	background-image: none !important;
 }
 .tabbrowser-tab::after,
 .tabbrowser-tab::before {
