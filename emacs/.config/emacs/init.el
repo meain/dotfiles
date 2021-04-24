@@ -559,7 +559,7 @@ Pass ORIGINAL and ALTERNATE options."
   :ensure t
   :init (setq selectrum-complete-in-buffer nil):config
   (progn
-    (setq selectrum-should-sort nil)
+    (setq selectrum-should-sort t)
     (setq read-file-name-completion-ignore-case
           t)
     (setq read-buffer-completion-ignore-case t)
@@ -1875,16 +1875,17 @@ Pass ORIGINAL and ALTERNATE options."
 Pass in `LISTITEMS to decide if you wanna create a new item or search for existing items."
   (interactive "P")
   (if listitems
-      (find-file (concat "~/.cache/vime/"
-                         (car (split-string (completing-read "Choose vime: "
-                                                             (mapcar (lambda (x)
-                                                                       (meain/vime-name-append (car x)))
-                                                                     (sort (remove-if-not #'(lambda (x)
-                                                                                              (eq (nth 1 x) nil))
-                                                                                          (directory-files-and-attributes "~/.cache/vime"))
-                                                                           #'(lambda (x y)
-                                                                               (time-less-p (nth 6 y)
-                                                                                            (nth 6 x))))))))))
+      (let ((selectrum-should-sort nil))
+        (find-file (concat "~/.cache/vime/"
+                           (car (split-string (completing-read "Choose vime: "
+                                                               (mapcar (lambda (x)
+                                                                         (meain/vime-name-append (car x)))
+                                                                       (sort (remove-if-not #'(lambda (x)
+                                                                                                (eq (nth 1 x) nil))
+                                                                                            (directory-files-and-attributes "~/.cache/vime"))
+                                                                             #'(lambda (x y)
+                                                                                 (time-less-p (nth 6 y)
+                                                                                              (nth 6 x)))))))))))
     (progn
       (find-file (concat "~/.cache/vime/_"
                          (substring (uuid-string)
