@@ -544,51 +544,38 @@ Pass ORIGINAL and ALTERNATE options."
   :after company
   :config (company-quickhelp-mode))
 
-;; Ivy && Counsel
-(use-package counsel :ensure t)
-(use-package flx :ensure t) ;; ivy--regex-plus uses this
-(use-package ivy
-  :after flx
+;; Completions
+;; (use-package counsel :ensure t)
+(use-package icomplete
+  :custom (read-file-name-completion-ignore-case t)(read-buffer-completion-ignore-case t)(completion-ignore-case t):config
+  (setq icomplete-show-matches-on-no-input t)
+  :init (icomplete-mode):bind
+  (:map icomplete-minibuffer-map
+        ("<tab>" . icomplete-forward-completions)
+        ("C-n" . icomplete-forward-completions)
+        ("<backtab>" . icomplete-backward-completions)
+        ("C-p" . icomplete-backward-completions)
+        ("RET" . icomplete-force-complete-and-exit)))
+(use-package icomplete-vertical
   :ensure t
-  :diminish t
+  :bind (:map icomplete-minibuffer-map
+              ("C-v" . icomplete-vertical-toggle)))
+(use-package orderless
+  :ensure t
+  :custom (completion-styles '(partial-completion substring initials orderless flex)))
+(use-package prescient
+  :ensure t
   :config (progn
-            (ivy-mode 1)
-            (setq ivy-use-virtual-buffers t) ; extend searching to bookmarks and
-            (setq ivy-height 10) ; Set height of the ivy window
-            (setq ivy-count-format "(%d/%d) ") ; count format, from the ivy help page
-            (setq ivy-display-style 'fancy)
-            (setq ivy-format-functions-alist '((t . ivy-format-function-line))) ; Make highlight extend all the way to the right
-            (setq ivy-re-builders-alist '((ivy-switch-buffer . ivy--regex-plus)
-                                          (counsel-rg . ivy--regex-plus)
-                                          (t . ivy--regex-fuzzy)))
-            (global-set-key (kbd "M-c")
-                            (meain/with-alternate (ivy-switch-buffer)
-                                                  (ibuffer-other-window)))
-            (evil-leader/set-key "b b"
-              (meain/with-alternate (ivy-switch-buffer)
-                                    (ibuffer-other-window)))
-            (evil-leader/set-key "R" 'counsel-recentf)
-            (global-set-key (kbd "M-x")
-                            'counsel-M-x)
-            (evil-leader/set-key "l" 'counsel-M-x)
-            (evil-leader/set-key "h f" 'counsel-describe-function)
-            (evil-leader/set-key "h v" 'counsel-describe-variable)
-            (evil-leader/set-key "h o" 'counsel-describe-symbol)
-            (evil-leader/set-key "h l" 'counsel-find-library)
-            (evil-leader/set-key "h i" 'counsel-info-lookup-symbol)
-            (define-key evil-normal-state-map (kbd "_") 'dired-jump)
-            (define-key evil-normal-state-map (kbd "-") 'counsel-find-file)
-            (define-key ivy-minibuffer-map (kbd "C-j") 'ivy-immediate-done)))
-
-;; ivy-rich
-(use-package ivy-rich
+            (setq prescient-aggressive-file-save t)
+            (prescient-persist-mode t)))
+(use-package marginalia
   :ensure t
-  :config (ivy-rich-mode))
-
-;; amx (better mx)
-(use-package amx
-  :ensure t
-  :init (amx-mode))
+  :bind (:map minibuffer-local-map
+              ("C-b" . marginalia-cycle)):config
+  (progn
+    (setq marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light
+                                                              nil))
+    (marginalia-mode)))
 
 ;; Helpful package
 (use-package helpful
