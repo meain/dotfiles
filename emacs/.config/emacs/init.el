@@ -70,6 +70,13 @@
             (global-evil-leader-mode)
             (evil-leader/set-leader "s")))
 
+;; Some keybindings
+(evil-leader/set-key "l" 'execute-extended-command)
+(evil-leader/set-key "h f" 'describe-function)
+(evil-leader/set-key "h v" 'describe-variable)
+(evil-leader/set-key "h o" 'describe-symbol)
+(evil-leader/set-key "h l" 'find-library)
+
 ;;; [BASIC SETTINGS] =============================================
 
 ;; Use cl-lib
@@ -233,7 +240,9 @@
       dired-mode-map
       (kbd "+")
       'dired-create-empty-file)
-    (add-hook 'dired-mode-hook 'hl-line-mode)))
+    (add-hook 'dired-mode-hook 'hl-line-mode)
+    (define-key evil-normal-state-map (kbd "-") 'dired-jump)
+    (define-key evil-normal-state-map (kbd "_") 'find-file)))
 
 ;; macro for alternate pattern
 (defmacro meain/with-alternate (original alternate)
@@ -590,7 +599,14 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; ibuffer
 (use-package ibuffer
-  :init (setq ibuffer-expert t))
+  :init (setq ibuffer-expert t):config
+  (progn
+    (global-set-key (kbd "M-c")
+                    (meain/with-alternate (switch-to-buffer)
+                                          (ibuffer-other-window)))
+    (evil-leader/set-key "b b"
+      (meain/with-alternate (switch-to-buffer)
+                            (ibuffer-other-window)))))
 
 ;; ibuffer-projectile
 (use-package ibuffer-projectile
@@ -2015,9 +2031,7 @@ START and END comes from it being interactive."
 (defun meain/kill-all-buffers ()
   "Kill all active buffers."
   (interactive)
-  (mapcar 'kill-buffer
-          (buffer-list))
-  (delete-other-windows))
+  (message "Just use `save-buffers-kill-emacs'"))
 
 ;; Narrow region
 (defun meain/narrow-region-dwim ()
