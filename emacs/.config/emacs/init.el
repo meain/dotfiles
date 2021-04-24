@@ -147,10 +147,8 @@
 (defun meain/select-font ()
   "Set font after selection using ivy."
   (interactive)
-  (ivy-read "Choose font:"
-            (font-family-list)
-            :action (lambda (x)
-                      (set-frame-font x))))
+  (set-frame-font (completing-read "Choose font: "
+                                   (font-family-list))))
 
 ;; Bell: audio -> visual
 (setq visible-bell nil)
@@ -946,7 +944,7 @@ Pass ORIGINAL and ALTERNATE options."
                              "` to create another tab.")))
            ((eq (length tabs) 1)
             (tab-bar-switch-to-tab (car tabs)))
-           (t (ivy-read "Select tab: " tabs :action 'tab-bar-switch-to-tab))))))
+           (t (tab-bar-switch-to-tab (completing-read "Select tab: " tabs)))))))
     (evil-leader/set-key "t" 'meain/switch-tab-dwim)
     (evil-leader/set-key "C"
       (lambda ()
@@ -1068,12 +1066,10 @@ Pass ORIGINAL and ALTERNATE options."
                 (message "No shells bruh!"))
                ((equal (length shell-buffers) 1)
                 (message "Only one shell"))
-               (alternate (ivy-read "Choose shell: "
-                                    (mapcar (lambda (x)
-                                              (buffer-name x))
-                                            shell-buffers)
-                                    :action (lambda (x)
-                                              (switch-to-buffer x))))
+               (alternate (switch-to-buffer (completing-read "Choose shell: "
+                                                             (mapcar (lambda (x)
+                                                                       (buffer-name x))
+                                                                     shell-buffers))))
                (t (switch-to-buffer (car (cdr shell-buffers)))))))
           (defun meain/run-in-vterm-kill (process event)
             "A process sentinel. Kills PROCESS's buffer if it is live."
@@ -1509,22 +1505,23 @@ Pass ORIGINAL and ALTERNATE options."
       (interactive)
       (setq elfeed-search-filter "@2-months-ago +unread")
       (elfeed-search-update :force)
-      (ivy-read "Apply tag: "
-                (remove-if (lambda (x)
-                             (equalp x 'unread))
-                           (delete-dups (flatten-list (cl-list* (with-current-buffer "*elfeed-search*"
-                                                                  (cl-loop for
-                                                                           entry
-                                                                           in
-                                                                           elfeed-search-entries
-                                                                           collect
-                                                                           (elfeed-entry-tags entry)))))))
-                :initial-input "."
-                :action (lambda (x)
-                          (setq elfeed-search-filter (concatenate 'string "@2-months-ago +unread +"
-                                                                  x))
-                          (elfeed-search-update :force)
-                          (evil-goto-first-line))))
+      (let ((tag (completing-read "Apply tag: "
+                                  (remove-if (lambda (x)
+                                               (equalp x 'unread))
+                                             (delete-dups (flatten-list (cl-list* (with-current-buffer "*elfeed-search*"
+                                                                                    (cl-loop for
+                                                                                             entry
+                                                                                             in
+                                                                                             elfeed-search-entries
+                                                                                             collect
+                                                                                             (elfeed-entry-tags entry)))))))
+                                  nil
+                                  t
+                                  ".")))
+        (setq elfeed-search-filter (concatenate 'string "@2-months-ago +unread +"
+                                                tag))
+        (elfeed-search-update :force)
+        (evil-goto-first-line)))
     (defun meain/elfeed-search-filter-by-name ()
       (interactive)
       (setq elfeed-search-filter (mapconcat 'identity
@@ -1534,29 +1531,27 @@ Pass ORIGINAL and ALTERNATE options."
                                                            (split-string elfeed-search-filter))
                                             " "))
       (elfeed-search-update :force)
-      (ivy-read "Look for: "
-                (remove-if (lambda (x)
-                             (equalp x 'unread))
-                           (delete-dups (flatten-list (cl-list* (with-current-buffer "*elfeed-search*"
-                                                                  (cl-loop for
-                                                                           entry
-                                                                           in
-                                                                           elfeed-search-entries
-                                                                           collect
-                                                                           (cl-struct-slot-value (type-of (elfeed-entry-feed (car elfeed-search-entries)))
-                                                                                                 'title
-                                                                                                 (elfeed-entry-feed entry))))))))
-                :initial-input ""
-                :action (lambda (x)
-                          ;; Need \s- insted of just a simple space because elfeed has issues with space in title
-                          (setq elfeed-search-filter (concatenate 'string
-                                                                  elfeed-search-filter
-                                                                  " ="
-                                                                  (mapconcat 'identity
-                                                                             (split-string x)
-                                                                             "\\s-")))
-                          (elfeed-search-update :force)
-                          (evil-goto-first-line))))
+      (let ((site (completing-read "Look for: "
+                                   (remove-if (lambda (x)
+                                                (equalp x 'unread))
+                                              (delete-dups (flatten-list (cl-list* (with-current-buffer "*elfeed-search*"
+                                                                                     (cl-loop for
+                                                                                              entry
+                                                                                              in
+                                                                                              elfeed-search-entries
+                                                                                              collect
+                                                                                              (cl-struct-slot-value (type-of (elfeed-entry-feed (car elfeed-search-entries)))
+                                                                                                                    'title
+                                                                                                                    (elfeed-entry-feed entry)))))))))))
+        ;; Need \s- insted of just a simple space because elfeed has issues with space in title
+        (setq elfeed-search-filter (concatenate 'string
+                                                elfeed-search-filter
+                                                " ="
+                                                (mapconcat 'identity
+                                                           (split-string site)
+                                                           "\\s-")))
+        (elfeed-search-update :force)
+        (evil-goto-first-line)))
     (setq-default elfeed-search-filter "@2-months-ago +unread ")
     (setq elfeed-use-curl t)
     (setq elfeed-curl-max-connections 10)
@@ -1779,18 +1774,16 @@ Pass ORIGINAL and ALTERNATE options."
   "Interactively pick ssh host."
   (with-temp-buffer
     (insert-file-contents "~/.ssh/config")
-    (ivy-read "Choose host: "
-              (mapcar (lambda (x)
-                        (replace-regexp-in-string (regexp-quote "Host ")
-                                                  ""
-                                                  x))
-                      (remove-if-not #'(lambda (x)
-                                         (s-starts-with-p "Host" x))
-                                     (split-string (buffer-string)
-                                                   "\n")))
-              :require-match t
-              :action (lambda (x)
-                        (format "%s" x)))))
+    (format "%s"
+            (completing-read "Choose host: "
+                             (mapcar (lambda (x)
+                                       (replace-regexp-in-string (regexp-quote "Host ")
+                                                                 ""
+                                                                 x))
+                                     (remove-if-not #'(lambda (x)
+                                                        (s-starts-with-p "Host" x))
+                                                    (split-string (buffer-string)
+                                                                  "\n")))))))
 
 ;; split between hirizontal and vertical (simpler emacs-rotate)
 (defun meain/window-split-toggle ()
@@ -1832,7 +1825,7 @@ Pass ORIGINAL and ALTERNATE options."
 (defun meain/scratchy ()
   "Open scratch buffer in a specific mode."
   (interactive "P")
-  (let ((scratch-major-mode (completing-read "Choose mode:"
+  (let ((scratch-major-mode (completing-read "Choose mode: "
                                              '(text-mode python-mode json-mode rust-mode
                                                          markdown-mode emacs-lisp-mode web-mode javascript-mode
                                                          artist-mode)
@@ -1871,25 +1864,22 @@ Pass ORIGINAL and ALTERNATE options."
                                                (car (split-string (buffer-string)
                                                                   "\n")))
                    ""))))
+;; TODO: Fxi ordering (issue caused after switching to icomplete)
 (defun meain/vime (&optional listitems)
   "Load a random file inside ~/.cache/vime dir.  Used as a temp notes dir.
 Pass in `LISTITEMS to decide if you wanna create a new item or search for existing items."
   (interactive "P")
   (if listitems
-      (ivy-read "Choose file: "
-                (mapcar (lambda (x)
-                          (meain/vime-name-append (car x)))
-                        (sort (remove-if-not #'(lambda (x)
-                                                 (eq (nth 1 x) nil))
-                                             (directory-files-and-attributes "~/.cache/vime"))
-                              #'(lambda (x y)
-                                  (time-less-p (nth 6 y)
-                                               (nth 6 x)))))
-                :preselect (ivy-thing-at-point):require-match
-                t
-                :action (lambda (x)
-                          (find-file (concat "~/.cache/vime/"
-                                             (car (split-string x))))):caller'meain/vime-open)
+      (find-file (concat "~/.cache/vime/"
+                         (car (split-string (completing-read "Choose vime: "
+                                                             (mapcar (lambda (x)
+                                                                       (meain/vime-name-append (car x)))
+                                                                     (sort (remove-if-not #'(lambda (x)
+                                                                                              (eq (nth 1 x) nil))
+                                                                                          (directory-files-and-attributes "~/.cache/vime"))
+                                                                           #'(lambda (x y)
+                                                                               (time-less-p (nth 6 y)
+                                                                                            (nth 6 x))))))))))
     (progn
       (find-file (concat "~/.cache/vime/_"
                          (substring (uuid-string)
@@ -1931,10 +1921,10 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 (defun meain/open-note ()
   "Quick open a note from `.notes` directory."
   (interactive)
-  (ivy-read "Choose note: "
-            (meain/nested-list-dir "~/.notes")
-            :action (lambda (x)
-                      (find-file (concatenate 'string "~/.notes/" x)))))
+  (find-file (concatenate 'string
+                          "~/.notes/"
+                          (completing-read "Choose note: "
+                                           (meain/nested-list-dir "~/.notes")))))
 (evil-leader/set-key "a N" 'meain/open-note)
 
 ;; dasht docs
@@ -1949,16 +1939,12 @@ START and END comes from it being interactive."
         (message "Nothing to look up.")
       (progn
         (let ((lookup-term (read-from-minibuffer "Lookup term: " thing)))
-          (ivy-read "Docset: "
-                    (split-string (shell-command-to-string "dasht-docsets"))
-                    :require-match t
-                    :preselect (car (split-string (message "%s" major-mode)
-                                                  "-")):action
-                    (lambda (ds)
-                      (message "Looking up %s in %s" lookup-term
-                               ds)
-                      (meain/run-in-vterm (concatenate 'string "docs " lookup-term " "
-                                                       ds)))))))))
+          (meain/run-in-vterm (concatenate 'string
+                                           "docs "
+                                           lookup-term
+                                           " "
+                                           (completing-read "Docset: "
+                                                            (split-string (shell-command-to-string "dasht-docsets"))))))))))
 (evil-leader/set-key "a d" 'meain/dasht-docs)
 
 ;; cheat.sh
