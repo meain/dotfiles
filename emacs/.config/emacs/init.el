@@ -834,7 +834,9 @@ Pass ORIGINAL and ALTERNATE options."
   (progn
     (evil-leader/set-key "gg" 'magit-status)
     (evil-leader/set-key "gc" 'magit-commit-create))
-  :config (define-key magit-mode-map (kbd "M-w") 'delete-window))
+  :config (progn
+            (define-key magit-mode-map (kbd "M-w") 'delete-window)
+            (setq magit-completing-read-function #'selectrum-completing-read)))
 
 ;; Magit forge
 (use-package forge :ensure t
