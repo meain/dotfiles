@@ -10,11 +10,13 @@
 
 ;; Font setup
 ;; iA Writer Mono S 14 | Inconsolata 16 | Fantasque Sans Mono 16 | Fira Code 15 | Noto Sans Mono 15 | DankMono Nerd Font 15
-;; Font (set-frame-font  "DankMono Nerd Font 15")
-(setq font-family-default "DankMono Nerd Font 15")
+;; Font (set-frame-font  "Inconsolata 16")
+(defvar meain/font-family-default "Inconsolata 16"
+  "Custom font family")
+;; (setq font-family-default "monaco 13")
 (setq line-spacing nil) ;; .1 for Inconsolata
 (add-to-list 'default-frame-alist
-             `(font . ,font-family-default))
+             `(font . ,meain/font-family-default))
 
 ;; Window decoraations
 (add-to-list 'default-frame-alist
