@@ -608,10 +608,10 @@ Pass ORIGINAL and ALTERNATE options."
   :init (setq ibuffer-expert t):config
   (progn
     (global-set-key (kbd "M-c")
-                    (meain/with-alternate (switch-to-buffer)
+                    (meain/with-alternate (call-interactively 'switch-to-buffer)
                                           (ibuffer-other-window)))
     (evil-leader/set-key "b b"
-      (meain/with-alternate (switch-to-buffer)
+      (meain/with-alternate (call-interactively 'switch-to-buffer)
                             (ibuffer-other-window)))))
 
 ;; ibuffer-projectile
