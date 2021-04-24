@@ -1527,7 +1527,7 @@ Pass ORIGINAL and ALTERNATE options."
                                                                                              (elfeed-entry-tags entry)))))))
                                   nil
                                   t
-                                  ".")))
+                                  "\\.")))
         (setq elfeed-search-filter (concatenate 'string "@2-months-ago +unread +"
                                                 tag))
         (elfeed-search-update :force)
