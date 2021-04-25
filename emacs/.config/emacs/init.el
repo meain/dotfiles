@@ -554,7 +554,6 @@ Pass ORIGINAL and ALTERNATE options."
   :config (company-quickhelp-mode))
 
 ;; Completions
-;; (use-package counsel :ensure t)
 (use-package selectrum
   :ensure t
   :init (setq selectrum-complete-in-buffer nil):config
@@ -592,6 +591,9 @@ Pass ORIGINAL and ALTERNATE options."
     (setq marginalia-annotators '(marginalia-annotators-heavy))
     (marginalia-mode)))
 
+;; Consult without consultation fees
+(use-package consult :ensure t)
+
 ;; Helpful package
 (use-package helpful
   :ensure t
@@ -599,9 +601,7 @@ Pass ORIGINAL and ALTERNATE options."
                               helpful-key):init
   (progn
     (evil-leader/set-key "h p" 'helpful-at-point)
-    (evil-leader/set-key "h k" 'helpful-key)
-    (setq counsel-describe-function-function #'helpful-callable)
-    (setq counsel-describe-variable-function #'helpful-variable)))
+    (evil-leader/set-key "h k" 'helpful-key)))
 
 ;; ibuffer
 (use-package ibuffer
@@ -641,12 +641,9 @@ Pass ORIGINAL and ALTERNATE options."
   :ensure t
   :commands rg
   :init (progn
-          (setq counsel-rg-base-command '("rg" "-M" "240" "--with-filename" "--no-heading"
-                                          "--line-number" "--color" "never" "--hidden"
-                                          "--follow" "--glob" "!.git/*" "%s"))
           (setq rg-command-line-flags '("--hidden" "--follow"))
           (evil-leader/set-key "f"
-            (meain/with-alternate (counsel-rg)
+            (meain/with-alternate (consult-ripgrep)
                                   (call-interactively 'rg)))))
 
 ;; dumb-jump
