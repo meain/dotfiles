@@ -1766,6 +1766,51 @@ Pass ORIGINAL and ALTERNATE options."
                 remember-notes-auto-save-visited-file-name
                 t))
 
+;; Tree sitter
+(use-package tree-sitter
+  :ensure t
+  :config (progn
+            (global-tree-sitter-mode)
+            (defun meain/ts-get-class-like-thing ()
+              (cond
+               ((eq major-mode 'rust-mode) 'impl_item)
+               ((eq major-mode 'python-mode) 'class_definition)))
+            (defun meain/ts-get-func-like-thing ()
+              (cond
+               ((eq major-mode 'rust-mode) 'function_item)
+               ((eq major-mode 'python-mode) 'function_definition)))
+            (defun meain/ts-get-class-like-thing-name ()
+              (let* ((node-at-point (tree-sitter-node-at-point (meain/ts-get-class-like-thing)))
+                     (name (cond
+                            ((eq node-at-point nil) "")
+                            (t (format "%s."
+                                       (thread-first (tsc-get-nth-named-child node-at-point 0)
+                                         (tsc-node-text)))))))
+                (format "%s" name)))
+            (defun meain/ts-get-func-like-thing-name ()
+              (let* ((node-at-point (tree-sitter-node-at-point (meain/ts-get-func-like-thing)))
+                     (name (cond
+                            ((eq node-at-point nil) "")
+                            (t (thread-first (tsc-get-child-by-field node-at-point :name)
+                                 (tsc-node-text))))))
+                (format "%s" name)))
+            (defun meain/highlight-function ()
+              (interactive)
+              (let* ((points (thread-first (tree-sitter-node-at-point (meain/ts-get-func-like-thing))
+                               (tsc-node-byte-range))))
+                (pulse-momentary-highlight-region (car points)
+                                                  (cdr points)
+                                                  'company-template-field)))
+            (defun meain/highlight-class ()
+              (interactive)
+              (let* ((points (thread-first (tree-sitter-node-at-point (meain/ts-get-class-like-thing))
+                               (tsc-node-byte-range))))
+                (pulse-momentary-highlight-region (car points)
+                                                  (cdr points)
+                                                  'company-template-field)))))
+(use-package tree-sitter-langs :ensure t)
+
+
 
 ;;; [CUSTOM FUNCTIONS] ==============================================
 
