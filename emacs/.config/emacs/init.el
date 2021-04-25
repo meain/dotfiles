@@ -1759,6 +1759,7 @@ Pass ORIGINAL and ALTERNATE options."
   :commands (rotate-layout rotate-window):init
   (define-key evil-normal-state-map (kbd "M-f <SPC>") 'rotate-layout))
 
+;; Remember
 (use-package remember
   :commands remember
   :config (setq remember-data-file "~/.config/emacs/remember-notes"
@@ -2256,6 +2257,9 @@ START and END comes from it being interactive."
     (delete-file "/tmp/thing-to-run" t)))
 
 ;; Better modeline
+(use-package mode-line-idle
+  :ensure t
+  :commands (mode-line-idle))
 (setq-default mode-line-format (list '(:eval (if (eq 'emacs evil-state)
                                                  "! "
                                                ": ")) ;; vim or emacs mode
@@ -2275,24 +2279,37 @@ START and END comes from it being interactive."
                                                                  'minibuffer-prompt)
                                                                'help-echo
                                                                (buffer-file-name))))
-                                     '(:eval (when-let (vc vc-mode) ;; git branch
-                                               (list " @"
-                                                     (propertize (substring vc 5)
-                                                                 'face
-                                                                 'font-lock-comment-face))))
-                                     '(:eval (list " "
-                                                   (propertize (let* ((explicit (cdr (car (cdr (cdr (tab-bar--current-tab))))))
-                                                                      (name (cdr (car (cdr (tab-bar--current-tab)))))
-                                                                      (out-name (if explicit
-                                                                                    (concatenate 'string ":" name)
-                                                                                  (if (projectile-project-p)
-                                                                                      (concatenate 'string
-                                                                                                   ";"
-                                                                                                   (projectile-project-name))
-                                                                                    ""))))
-                                                                 (format "%s" out-name))
-                                                               'face
-                                                               'font-lock-comment-face)))
+                                     '(:eval (mode-line-idle 1.0
+                                                             '(:propertize (:eval (when-let (vc vc-mode) ;; git branch
+                                                                                    (list " @"
+                                                                                          (substring vc 5))))
+                                                                           face
+                                                                           font-lock-comment-face)
+                                                             ""))
+                                     '(:eval (mode-line-idle 1.0
+                                                             '(:propertize (:eval (list " "
+                                                                                        (let* ((explicit (cdr (car (cdr (cdr (tab-bar--current-tab))))))
+                                                                                               (name (cdr (car (cdr (tab-bar--current-tab)))))
+                                                                                               (out-name (if explicit
+                                                                                                             (concatenate 'string ":" name)
+                                                                                                           (if (projectile-project-p)
+                                                                                                               (concatenate 'string
+                                                                                                                            ";"
+                                                                                                                            (projectile-project-name))
+                                                                                                             ""))))
+                                                                                          (format "%s" out-name))))
+                                                                           face
+                                                                           font-lock-comment-face)
+                                                             ""))
+                                     " "
+                                     '(:eval (mode-line-idle 0.3
+                                                             '(:eval (if tree-sitter-mode
+                                                                         (meain/ts-get-class-like-thing-name)))
+                                                             "#"))
+                                     '(:eval (mode-line-idle 0.3
+                                                             '(:eval (if tree-sitter-mode
+                                                                         (meain/ts-get-func-like-thing-name)))
+                                                             "$"))
                                      ;; spacer
 
                                      '(:eval (propertize " "
