@@ -2263,9 +2263,6 @@ START and END comes from it being interactive."
 (setq-default mode-line-format (list '(:eval (if (eq 'emacs evil-state)
                                                  "! "
                                                ": ")) ;; vim or emacs mode
-									 ;; (car (cdr (reverse (split-string (buffer-file-name) "/"))))
-									 ;; the buffer name; the file name as a tool tip
-
                                      '(:eval (list (if (eq buffer-file-name nil)
                                                        ""
                                                      (concatenate 'string
