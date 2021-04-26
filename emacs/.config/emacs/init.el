@@ -442,6 +442,10 @@ Pass ORIGINAL and ALTERNATE options."
     (compile compile-command t)))
 (evil-leader/set-key "r" 'meain/recompile-or-compile)
 
+;; Some custom text objects
+;; TODO: Make a more generic textobject over any tree sitter query
+(load-file "~/.config/emacs/evil-textobj-function.el")
+
 ;;; [OTHER PACKAGES] =============================================
 
 (use-package aas
