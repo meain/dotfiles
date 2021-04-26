@@ -643,7 +643,8 @@ Pass ORIGINAL and ALTERNATE options."
   :init (progn
           (setq rg-command-line-flags '("--hidden" "--follow"))
           (evil-leader/set-key "f"
-            (meain/with-alternate (consult-ripgrep)
+            (meain/with-alternate (let ((selectrum-display-style '(vertical)))
+                                    (consult-ripgrep))
                                   (call-interactively 'rg)))))
 
 ;; dumb-jump
