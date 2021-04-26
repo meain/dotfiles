@@ -72,9 +72,6 @@
 
 ;; Some keybindings
 (evil-leader/set-key "l" 'execute-extended-command)
-(evil-leader/set-key "h f" 'describe-function)
-(evil-leader/set-key "h v" 'describe-variable)
-(evil-leader/set-key "h o" 'describe-symbol)
 (evil-leader/set-key "h l" 'find-library)
 
 ;;; [BASIC SETTINGS] =============================================
@@ -601,7 +598,10 @@ Pass ORIGINAL and ALTERNATE options."
                               helpful-key):init
   (progn
     (evil-leader/set-key "h p" 'helpful-at-point)
-    (evil-leader/set-key "h k" 'helpful-key)))
+    (evil-leader/set-key "h k" 'helpful-key)
+    (evil-leader/set-key "h f" 'helpful-function)
+    (evil-leader/set-key "h v" 'helpful-variable)
+    (evil-leader/set-key "h o" 'helpful-symbol)))
 
 ;; ibuffer
 (use-package ibuffer
