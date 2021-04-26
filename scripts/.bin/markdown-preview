@@ -4,5 +4,4 @@ set -e
 
 filename="/tmp/$(xxd -l2 -ps /dev/urandom).html"
 cat ~/.config/datafiles/pandoc-github-template.html > "$filename" && open "$filename"
-# on-change "$1" "pandoc -s --highlight-style kate --output \"$filename\" -f gfm -t html5 --metadata title=\"$1 - Preview\" \"$1\""
-on-change "$1" "pandoc --template ~/.config/datafiles/pandoc-github-template.html  --output \"$filename\" -f gfm -t html5 --metadata title=\"$1 - Preview\" \"$1\""
+on-change "$1" "pandoc --no-highlight --template ~/.config/datafiles/pandoc-github-template.html  --output \"$filename\" -f gfm -t html5 --metadata title=\"$1 - Preview\" \"$1\""

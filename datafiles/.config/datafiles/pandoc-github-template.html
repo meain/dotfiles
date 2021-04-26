@@ -1,13 +1,35 @@
 <!DOCTYPE html>
 <html>
   <title>Markdown preview</title>
-  <style>
-    $styles.html()$
-  </style>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.20.0/themes/prism-coy.min.css"
+    integrity="sha512-m/Sn0Ay9ynzYIZZbbw5Jy2QEJhXXeppOimbFNz+5qj1wUOnrzt9Q2a4fRMFqp8SOFNZ3ZwVf+Zm/ezabpqlXXQ=="
+    crossorigin="anonymous"
+  />
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.20.0/prism.min.js"
+    integrity="sha512-rYNMWcr8EuYc/6mSBu0wD+hSoA4KkHvYRlmJEJGQI4bsho0OiX8fPOVB822QQZizkTUdkUCnJLnN8SAUBg9y9w=="
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.20.0/plugins/autoloader/prism-autoloader.min.js"
+    integrity="sha512-X4dQSI7eXvU12QcGK4YiwB30fIdLL7bxJbpC8149YrjO/3nSLLDFZNWBol5hBYPLePVHr0IBBNKKtw9zfULPOw=="
+    crossorigin="anonymous"
+  ></script>
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/3.0.1/github-markdown.min.css"
   />
+  <style>
+    pre[class*="language-"] > code {
+      box-shadow: none !important;
+    }
+    pre[class*="language-"]::after,
+    pre[class*="language-"]::before {
+      display: none !important;
+    }
+  </style>
   <body>
     <article
       class="markdown-body"
@@ -19,25 +41,42 @@
         padding: 45px;
       "
     >
-      $body$
+$body$
     </article>
     <script>
-      let content = null;
-      fetch(window.location)
-        .then((d) => d.text())
-        .then((con) => {
-          content = con;
-        });
-      setInterval(() => {
+      window.onload = () => {
+        console.log("hai");
+        function fixCodeBlocks() {
+          let ci = [].slice.call(document.getElementsByTagName("pre"));
+          ci.forEach((i) => {
+            let children = i.children;
+            if (children.length === 1 && children[0].tagName === "CODE") {
+              const cn = i.className;
+              console.log("cn:", cn);
+              if (cn.length > 0) i.children[0].classList.add(`language-${cn}`);
+            }
+          });
+          Prism.highlightAll();
+        }
+        let content = null;
         fetch(window.location)
           .then((d) => d.text())
           .then((con) => {
-            if (content !== con) {
-              content = con;
-              document.getElementsByTagName("html")[0].innerHTML = con;
-            }
+            content = con;
+            fixCodeBlocks();
           });
-      }, 1000);
+        setInterval(() => {
+          fetch(window.location)
+            .then((d) => d.text())
+            .then((con) => {
+              if (content !== con) {
+                content = con;
+                document.getElementsByTagName("html")[0].innerHTML = con;
+                fixCodeBlocks();
+              }
+            });
+        }, 1000);
+      };
     </script>
   </body>
 </html>
