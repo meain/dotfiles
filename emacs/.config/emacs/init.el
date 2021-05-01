@@ -557,22 +557,21 @@ Pass ORIGINAL and ALTERNATE options."
 ;; Completions
 (use-package selectrum
   :ensure t
-  :init (setq selectrum-complete-in-buffer nil):config
-  (progn
-    (setq selectrum-should-sort t)
-    (setq read-file-name-completion-ignore-case
-          t)
-    (setq read-buffer-completion-ignore-case t)
-    (setq completion-ignore-case t)
-    (setq selectrum-display-style '(horizontal))
-    (selectrum-mode +1)
-    ;; Optional performance optimization by highlighting only the visible candidates.
-    (setq orderless-skip-highlighting (lambda ()
-                                        selectrum-is-active))
-    (setq selectrum-highlight-candidates-function
-          #'orderless-highlight-matches))
-  :bind (:map selectrum-minibuffer-map
-              ("<S-backspace>" . selectrum-backward-kill-sexp)))
+  :config (progn
+            (setq selectrum-should-sort t)
+            (setq read-file-name-completion-ignore-case
+                  t)
+            (setq read-buffer-completion-ignore-case t)
+            (setq completion-ignore-case t)
+            (setq selectrum-display-style '(horizontal))
+            (selectrum-mode +1)
+            ;; Optional performance optimization by highlighting only the visible candidates.
+            (setq orderless-skip-highlighting (lambda ()
+                                                selectrum-is-active))
+            (setq selectrum-highlight-candidates-function
+                  #'orderless-highlight-matches)):bind
+  (:map selectrum-minibuffer-map
+        ("<S-backspace>" . selectrum-backward-kill-sexp)))
 (use-package selectrum-prescient
   :ensure t
   :config (progn
