@@ -131,6 +131,9 @@
 (setq-default tab-width 4)
 (setq-default indent-tabs-mode nil)
 
+;; Delete visual selection when I start typing
+(delete-selection-mode 1)
+
 ;; Meta-f keybinds (tmux memmories)
 (global-unset-key (kbd "M-f")) ; have to unset first
 
