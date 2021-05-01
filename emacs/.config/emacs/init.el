@@ -1477,6 +1477,7 @@ Pass ORIGINAL and ALTERNATE options."
                    (elfeed-db-save))))
   :init (evil-leader/set-key "a e" 'elfeed):config
   (progn
+    (setq elfeed-sort-order 'ascending)
     (setq browse-url-generic-program "open")
     (setq browse-url-generic-args (list "-g"))
     (evil-define-key 'normal
