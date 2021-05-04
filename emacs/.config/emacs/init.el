@@ -2025,6 +2025,12 @@ START and END comes from it being interactive."
   :init (evil-leader/set-key "a c" 'cheat-sh-maybe-region))
 
 ;; Quick edit (for use with hammerspoon quick edit)
+(defun meain/quick-edit-end ()
+  "Util function to be executed on qed completion."
+  (interactive)
+  (mark-whole-buffer)
+  (call-interactively 'kill-ring-save)
+  (meain/kill-current-buffer-unless-scratch))
 (defun meain/quick-edit ()
   "Util function for use with hammerspoon quick edit functionality."
   (interactive)

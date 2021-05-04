@@ -365,12 +365,11 @@ hs.hotkey.bind(
                 hs.alert("🤔 No edit in progress")
                 return
             end
-            hs.eventtap.keyStroke({"cmd"}, "a")
-            hs.eventtap.keyStroke({"cmd"}, "c")
             hs.eventtap.keyStroke({"alt", "shift"}, ";")
-            hs.eventtap.keyStrokes("(kill-buffer)")
+            hs.eventtap.keyStrokes("(meain/quick-edit-end)")
             hs.eventtap.keyStroke({}, "return")
             quick_edit_app:focus()
+            os.execute("sleep " .. tonumber(1))
             hs.eventtap.keyStroke({"cmd"}, "a")
             hs.eventtap.keyStroke({"cmd"}, "v")
             quick_edit_app = nil
