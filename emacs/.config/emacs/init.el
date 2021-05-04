@@ -509,6 +509,15 @@ Pass ORIGINAL and ALTERNATE options."
                               (lambda ()
                                 (interactive)
                                 (insert (file-name-nondirectory (buffer-file-name)))))
+            (aas-set-snippets 'markdown-mode
+                              ";bang"
+                              (lambda ()
+                                (interactive)
+                                (insert (concat "---\ntitle: "
+                                                (file-name-nondirectory (file-name-sans-extension (buffer-file-name)))
+                                                "\ncreated: "
+                                                (format-time-string "%a %d %b %Y %T")
+                                                "\n---\n"))))
             (aas-set-snippets 'python-mode ";ip" "__import__('ipdb').set_trace()")
             (aas-set-snippets 'org-mode ";el" "#+BEGIN_SRC emacs-lisp\n\n#+END_SRC"
                               ";py" "#+BEGIN_SRC python\n\n#+END_SRC" ";co"
