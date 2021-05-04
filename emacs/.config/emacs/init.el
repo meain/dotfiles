@@ -82,9 +82,13 @@
 ;; Consistent window title
 (setq frame-title-format '("Emacs")) ; needed by hammerspoon
 
-;; Fix cmd-v (paste in macOS)
+;; Fix some cmd keybinds
 (global-set-key (kbd "s-v")
                 'yank)
+(global-set-key (kbd "s-a")
+                'mark-whole-buffer)
+(global-set-key (kbd "s-c")
+                'kill-ring-save)
 
 ;; Scratch initial content
 (defun meain/get-scratch-message ()
