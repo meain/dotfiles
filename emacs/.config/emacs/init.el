@@ -483,7 +483,7 @@ Pass ORIGINAL and ALTERNATE options."
                               ";filename"
                               (lambda ()
                                 (interactive)
-                                (insert (buffer-file-name))))
+                                (insert (file-name-nondirectory (buffer-file-name)))))
             (aas-set-snippets 'prog-mode
                               ";isodate"
                               (lambda ()
@@ -508,7 +508,7 @@ Pass ORIGINAL and ALTERNATE options."
                               ";filename"
                               (lambda ()
                                 (interactive)
-                                (insert (buffer-file-name))))
+                                (insert (file-name-nondirectory (buffer-file-name)))))
             (aas-set-snippets 'python-mode ";ip" "__import__('ipdb').set_trace()")
             (aas-set-snippets 'org-mode ";el" "#+BEGIN_SRC emacs-lisp\n\n#+END_SRC"
                               ";py" "#+BEGIN_SRC python\n\n#+END_SRC" ";co"
