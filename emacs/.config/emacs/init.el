@@ -598,7 +598,8 @@ Pass ORIGINAL and ALTERNATE options."
   :ensure t
   :config (progn
             ;; (setq completion-styles '(partial-completion substring initials orderless flex))
-            (setq completion-styles '(orderless))))
+            ;; (setq completion-styles '(orderless)
+            (setq orderless-matching-styles '(orderless-regexp orderless-flex))))
 (use-package marginalia
   :ensure t
   :bind (:map minibuffer-local-map
@@ -2288,6 +2289,7 @@ START and END comes from it being interactive."
 (setq-default mode-line-format (list '(:eval (if (eq 'emacs evil-state)
                                                  "! "
                                                ": ")) ;; vim or emacs mode
+
                                      '(:eval (list (if (eq buffer-file-name nil)
                                                        ""
                                                      (concatenate 'string
