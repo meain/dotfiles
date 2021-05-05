@@ -544,10 +544,14 @@ vnoremap ' ;
 " Use the clipboard for copy and paste
 nnoremap y "+y
 nnoremap Y "+y$
+nnoremap d "+d
+nnoremap D "+D
 nnoremap p "+p`]
 nnoremap P "+P`]
 vnoremap y "+y
 vnoremap Y "+Y
+vnoremap d "+d
+vnoremap D "+D
 vnoremap p "+p
 vnoremap P "+P
 
