@@ -560,6 +560,7 @@ Pass ORIGINAL and ALTERNATE options."
     (setq company-tooltip-maximum-width 35)
     (setq company-tooltip-align-annotations t)
     (setq company-minimum-prefix-length 2)
+    (setq company-format-margin-function nil)
     (global-company-mode)
     ;; company-tng-mode provides better autocomplete behaviour
     (company-tng-mode)))
