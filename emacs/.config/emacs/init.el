@@ -1505,6 +1505,11 @@ Pass ORIGINAL and ALTERNATE options."
   :init (evil-leader/set-key "a e" 'elfeed):config
   (progn
     (setq elfeed-sort-order 'ascending)
+    (setq browse-url-browser-function '(lambda (url &rest args)
+                                         (interactive)
+                                         (start-process "*open*" "*open*" "open" "-g"
+                                                        url)
+                                         (message "Opened %s" url)))
     (setq browse-url-generic-program "open")
     (setq browse-url-generic-args (list "-g"))
     (evil-define-key 'normal
