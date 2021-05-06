@@ -2282,6 +2282,12 @@ START and END comes from it being interactive."
     (insert "```")
     (delete-file "/tmp/thing-to-run" t)))
 
+;; Fetch mail
+(defun meain/fetchmail ()
+  "Fetch email using mailsync."
+  (interactive)
+  (async-shell-command "mailsync"))
+
 ;; Better modeline
 (use-package mode-line-idle
   :ensure t
