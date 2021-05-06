@@ -449,6 +449,15 @@ Pass ORIGINAL and ALTERNATE options."
     (compile compile-command t)))
 (evil-leader/set-key "r" 'meain/recompile-or-compile)
 
+;; Simplify how Async Shell Command buffers get displayed
+;; (add-to-list 'display-buffer-alist
+;;   '("\\*Async Shell Command\\*.*" display-buffer-no-window))
+(add-to-list 'display-buffer-alist
+             '("\\*Async Shell Command\\*.*"
+               (display-buffer-reuse-window display-buffer-at-bottom)
+               (reusable-frames . visible)
+               (window-height . 0.1)))
+
 ;; Some custom text objects
 ;; TODO: Make a more generic textobject over any tree sitter query
 (load-file "~/.config/emacs/evil-textobj-function.el")
