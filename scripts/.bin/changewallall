@@ -1,0 +1,61 @@
+#!/usr/bin/env zsh
+
+NEW_PIC="$1"
+NUM_DESKTOPS="$2"
+
+if [ -z "$NEW_PIC" ]; then
+  echo "Usage: $0 image [desktopCount]"
+  exit 1
+fi
+
+if [ ! -f "$NEW_PIC" ]; then
+    echo "Error: File $NEW_PIC does not exist"
+    exit 1
+fi
+
+if [ -z "$NUM_DESKTOPS" ]; then
+  NUM_DESKTOPS=5
+  echo "Defaulted number of desktops to $NUM_DESKTOPS"
+fi
+
+# Go to leftmost desktop
+
+GO_LEFT_DESKTOP_SCRIPT_FILE=$(mktemp -t desktop-image-switcher-go-left)
+GO_LEFT_DESKTOP_SCRIPT_TEXT="
+tell application \"System Events\"
+    tell application \"System Events\"
+        key code 123 using {control down}
+    end tell
+end tell"
+
+echo $GO_LEFT_DESKTOP_SCRIPT_TEXT > $GO_LEFT_DESKTOP_SCRIPT_FILE
+
+function go_left() {
+  for i in {1..$NUM_DESKTOPS}; do
+    osascript $GO_LEFT_DESKTOP_SCRIPT_FILE
+  done
+}
+go_left
+
+# Set image for each desktop
+
+IMAGE_SCRIPT_FILE=$(mktemp -t desktop-image-switcher)
+IMAGE_SCRIPT_TEXT="
+on run picture_file
+    tell application \"System Events\"
+        tell every desktop
+            set picture to picture_file
+        end tell
+        tell application \"System Events\"
+            key code 124 using {control down}
+        end tell
+        delay 0.5
+    end tell
+end run"
+echo $IMAGE_SCRIPT_TEXT > $IMAGE_SCRIPT_FILE
+for i in {1..$NUM_DESKTOPS}; do
+  osascript $IMAGE_SCRIPT_FILE "$NEW_PIC"
+done
+go_left
+rm -f $SCRIPT_FILE
+rm -f $GO_LEFT_DESKTOP_SCRIPT_FILE
