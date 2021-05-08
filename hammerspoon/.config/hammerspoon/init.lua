@@ -416,7 +416,7 @@ hs.hotkey.bind(
             hs.application.launchOrFocus(browser)
             return
         end
-        if string.match(current_app:title(), editor) then
+        if string.match(current_app:title():sub(1, 5), editor) then
             hs.application.launchOrFocus(browser)
         else
             emacs:activate()
