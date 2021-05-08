@@ -1,6 +1,5 @@
 #!/bin/sh
 
-PATH="/usr/local/bin:/usr/bin:/bin"
 if pgrep "mpv" > /dev/null 2>&1; then
     echo ":player mpv"
     mpvc | sed 's|^error - ||'

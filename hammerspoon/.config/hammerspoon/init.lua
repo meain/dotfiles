@@ -68,56 +68,56 @@ clipdo.registerDefaultBindings({"alt", "shift"}, "I")
 
 -- Music keymaps
 local showCurrentSong = function()
-    local song = customshellrun.run(BIN .. "music/currentsongfull")
+    local song = customshellrun.run(BIN .. "music/currentsongfull", true)
     hs.alert(song)
 end
 hs.hotkey.bind(
     {"alt"},
     "right",
     function()
-        customshellrun.run(BIN .. "music/next")
+        customshellrun.run(BIN .. "music/next", true)
     end
 )
 hs.hotkey.bind(
     {"alt"},
     "left",
     function()
-        customshellrun.run(BIN .. "music/previous")
+        customshellrun.run(BIN .. "music/previous", true)
     end
 )
 hs.hotkey.bind(
     {"alt"},
     "\\",
     function()
-        customshellrun.run(BIN .. "music/playpause")
+        customshellrun.run(BIN .. "music/playpause", true)
     end
 )
 hs.hotkey.bind(
     {"alt"},
     "]",
     function()
-        customshellrun.run(BIN .. "music/musicspeedup")
+        customshellrun.run(BIN .. "music/musicspeedup", true)
     end
 )
 hs.hotkey.bind(
     {"alt"},
     "[",
     function()
-        customshellrun.run(BIN .. "music/musicslowdown")
+        customshellrun.run(BIN .. "music/musicslowdown", true)
     end
 )
 hs.hotkey.bind(
     {"alt"},
     ",",
     function()
-        customshellrun.run(BIN .. "music/seekbackward")
+        customshellrun.run(BIN .. "music/seekbackward", true)
     end
 )
 hs.hotkey.bind(
     {"alt"},
     ".",
     function()
-        customshellrun.run(BIN .. "music/seekforeward")
+        customshellrun.run(BIN .. "music/seekforeward", true)
     end
 )
 hs.hotkey.bind(
@@ -186,7 +186,7 @@ local emailNotify = function(alert)
                     {
                         title = vv,
                         fn = function()
-                            local jout = customshellrun.run("/usr/local/bin/notmuch show --format json " .. eid, true)
+                            local jout = customshellrun.run("notmuch show --format json " .. eid, true)
                             local jse = json.decode(jout)
                             local mailcontent = ""
                             local unreadcount = 0
@@ -211,7 +211,7 @@ local emailNotify = function(alert)
                                 "OK"
                             )
                             if pressedButton == "Mark Read" then
-                                customshellrun.run("/usr/local/bin/notmuch tag -unread " .. eid, true)
+                                customshellrun.run("notmuch tag -unread " .. eid, true)
                             end
                         end
                     }
@@ -225,7 +225,7 @@ local emailNotify = function(alert)
         return mailListing
     end
 
-    local result = customshellrun.run(BIN .. "unreadsenders | cut -c-120")
+    local result = customshellrun.run(BIN .. "unreadsenders | cut -c-120", true)
     local unreadcount = utils.linecount(result)
     if (unreadcount > 0) then
         mailcounter:setTitle(unreadcount)
@@ -251,7 +251,7 @@ hs.hotkey.bind(
     "e",
     function()
         emailNotify(true)
-        customshellrun.run("/usr/local/bin/tmux refresh-client -S")
+        customshellrun.run("tmux refresh-client -S", true)
         emailPathWatcher:stop()
         emailPathWatcher = hs.pathwatcher.new("/Users/meain/.local/share/mail/.notmuch/xapian", emailNotify)
         emailPathWatcher:start()
@@ -264,7 +264,7 @@ hs.hotkey.bind(
         hs.alert("📫 Marking all emails as read")
         customshellrun.run("notmuch tag +notified tag:imbox and tag:unread", true)
         emailNotify(false)
-        customshellrun.run("/usr/local/bin/tmux refresh-client -S")
+        customshellrun.run("tmux refresh-client -S", true)
     end
 )
 
@@ -272,7 +272,7 @@ hs.hotkey.bind(
     {"alt", "shift"},
     "s",
     function()
-        local result = customshellrun.run("/usr/local/bin/task totn|tail -n+4|head -n5")
+        local result = customshellrun.run("task totn|tail -n+4|head -n5", true)
         hs.alert("🔨 Tasks\n" .. result)
     end
 )
@@ -293,7 +293,7 @@ hs.hotkey.bind(
     {"ctrl", "alt", "shift"},
     "s",
     function()
-        customshellrun.run(BIN .. "ssq")
+        customshellrun.run(BIN .. "ssq", true)
     end
 )
 
@@ -548,8 +548,8 @@ hs.hotkey.bind(
 )
 
 local canvas = nil
-local canvascommand = "/usr/local/bin/task tiny | tail -n+4 | sed '$ d'"
-    local hcaltitlecolor = {red = 1, blue = 1, green = 1, alpha = 0.5}
+local canvascommand = "task tiny | tail -n+4 | sed '$ d'"
+local hcaltitlecolor = {red = 255, blue = 255, green = 255, alpha = 0.8}
 function ShowOutputInCanvas()
     if canvas ~= nil then
         canvas:hide()
@@ -567,7 +567,7 @@ function ShowOutputInCanvas()
     canvas:behavior(hs.canvas.windowBehaviors.canJoinAllSpaces)
     canvas:level(hs.canvas.windowLevels.desktopIcon)
 
-    local result = customshellrun.run(canvascommand)
+    local result = customshellrun.run(canvascommand, true)
     canvas[1] = {
         id = "hcal_title",
         type = "text",
@@ -580,7 +580,7 @@ function ShowOutputInCanvas()
     canvas:show()
 end
 function UpdateOutputCanvas()
-    local result = customshellrun.run(canvascommand)
+    local result = customshellrun.run(canvascommand, true)
     canvas[1].text = result
 end
 ShowOutputInCanvas()

@@ -1,8 +1,7 @@
 #!/bin/sh
 
-PATH="/usr/local/bin:/usr/bin:/bin"
 if pgrep "mpv" > /dev/null 2>&1;then
-    /usr/local/bin/mpvc seek +10
+    mpvc seek +10
 elif ! pgrep "Spotify" > /dev/null 2>&1;then
-    /usr/local/bin/mpc seek +10
+    mpc seek +10
 fi

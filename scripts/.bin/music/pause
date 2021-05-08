@@ -1,11 +1,10 @@
 #!/bin/sh
 
-PATH="/usr/local/bin:/usr/bin:/bin"
 if pgrep "mpv" > /dev/null 2>&1;then
-    /usr/local/bin/mpvc pause
+    mpvc pause
 elif pgrep "Spotify" > /dev/null 2>&1;then
-    /usr/local/bin/spotify pause
+    spotify pause
 else
-    /usr/local/bin/mpc pause
+    mpc pause
 fi
-/usr/local/bin/tmux refresh-client -S
+tmux refresh-client -S

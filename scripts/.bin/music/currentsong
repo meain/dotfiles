@@ -1,8 +1,7 @@
 #!/bin/sh
 
-PATH="/usr/local/bin:/usr/bin:/bin"
 if pgrep "mpv" >/dev/null 2>&1; then
-    mpvoutput="$(/usr/local/bin/mpvc)"
+    mpvoutput="$(mpvc)"
     songName="$(echo "$mpvoutput" | head -n1 | sed 's|^error - ||')"
     playing="$(echo "$mpvoutput" | head -n2 | tail -n1 | cut -d' ' -f1 | sed 's/\[playing\]/>/;s/\[paused\]/:/')"
     speed="$(echo "$mpvoutput" | grep 'speed' | cut -d' ' -f 2)"
@@ -23,9 +22,9 @@ if [ -n "$spotifySong" ]; then
     exit 0
 fi
 
-songName=$(/usr/local/bin/mpc --format '%title%' | head -n1 | sed 's/volume\:.*//')
-playing=$(/usr/local/bin/mpc | head -n2 | tail -n1 | cut -d' ' -f1 | sed 's/\[playing\]/>/;s/\[paused\]/:/')
-fileName=$(/usr/local/bin/mpc --format '%file%' | head -n1 | sed 's|.*/||;s|\.[^\.]*$||' | sed 's/volume:.*//')
+songName=$(mpc --format '%title%' | head -n1 | sed 's/volume\:.*//')
+playing=$(mpc | head -n2 | tail -n1 | cut -d' ' -f1 | sed 's/\[playing\]/>/;s/\[paused\]/:/')
+fileName=$(mpc --format '%file%' | head -n1 | sed 's|.*/||;s|\.[^\.]*$||' | sed 's/volume:.*//')
 if [ -z "$songName" ]; then
     songName=$fileName
 fi
