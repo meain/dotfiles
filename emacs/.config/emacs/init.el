@@ -2305,6 +2305,33 @@ START and END comes from it being interactive."
   (interactive)
   (async-shell-command "mailsync"))
 
+;; search from emacs using xwidgets
+(defun meain/search-xwidget ()
+  "Search from Emacs using xwidgets."
+  (interactive)
+  (xwidget-webkit-browse-url (concat "https://duckduckgo.com/?q="
+                                     (read-string "Search term: "
+                                                  (thing-at-point 'symbol)))))
+
+(defun meain/xwidgets-dasht-docs (start end)
+  "Look up word at point in dasht.
+START and END comes from it being interactive."
+  (interactive "r")
+  ;; http://127.0.0.1:54321/?query=print&docsets=Python
+  (let ((thing (if (use-region-p)
+                   (buffer-substring start end)
+                 (thing-at-point 'symbol))))
+    (if (eq (length thing) 0)
+        (message "Nothing to look up.")
+      (progn
+        (let ((lookup-term (read-from-minibuffer "Lookup term: " thing)))
+          (xwidget-webkit-browse-url (concatenate 'string
+                                                  "http://127.0.0.1:54321/?query="
+                                                  lookup-term
+                                                  "&docsets="
+                                                  (completing-read "Docset: "
+                                                                   (split-string (shell-command-to-string "dasht-docsets"))))))))))
+
 ;; Better modeline
 (use-package mode-line-idle
   :ensure t
