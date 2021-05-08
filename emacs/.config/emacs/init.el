@@ -1294,6 +1294,9 @@ Pass ORIGINAL and ALTERNATE options."
     (setq markdown-command "pandoc -t html5")
     (setq markdown-fontify-code-blocks-natively
           t)))
+(use-package nix-mode :ensure t
+  :defer t
+  :mode "\\.nix\\'")
 (use-package csv-mode
   :ensure t
   :defer t
