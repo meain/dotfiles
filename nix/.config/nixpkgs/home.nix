@@ -78,6 +78,7 @@
 
     # gui
     mpv  # audio/video player
+    alacritty  # terminal emulator
 
     # others
     redis  # key value db
