@@ -1,0 +1,18 @@
+nix-upgrade() {
+    nix-env --upgrade
+	home-manager switch
+}
+
+nix-try() {
+	nix-shell -p "$1"
+}
+
+
+nix-graph() {
+    package=$(ls /nix/store | grep -vE '\.drv$' | sed 's/[^-]*-//' | sort -u | fzf)
+    [ -z $package ] && return 0
+    fullname=$(ls /nix/store| grep -E "$package$" | head -n1)
+    echo "Visualizing $fullname"
+    nix-store -q --graph "/nix/store/$fullname" | dot -Tsvg > /tmp/nixgraph.svg
+    open /tmp/nixgraph.svg
+}

@@ -103,6 +103,7 @@ source $ZDOTDIR/.kubectl_functions
 source $ZDOTDIR/.gcloud_functions
 source $ZDOTDIR/.ffmpeg_functions
 source $ZDOTDIR/.imagemagic_functions
+source $ZDOTDIR/.nix_functions
 
 # Sorce fzf
 [ -f /usr/locale/opt/.fzf.zsh ] && source /usr/locale/opt/.fzf.zsh
@@ -148,7 +149,7 @@ export KEYTIMEOUT=1
 
 # updates PATH for Google Cloud SDK && add shell completion for gcloud
 export CLOUDSDK_PYTHON="/usr/local/opt/python@3.8/libexec/bin/python"
-source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+# source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
 
 preexec () {
   if ! grep -q "$1" "$DATAFILES_PATH/long_runnable_jobs" ; then
