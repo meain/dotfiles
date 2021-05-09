@@ -693,8 +693,15 @@ Pass ORIGINAL and ALTERNATE options."
   :ensure t
   :config (add-hook 'prog-mode-hook 'format-all-ensure-formatter):init
   (progn
+    (define-format-all-formatter fixjson
+      ;; Use goimport for formatting go files
+      (:executable "fixjson")
+      (:install "npm i -g fixjson")
+      (:languages "JSON")
+      (:format (format-all--buffer-easy executable)))
     (setq format-all-formatters '(("HTML" prettier)
-                                  ("Go" goimports)))
+                                  ("Go" goimports)
+                                  ("JSON" fixjson)))
     (defun meain/auto-format ()
       "Custom auto-format based on filetype."
       (interactive)
