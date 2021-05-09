@@ -15,7 +15,7 @@ Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }                       
 
 " Added functinality
 Plug '~/Documents/Projects/others/done/_vim/vim-googler', { 'on': ['LazyLoadPlugins', 'Searcher'] } " Search from within vim
-Plug '/usr/local/opt/fzf'                                                                      " Fzf
+Plug 'junegunn/fzf'                                                                            " Fzf
 Plug 'junegunn/fzf.vim'                                                                        " Fzf for vim
 Plug 'christoomey/vim-tmux-navigator'                                                          " Seamless navigation between vim and tmux
 Plug 'suan/vim-instant-markdown', { 'for': [ 'md', 'markdown' ] }                              " View markdown in browser while editing
