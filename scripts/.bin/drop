@@ -1,0 +1,21 @@
+#!/bin/sh
+
+set -e
+
+if [ -z "$1" ]; then
+    filename="$(xxd -l4 -ps /dev/urandom)"
+    pbpaste > /tmp/paste
+    scp /tmp/paste doom:drop/drop/$filename
+else
+    if [ -f "$1" ]; then
+        scp "$1" doom:drop/drop/
+        filename="$(basename $1)"
+    else
+        # zip if not a file
+        filename="$(xxd -l4 -ps /dev/urandom).zip"
+        zip -r /tmp/$filename "$1"
+        scp "/tmp/$filename" doom:drop/drop/
+    fi
+fi
+echo "https://drop.meain.io/drop/$filename"
+echo "https://drop.meain.io/drop/$filename" | pbcopy
