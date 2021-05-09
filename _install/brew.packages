@@ -1,72 +1,11 @@
 # important ones
-htop
-tmux
-tree
-wget
-cmake
-node
-task --HEAD
 neovim --HEAD
-imagemagick --with-fontconfig
-ffmpeg --with-fontconfig
 reattach-to-user-namespace
 
-# languages
-go
-python
-
-# tools
-jq
-jid
-fd
-hub
-tig
-fzf
-ripgrep
-task-spooler
-surfraw
-choose-gui
-
 # others
-aspell
-axel
-coreutils
-ctags
-fortune
-gawk
-ncurses
-neomutt
-msmtp
-newsboat
-pandoc
-redis
-stow
 trash
-up
-urlview
-w3m
 watch
-dasht
-isync
-chafa
-kubernetes-cli
-grip
-sshfs
-watchexec
-lf
-mpd
-mpc
-ncmpcpp
-googler
-tidy-html5
-shellcheck
-shfmt
-icdiff
 shpotify
-sc-im
-xsv
-gifsicle
-pgcli
 maccy
-k9s
 keith/formulae/reminders-cli
+pgcli
