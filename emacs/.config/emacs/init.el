@@ -740,6 +740,8 @@ Pass ORIGINAL and ALTERNATE options."
                  '(rust-mode . ("rust-analyzer")))
     (add-to-list 'eglot-server-programs
                  '(python-mode . ("~/.bin/vpyls")))
+    (add-to-list 'eglot-server-programs
+                 '(nix-mode . ("rnix-lsp")))
     (add-to-list 'display-buffer-alist
                  '("\\*sqls\\*"
                    (display-buffer-reuse-window display-buffer-at-bottom)

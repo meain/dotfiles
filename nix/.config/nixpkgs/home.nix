@@ -74,6 +74,7 @@
     shfmt  # shell code format
     html-tidy  # html formatter
     hey  # http load generator
+    rnix-lsp  # nix language server
 
     # gui
     mpv  # audio/video player
