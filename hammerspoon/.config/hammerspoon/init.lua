@@ -610,3 +610,13 @@ hs.hotkey.bind(
         taskwarrior.run()
     end
 )
+
+-- workspace login
+local workspaceLogin = require("workspacelogin")
+hs.hotkey.bind(
+    {"cmd", "alt"},
+    "w",
+    function()
+        workspaceLogin()
+    end
+)

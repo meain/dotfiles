@@ -1,0 +1,30 @@
+local utils = require("utils")
+local customshellrun = require("customshellrun")
+
+function workspaceLogin(filename)
+    local url = customshellrun.run("pass show workspaces/url", true)
+    local pin = customshellrun.run("pass show workspaces/pin", true)
+    local username = customshellrun.run("pass show workspaces/username", true)
+    local password = customshellrun.run("pass show workspaces/password", true)
+    customshellrun.run("open " .. url, true)
+    hs.application.launchOrFocus("workspaces")
+    os.execute("sleep " .. tonumber(15))
+    hs.application.launchOrFocus("firefox")
+    hs.eventtap.keyStrokes(pin)
+    hs.eventtap.keyStroke({}, "return")
+    os.execute("sleep " .. tonumber(20))
+    hs.alert("Logged into codauth")
+    hs.eventtap.leftClick(hs.geometry.point(-696.16455078125, 59.049240112305))
+    hs.alert("Copied thing")
+    hs.application.launchOrFocus("workspaces")
+    hs.eventtap.keyStroke({}, "tab")
+    hs.eventtap.keyStrokes(username)
+    hs.eventtap.keyStroke({}, "tab")
+    hs.eventtap.keyStrokes(password)
+    hs.eventtap.keyStroke({}, "tab")
+    hs.eventtap.keyStroke({"cmd"}, "v")
+    hs.alert("Login complete")
+end
+
+return workspaceLogin
+
