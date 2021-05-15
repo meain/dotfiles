@@ -695,8 +695,15 @@ Pass ORIGINAL and ALTERNATE options."
   :ensure t
   :config (add-hook 'prog-mode-hook 'format-all-ensure-formatter):init
   (progn
+    (defun meain/auto-format ()
+      "Custom auto-format based on filetype."
+      (interactive)
+      (if (eq major-mode 'emacs-lisp-mode)
+          (srefactor-lisp-format-buffer)
+        (call-interactively 'format-all-buffer)))
+    (define-key evil-normal-state-map (kbd ",,") 'meain/auto-format)
     (define-format-all-formatter fixjson
-      ;; Use goimport for formatting go files
+      ;; Use fixjson for formatting json files
       (:executable "fixjson")
       (:install "npm i -g fixjson")
       (:languages "JSON")
@@ -704,13 +711,7 @@ Pass ORIGINAL and ALTERNATE options."
     (setq format-all-formatters '(("HTML" prettier)
                                   ("Go" goimports)
                                   ("JSON" fixjson)))
-    (defun meain/auto-format ()
-      "Custom auto-format based on filetype."
-      (interactive)
-      (if (eq major-mode 'emacs-lisp-mode)
-          (srefactor-lisp-format-buffer)
-        (call-interactively 'format-all-buffer)))
-    (define-key evil-normal-state-map (kbd ",,") 'meain/auto-format)))
+    ))
 
 ;; Projectile
 (use-package projectile
