@@ -95,6 +95,7 @@
     nodePackages.fixjson # much better json formatter
     nodePackages.stylelint # css linter
     nodePackages.prettier # formatting for web stuff
+    nodePackages.pnpm # package management
     nodePackages.typescript # typescript
     nodePackages.vscode-css-languageserver-bin # css languageserver
     nodePackages.javascript-typescript-langserver # javascript langserver
