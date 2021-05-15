@@ -2168,6 +2168,28 @@ START and END comes from it being interactive."
 (global-set-key (kbd "M-f M")
                 'bookmark-set)
 
+;; Quick file rename
+(defun meain/rename-current-file ()
+  "Rename the current visiting file and switch buffer focus to it."
+  (interactive)
+  (if (null (buffer-file-name))
+      (user-error "Buffer does not have a filename: %s"
+                  (current-buffer)))
+  (let ((new-filename (meain/expand-filename-prompt (format "Rename %s to: "
+                                                            (file-name-nondirectory (buffer-file-name))))))
+    (if (null (file-writable-p new-filename))
+        (user-error "New file not writable: %s" new-filename))
+    (rename-file (buffer-file-name)
+                 new-filename
+                 1)
+    (find-alternate-file new-filename)
+    (message "Renamed to and now visiting: %s"
+             (abbreviate-file-name new-filename))))
+(defun meain/expand-filename-prompt (prompt)
+  "Return expanded filename PROMPT."
+  (expand-file-name (read-file-name prompt)))
+(defalias 'rename 'meain/rename-current-file)
+
 ;; setting proper default-dir
 (defun meain/set-proper-default-dir ()
   "Function to set the `default-directory' value as the project root if available."
