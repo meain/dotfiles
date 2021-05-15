@@ -1450,6 +1450,9 @@ Pass ORIGINAL and ALTERNATE options."
                        (or (not (notmuch-show-goto-message-next))
                            (member "unread" (plist-get (notmuch-show-get-message-properties)
                                                        :tags))))
+              ;; make sure last message is open
+              (notmuch-show-message-visible (notmuch-show-get-message-properties)
+                                            t)
               (force-window-update))):init
   (progn
     (evil-leader/set-key "a n" 'notmuch)
