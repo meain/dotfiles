@@ -226,28 +226,6 @@
 ;; auto-pair
 (electric-pair-mode t)
 
-;; eldoc load
-(use-package eldoc
-  :init (setq eldoc-echo-area-use-multiline-p nil):config
-  (global-eldoc-mode nil))
-
-;; dired
-(use-package dired
-  :hook (dired-mode . dired-hide-details-mode):config
-  (progn
-    (setq delete-by-moving-to-trash t)
-    (setq trash-directory "~/.Trash")
-    (setq dired-listing-switches "-AGFhlgo")
-    (setq dired-dwim-target t)
-    (define-key dired-mode-map (kbd "-") 'dired-up-directory)
-    (evil-define-key 'normal
-      dired-mode-map
-      (kbd "+")
-      'dired-create-empty-file)
-    (add-hook 'dired-mode-hook 'hl-line-mode)
-    (define-key evil-normal-state-map (kbd "-") 'dired-jump)
-    (define-key evil-normal-state-map (kbd "_") 'find-file)))
-
 ;; macro for alternate pattern
 (defmacro meain/with-alternate (original alternate)
   "Macro for easily creating commands with alternate on `universal-argument'.
@@ -463,6 +441,30 @@ Pass ORIGINAL and ALTERNATE options."
 (load-file "~/.config/emacs/evil-textobj-function.el")
 
 ;;; [OTHER PACKAGES] =============================================
+
+;; eldoc load
+(use-package eldoc
+  :init (setq eldoc-echo-area-use-multiline-p nil):config
+  (global-eldoc-mode nil))
+
+;; dired
+(use-package dired
+  :defer t
+  :hook (dired-mode . dired-hide-details-mode):config
+  (progn
+    (setq delete-by-moving-to-trash t)
+    (setq trash-directory "~/.Trash")
+    (setq dired-listing-switches "-AGFhlgo")
+    (setq dired-dwim-target t)
+    (define-key dired-mode-map (kbd "-") 'dired-up-directory)
+    (evil-define-key 'normal
+      dired-mode-map
+      (kbd "+")
+      'dired-create-empty-file)
+    (add-hook 'dired-mode-hook 'hl-line-mode)
+    (define-key evil-normal-state-map (kbd "-") 'dired-jump)
+    (define-key evil-normal-state-map (kbd "_") 'find-file)))
+
 
 (use-package aas
   :ensure t
