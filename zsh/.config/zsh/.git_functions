@@ -104,22 +104,18 @@ git_usebranch() {
 	git checkout "$1"
 }
 
+gpuf() {
+	[ "$branch" = "master" ] && echo "I won't force push to master." && return 1
+	echo 'Pushing with --force-with-lease'
+	git push origin "$branch" --force-with-lease
+}
+
 gpu() {
 	branch="$(git branch | grep '\*' | sed s:^..::g)"
-	if [ "$1" = '--force-with-lease' ]; then
-		printf "Are you sure you wanna force push to master?"
-		read -r
-		[ "$REPLY" = 'y' ] || return 0
+	if [ "$1" = '--force-with-lease' ] || [ "$1" = "-f" ]; then
+		echo "Use gpuf for force pushing" && return 1
 	fi
-	if [ "$1" = "-f" ] && [ "$branch" = "master" ]; then
-		echo "Are you sure you wanna force push to master?"
-		echo "How about --force-with-lease"
-		printf "Are you really sure?"
-		read -r
-		[ "$REPLY" = 'y' ] || return 0
-	fi
-	git push origin "$branch" "$*"
-	# (gitcistatus >/dev/null &)
+	git push origin "$branch"
 }
 
 gco() {
