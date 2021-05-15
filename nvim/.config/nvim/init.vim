@@ -37,8 +37,6 @@ Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }                              
 Plug 'justinmk/vim-dirvish'                                                                    " File browser
 Plug 'scrooloose/nerdtree', { 'on': [ 'NERDTree', 'NERDTreeFind', 'NERDTreeToggle' ] }         " Nerdtree
 Plug 'meain/vim-automkdir'                                                                     " Automatically create parent dirs
-Plug 'nvim-treesitter/nvim-treesitter'                                                         " Treesitter integration and highlight
-Plug 'nvim-treesitter/playground', { 'on': 'TSPlaygroundToggle' }                              " Treesitter debugger
 
 " Morph code
 Plug 'tpope/vim-surround'                                                                      " Surround
@@ -70,7 +68,6 @@ Plug 'nvim-lua/completion-nvim'
 " Plug 'nvim-lua/diagnostic-nvim'
 Plug 'nvim-lua/lsp-status.nvim'
 Plug 'steelsojka/completion-buffers'
-Plug 'nvim-treesitter/completion-treesitter'
 Plug 'Shougo/echodoc.vim', { 'on': 'LazyLoadPlugins' }                                         " Show signature
 
 " Testing
@@ -1155,9 +1152,6 @@ highlight default link MTODOPending Normal
 highlight default link MTODODone Comment
 highlight default link MTODOImportant Question
 let g:vim_mtodo_move_done_to_bottom=0
-
-" nvim-treesitter
-nnoremap <leader>ts :write <bar> edit <bar> TSBufEnable highlight<cr>
 
 " lsp-config
 nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
