@@ -3,41 +3,35 @@
 set -e
 
 remote_sync() {
-    IGNORE_STRING=""
-    if [ -f .dockerignore ]; then
-        IGNORE_STRING="$(sed '/^\ *$/d;s|^|--exclude |' .dockerignore | tr '\n' ' ')"
-    fi
-    rsync -azvr --exclude '.git' $IGNORE_STRING . "$EXPERIMENT_VM:/tmp/$1"
+	IGNORE_STRING=""
+	if [ -f .dockerignore ]; then
+		IGNORE_STRING="$(sed '/^\ *$/d;s|^|--exclude |' .dockerignore | tr '\n' ' ')"
+	fi
+	rsync -azvr --exclude '.git' $IGNORE_STRING . "$EXPERIMENT_VM:/tmp/$1"
 }
 
 # get name
 ROOT="$(git remote get-url origin 2>/dev/null | sed 's/\.git$//')"
 if [ -n "$ROOT" ]; then
-    NAME="$(basename "$ROOT")"
+	NAME="$(basename "$ROOT")"
 else
-    NAME="$(pwd | xargs basename)"
+	NAME="$(pwd | xargs basename)"
 fi
-
-
-REPO=""
-
-GCR_REPO="gcr.io/deeplearning-181416"
-ECR_REPO="987134842112.dkr.ecr.us-east-2.amazonaws.com"
 
 REPO="$ECR_REPO"
 [ "$1" = "--aws" ] && REPO="$ECR_REPO" && shift
 [ "$1" = "--gcp" ] && REPO="$GCR_REPO" && shift
 
 if [ -z "$1" ]; then
-    printf "Enter name [%s]: " "$NAME"
-    read
-    [ -n "$REPLY" ] && NAME="$REPLY"
-    printf "Tag: "
-    read
-    TAG="$REPLY"
-    FREPO="$REPO/$NAME:$TAG"
+	printf "Enter name [%s]: " "$NAME"
+	read
+	[ -n "$REPLY" ] && NAME="$REPLY"
+	printf "Tag: "
+	read
+	TAG="$REPLY"
+	FREPO="$REPO/$NAME:$TAG"
 else
-    FREPO="$REPO/$1"
+	FREPO="$REPO/$1"
 fi
 
 echo "Pushing to $FREPO"
