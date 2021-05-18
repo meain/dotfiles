@@ -3,11 +3,13 @@
 alias kalf='kubectl apply -f'
 
 kpods() {
-  kubectl get pods | tail -n +2 | awk '{print $3,$1}' | fzf --query "$*" | cut -d' ' -f2
+	kubectl get pods | tail -n +2 | awk '{print $3,$1}' | fzf --query "$*" | cut -d' ' -f2
 }
 
 klog() {
-  kpods "$*" | xargs kubectl logs --tail=130 -f
+	kpods "$*" | xargs kubectl logs --tail=130 -f
+}
+
 kdel() {
 	kubectl get pods | tail -n +2 | awk '{print $3,$1}' |
 		fzf --query "$*" -m | cut -d' ' -f2 |
@@ -15,27 +17,27 @@ kdel() {
 }
 
 kshell() {
-  kubectl exec -it "$(kpods "$*")" -- sh -c 'clear; (bash || ash || sh)'
+	kubectl exec -it "$(kpods "$*")" -- sh -c 'clear; (bash || ash || sh)'
 }
 
 kall() {
-  kubectl get all | grep '/' | cut -d' ' -f1 | fzf --query "$*"
+	kubectl get all | grep '/' | cut -d' ' -f1 | fzf --query "$*"
 }
 
 kdesc() {
-  kall "$*" | xargs kubectl describe
+	kall "$*" | xargs kubectl describe
 }
 
 k_change_namespace() {
-  NAMESPCE="$(kubectl get namespace | tail -n+2 | fzf --query "$1" | cut -d' ' -f1)"
-  [ -z "$NAMESPCE" ] && return 0
-  kubectl config set-context --current --namespace="$NAMESPCE"
+	NAMESPCE="$(kubectl get namespace | tail -n+2 | fzf --query "$1" | cut -d' ' -f1)"
+	[ -z "$NAMESPCE" ] && return 0
+	kubectl config set-context --current --namespace="$NAMESPCE"
 }
 
 k_change_context() {
-  kubectl config get-contexts | grep -v '^*' | tail -n+2 | awk '{print $1,"   ",$4}' |
-    fzf --preview "echo Current context: $(kubectl config current-context)" --preview-window up:1 |
-    awk '{print $1}' | xargs kubectl config use-context
+	kubectl config get-contexts | grep -v '^*' | tail -n+2 | awk '{print $1,"   ",$4}' |
+		fzf --preview "echo Current context: $(kubectl config current-context)" --preview-window up:1 |
+		awk '{print $1}' | xargs kubectl config use-context
 }
 
 alias kp="kubectl get pods"
