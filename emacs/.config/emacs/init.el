@@ -2401,7 +2401,7 @@ START and END comes from it being interactive."
                                                                            font-lock-comment-face)
                                                              ""))
                                      '(:eval (mode-line-idle 1.0
-                                                             '(:propertize (:eval (list " "
+                                                             '(:propertize (:eval (if projectile-mode (list " "
                                                                                         (let* ((explicit (cdr (car (cdr (cdr (tab-bar--current-tab))))))
                                                                                                (name (cdr (car (cdr (tab-bar--current-tab)))))
                                                                                                (out-name (if explicit
@@ -2411,7 +2411,7 @@ START and END comes from it being interactive."
                                                                                                                             ";"
                                                                                                                             (projectile-project-name))
                                                                                                              ""))))
-                                                                                          (format "%s" out-name))))
+                                                                                          (format "%s" out-name)))))
                                                                            face
                                                                            font-lock-comment-face)
                                                              ""))
