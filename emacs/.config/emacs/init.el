@@ -217,6 +217,9 @@
 (setq-default truncate-lines 1)
 (evil-leader/set-key "b W" 'toggle-truncate-lines)
 
+;; auto-fill
+(evil-leader/set-key "b F" 'auto-fill-mode)
+
 ;; Cursor blink
 (blink-cursor-mode -1)
 
