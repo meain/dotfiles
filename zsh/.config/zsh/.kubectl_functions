@@ -8,6 +8,10 @@ kpods() {
 
 klog() {
   kpods "$*" | xargs kubectl logs --tail=130 -f
+kdel() {
+	kubectl get pods | tail -n +2 | awk '{print $3,$1}' |
+		fzf --query "$*" -m | cut -d' ' -f2 |
+		xargs -n1 kubectl delete pod
 }
 
 kshell() {
