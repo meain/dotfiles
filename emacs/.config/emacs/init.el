@@ -5,15 +5,6 @@
 
 ;;; Code:
 
-;; native comp stuff
-(setq comp-speed 2)
-(setq package-native-compile t)
-(setq comp-async-report-warnings-errors nil)
-
-;; Use alt as meta on macOS
-(setq mac-option-modifier 'meta)
-(setq mac-command-modifier 'super)
-
 ;;; [PACKAGE SETUP] =============================================
 
 (setq user-mail-address "mail@meain.io" user-full-name

@@ -1,6 +1,15 @@
 ;; Setup LIBRARY env variable (needed for gccemacs)
 (setenv "LIBRARY_PATH" "/Applications/Emacs.app/Contents/MacOS/lib/gcc/10:/Applications/Emacs.app/Contents/MacOS/lib/gcc/10/gcc/x86_64-apple-darwin17/10.2.0")
 
+;; Native compilation stuff
+(setq comp-speed 2)
+(setq package-native-compile t)
+(setq comp-async-report-warnings-errors nil)
+
+;; MacOS specific keybinding changes
+(setq mac-option-modifier 'meta)
+(setq mac-command-modifier 'super)
+
 ;; Update some visual settings
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
@@ -9,7 +18,8 @@
 ;; (set-frame-parameter nil 'undecorated t)
 
 ;; Font setup
-;; iA Writer Mono S 14 | Inconsolata 16 | Fantasque Sans Mono 16 | Fira Code 15 | Noto Sans Mono 15 | DankMono Nerd Font 15 | Roboto Mono 14
+;; iA Writer Mono S 14 | Inconsolata 16 | Fantasque Sans Mono 16 | JetBrains Mono 14
+;; Fira Code 15 | Noto Sans Mono 15 | DankMono Nerd Font 15 | Roboto Mono 14 | Iosevka 15
 ;; Font (set-frame-font  "DankMono Nerd Font 15")
 (defvar meain/font-family-default "DankMono Nerd Font 15"
   "Custom font family")
