@@ -20,7 +20,7 @@ fi
 
 # Go to leftmost desktop
 
-GO_LEFT_DESKTOP_SCRIPT_FILE=$(mktemp -t desktop-image-switcher-go-left)
+GO_LEFT_DESKTOP_SCRIPT_FILE=$(mktemp)
 GO_LEFT_DESKTOP_SCRIPT_TEXT="
 tell application \"System Events\"
     tell application \"System Events\"
@@ -39,7 +39,7 @@ go_left
 
 # Set image for each desktop
 
-IMAGE_SCRIPT_FILE=$(mktemp -t desktop-image-switcher)
+IMAGE_SCRIPT_FILE=$(mktemp)
 IMAGE_SCRIPT_TEXT="
 on run picture_file
     tell application \"System Events\"
