@@ -966,8 +966,8 @@ Pass ORIGINAL and ALTERNATE options."
   :ensure t
   :commands (tab-close tab-new tab-next):init
   (progn
-    (defun meain/switch-tab-dwim (&optional close)
-      "Switch between available tabs.  Pass CLOSE as t to close the current tab if it is not the last one."
+    (defun meain/create-or-delete-tab (&optional close)
+      "Create or close tab"
       (interactive "P")
       (let ((tabs (cl-remove-if (lambda (x)
                                   (equal x "scratch"))
@@ -978,23 +978,32 @@ Pass ORIGINAL and ALTERNATE options."
             (if (eq tabs nil)
                 (message "Not closing last tab")
               (tab-close))
+          (tab-new))))
+    (defun meain/switch-tab-dwim (&optional chooser)
+      "Switch between available tabs.  Pass CLOSE as t to close the current tab if it is not the last one."
+      (interactive "P")
+      (let ((tabs (cl-remove-if (lambda (x)
+                                  (equal x "scratch"))
+                                (mapcar (lambda (tab)
+                                          (alist-get 'name tab))
+                                        (tab-bar--tabs-recent)))))
+        (if chooser
+            (tab-bar-switch-to-tab (completing-read "Select tab: " tabs))
           (cond
            ((eq tabs nil)
             (message (concat "Only one tab present. Use `"
-                             (substitute-command-keys "\\[tab-new]")
+                             (substitute-command-keys "\\[meain/create-or-delete-tab]")
                              "` to create another tab.")))
-           ((eq (length tabs) 1)
-            (tab-bar-switch-to-tab (car tabs)))
-           (t (tab-bar-switch-to-tab (completing-read "Select tab: " tabs)))))))
+           (t (tab-bar-switch-to-tab (car tabs)))))))
     (evil-leader/set-key "t" 'meain/switch-tab-dwim)
+    (evil-leader/set-key "T" 'meain/create-or-delete-tab)
     (evil-leader/set-key "C"
       (lambda ()
         (interactive)
         ;; TODO: make notmuch and elfeed automatically open up in scratch tab
         (tab-bar-switch-to-tab "scratch")))
     (global-set-key (kbd "M-f s")
-                    'meain/switch-tab-dwim)
-    (evil-leader/set-key "T" 'tab-new))
+                    'meain/switch-tab-dwim))
   :config (progn
             (setq tab-bar-close-button-show nil)
             (setq tab-bar-close-last-tab-choice 'tab-bar-mode-disable)
