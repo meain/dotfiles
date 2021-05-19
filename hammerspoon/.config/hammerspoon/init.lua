@@ -226,16 +226,10 @@ local emailNotify = function(alert)
     end
 
     local result = customshellrun.run(BIN .. "unreadsenders | cut -c-120", true)
-    local unreadcount = utils.linecount(result)
-    if (unreadcount > 0) then
-        mailcounter:setTitle(unreadcount)
-        mailcounter:setTooltip(result)
-        mailcounter:setMenu(populateMailListing(result))
-    else
-        mailcounter:setTitle("M")
-        mailcounter:setTooltip("No new emails")
-        mailcounter:setMenu(populateMailListing(result))
-    end
+    local unreadcount = customshellrun.run(BIN .. "mailcounter", true)
+    mailcounter:setTitle(unreadcount)
+    mailcounter:setTooltip(result)
+    mailcounter:setMenu(populateMailListing(result))
     if alert then
         if (string.len(result) > 0) then
             hs.alert("📧 Unread emails\n" .. result)

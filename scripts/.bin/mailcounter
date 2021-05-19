@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -e
+
+export NOTMUCH_CONFIG="$HOME/.config/notmuch/config"
+unread="$(notmuch search tag:unread and tag:inbox and '-tag:nonotify' and '-tag:notified' | wc -l)"
+todo="$(notmuch search tag:todo and tag:inbox | wc -l)"
+if [ $todo -ne 0 ]; then
+	echo "M$unread.$todo"
+elif [ $unread -ne 0 ]; then
+	echo "M$unread"
+else
+	echo "M"
+fi
