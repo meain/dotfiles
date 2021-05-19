@@ -2,7 +2,6 @@
 
 set -e
 
-export NOTMUCH_CONFIG="$HOME/.config/notmuch/config"
 if [ ! "$1" = "retag" ]; then
 	GPASS="${GOOGLE_PASSWORD:-$(keypuller)}"
 	GOOGLE_PASSWORD="$GPASS" mbsync -a ||
@@ -10,101 +9,7 @@ if [ ! "$1" = "retag" ]; then
 	[ -f /tmp/mailpullfailed ] && rm /tmp/mailpullfailed
 fi
 
-notmuch new 2>/dev/null
-
-# reindex inbox
-# notmuch tag -inbox tag:inbox
-# notmuch tag +inbox +imbox 'folder:/INBOX/'
-
-# start with everything in imbox
-notmuch tag +imbox tag:inbox
-
-# tag all known spams with +spammer and drop imbox label
-notmuch address --output address tag:spammer |
-	sort | uniq |
-	xargs -I{} notmuch tag -imbox +spam 'from:{}'
-notmuch address --output address tag:nope|
-	sort | uniq |
-	xargs -I{} notmuch tag -imbox +nonotify 'from:{}'
-notmuch address --output address tag:silent|
-	sort | uniq |
-	xargs -I{} notmuch tag +nonotify 'from:{}'
-
-#github
-notmuch tag +github 'tag:inbox' 'from:notifications@github.com'
-
-# newsletters
-notmuch tag +newsletter +nonotify -imbox 'tag:inbox' 'from:yo@dev.to'
-notmuch tag +newsletter +nonotify -imbox 'tag:inbox' 'from:noreply@medium.com'
-notmuch tag +newsletter +nonotify -imbox 'tag:inbox' 'from:no-reply@dribbble.com'
-notmuch tag +newsletter +nonotify -imbox 'tag:inbox' 'from:no-reply@n.dribbble.com'
-notmuch tag +newsletter +nonotify -imbox 'tag:inbox' 'from:no-reply@screener.in'
-notmuch tag +newsletter +nonotify -imbox 'tag:inbox' 'from:do-not-reply@stackoverflow.email'
-notmuch tag +newsletter +nonotify -imbox 'tag:inbox' 'from:jess@dev.to'
-notmuch tag +newsletter +nonotify -imbox 'tag:inbox' 'from:npm@npmjs.com'
-notmuch tag +newsletter +nonotify -imbox 'tag:inbox' 'from:erik@learnui.design'
-notmuch tag +newsletter +nonotify -imbox 'tag:inbox' 'from:jobs-listings@linkedin.com'
-notmuch tag +newsletter +nonotify -imbox 'tag:inbox' 'from:hello@uxdesign.cc'
-notmuch tag +newsletter +nonotify -imbox 'tag:inbox' 'from:vimtricks@substack.com'
-notmuch tag +newsletter +nonotify -imbox 'tag:inbox' 'from:hi@vimtricks.com'
-notmuch tag +newsletter +nonotify -imbox 'tag:inbox' 'from:noreply@ses.diff.blog'
-
-# jhunt
-notmuch tag +jobhunt +nonotify -imbox 'tag:inbox' 'from:jobalerts-noreply@linkedin.com'
-notmuch tag +jobhunt +nonotify -imbox 'tag:inbox' 'from:talent@marketing.angel.co'
-
-# bullshit
-notmuch tag +bullshit +nonotify -imbox 'tag:inbox' 'from:marketradar@newsletter.geojit.net'
-notmuch tag +bullshit +nonotify -imbox 'tag:inbox' 'from:no-reply@updates.bookmyshow.com'
-notmuch tag +bullshit +nonotify -imbox 'tag:inbox' 'from:assistant-noreply@google.com'
-notmuch tag +bullshit +nonotify -imbox 'tag:inbox' 'from:no-reply@spotify.com'
-notmuch tag +bullshit +nonotify -imbox 'tag:inbox' 'from:fnalerts-no-reply@firstnaukri.com'
-notmuch tag +bullshit +nonotify -imbox 'tag:inbox' 'from:irctctourismoffers@irctc.co.in'
-notmuch tag +bullshit +nonotify -imbox 'tag:inbox' 'from:noreply@newsletter.geojit.net'
-notmuch tag +bullshit +nonotify -imbox 'tag:inbox' 'from:no-reply@hello.geojitconnect.com'
-notmuch tag +bullshit +nonotify -imbox 'tag:inbox' 'from:info@geojit.com'
-notmuch tag +bullshit +nonotify -imbox 'tag:inbox' 'from:communications@nsdl.com'
-notmuch tag +bullshit +nonotify -imbox 'tag:inbox' 'from:no-reply@entertainment.bookmyshow.com'
-notmuch tag +bullshit +nonotify -imbox 'tag:inbox' 'from:uber@uber.com'
-notmuch tag +bullshit +nonotify -imbox 'tag:inbox' 'from:info@mailer.netflix.com'
-
-# spam
-notmuch tag +spam +nonotify -imbox 'tag:inbox' 'from:newsletter@incrediindia.in'
-notmuch tag +spam +nonotify -imbox 'tag:inbox' 'from:newsletter@vedikindia.in'
-
-# known
-notmuch tag +known +nonotify -imbox 'tag:inbox' 'from:noreply@swiggy.in'
-notmuch tag +known +nonotify -imbox 'tag:inbox' 'from:uber.india@uber.com'
-notmuch tag +known +nonotify -imbox 'tag:inbox' 'from:no-reply@swiggy.in'
-notmuch tag +known +nonotify -imbox 'tag:inbox' 'from:rapidocare@acko.com'
-notmuch tag +known +nonotify -imbox 'tag:inbox' 'from:info@meetup.com'
-notmuch tag +known +nonotify -imbox 'tag:inbox' 'from:no-reply@paytm.com'
-notmuch tag +known +nonotify -imbox 'tag:inbox' 'from:noreply@olacabs.com'
-notmuch tag +known +nonotify -imbox 'tag:inbox' 'from:support@vendekin.com'
-notmuch tag +known +nonotify -imbox 'tag:inbox' 'from:info@gokhana.com'
-
-# not so important
-notmuch tag +nonimportant +nonotify -imbox 'tag:inbox' 'from:info@bseindia.in'
-notmuch tag +nonimportant +nonotify -imbox 'tag:inbox' 'from:hello@splitwise.com'
-notmuch tag +nonimportant +nonotify -imbox 'tag:inbox' 'from:notifications-noreply@linkedin.com'
-notmuch tag +nonimportant +nonotify -imbox 'tag:inbox' 'from:linkedin@e.linkedin.com'
-notmuch tag +nonimportant +nonotify -imbox 'tag:inbox' 'from:alerts@ifttt.com'
-notmuch tag +nonimportant +nonotify -imbox 'tag:inbox' 'from:windowsinsiderprogram@e-mail.microsoft.com'
-notmuch tag +nonimportant +nonotify -imbox 'tag:inbox' 'from:no-reply@sampark.gov.in'
-notmuch tag +nonimportant +nonotify -imbox 'tag:inbox' 'from:upvote-noreply@quora.com'
-notmuch tag +nonimportant +nonotify -imbox 'tag:inbox' 'from:pro@codecademy.com'
-notmuch tag +nonimportant +nonotify -imbox 'tag:inbox' 'from:no-reply@mailer.bookmyshow.com'
-notmuch tag +nonimportant +nonotify -imbox 'tag:inbox' 'from:post.bookmyshow.com'
-notmuch tag +nonimportant +nonotify -imbox 'tag:inbox' 'from:informations@hdfcbank.net'
-notmuch tag +nonimportant +nonotify -imbox 'tag:inbox' 'from:info@e.atlassian.com'
-
-# high volume chat like stuff
-notmuch tag +chat +nonotify -imbox 'tag:inbox' 'from:noreply@zulip.com'
-
-# others
-notmuch tag +python +nonotify -imbox 'tag:inbox' 'subject:/\[Python-Dev\]/'
-notmuch tag +git +nonotify -imbox 'tag:inbox' 'to:git@vger.kernel.org'
-notmuch tag +bank 'tag:inbox' 'from:alerts@hdfcbank.net'
+mailtag
 
 # refresh tmux
 tmux refresh-client -S
