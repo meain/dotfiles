@@ -1085,7 +1085,7 @@ Pass ORIGINAL and ALTERNATE options."
                         (vterm-clear-scrollback))
                     (delete-window))))
                ((equal (length shell-buffers) 0)
-                (meain/shell-new))
+                (meain/shell-new t))
                (t (progn
                     (pop-to-buffer (car shell-buffers))
                     (if rerun-previous
@@ -1094,16 +1094,22 @@ Pass ORIGINAL and ALTERNATE options."
                           (vterm-clear-scrollback)
                           (vterm-send-up)
                           (vterm-send-return))))))))
-          (defun meain/shell-new ()
+          (defun meain/shell-new (&optional always-create)
             "Create a new shell for the current project."
             (interactive)
-            (if (equal major-mode 'vterm-mode)
-                (delete-window))
             (setq default-directory (cond
                                      ((projectile-project-p)
                                       (projectile-project-root))
                                      (t "~/")))
-            (vterm (meain/shell-name)))
+            (if (or always-create
+                    (s-starts-with-p "*popup-shell"
+                                     (buffer-name)))
+                (progn
+                  (if (s-starts-with-p "*popup-shell"
+                                       (buffer-name))
+                      (delete-window))
+                  (vterm (meain/shell-name)))
+              (call-interactively 'switch-to-buffer)))
           (defun meain/shell-other (&optional alternate)
             "Switch to previous shell in current project. Use ALTERNATE to get a list of shell in current project."
             (interactive "P")
@@ -1176,7 +1182,7 @@ Pass ORIGINAL and ALTERNATE options."
                      (s-starts-with-p "*popup-shell" bufname))
                    (display-buffer-reuse-window display-buffer-at-bottom)
                    (reusable-frames . visible)
-                   (window-height . 0.6)))
+                   (window-height . 0.3)))
     (defun meain/clear-and-exec ()
       (interactive)
       (vterm-clear)
