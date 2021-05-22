@@ -518,6 +518,16 @@ Pass ORIGINAL and ALTERNATE options."
                               (lambda ()
                                 (interactive)
                                 (insert (file-name-nondirectory (buffer-file-name)))))
+            (aas-set-snippets 'web-mode
+                              ";html"
+                              (lambda ()
+                                (interactive)
+                                (insert-file-contents (expand-file-name "~/.config/datafiles/html_starter"))))
+            (aas-set-snippets 'html-mode
+                              ";html"
+                              (lambda ()
+                                (interactive)
+                                (insert-file-contents (expand-file-name "~/.config/datafiles/html_starter"))))
             (aas-set-snippets 'markdown-mode
                               ";bang"
                               (lambda ()
