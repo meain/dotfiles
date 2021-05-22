@@ -1,6 +1,13 @@
 nix-upgrade() {
+    nix-channel --update
     nix-env --upgrade
 	home-manager switch
+
+    # hack to make sure nix gui apps available
+    # https://github.com/nix-community/home-manager/issues/1341
+    rm -rf /Applications/NixApps
+    mkdir /Applications/NixApps
+    ls ~/.nix-profile/Applications|xargs -I{} cp -rL ~/.nix-profile/Applications/{} /Applications/NixApps
 }
 
 nix-try() {
