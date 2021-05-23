@@ -5,6 +5,10 @@
 (setq comp-speed 2)
 (setq package-native-compile t)
 (setq comp-async-report-warnings-errors nil)
+(setq native-comp-deferred-compilation-deny-list nil)
+
+;; Disable package.el as we are using straight
+(setq package-enable-at-startup nil)
 
 ;; MacOS specific keybinding changes
 (setq mac-option-modifier 'meta)

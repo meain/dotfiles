@@ -7,38 +7,35 @@
 
 ;;; [PACKAGE SETUP] =============================================
 
+;; Basic setup
 (setq user-mail-address "mail@meain.io" user-full-name
       "Abin Simon")
 
-;; Set up package & melpa
-(require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/")
-             t)
-(package-initialize)
-
-;; Set up use-package
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-(eval-when-compile (require 'use-package))
-;; (setq use-package-always-demand (daemonp)) ;; eager load if daemon
-(setq use-package-always-demand (getenv "LOAD_FULL_EMACS"))
-
-;; Setup quelpa
-(use-package quelpa :ensure t
-  :defer t)
+;; Setup straight.el
+(setq straight-repository-branch "develop")
+(setq straight-vc-git-default-protocol 'ssh)
+(defvar bootstrap-version)
+(let ((bootstrap-file (expand-file-name "straight/repos/straight.el/bootstrap.el"
+                                        user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer (url-retrieve-synchronously "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+                                                     'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+(straight-use-package 'use-package)
 
 ;; Get proper PATH
 (use-package exec-path-from-shell
-  :ensure t
+  :straight t
   :config (exec-path-from-shell-initialize))
 
 ;;; [BASE EVIL] =================================================
 
 ;; Evil mode (set this up first)
 (use-package evil
-  :ensure t
+  :straight t
   :init (progn
           (setq evil-want-integration t)
           (setq evil-want-keybinding nil)
@@ -56,7 +53,7 @@
 
 ;; Evil leader
 (use-package evil-leader
-  :ensure t
+  :straight t
   :config (progn
             (global-evil-leader-mode)
             (evil-leader/set-leader "s")))
@@ -179,12 +176,12 @@
 
 ;; Theme
 (use-package modus-operandi-theme
-  :ensure t
+  :straight t
   :init (load-theme 'modus-operandi t))
 
 ;; Diminish
 (use-package diminish
-  :ensure t
+  :straight t
   :defer t
   :init (progn
           (diminish 'eldoc-mode)
@@ -232,27 +229,26 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; Evil commentary
 (use-package evil-commentary
-  :ensure t
+  :straight t
   :diminish :init
   (evil-commentary-mode))
 
 ;; Evil surround
 (use-package evil-surround
-  :ensure t
+  :straight t
   :init (global-evil-surround-mode 1))
 
 ;; Evil text objects
-(use-package evil-textobj-line :ensure t)
-(use-package evil-textobj-syntax :ensure t)
+(use-package evil-textobj-line :straight t)
+(use-package evil-textobj-syntax :straight t)
 
 ;; Evil number increment
-
-(unless (package-installed-p 'evil-numbers)
-  (quelpa '(evil-numbers :repo "janpath/evil-numbers"
-                         :fetcher github)))
-;; cannot directly use C-x (in use by emacs)
-(define-key evil-normal-state-map (kbd "g C-a") 'evil-numbers/inc-at-pt-incremental)
-(define-key evil-normal-state-map (kbd "g C-x") 'evil-numbers/dec-at-pt-incremental)
+(use-package evil-numbers
+  :straight t
+  :config (progn
+            ;; cannot directly use C-x (in use by emacs)
+            (define-key evil-normal-state-map (kbd "g C-a") 'evil-numbers/inc-at-pt-incremental)
+            (define-key evil-normal-state-map (kbd "g C-x") 'evil-numbers/dec-at-pt-incremental)))
 
 ;; Save buffer
 (define-key evil-normal-state-map (kbd "<SPC> <SPC>") 'evil-write)
@@ -430,10 +426,6 @@ Pass ORIGINAL and ALTERNATE options."
                (reusable-frames . visible)
                (window-height . 0.1)))
 
-;; Some custom text objects
-;; TODO: Make a more generic textobject over any tree sitter query
-(load-file "~/.config/emacs/evil-textobj-function.el")
-
 ;;; [OTHER PACKAGES] =============================================
 
 ;; eldoc load
@@ -444,24 +436,24 @@ Pass ORIGINAL and ALTERNATE options."
 ;; dired
 (use-package dired
   :defer t
-  :hook (dired-mode . dired-hide-details-mode):config
-  (progn
-    (setq delete-by-moving-to-trash t)
-    (setq trash-directory "~/.Trash")
-    (setq dired-listing-switches "-AGFhlgo")
-    (setq dired-dwim-target t)
-    (define-key dired-mode-map (kbd "-") 'dired-up-directory)
-    (evil-define-key 'normal
-      dired-mode-map
-      (kbd "+")
-      'dired-create-empty-file)
-    (add-hook 'dired-mode-hook 'hl-line-mode)
-    (define-key evil-normal-state-map (kbd "-") 'dired-jump)
-    (define-key evil-normal-state-map (kbd "_") 'find-file)))
+  :config (progn
+            (setq delete-by-moving-to-trash t)
+            (setq trash-directory "~/.Trash")
+            (setq dired-listing-switches "-AGFhlgo")
+            (setq dired-dwim-target t)
+            (define-key dired-mode-map (kbd "-") 'dired-up-directory)
+            (evil-define-key 'normal
+              dired-mode-map
+              (kbd "+")
+              'dired-create-empty-file)
+            (add-hook 'dired-mode-hook 'hl-line-mode)
+            (add-hook 'dired-mode-hook 'dired-hide-details-mode)
+            (define-key evil-normal-state-map (kbd "-") 'dired-jump)
+            (define-key evil-normal-state-map (kbd "_") 'find-file)))
 
 
 (use-package aas
-  :ensure t
+  :straight t
   :defer 1
   :hook (text-mode . ass-activate-for-major-mode):hook
   (org-mode . ass-activate-for-major-mode)
@@ -553,7 +545,7 @@ Pass ORIGINAL and ALTERNATE options."
             (evil-set-command-property 'flymake-goto-prev-error
                                        :jump t)))
 (use-package flymake-diagnostic-at-point
-  :ensure t
+  :straight t
   :after flymake
   :init (progn
           (setq flymake-diagnostic-at-point-error-prefix
@@ -566,7 +558,7 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; Company for autocompletions
 (use-package company
-  :ensure t
+  :straight t
   :defer 1
   :diminish :config
   (progn
@@ -582,13 +574,13 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; Company quickhelp
 (use-package company-quickhelp ; Show help in tooltip
-  :ensure t
+  :straight t
   :after company
   :config (company-quickhelp-mode))
 
 ;; Completions
 (use-package selectrum
-  :ensure t
+  :straight t
   :config (progn
             (setq selectrum-should-sort t)
             (setq read-file-name-completion-ignore-case
@@ -605,18 +597,18 @@ Pass ORIGINAL and ALTERNATE options."
   (:map selectrum-minibuffer-map
         ("<S-backspace>" . selectrum-backward-kill-sexp)))
 (use-package selectrum-prescient
-  :ensure t
+  :straight t
   :config (progn
             (selectrum-prescient-mode +1)
             (prescient-persist-mode +1)))
 (use-package orderless
-  :ensure t
+  :straight t
   :config (progn
             ;; (setq completion-styles '(partial-completion substring initials orderless flex))
             ;; (setq completion-styles '(orderless)
             (setq orderless-matching-styles '(orderless-regexp orderless-flex))))
 (use-package marginalia
-  :ensure t
+  :straight t
   :bind (:map minibuffer-local-map
               ("C-b" . marginalia-cycle)):config
   (progn
@@ -625,11 +617,11 @@ Pass ORIGINAL and ALTERNATE options."
     (marginalia-mode)))
 
 ;; Consult without consultation fees
-(use-package consult :ensure t)
+(use-package consult :straight t)
 
 ;; Helpful package
 (use-package helpful
-  :ensure t
+  :straight t
   :commands (helpful-callable helpful-variable helpful-at-point
                               helpful-key):init
   (progn
@@ -652,7 +644,7 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; ibuffer-projectile
 (use-package ibuffer-projectile
-  :ensure t
+  :straight t
   :defer 1
   :config (progn
             (add-hook 'ibuffer-hook
@@ -674,7 +666,7 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; rg.el
 (use-package rg
-  :ensure t
+  :straight t
   :commands rg
   :init (progn
           (setq rg-command-line-flags '("--hidden" "--follow"))
@@ -685,19 +677,29 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; dumb-jump
 (use-package dumb-jump
-  :ensure t
+  :straight t
   :commands dumb-jumb-go
   :init (evil-leader/set-key "J" 'dumb-jump-go))
 
 
 ;; Code formatting
 (use-package srefactor
-  :ensure t
+  :straight t
   :config (require 'srefactor-lisp))
 (use-package format-all
   :defer 1
-  :ensure t
-  :config (add-hook 'prog-mode-hook 'format-all-ensure-formatter):init
+  :straight t
+  :config (progn
+            (define-format-all-formatter fixjson
+              ;; Use fixjson for formatting json files
+              (:executable "fixjson")
+              (:install "npm i -g fixjson")
+              (:languages "JSON")
+              (:format (format-all--buffer-easy executable)))
+            (setq format-all-formatters '(("HTML" prettier)
+                                          ("Go" goimports)
+                                          ("JSON" fixjson)))
+            (add-hook 'prog-mode-hook 'format-all-ensure-formatter)):init
   (progn
     (defun meain/auto-format ()
       "Custom auto-format based on filetype."
@@ -705,20 +707,11 @@ Pass ORIGINAL and ALTERNATE options."
       (if (eq major-mode 'emacs-lisp-mode)
           (srefactor-lisp-format-buffer)
         (call-interactively 'format-all-buffer)))
-    (define-key evil-normal-state-map (kbd ",,") 'meain/auto-format)
-    (define-format-all-formatter fixjson
-      ;; Use fixjson for formatting json files
-      (:executable "fixjson")
-      (:install "npm i -g fixjson")
-      (:languages "JSON")
-      (:format (format-all--buffer-easy executable)))
-    (setq format-all-formatters '(("HTML" prettier)
-                                  ("Go" goimports)
-                                  ("JSON" fixjson)))))
+    (define-key evil-normal-state-map (kbd ",,") 'meain/auto-format)))
 
 ;; Projectile
 (use-package projectile
-  :ensure t
+  :straight t
   :diminish :commands
   (projectile-switch-project projectile-find-file)
   :init (progn
@@ -736,7 +729,7 @@ Pass ORIGINAL and ALTERNATE options."
 ;; LSP
 (use-package eglot
   :commands eglot-ensure
-  :ensure t
+  :straight t
   :hook ((python-mode . eglot-ensure)
          (rust-mode . eglot-ensure)
          (js-mod . eglot-ensure)
@@ -845,15 +838,15 @@ Pass ORIGINAL and ALTERNATE options."
     (define-key evil-normal-state-map (kbd "g a") 'eglot-code-actions)))
 
 ;; Tagbar alternative
-(use-package imenu :ensure t
+(use-package imenu :straight t
   :defer t
   :commands imenu)
 (use-package flimenu
-  :ensure t
+  :straight t
   :after imenu
   :config (flimenu-global-mode 1))
 (use-package imenu-list
-  :ensure t
+  :straight t
   :defer t
   :commands imenu-list-smart-toggle
   :init (global-set-key (kbd "M--")
@@ -866,13 +859,13 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; Flat imenu
 (use-package flimenu
-  :ensure t
+  :straight t
   :after imenu-list
   :config (flimenu-global-mode 1))
 
 ;; Magit
 (use-package magit
-  :ensure t
+  :straight t
   :commands (magit-status magit-commit-create):init
   (progn
     (evil-leader/set-key "gg" 'magit-status)
@@ -882,12 +875,12 @@ Pass ORIGINAL and ALTERNATE options."
             (setq magit-completing-read-function #'selectrum-completing-read)))
 
 ;; Magit forge
-(use-package forge :ensure t
+(use-package forge :straight t
   :after magit)
 
 ;; Diff hl
 (use-package diff-hl
-  :ensure t
+  :straight t
   :defer 1
   :config (progn
             (custom-set-faces '(diff-hl-change ((t (:background "#ede5cb"))))
@@ -913,25 +906,25 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; Git messenger
 (use-package git-messenger
-  :ensure t
+  :straight t
   :commands git-messenger:popup-message
   :init (evil-leader/set-key "G" 'git-messenger:popup-message))
 
 ;; Matchit
 (use-package evil-matchit
-  :ensure t
+  :straight t
   :defer 1
   :config (global-evil-matchit-mode 1))
 
 ;; Highlight color codes
 (use-package rainbow-mode
-  :ensure t
+  :straight t
   :defer t
   :init (rainbow-mode 1))
 
 ;; Code folding
 (use-package origami
-  :ensure t
+  :straight t
   :commands evil-toggle-fold
   :init (progn
           (global-origami-mode)
@@ -940,7 +933,7 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; drag-stuff
 (use-package drag-stuff
-  :ensure t
+  :straight t
   :diminish :commands
   (drag-stuff-up drag-stuff-down drag-stuff-left
                  drag-stuff-right)
@@ -955,14 +948,14 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; Saveplace
 (use-package saveplace
-  :ensure t
+  :straight t
   :init (progn
           (save-place-mode t)
           (setq save-place-file "~/.cache/emacs/saveplace")))
 
 ;; Persistant undo using undo-tree
 (use-package undo-tree
-  :ensure t
+  :straight t
   :diminish :config
   (progn
     (setq undo-limit 80000000)
@@ -973,7 +966,7 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; Fancier tab managerment
 (use-package tab-bar
-  :ensure t
+  :straight t
   :commands (tab-close tab-new tab-next):init
   (progn
     (defun meain/create-or-delete-tab (&optional close)
@@ -1031,13 +1024,13 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; which-key mode (until I fully figure out emacs)
 (use-package which-key
-  :ensure t
+  :straight t
   :diminish :config
   (which-key-mode))
 
 ;; Expand region
 (use-package expand-region
-  :ensure t
+  :straight t
   :config (progn
             ;; make evil jump list work with expand-region
             (evil-set-command-property 'er/expand-region
@@ -1047,12 +1040,12 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; dtrt (atuo find indend setting)
 (use-package dtrt-indent
-  :ensure t
+  :straight t
   :diminish :config
   (dtrt-indent-global-mode))
 
 (use-package indent-guide
-  :ensure t
+  :straight t
   :commands (indent-guide-global-mode indent-guide-mode):init
   (progn
     (setq indent-guide-delay nil)
@@ -1065,7 +1058,7 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; vterm setup
 (use-package vterm
-  :ensure t
+  :straight t
   :defer t
   :init (progn
           (setq vterm-max-scrollback 100000)
@@ -1215,20 +1208,20 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; ranger in emacs
 (use-package ranger
-  :ensure t
+  :straight t
   :commands ranger
   :config (use-package image-dired+
-            :ensure t
+            :straight t
             :config (image-diredx-async-mode)))
 
 ;; editorconfig
 (use-package editorconfig
-  :ensure t
+  :straight t
   :config (editorconfig-mode 1))
 
 ;; eros for eval
 (use-package eros
-  :ensure t
+  :straight t
   :commands (eros-eval-last-sexp):init
   (progn
     (defun meain/eval-last-sexp (&optional alternate)
@@ -1246,7 +1239,7 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; Virtualenv
 (use-package virtualenvwrapper
-  :ensure t
+  :straight t
   :commands venv-workon
   :init (setq venv-location "~/.cache/virtual_envs"))
 
@@ -1276,18 +1269,18 @@ Pass ORIGINAL and ALTERNATE options."
 (evil-leader/set-key "D" 'meain/test-runner-full)
 
 ;; Neotree
-(use-package neotree :ensure t
+(use-package neotree :straight t
   :commands neotree)
 
 ;; Evil keybindings for a lot of things
 (use-package evil-collection
-  :ensure t
+  :straight t
   :after evil
   :config (evil-collection-init))
 
 ;; Highlight TODO items
 (use-package hl-todo
-  :ensure t
+  :straight t
   :defer 1
   :config (progn
             (setq hl-todo-keyword-faces '(("TODO" . "#FF0000")
@@ -1299,24 +1292,24 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;;; [FILETYPE PUGINS] ===============================================
 
-(use-package rust-mode :ensure t
+(use-package rust-mode :straight t
   :defer t)
-(use-package go-mode :ensure t
+(use-package go-mode :straight t
   :defer t)
-(use-package lua-mode :ensure t
+(use-package lua-mode :straight t
   :defer t)
-(use-package web-mode :ensure t
+(use-package web-mode :straight t
   :defer t)
-(use-package jinja2-mode :ensure t
+(use-package jinja2-mode :straight t
   :defer t)
-(use-package json-mode :ensure t
+(use-package json-mode :straight t
   :defer t)
-(use-package config-general-mode :ensure t
+(use-package config-general-mode :straight t
   :defer t)  ;; config files
-(use-package vimrc-mode :ensure t
+(use-package vimrc-mode :straight t
   :defer t)
 (use-package markdown-mode
-  :ensure t
+  :straight t
   :defer t
   :mode ("\\.md\\'" . gfm-mode):config
   (progn
@@ -1324,28 +1317,28 @@ Pass ORIGINAL and ALTERNATE options."
     (setq markdown-command "pandoc -t html5")
     (setq markdown-fontify-code-blocks-natively
           t)))
-(use-package nix-mode :ensure t
+(use-package nix-mode :straight t
   :defer t
   :mode "\\.nix\\'")
 (use-package csv-mode
-  :ensure t
+  :straight t
   :defer t
   :config (progn
             (setq csv-align-mode t)
             (set-face-attribute 'csv-separator-face nil
                                 :background "gray100"
                                 :foreground "#000000")))
-(use-package yaml-mode :ensure t
+(use-package yaml-mode :straight t
   :defer t)
 (use-package dockerfile-mode
-  :ensure t
+  :straight t
   :defer t
   :init (add-hook 'find-file-hook
                   (lambda ()
                     (if (s-starts-with-p "Dockerfile"
                                          (file-name-nondirectory (buffer-file-name)))
                         (dockerfile-mode)))))
-(use-package docker-compose-mode :ensure t
+(use-package docker-compose-mode :straight t
   :defer t)
 (use-package org
   :defer t
@@ -1423,12 +1416,12 @@ Pass ORIGINAL and ALTERNATE options."
 ;;; [EXTRA PLUGINS] =================================================
 
 ;; Try
-(use-package try :ensure t
+(use-package try :straight t
   :commands try)
 
 ;; notmuch
 (use-package notmuch
-  :ensure t
+  :straight t
   :commands notmuch
   :config (progn
             (evil-define-key 'normal
@@ -1530,7 +1523,7 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; elfeed
 (use-package elfeed
-  :ensure t
+  :straight t
   :commands (elfeed elfeed-update):init
   (progn
     (run-at-time nil
@@ -1716,7 +1709,7 @@ Pass ORIGINAL and ALTERNATE options."
 ;; command log
 (use-package command-log-mode
   :commands global-command-log-mode
-  :ensure t
+  :straight t
   :init (progn
           (defun meain/command-log-start ()
             "Enable command-log-mode and open command-log buffer."
@@ -1726,18 +1719,18 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; Beacon mode
 (use-package beacon
-  :ensure t
+  :straight t
   :defer t
   :diminish :init
   (beacon-mode t))
 
 ;; Focus mode
-(use-package focus :ensure t
+(use-package focus :straight t
   :commands focus-mode)
 
 ;; Writing mode
 (use-package writeroom-mode
-  :ensure t
+  :straight t
   :commands writeroom-mode
   :config (progn
             (add-hook 'writeroom-mode-enable-hook
@@ -1753,7 +1746,7 @@ Pass ORIGINAL and ALTERNATE options."
 ;; tramp dired
 (use-package tramp
   :defer t
-  :ensure t
+  :straight t
   :init (progn
           (setq remote-file-name-inhibit-cache nil)
           (setq vc-ignore-dir-regexp (format "%s\\|%s" vc-ignore-dir-regexp tramp-file-name-regexp))
@@ -1768,7 +1761,7 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; tramp-term
 (use-package tramp-term
-  :ensure t
+  :straight t
   :commands tramp-term
   :init (defun meain/ssh-term ()
           "SSH into a server by selcting a host via autocomplete."
@@ -1776,13 +1769,13 @@ Pass ORIGINAL and ALTERNATE options."
           (tramp-term (list (meain/ssh-host-picker)))))
 
 ;; connect to docker via tramp
-(use-package docker-tramp :ensure t
+(use-package docker-tramp :straight t
   :defer t
   :after tramp)
 
 ;; timing stuff
 (use-package activity-watch-mode
-  :ensure t
+  :straight t
   :diminish :config
   (global-activity-watch-mode))
 
@@ -1797,36 +1790,34 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; Git info in dired buffer
 (use-package dired-git-info
-  :ensure t
+  :straight t
   :commands (dired-git-info-mode))
 
 ;; Restclient
 (use-package restclient
-  :ensure t
+  :straight t
   :defer t
   :mode (("\\.rest\\'" . restclient-mode)))
 
 ;; Link opening
 (use-package ace-link
-  :ensure t
+  :straight t
   :commands ace-link
   :init (global-set-key (kbd "M-f l")
                         'ace-link))
 
 ;; Docker
-(use-package docker :ensure t
+(use-package docker :straight t
   :defer t)
 
 ;; Kubernetes
-(use-package kubel :ensure t
+(use-package kubel :straight t
   :defer t)
 
 ;; Window layout changer
-(unless (package-installed-p 'rotate)
-  (quelpa '(rotate :repo "daichirata/emacs-rotate"
-                   :fetcher github)))
 (use-package rotate
-  :commands (rotate-layout rotate-window):init
+  :straight t
+  :commands (rotate-layout rotate-window):config
   (define-key evil-normal-state-map (kbd "M-f <SPC>") 'rotate-layout))
 
 ;; Remember
@@ -1839,7 +1830,7 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; Tree sitter
 (use-package tree-sitter
-  :ensure t
+  :straight t
   :config (progn
             (global-tree-sitter-mode)
             (defun meain/ts-get-class-like-thing ()
@@ -1879,7 +1870,8 @@ Pass ORIGINAL and ALTERNATE options."
                 (pulse-momentary-highlight-region (car points)
                                                   (cdr points)
                                                   'company-template-field)))))
-(use-package tree-sitter-langs :ensure t)
+(use-package tree-sitter-langs :straight t
+  :after tree-sitter)
 
 
 
@@ -1974,7 +1966,7 @@ Pass ORIGINAL and ALTERNATE options."
                         (meain/scratchy)))
 
 ;; vime functionality within emacs
-(use-package uuid :ensure t
+(use-package uuid :straight t
   :commands uuid-string)
 (defun meain/vime-name-append (filename)
   "Util function used to parse :name block for vime entries.  FILENAME is the name of the vime file."
@@ -2075,7 +2067,7 @@ START and END comes from it being interactive."
 
 ;; cheat.sh
 (use-package cheat-sh
-  :ensure t
+  :straight t
   :commands cheat-sh-maybe-region
   cheat-sh
   :init (evil-leader/set-key "a c" 'cheat-sh-maybe-region))
@@ -2283,44 +2275,6 @@ START and END comes from it being interactive."
                                             "pandocmarkdownpreview "
                                             (buffer-file-name))))
 
-;; Upgrade a single package
-(defun package-menu-upgrade-package ()
-  "Mark current package for upgrading (also mark obsolete version for deletion)."
-  (interactive)
-  (when-let ((upgrades (package-menu--find-upgrades))
-             (description (tabulated-list-get-id))
-             (name (package-desc-name description))
-             (upgradable (cdr (assq name upgrades))))
-    ;; Package is upgradable
-    (save-excursion
-      (goto-char (point-min))
-      (while (not (eobp))
-        (let* ((current-description (tabulated-list-get-id))
-               (current-name (package-desc-name current-description)))
-          (when (equal current-name name)
-            (cond
-             ((equal description current-description)
-              (package-menu-mark-install)
-              (forward-line -1))
-             (t (package-menu-mark-delete)))))
-        (forward-line 1)))))
-(define-key package-menu-mode-map (kbd "t") #'package-menu-upgrade-package)
-(evil-define-key 'normal
-  package-menu-mode-map
-  (kbd "t")
-  'package-menu-upgrade-package)
-
-;; Some util functions to filter package-menu items
-(defun package-menu-filter-by-marks ()
-  "Find packages marked for action in *Packages*."
-  (interactive)
-  (occur "^[A-Z]"))
-(defun package-menu-filter-by-status (status)
-  "Filter the *Packages* buffer by STATUS."
-  (interactive (list (completing-read "Status: "
-                                      '("new" "installed" "dependency" "obsolete"))))
-  (package-menu-filter (concat "status:" status)))
-
 ;; Run markdown code blocks (forest.el)
 (defun meain/run-markdown-code-block ()
   "Run markdown code block under curosr."
@@ -2387,9 +2341,14 @@ START and END comes from it being interactive."
                                                   (completing-read "Docset: "
                                                                    (split-string (shell-command-to-string "dasht-docsets"))))))))))
 
+
+;; Some custom text objects
+;; TODO: Make a more generic textobject over any tree sitter query
+(load-file "~/.config/emacs/evil-textobj-function.el")
+
 ;; Better modeline
 (use-package mode-line-idle
-  :ensure t
+  :straight t
   :commands (mode-line-idle))
 (setq-default mode-line-format (list '(:eval (if (eq 'emacs evil-state)
                                                  "! "
@@ -2461,7 +2420,9 @@ START and END comes from it being interactive."
                      gcs-done)))
 
 ;; Start server once we have emacs running
-(server-start)
+(require 'server)
+(unless (server-running-p)
+  (server-start))
 
 (provide 'init)
 ;;; init ends here
