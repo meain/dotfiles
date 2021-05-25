@@ -25,6 +25,7 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 (straight-use-package 'use-package)
+(setq use-package-always-demand (getenv "LOAD_FULL_EMACS"))
 
 ;; Get proper PATH
 (use-package exec-path-from-shell
