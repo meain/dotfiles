@@ -4,7 +4,7 @@
 ;; Native compilation stuff
 (setq comp-speed 2)
 (setq package-native-compile t)
-(setq comp-async-report-warnings-errors nil)
+(setq native-comp-async-report-warnings-errors nil)
 (setq native-comp-deferred-compilation-deny-list nil)
 
 ;; Disable package.el as we are using straight
