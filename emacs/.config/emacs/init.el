@@ -643,28 +643,6 @@ Pass ORIGINAL and ALTERNATE options."
       (meain/with-alternate (call-interactively 'switch-to-buffer)
                             (ibuffer-other-window)))))
 
-;; ibuffer-projectile
-(use-package ibuffer-projectile
-  :straight t
-  :defer 1
-  :config (progn
-            (add-hook 'ibuffer-hook
-                      (lambda ()
-                        (ibuffer-projectile-set-filter-groups)
-                        (unless (eq ibuffer-sorting-mode 'alphabetic)
-                          (ibuffer-do-sort-by-alphabetic))))
-            (setq ibuffer-formats '((mark modified
-                                          read-only
-                                          " "
-                                          (name 18 18 :left :elide)
-                                          " "
-                                          (size 9 -1 :right)
-                                          " "
-                                          (mode 16 16 :left :elide)
-                                          " "
-                                          project-relative-file)))))
-
-
 ;; rg.el
 (use-package rg
   :straight t
@@ -715,17 +693,39 @@ Pass ORIGINAL and ALTERNATE options."
   :straight t
   :diminish :commands
   (projectile-switch-project projectile-find-file)
-  :init (progn
-          (evil-leader/set-key "p" 'projectile-switch-project)
-          (define-key evil-normal-state-map (kbd "<RET>") (lambda ()
-                                                            (interactive)
-                                                            (if (projectile-project-p)
-                                                                (projectile-find-file)
-                                                              (projectile-switch-project))))):config
+  :init (evil-leader/set-key "p" 'projectile-switch-project):config
   (progn
-    (setq projectile-mode-line "Projectile") ; might speed up tramp
-    (projectile-mode 1)
-    (setq projectile-sort-order 'recently-active)))
+    (define-key evil-normal-state-map (kbd "<RET>") (lambda ()
+                                                      (interactive)
+                                                      (if (projectile-project-p)
+                                                          (projectile-find-file)
+                                                        (projectile-switch-project))))
+            (setq projectile-mode-line "Projectile") ; might speed up tramp
+            (projectile-mode 1)
+            (setq projectile-sort-order 'recently-active)))
+
+;; ibuffer-projectile
+(use-package ibuffer-projectile
+  :straight t
+  :defer 1
+  :config (progn
+            (add-hook 'ibuffer-hook
+                      (lambda ()
+                        (ibuffer-projectile-set-filter-groups)
+                        (unless (eq ibuffer-sorting-mode 'alphabetic)
+                          (ibuffer-do-sort-by-alphabetic))))
+            (setq ibuffer-formats '((mark modified
+                                          read-only
+                                          " "
+                                          (name 18 18 :left :elide)
+                                          " "
+                                          (size 9 -1 :right)
+                                          " "
+                                          (mode 16 16 :left :elide)
+                                          " "
+                                          project-relative-file)))))
+
+
 
 ;; LSP
 (use-package eglot
