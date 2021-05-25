@@ -2412,9 +2412,9 @@ START and END comes from it being interactive."
                                                          'display
                                                          `((space :align-to (- (+ right right-fringe right-margin)
                                                                                ,(+ 2
-                                                                                   (+ (string-width (format-mode-line "%l:%c"))
+                                                                                   (+ (string-width (format-mode-line "%l:%c %p"))
                                                                                       (string-width (format-mode-line "%m")))))))))
-                                     (propertize "%l:%c" 'face 'font-lock-variable-name-face) ;; position in file
+                                     (propertize "%l:%c %p" 'face 'font-lock-variable-name-face) ;; position in file
                                      (propertize " %m " 'face 'font-lock-constant-face) ;; current mode
                                      ))
 
