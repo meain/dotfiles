@@ -1812,8 +1812,14 @@ Pass ORIGINAL and ALTERNATE options."
   :defer t)
 
 ;; Kubernetes
-(use-package kubel :straight t
-  :defer t)
+(use-package kubel
+  :straight t
+  :defer t
+  :config (progn
+            (setq kubel-use-namespace-list t)
+            (use-package kubel-evil
+              :straight t
+              :config (add-hook 'kubel-mode 'kubel-evil-mode))))
 
 ;; Window layout changer
 (use-package rotate
