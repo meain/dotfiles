@@ -881,6 +881,7 @@ Pass ORIGINAL and ALTERNATE options."
     (evil-leader/set-key "gg" 'magit-status)
     (evil-leader/set-key "gc" 'magit-commit-create))
   :config (progn
+            (setq magit-diff-refine-hunk (quote all))
             (define-key magit-mode-map (kbd "M-w") 'delete-window)
             (setq magit-completing-read-function #'selectrum-completing-read)))
 
