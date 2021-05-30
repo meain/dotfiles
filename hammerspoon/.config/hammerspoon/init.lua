@@ -68,56 +68,56 @@ clipdo.registerDefaultBindings({"alt", "shift"}, "I")
 
 -- Music keymaps
 local showCurrentSong = function()
-    local song = customshellrun.run(BIN .. "music/currentsongfull", true)
+    local song = customshellrun.run(BIN .. "music/currentsongfull")
     hs.alert(song)
 end
 hs.hotkey.bind(
     {"alt"},
     "right",
     function()
-        customshellrun.run(BIN .. "music/next", true)
+        customshellrun.run(BIN .. "music/next")
     end
 )
 hs.hotkey.bind(
     {"alt"},
     "left",
     function()
-        customshellrun.run(BIN .. "music/previous", true)
+        customshellrun.run(BIN .. "music/previous")
     end
 )
 hs.hotkey.bind(
     {"alt"},
     "\\",
     function()
-        customshellrun.run(BIN .. "music/playpause", true)
+        customshellrun.run(BIN .. "music/playpause")
     end
 )
 hs.hotkey.bind(
     {"alt"},
     "]",
     function()
-        customshellrun.run(BIN .. "music/musicspeedup", true)
+        customshellrun.run(BIN .. "music/musicspeedup")
     end
 )
 hs.hotkey.bind(
     {"alt"},
     "[",
     function()
-        customshellrun.run(BIN .. "music/musicslowdown", true)
+        customshellrun.run(BIN .. "music/musicslowdown")
     end
 )
 hs.hotkey.bind(
     {"alt"},
     ",",
     function()
-        customshellrun.run(BIN .. "music/seekbackward", true)
+        customshellrun.run(BIN .. "music/seekbackward")
     end
 )
 hs.hotkey.bind(
     {"alt"},
     ".",
     function()
-        customshellrun.run(BIN .. "music/seekforeward", true)
+        customshellrun.run(BIN .. "music/seekforeward")
     end
 )
 hs.hotkey.bind(
@@ -133,7 +133,7 @@ hs.hotkey.bind(
     {"alt", "shift"},
     "\\",
     function()
-        customshellrun.run(BIN .. "changewall", true)
+        customshellrun.run(BIN .. "changewall")
         hs.alert("🖼 Wallpaper changed!")
     end
 )
@@ -186,7 +186,7 @@ local emailNotify = function(alert)
                     {
                         title = vv,
                         fn = function()
-                            local jout = customshellrun.run("notmuch show --format json " .. eid, true)
+                            local jout = customshellrun.run("notmuch show --format json " .. eid)
                             local jse = json.decode(jout)
                             local mailcontent = ""
                             local unreadcount = 0
@@ -211,7 +211,7 @@ local emailNotify = function(alert)
                                 "OK"
                             )
                             if pressedButton == "Mark Read" then
-                                customshellrun.run("notmuch tag -unread " .. eid, true)
+                                customshellrun.run("notmuch tag -unread " .. eid)
                             end
                         end
                     }
@@ -225,8 +225,8 @@ local emailNotify = function(alert)
         return mailListing
     end
 
-    local result = customshellrun.run(BIN .. "unreadsenders | cut -c-120", true)
-    local unreadcount = customshellrun.run(BIN .. "mailcounter", true)
+    local result = customshellrun.run(BIN .. "unreadsenders | cut -c-120")
+    local unreadcount = customshellrun.run(BIN .. "mailcounter")
     mailcounter:setTitle(unreadcount)
     mailcounter:setTooltip(result)
     mailcounter:setMenu(populateMailListing(result))
@@ -245,7 +245,7 @@ hs.hotkey.bind(
     "e",
     function()
         emailNotify(true)
-        customshellrun.run("tmux refresh-client -S", true)
+        customshellrun.run("tmux refresh-client -S")
         emailPathWatcher:stop()
         emailPathWatcher = hs.pathwatcher.new("/Users/meain/.local/share/mail/.notmuch/xapian", emailNotify)
         emailPathWatcher:start()
@@ -258,7 +258,7 @@ hs.hotkey.bind(
         hs.alert("📫 Marking all emails as read")
         customshellrun.run("notmuch tag +notified tag:imbox and tag:unread", true)
         emailNotify(false)
-        customshellrun.run("tmux refresh-client -S", true)
+        customshellrun.run("tmux refresh-client -S")
     end
 )
 
@@ -266,7 +266,7 @@ hs.hotkey.bind(
     {"alt", "shift"},
     "s",
     function()
-        local result = customshellrun.run("task totn|tail -n+4|head -n5", true)
+        local result = customshellrun.run("task totn|tail -n+4|head -n5")
         hs.alert("🔨 Tasks\n" .. result)
     end
 )
@@ -287,7 +287,7 @@ hs.hotkey.bind(
     {"ctrl", "alt", "shift"},
     "s",
     function()
-        customshellrun.run(BIN .. "ssq", true)
+        customshellrun.run(BIN .. "ssq")
     end
 )
 
@@ -540,9 +540,9 @@ hs.hotkey.bind(
         local button, command =
             dialog.textPrompt("Command input", "Enter command to exec in master window", "", "Run", "Cancel")
         if button == "Run" then
-            customshellrun.run("tmux send-keys -t master:1 C-c", true)
-            customshellrun.run("tmux send-keys -t master:1 '" .. command .. "'", true)
-            customshellrun.run("tmux send-keys -t master:1 Enter", true)
+            customshellrun.run("tmux send-keys -t master:1 C-c")
+            customshellrun.run("tmux send-keys -t master:1 '" .. command .. "'")
+            customshellrun.run("tmux send-keys -t master:1 Enter")
         end
         if prev_window then
             prev_window:focus()
@@ -570,9 +570,9 @@ function ShowOutputInCanvas()
     canvas:behavior(hs.canvas.windowBehaviors.canJoinAllSpaces)
     canvas:level(hs.canvas.windowLevels.desktopIcon)
 
-    local result = customshellrun.run(canvascommand, true)
+    local result = customshellrun.run(canvascommand)
     canvas[1] = {
-        id = "hcal_title",
+        id = "taskwarriror-display",
         type = "text",
         text = result,
         textFont = "DankMono Nerd Font",
@@ -583,7 +583,7 @@ function ShowOutputInCanvas()
     canvas:show()
 end
 function UpdateOutputCanvas()
-    local result = customshellrun.run(canvascommand, true)
+    local result = customshellrun.run(canvascommand)
     canvas[1].text = result
 end
 ShowOutputInCanvas()
@@ -609,7 +609,7 @@ hs.hotkey.bind(
             canvastimer:start()
             canvastimer:setNextTrigger(10)
         end
-        -- hs.alert(customshellrun.run(BIN .. 'task-choose', true))
+        -- hs.alert(customshellrun.run(BIN .. 'task-choose'))
         taskwarrior.run()
     end
 )

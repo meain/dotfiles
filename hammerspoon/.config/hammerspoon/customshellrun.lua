@@ -9,7 +9,10 @@ module.run = function(script, use_zsh)
         -- no need to specify full path in script, but just too slow
         result = hs.execute(script, "/bin/zsh")
     else
-        result = hs.execute(script)
+        -- Do `echo $PATH > ~/.local/share/latestpath` once in a while
+        local path = io.open("/Users/meain/.local/share/latestpath"):read()
+        result = hs.execute("PATH='"..path.."' " .. script)
+        -- result = hs.execute(script)
     end
     return utils.trim(result)
 end
