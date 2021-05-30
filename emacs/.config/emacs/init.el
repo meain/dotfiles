@@ -1739,7 +1739,7 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; tramp dired
 (use-package tramp
-  :defer t
+  :disabled t
   :straight t
   :init (progn
           (setq remote-file-name-inhibit-cache nil)
@@ -1755,6 +1755,7 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; tramp-term
 (use-package tramp-term
+  :after tramp
   :straight t
   :commands tramp-term
   :init (defun meain/ssh-term ()
