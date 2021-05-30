@@ -1417,6 +1417,15 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package try :straight t
   :commands try)
 
+;; Winner mode
+(use-package winner
+  :config (progn
+            (global-set-key (kbd "M-f <left>")
+                            'winner-undo)
+            (global-set-key (kbd "M-f <right>")
+                            'winner-redo)
+            (winner-mode)))
+
 ;; notmuch
 (use-package notmuch
   :straight t
