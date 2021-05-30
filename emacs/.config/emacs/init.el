@@ -2048,6 +2048,7 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 (evil-leader/set-key "a N" 'meain/open-note)
 
 ;; dasht docs
+(defvar meain/dasht-server-port "1111" "Server port to be used for dast server.")
 (defun meain/dasht-docs (start end)
   "Look up word at point in dasht.
 START and END comes from it being interactive."
@@ -2058,13 +2059,24 @@ START and END comes from it being interactive."
     (if (eq (length thing) 0)
         (message "Nothing to look up.")
       (progn
-        (let ((lookup-term (read-from-minibuffer "Lookup term: " thing)))
-          (meain/run-in-vterm (concatenate 'string
-                                           "docs "
-                                           lookup-term
-                                           " "
-                                           (completing-read "Docset: "
-                                                            (split-string (shell-command-to-string "dasht-docsets"))))))))))
+        (if (eq (get-buffer "*dasht-server*") nil)
+            (progn
+              (message "Starting dasht-server")
+              (start-process-shell-command "dasht-server"
+                                           "*dasht-server*"
+                                           (concat "dasht-server " meain/dasht-server-port))))
+        (let* ((lookup-term (read-from-minibuffer "Lookup term: " thing))
+               (dasht-server-url (concat "http://127.0.0.1:" meain/dasht-server-port))
+               (full-url (concatenate 'string
+                                      dasht-server-url
+                                      "/?"
+                                      "query="
+                                      lookup-term
+                                      "&docsets="
+                                      (completing-read "Docset: "
+                                                       (split-string (shell-command-to-string "dasht-docsets"))))))
+          (message full-url)
+          (eww full-url))))))
 (evil-leader/set-key "a d" 'meain/dasht-docs)
 
 ;; cheat.sh
