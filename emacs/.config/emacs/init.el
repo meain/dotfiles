@@ -260,34 +260,43 @@ Pass ORIGINAL and ALTERNATE options."
                 'universal-argument)
 
 ;; Window mappings
+(defun meain/move-swap-right (&optional swap)
+  "Move to window on right or move window to right if SWAP."
+  (interactive "P")
+  (evil-force-normal-state)
+  (if swap
+      (windmove-swap-states-right)
+    (windmove-right)))
 (global-set-key (kbd "M-l")
-                (defun meain/move-swap-right (&optional swap)
-                  (interactive "P")
-                  (evil-force-normal-state)
-                  (if swap
-                      (windmove-swap-states-right)
-                    (windmove-right))))
+                'meain/move-swap-right)
+(defun meain/move-swap-left (&optional swap)
+  "Move to window on left or move window to left if SWAP."
+  (interactive "P")
+  (evil-force-normal-state)
+  (if swap
+      (windmove-swap-states-left)
+    (windmove-left)))
 (global-set-key (kbd "M-h")
-                (defun meain/move-swap-left (&optional swap)
-                  (interactive "P")
-                  (evil-force-normal-state)
-                  (if swap
-                      (windmove-swap-states-left)
-                    (windmove-left))))
+                'meain/move-swap-left)
+(defun meain/move-swap-up (&optional swap)
+  "Move to window on top or move window to top if SWAP."
+  (interactive "P")
+  (evil-force-normal-state)
+  (if swap
+      (windmove-swap-states-up)
+    (windmove-up)))
 (global-set-key (kbd "M-k")
-                (defun meain/move-swap-up (&optional swap)
-                  (interactive "P")
-                  (evil-force-normal-state)
-                  (if swap
-                      (windmove-swap-states-up)
-                    (windmove-up))))
+                'meain/move-swap-up)
+(defun meain/move-swap-down (&optional swap)
+  "Move to window on bottom or move window to bottom if SWAP."
+  (interactive "P")
+  (evil-force-normal-state)
+  (if swap
+      (windmove-swap-states-down)
+    (windmove-down))
+  'meain/move-swap-down)
 (global-set-key (kbd "M-j")
-                (defun meain/move-swap-down (&optional swap)
-                  (interactive "P")
-                  (evil-force-normal-state)
-                  (if swap
-                      (windmove-swap-states-down)
-                    (windmove-down))))
+                'meain/move-swap-down)
 (global-set-key (kbd "M-b")
                 (lambda (&optional open-term)
                   (interactive "P")
@@ -1160,10 +1169,10 @@ Pass ORIGINAL and ALTERNATE options."
     (define-key vterm-mode-map (kbd "M-m") 'meain/shell-other)
     (define-key vterm-mode-map (kbd "M-w") 'delete-window)
     (define-key vterm-mode-map (kbd "M-u") 'universal-argument)
-    (define-key vterm-mode-map (kbd "M-l") 'evil-window-right)
-    (define-key vterm-mode-map (kbd "M-h") 'evil-window-left)
-    (define-key vterm-mode-map (kbd "M-k") 'evil-window-up)
-    (define-key vterm-mode-map (kbd "M-j") 'evil-window-down)
+    (define-key vterm-mode-map (kbd "M-l") 'meain/move-swap-right)
+    (define-key vterm-mode-map (kbd "M-h") 'meain/move-swap-left)
+    (define-key vterm-mode-map (kbd "M-k") 'meain/move-swap-up)
+    (define-key vterm-mode-map (kbd "M-j") 'meain/move-swap-down)
     (define-key vterm-mode-map (kbd "M-H") 'shrink-window-horizontally)
     (define-key vterm-mode-map (kbd "M-L") 'enlarge-window-horizontally)
     (define-key vterm-mode-map (kbd "M-K") 'shrink-window)
@@ -1356,31 +1365,19 @@ Pass ORIGINAL and ALTERNATE options."
             (evil-define-key 'normal
               org-mode-map
               (kbd "M-l")
-              (lambda ()
-                (interactive)
-                (evil-force-normal-state)
-                (evil-window-right 1)))
+              'meain/move-swap-right)
             (evil-define-key 'normal
               org-mode-map
               (kbd "M-h")
-              (lambda ()
-                (interactive)
-                (evil-force-normal-state)
-                (evil-window-left 1)))
+              'meain/move-swap-left)
             (evil-define-key 'normal
               org-mode-map
               (kbd "M-k")
-              (lambda ()
-                (interactive)
-                (evil-force-normal-state)
-                (evil-window-up 1)))
+              'meain/move-swap-up)
             (evil-define-key 'normal
               org-mode-map
               (kbd "M-j")
-              (lambda ()
-                (interactive)
-                (evil-force-normal-state)
-                (evil-window-down 1)))
+              'meain/move-swap-down)
             (evil-define-key 'normal
               org-mode-map
               (kbd "gk")
@@ -1440,17 +1437,11 @@ Pass ORIGINAL and ALTERNATE options."
             (evil-define-key 'normal
               notmuch-show-mode-map
               (kbd "M-k")
-              (lambda ()
-                (interactive)
-                (evil-force-normal-state)
-                (evil-window-up 1)))
+              'meain/move-swap-up)
             (evil-define-key 'normal
               notmuch-show-mode-map
               (kbd "M-j")
-              (lambda ()
-                (interactive)
-                (evil-force-normal-state)
-                (evil-window-down 1)))
+              'meain/move-swap-down)
             (defun meain/notmuch-show-close-all-but-unread ()
               "Close all messages until the first unread item."
               (interactive)
