@@ -729,6 +729,7 @@ Pass ORIGINAL and ALTERNATE options."
 
 
 ;; LSP
+(use-package project :straight t)  ;; dependency
 (use-package eglot
   :commands eglot-ensure
   :straight t
