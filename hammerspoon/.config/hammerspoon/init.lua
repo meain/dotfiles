@@ -434,18 +434,27 @@ browsernewtab =
         browsernewtab:enable()
     end
 )
--- cmd+e from anywhere to select a chat on slack
+
+-- cmd+e to open chat picker in slack/element
 slackchat =
     hs.hotkey.bind(
     {"cmd"},
     "e",
     function()
         local slack = hs.application("slack")
-        if not slack:isFrontmost() then
-            hs.application.launchOrFocus("slack")
+        local element = hs.application("element")
+        local current_app = hs.window.focusedWindow()
+        if current_app:title():sub(1, 7) == "Element" or (slack == nil and element ~= nil) then
+            if not element:isFrontmost() then
+                hs.application.launchOrFocus("element")
+            end
+        else
+            if not slack:isFrontmost() then
+                hs.application.launchOrFocus("slack")
+            end
         end
         browsernewtab:disable()
-        hs.eventtap.keyStroke({"cmd"}, "t")
+        hs.eventtap.keyStroke({"cmd"}, "k")
         browsernewtab:enable()
     end
 )
