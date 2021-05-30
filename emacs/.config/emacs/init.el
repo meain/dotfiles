@@ -456,6 +456,8 @@ Pass ORIGINAL and ALTERNATE options."
               dired-mode-map
               (kbd "+")
               'dired-create-empty-file)
+            (setq dired-omit-files "\\.DS_Store$\\|__pycache__$\\|.pytest_cache$\\|\\.mypy_cache$\\|\\.egg-info$")
+            (add-hook 'dired-mode-hook 'dired-omit-mode)
             (add-hook 'dired-mode-hook 'hl-line-mode)
             (add-hook 'dired-mode-hook 'dired-hide-details-mode)
             (define-key evil-normal-state-map (kbd "-") 'dired-jump)
