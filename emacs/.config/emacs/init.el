@@ -709,9 +709,9 @@ Pass ORIGINAL and ALTERNATE options."
                                                       (if (projectile-project-p)
                                                           (projectile-find-file)
                                                         (projectile-switch-project))))
-            (setq projectile-mode-line "Projectile") ; might speed up tramp
-            (projectile-mode 1)
-            (setq projectile-sort-order 'recently-active)))
+    (setq projectile-mode-line "Projectile") ; might speed up tramp
+    (projectile-mode 1)
+    (setq projectile-sort-order 'recently-active)))
 
 ;; ibuffer-projectile
 (use-package ibuffer-projectile
