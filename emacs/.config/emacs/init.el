@@ -600,25 +600,15 @@ Pass ORIGINAL and ALTERNATE options."
             (setq read-buffer-completion-ignore-case t)
             (setq completion-ignore-case t)
             (setq selectrum-display-style '(horizontal))
-            (selectrum-mode +1)
-            ;; Optional performance optimization by highlighting only the visible candidates.
-            (setq orderless-skip-highlighting (lambda ()
-                                                selectrum-is-active))
-            (setq selectrum-highlight-candidates-function
-                  #'orderless-highlight-matches)):bind
+            (selectrum-mode +1)):bind
   (:map selectrum-minibuffer-map
         ("<S-backspace>" . selectrum-backward-kill-sexp)))
 (use-package selectrum-prescient
   :straight t
   :config (progn
+            (setq prescient-filter-method '(literal-prefix prefix fuzzy regexp))
             (selectrum-prescient-mode +1)
             (prescient-persist-mode +1)))
-(use-package orderless
-  :straight t
-  :config (progn
-            ;; (setq completion-styles '(partial-completion substring initials orderless flex))
-            ;; (setq completion-styles '(orderless)
-            (setq orderless-matching-styles '(orderless-regexp orderless-flex))))
 (use-package marginalia
   :straight t
   :bind (:map minibuffer-local-map
