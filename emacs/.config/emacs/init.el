@@ -438,6 +438,9 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;;; [OTHER PACKAGES] =============================================
 
+;; project (eglot dependency)
+(use-package project :straight t)
+
 ;; eldoc load
 (use-package eldoc
   :init (setq eldoc-echo-area-use-multiline-p nil):config
@@ -729,9 +732,9 @@ Pass ORIGINAL and ALTERNATE options."
 
 
 ;; LSP
-(use-package project :straight t)  ;; dependency
 (use-package eglot
   :commands eglot-ensure
+  :after project
   :straight t
   :hook ((python-mode . eglot-ensure)
          (rust-mode . eglot-ensure)
