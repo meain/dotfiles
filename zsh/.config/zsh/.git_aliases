@@ -41,7 +41,7 @@ alias glp="gl @{1}.."
 # Easier checkout
 alias gcom='git checkout master'
 alias gcob='git checkout -b'
-alias gbd='git branch | grep -v "\*" | sed s:^..::g | fzf -m --height 40% --reverse | xargs git branch -D'
+alias gbd='git branch | grep -v "\*" | grep -v "master" | sed s:^..::g | fzf -m --height 40% --reverse | xargs git branch -D'
 
 # Fancy push
 alias gpl='git pull origin $(git branch | grep "\*" | sed s:^..::g ) && echo "Use `tput setaf 2`glp`tput sgr0` and `tput setaf 2`gdp`tput sgr0` to view new commits"'
