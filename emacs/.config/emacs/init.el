@@ -741,6 +741,7 @@ Pass ORIGINAL and ALTERNATE options."
   :hook ((python-mode . eglot-ensure)
          (rust-mode . eglot-ensure)
          (shell-script-mode . eglot-ensure)
+         (sh-mode . eglot-ensure)
          (js-mod . eglot-ensure)
          (lua-mode . eglot-ensure)
          (go-mode . eglot-ensure)):config
