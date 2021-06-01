@@ -263,7 +263,6 @@ Pass ORIGINAL and ALTERNATE options."
 (defun meain/move-swap-right (&optional swap)
   "Move to window on right or move window to right if SWAP."
   (interactive "P")
-  (evil-force-normal-state)
   (if swap
       (windmove-swap-states-right)
     (windmove-right)))
@@ -272,7 +271,6 @@ Pass ORIGINAL and ALTERNATE options."
 (defun meain/move-swap-left (&optional swap)
   "Move to window on left or move window to left if SWAP."
   (interactive "P")
-  (evil-force-normal-state)
   (if swap
       (windmove-swap-states-left)
     (windmove-left)))
@@ -281,7 +279,6 @@ Pass ORIGINAL and ALTERNATE options."
 (defun meain/move-swap-up (&optional swap)
   "Move to window on top or move window to top if SWAP."
   (interactive "P")
-  (evil-force-normal-state)
   (if swap
       (windmove-swap-states-up)
     (windmove-up)))
@@ -290,7 +287,6 @@ Pass ORIGINAL and ALTERNATE options."
 (defun meain/move-swap-down (&optional swap)
   "Move to window on bottom or move window to bottom if SWAP."
   (interactive "P")
-  (evil-force-normal-state)
   (if swap
       (windmove-swap-states-down)
     (windmove-down))
@@ -300,7 +296,6 @@ Pass ORIGINAL and ALTERNATE options."
 (global-set-key (kbd "M-b")
                 (lambda (&optional open-term)
                   (interactive "P")
-                  (evil-force-normal-state)
                   (split-window-below)
                   (windmove-down)
                   (when open-term
@@ -308,7 +303,6 @@ Pass ORIGINAL and ALTERNATE options."
 (global-set-key (kbd "M-v")
                 (lambda (&optional open-term)
                   (interactive "P")
-                  (evil-force-normal-state)
                   (split-window-right)
                   (windmove-right)
                   (when open-term
