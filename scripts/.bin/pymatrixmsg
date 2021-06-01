@@ -1,0 +1,18 @@
+#!/usr/bin/env python
+
+import os
+import sys
+import json
+from urllib import request
+
+room = os.environ["MATRIX_CHANNEL"]
+token = os.environ["MATRIX_ACCESS_TOKEN"]
+message = "".join(sys.stdin.readlines())
+
+url = f"https://matrix.org/_matrix/client/r0/rooms/{room}/send/m.room.message?access_token={token}"
+data = {"msgtype": "m.text", "body": message}
+
+# recreation of matrixmsg in python just so that I can send body as whatever
+data = str(json.dumps(data)).encode("utf-8")
+req = request.Request(url, data=data)
+resp = request.urlopen(req)
