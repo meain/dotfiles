@@ -14,11 +14,11 @@ defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -int 
 defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1     # use tap instead of click on trackpad
 defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1                  # use tap instead of click on trackpad
 defaults write NSGlobalDomain KeyRepeat -int 1                                    # key repeat speed
-defaults write NSGlobalDomain InitialKeyRepeat -int 15                            # inital key repeat delay
+defaults write NSGlobalDomain InitialKeyRepeat -int 15                            # initial key repeat delay
 defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true      # no .DS_Store on network devices
 defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true          # no .DS_Store on USB storage
-defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"               # search current dir in finder by deafult
-defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"               # set listview as prefered view in finder
+defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"               # search current dir in finder by default
+defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"               # set listview as preferred view in finder
 defaults write com.apple.dock tilesize -int 20                                    # smaller dock icons
 defaults write com.apple.dock mouse-over-hilite-stack -bool false                 # no highlight effect on docker grid view
 defaults write com.apple.dock minimize-to-application -bool false                 # minimise to indivual app spots
