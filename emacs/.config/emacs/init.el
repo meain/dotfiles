@@ -2062,27 +2062,25 @@ START and END comes from it being interactive."
   (let ((thing (if (use-region-p)
                    (buffer-substring start end)
                  (thing-at-point 'symbol))))
-    (if (eq (length thing) 0)
-        (message "Nothing to look up.")
-      (progn
-        (if (eq (get-buffer "*dasht-server*") nil)
-            (progn
-              (message "Starting dasht-server")
-              (start-process-shell-command "dasht-server"
-                                           "*dasht-server*"
-                                           (concat "dasht-server " meain/dasht-server-port))))
-        (let* ((lookup-term (read-from-minibuffer "Lookup term: " thing))
-               (dasht-server-url (concat "http://127.0.0.1:" meain/dasht-server-port))
-               (full-url (concatenate 'string
-                                      dasht-server-url
-                                      "/?"
-                                      "query="
-                                      lookup-term
-                                      "&docsets="
-                                      (completing-read "Docset: "
-                                                       (split-string (shell-command-to-string "dasht-docsets"))))))
-          (message full-url)
-          (eww full-url))))))
+    (progn
+      (if (eq (get-buffer "*dasht-server*") nil)
+          (progn
+            (message "Starting dasht-server")
+            (start-process-shell-command "dasht-server"
+                                         "*dasht-server*"
+                                         (concat "dasht-server " meain/dasht-server-port))))
+      (let* ((lookup-term (read-from-minibuffer "Lookup term: " thing))
+             (dasht-server-url (concat "http://127.0.0.1:" meain/dasht-server-port))
+             (full-url (concatenate 'string
+                                    dasht-server-url
+                                    "/?"
+                                    "query="
+                                    lookup-term
+                                    "&docsets="
+                                    (completing-read "Docset: "
+                                                     (split-string (shell-command-to-string "dasht-docsets"))))))
+        (message full-url)
+        (eww full-url)))))
 (evil-leader/set-key "a d" 'meain/dasht-docs)
 
 ;; cheat.sh
