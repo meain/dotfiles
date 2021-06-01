@@ -510,7 +510,7 @@ hs.hotkey.bind(
             title:sub(1, 5) == "Slack" or title:sub(1, 7) == "Element" or title:sub(1, 8) == "Hydrogen" or
                 title:sub(title:len() - 6, title:len()) == "Discord"
          then
-            currentWindow:move(hs.geometry(10, 415, 895, 475))
+            currentWindow:move(hs.geometry(10, 390, 920, 500))
         else
             currentWindow:move(wPosition)
         end
