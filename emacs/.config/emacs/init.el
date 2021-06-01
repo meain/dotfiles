@@ -347,8 +347,10 @@ Pass ORIGINAL and ALTERNATE options."
 (define-key evil-normal-state-map "Q" 'evil-record-macro)
 
 ;; Eval region
-;; Figure out a way to auto exit normal mode after eval
-(define-key evil-visual-state-map (kbd ";") 'eval-region)
+(define-key evil-visual-state-map (kbd ";") (lambda ()
+                                              (interactive)
+                                              (call-interactively 'eval-region)
+                                              (evil-force-normal-state)))
 
 ;; Quick quit
 (defun meain/create-or-switch-to-scratch ()
