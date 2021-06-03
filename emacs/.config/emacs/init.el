@@ -627,7 +627,8 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package selectrum-prescient
   :straight t
   :config (progn
-            (setq prescient-filter-method '(literal-prefix prefix fuzzy regexp))
+            (setq prescient-filter-method '(literal prefix fuzzy regexp))
+            (setq prescient-sort-full-matches-first t)
             (selectrum-prescient-mode +1)
             (prescient-persist-mode +1)))
 (use-package marginalia
