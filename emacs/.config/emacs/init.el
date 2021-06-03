@@ -1,4 +1,4 @@
-;;; init -- meain's Emacs config
+;;; init -- meain's Emacs config -*- lexical-binding: t -*-
 
 ;;; Commentary:
 ;; Well, this is a vimmer's Emacs config.  Nothing fancy though.
@@ -566,6 +566,28 @@ Pass ORIGINAL and ALTERNATE options."
           (evil-leader/set-key "j" 'flymake-goto-next-error)
           (evil-leader/set-key "k" 'flymake-goto-prev-error)):config
   (add-hook 'flymake-mode-hook #'flymake-diagnostic-at-point-mode))
+(use-package flymake-quickdef
+  :straight t
+  :after flymake
+  :config (progn
+            ;; https://github.com/crate-ci/typos
+            (flymake-quickdef-backend flymake-check-typos
+              :pre-let ((typos-exec (executable-find "typos"))):pre-check
+              (unless typos-exec
+                (error "Cannot find typos executable"))
+              :write-type 'file
+              :proc-form (list typos-exec "--hidden" "--format" "brief"
+                               fmqd-temp-file):search-regexp
+              "^\\([^:]+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\): \\(.*\\)$"
+              :prep-diagnostic (let* ((lnum (string-to-number (match-string 2)))
+                                      (col (string-to-number (match-string 3)))
+                                      (text (match-string 4))
+                                      (pos (flymake-diag-region fmqd-source lnum col))
+                                      (beg (car pos))
+                                      (end (cdr pos))
+                                      (msg (format "%s" text)))
+                                 (list fmqd-source beg end :warning msg)))
+            (add-hook 'flymake-diagnostic-functions 'flymake-check-typos)))
 
 ;; Company for autocompletions
 (use-package company
