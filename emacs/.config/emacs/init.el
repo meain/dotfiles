@@ -980,7 +980,7 @@ Pass ORIGINAL and ALTERNATE options."
           (save-place-mode t)
           (setq save-place-file "~/.cache/emacs/saveplace")))
 
-;; Persistant undo using undo-tree
+;; Persistent undo using undo-tree
 (use-package undo-tree
   :straight t
   :diminish :config
@@ -1798,7 +1798,7 @@ Pass ORIGINAL and ALTERNATE options."
   :diminish :config
   (global-activity-watch-mode))
 
-;; Markdown preivew
+;; Markdown preview
 (defun meain/markdown-preview ()
   "Preview markdown.  Using pandoc under the hood."
   (interactive)
