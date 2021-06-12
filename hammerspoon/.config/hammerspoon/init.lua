@@ -589,8 +589,12 @@ end
 ShowOutputInCanvas()
 
 -- Date canvas
+local datecanvas = nil
 function PaintDateCanvas()
-    canvas =
+    if datecanvas ~= nil then
+        datecanvas:hide()
+    end
+    datecanvas =
         hs.canvas.new(
         {
             x = 10,
@@ -600,12 +604,12 @@ function PaintDateCanvas()
         }
     )
 
-    canvas:behavior(hs.canvas.windowBehaviors.canJoinAllSpaces)
-    canvas:level(hs.canvas.windowLevels.desktopIcon)
+    datecanvas:behavior(hs.canvas.windowBehaviors.canJoinAllSpaces)
+    datecanvas:level(hs.canvas.windowLevels.desktopIcon)
     local diffDate = os.difftime(os.time(), os.time({year = 1996, month = 8, day = 13}))
     local daysSince = math.floor(diffDate / (24 * 60 * 60))
 
-    canvas[1] = {
+    datecanvas[1] = {
         id = "date-display",
         type = "text",
         text = daysSince,
@@ -614,7 +618,7 @@ function PaintDateCanvas()
         textColor = hcaltitlecolor,
         textAlignment = "left"
     }
-    canvas:show()
+    datecanvas:show()
 end
 PaintDateCanvas()
 hs.timer.doEvery(
