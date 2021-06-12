@@ -698,9 +698,9 @@ Pass ORIGINAL and ALTERNATE options."
               (:install "npm i -g fixjson")
               (:languages "JSON")
               (:format (format-all--buffer-easy executable)))
-            (setq format-all-formatters '(("HTML" prettier)
-                                          ("Go" goimports)
-                                          ("JSON" fixjson)))
+            (setq-default format-all-formatters '(("HTML" prettier)
+                                                  ("Go" goimports)
+                                                  ("JSON" fixjson)))
             (add-hook 'prog-mode-hook 'format-all-ensure-formatter)):init
   (progn
     (defun meain/auto-format ()
