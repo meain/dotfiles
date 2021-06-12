@@ -665,3 +665,6 @@ hs.hotkey.bind(
         workspaceLogin()
     end
 )
+
+hs.hotkey.bind({"ctrl", "alt"}, "h", hs.toggleConsole)
+hs.notify.new({title = "Hammerspoon loaded!", informativeText = "You are now ready to start clicking"}):send()

@@ -11,4 +11,3 @@ function reloadConfig(files)
     end
 end
 hs.pathwatcher.new(os.getenv("HOME") .. "/.config/hammerspoon/", reloadConfig):start()
-hs.notify.new({title = "Hammerspoon", informativeText = "Hammerspoon config reloaded!"}):send()
