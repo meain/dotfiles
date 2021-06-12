@@ -24,17 +24,14 @@
     # packages
     notmuch # mail indexer
     isync # mail syncronize with upstrem
-    slack-cli # interact with slack from cli
     htop # process monitor
     mpc_cli # remote for mpd
     mpd # music player
     axel # download manager
-    bat # cat with syntax highlight
     pandoc # convert document between different formats
     xsv # view/manage csv from terminal
     parallel # exec things in parallel
     fortune # give me a fortune
-    surfraw # search web
     lf # better ranger alternative
     diff-so-fancy # really good diff
     icdiff # simple colorfull diff replacement
@@ -56,20 +53,15 @@
     chafa # show images in terminal using half blocks
     hub # Github integration for git
     lynx # terminal web browser
-    w3m # terminal web browser
     imagemagick # image manip cli
     ffmpeg # video manip cli
-    gifski # gif manip cli
-    httpie # prettier curl for debugging
     gnuplot # plotting
     ddgr # search ddg from terminal
     dasht # terminal docs
-    qrencode # encode data as qr from cli
     taskwarrior # task management
     todo-txt-cli # todo management
     ts # task spooler
-    ncdu # disk usage viewer tui
-    pstree # view process tree
+    # pstree # view process tree
     jid # json incremental digger
     tldr # simpler man pages
     # silicon # create pretty code screenshots  # build error
@@ -140,23 +132,28 @@
     google-cloud-sdk # manage google cloud
 
     # optional
-    taskell # kanban board tui
+    ncdu # disk usage viewer tui
+    bat # cat with syntax highlight
+    surfraw # search web
+    # httpie # prettier curl for debugging
+    qrencode # encode data as qr from cli
+    w3m # terminal web browser
     scim # excel for terminal
-    jrnl # journaling
+    # jrnl # journaling
     figlet # make big text
     gource # source tree visualisation
     tig # tui git interface
-    lazygit # tui git interface
-    lazydocker # tui docker interface
-    ncmpcpp # mpd tui client
+    # lazygit # tui git interface
+    # lazydocker # tui docker interface
+    # ncmpcpp # mpd tui client
     tokei # count lines of code
-    navi # interactive cli launcher
-    googler # search google from terminal
-    cmatrix # matrix thingy in shell
-    graphviz # draw graphs with code
+    # navi # interactive cli launcher
+    # googler # search google from terminal
+    # cmatrix # matrix thingy in shell
+    # graphviz # draw graphs with code
 
     # tryout
-    gforth # gnu forth interpretter
-    groff # gnu troff
+    # gforth # gnu forth interpretter
+    # groff # gnu troff
   ];
 }
