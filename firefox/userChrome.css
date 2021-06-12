@@ -1,6 +1,6 @@
 * {
-  font-family: "Operator Mono Book" !important;
-  font-size: 10pt !important;
+  font-family: "DankMono Nerd Font";
+  font-size: 9pt;
 }
 
 /* https://github.com/nuchi/firefox-quantum-userchromejs */
@@ -42,20 +42,34 @@ body > box:nth-child(10) {
 }
 
 /* tab configs */
+#navigator-toolbox {
+  border: none !important;
+}
 .tab-line {
   opacity: 0.1 !important;
   --tab-line-color: black;
   -moz-box-ordinal-group: 999 !important;
 }
+.tabbrowser-tab {
+  padding: 0 !important;
+}
+.tab-background {
+  border-radius: 0 !important;
+  margin: 0 !important;
+  box-shadow: none !important;
+}
 .tab-background[selected="true"] {
-	background-color: #9AB2B5 !important;
-	background-image: none !important;
+  background-color: #9ab2b5 !important;
+  background-image: none !important;
 }
 .tabbrowser-tab::after,
 .tabbrowser-tab::before {
   border: none !important;
   color: grey !important;
   opacity: 0.2 !important;
+}
+.tab-icon-sound-label{
+  font-size: 9px;
 }
 
 #back-button {
