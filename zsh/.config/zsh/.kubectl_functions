@@ -28,6 +28,11 @@ kdesc() {
 	kall "$*" | xargs kubectl describe
 }
 
+kdeljobs() {
+  kubectl delete pod --field-selector=status.phase==Succeeded -n "$1"
+  kubectl delete pod --field-selector=status.phase==Failed -n "$1"
+}
+
 k_change_namespace() {
 	NAMESPCE="$(kubectl get namespace | tail -n+2 | fzf --query "$1" | cut -d' ' -f1)"
 	[ -z "$NAMESPCE" ] && return 0
