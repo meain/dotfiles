@@ -2298,10 +2298,7 @@ START and END comes from it being interactive."
       (message "%s coped to clipboard." web-url)
       (start-process-shell-command "pbcopy-gh"
                                    "*pbcopy-gh*"
-                                   (format "echo '%s'|pbcopy" web-url))
-      (start-process-shell-command "gh"
-                                   "*gh*"
-                                   (format "open '%s'" web-url)))))
+                                   (format "echo '%s'|pbcopy" web-url)))))
 (evil-leader/set-key "b G" 'meain/github-url)
 
 ;; Generate pdf from markdown document
