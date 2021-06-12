@@ -2,9 +2,14 @@
 
 set -e
 
-while ! ping -c1 meain.io 2>/dev/null; do
-    printf "."
+start="$(date +%s)"
+while ! ping -c1 meain.io 1>/dev/null 2>/dev/null; do
+    end="$(date +%s)"
+    timedifference="$((end-start))"
+    printf "You have been down for %s seconds.\r" "$timedifference"
     sleep 1
 done
+end="$(date +%s)"
+echo "You are now connected. You were down for $((end-start)) seconds."
 notify "You are now connected."
 say "You are now connected." -v Kyoko
