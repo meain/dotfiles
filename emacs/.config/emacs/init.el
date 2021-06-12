@@ -13,7 +13,7 @@
 
 ;; Setup straight.el
 (setq straight-repository-branch "develop")
-(setq straight-vc-git-default-protocol 'ssh)
+;; (setq straight-vc-git-default-protocol 'ssh)
 (defvar bootstrap-version)
 (let ((bootstrap-file (expand-file-name "straight/repos/straight.el/bootstrap.el"
                                         user-emacs-directory))
