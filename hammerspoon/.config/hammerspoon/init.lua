@@ -588,6 +588,44 @@ function UpdateOutputCanvas()
 end
 ShowOutputInCanvas()
 
+-- Date canvas
+function PaintDateCanvas()
+    canvas =
+        hs.canvas.new(
+        {
+            x = 10,
+            y = 630,
+            w = 600,
+            h = 600
+        }
+    )
+
+    canvas:behavior(hs.canvas.windowBehaviors.canJoinAllSpaces)
+    canvas:level(hs.canvas.windowLevels.desktopIcon)
+    local diffDate = os.difftime(os.time(), os.time({year = 1996, month = 8, day = 13}))
+    local daysSince = math.floor(diffDate / (24 * 60 * 60))
+
+    canvas[1] = {
+        id = "date-display",
+        type = "text",
+        text = daysSince,
+        textFont = "Operator Mono",
+        textSize = 200,
+        textColor = hcaltitlecolor,
+        textAlignment = "left"
+    }
+    canvas:show()
+end
+PaintDateCanvas()
+hs.timer.doEvery(
+    -- Ideally just every day would do, but doing it ever hour as we
+    -- might not start ar the right hour.
+    60 * 60,
+    function()
+        PaintDateCanvas()
+    end
+)
+
 -- taskwarrior
 local taskwarrior = require("taskwarrior")
 local canvastimer = nil
