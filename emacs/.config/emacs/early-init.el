@@ -24,10 +24,10 @@
 ;; Font setup
 ;; iA Writer Mono S 14 | Inconsolata 16 | Fantasque Sans Mono 16 | JetBrains Mono 14
 ;; Fira Code 15 | Noto Sans Mono 15 | DankMono Nerd Font 15 | Roboto Mono 14 | Iosevka 15
-;; Font (set-frame-font  "saxMono 15")
-(defvar meain/font-family-default "saxMono 15"
+;; Font (set-frame-font  "DankMono Nerd Font 15")
+(defvar meain/font-family-default "DankMono Nerd Font 15"
   "Custom font family")
-(setq-default line-spacing .4) ;; .1 for Inconsolata
+(setq-default line-spacing .1) ;; .1 for Inconsolata
 (add-to-list 'default-frame-alist
              `(font . ,meain/font-family-default))
 
