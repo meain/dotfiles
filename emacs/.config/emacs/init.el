@@ -1967,9 +1967,8 @@ Pass ORIGINAL and ALTERNATE options."
         (set-window-configuration meain/window-configuration))
     (setq meain/window-configuration (current-window-configuration))
     (delete-other-windows)))
-(global-set-key (kbd "M-m")
+(global-set-key (kbd "M-f f")
                 'meain/monacle-mode)
-(evil-leader/set-key "b m" 'meain/monacle-mode)
 
 ;; Quick open scratch buffers
 (defun meain/scratchy ()
