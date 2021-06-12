@@ -1862,12 +1862,16 @@ Pass ORIGINAL and ALTERNATE options."
             (defun meain/ts-get-class-like-thing ()
               (cond
                ((eq major-mode 'rust-mode) 'impl_item)
+               ((eq major-mode 'go-mode) 'struct_type)
                ((eq major-mode 'python-mode) 'class_definition)))
             (defun meain/ts-get-func-like-thing ()
               (cond
                ((eq major-mode 'rust-mode) 'function_item)
+               ((eq major-mode 'go-mode) 'function_declaration)
                ((eq major-mode 'python-mode) 'function_definition)))
             (defun meain/ts-get-class-like-thing-name ()
+              "Get name of the closeset class like thingy."
+              (interactive)
               (let* ((node-at-point (tree-sitter-node-at-point (meain/ts-get-class-like-thing)))
                      (name (cond
                             ((eq node-at-point nil) "")
@@ -1876,6 +1880,8 @@ Pass ORIGINAL and ALTERNATE options."
                                          (tsc-node-text)))))))
                 (format "%s" name)))
             (defun meain/ts-get-func-like-thing-name ()
+              "Get name of the closeset function like thingy."
+              (interactive)
               (let* ((node-at-point (tree-sitter-node-at-point (meain/ts-get-func-like-thing)))
                      (name (cond
                             ((eq node-at-point nil) "")
