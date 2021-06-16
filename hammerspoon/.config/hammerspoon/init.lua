@@ -16,6 +16,7 @@ mailcounter:setTitle("M")
 local BIN = os.getenv("HOME") .. "/.bin/"
 local browser = "firefox"
 local editor = "Emacs"
+local terminal = "alacritty"
 
 -- Disable animations
 hs.window.animationDuration = 0
@@ -303,6 +304,13 @@ hs.hotkey.bind(
     "k",
     function()
         focusandback(browser)
+    end
+)
+hs.hotkey.bind(
+    {"cmd", "shift"},
+    "h",
+    function()
+        focusandback(terminal)
     end
 )
 hs.hotkey.bind(
