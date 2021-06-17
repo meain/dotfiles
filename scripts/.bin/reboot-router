@@ -1,0 +1,9 @@
+#!/bin/sh
+
+set -e
+
+pass="$(pass show router/admin)"
+encoded_pass="$(printf "%s" "$pass"|base64)"
+rpass="$(curl 'http://192.168.0.1/LoginCheck' --data-raw "Username=admin&Password=$encoded_pass" -v 2>&1 | grep Set-Cookie | grep -oE 'ecos_pw=[^:]+')"
+curl 'http://192.168.0.1/goform/SysToolReboot' -H "Cookie: ecos_pw=$rpass" -m 5
+
