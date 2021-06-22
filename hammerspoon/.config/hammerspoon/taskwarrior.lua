@@ -46,7 +46,7 @@ function obj.run()
     selecter:width(69)
     selecter:placeholderText("Choose task to mark complete")
 
-    local result = customshellrun.run("/usr/local/bin/task totn")
+    local result = customshellrun.run("task totn")
     local tasks = utils.split(result, "\n")
 
     local choices = {}
