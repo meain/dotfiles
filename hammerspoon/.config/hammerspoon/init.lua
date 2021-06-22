@@ -592,8 +592,8 @@ function PaintDateCanvas()
     datecanvas =
         hs.canvas.new(
         {
-            x = 10,
-            y = 630,
+            x = 990,
+            y = 640,
             w = 600,
             h = 600
         }
