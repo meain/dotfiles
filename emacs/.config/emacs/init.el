@@ -1531,7 +1531,7 @@ Pass ORIGINAL and ALTERNATE options."
 (setq mail-specify-envelope-from t) ; Settings to work with msmtp
 (setq message-sendmail-envelope-from 'header)
 (setq mail-envelope-from 'header)
-(setq notmuch-fcc-dirs "\"[Gmail].Sent Mail\"") ; stores sent mail to the specified directory
+(setq notmuch-fcc-dirs "\"[Gmail].Sent Mail\" +sent -unread") ; stores sent mail to the specified directory
 (setq message-directory "[Gmail].Drafts") ; stores postponed messages to the specified directory
 (setq sendmail-program "msmtp")
 (setq send-mail-function 'smtpmail-send-it)
