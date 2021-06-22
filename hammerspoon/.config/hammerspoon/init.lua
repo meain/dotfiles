@@ -321,6 +321,19 @@ hs.hotkey.bind(
     end
 )
 
+function waitTillClipChanges(maxTime)
+    local initialClip = pasteboard.getContents()
+    local i = maxTime
+    while (i > 0) do
+        os.execute("sleep " .. tonumber(1))
+        if (pasteboard.getContents() ~= initialClip) then
+            return true
+        end
+        i = i - 1
+    end
+    return false
+end
+
 hs.hotkey.bind(
     {"ctrl", "alt", "shift"},
     "z",
@@ -328,7 +341,13 @@ hs.hotkey.bind(
         local currentApp = hs.window.focusedWindow()
         hs.application.launchOrFocus("zoom.us")
         hs.eventtap.keyStroke({"cmd", "ctrl"}, "v")
-        os.execute("sleep " .. tonumber(7))
+        local clipChanged = waitTillClipChanges(7)
+        if not clipChanged then
+            -- in case zoom was not open at all
+            hs.application.launchOrFocus("zoom.us")
+            hs.eventtap.keyStroke({"cmd", "ctrl"}, "v")
+            waitTillClipChanges(7)
+        end
         currentApp:focus()
         hs.eventtap.keyStroke({"cmd"}, "v")
     end
