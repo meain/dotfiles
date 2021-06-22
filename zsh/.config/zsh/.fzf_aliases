@@ -42,7 +42,7 @@ sn() {
     [ -z "$1" ] && echo "Pass script name" && return 1
     [ -f "$HOME/.bin/$1" ] && echo "script exists" && return 1
     printf '#!/bin/sh\n\nset -e\n\n' >"$HOME/.dotfiles/scripts/.bin/$1" &&
-        chmod +x "$HOME/.dotfiles/scripts/.bin/$1" && $EDITOR "$HOME/.bin/$1"
+        chmod +x "$HOME/.dotfiles/scripts/.bin/$1" && $EDITOR "$HOME/.dotfiles/scripts/.bin/$1"
 }
 
 snn() {
