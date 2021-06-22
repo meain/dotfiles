@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# set -e
+
+# ls|xargs -n1 -I{} sh -c 'printf {} && printf " " && cd {} && git log master..origin/master|grep -c .' | awk '{print $NF,$0}'|sort -h|tac|grep -vE '^0'|awk '{print $2,$3}'|fzf --preview 'cd {1} && git log master..origin/master --oneline'
+
+cd "$HOME/.config/emacs/straight/repos"
+for folder in *;do
+    pushd "$folder" > /dev/null
+    branch="$(git rev-parse --abbrev-ref HEAD)"
+    count="$(git log master..origin/master 2>/dev/null |grep -c .)"
+    if ! [ 0 = "$count" ]; then
+        echo "# $folder ($count)"
+        git log $branch..origin/$branch --oneline
+        echo ""
+    fi
+    popd > /dev/null
+done > /tmp/straight-available-updates.md
+$EDITOR /tmp/straight-available-updates.md
