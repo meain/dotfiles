@@ -1,0 +1,9 @@
+#!/bin/sh
+
+set -e
+
+scrcpy 2>&1 | grep 'ERROR' || exit 0
+nmap  '192.168.0.*' -p 5555 |
+	grep 'Nmap scan report' | awk '{print $NF}' |
+	tail -n+2 | xargs -n1 adb connect
+scrcpy # connect
