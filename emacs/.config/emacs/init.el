@@ -2106,6 +2106,25 @@ START and END comes from it being interactive."
         (eww full-url)))))
 (evil-leader/set-key "a d" 'meain/dasht-docs)
 
+;; Search from emacs
+(defun meain/eww-search-ddg (&optional open)
+  "Search using eww on ddg.  Pass OPEN to open in browser instead."
+  (interactive "P")
+  (let* ((thing (if (use-region-p)
+                    (buffer-substring start end)
+                  (thing-at-point 'symbol)))
+         (searchterm (replace-regexp-in-string " "
+                                               "+"
+                                               (read-from-minibuffer "Search query: "))))
+    (if open
+        (start-process-shell-command "browser-open-ddg"
+                                     "*browser-open-ddg*"
+                                     (concat "open 'https://duckduckgo.com/?q="
+                                             searchterm "'"))
+      (eww (concat "http://lite.duckduckgo.com/lite/?q="
+                   searchterm)))))
+(evil-leader/set-key "a s" 'meain/eww-search-ddg)
+
 ;; cheat.sh
 (use-package cheat-sh
   :straight t
