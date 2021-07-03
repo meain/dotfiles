@@ -715,3 +715,13 @@ hs.hotkey.bind(
     end
 )
 
+hs.hotkey.bind(
+    {"cmd", "alt"},
+    "p",
+    function()
+        hs.alert("Connecting to the phone...")
+        -- Need multiple leves of indirection to get this thing going
+        -- hammerspoon -> alacritty -> zsh -> nohup -> &
+        customshellrun.run("alacritty -e zsh -ic 'nohup phone & disown; exit'", true)
+    end
+)
