@@ -692,3 +692,26 @@ hs.hotkey.bind(
     end
 )
 
+local mouseTimer = nil
+hs.hotkey.bind(
+    {"cmd", "alt"},
+    "o",
+    function()
+        print(mouseTimer)
+        if mouseTimer == nil then
+            hs.alert("Starting clicking")
+            mouseTimer =
+                hs.timer.doEvery(
+                5,
+                function()
+                    hs.eventtap.leftClick(hs.mouse.absolutePosition())
+                end
+            )
+        else
+            hs.alert("Stopping clicking")
+            mouseTimer:stop()
+            mouseTimer = nil
+        end
+    end
+)
+
