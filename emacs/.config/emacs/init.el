@@ -2398,6 +2398,15 @@ START and END comes from it being interactive."
                                                   (completing-read "Docset: "
                                                                    (split-string (shell-command-to-string "dasht-docsets"))))))))))
 
+;; Check available update for straight managed packages
+(defun meain/straight-available-updates ()
+  "Check available update for straight managed packages."
+  (interactive)
+  (message "Fetching updates and calculating changes...")
+  ;; (async-shell-command "zsh -ic 'straight-available-updates'"))
+  (start-process-shell-command "straight-available-updates"
+                               "*straight-available-updates*" "zsh -ic 'straight-available-updates'"))
+
 
 ;; Some custom text objects
 ;; TODO: Make a more generic textobject over any tree sitter query
