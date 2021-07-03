@@ -2,8 +2,14 @@
 
 set -e
 
-scrcpy 2>&1 | grep 'ERROR' || exit 0
-nmap  '192.168.0.*' -p 5555 |
-	grep 'Nmap scan report' | awk '{print $NF}' |
-	tail -n+2 | xargs -n1 adb connect
-scrcpy # connect
+PHONE_NAME="${1:-slab}"
+echo "Connecting to $PHONE_NAME ..."
+scrcpy 2>&1 | grep -q 'ERROR' || exit 0
+
+# connect to router and figure out ip
+pass="$(pass show router/admin)"
+encoded_pass="$(printf "%s" "$pass" | base64)"
+rpass="$(curl -s 'http://192.168.0.1/LoginCheck' --data-raw "Username=admin&Password=$encoded_pass" -v 2>&1 | grep Set-Cookie | grep -oE 'ecos_pw=[^:]+')"
+curl -s 'http://192.168.0.1/lan_dhcp_clients.asp' -H "Cookie: ecos_pw=$rpass" -m 5 |
+	grep -oE "$PHONE_NAME;192.168.0.[0-9]{3}" | cut -d';' -f2 | xargs adb connect
+scrcpy >/dev/null 2>&1 # connect
