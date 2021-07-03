@@ -683,3 +683,12 @@ hs.hotkey.bind(
 
 hs.hotkey.bind({"ctrl", "alt"}, "h", hs.toggleConsole)
 hs.notify.new({title = "Hammerspoon loaded!", informativeText = "You are now ready to start clicking"}):send()
+
+hs.hotkey.bind(
+    {"cmd", "alt"},
+    "e",
+    function()
+        customshellrun.run("emacsclient -ne '(meain/emacs-popup-frame)'")
+    end
+)
+
