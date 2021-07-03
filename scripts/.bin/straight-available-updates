@@ -5,6 +5,7 @@
 # ls|xargs -n1 -I{} sh -c 'printf {} && printf " " && cd {} && git log master..origin/master|grep -c .' | awk '{print $NF,$0}'|sort -h|tac|grep -vE '^0'|awk '{print $2,$3}'|fzf --preview 'cd {1} && git log master..origin/master --oneline'
 
 cd "$HOME/.config/emacs/straight/repos"
+gloc 'git fetch' .
 for folder in *;do
     pushd "$folder" > /dev/null
     branch="$(git rev-parse --abbrev-ref HEAD)"
@@ -16,4 +17,4 @@ for folder in *;do
     fi
     popd > /dev/null
 done > /tmp/straight-available-updates.md
-$EDITOR /tmp/straight-available-updates.md
+$EDITOR --no-wait /tmp/straight-available-updates.md
