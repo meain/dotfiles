@@ -2407,6 +2407,28 @@ START and END comes from it being interactive."
   (start-process-shell-command "straight-available-updates"
                                "*straight-available-updates*" "zsh -ic 'straight-available-updates'"))
 
+;; popup frame thing
+(defun meain/emacs-popup-frame ()
+  ;; https://xenodium.com/emacs-utilities-for-your-os/
+  "Popup and interactive frame thingy.  For use from hammerspoon."
+  (interactive)
+  (let ((frame (make-frame '((auto-raise . t)
+                             (height . 20)
+                             (internal-border-width . 20)
+                             (left . 0.33)
+                             (left-fringe . 0)
+                             (line-spacing . 3)
+                             (menu-bar-lines . 0)
+                             (right-fringe . 0)
+                             (tool-bar-lines . 0)
+                             (top . 48)
+                             (undecorated . t)
+                             (unsplittable . t)
+                             (vertical-scroll-bars . nil)
+                             (width . 110)))))
+    (select-frame frame))
+  (elfeed))
+
 
 ;; Some custom text objects
 ;; TODO: Make a more generic textobject over any tree sitter query
