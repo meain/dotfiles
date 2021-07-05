@@ -6,7 +6,7 @@ name=Abin Simon
 primary_email=mail@meain.io
 
 [new]
-tags=unread;inbox;
+tags=unread;inbox;imbox;
 ignore=
 
 [search]
