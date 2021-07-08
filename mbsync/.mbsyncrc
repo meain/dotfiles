@@ -14,11 +14,11 @@ Inbox ~/.local/share/mail/meain/INBOX
 Flatten .
 
 Channel meain
+Create Both
 Expunge Both
 Far :meain-remote:
 Near :meain-local:
 Patterns * !"[Gmail]/All Mail"
-Create Both
 SyncState *
 ExpireUnread yes
 MaxMessages 5000
