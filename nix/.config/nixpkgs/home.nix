@@ -45,6 +45,7 @@
     aspell # spell checker
     # mpvc  # mpv remote control  # not available on macos
     msmtp # smtp client
+    # android-tools # adb and friends  # not available for macos
 
     # apps
     kubectl # kubernetes cli
@@ -64,7 +65,8 @@
     # pstree # view process tree
     jid # json incremental digger
     tldr # simpler man pages
-    # silicon # create pretty code screenshots  # build error
+    silicon # create pretty code screenshots
+    transmission # torrent stuff
 
     # programming
     gist # create gist
@@ -111,6 +113,7 @@
     python39Packages.mypy # check types in code
     python39Packages.isort # fix sort order
     python39Packages.pygments # generic syntax highliht
+    python38Packages.python-language-server  # python lsp
 
     # programming-rust
     cargo-edit # dep management
@@ -124,7 +127,7 @@
 
     # others
     redis # key value db
-    # postgresql  # object db  # need a newer version
+    postgresql_13 # postgres 13 (postgresql is at 11)
     mongodb # document db
     sqlite # better db
     minikube # mini kubernetes
@@ -151,6 +154,7 @@
     # googler # search google from terminal
     # cmatrix # matrix thingy in shell
     # graphviz # draw graphs with code
+    pgcli # fancier postgres cli
 
     # tryout
     # gforth # gnu forth interpretter
