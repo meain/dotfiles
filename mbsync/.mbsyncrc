@@ -15,8 +15,8 @@ Flatten .
 
 Channel meain
 Expunge Both
-Master :meain-remote:
-Slave :meain-local:
+Far :meain-remote:
+Near :meain-local:
 Patterns * !"[Gmail]/All Mail"
 Create Both
 SyncState *
