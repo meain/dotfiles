@@ -2407,10 +2407,10 @@ START and END comes from it being interactive."
   (start-process-shell-command "straight-available-updates"
                                "*straight-available-updates*" "zsh -ic 'straight-available-updates'"))
 
-;; popup frame thing
-(defun meain/emacs-popup-frame ()
-  ;; https://xenodium.com/emacs-utilities-for-your-os/
-  "Popup and interactive frame thingy.  For use from hammerspoon."
+;; popup frame thingy
+(defun meain/emacs-popup-frame (thing-to-popup)
+  "Popup and interactive frame thingy.  For use from hammerspoon.
+Pass THING-TO-POPUP as the thing to popup."
   (interactive)
   (let ((frame (make-frame '((auto-raise . t)
                              (height . 20)
@@ -2427,7 +2427,7 @@ START and END comes from it being interactive."
                              (vertical-scroll-bars . nil)
                              (width . 110)))))
     (select-frame frame))
-  (elfeed))
+  (funcall thing-to-popup))
 
 
 ;; Some custom text objects
