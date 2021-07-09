@@ -104,6 +104,9 @@ source $ZDOTDIR/.ffmpeg_functions
 source $ZDOTDIR/.imagemagic_functions
 source $ZDOTDIR/.nix_functions
 
+# source dir hashes
+[ -f ~/.cache/zsh/.zsh_dir_hashes ] && source ~/.cache/zsh/.zsh_dir_hashes
+
 # Sorce fzf
 [ -f /usr/locale/opt/.fzf.zsh ] && source /usr/locale/opt/.fzf.zsh
 
