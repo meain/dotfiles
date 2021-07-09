@@ -386,3 +386,9 @@ rfc() {
 	echo "Reading RFC $1"
 	w3m "https://tools.ietf.org/html/rfc$1"
 }
+
+hashdir() {
+    [ -z "$1" ] && echo "Pass hash to use for dir" && exit 1
+    hash -d "$1"="$(pwd)"
+    echo hash -d "$1"=\""$(pwd)"\" >> ~/.cache/zsh/.zsh_dir_hashes
+}
