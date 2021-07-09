@@ -10,10 +10,10 @@ export TERM=screen-256color-italic
 source $ZDOTDIR/.zsh_path
 
 echo ""
-if ! onacall;then
-  randomidea | fmt -c -w $COLUMNS
+if ! onacall; then
+	randomidea | fmt -c -w $COLUMNS
 else
-  corpcrap | fmt -c -w $COLUMNS
+	corpcrap | fmt -c -w $COLUMNS
 fi
 echo ""
 
@@ -30,17 +30,16 @@ setopt sharehistory
 setopt incappendhistory
 
 # cd-ing settings
-setopt auto_cd # automatically cd if folder name and no command found
-setopt auto_list # automatically list choices on ambiguous completion
-setopt auto_menu # automatically use menu completion
-setopt always_to_end # move cursor to end if word had one match
-setopt interactive_comments # allow comments in interactive shells
-zstyle ':completion:*' menu select # select completions with arrow keys
-zstyle ':completion:*' group-name '' # group results by category
+setopt auto_cd                                         # automatically cd if folder name and no command found
+setopt auto_list                                       # automatically list choices on ambiguous completion
+setopt auto_menu                                       # automatically use menu completion
+setopt always_to_end                                   # move cursor to end if word had one match
+setopt interactive_comments                            # allow comments in interactive shells
+zstyle ':completion:*' menu select                     # select completions with arrow keys
+zstyle ':completion:*' group-name ''                   # group results by category
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}' # non case sensitive complete
 zstyle ':completion:*' list-colors $LS_COLORS
 zstyle ':completion:::::' completer _expand _complete _ignored _approximate # enable approximate matches for completion
-
 
 # autocompletions
 autoload -Uz compinit
@@ -53,30 +52,30 @@ ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 ZSH_AUTOSUGGEST_USE_ASYNC="true"
 
 # sourcing plugins & themes
-source $HOME/.bin/spectrum  # for 256 colors
+source $HOME/.bin/spectrum # for 256 colors
 source $ZDOTDIR/.zsh-custom/themes/snipe.zsh-theme
 source $ZDOTDIR/.zsh-custom/plugins/z/z.sh
 source $ZDOTDIR/.zsh-custom/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
 source $ZDOTDIR/.zsh-custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
 
 export EDITOR='emacsclient'
-export BROWSER=  # do not set browser
+export BROWSER= # do not set browser
 export DIFFTOOL='icdiff'
 
 # Make CTRL-Z background things and unbackground them.
 function fg-bg() {
-  if [[ $#BUFFER -eq 0 ]]; then
-    fg
-  else
-    zle push-input
-  fi
+	if [[ $#BUFFER -eq 0 ]]; then
+		fg
+	else
+		zle push-input
+	fi
 }
 zle -N fg-bg
 bindkey '^Z' fg-bg
 
 # Credentials
-if [ -f $HOME/.credentials ];then
-  source $HOME/.credentials
+if [ -f $HOME/.credentials ]; then
+	source $HOME/.credentials
 fi
 
 # source exports
@@ -108,15 +107,15 @@ source $ZDOTDIR/.nix_functions
 # Sorce fzf
 [ -f /usr/locale/opt/.fzf.zsh ] && source /usr/locale/opt/.fzf.zsh
 
-if [ -f $HOME/.temp_aliases ];then
-  source $HOME/.temp_aliases
+if [ -f $HOME/.temp_aliases ]; then
+	source $HOME/.temp_aliases
 fi
 
 # Source any changs for linux
 case "$(uname -s)" in
-  Linux)
-    source $ZDOTDIR/.linux_modifications
-    ;;
+Linux)
+	source $ZDOTDIR/.linux_modifications
+	;;
 esac
 
 # Source colors for ls
@@ -151,18 +150,18 @@ export KEYTIMEOUT=1
 export CLOUDSDK_PYTHON="/usr/local/opt/python@3.8/libexec/bin/python"
 # source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
 
-preexec () {
-  if ! grep -q "$1" "$DATAFILES_PATH/long_runnable_jobs" ; then
-    CMD_START_DATE=$(date +%s)
-    CMD_NAME=$1
-  fi
+preexec() {
+	if ! grep -q "$1" "$DATAFILES_PATH/long_runnable_jobs"; then
+		CMD_START_DATE=$(date +%s)
+		CMD_NAME=$1
+	fi
 }
 
 # load nix
 . /Users/meain/.nix-profile/etc/profile.d/nix.sh
 . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
 
-setdarkmode quiet  # set dark or light mode
+setdarkmode quiet # set dark or light mode
 export ZSH_LOADED=1
 
 [ -n "$ZPROF" ] && zprof
