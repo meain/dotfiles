@@ -2260,6 +2260,13 @@ START and END comes from it being interactive."
   (expand-file-name (read-file-name prompt)))
 (defalias 'rename 'meain/rename-current-file)
 
+;; Delete current file
+(defun meain/delete-current-file ()
+  "Delete current file and close buffer."
+  (interactive)
+  (delete-file (buffer-file-name))
+  (meain/kill-current-buffer-unless-scratch))
+
 ;; setting proper default-dir
 (defun meain/set-proper-default-dir ()
   "Function to set the `default-directory' value as the project root if available."
