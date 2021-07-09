@@ -37,3 +37,14 @@ ffmpeg_grainify() {
 	convert "$1" -resize 1920x1080^ -gravity center -extent 1920x1080 -quality 90 /tmp/grainify.jpg
 	ffmpeg -y -loop 1 -i /tmp/grainify.jpg -f lavfi -i color=s=3840x2160 -filter_complex "[0]scale=3840x2160,fps=60[a];[a]unsharp=3:3:-1.7,noise=alls=85:allf=t+u[b];[1][b]scale2ref,overlay=y='if(mod(t,16), 2)':x='if(mod(t,8), 3)'[c];[c]scale=1920x1080" -c:v libx264 -qp 30 -t 60 grainified-"$1".mp4
 }
+
+ffmpeg-rotate(){
+    # https://ostechnix.com/how-to-rotate-videos-using-ffmpeg-from-commandline/
+	[ -z "$2" ] && echo "Usage: $0 <rotate-amount> <infile> <outfile>" && exit 1
+	case "$2" in
+		90) ffmpeg -i "$1" -vf "transpose=1" output.mp4 ;;
+		270) ffmpeg -i "$1" -vf "transpose=2" output.mp4 ;;
+		180) ffmpeg -i "$1" -vf "transpose=2,transpose=2" output.mp4 ;;
+		*) echo "I only know how to rotate 90, 180 and 270" && exit 1 ;;
+	esac
+}
