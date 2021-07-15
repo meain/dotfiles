@@ -1432,10 +1432,6 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;;; [EXTRA PLUGINS] =================================================
 
-;; Try
-(use-package try :straight t
-  :commands try)
-
 ;; Winner mode
 (use-package winner
   :config (progn
