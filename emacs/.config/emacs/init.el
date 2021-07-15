@@ -446,6 +446,7 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package dired
   :defer t
   :config (progn
+            (require 'dired-x)
             (setq delete-by-moving-to-trash t)
             (setq trash-directory "~/.Trash")
             (setq dired-listing-switches "-AGFhlgo")
