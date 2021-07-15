@@ -2212,14 +2212,22 @@ START and END comes from it being interactive."
   (message "Just use `save-buffers-kill-emacs'"))
 
 ;; Narrow region
-(defun meain/narrow-region-dwim ()
-  "Narrow or widen the region (dwim)."
-  (interactive)
-  (if (eq evil-state 'visual)
-      (call-interactively 'narrow-to-region)
-    (call-interactively 'widen)))
-(global-set-key (kbd "M-N")
-                'meain/narrow-region-dwim)
+(use-package fancy-narrow
+  :straight t
+  :commands (fancy-narrow-to-region fancy-widen):init
+  (progn
+    (defun meain/narrow-region-dwim (&optional basic)
+      "Narrow or widen the region (dwim)."
+      (interactive)
+      (if (eq evil-state 'visual)
+          (if basic
+              (call-interactively 'narrow-to-region)
+            (call-interactively 'fancy-narrow-to-region))
+        (if basic
+            (call-interactively 'widen)
+          (call-interactively 'fancy-widen))))
+    (global-set-key (kbd "M-N")
+                    'meain/narrow-region-dwim)))
 
 ;; Buffer/Frame/Window keybinds
 (evil-leader/set-key "b k" 'kill-buffer)
