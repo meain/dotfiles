@@ -451,6 +451,8 @@ Pass ORIGINAL and ALTERNATE options."
             (setq trash-directory "~/.Trash")
             (setq dired-listing-switches "-AGFhlgo")
             (setq dired-dwim-target t)
+            (setq dired-kill-when-opening-new-dired-buffer
+                  t)
             (define-key dired-mode-map (kbd "-") 'dired-up-directory)
             (evil-define-key 'normal
               dired-mode-map
