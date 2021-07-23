@@ -2378,7 +2378,8 @@ START and END comes from it being interactive."
                                                   default-directory
                                                 buffer-file-name)
                                               (projectile-project-root))
-                          (if no-linenumber
+                          (if (or no-linenumber
+                                  (equal major-mode 'dired-mode))
                               ""
                             (format "#L%s"
                                     (line-number-at-pos))))))
