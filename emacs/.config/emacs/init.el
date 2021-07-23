@@ -2368,12 +2368,15 @@ START and END comes from it being interactive."
                                                        "https://github.com/"
                                                        (car (split-string (shell-command-to-string "git config --get remote.origin.url")
                                                                           "\n")))))
+         ;; would love to remove abbrev-ref once we have some logic to check if we have pushed the latest version
          (git-branch (car (split-string (shell-command-to-string "git rev-parse --abbrev-ref HEAD")
                                         "\n")))
          (web-url (format "%s/blob/%s/%s%s"
                           git-url
                           git-branch
-                          (file-relative-name buffer-file-name
+                          (file-relative-name (if (equal major-mode 'dired-mode)
+                                                  default-directory
+                                                buffer-file-name)
                                               (projectile-project-root))
                           (if no-linenumber
                               ""
