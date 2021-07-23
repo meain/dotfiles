@@ -929,9 +929,10 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package imenu-list
   :straight t
   :defer t
+  :after consult
   :commands imenu-list-smart-toggle
   :init (global-set-key (kbd "M--")
-                        (meain/with-alternate (call-interactively 'imenu)
+                        (meain/with-alternate (call-interactively 'consult-imenu)
                                               (imenu-list-smart-toggle))):config
   (progn
     (setq imenu-list-focus-after-activation t)
