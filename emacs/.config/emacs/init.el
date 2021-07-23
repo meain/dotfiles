@@ -573,8 +573,8 @@ Pass ORIGINAL and ALTERNATE options."
   :straight t
   :after flymake
   :config (progn
-            ;; https://github.com/crate-ci/typos
             (flymake-quickdef-backend flymake-check-typos
+              ;; https://github.com/crate-ci/typos
               :pre-let ((typos-exec (executable-find "typos"))):pre-check
               (unless typos-exec
                 (error "Cannot find typos executable"))
@@ -588,9 +588,58 @@ Pass ORIGINAL and ALTERNATE options."
                                       (pos (flymake-diag-region fmqd-source lnum col))
                                       (beg (car pos))
                                       (end (cdr pos))
-                                      (msg (format "%s" text)))
+                                      (msg (format "typos> %s" text)))
                                  (list fmqd-source beg end :warning msg)))
-            (add-hook 'flymake-diagnostic-functions 'flymake-check-typos)))
+            (add-hook 'flymake-diagnostic-functions 'flymake-check-typos)
+            (flymake-quickdef-backend flymake-check-bandit
+              :pre-let ((bandit-exec (executable-find "bandit"))):pre-check
+              (unless bandit-exec
+                (error "Cannot find bandit executable"))
+              :write-type 'file
+              :proc-form (list bandit-exec "--format" "custom" "--msg-template"
+                               "diag:{line} {severity} {test_id}: {msg}"
+                               fmqd-temp-file):search-regexp
+              "^diag:\\([[:digit:]]+\\) \\(HIGH\\|LOW\\|MEDIUM\\|UNDEFINED\\) \\([[:alpha:]][[:digit:]]+\\): \\(.*\\)$"
+              :prep-diagnostic (let* ((lnum (string-to-number (match-string 1)))
+                                      (severity (match-string 2))
+                                      (code (match-string 3))
+                                      (text (match-string 4))
+                                      (pos (flymake-diag-region fmqd-source lnum))
+                                      (beg (car pos))
+                                      (end (cdr pos))
+                                      (type (cond
+                                             ((string= severity "HIGH") :error)
+                                             ((string= severity "MEDIUM") :warning)
+                                             (t :note)))
+                                      (msg (format "bandit> %s (%s)" text code)))
+                                 (list fmqd-source beg end type msg)))
+            (add-hook 'python-mode-hook
+                      (lambda ()
+                        (add-hook 'flymake-diagnostic-functions 'flymake-check-bandit
+                                  nil t)))
+            (flymake-quickdef-backend flymake-pylint
+              ;; https://github.com/PyCQA/pylint
+              ;; TODO: filter out warnings and errors properly
+              :pre-let ((pylint-exec (executable-find "pylint"))):pre-check
+              (unless pylint-exec
+                (error "Cannot find pylint executable"))
+              :write-type 'file
+              :proc-form (list pylint-exec "-f" "parseable" "-r" "n"
+                               "-s" "n" "--msg-template" "{line}:{column}: {msg_id}({symbol}) {msg}"
+                               "-d" "E0401,W0511" fmqd-temp-file):search-regexp
+              "\\([[:digit:]]+\\):\\([[:digit:]]+\\): \\(.*\\)$"
+              :prep-diagnostic (let* ((lnum (string-to-number (match-string 1)))
+                                      (col (string-to-number (match-string 2)))
+                                      (text (match-string 3))
+                                      (pos (flymake-diag-region fmqd-source lnum col))
+                                      (beg (car pos))
+                                      (end (cdr pos))
+                                      (msg (format "pylint> %s" text)))
+                                 (list fmqd-source beg end :warning msg)))
+            (add-hook 'python-mode-hook
+                      (lambda ()
+                        (add-hook 'flymake-diagnostic-functions 'flymake-pylint
+                                  nil t)))))
 
 ;; Company for autocompletions
 (use-package company
@@ -756,8 +805,8 @@ Pass ORIGINAL and ALTERNATE options."
 ;; LSP
 (use-package eglot
   :commands eglot-ensure
-  :after project
-  :straight t
+  :after (project flymake):straight
+  t
   :hook ((python-mode . eglot-ensure)
          (rust-mode . eglot-ensure)
          (shell-script-mode . eglot-ensure)
@@ -766,6 +815,8 @@ Pass ORIGINAL and ALTERNATE options."
          (lua-mode . eglot-ensure)
          (go-mode . eglot-ensure)):config
   (progn
+    (add-to-list 'eglot-stay-out-of 'flymake)
+    (add-hook 'flymake-diagnostic-functions 'eglot-flymake-backend)
     (add-to-list 'eglot-server-programs
                  '(lua-mode . ("~/.luarocks/bin/lua-lsp")))
     ;; Can be enabled on fiction like things
