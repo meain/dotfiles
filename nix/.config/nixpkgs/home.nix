@@ -46,6 +46,7 @@
     # mpvc  # mpv remote control  # not available on macos
     msmtp # smtp client
     # android-tools # adb and friends  # not available for macos
+    restic # backup
 
     # apps
     kubectl # kubernetes cli
