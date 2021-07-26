@@ -120,7 +120,7 @@
     cargo-edit # dep management
     cargo-bloat # find big chunks
     cargo-udeps # find unnecessary deps
-    cargo-watch # continously run cargo check
+    cargo-watch # continuously run cargo check
 
     # gui
     mpv # audio/video player
@@ -156,9 +156,10 @@
     # cmatrix # matrix thingy in shell
     # graphviz # draw graphs with code
     pgcli # fancier postgres cli
+    trivy # docker vulnerability scanner
 
     # tryout
-    # gforth # gnu forth interpretter
+    # gforth # gnu forth interpreter
     # groff # gnu troff
   ];
 }
