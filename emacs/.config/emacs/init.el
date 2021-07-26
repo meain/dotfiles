@@ -629,7 +629,7 @@ Pass ORIGINAL and ALTERNATE options."
               :write-type 'file
               :proc-form (list pylint-exec "-f" "parseable" "-r" "n"
                                "-s" "n" "--msg-template" "{line}:{column}: {msg_id}({symbol}) {msg}"
-                               "-d" "E0401,W0511" fmqd-temp-file):search-regexp
+                               "-d" "E0401,W0511,C0103,C0330" fmqd-temp-file):search-regexp
               "\\([[:digit:]]+\\):\\([[:digit:]]+\\): \\(.*\\)$"
               :prep-diagnostic (let* ((lnum (string-to-number (match-string 1)))
                                       (col (string-to-number (match-string 2)))
