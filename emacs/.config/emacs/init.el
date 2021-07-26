@@ -1621,10 +1621,6 @@ Pass ORIGINAL and ALTERNATE options."
       (lambda ()
         (interactive)
         (elfeed-search-browse-url t)))
-    (evil-define-key 'normal
-      elfeed-search-mode-map
-      (kbd "O")
-      'elfeed-search-browse-url)
     (evil-define-key 'visual
       elfeed-search-mode-map
       (kbd "o")
@@ -1648,6 +1644,21 @@ Pass ORIGINAL and ALTERNATE options."
       elfeed-search-mode-map
       (kbd "q")
       'elfeed-db-unload)
+    (defun meain/elfeed-open-all ()
+      (interactive)
+      (with-current-buffer "*elfeed-search*"
+        (cl-loop for
+                 entry
+                 in
+                 elfeed-search-entries
+                 collect
+                 (browse-url (elfeed-entry-link entry))))
+      (elfeed-untag elfeed-search-entries 'unread)
+      (mapc #'elfeed-search-update-entry elfeed-search-entries))
+    (evil-define-key 'normal
+      elfeed-search-mode-map
+      (kbd "O")
+      'meain/elfeed-open-all)
     (defun meain/elfeed-search-filter ()
       (interactive)
       (setq elfeed-search-filter "@2-months-ago +unread")
