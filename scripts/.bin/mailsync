@@ -2,6 +2,8 @@
 
 set -e
 
+mailmove  # move archived mails from inbox to archive
+
 if [ ! "$1" = "retag" ]; then
 	GPASS="${GOOGLE_PASSWORD:-$(keypuller)}"
 	GOOGLE_PASSWORD="$GPASS" mbsync -a ||
@@ -9,7 +11,7 @@ if [ ! "$1" = "retag" ]; then
 	[ -f /tmp/mailpullfailed ] && rm /tmp/mailpullfailed
 fi
 
-mailtag
+mailtag  # tag stuff with notmuch
 
 # refresh tmux
 tmux refresh-client -S
