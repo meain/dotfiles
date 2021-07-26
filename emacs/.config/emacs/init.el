@@ -1715,7 +1715,6 @@ Pass ORIGINAL and ALTERNATE options."
     (setq elfeed-curl-max-connections 10)
     (setq elfeed-db-directory "~/.config/emacs/elfeed/")
     (setq elfeed-enclosure-default-dir "~/Downloads/")
-    (setq elfeed-show-entry-switch #'meain/elfeed-display-buffer)
     (add-to-list 'display-buffer-alist
                  '((lambda (bufname _)
                      (with-current-buffer bufname
@@ -1763,12 +1762,9 @@ Pass ORIGINAL and ALTERNATE options."
         (insert (propertize tag-column 'face 'elfeed-search-tag-face)
                 " ")))
     (setq elfeed-search-print-entry-function 'meain/elfeed-search-print)
-    (defun meain/elfeed-display-buffer (buf &optional act)
-      (pop-to-buffer buf)
-      (set-window-text-height (get-buffer-window)
-                              (round (* 0.7
-                                        (frame-height)))
-                              (previous-window-any-frame)))
+    (defun meain/elfeed-display-buffer (buf &optional act &rest _)
+      (pop-to-buffer buf))
+    (setq elfeed-show-entry-switch #'meain/elfeed-display-buffer)
     (defun meain/elfeed-enclosure-download (base-dir extension)
       "Download podcast to `BASE-DIR' with proper heirary using feed and title using `EXTENSION'"
       (start-process "*elfeed-enclosure-download*"
