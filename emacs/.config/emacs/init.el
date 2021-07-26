@@ -1399,6 +1399,7 @@ Pass ORIGINAL and ALTERNATE options."
   :defer t
   :mode ("\\.md\\'" . gfm-mode):config
   (progn
+    (use-package edit-indirect :straight t)
     (setq markdown-enable-html -1)
     (setq markdown-command "pandoc -t html5")
     (setq markdown-fontify-code-blocks-natively
