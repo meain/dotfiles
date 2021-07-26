@@ -1765,6 +1765,26 @@ Pass ORIGINAL and ALTERNATE options."
     (defun meain/elfeed-display-buffer (buf &optional act &rest _)
       (pop-to-buffer buf))
     (setq elfeed-show-entry-switch #'meain/elfeed-display-buffer)
+    (defun meain/elfeed-show-next-prev (&optional prev)
+      "Go to next elfeed entry.  Pass PREV to switch to prev entry."
+      (interactive)
+      (if (equal (buffer-name) "*elfeed-entry*")
+          (delete-window))
+      (switch-to-buffer "*elfeed-search*")
+      (if prev
+          (previous-line 2))
+      (pulse-momentary-highlight-one-line (point))
+      (call-interactively 'elfeed-search-show-entry))
+    (evil-define-key 'normal
+      elfeed-show-mode-map
+      (kbd "M-n")
+      'meain/elfeed-show-next-prev)
+    (evil-define-key 'normal
+      elfeed-show-mode-map
+      (kbd "M-p")
+      (lambda ()
+        (interactive)
+        (meain/elfeed-show-next-prev t)))
     (defun meain/elfeed-enclosure-download (base-dir extension)
       "Download podcast to `BASE-DIR' with proper heirary using feed and title using `EXTENSION'"
       (start-process "*elfeed-enclosure-download*"
