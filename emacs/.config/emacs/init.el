@@ -1725,7 +1725,7 @@ Pass ORIGINAL and ALTERNATE options."
     (defun meain/elfeed-search-print (entry)
       "Print ENTRY to the buffer."
       (let* ((feed-width 25)
-             (tags-width 35)
+             (tags-width 50)
              (title (or (elfeed-meta entry :title)
                         (elfeed-entry-title entry)
                         ""))
