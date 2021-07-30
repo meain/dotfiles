@@ -181,7 +181,7 @@
 ;;   :init (load-theme 'modus-operandi t))
 (use-package almost-mono-themes
   :straight t
-  :init (load-theme 'almost-mono-black t))
+  :init (load-theme 'almost-mono-white t))
 
 ;; Diminish
 (use-package diminish
