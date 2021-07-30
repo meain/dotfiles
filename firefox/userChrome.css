@@ -59,7 +59,8 @@ body > box:nth-child(10) {
   box-shadow: none !important;
 }
 .tab-background[selected="true"] {
-  background-color: #9ab2b5 !important;
+  background-color: #1c70e5 !important;  /* for dark mode */
+  background-color: #9ab2b5 !important; /* for light mode */
   background-image: none !important;
 }
 .tabbrowser-tab::after,
@@ -104,7 +105,8 @@ body > box:nth-child(10) {
   bottom: 30px !important;
   top: unset !important;
   position: absolute !important;
-  background: white;
+  background: black;  /* for dark mode */
+  background: white;  /* for light mode */
   width: 100% !important;
   margin-inline: 0 !important;
   border-radius: 5px 5px 0 0 !important;
