@@ -5,4 +5,4 @@ set -e
 VENV_HOME="$HOME/.cache/virtual_envs"
 VENVNAME="$(ls -t "$VENV_HOME" | grep "$(basename "$(pwd)")" | head -n1)"
 [ -n "$VENVNAME" ] && source "$VENV_HOME/$VENVNAME/bin/activate"
-pyls
+pylsp
