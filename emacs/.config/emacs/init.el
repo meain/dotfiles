@@ -2368,7 +2368,7 @@ START and END comes from it being interactive."
 (add-hook 'find-file-hook 'meain/set-proper-default-dir)
 
 ;; Quikly add markdown links to document
-(defun meain/linkify-thing (start end)
+(defun meain/markdown-linkify-thing (start end)
   "Function to search and add markdown links to document.  START and END for position."
   (interactive "r")
   (let* ((thang (if (use-region-p)
