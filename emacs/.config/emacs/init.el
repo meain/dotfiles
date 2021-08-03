@@ -2500,6 +2500,10 @@ START and END comes from it being interactive."
                                                                    (split-string (shell-command-to-string "dasht-docsets"))))))))))
 
 ;; Check available update for straight managed packages
+(add-hook 'markdown-mode-hook
+          (lambda ()
+            (if (equal "/tmp/straight-available-updates.md" (buffer-file-name))
+                (markdown-toggle-url-hiding 1))))
 (defun meain/straight-available-updates ()
   "Check available update for straight managed packages."
   (interactive)

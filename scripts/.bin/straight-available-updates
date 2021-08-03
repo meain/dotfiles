@@ -2,17 +2,17 @@
 
 # set -e
 
-# ls|xargs -n1 -I{} sh -c 'printf {} && printf " " && cd {} && git log master..origin/master|grep -c .' | awk '{print $NF,$0}'|sort -h|tac|grep -vE '^0'|awk '{print $2,$3}'|fzf --preview 'cd {1} && git log master..origin/master --oneline'
-
 cd "$HOME/.config/emacs/straight/repos"
 gloc 'git fetch' .
 for folder in *;do
     pushd "$folder" > /dev/null
+    gurl="$(git remote get-url origin|sed 's|.git$||')"
     branch="$(git rev-parse --abbrev-ref HEAD)"
     count="$(git log master..origin/master 2>/dev/null |grep -c .)"
     if ! [ 0 = "$count" ]; then
         echo "# $folder ($count)"
-        git log $branch..origin/$branch --oneline
+        git log $branch..origin/$branch --oneline |
+            sed "s|\([a-z0-9]*\) \(.*\)$|\1 \2 [view]($gurl/commit/\1)|"
         echo ""
     fi
     popd > /dev/null
