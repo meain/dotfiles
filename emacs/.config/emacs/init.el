@@ -1391,8 +1391,14 @@ Pass ORIGINAL and ALTERNATE options."
   :defer t)
 (use-package json-mode :straight t
   :defer t)
-(use-package config-general-mode :straight t
-  :defer t)  ;; config files
+(use-package config-general-mode
+  :straight t
+  :defer t
+  :init (add-hook 'find-file-hook
+                  (lambda ()
+                    (if (s-starts-with-p ".env"
+                                         (file-name-nondirectory (buffer-file-name)))
+                        (config-general-mode)))))
 (use-package vimrc-mode :straight t
   :defer t)
 (use-package markdown-mode
