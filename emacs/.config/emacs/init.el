@@ -176,12 +176,7 @@
   (meain/set-emoji-font))
 
 ;; Theme
-;; (use-package modus-operandi-theme
-;;   :straight t
-;;   :init (load-theme 'modus-operandi t))
-(use-package almost-mono-themes
-  :straight t
-  :init (load-theme 'almost-mono-white t))
+(load-theme 'hima t)
 
 ;; Diminish
 (use-package diminish
