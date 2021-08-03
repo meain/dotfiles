@@ -4,6 +4,7 @@
 set -e
 
 MAILDIR=$HOME/.local/share/mail/meain
+NOTMUCH_CONFIG="$HOME/.config/notmuch/config"
 
 # Move a message file while removing its UID-part
 function safeMove { s=${1##*/}; s=${s%%,*}; mv -f $1 $2/$s; }
