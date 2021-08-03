@@ -964,6 +964,12 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package forge :straight t
   :after magit)
 
+;; Github review
+(use-package github-review
+  :straight t
+  :after forge
+  :commands (github-review-start github-review-forge-pr-at-point))
+
 ;; Diff hl
 (use-package diff-hl
   :straight t
