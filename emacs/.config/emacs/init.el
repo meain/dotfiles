@@ -1980,23 +1980,18 @@ Pass ORIGINAL and ALTERNATE options."
                             ((eq node-at-point nil) "")
                             (t (thread-first (tsc-get-child-by-field node-at-point :name)
                                  (tsc-node-text))))))
-                (format "%s" name)))
-            (defun meain/highlight-function ()
-              (interactive)
-              (let* ((points (thread-first (tree-sitter-node-at-point (meain/ts-get-func-like-thing))
-                               (tsc-node-byte-range))))
-                (pulse-momentary-highlight-region (car points)
-                                                  (cdr points)
-                                                  'company-template-field)))
-            (defun meain/highlight-class ()
-              (interactive)
-              (let* ((points (thread-first (tree-sitter-node-at-point (meain/ts-get-class-like-thing))
-                               (tsc-node-byte-range))))
-                (pulse-momentary-highlight-region (car points)
-                                                  (cdr points)
-                                                  'company-template-field)))))
+                (format "%s" name)))))
 (use-package tree-sitter-langs :straight t
   :after tree-sitter)
+
+;; Quick lookup in a dictionary
+(use-package dictionary
+  :straight t
+  :init (progn
+          (global-set-key (kbd "C-c d")
+                          #'dictionary-search)
+          (setq dictionary-server "dict.org")))
+
 
 
 
