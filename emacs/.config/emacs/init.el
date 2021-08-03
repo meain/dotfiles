@@ -1407,6 +1407,9 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package nix-mode :straight t
   :defer t
   :mode "\\.nix\\'")
+;; builtin package for scheme
+(use-package scheme-mode :defer t
+  :mode "\\.scm\\'")
 (use-package csv-mode
   :straight t
   :defer t
