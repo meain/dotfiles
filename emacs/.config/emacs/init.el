@@ -2567,8 +2567,8 @@ Pass THING-TO-POPUP as the thing to popup."
                                                    (propertize "%b"
                                                                'face
                                                                (if (buffer-modified-p)
-                                                                   'font-lock-builtin-face
-                                                                 'minibuffer-prompt)
+                                                                   'region
+                                                                 'font-lock-builtin-face)
                                                                'help-echo
                                                                (buffer-file-name))))
                                      '(:eval (mode-line-idle 1.0
