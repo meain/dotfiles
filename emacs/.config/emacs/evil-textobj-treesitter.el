@@ -18,37 +18,6 @@
 (puthash 'python-mode "python" evil-textobj-treesitter-queries)
 (puthash 'go-mode "go" evil-textobj-treesitter-queries)
 
-(defun evil-textobj-treesitter--get-capture-groups ()
-  "Util function to list all the available capture groups for a specific language."
-  (let* ((m-lang-file (gethash major-mode evil-textobj-treesitter-queries))
-         (m-ts-query-filename (concat "~/.config/emacs/ts-queries/" m-lang-file
-                                      "/textobjects.scm"))
-         (m-ts-debugging-query (with-temp-buffer
-                                 (insert-file-contents m-ts-query-filename)
-                                 (buffer-string)))
-         (m-ts-root-node (tsc-root-node tree-sitter-tree))
-         (m-ts-query (tsc-make-query tree-sitter-language m-ts-debugging-query))
-         (m-ts-captures (tsc-query-captures m-ts-query m-ts-root-node
-                                            #'tsc--buffer-substring-no-properties))
-         (m-previous nil))
-    (delete-dups (save-match-data (let ((pos 0) matches)
-                                    (while (string-match "@[a-z\.]+" m-ts-debugging-query
-                                                         pos)
-                                      (push (match-string 0 m-ts-debugging-query)
-                                            matches)
-                                      (setq pos (match-end 0)))
-                                    matches)))))
-
-(defun evil-textobj-treesitter-print-capture-groups ()
-  "Util function to list all the available capture groups for a specific language."
-  (interactive)
-  (cl-loop for
-           entry
-           in
-           (evil-textobj-treesitter--get-capture-groups)
-           do
-           (message "%s" entry)))
-
 (defun evil-textobj-treesitter--nodes-within (nodes)
   "NODES which contain the current point insdie them ordered inside out."
   (sort (remove-if-not (lambda (x)
