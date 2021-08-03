@@ -2531,9 +2531,14 @@ Pass THING-TO-POPUP as the thing to popup."
   (funcall thing-to-popup))
 
 
-;; Some custom text objects
-;; TODO: Make a more generic textobject over any tree sitter query
-(load-file "~/.config/emacs/evil-textobj-function.el")
+;; Some custom text objects based on treesitter
+(load-file "~/.config/emacs/evil-textobj-treesitter.el")
+(define-key evil-outer-text-objects-map "f" (evil-textobj-treesitter-get-textobj "function.outer"))
+(define-key evil-inner-text-objects-map "f" (evil-textobj-treesitter-get-textobj "function.inner"))
+(define-key evil-outer-text-objects-map "c" (evil-textobj-treesitter-get-textobj "class.outer"))
+(define-key evil-inner-text-objects-map "c" (evil-textobj-treesitter-get-textobj "class.inner"))
+(define-key evil-outer-text-objects-map "C" (evil-textobj-treesitter-get-textobj "comment.outer"))
+(define-key evil-inner-text-objects-map "C" (evil-textobj-treesitter-get-textobj "comment.outer"))
 
 ;; Better modeline
 (use-package mode-line-idle
