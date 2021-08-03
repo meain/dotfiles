@@ -1941,6 +1941,7 @@ Pass ORIGINAL and ALTERNATE options."
   :straight t
   :config (progn
             (global-tree-sitter-mode)
+            (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
             (defun meain/ts-get-class-like-thing ()
               (cond
                ((eq major-mode 'rust-mode) 'impl_item)
