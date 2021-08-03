@@ -12,16 +12,16 @@
 
 '(underline ((((class color) (min-colors 89)) (:underline t :foreground "#949494"))))
 '(font-lock-warning-face ((((class color) (min-colors 89)) (:foreground "#000000"))))
-'(font-lock-keyword-face ((((class color) (min-colors 89)) (:foreground "#4271AE"))))
+'(font-lock-keyword-face ((((class color) (min-colors 89)) (:foreground "#000000"))))
 '(font-lock-function-name-face ((((class color) (min-colors 89)) (:foreground "#E75600"))))
 '(font-lock-type-face ((((class color) (min-colors 89)) (:foreground "#000000"))))
 '(font-lock-preprocessor-face ((((class color) (min-colors 89)) (:foreground "#000000"))))
 '(font-lock-builtin-face ((((class color) (min-colors 89)) (:foreground "#000000"))))
-'(font-lock-variable-name-face ((((class color) (min-colors 89)) (:foreground "#E41D91"))))
+'(font-lock-variable-name-face ((((class color) (min-colors 89)) (:foreground "#000000"))))
 '(font-lock-string-face ((((class color) (min-colors 89)) (:foreground "#0087AF"))))
 '(font-lock-constant-face ((((class color) (min-colors 89)) (:foreground "#000000"))))
-'(font-lock-doc-face ((((class color) (min-colors 89)) (:foreground "#999999"))))
-'(font-lock-comment-face ((((class color) (min-colors 89)) (:foreground "#999999"))))
+'(font-lock-doc-face ((((class color) (min-colors 89)) (:foreground "#999999" :italic t))))
+'(font-lock-comment-face ((((class color) (min-colors 89)) (:foreground "#999999" :italic t))))
 '(show-paren-match-face ((((class color) (min-colors 89)) (:weight bold :background "#DADADA" :foreground "#1C1C1C"))))
 '(default ((((class color) (min-colors 89)) (:background "#ffffff" :foreground "#000000"))))
 '(highline-face ((((class color) (min-colors 89)) (:underline t :background "#f5f5f5"))))
@@ -37,7 +37,8 @@
 
 '(mode-line-inactive ((((class color) (min-colors 89)) (:background "#EEEEEE"))))
 '(mode-line-buffer-id ((((class color) (min-colors 89)) (:weight bold))))
-'(mode-line ((((class color) (min-colors 89)) (:background "#1C1C1C" :foreground "#FFFFFF"))))
+'(mode-line ((((class color) (min-colors 89)) (:background "#C3E9DB"))))
+'(minibuffer-prompt ((((class color) (min-colors 89)) (:foreground "#0087AF" :background "#ffffff"))))
 
 '(isearch ((((class color) (min-colors 89)) (:weight bold :background "#C3E9DB" :foreground "#424242"))))
 '(isearch-lazy-highlight-face ((((class color) (min-colors 89)) (:weight bold :background "#B7C9E2" :foreground "#424242"))))
@@ -63,8 +64,9 @@
 '(magit-section-highlight   ((((class color) (min-colors 89)) (:foreground "#E41D91"))))
 
 '(tree-sitter-hl-face:keyword ((((class color) (min-colors 89)) (:foreground "#000000"))))
-'(tree-sitter-hl-face:method.call ((((class color) (min-colors 89)) (:italic nil :foreground "#E75600"))))
-'(tree-sitter-hl-face:function.call ((((class color) (min-colors 89)) (:italic nil :foreground "#E75600"))))
+'(tree-sitter-hl-face:property ((((class color) (min-colors 89)) (:foreground "#000000"))))
+'(tree-sitter-hl-face:method.call ((((class color) (min-colors 89)) (:italic nil :foreground "#000000"))))
+'(tree-sitter-hl-face:function.call ((((class color) (min-colors 89)) (:italic nil :foreground "#000000"))))
 
 '(dired-directory ((((class color) (min-colors 89)) (:weight bold :foreground "#000000")))))
 
