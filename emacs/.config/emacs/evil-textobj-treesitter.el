@@ -74,31 +74,28 @@
   "Get a list of viable nodes based on GROUP value.
 They will be order with captures with point inside them first then the
 ones that follow.  This will return n(COUNT) items."
-  (let* ((m-lang-file (gethash major-mode evil-textobj-treesitter-queries))
-         (m-ts-query-filename (concat "~/.config/emacs/ts-queries/" m-lang-file
-                                      "/textobjects.scm"))
-         (m-ts-debugging-query (with-temp-buffer
-                                 (insert-file-contents m-ts-query-filename)
-                                 (buffer-string)))
-         (m-ts-root-node (tsc-root-node tree-sitter-tree))
-         (m-ts-query (tsc-make-query tree-sitter-language m-ts-debugging-query))
-         (m-ts-captures (tsc-query-captures m-ts-query m-ts-root-node
-                                            #'tsc--buffer-substring-no-properties))
-         (m-previous nil))
-    (progn
-      (setq filtered (seq-map #'cdr
-                              (remove-if-not (lambda (x)
-                                               (eq (car x) (intern group)))
-                                             m-ts-captures)))
-      (setq filtered (remove-duplicates filtered
-                                        :test (lambda (x y)
-                                                (and (= (car (tsc-node-byte-range x)) (car (tsc-node-byte-range y)))
-                                                     (= (cdr (tsc-node-byte-range x)) (cdr (tsc-node-byte-range y)))))))
-      (setq nodes-within (evil-textobj-treesitter--nodes-within filtered))
-      (setq nodes-after (evil-textobj-treesitter--nodes-after filtered))
-      (setq mappable (append nodes-within nodes-after))
-      (subseq mappable 0 count))))
-
+  (let* ((lang-file (gethash major-mode evil-textobj-treesitter-queries))
+         (query-filename (concat "~/.config/emacs/ts-queries/" lang-file
+                                 "/textobjects.scm"))
+         (debugging-query (with-temp-buffer
+                            (insert-file-contents query-filename)
+                            (buffer-string)))
+         (root-node (tsc-root-node tree-sitter-tree))
+         (query (tsc-make-query tree-sitter-language debugging-query))
+         (captures (tsc-query-captures query root-node #'tsc--buffer-substring-no-properties))
+         (filtered-captures (remove-if-not (lambda (x)
+                                             (eq (car x) (intern group)))
+                                           captures))
+         (nodes (seq-map #'cdr filtered-captures))
+         (nodes-nodupes (remove-duplicates nodes
+                                           :test (lambda (x y)
+                                                   (and (= (car (tsc-node-byte-range x)) (car (tsc-node-byte-range y)))
+                                                        (= (cdr (tsc-node-byte-range x)) (cdr (tsc-node-byte-range y)))))))
+         (nodes-within (evil-textobj-treesitter--nodes-within nodes-nodupes))
+         (nodes-after (evil-textobj-treesitter--nodes-after nodes-nodupes)))
+    (subseq (append nodes-within nodes-after)
+            0
+            count)))
 
 (defun evil-textobj-treesitter--range (count beg end type ts-group)
   "Get the range of the closeset item of type `TS-GROUP'.
@@ -107,24 +104,18 @@ thought it does not actually make sense in most cases as if we do
 3-in-func the selections will not be continues, but we can only
 provide the start and end as of now which is what we are doing.
 `TYPE' can probably be used to append inner or outer."
-  (let ((nodes (evil-textobj-treesitter--get-nodes ts-group
-                                                   count))
-        (min nil)
-        (max nil))
-    ;; Have to do this as we might have nested functions
-    (cl-loop for
-             node
-             in
-             nodes
-             do
-             (progn
-               (if (or (equal min nil)
-                       (< (car (tsc-node-byte-range node)) min))
-                   (setq min (car (tsc-node-byte-range node))))
-               (if (or (equal max nil)
-                       (> (cdr (tsc-node-byte-range node)) max))
-                   (setq max (cdr (tsc-node-byte-range node))))))
-    (evil-range min max)))
+  (let* ((nodes (evil-textobj-treesitter--get-nodes ts-group
+                                                    count))
+         (range-min (apply 'min
+                           (seq-map (lambda (x)
+                                      (car (tsc-node-byte-range x)))
+                                    nodes)))
+         (range-max (apply 'max
+                           (seq-map (lambda (x)
+                                      (cdr (tsc-node-byte-range x)))
+                                    nodes))))
+    ;; Have to compute min and max like this as we might have nested functions
+    (evil-range range-min range-max)))
 
 (defmacro evil-textobj-treesitter-get-textobj (group)
   "Macro to create a textobj function from `GROUP'."
