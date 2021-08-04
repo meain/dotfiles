@@ -2549,6 +2549,10 @@ Pass THING-TO-POPUP as the thing to popup."
 (define-key evil-inner-text-objects-map "c" (evil-textobj-treesitter-get-textobj "class.inner"))
 (define-key evil-outer-text-objects-map "C" (evil-textobj-treesitter-get-textobj "comment.outer"))
 (define-key evil-inner-text-objects-map "C" (evil-textobj-treesitter-get-textobj "comment.outer"))
+(define-key evil-outer-text-objects-map "o" (evil-textobj-treesitter-get-textobj "loop.outer"))
+(define-key evil-inner-text-objects-map "o" (evil-textobj-treesitter-get-textobj "loop.inner"))
+(define-key evil-outer-text-objects-map "n" (evil-textobj-treesitter-get-textobj "conditional.outer"))
+(define-key evil-inner-text-objects-map "n" (evil-textobj-treesitter-get-textobj "conditionalp.inner"))
 
 ;; Better modeline
 (use-package mode-line-idle
