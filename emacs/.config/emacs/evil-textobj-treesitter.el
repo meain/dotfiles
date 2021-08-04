@@ -53,7 +53,7 @@ ones that follow.  This will return n(COUNT) items."
          (query (tsc-make-query tree-sitter-language debugging-query))
          (captures (tsc-query-captures query root-node #'tsc--buffer-substring-no-properties))
          (filtered-captures (remove-if-not (lambda (x)
-                                             (eq (car x) (intern group)))
+                                             (member (car x) group))
                                            captures))
          (nodes (seq-map #'cdr filtered-captures))
          (nodes-nodupes (remove-duplicates nodes
@@ -87,12 +87,19 @@ provide the start and end as of now which is what we are doing.
     (evil-range range-min range-max)))
 
 (defmacro evil-textobj-treesitter-get-textobj (group)
-  "Macro to create a textobj function from `GROUP'."
-  (let (funsymbol (intern (concat "evil-textobj-treesitter-" group)))
+  "Macro to create a textobj function from `GROUP'.
+You can pass in multiple groups as a list and in that case as long as
+any one of them is vaild, it will be picked."
+  (let* ((groups (if (eq (type-of group) 'string)
+                     (list group)
+                   group))
+         (funsymbol (intern (concat "evil-textobj-treesitter-function--"
+                                    (mapconcat 'identity groups "-"))))
+         (interned-groups (map 'identity 'intern groups)))
     `(evil-define-text-object ,funsymbol
        (count &optional beg end type)
        (evil-textobj-treesitter--range count beg
-                                       end type ,group))))
+                                       end type ',interned-groups))))
 
 (provide 'evil-textobj-treesitter)
 ;;; evil-textobj-treesitter.el ends here
