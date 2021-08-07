@@ -2588,7 +2588,7 @@ Pass THING-TO-POPUP as the thing to popup."
                                                    (propertize "%b"
                                                                'face
                                                                (if (buffer-modified-p)
-                                                                   'region
+                                                                   'font-lock-string-face
                                                                  'font-lock-builtin-face)
                                                                'help-echo
                                                                (buffer-file-name))))
