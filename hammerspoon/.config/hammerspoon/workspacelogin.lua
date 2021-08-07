@@ -19,13 +19,13 @@ function workspaceLogin(filename)
     hs.eventtap.keyStrokes(password)
     hs.eventtap.keyStroke({}, "tab")
     hs.application.launchOrFocus("firefox")
-    -- os.execute("sleep " .. tonumber(20))
-    -- hs.alert("Logged into codauth")
-    -- hs.eventtap.leftClick(hs.geometry.point(-696.16455078125, 59.049240112305))
-    -- hs.alert("Copied thing")
-    -- hs.application.launchOrFocus("workspaces")
-    -- hs.eventtap.keyStroke({"cmd"}, "v")
-    -- hs.alert("Login complete")
+    local clipChanged = utils.waitTillClipChanges(10)
+    if clipChanged then
+        hs.application.launchOrFocus("workspaces")
+        hs.eventtap.keyStroke({"cmd"}, "v")
+        hs.eventtap.keyStroke({}, "return")
+        hs.alert("Login complete")
+    end
 end
 
 return workspaceLogin
