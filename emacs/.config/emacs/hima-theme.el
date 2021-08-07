@@ -29,6 +29,8 @@
 '(fringe ((((class color) (min-colors 89)) (:underline t :foreground "#000000"))))
 '(linum ((((class color) (min-colors 89)) (:underline t :foreground "#000000"))))
 
+'(widget-button   ((((class color) (min-colors 89)) (:foreground "#4271AE"))))
+
 '(ac-selection-face ((((class color) (min-colors 89)) (:background "#1C1C1C" :foreground "#EEEEEE"))))
 '(ac-candidate-face ((((class color) (min-colors 89)) (:background "#D0D0D0" :foreground "#424242"))))
 

@@ -82,12 +82,13 @@
 ;; Scratch initial content
 (defun meain/get-scratch-message ()
   "Pull a random fortue entry and format it for `lisp-interaction' mode as a comment."
+  ;; Commands: shuf -n1 ~/.local/share/quotes | fortune -s
   (concat (mapconcat 'identity
                      (mapcar (lambda (x)
                                (cl-concatenate 'string ";; " x))
                              (cl-remove-if (lambda (x)
                                              (equal x ""))
-                                           (split-string (shell-command-to-string "shuf -n1 ~/.local/share/quotes")
+                                           (split-string (shell-command-to-string "fortune -s")
                                                          "\n")))
                      "\n")
           "\n"))
