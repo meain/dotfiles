@@ -1564,10 +1564,16 @@ Pass ORIGINAL and ALTERNATE options."
     (setq notmuch-hello-logo nil)
     (setq notmuch-search-oldest-first nil)
     (setq notmuch-message-headers-visible nil)
-    (setq message-auto-save-directory "/Users/meain/.local/share/mail")
+    (setq message-auto-save-directory "/Users/meain/.local/share/mail/meain")
     (setq notmuch-saved-searches (quote ((:name "imbox" :query "tag:imbox AND tag:inbox"
                                                 :key "i"
                                                 :sort-order newest-first)
+                                         (:name "todo" :query "tag:inbox AND tag:todo"
+                                                :key "t"
+                                                :sort-order oldest-first)
+                                         (:name "watching" :query "tag:inbox AND tag:watch"
+                                                :key "w"
+                                                :sort-order oldest-first)
                                          (:name "read" :query "tag:inbox AND -tag:imbox AND -tag:newsletter AND -tag:python and -tag:unread AND -tag:jobhunt AND -tag:git"
                                                 :key "r"
                                                 :sort-order oldest-first)
