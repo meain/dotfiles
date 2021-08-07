@@ -31,6 +31,10 @@
 (add-to-list 'default-frame-alist
              `(font . ,meain/font-family-default))
 
+;; Wider frames by default
+(add-to-list 'default-frame-alist
+             `(width . 150))
+
 ;; Window decoraations
 (add-to-list 'default-frame-alist
              '(ns-transparent-titlebar . t))
