@@ -413,14 +413,18 @@ Pass ORIGINAL and ALTERNATE options."
 (advice-add 'evil-yank :around 'meain/evil-yank-advice)
 
 ;; Recompile binding
-(evil-set-initial-state 'comint-mode 'normal)
-(defun meain/recompile-or-compile (&optional arg)
-  "Compile or recompile based on universal `ARG'."
-  (interactive "P")
-  (if arg
-      (call-interactively 'compile)
-    (compile compile-command t)))
-(evil-leader/set-key "r" 'meain/recompile-or-compile)
+(use-package compile
+  :commands (compile recompile):config
+  (progn
+    (setq compilation-scroll-output nil)
+    (evil-set-initial-state 'comint-mode 'normal)
+    (defun meain/recompile-or-compile (&optional arg)
+      "Compile or recompile based on universal `ARG'."
+      (interactive "P")
+      (if arg
+          (call-interactively 'compile)
+        (compile compile-command t))))
+  :init (evil-leader/set-key "r" 'meain/recompile-or-compile))
 
 ;; Simplify how Async Shell Command buffers get displayed
 ;; (add-to-list 'display-buffer-alist
@@ -1332,29 +1336,34 @@ Pass ORIGINAL and ALTERNATE options."
   :init (setq venv-location "~/.cache/virtual_envs"))
 
 ;; Quick run current test
-(defun meain/test-runner-full ()
-  "Run the full test suite using toffee."
-  (interactive)
-  (compile (shell-command-to-string (format "toffee --full '%s' || exit 1'"
-                                            (buffer-file-name)))))
-(defun meain/test-runner (&optional full-file)
-  "Run the nearest test using toffee.  Pass `FULL-FILE' to run all test in file."
-  (interactive "P")
-  (message "%s"
-           (if full-file
-               (format "toffee '%s' || exit 1"
-                       (buffer-file-name))
-             (format "toffee '%s' '%s' || exit 1"
-                     (buffer-file-name)
-                     (line-number-at-pos))))
-  (compile (shell-command-to-string (if full-file
-                                        (format "toffee '%s' || exit 1"
-                                                (buffer-file-name))
-                                      (format "toffee '%s' '%s' || exit 1"
-                                              (buffer-file-name)
-                                              (line-number-at-pos))))))
-(evil-leader/set-key "d" 'meain/test-runner)
-(evil-leader/set-key "D" 'meain/test-runner-full)
+(use-package emacs
+  :after compile
+  :commands (meain/test-runner meain/test-runner-full):config
+  (progn
+    (defun meain/test-runner-full ()
+      "Run the full test suite using toffee."
+      (interactive)
+      (compile (shell-command-to-string (format "toffee --full '%s' || exit 1'"
+                                                (buffer-file-name)))))
+    (defun meain/test-runner (&optional full-file)
+      "Run the nearest test using toffee.  Pass `FULL-FILE' to run all test in file."
+      (interactive "P")
+      (message "%s"
+               (if full-file
+                   (format "toffee '%s' || exit 1"
+                           (buffer-file-name))
+                 (format "toffee '%s' '%s' || exit 1"
+                         (buffer-file-name)
+                         (line-number-at-pos))))
+      (compile (shell-command-to-string (if full-file
+                                            (format "toffee '%s' || exit 1"
+                                                    (buffer-file-name))
+                                          (format "toffee '%s' '%s' || exit 1"
+                                                  (buffer-file-name)
+                                                  (line-number-at-pos)))))))
+  :init (progn
+          (evil-leader/set-key "d" 'meain/test-runner)
+          (evil-leader/set-key "D" 'meain/test-runner-full)))
 
 ;; Neotree
 (use-package neotree :straight t
