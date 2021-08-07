@@ -1561,6 +1561,7 @@ Pass ORIGINAL and ALTERNATE options."
               (force-window-update))):init
   (progn
     (evil-leader/set-key "a n" 'notmuch)
+    (setq notmuch-hello-logo nil)
     (setq notmuch-search-oldest-first nil)
     (setq notmuch-message-headers-visible nil)
     (setq message-auto-save-directory "/Users/meain/.local/share/mail")
