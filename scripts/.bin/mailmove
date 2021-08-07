@@ -4,14 +4,14 @@
 set -e
 
 MAILDIR=$HOME/.local/share/mail/meain
-NOTMUCH_CONFIG="$HOME/.config/notmuch/config"
+# NOTMUCH_CONFIG="$HOME/.config/notmuch/config"
 
 # Move a message file while removing its UID-part
-function safeMove { s=${1##*/}; s=${s%%,*}; mv -f $1 $2/$s; }
+function safeMove { mv -f "$1" "$2/$(echo "$1"|xargs basename|cut -d',' -f1)"; }
 
 # Move all archived messages from Inbox to Archive folder
 echo Moving $(notmuch count --output=files 'folder:meain/INBOX' and -tag:inbox) \
      archived messages from Inbox to Archive folder
-for i in $(notmuch search --output=files 'folder:meain/INBOX' and -tag:inbox); do
-    safeMove $i ${MAILDIR}/Archive/cur
+for i in $(notmuch search --output=files 'folder:meain/INBOX' and -tag:inbox|grep 'meain/INBOX'); do
+    safeMove "$i" "$MAILDIR/[Gmail].All Mail/cur"
 done
