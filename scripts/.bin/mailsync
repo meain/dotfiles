@@ -2,7 +2,7 @@
 
 set -e
 
-mailmove  # move archived mails from inbox to archive
+mailmove || true  # move archived mails from inbox to archive
 
 if [ ! "$1" = "retag" ]; then
 	GPASS="${GOOGLE_PASSWORD:-$(keypuller)}"
