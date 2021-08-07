@@ -1,3 +1,5 @@
+local pasteboard = require("hs.pasteboard")
+
 local utils = {}
 
 function utils.reverse(arr)
@@ -170,6 +172,19 @@ function utils.printTable(node)
     output_str = table.concat(output)
 
     print(output_str)
+end
+
+function utils.waitTillClipChanges(maxTime)
+    local initialClip = pasteboard.getContents()
+    local i = maxTime
+    while (i > 0) do
+        os.execute("sleep " .. tonumber(1))
+        if (pasteboard.getContents() ~= initialClip) then
+            return true
+        end
+        i = i - 1
+    end
+    return false
 end
 
 return utils
