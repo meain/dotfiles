@@ -18,7 +18,8 @@ Create Both
 Expunge Both
 Far :meain-remote:
 Near :meain-local:
-Patterns * !"[Gmail]/All Mail"
+# Patterns * !"[Gmail]/All Mail"
+Patterns *
 SyncState *
 ExpireUnread yes
-MaxMessages 5000
+MaxMessages 500
