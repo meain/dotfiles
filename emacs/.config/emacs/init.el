@@ -2552,17 +2552,24 @@ Pass THING-TO-POPUP as the thing to popup."
 
 
 ;; Some custom text objects based on treesitter
-(load-file "~/.config/emacs/evil-textobj-treesitter.el")
-(define-key evil-outer-text-objects-map "f" (evil-textobj-treesitter-get-textobj "function.outer"))
-(define-key evil-inner-text-objects-map "f" (evil-textobj-treesitter-get-textobj "function.inner"))
-(define-key evil-outer-text-objects-map "c" (evil-textobj-treesitter-get-textobj "class.outer"))
-(define-key evil-inner-text-objects-map "c" (evil-textobj-treesitter-get-textobj "class.inner"))
-(define-key evil-outer-text-objects-map "C" (evil-textobj-treesitter-get-textobj "comment.outer"))
-(define-key evil-inner-text-objects-map "C" (evil-textobj-treesitter-get-textobj "comment.outer"))
-(define-key evil-outer-text-objects-map "o" (evil-textobj-treesitter-get-textobj "loop.outer"))
-(define-key evil-inner-text-objects-map "o" (evil-textobj-treesitter-get-textobj "loop.inner"))
-(define-key evil-outer-text-objects-map "n" (evil-textobj-treesitter-get-textobj "conditional.outer"))
-(define-key evil-inner-text-objects-map "n" (evil-textobj-treesitter-get-textobj "conditionalp.inner"))
+;; (load-file "~/.config/emacs/evil-textobj-treesitter.el")
+(use-package evil-textobj-treesitter
+  :straight (el-patch :type git
+                      :host github
+                      :repo "meain/evil-textobj-treesitter"
+                      :files (:defaults "queries")):after
+  tree-sitter
+  :config (progn
+            (define-key evil-outer-text-objects-map "f" (evil-textobj-treesitter-get-textobj "function.outer"))
+            (define-key evil-inner-text-objects-map "f" (evil-textobj-treesitter-get-textobj "function.inner"))
+            (define-key evil-outer-text-objects-map "c" (evil-textobj-treesitter-get-textobj "class.outer"))
+            (define-key evil-inner-text-objects-map "c" (evil-textobj-treesitter-get-textobj "class.inner"))
+            (define-key evil-outer-text-objects-map "C" (evil-textobj-treesitter-get-textobj "comment.outer"))
+            (define-key evil-inner-text-objects-map "C" (evil-textobj-treesitter-get-textobj "comment.outer"))
+            (define-key evil-outer-text-objects-map "o" (evil-textobj-treesitter-get-textobj "loop.outer"))
+            (define-key evil-inner-text-objects-map "o" (evil-textobj-treesitter-get-textobj "loop.inner"))
+            (define-key evil-outer-text-objects-map "n" (evil-textobj-treesitter-get-textobj "conditional.outer"))
+            (define-key evil-inner-text-objects-map "n" (evil-textobj-treesitter-get-textobj "conditionalp.inner"))))
 
 ;; Better modeline
 (use-package mode-line-idle
