@@ -326,17 +326,29 @@ hs.hotkey.bind(
     "z",
     function()
         local currentApp = hs.window.focusedWindow()
-        hs.application.launchOrFocus("zoom.us")
-        hs.eventtap.keyStroke({"cmd", "ctrl"}, "v")
-        local clipChanged = utils.waitTillClipChanges(7)
-        if not clipChanged then
-            -- in case zoom was not open at all
+        local startMeeting = function()
             hs.application.launchOrFocus("zoom.us")
             hs.eventtap.keyStroke({"cmd", "ctrl"}, "v")
-            waitTillClipChanges(7)
         end
-        currentApp:focus()
-        hs.eventtap.keyStroke({"cmd"}, "v")
+        local pasteLink = function()
+            currentApp:focus()
+            hs.eventtap.keyStroke({"cmd"}, "v")
+        end
+        startMeeting()
+        utils.ifClipChanges(
+            pasteLink,
+            function()
+                startMeeting()
+                utils.ifClipChanges(
+                    pasteLink,
+                    function()
+                        hs.notify("Can't get a link from zoom. I'm out.")
+                    end,
+                    7
+                )
+            end,
+            7
+        )
     end
 )
 
