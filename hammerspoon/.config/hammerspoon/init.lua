@@ -706,7 +706,7 @@ hs.hotkey.bind(
     {"cmd", "alt"},
     "e",
     function()
-        customshellrun.run("emacsclient -ne \"(meain/emacs-popup-frame 'notmuch)\"")
+        customshellrun.run('emacsclient -ne "(meain/emacs-popup-frame \'notmuch)"')
     end
 )
 
@@ -714,7 +714,7 @@ hs.hotkey.bind(
     {"cmd", "alt"},
     ";",
     function()
-        customshellrun.run("emacsclient -ne '(meain/emacs-popup-frame (lambda () (vterm \"popup-term\")))'")
+        customshellrun.run('emacsclient -ne \'(meain/emacs-popup-frame (lambda () (vterm "popup-term")))\'')
     end
 )
 
