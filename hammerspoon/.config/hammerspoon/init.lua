@@ -361,6 +361,7 @@ end
 
 -- Quick edit
 local quick_edit_app = nil
+local quick_edit_mode = nil
 hs.hotkey.bind(
     {"alt"},
     "`",
@@ -376,14 +377,32 @@ hs.hotkey.bind(
             hs.eventtap.keyStrokes("(meain/quick-edit-end)")
             hs.eventtap.keyStroke({}, "return")
             quick_edit_app:focus()
-            os.execute("sleep " .. tonumber(1))
-            hs.eventtap.keyStroke({"cmd"}, "a")
-            hs.eventtap.keyStroke({"cmd"}, "v")
-            quick_edit_app = nil
+            hs.timer.doAfter(
+                0.5,
+                function()
+                    if quick_edit_mode == "full" then
+                        hs.eventtap.keyStroke({"cmd"}, "a")
+                    end
+                    hs.eventtap.keyStroke({"cmd"}, "v")
+                    quick_edit_app = nil
+                    quick_edit_mode = nil
+                end
+            )
         else
             quick_edit_app = hs.window.focusedWindow()
-            hs.eventtap.keyStroke({"cmd"}, "a")
+            local clipContents = pasteboard.getContents()
             hs.eventtap.keyStroke({"cmd"}, "c")
+            quick_edit_mode = "partial"
+            if clipContents == pasteboard.getContents() then
+                -- if we did not get anything when we just did a copy
+                -- that is probably because there was nothitng
+                -- selected to begin with, so we just select
+                -- everything and go from there and set the mode to
+                -- full instead of partial
+                hs.eventtap.keyStroke({"cmd"}, "a")
+                hs.eventtap.keyStroke({"cmd"}, "c")
+                quick_edit_mode = "full"
+            end
             emacs:activate()
             hs.eventtap.keyStroke({"alt", "shift"}, ";")
             hs.eventtap.keyStrokes("(meain/quick-edit)")
