@@ -1998,8 +1998,28 @@ Pass ORIGINAL and ALTERNATE options."
                             (t (thread-first (tsc-get-child-by-field node-at-point :name)
                                  (tsc-node-text))))))
                 (format "%s" name)))))
-(use-package tree-sitter-langs :straight t
-  :after tree-sitter)
+(use-package tree-sitter-langs
+  :straight t
+  :after tree-sitter
+  :config (progn
+            (add-function :before-until tree-sitter-hl-face-mapping-function
+                          (lambda (capture-name)
+                            (pcase capture-name
+                              ("python.class.name" 'font-lock-function-name-face))))
+            (add-hook 'python-mode-hook
+                      (lambda ()
+                        (tree-sitter-hl-add-patterns nil
+                          [(class_definition (identifier)
+                                             @python.class.name)])))
+            (add-function :before-until tree-sitter-hl-face-mapping-function
+                          (lambda (capture-name)
+                            (pcase capture-name
+                              ("python.docstring" 'font-lock-comment-face))))
+            (add-hook 'python-mode-hook
+                      (lambda ()
+                        (tree-sitter-hl-add-patterns nil
+                          [(function_definition (block (expression_statement (string)
+                                                                             @python.docstring)))])))))
 
 ;; Quick lookup in a dictionary
 (use-package dictionary
