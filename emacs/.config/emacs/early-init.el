@@ -24,10 +24,14 @@
 ;; Font setup
 ;; iA Writer Mono S 14 | Inconsolata 16 | Fantasque Sans Mono 16 | JetBrains Mono 14
 ;; Fira Code 15 | Noto Sans Mono 15 | DankMono Nerd Font 15 | Roboto Mono 14 | Iosevka 15
-;; Font (set-frame-font  "Anonymous Pro 15")
-(defvar meain/font-family-default "Anonymous Pro 15"
-  "Custom font family")
-(setq-default line-spacing .3) ;; .1 for Inconsolata
+;; Conta Mono 14 | IBM Plex Mono 13 | MonoLisa 13 | Kraft Mono 14 | SpaceMono Nerd Font Mono 14
+;; Aglet Mono 15 | VictorMono Nerd Font 14 | NanumGothicCoding 15 | BPMono 14 | Fairfax HD 16
+;; Liga Camingocode 15 | Oxygen Mono 14 | M+ 1m 14 | MonospaceTypewriter 14 | Luculent 14
+;; Iosevka Slab 14 | Edlo 13 | Bront 15 | Whois 15
+;; Font (set-frame-font  "Whois 16")
+(defvar meain/font-family-default "Whois 15"
+  "Default font family for everything in Emacs.")
+(setq-default line-spacing .2) ;; .1 for Inconsolata
 (add-to-list 'default-frame-alist
              `(font . ,meain/font-family-default))
 
