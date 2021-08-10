@@ -174,6 +174,27 @@ function utils.printTable(node)
     print(output_str)
 end
 
+function utils.ifClipChanges(success, failure, maxTime)
+    local initialClip = pasteboard.getContents()
+    local sleepTime = 1
+    function clipCheck(initialClip, success, failure, currentTime, maxTime)
+        local clip = pasteboard.getContents()
+        if currentTime > maxTime then
+            failure()
+        elseif clip ~= initialClip then
+            success()
+        else
+            hs.timer.doAfter(
+                sleepTime,
+                function()
+                    clipCheck(initialClip, success, failure, currentTime + sleepTime, maxTime)
+                end
+            )
+        end
+    end
+    clipCheck(initialClip, success, failure, 0, maxTime)
+end
+
 function utils.waitTillClipChanges(maxTime)
     local initialClip = pasteboard.getContents()
     local i = maxTime
