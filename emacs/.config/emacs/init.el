@@ -1903,19 +1903,26 @@ Pass ORIGINAL and ALTERNATE options."
   :after tramp)
 
 ;; timing stuff
-(use-package activity-watch-mode
-  :straight t
-  :diminish :config
-  (global-activity-watch-mode))
+;; (use-package activity-watch-mode
+;;   :straight t
+;;   :diminish :config
+;;   (global-activity-watch-mode))
 
 ;; Markdown preview
 (defun meain/markdown-preview ()
   "Preview markdown.  Using pandoc under the hood."
+                                        ; TODO: handle local embedded images
   (interactive)
   (if (get-buffer "*markdown-preview*")
-      (kill-buffer "*markdown-preview*")
-    (start-process "*markdown-preview*" "*markdown-preview*"
-                   "markdown-preview" buffer-file-name)))
+      (kill-buffer "*markdown-preview*"))
+  (start-process "*markdown-preview*" "*markdown-preview*"
+                 "markdown-preview" buffer-file-name))
+
+(defun meain/kill-markdown-preview ()
+  "Preview markdown.  Using pandoc under the hood."
+  (interactive)
+  (if (get-buffer "*markdown-preview*")
+      (kill-buffer "*markdown-preview*")))
 
 ;; Git info in dired buffer
 (use-package dired-git-info
