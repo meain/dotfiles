@@ -14,7 +14,7 @@ if [ ! -f "$NEW_PIC" ]; then
 fi
 
 if [ -z "$NUM_DESKTOPS" ]; then
-  NUM_DESKTOPS=5
+  NUM_DESKTOPS=2
   echo "Defaulted number of desktops to $NUM_DESKTOPS"
 fi
 
