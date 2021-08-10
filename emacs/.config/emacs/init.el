@@ -1976,6 +1976,23 @@ Pass ORIGINAL and ALTERNATE options."
   :config (progn
             (global-tree-sitter-mode)
             (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
+            ;; debugging stuff
+            (setq tree-sitter-debug-jump-buttons t)
+            (setq tree-sitter-debug-highlight-jump-region
+                  nil)
+            ;; Override the tree sitter debug button does
+            (defun tree-sitter-debug--button-node-lookup (button)
+              "The function to call when a `tree-sitter-debug' BUTTON is clicked."
+              (unless tree-sitter-debug--source-code-buffer
+                (error "No source code buffer set"))
+              (unless (buffer-live-p tree-sitter-debug--source-code-buffer)
+                (user-error "Source code buffer has been killed"))
+              (unless button
+                (user-error "This function must be called on a button"))
+              (with-current-buffer tree-sitter-debug--source-code-buffer
+                (pulse-momentary-highlight-region (car (tsc-node-byte-range (button-get button 'points-to)))
+                                                  (cdr (tsc-node-byte-range (button-get button 'points-to)))
+                                                  'company-template-field)))
             (defun meain/ts-get-class-like-thing ()
               (cond
                ((eq major-mode 'rust-mode) 'impl_item)
