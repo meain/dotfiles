@@ -65,10 +65,13 @@
 '(magit-section-heading   ((((class color) (min-colors 89)) (:foreground "#4271AE"))))
 '(magit-section-highlight   ((((class color) (min-colors 89)) (:foreground "#E41D91"))))
 
+'(tree-sitter-hl-face:doc ((((class color) (min-colors 89)) (:foreground "#0087AF"))))
+'(tree-sitter-hl-face:string ((((class color) (min-colors 89)) (:foreground "#0087AF"))))
 '(tree-sitter-hl-face:keyword ((((class color) (min-colors 89)) (:foreground "#000000"))))
 '(tree-sitter-hl-face:property ((((class color) (min-colors 89)) (:foreground "#000000"))))
 '(tree-sitter-hl-face:method.call ((((class color) (min-colors 89)) (:italic nil :foreground "#000000"))))
 '(tree-sitter-hl-face:function.call ((((class color) (min-colors 89)) (:italic nil :foreground "#000000"))))
+'(tree-sitter-hl-face:constructor ((((class color) (min-colors 89)) (:italic nil :foreground "#E75600"))))
 
 '(dired-directory ((((class color) (min-colors 89)) (:weight bold :foreground "#000000")))))
 
