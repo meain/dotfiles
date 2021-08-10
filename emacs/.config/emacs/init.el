@@ -2302,11 +2302,13 @@ START and END comes from it being interactive."
     (gfm-mode)))
 
 ;; vim-printer remake in elisp
-(defun meain/quick-print (&optional print-above)
-  "Quickly print the variable your cursor is under.  Pass PRINT-ABOVE to print above current line."
-  (interactive "P")
-  (let ((thing-to-print (symbol-at-point)))
-    (if print-above
+(defun meain/quick-print (beg end)
+  "Quickly print the variable your cursor is under.  `BEG' and `END' is used in visual mode."
+  (interactive "r")
+  (let ((thing-to-print (if (eq evil-state 'visual)
+                            (buffer-substring beg end)
+                          (symbol-at-point))))
+    (if current-prefix-arg
         (progn
           (beginning-of-line)
           (newline-and-indent)
