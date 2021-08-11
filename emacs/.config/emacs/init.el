@@ -1868,7 +1868,7 @@ Pass ORIGINAL and ALTERNATE options."
                       (lambda ()
                         (interactive)
                         (focus-mode -1)))
-            (remove 'writeroom-set-fullscreen writeroom-global-effects)))
+            (setq writeroom-global-effects (remove 'writeroom-set-fullscreen writeroom-global-effects))))
 
 ;; tramp dired
 (use-package tramp
