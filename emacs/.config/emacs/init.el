@@ -690,10 +690,7 @@ Pass ORIGINAL and ALTERNATE options."
   :straight t
   :bind (:map minibuffer-local-map
               ("C-b" . marginalia-cycle)):config
-  (progn
-    ;; (setq marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
-    (setq marginalia-annotators '(marginalia-annotators-heavy))
-    (marginalia-mode)))
+  (marginalia-mode))
 
 ;; Consult without consultation fees
 (use-package consult :straight t)
