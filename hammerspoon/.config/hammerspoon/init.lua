@@ -543,7 +543,7 @@ hs.hotkey.bind(
                 title:sub(title:len() - 6, title:len()) == "Discord" or
                 title == "WhatsApp"
          then
-            currentWindow:move(hs.geometry(10, 390, 920, 500))
+            currentWindow:move(hs.geometry(10, 300, 920, 590))
         else
             currentWindow:move(wPosition)
         end
