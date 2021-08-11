@@ -2540,6 +2540,14 @@ START and END comes from it being interactive."
   (interactive)
   (async-shell-command "mailsync"))
 
+;; Quick "ddg"
+(defun meain/search-eww ()
+  "Search on ddg from Emacs using eww."
+  (interactive)
+  (eww (concat "https://lite.duckduckgo.com/lite/?q="
+               (read-string "Search term: "
+                            (thing-at-point 'symbol)))))
+
 ;; search from emacs using xwidgets
 (defun meain/search-xwidget ()
   "Search from Emacs using xwidgets."
