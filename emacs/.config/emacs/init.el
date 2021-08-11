@@ -805,118 +805,120 @@ Pass ORIGINAL and ALTERNATE options."
 ;; LSP
 (use-package eglot
   :commands eglot-ensure
-  :after (project flymake):straight
-  t
-  :hook ((python-mode . eglot-ensure)
-         (rust-mode . eglot-ensure)
-         (shell-script-mode . eglot-ensure)
-         (sh-mode . eglot-ensure)
-         (js-mod . eglot-ensure)
-         (lua-mode . eglot-ensure)
-         (go-mode . eglot-ensure)):config
-  (progn
-    (add-to-list 'eglot-stay-out-of 'flymake)
-    (add-hook 'flymake-diagnostic-functions 'eglot-flymake-backend)
-    (add-to-list 'eglot-server-programs
-                 '(lua-mode . ("~/.luarocks/bin/lua-lsp")))
-    ;; Can be enabled on fiction like things
-    (add-to-list 'eglot-server-programs
-                 '(markdown-mode . ("unified-language-server" "--parser=remark-parse"
-                                    "--stdio")))
-    (add-to-list 'eglot-server-programs
-                 '(rust-mode . ("rust-analyzer")))
-    (add-to-list 'eglot-server-programs
-                 '(python-mode . ("~/.bin/vpyls")))
-    (add-to-list 'eglot-server-programs
-                 '(nix-mode . ("rnix-lsp")))
-    (add-to-list 'display-buffer-alist
-                 '("\\*sqls\\*"
-                   (display-buffer-reuse-window display-buffer-at-bottom)
-                   (reusable-frames . visible)
-                   (window-height . 0.3)))
-    (defclass eglot-sqls (eglot-lsp-server)
-      ()
-      :documentation "SQL's Language Server")
-    (add-to-list 'eglot-server-programs
-                 '(sql-mode . (eglot-sqls "sqls" "-config" "~/.config/sqls/config.yaml")))
-    (cl-defmethod eglot-execute-command
-      ((server eglot-sqls)
-       (command (eql executeQuery))
-       arguments)
-      "For executeQuery."
-      (let* ((beg (eglot--pos-to-lsp-position (if (use-region-p)
-                                                  (region-beginning)
-                                                (point-min))))
-             (end (eglot--pos-to-lsp-position (if (use-region-p)
-                                                  (region-end)
-                                                (point-max))))
-             (res (jsonrpc-request server
-                                   :workspace/executeCommand `(:command ,(format "%s" command)
-                                                                        :arguments ,arguments
-                                                                        :timeout 0.5
-                                                                        :range (:start ,beg :end ,end))))
-             (buffer (generate-new-buffer "*sqls*")))
-        (with-current-buffer buffer
-          (eglot--apply-text-edits `[(:range (:start (:line 0 :character 0)
-                                                     :end (:line 0 :character 0))
-                                             :newText ,res)])
-          (org-mode))
-        (pop-to-buffer buffer)))
-    (cl-defmethod eglot-execute-command
-      ((server eglot-sqls)
-       (_cmd (eql switchDatabase))
-       arguments)
-      "For switchDatabase."
-      (let* ((res (jsonrpc-request server
-                                   :workspace/executeCommand `(:command "showDatabases" :arguments ,arguments
-                                                                        :timeout 0.5)))
-             (menu-items (split-string res "\n"))
-             (menu `("Eglot code actions:"
-                     ("dummy" ,@menu-items)))
-             (db (if (listp last-nonmenu-event)
-                     (x-popup-menu last-nonmenu-event menu)
-                   (completing-read "[eglot] Pick an database: "
-                                    menu-items
-                                    nil
-                                    t
-                                    nil
-                                    nil
-                                    (car menu-items)))))
-        (jsonrpc-request server
-                         :workspace/executeCommand `(:command "switchDatabase"
-                                                              :arguments [,db]:timeout
-                                                              0.5))))
-    (cl-defmethod eglot-execute-command
-      ((server eglot-sqls)
-       (_cmd (eql switchConnections))
-       arguments)
-      "For switchConnections"
-      (let* ((res (jsonrpc-request server
-                                   :workspace/executeCommand `(:command "switchConnections" :arguments ,arguments
-                                                                        :timeout 0.5)))
-             (menu-items (split-string res "\n"))
-             (menu `("Eglot code actions:"
-                     ("dummy" ,@menu-items)))
-             (db (if (listp last-nonmenu-event)
-                     (x-popup-menu last-nonmenu-event menu)
-                   (completing-read "[eglot] Pick an connection "
-                                    menu-items
-                                    nil
-                                    t
-                                    nil
-                                    nil
-                                    (car menu-items)))))
-        (jsonrpc-request server
-                         :workspace/executeCommand `(:command "switchConnections"
-                                                              :arguments [,db]:timeout
-                                                              0.5))))
-    (define-key evil-normal-state-map (kbd "K") 'eldoc-print-current-symbol-info)
-    (define-key evil-normal-state-map (kbd "g k") 'eldoc-print-current-symbol-info)
-    (define-key evil-normal-state-map (kbd "g d") 'xref-find-definitions)
-    (define-key evil-normal-state-map (kbd "g r") 'xref-find-references)
-    (define-key evil-normal-state-map (kbd "g R") 'eglot-rename)
-    (define-key evil-normal-state-map (kbd "g ,") 'eglot-format-buffer)
-    (define-key evil-normal-state-map (kbd "g a") 'eglot-code-actions)))
+  :straight t
+  :after (project flymake):hook
+  ((python-mode . eglot-ensure)
+   (rust-mode . eglot-ensure)
+   (shell-script-mode . eglot-ensure)
+   (sh-mode . eglot-ensure)
+   (js-mode . eglot-ensure)
+   (javascript-mode . eglot-ensure)
+   (web-mode . eglot-ensure)
+   (lua-mode . eglot-ensure)
+   (go-mode . eglot-ensure))
+  :config (progn
+            (add-to-list 'eglot-stay-out-of 'flymake)
+            (add-hook 'flymake-diagnostic-functions 'eglot-flymake-backend)
+            (add-to-list 'eglot-server-programs
+                         '(lua-mode . ("~/.luarocks/bin/lua-lsp")))
+            ;; Can be enabled on fiction like things
+            (add-to-list 'eglot-server-programs
+                         '(markdown-mode . ("unified-language-server" "--parser=remark-parse"
+                                            "--stdio")))
+            (add-to-list 'eglot-server-programs
+                         '(rust-mode . ("rust-analyzer")))
+            (add-to-list 'eglot-server-programs
+                         '(python-mode . ("~/.bin/vpyls")))
+            (add-to-list 'eglot-server-programs
+                         '(nix-mode . ("rnix-lsp")))
+            (add-to-list 'display-buffer-alist
+                         '("\\*sqls\\*"
+                           (display-buffer-reuse-window display-buffer-at-bottom)
+                           (reusable-frames . visible)
+                           (window-height . 0.3)))
+            (defclass eglot-sqls (eglot-lsp-server)
+              ()
+              :documentation "SQL's Language Server")
+            (add-to-list 'eglot-server-programs
+                         '(sql-mode . (eglot-sqls "sqls" "-config" "~/.config/sqls/config.yaml")))
+            (cl-defmethod eglot-execute-command
+              ((server eglot-sqls)
+               (command (eql executeQuery))
+               arguments)
+              "For executeQuery."
+              (let* ((beg (eglot--pos-to-lsp-position (if (use-region-p)
+                                                          (region-beginning)
+                                                        (point-min))))
+                     (end (eglot--pos-to-lsp-position (if (use-region-p)
+                                                          (region-end)
+                                                        (point-max))))
+                     (res (jsonrpc-request server
+                                           :workspace/executeCommand `(:command ,(format "%s" command)
+                                                                                :arguments ,arguments
+                                                                                :timeout 0.5
+                                                                                :range (:start ,beg :end ,end))))
+                     (buffer (generate-new-buffer "*sqls*")))
+                (with-current-buffer buffer
+                  (eglot--apply-text-edits `[(:range (:start (:line 0 :character 0)
+                                                             :end (:line 0 :character 0))
+                                                     :newText ,res)])
+                  (org-mode))
+                (pop-to-buffer buffer)))
+            (cl-defmethod eglot-execute-command
+              ((server eglot-sqls)
+               (_cmd (eql switchDatabase))
+               arguments)
+              "For switchDatabase."
+              (let* ((res (jsonrpc-request server
+                                           :workspace/executeCommand `(:command "showDatabases" :arguments ,arguments
+                                                                                :timeout 0.5)))
+                     (menu-items (split-string res "\n"))
+                     (menu `("Eglot code actions:"
+                             ("dummy" ,@menu-items)))
+                     (db (if (listp last-nonmenu-event)
+                             (x-popup-menu last-nonmenu-event menu)
+                           (completing-read "[eglot] Pick an database: "
+                                            menu-items
+                                            nil
+                                            t
+                                            nil
+                                            nil
+                                            (car menu-items)))))
+                (jsonrpc-request server
+                                 :workspace/executeCommand `(:command "switchDatabase"
+                                                                      :arguments [,db]:timeout
+                                                                      0.5))))
+            (cl-defmethod eglot-execute-command
+              ((server eglot-sqls)
+               (_cmd (eql switchConnections))
+               arguments)
+              "For switchConnections"
+              (let* ((res (jsonrpc-request server
+                                           :workspace/executeCommand `(:command "switchConnections" :arguments ,arguments
+                                                                                :timeout 0.5)))
+                     (menu-items (split-string res "\n"))
+                     (menu `("Eglot code actions:"
+                             ("dummy" ,@menu-items)))
+                     (db (if (listp last-nonmenu-event)
+                             (x-popup-menu last-nonmenu-event menu)
+                           (completing-read "[eglot] Pick an connection "
+                                            menu-items
+                                            nil
+                                            t
+                                            nil
+                                            nil
+                                            (car menu-items)))))
+                (jsonrpc-request server
+                                 :workspace/executeCommand `(:command "switchConnections"
+                                                                      :arguments [,db]:timeout
+                                                                      0.5))))
+            (define-key evil-normal-state-map (kbd "K") 'eldoc-print-current-symbol-info)
+            (define-key evil-normal-state-map (kbd "g k") 'eldoc-print-current-symbol-info)
+            (define-key evil-normal-state-map (kbd "g d") 'xref-find-definitions)
+            (define-key evil-normal-state-map (kbd "g r") 'xref-find-references)
+            (define-key evil-normal-state-map (kbd "g R") 'eglot-rename)
+            (define-key evil-normal-state-map (kbd "g ,") 'eglot-format-buffer)
+            (define-key evil-normal-state-map (kbd "g a") 'eglot-code-actions)))
 
 ;; Tagbar alternative
 (use-package imenu :straight t
