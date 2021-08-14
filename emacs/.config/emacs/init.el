@@ -1342,22 +1342,22 @@ Pass ORIGINAL and ALTERNATE options."
     (defun meain/test-runner-full ()
       "Run the full test suite using toffee."
       (interactive)
-      (compile (shell-command-to-string (format "toffee --full '%s' || exit 1'"
+      (compile (shell-command-to-string (format "toffee --full '%s'"
                                                 (buffer-file-name)))))
     (defun meain/test-runner (&optional full-file)
       "Run the nearest test using toffee.  Pass `FULL-FILE' to run all test in file."
       (interactive "P")
       (message "%s"
                (if full-file
-                   (format "toffee '%s' || exit 1"
+                   (format "toffee '%s'"
                            (buffer-file-name))
-                 (format "toffee '%s' '%s' || exit 1"
+                 (format "toffee '%s' '%s'"
                          (buffer-file-name)
                          (line-number-at-pos))))
       (compile (shell-command-to-string (if full-file
-                                            (format "toffee '%s' || exit 1"
+                                            (format "toffee '%s'"
                                                     (buffer-file-name))
-                                          (format "toffee '%s' '%s' || exit 1"
+                                          (format "toffee '%s' '%s'"
                                                   (buffer-file-name)
                                                   (line-number-at-pos)))))))
   :init (progn
