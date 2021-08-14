@@ -749,6 +749,7 @@ Pass ORIGINAL and ALTERNATE options."
               (:executable "fixjson")
               (:install "npm i -g fixjson")
               (:languages "JSON")
+              (:features)
               (:format (format-all--buffer-easy executable)))
             (setq-default format-all-formatters '(("HTML" prettier)
                                                   ("Go" goimports)
