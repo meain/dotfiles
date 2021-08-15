@@ -1404,11 +1404,8 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package config-general-mode
   :straight t
   :defer t
-  :init (add-hook 'find-file-hook
-                  (lambda ()
-                    (if (s-starts-with-p ".env"
-                                         (file-name-nondirectory (buffer-file-name)))
-                        (config-general-mode)))))
+  :init (add-to-list 'auto-mode-alist
+                     '("/\\.env" . config-general-mode)))
 (use-package vimrc-mode :straight t
   :defer t)
 (use-package markdown-mode
@@ -1440,11 +1437,8 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package dockerfile-mode
   :straight t
   :defer t
-  :init (add-hook 'find-file-hook
-                  (lambda ()
-                    (if (s-starts-with-p "Dockerfile"
-                                         (file-name-nondirectory (buffer-file-name)))
-                        (dockerfile-mode)))))
+  :init (add-to-list 'auto-mode-alist
+                     '("/Dockerfile" . dockerfile-mode)))
 (use-package docker-compose-mode :straight t
   :defer t)
 (use-package org
