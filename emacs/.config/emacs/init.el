@@ -27,10 +27,17 @@
 (straight-use-package 'use-package)
 (setq use-package-always-demand (getenv "LOAD_FULL_EMACS"))
 
-;; Get proper PATH
+;; Benchmark emacs startup (enable when necessary)
+(use-package benchmark-init
+  :straight t
+  :disabled :config
+  (add-hook 'after-init-hook 'benchmark-init/deactivate))
+
+;; Get proper PATH (not used as we are launching from shell)
 (use-package exec-path-from-shell
   :straight t
-  :config (exec-path-from-shell-initialize))
+  :disabled :config
+  (exec-path-from-shell-initialize))
 
 ;;; [BASE EVIL] =================================================
 
@@ -230,25 +237,30 @@ Pass ORIGINAL and ALTERNATE options."
 ;; Evil commentary
 (use-package evil-commentary
   :straight t
-  :diminish :init
+  :defer 1
+  :diminish :config
   (evil-commentary-mode))
 
 ;; Evil surround
 (use-package evil-surround
+  :defer 1
   :straight t
-  :init (global-evil-surround-mode 1))
+  :config (global-evil-surround-mode 1))
 
 ;; Evil text objects
-(use-package evil-textobj-line :straight t)
-(use-package evil-textobj-syntax :straight t)
+(use-package evil-textobj-line :straight t
+  :defer 1)
+(use-package evil-textobj-syntax :straight t
+  :defer 1)
 
 ;; Evil number increment
 (use-package evil-numbers
   :straight t
-  :config (progn
-            ;; cannot directly use C-x (in use by emacs)
-            (define-key evil-normal-state-map (kbd "g C-a") 'evil-numbers/inc-at-pt-incremental)
-            (define-key evil-normal-state-map (kbd "g C-x") 'evil-numbers/dec-at-pt-incremental)))
+  :commands (evil-numbers/inc-at-pt-incremental evil-numbers/dec-at-pt-incremental):init
+  (progn
+    ;; cannot directly use C-x (in use by emacs)
+    (define-key evil-normal-state-map (kbd "g C-a") 'evil-numbers/inc-at-pt-incremental)
+    (define-key evil-normal-state-map (kbd "g C-x") 'evil-numbers/dec-at-pt-incremental)))
 
 ;; Save buffer
 (define-key evil-normal-state-map (kbd "<SPC> <SPC>") 'evil-write)
@@ -442,6 +454,7 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; eldoc load
 (use-package eldoc
+  :defer t
   :init (setq eldoc-echo-area-use-multiline-p nil):config
   (global-eldoc-mode nil))
 
@@ -471,85 +484,85 @@ Pass ORIGINAL and ALTERNATE options."
 
 (use-package aas
   :straight t
-  :defer 1
-  :hook (text-mode . ass-activate-for-major-mode):hook
-  (org-mode . ass-activate-for-major-mode)
-  :hook (prog-mode . ass-activate-for-major-mode):hook
-  (python-mode . ass-activate-for-major-mode)
-  :config (progn
-            (aas-set-snippets 'text-mode
-                              ";isodate"
-                              (lambda ()
-                                (interactive)
-                                (insert (format-time-string "%a, %d %b %Y %T %z")))
-                              ";date"
-                              (lambda ()
-                                (interactive)
-                                (insert (format-time-string "%a %d %b %Y")))
-                              ";sdate"
-                              (lambda ()
-                                (interactive)
-                                (insert (format-time-string "%d %b %Y")))
-                              ";d/"
-                              (lambda ()
-                                (interactive)
-                                (insert (format-time-string "%D")))
-                              ";time"
-                              (lambda ()
-                                (interactive)
-                                (insert (format-time-string "%T")))
-                              ";filename"
-                              (lambda ()
-                                (interactive)
-                                (insert (file-name-nondirectory (buffer-file-name)))))
-            (aas-set-snippets 'prog-mode
-                              ";isodate"
-                              (lambda ()
-                                (interactive)
-                                (insert (format-time-string "%a, %d %b %Y %T %z")))
-                              ";date"
-                              (lambda ()
-                                (interactive)
-                                (insert (format-time-string "%a %d %b %Y")))
-                              ";sdate"
-                              (lambda ()
-                                (interactive)
-                                (insert (format-time-string "%d %b %Y")))
-                              ";d/"
-                              (lambda ()
-                                (interactive)
-                                (insert (format-time-string "%D")))
-                              ";time"
-                              (lambda ()
-                                (interactive)
-                                (insert (format-time-string "%T")))
-                              ";filename"
-                              (lambda ()
-                                (interactive)
-                                (insert (file-name-nondirectory (buffer-file-name)))))
-            (aas-set-snippets 'web-mode
-                              ";html"
-                              (lambda ()
-                                (interactive)
-                                (insert-file-contents (expand-file-name "~/.config/datafiles/html_starter"))))
-            (aas-set-snippets 'html-mode
-                              ";html"
-                              (lambda ()
-                                (interactive)
-                                (insert-file-contents (expand-file-name "~/.config/datafiles/html_starter"))))
-            (aas-set-snippets 'markdown-mode
-                              ";bang"
-                              (lambda ()
-                                (interactive)
-                                (insert (concat "---\ntitle: "
-                                                (file-name-nondirectory (file-name-sans-extension (buffer-file-name)))
-                                                "\ncreated: "
-                                                (format-time-string "%a %d %b %Y %T")
-                                                "\n---\n"))))
-            (aas-set-snippets 'python-mode ";ip" "__import__('ipdb').set_trace()")
-            (aas-set-snippets 'org-mode ";el" "#+BEGIN_SRC emacs-lisp\n\n#+END_SRC"
-                              ";py" "#+BEGIN_SRC python\n\n#+END_SRC" ";co"
-                              "#+BEGIN_SRC\n\n#+END_SRC")))
+  :commands (ass-activate-for-major-mode):hook
+  (text-mode . ass-activate-for-major-mode)
+  :hook (org-mode . ass-activate-for-major-mode):hook
+  (prog-mode . ass-activate-for-major-mode)
+  :hook (python-mode . ass-activate-for-major-mode):config
+  (progn
+    (aas-set-snippets 'text-mode
+                      ";isodate"
+                      (lambda ()
+                        (interactive)
+                        (insert (format-time-string "%a, %d %b %Y %T %z")))
+                      ";date"
+                      (lambda ()
+                        (interactive)
+                        (insert (format-time-string "%a %d %b %Y")))
+                      ";sdate"
+                      (lambda ()
+                        (interactive)
+                        (insert (format-time-string "%d %b %Y")))
+                      ";d/"
+                      (lambda ()
+                        (interactive)
+                        (insert (format-time-string "%D")))
+                      ";time"
+                      (lambda ()
+                        (interactive)
+                        (insert (format-time-string "%T")))
+                      ";filename"
+                      (lambda ()
+                        (interactive)
+                        (insert (file-name-nondirectory (buffer-file-name)))))
+    (aas-set-snippets 'prog-mode
+                      ";isodate"
+                      (lambda ()
+                        (interactive)
+                        (insert (format-time-string "%a, %d %b %Y %T %z")))
+                      ";date"
+                      (lambda ()
+                        (interactive)
+                        (insert (format-time-string "%a %d %b %Y")))
+                      ";sdate"
+                      (lambda ()
+                        (interactive)
+                        (insert (format-time-string "%d %b %Y")))
+                      ";d/"
+                      (lambda ()
+                        (interactive)
+                        (insert (format-time-string "%D")))
+                      ";time"
+                      (lambda ()
+                        (interactive)
+                        (insert (format-time-string "%T")))
+                      ";filename"
+                      (lambda ()
+                        (interactive)
+                        (insert (file-name-nondirectory (buffer-file-name)))))
+    (aas-set-snippets 'web-mode
+                      ";html"
+                      (lambda ()
+                        (interactive)
+                        (insert-file-contents (expand-file-name "~/.config/datafiles/html_starter"))))
+    (aas-set-snippets 'html-mode
+                      ";html"
+                      (lambda ()
+                        (interactive)
+                        (insert-file-contents (expand-file-name "~/.config/datafiles/html_starter"))))
+    (aas-set-snippets 'markdown-mode
+                      ";bang"
+                      (lambda ()
+                        (interactive)
+                        (insert (concat "---\ntitle: "
+                                        (file-name-nondirectory (file-name-sans-extension (buffer-file-name)))
+                                        "\ncreated: "
+                                        (format-time-string "%a %d %b %Y %T")
+                                        "\n---\n"))))
+    (aas-set-snippets 'python-mode ";ip" "__import__('ipdb').set_trace()")
+    (aas-set-snippets 'org-mode ";el" "#+BEGIN_SRC emacs-lisp\n\n#+END_SRC"
+                      ";py" "#+BEGIN_SRC python\n\n#+END_SRC" ";co"
+                      "#+BEGIN_SRC\n\n#+END_SRC")))
 
 
 ;; flymake
@@ -669,6 +682,7 @@ Pass ORIGINAL and ALTERNATE options."
 ;; Completions
 (use-package selectrum
   :straight t
+  :defer 1
   :config (progn
             (setq selectrum-should-sort t)
             (setq read-file-name-completion-ignore-case
@@ -681,6 +695,8 @@ Pass ORIGINAL and ALTERNATE options."
         ("<S-backspace>" . selectrum-backward-kill-sexp)))
 (use-package selectrum-prescient
   :straight t
+  :after selectrum
+  :defer 1
   :config (progn
             (setq prescient-filter-method '(literal prefix regexp))
             (setq prescient-sort-full-matches-first t)
@@ -688,12 +704,16 @@ Pass ORIGINAL and ALTERNATE options."
             (prescient-persist-mode +1)))
 (use-package marginalia
   :straight t
+  :defer 1
+  :after selectrum
   :bind (:map minibuffer-local-map
               ("C-b" . marginalia-cycle)):config
   (marginalia-mode))
 
 ;; Consult without consultation fees
-(use-package consult :straight t)
+(use-package consult :straight t
+  :after selectrum
+  :defer 1)
 
 ;; Helpful package
 (use-package helpful
@@ -709,8 +729,9 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; ibuffer
 (use-package ibuffer
-  :init (setq ibuffer-expert t):config
+  :commands (ibuffer ibuffer-other-window):init
   (progn
+    (setq ibuffer-expert t)
     (global-set-key (kbd "M-c")
                     (meain/with-alternate (call-interactively 'switch-to-buffer)
                                           (ibuffer-other-window)))
@@ -739,7 +760,8 @@ Pass ORIGINAL and ALTERNATE options."
 ;; Code formatting
 (use-package srefactor
   :straight t
-  :config (require 'srefactor-lisp))
+  :commands (srefactor-lisp-format-buffer):config
+  (require 'srefactor-lisp))
 (use-package format-all
   :defer 1
   :straight t
@@ -768,38 +790,40 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package projectile
   :straight t
   :diminish :commands
-  (projectile-switch-project projectile-find-file)
-  :init (evil-leader/set-key "p" 'projectile-switch-project):config
+  (projectile-switch-project projectile-find-file
+                             projectile-project-p)
+  :config (progn
+            (setq projectile-mode-line "Projectile") ; might speed up tramp
+            (projectile-mode 1)
+            (setq projectile-sort-order 'recently-active)):init
   (progn
+    (evil-leader/set-key "p" 'projectile-switch-project)
     (define-key evil-normal-state-map (kbd "<RET>") (lambda ()
                                                       (interactive)
                                                       (if (projectile-project-p)
                                                           (projectile-find-file)
-                                                        (projectile-switch-project))))
-    (setq projectile-mode-line "Projectile") ; might speed up tramp
-    (projectile-mode 1)
-    (setq projectile-sort-order 'recently-active)))
+                                                        (projectile-switch-project))))))
 
 ;; ibuffer-projectile
 (use-package ibuffer-projectile
   :straight t
-  :defer 1
-  :config (progn
-            (add-hook 'ibuffer-hook
-                      (lambda ()
-                        (ibuffer-projectile-set-filter-groups)
-                        (unless (eq ibuffer-sorting-mode 'alphabetic)
-                          (ibuffer-do-sort-by-alphabetic))))
-            (setq ibuffer-formats '((mark modified
-                                          read-only
-                                          " "
-                                          (name 18 18 :left :elide)
-                                          " "
-                                          (size 9 -1 :right)
-                                          " "
-                                          (mode 16 16 :left :elide)
-                                          " "
-                                          project-relative-file)))))
+  :after (ibuffer projectile):config
+  (progn
+    (add-hook 'ibuffer-hook
+              (lambda ()
+                (ibuffer-projectile-set-filter-groups)
+                (unless (eq ibuffer-sorting-mode 'alphabetic)
+                  (ibuffer-do-sort-by-alphabetic))))
+    (setq ibuffer-formats '((mark modified
+                                  read-only
+                                  " "
+                                  (name 18 18 :left :elide)
+                                  " "
+                                  (size 9 -1 :right)
+                                  " "
+                                  (mode 16 16 :left :elide)
+                                  " "
+                                  project-relative-file)))))
 
 
 
@@ -1011,17 +1035,18 @@ Pass ORIGINAL and ALTERNATE options."
 ;; Highlight color codes
 (use-package rainbow-mode
   :straight t
-  :defer t
-  :init (rainbow-mode 1))
+  :commands (rainbow-mode):init
+  (add-hook 'css-mode-hook 'rainbow-mode))
 
 ;; Code folding
 (use-package origami
   :straight t
-  :commands evil-toggle-fold
-  :init (progn
-          (global-origami-mode)
-          (define-key evil-normal-state-map (kbd "<SPC> TAB") 'evil-toggle-fold)
-          (evil-leader/set-key "o" 'evil-toggle-fold)))
+  :after evil
+  :defer 1
+  :config (global-origami-mode):init
+  (progn
+    (define-key evil-normal-state-map (kbd "<SPC> TAB") 'evil-toggle-fold)
+    (evil-leader/set-key "o" 'evil-toggle-fold)))
 
 ;; drag-stuff
 (use-package drag-stuff
@@ -1117,22 +1142,25 @@ Pass ORIGINAL and ALTERNATE options."
 ;; which-key mode (until I fully figure out emacs)
 (use-package which-key
   :straight t
+  :defer 1
   :diminish :config
   (which-key-mode))
 
 ;; Expand region
 (use-package expand-region
   :straight t
-  :config (progn
-            ;; make evil jump list work with expand-region
-            (evil-set-command-property 'er/expand-region
-                                       :jump t)
-            (global-set-key (kbd "M-i")
-                            'er/expand-region)))
+  :commands (er/expand-region):init
+  (progn
+    ;; make evil jump list work with expand-region
+    (evil-set-command-property 'er/expand-region
+                               :jump t)
+    (global-set-key (kbd "M-i")
+                    'er/expand-region)))
 
 ;; dtrt (atuo find indend setting)
 (use-package dtrt-indent
   :straight t
+  :defer 1
   :diminish :config
   (dtrt-indent-global-mode))
 
@@ -1308,6 +1336,7 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; editorconfig
 (use-package editorconfig
+  :defer 1
   :straight t
   :config (editorconfig-mode 1))
 
@@ -1371,6 +1400,7 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; Evil keybindings for a lot of things
 (use-package evil-collection
+  :defer 1
   :straight t
   :after evil
   :config (evil-collection-init))
@@ -1442,7 +1472,9 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package docker-compose-mode :straight t
   :defer t)
 (use-package org
-  :defer t
+  :commands (org-mode):init
+  (add-to-list 'auto-mode-alist
+               '("/\\.org\\'" . org-mode))
   :config (progn
             (setq org-agenda-files (list "~/.local/share/org/master.org"))
             (setq org-log-done 'time)
@@ -1506,6 +1538,7 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; Winner mode
 (use-package winner
+  :defer 1
   :config (progn
             (global-set-key (kbd "M-f <left>")
                             'winner-undo)
@@ -1621,212 +1654,213 @@ Pass ORIGINAL and ALTERNATE options."
   :straight t
   :commands (elfeed elfeed-update):init
   (progn
-    (run-at-time nil
+    (run-at-time "1 hour"
+                                        ; first run after 1 hour
                  (* 6 60 60)
                  (lambda ()
                    (elfeed-update)
-                   (elfeed-db-save))))
-  :init (evil-leader/set-key "a e" 'elfeed):config
-  (progn
-    (setq elfeed-sort-order 'ascending)
-    (setq browse-url-browser-function '(lambda (url &rest args)
-                                         (interactive)
-                                         (start-process "*open*" "*open*" "open" "-g"
-                                                        url)
-                                         (message "Opened %s" url)))
-    (setq browse-url-generic-program "open")
-    (setq browse-url-generic-args (list "-g"))
-    (evil-define-key 'normal
-      elfeed-search-mode-map
-      (kbd "o")
-      (lambda ()
-        (interactive)
-        (elfeed-search-browse-url t)))
-    (evil-define-key 'visual
-      elfeed-search-mode-map
-      (kbd "o")
-      'elfeed-search-browse-url)
-    (evil-define-key 'normal
-      elfeed-search-mode-map
-      (kbd "d")
-      'meain/elfeed-search-filter)
-    (evil-define-key 'normal
-      elfeed-search-mode-map
-      (kbd "c")
-      'meain/elfeed-search-filter-by-name)
-    (evil-define-key 'normal
-      elfeed-search-mode-map
-      (kbd "D")
-      (lambda ()
-        (interactive)
-        (setq elfeed-search-filter "@2-months-ago +unread")
-        (elfeed-search-update :force)))
-    (evil-define-key 'normal
-      elfeed-search-mode-map
-      (kbd "q")
-      'elfeed-db-unload)
-    (defun meain/elfeed-open-all ()
-      (interactive)
-      (with-current-buffer "*elfeed-search*"
-        (cl-loop for
-                 entry
-                 in
-                 elfeed-search-entries
-                 collect
-                 (browse-url (elfeed-entry-link entry))))
-      (elfeed-untag elfeed-search-entries 'unread)
-      (mapc #'elfeed-search-update-entry elfeed-search-entries))
-    (evil-define-key 'normal
-      elfeed-search-mode-map
-      (kbd "O")
-      'meain/elfeed-open-all)
-    (defun meain/elfeed-search-filter ()
-      (interactive)
-      (setq elfeed-search-filter "@2-months-ago +unread")
-      (elfeed-search-update :force)
-      (let ((tag (completing-read "Apply tag: "
-                                  (remove-if (lambda (x)
-                                               (equalp x 'unread))
-                                             (delete-dups (flatten-list (cl-list* (with-current-buffer "*elfeed-search*"
-                                                                                    (cl-loop for
-                                                                                             entry
-                                                                                             in
-                                                                                             elfeed-search-entries
-                                                                                             collect
-                                                                                             (elfeed-entry-tags entry)))))))
-                                  nil
-                                  t
-                                  "\\.")))
-        (setq elfeed-search-filter (concatenate 'string "@2-months-ago +unread +"
-                                                tag))
-        (elfeed-search-update :force)
-        (evil-goto-first-line)))
-    (defun meain/elfeed-search-filter-by-name ()
-      (interactive)
-      (setq elfeed-search-filter (mapconcat 'identity
-                                            (remove-if-not (lambda (x)
-                                                             (or (string-prefix-p "+" x)
-                                                                 (string-prefix-p "@" x)))
-                                                           (split-string elfeed-search-filter))
-                                            " "))
-      (elfeed-search-update :force)
-      (let ((site (completing-read "Look for: "
-                                   (remove-if (lambda (x)
-                                                (equalp x 'unread))
-                                              (delete-dups (flatten-list (cl-list* (with-current-buffer "*elfeed-search*"
-                                                                                     (cl-loop for
-                                                                                              entry
-                                                                                              in
-                                                                                              elfeed-search-entries
-                                                                                              collect
-                                                                                              (cl-struct-slot-value (type-of (elfeed-entry-feed (car elfeed-search-entries)))
-                                                                                                                    'title
-                                                                                                                    (elfeed-entry-feed entry)))))))))))
-        ;; Need \s- insted of just a simple space because elfeed has issues with space in title
-        (setq elfeed-search-filter (concatenate 'string
-                                                elfeed-search-filter
-                                                " ="
-                                                (mapconcat 'identity
-                                                           (split-string site)
-                                                           "\\s-")))
-        (elfeed-search-update :force)
-        (evil-goto-first-line)))
-    (setq-default elfeed-search-filter "@2-months-ago +unread ")
-    (setq elfeed-use-curl t)
-    (setq elfeed-curl-max-connections 10)
-    (setq elfeed-db-directory "~/.config/emacs/elfeed/")
-    (setq elfeed-enclosure-default-dir "~/Downloads/")
-    (add-to-list 'display-buffer-alist
-                 '((lambda (bufname _)
-                     (with-current-buffer bufname
-                       (equal major-mode 'elfeed-show-mode)))
-                   (display-buffer-reuse-window display-buffer-at-bottom)
-                   (reusable-frames . visible)
-                   (window-height . 0.7)))
-    (defun meain/elfeed-search-print (entry)
-      "Print ENTRY to the buffer."
-      (let* ((feed-width 25)
-             (tags-width 50)
-             (title (or (elfeed-meta entry :title)
-                        (elfeed-entry-title entry)
-                        ""))
-             (title-faces (elfeed-search--faces (elfeed-entry-tags entry)))
-             (feed (elfeed-entry-feed entry))
-             (feed-title (when feed
-                           (or (elfeed-meta feed :title)
-                               (elfeed-feed-title feed))))
-             (tags (mapcar #'symbol-name
-                           (elfeed-entry-tags entry)))
-             (tags-str (concat " ("
-                               (mapconcat 'identity tags ",")
-                               ")"))
-             (title-width (- (window-width)
-                             feed-width
-                             tags-width
-                             4))
-             (title-column (elfeed-format-column title
-                                                 (elfeed-clamp elfeed-search-title-min-width
-                                                               title-width elfeed-search-title-max-width)
-                                                 :left))
-             (tag-column (elfeed-format-column tags-str
-                                               (elfeed-clamp (length tags-str)
-                                                             tags-width
-                                                             tags-width)
-                                               :left))
-             (feed-column (elfeed-format-column feed-title
-                                                (elfeed-clamp feed-width feed-width feed-width)
-                                                :left)))
-        (insert (propertize feed-column 'face 'elfeed-search-feed-face)
-                " ")
-        (insert (propertize title 'face title-faces 'kbd-help
-                            title))
-        (insert (propertize tag-column 'face 'elfeed-search-tag-face)
-                " ")))
-    (setq elfeed-search-print-entry-function 'meain/elfeed-search-print)
-    (defun meain/elfeed-display-buffer (buf &optional act &rest _)
-      (pop-to-buffer buf))
-    (setq elfeed-show-entry-switch #'meain/elfeed-display-buffer)
-    (defun meain/elfeed-show-next-prev (&optional prev)
-      "Go to next elfeed entry.  Pass PREV to switch to prev entry."
-      (interactive)
-      (if (equal (buffer-name) "*elfeed-entry*")
-          (delete-window))
-      (switch-to-buffer "*elfeed-search*")
-      (if prev
-          (previous-line 2))
-      (pulse-momentary-highlight-one-line (point))
-      (call-interactively 'elfeed-search-show-entry))
-    (evil-define-key 'normal
-      elfeed-show-mode-map
-      (kbd "M-n")
-      'meain/elfeed-show-next-prev)
-    (evil-define-key 'normal
-      elfeed-show-mode-map
-      (kbd "M-p")
-      (lambda ()
-        (interactive)
-        (meain/elfeed-show-next-prev t)))
-    (defun meain/elfeed-enclosure-download (base-dir extension)
-      "Download podcast to `BASE-DIR' with proper heirary using feed and title using `EXTENSION'"
-      (start-process "*elfeed-enclosure-download*"
-                     "*elfeed-enclosure-download*"
-                     "downloader"
-                     (elt (car (elfeed-entry-enclosures elfeed-show-entry))
-                          0)
-                     (format "%s/%s/%s%s"
-                             base-dir
-                             (elfeed-feed-title (elfeed-entry-feed elfeed-show-entry))
-                             (elfeed-entry-title elfeed-show-entry)
-                             extension))
-      (message "Download started for %s - %s"
-               (elfeed-feed-title (elfeed-entry-feed elfeed-show-entry))
-               (elfeed-entry-title elfeed-show-entry)))
-    (defun meain/elfeed-podcast-download-to-local ()
-      "Download current feed(podcast) to usual dir."
-      (interactive)
-      (meain/elfeed-enclosure-download "/Users/meain/Desktop/newsboat/podcasts"
-                                       ".mp3"))
-    (load-file "~/.config/emacs/elfeed-feeds.el")))
+                   (elfeed-db-save)))
+    (evil-leader/set-key "a e" 'elfeed))
+  :config (progn
+            (setq elfeed-sort-order 'ascending)
+            (setq browse-url-browser-function '(lambda (url &rest args)
+                                                 (interactive)
+                                                 (start-process "*open*" "*open*" "open" "-g"
+                                                                url)
+                                                 (message "Opened %s" url)))
+            (setq browse-url-generic-program "open")
+            (setq browse-url-generic-args (list "-g"))
+            (evil-define-key 'normal
+              elfeed-search-mode-map
+              (kbd "o")
+              (lambda ()
+                (interactive)
+                (elfeed-search-browse-url t)))
+            (evil-define-key 'visual
+              elfeed-search-mode-map
+              (kbd "o")
+              'elfeed-search-browse-url)
+            (evil-define-key 'normal
+              elfeed-search-mode-map
+              (kbd "d")
+              'meain/elfeed-search-filter)
+            (evil-define-key 'normal
+              elfeed-search-mode-map
+              (kbd "c")
+              'meain/elfeed-search-filter-by-name)
+            (evil-define-key 'normal
+              elfeed-search-mode-map
+              (kbd "D")
+              (lambda ()
+                (interactive)
+                (setq elfeed-search-filter "@2-months-ago +unread")
+                (elfeed-search-update :force)))
+            (evil-define-key 'normal
+              elfeed-search-mode-map
+              (kbd "q")
+              'elfeed-db-unload)
+            (defun meain/elfeed-open-all ()
+              (interactive)
+              (with-current-buffer "*elfeed-search*"
+                (cl-loop for
+                         entry
+                         in
+                         elfeed-search-entries
+                         collect
+                         (browse-url (elfeed-entry-link entry))))
+              (elfeed-untag elfeed-search-entries 'unread)
+              (mapc #'elfeed-search-update-entry elfeed-search-entries))
+            (evil-define-key 'normal
+              elfeed-search-mode-map
+              (kbd "O")
+              'meain/elfeed-open-all)
+            (defun meain/elfeed-search-filter ()
+              (interactive)
+              (setq elfeed-search-filter "@2-months-ago +unread")
+              (elfeed-search-update :force)
+              (let ((tag (completing-read "Apply tag: "
+                                          (remove-if (lambda (x)
+                                                       (equalp x 'unread))
+                                                     (delete-dups (flatten-list (cl-list* (with-current-buffer "*elfeed-search*"
+                                                                                            (cl-loop for
+                                                                                                     entry
+                                                                                                     in
+                                                                                                     elfeed-search-entries
+                                                                                                     collect
+                                                                                                     (elfeed-entry-tags entry)))))))
+                                          nil
+                                          t
+                                          "\\.")))
+                (setq elfeed-search-filter (concatenate 'string "@2-months-ago +unread +"
+                                                        tag))
+                (elfeed-search-update :force)
+                (evil-goto-first-line)))
+            (defun meain/elfeed-search-filter-by-name ()
+              (interactive)
+              (setq elfeed-search-filter (mapconcat 'identity
+                                                    (remove-if-not (lambda (x)
+                                                                     (or (string-prefix-p "+" x)
+                                                                         (string-prefix-p "@" x)))
+                                                                   (split-string elfeed-search-filter))
+                                                    " "))
+              (elfeed-search-update :force)
+              (let ((site (completing-read "Look for: "
+                                           (remove-if (lambda (x)
+                                                        (equalp x 'unread))
+                                                      (delete-dups (flatten-list (cl-list* (with-current-buffer "*elfeed-search*"
+                                                                                             (cl-loop for
+                                                                                                      entry
+                                                                                                      in
+                                                                                                      elfeed-search-entries
+                                                                                                      collect
+                                                                                                      (cl-struct-slot-value (type-of (elfeed-entry-feed (car elfeed-search-entries)))
+                                                                                                                            'title
+                                                                                                                            (elfeed-entry-feed entry)))))))))))
+                ;; Need \s- insted of just a simple space because elfeed has issues with space in title
+                (setq elfeed-search-filter (concatenate 'string
+                                                        elfeed-search-filter
+                                                        " ="
+                                                        (mapconcat 'identity
+                                                                   (split-string site)
+                                                                   "\\s-")))
+                (elfeed-search-update :force)
+                (evil-goto-first-line)))
+            (setq-default elfeed-search-filter "@2-months-ago +unread ")
+            (setq elfeed-use-curl t)
+            (setq elfeed-curl-max-connections 10)
+            (setq elfeed-db-directory "~/.config/emacs/elfeed/")
+            (setq elfeed-enclosure-default-dir "~/Downloads/")
+            (add-to-list 'display-buffer-alist
+                         '((lambda (bufname _)
+                             (with-current-buffer bufname
+                               (equal major-mode 'elfeed-show-mode)))
+                           (display-buffer-reuse-window display-buffer-at-bottom)
+                           (reusable-frames . visible)
+                           (window-height . 0.7)))
+            (defun meain/elfeed-search-print (entry)
+              "Print ENTRY to the buffer."
+              (let* ((feed-width 25)
+                     (tags-width 50)
+                     (title (or (elfeed-meta entry :title)
+                                (elfeed-entry-title entry)
+                                ""))
+                     (title-faces (elfeed-search--faces (elfeed-entry-tags entry)))
+                     (feed (elfeed-entry-feed entry))
+                     (feed-title (when feed
+                                   (or (elfeed-meta feed :title)
+                                       (elfeed-feed-title feed))))
+                     (tags (mapcar #'symbol-name
+                                   (elfeed-entry-tags entry)))
+                     (tags-str (concat " ("
+                                       (mapconcat 'identity tags ",")
+                                       ")"))
+                     (title-width (- (window-width)
+                                     feed-width
+                                     tags-width
+                                     4))
+                     (title-column (elfeed-format-column title
+                                                         (elfeed-clamp elfeed-search-title-min-width
+                                                                       title-width elfeed-search-title-max-width)
+                                                         :left))
+                     (tag-column (elfeed-format-column tags-str
+                                                       (elfeed-clamp (length tags-str)
+                                                                     tags-width
+                                                                     tags-width)
+                                                       :left))
+                     (feed-column (elfeed-format-column feed-title
+                                                        (elfeed-clamp feed-width feed-width feed-width)
+                                                        :left)))
+                (insert (propertize feed-column 'face 'elfeed-search-feed-face)
+                        " ")
+                (insert (propertize title 'face title-faces 'kbd-help
+                                    title))
+                (insert (propertize tag-column 'face 'elfeed-search-tag-face)
+                        " ")))
+            (setq elfeed-search-print-entry-function 'meain/elfeed-search-print)
+            (defun meain/elfeed-display-buffer (buf &optional act &rest _)
+              (pop-to-buffer buf))
+            (setq elfeed-show-entry-switch #'meain/elfeed-display-buffer)
+            (defun meain/elfeed-show-next-prev (&optional prev)
+              "Go to next elfeed entry.  Pass PREV to switch to prev entry."
+              (interactive)
+              (if (equal (buffer-name) "*elfeed-entry*")
+                  (delete-window))
+              (switch-to-buffer "*elfeed-search*")
+              (if prev
+                  (previous-line 2))
+              (pulse-momentary-highlight-one-line (point))
+              (call-interactively 'elfeed-search-show-entry))
+            (evil-define-key 'normal
+              elfeed-show-mode-map
+              (kbd "M-n")
+              'meain/elfeed-show-next-prev)
+            (evil-define-key 'normal
+              elfeed-show-mode-map
+              (kbd "M-p")
+              (lambda ()
+                (interactive)
+                (meain/elfeed-show-next-prev t)))
+            (defun meain/elfeed-enclosure-download (base-dir extension)
+              "Download podcast to `BASE-DIR' with proper heirary using feed and title using `EXTENSION'"
+              (start-process "*elfeed-enclosure-download*"
+                             "*elfeed-enclosure-download*"
+                             "downloader"
+                             (elt (car (elfeed-entry-enclosures elfeed-show-entry))
+                                  0)
+                             (format "%s/%s/%s%s"
+                                     base-dir
+                                     (elfeed-feed-title (elfeed-entry-feed elfeed-show-entry))
+                                     (elfeed-entry-title elfeed-show-entry)
+                                     extension))
+              (message "Download started for %s - %s"
+                       (elfeed-feed-title (elfeed-entry-feed elfeed-show-entry))
+                       (elfeed-entry-title elfeed-show-entry)))
+            (defun meain/elfeed-podcast-download-to-local ()
+              "Download current feed(podcast) to usual dir."
+              (interactive)
+              (meain/elfeed-enclosure-download "/Users/meain/Desktop/newsboat/podcasts"
+                                               ".mp3"))
+            (load-file "~/.config/emacs/elfeed-feeds.el")))
 
 ;; command log
 (use-package command-log-mode
@@ -1966,6 +2000,7 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; Tree sitter
 (use-package tree-sitter
+  :defer 1
   :straight t
   :config (progn
             (global-tree-sitter-mode)
@@ -2018,6 +2053,7 @@ Pass ORIGINAL and ALTERNATE options."
                 (format "%s" name)))))
 (use-package tree-sitter-langs
   :straight t
+  :defer 1
   :after tree-sitter
   :config (progn
             (add-function :before-until tree-sitter-hl-face-mapping-function
@@ -2042,10 +2078,10 @@ Pass ORIGINAL and ALTERNATE options."
 ;; Quick lookup in a dictionary
 (use-package dictionary
   :straight t
-  :init (progn
-          (global-set-key (kbd "C-c d")
-                          #'dictionary-search)
-          (setq dictionary-server "dict.org")))
+  :commands (dictionary-search):init
+  (global-set-key (kbd "C-c d")
+                  #'dictionary-search)
+  :config (setq dictionary-server "dict.org"))
 
 
 
@@ -2609,6 +2645,7 @@ Pass THING-TO-POPUP as the thing to popup."
 ;; Some custom text objects based on treesitter
 ;; (load-file "~/.config/emacs/evil-textobj-treesitter.el")
 (use-package evil-textobj-treesitter
+  :defer 1
   :straight (el-patch :type git
                       :host github
                       :repo "meain/evil-textobj-treesitter"
@@ -2662,9 +2699,8 @@ Pass THING-TO-POPUP as the thing to popup."
                                                                                                    (out-name (if explicit
                                                                                                                  (concatenate 'string ":" name)
                                                                                                                (if (projectile-project-p)
-                                                                                                                   (concatenate 'string
-                                                                                                                                ";"
-                                                                                                                                (projectile-project-name))
+                                                                                                                   (concat ";"
+                                                                                                                           (projectile-project-name))
                                                                                                                  ""))))
                                                                                               (format "%s" out-name)))))
                                                                            face
