@@ -2034,7 +2034,6 @@ Pass ORIGINAL and ALTERNATE options."
             (defun meain/ts-get-class-like-thing ()
               (cond
                ((eq major-mode 'rust-mode) 'impl_item)
-               ((eq major-mode 'go-mode) 'struct_type)
                ((eq major-mode 'python-mode) 'class_definition)))
             (defun meain/ts-get-func-like-thing ()
               (cond
