@@ -2407,11 +2407,6 @@ START and END comes from it being interactive."
     (start-process-shell-command "journal" "*journal*"
                                  "EDITOR='emacsclient' journal")))
 
-;; Function to close Emacs in a more "proper" way
-(defun meain/kill-all-buffers ()
-  "Kill all active buffers."
-  (interactive)
-  (message "Just use `save-buffers-kill-emacs'"))
 
 ;; Narrow region
 (use-package fancy-narrow
