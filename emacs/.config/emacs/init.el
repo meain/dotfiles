@@ -2091,6 +2091,12 @@ Pass ORIGINAL and ALTERNATE options."
                   #'dictionary-search)
   :config (setq dictionary-server "dict.org"))
 
+;; Highlight enclosing parenthesis
+(use-package highlight-parentheses
+  :defer t
+  :straight t
+  :init (add-hook 'prog-mode-hook #'highlight-parentheses-mode):config
+  (setq highlight-parentheses-colors '("coral1")))
 
 
 
