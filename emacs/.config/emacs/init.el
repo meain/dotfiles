@@ -2706,7 +2706,7 @@ Pass THING-TO-POPUP as the thing to popup."
                                                                            font-lock-comment-face)
                                                              ""))
                                      '(:eval (mode-line-idle 1.0
-                                                             '(:propertize (:eval (if projectile-mode
+                                                             '(:propertize (:eval (if (boundp projectile-mode)
                                                                                       (list " "
                                                                                             (let* ((explicit (cdr (car (cdr (cdr (tab-bar--current-tab))))))
                                                                                                    (name (cdr (car (cdr (tab-bar--current-tab)))))
@@ -2722,13 +2722,13 @@ Pass THING-TO-POPUP as the thing to popup."
                                                              ""))
                                      " "
                                      '(:eval (mode-line-idle 0.3
-                                                             '(:eval (if tree-sitter-mode
+                                                             '(:eval (if (boundp tree-sitter-mode)
                                                                          (meain/ts-get-class-like-thing-name)))
-                                                             "#"))
+                                                             ""))
                                      '(:eval (mode-line-idle 0.3
-                                                             '(:eval (if tree-sitter-mode
+                                                             '(:eval (if (boundp tree-sitter-mode)
                                                                          (meain/ts-get-func-like-thing-name)))
-                                                             "$"))
+                                                             ""))
                                      ;; spacer
 
                                      '(:eval (propertize " "
