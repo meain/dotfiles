@@ -2098,6 +2098,10 @@ Pass ORIGINAL and ALTERNATE options."
   :init (add-hook 'prog-mode-hook #'highlight-parentheses-mode):config
   (setq highlight-parentheses-colors '("coral1")))
 
+;; Auto recompile on save (useful for running tests)
+(use-package recompile-on-save
+  :straight t
+  :commands (recompile-on-save-mode))
 
 
 ;;; [CUSTOM FUNCTIONS] ==============================================
