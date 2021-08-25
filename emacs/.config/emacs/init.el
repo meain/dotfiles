@@ -559,6 +559,15 @@ Pass ORIGINAL and ALTERNATE options."
                                         "\ncreated: "
                                         (format-time-string "%a %d %b %Y %T")
                                         "\n---\n"))))
+    (aas-set-snippets 'go-mode
+                      ";;"
+                      ":="
+                      ";ie"
+                      (lambda ()
+                        (interactive)
+                        (insert (concat "if err != nil { fmt.Errorf(\""
+                                        (read-string "Error message: ")
+                                        ": %v\", err) }"))))
     (aas-set-snippets 'python-mode ";ip" "__import__('ipdb').set_trace()")
     (aas-set-snippets 'org-mode ";el" "#+BEGIN_SRC emacs-lisp\n\n#+END_SRC"
                       ";py" "#+BEGIN_SRC python\n\n#+END_SRC" ";co"
