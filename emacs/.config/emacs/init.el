@@ -2546,9 +2546,9 @@ START and END comes from it being interactive."
                                             (buffer-file-name))))
 
 ;; Run markdown code blocks (forest.el)
-(defun meain/run-markdown-code-block ()
+(defun meain/run-markdown-code-block (&optional insert-to-buffer)
   "Run markdown code block under curosr."
-  (interactive)
+  (interactive "P")
   (let* ((start (nth 0
                      (markdown-get-enclosing-fenced-block-construct)))
          (end (nth 1
@@ -2558,25 +2558,26 @@ START and END comes from it being interactive."
                                "\n"))
          (snippet-runner (car (last (split-string (car (split-string snippet-with-markers "\n"))
                                                   "[ `]+")))))
-    (message "%s" start)
-    (message "%s" end)
+    (setq temp-source-file (make-temp-file "thing-to-run"))
     (pulse-momentary-highlight-region start end
                                       'company-template-field)
-    (message "%s"
-             (markdown-get-enclosing-fenced-block-construct))
-    (message "%s" snippet-with-markers)
     (message "Code: %s" snippet)
     (message "Runner: %s" snippet-runner)
-    (goto-char end)
-    (end-of-line)
-    (newline)
-    (insert "\n```output\n")
-    (append-to-file snippet nil "/tmp/thing-to-run")
-    (message "%s"
-             (format "%s '/tmp/thing-to-run'" snippet-runner))
-    (insert (shell-command-to-string (format "%s '/tmp/thing-to-run'" snippet-runner)))
-    (insert "```")
-    (delete-file "/tmp/thing-to-run" t)))
+    (append-to-file snippet nil temp-source-file)
+    (message "Running code...")
+    (if insert-to-buffer
+        (progn
+          (goto-char end)
+          (end-of-line)
+          (newline)
+          (insert "\n```output\n")
+          (insert (shell-command-to-string (format "%s '%s'" snippet-runner temp-source-file)))
+          (insert "```"))
+      (with-current-buffer (get-buffer-create "*markdown-runner-output*")
+        (erase-buffer)
+        (insert (shell-command-to-string (format "%s '%s'" snippet-runner temp-source-file)))
+        (switch-to-buffer (current-buffer))))
+    (delete-file temp-source-file t)))
 
 ;; Fetch mail
 (defun meain/fetchmail ()
