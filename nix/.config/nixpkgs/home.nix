@@ -20,6 +20,7 @@
     tree
     cmake
     curl
+    zsh
     coreutils
 
     # packages
