@@ -1,0 +1,19 @@
+#!/bin/sh
+
+set -e
+
+if [ -n $2 ]; then
+	URLID="&id=$2"
+else
+	URLID=""
+fi
+
+url="$(curl --silent "https://r.meain.io/shorten/?url=$1$URLID" \
+	-H "Authorization: Token $R_MEAIN_IO_TOKEN" | tee /tmp/urlshort-output | jq -r .url)"
+
+if [ $url == "null" ]; then
+	echo "Error:" "$(jq -r .message /tmp/urlshort-output)"
+else
+	echo "Url: $url"
+	echo "$url" | pbcopy
+fi
