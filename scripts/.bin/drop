@@ -2,21 +2,37 @@
 
 set -e
 
+md=0
+[ "$1" = "-md" ] && md=1 && shift
 if [ -z "$1" ]; then
 	filename="$(xxd -l4 -ps /dev/urandom)"
 	if [ -t 0 ]; then
-        echo "Reading from clipboard"
+		echo "Reading from clipboard"
 		pbpaste >/tmp/paste
 	else
-        echo "Reading from stdin"
+		echo "Reading from stdin"
 		cat /dev/stdin >/tmp/paste
 	fi
-	scp /tmp/paste doom:drop/drop/$filename
+	if [ $md -eq 1 ]; then
+		pandoc --no-highlight --template ~/.config/datafiles/github-template.html \
+			--output /tmp/formatted -f gfm -t html5 --metadata title="Document" /tmp/paste
+		filename="$filename".html
+		scp /tmp/formatted doom:drop/drop/$filename
+	else
+		scp /tmp/paste doom:drop/drop/$filename
+	fi
 else
 	if [ -f "$1" ]; then
-        echo "Uploading file"
-		scp "$1" doom:drop/drop/
-		filename="$(basename $1)"
+		echo "Uploading file"
+		filename="$(xxd -l4 -ps /dev/urandom)-$(basename $1)"
+		if [ $md -eq 1 ]; then
+			pandoc --no-highlight --template ~/.config/datafiles/github-template.html \
+				--output /tmp/formatted -f gfm -t html5 --metadata title="Document" "$1"
+			filename="$filename".html
+            scp /tmp/formatted doom:drop/drop/$filename
+		else
+            scp "$1" doom:drop/drop/$filename
+		fi
 	else
 		# zip if not a file
 		filename="$(xxd -l4 -ps /dev/urandom).zip"

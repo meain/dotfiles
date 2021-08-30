@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <title>Markdown preview</title>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/@highlightjs/cdn-assets@10.7.2/styles/github-gist.min.css"
+  />
+  <script src="https://unpkg.com/@highlightjs/cdn-assets@10.7.2/highlight.min.js"></script>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/3.0.1/github-markdown.min.css"
+  />
+  <style>
+    pre[class*="language-"] > code {
+      box-shadow: none !important;
+    }
+    pre[class*="language-"]::after,
+    pre[class*="language-"]::before {
+      display: none !important;
+    }
+  </style>
+  <body>
+    <article
+      class="markdown-body"
+      style="
+        box-sizing: border-box;
+        min-width: 200px;
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 45px;
+      "
+    >
+$body$
+    </article>
+  </body>
+</html>
