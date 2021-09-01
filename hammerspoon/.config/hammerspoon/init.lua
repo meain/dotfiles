@@ -7,6 +7,7 @@ local focusandback = require("focusandback")
 local typeout = require("typeout")
 local dialog = require("hs.dialog")
 local json = require("json")
+local conky = require("conky")
 
 local mailcounter = hs.menubar.new()
 mailcounter:setTooltip("No new emails")
@@ -260,15 +261,6 @@ hs.hotkey.bind(
         customshellrun.run("notmuch tag +notified tag:imbox and tag:unread", true)
         emailNotify(false)
         customshellrun.run("tmux refresh-client -S")
-    end
-)
-
-hs.hotkey.bind(
-    {"alt", "shift"},
-    "s",
-    function()
-        local result = customshellrun.run("task totn|tail -n+4|head -n5")
-        hs.alert("🔨 Tasks\n" .. result)
     end
 )
 
@@ -583,110 +575,19 @@ hs.hotkey.bind(
     end
 )
 
-local canvas = nil
-local canvascommand = "task tiny | tail -n+4 | sed '$ d'"
-local hcaltitlecolor = {red = 255, blue = 255, green = 255, alpha = 0.8}
-function ShowOutputInCanvas()
-    if canvas ~= nil then
-        canvas:hide()
-    end
-    canvas =
-        hs.canvas.new(
-        {
-            x = 30,
-            y = 50,
-            w = 2000,
-            h = 500
-        }
-    )
-
-    canvas:behavior(hs.canvas.windowBehaviors.canJoinAllSpaces)
-    canvas:level(hs.canvas.windowLevels.desktopIcon)
-
-    local result = customshellrun.run(canvascommand)
-    canvas[1] = {
-        id = "taskwarriror-display",
-        type = "text",
-        text = result,
-        textFont = "DankMono Nerd Font",
-        textSize = 13,
-        textColor = hcaltitlecolor,
-        textAlignment = "left"
-    }
-    canvas:show()
-end
-function UpdateOutputCanvas()
-    local result = customshellrun.run(canvascommand)
-    canvas[1].text = result
-end
-ShowOutputInCanvas()
-
--- Date canvas
-local datecanvas = nil
-function PaintDateCanvas()
-    if datecanvas ~= nil then
-        datecanvas:hide()
-    end
-    datecanvas =
-        hs.canvas.new(
-        {
-            x = 990,
-            y = 640,
-            w = 600,
-            h = 600
-        }
-    )
-
-    datecanvas:behavior(hs.canvas.windowBehaviors.canJoinAllSpaces)
-    datecanvas:level(hs.canvas.windowLevels.desktopIcon)
+function daysSince()
     local diffDate = os.difftime(os.time(), os.time({year = 1996, month = 8, day = 13}))
     local daysSince = math.floor(diffDate / (24 * 60 * 60))
-
-    datecanvas[1] = {
-        id = "date-display",
-        type = "text",
-        text = daysSince,
-        textFont = "Operator Mono",
-        textSize = 200,
-        textColor = hcaltitlecolor,
-        textAlignment = "left"
-    }
-    datecanvas:show()
+    return daysSince
 end
-PaintDateCanvas()
-hs.timer.doEvery(
-    -- Ideally just every day would do, but doing it ever hour as we
-    -- might not start ar the right hour.
+conky(
+    "days-since",
+    daysSince,
+    {x = 1111, y = 700, w = 600, h = 600},
+    {red = 255, blue = 255, green = 255, alpha = 0.8},
     60 * 60,
-    function()
-        PaintDateCanvas()
-    end
-)
-
--- taskwarrior
-local taskwarrior = require("taskwarrior")
-local canvastimer = nil
-hs.hotkey.bind(
-    {"alt"},
-    "t",
-    function()
-        UpdateOutputCanvas()
-        if canvastimer == nil then
-            canvastimer =
-                hs.timer.doEvery(
-                100,
-                function()
-                    UpdateOutputCanvas()
-                end
-            )
-            canvastimer:setNextTrigger(10)
-        else
-            canvastimer:start()
-            canvastimer:setNextTrigger(10)
-        end
-        -- hs.alert(customshellrun.run(BIN .. 'task-choose'))
-        taskwarrior.run()
-    end
+    "Product Sans",
+    150
 )
 
 -- workspace login
