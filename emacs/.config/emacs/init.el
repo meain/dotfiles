@@ -1008,9 +1008,6 @@ Pass ORIGINAL and ALTERNATE options."
   :straight t
   :defer 1
   :config (progn
-            (custom-set-faces '(diff-hl-change ((t (:background "#ede5cb"))))
-                              '(diff-hl-insert ((t (:background "#c7ddc7"))))
-                              '(diff-hl-delete ((t (:background "#edc4c4")))))
             (let* ((height (frame-char-height))
                    (width 2)
                    (bits (make-vector height 0)))
