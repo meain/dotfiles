@@ -1693,6 +1693,7 @@ Pass ORIGINAL and ALTERNATE options."
     (evil-leader/set-key "a e" 'elfeed))
   :config (progn
             (setq elfeed-sort-order 'ascending)
+            (setq elfeed-curl-timeout 60)
             (setq browse-url-browser-function '(lambda (url &rest args)
                                                  (interactive)
                                                  (start-process "*open*" "*open*" "open" "-g"
