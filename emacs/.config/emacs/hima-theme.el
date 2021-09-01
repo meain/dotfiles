@@ -8,6 +8,14 @@
 
 (deftheme hima)
 
+
+(defgroup hima-faces nil
+  "Custom faces for more stuff"
+  :prefix "hima-faces-")
+(defface hima-simple-grey `((t (:foreground "#999999")))
+  "Simple grey color for use outside comments"
+  :group  'hima-faces)
+
 (custom-theme-set-faces 'hima
 
 '(underline ((((class color) (min-colors 89)) (:underline t :foreground "#949494"))))
