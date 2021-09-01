@@ -1549,6 +1549,21 @@ Pass ORIGINAL and ALTERNATE options."
               (kbd "gr")
               'org-ctrl-c-ctrl-c)))
 
+;; mtodo mode
+(load (expand-file-name "~/.config/emacs/mtodo-mode.el"))
+(evil-define-key 'normal
+  mtodo-mode-map
+  (kbd "g d")
+  'mtodo-mark-done)
+(evil-define-key 'normal
+  mtodo-mode-map
+  (kbd "g m")
+  'mtodo-mark-undone)
+(evil-define-key 'normal
+  mtodo-mode-map
+  (kbd "g s")
+  'mtodo-mark-important)
+
 ;;; [EXTRA PLUGINS] =================================================
 
 ;; Winner mode
