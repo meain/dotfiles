@@ -2,8 +2,36 @@
 
 set -e
 
+# parsing logic
 md=0
+lang=""
 [ "$1" = "-md" ] && md=1 && shift
+[ "$1" = "-l" ] && shift && lang="$1" && shift
+
+
+dropMd() {
+    filepath="$1"
+    pandoc --no-highlight --template ~/.config/datafiles/github-template.html \
+        --output /tmp/formatted -f gfm -t html5 --metadata title="Document" $filepath
+    scp "$filepath" doom:drop/drop/$filename
+    scp /tmp/formatted doom:drop/drop/$filename.html
+}
+
+dropLang() {
+    filepath="$1"
+    filename="$2"
+    tmpfile="/tmp/drop-$(xxd -l12 -ps /dev/urandom)"
+
+    echo "\`\`\`$lang" >"$tmpfile"
+    cat "$filepath" >>"$tmpfile"
+    echo "\`\`\`" >>"$tmpfile"
+
+    pandoc --no-highlight --template ~/.config/datafiles/github-template.html \
+        --output /tmp/formatted -f gfm -t html5 --metadata title="Document" $tmpfile
+    scp "$filepath" doom:drop/drop/$filename
+    scp /tmp/formatted doom:drop/drop/$filename.html
+}
+
 if [ -z "$1" ]; then
 	filename="$(xxd -l4 -ps /dev/urandom)"
 	if [ -t 0 ]; then
@@ -13,32 +41,26 @@ if [ -z "$1" ]; then
 		echo "Reading from stdin"
 		cat /dev/stdin >/tmp/paste
 	fi
-	if [ $md -eq 1 ]; then
-		pandoc --no-highlight --template ~/.config/datafiles/github-template.html \
-			--output /tmp/formatted -f gfm -t html5 --metadata title="Document" /tmp/paste
-		filename="$filename".html
-		scp /tmp/formatted doom:drop/drop/$filename
-	else
-		scp /tmp/paste doom:drop/drop/$filename
-	fi
+    sourcefile="/tmp/paste"
 else
 	if [ -f "$1" ]; then
-		echo "Uploading file"
 		filename="$(xxd -l4 -ps /dev/urandom)-$(basename $1)"
-		if [ $md -eq 1 ]; then
-			pandoc --no-highlight --template ~/.config/datafiles/github-template.html \
-				--output /tmp/formatted -f gfm -t html5 --metadata title="Document" "$1"
-			filename="$filename".html
-            scp /tmp/formatted doom:drop/drop/$filename
-		else
-            scp "$1" doom:drop/drop/$filename
-		fi
+        sourcefile="$1"
 	else
 		# zip if not a file
 		filename="$(xxd -l4 -ps /dev/urandom).zip"
-		zip -r /tmp/$filename "$1"
-		scp "/tmp/$filename" doom:drop/drop/
+        sourcefile="/tmp/$filename"
 	fi
+fi
+
+if [ $md -eq 1 ]; then
+    dropMd "$sourcefile" "$filename"
+    filename="$filename".html
+elif [ "$lang" != "" ]; then
+    dropLang "$sourcefile" "$filename"
+    filename="$filename".html
+else
+    scp "$sourcefile" doom:drop/drop/$filename
 fi
 echo "https://drop.meain.io/drop/$filename"
 echo "https://drop.meain.io/drop/$filename" | pbcopy

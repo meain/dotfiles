@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-  <title>Markdown preview</title>
+  <title>drop | meain</title>
   <link
     rel="stylesheet"
     href="https://unpkg.com/@highlightjs/cdn-assets@10.7.2/styles/github-gist.min.css"
@@ -18,8 +18,13 @@
     pre[class*="language-"]::before {
       display: none !important;
     }
+    #view-raw {
+      font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+      float: right;
+    }
   </style>
   <body>
+    <a id="view-raw" href="javascript:gotoRaw()">View Raw</a>
     <article
       class="markdown-body"
       style="
@@ -32,5 +37,24 @@
     >
 $body$
     </article>
+    <script>
+      // TODO: find some way to avoid js completely
+      // gotoRaw just in case the user clicks before onload fires
+      function gotoRaw(){window.location = window.location.pathname.replace(/\.html$$/,"")}
+      window.onload = () => {
+        document.getElementById("view-raw").href = window.location.pathname.replace(/\.html$$/,"")
+        let ci = [].slice.call(document.getElementsByTagName("pre"));
+        ci.forEach((i) => {
+          let children = i.children;
+          if (children.length === 1 && children[0].tagName === "CODE") {
+            const cn = i.className;
+            console.log("cn:", cn);
+            if (cn.length > 0) i.children[0].classList.add("hljs");
+            if (cn.length > 0) i.children[0].classList.add(cn);
+          }
+        });
+        hljs.highlightAll();
+      }
+    </script>
   </body>
 </html>
