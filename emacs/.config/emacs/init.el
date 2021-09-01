@@ -143,9 +143,9 @@
 ;; Change font everywhere
 (defun meain/setup-fonts ()
   "Setup all the proper fonts for everything."
-  (set-face-attribute 'default nil :font meain/font-family-default)
-  (set-face-attribute 'fixed-pitch nil :font meain/font-family-default)
-  (set-face-attribute 'variable-pitch nil :font meain/font-family-default))
+  (set-face-attribute 'default nil :font meain/font-family-default :weight meain/font-weight-default)
+  (set-face-attribute 'fixed-pitch nil :font meain/font-family-default :weight meain/font-weight-default)
+  (set-face-attribute 'variable-pitch nil :font meain/font-family-default :weight meain/font-weight-default))
 (if (daemonp)
     (add-hook 'after-make-frame-functions
               (lambda (frame)

@@ -27,11 +27,13 @@
 ;; Conta Mono 14 | IBM Plex Mono 13 | MonoLisa 13 | Kraft Mono 14 | SpaceMono Nerd Font Mono 14
 ;; Aglet Mono 15 | VictorMono Nerd Font 14 | NanumGothicCoding 15 | BPMono 14 | Fairfax HD 16
 ;; Liga Camingocode 15 | Oxygen Mono 14 | M+ 1m 14 | MonospaceTypewriter 14 | Luculent 14
-;; Iosevka Slab 14 | Edlo 13 | Bront 15 | Whois 15
+;; Iosevka Slab 14 | Edlo 13 | Bront 15 | Whois 15 | Ligconsolata 16 | Operator Mono 14
 ;; Font (set-frame-font  "Whois 16")
-(defvar meain/font-family-default "Whois 15"
+(defvar meain/font-family-default "Whois 16"
   "Default font family for everything in Emacs.")
-(setq-default line-spacing .2) ;; .1 for Inconsolata
+(defvar meain/font-weight-default 'medium
+  "Default font weight for everything in Emacs.")
+(setq-default line-spacing .1) ;; .1 for Inconsolata
 (add-to-list 'default-frame-alist
              `(font . ,meain/font-family-default))
 
