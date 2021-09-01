@@ -44,7 +44,7 @@
     git-absorb # automatic git commit --fixup
     wget # get stuff from internet
     tmux # terminal multiplexer
-    aspell  # spell checker
+    aspell # spell checker
     # mpvc  # mpv remote control  # not available on macos
     msmtp # smtp client
     # android-tools # adb and friends  # not available for macos
@@ -119,7 +119,7 @@
     python39Packages.mypy # check types in code
     python39Packages.isort # fix sort order
     python39Packages.pygments # generic syntax highliht
-    python38Packages.python-language-server  # python lsp
+    python38Packages.python-language-server # python lsp
 
     # programming-rust
     cargo-edit # dep management
@@ -162,6 +162,7 @@
     # graphviz # draw graphs with code
     # pgcli # fancier postgres cli
     trivy # docker vulnerability scanner
+    act # github ci locally
 
     # tryout
     # gforth # gnu forth interpreter
