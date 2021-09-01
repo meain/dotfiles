@@ -2702,7 +2702,7 @@ Pass THING-TO-POPUP as the thing to popup."
                                                                                           (if thing-name
                                                                                               (format ":%s" thing-name)))))
                                                                              face
-                                                                             hima-simple-grey)
+                                                                             hima-simple-gray)
                                                                ""))
                                        '(:eval (mode-line-idle 0.3
                                                                '(:propertize (:eval (if (boundp tree-sitter-mode)
