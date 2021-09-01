@@ -2361,6 +2361,9 @@ START and END comes from it being interactive."
              ((equal major-mode 'emacs-lisp-mode)
               (format "(message \"%s: %%s\" %s)" thing-to-print
                       thing-to-print thing-to-print))
+             ((equal major-mode 'lisp-interaction-mode)
+              (format "(message \"%s: %%s\" %s)" thing-to-print
+                      thing-to-print thing-to-print))
              ((equal major-mode 'rust-mode)
               (format "println!(\"%s: {:?}\", %s);" thing-to-print
                       thing-to-print))
