@@ -2035,34 +2035,22 @@ Pass ORIGINAL and ALTERNATE options."
                 (pulse-momentary-highlight-region (car (tsc-node-byte-range (button-get button 'points-to)))
                                                   (cdr (tsc-node-byte-range (button-get button 'points-to)))
                                                   'company-template-field)))
-            (defun meain/ts-get-class-like-thing ()
-              (cond
-               ((eq major-mode 'rust-mode) 'impl_item)
-               ((eq major-mode 'python-mode) 'class_definition)))
-            (defun meain/ts-get-func-like-thing ()
-              (cond
-               ((eq major-mode 'rust-mode) 'function_item)
-               ((eq major-mode 'go-mode) 'function_declaration)
-               ((eq major-mode 'python-mode) 'function_definition)))
-            (defun meain/ts-get-class-like-thing-name ()
-              "Get name of the closeset class like thingy."
-              (interactive)
-              (let* ((node-at-point (tree-sitter-node-at-point (meain/ts-get-class-like-thing)))
-                     (name (cond
-                            ((eq node-at-point nil) "")
-                            (t (format "%s."
-                                       (thread-first (tsc-get-nth-named-child node-at-point 0)
-                                         (tsc-node-text)))))))
-                (format "%s" name)))
-            (defun meain/ts-get-func-like-thing-name ()
-              "Get name of the closeset function like thingy."
-              (interactive)
-              (let* ((node-at-point (tree-sitter-node-at-point (meain/ts-get-func-like-thing)))
-                     (name (cond
-                            ((eq node-at-point nil) "")
-                            (t (thread-first (tsc-get-child-by-field node-at-point :name)
-                                 (tsc-node-text))))))
-                (format "%s" name)))))
+            (setq meain/tree-sitter-calss-like-thing '((rust-mode . impl_item)
+                                                       (python-mode . class_definition)))
+            (setq meain/tree-sitter-function-like-thing '((rust-mode . function_item)
+                                                          (go-mode . function_declaration)
+                                                          (python-mode . function_definition)))
+            (defun meain/tree-sitter-thing-name (thing-kind)
+              "Get name of tree-sitter THING-KIND."
+              (let* ((thing-type-alist (cond
+                                        ((eq thing-kind 'class-like) meain/tree-sitter-calss-like-thing)
+                                        ((eq thing-kind 'function-like) meain/tree-sitter-function-like-thing)))
+                     (thing-type (alist-get major-mode thing-type-alist)))
+                (if thing-type
+                    (let ((node-at-point (tree-sitter-node-at-point thing-type)))
+                      (if node-at-point
+                          (thread-first (tsc-get-nth-named-child node-at-point 0)
+                            (tsc-node-text)))))))))
 (use-package tree-sitter-langs
   :straight t
   :defer 1
@@ -2687,65 +2675,74 @@ Pass THING-TO-POPUP as the thing to popup."
 (use-package mode-line-idle
   :straight t
   :commands (mode-line-idle))
-(setq-default mode-line-format (list '(:eval (if (eq 'emacs evil-state)
-                                                 "! "
-                                               ": ")) ;; vim or emacs mode
+(setq-default mode-line-format nil)
+(setq-default header-line-format (list '(:eval (if (eq 'emacs evil-state)
+                                                   "! "
+                                                 ": ")) ;; vim or emacs mode
 
-                                     '(:eval (list (if (eq buffer-file-name nil)
-                                                       ""
-                                                     (concatenate 'string
-                                                                  (car (cdr (reverse (split-string (buffer-file-name)
-                                                                                                   "/"))))
-                                                                  "/"))
-                                                   (propertize "%b"
-                                                               'face
-                                                               (if (buffer-modified-p)
-                                                                   'font-lock-string-face
-                                                                 'font-lock-builtin-face)
-                                                               'help-echo
-                                                               (buffer-file-name))))
-                                     '(:eval (mode-line-idle 1.0
-                                                             '(:propertize (:eval (when-let (vc vc-mode) ;; git branch
-                                                                                    (list " @"
-                                                                                          (substring vc 5))))
-                                                                           face
-                                                                           font-lock-comment-face)
-                                                             ""))
-                                     '(:eval (mode-line-idle 1.0
-                                                             '(:propertize (:eval (if (boundp projectile-mode)
-                                                                                      (list " "
-                                                                                            (let* ((explicit (cdr (car (cdr (cdr (tab-bar--current-tab))))))
-                                                                                                   (name (cdr (car (cdr (tab-bar--current-tab)))))
-                                                                                                   (out-name (if explicit
-                                                                                                                 (concatenate 'string ":" name)
-                                                                                                               (if (projectile-project-p)
-                                                                                                                   (concat ";"
-                                                                                                                           (projectile-project-name))
-                                                                                                                 ""))))
-                                                                                              (format "%s" out-name)))))
-                                                                           face
-                                                                           font-lock-comment-face)
-                                                             ""))
-                                     " "
-                                     '(:eval (mode-line-idle 0.3
-                                                             '(:eval (if (boundp tree-sitter-mode)
-                                                                         (meain/ts-get-class-like-thing-name)))
-                                                             ""))
-                                     '(:eval (mode-line-idle 0.3
-                                                             '(:eval (if (boundp tree-sitter-mode)
-                                                                         (meain/ts-get-func-like-thing-name)))
-                                                             ""))
-                                     ;; spacer
+                                       '(:eval (list (if (eq buffer-file-name nil)
+                                                         ""
+                                                       (concatenate 'string
+                                                                    (car (cdr (reverse (split-string (buffer-file-name)
+                                                                                                     "/"))))
+                                                                    "/"))
+                                                     (propertize "%b"
+                                                                 'face
+                                                                 (if (buffer-modified-p)
+                                                                     'font-lock-string-face
+                                                                   'font-lock-builtin-face)
+                                                                 'help-echo
+                                                                 (buffer-file-name))))
+                                       '(:eval (mode-line-idle 0.3
+                                                               '(:propertize (:eval (if (boundp tree-sitter-mode)
+                                                                                        (let ((thing-name (meain/tree-sitter-thing-name 'class-like)))
+                                                                                          (if thing-name
+                                                                                              (format ":%s" thing-name)))))
+                                                                             face
+                                                                             hima-simple-grey)
+                                                               ""))
+                                       '(:eval (mode-line-idle 0.3
+                                                               '(:propertize (:eval (if (boundp tree-sitter-mode)
+                                                                                        (let ((thing-name (meain/tree-sitter-thing-name 'function-like)))
+                                                                                          (if thing-name
+                                                                                              (format ":%s" thing-name)))))
+                                                                             face
+                                                                             hima-simple-grey)
+                                                               ""))
+                                       " "
+                                       '(:eval (mode-line-idle 1.0
+                                                               '(:propertize (:eval (when-let (vc vc-mode) ;; git branch
+                                                                                      (list " @"
+                                                                                            (substring vc 5))))
+                                                                             face
+                                                                             hima-simple-grey)
+                                                               ""))
+                                       '(:eval (mode-line-idle 1.0
+                                                               '(:propertize (:eval (if (boundp projectile-mode)
+                                                                                        (list " "
+                                                                                              (let* ((explicit (cdr (car (cdr (cdr (tab-bar--current-tab))))))
+                                                                                                     (name (cdr (car (cdr (tab-bar--current-tab)))))
+                                                                                                     (out-name (if explicit
+                                                                                                                   (concatenate 'string ":" name)
+                                                                                                                 (if (projectile-project-p)
+                                                                                                                     (concat ";"
+                                                                                                                             (projectile-project-name))
+                                                                                                                   ""))))
+                                                                                                (format "%s" out-name)))))
+                                                                             face
+                                                                             hima-simple-grey)
+                                                               ""))
+                                       ;; spacer
 
-                                     '(:eval (propertize " "
-                                                         'display
-                                                         `((space :align-to (- (+ right right-fringe right-margin)
-                                                                               ,(+ 2
-                                                                                   (+ (string-width (format-mode-line "%l:%c %p"))
-                                                                                      (string-width (format-mode-line "%m")))))))))
-                                     (propertize "%l:%c %p" 'face 'font-lock-variable-name-face) ;; position in file
-                                     (propertize " %m " 'face 'font-lock-constant-face) ;; current mode
-                                     ))
+                                       '(:eval (propertize " "
+                                                           'display
+                                                           `((space :align-to (- (+ right right-fringe right-margin)
+                                                                                 ,(+ 2
+                                                                                     (+ (string-width (format-mode-line "%l:%c %p"))
+                                                                                        (string-width (format-mode-line "%m")))))))))
+                                       (propertize "%l:%c %p" 'face 'font-lock-variable-name-face) ;; position in file
+                                       (propertize " %m " 'face 'font-lock-constant-face) ;; current mode
+                                       ))
 
 ;; Print emacs startup time
 (add-hook 'emacs-startup-hook
