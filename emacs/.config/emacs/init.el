@@ -2713,7 +2713,7 @@ Pass THING-TO-POPUP as the thing to popup."
                                                                                           (if thing-name
                                                                                               (format ":%s" thing-name)))))
                                                                              face
-                                                                             hima-simple-grey)
+                                                                             hima-simple-gray)
                                                                ""))
                                        " "
                                        '(:eval (mode-line-idle 1.0
@@ -2721,7 +2721,7 @@ Pass THING-TO-POPUP as the thing to popup."
                                                                                       (list " @"
                                                                                             (substring vc 5))))
                                                                              face
-                                                                             hima-simple-grey)
+                                                                             hima-simple-gray)
                                                                ""))
                                        '(:eval (mode-line-idle 1.0
                                                                '(:propertize (:eval (if (boundp projectile-mode)

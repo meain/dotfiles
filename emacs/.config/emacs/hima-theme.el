@@ -8,11 +8,6 @@
 
 (defgroup hima-faces nil "Custom faces for more stuff"
   :prefix "hima-faces-")
-;; TODO: change grey to gray
-(defface hima-simple-grey `((t (:foreground "#999999")))
-  "Simple grey color for use outside comments"
-  :group 'hima-faces)
-
 
 (deftheme hima "A minimal theme with simple colors")
 
@@ -26,6 +21,7 @@
        (medium-gray "#A0A0A0")
        (dark-gray "#424242")
 
+       (lighter-orange "#EDE5CB")
        (light-orange "#FFAF00")
        (dark-orange "#E75600")
 
@@ -54,20 +50,28 @@
        (green-light-green-layer `((t (:foreground ,dark-green :background ,light-green))))
        (red-light-red-layer `((t (:foreground ,dark-red :background ,light-red)))))
 
+  (defface hima-simple-gray `((t (:foreground ,medium-gray)))
+    "Simple gray color for use outside comments"
+    :group 'hima-faces)
+  (defface hima-all-white `,all-white-layer
+    "Simple gray color for use outside comments"
+    :group 'hima-faces)
+
   (custom-theme-set-faces 'hima
     ;; Basic items
     `(default ,default-layer)
     `(underline ,underline-layer)
     `(cursor ((t (:background ,black))))
-    `(fringe ((t (:background ,white))))
+    `(fringe ((t (:background ,white :foreground ,light-gray))))
     `(highlight ((t (:background ,light-blue))))
     `(region ((t (:background ,lighter-blue :foreground ,black))))
     `(tooltip ((t (:background ,light-black :foreground ,medium-gray))))
+    `(vertical-border ((t (:background ,lighter-gray :foreground ,lighter-gray))))
     `(widget-button ((t (:foreground ,dark-blue))))
 
     ;; Gui items
-    `(header-line ((t (:background ,lighter-gray))))
-    `(mode-line-inactive ((t (:background ,lighter-gray))))
+    `(header-line ((t (:background ,light-gray))))
+    `(mode-line-inactive ((t (:background ,light-gray))))
     `(mode-line-buffer-id ,bold-layer)
     `(mode-line ((t (:background ,green-blue))))
     `(minibuffer-prompt ((t (:foreground ,blue :background ,white))))
@@ -148,7 +152,7 @@
     `(dired-directory ((t (:weight bold :foreground ,black))))
 
     ;; diff-hl
-    `(diff-hl-change ((t (:background ,light-orange))))
+    `(diff-hl-change ((t (:background ,lighter-orange))))
     `(diff-hl-insert ((t (:background ,light-green))))
     `(diff-hl-delete ((t (:background ,light-red))))))
 
