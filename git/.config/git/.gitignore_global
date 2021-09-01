@@ -20,7 +20,11 @@ dist
 # personal
 run-dev
 .vimruncmd
+.todo.md
 
+# programming
 .mypy_cache
 node_modules
-.todo.md
+
+# nix (don't add it in if not already there)
+shell.nix
