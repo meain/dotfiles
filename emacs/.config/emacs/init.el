@@ -1425,6 +1425,10 @@ Pass ORIGINAL and ALTERNATE options."
                                           ("STUB" . "#1E90FF")))
             (global-hl-todo-mode)))
 
+;; consult-eglot
+(use-package consult-eglot :straight t
+  :commands consult-eglot-symbols
+  :after eglot)
 
 ;;; [FILETYPE PUGINS] ===============================================
 
