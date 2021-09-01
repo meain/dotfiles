@@ -2068,7 +2068,7 @@ Pass ORIGINAL and ALTERNATE options."
             (add-function :before-until tree-sitter-hl-face-mapping-function
                           (lambda (capture-name)
                             (pcase capture-name
-                              ("python.docstring" 'font-lock-comment-face))))
+                              ("python.docstring" 'tree-sitter-hl-face:doc))))
             (add-hook 'python-mode-hook
                       (lambda ()
                         (tree-sitter-hl-add-patterns nil

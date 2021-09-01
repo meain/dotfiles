@@ -37,14 +37,23 @@
 '(fringe ((((class color) (min-colors 89)) (:underline t :foreground "#000000"))))
 '(linum ((((class color) (min-colors 89)) (:underline t :foreground "#000000"))))
 
+'(tooltip   ((((class color) (min-colors 89)) (:background "#1C1C1C" :foreground "#A0A0A0"))))
 '(widget-button   ((((class color) (min-colors 89)) (:foreground "#4271AE"))))
 
-'(ac-selection-face ((((class color) (min-colors 89)) (:background "#1C1C1C" :foreground "#EEEEEE"))))
-'(ac-candidate-face ((((class color) (min-colors 89)) (:background "#D0D0D0" :foreground "#424242"))))
+'(company-tooltip ((((class color) (min-colors 89)) (:background "#1C1C1C" :foreground "#A0A0A0"))))
+'(company-tooltip-annotation ((((class color) (min-colors 89)) (:background "#1C1C1C" :foreground "#A0A0A0"))))
+'(company-tooltip-common ((((class color) (min-colors 89)) (:foreground "#FFFFFF")))) ; selcted part
+'(company-tooltip-selection ((((class color) (min-colors 89)) (:background "#C1E7F4" :foreground "#424242")))) ; selcted part
+'(company-tooltip-annotation-selection ((((class color) (min-colors 89)) (:background "#C1E7F4" :foreground "#424242")))) ; selcted part
+'(company-tooltip-common-selection ((((class color) (min-colors 89)) (:background "#C1E7F4" :foreground "#000000"))))
+'(company-preview ((((class color) (min-colors 89)) (:background "#C1E7F4" :foreground "#424242"))))
+'(company-scrollbar-bg ((((class color) (min-colors 89)) (:background "#000000" :foreground "#000000"))))
+'(company-scrollbar-fg ((((class color) (min-colors 89)) (:background "#FFFFFF" :foreground "#FFFFFF"))))
 
 '(flyspell-duplicate ((((class color) (min-colors 89)) (:underline (:style wave)))))
 '(flyspell-incorrect ((((class color) (min-colors 89)) (:underline t :foreground "#FFAF00"))))
 
+'(header-line ((((class color) (min-colors 89)) (:background "#EEEEEE"))))
 '(mode-line-inactive ((((class color) (min-colors 89)) (:background "#EEEEEE"))))
 '(mode-line-buffer-id ((((class color) (min-colors 89)) (:weight bold))))
 '(mode-line ((((class color) (min-colors 89)) (:background "#C3E9DB"))))
@@ -73,7 +82,7 @@
 '(magit-section-heading   ((((class color) (min-colors 89)) (:foreground "#4271AE"))))
 '(magit-section-highlight   ((((class color) (min-colors 89)) (:foreground "#E41D91"))))
 
-'(tree-sitter-hl-face:doc ((((class color) (min-colors 89)) (:foreground "#0087AF"))))
+'(tree-sitter-hl-face:doc ((((class color) (min-colors 89)) (:foreground "#008861"))))
 '(tree-sitter-hl-face:string ((((class color) (min-colors 89)) (:foreground "#0087AF"))))
 '(tree-sitter-hl-face:keyword ((((class color) (min-colors 89)) (:foreground "#000000"))))
 '(tree-sitter-hl-face:property ((((class color) (min-colors 89)) (:foreground "#000000"))))
