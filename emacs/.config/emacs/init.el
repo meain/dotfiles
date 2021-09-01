@@ -2678,9 +2678,10 @@ Pass THING-TO-POPUP as the thing to popup."
   :straight t
   :commands (mode-line-idle))
 (setq-default mode-line-format nil)
-(setq-default header-line-format (list '(:eval (if (eq 'emacs evil-state)
-                                                   "! "
-                                                 ": ")) ;; vim or emacs mode
+(setq-default header-line-format (list (propertize " " 'face 'hima-all-white)
+                                       '(:eval (if (eq 'emacs evil-state)
+                                                   "[E] "
+                                                 " ")) ;; vim or emacs mode
 
                                        '(:eval (list (if (eq buffer-file-name nil)
                                                          ""
@@ -2732,19 +2733,19 @@ Pass THING-TO-POPUP as the thing to popup."
                                                                                                                    ""))))
                                                                                                 (format "%s" out-name)))))
                                                                              face
-                                                                             hima-simple-grey)
+                                                                             hima-simple-gray)
                                                                ""))
                                        ;; spacer
 
                                        '(:eval (propertize " "
                                                            'display
                                                            `((space :align-to (- (+ right right-fringe right-margin)
-                                                                                 ,(+ 2
+                                                                                 ,(+ 3
                                                                                      (+ (string-width (format-mode-line "%l:%c %p"))
                                                                                         (string-width (format-mode-line "%m")))))))))
                                        (propertize "%l:%c %p" 'face 'font-lock-variable-name-face) ;; position in file
                                        (propertize " %m " 'face 'font-lock-constant-face) ;; current mode
-                                       ))
+                                       (propertize " " 'face 'hima-all-white)))
 
 ;; Print emacs startup time
 (add-hook 'emacs-startup-hook
