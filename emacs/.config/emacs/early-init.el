@@ -4,8 +4,10 @@
 ;; Native compilation stuff
 (setq comp-speed 2)
 (setq package-native-compile t)
-(setq native-comp-async-report-warnings-errors nil)
-(setq native-comp-deferred-compilation-deny-list nil)
+(setq native-comp-async-report-warnings-errors
+      nil)
+(setq native-comp-deferred-compilation-deny-list
+      nil)
 
 ;; Disable package.el as we are using straight
 (setq package-enable-at-startup nil)
@@ -17,7 +19,9 @@
 ;; Update some visual settings
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
-(menu-bar-mode 1)  ;; causes focus issue if disabled in railwaycat/homebrew-emacsmacport
+(if (not window-system)
+    ;; causes focus issue if disabled in railwaycat/homebrew-emacsmacport
+    (menu-bar-mode -1))
 (setq inhibit-startup-screen t)
 ;; (set-frame-parameter nil 'undecorated t)
 
