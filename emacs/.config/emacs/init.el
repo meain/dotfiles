@@ -1563,6 +1563,16 @@ Pass ORIGINAL and ALTERNATE options."
   mtodo-mode-map
   (kbd "g s")
   'mtodo-mark-important)
+(evil-leader/set-key "a t"
+  (lambda ()
+    (interactive)
+    (find-file "~/.cache/mobdump/thing-for-today")
+    (mtodo-mode)))
+(evil-leader/set-key "a T"
+  (lambda ()
+    (interactive)
+    (find-file "~/.cache/mobdump/thing-for-today-personal")
+    (mtodo-mode)))
 
 ;;; [EXTRA PLUGINS] =================================================
 
