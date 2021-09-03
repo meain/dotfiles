@@ -486,97 +486,103 @@ Pass ORIGINAL and ALTERNATE options."
             (define-key evil-normal-state-map (kbd "-") 'dired-jump)
             (define-key evil-normal-state-map (kbd "_") 'find-file)))
 
-
+;; auto activating snippets
 (use-package aas
   :straight t
   :commands (ass-activate-for-major-mode):hook
   (text-mode . ass-activate-for-major-mode)
-  :hook (org-mode . ass-activate-for-major-mode):hook
-  (prog-mode . ass-activate-for-major-mode)
-  :hook (python-mode . ass-activate-for-major-mode):config
-  (progn
-    (aas-set-snippets 'text-mode
-                      ";isodate"
-                      (lambda ()
-                        (interactive)
-                        (insert (format-time-string "%a, %d %b %Y %T %z")))
-                      ";date"
-                      (lambda ()
-                        (interactive)
-                        (insert (format-time-string "%a %d %b %Y")))
-                      ";sdate"
-                      (lambda ()
-                        (interactive)
-                        (insert (format-time-string "%d %b %Y")))
-                      ";d/"
-                      (lambda ()
-                        (interactive)
-                        (insert (format-time-string "%D")))
-                      ";time"
-                      (lambda ()
-                        (interactive)
-                        (insert (format-time-string "%T")))
-                      ";filename"
-                      (lambda ()
-                        (interactive)
-                        (insert (file-name-nondirectory (buffer-file-name)))))
-    (aas-set-snippets 'prog-mode
-                      ";isodate"
-                      (lambda ()
-                        (interactive)
-                        (insert (format-time-string "%a, %d %b %Y %T %z")))
-                      ";date"
-                      (lambda ()
-                        (interactive)
-                        (insert (format-time-string "%a %d %b %Y")))
-                      ";sdate"
-                      (lambda ()
-                        (interactive)
-                        (insert (format-time-string "%d %b %Y")))
-                      ";d/"
-                      (lambda ()
-                        (interactive)
-                        (insert (format-time-string "%D")))
-                      ";time"
-                      (lambda ()
-                        (interactive)
-                        (insert (format-time-string "%T")))
-                      ";filename"
-                      (lambda ()
-                        (interactive)
-                        (insert (file-name-nondirectory (buffer-file-name)))))
-    (aas-set-snippets 'web-mode
-                      ";html"
-                      (lambda ()
-                        (interactive)
-                        (insert-file-contents (expand-file-name "~/.config/datafiles/html_starter"))))
-    (aas-set-snippets 'html-mode
-                      ";html"
-                      (lambda ()
-                        (interactive)
-                        (insert-file-contents (expand-file-name "~/.config/datafiles/html_starter"))))
-    (aas-set-snippets 'markdown-mode
-                      ";bang"
-                      (lambda ()
-                        (interactive)
-                        (insert (concat "---\ntitle: "
-                                        (file-name-nondirectory (file-name-sans-extension (buffer-file-name)))
-                                        "\ncreated: "
-                                        (format-time-string "%a %d %b %Y %T")
-                                        "\n---\n"))))
-    (aas-set-snippets 'go-mode
-                      ";;"
-                      ":="
-                      ";ie"
-                      (lambda ()
-                        (interactive)
-                        (insert (concat "if err != nil { fmt.Errorf(\""
-                                        (read-string "Error message: ")
-                                        ": %v\", err) }"))))
-    (aas-set-snippets 'python-mode ";ip" "__import__('ipdb').set_trace()")
-    (aas-set-snippets 'org-mode ";el" "#+BEGIN_SRC emacs-lisp\n\n#+END_SRC"
-                      ";py" "#+BEGIN_SRC python\n\n#+END_SRC" ";co"
-                      "#+BEGIN_SRC\n\n#+END_SRC")))
+  :hook (mtodo-mode . ass-activate-for-major-mode):hook
+  (org-mode . ass-activate-for-major-mode)
+  :hook (prog-mode . ass-activate-for-major-mode):hook
+  (python-mode . ass-activate-for-major-mode)
+  :config (progn
+            (aas-set-snippets 'text-mode
+                              ";isodate"
+                              (lambda ()
+                                (interactive)
+                                (insert (format-time-string "%a, %d %b %Y %T %z")))
+                              ";date"
+                              (lambda ()
+                                (interactive)
+                                (insert (format-time-string "%a %b %d %Y")))
+                              ";sdate"
+                              (lambda ()
+                                (interactive)
+                                (insert (format-time-string "%d %b %Y")))
+                              ";d/"
+                              (lambda ()
+                                (interactive)
+                                (insert (format-time-string "%D")))
+                              ";time"
+                              (lambda ()
+                                (interactive)
+                                (insert (format-time-string "%T")))
+                              ";filename"
+                              (lambda ()
+                                (interactive)
+                                (insert (file-name-nondirectory (buffer-file-name)))))
+            (aas-set-snippets 'mtodo-mode
+                              ";date"
+                              (lambda ()
+                                (interactive)
+                                (insert (format-time-string "%a %b %d %Y"))))
+            (aas-set-snippets 'prog-mode
+                              ";isodate"
+                              (lambda ()
+                                (interactive)
+                                (insert (format-time-string "%a, %d %b %Y %T %z")))
+                              ";date"
+                              (lambda ()
+                                (interactive)
+                                (insert (format-time-string "%a %b %d %Y")))
+                              ";sdate"
+                              (lambda ()
+                                (interactive)
+                                (insert (format-time-string "%d %b %Y")))
+                              ";d/"
+                              (lambda ()
+                                (interactive)
+                                (insert (format-time-string "%D")))
+                              ";time"
+                              (lambda ()
+                                (interactive)
+                                (insert (format-time-string "%T")))
+                              ";filename"
+                              (lambda ()
+                                (interactive)
+                                (insert (file-name-nondirectory (buffer-file-name)))))
+            (aas-set-snippets 'web-mode
+                              ";html"
+                              (lambda ()
+                                (interactive)
+                                (insert-file-contents (expand-file-name "~/.config/datafiles/html_starter"))))
+            (aas-set-snippets 'html-mode
+                              ";html"
+                              (lambda ()
+                                (interactive)
+                                (insert-file-contents (expand-file-name "~/.config/datafiles/html_starter"))))
+            (aas-set-snippets 'markdown-mode
+                              ";bang"
+                              (lambda ()
+                                (interactive)
+                                (insert (concat "---\ntitle: "
+                                                (file-name-nondirectory (file-name-sans-extension (buffer-file-name)))
+                                                "\ncreated: "
+                                                (format-time-string "%a %d %b %Y %T")
+                                                "\n---\n"))))
+            (aas-set-snippets 'go-mode
+                              ";;"
+                              ":="
+                              ";ie"
+                              (lambda ()
+                                (interactive)
+                                (insert (concat "if err != nil { fmt.Errorf(\""
+                                                (read-string "Error message: ")
+                                                ": %v\", err) }"))))
+            (aas-set-snippets 'python-mode ";ip" "__import__('ipdb').set_trace()")
+            (aas-set-snippets 'org-mode ";el" "#+BEGIN_SRC emacs-lisp\n\n#+END_SRC"
+                              ";py" "#+BEGIN_SRC python\n\n#+END_SRC" ";co"
+                              "#+BEGIN_SRC\n\n#+END_SRC")))
 
 
 ;; flymake
