@@ -1939,11 +1939,13 @@ Pass ORIGINAL and ALTERNATE options."
             (add-hook 'writeroom-mode-enable-hook
                       (lambda ()
                         (interactive)
-                        (focus-mode t)))
+                        (if (not (eq major-mode 'rfc-mode))
+                            (focus-mode t))))
             (add-hook 'writeroom-mode-disable-hook
                       (lambda ()
                         (interactive)
-                        (focus-mode -1)))
+                        (if (not (eq major-mode 'rfc-mode))
+                            (focus-mode -1))))
             (setq writeroom-global-effects (remove 'writeroom-set-fullscreen writeroom-global-effects))))
 
 ;; tramp dired
@@ -2128,6 +2130,14 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package recompile-on-save
   :straight t
   :commands (recompile-on-save-mode))
+
+;; RFC reader
+(use-package rfc-mode
+  :straight t
+  :commands (rfc-mode-browse rfc-mode-read):config
+  (progn
+    (setq rfc-mode-directory (expand-file-name "~/.cache/rfc/"))
+    (add-hook 'rfc-mode-hook 'writeroom-mode)))
 
 
 ;;; [CUSTOM FUNCTIONS] ==============================================
