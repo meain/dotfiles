@@ -26,27 +26,29 @@ cd ~/.dotfiles
 stow nvim
 ```
 
-## Stuff you might wanna use
+## Tools I use a lot
 
-- [`fzf`](https://github.com/junegunn/fzf) Fuzzy finder
-- [`ripgrep`](https://github.com/BurntSushi/ripgrep) Much faster ack
-- [`mru.vim`](https://github.com/vim-scripts/mru.vim) Needed for `v` & `vv`
-- [`alacritty`](https://github.com/jwilm/alacritty) or [`kitty`](https://sw.kovidgoyal.net/kitty/) Best terminal emulators
-- [`hub`](https://hub.github.com/) Git plus something else
-- [`z`](https://github.com/rupa/z) Quickly jump around folders
-- [`bat`](https://github.com/sharkdp/bat) Cat with syntax highlight
-- [`lf`](https://github.com/gokcehan/lf) Ranger but faster
-- [`jv`](https://github.com/maxzender/jv) and [`jid`](https://github.com/simeji/jid) view/filter json in terminal
-- [`scim`](https://github.com/andmarti1424/sc-im) Excel in terminal
-- [`lsd`](https://github.com/Peltoche/lsd) `ls` but much more
-- [`diff-so-fancy`](https://github.com/so-fancy/diff-so-fancy) Better git diffs
-- [`spaceman-diff`](https://github.com/holman/spaceman-diff) Diff images in terminal
-- [`icdiff`](https://github.com/jeffkaufman/icdiff) Quick replacement for `diff`
-- [`dasht`](https://github.com/sunaku/dasht) Dash docs in terminal
-- [`up`](https://github.com/akavel/up) Every piper's dream
-- [`newsboat`](https://github.com/newsboat/newsboat) RSS feed in the shell
-- [`tig`](https://github.com/jonas/tig) ncurses interface for `git`
-- [`pandoc`](http://pandoc.org/index.html) + [`lynx`](http://lynx.browser.org/) View markdown in shell
+| ...                                                                                   | ...                                                                                     |
+| ------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| [fzf](https://github.com/junegunn/fzf) Fuzzy find anything                            | [ripgrep](https://blog.burntsushi.net/ripgrep) Insanely fast grepping                   |
+| [z](https://github.com/rupa/z) Quickly jump around common directories                 | [jq](https://github.com/stedolan/jq) Query into json objects                            |
+| [jiq](https://github.com/fiatjaf/jiq) `jq` but interactive                            | [isync](https://isync.sourceforge.io/) Mail sync                                        |
+| [mpd](https://musicpd.org/) Music player daemon                                       | [parallel](https://www.gnu.org/software/parallel/) Prarllel xargs                       |
+| [git-absorb](https://github.com/tummychow/git-absorb) Automatic --fixup               | [restic](https://restic.net/) Sane backup solution                                      |
+| [syncthing](https://syncthing.net/) Sane multi device sync tool                       | [KDE Connect](https://kdeconnect.kde.org) Connect your phone and PC                     |
+| [axel](https://github.com/axel-download-accelerator/axel) Download accelerator        | [imagemagick](https://imagemagick.org) Image manipulation via cli                       |
+| [ffmpeg](https://ffmpeg.org/) Video editing via cli                                   | [todo-txt-cli](https://github.com/todotxt/todo.txt-cli) Simple todo management          |
+| [lsd](https://github.com/Peltoche/lsd) `ls` but much more                             | [icdiff](https://github.com/jeffkaufman/icdiff) Colorful side by side diff              |
+| [diff-so-fancy](https://github.com/so-fancy/diff-so-fancy) Better git diff            | [dasht](https://dasht.io/) Offline documentation browser                                |
+| [pandoc](https://pandoc.org/) Convert from and to multiple formats                    | [hub](https://hub.github.com/) Github extension for git                                 |
+| [lf](https://github.com/gokcehan/lf) Better version of ranger                         | [alacritty](https://github.com/alacritty/alacritty) Fast simple terminal emulator       |
+| [ddgr](https://github.com/jarun/ddgr) Duckduckgo search from cli                      | [chafa](https://github.com/hpjansson/chafa) Image viewer in terminal                    |
+| [tmux](https://github.com/tmux/tmux) Terminal multiplexer                             | [hammerspoon](https://www.hammerspoon.org/) Control mac using lua                       |
+| [pixel-picker](https://github.com/acheronfail/pixel-picker/) Color picker for mac     | [Karabiner Elements](https://github.com/pqrs-org/Karabiner-Elements) Keyboard remapping |
+| [activity-watch](https://activitywatch.net) Track your computer usage                 | [Next DNS](https://nextdns.io/) A really good dns thingy                                |
+| [nix](https://nixos.org/) A sane package manager                                      | [fd](https://github.com/sharkdp/fd) Faster find                                         |
+| [notmuch](https://notmuchmail.org/) Simple mail indexer                               | [maccy](https://maccy.app/) Macos clipboard manager                                     |
+| [meetingbar](https://github.com/leits/MeetingBar) View next meeting in your statusbar | [insomnia](https://github.com/Kong/insomnia) Simpler postman                            |
 
 ## Screenshots
 
