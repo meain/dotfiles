@@ -2522,9 +2522,10 @@ START and END comes from it being interactive."
 (defun meain/markdown-linkify-thing (start end)
   "Function to search and add markdown links to document.  START and END for position."
   (interactive "r")
-  (let* ((thang (if (use-region-p)
-                    (buffer-substring start end)
-                  (thing-at-point 'symbol)))
+  (let* ((orig-thang (if (use-region-p)
+                         (buffer-substring start end)
+                       (thing-at-point 'symbol)))
+         (thang (read-string "Search term: " orig-thang))
          (json-object-type 'plist)
          (json-array-type 'list)
          (lurl (car (split-string (completing-read (format "Choose URL (%s): " thang)
@@ -2538,7 +2539,7 @@ START and END comes from it being interactive."
       (if (use-region-p)
           (kill-region start end)
         (kill-region (beginning-of-thing 'symbol) (end-of-thing 'symbol)))
-      (insert (format "[%s](%s)" thang lurl)))))
+      (insert (format "[%s](%s)" orig-thang lurl)))))
 
 ;; Open current file in Github
 (defun meain/github-url (&optional no-linenumber)
