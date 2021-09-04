@@ -50,6 +50,16 @@ stow nvim
 
 ## Screenshots
 
+| ![simple](https://user-images.githubusercontent.com/14259816/132101085-f7945bae-c37a-40eb-b1d4-7d6c216e3425.png) | ![terminal](https://user-images.githubusercontent.com/14259816/132101090-887420b7-8dc7-4dd1-b509-1814757df7b4.png) | ![rss](https://user-images.githubusercontent.com/14259816/132101092-719da4c2-4651-4cd2-8b13-8d8fa60e60f2.png) |
+| :--------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: |
+|                                                  Coding session                                                  |                                                       Shell                                                        |                                                   Rss feeds                                                   |
+
+## More screenshots
+
+<details>
+<summary>Screenshots (as of `d4733fb0`)</summary>
+<br>
+
 | ![](https://i.imgur.com/EvyYkS9.png) |
 | :----------------------------------: |
 |             Clean shell              |
@@ -78,7 +88,7 @@ stow nvim
 | :----------------------------------: |
 |          Kitty icat preview          |
 
-## More screenshots
+</details>
 
 <details>
 <summary>Screenshots (as of `ead4c86c`)</summary>
