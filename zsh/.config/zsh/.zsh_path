@@ -69,3 +69,6 @@ export PATH="$PATH":"$HOME/.dotnet"
 
 # emacs
 export PATH="$PATH:/Applications/Emacs.app/Contents/MacOS:/Applications/Emacs.app/Contents/MacOS/bin"
+
+# mail
+export MAILDIR=$HOME/.local/share/mail/meain
