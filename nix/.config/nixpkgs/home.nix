@@ -69,7 +69,7 @@
     todo-txt-cli # todo management
     ts # task spooler
     pstree # view process tree
-    jid # json incremental digger
+    jiq # interactive jiq
     tldr # simpler man pages
     silicon # create pretty code screenshots
     transmission # torrent stuff
