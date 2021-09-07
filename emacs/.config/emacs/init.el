@@ -492,97 +492,103 @@ Pass ORIGINAL and ALTERNATE options."
   :commands (ass-activate-for-major-mode):hook
   (text-mode . ass-activate-for-major-mode)
   :hook (mtodo-mode . ass-activate-for-major-mode):hook
-  (org-mode . ass-activate-for-major-mode)
-  :hook (prog-mode . ass-activate-for-major-mode):hook
-  (python-mode . ass-activate-for-major-mode)
-  :config (progn
-            (aas-set-snippets 'text-mode
-                              ";isodate"
-                              (lambda ()
-                                (interactive)
-                                (insert (format-time-string "%a, %d %b %Y %T %z")))
-                              ";date"
-                              (lambda ()
-                                (interactive)
-                                (insert (format-time-string "%a %b %d %Y")))
-                              ";sdate"
-                              (lambda ()
-                                (interactive)
-                                (insert (format-time-string "%d %b %Y")))
-                              ";d/"
-                              (lambda ()
-                                (interactive)
-                                (insert (format-time-string "%D")))
-                              ";time"
-                              (lambda ()
-                                (interactive)
-                                (insert (format-time-string "%T")))
-                              ";filename"
-                              (lambda ()
-                                (interactive)
-                                (insert (file-name-nondirectory (buffer-file-name)))))
-            (aas-set-snippets 'mtodo-mode
-                              ";date"
-                              (lambda ()
-                                (interactive)
-                                (insert (format-time-string "%a %b %d %Y"))))
-            (aas-set-snippets 'prog-mode
-                              ";isodate"
-                              (lambda ()
-                                (interactive)
-                                (insert (format-time-string "%a, %d %b %Y %T %z")))
-                              ";date"
-                              (lambda ()
-                                (interactive)
-                                (insert (format-time-string "%a %b %d %Y")))
-                              ";sdate"
-                              (lambda ()
-                                (interactive)
-                                (insert (format-time-string "%d %b %Y")))
-                              ";d/"
-                              (lambda ()
-                                (interactive)
-                                (insert (format-time-string "%D")))
-                              ";time"
-                              (lambda ()
-                                (interactive)
-                                (insert (format-time-string "%T")))
-                              ";filename"
-                              (lambda ()
-                                (interactive)
-                                (insert (file-name-nondirectory (buffer-file-name)))))
-            (aas-set-snippets 'web-mode
-                              ";html"
-                              (lambda ()
-                                (interactive)
-                                (insert-file-contents (expand-file-name "~/.config/datafiles/html_starter"))))
-            (aas-set-snippets 'html-mode
-                              ";html"
-                              (lambda ()
-                                (interactive)
-                                (insert-file-contents (expand-file-name "~/.config/datafiles/html_starter"))))
-            (aas-set-snippets 'markdown-mode
-                              ";bang"
-                              (lambda ()
-                                (interactive)
-                                (insert (concat "---\ntitle: "
-                                                (file-name-nondirectory (file-name-sans-extension (buffer-file-name)))
-                                                "\ncreated: "
-                                                (format-time-string "%a %d %b %Y %T")
-                                                "\n---\n"))))
-            (aas-set-snippets 'go-mode
-                              ";;"
-                              ":="
-                              ";ie"
-                              (lambda ()
-                                (interactive)
-                                (insert (concat "if err != nil { fmt.Errorf(\""
-                                                (read-string "Error message: ")
-                                                ": %v\", err) }"))))
-            (aas-set-snippets 'python-mode ";ip" "__import__('ipdb').set_trace()")
-            (aas-set-snippets 'org-mode ";el" "#+BEGIN_SRC emacs-lisp\n\n#+END_SRC"
-                              ";py" "#+BEGIN_SRC python\n\n#+END_SRC" ";co"
-                              "#+BEGIN_SRC\n\n#+END_SRC")))
+  (ledger-mode . ass-activate-for-major-mode)
+  :hook (org-mode . ass-activate-for-major-mode):hook
+  (prog-mode . ass-activate-for-major-mode)
+  :hook (python-mode . ass-activate-for-major-mode):config
+  (progn
+    (aas-set-snippets 'text-mode
+                      ";isodate"
+                      (lambda ()
+                        (interactive)
+                        (insert (format-time-string "%a, %d %b %Y %T %z")))
+                      ";date"
+                      (lambda ()
+                        (interactive)
+                        (insert (format-time-string "%a %b %d %Y")))
+                      ";sdate"
+                      (lambda ()
+                        (interactive)
+                        (insert (format-time-string "%d %b %Y")))
+                      ";d/"
+                      (lambda ()
+                        (interactive)
+                        (insert (format-time-string "%D")))
+                      ";time"
+                      (lambda ()
+                        (interactive)
+                        (insert (format-time-string "%T")))
+                      ";filename"
+                      (lambda ()
+                        (interactive)
+                        (insert (file-name-nondirectory (buffer-file-name)))))
+    (aas-set-snippets 'mtodo-mode
+                      ";date"
+                      (lambda ()
+                        (interactive)
+                        (insert (format-time-string "%a %b %d %Y"))))
+    (aas-set-snippets 'ledger-mode
+                      ";date"
+                      (lambda ()
+                        (interactive)
+                        (insert (format-time-string "%Y-%m-%d"))))
+    (aas-set-snippets 'prog-mode
+                      ";isodate"
+                      (lambda ()
+                        (interactive)
+                        (insert (format-time-string "%a, %d %b %Y %T %z")))
+                      ";date"
+                      (lambda ()
+                        (interactive)
+                        (insert (format-time-string "%a %b %d %Y")))
+                      ";sdate"
+                      (lambda ()
+                        (interactive)
+                        (insert (format-time-string "%d %b %Y")))
+                      ";d/"
+                      (lambda ()
+                        (interactive)
+                        (insert (format-time-string "%D")))
+                      ";time"
+                      (lambda ()
+                        (interactive)
+                        (insert (format-time-string "%T")))
+                      ";filename"
+                      (lambda ()
+                        (interactive)
+                        (insert (file-name-nondirectory (buffer-file-name)))))
+    (aas-set-snippets 'web-mode
+                      ";html"
+                      (lambda ()
+                        (interactive)
+                        (insert-file-contents (expand-file-name "~/.config/datafiles/html_starter"))))
+    (aas-set-snippets 'html-mode
+                      ";html"
+                      (lambda ()
+                        (interactive)
+                        (insert-file-contents (expand-file-name "~/.config/datafiles/html_starter"))))
+    (aas-set-snippets 'markdown-mode
+                      ";bang"
+                      (lambda ()
+                        (interactive)
+                        (insert (concat "---\ntitle: "
+                                        (file-name-nondirectory (file-name-sans-extension (buffer-file-name)))
+                                        "\ncreated: "
+                                        (format-time-string "%a %d %b %Y %T")
+                                        "\n---\n"))))
+    (aas-set-snippets 'go-mode
+                      ";;"
+                      ":="
+                      ";ie"
+                      (lambda ()
+                        (interactive)
+                        (insert (concat "if err != nil { fmt.Errorf(\""
+                                        (read-string "Error message: ")
+                                        ": %v\", err) }"))))
+    (aas-set-snippets 'python-mode ";ip" "__import__('ipdb').set_trace()")
+    (aas-set-snippets 'org-mode ";el" "#+BEGIN_SRC emacs-lisp\n\n#+END_SRC"
+                      ";py" "#+BEGIN_SRC python\n\n#+END_SRC" ";co"
+                      "#+BEGIN_SRC\n\n#+END_SRC")))
 
 
 ;; flymake
@@ -2138,6 +2144,41 @@ Pass ORIGINAL and ALTERNATE options."
   (progn
     (setq rfc-mode-directory (expand-file-name "~/.cache/rfc/"))
     (add-hook 'rfc-mode-hook 'writeroom-mode)))
+
+(use-package ledger-mode
+  :straight t
+  :defer t
+  :mode "\\.ledger\\'"
+  :init (evil-leader/set-key "a l"
+          (lambda ()
+            (interactive)
+            (find-file "~/.local/share/ledger/master.ledger"))):config
+  (defun meain/ledger-add-entry ()
+    (interactive)
+    (find-file "~/.local/share/ledger/master.ledger")
+    (let* ((accounts (mapcar 'list
+                             (ledger-accounts-list)))
+           (title (concat (format-time-string "%Y/%m/%d "
+                                              (org-read-date nil 'to-time nil "Date:  "))
+                          (completing-read "Description: "
+                                           (split-string (shell-command-to-string "ledger -f ~/.local/share/ledger/master.ledger payees")
+                                                         "\n"))))
+           (in (completing-read "What did you pay for? "
+                                accounts))
+           (amount (concat (read-string "How much did you pay? ")
+                           " INR"))
+           (out (completing-read "Where did the money come from? "
+                                 accounts)))
+      (goto-char (point-max))
+      (newline)
+      (insert title)
+      (newline)
+      (indent-to 4)
+      (insert in "  " amount)
+      (newline)
+      (indent-to 4)
+      (insert out)
+      (ledger-mode-clean-buffer))))
 
 
 ;;; [CUSTOM FUNCTIONS] ==============================================
