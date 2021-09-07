@@ -42,6 +42,7 @@
     sshfs # mount vm as fs using ssh
     stow # symlink management
     git-absorb # automatic git commit --fixup
+    git-crypt # encrypt git stuff
     wget # get stuff from internet
     tmux # terminal multiplexer
     aspell # spell checker
@@ -49,6 +50,7 @@
     msmtp # smtp client
     # android-tools # adb and friends  # not available for macos
     restic # backup
+    ledger # double entry accounting
 
     # aspell dicts
     aspellDicts.en

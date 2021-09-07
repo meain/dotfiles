@@ -1,0 +1,33 @@
+#!/bin/sh
+
+set -e
+
+get_company_id() {
+	filename="$HOME/.cache/ledger/cid-$1"
+	if [ ! -f "$filename" ]; then
+		mkdir -p "$(dirname "$filename")"
+		curl -s "https://www.screener.in/company/$1/consolidated/" |
+			pup 'button.button-primary attr{formaction}' | cut -d/ -f4 >$filename
+	fi
+	cat $filename
+}
+
+fetch_price() {
+    # TODO: Don't cache price if null
+	filename="$HOME/.cache/ledger/cprice-$1-$(date '+%Y-%m-%d')"
+	companyid="$(get_company_id "$1")"
+	if [ ! -f "$filename" ]; then
+		curl -s "https://www.screener.in/api/company/$companyid/chart/?q=Price&days=3" |
+			jq -r .datasets[0].values[-1][1] >$filename
+	fi
+    cat $filename
+}
+
+get_db_entry() {
+	echo "P $(date '+%Y/%m/%d') $1 $(fetch_price "$1") INR"
+}
+
+ledger -f ~/.local/share/ledger/master.ledger commodities | grep -vE '^INR$' |
+	while read -r item; do
+		get_db_entry "$item"
+	done > ~/.cache/ledger/pricedb
