@@ -486,6 +486,12 @@ Pass ORIGINAL and ALTERNATE options."
             (define-key evil-normal-state-map (kbd "-") 'dired-jump)
             (define-key evil-normal-state-map (kbd "_") 'find-file)))
 
+;; Github like git info in dired
+(use-package dired-git-info
+  :straight t
+  :after dired
+  :commands (dired-git-info-mode))
+
 ;; auto activating snippets
 (use-package aas
   :straight t
