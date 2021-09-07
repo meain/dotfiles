@@ -1992,10 +1992,11 @@ Pass ORIGINAL and ALTERNATE options."
   :after tramp)
 
 ;; timing stuff
-;; (use-package activity-watch-mode
-;;   :straight t
-;;   :diminish :config
-;;   (global-activity-watch-mode))
+(use-package activity-watch-mode
+  :straight t
+  :defer 1
+  :diminish :config
+  (global-activity-watch-mode))
 
 ;; Markdown preview
 (defun meain/markdown-preview ()
