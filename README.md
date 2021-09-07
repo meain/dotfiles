@@ -49,6 +49,7 @@ stow nvim
 | [nix](https://nixos.org/) A sane package manager                                      | [fd](https://github.com/sharkdp/fd) Faster find                                         |
 | [notmuch](https://notmuchmail.org/) Simple mail indexer                               | [maccy](https://maccy.app/) Macos clipboard manager                                     |
 | [meetingbar](https://github.com/leits/MeetingBar) View next meeting in your statusbar | [insomnia](https://github.com/Kong/insomnia) Simpler postman                            |
+| [ledger](https://www.ledger-cli.org/) Plaintext double entry accounting               | [pup](https://github.com/ericchiang/pup) HTML parser for cli                            |
 
 ## Screenshots
 
