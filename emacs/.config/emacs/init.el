@@ -2507,7 +2507,9 @@ START and END comes from it being interactive."
           (lambda ()
             (if (string-prefix-p (expand-file-name "~/.local/share/journal")
                                  default-directory)
-                (auto-fill-mode))))
+                (progn
+                  (company-mode -1)
+                  (auto-fill-mode)))))
 (evil-leader/set-key "a J"
   (lambda ()
     "Start writing journal entry.  `journal' invokes emacsclient and gives control back over to Emacs."
