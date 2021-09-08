@@ -697,13 +697,34 @@ Pass ORIGINAL and ALTERNATE options."
   (progn
     (setq company-dabbrev-downcase nil) ;; Do not lowercase my completions
     (setq company-idle-delay 0)
+    (setq company-tooltip-idle-delay 1)
+    (setq company-quickhelp-delay 0.3)
     (setq company-tooltip-maximum-width 35)
     (setq company-tooltip-align-annotations t)
     (setq company-minimum-prefix-length 2)
     (setq company-format-margin-function nil)
     (global-company-mode)
     ;; company-tng-mode provides better autocomplete behaviour
-    (company-tng-mode)))
+    ;; (company-tng-mode)
+    (define-key company-active-map (kbd "TAB") 'company-complete-common-or-cycle)
+    (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle)
+    (define-key company-active-map (kbd "S-TAB") 'company-select-previous)
+    (define-key company-active-map (kbd "<backtab>") 'company-select-previous)
+    (setq company-frontends '(company-pseudo-tooltip-unless-just-one-frontend
+                              company-preview-frontend company-echo-metadata-frontend))
+    (setq company-require-match 'never)
+    (defun my-company-visible-and-explicit-action-p ()
+      (and (company-tooltip-visible-p)
+           (company-explicit-action-p)))
+    (defun company-ac-setup ()
+      "Sets up `company-mode' to behave similarly to `auto-complete-mode'."
+      (setq company-require-match nil)
+      (setq company-auto-complete #'my-company-visible-and-explicit-action-p)
+      (setq company-frontends '(company-echo-metadata-frontend company-pseudo-tooltip-unless-just-one-frontend-with-delay
+                                                               company-preview-frontend))
+      (define-key company-active-map [tab] 'company-select-next-if-tooltip-visible-or-complete-selection)
+      (define-key company-active-map (kbd "TAB") 'company-select-next-if-tooltip-visible-or-complete-selection))
+    (company-ac-setup)))
 
 ;; Company quickhelp
 (use-package company-quickhelp ; Show help in tooltip
