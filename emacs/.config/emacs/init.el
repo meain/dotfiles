@@ -2202,9 +2202,10 @@ Pass ORIGINAL and ALTERNATE options."
           (lambda ()
             (interactive)
             (find-file "~/.local/share/ledger/master.ledger"))):config
-  (defun meain/ledger-add-entry ()
-    (interactive)
-    (find-file "~/.local/share/ledger/master.ledger")
+  (defun meain/ledger-add-entry (&optional no-switch)
+    (interactive "P")
+    (if (not no-switch)
+        (find-file "~/.local/share/ledger/master.ledger"))
     (let* ((accounts (mapcar 'list
                              (ledger-accounts-list)))
            (title (concat (format-time-string "%Y/%m/%d "
