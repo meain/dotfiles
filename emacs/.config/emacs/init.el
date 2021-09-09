@@ -1994,6 +1994,12 @@ Pass ORIGINAL and ALTERNATE options."
                             (focus-mode -1))))
             (setq writeroom-global-effects (remove 'writeroom-set-fullscreen writeroom-global-effects))))
 
+;; Naive linter for English prose
+(use-package writegood-mode
+  :straight t
+  :defer t
+  :commands (writegood-mode))
+
 ;; tramp dired
 (use-package tramp
   :disabled t
