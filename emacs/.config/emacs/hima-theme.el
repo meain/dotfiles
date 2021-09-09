@@ -106,8 +106,8 @@
     `(company-tooltip-selection ,tooltip-selected-layer)
     `(company-tooltip-annotation-selection ,tooltip-selected-layer)
     `(company-tooltip-common-selection ,tooltip-selected-layer)
-    `(company-preview ((t (:foreground ,medium-gray :background ,(face-attribute 'default :background)))))
-    `(company-preview-common ((t (:foreground ,medium-gray :background ,(face-attribute 'default :background)))))
+    `(company-preview ((t (:foreground ,dark-gray :background ,(face-attribute 'default :background)))))
+    `(company-preview-common ((t (:foreground ,dark-gray :background ,(face-attribute 'default :background)))))
     `(company-scrollbar-bg ,all-black-layer)
     `(company-scrollbar-fg ,all-white-layer)
 
