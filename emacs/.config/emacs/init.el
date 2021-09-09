@@ -2265,12 +2265,28 @@ Pass ORIGINAL and ALTERNATE options."
       (save-selected-window (other-window 1)
                             (switch-to-buffer (other-buffer))))))
 
-;; Quick open config file
-(evil-leader/set-key "e"
-  (defun meain/load-config ()
-    "Load emacs config for editing."
-    (interactive)
-    (find-file "~/.dotfiles/emacs/.config/emacs/init.el")))
+;; Quick open important files
+;; Doing this using a macro so that which key will show proper func name
+(defmacro meain/quick-file-open-builder (shortcut name file)
+  "Macro to create quick-file-open functions.
+SHORTCUT is the keybinding to use.  NAME if the func suffix and FILE is the filename."
+  (declare (debug t) (indent defun))
+  (let ((funsymbol (intern (concat "open-" name)))
+        (fullshortcut (concat "e " shortcut)))
+    `(evil-leader/set-key ,fullshortcut
+       (defun ,funsymbol ()
+         (interactive)
+         (find-file ,file)))))
+(meain/quick-file-open-builder "e" "init-el"
+  "~/.dotfiles/emacs/.config/emacs/init.el")
+(meain/quick-file-open-builder "f" "elfeed-feeds"
+  "~/.config/emacs/elfeed-feeds.el")
+(meain/quick-file-open-builder "r" "early-init"
+  "~/.dotfiles/emacs/.config/emacs/early-init.el")
+(meain/quick-file-open-builder "h" "hima-theme"
+  "~/.dotfiles/emacs/.config/emacs/hima-theme.el")
+(meain/quick-file-open-builder "t" "evil-textobj-tree-sitter"
+  "~/.config/emacs/straight/repos/evil-textobj-tree-sitter/evil-textobj-tree-sitter.el")
 
 ;; Fullscreen current buffer
 (defvar meain/window-configuration nil)
