@@ -768,6 +768,19 @@ Pass ORIGINAL and ALTERNATE options."
   :after selectrum
   :defer 1)
 
+;; Embark stuff
+(use-package embark
+  :straight t
+  :bind (("C-." . embark-act)
+         ("C-;" . embark-dwim)
+         ("C-h B" . embark-bindings)):init
+  (setq prefix-help-command #'embark-prefix-help-command))
+(use-package embark-consult
+  :straight t
+  :after (embark consult):demand
+  t
+  :hook (embark-collect-mode . consult-preview-at-point-mode))
+
 ;; Helpful package
 (use-package helpful
   :straight t
