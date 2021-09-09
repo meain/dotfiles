@@ -2000,9 +2000,10 @@ Pass ORIGINAL and ALTERNATE options."
 ;; tramp-term
 (use-package tramp-term
   :after tramp
+  :disabled t
   :straight t
   :commands tramp-term
-  :init (defun meain/ssh-term ()
+  :init (defun meain/tramp-shell ()
           "SSH into a server by selcting a host via autocomplete."
           (interactive)
           (tramp-term (list (meain/ssh-host-picker)))))
