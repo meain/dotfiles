@@ -1997,12 +1997,12 @@ Pass ORIGINAL and ALTERNATE options."
 ;; tramp dired
 (use-package tramp
   :disabled t
-  :straight t
   :init (progn
           (setq remote-file-name-inhibit-cache nil)
+          (setq tramp-default-method "ssh")
           (setq vc-ignore-dir-regexp (format "%s\\|%s" vc-ignore-dir-regexp tramp-file-name-regexp))
           (setq tramp-verbose 1)
-          (defun meain/ssh-access ()
+          (defun meain/tramp-open ()
             "Opern dired in a server by selcting a host via autocomplete."
             (interactive)
             (dired (concatenate 'string
