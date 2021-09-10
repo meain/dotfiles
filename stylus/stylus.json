@@ -1,146 +1,315 @@
 [
-	{
-		"enabled": true,
-		"updateUrl": null,
-		"md5Url": null,
-		"url": null,
-		"originalMd5": null,
-		"installDate": 1592899610165,
-		"name": "youtube.com",
-		"sections": [
-			{
-				"code": ".ytp-title-text,\nyt-formatted-string.ytd-video-primary-info-renderer:first-child {\n    opacity: 0;\n}\n\n.ytp-title-text:hover,\nyt-formatted-string.ytd-video-primary-info-renderer:hover {\n    opacity: 1;\n}",
-				"domains": [
-					"youtube.com"
-				]
-			}
-		],
-		"updateDate": 1592899610165,
-		"_id": "4b0337ef-830d-4cc3-94a6-6b555cf916dc",
-		"_rev": 1592899610165,
-		"id": 1
-	},
-	{
-		"enabled": true,
-		"updateUrl": null,
-		"md5Url": null,
-		"url": null,
-		"originalMd5": null,
-		"installDate": 1592899983454,
-		"name": "ycombinator.com",
-		"sections": [
-			{
-				"code": "* {\n    font-family: monaco;\n    font-size: 14px;\n}\nbody {\n    margin: 0;\n}\n.votearrow {\n    margin: 0 5px;\n    margin-top: 13px;\n    zoom: 1.3;\n}\n.rank {\n    margin-left: 20px;\n}\n.title {\n    padding-right: 10px;\n    padding-top: 13px;\n}\n.storylink {\n    font-size: 17px;\n    margin-right: 10px;\n}\n.storylink:hover {\n    color: #ef6437;\n}\n.subtext {\n    padding-bottom: 10px;\n    padding-top: 3px;\n}\n#hnmain {\n    max-width: 900px;\n}",
-				"domains": [
-					"ycombinator.com"
-				]
-			}
-		],
-		"updateDate": 1592899985287,
-		"_id": "e61af352-5040-4fac-bed2-e4d8808c1e4f",
-		"_rev": 1592899985287,
-		"id": 2
-	},
-	{
-		"enabled": true,
-		"updateUrl": null,
-		"md5Url": null,
-		"url": null,
-		"originalMd5": null,
-		"installDate": 1592979780159,
-		"name": "github.com",
-		"sections": [
-			{
-				"code": ".Box,\n.State,\n.Label,\n.IssueLabel,\n.timeline-comment-label,\n.form-control,\n.signed-commit-badge-large,\n.signed-commit-badge-medium,\n.signed-commit-badge-small,\n.btn {\n    border-radius: 3px !important;\n}\n\ndiv.border-bottom:nth-child(1) {\n    border-bottom: none !important;\n}\n\n.Box-row {\n    border-bottom: 1px solid #f1f1f1;\n    padding-top: 6px !important;\n    padding-bottom: 6px !important;\n}\n\n.BorderGrid-cell,\n.Box-header {\n    padding-top: 7px !important;\n    padding-bottom: 7px !important;\n    border: none !important;\n}\n\n.BorderGrid {\n    margin-top: 10px;\n}\n\nli.mb-2,\np.mt-3,\ndiv.mt-3 {\n    margin: 2px !important;\n}\n\nli.mb-2 > a:nth-child(1) {\n    display: none;\n}\n\n\nh2.mb-3 {\n    margin-top: 20px !important;\n    margin-bottom: 2px !important;\n}\n\n.btn.ml-2 {\n    padding: 4px 16px !important;\n}\n\ndiv.px-3:nth-child(1) {\n    margin-bottom: 5px !important;\n}\n\ndiv[aria-label=\"Issues\"] > div:first-child > div {\n    padding: 0 !important;\n}\n.pb-3 {\n    padding-top: 15px;\n}",
-				"domains": [
-					"github.com"
-				]
-			}
-		],
-		"updateDate": 1593421316123,
-		"_id": "e00290c2-7e69-490e-90f8-a1b26c289e24",
-		"_rev": 1593421316124,
-		"id": 3
-	},
-	{
-		"enabled": true,
-		"updateUrl": null,
-		"md5Url": null,
-		"url": null,
-		"originalMd5": null,
-		"installDate": 1592979979093,
-		"name": "jameshfisher.com",
-		"sections": [
-			{
-				"code": ".highlight {\n    padding: 5px 10px;\n}\npre.highlight * {\n    font-family: 'Operator Mono' !important;\n    font-weight: 300 !important;\n}",
-				"domains": [
-					"jameshfisher.com"
-				]
-			}
-		],
-		"updateDate": 1592979979093,
-		"_id": "c203a70d-d8cc-4391-b7e7-17127fba4d52",
-		"_rev": 1592979979093,
-		"id": 4
-	},
-	{
-		"enabled": true,
-		"updateUrl": null,
-		"md5Url": null,
-		"url": null,
-		"originalMd5": null,
-		"installDate": 1592980028017,
-		"name": "dev.to",
-		"sections": [
-			{
-				"code": "pre * {\n    font-family: \"Monaco\" !important;\n    font-weight: 100 !important;\n}",
-				"urlPrefixes": [
-					"https://dev.to/promode/how-to-set-your-selenium-grid-using-zalenium-in-5-mins-28ob"
-				]
-			}
-		],
-		"updateDate": 1592980028017,
-		"_id": "25df1d04-3606-47d0-aea8-70f02f4429b8",
-		"_rev": 1592980028017,
-		"id": 5
-	},
-	{
-		"enabled": false,
-		"updateUrl": null,
-		"md5Url": null,
-		"url": null,
-		"originalMd5": null,
-		"installDate": 1593521227418,
-		"name": "invert images",
-		"sections": [
-			{
-				"code": "video,\n.ytp-cued-thumbnail-overlay-image,\nsvg,\nimg {\n    -webkit-filter: invert(1);\n    filter: invert(1);\n    opacity: 0.8;\n}"
-			}
-		],
-		"updateDate": 1593522463673,
-		"_id": "814c8282-a53e-444c-bfd5-f75a05d28500",
-		"_rev": 1593526840749,
-		"id": 6
-	},
-	{
-		"enabled": true,
-		"updateUrl": null,
-		"md5Url": null,
-		"url": null,
-		"originalMd5": null,
-		"installDate": 1593867256845,
-		"name": "searx.lukesmith.xyz",
-		"sections": [
-			{
-				"code": "input,\npre,\nbutton,\nbody {\n    font-family: 'DankMono Nerd Font';\n    font-size: 1.1rem;\n}\n#urls {\n    width: 600px;\n}\n#sidebar {\n    opacity: 0.8;\n    margin: 3rem 0;\n}\n#sidebar input[type=\"submit\"] {\n    background: none;\n    color: black;\n    padding: 0;\n}\n.selectable_url {\n    border-radius: 5px;\n}\n\n#backToTop,\nfooter,\n.search_filters,\n.title {\n    display: none !important;\n}\n\n\n.index {\n    width: 100vw;\n    height: 100vh;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n\n#q {\n    border-radius: 5px 0 0 5px;\n}\n#send_search {\n    border-radius: 0 5px 5px 0;\n}\n#search {\n    padding: 1em 2em;\n}\n\n#pagination button {\n    padding: 10px 100px !important;\n    margin: 2em !important;\n    background: none !important;\n    color: black !important;\n    text-decoration: underline;\n}\n\n#pagination .ion-chevron-right {\n    display: none;\n}\n\n/*\n.content {\n    max-height: 50px;\n    overflow: hidden;\n} */",
-				"domains": [
-					"searx.lukesmith.xyz"
-				]
-			}
-		],
-		"updateDate": 1593870530379,
-		"_id": "4cb4c581-df1e-4879-84ea-9006e85610c1",
-		"_rev": 1593870530379,
-		"id": 7
-	}
+  {
+    "settings": {
+      "openEditInWindow": false,
+      "openEditInWindow.popup": false,
+      "windowPosition": {},
+      "show-badge": true,
+      "disableAll": false,
+      "exposeIframes": false,
+      "newStyleAsUsercss": false,
+      "styleViaXhr": false,
+      "patchCsp": false,
+      "config.autosave": true,
+      "popup.breadcrumbs": true,
+      "popup.breadcrumbs.usePath": false,
+      "popup.enabledFirst": true,
+      "popup.stylesFirst": true,
+      "popup.autoResort": false,
+      "popup.borders": false,
+      "popup.findStylesInline": true,
+      "popup.findSort": "u",
+      "manage.onlyEnabled": false,
+      "manage.onlyLocal": false,
+      "manage.onlyUsercss": false,
+      "manage.onlyEnabled.invert": false,
+      "manage.onlyLocal.invert": false,
+      "manage.onlyUsercss.invert": false,
+      "manage.actions.expanded": true,
+      "manage.backup.expanded": true,
+      "manage.filters.expanded": true,
+      "manage.newUI": true,
+      "manage.newUI.favicons": false,
+      "manage.newUI.faviconsGray": true,
+      "manage.newUI.targets": 3,
+      "manage.newUI.sort": "title,asc",
+      "editor.options": {},
+      "editor.toc.expanded": true,
+      "editor.options.expanded": true,
+      "editor.lint.expanded": true,
+      "editor.publish.expanded": true,
+      "editor.lineWrapping": true,
+      "editor.smartIndent": true,
+      "editor.indentWithTabs": false,
+      "editor.tabSize": 4,
+      "editor.keyMap": "vim",
+      "editor.theme": "default",
+      "editor.beautify": {
+        "selector_separator_newline": true,
+        "newline_before_open_brace": false,
+        "newline_after_open_brace": true,
+        "newline_between_properties": true,
+        "newline_before_close_brace": true,
+        "newline_between_rules": false,
+        "preserve_newlines": true,
+        "end_with_newline": false,
+        "indent_conditional": true
+      },
+      "editor.beautify.hotkey": "",
+      "editor.lintDelay": 300,
+      "editor.linter": "csslint",
+      "editor.lintReportDelay": 500,
+      "editor.matchHighlight": "token",
+      "editor.autoCloseBrackets": true,
+      "editor.autocompleteOnTyping": false,
+      "editor.contextDelete": false,
+      "editor.selectByTokens": true,
+      "editor.appliesToLineWidget": true,
+      "editor.livePreview": true,
+      "editor.colorpicker": true,
+      "editor.colorpicker.hexUppercase": false,
+      "editor.colorpicker.hotkey": "",
+      "editor.colorpicker.color": "",
+      "editor.colorpicker.maxHeight": 300,
+      "hotkey._execute_browser_action": "",
+      "hotkey.openManage": "",
+      "hotkey.styleDisableAll": "",
+      "sync.enabled": "none",
+      "iconset": 0,
+      "badgeDisabled": "#8B0000",
+      "badgeNormal": "#006666",
+      "popupWidth": 246,
+      "updateInterval": 24
+    }
+  },
+  {
+    "enabled": true,
+    "updateUrl": null,
+    "md5Url": null,
+    "url": null,
+    "originalMd5": null,
+    "installDate": 1592899610165,
+    "name": "youtube.com",
+    "sections": [
+      {
+        "code": ".ytp-title-text,\nyt-formatted-string.ytd-video-primary-info-renderer:first-child {\n    opacity: 0;\n}\n\n.ytp-title-text:hover,\nyt-formatted-string.ytd-video-primary-info-renderer:hover {\n    opacity: 1;\n}\n\n\nytd-rich-section-renderer {\n    display: none;\n}",
+        "domains": [
+          "youtube.com"
+        ]
+      }
+    ],
+    "updateDate": 1594277869854,
+    "_id": "4b0337ef-830d-4cc3-94a6-6b555cf916dc",
+    "_rev": 1594277869854,
+    "id": 1,
+    "_usw": {}
+  },
+  {
+    "enabled": true,
+    "updateUrl": null,
+    "md5Url": null,
+    "url": null,
+    "originalMd5": null,
+    "installDate": 1592899983454,
+    "name": "ycombinator.com",
+    "sections": [
+      {
+        "code": "* {\n    font-family: monaco;\n    font-size: 14px;\n}\nbody {\n    margin: 0;\n}\n.votearrow {\n    margin: 0 5px;\n    margin-top: 13px;\n    zoom: 1.3;\n}\n.rank {\n    margin-left: 20px;\n}\n.title {\n    padding-right: 10px;\n    padding-top: 13px;\n}\n.storylink {\n    font-size: 17px;\n    margin-right: 10px;\n}\n.storylink:hover {\n    color: #ef6437;\n}\n.subtext {\n    padding-bottom: 10px;\n    padding-top: 3px;\n}\n#hnmain {\n    max-width: 900px;\n}",
+        "domains": [
+          "ycombinator.com"
+        ]
+      }
+    ],
+    "updateDate": 1592899985287,
+    "_id": "e61af352-5040-4fac-bed2-e4d8808c1e4f",
+    "_rev": 1592899985287,
+    "id": 2,
+    "_usw": {}
+  },
+  {
+    "enabled": true,
+    "updateUrl": null,
+    "url": null,
+    "installDate": 1592979780159,
+    "name": "github.com",
+    "sections": [
+      {
+        "code": ".Box,\n.State,\n.Label,\n.IssueLabel,\n.timeline-comment-label,\n.form-control,\n.signed-commit-badge-large,\n.signed-commit-badge-medium,\n.signed-commit-badge-small,\n.btn {\n    border-radius: 3px !important;\n}\n\ndiv.border-bottom:nth-child(1) {\n    border-bottom: none !important;\n}\n\n.Box-row {\n    border-bottom: 1px solid #f1f1f1;\n    padding-top: 6px !important;\n    padding-bottom: 6px !important;\n}\n\n.BorderGrid-cell,\n.Box-header {\n    padding-top: 8px !important;\n    padding-bottom: 8px !important;\n}\n\n.BorderGrid {\n    margin-top: 10px;\n}\n\nli.mb-2,\np.mt-3,\ndiv.mt-3 {\n    margin: 2px !important;\n}\n\nli.mb-2 > a:nth-child(1) {\n    display: none;\n}\n\n\nh2.mb-3 {\n    margin-top: 20px !important;\n    margin-bottom: 2px !important;\n}\n\n.btn.ml-2 {\n    padding: 4px 16px !important;\n}\n\ndiv.px-3:nth-child(1) {\n    margin-bottom: 5px !important;\n}\n\ndiv[aria-label=\"Issues\"] > div:first-child > div {\n    padding: 0 !important;\n}\n.pb-3 {\n    padding-top: 15px;\n}",
+        "domains": [
+          "github.com"
+        ]
+      }
+    ],
+    "updateDate": 1623435987709,
+    "_id": "e00290c2-7e69-490e-90f8-a1b26c289e24",
+    "_rev": 1630690577308,
+    "id": 3,
+    "_usw": {}
+  },
+  {
+    "enabled": true,
+    "updateUrl": null,
+    "md5Url": null,
+    "url": null,
+    "originalMd5": null,
+    "installDate": 1592979979093,
+    "name": "jameshfisher.com",
+    "sections": [
+      {
+        "code": ".highlight {\n    padding: 5px 10px;\n}\npre.highlight * {\n    font-family: 'Operator Mono' !important;\n    font-weight: 300 !important;\n}",
+        "domains": [
+          "jameshfisher.com"
+        ]
+      }
+    ],
+    "updateDate": 1592979979093,
+    "_id": "c203a70d-d8cc-4391-b7e7-17127fba4d52",
+    "_rev": 1592979979093,
+    "id": 4,
+    "_usw": {}
+  },
+  {
+    "enabled": true,
+    "updateUrl": null,
+    "md5Url": null,
+    "url": null,
+    "originalMd5": null,
+    "installDate": 1592980028017,
+    "name": "dev.to",
+    "sections": [
+      {
+        "code": "pre * {\n    font-family: \"Monaco\" !important;\n    font-weight: 100 !important;\n}",
+        "urlPrefixes": [
+          "https://dev.to/promode/how-to-set-your-selenium-grid-using-zalenium-in-5-mins-28ob"
+        ]
+      }
+    ],
+    "updateDate": 1592980028017,
+    "_id": "25df1d04-3606-47d0-aea8-70f02f4429b8",
+    "_rev": 1592980028017,
+    "id": 5,
+    "_usw": {}
+  },
+  {
+    "enabled": false,
+    "updateUrl": null,
+    "md5Url": null,
+    "url": null,
+    "originalMd5": null,
+    "installDate": 1593521227418,
+    "name": "invert images",
+    "sections": [
+      {
+        "code": "video,\n.ytp-cued-thumbnail-overlay-image,\nsvg,\nimg {\n    -webkit-filter: invert(1);\n    filter: invert(1);\n    opacity: 0.8;\n}"
+      }
+    ],
+    "updateDate": 1593522463673,
+    "_id": "814c8282-a53e-444c-bfd5-f75a05d28500",
+    "_rev": 1596034988506,
+    "id": 6,
+    "_usw": {}
+  },
+  {
+    "enabled": true,
+    "updateUrl": null,
+    "md5Url": null,
+    "url": null,
+    "originalMd5": null,
+    "installDate": 1593867256845,
+    "name": "searx.lukesmith.xyz",
+    "sections": [
+      {
+        "code": "input,\npre,\nbutton,\nbody {\n    font-family: 'DankMono Nerd Font';\n    font-size: 1.1rem;\n}\n#urls {\n    width: 600px;\n}\n#sidebar {\n    opacity: 0.8;\n    margin: 3rem 0;\n}\n#sidebar input[type=\"submit\"] {\n    background: none;\n    color: black;\n    padding: 0;\n}\n.selectable_url {\n    border-radius: 5px;\n}\n\n#backToTop,\nfooter,\n.search_filters,\n.title {\n    display: none !important;\n}\n\n\n.index {\n    width: 100vw;\n    height: 100vh;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n\n#q {\n    border-radius: 5px 0 0 5px;\n}\n#send_search {\n    border-radius: 0 5px 5px 0;\n}\n#search {\n    padding: 1em 2em;\n}\n\n#pagination button {\n    padding: 10px 100px !important;\n    margin: 2em !important;\n    background: none !important;\n    color: black !important;\n    text-decoration: underline;\n}\n\n#pagination .ion-chevron-right {\n    display: none;\n}\n\n/*\n.content {\n    max-height: 50px;\n    overflow: hidden;\n} */",
+        "domains": [
+          "searx.lukesmith.xyz"
+        ]
+      }
+    ],
+    "updateDate": 1593870530379,
+    "_id": "4cb4c581-df1e-4879-84ea-9006e85610c1",
+    "_rev": 1593870530379,
+    "id": 7,
+    "_usw": {}
+  },
+  {
+    "enabled": true,
+    "updateUrl": null,
+    "md5Url": null,
+    "url": null,
+    "originalMd5": null,
+    "installDate": 1613894496949,
+    "name": "app.diagrams.net",
+    "sections": [
+      {
+        "code": "* {\n    font-family: Inconsolata !important;\n}",
+        "domains": [
+          "app.diagrams.net"
+        ]
+      }
+    ],
+    "updateDate": 1613894496949,
+    "_id": "f6002d23-dfc3-4b6a-b1db-4aa77e5cec42",
+    "_rev": 1613894496949,
+    "id": 8,
+    "_usw": {}
+  },
+  {
+    "enabled": true,
+    "updateUrl": null,
+    "url": null,
+    "installDate": 1616001573609,
+    "name": "lobste.rs",
+    "sections": [
+      {
+        "code": "li.story {\n    margin: 10px;\n    font-family: monaco;\n}",
+        "domains": [
+          "lobste.rs"
+        ]
+      }
+    ],
+    "updateDate": 1616001573609,
+    "_id": "468626e3-8505-4038-8fe9-bc19c393e634",
+    "_rev": 1616001573611,
+    "id": 9,
+    "_usw": {}
+  },
+  {
+    "enabled": true,
+    "updateUrl": null,
+    "url": null,
+    "installDate": 1630849937977,
+    "name": "ledger-cli.org",
+    "sections": [
+      {
+        "code": "body {\n    font-family: Iosevka;\n    width: 800px;\n    margin: auto;\n}\n\npre {\n    font-family: Iosevka;\n    background: #f1f1f1;\n    padding: 20px;\n    border-radius: 4px;\n}\n\n.smallexample {\n    /*display: flex;\n    justify-content: left;\n    align-items: center;*/\n    margin-left: 0!important;\n}",
+        "domains": [
+          "ledger-cli.org"
+        ]
+      }
+    ],
+    "updateDate": 1630850066433,
+    "_id": "1175e756-e181-45cb-8919-113030aafcac",
+    "_rev": 1630850066433,
+    "id": 10,
+    "_usw": {}
+  },
+  {
+    "enabled": true,
+    "updateUrl": null,
+    "url": null,
+    "installDate": 1630918967138,
+    "name": "craft.co",
+    "sections": [
+      {
+        "code": "body {\n    overflow: scroll !important;\n}\n#modal-root {\n    display: none !important;\n}",
+        "domains": [
+          "craft.co"
+        ]
+      }
+    ],
+    "updateDate": 1630918974596,
+    "_id": "1277b158-5924-4c7d-bffe-48db53fe3cd5",
+    "_rev": 1630918974596,
+    "id": 11
+  }
 ]
