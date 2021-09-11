@@ -42,7 +42,7 @@
        (commentary-layer `((t (:foreground ,medium-gray :background ,(face-attribute 'default :background) :italic t))))
        (string-layer `((t (:foreground ,blue :background ,(face-attribute 'default :background)))))
        (bold-layer `((t (:foreground ,black :weight bold))))
-       (underline-layer `((t (:foreground ,medium-gray :underline t))))
+       (underline-layer `((t (:underline t))))
        (tooltip-layer `((t (:background ,lighter-gray :foreground ,black))))
        (tooltip-selected-layer `((t (:background ,light-blue :foreground ,black))))
        (all-black-layer `((t (:background ,black :foreground ,black))))
@@ -127,6 +127,7 @@
     `(vterm-color-magenta ((t (:foreground "#8959A8" :background "#6C71C4"))))
     `(vterm-color-cyan ((t (:foreground "#3E999F" :background "#93A1A1"))))
     `(vterm-color-white ((t (:foreground "#F5F5F5" :background "#FDF6E3"))))
+    `(vterm-color-underline ,underline-layer)
 
     ;; magit
     `(magit-diff-context ((t (:background ,white))))
