@@ -2735,6 +2735,16 @@ START and END comes from it being interactive."
   (interactive)
   (async-shell-command "mailsync"))
 
+;; Create new blog entry
+(defun meain/blog-new-entry ()
+  "Quick function to start a new blog entry from Emacs."
+  (interactive)
+  (start-process-shell-command "blog"
+                               "*blog*"
+                               (concat "zsh -ic 'blog "
+                                       (read-string "Blog slug: ")
+                                       "'")))
+
 ;; Quick "ddg"
 (defun meain/search-eww ()
   "Search on ddg from Emacs using eww."
