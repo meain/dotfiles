@@ -797,10 +797,7 @@ Pass ORIGINAL and ALTERNATE options."
     (setq ibuffer-expert t)
     (global-set-key (kbd "M-c")
                     (meain/with-alternate (call-interactively 'switch-to-buffer)
-                                          (ibuffer-other-window)))
-    (evil-leader/set-key "b b"
-      (meain/with-alternate (call-interactively 'switch-to-buffer)
-                            (ibuffer-other-window)))))
+                                          (ibuffer-other-window)))))
 
 ;; rg.el
 (use-package rg
