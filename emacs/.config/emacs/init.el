@@ -593,6 +593,16 @@ Pass ORIGINAL and ALTERNATE options."
                       ";py" "#+BEGIN_SRC python\n\n#+END_SRC" ";co"
                       "#+BEGIN_SRC\n\n#+END_SRC")))
 
+;; flyspell
+(use-package flyspell
+  :defer t
+  :commands (flyspell-prog-mode flyspell-mode):init
+  (add-hook 'prog-mode-hook 'flyspell-prog-mode))
+(use-package flyspell-correct
+  :straight t
+  :after flyspell
+  :bind (:map flyspell-mode-map
+              ("C-;" . flyspell-correct-wrapper)))
 
 ;; flymake
 (use-package flymake
