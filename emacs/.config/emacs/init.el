@@ -2194,7 +2194,8 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package ledger-mode
   :straight t
   :defer t
-  :mode "\\.ledger\\'"
+  :commands (meain/ledger-add-entry):mode
+  "\\.ledger\\'"
   :init (evil-leader/set-key "a l"
           (lambda ()
             (interactive)
