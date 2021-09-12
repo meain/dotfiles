@@ -72,9 +72,6 @@
 
 ;;; [BASIC SETTINGS] =============================================
 
-;; Use cl-lib
-(require 'cl-lib)
-
 ;; Consistent window title
 (setq frame-title-format '("Emacs")) ; needed by hammerspoon
 
