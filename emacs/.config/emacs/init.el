@@ -905,8 +905,6 @@ Pass ORIGINAL and ALTERNATE options."
    (lua-mode . eglot-ensure)
    (go-mode . eglot-ensure))
   :config (progn
-            (add-to-list 'eglot-stay-out-of 'flymake)
-            (add-hook 'flymake-diagnostic-functions 'eglot-flymake-backend)
             (add-to-list 'eglot-server-programs
                          '(lua-mode . ("~/.luarocks/bin/lua-lsp")))
             ;; Can be enabled on fiction like things
@@ -924,6 +922,9 @@ Pass ORIGINAL and ALTERNATE options."
                            (display-buffer-reuse-window display-buffer-at-bottom)
                            (reusable-frames . visible)
                            (window-height . 0.3)))
+            ;; add flymake backend separately so that I can add other things as well to flymake
+            (add-to-list 'eglot-stay-out-of 'flymake)
+            (add-hook 'flymake-diagnostic-functions 'eglot-flymake-backend)
             (defclass eglot-sqls (eglot-lsp-server)
               ()
               :documentation "SQL's Language Server")
