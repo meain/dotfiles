@@ -212,7 +212,7 @@
 
 ;; Disable line wrapping
 (setq-default truncate-lines 1)
-(evil-leader/set-key "b W" 'toggle-truncate-lines)
+(evil-leader/set-key "b w" 'toggle-truncate-lines)
 
 ;; auto-fill
 (evil-leader/set-key "b F" 'auto-fill-mode)
@@ -1973,29 +1973,29 @@ Pass ORIGINAL and ALTERNATE options."
 ;; Focus mode
 (use-package focus :straight t
   :commands focus-mode)
-
 ;; Writing mode
 (use-package writeroom-mode
   :straight t
   :commands writeroom-mode
-  :config (progn
-            (add-hook 'writeroom-mode-enable-hook
-                      (lambda ()
-                        (interactive)
-                        (if (not (eq major-mode 'rfc-mode))
-                            (focus-mode t))))
-            (add-hook 'writeroom-mode-disable-hook
-                      (lambda ()
-                        (interactive)
-                        (if (not (eq major-mode 'rfc-mode))
-                            (focus-mode -1))))
-            (setq writeroom-global-effects (remove 'writeroom-set-fullscreen writeroom-global-effects))))
-
+  :config (setq writeroom-global-effects (remove 'writeroom-set-fullscreen writeroom-global-effects)))
 ;; Naive linter for English prose
 (use-package writegood-mode
   :straight t
   :defer t
   :commands (writegood-mode))
+(defvar meain/writing-mode-enabled -1 "State to store if `writing-mode' is enabled.")
+(defun meain/toggle-writing-mode ()
+  "Toggle `writing-mode'."
+  (interactive)
+  (toggle-truncate-lines meain/writing-mode-enabled)
+  (setq meain/writing-mode-enabled (if (eq meain/writing-mode-enabled t)
+                                       -1
+                                     t))
+  (writeroom-mode meain/writing-mode-enabled)
+  (focus-mode meain/writing-mode-enabled)
+  (writegood-mode meain/writing-mode-enabled)
+  (flyspell-mode meain/writing-mode-enabled))
+(evil-leader/set-key "b W" 'meain/toggle-writing-mode)
 
 ;; tramp dired
 (use-package tramp
