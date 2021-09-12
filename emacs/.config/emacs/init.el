@@ -2844,8 +2844,7 @@ Pass THING-TO-POPUP as the thing to popup."
   :straight t
   :commands (mode-line-idle))
 (setq-default mode-line-format nil)
-(setq-default header-line-format (list (propertize " " 'face 'hima-all-white)
-                                       '(:eval (if (eq 'emacs evil-state)
+(setq-default header-line-format (list '(:eval (if (eq 'emacs evil-state)
                                                    "[E] "
                                                  " ")) ;; vim or emacs mode
 
@@ -2906,12 +2905,11 @@ Pass THING-TO-POPUP as the thing to popup."
                                        '(:eval (propertize " "
                                                            'display
                                                            `((space :align-to (- (+ right right-fringe right-margin)
-                                                                                 ,(+ 3
+                                                                                 ,(+ 2
                                                                                      (+ (string-width (format-mode-line "%l:%c %p"))
                                                                                         (string-width (format-mode-line "%m")))))))))
                                        (propertize "%l:%c %p" 'face 'font-lock-variable-name-face) ;; position in file
-                                       (propertize " %m " 'face 'font-lock-constant-face) ;; current mode
-                                       (propertize " " 'face 'hima-all-white)))
+                                       (propertize " %m " 'face 'font-lock-constant-face)))
 
 ;; Print emacs startup time
 (add-hook 'emacs-startup-hook
