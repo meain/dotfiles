@@ -2506,14 +2506,8 @@ START and END comes from it being interactive."
                             (buffer-substring beg end)
                           (symbol-at-point))))
     (if current-prefix-arg
-        (progn
-          (beginning-of-line)
-          (newline-and-indent)
-          (previous-line)
-          (indent-relative))
-      (progn
-        (end-of-line)
-        (newline-and-indent)))
+        (evil-open-above 1)
+      (evil-open-below 1))
     (insert (cond
              ((equal major-mode 'emacs-lisp-mode)
               (format "(message \"%s: %%s\" %s)" thing-to-print
@@ -2537,7 +2531,8 @@ START and END comes from it being interactive."
               (format "echo \"%s:\" %s" thing-to-print thing-to-print))
              ((equal major-mode 'python-mode)
               (format "print(\"%s:\", %s)" thing-to-print
-                      thing-to-print))))))
+                      thing-to-print)))))
+  (evil-force-normal-state))
 (define-key evil-normal-state-map (kbd "g p") 'meain/quick-print)
 
 ;; Quick launch htop
