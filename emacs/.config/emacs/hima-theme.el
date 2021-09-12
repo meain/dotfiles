@@ -123,14 +123,14 @@
     `(isearch ((t (:background ,light-blue :foreground ,dark-gray))))
 
     ;; vterm (need a lot more colors)
-    `(vterm-color-black ((t (:foreground "#444444" :background "#002B36"))))
-    `(vterm-color-red ((t (:foreground "#9E0047" :background "#CB4B16"))))
-    `(vterm-color-green ((t (:foreground "#718C00" :background "#586E75"))))
-    `(vterm-color-yellow ((t (:foreground "#B25000" :background "#657B83"))))
-    `(vterm-color-blue ((t (:foreground "#4271AE" :background "#839496"))))
-    `(vterm-color-magenta ((t (:foreground "#8959A8" :background "#6C71C4"))))
-    `(vterm-color-cyan ((t (:foreground "#3E999F" :background "#93A1A1"))))
-    `(vterm-color-white ((t (:foreground "#F5F5F5" :background "#FDF6E3"))))
+    `(vterm-color-black ((t (:foreground "#444444" :background "#969694"))))
+    `(vterm-color-red ((t (:foreground "#9E0047" :background "#FF0072"))))
+    `(vterm-color-green ((t (:foreground "#718C00" :background "#8EB200"))))
+    `(vterm-color-yellow ((t (:foreground "#B25000" :background "#FF7200"))))
+    `(vterm-color-blue ((t (:foreground "#4271AE" :background "#5EA2F9"))))
+    `(vterm-color-magenta ((t (:foreground "#8959A8" :background "#A56CCC"))))
+    `(vterm-color-cyan ((t (:foreground "#3E999F" :background "#51C8D1"))))
+    `(vterm-color-white ((t (:foreground "#F5F5F5" :background "#FFFFFF"))))
     `(vterm-color-underline ,underline-layer)
 
     ;; magit
