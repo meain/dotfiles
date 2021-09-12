@@ -32,8 +32,10 @@
        (green-blue "#C3E9DB")
 
        (light-green "#DDFEDD")
+       (almost-light-green "#C9F3D2")
        (dark-green "#008861")
        (light-red "#FFDDDD")
+       (almost-light-red "#F8CED3")
        (dark-red "#9E0047")
 
        (pink "#E41D91")
@@ -48,7 +50,9 @@
        (all-black-layer `((t (:background ,black :foreground ,black))))
        (all-white-layer `((t (:background ,white :foreground ,white))))
        (green-light-green-layer `((t (:foreground ,dark-green :background ,light-green))))
-       (red-light-red-layer `((t (:foreground ,dark-red :background ,light-red)))))
+       (greener-light-green-layer `((t (:foreground ,dark-green :background ,almost-light-green))))
+       (red-light-red-layer `((t (:foreground ,dark-red :background ,light-red))))
+       (reder-light-red-layer `((t (:foreground ,dark-red :background ,almost-light-red)))))
 
   (defface hima-simple-gray `((t (:foreground ,medium-gray)))
     "Simple gray color for use outside comments"
@@ -130,10 +134,12 @@
     `(vterm-color-underline ,underline-layer)
 
     ;; magit
+    `(diff-refine-removed ,reder-light-red-layer)
+    `(diff-refine-added ,greener-light-green-layer)
     `(magit-diff-context ((t (:background ,white))))
     `(magit-diff-context-highlight ((t (:background ,light-white))))
-    `(magit-diff-hunk-heading ((t (:background ,medium-gray))))
-    `(magit-diff-hunk-heading-highlight ,tooltip-layer)
+    `(magit-diff-hunk-heading ((t (:background ,light-gray))))
+    `(magit-diff-hunk-heading-highlight ((t (:background ,medium-gray))))
     `(magit-diff-removed ,red-light-red-layer)
     `(magit-diff-added ,green-light-green-layer)
     `(magit-diff-removed-highlight ,red-light-red-layer)
