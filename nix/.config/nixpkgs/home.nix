@@ -129,6 +129,10 @@
     cargo-udeps # find unnecessary deps
     # cargo-watch # continuously run cargo check
 
+    # programming-other
+    nodePackages.yaml-language-server
+    nodePackages.vscode-json-languageserver
+
     # gui
     # mpv # audio/video player
     alacritty # terminal emulator

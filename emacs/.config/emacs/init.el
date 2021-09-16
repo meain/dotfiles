@@ -911,10 +911,17 @@ Pass ORIGINAL and ALTERNATE options."
    (javascript-mode . eglot-ensure)
    (web-mode . eglot-ensure)
    (lua-mode . eglot-ensure)
-   (go-mode . eglot-ensure))
+   (go-mode . eglot-ensure)
+   (json-mode . eglot-ensure)
+   (yaml-mode . eglot-ensure))
   :config (progn
             (add-to-list 'eglot-server-programs
                          '(lua-mode . ("~/.luarocks/bin/lua-lsp")))
+            ;; yaml-mode useful for github actions
+            (add-to-list 'eglot-server-programs
+                         '(yaml-mode . ("yaml-language-server" "--stdio")))
+            (add-to-list 'eglot-server-programs
+                         '(json-mode . ("vscode-json-languageserver" "--stdio")))
             ;; Can be enabled on fiction like things
             (add-to-list 'eglot-server-programs
                          '(markdown-mode . ("unified-language-server" "--parser=remark-parse"
