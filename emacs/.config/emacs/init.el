@@ -1030,13 +1030,10 @@ Pass ORIGINAL and ALTERNATE options."
   :defer t
   :after consult
   :commands imenu-list-smart-toggle
-  :init (global-set-key (kbd "M--")
-                        (meain/with-alternate (call-interactively 'consult-imenu)
-                                              (imenu-list-smart-toggle))):config
-  (progn
-    (setq imenu-list-focus-after-activation t)
-    (setq imenu-list-after-jump-hook nil)
-    (setq imenu-list-auto-resize t)))
+  :config (progn
+            (setq imenu-list-focus-after-activation t)
+            (setq imenu-list-after-jump-hook nil)
+            (setq imenu-list-auto-resize t)))
 
 ;; Flat imenu
 (use-package flimenu
