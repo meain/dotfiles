@@ -2518,30 +2518,30 @@ START and END comes from it being interactive."
     (if current-prefix-arg
         (evil-open-above 1)
       (evil-open-below 1))
-    (insert (cond
-             ((equal major-mode 'emacs-lisp-mode)
-              (format "(message \"%s: %%s\" %s)" thing-to-print
-                      thing-to-print thing-to-print))
-             ((equal major-mode 'lisp-interaction-mode)
-              (format "(message \"%s: %%s\" %s)" thing-to-print
-                      thing-to-print thing-to-print))
-             ((equal major-mode 'rust-mode)
-              (format "println!(\"%s: {:?}\", %s);" thing-to-print
-                      thing-to-print))
-             ((equal major-mode 'go-mode)
-              (format "fmt.Println(\"%s:\", %s);" thing-to-print
-                      thing-to-print))
-             ((equal major-mode 'lua-mode)
-              (format "print(\"%s:\", %s)" thing-to-print
-                      thing-to-print))
-             ((equal major-mode 'js-mode)
-              (format "console.log(\"%s:\", %s)" thing-to-print
-                      thing-to-print))
-             ((equal major-mode 'shell-script-mode)
-              (format "echo \"%s:\" %s" thing-to-print thing-to-print))
-             ((equal major-mode 'python-mode)
-              (format "print(\"%s:\", %s)" thing-to-print
-                      thing-to-print)))))
+    (insert (pcase major-mode
+              ('emacs-lisp-mode
+               (format "(message \"%s: %%s\" %s)" thing-to-print
+                       thing-to-print thing-to-print))
+              ('lisp-interaction-mode
+               (format "(message \"%s: %%s\" %s)" thing-to-print
+                       thing-to-print thing-to-print))
+              ('rust-mode
+               (format "println!(\"%s: {:?}\", %s);" thing-to-print
+                       thing-to-print))
+              ('go-mode
+               (format "fmt.Println(\"%s:\", %s);" thing-to-print
+                       thing-to-print))
+              ('lua-mode
+               (format "print(\"%s:\", %s)" thing-to-print
+                       thing-to-print))
+              ('js-mode
+               (format "console.log(\"%s:\", %s)" thing-to-print
+                       thing-to-print))
+              ('shell-script-mode
+               (format "echo \"%s:\" %s" thing-to-print thing-to-print))
+              ('python-mode
+               (format "print(\"%s:\", %s)" thing-to-print
+                       thing-to-print)))))
   (evil-force-normal-state))
 (define-key evil-normal-state-map (kbd "g p") 'meain/quick-print)
 
