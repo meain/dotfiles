@@ -51,6 +51,8 @@
     # android-tools # adb and friends  # not available for macos
     restic # backup
     ledger # double entry accounting
+    dasel # jq but more versatile
+    # haskellPackages.kmonad # keyboard remapping
 
     # aspell dicts
     aspellDicts.en
@@ -75,6 +77,7 @@
     tldr # simpler man pages
     silicon # create pretty code screenshots
     transmission # torrent stuff
+    kube-prompt # interactive kubernetes cli
 
     # programming
     gist # create gist
