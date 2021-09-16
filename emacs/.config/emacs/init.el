@@ -2240,6 +2240,10 @@ Pass ORIGINAL and ALTERNATE options."
       (insert out)
       (ledger-mode-clean-buffer))))
 
+(use-package cheat-sh
+  :straight t
+  :commands (cheat-sh cheat-sh-maybe-region))
+
 
 ;;; [CUSTOM FUNCTIONS] ==============================================
 
@@ -2454,7 +2458,9 @@ START and END comes from it being interactive."
                                                      (split-string (shell-command-to-string "dasht-docsets"))))))
         (message full-url)
         (eww full-url)))))
-(evil-leader/set-key "a d" 'meain/dasht-docs)
+(evil-leader/set-key "a d"
+  (meain/with-alternate (call-interactively 'meain/dasht-docs)
+                        (call-interactively 'cheat-sh-maybe-region)))
 
 ;; Search from emacs
 (defun meain/eww-search-ddg (&optional open)
