@@ -2849,6 +2849,15 @@ Pass THING-TO-POPUP as the thing to popup."
             (define-key evil-outer-text-objects-map "n" (evil-textobj-tree-sitter-get-textobj "conditional.outer"))
             (define-key evil-inner-text-objects-map "n" (evil-textobj-tree-sitter-get-textobj "conditional.inner"))))
 
+;; Just some hima testing code
+(defun meain/reload-current-theme ()
+  "Util to reload hima theme for debugging."
+  (interactive)
+  (message "%s" custom-enabled-themes)
+  (let ((current-theme (car custom-enabled-themes)))
+    (disable-theme current-theme)
+    (load-theme current-theme t)))
+
 ;; Better modeline
 (use-package mode-line-idle
   :straight t
