@@ -1,13 +1,8 @@
 ;;; hima-theme.el --- Custom face theme for Emacs
 
 ;;; Code:
-(defun meain/reload-hima ()
-  (interactive)
-  (disable-theme 'hima)
-  (load-theme 'hima t))
-
-(defgroup hima-faces nil "Custom faces for more stuff"
-  :prefix "hima-faces-")
+(defgroup hima nil "Custom faces for more stuff" :prefix "hima-" :group nil)
+(defvar hima-use-italics nil "Decides weather to use italics.")
 
 (deftheme hima "A minimal theme with simple colors")
 
@@ -21,7 +16,8 @@
        (medium-gray "#A0A0A0")
        (dark-gray "#424242")
 
-       (lighter-orange "#EDE5CB")
+       (barely-orange "#EDE5CB")
+       (lighter-orange "#F7C862")
        (light-orange "#FFAF00")
        (dark-orange "#E75600")
 
@@ -40,9 +36,10 @@
 
        (pink "#E41D91")
 
-       (default-layer `((t (:foreground ,black :background ,(face-attribute 'default :background)))))
-       (commentary-layer `((t (:foreground ,medium-gray :background ,(face-attribute 'default :background) :italic t))))
-       (string-layer `((t (:foreground ,blue :background ,(face-attribute 'default :background)))))
+       (default-layer `((t (:foreground ,black))))
+       (commentary-layer `((t (:foreground ,medium-gray :italic ,hima-use-italics))))
+       (string-layer `((t (:foreground ,blue))))
+       (defenition-layer `((t (:foreground ,dark-orange))))
        (bold-layer `((t (:foreground ,black :weight bold))))
        (underline-layer `((t (:underline t))))
        (tooltip-layer `((t (:background ,lighter-gray :foreground ,black))))
@@ -56,10 +53,10 @@
 
   (defface hima-simple-gray `((t (:foreground ,medium-gray)))
     "Simple gray color for use outside comments"
-    :group 'hima-faces)
+    :group 'hima)
   (defface hima-all-white `,all-white-layer
     "Simple gray color for use outside comments"
-    :group 'hima-faces)
+    :group 'hima)
 
   (custom-theme-set-faces 'hima
     ;; Basic items
@@ -81,15 +78,15 @@
     `(minibuffer-prompt ((t (:foreground ,blue :background ,white))))
 
     ;; Basic font lock entries
-    `(font-lock-keyword-face ((t (:foreground ,black))))
-    `(font-lock-warning-face ((t (:foreground ,black))))
-    `(font-lock-function-name-face ((t (:foreground ,dark-orange))))
-    `(font-lock-type-face ((t (:foreground ,black))))
-    `(font-lock-preprocessor-face ((t (:foreground ,black))))
-    `(font-lock-builtin-face ((t (:foreground ,black))))
-    `(font-lock-variable-name-face ((t (:foreground ,black))))
-    `(font-lock-string-face ((t (:foreground ,blue))))
-    `(font-lock-constant-face ((t (:foreground ,black))))
+    `(font-lock-keyword-face ,default-layer)
+    `(font-lock-warning-face ,default-layer)
+    `(font-lock-function-name-face ,defenition-layer)
+    `(font-lock-type-face ,default-layer)
+    `(font-lock-preprocessor-face ,default-layer)
+    `(font-lock-builtin-face ,default-layer)
+    `(font-lock-variable-name-face ,default-layer)
+    `(font-lock-string-face ,string-layer)
+    `(font-lock-constant-face ,default-layer)
     `(font-lock-doc-face ,commentary-layer)
     `(font-lock-comment-face ,commentary-layer)
 
@@ -116,8 +113,8 @@
     `(company-scrollbar-fg ,all-white-layer)
 
     ;; flyspell
-    `(flyspell-duplicate ((t (:underline (:style wave)))))
-    `(flyspell-incorrect ((t (:underline t :foreground ,light-orange))))
+    `(flyspell-duplicate ((t (:underline (:style wave :color ,dark-green)))))
+    `(flyspell-incorrect ((t (:underline (:style wave :color ,dark-orange)))))
 
     ;; isearch
     `(isearch ((t (:background ,light-blue :foreground ,dark-gray))))
@@ -154,18 +151,16 @@
     `(tree-sitter-hl-face:property ,default-layer)
     `(tree-sitter-hl-face:method.call ,default-layer)
     `(tree-sitter-hl-face:function.call ,default-layer)
-    `(tree-sitter-hl-face:constructor ((t (:italic nil :foreground ,dark-orange))))
+    `(tree-sitter-hl-face:function.method ,default-layer)
+    `(tree-sitter-hl-face:constructor ,defenition-layer)
 
     ;; dired
     `(dired-directory ((t (:weight bold :foreground ,black))))
 
     ;; diff-hl
-    `(diff-hl-change ((t (:background ,lighter-orange))))
+    `(diff-hl-change ((t (:background ,barely-orange))))
     `(diff-hl-insert ((t (:background ,light-green))))
     `(diff-hl-delete ((t (:background ,light-red))))))
 
 (provide-theme 'hima)
-
-;; Local Variables:
-;; no-byte-compile: t
-;; End:
+;; hima-theme.el ends here
