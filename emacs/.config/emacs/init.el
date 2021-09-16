@@ -501,6 +501,45 @@ Pass ORIGINAL and ALTERNATE options."
   (prog-mode . ass-activate-for-major-mode)
   :hook (python-mode . ass-activate-for-major-mode):config
   (progn
+    (defun meain/go-default-returns (type)
+      "Making it a function instead of an alist so that we can handle unknown TYPE."
+      (pcase type
+        ("error" "err")
+        ("string" "\"\"")
+        ("rune" "0")
+        ("int" "0")
+        ("float64" "0.0")
+        ("bool" "false")
+        ("chan" "nil")
+        ((pred (string-prefix-p "<-")) "nil")
+        ((pred (string-prefix-p "[")) "nil")
+        ((pred (string-match " ")) nil) ; for situations with return name
+        ;; ((pred (string-match " "))
+        ;;  (meain/go-default-returns (nth 1
+        ;;                                 (split-string type " "))))
+        (_ (concat type "{}"))))
+    (defun meain/go-return-string ()
+      "Get return string for go by looking up the return type of current func."
+      (let* ((func-node (tree-sitter-node-at-point 'function_declaration))
+             (return-node (tsc-get-child-by-field func-node ':result)))
+        ;; remove extra whitespace if nothing at end
+        (replace-regexp-in-string " $"
+                                  ""
+                                  (concat "return "
+                                          (if return-node
+                                              (let ((return-node-type (tsc-node-type return-node))
+                                                    (return-node-text (tsc-node-text return-node)))
+                                                (pcase return-node-type
+                                                  ('parameter_list
+                                                   (string-join (remove-if (lambda (x)
+                                                                             (equal nil x))
+                                                                           (mapcar 'meain/go-default-returns
+                                                                                   (mapcar 'string-trim
+                                                                                           ;; TODO: maybe use ts to find actual type nodes
+                                                                                           (split-string (string-trim return-node-text "(" ")")
+                                                                                                         ","))))
+                                                                ", "))
+                                                  (_ (meain/go-default-returns return-node-text)))))))))
     (aas-set-snippets 'text-mode
                       ";isodate"
                       (lambda ()
@@ -586,9 +625,15 @@ Pass ORIGINAL and ALTERNATE options."
                       ";ie"
                       (lambda ()
                         (interactive)
-                        (insert (concat "if err != nil { fmt.Errorf(\""
+                        (insert (concat "if err != nil { fmt.Println(\""
                                         (read-string "Error message: ")
-                                        ": %v\", err) }"))))
+                                        "\", err) }")))
+                      ";er"
+                      (lambda ()
+                        (interactive)
+                        (insert (concat "if err != nil { "
+                                        (meain/go-return-string)
+                                        " }"))))
     (aas-set-snippets 'python-mode ";ip" "__import__('ipdb').set_trace()")
     (aas-set-snippets 'org-mode ";el" "#+BEGIN_SRC emacs-lisp\n\n#+END_SRC"
                       ";py" "#+BEGIN_SRC python\n\n#+END_SRC" ";co"
