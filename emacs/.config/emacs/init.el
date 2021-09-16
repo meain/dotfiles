@@ -780,7 +780,7 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package embark
   :straight t
   :bind (("C-." . embark-act)
-         ("C-;" . embark-dwim)
+         ("C-'" . embark-dwim)
          ("C-h B" . embark-bindings)):init
   (setq prefix-help-command #'embark-prefix-help-command))
 (use-package embark-consult
