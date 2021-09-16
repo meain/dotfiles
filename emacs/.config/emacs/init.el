@@ -132,7 +132,7 @@
 ;; Delete visual selection when I start typing
 (delete-selection-mode 1)
 
-;; Meta-f keybinds (tmux memmories)
+;; Meta-f keybinds (tmux memories)
 (global-unset-key (kbd "M-f")) ; have to unset first
 
 ;;; [VISUAL CONFIG] ==============================================
