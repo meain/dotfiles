@@ -1223,7 +1223,7 @@ Pass ORIGINAL and ALTERNATE options."
     ;; make evil jump list work with expand-region
     (evil-set-command-property 'er/expand-region
                                :jump t)
-    (global-set-key (kbd "M-i")
+    (global-set-key (kbd "M--")
                     'er/expand-region)))
 
 ;; dtrt (atuo find indend setting)
@@ -1486,9 +1486,13 @@ Pass ORIGINAL and ALTERNATE options."
             (global-hl-todo-mode)))
 
 ;; consult-eglot
-(use-package consult-eglot :straight t
+(use-package consult-eglot
+  :straight t
   :commands consult-eglot-symbols
-  :after eglot)
+  :after eglot
+  :init (global-set-key (kbd "M-i")
+                        (meain/with-alternate (call-interactively 'consult-imenu)
+                                              (consult-eglot-symbols))))
 
 ;;; [FILETYPE PUGINS] ===============================================
 
