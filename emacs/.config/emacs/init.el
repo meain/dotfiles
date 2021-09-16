@@ -2140,15 +2140,17 @@ Pass ORIGINAL and ALTERNATE options."
                                                           (python-mode . function_definition)))
             (defun meain/tree-sitter-thing-name (thing-kind)
               "Get name of tree-sitter THING-KIND."
-              (let* ((thing-type-alist (cond
-                                        ((eq thing-kind 'class-like) meain/tree-sitter-calss-like-thing)
-                                        ((eq thing-kind 'function-like) meain/tree-sitter-function-like-thing)))
-                     (thing-type (alist-get major-mode thing-type-alist)))
-                (if thing-type
-                    (let ((node-at-point (tree-sitter-node-at-point thing-type)))
-                      (if node-at-point
-                          (thread-first (tsc-get-nth-named-child node-at-point 0)
-                            (tsc-node-text)))))))))
+              (if tree-sitter-mode
+                  (let* ((thing-type-alist (pcase thing-kind
+                                             ('class-like meain/tree-sitter-calss-like-thing)
+                                             ('function-like meain/tree-sitter-function-like-thing)))
+                         (thing-type (alist-get major-mode thing-type-alist)))
+                    (if thing-type
+                        (let ((node-at-point (tree-sitter-node-at-point thing-type)))
+                          (if node-at-point
+                              (let ((node-name-node-at-point (tsc-get-child-by-field node-at-point ':name)))
+                                (if node-name-node-at-point
+                                    (tsc-node-text node-name-node-at-point)))))))))))
 (use-package tree-sitter-langs
   :straight t
   :defer 1
