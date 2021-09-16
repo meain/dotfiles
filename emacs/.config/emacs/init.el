@@ -2881,18 +2881,16 @@ Pass THING-TO-POPUP as the thing to popup."
                                                                  'help-echo
                                                                  (buffer-file-name))))
                                        '(:eval (mode-line-idle 0.3
-                                                               '(:propertize (:eval (if (boundp tree-sitter-mode)
-                                                                                        (let ((thing-name (meain/tree-sitter-thing-name 'class-like)))
-                                                                                          (if thing-name
-                                                                                              (format ":%s" thing-name)))))
+                                                               '(:propertize (:eval (let ((thing-name (meain/tree-sitter-thing-name 'class-like)))
+                                                                                      (if thing-name
+                                                                                          (format ":%s" thing-name))))
                                                                              face
                                                                              hima-simple-gray)
                                                                ""))
                                        '(:eval (mode-line-idle 0.3
-                                                               '(:propertize (:eval (if (boundp tree-sitter-mode)
-                                                                                        (let ((thing-name (meain/tree-sitter-thing-name 'function-like)))
-                                                                                          (if thing-name
-                                                                                              (format ":%s" thing-name)))))
+                                                               '(:propertize (:eval (let ((thing-name (meain/tree-sitter-thing-name 'function-like)))
+                                                                                      (if thing-name
+                                                                                          (format ":%s" thing-name))))
                                                                              face
                                                                              hima-simple-gray)
                                                                ""))
@@ -2919,16 +2917,14 @@ Pass THING-TO-POPUP as the thing to popup."
                                                                              face
                                                                              hima-simple-gray)
                                                                ""))
-                                       ;; spacer
-
                                        '(:eval (propertize " "
                                                            'display
                                                            `((space :align-to (- (+ right right-fringe right-margin)
                                                                                  ,(+ 2
                                                                                      (+ (string-width (format-mode-line "%l:%c %p"))
-                                                                                        (string-width (format-mode-line "%m")))))))))
-                                       (propertize "%l:%c %p" 'face 'font-lock-variable-name-face) ;; position in file
-                                       (propertize " %m " 'face 'font-lock-constant-face)))
+                                                                                        (string-width (format-mode-line "%m"))))))))) ;; spacer
+                                       (propertize "%l:%c %p") ;; position in file
+                                       (propertize " %m ")))
 
 ;; Print emacs startup time
 (add-hook 'emacs-startup-hook
