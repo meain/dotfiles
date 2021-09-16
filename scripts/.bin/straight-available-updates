@@ -6,7 +6,7 @@ cd "$HOME/.config/emacs/straight/repos"
 gloc 'git fetch' .
 for folder in *;do
     pushd "$folder" > /dev/null
-    gurl="$(git remote get-url origin|sed 's|.git$||')"
+    gurl="$(git remote get-url origin|sed 's|.git$||;s|git@github.com:|https://github.com/|')"
     branch="$(git rev-parse --abbrev-ref HEAD)"
     count="$(git log master..origin/master 2>/dev/null |grep -c .)"
     if ! [ 0 = "$count" ]; then
