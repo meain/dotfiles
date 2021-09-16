@@ -2707,7 +2707,8 @@ START and END comes from it being interactive."
 
 ;; Run markdown code blocks (forest.el)
 (defun meain/run-markdown-code-block (&optional insert-to-buffer)
-  "Run markdown code block under curosr."
+  "Run markdown code block under cursor.
+Pass INSERT-TO-BUFFER to insert output to current buffer."
   (interactive "P")
   (let* ((start (nth 0
                      (markdown-get-enclosing-fenced-block-construct)))
