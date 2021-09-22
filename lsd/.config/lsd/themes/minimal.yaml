@@ -1,0 +1,24 @@
+user: 0
+group: 0
+permission:
+  read: 0
+  write: 0
+  exec: 0
+  exec-sticky: 0
+  no-access: 250
+date:
+  hour-old: 0
+  day-old: 0
+  older: 245
+size:
+  none: 250
+  small: 245
+  medium: 0
+  large: 0
+inode:
+  valid: 0
+  invalid: 250
+links:
+  valid: 0
+  invalid: 250
+tree-edge: 0
