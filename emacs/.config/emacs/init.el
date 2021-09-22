@@ -740,6 +740,26 @@ Pass ORIGINAL and ALTERNATE options."
             (add-hook 'python-mode-hook
                       (lambda ()
                         (add-hook 'flymake-diagnostic-functions 'flymake-pylint
+                                  nil t)))
+            (flymake-quickdef-backend flymake-govet
+              ;; https://pkg.go.dev/cmd/vet
+              :pre-let ((govet-exec (executable-find "go"))):pre-check
+              (unless govet-exec
+                (error "Cannot find govet executable"))
+              :write-type 'file
+              :proc-form (list govet-exec fmqd-temp-file):search-regexp
+              "^\\([^:]+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\): \\(.*\\)$"
+              :prep-diagnostic (let* ((lnum (string-to-number (match-string 2)))
+                                      (col (string-to-number (match-string 3)))
+                                      (text (match-string 4))
+                                      (pos (flymake-diag-region fmqd-source lnum col))
+                                      (beg (car pos))
+                                      (end (cdr pos))
+                                      (msg (format "govet> %s" text)))
+                                 (list fmqd-source beg end :warning msg)))
+            (add-hook 'go-mode-hook
+                      (lambda ()
+                        (add-hook 'flymake-diagnostic-functions 'flymake-govet
                                   nil t)))))
 
 ;; Company for autocompletions
