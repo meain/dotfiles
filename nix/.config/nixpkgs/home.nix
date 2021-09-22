@@ -127,6 +127,11 @@
     python38Packages.python-language-server # python lsp
 
     # programming-rust
+    rustc # compiler
+    cargo # package manager
+    rustfmt # formatter
+    clippy # the useful clippy
+    rust-analyzer # lsp for rust
     cargo-edit # dep management
     cargo-bloat # find big chunks
     cargo-udeps # find unnecessary deps
