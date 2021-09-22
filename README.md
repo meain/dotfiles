@@ -50,6 +50,7 @@ stow nvim
 | [notmuch](https://notmuchmail.org/) Simple mail indexer                               | [maccy](https://maccy.app/) Macos clipboard manager                                     |
 | [meetingbar](https://github.com/leits/MeetingBar) View next meeting in your statusbar | [insomnia](https://github.com/Kong/insomnia) Simpler postman                            |
 | [ledger](https://www.ledger-cli.org/) Plaintext double entry accounting               | [pup](https://github.com/ericchiang/pup) HTML parser for cli                            |
+| [entr](https://github.com/clibs/entr) Run commands on file change                     | [mpv](https://mpv.io/) Simple but really powerful media player                          |
 
 ## Screenshots
 
