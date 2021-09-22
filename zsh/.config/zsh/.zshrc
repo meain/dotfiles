@@ -164,6 +164,9 @@ preexec() {
 . /Users/meain/.nix-profile/etc/profile.d/nix.sh
 . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
 
+# final rest setup
+export RUST_SRC_PATH="$(rustc --print sysroot)"
+
 setdarkmode quiet # set dark or light mode
 export ZSH_LOADED=1
 
