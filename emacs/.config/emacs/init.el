@@ -777,6 +777,7 @@ Pass ORIGINAL and ALTERNATE options."
     (setq company-minimum-prefix-length 2)
     (setq company-format-margin-function nil)
     (global-company-mode)
+    (evil-declare-change-repeat 'company-complete-common-or-cycle) ; make evil repeat working with completions
     (define-key company-active-map (kbd "TAB") 'company-complete-common-or-cycle)
     (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle)
     (define-key company-active-map (kbd "S-TAB") 'company-select-previous)
