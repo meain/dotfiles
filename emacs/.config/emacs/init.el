@@ -2080,30 +2080,32 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; tramp dired
 (use-package tramp
-  :disabled t
-  :init (progn
-          (setq remote-file-name-inhibit-cache nil)
-          (setq tramp-default-method "ssh")
-          (setq vc-ignore-dir-regexp (format "%s\\|%s" vc-ignore-dir-regexp tramp-file-name-regexp))
-          (setq tramp-verbose 1)
-          (defun meain/tramp-open ()
-            "Opern dired in a server by selcting a host via autocomplete."
-            (interactive)
-            (dired (concatenate 'string
-                                "/ssh:"
-                                (meain/ssh-host-picker)
-                                ":")))))
+  :commands (meain/tramp-open):config
+  (progn
+    (put 'temporary-file-directory
+         'standard-value
+         (list temporary-file-directory))
+    (setq remote-file-name-inhibit-cache nil)
+    (setq tramp-default-method "ssh")
+    (setq vc-ignore-dir-regexp (format "%s\\|%s" vc-ignore-dir-regexp tramp-file-name-regexp))
+    (setq tramp-verbose 3)
+    (defun meain/tramp-open ()
+      "Opern dired in a server by selcting a host via autocomplete."
+      (interactive)
+      (dired (concatenate 'string
+                          "/ssh:"
+                          (meain/ssh-host-picker)
+                          ":")))))
 
 ;; tramp-term
 (use-package tramp-term
   :after tramp
-  :disabled t
   :straight t
-  :commands tramp-term
-  :init (defun meain/tramp-shell ()
-          "SSH into a server by selcting a host via autocomplete."
-          (interactive)
-          (tramp-term (list (meain/ssh-host-picker)))))
+  :commands (tramp-term meain/tramp-shell):config
+  (defun meain/tramp-shell ()
+    "SSH into a server by selcting a host via autocomplete."
+    (interactive)
+    (tramp-term (list (meain/ssh-host-picker)))))
 
 ;; connect to docker via tramp
 (use-package docker-tramp :straight t
@@ -2703,10 +2705,11 @@ START and END comes from it being interactive."
 (defun meain/set-proper-default-dir ()
   "Function to set the `default-directory' value as the project root if available."
   (interactive)
-  (setq default-directory (cond
-                           ((projectile-project-p)
-                            (projectile-project-root))
-                           (t "~/"))))
+  (if (not (file-remote-p default-directory))
+      (setq default-directory (cond
+                               ((projectile-project-p)
+                                (projectile-project-root))
+                               (t "~/")))))
 (add-hook 'find-file-hook 'meain/set-proper-default-dir)
 
 ;; Quikly add markdown links to document
@@ -2975,7 +2978,8 @@ Pass THING-TO-POPUP as the thing to popup."
                                                                              hima-simple-gray)
                                                                ""))
                                        '(:eval (mode-line-idle 1.0
-                                                               '(:propertize (:eval (if (boundp projectile-mode)
+                                                               '(:propertize (:eval (if (and (boundp projectile-mode)
+                                                                                             (not (file-remote-p default-directory)))
                                                                                         (list " "
                                                                                               (let* ((explicit (cdr (car (cdr (cdr (tab-bar--current-tab))))))
                                                                                                      (name (cdr (car (cdr (tab-bar--current-tab)))))
