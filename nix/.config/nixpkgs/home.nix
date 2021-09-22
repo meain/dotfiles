@@ -78,6 +78,7 @@
     silicon # create pretty code screenshots
     transmission # torrent stuff
     kube-prompt # interactive kubernetes cli
+    cowsay # useless stuff
 
     # programming
     gist # create gist
