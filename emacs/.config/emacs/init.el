@@ -92,7 +92,7 @@
                                (cl-concatenate 'string ";; " x))
                              (cl-remove-if (lambda (x)
                                              (equal x ""))
-                                           (split-string (shell-command-to-string "fortune -s")
+                                           (split-string (shell-command-to-string "fortune | cowthink -f `cowsay -l|tail -n+2|tr ' ' '\n'|shuf -n1`")
                                                          "\n")))
                      "\n")
           "\n"))
