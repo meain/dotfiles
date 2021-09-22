@@ -777,8 +777,6 @@ Pass ORIGINAL and ALTERNATE options."
     (setq company-minimum-prefix-length 2)
     (setq company-format-margin-function nil)
     (global-company-mode)
-    ;; company-tng-mode provides better autocomplete behaviour
-    ;; (company-tng-mode)
     (define-key company-active-map (kbd "TAB") 'company-complete-common-or-cycle)
     (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle)
     (define-key company-active-map (kbd "S-TAB") 'company-select-previous)
