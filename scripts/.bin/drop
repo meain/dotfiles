@@ -62,5 +62,5 @@ elif [ "$lang" != "" ]; then
 else
     scp "$sourcefile" doom:drop/drop/$filename
 fi
-echo "https://drop.meain.io/drop/$filename"
-echo "https://drop.meain.io/drop/$filename" | pbcopy
+echo "https://d.meain.io/$filename"
+echo "https://d.meain.io/$filename" | pbcopy
