@@ -30,12 +30,14 @@
 ;; Aglet Mono 15 | VictorMono Nerd Font 14 | NanumGothicCoding 15 | BPMono 14 | Fairfax HD 16
 ;; Liga Camingocode 15 | Oxygen Mono 14 | M+ 1m 14 | MonospaceTypewriter 14 | Luculent 14
 ;; Iosevka Slab 14 | Edlo 13 | Bront 15 | Whois 15 | Ligconsolata 16 | Operator Mono 14
-;; Font (set-frame-font  "Whois 16")
-(defvar meain/font-family-default "Whois 16"
+;; PragmataPro 14 | agave 15 | Unifont 15 | Apercu Mono 14 | Binchotan_Sharp 15
+;; CMU Typewriter Text 16 | Input 14 | SF Mono 14
+;; Font (set-frame-font  "Unifont 15")
+(defvar meain/font-family-default "Unifont 15"
   "Default font family for everything in Emacs.")
-(defvar meain/font-weight-default 'medium
+(defvar meain/font-weight-default 'regular
   "Default font weight for everything in Emacs.")
-(setq-default line-spacing .1) ;; .1 for Inconsolata
+(setq-default line-spacing .2)
 (add-to-list 'default-frame-alist
              `(font . ,meain/font-family-default))
 
