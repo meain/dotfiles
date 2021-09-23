@@ -1148,6 +1148,12 @@ Pass ORIGINAL and ALTERNATE options."
             (add-hook 'dired-mode-hook 'diff-hl-dired-mode-unless-remote)
             (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
             (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
+            (evil-set-command-property 'diff-hl-revert-hunk
+                                       :jump t)
+            (evil-set-command-property 'diff-hl-next-hunk
+                                       :jump t)
+            (evil-set-command-property 'diff-hl-previous-hunk
+                                       :jump t)
             (evil-leader/set-key "gr" 'diff-hl-revert-hunk)
             (evil-leader/set-key "gj" 'diff-hl-next-hunk)
             (evil-leader/set-key "gk" 'diff-hl-previous-hunk)
