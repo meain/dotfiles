@@ -273,7 +273,7 @@ Pass ORIGINAL and ALTERNATE options."
 (global-set-key (kbd "M-u")
                 'universal-argument)
 
-;; Window mappings
+;; Window mappings (not using meain/with-alternate as I need functions)
 (defun meain/move-swap-right (&optional swap)
   "Move to window on right or move window to right if SWAP."
   (interactive "P")
@@ -337,9 +337,6 @@ Pass ORIGINAL and ALTERNATE options."
                 'shrink-window)
 (global-set-key (kbd "M-J")
                 'enlarge-window)
-
-;; File manipulation mappings
-(evil-leader/set-key "<SPC>" 'save-buffer)
 
 ;; Easier C-c C-c
 (evil-leader/set-key "i"
@@ -473,10 +470,6 @@ Pass ORIGINAL and ALTERNATE options."
             (setq dired-kill-when-opening-new-dired-buffer
                   t)
             (define-key dired-mode-map (kbd "-") 'dired-up-directory)
-            (evil-define-key 'normal
-              dired-mode-map
-              (kbd "+")
-              'dired-create-empty-file)
             (setq dired-omit-files "\\.DS_Store$\\|__pycache__$\\|.pytest_cache$\\|\\.mypy_cache$\\|\\.egg-info$")
             (add-hook 'dired-mode-hook 'dired-omit-mode)
             (add-hook 'dired-mode-hook 'hl-line-mode)
@@ -1088,29 +1081,33 @@ Pass ORIGINAL and ALTERNATE options."
             (define-key evil-normal-state-map (kbd "g ,") 'eglot-format-buffer)
             (define-key evil-normal-state-map (kbd "g a") 'eglot-code-actions)))
 
+;; consult-eglot
+(use-package consult-eglot
+  :straight t
+  :commands consult-eglot-symbols
+  :after eglot
+  :init (global-set-key (kbd "M-i")
+                        (meain/with-alternate (call-interactively 'consult-imenu)
+                                              (consult-eglot-symbols))))
+
 ;; Tagbar alternative
 (use-package imenu :straight t
-  :defer t
+  :defer 1
   :commands imenu)
 (use-package flimenu
   :straight t
+  :defer 1
   :after imenu
   :config (flimenu-global-mode 1))
 (use-package imenu-list
   :straight t
-  :defer t
-  :after consult
-  :commands imenu-list-smart-toggle
+  :defer 1
+  :after (imenu consult):commands
+  imenu-list-smart-toggle
   :config (progn
             (setq imenu-list-focus-after-activation t)
             (setq imenu-list-after-jump-hook nil)
             (setq imenu-list-auto-resize t)))
-
-;; Flat imenu
-(use-package flimenu
-  :straight t
-  :after imenu-list
-  :config (flimenu-global-mode 1))
 
 ;; Magit
 (use-package magit
@@ -1166,7 +1163,7 @@ Pass ORIGINAL and ALTERNATE options."
 ;; Matchit
 (use-package evil-matchit
   :straight t
-  :defer 1
+  :defer t
   :config (global-evil-matchit-mode 1))
 
 ;; Highlight color codes
@@ -1553,15 +1550,6 @@ Pass ORIGINAL and ALTERNATE options."
                                           ("STUB" . "#1E90FF")))
             (global-hl-todo-mode)))
 
-;; consult-eglot
-(use-package consult-eglot
-  :straight t
-  :commands consult-eglot-symbols
-  :after eglot
-  :init (global-set-key (kbd "M-i")
-                        (meain/with-alternate (call-interactively 'consult-imenu)
-                                              (consult-eglot-symbols))))
-
 ;;; [FILETYPE PUGINS] ===============================================
 
 (use-package rust-mode :straight t
@@ -1596,7 +1584,7 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package nix-mode :straight t
   :defer t
   :mode "\\.nix\\'")
-;; builtin package for scheme
+;; builtin package for scheme (for tree-sitter grammar)
 (use-package scheme-mode :defer t
   :mode "\\.scm\\'")
 (use-package csv-mode
@@ -1693,12 +1681,12 @@ Pass ORIGINAL and ALTERNATE options."
   mtodo-mode-map
   (kbd "g s")
   'mtodo-mark-important)
-(evil-leader/set-key "a t"
+(evil-leader/set-key "e m"
   (lambda ()
     (interactive)
     (find-file "~/.cache/mobdump/thing-for-today")
     (mtodo-mode)))
-(evil-leader/set-key "a T"
+(evil-leader/set-key "e M"
   (lambda ()
     (interactive)
     (find-file "~/.cache/mobdump/thing-for-today-personal")
@@ -2115,31 +2103,27 @@ Pass ORIGINAL and ALTERNATE options."
 ;; timing stuff
 (use-package activity-watch-mode
   :straight t
-  :disabled t  ; having some issues with the main package
+  :disabled t
   :defer 1
   :diminish :config
   (global-activity-watch-mode))
 
 ;; Markdown preview
-(defun meain/markdown-preview ()
-  "Preview markdown.  Using pandoc under the hood."
-                                        ; TODO: handle local embedded images
-  (interactive)
-  (if (get-buffer "*markdown-preview*")
-      (kill-buffer "*markdown-preview*"))
-  (start-process "*markdown-preview*" "*markdown-preview*"
-                 "markdown-preview" buffer-file-name))
-
 (defun meain/kill-markdown-preview ()
   "Preview markdown.  Using pandoc under the hood."
   (interactive)
-  (if (get-buffer "*markdown-preview*")
-      (kill-buffer "*markdown-preview*")))
-
-;; Git info in dired buffer
-(use-package dired-git-info
-  :straight t
-  :commands (dired-git-info-mode))
+  (let ((kill-buffer-query-functions nil))
+    (if (get-buffer "*markdown-preview*")
+        (progn
+          (message "Killing old markdown preview server...")
+          (kill-buffer "*markdown-preview*")))))
+(defun meain/markdown-preview ()
+  "Preview markdown.  Using pandoc under the hood."
+  ;; TODO: handle local embedded images
+  (interactive)
+  (meain/kill-markdown-preview)
+  (start-process "*markdown-preview*" "*markdown-preview*"
+                 "markdown-preview" buffer-file-name))
 
 ;; Restclient
 (use-package restclient
@@ -2155,18 +2139,21 @@ Pass ORIGINAL and ALTERNATE options."
                         'ace-link))
 
 ;; Docker
-(use-package docker :straight t
-  :defer t)
+(use-package docker
+  :straight t
+  :defer t
+  :commands (docker))
 
 ;; Kubernetes
 (use-package kubel
   :straight t
   :defer t
-  :config (progn
-            (setq kubel-use-namespace-list t)
-            (use-package kubel-evil
-              :straight t
-              :config (add-hook 'kubel-mode 'kubel-evil-mode))))
+  :commands (kubel):config
+  (progn
+    (setq kubel-use-namespace-list t)
+    (use-package kubel-evil
+      :straight t
+      :config (add-hook 'kubel-mode 'kubel-evil-mode))))
 
 ;; Window layout changer
 (use-package rotate
@@ -2313,11 +2300,6 @@ Pass ORIGINAL and ALTERNATE options."
       (insert out)
       (ledger-mode-clean-buffer))))
 
-(use-package cheat-sh
-  :straight t
-  :commands (cheat-sh cheat-sh-maybe-region))
-
-
 ;;; [CUSTOM FUNCTIONS] ==============================================
 
 ;; Font size changes
@@ -2382,6 +2364,8 @@ SHORTCUT is the keybinding to use.  NAME if the func suffix and FILE is the file
   "~/.dotfiles/emacs/.config/emacs/hima-theme.el")
 (meain/quick-file-open-builder "t" "evil-textobj-tree-sitter"
   "~/.config/emacs/straight/repos/evil-textobj-tree-sitter/evil-textobj-tree-sitter.el")
+(meain/quick-file-open-builder "l" "ledger"
+  "~/.local/share/ledger/master.ledger")
 
 ;; Fullscreen current buffer
 (defvar meain/window-configuration nil)
@@ -2531,35 +2515,33 @@ START and END comes from it being interactive."
                                                      (split-string (shell-command-to-string "dasht-docsets"))))))
         (message full-url)
         (eww full-url)))))
-(evil-leader/set-key "a d"
-  (meain/with-alternate (call-interactively 'meain/dasht-docs)
-                        (call-interactively 'cheat-sh-maybe-region)))
-
-;; Search from emacs
-(defun meain/eww-search-ddg (&optional open)
-  "Search using eww on ddg.  Pass OPEN to open in browser instead."
-  (interactive "P")
-  (let* ((thing (if (use-region-p)
-                    (buffer-substring start end)
-                  (thing-at-point 'symbol)))
-         (searchterm (replace-regexp-in-string " "
-                                               "+"
-                                               (read-from-minibuffer "Search query: "))))
-    (if open
-        (start-process-shell-command "browser-open-ddg"
-                                     "*browser-open-ddg*"
-                                     (concat "open 'https://duckduckgo.com/?q="
-                                             searchterm "'"))
-      (eww (concat "http://lite.duckduckgo.com/lite/?q="
-                   searchterm)))))
-(evil-leader/set-key "a s" 'meain/eww-search-ddg)
+;; TODO: merge this with previous function
+(defun meain/xwidgets-dasht-docs (start end)
+  "Look up word at point in dasht.
+START and END comes from it being interactive."
+  (interactive "r")
+  ;; http://127.0.0.1:54321/?query=print&docsets=Python
+  (let ((thing (if (use-region-p)
+                   (buffer-substring start end)
+                 (thing-at-point 'symbol))))
+    (if (eq (length thing) 0)
+        (message "Nothing to look up.")
+      (progn
+        (let ((lookup-term (read-from-minibuffer "Lookup term: " thing)))
+          (xwidget-webkit-browse-url (concatenate 'string
+                                                  "http://127.0.0.1:54321/?query="
+                                                  lookup-term
+                                                  "&docsets="
+                                                  (completing-read "Docset: "
+                                                                   (split-string (shell-command-to-string "dasht-docsets"))))))))))
 
 ;; cheat.sh
 (use-package cheat-sh
   :straight t
-  :commands cheat-sh-maybe-region
-  cheat-sh
-  :init (evil-leader/set-key "a c" 'cheat-sh-maybe-region))
+  :commands (cheat-sh cheat-sh-maybe-region):init
+  (evil-leader/set-key "a d"
+    (meain/with-alternate (call-interactively 'meain/dasht-docs)
+                          (call-interactively 'cheat-sh-maybe-region))))
 
 ;; Quick edit (for use with hammerspoon quick edit)
 (defun meain/quick-edit-end ()
@@ -2830,40 +2812,32 @@ Pass INSERT-TO-BUFFER to insert output to current buffer."
                                        (read-string "Blog slug: ")
                                        "'")))
 
-;; Quick "ddg"
-(defun meain/search-eww ()
-  "Search on ddg from Emacs using eww."
-  (interactive)
-  (eww (concat "https://lite.duckduckgo.com/lite/?q="
-               (read-string "Search term: "
-                            (thing-at-point 'symbol)))))
+;; Search from Emacs
+(defun meain/eww-search-ddg (&optional open)
+  "Search using eww on ddg.  Pass OPEN to open in browser instead."
+  (interactive "P")
+  (let* ((thing (if (use-region-p)
+                    (buffer-substring start end)
+                  (thing-at-point 'symbol)))
+         (searchterm (replace-regexp-in-string " "
+                                               "+"
+                                               (read-from-minibuffer "Search query: "))))
+    (if open
+        (start-process-shell-command "browser-open-ddg"
+                                     "*browser-open-ddg*"
+                                     (concat "open 'https://duckduckgo.com/?q="
+                                             searchterm "'"))
+      (eww (concat "http://lite.duckduckgo.com/lite/?q="
+                   searchterm)))))
+(evil-leader/set-key "a s" 'meain/eww-search-ddg)
 
-;; search from emacs using xwidgets
+;; search from Emacs using xwidgets
 (defun meain/search-xwidget ()
   "Search from Emacs using xwidgets."
   (interactive)
   (xwidget-webkit-browse-url (concat "https://duckduckgo.com/?q="
                                      (read-string "Search term: "
                                                   (thing-at-point 'symbol)))))
-
-(defun meain/xwidgets-dasht-docs (start end)
-  "Look up word at point in dasht.
-START and END comes from it being interactive."
-  (interactive "r")
-  ;; http://127.0.0.1:54321/?query=print&docsets=Python
-  (let ((thing (if (use-region-p)
-                   (buffer-substring start end)
-                 (thing-at-point 'symbol))))
-    (if (eq (length thing) 0)
-        (message "Nothing to look up.")
-      (progn
-        (let ((lookup-term (read-from-minibuffer "Lookup term: " thing)))
-          (xwidget-webkit-browse-url (concatenate 'string
-                                                  "http://127.0.0.1:54321/?query="
-                                                  lookup-term
-                                                  "&docsets="
-                                                  (completing-read "Docset: "
-                                                                   (split-string (shell-command-to-string "dasht-docsets"))))))))))
 
 ;; Check available update for straight managed packages
 (add-hook 'markdown-mode-hook
