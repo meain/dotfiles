@@ -1179,7 +1179,11 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package git-messenger
   :straight t
   :commands git-messenger:popup-message
-  :init (evil-leader/set-key "G" 'git-messenger:popup-message))
+  :init (evil-leader/set-key "G" 'git-messenger:popup-message):config
+  (progn
+    (define-key git-messenger-map (kbd "y") 'git-messenger:copy-message)
+    (setq git-messenger:show-detail t)
+    (setq git-messenger:use-magit-popup t)))
 
 ;; Matchit
 (use-package evil-matchit
