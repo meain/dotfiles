@@ -368,6 +368,12 @@ Pass ORIGINAL and ALTERNATE options."
         (setq default-directory "~/")
         (lisp-interaction-mode)
         (insert (meain/get-scratch-message))))))
+(defun meain/recreate-scratch ()
+  "Recreate scratch buffer by just replacing the entire thing with new fortune."
+  (interactive)
+  (with-current-buffer "*scratch*")
+  (erase-buffer)
+  (insert (meain/get-scratch-message)))
 (defun meain/kill-current-buffer-unless-scratch ()
   "Kill current buffer if it is not scratch."
   (interactive)
