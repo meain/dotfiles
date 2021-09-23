@@ -1298,7 +1298,7 @@ Pass ORIGINAL and ALTERNATE options."
             (global-set-key (kbd "M-f ,")
                             'tab-bar-rename-tab)))
 
-;; which-key mode (until I fully figure out emacs)
+;; which-key mode
 (use-package which-key
   :straight t
   :defer 1
