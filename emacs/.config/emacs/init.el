@@ -158,17 +158,6 @@
   (set-frame-font (completing-read "Choose font: "
                                    (font-family-list))))
 
-;; Bell: audio -> visual
-(setq visible-bell nil)
-(setq ring-bell-function (lambda ()
-                           (unless (memq this-command
-                                         '(isearch-abort abort-recursive-edit exit-minibuffer
-                                                         keyboard-quit))
-                             (invert-face 'mode-line)
-                             (invert-face 'header-line)
-                             (run-with-timer 0.1 nil 'invert-face 'mode-line)
-                             (run-with-timer 0.1 nil 'invert-face 'header-line))))
-
 ;; emoji support
 (defun meain/set-emoji-font ()
   "Setup proper emoji font."
@@ -184,6 +173,17 @@
 (if (daemonp)
     (add-hook 'after-make-frame-functions 'meain/set-emoji-font-in-frame)
   (meain/set-emoji-font))
+
+;; Bell: audio -> visual
+(setq visible-bell nil)
+(setq ring-bell-function (lambda ()
+                           (unless (memq this-command
+                                         '(isearch-abort abort-recursive-edit exit-minibuffer
+                                                         keyboard-quit))
+                             (invert-face 'mode-line)
+                             (invert-face 'header-line)
+                             (run-with-timer 0.1 nil 'invert-face 'mode-line)
+                             (run-with-timer 0.1 nil 'invert-face 'header-line))))
 
 ;; Theme
 (load-theme 'hima t)
