@@ -79,6 +79,7 @@
     transmission # torrent stuff
     kube-prompt # interactive kubernetes cli
     cowsay # useless stuff
+    podman # pod manager
 
     # programming
     gist # create gist
@@ -124,7 +125,7 @@
     python39Packages.bandit # analyze code for security issues
     python39Packages.mypy # check types in code
     python39Packages.isort # fix sort order
-    python39Packages.pygments # generic syntax highliht
+    python39Packages.pygments # generic syntax highlight
     python38Packages.python-language-server # python lsp
 
     # programming-rust
