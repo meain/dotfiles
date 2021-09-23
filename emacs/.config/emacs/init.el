@@ -1098,9 +1098,12 @@ Pass ORIGINAL and ALTERNATE options."
   :straight t
   :commands consult-eglot-symbols
   :after eglot
-  :init (global-set-key (kbd "M-i")
-                        (meain/with-alternate (call-interactively 'consult-imenu)
-                                              (consult-eglot-symbols))))
+  :config (progn
+            (setq consult-ripgrep-args "rg --line-buffered --color=never --max-columns=1000 --path-separator /\
+   --smart-case --no-heading --line-number --hidden --follow --glob \"!.git/*\" .")):init
+  (global-set-key (kbd "M-i")
+                  (meain/with-alternate (call-interactively 'consult-imenu)
+                                        (consult-eglot-symbols))))
 
 ;; Tagbar alternative
 (use-package imenu :straight t
