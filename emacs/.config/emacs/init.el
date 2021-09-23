@@ -826,7 +826,13 @@ Pass ORIGINAL and ALTERNATE options."
   :after selectrum
   :bind (:map minibuffer-local-map
               ("C-b" . marginalia-cycle)):config
-  (marginalia-mode))
+  (progn
+    ;; add marginalia stuff to projectile-find-file
+    (add-to-list 'marginalia-prompt-categories
+                 '("Switch to project" . file))
+    (add-to-list 'marginalia-prompt-categories
+                 '("Find file:" . file))
+    (marginalia-mode)))
 
 ;; Consult without consultation fees
 (use-package consult :straight t
@@ -2416,82 +2422,108 @@ SHORTCUT is the keybinding to use.  NAME if the func suffix and FILE is the file
 ;; vime functionality within emacs
 (use-package uuid :straight t
   :commands uuid-string)
-(defun meain/vime-name-append (filename)
-  "Util function used to parse :name block for vime entries.  FILENAME is the name of the vime file."
-  (with-temp-buffer
-    (insert-file-contents (concatenate 'string "~/.cache/vime/" filename))
-    (concatenate 'string
-                 filename
-                 (if (s-starts-with-p ":name"
-                                      (car (split-string (buffer-string)
-                                                         "\n")))
-                     (replace-regexp-in-string (regexp-quote ":name")
-                                               ""
-                                               (car (split-string (buffer-string)
-                                                                  "\n")))
-                   ""))))
-(defun meain/vime (&optional listitems)
-  "Load a random file inside ~/.cache/vime dir.  Used as a temp notes dir.
+(use-package emacs
+  :commands (meain/vime):after
+  (marginalia)
+  :config (progn
+            (defun meain/marginalia-annotate-vime (cand)
+              (when-let (root "~/.cache/vime/")
+                (marginalia-annotate-file (expand-file-name (car (split-string cand " "))
+                                                            root))))
+            (add-to-list 'marginalia-annotator-registry
+                         '(vime meain/marginalia-annotate-vime builtin
+                                none))
+            (add-to-list 'marginalia-prompt-categories
+                         '("Choose vime:" . vime))
+            (defun meain/vime-name-append (filename)
+              "Util function used to parse :name block for vime entries.  FILENAME is the name of the vime file."
+              (with-temp-buffer
+                (insert-file-contents (concatenate 'string "~/.cache/vime/" filename))
+                (concatenate 'string
+                             filename
+                             (if (s-starts-with-p ":name"
+                                                  (car (split-string (buffer-string)
+                                                                     "\n")))
+                                 (replace-regexp-in-string (regexp-quote ":name")
+                                                           ""
+                                                           (car (split-string (buffer-string)
+                                                                              "\n")))
+                               ""))))
+            (defun meain/vime (&optional listitems)
+              "Load a random file inside ~/.cache/vime dir.  Used as a temp notes dir.
 Pass in `LISTITEMS to decide if you wanna create a new item or search for existing items."
-  (interactive "P")
-  (if listitems
-      (let ((selectrum-should-sort nil))
-        (find-file (concat "~/.cache/vime/"
-                           (car (split-string (completing-read "Choose vime: "
-                                                               (mapcar (lambda (x)
-                                                                         (meain/vime-name-append (car x)))
-                                                                       (sort (remove-if-not #'(lambda (x)
-                                                                                                (eq (nth 1 x) nil))
-                                                                                            (directory-files-and-attributes "~/.cache/vime"))
-                                                                             #'(lambda (x y)
-                                                                                 (time-less-p (nth 6 y)
-                                                                                              (nth 6 x)))))))))))
-    (progn
-      (find-file (concat "~/.cache/vime/_"
-                         (substring (uuid-string)
-                                    0
-                                    4)))
-      (insert ":name ")
-      (evil-insert 1))))
-(evil-leader/set-key "v" 'meain/vime)
+              (interactive "P")
+              (if listitems
+                  (let ((selectrum-should-sort nil))
+                    (find-file (concat "~/.cache/vime/"
+                                       (car (split-string (completing-read "Choose vime: "
+                                                                           (mapcar (lambda (x)
+                                                                                     (meain/vime-name-append (car x)))
+                                                                                   (sort (remove-if-not #'(lambda (x)
+                                                                                                            (eq (nth 1 x) nil))
+                                                                                                        (directory-files-and-attributes "~/.cache/vime"))
+                                                                                         #'(lambda (x y)
+                                                                                             (time-less-p (nth 6 y)
+                                                                                                          (nth 6 x)))))))))))
+                (progn
+                  (find-file (concat "~/.cache/vime/_"
+                                     (substring (uuid-string)
+                                                0
+                                                4)))
+                  (insert ":name ")
+                  (evil-insert 1))))):init
+  (evil-leader/set-key "v" 'meain/vime))
 
-;; Open note
-(defun meain/nested-list-dir (directory)
-  "List items two level deep in DIRECTORY."
-  (apply 'concatenate
-         'list
-         (mapcar (lambda (x)
-                   (mapcar (lambda (y)
-                             (concatenate 'string
-                                          (car x)
-                                          "/"
-                                          (car y)))
-                           (remove-if #'(lambda (x)
-                                          (or (eq (nth 1 x) t)
-                                              (equal (substring (nth 0 x)
-                                                                0
-                                                                1) ".")))
-                                      (directory-files-and-attributes (concatenate 'string
-                                                                                   directory
-                                                                                   "/"
-                                                                                   (car x))))))
-                 (remove-if #'(lambda (x)
-                                (or (eq (nth 1 x) nil)
-                                    (equal (substring (nth 0 x)
-                                                      0
-                                                      1) ".")
-                                    (equal (nth 0 x) "archive")
-                                    (equal (nth 0 x) "temp")))
-                            (directory-files-and-attributes directory)))))
+;; Notes
+(use-package emacs
+  :commands (meain/open-note):after
+  (marginalia)
+  :config (progn
+            ;; Open note
+            (defun meain/nested-list-dir (directory)
+              "List items two level deep in DIRECTORY."
+              (apply 'concatenate
+                     'list
+                     (mapcar (lambda (x)
+                               (mapcar (lambda (y)
+                                         (concatenate 'string
+                                                      (car x)
+                                                      "/"
+                                                      (car y)))
+                                       (remove-if #'(lambda (x)
+                                                      (or (eq (nth 1 x) t)
+                                                          (equal (substring (nth 0 x)
+                                                                            0
+                                                                            1) ".")))
+                                                  (directory-files-and-attributes (concatenate 'string
+                                                                                               directory
+                                                                                               "/"
+                                                                                               (car x))))))
+                             (remove-if #'(lambda (x)
+                                            (or (eq (nth 1 x) nil)
+                                                (equal (substring (nth 0 x)
+                                                                  0
+                                                                  1) ".")
+                                                (equal (nth 0 x) "archive")
+                                                (equal (nth 0 x) "temp")))
+                                        (directory-files-and-attributes directory)))))
+            (defun meain/marginalia-annotate-note (cand)
+              (when-let (root "~/.notes/")
+                (marginalia-annotate-file (expand-file-name cand root))))
+            (add-to-list 'marginalia-annotator-registry
+                         '(note meain/marginalia-annotate-note builtin
+                                none))
+            (add-to-list 'marginalia-prompt-categories
+                         '("Choose note:" . note))
+            (defun meain/open-note ()
+              "Quick open a note from `.notes` directory."
+              (interactive)
+              (find-file (concatenate 'string
+                                      "~/.notes/"
+                                      (completing-read "Choose note: "
+                                                       (meain/nested-list-dir "~/.notes")))))):init
+  (evil-leader/set-key "a N" 'meain/open-note))
 
-(defun meain/open-note ()
-  "Quick open a note from `.notes` directory."
-  (interactive)
-  (find-file (concatenate 'string
-                          "~/.notes/"
-                          (completing-read "Choose note: "
-                                           (meain/nested-list-dir "~/.notes")))))
-(evil-leader/set-key "a N" 'meain/open-note)
 
 ;; dasht docs
 (defvar meain/dasht-server-port "1111" "Server port to be used for dast server.")
