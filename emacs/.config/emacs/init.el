@@ -24,6 +24,7 @@
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
+(setq use-package-verbose t)
 (straight-use-package 'use-package)
 (setq use-package-always-demand (getenv "LOAD_FULL_EMACS"))
 
