@@ -457,13 +457,15 @@ Pass ORIGINAL and ALTERNATE options."
 ;;; [OTHER PACKAGES] =============================================
 
 ;; project (eglot dependency)
-(use-package project :straight t)
+(use-package project :straight t
+  :defer t)
 
 ;; eldoc load
 (use-package eldoc
   :defer t
-  :init (setq eldoc-echo-area-use-multiline-p nil):config
-  (global-eldoc-mode nil))
+  :config (progn
+            (setq eldoc-echo-area-use-multiline-p nil)
+            (global-eldoc-mode nil)))
 
 ;; dired
 (use-package dired
@@ -848,6 +850,7 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; Embark stuff
 (use-package embark
+  :defer 1
   :straight t
   :bind (("C-." . embark-act)
          ("C-'" . embark-dwim)
@@ -855,7 +858,7 @@ Pass ORIGINAL and ALTERNATE options."
   (setq prefix-help-command #'embark-prefix-help-command))
 (use-package embark-consult
   :straight t
-  :after (embark consult):demand
+  :after (embark consult):defer
   t
   :hook (embark-collect-mode . consult-preview-at-point-mode))
 
@@ -904,28 +907,27 @@ Pass ORIGINAL and ALTERNATE options."
   :commands (srefactor-lisp-format-buffer):config
   (require 'srefactor-lisp))
 (use-package format-all
-  :defer 1
   :straight t
-  :config (progn
-            (define-format-all-formatter fixjson
-              ;; Use fixjson for formatting json files
-              (:executable "fixjson")
-              (:install "npm i -g fixjson")
-              (:languages "JSON")
-              (:features)
-              (:format (format-all--buffer-easy executable)))
-            (setq-default format-all-formatters '(("HTML" prettier)
-                                                  ("Go" goimports)
-                                                  ("JSON" fixjson)))
-            (add-hook 'prog-mode-hook 'format-all-ensure-formatter)):init
+  :commands (meain/auto-format):config
   (progn
+    (define-format-all-formatter fixjson
+      ;; Use fixjson for formatting json files
+      (:executable "fixjson")
+      (:install "npm i -g fixjson")
+      (:languages "JSON")
+      (:features)
+      (:format (format-all--buffer-easy executable)))
+    (setq-default format-all-formatters '(("HTML" prettier)
+                                          ("Go" goimports)
+                                          ("JSON" fixjson)))
+    (add-hook 'prog-mode-hook 'format-all-ensure-formatter)
     (defun meain/auto-format ()
       "Custom auto-format based on filetype."
       (interactive)
       (if (eq major-mode 'emacs-lisp-mode)
           (srefactor-lisp-format-buffer)
-        (call-interactively 'format-all-buffer)))
-    (define-key evil-normal-state-map (kbd ",,") 'meain/auto-format)))
+        (call-interactively 'format-all-buffer))))
+  :init (define-key evil-normal-state-map (kbd ",,") 'meain/auto-format))
 
 ;; Projectile
 (use-package projectile
@@ -948,6 +950,7 @@ Pass ORIGINAL and ALTERNATE options."
 ;; ibuffer-projectile
 (use-package ibuffer-projectile
   :straight t
+  :defer t
   :after (ibuffer projectile):config
   (progn
     (add-hook 'ibuffer-hook
@@ -1108,16 +1111,16 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; Tagbar alternative
 (use-package imenu :straight t
-  :defer 1
+  :defer t
   :commands imenu)
 (use-package flimenu
   :straight t
-  :defer 1
+  :defer t
   :after imenu
   :config (flimenu-global-mode 1))
 (use-package imenu-list
   :straight t
-  :defer 1
+  :defer t
   :after (imenu consult):commands
   imenu-list-smart-toggle
   :config (progn
@@ -1139,11 +1142,13 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; Magit forge
 (use-package forge :straight t
+  :defer t
   :after magit)
 
 ;; Github review
 (use-package github-review
   :straight t
+  :defer t
   :after forge
   :commands (github-review-start github-review-forge-pr-at-point))
 
@@ -1189,7 +1194,7 @@ Pass ORIGINAL and ALTERNATE options."
 ;; Matchit
 (use-package evil-matchit
   :straight t
-  :defer t
+  :defer 1
   :config (global-evil-matchit-mode 1))
 
 ;; Highlight color codes
@@ -1340,151 +1345,151 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package vterm
   :straight t
   :defer t
-  :init (progn
-          (setq vterm-max-scrollback 100000)
-          (setq vterm-kill-buffer-on-exit t)
-          (global-set-key (kbd "M-;")
-                          'meain/shell-toggle)
-          (defun meain/shell-name ()
-            "Get the name of the shell based on project info."
-            (format "*popup-shell-%s*"
-                    (if (projectile-project-p)
-                        (projectile-project-name)
-                      "-")))
-          (defun meain/shell-toggle (&optional rerun-previous)
-            "Create/toggle shell for current project."
-            (interactive "P")
-            (let ((shell-buffers (remove-if-not (lambda (x)
-                                                  (s-starts-with-p (meain/shell-name)
-                                                                   (buffer-name x)))
-                                                (buffer-list))))
-              (cond
-               ((s-starts-with-p (meain/shell-name)
-                                 (buffer-name (current-buffer)))
-                (progn
-                  (if rerun-previous
-                      (progn
-                        (vterm-clear)
-                        (vterm-clear-scrollback))
-                    (delete-window))))
-               ((equal (length shell-buffers) 0)
-                (meain/shell-new t))
-               (t (progn
-                    (pop-to-buffer (car shell-buffers))
+  :commands (vterm meain/shell-toggle):init
+  (global-set-key (kbd "M-;")
+                  'meain/shell-toggle)
+  :config (progn
+            (evil-set-initial-state 'vterm-mode 'insert)
+            (setq vterm-max-scrollback 100000)
+            (setq vterm-kill-buffer-on-exit t)
+            (define-key vterm-mode-map (kbd "M-c") 'meain/shell-new)
+            (define-key vterm-mode-map (kbd "M-m") 'meain/shell-other)
+            (define-key vterm-mode-map (kbd "M-w") 'delete-window)
+            (define-key vterm-mode-map (kbd "M-u") 'universal-argument)
+            (define-key vterm-mode-map (kbd "M-l") 'meain/move-swap-right)
+            (define-key vterm-mode-map (kbd "M-h") 'meain/move-swap-left)
+            (define-key vterm-mode-map (kbd "M-k") 'meain/move-swap-up)
+            (define-key vterm-mode-map (kbd "M-j") 'meain/move-swap-down)
+            (define-key vterm-mode-map (kbd "M-H") 'shrink-window-horizontally)
+            (define-key vterm-mode-map (kbd "M-L") 'enlarge-window-horizontally)
+            (define-key vterm-mode-map (kbd "M-K") 'shrink-window)
+            (define-key vterm-mode-map (kbd "M-J") 'enlarge-window)
+            ;; (define-key vterm-mode-map (kbd "M-f l") 'ace-link)
+            (define-key vterm-mode-map (kbd "M-b") (lambda (&optional open-term)
+                                                     (interactive "P")
+                                                     (split-window-below)
+                                                     (windmove-down)
+                                                     (when open-term
+                                                       (vterm t))))
+            (define-key vterm-mode-map (kbd "M-v") (lambda (&optional open-term)
+                                                     (interactive "P")
+                                                     (split-window-right)
+                                                     (windmove-right)
+                                                     (when open-term
+                                                       (vterm t))))
+            (add-to-list 'display-buffer-alist
+                         '((lambda (bufname _)
+                             (s-starts-with-p "*popup-shell" bufname))
+                           (display-buffer-reuse-window display-buffer-at-bottom)
+                           (reusable-frames . visible)
+                           (window-height . 0.3)))
+            (defun meain/shell-name ()
+              "Get the name of the shell based on project info."
+              (format "*popup-shell-%s*"
+                      (if (projectile-project-p)
+                          (projectile-project-name)
+                        "-")))
+            (defun meain/shell-toggle (&optional rerun-previous)
+              "Create/toggle shell for current project."
+              (interactive "P")
+              (let ((shell-buffers (remove-if-not (lambda (x)
+                                                    (s-starts-with-p (meain/shell-name)
+                                                                     (buffer-name x)))
+                                                  (buffer-list))))
+                (cond
+                 ((s-starts-with-p (meain/shell-name)
+                                   (buffer-name (current-buffer)))
+                  (progn
                     (if rerun-previous
                         (progn
                           (vterm-clear)
-                          (vterm-clear-scrollback)
-                          (vterm-send-up)
-                          (vterm-send-return))))))))
-          (defun meain/shell-new (&optional always-create)
-            "Create a new shell for the current project."
-            (interactive)
-            (setq default-directory (cond
-                                     ((projectile-project-p)
-                                      (projectile-project-root))
-                                     (t "~/")))
-            (if (or always-create
-                    (s-starts-with-p "*popup-shell"
-                                     (buffer-name)))
-                (progn
-                  (if (s-starts-with-p "*popup-shell"
-                                       (buffer-name))
-                      (delete-window))
-                  (vterm (meain/shell-name)))
-              (call-interactively 'switch-to-buffer)))
-          (defun meain/shell-other (&optional alternate)
-            "Switch to previous shell in current project. Use ALTERNATE to get a list of shell in current project."
-            (interactive "P")
-            (let ((shell-buffers (remove-if-not (lambda (x)
-                                                  (s-starts-with-p (meain/shell-name)
-                                                                   (buffer-name x)))
-                                                (buffer-list))))
-              (cond
-               ((equal (length shell-buffers) 0)
-                (message "No shells bruh!"))
-               ((equal (length shell-buffers) 1)
-                (message "Only one shell"))
-               (alternate (switch-to-buffer (completing-read "Choose shell: "
-                                                             (mapcar (lambda (x)
-                                                                       (buffer-name x))
-                                                                     shell-buffers))))
-               (t (switch-to-buffer (car (cdr shell-buffers)))))))
-          (defun meain/run-in-vterm-kill (process event)
-            "A process sentinel. Kills PROCESS's buffer if it is live."
-            (let ((b (process-buffer process)))
-              (and (buffer-live-p b)
-                   (kill-buffer b)
-                   (delete-window))))
-          (defun meain/run-in-vterm (command)
-            "Execute string COMMAND in a new vterm and kill the shell once done.  Useful for interactive items."
-            (interactive (list (let* ((f (cond
-                                          (buffer-file-name)
-                                          ((eq major-mode 'dired-mode)
-                                           (dired-get-filename nil t))))
-                                      (filename (concat " "
-                                                        (shell-quote-argument (and f
-                                                                                   (file-relative-name f))))))
-                                 (read-shell-command "Terminal command: "
-                                                     (cons filename 0)
-                                                     (cons 'shell-command-history 1)
-                                                     (list filename)))))
-            (with-current-buffer (vterm (concat "*popup-shell-" command "*"))
-              (set-process-sentinel vterm--process #'meain/run-in-vterm-kill)
-              (vterm-send-string (concatenate 'string command ";exit 0"))
-              (vterm-send-return)))):config
-  (progn
-    (evil-set-initial-state 'vterm-mode 'insert)
-    (define-key vterm-mode-map (kbd "M-c") 'meain/shell-new)
-    (define-key vterm-mode-map (kbd "M-m") 'meain/shell-other)
-    (define-key vterm-mode-map (kbd "M-w") 'delete-window)
-    (define-key vterm-mode-map (kbd "M-u") 'universal-argument)
-    (define-key vterm-mode-map (kbd "M-l") 'meain/move-swap-right)
-    (define-key vterm-mode-map (kbd "M-h") 'meain/move-swap-left)
-    (define-key vterm-mode-map (kbd "M-k") 'meain/move-swap-up)
-    (define-key vterm-mode-map (kbd "M-j") 'meain/move-swap-down)
-    (define-key vterm-mode-map (kbd "M-H") 'shrink-window-horizontally)
-    (define-key vterm-mode-map (kbd "M-L") 'enlarge-window-horizontally)
-    (define-key vterm-mode-map (kbd "M-K") 'shrink-window)
-    (define-key vterm-mode-map (kbd "M-J") 'enlarge-window)
-    ;; (define-key vterm-mode-map (kbd "M-f l") 'ace-link)
-    (define-key vterm-mode-map (kbd "M-b") (lambda (&optional open-term)
-                                             (interactive "P")
-                                             (split-window-below)
-                                             (windmove-down)
-                                             (when open-term
-                                               (vterm t))))
-    (define-key vterm-mode-map (kbd "M-v") (lambda (&optional open-term)
-                                             (interactive "P")
-                                             (split-window-right)
-                                             (windmove-right)
-                                             (when open-term
-                                               (vterm t))))
-    (add-to-list 'display-buffer-alist
-                 '((lambda (bufname _)
-                     (s-starts-with-p "*popup-shell" bufname))
-                   (display-buffer-reuse-window display-buffer-at-bottom)
-                   (reusable-frames . visible)
-                   (window-height . 0.3)))
-    (defun meain/clear-and-exec ()
-      (interactive)
-      (vterm-clear)
-      (vterm-clear-scrollback)
-      (vterm-send-return))
-    (define-key vterm-mode-map [(S-return)] 'meain/clear-and-exec)
-    (defun meain/vterm--kill-vterm-buffer-and-window (process event)
-      "Kill buffer and window on vterm PROCESS termination.  EVENT is the close event."
-      (when (not (process-live-p process))
-        (let ((buf (process-buffer process)))
-          (when (buffer-live-p buf)
-            (with-current-buffer buf
-              (kill-buffer)
-              (ignore-errors (delete-window))
-              (message "VTerm closed."))))))
-    (add-hook 'vterm-mode-hook
-              (lambda ()
-                (set-process-sentinel (get-buffer-process (buffer-name))
-                                      #'meain/vterm--kill-vterm-buffer-and-window)))))
+                          (vterm-clear-scrollback))
+                      (delete-window))))
+                 ((equal (length shell-buffers) 0)
+                  (meain/shell-new t))
+                 (t (progn
+                      (pop-to-buffer (car shell-buffers))
+                      (if rerun-previous
+                          (progn
+                            (vterm-clear)
+                            (vterm-clear-scrollback)
+                            (vterm-send-up)
+                            (vterm-send-return))))))))
+            (defun meain/shell-new (&optional always-create)
+              "Create a new shell for the current project."
+              (interactive)
+              (setq default-directory (cond
+                                       ((projectile-project-p)
+                                        (projectile-project-root))
+                                       (t "~/")))
+              (if (or always-create
+                      (s-starts-with-p "*popup-shell"
+                                       (buffer-name)))
+                  (progn
+                    (if (s-starts-with-p "*popup-shell"
+                                         (buffer-name))
+                        (delete-window))
+                    (vterm (meain/shell-name)))
+                (call-interactively 'switch-to-buffer)))
+            (defun meain/shell-other (&optional alternate)
+              "Switch to previous shell in current project. Use ALTERNATE to get a list of shell in current project."
+              (interactive "P")
+              (let ((shell-buffers (remove-if-not (lambda (x)
+                                                    (s-starts-with-p (meain/shell-name)
+                                                                     (buffer-name x)))
+                                                  (buffer-list))))
+                (cond
+                 ((equal (length shell-buffers) 0)
+                  (message "No shells bruh!"))
+                 ((equal (length shell-buffers) 1)
+                  (message "Only one shell"))
+                 (alternate (switch-to-buffer (completing-read "Choose shell: "
+                                                               (mapcar (lambda (x)
+                                                                         (buffer-name x))
+                                                                       shell-buffers))))
+                 (t (switch-to-buffer (car (cdr shell-buffers)))))))
+            (defun meain/run-in-vterm-kill (process event)
+              "A process sentinel. Kills PROCESS's buffer if it is live."
+              (let ((b (process-buffer process)))
+                (and (buffer-live-p b)
+                     (kill-buffer b)
+                     (delete-window))))
+            (defun meain/run-in-vterm (command)
+              "Execute string COMMAND in a new vterm and kill the shell once done.  Useful for interactive items."
+              (interactive (list (let* ((f (cond
+                                            (buffer-file-name)
+                                            ((eq major-mode 'dired-mode)
+                                             (dired-get-filename nil t))))
+                                        (filename (concat " "
+                                                          (shell-quote-argument (and f
+                                                                                     (file-relative-name f))))))
+                                   (read-shell-command "Terminal command: "
+                                                       (cons filename 0)
+                                                       (cons 'shell-command-history 1)
+                                                       (list filename)))))
+              (with-current-buffer (vterm (concat "*popup-shell-" command "*"))
+                (set-process-sentinel vterm--process #'meain/run-in-vterm-kill)
+                (vterm-send-string (concatenate 'string command ";exit 0"))
+                (vterm-send-return)))
+            (defun meain/clear-and-exec ()
+              (interactive)
+              (vterm-clear)
+              (vterm-clear-scrollback)
+              (vterm-send-return))
+            (define-key vterm-mode-map [(S-return)] 'meain/clear-and-exec)
+            (defun meain/vterm--kill-vterm-buffer-and-window (process event)
+              "Kill buffer and window on vterm PROCESS termination.  EVENT is the close event."
+              (when (not (process-live-p process))
+                (let ((buf (process-buffer process)))
+                  (when (buffer-live-p buf)
+                    (with-current-buffer buf
+                      (kill-buffer)
+                      (ignore-errors (delete-window))
+                      (message "VTerm closed."))))))
+            (add-hook 'vterm-mode-hook
+                      (lambda ()
+                        (set-process-sentinel (get-buffer-process (buffer-name))
+                                              #'meain/vterm--kill-vterm-buffer-and-window)))))
 
 ;; ranger in emacs
 (use-package ranger
