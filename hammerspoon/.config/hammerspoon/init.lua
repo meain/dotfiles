@@ -234,7 +234,7 @@ local emailNotify = function(alert)
     mailcounter:setMenu(populateMailListing(result))
     if alert then
         if (string.len(result) > 0) then
-            hs.alert("📧 Unread emails\n" .. result)
+            hs.alert.show("📧 Unread emails\n" .. result, 1 + utils.linecount(result))
         else
             hs.alert("📭 No unread emails")
         end
