@@ -950,24 +950,23 @@ Pass ORIGINAL and ALTERNATE options."
 ;; ibuffer-projectile
 (use-package ibuffer-projectile
   :straight t
-  :defer t
-  :after (ibuffer projectile):config
-  (progn
-    (add-hook 'ibuffer-hook
-              (lambda ()
-                (ibuffer-projectile-set-filter-groups)
-                (unless (eq ibuffer-sorting-mode 'alphabetic)
-                  (ibuffer-do-sort-by-alphabetic))))
-    (setq ibuffer-formats '((mark modified
-                                  read-only
-                                  " "
-                                  (name 18 18 :left :elide)
-                                  " "
-                                  (size 9 -1 :right)
-                                  " "
-                                  (mode 16 16 :left :elide)
-                                  " "
-                                  project-relative-file)))))
+  :commands (ibuffer-projectile-set-filter-groups):after
+  (ibuffer projectile)
+  :init (add-hook 'ibuffer-hook
+                  (lambda ()
+                    (ibuffer-projectile-set-filter-groups)
+                    (unless (eq ibuffer-sorting-mode 'alphabetic)
+                      (ibuffer-do-sort-by-alphabetic)))):config
+  (setq ibuffer-formats '((mark modified
+                                read-only
+                                " "
+                                (name 18 18 :left :elide)
+                                " "
+                                (size 9 -1 :right)
+                                " "
+                                (mode 16 16 :left :elide)
+                                " "
+                                project-relative-file))))
 
 
 
