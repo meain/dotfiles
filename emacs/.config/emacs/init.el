@@ -1136,6 +1136,8 @@ Pass ORIGINAL and ALTERNATE options."
     (evil-leader/set-key "gg" 'magit-status)
     (evil-leader/set-key "gc" 'magit-commit-create))
   :config (progn
+            ;; make <escape> quit(go back one level) in magit popups
+            (define-key transient-map (kbd "<escape>") 'transient-quit-one)
             (setq magit-diff-refine-hunk (quote all))
             (define-key magit-mode-map (kbd "M-w") 'delete-window)
             (setq magit-completing-read-function #'selectrum-completing-read)))
