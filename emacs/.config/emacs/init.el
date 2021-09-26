@@ -1569,7 +1569,12 @@ Pass ORIGINAL and ALTERNATE options."
   :defer 1
   :straight t
   :after evil
-  :config (evil-collection-init))
+  :config (progn
+            (setq evil-collection-magit-want-horizontal-movement
+                  t)
+            (setq evil-collection-magit-use-y-for-yank
+                  t)
+            (evil-collection-init)))
 
 ;; Highlight TODO items
 (use-package hl-todo
