@@ -2182,15 +2182,16 @@ Pass ORIGINAL and ALTERNATE options."
   :commands (docker))
 
 ;; Kubernetes
-(use-package kubel
+(use-package kubernetes
   :straight t
   :defer t
-  :commands (kubel):config
+  :commands (meain/kube):config
   (progn
-    (setq kubel-use-namespace-list t)
-    (use-package kubel-evil
-      :straight t
-      :config (add-hook 'kubel-mode 'kubel-evil-mode))))
+    (defun meain/kube ()
+      "Hacky function to load `kubernetes-evil' as it was not loading otherwise."
+      (interactive)
+      (use-package kubernetes-evil :straight t)
+      (kubernetes-overview))))
 
 ;; Window layout changer
 (use-package rotate
