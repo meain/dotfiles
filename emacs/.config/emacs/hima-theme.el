@@ -61,6 +61,7 @@
   (custom-theme-set-faces 'hima
     ;; Basic items
     `(default ,default-layer)
+    `(nobreak-space ,default-layer)
     `(underline ,underline-layer)
     `(cursor ((t (:background ,black))))
     `(fringe ((t (:background ,white :foreground ,light-gray))))
