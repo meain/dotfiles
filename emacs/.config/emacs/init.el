@@ -636,7 +636,28 @@ Pass ORIGINAL and ALTERNATE options."
                         (interactive)
                         (insert (concat "if err != nil { "
                                         (meain/go-return-string)
-                                        " }"))))
+                                        " }")))
+                      ";te"
+                      (lambda ()
+                        (interactive)
+                        (insert (concat "func " (read-string "Test function name: ") "(t *testing.T) {
+	tests := []struct {
+		name  string
+		input string
+		want  _
+	}{
+		{},
+	}
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			// got, err := _
+			if !cmp.Equal(tc.want, got) {
+				t.Fatalf(\"values are not the same %s\", cmp.Diff(tc.want, got))
+			}
+
+		})
+	}
+}"))))
     (aas-set-snippets 'python-mode ";ip" "__import__('ipdb').set_trace()")
     (aas-set-snippets 'org-mode ";el" "#+BEGIN_SRC emacs-lisp\n\n#+END_SRC"
                       ";py" "#+BEGIN_SRC python\n\n#+END_SRC" ";co"
