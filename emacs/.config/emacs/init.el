@@ -1743,16 +1743,6 @@ Pass ORIGINAL and ALTERNATE options."
   mtodo-mode-map
   (kbd "g s")
   'mtodo-mark-important)
-(evil-leader/set-key "e m"
-  (lambda ()
-    (interactive)
-    (find-file "~/.cache/mobdump/thing-for-today")
-    (mtodo-mode)))
-(evil-leader/set-key "e M"
-  (lambda ()
-    (interactive)
-    (find-file "~/.cache/mobdump/thing-for-today-personal")
-    (mtodo-mode)))
 
 ;;; [EXTRA PLUGINS] =================================================
 
@@ -2421,7 +2411,7 @@ SHORTCUT is the keybinding to use.  NAME if the func suffix and FILE is the file
   "~/.dotfiles/emacs/.config/emacs/init.el")
 (meain/quick-file-open-builder "f" "elfeed-feeds"
   "~/.config/emacs/elfeed-feeds.el")
-(meain/quick-file-open-builder "r" "early-init"
+(meain/quick-file-open-builder "a" "early-init"
   "~/.dotfiles/emacs/.config/emacs/early-init.el")
 (meain/quick-file-open-builder "h" "hima-theme"
   "~/.dotfiles/emacs/.config/emacs/hima-theme.el")
@@ -2429,6 +2419,14 @@ SHORTCUT is the keybinding to use.  NAME if the func suffix and FILE is the file
   "~/.config/emacs/straight/repos/evil-textobj-tree-sitter/evil-textobj-tree-sitter.el")
 (meain/quick-file-open-builder "l" "ledger"
   "~/.local/share/ledger/master.ledger")
+(meain/quick-file-open-builder "i" "interesting"
+  "~/.notes/note/interesting-links.md")
+(meain/quick-file-open-builder "r" "frequent-web-references"
+  "~/.notes/note/web-references.md")
+(meain/quick-file-open-builder "m" "thing-for-today"
+  "~/.cache/mobdump/thing-for-today")
+(meain/quick-file-open-builder "M" "thing-for-today-personal"
+  "Zoom in and out of single window.")
 
 ;; Fullscreen current buffer
 (defvar meain/window-configuration nil)
