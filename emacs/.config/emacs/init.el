@@ -2155,7 +2155,6 @@ Pass ORIGINAL and ALTERNATE options."
 ;; timing stuff
 (use-package activity-watch-mode
   :straight t
-  :disabled t
   :defer 1
   :diminish :config
   (global-activity-watch-mode))
