@@ -5,4 +5,5 @@ keywords: <++>
 date: REPLACE_DATE
 layout: layouts/post.njk
 permalink: "{{ page.date | date: '%Y' }}/{{ page.fileSlug }}/"
+draft: true
 ---
