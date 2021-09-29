@@ -620,7 +620,11 @@ Pass ORIGINAL and ALTERNATE options."
                                         (file-name-nondirectory (file-name-sans-extension (buffer-file-name)))
                                         "\ncreated: "
                                         (format-time-string "%a %d %b %Y %T")
-                                        "\n---\n"))))
+                                        "\n---\n")))
+                      ";month"
+                      (lambda ()
+                        (interactive)
+                        (insert (format-time-string "%B %Y"))))
     (aas-set-snippets 'go-mode
                       ";;"
                       ":="
