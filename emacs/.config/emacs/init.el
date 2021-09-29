@@ -137,6 +137,9 @@
 ;; Meta-f keybinds (tmux memories)
 (global-unset-key (kbd "M-f")) ; have to unset first
 
+;; Enable visual line mode
+(global-visual-line-mode 1)
+
 ;;; [VISUAL CONFIG] ==============================================
 
 ;; Change font everywhere
@@ -345,10 +348,6 @@ Pass ORIGINAL and ALTERNATE options."
   '(lambda ()
      (interactive)
      (execute-kbd-macro (kbd "C-c C-c"))))
-
-;; Up/Down don't bother wrap
-(define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
-(define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
 
 ;; Remap macro recoring key
 (define-key evil-normal-state-map "Q" 'evil-record-macro)
