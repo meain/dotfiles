@@ -643,7 +643,9 @@ Pass ORIGINAL and ALTERNATE options."
                       ";te"
                       (lambda ()
                         (interactive)
-                        (insert (concat "func " (read-string "Test function name: ") "(t *testing.T) {
+                        (insert (concat "func "
+                                        (read-string "Test function name: ")
+                                        "(t *testing.T) {
 	tests := []struct {
 		name  string
 		input string
@@ -2696,12 +2698,6 @@ START and END comes from it being interactive."
                        thing-to-print)))))
   (evil-force-normal-state))
 (define-key evil-normal-state-map (kbd "g p") 'meain/quick-print)
-
-;; Quick launch htop
-(evil-leader/set-key "a H"
-  (lambda ()
-    (interactive)
-    (meain/run-in-vterm "htop")))
 
 ;; Journal entry
 (add-hook 'find-file-hook
