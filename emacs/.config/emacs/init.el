@@ -2353,6 +2353,17 @@ Pass ORIGINAL and ALTERNATE options."
       (insert out)
       (ledger-mode-clean-buffer))))
 
+(use-package scroll-on-drag
+  :straight t
+  :defer 3
+  :config (progn
+            (setq scroll-on-drag-motion-scale 0.1)
+            (global-set-key [down-mouse-2]
+                            (lambda ()
+                              (interactive)
+                              (unless (scroll-on-drag)
+                                (mouse-yank-primary t))))))
+
 ;;; [CUSTOM FUNCTIONS] ==============================================
 
 ;; Font size changes
