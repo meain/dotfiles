@@ -158,6 +158,10 @@
     ;; dired
     `(dired-directory ((t (:weight bold :foreground ,black))))
 
+    ;; strips-mode
+    `(stripe-highlight ((t (:background ,lighter-blue))))
+    `(stripe-hl-line ((t (:background ,barely-orange))))
+
     ;; diff-hl
     `(diff-hl-change ((t (:background ,lighter-orange))))
     `(diff-hl-insert ((t (:background ,light-green))))
