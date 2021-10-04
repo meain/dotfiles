@@ -51,7 +51,7 @@
           (setq evil-want-C-u-scroll t)
           (setq evil-undo-system 'undo-tree)
           (setq evil-kill-on-visual-paste nil)
-          (setq evil-respect-visual-line-mode t)
+          (setq evil-respect-visual-line-mode nil)
           (setq evil-symbol-word-search t)):config
   (progn
     (evil-mode t)
@@ -59,7 +59,10 @@
     (evil-set-command-property 'evil-visual-char
                                :jump t)
     (evil-set-command-property 'evil-visual-line
-                               :jump t)))
+                               :jump t)
+    ;; Up/Down on visual instead of actual lines
+    (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
+    (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)))
 
 ;; Evil leader
 (use-package evil-leader
@@ -137,8 +140,8 @@
 ;; Meta-f keybinds (tmux memories)
 (global-unset-key (kbd "M-f")) ; have to unset first
 
-;; Enable visual line mode
-(global-visual-line-mode 1)
+;; Disable visual line mode (this causes issues with $ and a few other things in evil)
+(global-visual-line-mode nil)
 
 ;;; [VISUAL CONFIG] ==============================================
 
