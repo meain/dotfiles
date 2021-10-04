@@ -1751,6 +1751,22 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;;; [EXTRA PLUGINS] =================================================
 
+;; Dashboard
+(use-package dashboard
+  :disabled t
+  :straight t
+  :config (progn
+            (setq dashboard-banner-logo-title nil)
+            (setq dashboard-center-content t)
+            (setq dashboard-show-shortcuts t)
+            (setq dashboard-startup-banner 'official)
+            (setq dashboard-items '((recents . 3)
+                                    (projects . 7)))
+            (setq dashboard-projects-backend 'projectile)
+            (setq dashboard-set-navigator t)
+            (setq dashboard-set-footer nil)
+            (dashboard-setup-startup-hook)))
+
 ;; Winner mode
 (use-package winner
   :defer 1
