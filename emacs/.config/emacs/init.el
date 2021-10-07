@@ -2813,6 +2813,30 @@ START and END comes from it being interactive."
       (kill-new filename)
       (message "Copied buffer file name '%s' to the clipboard."
                filename))))
+
+;; Quickly add a prog1 wrapper for logging
+(defun meain/elisp-inspect-value (&optional before)
+  "Quick prog1/progn dance to view variable value.
+Default is after, but use BEFORE to print before."
+  (interactive)
+  (let* ((variable-name (read-string "Variable name: "))
+         (subst-string (concat "(message \"" variable-name ": %s\" "
+                               variable-name ")")))
+    (if before
+        (execute-kbd-macro (kbd "vabS)aprogn"))
+      (execute-kbd-macro (kbd "vabS)aprog1")))
+    (evil-force-normal-state)
+    (if before
+        (progn
+          (execute-kbd-macro (kbd "i"))
+          (insert subst-string))
+      (progn
+        (execute-kbd-macro (kbd "vab"))
+        (evil-force-normal-state)
+        (execute-kbd-macro (kbd "i"))
+        (insert subst-string)))
+    (evil-force-normal-state)))
+
 ;; setting proper default-dir
 (defun meain/set-proper-default-dir ()
   "Function to set the `default-directory' value as the project root if available."
