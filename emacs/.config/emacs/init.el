@@ -101,7 +101,6 @@
                                                          "\n")))
                      "\n")
           "\n"))
-(setq initial-scratch-message (meain/get-scratch-message))
 
 ;; Quicker yes or no
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -1885,8 +1884,8 @@ Pass ORIGINAL and ALTERNATE options."
   :straight t
   :commands (elfeed elfeed-update):init
   (progn
+    ;; first run after 1 hour
     (run-at-time "1 hour"
-                                        ; first run after 1 hour
                  (* 6 60 60)
                  (lambda ()
                    (elfeed-update)
@@ -3095,6 +3094,38 @@ Pass THING-TO-POPUP as the thing to popup."
                      (format "%.2f seconds"
                              (float-time (time-subtract after-init-time before-init-time)))
                      gcs-done)))
+
+;;scratch message
+(setq initial-scratch-message (let ((package-count 0)
+                                    (time (emacs-init-time)))
+                                (when (bound-and-true-p package-alist)
+                                  (setq package-count (length package-activated-list)))
+                                (when (boundp 'straight--profile-cache)
+                                  (setq package-count (+ (hash-table-size straight--profile-cache)
+                                                         package-count)))
+                                (if (zerop package-count)
+                                    (format "Emacs started in %s" time)
+                                  (format ";; %d packages loaded in %s" package-count
+                                          time))))
+
+;; Auto updating scratch message
+(run-at-time "10 minutes"
+             (* 10 60)
+             (lambda ()
+               (with-current-buffer "*scratch*"
+                 (save-excursion
+                   (goto-line 1)
+                   ;; kill-line without copying to clipboard
+                   (delete-region (point)
+                                  (progn
+                                    (end-of-line 1)
+                                    (point)))
+                   (insert (format ";; It is %s. You have %s unread mails. %s"
+                                   (format-time-string "%l %p")
+                                   (car (split-string (shell-command-to-string "unreadsenders|wc -l")
+                                                      "\n"))
+                                   (car (split-string (shell-command-to-string "awk -F'|' '{print \"Btw, it is\",$1,\"with\",$2,\"humidity and\",$3,\"speed winds\"}' /tmp/weather-current")
+                                                      "\n"))))))))
 
 ;; Start server once we have emacs running
 (require 'server)
