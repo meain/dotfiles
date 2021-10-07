@@ -2802,6 +2802,17 @@ START and END comes from it being interactive."
   (delete-file (buffer-file-name))
   (meain/kill-current-buffer-unless-scratch))
 
+;; Copy filename to clipboard
+(defun meain/copy-file-name-to-clipboard ()
+  "Copy the current buffer file name to the clipboard."
+  (interactive)
+  (let ((filename (if (equal major-mode 'dired-mode)
+                      default-directory
+                    (buffer-file-name))))
+    (when filename
+      (kill-new filename)
+      (message "Copied buffer file name '%s' to the clipboard."
+               filename))))
 ;; setting proper default-dir
 (defun meain/set-proper-default-dir ()
   "Function to set the `default-directory' value as the project root if available."
