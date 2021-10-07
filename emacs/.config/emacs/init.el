@@ -2383,6 +2383,12 @@ Pass ORIGINAL and ALTERNATE options."
                               (unless (scroll-on-drag)
                                 (mouse-yank-primary t))))))
 
+(use-package 0x0
+  :straight t
+  :defer t
+  :commands (0x0-dwim 0x0-popup 0x0-upload-file 0x0-upload-text)
+  :init (evil-leader/set-key "a 0" '0x0-dwim))
+
 ;;; [CUSTOM FUNCTIONS] ==============================================
 
 ;; Font size changes
