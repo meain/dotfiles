@@ -1919,7 +1919,7 @@ Pass ORIGINAL and ALTERNATE options."
               'meain/elfeed-search-filter)
             (evil-define-key 'normal
               elfeed-search-mode-map
-              (kbd "c")
+              (kbd "f")
               'meain/elfeed-search-filter-by-name)
             (evil-define-key 'normal
               elfeed-search-mode-map
