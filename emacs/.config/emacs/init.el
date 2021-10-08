@@ -3155,7 +3155,7 @@ Pass THING-TO-POPUP as the thing to popup."
 
 ;; Auto updating scratch message
 (run-at-time "10 minutes"
-             (* 10 60)
+             (* 5 60)
              (lambda ()
                (with-current-buffer "*scratch*"
                  (save-excursion
