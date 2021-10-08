@@ -4,7 +4,7 @@
   smudge = git-lfs smudge %f
 [user]
   name = Abin Simon
-  email = abinsimon10@gmail.com
+  email = mail@meain.io
   signingkey = B2BBAEE6203686675A9288737E2E3C7B32C8E368
 [Alias]
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --branches
