@@ -138,6 +138,7 @@
     cargo-edit # dep management
     cargo-bloat # find big chunks
     cargo-udeps # find unnecessary deps
+    cargo-release # for releasing packages
     # cargo-watch # continuously run cargo check
 
     # programming-other
