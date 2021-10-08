@@ -2459,6 +2459,8 @@ SHORTCUT is the keybinding to use.  NAME if the func suffix and FILE is the file
   "~/.local/share/ledger/master.ledger")
 (meain/quick-file-open-builder "i" "interesting"
   "~/.notes/note/interesting-links.md")
+(meain/quick-file-open-builder "u" "useful-someday"
+  "~/.notes/note/useful-someday.md")
 (meain/quick-file-open-builder "r" "frequent-web-references"
   "~/.notes/note/web-references.md")
 (meain/quick-file-open-builder "m" "thing-for-today"
