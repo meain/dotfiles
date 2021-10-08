@@ -1281,37 +1281,13 @@ Pass ORIGINAL and ALTERNATE options."
 ;; Fancier tab managerment
 (use-package tab-bar
   :straight t
-  :commands (tab-close tab-new tab-next):init
+  :defer 3
+  :commands (tab-close tab-new tab-next tab-bar-rename-tab
+                       meain/switch-tab-dwim meain/create-or-delete-tab
+                       tab-bar-switch-to-tab):init
   (progn
-    (defun meain/create-or-delete-tab (&optional close)
-      "Create or close tab"
-      (interactive "P")
-      (let ((tabs (cl-remove-if (lambda (x)
-                                  (equal x "scratch"))
-                                (mapcar (lambda (tab)
-                                          (alist-get 'name tab))
-                                        (tab-bar--tabs-recent)))))
-        (if close
-            (if (eq tabs nil)
-                (message "Not closing last tab")
-              (tab-close))
-          (tab-new))))
-    (defun meain/switch-tab-dwim (&optional chooser)
-      "Switch between available tabs.  Pass CLOSE as t to close the current tab if it is not the last one."
-      (interactive "P")
-      (let ((tabs (cl-remove-if (lambda (x)
-                                  (equal x "scratch"))
-                                (mapcar (lambda (tab)
-                                          (alist-get 'name tab))
-                                        (tab-bar--tabs-recent)))))
-        (if chooser
-            (tab-bar-switch-to-tab (completing-read "Select tab: " tabs))
-          (cond
-           ((eq tabs nil)
-            (message (concat "Only one tab present. Use `"
-                             (substitute-command-keys "\\[meain/create-or-delete-tab]")
-                             "` to create another tab.")))
-           (t (tab-bar-switch-to-tab (car tabs)))))))
+    (global-set-key (kbd "M-f ,")
+                    'tab-bar-rename-tab)
     (evil-leader/set-key "t" 'meain/switch-tab-dwim)
     (evil-leader/set-key "T" 'meain/create-or-delete-tab)
     (evil-leader/set-key "C"
@@ -1333,8 +1309,35 @@ Pass ORIGINAL and ALTERNATE options."
             (setq tab-bar-tab-name-function 'tab-bar-tab-name-all)
             (tab-bar-mode -1)
             (tab-bar-history-mode -1)
-            (global-set-key (kbd "M-f ,")
-                            'tab-bar-rename-tab)))
+            (defun meain/create-or-delete-tab (&optional close)
+              "Create or close tab"
+              (interactive "P")
+              (let ((tabs (cl-remove-if (lambda (x)
+                                          (equal x "scratch"))
+                                        (mapcar (lambda (tab)
+                                                  (alist-get 'name tab))
+                                                (tab-bar--tabs-recent)))))
+                (if close
+                    (if (eq tabs nil)
+                        (message "Not closing last tab")
+                      (tab-close))
+                  (tab-new))))
+            (defun meain/switch-tab-dwim (&optional chooser)
+              "Switch between available tabs.  Pass CLOSE as t to close the current tab if it is not the last one."
+              (interactive "P")
+              (let ((tabs (cl-remove-if (lambda (x)
+                                          (equal x "scratch"))
+                                        (mapcar (lambda (tab)
+                                                  (alist-get 'name tab))
+                                                (tab-bar--tabs-recent)))))
+                (if chooser
+                    (tab-bar-switch-to-tab (completing-read "Select tab: " tabs))
+                  (cond
+                   ((eq tabs nil)
+                    (message (concat "Only one tab present. Use `"
+                                     (substitute-command-keys "\\[meain/create-or-delete-tab]")
+                                     "` to create another tab.")))
+                   (t (tab-bar-switch-to-tab (car tabs)))))))))
 
 ;; which-key mode
 (use-package which-key
