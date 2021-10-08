@@ -3163,13 +3163,20 @@ Pass THING-TO-POPUP as the thing to popup."
                    ;; kill-line without copying to clipboard
                    (delete-region (point)
                                   (progn
+                                    (condition-case nil
+                                        (next-line)
+                                      (error nil))
                                     (end-of-line 1)
                                     (point)))
-                   (insert (format ";; It is %s. You have %s unread mails. %s"
+                   (insert (format ";; Time is %s and you have %s unread mails and %s buffers.\n;; %s"
                                    (format-time-string "%l %p")
                                    (car (split-string (shell-command-to-string "unreadsenders|wc -l")
                                                       "\n"))
-                                   (car (split-string (shell-command-to-string "awk -F'|' '{print \"Btw, it is\",$1,\"with\",$2,\"humidity and\",$3,\"speed winds\"}' /tmp/weather-current")
+                                   (cl-count-if (lambda (b)
+                                                  (or (buffer-file-name b)
+                                                      (not (string-match "^ " (buffer-name b)))))
+                                                (buffer-list))
+                                   (car (split-string (shell-command-to-string "awk -F'|' '{print \"Also, it is\",$1,\"with\",$2,\"humidity and\",$3,\"speed winds\"}' /tmp/weather-current")
                                                       "\n"))))))))
 
 ;; Start server once we have emacs running
