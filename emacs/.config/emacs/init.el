@@ -140,7 +140,7 @@
 (global-unset-key (kbd "M-f")) ; have to unset first
 
 ;; Disable visual line mode (this causes issues with $ and a few other things in evil)
-(global-visual-line-mode nil)
+(global-visual-line-mode -1)
 
 ;;; [VISUAL CONFIG] ==============================================
 
