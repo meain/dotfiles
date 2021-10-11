@@ -458,9 +458,17 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;;; [OTHER PACKAGES] =============================================
 
-;; project (eglot dependency)
-(use-package project :straight t
-  :defer t)
+;; project
+(use-package project
+  :straight t
+  :defer t
+  :commands (project-switch-project project-find-file
+                                    project-current):config
+  (defun meain/project-name ()
+    (file-name-nondirectory (directory-file-name (project-root (project-current)))))
+  :init (progn
+          (evil-leader/set-key "p" 'project-switch-project)
+          (define-key evil-normal-state-map (kbd "<RET>") 'project-find-file)))
 
 ;; eldoc load
 (use-package eldoc
@@ -865,11 +873,6 @@ Pass ORIGINAL and ALTERNATE options."
   :bind (:map minibuffer-local-map
               ("C-b" . marginalia-cycle)):config
   (progn
-    ;; add marginalia stuff to projectile-find-file
-    (add-to-list 'marginalia-prompt-categories
-                 '("Switch to project" . file))
-    (add-to-list 'marginalia-prompt-categories
-                 '("Find file:" . file))
     (marginalia-mode)))
 
 ;; Consult without consultation fees
@@ -911,6 +914,30 @@ Pass ORIGINAL and ALTERNATE options."
     (global-set-key (kbd "M-c")
                     (meain/with-alternate (call-interactively 'switch-to-buffer)
                                           (ibuffer-other-window)))))
+(use-package ibuffer-project
+  :straight t
+  :after (ibuffer project):config
+  (progn
+    (add-to-list 'ibuffer-project-root-functions
+                 '(file-remote-p . "Remote"))
+    (add-hook 'ibuffer-hook
+              (lambda ()
+                (setq ibuffer-filter-groups (ibuffer-project-generate-filter-groups))
+                (unless (eq ibuffer-sorting-mode 'project-file-relative)
+                  (ibuffer-do-sort-by-project-file-relative))))
+    (setq ibuffer-formats '((mark modified
+                                  read-only
+                                  " "
+                                  (name 18 18 :left :elide)
+                                  " "
+                                  (size 9 -1 :right)
+                                  " "
+                                  (mode 16 16 :left :elide)
+                                  " "
+                                  project-file-relative))))
+  :init (add-hook 'ibuffer-hook
+                  (lambda ()
+                    (setq ibuffer-filter-groups (ibuffer-project-generate-filter-groups)))))
 
 ;; rg.el
 (use-package rg
@@ -957,47 +984,6 @@ Pass ORIGINAL and ALTERNATE options."
           (srefactor-lisp-format-buffer)
         (call-interactively 'format-all-buffer))))
   :init (define-key evil-normal-state-map (kbd ",,") 'meain/auto-format))
-
-;; Projectile
-(use-package projectile
-  :straight t
-  :diminish :commands
-  (projectile-switch-project projectile-find-file
-                             projectile-project-p)
-  :config (progn
-            (setq projectile-mode-line "Projectile") ; might speed up tramp
-            (projectile-mode 1)
-            (setq projectile-sort-order 'recently-active)):init
-  (progn
-    (evil-leader/set-key "p" 'projectile-switch-project)
-    (define-key evil-normal-state-map (kbd "<RET>") (lambda ()
-                                                      (interactive)
-                                                      (if (projectile-project-p)
-                                                          (projectile-find-file)
-                                                        (projectile-switch-project))))))
-
-;; ibuffer-projectile
-(use-package ibuffer-projectile
-  :straight t
-  :commands (ibuffer-projectile-set-filter-groups):after
-  (ibuffer projectile)
-  :init (add-hook 'ibuffer-hook
-                  (lambda ()
-                    (ibuffer-projectile-set-filter-groups)
-                    (unless (eq ibuffer-sorting-mode 'alphabetic)
-                      (ibuffer-do-sort-by-alphabetic)))):config
-  (setq ibuffer-formats '((mark modified
-                                read-only
-                                " "
-                                (name 18 18 :left :elide)
-                                " "
-                                (size 9 -1 :right)
-                                " "
-                                (mode 16 16 :left :elide)
-                                " "
-                                project-relative-file))))
-
-
 
 ;; LSP
 (use-package eglot
@@ -1421,8 +1407,8 @@ Pass ORIGINAL and ALTERNATE options."
             (defun meain/shell-name ()
               "Get the name of the shell based on project info."
               (format "*popup-shell-%s*"
-                      (if (projectile-project-p)
-                          (projectile-project-name)
+                      (if (project-current)
+                          (meain/project-name)
                         "-")))
             (defun meain/shell-toggle (&optional rerun-previous)
               "Create/toggle shell for current project."
@@ -1453,10 +1439,6 @@ Pass ORIGINAL and ALTERNATE options."
             (defun meain/shell-new (&optional always-create)
               "Create a new shell for the current project."
               (interactive)
-              (setq default-directory (cond
-                                       ((projectile-project-p)
-                                        (projectile-project-root))
-                                       (t "~/")))
               (if (or always-create
                       (s-starts-with-p "*popup-shell"
                                        (buffer-name)))
@@ -1776,7 +1758,7 @@ Pass ORIGINAL and ALTERNATE options."
             (setq dashboard-startup-banner 'official)
             (setq dashboard-items '((recents . 3)
                                     (projects . 7)))
-            (setq dashboard-projects-backend 'projectile)
+            (setq dashboard-projects-backend 'project)
             (setq dashboard-set-navigator t)
             (setq dashboard-set-footer nil)
             (dashboard-setup-startup-hook)))
@@ -2858,8 +2840,8 @@ Default is after, but use BEFORE to print before."
   (interactive)
   (if (not (file-remote-p default-directory))
       (setq default-directory (cond
-                               ((projectile-project-p)
-                                (projectile-project-root))
+                               ((not (eq (project-current) nil))
+                                (project-root (project-current)))
                                (t "~/")))))
 (add-hook 'find-file-hook 'meain/set-proper-default-dir)
 
@@ -2905,7 +2887,7 @@ Default is after, but use BEFORE to print before."
                           (file-relative-name (if (equal major-mode 'dired-mode)
                                                   default-directory
                                                 buffer-file-name)
-                                              (projectile-project-root))
+                                              (project-root (project-current)))
                           (if (or no-linenumber
                                   (equal major-mode 'dired-mode))
                               ""
@@ -3121,16 +3103,16 @@ Pass THING-TO-POPUP as the thing to popup."
                                                                              hima-simple-gray)
                                                                ""))
                                        '(:eval (mode-line-idle 1.0
-                                                               '(:propertize (:eval (if (and (boundp projectile-mode)
+                                                               '(:propertize (:eval (if (and (project-current)
                                                                                              (not (file-remote-p default-directory)))
                                                                                         (list " "
                                                                                               (let* ((explicit (cdr (car (cdr (cdr (tab-bar--current-tab))))))
                                                                                                      (name (cdr (car (cdr (tab-bar--current-tab)))))
                                                                                                      (out-name (if explicit
                                                                                                                    (concatenate 'string ":" name)
-                                                                                                                 (if (projectile-project-p)
+                                                                                                                 (if (project-current)
                                                                                                                      (concat ";"
-                                                                                                                             (projectile-project-name))
+                                                                                                                             (meain/project-name))
                                                                                                                    ""))))
                                                                                                 (format "%s" out-name)))))
                                                                              face
