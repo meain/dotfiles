@@ -1621,6 +1621,12 @@ Pass ORIGINAL and ALTERNATE options."
                                           ("STUB" . "#1E90FF")))
             (global-hl-todo-mode)))
 
+;; Emmet for html stuff (c-j to activate)
+(use-package emmet-mode
+  :straight t
+  :defer t
+  :commands (emmet-mode))
+
 ;;; [FILETYPE PUGINS] ===============================================
 
 (use-package rust-mode :straight t
