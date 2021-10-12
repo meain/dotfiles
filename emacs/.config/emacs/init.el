@@ -462,10 +462,10 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package project
   :straight t
   :defer t
-  :commands (project-switch-project project-find-file
+  :commands (project-switch-project project-find-file project-roots
                                     project-current):config
   (defun meain/project-name ()
-    (file-name-nondirectory (directory-file-name (project-root (project-current)))))
+    (file-name-nondirectory (directory-file-name (car (project-roots (project-current))))))
   :init (progn
           (evil-leader/set-key "p" 'project-switch-project)
           (define-key evil-normal-state-map (kbd "<RET>") 'project-find-file)))
@@ -2841,7 +2841,7 @@ Default is after, but use BEFORE to print before."
   (if (not (file-remote-p default-directory))
       (setq default-directory (cond
                                ((not (eq (project-current) nil))
-                                (project-root (project-current)))
+                                (car (project-roots (project-current))))
                                (t "~/")))))
 (add-hook 'find-file-hook 'meain/set-proper-default-dir)
 
@@ -2887,7 +2887,7 @@ Default is after, but use BEFORE to print before."
                           (file-relative-name (if (equal major-mode 'dired-mode)
                                                   default-directory
                                                 buffer-file-name)
-                                              (project-root (project-current)))
+                                              (car (project-roots (project-current))))
                           (if (or no-linenumber
                                   (equal major-mode 'dired-mode))
                               ""
