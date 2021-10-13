@@ -1,0 +1,61 @@
+(defcfg
+  input  (device-file "/dev/input/by-path/platform-i8042-serio-0-event-kbd")
+  output (uinput-sink "kmonad-board")
+  fallthrough true
+  allow-cmd true
+)
+
+(defsrc
+  esc  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+  caps a    s    d    f    g    h    j    k    l    ;    '    ret
+  lsft z    x    c    v    b    n    m    ,    .    /    rsft
+  lctl lmet lalt           spc            ralt rmet cmp  rctl
+)
+
+
+(defalias
+  num  (tap-next-release spc (layer-toggle numbers)) ;; Bind num to a button that switches to a layer
+  kil  C-A-del                ;; Bind kil to a button that Ctrl-Alt-deletes
+  ealt (tap-next-release esc lalt)
+  qctl (tap-next-release ' lctl)
+  super (tap-next-release down (layer-toggle superlayer))
+  dctl (tap-next-release up lctl)
+  cpy C-c
+  pst C-v
+  cut C-x
+  noti (cmd-button "notify-send 'Keyboard is working'")
+)
+
+
+(deflayer qwerty
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+ @ealt a    s    d    f    g    h    j    k    l    ;    @qctl    ret
+  lsft z    x    c    v    b    n    m    ,    .    /    rsft
+ @dctl lalt @super           @num         left rmet cmp  rght
+)
+
+(deflayer blank
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _              _              _    _    _    _
+)
+
+(deflayer numbers
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    *    \(   \)   _    _    _    _
+  del  1    2    3    4    5    6    7    8    9    0    _    _
+  _    _    _    _    _    _    _    _   @noti _    _    _
+  _    _    _              _              _    _    _    _
+)
+
+(deflayer superlayer
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    -    _    _    _
+  _    _    _    _    _    _    left down up  rght  _    _    _
+  _    _    @cut @cpy @pst _    _    _    _    _    _    _ 
+  _    _    _              _              _    _    _    _
+)
