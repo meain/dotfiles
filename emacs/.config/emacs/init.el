@@ -468,10 +468,9 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; project
 (use-package project
-  :straight t
   :defer t
-  :commands (project-switch-project project-find-file project-roots
-                                    project-current):config
+  :commands (project-switch-project project-find-file
+                                    project-roots project-current):config
   (defun meain/project-name ()
     (file-name-nondirectory (directory-file-name (car (project-roots (project-current))))))
   :init (progn
@@ -3036,10 +3035,10 @@ Pass THING-TO-POPUP as the thing to popup."
 ;; Some custom text objects based on treesitter
 (use-package evil-textobj-tree-sitter
   :defer 1
-  :straight (el-patch :type git
-                      :host github
-                      :repo "meain/evil-textobj-tree-sitter"
-                      :files (:defaults "queries")):after
+  :straight (evil-textobj-tree-sitter :type git
+                                      :host github
+                                      :repo "meain/evil-textobj-tree-sitter"
+                                      :files (:defaults "queries")):after
   tree-sitter
   :config (progn
             (define-key evil-outer-text-objects-map "m" (evil-textobj-tree-sitter-get-textobj "import"
