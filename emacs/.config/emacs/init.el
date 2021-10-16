@@ -3054,7 +3054,22 @@ Pass THING-TO-POPUP as the thing to popup."
             (define-key evil-outer-text-objects-map "o" (evil-textobj-tree-sitter-get-textobj "loop.outer"))
             (define-key evil-inner-text-objects-map "o" (evil-textobj-tree-sitter-get-textobj "loop.inner"))
             (define-key evil-outer-text-objects-map "n" (evil-textobj-tree-sitter-get-textobj "conditional.outer"))
-            (define-key evil-inner-text-objects-map "n" (evil-textobj-tree-sitter-get-textobj "conditional.inner"))))
+            (define-key evil-inner-text-objects-map "n" (evil-textobj-tree-sitter-get-textobj "conditional.inner"))
+            (define-key evil-normal-state-map (kbd "]f") (lambda ()
+                                                           (interactive)
+                                                           (evil-textobj-tree-sitter-goto-textobj "function.outer")))
+            (define-key evil-normal-state-map (kbd "[f") (lambda ()
+                                                           (interactive)
+                                                           (evil-textobj-tree-sitter-goto-textobj "function.outer"
+                                                                                                  t)))
+            (define-key evil-normal-state-map (kbd "]F") (lambda ()
+                                                           (interactive)
+                                                           (evil-textobj-tree-sitter-goto-textobj "function.outer"
+                                                                                                  nil t)))
+            (define-key evil-normal-state-map (kbd "[F") (lambda ()
+                                                           (interactive)
+                                                           (evil-textobj-tree-sitter-goto-textobj "function.outer"
+                                                                                                  t t)))))
 
 ;; Just some hima testing code
 (defun meain/reload-current-theme ()
