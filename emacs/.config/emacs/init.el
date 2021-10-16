@@ -88,20 +88,6 @@
 (global-set-key (kbd "s-c")
                 'kill-ring-save)
 
-;; Scratch initial content
-(defun meain/get-scratch-message ()
-  "Pull a random fortue entry and format it for `lisp-interaction' mode as a comment."
-  ;; Commands: shuf -n1 ~/.local/share/quotes | fortune -s
-  (concat (mapconcat 'identity
-                     (mapcar (lambda (x)
-                               (cl-concatenate 'string ";; " x))
-                             (cl-remove-if (lambda (x)
-                                             (equal x ""))
-                                           (split-string (shell-command-to-string "fortune | cowsay -f `cowsay -l|tail -n+2|tr ' ' '\n'|shuf -n1`")
-                                                         "\n")))
-                     "\n")
-          "\n"))
-
 ;; Quicker yes or no
 (fset 'yes-or-no-p 'y-or-n-p)
 
@@ -361,6 +347,28 @@ Pass ORIGINAL and ALTERNATE options."
                                               (evil-force-normal-state)))
 
 ;; Quick quit
+(defun meain/update-scratch-message ()
+  (with-current-buffer "*scratch*"
+    (save-excursion
+      (goto-char 1)
+      ;; kill-line without copying to clipboard
+      (delete-region (point)
+                     (progn
+                       (condition-case nil
+                           (next-line)
+                         (error nil))
+                       (end-of-line 1)
+                       (point)))
+      (insert (format ";; Time is %s. You have %s unread mails and %s buffers.\n;; %s"
+                      (format-time-string "%l %p")
+                      (car (split-string (shell-command-to-string "unreadsenders|wc -l")
+                                         "\n"))
+                      (cl-count-if (lambda (b)
+                                     (or (buffer-file-name b)
+                                         (not (string-match "^ " (buffer-name b)))))
+                                   (buffer-list))
+                      (car (split-string (shell-command-to-string "awk -F'|' '{print \"Also, it is\",$1,\"with\",$2,\"humidity and\",$3,\"speed winds\"}' /tmp/weather-current")
+                                         "\n")))))))
 (defun meain/create-or-switch-to-scratch ()
   "Switch to scratch buffer if exists, else create a scratch buffer with our config."
   (cond
@@ -370,13 +378,13 @@ Pass ORIGINAL and ALTERNATE options."
         (switch-to-buffer "*scratch*")
         (setq default-directory "~/")
         (lisp-interaction-mode)
-        (insert (meain/get-scratch-message))))))
+        (meain/update-scratch-message)))))
 (defun meain/recreate-scratch ()
   "Recreate scratch buffer by just replacing the entire thing with new fortune."
   (interactive)
   (with-current-buffer "*scratch*")
   (erase-buffer)
-  (insert (meain/get-scratch-message)))
+  (meain/update-scratch-message))
 (defun meain/kill-current-buffer-unless-scratch ()
   "Kill current buffer if it is not scratch."
   (interactive)
@@ -3151,28 +3159,7 @@ Pass THING-TO-POPUP as the thing to popup."
 ;; Auto updating scratch message
 (run-at-time "10 minutes"
              (* 5 60)
-             (lambda ()
-               (with-current-buffer "*scratch*"
-                 (save-excursion
-                   (goto-line 1)
-                   ;; kill-line without copying to clipboard
-                   (delete-region (point)
-                                  (progn
-                                    (condition-case nil
-                                        (next-line)
-                                      (error nil))
-                                    (end-of-line 1)
-                                    (point)))
-                   (insert (format ";; Time is %s and you have %s unread mails and %s buffers.\n;; %s"
-                                   (format-time-string "%l %p")
-                                   (car (split-string (shell-command-to-string "unreadsenders|wc -l")
-                                                      "\n"))
-                                   (cl-count-if (lambda (b)
-                                                  (or (buffer-file-name b)
-                                                      (not (string-match "^ " (buffer-name b)))))
-                                                (buffer-list))
-                                   (car (split-string (shell-command-to-string "awk -F'|' '{print \"Also, it is\",$1,\"with\",$2,\"humidity and\",$3,\"speed winds\"}' /tmp/weather-current")
-                                                      "\n"))))))))
+             'meain/update-scratch-message)
 
 ;; Start server once we have emacs running
 (require 'server)
