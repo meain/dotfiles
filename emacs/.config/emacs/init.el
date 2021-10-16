@@ -3071,6 +3071,25 @@ Pass THING-TO-POPUP as the thing to popup."
                                                            (evil-textobj-tree-sitter-goto-textobj "function.outer"
                                                                                                   t t)))))
 
+(use-package tree-sitter-fold
+  :defer t
+  :after (tree-sitter):commands
+  (tree-sitter-fold-mode)
+  :straight (tree-sitter-fold :host github
+                              :repo "jcs090218/tree-sitter-fold"):config
+  (progn
+    (defun meain/toggle-fold ()
+      (interactive)
+      (if (equal tree-sitter-mode nil)
+          (call-interactively 'evil-toggle-fold)
+        (call-interactively 'tree-sitter-fold-toggle))))
+  :init (add-hook 'tree-sitter-after-on-hook
+                  (lambda ()
+                    (origami-mode -1)
+                    (tree-sitter-fold-mode 1)
+                    (define-key evil-normal-state-map (kbd "<SPC> TAB") 'meain/toggle-fold)
+                    (evil-leader/set-key "o" 'meain/toggle-fold))))
+
 ;; Just some hima testing code
 (defun meain/reload-current-theme ()
   "Util to reload hima theme for debugging."
