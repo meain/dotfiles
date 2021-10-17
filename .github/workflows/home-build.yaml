@@ -1,0 +1,36 @@
+name: Build home using nix
+on:
+  push:
+    branches: [ "*" ]
+jobs:
+  build:
+    name: Nix build
+    runs-on: ${{ matrix.job.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        job: [ { os: ubuntu-latest } ] # { os: macos-latest } takes ages to build
+    steps:
+    - uses: actions/checkout@v2
+    - name: "Get nixpkgs"
+      id: pinned_nixpkgs
+      run: echo "::set-output name=url::https://github.com/NixOS/nixpkgs/archive/master.tar.gz"
+    - name: "Install Nix"
+      uses: cachix/install-nix-action@v13
+      with:
+        nix_path: "nixpkgs=${{ steps.pinned_nixpkgs.outputs.url }}"
+    - name: "Install home-manager"
+      run: |
+          nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+          nix-channel --update
+          export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
+          nix-shell '<home-manager>' -A install
+    - name: "Run home-manager build"
+      run: |
+          export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
+          mkdir -p ~/.config/nix
+          echo 'experimental-features = nix-command flakes' > ~/.config/nix/nix.conf
+          cd nix/.config/nixpkgs
+          sed -i 's|path:/home/meain/dev/src/nur-packages|github:meain/nur-packages/aw-watcher-mpd|' flake.nix
+          nix build .#homeConfigurations.meain.activationPackage
+          home-manager build
