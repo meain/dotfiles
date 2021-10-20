@@ -1929,12 +1929,17 @@ Pass ORIGINAL and ALTERNATE options."
               (kbd "D")
               (lambda ()
                 (interactive)
-                (setq elfeed-search-filter "@2-months-ago +unread")
+                (setq elfeed-search-filter "@2-months-ago -nah +unread")
                 (elfeed-search-update :force)))
             (evil-define-key 'normal
               elfeed-search-mode-map
               (kbd "q")
               'elfeed-db-unload)
+            (defun meain/elfeed-filter (entry)
+              "Elfeed hook for `ENTRY' to tag thing I don't really care about."
+              (if (string-match "book review" (downcase (elfeed-entry-title entry)))
+                  (elfeed-tag entry 'nah)))
+            (add-hook 'elfeed-new-entry-hook #'meain/elfeed-filter)
             (defun meain/elfeed-open-all ()
               (interactive)
               (with-current-buffer "*elfeed-search*"
@@ -1952,7 +1957,7 @@ Pass ORIGINAL and ALTERNATE options."
               'meain/elfeed-open-all)
             (defun meain/elfeed-search-filter ()
               (interactive)
-              (setq elfeed-search-filter "@2-months-ago +unread")
+              (setq elfeed-search-filter "@2-months-ago -nah +unread")
               (elfeed-search-update :force)
               (let ((tag (completing-read "Apply tag: "
                                           (remove-if (lambda (x)
@@ -1967,7 +1972,7 @@ Pass ORIGINAL and ALTERNATE options."
                                           nil
                                           t
                                           "\\.")))
-                (setq elfeed-search-filter (concatenate 'string "@2-months-ago +unread +"
+                (setq elfeed-search-filter (concatenate 'string "@2-months-ago -nah +unread +"
                                                         tag))
                 (elfeed-search-update :force)
                 (evil-goto-first-line)))
@@ -1976,6 +1981,7 @@ Pass ORIGINAL and ALTERNATE options."
               (setq elfeed-search-filter (mapconcat 'identity
                                                     (remove-if-not (lambda (x)
                                                                      (or (string-prefix-p "+" x)
+                                                                         (string-prefix-p "-" x)
                                                                          (string-prefix-p "@" x)))
                                                                    (split-string elfeed-search-filter))
                                                     " "))
@@ -2001,7 +2007,7 @@ Pass ORIGINAL and ALTERNATE options."
                                                                    "\\s-")))
                 (elfeed-search-update :force)
                 (evil-goto-first-line)))
-            (setq-default elfeed-search-filter "@2-months-ago +unread ")
+            (setq-default elfeed-search-filter "@2-months-ago -nah +unread ")
             (setq elfeed-use-curl t)
             (setq elfeed-curl-max-connections 10)
             (setq elfeed-db-directory "~/.config/emacs/elfeed/")
