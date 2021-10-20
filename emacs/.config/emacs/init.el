@@ -1850,7 +1850,7 @@ Pass ORIGINAL and ALTERNATE options."
                                                 :sort-order newest-first)
                                          (:name "drafts" :query "tag:draft AND tag:inbox"
                                                 :key "d")
-                                         (:name "unread" :query "tag:unread AND tag:inbox AND -tag:python AND -tag:git AND -tag:newsletter AND -tag:jobhunt"
+                                         (:name "unread" :query "tag:unread AND tag:inbox AND -tag:python AND -tag:git AND -tag:newsletter AND -tag:jobhunt AND -tag:imbox"
                                                 :key "u")
                                          (:name "python" :query "tag:python AND tag:inbox"
                                                 :key "p")
