@@ -88,12 +88,13 @@
     # programming-shell
     shellcheck # shell checker
     shfmt # shell code format
-    nodePackages.bash-language-server # bash languageserver
+    nodePackages.bash-language-server # bash language-server
 
     # programming-go
     go # go programming language
-    go-langserver # go languageserve
+    go-langserver # go language-server
     goimports # go formatter
+    golangci-lint # all kinds of linters for go
 
     # programming-web
     html-tidy # html formatter
@@ -121,7 +122,7 @@
     python39Packages.pycodestyle # code style check
     python39Packages.pydocstyle # doc style check
     python39Packages.requests # http lib for quick stuff
-    python39Packages.virtualenv # virual envs
+    python39Packages.virtualenv # virtual envs
     python39Packages.bandit # analyze code for security issues
     python39Packages.mypy # check types in code
     python39Packages.isort # fix sort order
