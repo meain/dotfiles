@@ -630,6 +630,11 @@ Pass ORIGINAL and ALTERNATE options."
                       (lambda ()
                         (interactive)
                         (insert-file-contents (expand-file-name "~/.config/datafiles/html_starter"))))
+    (aas-set-snippets 'nix-mode
+                      ";bang"
+                      (lambda ()
+                        (interactive)
+                        (insert-file-contents (expand-file-name "~/.config/datafiles/starter-default.nix"))))
     (aas-set-snippets 'markdown-mode
                       ";bang"
                       (lambda ()
