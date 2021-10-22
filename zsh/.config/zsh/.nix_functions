@@ -23,3 +23,11 @@ nix-graph() {
     nix-store -q --graph "/nix/store/$fullname" | dot -Tsvg > /tmp/nixgraph.svg
     open /tmp/nixgraph.svg
 }
+
+ ns() {
+    if [ -z "$1" ]; then
+        nix-shell --run $SHELL
+    else
+        nix-shell --run $SHELL -p $*
+    fi
+}
