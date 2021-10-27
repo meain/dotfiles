@@ -1960,11 +1960,11 @@ Pass ORIGINAL and ALTERNATE options."
               elfeed-search-mode-map
               (kbd "q")
               'elfeed-db-unload)
-            (defun meain/elfeed-filter (entry)
-              "Elfeed hook for `ENTRY' to tag thing I don't really care about."
-              (if (string-match "book review" (downcase (elfeed-entry-title entry)))
-                  (elfeed-tag entry 'nah)))
-            (add-hook 'elfeed-new-entry-hook #'meain/elfeed-filter)
+            ;; (defun meain/elfeed-filter (entry)
+            ;;   "Elfeed hook for `ENTRY' to tag thing I don't really care about."
+            ;;   (if (string-match "book review" (downcase (elfeed-entry-title entry)))
+            ;;       (elfeed-tag entry 'nah)))
+            ;; (add-hook 'elfeed-new-entry-hook #'meain/elfeed-filter)
             (defun meain/elfeed-open-all ()
               (interactive)
               (with-current-buffer "*elfeed-search*"
