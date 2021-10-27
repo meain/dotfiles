@@ -160,9 +160,9 @@ preexec() {
 	fi
 }
 
-# load nix
-. /Users/meain/.nix-profile/etc/profile.d/nix.sh
-. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+# load nix (not needed on nixos)
+. $HOME/.nix-profile/etc/profile.d/nix.sh
+. $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh
 
 setdarkmode quiet # set dark or light mode
 export ZSH_LOADED=1
