@@ -247,7 +247,8 @@ hs.hotkey.bind(
     "e",
     function()
         emailNotify(true)
-        customshellrun.run("tmux refresh-client -S")
+        customshellrun.run("emacsclient")
+        customshellrun.run("emacsclient -e '(meain/update-scratch-message)'")
         emailPathWatcher:stop()
         emailPathWatcher = hs.pathwatcher.new("/Users/meain/.local/share/mail/.notmuch/xapian", emailNotify)
         emailPathWatcher:start()
@@ -261,6 +262,7 @@ hs.hotkey.bind(
         customshellrun.run("notmuch tag +notified tag:imbox and tag:unread", true)
         emailNotify(false)
         customshellrun.run("tmux refresh-client -S")
+        customshellrun.run("emacsclient -e '(meain/update-scratch-message)'")
     end
 )
 
