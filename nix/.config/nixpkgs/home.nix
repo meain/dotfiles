@@ -53,6 +53,7 @@
     ledger # double entry accounting
     dasel # jq but more versatile
     # haskellPackages.kmonad # keyboard remapping
+    mosh
 
     # aspell dicts
     aspellDicts.en
