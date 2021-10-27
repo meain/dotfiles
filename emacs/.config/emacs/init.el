@@ -812,6 +812,26 @@ Pass ORIGINAL and ALTERNATE options."
             (add-hook 'go-mode-hook
                       (lambda ()
                         (add-hook 'flymake-diagnostic-functions 'flymake-govet
+                                  nil t)))
+            (flymake-quickdef-backend flymake-golangci
+              :pre-let ((golangci-exec (executable-find "golangci-lint"))):pre-check
+              (unless golangci-exec
+                (error "Cannot find golangci-lint executable"))
+              :write-type 'file
+              :proc-form (list golangci-exec "--print-issued-lines=false"
+                               "--out-format=line-number" fmqd-temp-file):search-regexp
+              "^\\([^:]+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\): \\(.*\\)$"
+              :prep-diagnostic (let* ((lnum (string-to-number (match-string 2)))
+                                      (col (string-to-number (match-string 3)))
+                                      (text (match-string 4))
+                                      (pos (flymake-diag-region fmqd-source lnum col))
+                                      (beg (car pos))
+                                      (end (cdr pos))
+                                      (msg (format "golangci> %s" text)))
+                                 (list fmqd-source beg end :warning msg)))
+            (add-hook 'go-mode-hook
+                      (lambda ()
+                        (add-hook 'flymake-diagnostic-functions 'flymake-golangci
                                   nil t)))))
 
 ;; Company for autocompletions
