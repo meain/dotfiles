@@ -3,9 +3,8 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-
-let 
-  kmonad = (import ./kmonad.nix) pkgs;
+let
+personal = import (builtins.fetchTarball "https://github.com/meain/nix-channel/archive/06faf41211569f8551a3d966874daffc1418daa5.tar.gz"){};
 in
 {
   imports =
@@ -22,11 +21,12 @@ in
   # Define on which hard drive you want to install Grub.
   boot.loader.grub.device = "/dev/sda"; # or "nodev" for efi only
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "bee"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Set your time zone.
   # time.timeZone = "Europe/Amsterdam";
+
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
@@ -46,16 +46,27 @@ in
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
-  services.xserver = {
-    desktopManager = {
-      xterm.enable = false;
-      xfce.enable = true;
-    };
-    displayManager.defaultSession = "xfce";
-  };
 
+  # services.udev.packages = with pkgs; [ gnome3.gnome-settings-daemon ];
 
-  
+  # Enable the GNOME Desktop Environment.
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
+  services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
+  [org.gnome.desktop.background]
+  picture-uri='file:///home/meain/wallpaper.jpg'
+
+  [org.gnome.desktop.interface]
+  gtk-theme='Fluent-light-compact'
+  font-name='Unifont 10'
+  monospace-font-name='Unifont 10'
+
+  [org.gnome.shell]
+  disable-user-extensions=false
+  disabled-extensions=[]
+  enabled-extensions=['dash-to-panel@jderose9.github.com', 'clipboard-indicator@tudmotu.com', 'blur-my-shell@aunetx']
+  favorite-apps=['org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop', 'firefox.desktop']
+'';
 
   # Configure keymap in X11
   # services.xserver.layout = "us";
@@ -72,22 +83,39 @@ in
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  programs.zsh.enable = true;
   users.users.meain = {
     isNormalUser = true;
     initialPassword = "password";
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-    shell = pkgs.zsh;
+  };
+
+  systemd.services.kmonad = {
+    enable = true;
+    description = "KMonad";
+    serviceConfig = {
+      Type = "simple";
+      ExecStart = "${personal.kmonad}/bin/kmonad /home/meain/.config/kmonad/master.kbd";
+    };
+    wantedBy = [ "graphical.target" ];
   };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    vim
-    wget
-    midori
-    xfce.xfce4-genmon-plugin
-    kmonad
+  environment.systemPackages = [
+    pkgs.vim
+    pkgs.git
+    pkgs.stow
+    pkgs.wget
+    pkgs.firefox
+    pkgs.gnome3.dconf-editor
+    pkgs.gnome.gnome-tweaks
+    personal.kmonad
+   
+    # gnome tweaking
+    personal.fluent-theme
+    pkgs.gnomeExtensions.dash-to-panel
+    pkgs.gnomeExtensions.blur-my-shell
+    pkgs.gnomeExtensions.clipboard-indicator
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
