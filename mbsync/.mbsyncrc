@@ -5,7 +5,6 @@ User abinsimon10@gmail.com
 PassCmd "echo $GOOGLE_PASSWORD"
 AuthMechs LOGIN
 SSLType IMAPS
-CertificateFile /etc/ssl/cert.pem
 
 MaildirStore meain-local
 Subfolders Verbatim
