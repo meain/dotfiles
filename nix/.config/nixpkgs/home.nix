@@ -247,18 +247,7 @@ in
     };
   };
 
-  systemd.user.services.kmonad = {
-    Unit = {
-      Description="Kmonadddddd";
-    };
-    # description="Kmonad keyboard remapping thingy";
-    # enable=true;
-    serviceConfig = {
-      ExecStart="${personal.kmonad}/bin/kmonad /home/meain/.config/kmonad/master.kbd";
-    };
-  };
-
-# This value determines the Home Manager release that your # configuration is compatible with. This helps avoid breakage # when a new Home Manager release introduces backwards
+  # This value determines the Home Manager release that your # configuration is compatible with. This helps avoid breakage # when a new Home Manager release introduces backwards
   # incompatible changes.
   #
   # You can update Home Manager without changing this value. See
