@@ -87,6 +87,7 @@ in
     isNormalUser = true;
     initialPassword = "password";
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    shell=pkgs.zsh;
   };
 
   systemd.services.kmonad = {
