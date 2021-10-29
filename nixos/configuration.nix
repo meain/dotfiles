@@ -64,8 +64,8 @@ in
   [org.gnome.shell]
   disable-user-extensions=false
   disabled-extensions=[]
-  favorite-apps=['org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop', 'firefox.desktop']
   enabled-extensions=['dash-to-panel@jderose9.github.com', 'clipboard-indicator@tudmotu.com', 'blur-my-shell@aunetx', 'caffeine@patapon.info', 'gsconnect@andyholmes.github.io', 'no-overview@fthx']
+  favorite-apps=['org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop', 'chromium-browser.desktop']
 '';
 
   # Configure keymap in X11
@@ -103,10 +103,8 @@ in
   # $ nix search wget
   environment.systemPackages = [
     pkgs.vim
-    pkgs.git
-    pkgs.stow
     pkgs.wget
-    pkgs.firefox
+    pkgs.ungoogled-chromium
     pkgs.gnome3.dconf-editor
     pkgs.gnome.gnome-tweaks
     personal.kmonad
