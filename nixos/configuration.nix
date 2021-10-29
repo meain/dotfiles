@@ -64,8 +64,8 @@ in
   [org.gnome.shell]
   disable-user-extensions=false
   disabled-extensions=[]
-  enabled-extensions=['dash-to-panel@jderose9.github.com', 'clipboard-indicator@tudmotu.com', 'blur-my-shell@aunetx']
   favorite-apps=['org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop', 'firefox.desktop']
+  enabled-extensions=['dash-to-panel@jderose9.github.com', 'clipboard-indicator@tudmotu.com', 'blur-my-shell@aunetx', 'caffeine@patapon.info', 'gsconnect@andyholmes.github.io', 'no-overview@fthx']
 '';
 
   # Configure keymap in X11
@@ -116,6 +116,9 @@ in
     pkgs.gnomeExtensions.dash-to-panel
     pkgs.gnomeExtensions.blur-my-shell
     pkgs.gnomeExtensions.clipboard-indicator
+    pkgs.gnomeExtensions.gsconnect
+    pkgs.gnomeExtensions.caffeine
+    pkgs.gnomeExtensions.no-overview
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
