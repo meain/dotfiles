@@ -12,6 +12,13 @@ in
   home.homeDirectory = "/home/meain";
 
   services.emacs.enable = true;
+  services = {
+    syncthing = {
+      enable = true;
+      tray.enable = true;
+    };
+  };
+
   home.packages = [
     # core utils
     pkgs.ripgrep
