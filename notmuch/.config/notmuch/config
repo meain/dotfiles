@@ -1,5 +1,5 @@
 [database]
-path=/Users/meain/.local/share/mail
+path=/home/meain/.local/share/mail
 
 [user]
 name=Abin Simon
