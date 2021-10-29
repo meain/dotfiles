@@ -71,3 +71,6 @@ export PATH="$PATH:/Applications/Emacs.app/Contents/MacOS:/Applications/Emacs.ap
 
 # mail
 export MAILDIR=$HOME/.local/share/mail/meain
+
+# nix
+export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
