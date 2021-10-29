@@ -1,6 +1,6 @@
 { lib, config, pkgs, ... }:
 let
-personal = import (builtins.fetchTarball "https://github.com/meain/nix-channel/archive/4780703f9bcb313759aecf11cc231953e77f43f3.tar.gz"){};
+  personal = import (builtins.fetchTarball "https://github.com/meain/nix-channel/archive/4780703f9bcb313759aecf11cc231953e77f43f3.tar.gz") { };
 in
 {
   programs.home-manager.enable = true;
@@ -206,30 +206,30 @@ in
 
   dconf.settings = {
     "org/gnome/nautilus/preferences" = {
-      default-folder-viewer="icon-view";
+      default-folder-viewer = "icon-view";
     };
     "org/gnome/nautilus/icon-view" = {
-      default-zoom-level="small";
+      default-zoom-level = "small";
     };
 
     "org/gnome/shell/keybindings" = {
-      toggle-overview=["<Super>Space"];
+      toggle-overview = [ "<Super>Space" ];
     };
 
     "org/gnome/shell/extensions/dash-to-panel" = {
-      appicon-margin=0;
-      appicon-padding=3;
-      available-monitors=[0];
-      dot-position="BOTTOM";
-      hotkeys-overlay-combo="TEMPORARILY";
-      leftbox-padding=-1;
-      panel-anchors="{\"0\":\"MIDDLE\"}";
-      panel-lengths="{\"0\":100}";
-      panel-positions="{\"0\":\"TOP\"}";
-      panel-sizes="{\"0\":24}";
-      status-icon-padding=-1;
-      tray-padding=-1;
-      window-preview-title-position="TOP";
+      appicon-margin = 0;
+      appicon-padding = 3;
+      available-monitors = [ 0 ];
+      dot-position = "BOTTOM";
+      hotkeys-overlay-combo = "TEMPORARILY";
+      leftbox-padding = -1;
+      panel-anchors = "{\"0\":\"MIDDLE\"}";
+      panel-lengths = "{\"0\":100}";
+      panel-positions = "{\"0\":\"TOP\"}";
+      panel-sizes = "{\"0\":24}";
+      status-icon-padding = -1;
+      tray-padding = -1;
+      window-preview-title-position = "TOP";
     };
 
     "org/gnome/desktop/interface" = {
@@ -240,10 +240,10 @@ in
     };
     "org/gnome/desktop/wm/keybindings" = {
       # close = ["<Super>w"];
-      switch-to-workspace-left = ["<Alt>u"];
-      switch-to-workspace-right = ["<Alt>i"];
-      move-to-workspace-left = ["<Alt><Shift>u"];
-      move-to-workspace-right = ["<Alt><Shift>i"];
+      switch-to-workspace-left = [ "<Alt>u" ];
+      switch-to-workspace-right = [ "<Alt>i" ];
+      move-to-workspace-left = [ "<Alt><Shift>u" ];
+      move-to-workspace-right = [ "<Alt><Shift>i" ];
     };
   };
 
