@@ -104,8 +104,8 @@
 (setq scroll-margin 3)
 
 ;; Backup and autosave somewhere else
-(setq backup-directory-alist `((".*" . "~/.cache/emacs/backup")))
-(setq auto-save-file-name-transforms `((".*" "~/.cache/emacs/autosave" t)))
+(setq backup-directory-alist `((".*" . "~/.local/share/emacs/backup")))
+(setq auto-save-file-name-transforms `((".*" "~/.local/share/emacs/autosave" t)))
 
 ;; Don't create lockfiles
 (setq create-lockfiles nil)
@@ -1283,7 +1283,7 @@ Pass ORIGINAL and ALTERNATE options."
   :straight t
   :init (progn
           (save-place-mode t)
-          (setq save-place-file "~/.cache/emacs/saveplace")))
+          (setq save-place-file "~/.local/share/emacs/saveplace")))
 
 ;; Persistent undo using undo-tree
 (use-package undo-tree
@@ -1293,7 +1293,7 @@ Pass ORIGINAL and ALTERNATE options."
     (setq undo-limit 80000000)
     (setq evil-want-fine-undo nil)
     (setq undo-tree-auto-save-history t)
-    (setq undo-tree-history-directory-alist '(("." . "~/.cache/emacs/undo"))))
+    (setq undo-tree-history-directory-alist '(("." . "~/.local/share/emacs/undo"))))
   :init (global-undo-tree-mode t))
 
 ;; Fancier tab managerment
@@ -1576,7 +1576,7 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package virtualenvwrapper
   :straight t
   :commands venv-workon
-  :init (setq venv-location "~/.cache/virtual_envs"))
+  :init (setq venv-location "~/.local/share/virtual_envs"))
 
 ;; Quick run current test
 (use-package emacs
@@ -2367,7 +2367,7 @@ Pass ORIGINAL and ALTERNATE options."
   :straight t
   :commands (rfc-mode-browse rfc-mode-read):config
   (progn
-    (setq rfc-mode-directory (expand-file-name "~/.cache/rfc/"))
+    (setq rfc-mode-directory (expand-file-name "~/.local/share/rfc/"))
     (add-hook 'rfc-mode-hook 'writeroom-mode)))
 
 (use-package ledger-mode
@@ -2491,13 +2491,13 @@ SHORTCUT is the keybinding to use.  NAME if the func suffix and FILE is the file
 (meain/quick-file-open-builder "l" "ledger"
   "~/.local/share/ledger/master.ledger")
 (meain/quick-file-open-builder "i" "interesting"
-  "~/.notes/note/interesting-links.md")
+  "~/.local/share/notes/note/interesting-links.md")
 (meain/quick-file-open-builder "u" "useful-someday"
-  "~/.notes/note/useful-someday.md")
+  "~/.local/share/notes/note/useful-someday.md")
 (meain/quick-file-open-builder "r" "frequent-web-references"
-  "~/.notes/note/web-references.md")
+  "~/.local/share/notes/note/web-references.md")
 (meain/quick-file-open-builder "m" "thing-for-today"
-  "~/.cache/mobdump/thing-for-today")
+  "~/.local/share/vime/thing-for-today")
 (meain/quick-file-open-builder "M" "thing-for-today-personal"
   "Zoom in and out of single window.")
 
@@ -2529,7 +2529,7 @@ SHORTCUT is the keybinding to use.  NAME if the func suffix and FILE is the file
                                              nil
                                              (format "%s" major-mode)))
         (scratch-file-name (concatenate 'string
-                                        "~/.cache/scratch/"
+                                        "~/.local/share/scratch/"
                                         (substring (uuid-string)
                                                    0
                                                    4))))
@@ -2549,7 +2549,7 @@ SHORTCUT is the keybinding to use.  NAME if the func suffix and FILE is the file
   (marginalia)
   :config (progn
             (defun meain/marginalia-annotate-vime (cand)
-              (when-let (root "~/.cache/vime/")
+              (when-let (root "~/.local/share/vime/")
                 (marginalia-annotate-file (expand-file-name (car (split-string cand " "))
                                                             root))))
             (add-to-list 'marginalia-annotator-registry
@@ -2560,7 +2560,7 @@ SHORTCUT is the keybinding to use.  NAME if the func suffix and FILE is the file
             (defun meain/vime-name-append (filename)
               "Util function used to parse :name block for vime entries.  FILENAME is the name of the vime file."
               (with-temp-buffer
-                (insert-file-contents (concatenate 'string "~/.cache/vime/" filename))
+                (insert-file-contents (concatenate 'string "~/.local/share/vime/" filename))
                 (concatenate 'string
                              filename
                              (if (s-starts-with-p ":name"
@@ -2572,23 +2572,23 @@ SHORTCUT is the keybinding to use.  NAME if the func suffix and FILE is the file
                                                                               "\n")))
                                ""))))
             (defun meain/vime (&optional listitems)
-              "Load a random file inside ~/.cache/vime dir.  Used as a temp notes dir.
+              "Load a random file inside vime dir.  Used as a temp notes dir.
 Pass in `LISTITEMS to decide if you wanna create a new item or search for existing items."
               (interactive "P")
               (if listitems
                   (let ((selectrum-should-sort nil))
-                    (find-file (concat "~/.cache/vime/"
+                    (find-file (concat "~/.local/share/vime/"
                                        (car (split-string (completing-read "Choose vime: "
                                                                            (mapcar (lambda (x)
                                                                                      (meain/vime-name-append (car x)))
                                                                                    (sort (remove-if-not #'(lambda (x)
                                                                                                             (eq (nth 1 x) nil))
-                                                                                                        (directory-files-and-attributes "~/.cache/vime"))
+                                                                                                        (directory-files-and-attributes "~/.local/share/vime"))
                                                                                          #'(lambda (x y)
                                                                                              (time-less-p (nth 6 y)
                                                                                                           (nth 6 x)))))))))))
                 (progn
-                  (find-file (concat "~/.cache/vime/_"
+                  (find-file (concat "~/.local/share/vime/_"
                                      (substring (uuid-string)
                                                 0
                                                 4)))
@@ -2630,7 +2630,7 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
                                                 (equal (nth 0 x) "temp")))
                                         (directory-files-and-attributes directory)))))
             (defun meain/marginalia-annotate-note (cand)
-              (when-let (root "~/.notes/")
+              (when-let (root "~/.local/share/notes/")
                 (marginalia-annotate-file (expand-file-name cand root))))
             (add-to-list 'marginalia-annotator-registry
                          '(note meain/marginalia-annotate-note builtin
@@ -2641,9 +2641,9 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
               "Quick open a note from `.notes` directory."
               (interactive)
               (find-file (concatenate 'string
-                                      "~/.notes/"
+                                      "~/.local/share/notes/"
                                       (completing-read "Choose note: "
-                                                       (meain/nested-list-dir "~/.notes")))))):init
+                                                       (meain/nested-list-dir "~/.local/share/notes")))))):init
   (evil-leader/set-key "a N" 'meain/open-note))
 
 
