@@ -201,6 +201,7 @@ in
     pkgs.htop
     pkgs.diff-so-fancy
     personal.traffic
+    pkgs.trash-cli
   ];
 
   dconf.settings = {
