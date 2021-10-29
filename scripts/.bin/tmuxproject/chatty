@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 cd ~/Documents/Projects/work/saama/dalia || exit 1
 SESSION=chatty

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 cd ~/Documents/Projects/work/saama/automl/kqrunner || exit 1
 SESSION=kqrunner
