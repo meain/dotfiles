@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 # https://notmuchmail.org/pipermail/notmuch/2019/028956.html
 
 set -e

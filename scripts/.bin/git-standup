@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 # https://github.com/kamranahmedse/git-standup/blob/master/git-standup
 
 # Shows the usage

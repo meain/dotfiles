@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 # modified from http://ficate.com/blog/2012/10/15/battery-life-in-the-land-of-tmux/
 
 HEART='♥ '

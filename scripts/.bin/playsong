@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 SONG="$(cat <(mpc playlist | sed 's|.*/||;s|\.[^\.]*$||') | fzf)"
 if [ -n "$SONG" ];then
