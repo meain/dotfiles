@@ -247,6 +247,14 @@ in
     };
   };
 
+  systemd.user.services.git-syncer = {
+    Service.Type = "oneshot";
+    Service.WorkingDirectory = "/home/meain/.local/share/notes";
+    Service.ExecStart = "${pkgs.git}/bin/git add . ; ${pkgs.git}/bin/git commit -m 'Updating notes' ; ${pkgs.git}/bin/git push origin master";
+    Timer.OnCalendar = [ "*-*-* *:00:00" ];
+    Timer.Persistent=true;
+  };
+
   # This value determines the Home Manager release that your # configuration is compatible with. This helps avoid breakage # when a new Home Manager release introduces backwards
   # incompatible changes.
   #
