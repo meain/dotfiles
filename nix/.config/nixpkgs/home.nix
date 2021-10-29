@@ -3,11 +3,7 @@ let
 personal = import (builtins.fetchTarball "https://github.com/meain/nix-channel/archive/4780703f9bcb313759aecf11cc231953e77f43f3.tar.gz"){};
 in
 {
-  # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
-
-  # Home Manager needs a bit of information about you and the
-  # paths it should manage.
   home.username = "meain";
   home.homeDirectory = "/home/meain";
 
@@ -65,7 +61,6 @@ in
     pkgs.restic # backup
     pkgs.ledger # double entry accounting
     pkgs.dasel # jq but more versatile
-    # pkgs.haskellPackages.kmonad # keyboard remapping
     pkgs.mosh
 
     # aspell dicts
