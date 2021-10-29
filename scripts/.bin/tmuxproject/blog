@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 cd ~/Documents/Projects/projects/blog || exit 1
 SESSION=blog

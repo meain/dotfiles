@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 cd ~/.dotfiles || exit 1
 SESSION=dotfiles
