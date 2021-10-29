@@ -1,6 +1,6 @@
 { lib, config, pkgs, ... }:
 let
-personal = import (builtins.fetchTarball "https://github.com/meain/nix-channel/archive/c146160cd9520808f9ca6e749a6d9e8fc4742de1.tar.gz"){};
+personal = import (builtins.fetchTarball "https://github.com/meain/nix-channel/archive/4780703f9bcb313759aecf11cc231953e77f43f3.tar.gz"){};
 in
 {
   # Let Home Manager install and manage itself.
@@ -14,6 +14,8 @@ in
   home.packages = [
     # core utils
     pkgs.ripgrep
+    pkgs.lsd
+    pkgs.neovim
     pkgs.fd
     pkgs.jq
     pkgs.git
@@ -22,17 +24,18 @@ in
     pkgs.cmake
     pkgs.curl
     pkgs.zsh
+    pkgs.gnupg
     pkgs.coreutils
 
     # packages
-    pkgs.notmuch # mail indexer
+    personal.notmuch-git # mail indexer
     pkgs.isync # mail syncronize with upstrem
     pkgs.htop # process monitor
     pkgs.mpc_cli # remote for mpd
     pkgs.mpd # music player
     pkgs.axel # download manager
     pkgs.pandoc # convert document between different formats
-    pkgs.xsv # view/manage csv from terminal
+    # pkgs.xsv # view/manage csv from terminal
     pkgs.parallel # exec things in parallel
     pkgs.fortune # give me a fortune
     pkgs.lf # better ranger alternative
@@ -60,32 +63,32 @@ in
     pkgs.aspellDicts.en
 
     # apps
-    pkgs.kubectl # kubernetes cli
-    pkgs.kubernetes-helm # helm cli
-    pkgs.youtube-dl # download youtube videos
-    pkgs.chafa # show images in terminal using half blocks
+    # pkgs.kubectl # kubernetes cli
+    # pkgs.kubernetes-helm # helm cli
+    # pkgs.youtube-dl # download youtube videos
+    # pkgs.chafa # show images in terminal using half blocks
     pkgs.hub # Github integration for git
     pkgs.lynx # terminal web browser
     pkgs.imagemagick # image manip cli
     pkgs.ffmpeg # video manip cli
-    pkgs.gnuplot # plotting
+    # pkgs.gnuplot # plotting
     pkgs.ddgr # search ddg from terminal
     pkgs.dasht # terminal docs
     # taskwarrior # task management
     pkgs.todo-txt-cli # todo management
-    pkgs.pkgs.ts # task spooler
+    # pkgs.pkgs.ts # task spooler
     pkgs.pkgs.pstree # view process tree
     pkgs.pkgs.jiq # interactive jiq
     pkgs.pkgs.tldr # simpler man pages
-    pkgs.pkgs.silicon # create pretty code screenshots
-    pkgs.pkgs.transmission # torrent stuff
-    pkgs.pkgs.kube-prompt # interactive kubernetes cli
-    pkgs.pkgs.cowsay # useless stuff
+    # pkgs.pkgs.silicon # create pretty code screenshots
+    # pkgs.pkgs.transmission # torrent stuff
+    # pkgs.pkgs.kube-prompt # interactive kubernetes cli
+    # pkgs.pkgs.cowsay # useless stuff
     pkgs.podman # pod manager
 
     # programming
     pkgs.gist # create gist
-    pkgs.hey # http load generator
+    # pkgs.hey # http load generator
 
     # programming-shell
     pkgs.shellcheck # shell checker
@@ -99,16 +102,16 @@ in
     pkgs.golangci-lint # all kinds of linters for go
 
     # programming-web
-    pkgs.html-tidy # html formatter
-    pkgs.nodejs # nodejs
-    pkgs.nodePackages.neovim # neovim package for js support
-    pkgs.nodePackages.fixjson # much better json formatter
-    pkgs.nodePackages.stylelint # css linter
-    pkgs.nodePackages.prettier # formatting for web stuff
-    pkgs.nodePackages.pnpm # package management
-    pkgs.nodePackages.typescript # typescript
-    pkgs.nodePackages.vscode-css-languageserver-bin # css languageserver
-    pkgs.nodePackages.javascript-typescript-langserver # javascript langserver
+    # pkgs.html-tidy # html formatter
+    # pkgs.nodejs # nodejs
+    # pkgs.nodePackages.neovim # neovim package for js support
+    # pkgs.nodePackages.fixjson # much better json formatter
+    # pkgs.nodePackages.stylelint # css linter
+    # pkgs.nodePackages.prettier # formatting for web stuff
+    # pkgs.nodePackages.pnpm # package management
+    # pkgs.nodePackages.typescript # typescript
+    # pkgs.nodePackages.vscode-css-languageserver-bin # css languageserver
+    # pkgs.nodePackages.javascript-typescript-langserver # javascript langserver
 
     # programming-nix
     pkgs.rnix-lsp # nix language server
@@ -129,37 +132,37 @@ in
     pkgs.python39Packages.mypy # check types in code
     pkgs.python39Packages.isort # fix sort order
     pkgs.python39Packages.pygments # generic syntax highlight
-    # pkgs.python38Packages.python-language-server # python lsp (using below one as tests are failing)
-    (pkgs.python38Packages.python-language-server.overridePythonAttrs (oldAttrs: { checkPhase = ""; checkInputs = []; }))
+    pkgs.python38Packages.python-language-server # python lsp (using below one as tests are failing)
+    # (pkgs.python38Packages.python-language-server.overridePythonAttrs (oldAttrs: { checkPhase = ""; checkInputs = []; }))
 
     # programming-rust
-    pkgs.rustc # compiler
-    pkgs.cargo # package manager
-    pkgs.rustfmt # formatter
-    pkgs.clippy # the useful clippy
-    pkgs.rust-analyzer # lsp for rust
-    pkgs.cargo-edit # dep management
-    pkgs.cargo-bloat # find big chunks
-    pkgs.cargo-udeps # find unnecessary deps
-    pkgs.cargo-release # for releasing packages
+    # pkgs.rustc # compiler
+    # pkgs.cargo # package manager
+    # pkgs.rustfmt # formatter
+    # pkgs.clippy # the useful clippy
+    # pkgs.rust-analyzer # lsp for rust
+    # pkgs.cargo-edit # dep management
+    # pkgs.cargo-bloat # find big chunks
+    # pkgs.cargo-udeps # find unnecessary deps
+    # pkgs.cargo-release # for releasing packages
     # cargo-watch # continuously run cargo check
 
     # programming-other
-    pkgs.nodePackages.yaml-language-server
-    pkgs.nodePackages.vscode-json-languageserver
+    # pkgs.nodePackages.yaml-language-server
+    # pkgs.nodePackages.vscode-json-languageserver
 
     # gui
-    pkgs.mpv # audio/video player
-    pkgs.alacritty # terminal emulator
+    # pkgs.mpv # audio/video player
+    # pkgs.alacritty # terminal emulator
 
     # others
-    pkgs.redis # key value db
-    pkgs.postgresql_13 # postgres 13 (postgresql is at 11)
+    # pkgs.redis # key value db
+    # pkgs.postgresql_13 # postgres 13 (postgresql is at 11)
     # pkgs.mongodb # document db
-    pkgs.sqlite # better db
+    # pkgs.sqlite # better db
     # pkgs.minikube # mini kubernetes
-    pkgs.awscli # manage aws
-    pkgs.google-cloud-sdk # manage google cloud
+    # pkgs.awscli # manage aws
+    # pkgs.google-cloud-sdk # manage google cloud
 
     # optional
     # pkgs.ncdu # disk usage viewer tui
@@ -182,8 +185,8 @@ in
     # pkgs.cmatrix # matrix thingy in shell
     # pkgs.graphviz # draw graphs with code
     # pkgs.pgcli # fancier postgres cli
-    pkgs.trivy # docker vulnerability scanner
-    pkgs.act # github ci locally
+    # pkgs.trivy # docker vulnerability scanner
+    # pkgs.act # github ci locally
 
     # tryout
     # pkgs.gforth # gnu forth interpreter
