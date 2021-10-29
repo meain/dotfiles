@@ -11,6 +11,7 @@ in
   home.username = "meain";
   home.homeDirectory = "/home/meain";
 
+  services.emacs.enable = true;
   home.packages = [
     # core utils
     pkgs.ripgrep
@@ -26,6 +27,7 @@ in
     pkgs.zsh
     pkgs.gnupg
     pkgs.coreutils
+    pkgs.emacs
 
     # packages
     personal.notmuch-git # mail indexer
@@ -195,7 +197,6 @@ in
     # linux-specific
     pkgs.victor-mono
     pkgs.htop
-    pkgs.emacs
     pkgs.diff-so-fancy
     personal.traffic
   ];
