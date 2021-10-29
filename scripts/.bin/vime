@@ -4,7 +4,7 @@
 
 set -e
 
-DIR="$HOME/.cache/vime"
+DIR="$HOME/.local/share/vime"
 mkdir -p "$DIR"
 if [ "$1" = "list" ]; then
     ls -t "$DIR" | {

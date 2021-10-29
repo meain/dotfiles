@@ -2,5 +2,5 @@
 
 set -e
 
-IDEA_FOLDER="$HOME/.notes/idea"
+IDEA_FOLDER="$HOME/.local/share/notes/idea"
 \ls "$IDEA_FOLDER" | sed 's|.md$||' | shuf -n1

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-NOTES_FOLDER="$HOME/.notes"
+NOTES_FOLDER="$HOME/.local/share/notes"
 mkdir -p "$NOTES_FOLDER/archive"
 cd "$NOTES_FOLDER" || echo "Notes folder does not seem to exist" || exit 1
 
