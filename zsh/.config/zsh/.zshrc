@@ -5,7 +5,6 @@
 # Basic exports
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
-export TERM=screen-256color-italic
 
 source $ZDOTDIR/.zsh_path
 
