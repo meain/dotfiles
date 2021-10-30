@@ -252,6 +252,14 @@ in
     };
   };
 
+
+  systemd.user.services.email-sync = {
+    Service.Type = "oneshot";
+    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic ',mail-sync'";
+    Timer.OnCalendar = [ "*:0/15" ];  # every 15min
+    Timer.Persistent=true;
+  };
+
   # make this into a function??
   systemd.user.services.note-sync = {
     Service.Type = "oneshot";
