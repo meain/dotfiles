@@ -101,6 +101,13 @@ in
     wantedBy = [ "graphical.target" ];
   };
 
+  # nextdns doh
+  services.nextdns = {
+    enable = true;
+    arguments = [ "-config" "3c68d5" ];  # I'm watching ;)
+  };
+
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = [
