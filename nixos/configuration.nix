@@ -44,10 +44,11 @@ in
   #   keyMap = "us";
   # };
 
+  # setup gpg
+  programs.gnupg.agent.enable = true;
+
   # Enable the X11 windowing system.
   services.xserver.enable = true;
-
-  # services.udev.packages = with pkgs; [ gnome3.gnome-settings-daemon ];
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
