@@ -1,3 +1,0 @@
-#!/bin/sh
-
-(cd ~/Documents/Projects/work/saama && gloc --ignore-errors --recurse-into --output --ignore-empty "git lg --color=always --since='yesterday' --author='Abin Simon'")

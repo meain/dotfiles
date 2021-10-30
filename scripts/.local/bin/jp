@@ -1,9 +1,0 @@
-#!/bin/zsh
-
-set -e
-
-. $ZDOTDIR/.zsh-custom/plugins/z/z.sh
-z "$1"
-FOLDER=$(pwd | sed 's:.*/::' | sed 's:^\.::')
-tmuxsession "$FOLDER"
-

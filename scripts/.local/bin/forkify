@@ -1,9 +1,0 @@
-#!/bin/sh
-
-set -e
-
-hub fork
-git remote rename origin upstream
-# not removing the remote meain so that hub wont fork it again
-git remote show meain | grep -o 'https://github.com/.*' |
-    head -n1 | xargs git remote add origin

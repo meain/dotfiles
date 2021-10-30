@@ -1,7 +1,0 @@
-#!/bin/sh
-
-set -e
-
-cd /tmp
-nohup mpv "$1" &
-clear

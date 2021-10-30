@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# Delete currently playing song in mpc
+
+set -e
+
+
+name="$(mpc --format '%file%' | head -n1)"
+cd "$MUSIC_PATH"  # TODO: can't we find the path from mpc?
+echo "$name" && trash "$name"

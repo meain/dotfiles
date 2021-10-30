@@ -1,5 +1,0 @@
-#!/bin/sh
-
-set -e
-
-nohup /usr/local/bin/mpv --sub-ass-override=strip -ontop -geometry '1000-0-0' "$(pbpaste)" >/dev/null 2>&1 &

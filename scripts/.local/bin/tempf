@@ -1,9 +1,0 @@
-#!/bin/sh
-
-set -e
-
-mkdir -p /tmp/tempf
-FILENAME="/tmp/tempf/$(basename "$(pbpaste)")"
-echo "FILENAME: $FILENAME"
-curl -L# "$(pbpaste)" > "$FILENAME"
-"$EDITOR" "$FILENAME"

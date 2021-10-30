@@ -1,8 +1,0 @@
-#!/bin/sh
-
-file="$1"
-title="$(ffprobe "$file" 2>&1 | grep 'title' | grep -o '[^:]*$' | sed 's| ||' | head -n1)"
-artist_or_album="$(ffprobe "$file" 2>&1 | grep -E '^\ *(album|artist)' | head -n1 | grep -o '[^:]*$' | sed 's| ||')"
-[ -z "$title" ] && [ -z "$artist_or_album" ] && exit 1
-[ "$file" = "./$title - $artist_or_album.mp3" ] && exit 0
-mv -v "$file" "$(dirname "$file")/$title - $artist_or_album.mp3"

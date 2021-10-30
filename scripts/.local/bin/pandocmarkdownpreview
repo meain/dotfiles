@@ -1,9 +1,0 @@
-#!/bin/sh
-
-set -e
-
-mkdir -p '/tmp/markdownpdfrenders'
-filename="/tmp/markdownpdfrenders/$(date '+%s').pdf"
-
-pandoc "$1" -t ms --pdf-engine-opt=-p -o "$filename" &&
-    qlmanage -p "$filename" >/dev/null 2>&1

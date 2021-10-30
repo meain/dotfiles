@@ -1,7 +1,0 @@
-#!/bin/sh
-
-set -e
-
-while true; do
-    mpc idle && tmux refresh-client -S
-done

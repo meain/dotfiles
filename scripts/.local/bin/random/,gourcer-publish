@@ -1,0 +1,15 @@
+#!/bin/sh
+
+set -e
+
+# check if we have items to push
+grep -qE '^-' $VIME_PATH/gourcer || exit 0
+
+cd $GOURCER_PATH
+git pull origin master --rebase
+cat $VIME_PATH/gourcer >>pending
+git add pending
+[ -f repo ] && rm repo && git add repo
+rm $VIME_PATH/gourcer && touch $VIME_PATH/gourcer
+git commit -m 'Update pending items'
+git push origin master

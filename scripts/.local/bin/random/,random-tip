@@ -1,0 +1,33 @@
+#!/bin/sh
+
+# Loads a random tip
+
+set -e
+
+FROM_FILE="$NOTES_PATH/resources/curated-dev-learning-resources"
+mkdir -p /tmp/tip-cache
+
+showlink(){
+    echo "$1" | tee -a ~/.cache/tip-links
+    open "$1"
+}
+
+# pull and cache link contents
+while read -r line; do
+    link="$(echo "$line" | awk '{print $1}')"
+    hash="$(echo "$link" | md5)"
+    [ -f "/tmp/tip-cache/$hash" ] && continue
+    echo "Caching $link" 1>&2
+    echo "$link" | xargs curl -s > "/tmp/tip-cache/$hash"
+done < "$FROM_FILE"
+
+
+link="$(shuf -n1 < "$FROM_FILE" | awk '{print $1}')"
+hash="$(echo "$link" | md5)"
+linkbase="$(echo "$link" | grep -oE 'https://[^/]*')"
+article="$(pup 'a attr{href}' < "/tmp/tip-cache/$hash" | shuf -n1)"
+if echo "$article" | grep -Eq '^https://';then
+    showlink "$article"
+else
+    showlink "$linkbase$article"
+fi

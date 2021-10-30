@@ -1,9 +1,0 @@
-#!/bin/sh
-
-set -e
-
-[ -z "$1" ] && echo "Pass task ID" >&2 && exit 1
-
-task "$1" 2>/dev/null | grep -oE 'https?://[^ ]*' | fzf | xargs open
-
-[ -n "$2" ] && task $*  # useful if we need to mark it as done after opening

@@ -1,8 +1,0 @@
-#!/bin/sh
-
-set -e
-
-ts | tail -n+2 | 
-    awk '{print $1,$6,$7,$8}' | 
-    fzf -m --preview 'ts -t {}' | 
-    cut -d' ' -f2- | xargs -L1 ts

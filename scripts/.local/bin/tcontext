@@ -1,6 +1,0 @@
-#!/bin/sh
-
-set -e
-
-task context define temp "$@ or project:chore"
-task context temp

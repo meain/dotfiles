@@ -1,6 +1,0 @@
-#!/bin/sh
-
-set -e
-
-FILE="$(\ls -Art -d ~/Documents/Screenshots/* | tail -n 1)"
-sender "$FILE"

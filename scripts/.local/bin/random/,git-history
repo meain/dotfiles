@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# Checkout a specific revision of git to a new folder
+
+set -e
+
+if [ -z "$1" ];then
+    CHECKOUT_LOC="$(git log --oneline | fzf | cut -d' ' -f1)"
+else
+    CHECKOUT_LOC="$1"
+fi
+
+
+DIR="/tmp/howwasit/$(basename $(pwd))-$CHECKOUT_LOC"
+git worktree add "$DIR" $CHECKOUT_LOC
+cd "$DIR" && zsh -i  # because we cannot cd there from inside a script

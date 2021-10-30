@@ -1,9 +1,0 @@
-#!/bin/sh
-
-tmux split-window -v -p 20
-tmux split-window -h -p 66
-tmux split-window -h -p 50
-tmux send-keys -t ${window}.2 'clear' Enter
-tmux send-keys -t ${window}.3 'clear' Enter
-tmux send-keys -t ${window}.4 'clear' Enter
-tmux select-pane -t 1

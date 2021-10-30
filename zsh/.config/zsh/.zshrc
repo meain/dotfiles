@@ -7,13 +7,11 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 source $ZDOTDIR/.zsh_path
+source $ZDOTDIR/universal-paths
 
 echo ""
-if ! onacall; then
-	randomidea | fmt -c -w $COLUMNS
-else
-	corpcrap | fmt -c -w $COLUMNS
-fi
+basename `find "$NOTES_PATH/idea" -name '*.md' | sed 's|.md$||' | shuf -n1` | fmt -c -w $COLUMNS
+# corpcrap | fmt -c -w $COLUMNS
 echo ""
 
 # zsh settings
@@ -51,7 +49,6 @@ ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 ZSH_AUTOSUGGEST_USE_ASYNC="true"
 
 # sourcing plugins & themes
-source `which spectrum` # for 256 colors
 source $ZDOTDIR/.zsh-custom/themes/snipe.zsh-theme
 source $ZDOTDIR/.zsh-custom/plugins/z/z.sh
 source $ZDOTDIR/.zsh-custom/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
@@ -162,7 +159,7 @@ preexec() {
 # load nix (not needed on nixos)
 . $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh
 
-setdarkmode quiet # set dark or light mode
+,darkmode quiet # set dark or light mode
 export ZSH_LOADED=1
 
 [ -n "$ZPROF" ] && zprof

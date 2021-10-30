@@ -1,8 +1,0 @@
-#!/bin/sh
-
-if [ -z $1 ];then
-    cp /tmp/wallpaper.jpg "$HOME/Pictures/$(cat /tmp/current_wallpaper_name)"
-else
-    TO_LOC="$HOME/Pictures/$(basename "$1")"
-    cp "$1" "$TO_LOC"
-fi

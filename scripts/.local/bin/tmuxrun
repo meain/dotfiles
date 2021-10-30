@@ -1,5 +1,0 @@
-#!/bin/sh
-
-echo "$1" >> /tmp/tmuxrun
-tmux -2 new-session -d -s runner 'sleep 5' >/dev/null 2>&1
-tmux new-window -t runner -k "$1"

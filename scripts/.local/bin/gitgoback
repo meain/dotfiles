@@ -1,5 +1,0 @@
-#!/bin/sh
-
-set -e
-
-git reflog | fzf | cut -d' ' -f1 | xargs git reset --hard
