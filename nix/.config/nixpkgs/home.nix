@@ -243,10 +243,10 @@ in
     };
     "org/gnome/desktop/wm/keybindings" = {
       # close = ["<Super>w"];
-      switch-to-workspace-left = [ "<Alt>u" ];
-      switch-to-workspace-right = [ "<Alt>i" ];
-      move-to-workspace-left = [ "<Alt><Shift>u" ];
-      move-to-workspace-right = [ "<Alt><Shift>i" ];
+      switch-to-workspace-left = [ "<Super>u" ];
+      switch-to-workspace-right = [ "<Super>o" ];  # M-i/<Super>i has some issues
+      move-to-workspace-left = [ "<Super><Shift>u" ];
+      move-to-workspace-right = [ "<Super><Shift>o" ];
     };
   };
 
