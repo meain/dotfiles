@@ -8,6 +8,11 @@ in
   home.homeDirectory = "/home/meain";
 
   services.emacs.enable = true;
+  programs.emacs = {
+    enable = true;
+    extraPackages = epkgs: [ epkgs.vterm ];
+  };
+
   services = {
     syncthing = {
       enable = true;
@@ -30,7 +35,6 @@ in
     pkgs.zsh
     pkgs.gnupg
     pkgs.coreutils
-    pkgs.emacs
 
     # packages
     personal.notmuch-git # mail indexer
