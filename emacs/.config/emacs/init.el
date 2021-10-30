@@ -36,7 +36,7 @@
 ;; Get proper PATH (not used as we are launching from shell)
 (use-package exec-path-from-shell
   :straight t
-  :disabled :config
+  :config
   (exec-path-from-shell-initialize))
 
 ;;; [BASE EVIL] =================================================
