@@ -80,3 +80,9 @@ export MAILDIR=$HOME/.local/share/mail/meain
 
 # nix
 export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
+
+# notmuch
+export NOTMUCH_CONFIG="$HOME/.config/notmuch/config"
+
+# rupa/z
+export _Z_DATA="$HOME/.local/share/z/z"

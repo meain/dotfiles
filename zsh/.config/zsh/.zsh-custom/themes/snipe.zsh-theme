@@ -192,7 +192,7 @@ function precmd() {
     CMD_START_DATE=""
 
     if [[ $CMD_ELAPSED_TIME -gt $CMD_NOTIFY_THRESHOLD ]]; then
-      osascript -e "display notification \"$CMD_NAME took $CMD_ELAPSED_TIME seconds\" with title \"Job complete\""
+      notify "$CMD_NAME" "Completed in $CMD_ELAPSED_TIME seconds"
     fi
   fi
 
