@@ -33,7 +33,6 @@ in
     pkgs.cmake
     pkgs.curl
     pkgs.zsh
-    pkgs.gnupg
     pkgs.coreutils
 
     # packages
