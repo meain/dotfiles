@@ -361,7 +361,7 @@ Pass ORIGINAL and ALTERNATE options."
                        (point)))
       (insert (format ";; Time is %s. You have %s unread mails and %s buffers.\n;; %s"
                       (format-time-string "%l %p")
-                      (car (split-string (shell-command-to-string "unreadsenders|wc -l")
+                      (car (split-string (shell-command-to-string ",mail-unread|wc -l")
                                          "\n"))
                       (cl-count-if (lambda (b)
                                      (or (buffer-file-name b)
@@ -2989,7 +2989,7 @@ Pass INSERT-TO-BUFFER to insert output to current buffer."
 (defun meain/fetchmail ()
   "Fetch email using mailsync."
   (interactive)
-  (async-shell-command "mailsync"))
+  (async-shell-command ",mail-sync"))
 
 ;; Create new blog entry
 (defun meain/blog-new-entry ()
