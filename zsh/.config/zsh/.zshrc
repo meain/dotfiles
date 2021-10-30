@@ -51,7 +51,7 @@ ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 ZSH_AUTOSUGGEST_USE_ASYNC="true"
 
 # sourcing plugins & themes
-source $HOME/.bin/spectrum # for 256 colors
+source `which spectrum` # for 256 colors
 source $ZDOTDIR/.zsh-custom/themes/snipe.zsh-theme
 source $ZDOTDIR/.zsh-custom/plugins/z/z.sh
 source $ZDOTDIR/.zsh-custom/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
