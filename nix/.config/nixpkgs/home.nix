@@ -250,10 +250,25 @@ in
     };
   };
 
-  systemd.user.services.git-syncer = {
+  # make this into a function??
+  systemd.user.services.note-sync = {
     Service.Type = "oneshot";
     Service.WorkingDirectory = "/home/meain/.local/share/notes";
     Service.ExecStart = "${pkgs.git}/bin/git add . ; ${pkgs.git}/bin/git commit -m 'Updating notes' ; ${pkgs.git}/bin/git push origin master";
+    Timer.OnCalendar = [ "*-*-* *:00:00" ];
+    Timer.Persistent=true;
+  };
+  systemd.user.services.ledger-sync = {
+    Service.Type = "oneshot";
+    Service.WorkingDirectory = "/home/meain/.local/share/ledger";
+    Service.ExecStart = "${pkgs.git}/bin/git add . ; ${pkgs.git}/bin/git commit -m 'Updating ledger' ; ${pkgs.git}/bin/git push origin master";
+    Timer.OnCalendar = [ "*-*-* *:00:00" ];
+    Timer.Persistent=true;
+  };
+  systemd.user.services.journal-sync = {
+    Service.Type = "oneshot";
+    Service.WorkingDirectory = "/home/meain/.local/share/journal";
+    Service.ExecStart = "${pkgs.git}/bin/git add . ; ${pkgs.git}/bin/git commit -m 'Updating journal' ; ${pkgs.git}/bin/git push origin master";
     Timer.OnCalendar = [ "*-*-* *:00:00" ];
     Timer.Persistent=true;
   };
