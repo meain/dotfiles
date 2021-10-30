@@ -1,8 +1,0 @@
-#!/bin/sh
-
-set -e
-
-git checkout deploy
-git merge master --ff-only
-git push origin deploy
-git checkout -

@@ -205,6 +205,8 @@ in
     pkgs.diff-so-fancy
     personal.traffic
     pkgs.trash-cli
+    pkgs.entr
+    pkgs.notify-desktop
   ];
 
   dconf.settings = {

@@ -1,0 +1,8 @@
+#!/bin/sh
+
+set -e
+
+hub fork
+git remote rename origin upstream
+# not removing the remote meain so that hub wont fork it again
+git remote get-url meain |xargs git remote add origin

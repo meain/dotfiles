@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# Search multiple search engines using surfraw
+
+set -e
+
+if [ -z "$1" ];then
+    printf "Search term: "
+    read -r
+    SEARCH_TERM="$REPLY"
+else
+    SEARCH_TERM="$1"
+fi
+surfraw -elvi | tail -n+4 | fzf -m | awk '{print $1}' |
+    xargs -L1 -I{} surfraw -p "{}" "$SEARCH_TERM" | xargs open

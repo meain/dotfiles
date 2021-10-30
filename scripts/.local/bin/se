@@ -1,6 +1,0 @@
-#!/bin/sh
-
-set -e
-
-lynx -lss="~/.config/lynx/.lynx.lss" -cfg="~/.config/lynx/.lynx.cfg" \
-    "https://lite.duckduckgo.com/lite/?q=$*"

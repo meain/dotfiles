@@ -1,0 +1,27 @@
+#!/bin/sh
+
+set -e
+
+if [ -z "$1" ]; then
+    IMAGE_FILE="$(\ls -1Art -d $SCREENSHOTS_PATH/* | tail -n 1)"
+else
+    IMAGE_FILE="$1"
+fi
+
+if [ -z "$2" ]; then
+    IMAGE_CATEGORY="dump"
+else
+    IMAGE_CATEGORY="$2"
+fi
+
+IMAGE_FOLDER="$HOME/Documents/Projects/projects/images/$IMAGE_CATEGORY"
+FINAL_IMAGE_NAME="$(date '+%s')"
+FINAL_IMAGE_EXT="$(echo "$IMAGE_FILE" | sed 's|.*\.\([^\.]*\)|\1|')"
+
+cp -i "$IMAGE_FILE" "$IMAGE_FOLDER/$FINAL_IMAGE_NAME.$FINAL_IMAGE_EXT"
+echo "https://images.meain.io/$IMAGE_CATEGORY/$FINAL_IMAGE_NAME.$FINAL_IMAGE_EXT" | tee /dev/stderr | pbcopy
+
+cd "$IMAGE_FOLDER"
+git add .
+git commit -m "[autocommit] added new image"
+git push origin master

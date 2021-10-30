@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# Send notification
+
+set -e
+
+if [ $OSTYPE == "linux-gnu" ]; then
+    notify-desktop "${1:-Notification}" "${2:-Task complete}"
+else
+	osascript -e "display notification \"${2-'Task complete'}\" with title \"${1:-'Notification'}\""
+fi

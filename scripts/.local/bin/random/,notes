@@ -1,0 +1,82 @@
+#!/bin/sh
+
+mkdir -p "$NOTES_PATH/archive"
+cd "$NOTES_PATH" || echo "Notes folder does not seem to exist" || exit 1
+
+new() {
+    FOLDER="note"
+    [ -n "$1" ] && FOLDER="$1"
+    mkdir -p "$FOLDER"
+
+    if [ -n "$2" ]; then
+        NAME="$(echo "$2" | sed 's| |-|g')"
+    else
+        printf "New %s: " "$FOLDER"
+        read -r
+        NAME="$(echo "$REPLY" | sed 's| |-|g')"
+    fi
+
+    if [ "$FOLDER" = "quote" ]; then
+        printf "Content: "
+        read -r
+        echo "$REPLY" >"$FOLDER/$NAME.md"
+    else
+        "$EDITOR" "$FOLDER/$NAME.md"
+    fi
+}
+
+_print_name_and_title() {
+    while read -r line; do
+        title="$(grep '^title' "$line" | head -n1 | sed 's|title: ||')"
+        echo "$line  $title"
+    done </dev/stdin
+}
+
+pick_with_title() {
+    ls -t "$1"/*.md | _print_name_and_title |
+        fzf --no-sort --multi --query "$2" --preview "echo '{}'| awk '{print \$1}'|xargs cat" | awk '{print $1}'
+}
+
+pick() {
+    ls -t "$1"/*.md |
+        fzf --no-sort --multi --query "$2" --preview "cat '{}'"
+}
+
+types() {
+    ls -t -1
+}
+
+list() {
+    if [ "$1" = "temp" ]; then
+        pick_with_title "$1" "$2" | xargs "$EDITOR"
+    else
+        pick "${1:-note}" "$2" | xargs "$EDITOR"
+    fi
+}
+
+archive() {
+    pick "$1" "$2" |
+        while read -r n; do
+            echo "Archiving $n"
+            mkdir -p "archive/$(dirname "$n")"
+            mv "$n" "archive/$n"
+        done
+}
+
+case "$1" in
+"new") new "$2" ;;
+"temp") new temp "$(xxd -l5 -ps /dev/urandom)" ;;
+"stash") list stash "$2" ;;
+"vault") list vault "$2" ;;
+"idea") list idea "$2" ;;
+"quote") list quote "$(xxd -l5 -ps /dev/urandom)" ;;
+"list") list "$2" "$3" ;;
+"view") lf "$2" ;;
+"archive") archive "$2" "$3" ;;
+"types") types ;;
+"commit") ;; # just for backwards compatability
+*) list note "$1";;
+esac
+
+(git add . && git commit -m '[autocommit] updating notes') 1>/dev/null 2>&1 || true
+(git push origin master &) 1>/dev/null 2>&1 || true

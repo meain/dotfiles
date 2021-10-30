@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -e
+
+mailmove || true  # move archived mails from inbox to archive
+
+if [ ! "$1" = "retag" ]; then
+	GPASS="${GOOGLE_PASSWORD:-$(pass show google/abinsimon10)}"
+	GOOGLE_PASSWORD="$GPASS" mbsync -a ||
+		(touch /tmp/mailpullfailed && exit 1)
+	[ -f /tmp/mailpullfailed ] && rm /tmp/mailpullfailed
+fi
+
+mailtag  # tag stuff with notmuch

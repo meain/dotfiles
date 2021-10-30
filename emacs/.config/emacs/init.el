@@ -1850,7 +1850,7 @@ Pass ORIGINAL and ALTERNATE options."
     (setq notmuch-hello-logo nil)
     (setq notmuch-search-oldest-first nil)
     (setq notmuch-message-headers-visible nil)
-    (setq message-auto-save-directory "/Users/meain/.local/share/mail/meain")
+    (setq message-auto-save-directory "~/.local/share/mail/meain")
     (setq notmuch-saved-searches (quote ((:name "imbox" :query "tag:imbox AND tag:inbox"
                                                 :key "i"
                                                 :sort-order newest-first)

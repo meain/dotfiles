@@ -1,3 +1,0 @@
-#!/bin/sh
-
-notmuch address "$1" | sort | uniq | grep -i "$1"

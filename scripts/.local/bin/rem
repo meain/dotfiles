@@ -1,7 +1,0 @@
-#!/bin/sh
-
-set -e
-
-action="$1" && shift
-reminders "$action" Reminders $*
-

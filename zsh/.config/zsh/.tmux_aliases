@@ -9,11 +9,11 @@ tc(){
 tt() {
 	if [ -z "$1" ]; then
 		FOLDER=$(pwd | xargs basename | sed 's:^\.::')
-		tmuxsession "$FOLDER"
+		,tmuxsession "$FOLDER"
 	else
 		mkdir "$1"
 		cd "$1" || return 1
-		tmuxsession "$1"
+		,tmuxsession "$1"
 	fi
 }
 
@@ -21,11 +21,11 @@ ttc() {
     CURRENT_SESSION=$(tmux display-message -p "#S")
     if [ -z "$1" ]; then
 	    FOLDER=$(pwd | xargs basename | sed 's:^\.::')
-	    tmuxsession "$FOLDER"
+	    ,tmuxsession "$FOLDER"
     else
 	    mkdir "$1"
 	    cd "$1" || return 1
-	    tmuxsession "$1"
+	    ,tmuxsession "$1"
     fi
     tmux kill-session -t "$CURRENT_SESSION"
 }

@@ -1,0 +1,32 @@
+#!/bin/sh
+
+# add `:name <name>` at top to specify name
+
+set -e
+
+DIR="$VIME_PATH"
+mkdir -p "$DIR"
+if [ "$1" = "list" ]; then
+    ls -t "$DIR" | {
+        while read -r line; do
+            title="$(grep '^:name' "$DIR/$line" | head -n1 | sed 's|:name ||')"
+            echo "$line   $title"
+        done </dev/stdin
+    } |
+        fzf --header "Select file" --preview "cat '$DIR/{1}'" | awk '{print $1}' | xargs -I{} "$EDITOR" "$DIR/{}"
+elif [ "$1" = "last" ]; then
+    ls -t "$DIR" | head -n1 | xargs -I{} "$EDITOR" "$DIR/{}"
+elif [ "$1" = "rename" ]; then
+    printf "New name: "
+    read -r
+    ls -t "$DIR" | {
+        while read -r line; do
+            title="$(grep '^:name' "$line" | head -n1 | sed 's|:name ||')"
+            echo "$line  $title"
+        done </dev/stdin
+    } |
+        fzf --header "Select file" --preview "cat '$DIR/{1}'" |
+        awk '{print $1}' | xargs -I{} mv "$DIR/{}" "$DIR/$REPLY"
+else
+    $EDITOR "$DIR/_$(xxd -l2 -ps /dev/urandom)"
+fi

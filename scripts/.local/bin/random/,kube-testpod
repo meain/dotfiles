@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# Start a new simple pod in any kube cluster
+
+set -e
+
+IMAGES="meain/testpod fish
+alpine sh
+python bash
+ubuntu bash"
+
+IMAGEANDCMD="$(echo "$IMAGES" | fzf)"
+IMAGE="$(echo "$IMAGEANDCMD" | cut -d' ' -f1)"
+CMD="$(echo "$IMAGEANDCMD" | cut -d' ' -f2)"
+
+NAME="testpod-$(xxd -l2 -ps /dev/urandom)"
+echo "$NAME: $IMAGEANDCMD"
+
+kubectl run -i --tty "$NAME" --image="$IMAGE" --restart=Never -- "$CMD"
+kubectl delete pod "$NAME"
