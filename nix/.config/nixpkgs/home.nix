@@ -202,6 +202,7 @@ in
     pkgs.trash-cli
     pkgs.entr
     pkgs.notify-desktop
+    pkgs.guake
   ];
 
   dconf.settings = {
@@ -245,6 +246,20 @@ in
       move-to-workspace-left = [ "<Super><Shift>u" ];
       move-to-workspace-right = [ "<Super><Shift>o" ];
     };
+    "org/gnome/settings-daemon/plugins/media-keys" = {
+      custom-keybindings = [ "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/" "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/" ];
+    };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
+      binding = "<Primary>semicolon";
+      command = "guake-toggle";
+      name = "guake";
+    };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
+      binding = "<Alt>t";
+      command = "gnome-terminal";
+      name = "spawn-terminal";
+    };
+
   };
 
 
@@ -276,6 +291,10 @@ in
     Service.ExecStart = "${pkgs.git}/bin/git add . ; ${pkgs.git}/bin/git commit -m 'Updating journal' ; ${pkgs.git}/bin/git push origin master";
     Timer.OnCalendar = [ "*-*-* *:00:00" ];
     Timer.Persistent=true;
+  systemd.user.services.guake = {
+    Unit.Description = "Guake setup script";
+    Service.ExecStart = "${pkgs.guake}/bin/guake";
+    Install.WantedBy = [ "graphical-session.target" ];
   };
 
   # This value determines the Home Manager release that your # configuration is compatible with. This helps avoid breakage # when a new Home Manager release introduces backwards
