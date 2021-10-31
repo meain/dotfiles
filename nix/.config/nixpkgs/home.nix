@@ -273,12 +273,15 @@ in
   };
 
 
-  systemd.user.startServices = true;
+  # systemd.user.startServices = true;  # enabling this increases switch time a lot
   systemd.user.services.email-sync = {
     Service.Type = "oneshot";
     Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic ',mail-sync'";
-    Timer.OnCalendar = [ "*:0/15" ]; # every 15min
-    Timer.Persistent = true;
+    Install.WantedBy = [ "graphical-session.target" ];
+  };
+  systemd.user.timers.email-sync = {
+    Timer.OnCalendar = "*:0/15"; # every 15min
+    Install.WantedBy = [ "timers.target" ];
   };
 
   # make this into a function??
@@ -320,6 +323,7 @@ in
     Install.WantedBy = [ "graphical-session.target" ];
   };
   systemd.user.services.guake = {
+    Service.Type = "forking";
     Unit.Description = "Guake setup script";
     Service.ExecStart = "${pkgs.guake}/bin/guake";
     Install.WantedBy = [ "graphical-session.target" ];
