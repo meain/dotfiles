@@ -232,9 +232,14 @@ in
       tray-padding = -1;
       window-preview-title-position = "TOP";
     };
+    "org/gnome/shell/extensions/clipboard-indicator" = {
+      history-size = 100;
+      toggle-menu = [ "<Alt>i" ]; # should be alt+shift+i later
+    };
 
     "org/gnome/desktop/interface" = {
       clock-format = "12h";
+      show-battery-percentage = true;
     };
     "org/gtk/settings/file-chooser" = {
       clock-format = "12h";
@@ -242,7 +247,7 @@ in
     "org/gnome/desktop/wm/keybindings" = {
       # close = ["<Super>w"];
       switch-to-workspace-left = [ "<Super>u" ];
-      switch-to-workspace-right = [ "<Super>o" ];  # M-i/<Super>i has some issues
+      switch-to-workspace-right = [ "<Super>o" ]; # M-i/<Super>i has some issues
       move-to-workspace-left = [ "<Super><Shift>u" ];
       move-to-workspace-right = [ "<Super><Shift>o" ];
     };
