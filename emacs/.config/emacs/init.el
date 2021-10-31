@@ -367,7 +367,7 @@ Pass ORIGINAL and ALTERNATE options."
                                      (or (buffer-file-name b)
                                          (not (string-match "^ " (buffer-name b)))))
                                    (buffer-list))
-                      (car (split-string (shell-command-to-string "awk -F'|' '{print \"Looks like\",$1,$2,\"(\"$3\") with\",$4,\"humidity and\",$6,\"speed winds\"}' /tmp/weather-current")
+                      (car (split-string (shell-command-to-string ",weather-current")
                                          "\n")))))))
 (defun meain/create-or-switch-to-scratch ()
   "Switch to scratch buffer if exists, else create a scratch buffer with our config."
