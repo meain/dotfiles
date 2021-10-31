@@ -367,7 +367,7 @@ Pass ORIGINAL and ALTERNATE options."
                                      (or (buffer-file-name b)
                                          (not (string-match "^ " (buffer-name b)))))
                                    (buffer-list))
-                      (car (split-string (shell-command-to-string "awk -F'|' '{print \"Also, it is\",$1,\"with\",$2,\"humidity and\",$3,\"speed winds\"}' /tmp/weather-current")
+                      (car (split-string (shell-command-to-string "awk -F'|' '{print \"Looks like\",$1,$2,\"(\"$3\") with\",$4,\"humidity and\",$6,\"speed winds\"}' /tmp/weather-current")
                                          "\n")))))))
 (defun meain/create-or-switch-to-scratch ()
   "Switch to scratch buffer if exists, else create a scratch buffer with our config."
@@ -2124,7 +2124,7 @@ Pass ORIGINAL and ALTERNATE options."
             (defun meain/elfeed-podcast-download-to-local ()
               "Download current feed(podcast) to usual dir."
               (interactive)
-              (meain/elfeed-enclosure-download "/Users/meain/Desktop/newsboat/podcasts"
+              (meain/elfeed-enclosure-download "Downloads/podcasts"
                                                ".mp3"))
             (load-file "~/.config/emacs/elfeed-feeds.el")))
 
