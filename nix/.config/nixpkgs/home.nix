@@ -286,23 +286,32 @@ in
   systemd.user.services.note-sync = {
     Service.Type = "oneshot";
     Service.WorkingDirectory = "/home/meain/.local/share/notes";
-    Service.ExecStart = "${pkgs.git}/bin/git add . ; ${pkgs.git}/bin/git commit -m 'Updating notes' ; ${pkgs.git}/bin/git push origin master";
-    Timer.OnCalendar = [ "*-*-* *:00:00" ];
-    Timer.Persistent = true;
+    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic ',git-auto-sync'";
+    Install.WantedBy = [ "graphical-session.target" ];
+  };
+  systemd.user.timers.note-sync = {
+    Timer.OnCalendar = "*-*-* *:00:00";
+    Install.WantedBy = [ "timers.target" ];
   };
   systemd.user.services.ledger-sync = {
     Service.Type = "oneshot";
     Service.WorkingDirectory = "/home/meain/.local/share/ledger";
-    Service.ExecStart = "${pkgs.git}/bin/git add . ; ${pkgs.git}/bin/git commit -m 'Updating ledger' ; ${pkgs.git}/bin/git push origin master";
-    Timer.OnCalendar = [ "*-*-* *:00:00" ];
-    Timer.Persistent = true;
+    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic ',git-auto-sync'";
+    Install.WantedBy = [ "graphical-session.target" ];
+  };
+  systemd.user.timers.ledger-sync = {
+    Timer.OnCalendar = "*-*-* *:00:00";
+    Install.WantedBy = [ "timers.target" ];
   };
   systemd.user.services.journal-sync = {
     Service.Type = "oneshot";
     Service.WorkingDirectory = "/home/meain/.local/share/journal";
-    Service.ExecStart = "${pkgs.git}/bin/git add . ; ${pkgs.git}/bin/git commit -m 'Updating journal' ; ${pkgs.git}/bin/git push origin master";
-    Timer.OnCalendar = [ "*-*-* *:00:00" ];
-    Timer.Persistent = true;
+    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic ',git-auto-sync'";
+    Install.WantedBy = [ "graphical-session.target" ];
+  };
+  systemd.user.timers.journal-sync = {
+    Timer.OnCalendar = "*-*-* *:00:00";
+    Install.WantedBy = [ "timers.target" ];
   };
 
   systemd.user.services.guake = {

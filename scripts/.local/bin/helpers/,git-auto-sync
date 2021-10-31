@@ -1,0 +1,7 @@
+#!/bin/sh
+
+set -e
+
+git add .
+git commit -m "${1:-Updating content}" || echo "Nothing to sync" && exit 0
+git push
