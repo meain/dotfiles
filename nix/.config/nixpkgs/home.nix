@@ -212,6 +212,10 @@ in
     pkgs.gnomeExtensions.gsconnect
     pkgs.gnomeExtensions.caffeine
     pkgs.gnomeExtensions.no-overview
+
+    # autostart
+    (pkgs.makeAutostartItem {name = "guake"; package = pkgs.guake;})
+    (pkgs.makeAutostartItem {name = "albert"; package = pkgs.albert;})
   ];
 
   dconf.settings = {
