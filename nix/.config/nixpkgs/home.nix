@@ -263,11 +263,12 @@ in
   };
 
 
+  systemd.user.startServices = true;
   systemd.user.services.email-sync = {
     Service.Type = "oneshot";
     Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic ',mail-sync'";
-    Timer.OnCalendar = [ "*:0/15" ];  # every 15min
-    Timer.Persistent=true;
+    Timer.OnCalendar = [ "*:0/15" ]; # every 15min
+    Timer.Persistent = true;
   };
 
   # make this into a function??
@@ -276,21 +277,23 @@ in
     Service.WorkingDirectory = "/home/meain/.local/share/notes";
     Service.ExecStart = "${pkgs.git}/bin/git add . ; ${pkgs.git}/bin/git commit -m 'Updating notes' ; ${pkgs.git}/bin/git push origin master";
     Timer.OnCalendar = [ "*-*-* *:00:00" ];
-    Timer.Persistent=true;
+    Timer.Persistent = true;
   };
   systemd.user.services.ledger-sync = {
     Service.Type = "oneshot";
     Service.WorkingDirectory = "/home/meain/.local/share/ledger";
     Service.ExecStart = "${pkgs.git}/bin/git add . ; ${pkgs.git}/bin/git commit -m 'Updating ledger' ; ${pkgs.git}/bin/git push origin master";
     Timer.OnCalendar = [ "*-*-* *:00:00" ];
-    Timer.Persistent=true;
+    Timer.Persistent = true;
   };
   systemd.user.services.journal-sync = {
     Service.Type = "oneshot";
     Service.WorkingDirectory = "/home/meain/.local/share/journal";
     Service.ExecStart = "${pkgs.git}/bin/git add . ; ${pkgs.git}/bin/git commit -m 'Updating journal' ; ${pkgs.git}/bin/git push origin master";
     Timer.OnCalendar = [ "*-*-* *:00:00" ];
-    Timer.Persistent=true;
+    Timer.Persistent = true;
+  };
+
   systemd.user.services.guake = {
     Unit.Description = "Guake setup script";
     Service.ExecStart = "${pkgs.guake}/bin/guake";
