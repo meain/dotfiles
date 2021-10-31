@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# Upload a snippet to be served from snippets.meain.io
+
+set -e
+
+filename="$(xxd -l10 -ps /dev/urandom)"
+pbpaste >"$SNIPPETS_PATH/entries/pb/$filename"
+echo "https://snippets.meain.io/pb/$filename"
+echo "https://snippets.meain.io/pb/$filename" | pbcopy
+printf "Pushing"
+(cd "$SNIPPETS_PATH" >/dev/null 2>&1 &&
+	git add "entries/pb/$filename" >/dev/null 2>&1 &&
+	git commit -m "[auto] $filename" >/dev/null 2>&1 &&
+	(git push origin master >/dev/null 2>&1 ||
+		(printf " ... woops ... Pulling" &&
+			git pull origin master --rebase >/dev/null 2>&1 &&
+			printf " > Pushing" &&
+			git push origin master >/dev/null 2>&1)))
+printf " > Publishing"
+while [ "$(curl -s -o /dev/null -w "%{http_code}" "https://snippets.meain.io/pb/$filename")" = "404" ]; do
+	sleep 0.5
+done
+printf " > Done\n"

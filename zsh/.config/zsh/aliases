@@ -1,0 +1,71 @@
+#! /bin/sh
+
+# cd
+alias -- -='cd -'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias ......='cd ../../../../..'
+
+# simple
+alias mkdir='mkdir -p'
+alias clera='clear'
+alias clea='clear'
+alias chmox='chmod +x'
+
+# ls
+alias ls='lsd'
+alias ll='ls -Alh'
+alias llg='ls -Alh --group-directories-first'
+alias l='ls'
+alias la='ls -A'
+
+# random
+alias j=z
+alias rr=lf
+alias rm=trash
+alias git=hub
+alias k=kubectl
+alias brew='HOMEBREW_NO_AUTO_UPDATE=1 brew'
+alias ax="axel -a -n 10"
+alias lynx='lynx -lss="~/.config/lynx/.lynx.lss" -cfg="~/.config/lynx/.lynx.cfg"'
+alias c='clear && echo "" && pwd && ls'
+alias wf='venv activate'
+alias yd='youtube-dl'
+alias ydp='youtube-dl -o "%(playlist_index)s_%(title)s.%(ext)s"'
+
+# ledger
+alias ledger='ledger -f ~/.local/share/ledger/master.ledger --strict --price-db ~/.local/cache/ledger/pricedb --market'
+alias ,ledger-bal='ledger bal'
+alias ,ledger-cashflow='ledger bal ^Income ^Expenses'
+alias ,ledger-networth='ledger bal ^Assets ^Liabilities'
+
+# tmux
+alias ta='tmux attach -t'
+alias tn='tmux new-session -s'
+alias tl='tmux list-sessions'
+
+# vim
+alias vim='vim'
+alias ivm='vim'
+
+# remote
+alias ,remote-work="ssh $EXPERIMENT_VM"
+
+# git
+alias g='git status -sb'
+alias gs='git status'
+alias gma='git commit --amend'
+alias gl='git lg'
+alias ggg='git lh'
+alias gggg='git hi'
+alias gd='git diff'
+alias gds='git diff --staged'
+alias gdp="git diff @{1}.."
+alias glp="git lg @{1}.."
+alias gcom='git checkout master'
+alias gcob='git checkout -b'
+alias grr='git pull upstream master --rebase'
+alias gor='git pull origin master --rebase'
+alias glr='git rebase master'

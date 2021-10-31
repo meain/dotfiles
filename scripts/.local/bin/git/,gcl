@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# Fancy git clone
+
+set -e
+
+if [ -z "$1" ]; then
+	GITURL=$(pbpaste)
+elif echo "$1" | grep '/' >/dev/null; then
+	GITURL="https://github.com/$1.git"
+else
+	GITURL="https://github.com/meain/$1.git"
+fi
+FOLDER="$(echo "$GITURL" | sed 's/.*\///g' | sed 's/\..*//g')"
+git clone "$GITURL"
+cd "$FOLDER" || exit 1

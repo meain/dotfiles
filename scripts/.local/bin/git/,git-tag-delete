@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Delete git tag from local and upstream
+
+set -e
+
+git tag --delete "$1" && git push --delete origin "$1"

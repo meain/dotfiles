@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# Docker build
+
+set -e
+
+if [ -z "$1" ]; then
+	docker build .
+	IMG_ID=$(docker images --format "{{.ID}}" | head -n1)
+	echo "$IMG_ID" | pbcopy
+else
+	docker build -t "$1" .
+fi

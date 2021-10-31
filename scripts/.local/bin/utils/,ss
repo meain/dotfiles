@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# Open one of the existing scripts ot edit
+
+set -e
+
+if [ -z "$1" ]; then
+	file=$(find "$SCRIPTS_DIR"/* -type f | sed "s|$SCRIPTS_DIR/||" | fzf --preview "cat $SCRIPTS_DIR/{}" --print-query | tail -n 1)
+	[ -z "$file" ] && return 1
+else
+	file="$1"
+fi
+
+if [ -f "$SCRIPTS_DIR/$file" ]; then
+	$EDITOR "$SCRIPTS_DIR/$file"
+else
+	printf '#!/bin/sh\n\nset -e\n\n' >"$SCRIPTS_DIR/$file" && chmod +x "$SCRIPTS_DIR/$file" && $EDITOR "$SCRIPTS_DIR/$file"
+fi

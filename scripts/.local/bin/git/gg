@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# Fancy git status
+
+set -e
+
+UNPUSHED="$(git rev-list --count "origin/$(git rev-parse --abbrev-ref HEAD 2>/dev/null).." 2>/dev/null)"
+[ -n "$UNPUSHED" ] && UNPUSHED="$(tput setaf 245)($UNPUSHED unpushed)" &&
+	echo "$(git rev-list --count HEAD 2>/dev/null) total commits $UNPUSHED"
+git hm

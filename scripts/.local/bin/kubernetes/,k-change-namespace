@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Change default namespace in kubernetes config
+
+set -e
+
+NAMESPCE="$(kubectl get namespace | tail -n+2 | fzf --query "$1" | cut -d' ' -f1)"
+[ -z "$NAMESPCE" ] && return 0
+kubectl config set-context --current --namespace="$NAMESPCE"

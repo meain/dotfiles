@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# Copy latest file from download dir
+
+set -e
+
+FROMFILE=$(\ls -t "$DOWNLOADS_PATH" | fzf --query="$1")
+if [ -z $FROMFILE ]; then
+	echo "No file selected"
+	return 1
+fi
+printf "Name of destination file (%s): " "$(basename "$FROMFILE")"
+read -r TOFILE
+
+if [ -z "$TOFILE" ]; then
+	TOFILE=$(basename "$FROMFILE")
+fi
+cp -riv "$DOWNLOADS_PATH/$FROMFILE" "$TOFILE"

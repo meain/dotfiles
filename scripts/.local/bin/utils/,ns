@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# Start a new nix shell
+
+set -e
+
+if [ -z "$1" ]; then
+	nix-shell --run $SHELL
+else
+	nix-shell --run $SHELL -p $*
+fi

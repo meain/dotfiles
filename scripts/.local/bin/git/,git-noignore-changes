@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# Stop ignoring changes to file
+
+set -e
+
+[ -z "$1" ] && echo "Usage: $(basename $0) <filename>" && exit 1
+git update-index --no-skip-worktree "$1"

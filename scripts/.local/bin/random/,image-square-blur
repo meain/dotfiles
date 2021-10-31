@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# Like image-square, but with blur instead of white padding
+
+set -e
+
+convert -size 1024x1024 xc:skyblue \
+	"$1" -geometry 1024x1024 -blur 0x25 -gravity northwest -composite \
+	"$1" -geometry 1024x1024 -blur 0x25 -gravity southeast -composite \
+	"$1" -geometry 1024x1024 -gravity center -composite \
+	"square-$1"

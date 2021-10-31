@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# Rotate video
+
+set -e
+
+
+# https://ostechnix.com/how-to-rotate-videos-using-ffmpeg-from-commandline/
+[ -z "$2" ] && echo "Usage: $0 <filename> <rotate-degree>" && return 1
+case "$2" in
+    90) ffmpeg -i "$1" -vf "transpose=1" "${1%.*}-rotated-$2.mp4" ;;
+    270) ffmpeg -i "$1" -vf "transpose=2" "${1%.*}-rotated-$2.mp4"  ;;
+    180) ffmpeg -i "$1" -vf "transpose=2,transpose=2" "${1%.*}-rotated-$2.mp4"  ;;
+    *) echo "I only know how to rotate 90, 180 and 270" && return 1 ;;
+esac

@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# Add and commit
+
+set -e
+
+GIT_STAGED_FILES=$(git diff --name-only --cached)
+if [ -z "$GIT_STAGED_FILES" ]; then
+	git add -u && git commit -m "$*"
+else
+	git commit -m "$*"
+fi

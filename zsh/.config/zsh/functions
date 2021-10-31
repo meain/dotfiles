@@ -1,0 +1,168 @@
+#! /bin/sh
+
+# Only things that cannot really be script like thigs that need to `cd`
+
+unalias z 2>/dev/null
+z() {
+	[ $# -gt 0 ] && _z "$*" && return
+	cd "$(_z -l 2>&1 | cat | sed 's/^[^ ]*\ *//' | fzf --height 40% --reverse --inline-info +s --tac --query "$*" --preview "ls {}")" || return
+}
+
+jj() {
+	cd "./$(fd -H -td -d5 | fzf --preview 'tree -L 2 ./{}')" || return 1
+}
+
+# cd, but use lf to choose dir
+rcd() {
+	tmp="$(mktemp)"
+	lf -last-dir-path="$tmp" "$@"
+	if [ -f "$tmp" ]; then
+		dir="$(cat "$tmp")"
+		\rm -f "$tmp"
+		if [ -d "$dir" ]; then
+			if [ "$dir" != "$(pwd)" ]; then
+				cd "$dir" || return 1
+			fi
+		fi
+	fi
+}
+
+# Go to root of project
+r() {
+	cd "$(git rev-parse --show-toplevel 2>/dev/null)" || return 1
+}
+
+take() {
+	mkdir -p "$1" && cd "$1" || return 1
+}
+
+cssh() {
+	[ -z "$1" ] && HOST=$(grep -E "^Host" "$HOME/.ssh/config" | sed 's/^Host //' | fzf) || HOST="$1"
+	[ -z "$HOST" ] && echo "No host specified" && return 1
+	[ -n "$TMUX" ] && tmux select-pane -P bg=colour195
+	[ -z "$1" ] && ssh "$HOST" || ssh "$@"
+	tmux selectp -P default
+}
+compdef _ssh cssh=ssh
+alias ssh=cssh
+
+cmosh() {
+	[ -z "$1" ] && HOST=$(grep -E "^Host" "$HOME/.ssh/config" | sed 's/^Host //' | fzf) || HOST="$1"
+	[ -z "$HOST" ] && echo "No host specified" && return 1
+	[ -n "$TMUX" ] && tmux select-pane -P bg=colour195
+	[ -z "$1" ] && mosh "$HOST" || mosh "$@"
+	tmux selectp -P default
+}
+compdef _mosh cmosh=mosh
+alias mosh=cmosh
+
+o() {
+	[ -z "$1" ] && open . || open "$1"
+}
+
+q() {
+	[ -z "$TMUX" ] && exit
+	PANES="$(tmux list-panes | wc -l | sed 's/ //g')"
+	WINDOWS="$(tmux list-windows | wc -l | sed 's/ //g')"
+	CURRENT_PANE="$(tmux display-message -p -F "#{session_name}")"
+	[ -z "$TMUX_PANE" ] && exit                                         # tmux popup
+	[ -n "$NVIM_LISTEN_ADDRESS" ] && exit                               # nvim popup
+	echo "$CURRENT_PANE" | grep ".*popup" && tmux detach-client && exit # floating one
+	if [ "$PANES" = "1" ] && [ "$WINDOWS" = "1" ]; then
+		tmux switch-client -l || tmux switch-client -n
+		exit
+	else
+		exit
+	fi
+}
+
+# add a hash for current dir
+hashdir() {
+	[ -z "$1" ] && echo "Pass hash to use for dir" && exit 1
+	hash -d "$1"="$(pwd)"
+	echo hash -d "$1"=\""$(pwd)"\" >>~/.local/share/zsh/.zsh_dir_hashes
+}
+
+# python venv setup (need to be function as we have to source)
+venv() {
+    DEFAULT_VENV_PYTHON_VERSION=${DEFAULT_VENV_PYTHON_VERSION:-"3.6.6"}
+    PYENV_ROOT=${PYENV_ROOT:-"$HOME/.pyenv"}
+    if [ -z "$VENV_HOME" ]; then
+        if [ -n "$WORKON_HOME" ]; then
+            VENV_HOME="$WORKON_HOME"
+        else
+            VENV_HOME="$HOME/.cache/virtual_envs"
+        fi
+    fi
+
+    create() {
+        # get name first
+        if [ -z "$1" ]; then
+            printf "Virtualenv name (%s): " "$(basename "$(pwd)")"
+            read -r
+            if [ -z "$REPLY" ]; then
+                VIRTUALENVNAME="$(basename "$(pwd)")"
+            else
+                VIRTUALENVNAME="$REPLY"
+            fi
+        else
+            VIRTUALENVNAME=$1
+        fi
+
+        # select from available versions
+        PYVERSION=$(pyenv versions | {
+            echo "  Default ($DEFAULT_VENV_PYTHON_VERSION)"
+            tail -n +2 | grep -v "$DEFAULT_VENV_PYTHON_VERSION"
+            echo '  Other ( Install from pyenv )'
+        } | fzf --no-sort | sed 's/^ *//')
+        [ -z "$PYVERSION" ] && return 0
+
+        # install if not available
+        if [ "$PYVERSION" = 'Other ( Install from pyenv )' ]; then
+            PYVERSION=$(pyenv install -l | tail -n +2 | fzf --no-sort | sed 's/^ *//')
+            [ -z "$PYVERSION" ] && return 0
+            pyenv install "$PYVERSION"
+        elif [ "$PYVERSION" = "Default ($DEFAULT_VENV_PYTHON_VERSION)" ]; then
+            PYVERSION=$DEFAULT_VENV_PYTHON_VERSION
+        fi
+        PYNAME=$(readlink "$PYENV_ROOT/versions/$PYVERSION/bin/python")
+
+        [ -z "$PYVERSION" ] && return 0
+
+        echo "Creating new virtualenv at $VENV_HOME/$VIRTUALENVNAME"
+        virtualenv "$VENV_HOME/$VIRTUALENVNAME" -p "$PYENV_ROOT/versions/$PYVERSION/bin/$PYNAME" &&
+            . "$VENV_HOME/$VIRTUALENVNAME/bin/activate"
+    }
+
+    activate() {
+        VENVNAME=$({
+            \ls -t "$VENV_HOME" | grep "$(basename "$(pwd)")"
+            \ls -t "$VENV_HOME" | grep -v "$(basename "$(pwd)")"
+        } | fzf --height 30% --layout=reverse --query="$*")
+        [ -n "$VENVNAME" ] && . "$VENV_HOME/$VENVNAME/bin/activate"
+    }
+
+    remove() {
+        VENVNAME=$(\ls -t "$VENV_HOME" | fzf --height 30% --layout=reverse --query="$*")
+        [ -z "$VENVNAME" ] && return 0
+        printf "Remove %s (y/N): " "$VENV_HOME/$VENVNAME"
+        read -r
+        [ "y" = "$REPLY" ] && rm -rf "$VENV_HOME/$VENVNAME"
+    }
+
+    help() {
+        echo "venv - easily manage virtualenvs in pyenv"
+        echo "Options: create, activate, remove"
+    }
+
+    [ -n "$1" ] && option="$1" && shift
+    case "$option" in
+    "create") create "$*" ;;
+    "activate") activate "$*" ;;
+    "remove") remove "$*" ;;
+    "c") create "$*" ;;
+    "a") activate "$*" ;;
+    "r") remove "$*" ;;
+    *) help ;;
+    esac
+}

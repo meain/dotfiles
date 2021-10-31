@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# Convert video to gif and upload to imgur
+
+set -e
+
+# gifigy: https://github.com/vvo/gifify
+# imgur-uploader: https://github.com/meain/imgur-uploader
+gifname="gif-$(date +"%s")"
+gifify "$1" -o "/tmp/$gifname" && ,imgur-upload "/tmp/$gifname"

@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# List ignored files in git
+
+set -e
+
+git ls-files --others -i --exclude-standard

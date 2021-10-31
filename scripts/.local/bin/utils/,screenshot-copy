@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Copy latest screenshot to current dir
+
+set -e
+
+FILE="$(\ls -Art -d ~/Documents/Screenshots/* | fzf)"
+[ -z "$1" ] && 1="$(basename $FILE)" || 1="$1.png"
+cp "$FILE" "$1"

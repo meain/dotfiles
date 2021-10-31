@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# Docker build and push upstream
+
+set -e
+
+[ -z "$1" ] && echo "Specify tag" && return 1
+DOCKERFILE="$(fd Dockerfile | fzf | head -n1)"
+echo "Building using: $DOCKERFILE"
+if docker build -f "$DOCKERFILE" -t "$1" .; then
+	docker push "$1"
+fi

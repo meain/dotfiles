@@ -1,7 +1,6 @@
 #!/bin/sh
 
 # alias emacs='Emacs'
-alias eserver='Emacs --bg-daemon'
 alias ec='emacsclient  -a "" --no-wait -c'
 alias eclose='emacsclient -e "(save-buffers-kill-terminal)"'
 alias ekillserver='emacsclient -e "(kill-emacs)"'

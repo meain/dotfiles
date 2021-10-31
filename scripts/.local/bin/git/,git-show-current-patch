@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Show current patch (just so that I will remember)
+
+set -e
+
+git am --show-current-patch

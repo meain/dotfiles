@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Trim extra stuff at the end of image
+
+set -e
+
+convert "$1" -trim "${2:-trimmed-$1}"

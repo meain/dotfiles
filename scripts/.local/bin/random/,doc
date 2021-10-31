@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# Pull up documentation from dasht
+
+set -e
+
+[ -z "$1" ] && echo "Example: $(basename $0) os.environ python" && exit 1
+array=($@)
+len=${#array[@]}
+docset=${array[$len]}
+querry=${array[@]:0:$len-1}
+dasht "$querry" "$docset"

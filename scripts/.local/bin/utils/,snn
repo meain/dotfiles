@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# Start a new script in the current directory
+
+set -e
+
+if [ -f "$1" ]; then
+	$EDITOR "$1"
+else
+	printf '#!/bin/sh\n\nset -e\n\n' >"$1" && chmod +x "$1" && $EDITOR "$1"
+fi

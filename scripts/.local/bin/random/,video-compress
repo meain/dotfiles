@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# Compress video by converting to H.264
+
+set -e
+
+ffmpeg -i "$1" -vcodec libx264 -acodec aac "$1".mp4
+

@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# Run an existing docker iamge
+
+set -e
+
+if [ -z "$1" ]; then
+	docker run -it "$(docker images --format "{{.ID}}\n{{.Repository}}" | grep -v '<none>' | fzf)"
+else
+	docker run -it "$1"
+fi
