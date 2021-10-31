@@ -204,6 +204,7 @@ in
     pkgs.entr
     pkgs.notify-desktop
     pkgs.guake
+    pkgs.albert
   ];
 
   dconf.settings = {
@@ -253,7 +254,7 @@ in
       move-to-workspace-right = [ "<Super><Shift>o" ];
     };
     "org/gnome/settings-daemon/plugins/media-keys" = {
-      custom-keybindings = [ "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/" "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/" ];
+      custom-keybindings = [ "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/" "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/" "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/" ];
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
       binding = "<Primary>semicolon";
@@ -265,7 +266,11 @@ in
       command = "gnome-terminal";
       name = "spawn-terminal";
     };
-
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2" = {
+      binding = "<Primary>Space";
+      command = "albert toggle";
+      name = "albert";
+    };
   };
 
 
@@ -303,6 +308,11 @@ in
   systemd.user.services.guake = {
     Unit.Description = "Guake setup script";
     Service.ExecStart = "${pkgs.guake}/bin/guake";
+    Install.WantedBy = [ "graphical-session.target" ];
+  };
+  systemd.user.services.albert = {
+    Unit.Description = "Albert setup script";
+    Service.ExecStart = "${pkgs.albert}/bin/albert";
     Install.WantedBy = [ "graphical-session.target" ];
   };
 }

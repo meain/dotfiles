@@ -16,3 +16,6 @@ mpd/.mpd/playlists/*
 .zcompcache
 .zcompdump*
 zsh/.config/zsh/.zsh_sessions/
+/albert/.config/albert/core.db
+/albert/.config/albert/last_used_version
+/albert/.config/albert/org.albert.extension.snippets/
