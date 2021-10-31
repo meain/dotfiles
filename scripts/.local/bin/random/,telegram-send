@@ -1,0 +1,27 @@
+#!/bin/sh
+
+# Send message on telegram
+
+set -e
+
+[ -z "$2" ] && echo "Usage: $(basename $0) [text|image|file|video] <message|filename>" && exit 1
+
+case "$1" in
+text)
+	curl -s -X POST \
+		-H 'Content-Type: application/json' \
+		-d "{\"chat_id\": \"$TELEGRAM_USER_ID\", \"text\": \"$MESSAGE\", \"disable_notification\": true}" \
+		"https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" | jq '.ok'
+	;;
+image)
+	curl -s -X POST "https://api.telegram.org/bot"$TELEGRAM_BOT_TOKEN"/sendPhoto" -F chat_id="$TELEGRAM_USER_ID" -F photo="@$1" | jq '.ok'
+	;;
+video)
+	curl -s _X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendVideo" -F chat_id="$TELEGRAM_USER_ID" -F video="@$1" | jq '.ok'
+	;;
+file)
+	curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendDocument" \
+		-F chat_id="$TELEGRAM_USER_ID" -F document="@$1" | jq '.ok'
+	;;
+*) echo "Usage: $(basename $0) [text|image|file|video] <message|filename>" && exit 1 ;;
+esac
