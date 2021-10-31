@@ -253,7 +253,7 @@ in
     };
     "org/gnome/shell/extensions/clipboard-indicator" = {
       history-size = 100;
-      toggle-menu = [ "<Alt>i" ]; # should be alt+shift+i later
+      toggle-menu = [ "<Alt>p" ]; # should be alt+shift+p later
     };
 
     "org/gnome/desktop/interface" = {
