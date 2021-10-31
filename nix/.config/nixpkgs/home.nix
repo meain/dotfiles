@@ -13,12 +13,7 @@ in
     extraPackages = epkgs: [ epkgs.vterm ];
   };
 
-  services = {
-    syncthing = {
-      enable = true;
-      tray.enable = true;
-    };
-  };
+  services.syncthing.enable = true;
 
   home.packages = [
     # core utils
