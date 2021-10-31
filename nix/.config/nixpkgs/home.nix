@@ -8,7 +8,6 @@ in
   home.username = "meain";
   home.homeDirectory = "/home/meain";
 
-  services.emacs.enable = true;
   programs.emacs = {
     enable = true;
     extraPackages = epkgs: [ epkgs.vterm ];
@@ -314,6 +313,12 @@ in
     Install.WantedBy = [ "timers.target" ];
   };
 
+  systemd.user.services.emacs = {
+    Unit.Description = "Start emacs server";
+    Service.Type = "forking";
+    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic 'emacs --daemon'";
+    Install.WantedBy = [ "graphical-session.target" ];
+  };
   systemd.user.services.guake = {
     Unit.Description = "Guake setup script";
     Service.ExecStart = "${pkgs.guake}/bin/guake";
