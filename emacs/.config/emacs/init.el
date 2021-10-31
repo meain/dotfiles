@@ -2484,7 +2484,9 @@ SHORTCUT is the keybinding to use.  NAME if the func suffix and FILE is the file
   "~/.config/emacs/elfeed-feeds.el")
 (meain/quick-file-open-builder "a" "early-init"
   "~/.dotfiles/emacs/.config/emacs/early-init.el")
-(meain/quick-file-open-builder "h" "hima-theme"
+(meain/quick-file-open-builder "h" "home-manager"
+  "~/.dotfiles/nix/.config/nixpkgs/home.nix")
+(meain/quick-file-open-builder "H" "hima-theme"
   "~/.dotfiles/emacs/.config/emacs/hima-theme.el")
 (meain/quick-file-open-builder "t" "evil-textobj-tree-sitter"
   "~/.config/emacs/straight/repos/evil-textobj-tree-sitter/evil-textobj-tree-sitter.el")
