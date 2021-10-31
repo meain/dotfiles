@@ -338,6 +338,16 @@ in
     Timer.OnCalendar = "*-*-* *:00:00";
     Install.WantedBy = [ "timers.target" ];
   };
+  systemd.user.services.weather-pull = {
+    Service.Type = "oneshot";
+    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic ',weather-current'";
+    Install.WantedBy = [ "graphical-session.target" ];
+  };
+  systemd.user.timers.weather-pull = {
+    Timer.OnCalendar = "*-*-* *:00:00";
+    Timer.Persistent = true;
+    Install.WantedBy = [ "timers.target" ];
+  };
 
   systemd.user.services.emacs = {
     Unit.Description = "Start emacs server";
