@@ -1,0 +1,12 @@
+#!/bin/sh
+
+set -e
+
+[ "$1" == 'fetch' ] &&
+	curl 'http://wttr.in?format=+%C|+%t|+%f|+%h|+%p|+%w' >/tmp/weather-current &&
+	exit 0
+
+[ -f /tmp/weather-current ] ||
+	curl -s 'http://wttr.in?format=+%C|+%t|+%f|+%h|+%p|+%w' >/tmp/weather-current
+tr '|' '\n' </tmp/weather-current | xargs echo |
+	awk '{print $1,$2,"("$3") with",$4,"humidity and",$6,"speed winds"}'
