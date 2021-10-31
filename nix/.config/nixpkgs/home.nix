@@ -322,15 +322,4 @@ in
     Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic 'emacs --daemon'";
     Install.WantedBy = [ "graphical-session.target" ];
   };
-  systemd.user.services.guake = {
-    Service.Type = "forking";
-    Unit.Description = "Guake setup script";
-    Service.ExecStart = "${pkgs.guake}/bin/guake";
-    Install.WantedBy = [ "graphical-session.target" ];
-  };
-  systemd.user.services.albert = {
-    Unit.Description = "Albert setup script";
-    Service.ExecStart = "${pkgs.albert}/bin/albert";
-    Install.WantedBy = [ "graphical-session.target" ];
-  };
 }
