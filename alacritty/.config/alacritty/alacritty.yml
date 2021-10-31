@@ -1,6 +1,3 @@
-env:
-  TERM: screen-256color-italic
-
 window:
   dimensions:
     columns: 120
@@ -9,7 +6,7 @@ window:
     x: 0
     y: 0
   dynamic_padding: true
-  decorations: buttonless
+  decorations: Full
 
 draw_bold_text_with_bright_colors: true
 
@@ -19,15 +16,15 @@ scrolling:
 
 font:
   normal:
-    family: DankMono Nerd Font
+    family: Unifont
     style: Regular
   bold:
-    family: DankMono Nerd Font
+    family: Unifont
     style: Regular
   italic:
-    family: DankMono Nerd Font
+    family: Unifont
     style: Regular
-  size: 15.0
+  size: 10.0
   offset:
     x: 0
     y: 0
