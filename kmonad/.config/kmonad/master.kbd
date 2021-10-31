@@ -26,7 +26,7 @@
   mu M-u
   mo M-o
   mspc M-spc  ;; needed as base layer is @num
-  noti (cmd-button "notify-send 'Keyboard is working'")
+  noti (cmd-button "notify 'Keyboard is working'")
 )
 
 
@@ -56,7 +56,7 @@
 
 (deflayer superlayer
   _    _    _    _    _    _    _    _    _    _    _    _    _    _
-  _    _    _    _    _    _    _    @mu  _    @mo    -    _    _    _
+  _    _    _    _    _    _    _    @mu  _    @mo  _    _    _    _
   _    _    _    _    _    _    left down up  rght  _    _    _
   _    _    @cut @cpy @pst _    _    _    _    _    _    _ 
   _    _    _             @mspc           _            _    _    _
