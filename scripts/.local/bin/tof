@@ -1,7 +1,0 @@
-#!/bin/sh
-
-[ -z "$1" ] && echo "No file provided" && exit 1
-FILE="$1"
-
-curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendDocument" \
-  -F chat_id="$TELEGRAM_USER_ID" -F document="@$FILE" | jq '.ok'
