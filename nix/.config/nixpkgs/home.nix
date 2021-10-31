@@ -3,6 +3,7 @@ let
   personal = import (builtins.fetchTarball "https://github.com/meain/nix-channel/archive/4780703f9bcb313759aecf11cc231953e77f43f3.tar.gz") { };
 in
 {
+  home.stateVersion = "21.05";
   programs.home-manager.enable = true;
   home.username = "meain";
   home.homeDirectory = "/home/meain";
@@ -59,7 +60,8 @@ in
     pkgs.restic # backup
     pkgs.ledger # double entry accounting
     pkgs.dasel # jq but more versatile
-    pkgs.mosh
+    pkgs.mosh # better ssh
+    pkgs.diff-so-fancy # cleaner diff in git
 
     # aspell dicts
     pkgs.aspellDicts.en
@@ -197,7 +199,6 @@ in
     # linux-specific
     pkgs.victor-mono
     pkgs.htop
-    pkgs.diff-so-fancy
     personal.traffic
     pkgs.trash-cli
     pkgs.entr
@@ -304,12 +305,4 @@ in
     Service.ExecStart = "${pkgs.guake}/bin/guake";
     Install.WantedBy = [ "graphical-session.target" ];
   };
-
-  # This value determines the Home Manager release that your # configuration is compatible with. This helps avoid breakage # when a new Home Manager release introduces backwards
-  # incompatible changes.
-  #
-  # You can update Home Manager without changing this value. See
-  # the Home Manager release notes for a list of state version
-  # changes in each release.
-  home.stateVersion = "21.05";
 }
