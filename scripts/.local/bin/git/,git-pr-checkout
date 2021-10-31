@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Checking a pr using hub
+
+set -e
+
+hub pr checkout "$(hub pr list | sed 's/^\ *//' | fzf | sed 's/.\([0-9]*\).*/\1/')"

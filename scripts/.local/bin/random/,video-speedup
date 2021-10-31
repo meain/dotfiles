@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# Speedup video by 2x
+
+set -e
+
+faster_filename=$(echo "$1" | sed 's/\..*$/2x.mp4/g')
+ffmpeg -i "$1" -filter:v "setpts=0.5*PTS" "$faster_filename"

@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# Push to current upstream
+
+set -e
+
+branch="$(git branch | grep '\*' | sed s:^..::g)"
+if [ "$1" = '--force-with-lease' ] || [ "$1" = '--force' ] || [ "$1" = "-f" ]; then
+	echo "Use ,gpuf for force pushing" && return 1
+fi
+git push origin "$branch"

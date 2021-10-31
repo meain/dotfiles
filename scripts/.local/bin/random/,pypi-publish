@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Publish to pypi
+
+set -e
+
+python setup.py sdist bdist_wheel && twine upload dist/*

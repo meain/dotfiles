@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# Start a new blog
+
+set -e
+
+cd "$BLOG_PATH"
+DATE=$(date +%Y-%m-%d)
+FIXED="$(echo "$*" | sed 's/ /-/g')"
+NAME="$DATE-$FIXED.md"
+[ -d "posts" ] && NAME="posts/$NAME"
+if [ ! -f "$NAME" ]; then
+	sed "s|REPLACE_DATE|$DATE|" "$DATAFILES_PATH/blog_template" >>"$NAME"
+fi
+$EDITOR "$NAME"

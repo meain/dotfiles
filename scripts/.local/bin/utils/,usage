@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Show space taken up by items in folder and total
+
+set -e
+
+du -h -d 1 . | sort -hr

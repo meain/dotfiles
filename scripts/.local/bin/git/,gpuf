@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Force push upstream
+
+set -e
+
+[ "$branch" = "master" ] && echo "I won't force push to master." && return 1
+echo 'Pushing with --force-with-lease'
+git push origin "$branch" --force-with-lease

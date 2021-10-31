@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# Ammend commit with new changes
+
+set -e
+
+GIT_STAGED_FILES=$(git diff --name-only --cached)
+if [ -z "$GIT_STAGED_FILES" ]; then
+	git commit -a --amend -C HEAD
+else
+	git commit --amend -C HEAD
+fi

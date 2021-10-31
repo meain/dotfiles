@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Get current namespace
+
+set -e
+
+kubectl config view --minify --output 'jsonpath={..namespace}'

@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Select and delete brances
+
+set -e
+
+git branch | grep -v "\*" | grep -v "master" | sed s:^..::g | fzf -m --height 40% --reverse | xargs git branch -D

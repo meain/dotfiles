@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Add untracked items to gitignore
+
+set -e
+
+git status | grep -P \"^\\t\" | grep -vF .gitignore | sed \"s/^\\t//\" >>.gitignore

@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# Build and run a docker image
+
+set -e
+
+TAG="$(xxd -l2 -ps /dev/urandom)"
+echo $TAG | pbcopy
+if docker build -f "$(fd Dockerfile | fzf | head -n1)" -t "$TAG" .; then
+	docker run "$@" -it "$TAG"
+fi

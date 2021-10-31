@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Simple image compression (there are better alternatives)
+
+set -e
+
+convert "$1" -sampling-factor 4:2:0 -strip -quality 30 -interlace JPEG -colorspace RGB "${2:-small-${1%.*}.jpg}"

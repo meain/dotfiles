@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# ,vime but use vim instead of $EDITOR
+
+set -e
+
+EDITOR=vim ,vime "$*"

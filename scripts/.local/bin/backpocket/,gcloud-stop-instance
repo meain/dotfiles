@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# Stop a gcloud instance
+
+set -e
+
+INSTANCES="$(gcloud compute instances list)"
+INSTANCE="$(echo "$INSTANCES" | grep 'RUNNING' | grep -vE '^gke-' | cut -d' ' -f1 | fzf --query "$1")"
+if [ -z "$INSTANCE" ]; then
+	if echo "$INSTANCES" | grep "^$1" | grep "TERMINATED" >/dev/null; then
+		echo "Instance was not running"
+		return 0
+	fi
+	echo "Could not stop instance"
+	return 1
+fi
+gcloud compute instances stop "$INSTANCE"

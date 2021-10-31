@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# Open a tmux session for current dir
+
+set -e
+
+if [ -z "$1" ]; then
+	FOLDER=$(pwd | xargs basename | sed 's:^\.::')
+	,tmuxsession "$FOLDER"
+else
+	mkdir "$1"
+	cd "$1" || return 1
+	,tmuxsession "$1"
+fi

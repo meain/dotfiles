@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# Start stop ssh tunnel
+
+set -e
+
+# networksetup -listallnetworkservices
+DEVICE='USB 10/100/1000 LAN'
+PORT=8889
+if [ "$1" == "start" ]; then
+	ssh -D "$PORT" -f -C -q -N "$TUNNEL_INSTANCE"
+	networksetup -setsocksfirewallproxy "$DEVICE" localhost "$PORT"
+	networksetup -setsocksfirewallproxystate "$DEVICE" on
+	tmux refresh-client -S
+elif [ "$1" == "stop" ]; then
+	networksetup -setsocksfirewallproxystate "$DEVICE" off
+	kill $(ps aux | grep 'ssh -D' | grep -v grep | awk '{print $2}')
+	tmux refresh-client -S
+else
+	DEVICE='USB 10/100/1000 LAN'
+	networksetup -getsocksfirewallproxy "$DEVICE"
+	echo "Use $(basename $0) <start|stop> to start or stop the tunnel"
+fi

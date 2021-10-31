@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Change current context in kube config
+
+set -e
+
+kubectl config get-contexts | grep -v '^*' | tail -n+2 | awk '{print $1,"   ",$4}' |
+	fzf --preview "echo Current context: $(kubectl config current-context)" --preview-window up:1 |
+	awk '{print $1}' | xargs kubectl config use-context

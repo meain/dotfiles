@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# git pull
+
+set -e
+
+git pull origin $(git branch | grep "\*" | sed s:^..::g )
+echo "Use `tput setaf 2`glp`tput sgr0` and `tput setaf 2`gdp`tput sgr0` to view new commits"

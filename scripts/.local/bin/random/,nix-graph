@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# Show a dependency graph of a nix package
+
+set -e
+
+package=$(ls /nix/store | grep -vE '\.drv$' | sed 's/[^-]*-//' | sort -u | fzf)
+[ -z $package ] && return 0
+fullname=$(ls /nix/store | grep -E "$package$" | head -n1)
+echo "Visualizing $fullname"
+nix-store -q --graph "/nix/store/$fullname" | dot -Tsvg >/tmp/nixgraph.svg
+open /tmp/nixgraph.svg

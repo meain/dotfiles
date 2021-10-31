@@ -6,8 +6,7 @@
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
-source $ZDOTDIR/.zsh_path
-source $ZDOTDIR/universal-paths
+source $ZDOTDIR/exports
 
 echo ""
 basename `find "$NOTES_PATH/idea" -name '*.md' | sed 's|.md$||' | shuf -n1` | fmt -c -w $COLUMNS
@@ -70,62 +69,20 @@ zle -N fg-bg
 bindkey '^Z' fg-bg
 
 # Credentials
-if [ -f $HOME/.credentials ]; then
-	source $HOME/.credentials
-fi
-
-# source exports
-source $ZDOTDIR/.exports
+[ -f $HOME/.credentials ] && source $HOME/.credentials
 
 # Source aliases
-source $ZDOTDIR/.basic_aliases
-source $ZDOTDIR/.vim_aliases
-source $ZDOTDIR/.emacs_aliases
-source $ZDOTDIR/.git_aliases
-source $ZDOTDIR/.tmux_aliases
-source $ZDOTDIR/.fzf_aliases
-source $ZDOTDIR/.macos_aliases
-
-# Source custom functions
-source $ZDOTDIR/.zsh_mods
-source $ZDOTDIR/.other_functions
-source $ZDOTDIR/.coding_functions
-source $ZDOTDIR/.npm_functions
-source $ZDOTDIR/.git_functions
-source $ZDOTDIR/.docker_functions
-source $ZDOTDIR/.python_functions
-source $ZDOTDIR/.kubectl_functions
-source $ZDOTDIR/.gcloud_functions
-source $ZDOTDIR/.ffmpeg_functions
-source $ZDOTDIR/.imagemagic_functions
-source $ZDOTDIR/.nix_functions
+source $ZDOTDIR/aliases
+source $ZDOTDIR/functions
 
 # source dir hashes
-[ -f ~/.cache/zsh/.zsh_dir_hashes ] && source ~/.cache/zsh/.zsh_dir_hashes
+[ -f ~/.local/share/zsh/.zsh_dir_hashes ] && source ~/.local/share/zsh/.zsh_dir_hashes
 
 # Sorce fzf
 [ -f /usr/locale/opt/.fzf.zsh ] && source /usr/locale/opt/.fzf.zsh
 
-if [ -f $HOME/.temp_aliases ]; then
-	source $HOME/.temp_aliases
-fi
-
-# Source any changs for linux
-case "$(uname -s)" in
-Linux)
-	source $ZDOTDIR/.linux_modifications
-	;;
-esac
-
-# Source colors for ls
-# case "$(uname -s)" in
-#   Darwin)
-#     eval $(gdircolors -b $ZDOTDIR/.dircolors)
-#     ;;
-#   Linux)
-#     eval $(dircolors -b $ZDOTDIR/.dircolors)
-#     ;;
-# esac
+# Source colors for ls (trapd00r/LS_COLORS)
+# [ "$(uname -s)" == "Darwin" ] && eval $(gdircolors -b $ZDOTDIR/dircolors) || eval $(dircolors -b $ZDOTDIR/dircolors)
 
 # Use vim mode in zsh
 autoload -Uz edit-command-line
@@ -145,10 +102,6 @@ bindkey "\e[A" history-search-backward
 bindkey "\e[B" history-search-forward
 export KEYTIMEOUT=1
 
-# updates PATH for Google Cloud SDK && add shell completion for gcloud
-export CLOUDSDK_PYTHON="/usr/local/opt/python@3.8/libexec/bin/python"
-# source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
-
 preexec() {
 	if ! grep -q "$1" "$DATAFILES_PATH/long_runnable_jobs"; then
 		CMD_START_DATE=$(date +%s)
@@ -156,7 +109,16 @@ preexec() {
 	fi
 }
 
-# load nix (not needed on nixos)
+# cd > cd&&ls
+list_all() {
+  emulate -L zsh
+  ls
+}
+if [[ ${chpwd_functions[(r)list_all]} != "list_all" ]];then
+  chpwd_functions=(${chpwd_functions[@]} "list_all")
+fi
+
+# load nix
 . $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh
 
 ,darkmode quiet # set dark or light mode

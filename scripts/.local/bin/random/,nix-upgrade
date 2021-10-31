@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# Perform a complete upgrade of nix setup
+
+set -e
+
+nix-channel --update
+nix-env --upgrade
+nixos-rebuild switch
+home-manager switch

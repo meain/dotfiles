@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Open conflicting files in editor
+
+set -e
+
+git diff --name-only --diff-filter=U | xargs "$EDIOR"

@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Print out logs from pod
+
+set -e
+
+kubectl get pods | tail -n +2 | awk '{print $3,$1}' |
+	fzf --query "$*" | cut -d' ' -f2 |
+	xargs kubectl logs --tail=130 -f

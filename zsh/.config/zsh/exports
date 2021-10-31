@@ -1,0 +1,120 @@
+#!/bin/sh
+
+## =============================================================== :PATH
+
+# Golang
+export GOPATH=$HOME/.local/share/go
+export GOBIN=$GOPATH/bin
+PATH=$PATH:$GOPATH/bin
+
+# Poetry
+PATH="$HOME/.loca/share/poetry/bin:$PATH"
+
+# pyenv
+export PYENV_ROOT="$HOME/.local/share/pyenv"
+PATH="$PYENV_ROOT/bin:$PATH"
+
+# Python
+export WORKON_HOME=$HOME/.local/share/virtual-envs
+
+# ruby
+export GEM_HOME=$HOME/.local/cache/gems
+export PATH=$HOME/.local/cache/gems/bin:$PATH
+
+# node
+export NVM_DIR="$HOME/.local/cache/nvm"
+
+# Latex (macos)
+PATH=/Library/TeX/texbin:$PATH
+
+# PATH (extras)
+PATH=$HOME/.local/bin:$PATH
+PATH=$HOME/.local/bin/random:$PATH
+PATH=$HOME/.local/bin/helpers:$PATH
+PATH=$HOME/.local/bin/utils:$PATH
+PATH=$HOME/.local/bin/backpocket:$PATH
+PATH=$HOME/.local/bin/macos:$PATH
+PATH=$HOME/.local/bin/git:$PATH
+PATH=$HOME/.local/bin/docker:$PATH
+PATH=$HOME/.local/bin/kubernetes:$PATH
+PATH=$HOME/.local/bin/music:$PATH
+PATH=$HOME/.local/bin/tmux:$PATH
+export PATH
+
+# rustup and cargo
+# export RUSTUP_HOME="$HOME/.local/share/rustup"
+export CARGO_HOME="$HOME/.local/share/cargo"
+export PATH="$CARGO_HOME/bin:$PATH"
+
+# android
+export ANDROID_HOME="$HOME/.local/share/android"
+export PATH="$PATH:$ANDROID_HOME/cmdline-tools/tools/bin"
+
+# Flutter & Dart
+PATH="$PATH:$HOME/.local/share/flutter/bin"
+PATH="$PATH:$HOME/.local/share/flutter/bin/cache/dart-sdk/bin"
+export PATH="$PATH":"$HOME/.pub-cache/bin"
+
+# dotnet
+export PATH="$PATH":"$HOME/.dotnet"
+
+# mail
+export MAILDIR=$HOME/.local/share/mail/meain
+
+# nix
+export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
+
+# notmuch
+export NOTMUCH_CONFIG="$HOME/.config/notmuch/config"
+
+# rupa/z
+export _Z_DATA="$HOME/.local/share/z/z"
+
+## =============================================================== :folders
+
+# local path
+export VIME_PATH="$HOME/.local/share/vime"
+export NOTES_PATH="$HOME/.local/share/notes"
+export LEDGER_PATH="$HOME/.local/share/ledger"
+export JOURNAL_PATH="$HOME/.local/share/journal"
+export DATAFILES_PATH="$HOME/.config/datafiles"
+export SCRIPTS_DIR="$HOME/.dotfiles/scripts/.local/bin"
+
+# projects???
+export GOURCER_PATH="$HOME/dev/projects/gourcer"
+export REDIRECTS_PATH="$HOME/dev/projects/redirects"
+export BLOG_PATH="$HOME/dev/projects/blog"
+export SNIPPETS_PATH="$HOME/dev/projects/snippets"
+
+# others
+export DOWNLOADS_PATH="$HOME/Downloads"
+export SCREENSHOTS_PATH="$HOME/screenshots"
+export MUSIC_PATH="$HOME/Documents/music"
+
+## =============================================================== :settings
+
+# add color to man pages
+export MANROFFOPT='-c'
+export LESS_TERMCAP_mb=$(tput bold; tput setaf 2)
+export LESS_TERMCAP_md=$(tput bold; tput setaf 6)
+export LESS_TERMCAP_me=$(tput sgr0)
+export LESS_TERMCAP_so=$(tput bold; tput setaf 3; tput setab 4)
+export LESS_TERMCAP_se=$(tput rmso; tput sgr0)
+export LESS_TERMCAP_us=$(tput smul; tput bold; tput setaf 8)
+export LESS_TERMCAP_ue=$(tput rmul; tput sgr0)
+export LESS_TERMCAP_mr=$(tput rev)
+export LESS_TERMCAP_mh=$(tput dim)
+
+# task spooler
+export TS_MAXFINISHED="13"
+# export TS_ONFINISH="tscomplete"
+
+# fzf
+export FZF_DEFAULT_OPTS='
+    -1 -0
+    --prompt=" "
+    --inline-info
+    --reverse --height "40%"
+    --color fg:-1,hl:4,fg+:1,bg+:-1,hl+:4
+    --color info:108,prompt:242,spinner:108,pointer:1,marker:168
+'

@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# Start an existing instance on gcloud
+
+set -e
+
+INSTANCES="$(gcloud compute instances list)"
+INSTANCE="$(echo "$INSTANCES" | grep 'TERMINATED' | cut -d' ' -f1 | fzf --query "$1")"
+if [ -z "$INSTANCE" ]; then
+	if echo "$INSTANCES" | grep "^$1" | grep "RUNNING" >/dev/null; then
+		echo "Instance already running"
+		return 0
+	fi
+	echo "Could not start instance"
+	return 1
+fi
+gcloud compute instances start "$INSTANCE"

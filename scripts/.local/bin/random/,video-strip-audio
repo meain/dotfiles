@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Convert a video file to mp3
+
+set -e
+
+ffmpeg -i "$1" -vn -ab 128k -ar 44100 -y "${1%.*}.mp3"
