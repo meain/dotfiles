@@ -364,7 +364,7 @@ in
       window-width = 100;
     };
     "apps/guake/keybindings/global" = {
-      show-hide = "";
+      show-hide = "disabled";
     };
     "apps/guake/keybindings/local" = {
       toggle-fullscreen = "<Primary>Return";
