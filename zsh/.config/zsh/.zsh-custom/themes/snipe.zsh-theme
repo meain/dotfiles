@@ -91,7 +91,9 @@ function _git_repo_base(){
 
 _tmux_indicator='!'
 
-if [[ -n "$TMUX" ]] ; then
+if [[ -n "$IN_NIX_SHELL" ]] ; then
+  local _tmux_indicator="#"
+elif [[ -n "$TMUX" ]] ; then
   local _tmux_indicator="="
 fi
 
