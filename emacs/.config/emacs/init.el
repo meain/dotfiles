@@ -1923,13 +1923,9 @@ Pass ORIGINAL and ALTERNATE options."
   :config (progn
             (setq elfeed-sort-order 'ascending)
             (setq elfeed-curl-timeout 60)
-            (setq browse-url-browser-function '(lambda (url &rest args)
-                                                 (interactive)
-                                                 (start-process "*open*" "*open*" "open" "-g"
-                                                                url)
-                                                 (message "Opened %s" url)))
+            (setq browse-url-browser-function 'browse-url-default-browser)
             (setq browse-url-generic-program "open")
-            (setq browse-url-generic-args (list "-g"))
+            (setq browse-url-generic-args nil)
             (evil-define-key 'normal
               elfeed-search-mode-map
               (kbd "o")
