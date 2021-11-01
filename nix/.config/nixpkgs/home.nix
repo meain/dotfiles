@@ -204,6 +204,7 @@ in
     pkgs.notify-desktop
     pkgs.guake
     pkgs.albert
+    pkgs.wl-clipboard
 
     # gnome tweaking
     pkgs.gnomeExtensions.dash-to-panel
@@ -213,9 +214,14 @@ in
     pkgs.gnomeExtensions.caffeine
     pkgs.gnomeExtensions.no-overview
 
+    # symlinks
+    (pkgs.runCommand "open" { } ''mkdir -p $out/bin; ln -s ${pkgs.xdg-utils}/bin/xdg-open $out/bin/open'')
+    (pkgs.runCommand "pbcopy" { } ''mkdir -p $out/bin; ln -s ${pkgs.wl-clipboard}/bin/wl-copy $out/bin/pbcopy'')
+    (pkgs.runCommand "pbpaste" { } ''mkdir -p $out/bin; ln -s ${pkgs.wl-clipboard}/bin/wl-paste $out/bin/pbpaste'')
+
     # autostart
-    (pkgs.makeAutostartItem {name = "guake"; package = pkgs.guake;})
-    (pkgs.makeAutostartItem {name = "albert"; package = pkgs.albert;})
+    (pkgs.makeAutostartItem { name = "guake"; package = pkgs.guake; })
+    (pkgs.makeAutostartItem { name = "albert"; package = pkgs.albert; })
   ];
 
   dconf.settings = {
