@@ -19,8 +19,7 @@ map e $$EDITOR "$f"
 map i $less "$f"
 map I $qlmanage -p "$f" > /dev/null 2> /dev/null
 map P $echo "$f" | pbcopy
-set previewer preview
-set cleaner icatclear
+set previewer ,preview
 
 map S $$SHELL
 map L $sender "$f"
