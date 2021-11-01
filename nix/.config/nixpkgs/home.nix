@@ -311,7 +311,7 @@ in
       ];
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
-      binding = "<Primary>semicolon";
+      binding = "<Super>semicolon";
       command = "guake-toggle";
       name = "guake";
     };
@@ -367,7 +367,7 @@ in
       show-hide = "disabled";
     };
     "apps/guake/keybindings/local" = {
-      toggle-fullscreen = "<Primary>Return";
+      toggle-fullscreen = "<Super>Return";
     };
     "apps/guake/style/background" = {
       transparency = 90;
