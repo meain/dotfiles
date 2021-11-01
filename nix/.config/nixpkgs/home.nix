@@ -227,8 +227,19 @@ in
     "org/gnome/shell" = {
       disable-user-extensions = false;
       disabled-extensions = [ ];
-      enabled-extensions = [ "dash-to-panel@jderose9.github.com" "clipboard-indicator@tudmotu.com" "blur-my-shell@aunetx" "caffeine@patapon.info" "gsconnect@andyholmes.github.io" "no-overview@fthx" ];
-      favorite-apps = [ "org.gnome.Terminal.desktop" "org.gnome.Nautilus.desktop" "chromium-browser.desktop" ];
+      enabled-extensions = [
+        "dash-to-panel@jderose9.github.com"
+        "clipboard-indicator@tudmotu.com"
+        "blur-my-shell@aunetx"
+        "caffeine@patapon.info"
+        "gsconnect@andyholmes.github.io"
+        "no-overview@fthx"
+      ];
+      favorite-apps = [
+        "org.gnome.Terminal.desktop"
+        "org.gnome.Nautilus.desktop"
+        "chromium-browser.desktop"
+      ];
     };
     "org/gnome/nautilus/preferences" = {
       default-folder-viewer = "icon-view";
@@ -281,6 +292,7 @@ in
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/"
       ];
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
@@ -302,6 +314,11 @@ in
       binding = "<Alt>e";
       command = "emacsclient  -a '' --no-wait -c";
       name = "emacs";
+    };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4" = {
+      binding = "<Alt>Backspace";
+      command = "zsh -ic ',open-or-search $(pbpaste)'";
+      name = "open-or-search";
     };
   };
 
