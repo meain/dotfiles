@@ -15,6 +15,7 @@ in
 
   services.syncthing.enable = true;
 
+  fonts.fontconfig.enable = true;
   home.packages = [
     # core utils
     pkgs.ripgrep
@@ -195,7 +196,6 @@ in
     # pkgs.groff # gnu troff
 
     # linux-specific
-    pkgs.victor-mono
     pkgs.htop
     personal.traffic
     pkgs.trash-cli
@@ -204,6 +204,9 @@ in
     pkgs.guake
     pkgs.albert
     pkgs.wl-clipboard
+    pkgs.gnome3.dconf-editor
+    pkgs.gnome.gnome-tweaks
+    personal.fluent-theme
 
     # gnome tweaking
     pkgs.gnomeExtensions.dash-to-panel
@@ -221,9 +224,25 @@ in
     # autostart
     (pkgs.makeAutostartItem { name = "guake"; package = pkgs.guake; })
     (pkgs.makeAutostartItem { name = "albert"; package = pkgs.albert; })
+
+    # fonts
+    pkgs.victor-mono
   ];
 
   dconf.settings = {
+    "org/gnome/desktop/background" = {
+      picture-uri = "file:///home/meain/wallpaper.jpg";
+    };
+
+    "org/gnome/desktop/interface" = {
+      gtk-theme = "Fluent-light-compact";
+      font-name = "Victor Mono 9";
+      monospace-font-name = "Victor Mono 9";
+      font-antialiasing = "grayscale";
+      font-hinting = "slight";
+      clock-format = "12h";
+      show-battery-percentage = true;
+    };
     "org/gnome/shell" = {
       disable-user-extensions = false;
       disabled-extensions = [ ];
@@ -261,7 +280,7 @@ in
       leftbox-padding = -1;
       panel-anchors = "{\"0\":\"MIDDLE\"}";
       panel-lengths = "{\"0\":100}";
-      panel-positions = "{\"0\":\"TOP\"}";
+      panel-positions = "{\"0\":\"BOTTOM\"}";
       panel-sizes = "{\"0\":24}";
       status-icon-padding = -1;
       tray-padding = -1;
@@ -272,10 +291,6 @@ in
       toggle-menu = [ "<Alt>p" ]; # should be alt+shift+p later
     };
 
-    "org/gnome/desktop/interface" = {
-      clock-format = "12h";
-      show-battery-percentage = true;
-    };
     "org/gtk/settings/file-chooser" = {
       clock-format = "12h";
     };

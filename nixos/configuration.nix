@@ -53,15 +53,6 @@ in
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
-  services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
-  [org.gnome.desktop.background]
-  picture-uri='file:///home/meain/wallpaper.jpg'
-
-  [org.gnome.desktop.interface]
-  gtk-theme='Fluent-light-compact'
-  font-name='Unifont 10'
-  monospace-font-name='Unifont 10'
-'';
 
   # Configure keymap in X11
   # services.xserver.layout = "us";
@@ -108,10 +99,7 @@ in
     pkgs.vim
     pkgs.wget
     pkgs.ungoogled-chromium
-    pkgs.gnome3.dconf-editor
-    pkgs.gnome.gnome-tweaks
     personal.kmonad
-    personal.fluent-theme
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
