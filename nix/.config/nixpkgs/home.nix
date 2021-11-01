@@ -335,6 +335,44 @@ in
       command = "zsh -ic ',open-or-search $(pbpaste)'";
       name = "open-or-search";
     };
+
+    "apps/guake/general" = {
+      abbreviate-tab-names = false;
+      compat-delete = "delete-sequence";
+      display-n = 0;
+      gtk-theme-name = "Default";
+      history-size = 10000;
+      max-tab-name-length = 100;
+      mouse-display = true;
+      open-tab-cwd = false;
+      prompt-on-quit = false;
+      quick-open-command-line = "gedit %(file_path) s";
+      restore-tabs-notify = false;
+      restore-tabs-startup = false;
+      save-tabs-when-changed = false;
+      scroll-keystroke = true;
+      start-at-login = false;
+      use-default-font = true;
+      use-popup = false;
+      use-scrollbar = false;
+      use-trayicon = false;
+      window-halignment = 0;
+      window-height = 60;
+      window-losefocus = false;
+      window-refocus = true;
+      window-tabbar = false;
+      window-width = 100;
+    };
+    "apps/guake/keybindings/global" = {
+      show-hide = "";
+    };
+    "apps/guake/keybindings/local" = {
+      toggle-fullscreen = "<Primary>Return";
+    };
+    "apps/guake/style/background" = {
+      transparency = 90;
+    };
+
   };
 
 
