@@ -100,6 +100,8 @@ in
 
     # programming-go
     pkgs.go # go programming language
+    pkgs.gopls
+    pkgs.godef
     pkgs.go-langserver # go language-server
     pkgs.goimports # go formatter
     pkgs.golangci-lint # all kinds of linters for go
@@ -207,6 +209,7 @@ in
     pkgs.gnome3.dconf-editor
     pkgs.gnome.gnome-tweaks
     personal.fluent-theme
+    pkgs.nethogs
 
     # gnome tweaking
     pkgs.gnomeExtensions.dash-to-panel
