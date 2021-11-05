@@ -36,6 +36,7 @@
   helper = cache
 [init]
   templatedir = ~/.config/git/.git_template
+  defaultBranch = master
 [color "diff-highlight"]
   oldNormal = red
   oldHighlight = red reverse
