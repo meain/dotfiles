@@ -215,6 +215,7 @@ in
     pkgs.gnomeExtensions.gsconnect
     pkgs.gnomeExtensions.caffeine
     pkgs.gnomeExtensions.no-overview
+    personal.gnomeExtensions.steal-my-focus
 
     # symlinks
     (pkgs.runCommand "open" { } ''mkdir -p $out/bin; ln -s ${pkgs.xdg-utils}/bin/xdg-open $out/bin/open'')
@@ -253,6 +254,7 @@ in
         "caffeine@patapon.info"
         "gsconnect@andyholmes.github.io"
         "no-overview@fthx"
+        "focus-my-window@varianto25.com"
       ];
       favorite-apps = [
         "org.gnome.Terminal.desktop"
@@ -308,6 +310,7 @@ in
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/"
       ];
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
@@ -334,6 +337,11 @@ in
       binding = "<Alt>Backspace";
       command = "zsh -ic ',open-or-search $(pbpaste)'";
       name = "open-or-search";
+    };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5" = {
+      binding = "<Super>s"; # this is stupid keybinding, just can't get super+' to work in vm
+      command = "zsh -ic ',editor-or-browser'";
+      name = "launch-or-focus-editor-browser";
     };
 
     "apps/guake/general" = {

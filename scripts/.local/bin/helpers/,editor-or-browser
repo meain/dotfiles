@@ -1,0 +1,7 @@
+#!/bin/sh
+
+set -e
+
+,launch-or-focus Emacs 'emacsclient  -a "" --no-wait -c' Chromium-browser chromium
+
+
