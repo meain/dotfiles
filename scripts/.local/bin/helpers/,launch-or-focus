@@ -1,0 +1,74 @@
+#!/bin/sh
+
+# Launch or focus a specific app.
+
+# Simple case: (single application)
+# eg: ,lof Emacs 'emacsclient  -a "" --no-wait -c'
+# In this cae we first search if a window with the name Emacs is
+# available and if so we focus it, but if not we laucnch it with the
+# shell command emacsclient
+
+# Two app case:
+# eg: ,lof Emacs 'emacsclient  -a "" --no-wait -c' Chromium-browser chromium
+# In this situation, you have to pass in 4 args. Essentialy the same
+# idea as the first one, but if the first app is already in focus, we
+# open the second one and vice versa.
+
+set -e
+
+[ -z "$2" ] && echo "Usage: $(basename $0) <window_name> <launch_binary> [<window2_name> <launch_binary2>]" && exit 1
+[ -n "$3" ] && [ -z "$4" ] && echo "Usage: $(basename $0) <window_name> <launch_binary> [<window2_name> <launch_binary2>]" && exit 1
+
+current="$(gdbus call \
+	--session \
+	--dest org.gnome.Shell \
+	--object-path /org/gnome/Shell \
+	--method org.gnome.Shell.Eval "
+    global
+      .get_window_actors()
+      .map(a=>a.meta_window)
+      .find(w=>w.has_focus())
+      .get_wm_class()" |
+	cut -d'"' -f 2)"
+
+all="$(gdbus call \
+	--session \
+	--dest org.gnome.Shell \
+	--object-path /org/gnome/Shell \
+	--method org.gnome.Shell.Eval "      
+    global              
+      .get_window_actors()
+      .map(a=>a.meta_window)                                   
+      .map(w=>w.get_wm_class())" |
+	sed -E -e "s/^\(\S+, '//" -e "s/'\)$//" |
+	jq -r '.|join("\n")')"
+
+function focusApplication() {
+	gdbus call \
+		--session \
+		--dest org.gnome.Shell \
+		--object-path /org/gnome/Shell \
+		--method org.gnome.Shell.Eval "      
+            global              
+            .get_window_actors()
+            .map(a=>a.meta_window)                                   
+            .filter(w=>w.get_wm_class() == '$1')[0].activate(true)"
+}
+
+function launchOrFocus() {
+	if echo $all | grep -q "$1"; then
+		focusApplication "$1"
+	else
+		"$2" >/dev/null 2>&1 &
+		disown
+	fi
+}
+
+echo "Available windows: $all"
+if [ $current == "$1" ]; then
+	if [ -n "$3" ]; then
+		launchOrFocus "$3" "$4"
+	fi
+else
+	launchOrFocus "$1" "$2"
+fi
