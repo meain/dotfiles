@@ -59,7 +59,7 @@ function launchOrFocus() {
 	if echo $all | grep -q "$1"; then
 		focusApplication "$1"
 	else
-		"$2" >/dev/null 2>&1 &
+		$2 >/dev/null 2>&1 &
 		disown
 	fi
 }
