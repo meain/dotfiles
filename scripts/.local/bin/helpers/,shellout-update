@@ -1,0 +1,6 @@
+#!/bin/sh
+
+set -e
+
+# just doing asimple mail count update for now
+,mail-counter > /tmp/shellout
