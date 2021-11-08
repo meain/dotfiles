@@ -25,6 +25,3 @@ run-dev
 # programming
 .mypy_cache
 node_modules
-
-# nix (don't add it in if not already there)
-shell.nix
