@@ -1641,6 +1641,13 @@ Pass ORIGINAL and ALTERNATE options."
   :defer t
   :commands (emmet-mode))
 
+;; Direnv support
+(use-package envrc
+  :straight t
+  :defer 1
+  :config (progn
+            (envrc-global-mode)))
+
 ;;; [FILETYPE PUGINS] ===============================================
 
 (use-package rust-mode :straight t
