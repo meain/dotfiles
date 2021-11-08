@@ -8,10 +8,12 @@ export LANG=en_US.UTF-8
 
 source $ZDOTDIR/exports
 
-echo ""
-basename `find "$NOTES_PATH/idea" -name '*.md' | sed 's|.md$||' | shuf -n1` | fmt -c -w $COLUMNS
-# corpcrap | fmt -c -w $COLUMNS
-echo ""
+if [ -z "$QUITE_ZSH" ]; then
+    echo ""
+    basename `find "$NOTES_PATH/idea" -name '*.md' | sed 's|.md$||' | shuf -n1` | fmt -c -w $COLUMNS
+    # corpcrap | fmt -c -w $COLUMNS
+    echo ""
+fi
 
 # zsh settings
 export DISABLE_AUTO_TITLE="true"

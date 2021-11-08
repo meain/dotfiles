@@ -219,6 +219,7 @@ in
     pkgs.gnomeExtensions.caffeine
     pkgs.gnomeExtensions.no-overview
     personal.gnomeExtensions.steal-my-focus
+    personal.gnomeExtensions.shellout
 
     # symlinks
     (pkgs.runCommand "open" { } ''mkdir -p $out/bin; ln -s ${pkgs.xdg-utils}/bin/xdg-open $out/bin/open'')
@@ -258,6 +259,7 @@ in
         "gsconnect@andyholmes.github.io"
         "no-overview@fthx"
         "focus-my-window@varianto25.com"
+        "shellout@meain.io"
       ];
       favorite-apps = [
         "org.gnome.Terminal.desktop"
@@ -396,6 +398,13 @@ in
   systemd.user.timers.email-sync = {
     Timer.OnCalendar = "*:0/15"; # every 15min
     Install.WantedBy = [ "timers.target" ];
+  };
+
+  # update output for shellout gnome extension
+  systemd.user.services.mail-watcher = {
+    Service.Environment="QUITE_ZSH=1";
+    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic 'find /home/meain/.local/share/mail/.notmuch/xapian|entr -n ,shellout-update'";
+    Install.WantedBy = [ "graphical-session.target" ];
   };
 
   # make this into a function??
