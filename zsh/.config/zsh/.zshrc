@@ -121,6 +121,9 @@ fi
 # load nix
 . $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh
 
+# setup direnv
+eval "$(direnv hook zsh)"
+
 ,darkmode quiet # set dark or light mode
 export ZSH_LOADED=1
 
