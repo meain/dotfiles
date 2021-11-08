@@ -36,8 +36,7 @@
 ;; Get proper PATH (not used as we are launching from shell)
 (use-package exec-path-from-shell
   :straight t
-  :config
-  (exec-path-from-shell-initialize))
+  :config (exec-path-from-shell-initialize))
 
 ;;; [BASE EVIL] =================================================
 
@@ -2565,7 +2564,8 @@ SHORTCUT is the keybinding to use.  NAME if the func suffix and FILE is the file
             (defun meain/vime-name-append (filename)
               "Util function used to parse :name block for vime entries.  FILENAME is the name of the vime file."
               (with-temp-buffer
-                (insert-file-contents (concatenate 'string "~/.local/share/vime/" filename))
+                (insert-file-contents (concatenate 'string "~/.local/share/vime/"
+                                                   filename))
                 (concatenate 'string
                              filename
                              (if (s-starts-with-p ":name"
