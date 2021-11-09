@@ -12,11 +12,15 @@ in
       ./hardware-configuration.nix
     ];
 
-  # Enable nix flakes
   nix = {
+    # Enable nix flakes
     package = pkgs.nixFlakes;
     extraOptions = ''
       experimental-features = nix-command flakes
+
+      # for nix-direnv
+      keep-outputs = true
+      keep-derivations = true
     '';
    };
 
