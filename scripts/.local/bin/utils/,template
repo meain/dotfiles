@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# Dump out a template from datafiles
+
+set -e
+
+templates="shell.nix shell.nix Simple nix shell
+default.nix default.nix Simple default.nix
+.gitignore gitignore Basic gitignore
+index.html index.html Basic html starter
+Dockerfile dockerfile/python-gunicorn A guicorn based dockerfile for python
+Dockerfile dockerfile/static-serving Static serving for nodejs project" 
+
+# <target-filename> <source-filename> <info>
+choice="$(echo "$templates"| awk '{$2="";print $0}' | fzf --preview "cat $DATAFILES_PATH/templates/{1}")"
+tgt="$(echo $choice|cut -d' ' -f1)"
+info="$(echo $choice|cut -d' ' -f2-)"
+src="$(echo "$templates"|grep "$info"|cut -d' ' -f1)"
+
+echo "Creating $src using $tgt.
+$info"
+
+cat $DATAFILES_PATH/templates/$src > $tgt
