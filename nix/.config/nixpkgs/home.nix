@@ -1,6 +1,8 @@
 { lib, config, pkgs, ... }:
 let
-  personal = import (builtins.fetchTarball "https://github.com/meain/nix-channel/archive/4780703f9bcb313759aecf11cc231953e77f43f3.tar.gz") { };
+  # personal = import (builtins.fetchTarball "https://github.com/meain/nix-channel/archive/4780703f9bcb313759aecf11cc231953e77f43f3.tar.gz") { };
+  personal = import /home/meain/dev/nix-channel { };
+  nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") { inherit pkgs; };
 in
 {
   home.stateVersion = "21.05";
@@ -210,6 +212,7 @@ in
     pkgs.gnome.gnome-tweaks
     personal.fluent-theme
     pkgs.nethogs
+    nur.repos.j-k.comma
 
     # gnome tweaking
     pkgs.gnomeExtensions.dash-to-panel
@@ -402,7 +405,7 @@ in
 
   # update output for shellout gnome extension
   systemd.user.services.mail-watcher = {
-    Service.Environment="QUITE_ZSH=1";
+    Service.Environment = "QUITE_ZSH=1";
     Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic 'find /home/meain/.local/share/mail/.notmuch/xapian|entr -n ,shellout-update'";
     Install.WantedBy = [ "graphical-session.target" ];
   };
