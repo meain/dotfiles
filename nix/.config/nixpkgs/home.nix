@@ -247,8 +247,8 @@ in
 
     "org/gnome/desktop/interface" = {
       gtk-theme = "Fluent-light-compact";
-      font-name = "Victor Mono 9";
-      monospace-font-name = "Victor Mono 9";
+      font-name = "Unifont 10";
+      monospace-font-name = "Julia Mono 9";
       font-antialiasing = "grayscale";
       font-hinting = "slight";
       clock-format = "12h";
