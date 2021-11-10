@@ -1,7 +1,8 @@
+background_opacity: 0.4
 window:
   dimensions:
     columns: 120
-    lines: 25
+    lines: 19 # need odd number for centering
   padding:
     x: 0
     y: 0
@@ -31,7 +32,7 @@ font:
   glyph_offset:
     x: 0
     y: 0
-  use_thin_strokes: true
+  use_thin_strokes: false
 
 color_schemes:
   dark: &dark
@@ -90,7 +91,7 @@ color_schemes:
       cyan:    '0x51c8d1'
       white:   '0xffffff'
 
-colors: *light
+colors: *dark
 
 # https://github.com/alacritty/alacritty/issues/2950
 bell:
