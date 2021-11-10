@@ -1,6 +1,7 @@
 <h1 align="center">Dotfiles</h1>
 <p align="center"> If there is a shell, there is a way</p>
 <p align="center">
+  <img src="https://img.shields.io/badge/OS-NixOS-violet.svg" />
   <img src="https://img.shields.io/badge/Editor-emacs-brightgreen.svg" />
   <img src="https://img.shields.io/badge/Terminal-alacritty-orange.svg" />
   <img src="https://img.shields.io/badge/Shell-zsh-yellow.svg" />
