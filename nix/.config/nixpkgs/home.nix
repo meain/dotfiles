@@ -113,8 +113,8 @@ in
     # pkgs.nodejs # nodejs
     # pkgs.nodePackages.neovim # neovim package for js support
     # pkgs.nodePackages.fixjson # much better json formatter
-    # pkgs.nodePackages.stylelint # css linter
-    # pkgs.nodePackages.prettier # formatting for web stuff
+    pkgs.nodePackages.stylelint # css linter
+    pkgs.nodePackages.prettier # formatting for web stuff
     # pkgs.nodePackages.pnpm # package management
     # pkgs.nodePackages.typescript # typescript
     # pkgs.nodePackages.vscode-css-languageserver-bin # css languageserver
