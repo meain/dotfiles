@@ -221,6 +221,7 @@ in
     pkgs.gnomeExtensions.gsconnect
     pkgs.gnomeExtensions.caffeine
     pkgs.gnomeExtensions.no-overview
+    pkgs.gnomeExtensions.bluetooth-quick-connect
     personal.gnomeExtensions.steal-my-focus
     personal.gnomeExtensions.shellout
 
@@ -266,6 +267,7 @@ in
         "caffeine@patapon.info"
         "gsconnect@andyholmes.github.io"
         "no-overview@fthx"
+        "bluetooth-quick-connect@bjarosze.gmail.com"
         "focus-my-window@varianto25.com"
         "shellout@meain.io"
       ];
