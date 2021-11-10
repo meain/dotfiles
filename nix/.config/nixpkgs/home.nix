@@ -160,7 +160,7 @@ in
 
     # gui
     # pkgs.mpv # audio/video player
-    # pkgs.alacritty # terminal emulator
+    pkgs.alacritty # terminal emulator
 
     # others
     # pkgs.redis # key value db
@@ -233,8 +233,11 @@ in
     (pkgs.makeAutostartItem { name = "guake"; package = pkgs.guake; })
     (pkgs.makeAutostartItem { name = "albert"; package = pkgs.albert; })
 
-    # fonts
+    # fonts (set-frame-font  "Julia Mono 9")
     pkgs.victor-mono
+    pkgs.cascadia-code
+    pkgs.julia-mono
+    pkgs.sudo-font
   ];
 
   dconf.settings = {
@@ -319,6 +322,7 @@ in
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/"
       ];
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
@@ -350,6 +354,11 @@ in
       binding = "<Super>s"; # this is stupid keybinding, just can't get super+' to work in vm
       command = "zsh -ic ',editor-or-browser'";
       name = "launch-or-focus-editor-browser";
+    };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6" = {
+      binding = "<Alt><Shift>e";
+      command = "alacritty -e zsh -ic ',mail-quick-read'";
+      name = "mail-quick-read";
     };
 
     "apps/guake/general" = {

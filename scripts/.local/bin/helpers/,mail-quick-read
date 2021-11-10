@@ -1,0 +1,12 @@
+#!/bin/sh
+
+set -e
+
+,mail-unread | cut -d' ' -f3-
+printf '\n\n[r] mark all read'
+read -r -n1 -s
+
+echo
+[ "$REPLY" == "r" ] &&
+	echo "Marking all as read" &&
+	notmuch tag +notified tag:imbox and tag:unread
