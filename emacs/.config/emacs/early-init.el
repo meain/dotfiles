@@ -32,8 +32,8 @@
 ;; Iosevka Slab 14 | Edlo 13 | Bront 15 | Whois 15 | Ligconsolata 16 | Operator Mono 14
 ;; PragmataPro 14 | agave 15 | Unifont 15 | Apercu Mono 14 | Binchotan_Sharp 15
 ;; CMU Typewriter Text 16 | Input 14 | SF Mono 14
-;; Font (set-frame-font  "Victor Mono 9")
-(defvar meain/font-family-default "Victor Mono 9"
+;; Font (set-frame-font  "Julia Mono 9")
+(defvar meain/font-family-default "Julia Mono 9"
   "Default font family for everything in Emacs.")
 (defvar meain/font-weight-default 'regular
   "Default font weight for everything in Emacs.")
