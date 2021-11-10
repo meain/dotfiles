@@ -246,12 +246,13 @@ in
     };
 
     "org/gnome/desktop/interface" = {
-      gtk-theme = "Fluent-light-compact";
-      font-name = "Unifont 10";
-      monospace-font-name = "Julia Mono 9";
+      clock-format = "12h";
       font-antialiasing = "grayscale";
       font-hinting = "slight";
-      clock-format = "12h";
+      font-name = "Victor Mono 9";
+      gtk-im-module = "gtk-im-context-simple";
+      gtk-theme = "Fluent-light-compact";
+      monospace-font-name = "JuliaMono 9";
       show-battery-percentage = true;
     };
     "org/gnome/shell" = {
@@ -261,6 +262,7 @@ in
         "dash-to-panel@jderose9.github.com"
         "clipboard-indicator@tudmotu.com"
         "blur-my-shell@aunetx"
+        "user-theme@gnome-shell-extensions.gcampax.github.com"
         "caffeine@patapon.info"
         "gsconnect@andyholmes.github.io"
         "no-overview@fthx"
@@ -273,6 +275,11 @@ in
         "chromium-browser.desktop"
       ];
     };
+
+    "org/gnome/shell/extensions/user-theme" = {
+      name = "Fluent-dark-compact";
+    };
+
     "org/gnome/nautilus/preferences" = {
       default-folder-viewer = "icon-view";
     };
