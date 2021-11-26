@@ -6,10 +6,11 @@ if [[ ! -e shell.nix ]] && [[ ! -e default.nix ]]; then
 	cat >shell.nix <<'EOF'
 with import <nixpkgs> {};
 mkShell {
-  nativeBuildInputs = [];
+  nativeBuildInputs = [
+  ];
 }
 EOF
-	$EDITOR default.nix
+	$EDITOR shell.nix
 fi
 
 if [ ! -e ./.envrc ]; then
