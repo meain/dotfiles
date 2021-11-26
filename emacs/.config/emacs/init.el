@@ -470,8 +470,10 @@ Pass ORIGINAL and ALTERNATE options."
   :defer t
   :commands (project-switch-project project-find-file
                                     project-roots project-current):config
-  (defun meain/project-name ()
-    (file-name-nondirectory (directory-file-name (car (project-roots (project-current))))))
+  (progn
+    (setq project-switch-commands 'project-find-file)
+    (defun meain/project-name ()
+      (file-name-nondirectory (directory-file-name (car (project-roots (project-current)))))))
   :init (progn
           (evil-leader/set-key "p" 'project-switch-project)
           (define-key evil-normal-state-map (kbd "<RET>") 'project-find-file)))
