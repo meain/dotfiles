@@ -235,6 +235,7 @@ in
     (pkgs.makeAutostartItem { name = "albert"; package = pkgs.albert; })
 
     # fonts (set-frame-font  "Julia Mono 9")
+    pkgs.inconsolata
     pkgs.victor-mono
     pkgs.cascadia-code
     pkgs.julia-mono
@@ -250,7 +251,7 @@ in
       clock-format = "12h";
       font-antialiasing = "grayscale";
       font-hinting = "slight";
-      font-name = "Victor Mono 9";
+      font-name = "Inconsolata 10";
       gtk-im-module = "gtk-im-context-simple";
       gtk-theme = "Fluent-light-compact";
       monospace-font-name = "JuliaMono 9";
