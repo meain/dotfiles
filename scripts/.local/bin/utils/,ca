@@ -1,7 +1,8 @@
 #!/bin/sh
 
 if [ -n "$1" ]; then
-	todo.sh nav "$1"
-	todo.sh "do" "$1"
+	URL=$(todo.sh -p ls | sed "$1!d" | grep -E -o "([a-z]*)://[^ ]+")
+	xdg-open "$URL"
+	todo.sh do "$1"
 fi
 clear && todo.sh
