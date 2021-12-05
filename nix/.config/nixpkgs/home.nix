@@ -236,6 +236,7 @@ in
     pkgs.gnomeExtensions.caffeine
     pkgs.gnomeExtensions.no-overview
     pkgs.gnomeExtensions.bluetooth-quick-connect
+    pkgs.gnomeExtensions.custom-hot-corners-extended
     personal.gnomeExtensions.steal-my-focus
     personal.gnomeExtensions.shellout
 
@@ -291,6 +292,7 @@ in
         "bluetooth-quick-connect@bjarosze.gmail.com"
         "focus-my-window@varianto25.com"
         "shellout@meain.io"
+        "custom-hot-corners-extended@G-dH.github.com"
       ];
     #   favorite-apps = [
     #     "org.gnome.Terminal.desktop"
@@ -389,6 +391,13 @@ in
       binding = "<Alt><Shift>e";
       command = "alacritty -e zsh -ic ',mail-quick-read'";
       name = "mail-quick-read";
+    };
+
+    "org/gnome/shell/extensions/custom-hot-corners-extended/monitor-0-top-left-0" = {
+      action = "toggle-overview";
+    };
+    "org/gnome/shell/extensions/custom-hot-corners-extended/monitor-0-top-right-0" = {
+      action = "toggle-overview";
     };
 
     "apps/guake/general" = {
