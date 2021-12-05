@@ -217,7 +217,7 @@ in
     pkgs.wl-clipboard
     pkgs.gnome3.dconf-editor
     pkgs.gnome.gnome-tweaks
-    personal.fluent-theme
+    # personal.fluent-theme
     pkgs.nethogs
     nur.repos.j-k.comma
 
@@ -250,17 +250,17 @@ in
   ];
 
   dconf.settings = {
-    "org/gnome/desktop/background" = {
-      picture-uri = "file:///home/meain/wallpaper.jpg";
-    };
+    # "org/gnome/desktop/background" = {
+    #   picture-uri = "file:///home/meain/wallpaper.jpg";
+    # };
 
     "org/gnome/desktop/interface" = {
       clock-format = "12h";
       font-antialiasing = "grayscale";
       font-hinting = "slight";
       font-name = "Inconsolata 10";
-      gtk-im-module = "gtk-im-context-simple";
-      gtk-theme = "Fluent-light-compact";
+      # gtk-im-module = "gtk-im-context-simple";
+      # gtk-theme = "Fluent-light-compact";
       monospace-font-name = "JuliaMono 9";
       show-battery-percentage = true;
     };
@@ -279,16 +279,16 @@ in
         "focus-my-window@varianto25.com"
         "shellout@meain.io"
       ];
-      favorite-apps = [
-        "org.gnome.Terminal.desktop"
-        "org.gnome.Nautilus.desktop"
-        "chromium-browser.desktop"
-      ];
+    #   favorite-apps = [
+    #     "org.gnome.Terminal.desktop"
+    #     "org.gnome.Nautilus.desktop"
+    #     "chromium-browser.desktop"
+    #   ];
     };
 
-    "org/gnome/shell/extensions/user-theme" = {
-      name = "Fluent-dark-compact";
-    };
+    # "org/gnome/shell/extensions/user-theme" = {
+    #   name = "Fluent-dark-compact";
+    # };
 
     "org/gnome/nautilus/preferences" = {
       default-folder-viewer = "icon-view";
@@ -488,6 +488,4 @@ in
   # Setup direnv
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
-  # optional for nix flakes support
-  programs.direnv.nix-direnv.enableFlakes = true;
 }
