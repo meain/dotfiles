@@ -263,6 +263,7 @@ in
 
     "org/gnome/desktop/interface" = {
       clock-format = "12h";
+      clock-show-weekday = true;
       font-antialiasing = "grayscale";
       font-hinting = "slight";
       font-name = "Inconsolata 10";
