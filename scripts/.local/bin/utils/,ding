@@ -1,5 +1,0 @@
-#!/bin/sh
-
-for _ in $(seq "${1:-1}"); do
-	echo "ding"
-done | xargs say -r 400
