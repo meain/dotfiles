@@ -19,7 +19,7 @@
 ;; Update some visual settings
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
-(menu-bar-mode 1)  ;; causes focus issue if disabled in railwaycat/homebrew-emacsmacport
+(menu-bar-mode -1)  ;; causes focus issue if disabled in railwaycat/homebrew-emacsmacport
 (setq inhibit-startup-screen t)
 ;; (set-frame-parameter nil 'undecorated t)
 
