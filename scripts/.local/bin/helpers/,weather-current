@@ -3,10 +3,10 @@
 set -e
 
 [ "$1" == 'fetch' ] &&
-	curl 'http://wttr.in?format=+%C|+%t|+%f|+%h|+%p|+%w' >/tmp/weather-current &&
+	curl 'http://wttr.in/Aloor?format=+%C|+%t|+%f|+%h|+%p|+%w' >/tmp/weather-current &&
 	exit 0
 
 [ -f /tmp/weather-current ] ||
-	curl -s 'http://wttr.in?format=+%C|+%t|+%f|+%h|+%p|+%w' >/tmp/weather-current
-tr '|' '\n' </tmp/weather-current | xargs echo |
-	awk '{print $1,$2,"("$3") with",$4,"humidity and",$6,"speed winds"}'
+	curl -s 'http://wttr.in/Aloor?format=+%C|+%t|+%f|+%h|+%p|+%w' >/tmp/weather-current
+sed 's/  / /g;s/| /|/g;s/^ //' /tmp/weather-current |
+	awk -F'|' '{print $1,$2"("$3") with",$4,"humidity and",$6,"speed winds"}'
