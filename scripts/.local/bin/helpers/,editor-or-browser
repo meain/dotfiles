@@ -2,6 +2,6 @@
 
 set -e
 
-,launch-or-focus Emacs 'emacsclient  -a "" --no-wait -c' Chromium-browser chromium
+,launch-or-focus Emacs 'emacsclient  -a "" --no-wait -c' Firefox firefox
 
 
