@@ -12,4 +12,4 @@ done
 end="$(date +%s)"
 echo "You are now connected. You were down for $((end-start)) seconds."
 notify "You are now connected."
-say "You are now connected." -v Kyoko
+say "You are now connected."
