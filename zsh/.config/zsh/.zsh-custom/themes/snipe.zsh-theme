@@ -75,7 +75,7 @@ function _current_kubernets_namespace() {
 }
 
 function _hosthame_custom() {
-  hostname | sed 's/\..*//g' | grep -v -E '^prop$' | sed 's/^/\ @/'
+  hostname | sed 's/\..*//g' | grep -v -E '^abin' | sed 's/^/\ @/'
 }
 
 function _git_total_commits() {
