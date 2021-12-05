@@ -19,3 +19,9 @@ zsh/.config/zsh/.zsh_sessions/
 /albert/.config/albert/core.db
 /albert/.config/albert/last_used_version
 /albert/.config/albert/org.albert.extension.snippets/
+/emacs/.config/emacs/auto-save-list/
+/emacs/.config/emacs/projects
+/emacs/.config/emacs/request/
+/emacs/.config/emacs/straight/
+/emacs/.config/emacs/transient/
+/emacs/.config/emacs/var/
