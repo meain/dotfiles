@@ -1,5 +1,5 @@
 (defcfg
-  input  (device-file "/dev/input/by-path/platform-i8042-serio-0-event-kbd")
+  input  (device-file "/dev/input/by-id/usb-04d9_USB_Keyboard-event-kbd")
   output (uinput-sink "kmonad-board")
   fallthrough true
   allow-cmd true
@@ -16,6 +16,7 @@
 (defalias
   kil  C-A-del  ;; Bind kil to a button that Ctrl-Alt-deletes
   ealt (tap-next esc lalt)  ;; has issue in vm inside mac
+  salt (around lalt lsft)
   qctl (tap-next-release ' lctl)
   spl (tap-next-release space (layer-toggle spacelayer))
   super (tap-next up (layer-toggle superlayer))
@@ -39,8 +40,8 @@
   grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
   tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
  @ealt a    s    d    f    g    h    j    k    l    ;    @qctl ret
-  lsft z    x    c    v    b    n    m    ,    .    /    esc
-@super lalt @dctl          @spl         left rmet cmp   rght
+  lsft z    x    c    v    b    n    m    ,    .    /    rsft
+@super @salt @dctl          @spl         left rmet cmp   rght
 )
 
 (deflayer blank
