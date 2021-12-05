@@ -271,6 +271,11 @@ in
       monospace-font-name = "JuliaMono 9";
       show-battery-percentage = true;
     };
+
+    "org/gnome/desktop/wm/preferences" = {
+      titlebar-font = "Inconsolata 10";
+    };
+
     "org/gnome/shell" = {
       disable-user-extensions = false;
       disabled-extensions = [ ];
