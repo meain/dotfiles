@@ -1,7 +1,7 @@
 { lib, config, pkgs, ... }:
 let
   # personal = import (builtins.fetchTarball "https://github.com/meain/nix-channel/archive/4780703f9bcb313759aecf11cc231953e77f43f3.tar.gz") { };
-  personal = import /home/meain/dev/nix-channel { };
+  personal = import /home/meain/dev/src/nix-channel { };
   nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") { inherit pkgs; };
 in
 {
@@ -29,18 +29,20 @@ in
     pkgs.tree
     pkgs.cmake
     pkgs.curl
-    pkgs.zsh
+    # pkgs.zsh
     pkgs.coreutils
+    pkgs.vim
 
     # packages
-    personal.notmuch-git # mail indexer
+    # personal.notmuch-git # mail indexer
+    pkgs.notmuch
     pkgs.isync # mail syncronize with upstrem
     pkgs.htop # process monitor
     pkgs.mpc_cli # remote for mpd
     pkgs.mpd # music player
     pkgs.axel # download manager
     pkgs.pandoc # convert document between different formats
-    # pkgs.xsv # view/manage csv from terminal
+    pkgs.xsv # view/manage csv from terminal
     pkgs.parallel # exec things in parallel
     pkgs.fortune # give me a fortune
     pkgs.lf # better ranger alternative
@@ -55,23 +57,24 @@ in
     pkgs.wget # get stuff from internet
     pkgs.tmux # terminal multiplexer
     pkgs.aspell # spell checker
-    # pkgs.mpvc  # mpv remote control  # not available on macos
+    pkgs.mpvc  # mpv remote control  # not available on macos
     pkgs.msmtp # smtp client
-    # pkgs.android-tools # adb and friends  # not available for macos
+    pkgs.android-tools # adb and friends  # not available for macos
     pkgs.restic # backup
     pkgs.ledger # double entry accounting
     pkgs.dasel # jq but more versatile
     pkgs.mosh # better ssh
     pkgs.diff-so-fancy # cleaner diff in git
+    personal.kmonad
 
     # aspell dicts
     pkgs.aspellDicts.en
 
     # apps
-    # pkgs.kubectl # kubernetes cli
-    # pkgs.kubernetes-helm # helm cli
-    # pkgs.youtube-dl # download youtube videos
-    # pkgs.chafa # show images in terminal using half blocks
+    pkgs.kubectl # kubernetes cli
+    pkgs.kubernetes-helm # helm cli
+    pkgs.youtube-dl # download youtube videos
+    pkgs.chafa # show images in terminal using half blocks
     pkgs.hub # Github integration for git
     pkgs.lynx # terminal web browser
     pkgs.imagemagick # image manip cli
@@ -86,10 +89,11 @@ in
     pkgs.pkgs.jiq # interactive jiq
     pkgs.pkgs.tldr # simpler man pages
     # pkgs.pkgs.silicon # create pretty code screenshots
-    # pkgs.pkgs.transmission # torrent stuff
-    # pkgs.pkgs.kube-prompt # interactive kubernetes cli
+    pkgs.pkgs.transmission # torrent stuff
+    pkgs.pkgs.kube-prompt # interactive kubernetes cli
     # pkgs.pkgs.cowsay # useless stuff
-    pkgs.podman # pod manager
+    # pkgs.podman # pod manager
+    pkgs.kind
 
     # programming
     pkgs.gist # create gist
@@ -139,19 +143,19 @@ in
     pkgs.python39Packages.mypy # check types in code
     pkgs.python39Packages.isort # fix sort order
     pkgs.python39Packages.pygments # generic syntax highlight
-    pkgs.python38Packages.python-language-server # python lsp (using below one as tests are failing)
+    # pkgs.python38Packages.python-language-server # python lsp (using below one as tests are failing)
     # (pkgs.python38Packages.python-language-server.overridePythonAttrs (oldAttrs: { checkPhase = ""; checkInputs = []; }))
 
     # programming-rust
-    # pkgs.rustc # compiler
-    # pkgs.cargo # package manager
-    # pkgs.rustfmt # formatter
-    # pkgs.clippy # the useful clippy
-    # pkgs.rust-analyzer # lsp for rust
-    # pkgs.cargo-edit # dep management
-    # pkgs.cargo-bloat # find big chunks
-    # pkgs.cargo-udeps # find unnecessary deps
-    # pkgs.cargo-release # for releasing packages
+    pkgs.rustc # compiler
+    pkgs.cargo # package manager
+    pkgs.rustfmt # formatter
+    pkgs.clippy # the useful clippy
+    pkgs.rust-analyzer # lsp for rust
+    pkgs.cargo-edit # dep management
+    pkgs.cargo-bloat # find big chunks
+    pkgs.cargo-udeps # find unnecessary deps
+    pkgs.cargo-release # for releasing packages
     # cargo-watch # continuously run cargo check
 
     # programming-other
@@ -159,17 +163,20 @@ in
     # pkgs.nodePackages.vscode-json-languageserver
 
     # gui
-    # pkgs.mpv # audio/video player
+    pkgs.mpv # audio/video player
     pkgs.alacritty # terminal emulator
+    pkgs.firefox
+    pkgs.chromium
 
     # others
-    # pkgs.redis # key value db
-    # pkgs.postgresql_13 # postgres 13 (postgresql is at 11)
+    pkgs.redis # key value db
+    pkgs.postgresql_13 # postgres 13 (postgresql is at 11)
     # pkgs.mongodb # document db
-    # pkgs.sqlite # better db
-    # pkgs.minikube # mini kubernetes
+    pkgs.sqlite # better db
+    pkgs.minikube # mini kubernetes
     # pkgs.awscli # manage aws
     # pkgs.google-cloud-sdk # manage google cloud
+    pkgs.lens # kubernetes viewer
 
     # optional
     # pkgs.ncdu # disk usage viewer tui
