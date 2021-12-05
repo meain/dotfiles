@@ -224,7 +224,7 @@ in
     pkgs.wl-clipboard
     pkgs.gnome3.dconf-editor
     pkgs.gnome.gnome-tweaks
-    # personal.fluent-theme
+    personal.fluent-theme
     pkgs.nethogs
     nur.repos.j-k.comma
 
@@ -267,7 +267,7 @@ in
       font-hinting = "slight";
       font-name = "Inconsolata 10";
       # gtk-im-module = "gtk-im-context-simple";
-      # gtk-theme = "Fluent-light-compact";
+      gtk-theme = "Fluent-light-compact";
       monospace-font-name = "JuliaMono 9";
       show-battery-percentage = true;
     };
@@ -293,9 +293,9 @@ in
     #   ];
     };
 
-    # "org/gnome/shell/extensions/user-theme" = {
-    #   name = "Fluent-dark-compact";
-    # };
+    "org/gnome/shell/extensions/user-theme" = {
+      name = "Fluent-dark-compact";
+    };
 
     "org/gnome/nautilus/preferences" = {
       default-folder-viewer = "icon-view";
