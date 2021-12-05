@@ -81,10 +81,10 @@ export DATAFILES_PATH="$HOME/.config/datafiles"
 export SCRIPTS_DIR="$HOME/.dotfiles/scripts/.local/bin"
 
 # projects???
-export GOURCER_PATH="$HOME/dev/gourcer"
-export REDIRECTS_PATH="$HOME/dev/redirects"
-export BLOG_PATH="$HOME/dev/blog"
-export SNIPPETS_PATH="$HOME/dev/snippets"
+export GOURCER_PATH="$HOME/.local/share/gourcer"
+export REDIRECTS_PATH="$HOME/dev/src/redirects"
+export BLOG_PATH="$HOME/dev/src/blog"
+export SNIPPETS_PATH="$HOME/dev/src/snippets"
 
 # others
 export DOWNLOADS_PATH="$HOME/Downloads"
