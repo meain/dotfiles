@@ -344,7 +344,7 @@ in
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
       binding = "<Super>semicolon";
-      command = "guake-toggle";
+      command = "zsh -ic 'guake-toggle'";
       name = "guake";
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
@@ -353,8 +353,8 @@ in
       name = "spawn-terminal";
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2" = {
-      binding = "<Primary>Space";
-      command = "albert toggle";
+      binding = "<Alt>Space";
+      command = "zsh -ic 'albert toggle'";
       name = "albert";
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3" = {
