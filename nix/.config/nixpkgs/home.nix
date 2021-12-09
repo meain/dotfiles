@@ -39,6 +39,7 @@ in
     # pkgs.zsh
     pkgs.coreutils
     pkgs.vim
+    pkgs.gcc
 
     # packages
     # personal.notmuch-git # mail indexer
@@ -64,7 +65,7 @@ in
     pkgs.wget # get stuff from internet
     pkgs.tmux # terminal multiplexer
     pkgs.aspell # spell checker
-    pkgs.mpvc  # mpv remote control  # not available on macos
+    pkgs.mpvc # mpv remote control  # not available on macos
     pkgs.msmtp # smtp client
     pkgs.android-tools # adb and friends  # not available for macos
     pkgs.restic # backup
@@ -86,7 +87,7 @@ in
     pkgs.lynx # terminal web browser
     pkgs.imagemagick # image manip cli
     pkgs.ffmpeg # video manip cli
-    # pkgs.gnuplot # plotting
+    pkgs.gnuplot # plotting
     pkgs.ddgr # search ddg from terminal
     pkgs.dasht # terminal docs
     # taskwarrior # task management
@@ -95,7 +96,7 @@ in
     pkgs.pkgs.pstree # view process tree
     pkgs.pkgs.jiq # interactive jiq
     pkgs.pkgs.tldr # simpler man pages
-    # pkgs.pkgs.silicon # create pretty code screenshots
+    pkgs.pkgs.silicon # create pretty code screenshots
     pkgs.pkgs.transmission # torrent stuff
     pkgs.pkgs.kube-prompt # interactive kubernetes cli
     # pkgs.pkgs.cowsay # useless stuff
@@ -120,16 +121,16 @@ in
     pkgs.golangci-lint # all kinds of linters for go
 
     # programming-web
-    # pkgs.html-tidy # html formatter
-    # pkgs.nodejs # nodejs
-    # pkgs.nodePackages.neovim # neovim package for js support
-    # pkgs.nodePackages.fixjson # much better json formatter
+    pkgs.html-tidy # html formatter
+    pkgs.nodejs # nodejs
+    pkgs.nodePackages.neovim # neovim package for js support
+    pkgs.nodePackages.fixjson # much better json formatter
     pkgs.nodePackages.stylelint # css linter
     pkgs.nodePackages.prettier # formatting for web stuff
-    # pkgs.nodePackages.pnpm # package management
-    # pkgs.nodePackages.typescript # typescript
-    # pkgs.nodePackages.vscode-css-languageserver-bin # css languageserver
-    # pkgs.nodePackages.javascript-typescript-langserver # javascript langserver
+    pkgs.nodePackages.pnpm # package management
+    pkgs.nodePackages.typescript # typescript
+    pkgs.nodePackages.vscode-css-languageserver-bin # css languageserver
+    pkgs.nodePackages.javascript-typescript-langserver # javascript langserver
 
     # programming-nix
     pkgs.rnix-lsp # nix language server
@@ -166,14 +167,14 @@ in
     # cargo-watch # continuously run cargo check
 
     # programming-other
-    # pkgs.nodePackages.yaml-language-server
-    # pkgs.nodePackages.vscode-json-languageserver
+    pkgs.nodePackages.yaml-language-server
+    pkgs.nodePackages.vscode-json-languageserver
 
     # gui
     pkgs.mpv # audio/video player
     pkgs.alacritty # terminal emulator
-    pkgs.firefox
-    pkgs.chromium
+    # pkgs.firefox
+    # pkgs.chromium
 
     # others
     pkgs.redis # key value db
@@ -192,13 +193,13 @@ in
     # pkgs.httpie # prettier curl for debugging
     # pkgs.qrencode # encode data as qr from cli
     # pkgs.w3m # terminal web browser
-    # pkgs.scim # excel for terminal
+    pkgs.scim # excel for terminal
     # pkgs.jrnl # journaling
     # pkgs.figlet # make big text
     # pkgs.gource # source tree visualisation
     # pkgs.tig # tui git interface
     # pkgs.lazygit # tui git interface
-    # pkgs.lazydocker # tui docker interface
+    pkgs.lazydocker # tui docker interface
     # pkgs.ncmpcpp # mpd tui client
     # pkgs.tokei # count lines of code
     # pkgs.navi # interactive cli launcher
@@ -232,7 +233,7 @@ in
     pkgs.gnomeExtensions.dash-to-panel
     pkgs.gnomeExtensions.blur-my-shell
     pkgs.gnomeExtensions.clipboard-indicator
-    pkgs.gnomeExtensions.gsconnect
+    # personal.gnomeExtensions.gsconnect
     pkgs.gnomeExtensions.caffeine
     pkgs.gnomeExtensions.no-overview
     pkgs.gnomeExtensions.bluetooth-quick-connect
@@ -240,10 +241,11 @@ in
     personal.gnomeExtensions.steal-my-focus
     personal.gnomeExtensions.shellout
 
-    # symlinks
+    # symlinks (macos polyfills)
     (pkgs.runCommand "open" { } ''mkdir -p $out/bin; ln -s ${pkgs.xdg-utils}/bin/xdg-open $out/bin/open'')
     (pkgs.runCommand "pbcopy" { } ''mkdir -p $out/bin; ln -s ${pkgs.wl-clipboard}/bin/wl-copy $out/bin/pbcopy'')
     (pkgs.runCommand "pbpaste" { } ''mkdir -p $out/bin; ln -s ${pkgs.wl-clipboard}/bin/wl-paste $out/bin/pbpaste'')
+    (pkgs.runCommand "say" { } ''mkdir -p $out/bin; ln -s ${pkgs.espeak}/bin/espeak $out/bin/say'')
 
     # autostart
     (pkgs.makeAutostartItem { name = "guake"; package = pkgs.guake; })
@@ -294,11 +296,11 @@ in
         "shellout@meain.io"
         "custom-hot-corners-extended@G-dH.github.com"
       ];
-    #   favorite-apps = [
-    #     "org.gnome.Terminal.desktop"
-    #     "org.gnome.Nautilus.desktop"
-    #     "chromium-browser.desktop"
-    #   ];
+      #   favorite-apps = [
+      #     "org.gnome.Terminal.desktop"
+      #     "org.gnome.Nautilus.desktop"
+      #     "chromium-browser.desktop"
+      #   ];
     };
 
     "org/gnome/shell/extensions/user-theme" = {
