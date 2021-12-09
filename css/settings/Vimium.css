@@ -8,15 +8,15 @@ div > .vimiumHintMarker {
     color-stop(100%, #ffc542)
   );
   border: 1px solid #e3be23;
-  font-family: "Operator Mono", sans-serif;
+  font-family: "Inconsolata", sans-serif;
 }
 
 div > .vimiumHintMarker span {
   /* linkhint text */
   color: black;
   font-weight: bold;
-  font-size: 12px;
-  font-family: "Operator Mono", sans-serif;
+  font-size: 10px;
+  font-family: "Inconsolata", sans-serif;
 }
 
 div > .vimiumHintMarker > .matchingCharacter {
@@ -29,7 +29,7 @@ div > .vimiumHintMarker > .matchingCharacter {
 }
 
 #vomnibar * {
-  font-family: "Operator Mono", sans-serif !important;
+  font-family: "Inconsolata", sans-serif !important;
 }
 
 #vomnibar {
@@ -40,7 +40,7 @@ div > .vimiumHintMarker > .matchingCharacter {
   ); /* adjusted to keep border radius and box-shadow visible*/
   top: 8px;
   left: 8px;
-  font-family: "Operator Mono", sans-serif !important;
+  font-family: "Inconsolata", sans-serif !important;
 
   background: #101010;
   text-align: left;
@@ -52,8 +52,8 @@ div > .vimiumHintMarker > .matchingCharacter {
 
 #vomnibar input {
   color: #cecece;
-  font-family: "Operator Mono", sans-serif;
-  font-size: 20px;
+  font-family: "Inconsolata", sans-serif;
+  font-size: 14px;
   height: 34px;
   margin-bottom: 0;
   padding: 4px;
@@ -86,12 +86,12 @@ div > .vimiumHintMarker > .matchingCharacter {
   border-bottom: 1px solid #3c3c3c;
   line-height: 1.1em;
   padding: 7px 10px;
-  font-size: 16px;
+  font-size: 12px;
   color: #b7b7b7;
   position: relative;
   display: list-item;
   margin: auto;
-  font-family: "Operator Mono", sans-serif;
+  font-family: "Inconsolata", sans-serif;
 }
 
 #vomnibar li:last-of-type {
@@ -105,7 +105,7 @@ div > .vimiumHintMarker > .matchingCharacter {
 }
 
 #vomnibar li .vomnibarBottomHalf {
-  font-size: 15px;
+  font-size: 12px;
   margin-top: 3px;
   padding: 2px 0;
 }
