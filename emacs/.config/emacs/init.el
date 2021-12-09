@@ -1008,7 +1008,8 @@ Pass ORIGINAL and ALTERNATE options."
       (:format (format-all--buffer-easy executable)))
     (setq-default format-all-formatters '(("HTML" prettier)
                                           ("Go" goimports)
-                                          ("JSON" fixjson)))
+                                          ("JSON" fixjson)
+                                          ("Nix" nixpkgs-fmt)))
     (add-hook 'prog-mode-hook 'format-all-ensure-formatter)
     (defun meain/auto-format ()
       "Custom auto-format based on filetype."
