@@ -506,6 +506,11 @@ in
     Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic 'emacs --daemon'";
     Install.WantedBy = [ "graphical-session.target" ];
   };
+  systemd.user.services.guake = {
+    Unit.Description = "Start guake server";
+    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic 'guake'";
+    Install.WantedBy = [ "graphical-session.target" ];
+  };
 
   # Setup direnv
   programs.direnv.enable = true;
