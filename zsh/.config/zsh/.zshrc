@@ -121,6 +121,7 @@ if [[ ${chpwd_functions[(r)list_all]} != "list_all" ]];then
 fi
 
 # load nix
+. /etc/profile.d/nix.sh
 . $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh
 
 # setup direnv
