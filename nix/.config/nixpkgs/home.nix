@@ -401,7 +401,7 @@ in
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6" = {
       binding = "<Alt><Shift>e";
-      command = "alacritty -e zsh -ic ',mail-quick-read'";
+      command = "gnome-terminal -- zsh -ic ',mail-quick-read'";
       name = "mail-quick-read";
     };
 
