@@ -2,13 +2,15 @@
 
 set -e
 
-echo "$1" | grep -q '#' && echo "Invalid git url. Url contains #" && exit 1
+[ -z "$1" ] && URL="$(pbpaste)" || URL="$1"
+echo "$URL" | grep -q '[#?]' && echo "Invalid git url. Url contains [#?]" && exit 1
 
 cat $VIME_PATH/gourcer $GOURCER_PATH/pending |
-	grep -q "$1" && echo "[Already available] $1" && exit 0
-if echo "$1" | grep -qE "^http"; then
-	echo "- $1" >>~/.cache/vime/gourcer
+	grep -q "$URL" && echo "[Already available] $URL" && exit 0
+if echo "$URL" | grep -qE "^http"; then
+	echo "- $URL" >>$VIME_PATH/gourcer
+    echo "$URL added to grourcer list"
 else
-	echo "[Invalid url] $1"
+	echo "[Invalid url] $URL"
 fi
 # exit 1 will mess with newsboat
