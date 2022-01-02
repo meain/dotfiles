@@ -1874,7 +1874,7 @@ Pass ORIGINAL and ALTERNATE options."
                                          (:name "watching" :query "tag:inbox AND tag:watch"
                                                 :key "w"
                                                 :sort-order oldest-first)
-                                         (:name "read" :query "tag:inbox AND -tag:imbox AND -tag:newsletter AND -tag:python and -tag:unread AND -tag:jobhunt AND -tag:git"
+                                         (:name "read" :query "tag:inbox AND -tag:imbox AND -tag:newsletter AND -tag:python and -tag:unread AND -tag:jobhunt AND -tag:git AND -tag:todo"
                                                 :key "r"
                                                 :sort-order oldest-first)
                                          (:name "meain" :query "query=to:mail@meain.io AND tag:inbox"
@@ -1898,7 +1898,7 @@ Pass ORIGINAL and ALTERNATE options."
                                                 :key "n")
                                          (:name "jobhunt" :query "tag:jobhunt AND tag:inbox"
                                                 :key "j")
-                                         (:name "known" :query "tag:known AND tag:inbox"
+                                         (:name "known" :query "tag:known AND tag:inbox AND -tag:todo"
                                                 :key "k")
                                          (:name "archiveable" :query "tag:bullshit AND tag:known AND tag:nonimportant AND tag:inbox"
                                                 :key "a")
