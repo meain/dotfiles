@@ -1612,8 +1612,10 @@ Pass ORIGINAL and ALTERNATE options."
           (evil-leader/set-key "D" 'meain/test-runner-full)))
 
 ;; Neotree
-(use-package neotree :straight t
-  :commands neotree)
+(use-package neotree
+  :straight t
+  :commands neotree
+  :config (setq neo-window-fixed-size nil))
 
 ;; Evil keybindings for a lot of things
 (use-package evil-collection
