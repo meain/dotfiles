@@ -299,9 +299,12 @@ in
         "gsconnect@andyholmes.github.io"
         "no-overview@fthx"
         "bluetooth-quick-connect@bjarosze.gmail.com"
+        "bluetooth-battery@michalw.github.com"
+        "sound-output-device-chooser@kgshank.net"
         "focus-my-window@varianto25.com"
         "shellout@meain.io"
         "custom-hot-corners-extended@G-dH.github.com"
+        "steal-my-focus@kagesenshi.org"
       ];
       #   favorite-apps = [
       #     "org.gnome.Terminal.desktop"
