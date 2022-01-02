@@ -4,17 +4,17 @@ set -e
 
 recreate(){
     "$0" stop || true
-    rm -rf /Users/meain/.cache/postgres/data
-    mkdir /Users/meain/.cache/postgres/data
-    initdb -D /Users/meain/.cache/postgres/data
+    rm -rf ~/.cache/postgres/data
+    mkdir ~/.cache/postgres/data
+    initdb -D ~/.cache/postgres/data
     "$0" start
     createdb -T template0 mockdb
-    psql mockdb < "$1"
+    # psql mockdb < "$1"
 }
 
 case "$1" in
-    start) pg_ctl -D /Users/meain/.cache/postgres/data -l /tmp/pglogfile start;;
-    stop) pg_ctl -D /Users/meain/.cache/postgres/data -l /tmp/pglogfile stop;;
+    start) pg_ctl -D ~/.cache/postgres/data -l /tmp/pglogfile start;;
+    stop) pg_ctl -D ~/.cache/postgres/data -l /tmp/pglogfile stop;;
     recreate) recreate "$2";;
     *) echo "Not sure what you are going for yet."
 esac
