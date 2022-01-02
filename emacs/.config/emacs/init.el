@@ -3184,13 +3184,6 @@ Pass THING-TO-POPUP as the thing to popup."
                                                                ""))
                                        " "
                                        '(:eval (mode-line-idle 1.0
-                                                               '(:propertize (:eval (when-let (vc vc-mode) ;; git branch
-                                                                                      (list " @"
-                                                                                            (substring vc 5))))
-                                                                             face
-                                                                             hima-simple-gray)
-                                                               ""))
-                                       '(:eval (mode-line-idle 1.0
                                                                '(:propertize (:eval (if (and (project-current)
                                                                                              (not (file-remote-p default-directory)))
                                                                                         (list " "
@@ -3203,6 +3196,13 @@ Pass THING-TO-POPUP as the thing to popup."
                                                                                                                              (meain/project-name))
                                                                                                                    ""))))
                                                                                                 (format "%s" out-name)))))
+                                                                             face
+                                                                             hima-simple-gray)
+                                                               ""))
+                                       '(:eval (mode-line-idle 1.0
+                                                               '(:propertize (:eval (when-let (vc vc-mode) ;; git branch
+                                                                                      (list " @"
+                                                                                            (substring vc 5))))
                                                                              face
                                                                              hima-simple-gray)
                                                                ""))
