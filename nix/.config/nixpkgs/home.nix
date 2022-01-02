@@ -279,7 +279,7 @@ in
       font-name = "Inconsolata 10";
       # gtk-im-module = "gtk-im-context-simple";
       gtk-theme = "Fluent-light-compact";
-      monospace-font-name = "JuliaMono 9";
+      monospace-font-name = "VictorMono 10";
       show-battery-percentage = true;
     };
 
