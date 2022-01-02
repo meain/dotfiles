@@ -2951,9 +2951,7 @@ Default is after, but use BEFORE to print before."
                                     (line-number-at-pos))))))
     (progn
       (message "%s coped to clipboard." web-url)
-      (start-process-shell-command "pbcopy-gh"
-                                   "*pbcopy-gh*"
-                                   (format "echo '%s'|pbcopy" web-url)))))
+      (kill-new web-url))))
 (evil-leader/set-key "b G" 'meain/github-url)
 
 ;; Generate pdf from markdown document
