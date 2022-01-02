@@ -1,0 +1,5 @@
+#!/bin/sh
+
+set -e
+
+find $HOME/.ssh/ -name '*.pub'| sed 's/.pub$//' | xargs -n1 basename | fzf | xargs -I{} git config --global core.sshCommand "ssh -i ~/.ssh/{}"
