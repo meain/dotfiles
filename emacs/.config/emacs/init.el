@@ -1707,6 +1707,8 @@ Pass ORIGINAL and ALTERNATE options."
                      '("/Dockerfile" . dockerfile-mode)))
 (use-package docker-compose-mode :straight t
   :defer t)
+(use-package protobuf-mode :straight t
+  :defer t)
 (use-package org
   :commands (org-mode):init
   (add-to-list 'auto-mode-alist
