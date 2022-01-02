@@ -29,6 +29,7 @@ in
     # core utils
     pkgs.ripgrep
     pkgs.lsd
+    pkgs.gnumake
     pkgs.fd
     pkgs.jq
     pkgs.git
@@ -40,6 +41,7 @@ in
     pkgs.coreutils
     pkgs.vim
     pkgs.gcc
+    pkgs.zlib
 
     # packages
     # personal.notmuch-git # mail indexer
@@ -140,6 +142,7 @@ in
     pkgs.python39 # python language
     pkgs.poetry # better package manager
     pkgs.black # python code formatter
+    pkgs.python39Packages.pip
     pkgs.python39Packages.flake8 # linter
     pkgs.python39Packages.ipdb # interactive debugging
     pkgs.python39Packages.pynvim # neovim python support
@@ -151,6 +154,7 @@ in
     pkgs.python39Packages.mypy # check types in code
     pkgs.python39Packages.isort # fix sort order
     pkgs.python39Packages.pygments # generic syntax highlight
+    pkgs.python39Packages.python-lsp-server # python lsp
     # pkgs.python38Packages.python-language-server # python lsp (using below one as tests are failing)
     # (pkgs.python38Packages.python-language-server.overridePythonAttrs (oldAttrs: { checkPhase = ""; checkInputs = []; }))
 
@@ -200,12 +204,13 @@ in
     # pkgs.tig # tui git interface
     # pkgs.lazygit # tui git interface
     pkgs.lazydocker # tui docker interface
+    pkgs.docker-compose # docker-compose
     # pkgs.ncmpcpp # mpd tui client
     # pkgs.tokei # count lines of code
     # pkgs.navi # interactive cli launcher
     # pkgs.googler # search google from terminal
     # pkgs.cmatrix # matrix thingy in shell
-    # pkgs.graphviz # draw graphs with code
+    pkgs.graphviz # draw graphs with code
     # pkgs.pgcli # fancier postgres cli
     # pkgs.trivy # docker vulnerability scanner
     # pkgs.act # github ci locally
@@ -220,9 +225,10 @@ in
     pkgs.trash-cli
     pkgs.entr
     pkgs.notify-desktop
-    pkgs.guake
+    # pkgs.guake
     pkgs.albert
-    pkgs.wl-clipboard
+    pkgs.xclip
+    # pkgs.wl-clipboard
     pkgs.gnome3.dconf-editor
     pkgs.gnome.gnome-tweaks
     personal.fluent-theme
@@ -239,17 +245,17 @@ in
     pkgs.gnomeExtensions.bluetooth-quick-connect
     pkgs.gnomeExtensions.custom-hot-corners-extended
     personal.gnomeExtensions.steal-my-focus
-    personal.gnomeExtensions.shellout
+    # personal.gnomeExtensions.shellout
 
     # symlinks (macos polyfills)
     (pkgs.runCommand "open" { } ''mkdir -p $out/bin; ln -s ${pkgs.xdg-utils}/bin/xdg-open $out/bin/open'')
-    (pkgs.runCommand "pbcopy" { } ''mkdir -p $out/bin; ln -s ${pkgs.wl-clipboard}/bin/wl-copy $out/bin/pbcopy'')
-    (pkgs.runCommand "pbpaste" { } ''mkdir -p $out/bin; ln -s ${pkgs.wl-clipboard}/bin/wl-paste $out/bin/pbpaste'')
+    # (pkgs.runCommand "pbcopy" { } ''mkdir -p $out/bin; ln -s ${pkgs.wl-clipboard}/bin/wl-copy $out/bin/pbcopy'')
+    # (pkgs.runCommand "pbpaste" { } ''mkdir -p $out/bin; ln -s ${pkgs.wl-clipboard}/bin/wl-paste $out/bin/pbpaste'')
     (pkgs.runCommand "say" { } ''mkdir -p $out/bin; ln -s ${pkgs.espeak}/bin/espeak $out/bin/say'')
 
     # autostart
-    (pkgs.makeAutostartItem { name = "guake"; package = pkgs.guake; })
-    (pkgs.makeAutostartItem { name = "albert"; package = pkgs.albert; })
+    # (pkgs.makeAutostartItem { name = "guake"; package = pkgs.guake; })
+    # (pkgs.makeAutostartItem { name = "albert"; package = pkgs.albert; })
 
     # fonts (set-frame-font  "Julia Mono 9")
     pkgs.inconsolata
@@ -257,6 +263,7 @@ in
     pkgs.cascadia-code
     pkgs.julia-mono
     pkgs.sudo-font
+    pkgs.terminus-nerdfont
   ];
 
   dconf.settings = {
