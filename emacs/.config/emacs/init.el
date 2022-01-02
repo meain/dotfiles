@@ -2434,6 +2434,11 @@ Pass ORIGINAL and ALTERNATE options."
   :commands (0x0-dwim 0x0-popup 0x0-upload-file 0x0-upload-text)
   :init (evil-leader/set-key "a 0" '0x0-dwim))
 
+(use-package secret-mode
+  :straight (secret-mode :host github
+                         :repo "bkaestner/secret-mode.el"):commands
+  (secret-mode))
+
 ;;; [CUSTOM FUNCTIONS] ==============================================
 
 ;; Font size changes
