@@ -2,10 +2,13 @@
 
 set -e
 
-,mail-unread|grep -q . || ,center "No unread emails" && read -n1 && exit
+if ! ,mail-unread | grep -q .; then
+	# ,center "No unread emails" && read -n1 && exit
+    notify "No unread emails" "You are good for now. You got nothing to do." && exit
+fi
 
 ,mail-unread | cut -d' ' -f3-
-printf '\n\n[r] mark all read'
+printf '\n[r] mark all read'
 read -r -n1 -s
 
 echo
