@@ -446,7 +446,7 @@ in
       toggle-fullscreen = "<Super>Return";
     };
     "apps/guake/style/background" = {
-      transparency = 90;
+      transparency = 95;
     };
 
   };
