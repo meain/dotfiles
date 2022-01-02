@@ -1,7 +1,8 @@
 #!/bin/sh
 
-set -e
+# Add and commit might fail as the script might auto commit, but we
+# still have to make sure to push it. So don't add a `set -e`.
 
 git add .
-git commit -m "${1:-Updating content}" || echo "Nothing to sync" && exit 0
+git commit -m "${1:-Updating content}"
 git push
