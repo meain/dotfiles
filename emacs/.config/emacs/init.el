@@ -1142,6 +1142,7 @@ Pass ORIGINAL and ALTERNATE options."
             (define-key evil-normal-state-map (kbd "K") 'eldoc-print-current-symbol-info)
             (define-key evil-normal-state-map (kbd "g k") 'eldoc-print-current-symbol-info)
             (define-key evil-normal-state-map (kbd "g d") 'xref-find-definitions)
+            (define-key evil-normal-state-map (kbd "g D") 'eglot-find-implementation)
             (define-key evil-normal-state-map (kbd "g r") 'xref-find-references)
             (define-key evil-normal-state-map (kbd "g R") 'eglot-rename)
             (define-key evil-normal-state-map (kbd "g ,") 'eglot-format-buffer)
