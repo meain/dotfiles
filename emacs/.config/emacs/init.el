@@ -2239,7 +2239,7 @@ Pass ORIGINAL and ALTERNATE options."
   (interactive)
   (meain/kill-markdown-preview)
   (start-process "*markdown-preview*" "*markdown-preview*"
-                 "markdown-preview" buffer-file-name))
+                 ",markdown-preview" buffer-file-name))
 
 ;; Restclient
 (use-package restclient
