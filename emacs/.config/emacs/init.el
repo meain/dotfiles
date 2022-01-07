@@ -561,114 +561,114 @@ Pass ORIGINAL and ALTERNATE options."
                                                                 ", "))
                                                   (_ (meain/go-default-returns return-node-text)))))))))
     (aas-set-snippets 'text-mode
-                      ";isodate"
-                      (lambda ()
-                        (interactive)
-                        (insert (format-time-string "%a, %d %b %Y %T %z")))
-                      ";date"
-                      (lambda ()
-                        (interactive)
-                        (insert (format-time-string "%a %b %d %Y")))
-                      ";sdate"
-                      (lambda ()
-                        (interactive)
-                        (insert (format-time-string "%d %b %Y")))
-                      ";d/"
-                      (lambda ()
-                        (interactive)
-                        (insert (format-time-string "%D")))
-                      ";time"
-                      (lambda ()
-                        (interactive)
-                        (insert (format-time-string "%T")))
-                      ";filename"
-                      (lambda ()
-                        (interactive)
-                        (insert (file-name-nondirectory (buffer-file-name)))))
+      ";isodate"
+      (lambda ()
+        (interactive)
+        (insert (format-time-string "%a, %d %b %Y %T %z")))
+      ";date"
+      (lambda ()
+        (interactive)
+        (insert (format-time-string "%a %b %d %Y")))
+      ";sdate"
+      (lambda ()
+        (interactive)
+        (insert (format-time-string "%d %b %Y")))
+      ";d/"
+      (lambda ()
+        (interactive)
+        (insert (format-time-string "%D")))
+      ";time"
+      (lambda ()
+        (interactive)
+        (insert (format-time-string "%T")))
+      ";filename"
+      (lambda ()
+        (interactive)
+        (insert (file-name-nondirectory (buffer-file-name)))))
     (aas-set-snippets 'mtodo-mode
-                      ";date"
-                      (lambda ()
-                        (interactive)
-                        (insert (format-time-string "%a %b %d %Y"))))
+      ";date"
+      (lambda ()
+        (interactive)
+        (insert (format-time-string "%a %b %d %Y"))))
     (aas-set-snippets 'ledger-mode
-                      ";date"
-                      (lambda ()
-                        (interactive)
-                        (insert (format-time-string "%Y-%m-%d"))))
+      ";date"
+      (lambda ()
+        (interactive)
+        (insert (format-time-string "%Y-%m-%d"))))
     (aas-set-snippets 'prog-mode
-                      ";isodate"
-                      (lambda ()
-                        (interactive)
-                        (insert (format-time-string "%a, %d %b %Y %T %z")))
-                      ";date"
-                      (lambda ()
-                        (interactive)
-                        (insert (format-time-string "%a %b %d %Y")))
-                      ";sdate"
-                      (lambda ()
-                        (interactive)
-                        (insert (format-time-string "%d %b %Y")))
-                      ";d/"
-                      (lambda ()
-                        (interactive)
-                        (insert (format-time-string "%D")))
-                      ";time"
-                      (lambda ()
-                        (interactive)
-                        (insert (format-time-string "%T")))
-                      ";filename"
-                      (lambda ()
-                        (interactive)
-                        (insert (file-name-nondirectory (buffer-file-name)))))
+      ";isodate"
+      (lambda ()
+        (interactive)
+        (insert (format-time-string "%a, %d %b %Y %T %z")))
+      ";date"
+      (lambda ()
+        (interactive)
+        (insert (format-time-string "%a %b %d %Y")))
+      ";sdate"
+      (lambda ()
+        (interactive)
+        (insert (format-time-string "%d %b %Y")))
+      ";d/"
+      (lambda ()
+        (interactive)
+        (insert (format-time-string "%D")))
+      ";time"
+      (lambda ()
+        (interactive)
+        (insert (format-time-string "%T")))
+      ";filename"
+      (lambda ()
+        (interactive)
+        (insert (file-name-nondirectory (buffer-file-name)))))
     (aas-set-snippets 'web-mode
-                      ";html"
-                      (lambda ()
-                        (interactive)
-                        (insert-file-contents (expand-file-name "~/.config/datafiles/html_starter"))))
+      ";html"
+      (lambda ()
+        (interactive)
+        (insert-file-contents (expand-file-name "~/.config/datafiles/html_starter"))))
     (aas-set-snippets 'html-mode
-                      ";html"
-                      (lambda ()
-                        (interactive)
-                        (insert-file-contents (expand-file-name "~/.config/datafiles/html_starter"))))
+      ";html"
+      (lambda ()
+        (interactive)
+        (insert-file-contents (expand-file-name "~/.config/datafiles/html_starter"))))
     (aas-set-snippets 'nix-mode
-                      ";bang"
-                      (lambda ()
-                        (interactive)
-                        (insert-file-contents (expand-file-name "~/.config/datafiles/starter-default.nix"))))
+      ";bang"
+      (lambda ()
+        (interactive)
+        (insert-file-contents (expand-file-name "~/.config/datafiles/starter-default.nix"))))
     (aas-set-snippets 'markdown-mode
-                      ";bang"
-                      (lambda ()
-                        (interactive)
-                        (insert (concat "---\ntitle: "
-                                        (file-name-nondirectory (file-name-sans-extension (buffer-file-name)))
-                                        "\ncreated: "
-                                        (format-time-string "%a %d %b %Y %T")
-                                        "\n---\n")))
-                      ";month"
-                      (lambda ()
-                        (interactive)
-                        (insert (format-time-string "%B %Y"))))
+      ";bang"
+      (lambda ()
+        (interactive)
+        (insert (concat "---\ntitle: "
+                        (file-name-nondirectory (file-name-sans-extension (buffer-file-name)))
+                        "\ncreated: "
+                        (format-time-string "%a %d %b %Y %T")
+                        "\n---\n")))
+      ";month"
+      (lambda ()
+        (interactive)
+        (insert (format-time-string "%B %Y"))))
     (aas-set-snippets 'go-mode
-                      ";;"
-                      ":="
-                      ";ie"
-                      (lambda ()
-                        (interactive)
-                        (insert (concat "if err != nil { fmt.Println(\""
-                                        (read-string "Error message: ")
-                                        "\", err) }")))
-                      ";er"
-                      (lambda ()
-                        (interactive)
-                        (insert (concat "if err != nil { "
-                                        (meain/go-return-string)
-                                        " }")))
-                      ";te"
-                      (lambda ()
-                        (interactive)
-                        (insert (concat "func "
-                                        (read-string "Test function name: ")
-                                        "(t *testing.T) {
+      ";;"
+      ":="
+      ";ie"
+      (lambda ()
+        (interactive)
+        (insert (concat "if err != nil { fmt.Println(\""
+                        (read-string "Error message: ")
+                        "\", err) }")))
+      ";er"
+      (lambda ()
+        (interactive)
+        (insert (concat "if err != nil { "
+                        (meain/go-return-string)
+                        " }")))
+      ";te"
+      (lambda ()
+        (interactive)
+        (insert (concat "func "
+                        (read-string "Test function name: ")
+                        "(t *testing.T) {
 	tests := []struct {
 		name  string
 		input string
