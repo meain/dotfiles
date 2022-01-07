@@ -367,6 +367,7 @@ in
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/"
       ];
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
@@ -403,6 +404,11 @@ in
       binding = "<Alt><Shift>e";
       command = "gnome-terminal -- zsh -ic ',mail-quick-read'";
       name = "mail-quick-read";
+    };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7" = {
+      binding = "<Alt><Shift>m";
+      command = "gnome-terminal -- zsh -ic ',emojipicker'";
+      name = "emoji-picker";
     };
 
     "org/gnome/shell/extensions/custom-hot-corners-extended/monitor-0-top-left-0" = {
