@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if [ -n "$1" ]; then
-	URL=$(todo.sh -p ls | sed "$1!d" | grep -E -o "https?://[^ ]+")
+	URL=$(todo.sh -p ls | grep -E "^$1" | grep -E -o "https?://[^ ]+")
 	open "$URL"
 	todo.sh do "$1"
 fi
