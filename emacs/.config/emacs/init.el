@@ -3182,7 +3182,6 @@ Pass THING-TO-POPUP as the thing to popup."
                                                                              face
                                                                              hima-simple-gray)
                                                                ""))
-                                       " "
                                        '(:eval (mode-line-idle 1.0
                                                                '(:propertize (:eval (if (and (project-current)
                                                                                              (not (file-remote-p default-directory)))
