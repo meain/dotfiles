@@ -94,4 +94,4 @@ case "$OPTION" in
 *) echo "Options are: list print copy open new add all" ;;
 esac
 
-note commit # commit changes
+,note commit # commit changes
