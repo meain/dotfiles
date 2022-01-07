@@ -44,6 +44,9 @@ all="$(gdbus call \
 	jq -r '.|join("\n")')"
 
 function focusApplication() {
+    # The `forEach` is to handle in case we have multiple windows
+    # Somehow, this way it always manages to open the first window always
+    # One other possible solution is to open the largest window
 	gdbus call \
 		--session \
 		--dest org.gnome.Shell \
@@ -52,7 +55,8 @@ function focusApplication() {
             global              
             .get_window_actors()
             .map(a=>a.meta_window)                                   
-            .filter(w=>w.get_wm_class() == '$1')[0].activate(true)"
+            .filter(w=>w.get_wm_class() == '$1')
+            .forEach(w => w.activate(true))"
 }
 
 function launchOrFocus() {
