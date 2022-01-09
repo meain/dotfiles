@@ -378,6 +378,7 @@ in
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/"
       ];
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
@@ -419,6 +420,11 @@ in
       binding = "<Alt><Shift>m";
       command = "gnome-terminal -- zsh -ic ',emojipicker'";
       name = "emoji-picker";
+    };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8" = {
+      binding = "<Super>n";
+      command = "zsh -ic ',thing-for-today-popup'";
+      name = "thing-for-today";
     };
 
     "org/gnome/shell/extensions/custom-hot-corners-extended/monitor-0-top-left-0" = {

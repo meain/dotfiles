@@ -1,0 +1,5 @@
+#!/bin/sh
+
+set -e
+
+emacsclient -e "(meain/emacs-popup-frame 'open-thing-for-today)"
