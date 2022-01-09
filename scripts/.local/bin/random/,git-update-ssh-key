@@ -1,0 +1,13 @@
+#!/bin/sh
+
+set -e
+
+# Set ssh key for git
+# Pass $1 as global for setting it globally
+
+[ "$1" == "global" ] && find $HOME/.ssh/ -name '*.pub' |
+	sed 's/.pub$//' | xargs -n1 basename | fzf |
+	xargs -I{} git config --global core.sshCommand "ssh -i ~/.ssh/{}" ||
+	find $HOME/.ssh/ -name '*.pub' |
+	sed 's/.pub$//' | xargs -n1 basename | fzf |
+		xargs -I{} git config core.sshCommand "ssh -i ~/.ssh/{}"
