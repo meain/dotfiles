@@ -1053,13 +1053,15 @@ Pass ORIGINAL and ALTERNATE options."
                          '(python-mode . ("~/.bin/vpyls")))
             (add-to-list 'eglot-server-programs
                          '(nix-mode . ("rnix-lsp")))
-            (setq-default eglot-workspace-configuration '((:json.schemas . [((:fileMatch . ["package.json"])
-                                                                             (:url . "https://json.schemastore.org/package.json"))])))
             (add-to-list 'display-buffer-alist
                          '("\\*sqls\\*"
                            (display-buffer-reuse-window display-buffer-at-bottom)
                            (reusable-frames . visible)
                            (window-height . 0.3)))
+            (setq-default eglot-workspace-configuration '((:json.schemas . [((:fileMatch . ["package.json"])
+                                                                             (:url . "https://json.schemastore.org/package.json"))])
+                                                          (:gopls . ((staticcheck . t)
+                                                                     (experimentalWorkspaceModule . t)))))
             ;; add flymake backend separately so that I can add other things as well to flymake
             (add-to-list 'eglot-stay-out-of 'flymake)
             (add-hook 'flymake-diagnostic-functions 'eglot-flymake-backend)
