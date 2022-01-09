@@ -2,6 +2,13 @@
 
 set -e
 
-,launch-or-focus Emacs 'emacsclient  -a "" --no-wait -c' Firefox firefox
+# ,launch-or-focus Emacs 'emacsclient  -a "" --no-wait -c' Firefox firefox
 
-
+window="$(xdotool getwindowfocus | xargs xdotool getwindowname)"
+if [ $window == "Emacs" ]; then
+	xdotool search --name 'Mozilla Firefox' | xargs -n1 xdotool windowraise
+	xdotool search --name 'Mozilla Firefox' | xargs -n1 xdotool windowfocus
+else
+	xdotool search --name Emacs | tail -n1 | xargs -n1 xdotool windowraise
+	xdotool search --name Emacs | tail -n1 | xargs -n1 xdotool windowfocus
+fi
