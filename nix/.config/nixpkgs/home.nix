@@ -290,6 +290,8 @@ in
 
     "org/gnome/desktop/wm/preferences" = {
       titlebar-font = "Agave 10";
+      auto-raise = true;
+      focus-new-windows = "smart";
     };
 
     "org/gnome/shell" = {
