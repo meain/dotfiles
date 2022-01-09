@@ -194,7 +194,7 @@ in
     # pkgs.ncdu # disk usage viewer tui
     # pkgs.bat # cat with syntax highlight
     # pkgs.surfraw # search web
-    # pkgs.httpie # prettier curl for debugging
+    pkgs.httpie # prettier curl for debugging
     # pkgs.qrencode # encode data as qr from cli
     # pkgs.w3m # terminal web browser
     pkgs.scim # excel for terminal
@@ -234,6 +234,7 @@ in
     personal.fluent-theme
     pkgs.nethogs
     nur.repos.j-k.comma
+    pkgs.xdotool
 
     # gnome tweaking
     pkgs.gnomeExtensions.dash-to-panel
