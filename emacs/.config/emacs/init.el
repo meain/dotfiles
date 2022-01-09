@@ -2518,7 +2518,7 @@ SHORTCUT is the keybinding to use.  NAME if the func suffix and FILE is the file
 (meain/quick-file-open-builder "m" "thing-for-today"
   "~/.local/share/vime/thing-for-today")
 (meain/quick-file-open-builder "M" "thing-for-today-personal"
-  "Zoom in and out of single window.")
+  "~/.local/share/vime/thing-for-today-personal")
 
 ;; Fullscreen current buffer
 (defvar meain/window-configuration nil)
