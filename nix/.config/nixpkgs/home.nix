@@ -257,7 +257,11 @@ in
     # (pkgs.makeAutostartItem { name = "guake"; package = pkgs.guake; })
     # (pkgs.makeAutostartItem { name = "albert"; package = pkgs.albert; })
 
-    # fonts (set-frame-font  "Julia Mono 9")
+    # fonts (set-frame-font  "Hermit 9")
+    pkgs.iosevka
+    pkgs.hermit
+    pkgs.profont
+    pkgs.agave
     pkgs.inconsolata
     pkgs.victor-mono
     pkgs.cascadia-code
@@ -276,15 +280,15 @@ in
       clock-show-weekday = true;
       font-antialiasing = "grayscale";
       font-hinting = "slight";
-      font-name = "Inconsolata 10";
+      font-name = "Agave 10";
       # gtk-im-module = "gtk-im-context-simple";
       gtk-theme = "Fluent-light-compact";
-      monospace-font-name = "VictorMono 10";
+      monospace-font-name = "Hermit 9";
       show-battery-percentage = true;
     };
 
     "org/gnome/desktop/wm/preferences" = {
-      titlebar-font = "Inconsolata 10";
+      titlebar-font = "Agave 10";
     };
 
     "org/gnome/shell" = {

@@ -30,11 +30,11 @@
 ;; PragmataPro 14 | agave 15 | Unifont 15 | Apercu Mono 14 | Binchotan_Sharp 15
 ;; CMU Typewriter Text 16 | Input 14 | SF Mono 14
 ;; Font (set-frame-font  "VictorMono 10")
-(defvar meain/font-family-default "VictorMono 10"
+(defvar meain/font-family-default "Hermit 9"
   "Default font family for everything in Emacs.")
 (defvar meain/font-weight-default 'regular
   "Default font weight for everything in Emacs.")
-(setq-default line-spacing .2)
+(setq-default line-spacing nil)
 (add-to-list 'default-frame-alist
              `(font . ,meain/font-family-default))
 
