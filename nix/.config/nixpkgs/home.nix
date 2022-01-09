@@ -313,11 +313,14 @@ in
         "custom-hot-corners-extended@G-dH.github.com"
         "steal-my-focus@kagesenshi.org"
       ];
-      #   favorite-apps = [
-      #     "org.gnome.Terminal.desktop"
-      #     "org.gnome.Nautilus.desktop"
-      #     "chromium-browser.desktop"
-      #   ];
+      favorite-apps = [
+        "org.gnome.Nautilus.desktop"
+        "org.gnome.Terminal.desktop"
+        "slack_slack.desktop"
+        "firefox.desktop"
+        "chromium-browser.desktop"
+        "org.gnome.Calendar.desktop"
+      ];
     };
 
     "org/gnome/shell/extensions/user-theme" = {
