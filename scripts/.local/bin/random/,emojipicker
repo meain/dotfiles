@@ -3,5 +3,7 @@
 set -e
 
 fzf --height="100%" <$HOME/.config/datafiles/emojis.txt |
-	tee /dev/stderr | # just to see the picked emoji
+	tee /tmp/emoji-picked | # just to see the picked emoji
 	awk '{print $1}' | tr -d '\n' | pbcopy
+
+cat /tmp/emoji-picked | xargs -I{} ,center "{}"
