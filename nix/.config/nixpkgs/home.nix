@@ -123,6 +123,7 @@ in
     pkgs.go-langserver # go language-server
     pkgs.goimports # go formatter
     pkgs.golangci-lint # all kinds of linters for go
+    pkgs.delve # debugging in go
 
     # programming-web
     pkgs.html-tidy # html formatter
