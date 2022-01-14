@@ -475,7 +475,9 @@ Pass ORIGINAL and ALTERNATE options."
     (defun meain/project-name ()
       (file-name-nondirectory (directory-file-name (car (project-roots (project-current)))))))
   :init (progn
-          (evil-leader/set-key "p" 'project-switch-project)
+          (evil-leader/set-key "p"
+            (meain/with-alternate (call-interactively 'project-switch-project)
+                                  (project-find-file)))
           (define-key evil-normal-state-map (kbd "<RET>") 'project-find-file)))
 
 ;; eldoc load
