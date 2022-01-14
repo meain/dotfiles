@@ -989,7 +989,9 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package dumb-jump
   :straight t
   :commands dumb-jumb-go
-  :init (evil-leader/set-key "J" 'dumb-jump-go))
+  :init (evil-leader/set-key "J" 'dumb-jump-go):config
+  (progn
+    (evil-set-command-property 'dumb-jumb-go :jump t)))
 
 
 ;; Code formatting
