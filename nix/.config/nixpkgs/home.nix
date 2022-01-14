@@ -287,7 +287,7 @@ in
       font-hinting = "slight";
       font-name = "Agave 10";
       # gtk-im-module = "gtk-im-context-simple";
-      gtk-theme = "Fluent-light-compact";
+      gtk-theme = "Fluent-round-light-compact";
       monospace-font-name = "Hermit 9";
       show-battery-percentage = true;
     };
