@@ -1,10 +1,8 @@
 ;; Native compilation stuff
 (setq comp-speed 2)
 (setq package-native-compile t)
-(setq native-comp-async-report-warnings-errors
-      nil)
-(setq native-comp-deferred-compilation-deny-list
-      nil)
+(setq native-comp-async-report-warnings-errors nil)
+(setq native-comp-deferred-compilation-deny-list nil)
 
 ;; Disable package.el as we are using straight
 (setq package-enable-at-startup nil)
@@ -30,30 +28,23 @@
 ;; PragmataPro 14 | agave 15 | Unifont 15 | Apercu Mono 14 | Binchotan_Sharp 15
 ;; CMU Typewriter Text 16 | Input 14 | SF Mono 14
 ;; Font (set-frame-font  "VictorMono 10")
-(defvar meain/font-family-default "Hermit 9"
-  "Default font family for everything in Emacs.")
-(defvar meain/font-weight-default 'regular
-  "Default font weight for everything in Emacs.")
+(defvar meain/font-family-default "Hermit 9" "Default font family for everything in Emacs.")
+(defvar meain/font-weight-default 'regular "Default font weight for everything in Emacs.")
 (setq-default line-spacing nil)
-(add-to-list 'default-frame-alist
-             `(font . ,meain/font-family-default))
+(add-to-list 'default-frame-alist `(font . ,meain/font-family-default))
 
 ;; Wider frames by default
-(add-to-list 'default-frame-alist
-             `(width . 150))
+(add-to-list 'default-frame-alist `(width . 150))
 
 ;; Window decoraations
-(add-to-list 'default-frame-alist
-             '(ns-transparent-titlebar . t))
+(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 ;; (setq default-frame-alist '((undecorated . t)))
 ;; (add-to-list 'default-frame-alist '(drag-internal-border . 10))
 ;; (add-to-list 'default-frame-alist '(internal-border-width . 10))
 ;; (add-to-list 'default-frame-alist '(ns-appearance . dark))
 
 ;; Bump up gc threshold until emacs startup
-(setq gc-cons-threshold most-positive-fixnum ; 2^61 bytes
-      gc-cons-percentage 0.6)
+(setq gc-cons-threshold most-positive-fixnum gc-cons-percentage 0.6)
 (add-hook 'emacs-startup-hook
           (lambda ()
-            (setq gc-cons-threshold 16777216 gc-cons-percentage
-                  0.1)))
+            (setq gc-cons-threshold 16777216 gc-cons-percentage 0.1)))
