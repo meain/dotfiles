@@ -339,6 +339,7 @@ in
     };
 
     "org/gnome/shell/keybindings" = {
+      focus-active-notification = [ ]; # clashes with ,thing-for-today-popup
       toggle-overview = [ "<Super>Space" ];
     };
 
@@ -427,7 +428,7 @@ in
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8" = {
       binding = "<Super>n";
-      command = "zsh -ic ',thing-for-today-popup'";
+      command = "gnome-terminal -- zsh -ic ',thing-for-today-popup'"; # opening via gnome-terminal fixes focus issues
       name = "thing-for-today";
     };
 
