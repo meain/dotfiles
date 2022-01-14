@@ -1234,6 +1234,7 @@ Pass ORIGINAL and ALTERNATE options."
                                        :jump t)
             (evil-set-command-property 'diff-hl-previous-hunk
                                        :jump t)
+            (evil-leader/set-key "gs" 'diff-hl-show-hunk)
             (evil-leader/set-key "gr" 'diff-hl-revert-hunk)
             (evil-leader/set-key "gj" 'diff-hl-next-hunk)
             (evil-leader/set-key "gk" 'diff-hl-previous-hunk)
