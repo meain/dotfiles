@@ -3,6 +3,7 @@ let
   # personal = import (builtins.fetchTarball "https://github.com/meain/nix-channel/archive/4780703f9bcb313759aecf11cc231953e77f43f3.tar.gz") { };
   personal = import /home/meain/dev/src/nix-channel { };
   nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") { inherit pkgs; };
+  stable = import (builtins.fetchTarball "https://github.com/nixos/nixpkgs/archive/21.11.tar.gz") { };
 in
 {
   home.stateVersion = "21.05";
@@ -45,7 +46,8 @@ in
 
     # packages
     # personal.notmuch-git # mail indexer
-    pkgs.notmuch
+    # pkgs.notmuch
+    stable.notmuch
     pkgs.isync # mail syncronize with upstrem
     pkgs.htop # process monitor
     pkgs.mpc_cli # remote for mpd
