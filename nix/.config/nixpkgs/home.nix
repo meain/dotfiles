@@ -1,7 +1,7 @@
 { lib, config, pkgs, ... }:
 let
   # personal = import (builtins.fetchTarball "https://github.com/meain/nix-channel/archive/4780703f9bcb313759aecf11cc231953e77f43f3.tar.gz") { };
-  personal = import /home/meain/dev/src/nix-channel { };
+  personal = import /home/meain/dev/src/nur-packages { };
   nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") { inherit pkgs; };
   stable = import (builtins.fetchTarball "https://github.com/nixos/nixpkgs/archive/21.11.tar.gz") { };
 in
