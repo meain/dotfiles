@@ -1,0 +1,5 @@
+#!/bin/sh
+
+set -e
+
+pico2wave -w /tmp/say.wav "$*" && aplay /tmp/say.wav

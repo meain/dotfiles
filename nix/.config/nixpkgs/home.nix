@@ -235,6 +235,7 @@ in
     pkgs.nethogs
     nur.repos.j-k.comma
     pkgs.xdotool
+    pkgs.picotts # for say
 
     # gnome tweaking
     pkgs.gnomeExtensions.dash-to-panel
@@ -252,7 +253,7 @@ in
     (pkgs.runCommand "open" { } ''mkdir -p $out/bin; ln -s ${pkgs.xdg-utils}/bin/xdg-open $out/bin/open'')
     # (pkgs.runCommand "pbcopy" { } ''mkdir -p $out/bin; ln -s ${pkgs.wl-clipboard}/bin/wl-copy $out/bin/pbcopy'')
     # (pkgs.runCommand "pbpaste" { } ''mkdir -p $out/bin; ln -s ${pkgs.wl-clipboard}/bin/wl-paste $out/bin/pbpaste'')
-    (pkgs.runCommand "say" { } ''mkdir -p $out/bin; ln -s ${pkgs.espeak}/bin/espeak $out/bin/say'')
+    # (pkgs.runCommand "say" { } ''mkdir -p $out/bin; ln -s ${pkgs.espeak}/bin/espeak $out/bin/say'')
 
     # autostart
     # (pkgs.makeAutostartItem { name = "guake"; package = pkgs.guake; })
