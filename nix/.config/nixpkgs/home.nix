@@ -372,6 +372,8 @@ in
       switch-to-workspace-right = [ "<Super>o" ]; # M-i/<Super>i has some issues
       move-to-workspace-left = [ "<Super><Shift>u" ];
       move-to-workspace-right = [ "<Super><Shift>o" ];
+      move-to-workspace-up = [ "<Super><Shift>u" ]; # for older version of GNOME
+      move-to-workspace-down = [ "<Super><Shift>o" ]; # for older version of GNOME
     };
     "org/gnome/settings-daemon/plugins/media-keys" = {
       custom-keybindings = [
