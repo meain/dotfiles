@@ -29,8 +29,8 @@ in
   home.packages = [
     # core utils
     pkgs.ripgrep
-    pkgs.lsd
     pkgs.gnumake
+    # pkgs.lsd
     pkgs.fd
     pkgs.jq
     pkgs.git
