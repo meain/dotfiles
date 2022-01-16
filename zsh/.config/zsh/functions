@@ -61,6 +61,7 @@ o() {
 }
 
 q() {
+	[ -n "$IN_NIX_SHELL" ] && exit
 	[ -z "$TMUX" ] && exit
 	PANES="$(tmux list-panes | wc -l | sed 's/ //g')"
 	WINDOWS="$(tmux list-windows | wc -l | sed 's/ //g')"
