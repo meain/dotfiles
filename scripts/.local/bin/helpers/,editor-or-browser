@@ -6,9 +6,9 @@ set -e
 
 window="$(xdotool getwindowfocus | xargs xdotool getwindowname)"
 if [ $window == "Emacs" ]; then
-	xdotool search --name 'Mozilla Firefox' | xargs -n1 xdotool windowraise
-	xdotool search --name 'Mozilla Firefox' | xargs -n1 xdotool windowfocus
+	xdotool search --name 'Mozilla Firefox' | tail -n1 | xargs xdotool windowraise
+	xdotool search --name 'Mozilla Firefox' | tail -n1 | xargs xdotool windowfocus
 else
-	xdotool search --name Emacs | tail -n1 | xargs -n1 xdotool windowraise
-	xdotool search --name Emacs | tail -n1 | xargs -n1 xdotool windowfocus
+	xdotool search --name Emacs | tail -n1 | tail -n1 | xargs xdotool windowraise
+	xdotool search --name Emacs | tail -n1 | tail -n1 | xargs xdotool windowfocus
 fi
