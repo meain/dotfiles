@@ -60,7 +60,7 @@
   gpgsign = false
   verbose = true
 [gpg]
-  program = gpg2
+  program = gpg
 [push]
   default = current
 [pull]
