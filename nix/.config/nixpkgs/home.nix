@@ -30,7 +30,7 @@ in
     # core utils
     pkgs.ripgrep
     pkgs.gnumake
-    # pkgs.lsd
+    # pkgs.lsd # installed from master
     pkgs.fd
     pkgs.jq
     pkgs.git
@@ -42,7 +42,6 @@ in
     pkgs.coreutils
     pkgs.vim
     pkgs.gcc
-    pkgs.zlib
 
     # packages
     # personal.notmuch-git # mail indexer
@@ -62,7 +61,7 @@ in
     pkgs.icdiff # simple colorfull diff replacement
     pkgs.ctags # code tag stuff
     pkgs.pass # password management
-    pkgs.sshfs # mount vm as fs using ssh
+    # pkgs.sshfs # mount vm as fs using ssh
     pkgs.stow # symlink management
     pkgs.git-absorb # automatic git commit --fixup
     pkgs.git-crypt # encrypt git stuff
@@ -75,9 +74,16 @@ in
     pkgs.restic # backup
     pkgs.ledger # double entry accounting
     pkgs.dasel # jq but more versatile
-    pkgs.mosh # better ssh
-    pkgs.diff-so-fancy # cleaner diff in git
+    # pkgs.mosh # better ssh
     personal.kmonad
+    pkgs.trash-cli
+    pkgs.entr
+    pkgs.notify-desktop
+    pkgs.xclip
+    # pkgs.wl-clipboard
+    pkgs.nethogs
+    pkgs.xdotool
+    pkgs.picotts # for say
 
     # aspell dicts
     pkgs.aspellDicts.en
@@ -97,7 +103,6 @@ in
     # taskwarrior # task management
     pkgs.todo-txt-cli # todo management
     # pkgs.pkgs.ts # task spooler
-    pkgs.pkgs.pstree # view process tree
     pkgs.pkgs.jiq # interactive jiq
     pkgs.pkgs.tldr # simpler man pages
     pkgs.pkgs.silicon # create pretty code screenshots
@@ -105,7 +110,6 @@ in
     pkgs.pkgs.kube-prompt # interactive kubernetes cli
     # pkgs.pkgs.cowsay # useless stuff
     # pkgs.podman # pod manager
-    pkgs.kind
 
     # programming
     pkgs.gist # create gist
@@ -128,12 +132,12 @@ in
     # programming-web
     pkgs.html-tidy # html formatter
     pkgs.nodejs # nodejs
-    pkgs.nodePackages.neovim # neovim package for js support
+    # pkgs.nodePackages.neovim # neovim package for js support
     pkgs.nodePackages.fixjson # much better json formatter
     pkgs.nodePackages.stylelint # css linter
     pkgs.nodePackages.prettier # formatting for web stuff
-    pkgs.nodePackages.pnpm # package management
-    pkgs.nodePackages.typescript # typescript
+    # pkgs.nodePackages.pnpm # package management
+    # pkgs.nodePackages.typescript # typescript
     pkgs.nodePackages.vscode-css-languageserver-bin # css languageserver
     pkgs.nodePackages.javascript-typescript-langserver # javascript langserver
 
@@ -148,15 +152,15 @@ in
     pkgs.python39Packages.pip
     pkgs.python39Packages.flake8 # linter
     pkgs.python39Packages.ipdb # interactive debugging
-    pkgs.python39Packages.pynvim # neovim python support
+    # pkgs.python39Packages.pynvim # neovim python support
     pkgs.python39Packages.pycodestyle # code style check
     pkgs.python39Packages.pydocstyle # doc style check
-    pkgs.python39Packages.requests # http lib for quick stuff
+    # pkgs.python39Packages.requests # http lib for quick stuff
     pkgs.python39Packages.virtualenv # virtual envs
     pkgs.python39Packages.bandit # analyze code for security issues
     pkgs.python39Packages.mypy # check types in code
     pkgs.python39Packages.isort # fix sort order
-    pkgs.python39Packages.pygments # generic syntax highlight
+    # pkgs.python39Packages.pygments # generic syntax highlight
     pkgs.python39Packages.python-lsp-server # python lsp
     # pkgs.python38Packages.python-language-server # python lsp (using below one as tests are failing)
     # (pkgs.python38Packages.python-language-server.overridePythonAttrs (oldAttrs: { checkPhase = ""; checkInputs = []; }))
@@ -168,10 +172,10 @@ in
     pkgs.clippy # the useful clippy
     pkgs.rust-analyzer # lsp for rust
     pkgs.cargo-edit # dep management
-    pkgs.cargo-bloat # find big chunks
-    pkgs.cargo-udeps # find unnecessary deps
-    pkgs.cargo-release # for releasing packages
-    # cargo-watch # continuously run cargo check
+    # pkgs.cargo-bloat # find big chunks
+    # pkgs.cargo-udeps # find unnecessary deps
+    # pkgs.cargo-release # for releasing packages
+    pkgs.cargo-watch # continuously run cargo check
 
     # programming-other
     pkgs.nodePackages.yaml-language-server
@@ -182,31 +186,33 @@ in
     pkgs.alacritty # terminal emulator
     # pkgs.firefox
     # pkgs.chromium
+    # pkgs.guake
 
     # others
     pkgs.redis # key value db
     pkgs.postgresql_13 # postgres 13 (postgresql is at 11)
     # pkgs.mongodb # document db
     pkgs.sqlite # better db
-    pkgs.minikube # mini kubernetes
+    # pkgs.minikube # mini kubernetes
+    pkgs.kind # better minikube
     # pkgs.awscli # manage aws
     # pkgs.google-cloud-sdk # manage google cloud
-    pkgs.lens # kubernetes viewer
+    # pkgs.lens # kubernetes viewer
 
     # optional
     # pkgs.ncdu # disk usage viewer tui
     # pkgs.bat # cat with syntax highlight
     # pkgs.surfraw # search web
-    pkgs.httpie # prettier curl for debugging
+    # pkgs.httpie # prettier curl for debugging
     # pkgs.qrencode # encode data as qr from cli
     # pkgs.w3m # terminal web browser
-    pkgs.scim # excel for terminal
+    # pkgs.scim # excel for terminal
     # pkgs.jrnl # journaling
     # pkgs.figlet # make big text
     # pkgs.gource # source tree visualisation
     # pkgs.tig # tui git interface
     # pkgs.lazygit # tui git interface
-    pkgs.lazydocker # tui docker interface
+    # pkgs.lazydocker # tui docker interface
     pkgs.docker-compose # docker-compose
     # pkgs.ncmpcpp # mpd tui client
     # pkgs.tokei # count lines of code
@@ -214,33 +220,18 @@ in
     # pkgs.googler # search google from terminal
     # pkgs.cmatrix # matrix thingy in shell
     pkgs.graphviz # draw graphs with code
+    # pkgs.groff # gnu troff
     # pkgs.pgcli # fancier postgres cli
     # pkgs.trivy # docker vulnerability scanner
     # pkgs.act # github ci locally
-
-    # tryout
-    # pkgs.gforth # gnu forth interpreter
-    # pkgs.groff # gnu troff
-
-    # linux-specific
-    pkgs.htop
+    # pkgs.pkgs.pstree # view process tree
     personal.traffic
-    pkgs.trash-cli
-    pkgs.entr
-    pkgs.notify-desktop
-    # pkgs.guake
-    pkgs.albert
-    pkgs.xclip
-    # pkgs.wl-clipboard
+    nur.repos.j-k.comma
+
+    # gnome tweaking
     pkgs.gnome3.dconf-editor
     pkgs.gnome.gnome-tweaks
     personal.fluent-theme
-    pkgs.nethogs
-    nur.repos.j-k.comma
-    pkgs.xdotool
-    pkgs.picotts # for say
-
-    # gnome tweaking
     pkgs.gnomeExtensions.dash-to-panel
     pkgs.gnomeExtensions.blur-my-shell
     pkgs.gnomeExtensions.clipboard-indicator
@@ -251,6 +242,9 @@ in
     pkgs.gnomeExtensions.custom-hot-corners-extended
     personal.gnomeExtensions.steal-my-focus
     # personal.gnomeExtensions.shellout
+
+    # tryout
+    # pkgs.gforth # gnu forth interpreter
 
     # symlinks (macos polyfills)
     (pkgs.runCommand "open" { } ''mkdir -p $out/bin; ln -s ${pkgs.xdg-utils}/bin/xdg-open $out/bin/open'')
@@ -545,11 +539,6 @@ in
     Unit.Description = "Start emacs server";
     Service.Type = "forking";
     Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic 'emacs --daemon'";
-    Install.WantedBy = [ "graphical-session.target" ];
-  };
-  systemd.user.services.guake = {
-    Unit.Description = "Start guake server";
-    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic 'guake'";
     Install.WantedBy = [ "graphical-session.target" ];
   };
 
