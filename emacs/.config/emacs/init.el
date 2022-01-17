@@ -324,17 +324,12 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; Quick quit
 (defun meain/update-scratch-message ()
+  (interactive)
   (with-current-buffer "*scratch*"
     (save-excursion
       (goto-char 1)
       ;; kill-line without copying to clipboard
-      (delete-region (point)
-                     (progn
-                       (condition-case nil
-                           (next-line)
-                         (error nil))
-                       (end-of-line 1)
-                       (point)))
+      (delete-region (point) (save-excursion (end-of-line 2) (point)))
       (insert (format ";; Time is %s. You have %s unread mails and %s buffers.\n;; %s"
                       (format-time-string "%l %p")
                       (car (split-string (shell-command-to-string ",mail-unread|wc -l") "\n"))
