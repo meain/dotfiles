@@ -84,7 +84,7 @@ source $ZDOTDIR/functions
 [ -f /usr/locale/opt/.fzf.zsh ] && source /usr/locale/opt/.fzf.zsh
 
 # Source colors for ls (trapd00r/LS_COLORS)
-# [ "$(uname -s)" == "Darwin" ] && eval $(gdircolors -b $ZDOTDIR/dircolors) || eval $(dircolors -b $ZDOTDIR/dircolors)
+[ "$(uname -s)" = "Darwin" ] && eval $(gdircolors -b $ZDOTDIR/dircolors) || eval $(dircolors -b $ZDOTDIR/dircolors)
 
 # Use vim mode in zsh
 autoload -Uz edit-command-line
