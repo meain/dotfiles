@@ -6,9 +6,31 @@ set -e
 
 window="$(xdotool getwindowfocus | xargs xdotool getwindowname)"
 if [ $window == "Emacs" ]; then
+	if echo $window | grep "Emacs"; then
+		xdotool getwindowfocus >/tmp/last-editor-window
+	fi
+	if [ -f /tmp/last-browser-window ]; then
+		lastBrowserWindow="$(cat /tmp/last-browser-window)"
+		if xdotool search --name 'Mozilla Firefox' | grep "$lastBrowserWindow"; then
+			xdotool windowraise "$lastBrowserWindow"
+			xdotool windowfocus "$lastBrowserWindow"
+            exit
+		fi
+	fi
 	xdotool search --name 'Mozilla Firefox' | tail -n1 | xargs xdotool windowraise
 	xdotool search --name 'Mozilla Firefox' | tail -n1 | xargs xdotool windowfocus
 else
+	if echo $window | grep "Mozilla Firefox"; then
+		xdotool getwindowfocus >/tmp/last-browser-window
+	fi
+	if [ -f /tmp/last-editor-window ]; then
+		lastEditorWindow="$(cat /tmp/last-editor-window)"
+		if xdotool search --name 'Emacs' | grep "$lastEditorWindow"; then
+			xdotool windowraise "$lastEditorWindow"
+			xdotool windowfocus "$lastEditorWindow"
+            exit
+		fi
+	fi
 	xdotool search --name Emacs | tail -n1 | tail -n1 | xargs xdotool windowraise
 	xdotool search --name Emacs | tail -n1 | tail -n1 | xargs xdotool windowfocus
 fi
