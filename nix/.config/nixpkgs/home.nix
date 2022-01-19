@@ -75,15 +75,16 @@ in
     pkgs.ledger # double entry accounting
     pkgs.dasel # jq but more versatile
     # pkgs.mosh # better ssh
-    personal.kmonad
-    pkgs.trash-cli
-    pkgs.entr
-    pkgs.notify-desktop
-    pkgs.xclip
+    personal.kmonad # key remapping
+    pkgs.trash-cli # rm -> trash
+    pkgs.entr # continuously run stuff
+    pkgs.notify-desktop # desktop notifications
+    pkgs.xclip # clipboard
     # pkgs.wl-clipboard
-    pkgs.nethogs
-    pkgs.xdotool
+    pkgs.nethogs # view network stats
+    pkgs.xdotool # for window switching
     pkgs.picotts # for say
+    pkgs.dmenu # menu stuff
 
     # aspell dicts
     pkgs.aspellDicts.en
@@ -122,8 +123,8 @@ in
 
     # programming-go
     pkgs.go # go programming language
-    pkgs.gopls
-    pkgs.godef
+    pkgs.gopls # language server
+    pkgs.godef # language server helper
     pkgs.go-langserver # go language-server
     pkgs.goimports # go formatter
     pkgs.golangci-lint # all kinds of linters for go
@@ -183,10 +184,12 @@ in
 
     # gui
     pkgs.mpv # audio/video player
-    pkgs.alacritty # terminal emulator
-    # pkgs.firefox
-    # pkgs.chromium
-    # pkgs.guake
+    # pkgs.kitty
+    # pkgs.alacritty # terminal emulator
+    # pkgs.firefox # working OSS browser
+    # pkgs.chromium # because Google hates firefox
+    # pkgs.guake # drop down terminal
+    pkgs.insomnia # simpler postman
 
     # others
     pkgs.redis # key value db
@@ -225,23 +228,26 @@ in
     # pkgs.trivy # docker vulnerability scanner
     # pkgs.act # github ci locally
     # pkgs.pkgs.pstree # view process tree
-    personal.traffic
-    nur.repos.j-k.comma
+    personal.traffic # simple network stats
+    nur.repos.j-k.comma # run literally anything
+    personal.gloc # run stuff in all git repos
+    personal.tojson # convert yaml/toml/json
+    pkgs.fx # json viewer
 
     # gnome tweaking
-    pkgs.gnome3.dconf-editor
-    pkgs.gnome.gnome-tweaks
-    personal.fluent-theme
-    pkgs.gnomeExtensions.dash-to-panel
-    pkgs.gnomeExtensions.blur-my-shell
-    pkgs.gnomeExtensions.clipboard-indicator
-    # personal.gnomeExtensions.gsconnect
-    pkgs.gnomeExtensions.caffeine
-    pkgs.gnomeExtensions.no-overview
-    pkgs.gnomeExtensions.bluetooth-quick-connect
-    pkgs.gnomeExtensions.custom-hot-corners-extended
-    personal.gnomeExtensions.steal-my-focus
-    # personal.gnomeExtensions.shellout
+    pkgs.gnome3.dconf-editor # change dconf settings
+    pkgs.gnome.gnome-tweaks # tweak gnome settings
+    personal.fluent-theme # a good simple theme
+    pkgs.gnomeExtensions.dash-to-panel # move dash and make it a panel
+    pkgs.gnomeExtensions.blur-my-shell # use blurred wallpaper for overview
+    pkgs.gnomeExtensions.clipboard-indicator # clipboard history
+    # personal.gnomeExtensions.gsconnect # kdeconnect
+    pkgs.gnomeExtensions.caffeine # don't sleep
+    pkgs.gnomeExtensions.no-overview # no overview on start
+    pkgs.gnomeExtensions.bluetooth-quick-connect # better bluetooth menu
+    pkgs.gnomeExtensions.custom-hot-corners-extended # smokin' hot corners
+    personal.gnomeExtensions.steal-my-focus # just switch, don't say
+    # personal.gnomeExtensions.shellout # custom info in bar
 
     # tryout
     # pkgs.gforth # gnu forth interpreter
