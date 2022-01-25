@@ -84,7 +84,7 @@ in
     pkgs.nethogs # view network stats
     pkgs.xdotool # for window switching
     pkgs.picotts # for say
-    pkgs.dmenu # menu stuff
+    # pkgs.dmenu # menu stuff
 
     # aspell dicts
     pkgs.aspellDicts.en
@@ -95,6 +95,7 @@ in
     pkgs.youtube-dl # download youtube videos
     pkgs.chafa # show images in terminal using half blocks
     pkgs.hub # Github integration for git
+    pkgs.gh # Yet another Github integration for git
     pkgs.lynx # terminal web browser
     pkgs.imagemagick # image manip cli
     pkgs.ffmpeg # video manip cli
@@ -187,7 +188,7 @@ in
     # pkgs.kitty
     # pkgs.alacritty # terminal emulator
     # pkgs.firefox # working OSS browser
-    # pkgs.chromium # because Google hates firefox
+    pkgs.chromium # because Google hates firefox
     # pkgs.guake # drop down terminal
     pkgs.insomnia # simpler postman
 
