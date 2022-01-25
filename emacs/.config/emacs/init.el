@@ -2358,7 +2358,7 @@ START and END comes from it being interactive."
     "Start writing journal entry.  `journal' invokes emacsclient and gives control back over to Emacs."
     (interactive)
     (start-process-shell-command "journal" "*journal*"
-                                 "EDITOR='emacsclient' journal")))
+                                 "EDITOR='emacsclient' ,journal")))
 
 
 ;; Narrow region
