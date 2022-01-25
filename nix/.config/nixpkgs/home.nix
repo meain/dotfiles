@@ -274,6 +274,8 @@ in
     pkgs.julia-mono
     pkgs.sudo-font
     pkgs.terminus-nerdfont
+    pkgs.fantasque-sans-mono
+    pkgs.monoid
   ];
 
   dconf.settings = {
