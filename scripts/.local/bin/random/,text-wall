@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# Just have to set the generated file once using the image viewer in
+# gnome and every time the image changes, it will automatically
+# refresh the wallpaper
+
+set -e
+
+[ -z "$1" ] && echo "Usage: ,text-wall <text>" && exit 1
+mkdir -p "$HOME/.local/share/wall"
+# font="$(fc-list -f '%{file}\n' | sort |xargs -n1 basename|sed 's|\..*$||'|fzf|sed 's| |-|')"
+font="$(identify -list font | grep '  Font' | cut -d' ' -f 4 | fzf)"
+echo Using font $font
+convert -size 1920x1080 xc:black -font "$font" -fill white -pointsize 70 \
+	-stroke white -strokewidth 2 \
+	-gravity center -annotate +0+0 "$1" \
+	"$HOME/.local/share/wall/text-wall.png"
