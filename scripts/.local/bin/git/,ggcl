@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# ,gcl but with ssh key switching
+
+set -e
+
+prev="$(git config --global core.sshCommand)"
+,git-update-ssh-key
+git clone "$(pbpaste)"
+cd "$(pbpaste|xargs basename|sed 's/.git$//')"
+git config core.sshCommand="$(git config --global core.sshCommand)"
+git config --global core.sshCommand="$prev"
