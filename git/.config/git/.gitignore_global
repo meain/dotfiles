@@ -21,6 +21,7 @@ dist
 run-dev
 .vimruncmd
 .todo.md
+.mscripts
 
 # programming
 .mypy_cache

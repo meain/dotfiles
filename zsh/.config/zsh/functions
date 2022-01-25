@@ -77,6 +77,15 @@ q() {
 	fi
 }
 
+m() {
+    r
+	if [ ! -d .mscripts ]; then
+		echo "Unable to find .mscripts" && return 1
+	fi
+    eval .mscripts/"$(find .mscripts/ | tail -n+2 | xargs -n1 basename | fzf)"
+    cd -
+}
+
 # add a hash for current dir
 hashdir() {
 	[ -z "$1" ] && echo "Pass hash to use for dir" && exit 1
