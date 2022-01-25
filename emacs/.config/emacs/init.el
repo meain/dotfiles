@@ -307,6 +307,9 @@ Pass ORIGINAL and ALTERNATE options."
 (global-set-key (kbd "M-K") 'shrink-window)
 (global-set-key (kbd "M-J") 'enlarge-window)
 
+;; Switch to other frame
+(evil-leader/set-key "a f" 'other-frame)
+
 ;; Easier C-c C-c
 (evil-leader/set-key "i"
   '(lambda ()
