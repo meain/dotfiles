@@ -1,0 +1,6 @@
+#!/bin/sh
+
+set -e
+
+[ -z "$1" ] && echo "Usage: ,ffmpeg-remove-audio <filename>"
+ffmpeg -i "$1" -c:v copy -an "noaudio-$1"
