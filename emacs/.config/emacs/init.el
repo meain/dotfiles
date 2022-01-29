@@ -208,6 +208,25 @@
 ;; auto-pair
 (electric-pair-mode t)
 
+;; Enable recentf
+(use-package recentf
+  :init
+  (recentf-mode t)
+  (add-hook 'after-init-hook
+            (lambda ()
+              (with-current-buffer "*scratch*"
+                (goto-char (point-max))
+                (insert initial-scratch-message)
+                (newline 2)
+                (mapcar (lambda (x)
+                          (insert "\n")
+                          (insert-button
+                           (string-join (reverse (cl-subseq (reverse (split-string x "/")) 0 2)) "/")
+                           'action (lambda (_buton) (find-file x))
+                           'follow-link t))
+                        (cl-subseq recentf-list 0 13))))))
+
+
 ;; macro for alternate pattern
 (defmacro meain/with-alternate (original alternate)
   "Macro for easily creating commands with alternate on `universal-argument'.
