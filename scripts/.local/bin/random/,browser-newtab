@@ -1,0 +1,20 @@
+#!/bin/sh
+
+set -e
+
+window="$(xdotool getwindowfocus | xargs xdotool getwindowname)"
+if ! echo $window | grep "Mozilla Firefox"; then
+	if [ -f /tmp/last-browser-window ]; then
+		lastBrowserWindow="$(cat /tmp/last-browser-window)"
+		xdotool search --name 'Mozilla Firefox' | grep "$lastBrowserWindow" &&
+			windowid="$lastBrowserWindow"
+	else
+		windowid="$(xdotool search --name 'Mozilla Firefox' | tail -n1)"
+	fi
+	xdotool windowactivate --sync "$windowid"
+else
+	windowid="$(xdotool getwindowfocus)"
+fi
+
+# send ctrl+t to specific window so as to not be captured by Gnome
+xdotool key --window $windowid 'Ctrl+t'

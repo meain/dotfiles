@@ -394,6 +394,7 @@ in
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom9/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom10/"
       ];
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
@@ -445,6 +446,11 @@ in
       binding = "<Alt>d";
       command = "dmenu_run";
       name = "dmenu";
+    };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom10" = {
+      binding = "<Ctrl>t";
+      command = "zsh -ic ',browser-newtab'";
+      name = "newtab";
     };
 
     "org/gnome/shell/extensions/custom-hot-corners-extended/monitor-0-top-left-0" = {
