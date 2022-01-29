@@ -546,11 +546,11 @@ Pass ORIGINAL and ALTERNATE options."
     ";time" (lambda () (interactive) (insert (format-time-string "%T")))
     ";filename" (lambda () (interactive) (insert (file-name-nondirectory (buffer-file-name)))))
   (aas-set-snippets 'web-mode
-    ";html" (lambda () (interactive) (insert-file-contents (expand-file-name "~/.config/datafiles/html_starter"))))
+    ";bang" (lambda () (interactive) (insert-file-contents (expand-file-name "~/.config/datafiles/templates/index.html"))))
   (aas-set-snippets 'html-mode
-    ";html" (lambda () (interactive) (insert-file-contents (expand-file-name "~/.config/datafiles/html_starter"))))
+    ";bang" (lambda () (interactive) (insert-file-contents (expand-file-name "~/.config/datafiles/templates/index.html"))))
   (aas-set-snippets 'nix-mode
-    ";bang" (lambda () (interactive) (insert-file-contents (expand-file-name "~/.config/datafiles/starter-default.nix"))))
+    ";bang" (lambda () (interactive) (insert-file-contents (expand-file-name "~/.config/datafiles/templates/default.nix"))))
   (aas-set-snippets 'markdown-mode
     ";month" (lambda () (interactive) (insert (format-time-string "%B %Y")))
     ";bang"
