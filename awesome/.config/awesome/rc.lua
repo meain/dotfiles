@@ -486,7 +486,7 @@ clientkeys =
         {description = "move to master", group = "client"}
     ),
     awful.key(
-        {modkey},
+        {modkey, "Shift"},
         "s",
         function(c)
             c:move_to_screen()
@@ -672,7 +672,7 @@ awful.rules.rules = {
     },
     -- Make sure Emacs does not leave a gap
     {rule = {class = "Emacs"}, properties = {size_hints_honor = false}},
-    {rule = {class = "xterm"}, properties = {size_hints_honor = false}},
+    {rule = {class = "xterm"}, properties = {size_hints_honor = false}}
     -- Set Firefox to always map on the tag named "2" on screen 1.
     -- { rule = { class = "Firefox" }, properties = { screen = 1, tag = "2" } },
 }
