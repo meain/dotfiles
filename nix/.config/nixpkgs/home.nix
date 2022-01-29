@@ -263,7 +263,7 @@ in
     # (pkgs.makeAutostartItem { name = "guake"; package = pkgs.guake; })
     # (pkgs.makeAutostartItem { name = "albert"; package = pkgs.albert; })
 
-    # fonts (set-frame-font  "Hermit 9")
+    # fonts (set-frame-font  "Anka/Coder 10")
     pkgs.iosevka
     pkgs.hermit
     pkgs.profont
@@ -276,6 +276,7 @@ in
     pkgs.terminus-nerdfont
     pkgs.fantasque-sans-mono
     pkgs.monoid
+    pkgs.ankacoder
   ];
 
   dconf.settings = {
@@ -291,7 +292,7 @@ in
       font-name = "Agave 10";
       # gtk-im-module = "gtk-im-context-simple";
       gtk-theme = "Fluent-round-light-compact";
-      monospace-font-name = "Hermit 9";
+      monospace-font-name = "Anka/Coder 9";
       show-battery-percentage = true;
     };
 

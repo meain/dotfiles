@@ -27,10 +27,10 @@
 ;; Iosevka Slab 14 | Edlo 13 | Bront 15 | Whois 15 | Ligconsolata 16 | Operator Mono 14
 ;; PragmataPro 14 | agave 15 | Unifont 15 | Apercu Mono 14 | Binchotan_Sharp 15
 ;; CMU Typewriter Text 16 | Input 14 | SF Mono 14
-;; Font (set-frame-font  "VictorMono 10")
-(defvar meain/font-family-default "Hermit 9" "Default font family for everything in Emacs.")
+;; Font (set-frame-font  "Fantasque Sans Mono 10")
+(defvar meain/font-family-default "Anka/Coder 10" "Default font family for everything in Emacs.")
 (defvar meain/font-weight-default 'regular "Default font weight for everything in Emacs.")
-(setq-default line-spacing nil)
+(setq-default line-spacing .1)
 (add-to-list 'default-frame-alist `(font . ,meain/font-family-default))
 
 ;; Wider frames by default
