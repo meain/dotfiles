@@ -179,6 +179,9 @@ in
     # pkgs.cargo-release # for releasing packages
     pkgs.cargo-watch # continuously run cargo check
 
+    # programming-lua
+    pkgs.nodePackages.lua-fmt
+
     # programming-other
     pkgs.nodePackages.yaml-language-server
     pkgs.nodePackages.vscode-json-languageserver
