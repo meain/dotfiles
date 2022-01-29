@@ -664,7 +664,7 @@ awful.rules.rules = {
     {
         rule_any = {
             instance = {"pinentry"},
-            class = {"Arandr", "Blueman-manager", "Sxiv"},
+            class = {"Arandr", "Blueman-manager", "Sxiv", "Guake"},
             name = {"Event Tester"}, --xev
             role = {"pop-up"}
         },
