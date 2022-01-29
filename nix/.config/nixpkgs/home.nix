@@ -393,6 +393,7 @@ in
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom9/"
       ];
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
@@ -439,6 +440,11 @@ in
       binding = "<Super>n";
       command = "gnome-terminal -- zsh -ic ',thing-for-today-popup'"; # opening via gnome-terminal fixes focus issues
       name = "thing-for-today";
+    };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom9" = {
+      binding = "<Alt>d";
+      command = "dmenu_run";
+      name = "dmenu";
     };
 
     "org/gnome/shell/extensions/custom-hot-corners-extended/monitor-0-top-left-0" = {
