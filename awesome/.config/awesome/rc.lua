@@ -270,7 +270,7 @@ globalkeys =
     awful.key({modkey}, "g", hotkeys_popup.show_help, {description = "show help", group = "awesome"}),
     awful.key({modkey}, "u", awful.tag.viewprev, {description = "view previous", group = "tag"}),
     awful.key({modkey}, "o", awful.tag.viewnext, {description = "view next", group = "tag"}),
-    awful.key({modkey}, "i", awful.tag.history.restore, {description = "go back", group = "tag"}),
+    awful.key({modkey}, "s", awful.tag.history.restore, {description = "go back", group = "tag"}),
     awful.key(
         {modkey},
         "j",
