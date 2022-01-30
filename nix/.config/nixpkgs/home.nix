@@ -233,7 +233,7 @@ in
     # pkgs.act # github ci locally
     # pkgs.pkgs.pstree # view process tree
     personal.traffic # simple network stats
-    nur.repos.j-k.comma # run literally anything
+    pkgs.comma # run literally anything
     personal.gloc # run stuff in all git repos
     personal.tojson # convert yaml/toml/json
     pkgs.fx # json viewer
