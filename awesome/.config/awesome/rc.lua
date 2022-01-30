@@ -459,7 +459,7 @@ globalkeys =
         {modkey},
         "r",
         function()
-            awful.util.spawn("dmenu_run")
+            awful.util.spawn("dmenu_run " .. dmenu_config)
         end,
         {description = "run prompt", group = "launcher"}
     ),
