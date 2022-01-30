@@ -237,6 +237,7 @@ in
     personal.gloc # run stuff in all git repos
     personal.tojson # convert yaml/toml/json
     pkgs.fx # json viewer
+    pkgs.blueman # bluetooth control
     pkgs.clipmenu # clipboard history
 
     # gnome tweaking

@@ -781,4 +781,6 @@ client.connect_signal(
         }
     end
 )
+
+awful.spawn.with_shell("pgrep blueman-applet || blueman-applet")
 awful.spawn.with_shell("pgrep clipmenud || clipmenud")
