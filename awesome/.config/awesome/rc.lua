@@ -380,6 +380,14 @@ globalkeys =
         end,
         {description = "open an emacs client instance", group = "launcher"}
     ),
+    awful.key(
+        {modkey},
+        ";",
+        function()
+            awful.spawn("guake")
+        end,
+        {description = "open guake", group = "launcher"}
+    ),
     awful.key({modkey, "Control"}, "r", awesome.restart, {description = "reload awesome", group = "awesome"}),
     awful.key({modkey, "Control"}, "q", awesome.quit, {description = "quit awesome", group = "awesome"}),
     awful.key(
@@ -791,3 +799,4 @@ client.connect_signal(
 
 awful.spawn.with_shell("pgrep blueman-applet || blueman-applet")
 awful.spawn.with_shell("pgrep clipmenud || clipmenud")
+awful.spawn.with_shell("pgrep guake || guake")
