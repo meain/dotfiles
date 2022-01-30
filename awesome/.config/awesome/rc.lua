@@ -284,12 +284,13 @@ root.buttons(
 globalkeys =
     gears.table.join(
     awful.key({modkey}, "g", hotkeys_popup.show_help, {description = "show help", group = "awesome"}),
-    awful.key({modkey}, "u", awful.tag.viewprev, {description = "view previous", group = "tag"}),
-    awful.key({modkey}, "o", awful.tag.viewnext, {description = "view next", group = "tag"}),
+    awful.key({modkey}, "h", awful.tag.viewprev, {description = "view previous", group = "tag"}),
+    awful.key({modkey}, "l", awful.tag.viewnext, {description = "view next", group = "tag"}),
     awful.key({modkey}, "s", awful.tag.history.restore, {description = "go back", group = "tag"}),
+    awful.key({modkey}, "i", awful.tag.history.restore, {description = "go back", group = "tag"}),
     awful.key(
         {modkey},
-        "j",
+        "k",
         function()
             awful.client.focus.byidx(1)
         end,
@@ -297,7 +298,7 @@ globalkeys =
     ),
     awful.key(
         {modkey},
-        "k",
+        "j",
         function()
             awful.client.focus.byidx(-1)
         end,
@@ -322,7 +323,7 @@ globalkeys =
     ),
     awful.key(
         {modkey, "Shift"},
-        "u",
+        "o",
         function()
             awful.screen.focus_relative(1)
         end,
@@ -330,7 +331,7 @@ globalkeys =
     ),
     awful.key(
         {modkey, "Shift"},
-        "o",
+        "u",
         function()
             awful.screen.focus_relative(-1)
         end,
@@ -366,7 +367,7 @@ globalkeys =
     awful.key({modkey, "Control"}, "q", awesome.quit, {description = "quit awesome", group = "awesome"}),
     awful.key(
         {modkey},
-        "l",
+        "o",
         function()
             awful.tag.incmwfact(0.05)
         end,
@@ -374,7 +375,7 @@ globalkeys =
     ),
     awful.key(
         {modkey},
-        "h",
+        "u",
         function()
             awful.tag.incmwfact(-0.05)
         end,
