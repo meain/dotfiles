@@ -239,6 +239,7 @@ in
     pkgs.fx # json viewer
     pkgs.blueman # bluetooth control
     pkgs.clipmenu # clipboard history
+    pkgs.cbatticon # battery indicator
 
     # gnome tweaking
     pkgs.gnome3.dconf-editor # change dconf settings
