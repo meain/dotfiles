@@ -57,8 +57,8 @@ end
 
 -- Setup some variables
 modkey = "Mod4"
-terminal = "st"
 dmenu_config = "-i -fn 'Anka/Coder:size=8' -nb '#000000' -nf '#aaaaaa' -sb '#263238' -sf '#ffffff'"
+terminal = "gnome-terminal"
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -696,11 +696,10 @@ awful.rules.rules = {
         },
         properties = {floating = true}
     },
-    -- Make sure Emacs does not leave a gap
-    {rule = {class = "Emacs"}, properties = {size_hints_honor = false}},
-    {rule = {class = "xterm"}, properties = {size_hints_honor = false}}
-    -- Set Firefox to always map on the tag named "2" on screen 1.
-    -- { rule = { class = "Firefox" }, properties = { screen = 1, tag = "2" } },
+    -- Make sure does not leave a gap
+    {rule_any = {class = {"Emacs", "xterm", "Gnome-terminal"}}, properties = {size_hints_honor = false}}
+    -- Set Firefox to always map on the tag named "2" on screen 2
+    -- {rule = {class = "Firefox"}, properties = {screen = 2, tag = "2"}}
 }
 
 -- Deal with screens being attached/removed
