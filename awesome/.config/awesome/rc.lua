@@ -712,6 +712,10 @@ awful.rules.rules = {
         },
         properties = {floating = true}
     },
+    {
+        rule_any = {class = {"Guake"}},
+        properties = {border_width = 0}
+    },
     -- Make sure does not leave a gap
     {rule_any = {class = {"Emacs", "xterm", "Gnome-terminal"}}, properties = {size_hints_honor = false}}
     -- Set Firefox to always map on the tag named "2" on screen 2
