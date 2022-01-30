@@ -324,7 +324,7 @@ globalkeys =
     ),
     awful.key(
         {modkey, "Shift"},
-        "o",
+        "l",
         function()
             awful.screen.focus_relative(1)
         end,
@@ -332,7 +332,7 @@ globalkeys =
     ),
     awful.key(
         {modkey, "Shift"},
-        "u",
+        "h",
         function()
             awful.screen.focus_relative(-1)
         end,
@@ -408,7 +408,7 @@ globalkeys =
     ),
     awful.key(
         {modkey, "Shift"},
-        "h",
+        "u",
         function()
             awful.tag.incnmaster(1, nil, true)
         end,
@@ -416,7 +416,7 @@ globalkeys =
     ),
     awful.key(
         {modkey, "Shift"},
-        "l",
+        "o",
         function()
             awful.tag.incnmaster(-1, nil, true)
         end,
@@ -424,7 +424,7 @@ globalkeys =
     ),
     awful.key(
         {modkey, "Control"},
-        "h",
+        "u",
         function()
             awful.tag.incncol(1, nil, true)
         end,
@@ -432,7 +432,7 @@ globalkeys =
     ),
     awful.key(
         {modkey, "Control"},
-        "l",
+        "o",
         function()
             awful.tag.incncol(-1, nil, true)
         end,
