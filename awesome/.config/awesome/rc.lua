@@ -58,6 +58,7 @@ end
 -- Setup some variables
 modkey = "Mod4"
 terminal = "st"
+dmenu_config = "-i -fn 'Anka/Coder:size=8' -nb '#000000' -nf '#aaaaaa' -sb '#263238' -sf '#ffffff'"
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -362,6 +363,14 @@ globalkeys =
             awful.spawn(terminal)
         end,
         {description = "open a terminal", group = "launcher"}
+    ),
+    awful.key(
+        {modkey, "Shift"},
+        "p",
+        function()
+            awful.spawn("clipmenu " .. dmenu_config)
+        end,
+        {description = "open an emacs client instance", group = "launcher"}
     ),
     awful.key({modkey, "Control"}, "r", awesome.restart, {description = "reload awesome", group = "awesome"}),
     awful.key({modkey, "Control"}, "q", awesome.quit, {description = "quit awesome", group = "awesome"}),
@@ -772,3 +781,4 @@ client.connect_signal(
         }
     end
 )
+awful.spawn.with_shell("pgrep clipmenud || clipmenud")
