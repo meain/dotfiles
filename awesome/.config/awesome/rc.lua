@@ -365,6 +365,14 @@ globalkeys =
         {description = "open a terminal", group = "launcher"}
     ),
     awful.key(
+        {modkey},
+        "e",
+        function()
+            awful.spawn("emacsclient -nc -a ''")
+        end,
+        {description = "open an emacs client instance", group = "launcher"}
+    ),
+    awful.key(
         {modkey, "Shift"},
         "p",
         function()
