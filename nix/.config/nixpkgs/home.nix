@@ -502,7 +502,7 @@ in
       toggle-fullscreen = "<Super>Return";
     };
     "apps/guake/style/background" = {
-      transparency = 95;
+      transparency = 100;
     };
 
   };
