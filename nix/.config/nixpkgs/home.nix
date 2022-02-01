@@ -239,10 +239,12 @@ in
     personal.tojson # convert yaml/toml/json
     pkgs.fx # json viewer
     pkgs.blueman # bluetooth control
+    pkgs.arandr # screen layout configure
     pkgs.clipmenu # clipboard history
     pkgs.cbatticon # battery indicator
     pkgs.brightnessctl # brightness control
     pkgs.scrot # screenshotting
+    pkgs.dunst # notifications with buttons (dunstify)
 
     # gnome tweaking
     pkgs.gnome3.dconf-editor # change dconf settings
