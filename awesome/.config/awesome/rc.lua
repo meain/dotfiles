@@ -355,6 +355,41 @@ function view_prev_tag_with_client()
         end
     end
 end
+function rotate_screens(direction)
+    local current_screen = awful.screen.focused()
+    local initial_scren = current_screen
+    while (true) do
+        awful.screen.focus_relative(direction)
+        local next_screen = awful.screen.focused()
+        if next_screen == initial_scren then
+            return
+        end
+
+        for _, t in ipairs(current_screen.tags) do
+            local fallback_tag = awful.tag.find_by_name(next_screen, t.name)
+            local self_clients = t:clients()
+            local other_clients
+
+            if not fallback_tag then
+                -- if not available, use first tag
+                fallback_tag = next_screen.tags[1]
+                other_clients = {}
+            else
+                other_clients = fallback_tag:clients()
+            end
+
+            for _, c in ipairs(self_clients) do
+                c:move_to_tag(fallback_tag)
+            end
+
+            for _, c in ipairs(other_clients) do
+                c:move_to_tag(t)
+            end
+        end
+        current_screen = next_screen
+    end
+end
+
 globalkeys =
     gears.table.join(
     awful.key({modkey}, "g", hotkeys_popup.show_help, {description = "show help", group = "awesome"}),
@@ -647,6 +682,22 @@ clientkeys =
             c:move_to_screen()
         end,
         {description = "move to screen", group = "client"}
+    ),
+    awful.key(
+        {modkey, "Control"},
+        "s",
+        function()
+            rotate_screens(-1)
+        end,
+        {description = "rotate screens right", group = "screen"}
+    ),
+    awful.key(
+        {modkey, "Control", "Shift"},
+        "s",
+        function()
+            rotate_screens(1)
+        end,
+        {description = "rotate screens left", group = "screen"}
     ),
     awful.key(
         {modkey},
