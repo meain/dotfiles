@@ -256,7 +256,9 @@ awful.screen.connect_for_each_screen(
         s.mytaglist =
             awful.widget.taglist {
             screen = s,
-            filter = awful.widget.taglist.filter.all,
+            filter = function(t)
+                return t.selected or #t:clients() > 0
+            end,
             buttons = taglist_buttons
         }
 
