@@ -194,6 +194,7 @@ in
     pkgs.chromium # because Google hates firefox
     # pkgs.guake # drop down terminal
     pkgs.insomnia # simpler postman
+    pkgs.beekeeper-studio # db viewer
 
     # others
     pkgs.redis # key value db
