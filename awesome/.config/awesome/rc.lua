@@ -866,6 +866,29 @@ client.connect_signal(
     end
 )
 
+-- Swallowing
+function is_terminal(c)
+    return (c.class and c.class == "Gnome-terminal") and true or false
+end
+client.connect_signal(
+    "manage",
+    function(c)
+        if is_terminal(c) then
+            return
+        end
+        local parent_client = awful.client.focus.history.get(c.screen, 1)
+        if parent_client and is_terminal(parent_client) then
+            parent_client.minimized = true
+            c:connect_signal(
+                "unmanage",
+                function()
+                    parent_client.minimized = false
+                end
+            )
+        end
+    end
+)
+
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
 client.connect_signal(
     "request::titlebars",
