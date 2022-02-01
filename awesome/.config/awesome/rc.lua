@@ -118,6 +118,22 @@ mylauncher =
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 mytextclock = wibox.widget.textclock("%a %b %d, %I:%M %p") -- Create a textclock widget
 
+function updating_file_textwidget(filename, timeout)
+    local w = wibox.widget.textbox(io.open(filename, "r"):read("*a"))
+    gears.timer(
+        {
+            timeout = timeout,
+            call_now = true,
+            autostart = true,
+            callback = function()
+                w.text = io.open(filename, "r"):read("*a")
+            end
+        }
+    )
+    return w
+end
+
+mymailcounter = updating_file_textwidget("/tmp/shellout", 5)
 -- Create a wibox for each screen and add it
 local taglist_buttons =
     gears.table.join(
@@ -259,8 +275,12 @@ awful.screen.connect_for_each_screen(
             {
                 -- Right widgets
                 layout = wibox.layout.fixed.horizontal,
-                wibox.widget.systray(),
+                wibox.widget.textbox(" * "),
+                mymailcounter,
+                wibox.widget.textbox(" * "),
                 mytextclock,
+                wibox.widget.textbox(" "),
+                wibox.widget.systray(),
                 s.mylayoutbox
             }
         }
