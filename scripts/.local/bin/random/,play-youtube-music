@@ -1,0 +1,15 @@
+#!/bin/sh
+
+set -e
+
+
+url="$1"
+[ -z "$1" ] && url="$(pbpaste)" && echo "Playing from link in clipboard"
+mpv --ytdl-format='bestaudio[ext=m4a]' --loop "$url"
+
+# name="$(echo $url | cut -c '33-')"
+# filename="$HOME/.cache/ytmusic/$name"
+# mkdir -p "$HOME/.cache/ytmusic"
+# [ ! -f $filename ] &&
+# 	youtube-dl -f 'bestaudio[ext=m4a]' --output "$filename" "$url"
+# mpv --loop-file "$name" --input-ipc-server=/tmp/mpvsocket
