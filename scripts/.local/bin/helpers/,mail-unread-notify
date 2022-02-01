@@ -1,0 +1,13 @@
+#!/bin/sh
+
+set -e
+
+if ! ,mail-unread | grep -q .; then
+	notify "No unread emails" "You are good for now. You got nothing to do." && exit
+fi
+
+notiresp="$(,mail-unread | cut -d' ' -f3- |
+	xargs -0 -I{} dunstify -A "read,Mark all read" "Unread emails" "{}")"
+
+[ "$notiresp" == "read" ] && notify "Marking all emails as read" &&
+	notmuch tag +notified tag:imbox and tag:unread
