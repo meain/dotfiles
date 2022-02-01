@@ -435,6 +435,14 @@ globalkeys =
         end,
         {description = "open guake", group = "launcher"}
     ),
+    awful.key(
+        {modkey, "Shift"},
+        "c",
+        function()
+            awful.spawn("scrot -s -e 'mv $f ~/Pictures/Screenshots/'")
+        end,
+        {description = "take screenshot", group = "launcher"}
+    ),
     awful.key({modkey, "Control"}, "r", awesome.restart, {description = "reload awesome", group = "awesome"}),
     awful.key({modkey, "Control"}, "q", awesome.quit, {description = "quit awesome", group = "awesome"}),
     awful.key(

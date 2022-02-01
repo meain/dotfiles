@@ -240,6 +240,7 @@ in
     pkgs.blueman # bluetooth control
     pkgs.clipmenu # clipboard history
     pkgs.cbatticon # battery indicator
+    pkgs.scrot # screenshotting
 
     # gnome tweaking
     pkgs.gnome3.dconf-editor # change dconf settings
