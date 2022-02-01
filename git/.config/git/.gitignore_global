@@ -22,6 +22,7 @@ run-dev
 .vimruncmd
 .todo.md
 .mscripts
+.direnv
 
 # programming
 .mypy_cache
