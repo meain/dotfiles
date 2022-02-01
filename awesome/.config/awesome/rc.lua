@@ -707,6 +707,69 @@ for i = 1, 9 do
                 end
             end,
             {description = "toggle focused client on tag #" .. i, group = "tag"}
+        ),
+        -- Volume keys
+        awful.key(
+            {},
+            "XF86AudioRaiseVolume",
+            function()
+                awful.util.spawn("amixer -D pulse set Master '500+'")
+                myaudiostatus_refresh()
+            end
+        ),
+        awful.key(
+            {},
+            "XF86AudioLowerVolume",
+            function()
+                awful.util.spawn("amixer -D pulse set Master '500-'")
+                myaudiostatus_refresh()
+            end
+        ),
+        awful.key(
+            {},
+            "XF86AudioMute",
+            function()
+                awful.util.spawn("amixer -D pulse set Master toggle")
+                myaudiostatus_refresh()
+            end
+        ),
+        awful.key(
+            {"Shift"},
+            "XF86AudioRaiseVolume",
+            function()
+                awful.util.spawn("amixer -D pulse set Capture '500+'")
+                myaudiostatus_refresh()
+            end
+        ),
+        awful.key(
+            {"Shift"},
+            "XF86AudioLowerVolume",
+            function()
+                awful.util.spawn("amixer -D pulse set Capture '500-'")
+                myaudiostatus_refresh()
+            end
+        ),
+        awful.key(
+            {},
+            "XF86AudioMicMute",
+            function()
+                awful.util.spawn("amixer -D pulse set Capture toggle")
+                myaudiostatus_refresh()
+            end
+        ),
+        awful.key(
+            {},
+            "XF86MonBrightnessDown",
+            function()
+                awful.util.spawn("brightnessctl specific '1-'")
+            end
+        ),
+        awful.key(
+            {},
+            "XF86MonBrightnessUp",
+            function()
+                awful.util.spawn("brightnessctl specific '+1'")
+            end
         )
     )
 end
