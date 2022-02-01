@@ -282,11 +282,33 @@ root.buttons(
 )
 
 -- Key bindings
+function view_next_tag_with_client()
+    local initial_tag_index = awful.screen.focused().selected_tag.index
+    while (true) do
+        awful.tag.viewnext()
+        local current_tag = awful.screen.focused().selected_tag
+        local current_tag_index = current_tag.index
+        if #current_tag:clients() > 0 or current_tag_index == initial_tag_index then
+            return
+        end
+    end
+end
+function view_prev_tag_with_client()
+    local initial_tag_index = awful.screen.focused().selected_tag.index
+    while (true) do
+        awful.tag.viewprev()
+        local current_tag = awful.screen.focused().selected_tag
+        local current_tag_index = current_tag.index
+        if #current_tag:clients() > 0 or current_tag_index == initial_tag_index then
+            return
+        end
+    end
+end
 globalkeys =
     gears.table.join(
     awful.key({modkey}, "g", hotkeys_popup.show_help, {description = "show help", group = "awesome"}),
-    awful.key({modkey}, "h", awful.tag.viewprev, {description = "view previous", group = "tag"}),
-    awful.key({modkey}, "l", awful.tag.viewnext, {description = "view next", group = "tag"}),
+    awful.key({modkey}, "h", view_prev_tag_with_client, {description = "view previous", group = "tag"}),
+    awful.key({modkey}, "l", view_next_tag_with_client, {description = "view next", group = "tag"}),
     awful.key({modkey}, "s", awful.tag.history.restore, {description = "go back", group = "tag"}),
     awful.key({modkey}, "i", awful.tag.history.restore, {description = "go back", group = "tag"}),
     awful.key(
