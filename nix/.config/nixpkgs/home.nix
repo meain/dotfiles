@@ -303,7 +303,7 @@ in
       font-name = "Agave 10";
       # gtk-im-module = "gtk-im-context-simple";
       gtk-theme = "Fluent-round-light-compact";
-      monospace-font-name = "Anka/Coder 9";
+      monospace-font-name = "Anka/Coder 10";
       show-battery-percentage = true;
     };
 
