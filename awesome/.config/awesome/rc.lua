@@ -824,18 +824,21 @@ awful.rules.rules = {
     {
         rule_any = {
             instance = {"pinentry"},
-            class = {"Arandr", "Blueman-manager", "Sxiv", "Guake"},
+            class = {"Arandr", "Blueman-manager", "Sxiv", "kdeconnect-indicator", ".blueman-manager-wrapped"},
             name = {"Event Tester"}, --xev
             role = {"pop-up"}
         },
-        properties = {floating = true}
+        properties = {floating = true, titlebars_enabled = true}
     },
     {
         rule_any = {class = {"Guake"}},
-        properties = {border_width = 0}
+        properties = {floating = true, border_width = 0}
     },
     -- Make sure does not leave a gap
-    {rule_any = {class = {"Emacs", "xterm", "Gnome-terminal"}}, properties = {size_hints_honor = false}}
+    {
+        rule_any = {class = {"Emacs", "xterm", "Gnome-terminal", "beekeeper-studio"}},
+        properties = {size_hints_honor = false}
+    }
     -- Set Firefox to always map on the tag named "2" on screen 2
     -- {rule = {class = "Firefox"}, properties = {screen = 2, tag = "2"}}
 }
