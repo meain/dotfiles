@@ -649,6 +649,15 @@ clientkeys =
         {description = "move to screen", group = "client"}
     ),
     awful.key(
+        {modkey},
+        "t",
+        function(c)
+            awful.titlebar.toggle(c)
+            c:raise()
+        end,
+        {description = "toggle titlebars", group = "client"}
+    ),
+    awful.key(
         {modkey, "Shift"},
         "t",
         function(c)
