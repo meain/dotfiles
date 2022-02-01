@@ -133,7 +133,33 @@ function updating_file_textwidget(filename, timeout)
     return w
 end
 
+function updating_cmd_textwidget(command, timeout)
+    local w = wibox.widget.textbox("..")
+    local refresh = function()
+        awful.spawn.easy_async_with_shell(
+            command,
+            function(result)
+                w.text = result
+            end
+        )
+    end
+    gears.timer(
+        {
+            timeout = timeout,
+            call_now = true,
+            autostart = true,
+            callback = function()
+                refresh()
+            end
+        }
+    )
+    return w, refresh
+end
+
 mymailcounter = updating_file_textwidget("/tmp/shellout", 5)
+myaudiostatus, myaudiostatus_refresh =
+    updating_cmd_textwidget("amixer -D pulse | awk -F'[][]' '/Left:/ { print $2 }' | xargs echo", 10)
+
 -- Create a wibox for each screen and add it
 local taglist_buttons =
     gears.table.join(
@@ -275,6 +301,8 @@ awful.screen.connect_for_each_screen(
             {
                 -- Right widgets
                 layout = wibox.layout.fixed.horizontal,
+                wibox.widget.textbox(" "),
+                myaudiostatus,
                 wibox.widget.textbox(" * "),
                 mymailcounter,
                 wibox.widget.textbox(" * "),
