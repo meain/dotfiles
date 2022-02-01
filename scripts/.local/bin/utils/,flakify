@@ -1,0 +1,13 @@
+#!/bin/sh
+
+set -e
+
+if [[ ! -e shell.nix ]] && [[ ! -e default.nix ]]; then
+    nix flake init
+	$EDITOR flake.nix
+fi
+
+if [ ! -e ./.envrc ]; then
+	echo "use flake" >.envrc
+	direnv allow
+fi
