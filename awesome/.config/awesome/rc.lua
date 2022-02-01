@@ -11,6 +11,7 @@ local wibox = require("wibox") -- Widget and layout library
 local beautiful = require("beautiful") -- Theme handling library
 local naughty = require("naughty") -- Notification library
 local menubar = require("menubar")
+local mouse = require("mouse")
 
 local hotkeys_popup = require("awful.hotkeys_popup")
 -- Enable hotkeys help widget for VIM and other apps
@@ -349,6 +350,18 @@ globalkeys =
         "l",
         function()
             awful.screen.focus_relative(1)
+            mouse.highlight()
+            gears.timer(
+                {
+                    timeout = 1,
+                    call_now = false,
+                    autostart = true,
+                    callback = function()
+                        mouse.hide()
+                        return false
+                    end
+                }
+            )
         end,
         {description = "focus the next screen", group = "screen"}
     ),
@@ -357,6 +370,18 @@ globalkeys =
         "h",
         function()
             awful.screen.focus_relative(-1)
+            mouse.highlight()
+            gears.timer(
+                {
+                    timeout = 1,
+                    call_now = false,
+                    autostart = true,
+                    callback = function()
+                        mouse.hide()
+                        return false
+                    end
+                }
+            )
         end,
         {description = "focus the previous screen", group = "screen"}
     ),
