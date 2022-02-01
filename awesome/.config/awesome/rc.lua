@@ -528,6 +528,14 @@ globalkeys =
         {description = "show the menubar", group = "launcher"}
     ),
     awful.key(
+        {modkey},
+        "x",
+        function()
+            awful.util.spawn("zsh -ic ,se")
+        end,
+        {description = "run prompt", group = "launcher"}
+    ),
+    awful.key(
         {modkey, "Shift"},
         "x",
         function()
