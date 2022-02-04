@@ -1,19 +1,10 @@
 #! /bin/zsh
 
-[ -n "$ZPROF" ] && zmodload zsh/zprof
-
 # Basic exports
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 source $ZDOTDIR/exports
-
-# if [ -z "$QUITE_ZSH" ]; then
-#     echo ""
-#     basename `find "$NOTES_PATH/idea" -name '*.md' | sed 's|.md$||' | shuf -n1` | xargs -I{} echo " █ {}"
-#     # corpcrap | fmt -c -w $COLUMNS
-#     echo ""
-# fi
 
 # zsh settings
 export DISABLE_AUTO_TITLE="true"
@@ -135,5 +126,3 @@ eval "$(direnv hook zsh)"
 
 ,darkmode quiet # set dark or light mode
 export ZSH_LOADED=1
-
-[ -n "$ZPROF" ] && zprof
