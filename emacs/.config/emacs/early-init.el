@@ -30,7 +30,7 @@
 ;; Font (set-frame-font  "Fantasque Sans Mono 10")
 (defvar meain/font-family-default "Anka/Coder 10" "Default font family for everything in Emacs.")
 (defvar meain/font-weight-default 'regular "Default font weight for everything in Emacs.")
-(setq-default line-spacing .1)
+(setq-default line-spacing nil)
 (add-to-list 'default-frame-alist `(font . ,meain/font-family-default))
 
 ;; Wider frames by default
