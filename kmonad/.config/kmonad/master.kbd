@@ -37,8 +37,7 @@
   mspc M-spc  ;; needed as base layer is @num
   noti (cmd-button "notify 'Keyboard is working'")
   dmneu (cmd-button "/home/meain/.")
-  ;; nav (tap-hold 180 f (layer-toggle navigation))
-  nav (tap-hold 180 f (layer-toggle navigation))
+  nav (tap-next-release f (layer-toggle navigation))
 )
 
 
