@@ -59,7 +59,7 @@ end
 -- Setup some variables
 modkey = "Mod4"
 dmenu_config = "-i -fn 'Anka/Coder:size=8' -nb '#000000' -nf '#aaaaaa' -sb '#263238' -sf '#ffffff'"
-terminal = "gnome-terminal"
+terminal = "sakura"
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
 

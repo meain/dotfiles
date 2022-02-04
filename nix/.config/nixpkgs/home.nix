@@ -195,6 +195,7 @@ in
     # pkgs.guake # drop down terminal
     pkgs.insomnia # simpler postman
     pkgs.beekeeper-studio # db viewer
+    pkgs.sakura # x11 terminal emulator
 
     # others
     pkgs.redis # key value db
