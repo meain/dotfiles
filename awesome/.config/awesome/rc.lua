@@ -374,6 +374,9 @@ function rotate_screens(direction)
             return
         end
 
+        local current_screen_tag_name = current_screen.selected_tag.name
+        local next_screen_tag_name = next_screen.selected_tag.name
+
         for _, t in ipairs(current_screen.tags) do
             local fallback_tag = awful.tag.find_by_name(next_screen, t.name)
             local self_clients = t:clients()
@@ -395,6 +398,8 @@ function rotate_screens(direction)
                 c:move_to_tag(t)
             end
         end
+        awful.tag.find_by_name(next_screen, current_screen_tag_name):view_only()
+        awful.tag.find_by_name(current_screen, next_screen_tag_name):view_only()
         current_screen = next_screen
     end
 end
