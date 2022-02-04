@@ -118,15 +118,24 @@ mylauncher =
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 mytextclock = wibox.widget.textclock("%a %b %d, %I:%M %p") -- Create a textclock widget
 
+function get_file_content_if_exists(filename)
+    local content = "..."
+    local cfile =io.open(filename, "r")
+    if cfile ~= nil then
+	    content = cfile:read("*a")
+    end
+    return content
+end
+
 function updating_file_textwidget(filename, timeout)
-    local w = wibox.widget.textbox(io.open(filename, "r"):read("*a"))
+    local w = wibox.widget.textbox(get_file_content_if_exists(filename))
     gears.timer(
         {
             timeout = timeout,
             call_now = true,
             autostart = true,
             callback = function()
-                w.text = io.open(filename, "r"):read("*a")
+                w.text = get_file_content_if_exists(filename)
             end
         }
     )
