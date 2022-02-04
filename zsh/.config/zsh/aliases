@@ -51,7 +51,7 @@ alias vim='vim'
 alias ivm='vim'
 
 # emacs/editor
-alias e='emacsclient  -a '' --no-wait -c'
+alias e="emacsclient  -a '' --no-wait -c"
 
 # remote
 alias ,remote-work="ssh $EXPERIMENT_VM"
