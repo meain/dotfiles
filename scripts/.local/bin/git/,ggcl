@@ -4,9 +4,10 @@
 
 set -e
 
-prev="$(git config --global core.sshCommand)"
-,git-update-ssh-key
-git clone "$(pbpaste)"
+key="$(find $HOME/.ssh/ -name '*.pub' |
+	sed 's/.pub$//' | xargs -n1 basename | fzf)"
+echo Using key "$key"
+
+git clone "$(pbpaste)" --config core.sshCommand="ssh -i ~/.ssh/$key"
 cd "$(pbpaste|xargs basename|sed 's/.git$//')"
-git config core.sshCommand="$(git config --global core.sshCommand)"
-git config --global core.sshCommand="$prev"
+git config core.sshCommand "ssh -i ~/.ssh/$key"
