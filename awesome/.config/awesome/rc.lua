@@ -172,7 +172,7 @@ mymailcounter:connect_signal(
         if button == 1 then
             awful.spawn("zsh -ic ,mail-unread-notify")
         elseif button == 2 then
-            awful.spawn("zsh -ic 'notify-send \"Syncing mail\"'")
+            awful.spawn('zsh -ic \'notify-send "Syncing mail"\'')
             awful.spawn("zsh -ic ,mail-sync")
         end
     end
@@ -698,13 +698,12 @@ globalkeys =
         end,
         {description = "lua execute prompt", group = "awesome"}
     ),
-
     -- Sound and volume keys
     awful.key(
         {},
         "XF86AudioRaiseVolume",
         function()
-            awful.util.spawn("amixer -D pulse set Master '500+'")
+            awful.util.spawn("amixer -D pulse set Master '1000+'")
             myaudiostatus_refresh()
         end
     ),
@@ -712,7 +711,7 @@ globalkeys =
         {},
         "XF86AudioLowerVolume",
         function()
-            awful.util.spawn("amixer -D pulse set Master '500-'")
+            awful.util.spawn("amixer -D pulse set Master '1000-'")
             myaudiostatus_refresh()
         end
     ),
@@ -728,16 +727,16 @@ globalkeys =
         {"Shift"},
         "XF86AudioRaiseVolume",
         function()
-            awful.util.spawn("amixer -D pulse set Capture '500+'")
-            myaudiostatus_refresh()
+            awful.util.spawn("amixer -D pulse set Capture '1000+'")
+            mymicstatus_refresh()
         end
     ),
     awful.key(
         {"Shift"},
         "XF86AudioLowerVolume",
         function()
-            awful.util.spawn("amixer -D pulse set Capture '500-'")
-            myaudiostatus_refresh()
+            awful.util.spawn("amixer -D pulse set Capture '1000-'")
+            mymicstatus_refresh()
         end
     ),
     awful.key(
@@ -745,7 +744,7 @@ globalkeys =
         "XF86AudioMicMute",
         function()
             awful.util.spawn("amixer -D pulse set Capture toggle")
-            myaudiostatus_refresh()
+            mymicstatus_refresh()
         end
     ),
     awful.key(
