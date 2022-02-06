@@ -586,11 +586,22 @@ globalkeys =
         {description = "open an emacs client instance", group = "launcher"}
     ),
     awful.key({modkey, "Control"}, "r", awesome.restart, {description = "reload awesome", group = "awesome"}),
-    awful.key({modkey, "Control"}, "q", awesome.quit, {description = "quit awesome", group = "awesome"}),
+    awful.key({modkey, "Shift", "Control"}, "q", awesome.quit, {description = "quit awesome", group = "awesome"}),
     awful.key(
         {modkey, "Shift"},
         "q",
         function()
+            awful.util.spawn("zsh -ic ',music-pause'")
+            awful.spawn("i3lock -b -c 0097A7 -f")
+        end,
+        {description = "suspend", group = "awesome"}
+    ),
+    awful.key(
+        {modkey, "Mod1"},
+        "q",
+        function()
+            awful.util.spawn("zsh -ic ',music-pause'")
+            awful.spawn("i3lock -b -c 0097A7 -f")
             awful.spawn("systemctl suspend")
         end,
         {description = "suspend", group = "awesome"}
