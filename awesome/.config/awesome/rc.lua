@@ -178,7 +178,7 @@ mymailcounter:connect_signal(
     end
 )
 myaudiostatus, myaudiostatus_refresh =
-    updating_cmd_textwidget('amixer -D pulse | awk -F\'[][]\' \'/Left:/ { print "S"$2 }\' | head -n1', 10)
+    updating_cmd_textwidget('amixer -D pulse | awk -F\'[][]\' \'/Left:/ { print $2 }\' | head -n1', 10)
 myaudiostatus:connect_signal(
     "button::press",
     function(_, _, _, button)
@@ -191,7 +191,7 @@ myaudiostatus:connect_signal(
 )
 
 mymicstatus, mymicstatus_refresh =
-    updating_cmd_textwidget('amixer -D pulse | awk -F\'[][]\' \'/Left:/ { print "M"$2 }\' | tail -n1', 10)
+    updating_cmd_textwidget('amixer -D pulse | awk -F\'[][]\' \'/Left:/ { print $2 }\' | tail -n1', 10)
 mymicstatus:connect_signal(
     "button::press",
     function(_, _, _, button)
@@ -347,7 +347,7 @@ awful.screen.connect_for_each_screen(
                 layout = wibox.layout.fixed.horizontal,
                 wibox.widget.textbox(" "),
                 myaudiostatus,
-                wibox.widget.textbox(" "),
+                wibox.widget.textbox("/"),
                 mymicstatus,
                 wibox.widget.textbox(" * "),
                 mymailcounter,
