@@ -770,6 +770,32 @@ globalkeys =
         end,
         {description = "focus next by index", group = "client"}
     ),
+    awful.key(
+        {"Mod1"},
+        "Right",
+        function()
+            awful.util.spawn("zsh -ic ',music-next'")
+            awful.util.spawn("zsh -ic ',song|xargs -0 notify-send'")
+        end,
+        {description = "focus next by index", group = "client"}
+    ),
+    awful.key(
+        {"Mod1"},
+        "Left",
+        function()
+            awful.util.spawn("zsh -ic ',music-previous'")
+            awful.util.spawn("zsh -ic ',song|xargs -0 notify-send'")
+        end,
+        {description = "focus next by index", group = "client"}
+    ),
+    awful.key(
+        {"Mod1"},
+        "\\",
+        function()
+            awful.util.spawn("zsh -ic ',music-playpause'")
+            awful.util.spawn("zsh -ic ',song|xargs -0 notify-send'")
+        end,
+        {description = "focus next by index", group = "client"}
     )
 )
 
@@ -1144,3 +1170,4 @@ awful.spawn.with_shell("pgrep cbatticon || cbatticon")
 awful.spawn.with_shell("pgrep guake || guake")
 awful.spawn.with_shell("pgrep nm-applet || nm-applet")
 awful.spawn.with_shell("pgrep kdeconnect-indicator || kdeconnect-indicator")
+awful.spawn.with_shell("pgrep mpd || mpd")
