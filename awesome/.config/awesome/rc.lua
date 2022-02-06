@@ -542,6 +542,14 @@ globalkeys =
         end,
         {description = "take screenshot", group = "launcher"}
     ),
+    awful.key(
+        {modkey, "Shift"},
+        "e",
+        function()
+            awful.spawn("zsh -ic ,mail-unread-notify")
+        end,
+        {description = "open an emacs client instance", group = "launcher"}
+    ),
     awful.key({modkey, "Control"}, "r", awesome.restart, {description = "reload awesome", group = "awesome"}),
     awful.key({modkey, "Control"}, "q", awesome.quit, {description = "quit awesome", group = "awesome"}),
     awful.key(
