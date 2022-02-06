@@ -791,7 +791,10 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package company-quickhelp ; Show help in tooltip
   :straight t
   :after company
-  :config (company-quickhelp-mode))
+  :config
+  (company-quickhelp-mode)
+  (setq pos-tip-foreground-color "#000000"
+        pos-tip-background-color "#ffffff"))
 
 ;; Completions (core framework)
 (use-package selectrum
