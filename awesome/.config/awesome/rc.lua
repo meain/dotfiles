@@ -760,6 +760,16 @@ globalkeys =
         function()
             awful.util.spawn("brightnessctl specific '+3'")
         end
+    ),
+    -- Scripts
+    awful.key(
+        {"Mod1"},
+        "BackSpace",
+        function()
+            awful.util.spawn('zsh -ic \',open-or-search "$(pbpaste)"\'')
+        end,
+        {description = "focus next by index", group = "client"}
+    ),
     )
 )
 
