@@ -553,6 +553,14 @@ globalkeys =
     awful.key({modkey, "Control"}, "r", awesome.restart, {description = "reload awesome", group = "awesome"}),
     awful.key({modkey, "Control"}, "q", awesome.quit, {description = "quit awesome", group = "awesome"}),
     awful.key(
+        {modkey, "Shift"},
+        "q",
+        function()
+            awful.spawn("systemctl suspend")
+        end,
+        {description = "suspend", group = "awesome"}
+    ),
+    awful.key(
         {modkey},
         "o",
         function()
