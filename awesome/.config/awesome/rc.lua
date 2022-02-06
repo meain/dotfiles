@@ -166,8 +166,41 @@ function updating_cmd_textwidget(command, timeout)
 end
 
 mymailcounter = updating_file_textwidget("/tmp/shellout", 5)
+mymailcounter:connect_signal(
+    "button::press",
+    function(_, _, _, button)
+        if button == 1 then
+            awful.spawn("zsh -ic ,mail-unread-notify")
+        elseif button == 2 then
+            awful.spawn("zsh -ic 'notify-send \"Syncing mail\"'")
+            awful.spawn("zsh -ic ,mail-sync")
+        end
+    end
+)
 myaudiostatus, myaudiostatus_refresh =
-    updating_cmd_textwidget("amixer -D pulse | awk -F'[][]' '/Left:/ { print $2 }' | xargs echo", 10)
+    updating_cmd_textwidget('amixer -D pulse | awk -F\'[][]\' \'/Left:/ { print "S"$2 }\' | head -n1', 10)
+myaudiostatus:connect_signal(
+    "button::press",
+    function(_, _, _, button)
+        if button == 1 then
+            awful.util.spawn("amixer -D pulse set Master toggle")
+            -- awful.util.spawn("amixer -D pulse set Capture toggle")
+            myaudiostatus_refresh()
+        end
+    end
+)
+
+mymicstatus, mymicstatus_refresh =
+    updating_cmd_textwidget('amixer -D pulse | awk -F\'[][]\' \'/Left:/ { print "M"$2 }\' | tail -n1', 10)
+mymicstatus:connect_signal(
+    "button::press",
+    function(_, _, _, button)
+        if button == 1 then
+            awful.util.spawn("amixer -D pulse set Capture toggle")
+            mymicstatus_refresh()
+        end
+    end
+)
 
 -- Create a wibox for each screen and add it
 local taglist_buttons =
@@ -314,6 +347,8 @@ awful.screen.connect_for_each_screen(
                 layout = wibox.layout.fixed.horizontal,
                 wibox.widget.textbox(" "),
                 myaudiostatus,
+                wibox.widget.textbox(" "),
+                mymicstatus,
                 wibox.widget.textbox(" * "),
                 mymailcounter,
                 wibox.widget.textbox(" * "),
