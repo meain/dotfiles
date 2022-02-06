@@ -7,23 +7,23 @@ local themes_path = gfs.get_themes_dir()
 
 local theme = {}
 
-theme.font = "Anka/Coder 8"
+theme.font = "Anka/Coder 9"
 
-theme.bg_normal = "#000000"
-theme.bg_focus = "#263238"
+theme.bg_normal = "#f1f1f1"
+theme.bg_focus = "#ffffff"
 theme.bg_urgent = "#ff0000"
-theme.bg_minimize = "#444444"
+theme.bg_minimize = "#f5f5f5"
 theme.bg_systray = theme.bg_normal
 
-theme.fg_normal = "#aaaaaa"
-theme.fg_focus = "#ffffff"
-theme.fg_urgent = "#ffffff"
-theme.fg_minimize = "#ffffff"
+theme.fg_normal = "#333333"
+theme.fg_focus = "#000000"
+theme.fg_urgent = "#000000"
+theme.fg_minimize = "#000000"
 
 theme.useless_gap = dpi(2)
 theme.border_width = dpi(2)
-theme.border_normal = "#000000"
-theme.border_focus = "#EC407A"
+theme.border_normal = "#f1f1f1"
+theme.border_focus = "#ffccdd"
 theme.border_marked = "#91231c"
 
 -- Generate taglist squares:
