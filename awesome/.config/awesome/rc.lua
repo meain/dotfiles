@@ -178,27 +178,35 @@ mymailcounter:connect_signal(
     end
 )
 myaudiostatus, myaudiostatus_refresh =
-    updating_cmd_textwidget('amixer -D pulse | awk -F\'[][]\' \'/Left:/ { print $2 }\' | head -n1', 10)
+    updating_cmd_textwidget("amixer -D pulse | awk -F'[][]' '/Left:/ { print $2 }' | head -n1", 10)
 myaudiostatus:connect_signal(
     "button::press",
     function(_, _, _, button)
         if button == 1 then
-            awful.util.spawn("amixer -D pulse set Master toggle")
             -- awful.util.spawn("amixer -D pulse set Capture toggle")
-            myaudiostatus_refresh()
+            awful.util.spawn("amixer -D pulse set Master toggle")
+        elseif button == 4 then
+            awful.util.spawn("amixer -D pulse set Master '1000+'")
+        elseif button == 5 then
+            awful.util.spawn("amixer -D pulse set Master '1000-'")
         end
+        myaudiostatus_refresh()
     end
 )
 
 mymicstatus, mymicstatus_refresh =
-    updating_cmd_textwidget('amixer -D pulse | awk -F\'[][]\' \'/Left:/ { print $2 }\' | tail -n1', 10)
+    updating_cmd_textwidget("amixer -D pulse | awk -F'[][]' '/Left:/ { print $2 }' | tail -n1", 10)
 mymicstatus:connect_signal(
     "button::press",
     function(_, _, _, button)
         if button == 1 then
             awful.util.spawn("amixer -D pulse set Capture toggle")
-            mymicstatus_refresh()
+        elseif button == 4 then
+            awful.util.spawn("amixer -D pulse set Capture '1000+'")
+        elseif button == 5 then
+            awful.util.spawn("amixer -D pulse set Capture '1000-'")
         end
+        mymicstatus_refresh()
     end
 )
 
