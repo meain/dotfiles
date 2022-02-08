@@ -244,7 +244,6 @@ in
     pkgs.clipmenu # clipboard history
     pkgs.cbatticon # battery indicator
     pkgs.brightnessctl # brightness control
-    pkgs.scrot # screenshotting
     pkgs.dunst # notifications with buttons (dunstify)
     pkgs.pcmanfm # gui file manager
     pkgs.unixtools.netstat # netstat

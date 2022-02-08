@@ -581,7 +581,10 @@ globalkeys =
         {modkey, "Shift"},
         "c",
         function()
-            awful.spawn("scrot -s -e 'mv $f ~/Pictures/Screenshots/'")
+            awful.spawn(
+                "import /home/meain/Pictures/Screenshots/" ..
+                    os.date("%Y-%m-%d-%H-%M-%S") .. math.random(1, 10000) .. ".png"
+            )
         end,
         {description = "take screenshot", group = "launcher"}
     ),
