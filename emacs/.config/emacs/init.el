@@ -2364,7 +2364,7 @@ START and END comes from it being interactive."
               ('emacs-lisp-mode (format "(message \"%s: %%s\" %s)" thing-to-print thing-to-print thing-to-print))
               ('lisp-interaction-mode (format "(message \"%s: %%s\" %s)" thing-to-print thing-to-print thing-to-print))
               ('rust-mode (format "println!(\"%s: {:?}\", %s);" thing-to-print thing-to-print))
-              ('go-mode (format "fmt.Println(\"%s:\", %s);" thing-to-print thing-to-print))
+              ('go-mode (format "fmt.Println(\"%s:\", %s)" thing-to-print thing-to-print))
               ('lua-mode (format "print(\"%s:\", %s)" thing-to-print thing-to-print))
               ('js-mode (format "console.log(\"%s:\", %s)" thing-to-print thing-to-print))
               ('shell-script-mode (format "echo \"%s:\" %s" thing-to-print thing-to-print))
