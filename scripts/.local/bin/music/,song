@@ -6,19 +6,12 @@ if pgrep "mpv" >/dev/null 2>&1; then
     playing="$(echo "$mpvoutput" | head -n2 | tail -n1 | cut -d' ' -f1 | sed 's/\[playing\]/>/;s/\[paused\]/:/')"
     speed="$(echo "$mpvoutput" | grep 'speed' | cut -d' ' -f 2)"
     if echo "$songName" | grep -q "No files added to";then
-        echo "V| No item in mpv"
+        printf "V| No item in mpv"
     elif [ -z "$speed" ] || [ "$speed" = "1.00x" ]; then
-        echo "V| $playing $songName"
+        printf "V| $playing $songName"
     else
-        echo "V| $playing $songName ($speed)"
+        printf "V| $playing $songName ($speed)"
     fi
-    exit 0
-fi
-
-# use song from spotify if available
-spotifySong=$(,spotify-song)
-if [ -n "$spotifySong" ]; then
-    echo "S| $spotifySong"
     exit 0
 fi
 
@@ -29,7 +22,7 @@ if [ -z "$songName" ]; then
     songName=$fileName
 fi
 if [ -z "$fileName" ]; then
-    echo "M| No song in queue"
+    printf "M| No song in queue"
 else
-    echo "M| $playing $songName"
+    printf "M| $playing $songName"
 fi

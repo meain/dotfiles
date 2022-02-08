@@ -6,14 +6,6 @@ if pgrep "mpv" > /dev/null 2>&1; then
     exit 0
 fi
 
-# use song from spotify if available
-spotifySong=$(~/.bin/tmux/music)
-if [ -n "$spotifySong" ]; then
-    echo ":player spotify"
-    echo "$spotifySong"
-    exit 0
-fi
-
 if mpc >/dev/null 2>&1 ; then
     echo ":player mpd"
     mpc
