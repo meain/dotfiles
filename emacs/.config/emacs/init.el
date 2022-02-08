@@ -828,7 +828,12 @@ Pass ORIGINAL and ALTERNATE options."
   :config (marginalia-mode))
 
 ;; Consult without consultation fees
-(use-package consult :straight t :after selectrum :defer 1)
+(use-package consult
+  :straight t
+  :after selectrum
+  :defer 1
+  :config
+  (evil-set-command-property 'consult-imenu :jump t))
 
 ;; Embark stuff
 (use-package embark
