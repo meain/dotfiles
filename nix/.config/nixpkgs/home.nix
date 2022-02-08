@@ -526,6 +526,8 @@ in
     Service.Environment = "QUITE_ZSH=1";
     Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic 'find /home/meain/.local/share/mail/.notmuch/xapian|entr -n ,shellout-update'";
     Install.WantedBy = [ "graphical-session.target" ];
+    Service.Restart = "on-failure";
+    Service.RestartSec = 5;
   };
 
   # make this into a function??
@@ -575,6 +577,8 @@ in
     Service.Type = "forking";
     Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic 'emacs --daemon'";
     Install.WantedBy = [ "graphical-session.target" ];
+    Service.Restart = "on-failure";
+    Service.RestartSec = 5;
   };
 
   # Setup direnv
