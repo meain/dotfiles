@@ -1900,7 +1900,9 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package restclient
   :straight t
   :defer t
-  :mode "\\.rest\\'")
+  :mode "\\.rest\\'"
+  :config (add-hook 'restclient-mode-hook (lambda ()
+                                            (setq imenu-generic-expression '((nil "^[A-Z]+\s+.+" 0))))))
 
 ;; Link opening
 (use-package ace-link
