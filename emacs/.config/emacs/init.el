@@ -71,7 +71,6 @@
   (evil-leader/set-leader "s"))
 
 ;; Some keybindings
-(evil-leader/set-key "l" 'execute-extended-command)
 (evil-leader/set-key "h l" 'find-library)
 
 ;;; [BASIC SETTINGS] =============================================
@@ -461,7 +460,7 @@ Pass ORIGINAL and ALTERNATE options."
   (defun meain/project-name ()
     (file-name-nondirectory (directory-file-name (car (project-roots (project-current))))))
   :init
-  (evil-leader/set-key "p"
+  (evil-leader/set-key "p p"
     (meain/with-alternate (call-interactively 'project-switch-project)
                           (project-find-file)))
   (define-key evil-normal-state-map (kbd "<RET>") 'project-find-file))
@@ -890,7 +889,7 @@ Pass ORIGINAL and ALTERNATE options."
   :straight t
   :commands rg
   :init
-  (evil-leader/set-key "f"
+  (evil-leader/set-key "p f"
     (meain/with-alternate (let ((selectrum-display-style '(vertical)))
                             (consult-ripgrep))
                           (call-interactively 'rg)))
@@ -2098,6 +2097,25 @@ Pass ORIGINAL and ALTERNATE options."
   :straight t
   :commands (redacted-mode)
   :config (add-hook 'redacted-mode-hook (lambda () (read-only-mode (if redacted-mode 1 -1)))))
+
+(use-package harpoon
+  :straight t
+  :config
+  (setq harpoon-cache-file (concat user-emacs-directory "harpoon/"))
+  (setq harpoon-separate-by-branch nil)
+  (evil-leader/set-key "f t" 'harpoon-toggle-file)
+  (evil-leader/set-key "f r" 'harpoon-toggle-quick-menu)
+  (evil-leader/set-key "f c" 'harpoon-clear)
+  (evil-leader/set-key "f h" 'harpoon-add-file)
+  (evil-leader/set-key "f j" 'harpoon-go-to-1)
+  (evil-leader/set-key "f k" 'harpoon-go-to-2)
+  (evil-leader/set-key "f l" 'harpoon-go-to-3)
+  (evil-leader/set-key "f ;" 'harpoon-go-to-4)
+  (evil-leader/set-key "f f j" 'harpoon-go-to-5)
+  (evil-leader/set-key "f f k" 'harpoon-go-to-6)
+  (evil-leader/set-key "f f l" 'harpoon-go-to-7)
+  (evil-leader/set-key "f f ;" 'harpoon-go-to-8)
+  (evil-leader/set-key "f f f" 'harpoon-go-to-9))
 
 ;;; [CUSTOM FUNCTIONS] ==============================================
 
