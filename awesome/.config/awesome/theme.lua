@@ -26,6 +26,16 @@ theme.border_normal = "#f1f1f1"
 theme.border_focus = "#ffccdd"
 theme.border_marked = "#91231c"
 
+-- Taglist
+theme.taglist_fg_focus = theme.fg_focus
+theme.taglist_bg_focus = theme.bg_focus
+theme.taglist_fg_occupied = theme.fg_focus
+theme.taglist_bg_occupied = theme.bg_focus
+theme.taglist_fg_urgent = theme.fg_focus
+theme.taglist_fg_empty = theme.fg_normal
+theme.taglist_spacing = 0
+theme.taglist_font = theme.font
+
 -- Generate taglist squares:
 local taglist_square_size = dpi(4)
 theme.taglist_squares_sel = theme_assets.taglist_squares_sel(taglist_square_size, theme.fg_normal)
