@@ -59,7 +59,8 @@ end
 -- Setup some variables
 modkey = "Mod4"
 dmenu_config = "-i -fn 'Anka/Coder:size=8' -nb '#000000' -nf '#aaaaaa' -sb '#263238' -sf '#ffffff'"
-terminal = "sakura"
+terminal = "emacsclient -cne '(vterm \"terminal\")'"
+backup_terminal = "sakura"
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -78,7 +79,7 @@ myawesomemenu = {
             hotkeys_popup.show_help(nil, awful.screen.focused())
         end
     },
-    {"manual", terminal .. " -e man awesome"},
+    {"manual", backup_terminal .. " -e man awesome"},
     {"edit config", editor_cmd .. " " .. awesome.conffile},
     {"restart", awesome.restart},
     {
@@ -115,7 +116,7 @@ mylauncher =
     }
 )
 
-menubar.utils.terminal = terminal -- Set the terminal for applications that require it
+menubar.utils.terminal = backup_terminal -- Set the terminal for applications that require it
 mytextclock = wibox.widget.textclock("%a %b %d, %I:%M %p") -- Create a textclock widget
 
 function get_file_content_if_exists(filename)
@@ -554,10 +555,26 @@ globalkeys =
         {description = "open a terminal", group = "launcher"}
     ),
     awful.key(
+        {modkey, "Control"},
+        "Return",
+        function()
+            awful.spawn(backup_terminal)
+        end,
+        {description = "open a terminal", group = "launcher"}
+    ),
+    awful.key(
         {modkey},
         "e",
         function()
             awful.spawn("emacsclient -nc -a ''")
+        end,
+        {description = "open an emacs client instance", group = "launcher"}
+    ),
+    awful.key(
+        {modkey},
+        "t",
+        function()
+            awful.spawn(terminal)
         end,
         {description = "open an emacs client instance", group = "launcher"}
     ),
@@ -886,21 +903,13 @@ clientkeys =
         {description = "rotate screens left", group = "screen"}
     ),
     awful.key(
-        {modkey},
+        {modkey, "Shift"},
         "t",
         function(c)
             awful.titlebar.toggle(c)
             c:raise()
         end,
         {description = "toggle titlebars", group = "client"}
-    ),
-    awful.key(
-        {modkey, "Shift"},
-        "t",
-        function(c)
-            c.ontop = not c.ontop
-        end,
-        {description = "toggle keep on top", group = "client"}
     ),
     awful.key(
         {modkey},

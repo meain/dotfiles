@@ -1372,12 +1372,14 @@ Pass ORIGINAL and ALTERNATE options."
   (defun meain/vterm--kill-vterm-buffer-and-window (process event)
     "Kill buffer and window on vterm PROCESS termination.  EVENT is the close event."
     (when (not (process-live-p process))
-      (let ((buf (process-buffer process)))
+      (let ((buf (process-buffer process))
+            (bufname (buffer-name (current-buffer))))
         (when (buffer-live-p buf)
           (with-current-buffer buf
             (kill-buffer)
             (ignore-errors (delete-window))
-            (message "VTerm closed."))))))
+            (when (s-starts-with-p "terminal" bufname) ; wm opened term
+              (delete-frame)))))))
   (add-hook 'vterm-mode-hook
             (lambda ()
               (set-process-sentinel (get-buffer-process (buffer-name))
