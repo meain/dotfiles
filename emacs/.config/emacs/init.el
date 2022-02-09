@@ -523,10 +523,13 @@ Pass ORIGINAL and ALTERNATE options."
       ;; ((pred (string-match " "))
       ;;  (meain/go-default-returns (nth 1
       ;;                                 (split-string type " "))))
+      ((pred (string-prefix-p "*")) (concat (replace-regexp-in-string "\*" "&" type) "{}"))
       (_ (concat type "{}"))))
   (defun meain/go-return-string ()
     "Get return string for go by looking up the return type of current func."
-    (let* ((func-node (tree-sitter-node-at-point 'function_declaration))
+    (let* ((f-declaration (tree-sitter-node-at-pos 'function_declaration))
+           (m-declaration (tree-sitter-node-at-pos 'method_declaration))
+           (func-node (if (eq f-declaration nil) m-declaration f-declaration))
            (return-node (tsc-get-child-by-field func-node ':result)))
       ;; remove extra whitespace if nothing at end
       (replace-regexp-in-string " $"
