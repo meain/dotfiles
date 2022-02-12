@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -e
+
+# Create a pixelated image and use that as lockscreen
+import -window root /tmp/screen.png  # piping image seems to take double the time
+convert /tmp/screen.png -scale 5% -scale 2000% \
+        -font Agave-Regular -fill white -pointsize 100 \
+        -stroke black -strokewidth 3 -gravity center \
+        -annotate +0+0 'locked' /tmp/lockscreen.png
+i3lock -fei /tmp/lockscreen.png
