@@ -175,6 +175,9 @@ mymailcounter:connect_signal(
         elseif button == 2 then
             awful.spawn('zsh -ic \'notify-send "Syncing mail"\'')
             awful.spawn("zsh -ic ,mail-sync")
+        elseif button == 3 then
+            awful.spawn('zsh -ic \'notify-send "Marking all emails as read"\'')
+            awful.spawn("zsh -ic 'notmuch tag +notified tag:imbox and tag:unread'")
         end
     end
 )
@@ -611,7 +614,16 @@ globalkeys =
         function()
             awful.spawn("zsh -ic ,mail-unread-notify")
         end,
-        {description = "open an emacs client instance", group = "launcher"}
+        {description = "show unread email", group = "launcher"}
+    ),
+    awful.key(
+        {modkey, "Shift", "Control"},
+        "e",
+        function()
+            awful.spawn('zsh -ic \'notify-send "Marking all emails as read"\'')
+            awful.spawn("zsh -ic 'notmuch tag +notified tag:imbox and tag:unread'")
+        end,
+        {description = "mark all mails as unread", group = "launcher"}
     ),
     awful.key({modkey, "Control"}, "r", awesome.restart, {description = "reload awesome", group = "awesome"}),
     awful.key({modkey, "Shift", "Control"}, "q", awesome.quit, {description = "quit awesome", group = "awesome"}),
