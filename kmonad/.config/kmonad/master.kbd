@@ -18,7 +18,7 @@
   salt (around lalt lsft)
   qctl (tap-next-release ' lctl)
   spl (tap-next-release space lmet)
-  super (tap-next up lmet)
+  super (tap-hold 180 up lmet)
   dctl (tap-next down lctl)
   nav (tap-next-release d (layer-toggle navigation))
 )
