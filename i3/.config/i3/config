@@ -1,23 +1,48 @@
-# Set modifier key
-set $mod Mod1
+set $mod Mod4
+font pango:Anka/Coder 7
 
-# Set font
-font pango:Monaco for Powerline 11
+# Startup entries
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+exec --no-startup-id nm-applet
+exec --no-startup-id guake
+exec --no-startup-id cbatticon
+exec --no-startup-id clipmenud
+exec --no-startup-id blueman-applet
+exec --no-startup-id kdeconnect-indicator
+exec --no-startup-id xset r rate 220 33
 
-# no border
-for_window [class="^.*"] border pixel 1
+# Use pactl to adjust volume in PulseAudio.
+set $refresh_i3status killall -SIGUSR1 i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl specific '3-'
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl specific '+3'
 
-# use Mouse+$mod to drag floating windows to their wanted position
+# Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
-# start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+# start terminal and editor
+bindsym $mod+Return exec sakura
+bindsym $mod+e exec emacsclient -nc -a ''
+
+# scratchpad
+bindsym $mod+Shift+i move scratchpad
+bindsym $mod+i scratchpad show
 
 # kill focused window
-bindsym $mod+semicolon kill
+bindsym $mod+q kill
+# The middle button over a titlebar kills the window
+# bindsym --release button2 kill
 
-# start rofi
-bindsym $mod+o exec rofi -show run -font 'Monaco 15' -opacity 50 -lines 25 -eh 1 -line-margin 5 -hide-scrollbar -width 100 -padding 250
+# Lock and suspend
+bindsym $mod+Shift+q exec "zsh -ic ,lock-screen"
+bindsym $mod+Mod1+q exec "zsh -ic ,lock-screen && sleep 2 && systemctl suspend"
+
+# start dmenu (a program launcher)
+bindsym $mod+d exec dmenu_run -i -fn 'Anka/Coder:size=8' -nb '#000000' -nf '#aaaaaa' -sb '#263238' -sf '#ffffff'
+bindsym $mod+Shift+d exec --no-startup-id i3-dmenu-desktop 
 
 # change focus
 bindsym $mod+h focus left
@@ -25,85 +50,122 @@ bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
 
-# alternatively, you can use the cursor keys:
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
-
 # move focused window
 bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
-# alternatively, you can use the cursor keys:
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
+# changing workspace
+bindsym $mod+u workspace prev_on_output
+bindsym $mod+o workspace next_on_output
+bindsym $mod+s workspace back_and_forth
+bindsym $mod+Shift+u workspace prev_on_output
+bindsym $mod+Shift+o workspace next_on_output
 
-# split in horizontal orientation
-bindsym $mod+v split h
-
-# split in vertical orientation
-bindsym $mod+b split v
-
-# enter fullscreen mode for the focused container
-bindsym $mod+f fullscreen
-
-# change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
+# window arrangement
+bindsym $mod+v split toggle
+bindsym $mod+f fullscreen toggle
+bindsym $mod+Shift+s layout stacking
+bindsym $mod+Shift+t layout tabbed
+bindsym $mod+Shift+v layout toggle split
 
 # toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
-bindsym $mod+space workspace back_and_forth
+bindsym $mod+Shift+f floating toggle
+bindsym button3 floating toggle
 
 # change focus between tiling / floating windows
-# bindsym $mod+Shift+space focus mode_toggle
+bindsym $mod+space focus mode_toggle
 
-# move the currently focused window to the scratchpad
-bindsym $mod+Shift+minus move scratchpad
+# focus the parent container
+bindsym $mod+a focus parent
 
-# Show the next scratchpad window or hide the focused scratchpad window.
-# If there are multiple scratchpad windows, this command cycles through them.
-bindsym $mod+minus scratchpad show
+# Define names for default workspaces for which we configure key bindings later on.
+# We use variables to avoid repeating the names in multiple places.
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+# specify monitors for workspaces
+workspace $ws1 output eDP
+workspace $ws2 output eDP
+workspace $ws3 output DisplayPort-0
+workspace $ws4 output DisplayPort-0
+workspace $ws9 output HDMI-A-0
+workspace $ws10 output HDMI-A-0
 
 # switch to workspace
-bindsym $mod+1 workspace 1
-bindsym $mod+2 workspace 2
-bindsym $mod+3 workspace 3
-bindsym $mod+4 workspace 4
-bindsym $mod+5 workspace 5
-bindsym $mod+6 workspace 6
-bindsym $mod+7 workspace 7
-bindsym $mod+8 workspace 8
-bindsym $mod+9 workspace 9
-bindsym $mod+0 workspace 10
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace 1
-bindsym $mod+Shift+2 move container to workspace 2
-bindsym $mod+Shift+3 move container to workspace 3
-bindsym $mod+Shift+4 move container to workspace 4
-bindsym $mod+Shift+5 move container to workspace 5
-bindsym $mod+Shift+6 move container to workspace 6
-bindsym $mod+Shift+7 move container to workspace 7
-bindsym $mod+Shift+8 move container to workspace 8
-bindsym $mod+Shift+9 move container to workspace 9
-bindsym $mod+Shift+0 move container to workspace 10
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
 
-# reload the configuration file
+# other keybinds
+bindsym $mod+Mod1+e exec "zsh -ic ,mail-unread-notify"
+bindsym $mod+Mod1+x exec "zsh -ic ,se"
+
+# i3 keybindings
 bindsym $mod+Shift+c reload
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
-# run necessary programs
-exec polybar example &
-exec --no-startup-id nitrogen --restore
-exec --no-startup-id nm-applet
-exec --no-startup-id xset r rate 200 45
+# resize window
+mode "resize" {
+    bindsym h resize shrink width 3 px or 3 ppt
+    bindsym j resize grow height 3 px or 3 ppt
+    bindsym k resize shrink height 3 px or 3 ppt
+    bindsym l resize grow width 3 px or 3 ppt
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym $mod+r mode "default"
+}
+bindsym $mod+r mode "resize"
+
+# Configure some settings
+focus_follows_mouse no
+workspace_auto_back_and_forth no
+# hide_edge_borders smart
+
+# Styling
+# default_border pixel 1
+# gaps inner all set 20
+
+# i3bar to display a workspace bar
+bar {
+   status_command i3status
+
+   colors {
+      separator #cccccc
+      background  #000000
+      statusline #ffffff
+      focused_workspace  #586e75 #586e75 #ffffff
+      active_workspace #2d2d2d #2d2d2d #ffffff
+      inactive_workspace #1F1F1F #1F1F1F #c7c7c7
+      urgent_workspace #ae4544 #ae4544 #ffffff
+   }
+}
