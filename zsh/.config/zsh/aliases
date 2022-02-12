@@ -72,3 +72,10 @@ alias gcob='git checkout -b'
 alias grr='git pull upstream master --rebase'
 alias gor='git pull origin master --rebase'
 alias glr='git rebase master'
+
+# utils
+alias ppid='ps -o ppid= -p'
+
+# other
+alias caffienate='systemd-inhibit tail -f /dev/null'
+alias suspend='systemctl suspend'
