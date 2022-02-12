@@ -2207,7 +2207,7 @@ SHORTCUT is the keybinding to use.  NAME if the func suffix and FILE is the file
   (let ((scratch-major-mode
          (completing-read
           "Choose mode: "
-          '(text-mode python-mode json-mode rust-mode
+          '(text-mode python-mode json-mode rust-mode go-mode restclient-mode
                       markdown-mode emacs-lisp-mode web-mode javascript-mode
                       artist-mode)
           nil t nil nil (format "%s" major-mode)))
