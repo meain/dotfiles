@@ -507,10 +507,10 @@ Pass ORIGINAL and ALTERNATE options."
   :hook (prog-mode . ass-activate-for-major-mode)
   :hook (python-mode . ass-activate-for-major-mode)
   :config
-  (defun meain/go-default-returns (type)
+  (defun meain/go-default-returns (type errformat)
     "Making it a function instead of an alist so that we can handle unknown TYPE."
     (pcase type
-      ("error" "err")
+      ("error" errformat)
       ("string" "\"\"")
       ("rune" "0")
       ("int" "0")
@@ -525,7 +525,7 @@ Pass ORIGINAL and ALTERNATE options."
       ;;                                 (split-string type " "))))
       ((pred (string-prefix-p "*")) (concat (replace-regexp-in-string "\*" "&" type) "{}"))
       (_ (concat type "{}"))))
-  (defun meain/go-return-string ()
+  (defun meain/go-return-string (errformat)
     "Get return string for go by looking up the return type of current func."
     (let* ((f-declaration (tree-sitter-node-at-pos 'function_declaration))
            (m-declaration (tree-sitter-node-at-pos 'method_declaration))
@@ -541,13 +541,13 @@ Pass ORIGINAL and ALTERNATE options."
                                               (pcase return-node-type
                                                 ('parameter_list
                                                  (string-join (remove-if (lambda (x) (equal nil x))
-                                                                         (mapcar 'meain/go-default-returns
+                                                                         (mapcar (lambda (x) (meain/go-default-returns x errformat))
                                                                                  (mapcar 'string-trim
                                                                                          ;; TODO: maybe use ts to find actual type nodes
                                                                                          (split-string (string-trim return-node-text "(" ")")
                                                                                                        ","))))
                                                               ", "))
-                                                (_ (meain/go-default-returns return-node-text)))))))))
+                                                (_ (meain/go-default-returns return-node-text errformat)))))))))
   (aas-set-snippets 'text-mode
     ";isodate" (lambda () (interactive) (insert (format-time-string "%a, %d %b %Y %T %z")))
     ";date" (lambda () (interactive) (insert (format-time-string "%a %b %d %Y")))
@@ -591,7 +591,16 @@ Pass ORIGINAL and ALTERNATE options."
     ";er"
     (lambda ()
       (interactive)
-      (insert (concat "if err != nil { " (meain/go-return-string) " }")))
+      (insert (concat "if err != nil { " (meain/go-return-string "err") " }")))
+    ";ec"
+    (lambda ()
+      (interactive)
+      (insert (concat "if err != nil { "
+                      (meain/go-return-string
+                       (concat "fmt.Errorf(\""
+                               (read-string "Error message: ")
+                               "; %v\", err)"))
+                      " }")))
     ";te"
     (lambda ()
       (interactive)
