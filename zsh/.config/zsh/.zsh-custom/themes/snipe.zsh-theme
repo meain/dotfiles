@@ -9,7 +9,7 @@ colors
 
 # variables
 INSERT_COLOR="%{$reset_color%}"
-NORMAL_COLOR="%{$FG[039]%}"
+NORMAL_COLOR="%{%F{39}%}"
 
 # https://github.com/clvv/oh-my-zsh/blob/master/modules/git/functions/git-info
 autoload -Uz vcs_info
