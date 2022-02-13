@@ -50,7 +50,9 @@ battery 0 {
         status_unk = "UNK"
         status_full = "FULL"
         path = "/sys/class/power_supply/BAT%d/uevent"
-        low_threshold = 10
+        last_full_capacity = true
+        integer_battery_capacity = true
+        low_threshold = 20
 }
 
 tztime local {
