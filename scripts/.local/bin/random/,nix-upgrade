@@ -5,6 +5,6 @@
 set -e
 
 nix-channel --update
-nix-env --upgrade
-sudo nixos-rebuild switch
-home-manager switch
+nice -n 19 nix-env --upgrade
+command nixos-rebuild && sudo nice -n 19 nixos-rebuild switch
+nice -n 19 home-manager switch
