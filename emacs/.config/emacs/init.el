@@ -2621,7 +2621,7 @@ Pass INSERT-TO-BUFFER to insert output to current buffer."
   "Quick function to start a new blog entry from Emacs."
   (interactive)
   (start-process-shell-command "blog" "*blog*"
-                               (concat "zsh -ic 'blog " (read-string "Blog slug: ") "'")))
+                               (concat "zsh -ic ',blog " (read-string "Blog slug: ") "'")))
 ;; Search from Emacs
 (defun meain/eww-search-ddg (&optional open)
   "Search using eww on ddg.  Pass OPEN to open in browser instead."
