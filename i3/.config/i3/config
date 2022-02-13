@@ -22,6 +22,11 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl specific '3-'
 bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl specific '+3'
 
+# Music keybinding
+bindsym XF86AudioPlay exec "zsh -ic ,music-playpause"
+bindsym XF86AudioPrev exec "zsh -ic ,music-prevous"
+bindsym XF86AudioNext exec "zsh -ic ,music-next"
+
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
