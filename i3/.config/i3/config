@@ -33,6 +33,7 @@ floating_modifier $mod
 # start terminal and editor
 bindsym $mod+Return exec sakura
 bindsym $mod+e exec emacsclient -nc -a ''
+bindsym $mod+t exec emacsclient -cne '(vterm \"terminal\")' -a ''
 
 # scratchpad
 bindsym $mod+Shift+i move scratchpad
