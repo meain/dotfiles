@@ -71,6 +71,22 @@ bindsym $mod+s workspace back_and_forth
 bindsym $mod+Shift+u workspace prev_on_output
 bindsym $mod+Shift+o workspace next_on_output
 
+# moving workspace
+bindsym $mod+Mod1+1 [workspace=1] move workspace to output current
+bindsym $mod+Mod1+2 [workspace=2] move workspace to output current
+bindsym $mod+Mod1+3 [workspace=3] move workspace to output current
+bindsym $mod+Mod1+4 [workspace=4] move workspace to output current
+bindsym $mod+Mod1+5 [workspace=5] move workspace to output current
+bindsym $mod+Mod1+6 [workspace=6] move workspace to output current
+bindsym $mod+Mod1+7 [workspace=7] move workspace to output current
+bindsym $mod+Mod1+8 [workspace=8] move workspace to output current
+bindsym $mod+Mod1+9 [workspace=9] move workspace to output current
+bindsym $mod+Mod1+0 [workspace=0] move workspace to output current
+bindsym $mod+Mod1+l move workspace to output right
+bindsym $mod+Mod1+h move workspace to output left
+bindsym $mod+Mod1+j move workspace to output down
+bindsym $mod+Mod1+k move workspace to output up
+
 # window arrangement
 bindsym $mod+v split toggle
 bindsym $mod+Shift+f fullscreen toggle
