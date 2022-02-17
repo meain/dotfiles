@@ -73,13 +73,13 @@ bindsym $mod+Shift+o workspace next_on_output
 
 # window arrangement
 bindsym $mod+v split toggle
-bindsym $mod+f fullscreen toggle
+bindsym $mod+Shift+f fullscreen toggle
 bindsym $mod+Shift+s layout stacking
 bindsym $mod+Shift+t layout tabbed
 bindsym $mod+Shift+v layout toggle split
 
 # toggle tiling / floating
-bindsym $mod+Shift+f floating toggle
+bindsym $mod+f floating toggle
 bindsym button3 floating toggle
 
 # change focus between tiling / floating windows
