@@ -28,7 +28,7 @@ bindsym XF86AudioPrev exec "zsh -ic ,music-prevous"
 bindsym XF86AudioNext exec "zsh -ic ,music-next"
 
 # Use Mouse+$mod to drag floating windows to their wanted position
-floating_modifier $mod
+floating_modifier Mod1
 
 # start terminal and editor
 bindsym $mod+Return exec sakura
