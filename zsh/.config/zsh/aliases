@@ -47,8 +47,8 @@ alias tn='tmux new-session -s'
 alias tl='tmux list-sessions'
 
 # vim
-alias vim='vim'
-alias ivm='vim'
+alias vim='nvim'
+alias ivm='nvim'
 
 # emacs/editor
 alias e="emacsclient  -a '' --no-wait -c"

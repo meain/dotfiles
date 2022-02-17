@@ -40,7 +40,7 @@ in
     pkgs.curl
     # pkgs.zsh
     pkgs.coreutils
-    pkgs.vim
+    pkgs.neovim
     pkgs.gcc
 
     # packages
