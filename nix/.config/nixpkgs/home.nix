@@ -252,6 +252,8 @@ in
     pkgs.dunst # notifications with buttons (dunstify)
     pkgs.pcmanfm # gui file manager
     pkgs.unixtools.netstat # netstat
+    pkgs.comby # structural search/editing of code
+    pkgs.visidata # data visualization
 
     # gnome tweaking
     pkgs.gnome3.dconf-editor # change dconf settings
