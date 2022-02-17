@@ -178,12 +178,20 @@ bindsym $mod+r mode "resize"
 
 # Configure some settings
 focus_follows_mouse no
-workspace_auto_back_and_forth no
-# hide_edge_borders smart
-
-# Styling
-# default_border pixel 1
+workspace_auto_back_and_forth yes
+default_orientation auto
+title_align left
+force_display_urgency_hint 1000 ms
+hide_edge_borders smart
+default_border pixel 5
 # gaps inner all set 20
+
+# Styling               border  backgr. text    indicator child_border
+client.focused          #4C7899 #586e75 #FFFFFF #2E9EF4   #ffffff
+client.focused_inactive #333333 #5F676A #FFFFFF #484E50   #5F676A
+client.unfocused        #333333 #222222 #888888 #292D2E   #222222
+client.urgent           #2F343A #900000 #FFFFFF #900000   #900000
+client.placeholder      #000000 #0C0C0C #FFFFFF #000000   #0C0C0C
 
 # i3bar to display a workspace bar
 bar {
