@@ -214,7 +214,7 @@ in
     # pkgs.lens # kubernetes viewer
 
     # optional
-    # pkgs.ncdu # disk usage viewer tui
+    pkgs.gdu # disk usage viewer tui (alt: ncdu)
     # pkgs.bat # cat with syntax highlight
     # pkgs.surfraw # search web
     # pkgs.httpie # prettier curl for debugging
