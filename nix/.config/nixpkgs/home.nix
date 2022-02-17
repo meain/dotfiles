@@ -106,6 +106,7 @@ in
     # taskwarrior # task management
     pkgs.todo-txt-cli # todo management
     # pkgs.pkgs.ts # task spooler
+    pkgs.jo # create json
     pkgs.pkgs.jiq # interactive jiq
     pkgs.pkgs.tldr # simpler man pages
     pkgs.pkgs.silicon # create pretty code screenshots
