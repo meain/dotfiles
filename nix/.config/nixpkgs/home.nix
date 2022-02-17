@@ -82,7 +82,7 @@ in
     pkgs.notify-desktop # desktop notifications
     pkgs.xclip # clipboard
     # pkgs.wl-clipboard
-    pkgs.nethogs # view network stats
+    pkgs.bandwhich # view network stats (alt: nethogs)
     pkgs.xdotool # for window switching
     pkgs.picotts # for say
     # pkgs.dmenu # menu stuff
