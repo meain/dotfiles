@@ -46,7 +46,7 @@ bindsym $mod+q kill
 
 # Lock and suspend
 bindsym $mod+Shift+q exec "zsh -ic ,lock-screen"
-bindsym $mod+Mod1+q exec "zsh -ic ,lock-screen && sleep 2 && systemctl suspend"
+bindsym $mod+Mod1+q exec "zsh -ic ,lock-screen && systemctl suspend"
 
 # start dmenu (a program launcher)
 bindsym $mod+d exec dmenu_run -i -fn 'Anka/Coder:size=8' -nb '#000000' -nf '#aaaaaa' -sb '#263238' -sf '#ffffff'
