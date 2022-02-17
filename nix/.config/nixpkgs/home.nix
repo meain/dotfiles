@@ -14,7 +14,7 @@ in
   services.emacs.package = pkgs.emacsUnstable;
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
-      url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
+      url = "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz";
     }))
   ];
   programs.emacs = {
@@ -146,6 +146,7 @@ in
     # programming-nix
     pkgs.rnix-lsp # nix language server
     pkgs.nixpkgs-fmt # nix formater
+    pkgs.statix # linter for nix
 
     # programming-python
     pkgs.python39 # python language
