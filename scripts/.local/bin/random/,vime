@@ -13,7 +13,7 @@ if [ "$1" = "list" ]; then
             echo "$line   $title"
         done </dev/stdin
     } |
-        fzf --header "Select file" --preview "cat '$DIR/{1}'" | awk '{print $1}' | xargs -I{} "$EDITOR" "$DIR/{}"
+        ,picker -p "Select file" --preview "cat '$DIR/{1}'" | awk '{print $1}' | xargs -I{} "$EDITOR" "$DIR/{}"
 elif [ "$1" = "last" ]; then
     ls -t "$DIR" | head -n1 | xargs -I{} "$EDITOR" "$DIR/{}"
 elif [ "$1" = "rename" ]; then
@@ -25,7 +25,7 @@ elif [ "$1" = "rename" ]; then
             echo "$line  $title"
         done </dev/stdin
     } |
-        fzf --header "Select file" --preview "cat '$DIR/{1}'" |
+        ,picker -p "Select file" --preview "cat '$DIR/{1}'" |
         awk '{print $1}' | xargs -I{} mv "$DIR/{}" "$DIR/$REPLY"
 else
     $EDITOR "$DIR/_$(xxd -l2 -ps /dev/urandom)"

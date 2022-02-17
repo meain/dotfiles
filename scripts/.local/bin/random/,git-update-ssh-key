@@ -11,8 +11,8 @@ if ! git branch >/dev/null 2>&1; then
 	echo "Updating global settings as we are not in any repo"
 fi
 [ "$global" == "global" ] && find $HOME/.ssh/ -name '*.pub' |
-	sed 's/.pub$//' | xargs -n1 basename | fzf |
+	sed 's/.pub$//' | xargs -n1 basename | ,picker |
 	xargs -I{} git config --global core.sshCommand "ssh -i ~/.ssh/{}" ||
 	find $HOME/.ssh/ -name '*.pub' |
-	sed 's/.pub$//' | xargs -n1 basename | fzf |
+	sed 's/.pub$//' | xargs -n1 basename | ,picker |
 		xargs -I{} git config core.sshCommand "ssh -i ~/.ssh/{}"

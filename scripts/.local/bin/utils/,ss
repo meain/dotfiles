@@ -5,7 +5,7 @@
 set -e
 
 if [ -z "$1" ]; then
-	file=$(find "$SCRIPTS_DIR"/* -type f | sed "s|$SCRIPTS_DIR/||" | fzf --preview "cat $SCRIPTS_DIR/{}" --print-query | tail -n 1)
+	file=$(find "$SCRIPTS_DIR"/* -type f | sed "s|$SCRIPTS_DIR/||" | ,picker --preview "cat $SCRIPTS_DIR/{}" --print-query | tail -n 1)
 	[ -z "$file" ] && return 1
 else
 	file="$1"

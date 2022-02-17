@@ -1,0 +1,8 @@
+#!/bin/sh
+
+set -e
+
+find $DATAFILES_PATH/statuscodes/ -type f |
+	sort | xargs -n1 basename |
+	,picker --preview "cat $DATAFILES_PATH/statuscodes/{}" |
+	xargs -n1 -I{} cat "$DATAFILES_PATH/statuscodes/{}"

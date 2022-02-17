@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MUSIC_FOLDER="$HOME/Documents/Media/Music"
-FOLDER="$(find "$MUSIC_FOLDER" -type d | grep -v "^$MUSIC_FOLDER$" | sed "s|$MUSIC_FOLDER/||" | fzf --query "$1")"
+FOLDER="$(find "$MUSIC_FOLDER" -type d | grep -v "^$MUSIC_FOLDER$" | sed "s|$MUSIC_FOLDER/||" | ,picker "$1")"
 
 if [ -n "$FOLDER" ];then
     mpc clear > /dev/null

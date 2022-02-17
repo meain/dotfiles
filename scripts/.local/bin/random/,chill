@@ -22,7 +22,7 @@ if [ "$1" = "cache" ]; then
     exit 0
 fi
 
-item="$(fzf <"$HOME/.config/datafiles/chills")"
+item="$(,picker <"$HOME/.config/datafiles/chills")"
 download "$item"
 name="$(echo "$item" | awk '{print $1}')"
 mpv --loop-file "$name" --input-ipc-server=/tmp/mpvsocket

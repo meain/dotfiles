@@ -3,9 +3,12 @@
 set -e
 
 # Create a pixelated image and use that as lockscreen
-import -window root /tmp/screen.png  # piping image seems to take double the time
-convert /tmp/screen.png -scale 5% -scale 2000% \
-        -font Agave-Regular -fill white -pointsize 100 \
-        -stroke black -strokewidth 3 -gravity center \
-        -annotate +0+0 'locked' /tmp/lockscreen.png
-i3lock -fei /tmp/lockscreen.png
+# import -window root /tmp/screen.png  # piping image seems to take double the time
+# convert /tmp/screen.png -scale 5% -scale 2000% \
+#         -font Agave-Regular -fill white -pointsize 100 \
+#         -stroke black -strokewidth 3 -gravity center \
+#         -annotate +0+0 'locked' /tmp/lockscreen.png
+# i3lock -fei /tmp/lockscreen.png
+# i3lock -fec 333333
+# find $HOME/Pictures/Lockscreen -name '*.png' | shuf -n1 | xargs i3lock -ftei
+i3lock -ftei $HOME/Pictures/Lockscreen/current

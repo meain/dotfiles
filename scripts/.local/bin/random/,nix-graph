@@ -4,7 +4,7 @@
 
 set -e
 
-package=$(ls /nix/store | grep -vE '\.drv$' | sed 's/[^-]*-//' | sort -u | fzf)
+package=$(ls /nix/store | grep -vE '\.drv$' | sed 's/[^-]*-//' | sort -u | ,picker)
 [ -z $package ] && return 0
 fullname=$(ls /nix/store | grep -E "$package$" | head -n1)
 echo "Visualizing $fullname"

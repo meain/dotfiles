@@ -1,9 +1,0 @@
-#!/bin/sh
-
-set -e
-
-cd $DATAFILES_PATH/statuscodes || exit 1
-
-code="$1"
-[ -z "$1" ] && code="$(ls|fzf --preview "cat {}")"
-cat "$code"

@@ -32,7 +32,7 @@ fi
 # Search through items
 if [ "$search" = 1 ]; then
     find "$DIR" -name '*.md.asc' | sed "s|^$DIR/||;s|.md.asc$||" | sort |
-        fzf --preview "gpg --decrypt $DIR/{}.md.asc 2>/dev/null" --preview-window 90% --height 100%
+        ,picker --preview "gpg --decrypt $DIR/{}.md.asc 2>/dev/null" --preview-window 90% --height 100%
     exit 0
 fi
 

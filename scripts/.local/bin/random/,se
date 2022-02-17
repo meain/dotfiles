@@ -4,6 +4,7 @@
 
 set -eo pipefail
 
-find -L "$HOME/.local/bin" -type f | sed "s|$HOME/.local/bin/||" |
-	dmenu -i -fn 'Anka/Coder:size=8' -nb '#000000' -nf '#aaaaaa' -sb '#263238' -sf '#ffffff' -l 13 -p "Run script" |
-	xargs -I{} zsh -ic "$HOME/.local/bin/{}"
+script="$(find -L "$HOME/.local/bin" -type f | sed "s|$HOME/.local/bin/||" |
+	,picker -p "Run script: ")"
+
+zsh -ic "$HOME/.local/bin/$script" | xargs -0 -I{} notify-send "[DONE] $script" "{}"

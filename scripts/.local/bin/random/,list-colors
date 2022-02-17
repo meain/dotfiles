@@ -1,16 +1,16 @@
 #!/bin/sh
 
-target_shell=$1
+printf "[0m16 colors\n"
+for code in {30..37}; do
+	echo -n "[0;${code}m$(printf %03d $code) "
+done
+for code in {90..97}; do
+	echo -n "[0;${code}m$(printf %03d $code) "
+done
 
-if [ -z "$1" ]; then
-    target_shell=$(basename "$SHELL")
-fi
+printf "[0m\n\n256 colors\n"
 
-if [ "$target_shell" = "bash" ]; then
-    bash <<< 'for code in {0..255}; do echo -n "[38;05;${code}m $(printf %03d $code)"; [ $((${code} % 16)) -eq 15 ] && echo; done'
-elif [ "$target_shell" = "zsh" ]; then
-    zsh  <<< 'for code in {000..255}; do print -nP -- "%F{$code}$code %f"; [ $((${code} % 16)) -eq 15 ] && echo; done'
-else
-    echo "error: Invalid argument ($target)"
-    echo "Usage: $0 [bash|zsh]"
-fi
+for code in {0..255}; do
+	echo -n "[38;05;${code}m$(printf %03d $code) "
+	[ $((${code} % 16)) -eq 15 ] && echo
+done

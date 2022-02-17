@@ -1,0 +1,46 @@
+#!/bin/sh
+
+set -e
+
+prompt=""
+preview=""
+preview_window=""
+height=""
+multi=""
+lines=""
+no_sort=""
+query=""
+print_query=""
+while [[ "$1" = -* ]]; do
+	[ "$1" == "-p" ] && shift && prompt="$1" && shift && continue
+	[ "$1" == "--preview" ] && shift && preview="$1" && shift && continue
+	[ "$1" == "--preview-window" ] && shift && preview_window="$1" && shift && continue
+	[ "$1" == "--height" ] && shift && height="$1" && shift && continue
+	[ "$1" == "-m" ] && shift && multi=1 && continue
+	[ "$1" == "--multi" ] && shift && multi=1 && continue
+	[ "$1" == "--no-sort" ] && shift && no_sort=1 && continue
+	[ "$1" == "-l" ] && shift && lines="$1" && shift && continue
+	[ "$1" == "--query" ] && shift && query="$1" && shift && continue
+	[ "$1" == "--print-query" ] && shift && print_query="1" && continue
+    echo "Unknown option $1" && exit 1
+done
+
+dmenu_cmd="dmenu -i -fn 'Anka/Coder:size=8' -nb '#000000' -nf '#aaaaaa' -sb '#263238' -sf '#ffffff'"
+fzf_cmd="fzf"
+
+if [ "$GUI_PICKER" == 1 ]; then
+	[ -n "$prompt" ] && dmenu_cmd="$dmenu_cmd -p '$prompt'"
+	[ -n "$lines" ] && dmenu_cmd="$dmenu_cmd -l '$lines'"
+	eval $dmenu_cmd
+else
+	[ -n "$prompt" ] && fzf_cmd="$fzf_cmd --prompt '$prompt'"
+	[ -n "$preview" ] && fzf_cmd="$fzf_cmd --preview '$preview'"
+	[ -n "$preview_window" ] && fzf_cmd="$fzf_cmd --preview-window '$preview_window'"
+	[ -n "$height" ] && fzf_cmd="$fzf_cmd --height '$height'"
+	[ -n "$multi" ] && fzf_cmd="$fzf_cmd -m"
+	[ -n "$no_sort" ] && fzf_cmd="$fzf_cmd --no-sort"
+	[ -n "$print_query" ] && fzf_cmd="$fzf_cmd --print-query"
+	[ -n "$query" ] && fzf_cmd="$fzf_cmd --query='$1'"
+	[ -n "$1" ] && fzf_cmd="$fzf_cmd --query='$1'"
+	eval $fzf_cmd
+fi

@@ -2,4 +2,8 @@
 
 set -e
 
-emacsclient -e "(meain/emacs-popup-frame 'open-thing-for-today)"
+if date '+%a' | grep -E 'Sat|Sun'; then
+	emacsclient -e "(meain/emacs-popup-frame 'open-thing-for-today-personal)"
+else
+	emacsclient -e "(meain/emacs-popup-frame 'open-thing-for-today)"
+fi

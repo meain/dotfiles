@@ -1,6 +1,6 @@
 #!/bin/sh
 
-SONG="$(cat <(mpc playlist | sed 's|.*/||;s|\.[^\.]*$||') | fzf)"
+SONG="$(mpc playlist | sed 's|.*/||;s|\.[^\.]*$||' | ,picker)"
 if [ -n "$SONG" ];then
-    mpc play "$(\cat -n <(mpc playlist | sed 's|.*/||;s|\.[^\.]*$||') | grep "$SONG" | awk '{print $1}')"
+    mpc play "$(mpc playlist | sed 's|.*/||;s|\.[^\.]*$||' | cat -n | grep "$SONG" | awk '{print $1}')"
 fi

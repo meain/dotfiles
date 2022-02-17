@@ -7,5 +7,5 @@ pacmd list-sources |
 	grep -E '(name: <|device.description)' |
 	sed 'N;s/\n/ /;s|.*name: <\([^>]*\).*= "\([^"]*\)"|\2 :\1:|' |
 	sed "s/$default:/$default: [current]/" |
-	dmenu -i -fn 'Anka/Coder:size=8' -nb '#000000' -nf '#aaaaaa' -sb '#263238' -sf '#ffffff' -l 5 -p "Select audio device" |
+	,picker -p "Select audio device" |
 	awk -F':' '{print $(NF-1)}' | xargs pacmd set-default-source

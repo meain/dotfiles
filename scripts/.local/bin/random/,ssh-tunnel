@@ -7,6 +7,7 @@ set -e
 # networksetup -listallnetworkservices
 DEVICE='USB 10/100/1000 LAN'
 PORT=8889
+echo "Does not work on linux" && exit 1
 if [ "$1" == "start" ]; then
 	ssh -D "$PORT" -f -C -q -N "$TUNNEL_INSTANCE"
 	networksetup -setsocksfirewallproxy "$DEVICE" localhost "$PORT"

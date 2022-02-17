@@ -34,12 +34,12 @@ _print_name_and_title() {
 
 pick_with_title() {
     ls -t "$1"/*.md | _print_name_and_title |
-        fzf --no-sort --multi --query "$2" --preview "echo '{}'| awk '{print \$1}'|xargs cat" | awk '{print $1}'
+        ,picker --multi --query "$2" --preview "echo '{}'| awk '{print \$1}'|xargs cat" | awk '{print $1}'
 }
 
 pick() {
     ls -t "$1"/*.md |
-        fzf --no-sort --multi --query "$2" --preview "cat '{}'"
+        ,picker --no-sort --multi --query "$2" --preview "cat '{}'"
 }
 
 types() {
