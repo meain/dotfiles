@@ -199,6 +199,8 @@ in
     pkgs.insomnia # simpler postman
     pkgs.beekeeper-studio # db viewer
     pkgs.sakura # x11 terminal emulator
+    pkgs.zathura # pdf viewer
+    pkgs.sxiv # image viewer
 
     # others
     pkgs.redis # key value db
