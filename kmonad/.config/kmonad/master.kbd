@@ -14,19 +14,22 @@
 )
 
 (defalias
-  ealt (tap-next esc lalt)
+  ealt (tap-hold 180 esc lalt)
   salt (around lalt lsft)
+  hype (tap-hold 180 tab (around lmet (around lalt lctl)))
+  pipe (tap-hold 180 \ (around lmet (around lalt lctl)))
+  bype (tap-hold 180 bspc (around lmet (around lalt lsft)))
   qctl (tap-next-release ' lctl)
   spl (tap-next-release space lmet)
-  super (tap-hold 180 up lmet)
-  dctl (tap-next down lctl)
-  nav (tap-next-release d (layer-toggle navigation))
+  super (tap-next-release up (layer-toggle symbols))
+  dctl (tap-hold 180 down lctl)
+  nav (tap-next-release d (layer-toggle custom))
 )
 
 
 (deflayer qwerty
   grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
-  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+@hype  q    w    e    r    t    y    u    i    o    p    [    ]    @pipe
  @ealt a    s    @nav f    g    h    j    k    l    ;    @qctl ret
   lsft z    x    c    v    b    n    m    ,    .    /    rsft
 @super @salt @dctl          @spl         left rmet cmp   rght
@@ -40,11 +43,18 @@
   _    _    _              _              _    _    _    _
 )
 
-;; Currently just for arrow keys, could add more items
-(deflayer navigation
+(deflayer custom
   _    _    _    _    _    _    _    _    _    _    _    _    _    del
-  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    +    \(   \)   *    _    _    _    _
   _    _    _    _    _    _    left down up   rght _    _    _
+  _    _    _    _    _    _    [    ]    _    _    _    _
+  _    _    _              _              _    _    _    _
+)
+
+(deflayer symbols
+  _    _    _    _    _    _    _    _    _    _    _    _    _    del
+  _    _    _    _    _    _    _    [    ]    _    _    _    _    _
+  _    _    _    _    _    _    _    \(   \)   _    _    _    _
   _    _    _    _    _    _    _    _    _    _    _    _
   _    _    _              _              _    _    _    _
 )
