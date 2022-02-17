@@ -295,6 +295,8 @@ in
     pkgs.fantasque-sans-mono
     pkgs.monoid
     pkgs.ankacoder
+    pkgs.jetbrains-mono
+    pkgs.go-font
   ];
 
   dconf.settings = {
