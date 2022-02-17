@@ -76,6 +76,7 @@ in
     pkgs.dasel # jq but more versatile
     # pkgs.mosh # better ssh
     personal.kmonad # key remapping
+    personal.warpd # mouse control
     pkgs.trash-cli # rm -> trash
     pkgs.entr # continuously run stuff
     pkgs.notify-desktop # desktop notifications
@@ -577,6 +578,15 @@ in
     Unit.Description = "Start emacs server";
     Service.Type = "forking";
     Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic 'emacs --daemon'";
+    Install.WantedBy = [ "graphical-session.target" ];
+    Service.Restart = "on-failure";
+    Service.RestartSec = 5;
+  };
+
+  systemd.user.services.warpd = {
+    Unit.Description = "Start warpd server";
+    Service.Type = "forking";
+    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic 'warpd -f'";
     Install.WantedBy = [ "graphical-session.target" ];
     Service.Restart = "on-failure";
     Service.RestartSec = 5;
