@@ -243,7 +243,7 @@ in
     pkgs.comma # run literally anything
     personal.gloc # run stuff in all git repos
     personal.tojson # convert yaml/toml/json
-    pkgs.fx # json viewer
+    pkgs.jless # json viewer
     pkgs.blueman # bluetooth control
     pkgs.arandr # screen layout configure
     pkgs.clipmenu # clipboard history
