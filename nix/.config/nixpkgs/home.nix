@@ -3,7 +3,7 @@ let
   # personal = import (builtins.fetchTarball "https://github.com/meain/nix-channel/archive/4780703f9bcb313759aecf11cc231953e77f43f3.tar.gz") { };
   personal = import /home/meain/dev/src/nur-packages { };
   nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") { inherit pkgs; };
-  stable = import (builtins.fetchTarball "https://github.com/nixos/nixpkgs/archive/21.11.tar.gz") { };
+  unstable = import (builtins.fetchTarball "https://github.com/nixos/nixpkgs/archive/master.tar.gz") { };
 in
 {
   home.stateVersion = "21.05";
@@ -46,16 +46,15 @@ in
     # packages
     # personal.notmuch-git # mail indexer
     # pkgs.notmuch
-    stable.notmuch
+    pkgs.notmuch
     pkgs.isync # mail syncronize with upstrem
     pkgs.htop # process monitor
     pkgs.mpc_cli # remote for mpd
     pkgs.mpd # music player
-    pkgs.axel # download manager
     pkgs.pandoc # convert document between different formats
     pkgs.xsv # view/manage csv from terminal
     pkgs.parallel # exec things in parallel
-    pkgs.fortune # give me a fortune
+    # pkgs.fortune # give me a fortune
     pkgs.lf # better ranger alternative
     pkgs.diff-so-fancy # really good diff
     pkgs.icdiff # simple colorfull diff replacement
@@ -71,8 +70,8 @@ in
     pkgs.mpvc # mpv remote control  # not available on macos
     pkgs.msmtp # smtp client
     pkgs.android-tools # adb and friends  # not available for macos
-    pkgs.restic # backup
-    pkgs.ledger # double entry accounting
+    # pkgs.restic # backup
+    # pkgs.ledger # double entry accounting
     pkgs.dasel # jq but more versatile
     # pkgs.mosh # better ssh
     personal.kmonad # key remapping
@@ -83,9 +82,9 @@ in
     pkgs.xclip # clipboard
     # pkgs.wl-clipboard
     pkgs.bandwhich # view network stats (alt: nethogs)
-    pkgs.xdotool # for window switching
+    # pkgs.xdotool # for window switching
     pkgs.picotts # for say
-    # pkgs.dmenu # menu stuff
+    # personal.dmenu # menu stuff (fork for emojis)
 
     # aspell dicts
     pkgs.aspellDicts.en
@@ -106,17 +105,16 @@ in
     # taskwarrior # task management
     pkgs.todo-txt-cli # todo management
     # pkgs.pkgs.ts # task spooler
-    pkgs.jo # create json
     pkgs.pkgs.jiq # interactive jiq
-    pkgs.pkgs.tldr # simpler man pages
-    pkgs.pkgs.silicon # create pretty code screenshots
+    # pkgs.pkgs.tldr # simpler man pages
+    # pkgs.pkgs.silicon # create pretty code screenshots
     pkgs.pkgs.transmission # torrent stuff
-    pkgs.pkgs.kube-prompt # interactive kubernetes cli
+    # pkgs.pkgs.kube-prompt # interactive kubernetes cli
     # pkgs.pkgs.cowsay # useless stuff
     # pkgs.podman # pod manager
 
     # programming
-    pkgs.gist # create gist
+    # pkgs.gist # create gist
     # pkgs.hey # http load generator
 
     # programming-shell
@@ -162,15 +160,17 @@ in
     pkgs.python39Packages.pydocstyle # doc style check
     # pkgs.python39Packages.requests # http lib for quick stuff
     pkgs.python39Packages.virtualenv # virtual envs
-    pkgs.python39Packages.bandit # analyze code for security issues
-    pkgs.python39Packages.mypy # check types in code
-    pkgs.python39Packages.isort # fix sort order
+    # pkgs.python39Packages.bandit # analyze code for security issues
+    # pkgs.python39Packages.mypy # check types in code
+    # pkgs.python39Packages.isort # fix sort order
     # pkgs.python39Packages.pygments # generic syntax highlight
     pkgs.python39Packages.python-lsp-server # python lsp
     # pkgs.python38Packages.python-language-server # python lsp (using below one as tests are failing)
     # (pkgs.python38Packages.python-language-server.overridePythonAttrs (oldAttrs: { checkPhase = ""; checkInputs = []; }))
 
     # programming-rust
+    # pkgs.rustup # rust toolchain
+    # pkgs.cargo-cross # cross platform rust devel
     pkgs.rustc # compiler
     pkgs.cargo # package manager
     pkgs.rustfmt # formatter
@@ -196,17 +196,18 @@ in
     # pkgs.firefox # working OSS browser
     pkgs.chromium # because Google hates firefox
     # pkgs.guake # drop down terminal
-    pkgs.insomnia # simpler postman
+    # pkgs.insomnia # simpler postman
     pkgs.beekeeper-studio # db viewer
     pkgs.sakura # x11 terminal emulator
+    # pkgs.foot # wayland terminal emulator
     pkgs.zathura # pdf viewer
     pkgs.sxiv # image viewer
 
     # others
-    pkgs.redis # key value db
-    pkgs.postgresql_13 # postgres 13 (postgresql is at 11)
+    # pkgs.redis # key value db
+    # pkgs.postgresql_13 # postgres 13 (postgresql is at 11)
     # pkgs.mongodb # document db
-    pkgs.sqlite # better db
+    # pkgs.sqlite # better db
     # pkgs.minikube # mini kubernetes
     pkgs.kind # better minikube
     # pkgs.awscli # manage aws
@@ -215,6 +216,7 @@ in
 
     # optional
     pkgs.gdu # disk usage viewer tui (alt: ncdu)
+    pkgs.axel # download manager
     # pkgs.bat # cat with syntax highlight
     # pkgs.surfraw # search web
     # pkgs.httpie # prettier curl for debugging
@@ -235,15 +237,16 @@ in
     # pkgs.cmatrix # matrix thingy in shell
     pkgs.graphviz # draw graphs with code
     # pkgs.groff # gnu troff
-    # pkgs.pgcli # fancier postgres cli
+    pkgs.pgcli # fancier postgres cli
     # pkgs.trivy # docker vulnerability scanner
     # pkgs.act # github ci locally
     # pkgs.pkgs.pstree # view process tree
     personal.traffic # simple network stats
-    pkgs.comma # run literally anything
+    # pkgs.comma # run literally anything
     personal.gloc # run stuff in all git repos
     personal.tojson # convert yaml/toml/json
-    pkgs.jless # json viewer
+    pkgs.jo # create json
+    unstable.jless # json viewer
     pkgs.blueman # bluetooth control
     pkgs.arandr # screen layout configure
     pkgs.clipmenu # clipboard history
@@ -252,22 +255,22 @@ in
     pkgs.dunst # notifications with buttons (dunstify)
     pkgs.pcmanfm # gui file manager
     pkgs.unixtools.netstat # netstat
-    pkgs.comby # structural search/editing of code
-    pkgs.visidata # data visualization
+    # pkgs.comby # structural search/editing of code
+    # pkgs.visidata # data visualization
 
     # gnome tweaking
-    pkgs.gnome3.dconf-editor # change dconf settings
-    pkgs.gnome.gnome-tweaks # tweak gnome settings
-    personal.fluent-theme # a good simple theme
-    pkgs.gnomeExtensions.dash-to-panel # move dash and make it a panel
-    pkgs.gnomeExtensions.blur-my-shell # use blurred wallpaper for overview
-    pkgs.gnomeExtensions.clipboard-indicator # clipboard history
+    # pkgs.gnome3.dconf-editor # change dconf settings
+    # pkgs.gnome.gnome-tweaks # tweak gnome settings
+    # personal.fluent-theme # a good simple theme
+    # pkgs.gnomeExtensions.dash-to-panel # move dash and make it a panel
+    # pkgs.gnomeExtensions.blur-my-shell # use blurred wallpaper for overview
+    # pkgs.gnomeExtensions.clipboard-indicator # clipboard history
     # personal.gnomeExtensions.gsconnect # kdeconnect
-    pkgs.gnomeExtensions.caffeine # don't sleep
-    pkgs.gnomeExtensions.no-overview # no overview on start
-    pkgs.gnomeExtensions.bluetooth-quick-connect # better bluetooth menu
-    pkgs.gnomeExtensions.custom-hot-corners-extended # smokin' hot corners
-    personal.gnomeExtensions.steal-my-focus # just switch, don't say
+    # pkgs.gnomeExtensions.caffeine # don't sleep
+    # pkgs.gnomeExtensions.no-overview # no overview on start
+    # pkgs.gnomeExtensions.bluetooth-quick-connect # better bluetooth menu
+    # pkgs.gnomeExtensions.custom-hot-corners-extended # smokin' hot corners
+    # personal.gnomeExtensions.steal-my-focus # just switch, don't say
     # personal.gnomeExtensions.shellout # custom info in bar
 
     # tryout
