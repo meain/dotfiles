@@ -526,7 +526,7 @@ in
   systemd.user.services.email-sync = {
     Service.Type = "oneshot";
     Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic ',mail-sync'";
-    Install.WantedBy = [ "graphical-session.target" ];
+    Install.WantedBy = [ "default.target" ];
   };
   systemd.user.timers.email-sync = {
     Timer.OnCalendar = "*:0/15"; # every 15min
@@ -535,9 +535,18 @@ in
 
   # update output for shellout gnome extension
   systemd.user.services.mail-watcher = {
-    Service.Environment = "QUITE_ZSH=1";
+    Service.Type = "simple";
     Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic 'find /home/meain/.local/share/mail/.notmuch/xapian|entr -n ,shellout-update'";
-    Install.WantedBy = [ "graphical-session.target" ];
+    Install.WantedBy = [ "default.target" ];
+    Service.Restart = "on-failure";
+    Service.RestartSec = 5;
+  };
+
+  systemd.user.services.emacs = {
+    Unit.Description = "Start emacs server";
+    Service.Type = "simple";
+    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic 'emacs --fg-daemon'";
+    Install.WantedBy = [ "default.target" ];
     Service.Restart = "on-failure";
     Service.RestartSec = 5;
   };
@@ -547,7 +556,7 @@ in
     Service.Type = "oneshot";
     Service.WorkingDirectory = "/home/meain/.local/share/notes";
     Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic ',git-auto-sync'";
-    Install.WantedBy = [ "graphical-session.target" ];
+    Install.WantedBy = [ "default.target" ];
   };
   systemd.user.timers.note-sync = {
     Timer.OnCalendar = "*-*-* *:00:00";
@@ -557,7 +566,7 @@ in
     Service.Type = "oneshot";
     Service.WorkingDirectory = "/home/meain/.local/share/til";
     Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic ',git-auto-sync'";
-    Install.WantedBy = [ "graphical-session.target" ];
+    Install.WantedBy = [ "default.target" ];
   };
   systemd.user.timers.til-sync = {
     Timer.OnCalendar = "*-*-* *:00:00";
@@ -567,7 +576,7 @@ in
     Service.Type = "oneshot";
     Service.WorkingDirectory = "/home/meain/.local/share/ledger";
     Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic ',git-auto-sync'";
-    Install.WantedBy = [ "graphical-session.target" ];
+    Install.WantedBy = [ "default.target" ];
   };
   systemd.user.timers.ledger-sync = {
     Timer.OnCalendar = "*-*-* *:00:00";
@@ -577,7 +586,7 @@ in
     Service.Type = "oneshot";
     Service.WorkingDirectory = "/home/meain/.local/share/journal";
     Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic ',git-auto-sync'";
-    Install.WantedBy = [ "graphical-session.target" ];
+    Install.WantedBy = [ "default.target" ];
   };
   systemd.user.timers.journal-sync = {
     Timer.OnCalendar = "*-*-* *:00:00";
@@ -586,30 +595,12 @@ in
   systemd.user.services.weather-pull = {
     Service.Type = "oneshot";
     Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic ',weather-current'";
-    Install.WantedBy = [ "graphical-session.target" ];
+    Install.WantedBy = [ "default.target" ];
   };
   systemd.user.timers.weather-pull = {
     Timer.OnCalendar = "*-*-* *:00:00";
     Timer.Persistent = true;
     Install.WantedBy = [ "timers.target" ];
-  };
-
-  systemd.user.services.emacs = {
-    Unit.Description = "Start emacs server";
-    Service.Type = "forking";
-    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic 'emacs --daemon'";
-    Install.WantedBy = [ "graphical-session.target" ];
-    Service.Restart = "on-failure";
-    Service.RestartSec = 5;
-  };
-
-  systemd.user.services.warpd = {
-    Unit.Description = "Start warpd server";
-    Service.Type = "forking";
-    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic 'warpd -f'";
-    Install.WantedBy = [ "graphical-session.target" ];
-    Service.Restart = "on-failure";
-    Service.RestartSec = 5;
   };
 
   # Setup direnv
