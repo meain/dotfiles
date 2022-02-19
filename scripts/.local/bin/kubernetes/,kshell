@@ -4,5 +4,5 @@
 
 set -e
 
-kubectl get pods | tail -n +2 | awk '{print $3,$1}' | fzf --query "$*" | cut -d' ' -f2 |
-	xargs -I{} kubectl exec -it "{}" -- sh -c 'clear; (bash || ash || sh)'
+kubectl get pods --all-namespaces | tail -n +2 | fzf --query "$*" | awk '{print "-n",$1,$2}'  |
+	xargs -I{} echo kubectl exec -it {} -- sh -c 'clear; (bash || ash || sh)'
