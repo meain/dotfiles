@@ -1,18 +1,21 @@
 #!/bin/sh
 
-set -e
+# Url shortening via github.com/meain/sirus
 
+set -eo pipefail
+
+[ -z "$1" ] && echo "usage: url-shorten <url> <code>" && exit 1
 if [ -n $2 ]; then
-	URLID="&id=$2"
+	URLID=", \"code\":\"$2\""
 else
 	URLID=""
 fi
 
-url="$(curl --silent "https://r.meain.io/shorten/?url=$1$URLID" \
-	-H "Authorization: Token $R_MEAIN_IO_TOKEN" | tee /tmp/urlshort-output | jq -r .url)"
+url="$(curl -X POST --silent "https://r.meain.io" --data "{\"url\": \"$1\"$URLID}" \
+	-H "Authorization: Basic $R_MEAIN_IO_TOKEN")"
 
-if [ $url == "null" ]; then
-	echo "Error:" "$(jq -r .message /tmp/urlshort-output)"
+if [ "$url" != http* ]; then
+	echo $url
 else
 	echo "Url: $url"
 	echo "$url" | pbcopy
