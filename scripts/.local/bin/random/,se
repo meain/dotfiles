@@ -7,4 +7,7 @@ set -eo pipefail
 script="$(find -L "$HOME/.local/bin" -type f | sed "s|$HOME/.local/bin/||" |
 	,picker -p "Run script: ")"
 
-zsh -ic "$HOME/.local/bin/$script" | xargs -0 -I{} notify-send "[DONE] $script" "{}"
+tmpfile="/tmp/$(xxd -l13 -ps /dev/urandom)"
+zsh -ic "$HOME/.local/bin/$script" | tee $tmpfile
+
+[ "$GUI_PICKER" = 1 ] && notify-send "[DONE] $script" "$(cat $tmpfile)"
