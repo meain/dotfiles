@@ -108,7 +108,7 @@ export TS_MAXFINISHED="13"
 
 # fzf
 export FZF_DEFAULT_OPTS='
-    -1 -0
+    -0
     --prompt=" "
     --inline-info
     --reverse --height "40%"
