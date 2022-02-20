@@ -3,7 +3,7 @@
 set -e
 
 if ! ,mail-unread | grep -q .; then
-	notify "No unread emails" "You are good for now. You got nothing to do." && exit
+	notify "No unread emails" && exit
 fi
 
 notiresp="$(,mail-unread | cut -d' ' -f3- |

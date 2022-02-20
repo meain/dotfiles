@@ -5,7 +5,9 @@
 set -e
 
 if [ $OSTYPE == "linux-gnu" ]; then
-    notify-desktop "${1:-Notification}" "${2}" >/dev/null 2>/dev/null
+	notify-desktop "${1:-Notification}" "${2}" >/dev/null 2>/dev/null
 else
-	osascript -e "display notification \"${2-'Task complete'}\" with title \"${1:-'Notification'}\""
+	[ -n $2 ] &&
+		osascript -e "display notification \"${2}\" with title \"${1}\"" ||
+		osascript -e "display notification \"${1}\" with title \"Notification\""
 fi
