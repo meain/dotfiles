@@ -5,6 +5,8 @@ font pango:Anka/Coder 7
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
 exec --no-startup-id guake
+exec --no-startup-id warpd
+exec --no-startup-id mpd
 exec --no-startup-id cbatticon
 exec --no-startup-id clipmenud
 exec --no-startup-id blueman-applet
