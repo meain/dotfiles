@@ -5,4 +5,4 @@
 set -e
 
 cmd="$1" && shift
-nix-shell --run $SHELL -p "$cmd" --command "$cmd" $*
+nix-shell --run $SHELL -p "$cmd" --command "'$cmd' $*"
