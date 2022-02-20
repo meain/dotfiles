@@ -124,6 +124,7 @@ workspace $ws1 output eDP
 workspace $ws2 output eDP
 workspace $ws3 output DisplayPort-0
 workspace $ws4 output DisplayPort-0
+workspace $ws5 output DisplayPort-0
 workspace $ws9 output HDMI-A-0
 workspace $ws10 output HDMI-A-0
 
