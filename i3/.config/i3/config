@@ -151,13 +151,14 @@ bindsym $mod+Shift+0 move container to workspace number $ws10
 
 # other keybinds
 bindsym $mod+Mod1+Control+u exec "zsh -ic ,mail-unread-notify"
-bindsym $mod+Mod1+Control+Shift+u exec "zsh -ic 'notmuch tag +notified tag:imbox and tag:unread'"
+bindsym $mod+Mod1+Control+Shift+u exec "zsh -ic 'notmuch tag +notified tag:imbox and tag:unread && notify \\"All emails marked read\\"'"
 bindsym $mod+Mod1+Control+i exec "GUI_PICKER=1 zsh -ic ,se"
-bindsym $mod+Mod1+Control+p exec "clipmenu -i -fn 'Anka/Coder:size=8' -nb '#000000' -nf '#aaaaaa' -sb '#263238' -sf '#ffffff'"
+bindsym $mod+Mod1+Control+p exec "zsh -ic \\"clipmenu -i -fn 'Anka/Coder:size=8' -nb '#000000' -nf '#aaaaaa' -sb '#263238' -sf '#ffffff'\\""
 bindsym $mod+Mod1+Control+o exec "zsh -ic 'import $HOME/Pictures/Screenshots/$(date +%Y-%m-%d-%H-%M-%S).png'"
 bindsym $mod+Mod1+Control+Shift+o exec "zsh -ic 'ls -t $HOME/Pictures/Screenshots|head -n1|xargs -I{} pcmanfm $HOME/Pictures/Screenshots/{}'"
 bindsym $mod+Mod1+Control+j exec "zsh -ic ,thing-for-today-popup && i3-msg floating toggle"
 bindsym $mod+Mod1+Control+l exec pcmanfm
+bindsym $mod+Mod1+Control+m exec "zsh -ic ',song | xargs -0 notify'"
 
 # i3 keybindings
 bindsym $mod+Shift+c reload
