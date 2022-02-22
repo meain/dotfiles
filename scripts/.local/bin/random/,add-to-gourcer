@@ -3,14 +3,23 @@
 set -e
 
 [ -z "$1" ] && URL="$(pbpaste)" || URL="$1"
+
+if ! echo "$URL" | grep -qE '^http'; then
+	echo "Not a url" && exit 1
+fi
 echo "$URL" | grep -q '[#?]' && echo "Invalid git url. Url contains [#?]" && exit 1
 
 cat $VIME_PATH/gourcer $GOURCER_PATH/pending |
 	grep -q "$URL" && echo "[Already available] $URL" && exit 0
+
+if echo "$URL" | grep -q github.com; then
+	stars="$(curl -s "$URL" | pup '.js-social-count attr{aria-label}' | grep 'starred this repository' | cut -d' ' -f1)"
+	[ -n "$stars" ] && [ $stars -le 50 ] && echo "[Not enought stars ($stars)] $URL" && exit 0
+fi
+
 if echo "$URL" | grep -qE "^http"; then
 	echo "- $URL" >>$VIME_PATH/gourcer
-    echo "$URL added to grourcer list"
+	echo "[$stars] $URL added to grourcer list"
 else
 	echo "[Invalid url] $URL"
 fi
-# exit 1 will mess with newsboat

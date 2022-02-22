@@ -7,8 +7,10 @@ set -e
 
 url="$1"
 mstars="${2:-50}"
-stars="$(curl -s "$url" | pup '.social-count.js-social-count attr{aria-label}'|grep 'starred this repository'|cut -d' ' -f1)"
+stars="$(curl -s "$url" |
+	pup '.social-count.js-social-count attr{aria-label}' |
+	grep 'starred this repository' | cut -d' ' -f1)"
 
-if [ $mstars -le $stars ];then
-   echo "$url"
+if [ $mstars -le $stars ]; then
+	echo "$url"
 fi
