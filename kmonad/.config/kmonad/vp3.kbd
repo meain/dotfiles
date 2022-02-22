@@ -1,6 +1,6 @@
 (defcfg
   input  (device-file "/dev/input/by-id/usb-04d9_USB_Keyboard-event-kbd")
-  output (uinput-sink "kmonad-board")
+  output (uinput-sink "vp3-kmonad-board")
   fallthrough true
   allow-cmd true
 )
