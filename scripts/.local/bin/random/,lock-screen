@@ -11,4 +11,4 @@ set -e
 # i3lock -fei /tmp/lockscreen.png
 # i3lock -fec 333333
 # find $HOME/Pictures/Lockscreen -name '*.png' | shuf -n1 | xargs i3lock -ftei
-i3lock -ftei $HOME/Pictures/Lockscreen/current
+i3lock -ftec "$(xxd -l3 -ps /dev/urandom)" 
