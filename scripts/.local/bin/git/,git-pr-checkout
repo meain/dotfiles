@@ -11,5 +11,5 @@ printf "Branch name: " && read -r
 branch="$REPLY"
 upstream="upstream"
 git remote | grep -q upstream || upstream="origin"
-git fetch $upstream pull/$pr/head $branch
+git fetch $upstream pull/$pr/head:$branch
 git checkout $branch
