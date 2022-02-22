@@ -82,7 +82,7 @@ in
     pkgs.xclip # clipboard
     # pkgs.wl-clipboard
     pkgs.bandwhich # view network stats (alt: nethogs)
-    # pkgs.xdotool # for window switching
+    pkgs.xdotool # for window switching
     pkgs.picotts # for say
     # personal.dmenu # menu stuff (fork for emojis)
 
@@ -105,6 +105,7 @@ in
     # taskwarrior # task management
     pkgs.todo-txt-cli # todo management
     # pkgs.pkgs.ts # task spooler
+    pkgs.pup # html filtering
     pkgs.pkgs.jiq # interactive jiq
     # pkgs.pkgs.tldr # simpler man pages
     # pkgs.pkgs.silicon # create pretty code screenshots
