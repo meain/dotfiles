@@ -46,12 +46,11 @@ alias ta='tmux attach -t'
 alias tn='tmux new-session -s'
 alias tl='tmux list-sessions'
 
-# vim
+# editors
 alias vim='nvim'
 alias ivm='nvim'
-
-# emacs/editor
 alias e="emacsclient  -a '' --no-wait -c"
+alias et='emacsclient -nw'
 
 # remote
 alias ,remote-work="ssh $EXPERIMENT_VM"
