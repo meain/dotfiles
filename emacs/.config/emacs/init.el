@@ -945,6 +945,8 @@ Pass ORIGINAL and ALTERNATE options."
          (web-mode . eglot-ensure)
          (lua-mode . eglot-ensure)
          (go-mode . eglot-ensure)
+         (markdown-mode . eglot-ensure)
+         (gfm-mode . eglot-ensure)
          (json-mode . eglot-ensure)
          (yaml-mode . eglot-ensure))
   :config
@@ -953,7 +955,8 @@ Pass ORIGINAL and ALTERNATE options."
   (add-to-list 'eglot-server-programs '(yaml-mode . ("yaml-language-server" "--stdio")))
   (add-to-list 'eglot-server-programs '(json-mode . ("vscode-json-languageserver" "--stdio")))
   ;; Can be enabled on fiction like things
-  (add-to-list 'eglot-server-programs '(markdown-mode . ("unified-language-server" "--parser=remark-parse" "--stdio")))
+  ;; (add-to-list 'eglot-server-programs '(markdown-mode . ("unified-language-server" "--parser=remark-parse" "--stdio")))
+  (add-to-list 'eglot-server-programs '(markdown-mode . ("prosemd-lsp" "--stdio"))) ;; to be used in combination with flyspell
   (add-to-list 'eglot-server-programs '(rust-mode . ("rust-analyzer")))
   (add-to-list 'eglot-server-programs '(python-mode . ("pylsp")))
   (add-to-list 'eglot-server-programs '(nix-mode . ("rnix-lsp")))

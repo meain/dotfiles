@@ -187,8 +187,9 @@ in
     pkgs.nodePackages.lua-fmt
 
     # programming-other
-    pkgs.nodePackages.yaml-language-server
-    pkgs.nodePackages.vscode-json-languageserver
+    pkgs.nodePackages.yaml-language-server # language server for yaml
+    pkgs.nodePackages.vscode-json-languageserver # language server for json
+    personal.prosemd-lsp
 
     # gui
     pkgs.mpv # audio/video player
