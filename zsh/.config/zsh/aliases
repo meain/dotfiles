@@ -67,11 +67,7 @@ alias gd='git diff'
 alias gds='git diff --staged'
 alias gdp="git diff @{1}.."
 alias glp="git lg @{1}.."
-alias gcom='git checkout master'
 alias gcob='git checkout -b'
-alias grr='git pull upstream master --rebase'
-alias gor='git pull origin master --rebase'
-alias glr='git rebase master'
 
 # utils
 alias ppid='ps -o ppid= -p'
