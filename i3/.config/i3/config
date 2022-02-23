@@ -39,6 +39,9 @@ bindsym $mod+Return exec sakura
 bindsym $mod+e exec emacsclient -nc -a ''
 bindsym $mod+t exec emacsclient -cne '(vterm \"terminal\")' -a ''
 
+# default floating apps
+for_window [class="blueman-manager-wrapped"] floating enable
+
 # scratchpad
 bindsym $mod+Shift+i move scratchpad
 bindsym $mod+i scratchpad show
