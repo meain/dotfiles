@@ -16,8 +16,9 @@
 (let ((bootstrap-file (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
       (bootstrap-version 5))
   (unless (file-exists-p bootstrap-file)
-    (with-current-buffer (url-retrieve-synchronously "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-                                                     'silent 'inhibit-cookies)
+    (with-current-buffer
+        (url-retrieve-synchronously "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+                                    'silent 'inhibit-cookies)
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
@@ -1545,10 +1546,6 @@ Pass ORIGINAL and ALTERNATE options."
   (setq org-agenda-files (list "~/.local/share/org/master.org"))
   (setq org-log-done 'time)
   (setq org-todo-keywords '((sequence "TODO" "|" "DONE" "CANCELLED")))
-  (evil-leader/set-key "m"
-    (lambda ()
-      (interactive)
-      (find-file "~/.local/share/org/master.org")))
   (global-set-key (kbd "M-f j") 'org-agenda-list)
   (evil-define-key 'normal org-mode-map (kbd "M-l") 'meain/move-swap-right)
   (evil-define-key 'normal org-mode-map (kbd "M-h") 'meain/move-swap-left)
@@ -1562,6 +1559,12 @@ Pass ORIGINAL and ALTERNATE options."
   (evil-define-key 'normal org-mode-map (kbd "gL") 'org-demote-subtree)
   (evil-define-key 'normal org-mode-map (kbd "gt") 'org-todo)
   (evil-define-key 'normal org-mode-map (kbd "gr") 'org-ctrl-c-ctrl-c))
+;; for kmonad files
+(use-package kbd-mode
+  :defer t
+  :mode "\\.kbd\\'"
+  :straight (kbd-mode :host github
+                      :repo "kmonad/kbd-mode"))
 
 ;; TODO: convert to major mode
 ;; still gets early loaded as it is in load path
