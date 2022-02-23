@@ -7,8 +7,8 @@ if echo "$CURRENT_PANE" | grep -q '^popup.*'; then
     tmux detach-client
 else
     if [ "$1" = "single" ]; then
-        tmux popup -d '#{pane_current_path}' -x100% -y0% -w50% -h50% -K -E -R "tmux attach -t 'popup-$CURRENT_PANE' || tmux new -s 'popup-$CURRENT_PANE'" || true
+        tmux popup -d '#{pane_current_path}' -x100% -y0% -w50% -h50% -E "tmux attach -t 'popup-$CURRENT_PANE' || tmux new -s 'popup-$CURRENT_PANE'" || true
     else
-        tmux popup -x100% -y0% -w50% -h50% -K -E -R "tmux attach -t popup-master || tmux new -s popup-master" || true
+        tmux popup -x100% -y0% -w50% -h50% -E "tmux attach -t popup-master || tmux new -s popup-master" || true
     fi
 fi

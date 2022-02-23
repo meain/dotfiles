@@ -259,6 +259,7 @@ in
     # pkgs.comby # structural search/editing of code
     # pkgs.visidata # data visualization
     pkgs.i3-auto-layout # automatic layout switching in i3
+    pkgs.dragon-drop
 
     # gnome tweaking
     # pkgs.gnome3.dconf-editor # change dconf settings

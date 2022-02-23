@@ -5,18 +5,18 @@ set -e
 [ -z "$1" ] && exit
 if echo "$1" | grep -qE '^xhttps?\:\/\/[a-z0-9_\.\?\&\=#-]+'; then
    URL="$(echo "$1" | cut -c2-)" # this is from the seperator in neomutt
-   tmux popup -w90% -h90% -KE -d '#{pane_current_path}' -R "open '$URL'"
+   tmux popup -w90% -h90% -E -d '#{pane_current_path}' "open '$URL'"
 elif echo "$1" | grep -qE '^https?\:\/\/[a-z0-9_\.\?\&\=#-]+'; then
-   tmux popup -w90% -h90% -KE -d '#{pane_current_path}' -R "open '$1'"
+   tmux popup -w90% -h90% -E -d '#{pane_current_path}' "open '$1'"
 elif echo "$1" | grep -qE '^E\d{4}`\.'; then
    ERR=$(echo "$1" | cut -c1-5)
-   tmux popup -w50% -h80% -KER "rustc --explain '$ERR'"
+   tmux popup -w50% -h80% -E "rustc --explain '$ERR'"
 elif [ -f "$1" ]; then
-   tmux popup -w90% -h90% -KE -d '#{pane_current_path}' -R "nvim '$1'"
+   tmux popup -w90% -h90% -E -d '#{pane_current_path}' "nvim '$1'"
 elif [ -d "$1" ]; then
-   tmux popup -w90% -h90% -KE -d '#{pane_current_path}' -R "lf '$1'"
+   tmux popup -w90% -h90% -E -d '#{pane_current_path}' "lf '$1'"
 elif git log --format=format:%H | grep -q "$1"; then
-   tmux popup -w90% -h90% -KE -d '#{pane_current_path}' -R \
+   tmux popup -w90% -h90% -E -d '#{pane_current_path}' \
       "git log --format=format:%H | grep '$1' | xargs git show;read"
 else
    echo "$1" | pbcopy

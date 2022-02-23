@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -e
+
+filename="$HOME/Pictures/Screenshots/$(date +%Y-%m-%d-%H-%M-%S).png"
+
+[ "$1" == "full" ] &&
+	import -window root "$filename" ||
+	import "$filename"
+
+echo "$filename" | pbcopy
