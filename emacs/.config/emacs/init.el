@@ -726,43 +726,123 @@ Pass ORIGINAL and ALTERNATE options."
             (lambda ()
               (add-hook 'flymake-diagnostic-functions 'flymake-pylint nil t)))
 
-  ;; https://pkg.go.dev/cmd/vet
-  (flymake-quickdef-backend flymake-govet
-    :pre-let ((govet-exec (executable-find "go")))
-    :pre-check (unless govet-exec (error "Cannot find govet executable"))
-    :write-type 'file
-    :proc-form (list govet-exec fmqd-temp-file)
-    :search-regexp "^\\([^:]+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\): \\(.*\\)$"
-    :prep-diagnostic (let* ((lnum (string-to-number (match-string 2)))
-                            (col (string-to-number (match-string 3)))
-                            (text (match-string 4))
-                            (pos (flymake-diag-region fmqd-source lnum col))
-                            (beg (car pos))
-                            (end (cdr pos))
-                            (msg (format "govet> %s" text)))
-                       (list fmqd-source beg end :warning msg)))
-  (add-hook 'go-mode-hook
-            (lambda ()
-              (add-hook 'flymake-diagnostic-functions 'flymake-govet nil t)))
+  ;; TODO: vet/golangci-lint/errcheck cannot be run on temp file nor or a single file (it needs project context)
+  ;; ;; https://pkg.go.dev/cmd/vet
+  ;; (flymake-quickdef-backend flymake-govet
+  ;;   :pre-let ((govet-exec (executable-find "go")))
+  ;;   :pre-check (unless govet-exec (error "Cannot find govet executable"))
+  ;;   :write-type 'file
+  ;;   :proc-form (list govet-exec "vet" fmqd-temp-file)
+  ;;   :search-regexp "^\\([^:]+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\): \\(.*\\)$"
+  ;;   :prep-diagnostic (let* ((lnum (string-to-number (match-string 2)))
+  ;;                           (col (string-to-number (match-string 3)))
+  ;;                           (text (match-string 4))
+  ;;                           (pos (flymake-diag-region fmqd-source lnum col))
+  ;;                           (beg (car pos))
+  ;;                           (end (cdr pos))
+  ;;                           (msg (format "govet> %s" text)))
+  ;;                      (list fmqd-source beg end :warning msg)))
+  ;; (add-hook 'go-mode-hook
+  ;;           (lambda ()
+  ;;             (add-hook 'flymake-diagnostic-functions 'flymake-govet nil t)))
 
-  ;; https://github.com/golangci/golangci-lint
-  (flymake-quickdef-backend flymake-golangci
-    :pre-let ((golangci-exec (executable-find "golangci-lint")))
-    :pre-check (unless golangci-exec (error "Cannot find golangci-lint executable"))
+  ;; ;; https://github.com/golangci/golangci-lint
+  ;; (flymake-quickdef-backend flymake-golangci
+  ;;   :pre-let ((golangci-exec (executable-find "golangci-lint")))
+  ;;   :pre-check (unless golangci-exec (error "Cannot find golangci-lint executable"))
+  ;;   :write-type 'file
+  ;;   :proc-form (list golangci-exec "run" "--print-issued-lines=false" "--out-format=line-number" fmqd-temp-file)
+  ;;   :search-regexp "^\\([^:]+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\): \\(.*\\)$"
+  ;;   :prep-diagnostic (let* ((lnum (string-to-number (match-string 2)))
+  ;;                           (col (string-to-number (match-string 3)))
+  ;;                           (text (match-string 4))
+  ;;                           (pos (flymake-diag-region fmqd-source lnum col))
+  ;;                           (beg (car pos))
+  ;;                           (end (cdr pos))
+  ;;                           (msg (format "golangci> %s" text)))
+  ;;                      (list fmqd-source beg end :warning msg)))
+  ;; (add-hook 'go-mode-hook
+  ;;           (lambda ()
+  ;;             (add-hook 'flymake-diagnostic-functions 'flymake-golangci nil t)))
+
+  ;; ;; https://github.com/kisielk/errcheck
+  ;; (flymake-quickdef-backend flymake-errcheck
+  ;;   :pre-let ((errcheck-exec (executable-find "errcheck")))
+  ;;   :pre-check (unless errcheck-exec (error "Cannot find errcheck executable"))
+  ;;   :write-type 'file
+  ;;   :proc-form (list errcheck-exec fmqd-temp-file)
+  ;;   :search-regexp "^\\([^:]+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\): \\(.*\\)$"
+  ;;   :prep-diagnostic (let* ((lnum (string-to-number (match-string 2)))
+  ;;                           (col (string-to-number (match-string 3)))
+  ;;                           (text (match-string 4))
+  ;;                           (pos (flymake-diag-region fmqd-source lnum col))
+  ;;                           (beg (car pos))
+  ;;                           (end (cdr pos))
+  ;;                           (msg (format "golangci> %s" text)))
+  ;;                      (list fmqd-source beg end :warning msg)))
+  ;; (add-hook 'go-mode-hook
+  ;;           (lambda ()
+  ;;             (add-hook 'flymake-diagnostic-functions 'flymake-errcheck nil t)))
+
+  ;; https://github.com/hadolint/hadolint
+  (flymake-quickdef-backend flymake-hadolint
+    :pre-let ((hadolint-exec (executable-find "hadolint")))
+    :pre-check (unless hadolint-exec (error "Cannot find hadolint executable"))
     :write-type 'file
-    :proc-form (list golangci-exec "--print-issued-lines=false" "--out-format=line-number" fmqd-temp-file)
-    :search-regexp "^\\([^:]+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\): \\(.*\\)$"
+    :proc-form (list hadolint-exec "--no-color" fmqd-temp-file)
+    :search-regexp "^\\([^:]+\\):\\([[:digit:]]+\\) \\(.*\\)$"
+    :prep-diagnostic (let* ((lnum (string-to-number (match-string 2)))
+                            (col 0)
+                            (text (match-string 3))
+                            (pos (flymake-diag-region fmqd-source lnum col))
+                            (beg (car pos))
+                            (end (cdr pos))
+                            (msg (format "hadolint> %s" text)))
+                       (list fmqd-source beg end :warning msg)))
+  (add-hook 'dockerfile-mode-hook
+            (lambda ()
+              (add-hook 'flymake-diagnostic-functions 'flymake-hadolint nil t)))
+
+  ;; https://github.com/DavidAnson/markdownlint
+  (flymake-quickdef-backend flymake-markdownlint
+    :pre-let ((markdownlint-exec (executable-find "markdownlint")))
+    :pre-check (unless markdownlint-exec (error "Cannot find markdownlint executable"))
+    :write-type 'file
+    :proc-form (list markdownlint-exec "-c" (concat (getenv "HOME") "/.config/markdownlint/config.yaml") fmqd-temp-file)
+    :search-regexp "^\\([^:]+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\) \\(.*\\)$"
     :prep-diagnostic (let* ((lnum (string-to-number (match-string 2)))
                             (col (string-to-number (match-string 3)))
                             (text (match-string 4))
                             (pos (flymake-diag-region fmqd-source lnum col))
                             (beg (car pos))
                             (end (cdr pos))
-                            (msg (format "golangci> %s" text)))
+                            (msg (format "markdownlint> %s" text)))
                        (list fmqd-source beg end :warning msg)))
-  (add-hook 'go-mode-hook
+  (add-hook 'markdown-mode-hook
             (lambda ()
-              (add-hook 'flymake-diagnostic-functions 'flymake-golangci nil t))))
+              (add-hook 'flymake-diagnostic-functions 'flymake-markdownlint nil t)))
+  (add-hook 'gfm-mode-hook
+            (lambda ()
+              (add-hook 'flymake-diagnostic-functions 'flymake-markdownlint nil t)))
+
+  ;; jsonlint
+  (flymake-quickdef-backend flymake-jsonlint
+    :pre-let ((jsonlint-exec (executable-find "jsonlint")))
+    :pre-check (unless jsonlint-exec (error "Cannot find jsonlint executable"))
+    :write-type 'file
+    :proc-form (list jsonlint-exec "-c" "-q" fmqd-temp-file)
+    :search-regexp "^\\([^:]+\\): line \\([[:digit:]]+\\), col \\([[:digit:]]+\\), \\(.*\\)$"
+    :prep-diagnostic (let* ((lnum (string-to-number (match-string 2)))
+                            (col (string-to-number (match-string 3)))
+                            (text (match-string 4))
+                            (pos (flymake-diag-region fmqd-source lnum col))
+                            (beg (car pos))
+                            (end (cdr pos))
+                            (msg (format "jsonlint> %s" text)))
+                       (list fmqd-source beg end :warning msg)))
+  (add-hook 'json-mode-hook
+            (lambda ()
+              (add-hook 'flymake-diagnostic-functions 'flymake-jsonlint nil t))))
 
 ;; Company for autocompletions
 (use-package company
@@ -991,10 +1071,7 @@ Pass ORIGINAL and ALTERNATE options."
                                            :newText ,res)])
         (org-mode))
       (pop-to-buffer buffer)))
-  (cl-defmethod eglot-execute-command
-    ((server eglot-sqls)
-     (_cmd (eql switchDatabase))
-     arguments)
+  (cl-defmethod eglot-execute-command ((server eglot-sqls) (_cmd (eql switchDatabase)) arguments)
     "For switchDatabase."
     (let* ((res (jsonrpc-request server :workspace/executeCommand
                                  `(:command "showDatabases" :arguments ,arguments :timeout 0.5)))

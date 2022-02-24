@@ -113,6 +113,7 @@ in
     # pkgs.pkgs.kube-prompt # interactive kubernetes cli
     # pkgs.pkgs.cowsay # useless stuff
     # pkgs.podman # pod manager
+    pkgs.typos # typo checker (integrated with flymake)
 
     # programming
     # pkgs.gist # create gist
@@ -129,6 +130,8 @@ in
     pkgs.godef # language server helper
     pkgs.go-langserver # go language-server
     pkgs.goimports # go formatter
+    pkgs.go-tools # installing staticcheck (technically available in golangci-lint, but for use in lsp)
+    pkgs.errcheck # available in golangci-lint, but still
     pkgs.golangci-lint # all kinds of linters for go
     pkgs.delve # debugging in go
 
@@ -136,7 +139,6 @@ in
     pkgs.html-tidy # html formatter
     pkgs.nodejs # nodejs
     # pkgs.nodePackages.neovim # neovim package for js support
-    pkgs.nodePackages.fixjson # much better json formatter
     pkgs.nodePackages.stylelint # css linter
     pkgs.nodePackages.prettier # formatting for web stuff
     # pkgs.nodePackages.pnpm # package management
@@ -190,6 +192,10 @@ in
     pkgs.nodePackages.yaml-language-server # language server for yaml
     pkgs.nodePackages.vscode-json-languageserver # language server for json
     personal.prosemd-lsp
+    pkgs.nodePackages.fixjson # much better json formatter
+    pkgs.nodePackages.jsonlint # json linting
+    pkgs.nodePackages.markdownlint-cli # markdown linter
+    pkgs.hadolint # Dockerfile lint
 
     # gui
     pkgs.mpv # audio/video player
