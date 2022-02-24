@@ -1066,6 +1066,7 @@ Pass ORIGINAL and ALTERNATE options."
   :init
   (evil-leader/set-key "gg" 'magit-status)
   (evil-leader/set-key "gc" 'magit-commit-create)
+  (evil-leader/set-key "gG" 'magit-show-commit)
   :config
   ;; make <escape> quit(go back one level) in magit popups
   (define-key transient-map (kbd "<escape>") 'transient-quit-one)
@@ -1106,15 +1107,18 @@ Pass ORIGINAL and ALTERNATE options."
   (evil-leader/set-key "gn" 'diff-hl-next-hunk)
   (evil-leader/set-key "gp" 'diff-hl-previous-hunk))
 
-;; Git messenger
-(use-package git-messenger
+;; Git blame info
+(use-package blamer
   :straight t
-  :commands git-messenger:popup-message
-  :init (evil-leader/set-key "G" 'git-messenger:popup-message)
+  :commands (blamer-show-commit-info blamer-mode global-blamer-mode)
+  :custom
+  (blamer-idle-time 0.1)
+  (blamer-min-offset 30)
   :config
-  (define-key git-messenger-map (kbd "y") 'git-messenger:copy-message)
-  (setq git-messenger:show-detail t)
-  (setq git-messenger:use-magit-popup t))
+  (set-face-attribute 'blamer-face nil :height 0.9)
+  (setq blamer-max-commit-message-length 90)
+  (setq blamer-border-lines '(?+ ?- ?+ ?| ?+ ?+ )) ;; default one creates issues with spacing
+  :init (evil-leader/set-key "G" 'blamer-show-commit-info))
 
 ;; Matchit
 (use-package evil-matchit
