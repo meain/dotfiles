@@ -198,7 +198,7 @@ default_border pixel 5
 # gaps inner all set 20
 
 # Styling               border  backgr. text    indicator child_border
-client.focused          #FFFFFF #FFFFFF #FFFFFF #F2F2F2   #FFFFFF
+client.focused          #FFFFFF #FFFFFF #000000 #F2F2F2   #FFFFFF
 client.focused_inactive #000000 #000000 #FFFFFF #000000   #000000
 client.unfocused        #000000 #000000 #FFFFFF #000000   #000000
 client.urgent           #900000 #900000 #FFFFFF #900000   #900000
