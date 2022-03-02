@@ -2,11 +2,13 @@
 
 set -e
 
-[ "$1" == 'fetch' ] &&
-	curl 'http://wttr.in/Aloor?format=+%C|+%t|+%f|+%h|+%p|+%w' >/tmp/weather-current &&
-	exit 0
+fetch_weather() {
+	curl "https://wttr.in/$WEATHER_LOC?format=+%C|+%t|+%f|+%h|+%p|+%w" >/tmp/weather-current &&
+		sed 's/  / /g;s/| /|/g;s/^ //;s/°C//g' /tmp/weather-current | awk -F'|' '{print $2"/"$3":"$4}' >/tmp/weather-minimal
+}
 
-[ -f /tmp/weather-current ] ||
-	curl -s 'http://wttr.in/Aloor?format=+%C|+%t|+%f|+%h|+%p|+%w' >/tmp/weather-current
+[ "$1" == 'fetch' ] && fetch_weather && exit 0
+[ -f /tmp/weather-current ] || fetch_weather
+
 sed 's/  / /g;s/| /|/g;s/^ //' /tmp/weather-current |
 	awk -F'|' '{print $1,$2"("$3") with",$4,"humidity and",$6,"speed winds"}'
