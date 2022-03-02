@@ -1008,7 +1008,7 @@ Pass ORIGINAL and ALTERNATE options."
     (:languages "JSON")
     (:features)
     (:format (format-all--buffer-easy executable)))
-  (setq-default format-all-formatters '(("HTML" prettier) ("Go" goimports) ("JSON" fixjson) ("Nix" nixpkgs-fmt)))
+  (setq-default format-all-formatters '(("HTML" prettier) ("Go" goimports) ("JSON" fixjson) ("Nix" nixpkgs-fmt) ("Shell" shfmt)))
   (add-hook 'prog-mode-hook 'format-all-ensure-formatter)
   :init (define-key evil-normal-state-map (kbd ",,") 'format-all-buffer))
 
