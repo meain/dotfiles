@@ -167,7 +167,7 @@ bindsym $mod+Mod1+Control+o exec "zsh -ic ',screenshot'"
 bindsym $mod+Mod1+Control+Shift+o exec "zsh -ic ',screenshot full'"
 bindsym $mod+Mod1+Control+j exec "zsh -ic ,thing-for-today-popup && i3-msg floating toggle"
 bindsym $mod+Mod1+Control+l exec pcmanfm
-bindsym $mod+Mod1+Control+Shift+l exec "zsh -ic 'dragon $(pbpaste)'"
+bindsym $mod+Mod1+Control+Shift+l exec "zsh -ic 'dragon -x $(pbpaste)'"
 bindsym $mod+Mod1+Control+m exec "zsh -ic ',song | xargs -0 notify'"
 
 # i3 keybindings
