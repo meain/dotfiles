@@ -4,6 +4,7 @@ general {
 }
 
 order += "read_file shellout"
+order += "read_file weather"
 order += "wireless _first_"
 order += "ethernet _first_"
 order += "volume master"
@@ -13,8 +14,14 @@ order += "memory"
 order += "battery 0"
 order += "tztime local"
 
+
 read_file shellout {
           path = "/tmp/shellout"
+          format_bad = "..."
+}
+
+read_file weather {
+          path = "/tmp/weather-minimal"
           format_bad = "..."
 }
 
