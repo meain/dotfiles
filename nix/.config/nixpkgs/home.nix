@@ -608,7 +608,7 @@ in
     Install.WantedBy = [ "default.target" ];
   };
   systemd.user.timers.weather-pull = {
-    Timer.OnCalendar = "*-*-* *:00:00";
+    Timer.OnCalendar = "*:0/30";
     Timer.Persistent = true;
     Install.WantedBy = [ "timers.target" ];
   };
