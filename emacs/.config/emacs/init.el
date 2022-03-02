@@ -224,7 +224,7 @@
                            (string-join (reverse (cl-subseq (reverse (split-string x "/")) 0 2)) "/")
                            'action (lambda (_buton) (find-file x))
                            'follow-link t))
-                        (cl-subseq recentf-list 0 3))))))
+                        (cl-subseq recentf-list 0 (min 3 (length recentf-list))))))))
 
 
 ;; macro for alternate pattern
