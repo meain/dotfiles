@@ -21,9 +21,11 @@
   bype (tap-hold 180 bspc (around lmet (around lalt lsft)))
   qctl (tap-next-release ' lctl)
   spl (tap-next-release space lmet)
-  super (tap-next-release up (layer-toggle symbols))
+  super (tap-next-release up lmet)
   dctl (tap-hold 180 down lctl)
   nav (tap-next-release d (layer-toggle custom))
+  me (tap-macro m e a i n . i o) ;; just pointless fun
+  dsh (multi-tap 200 rsft M-s)
 )
 
 
@@ -31,7 +33,7 @@
   grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
 @hype  q    w    e    r    t    y    u    i    o    p    [    ]    @pipe
  @ealt a    s    @nav f    g    h    j    k    l    ;    @qctl ret
-  lsft z    x    c    v    b    n    m    ,    .    /    rsft
+  lsft z    x    c    v    b    n    m    ,    .    /    @dsh
 @super @salt @dctl          @spl         left rmet cmp   rght
 )
 
@@ -45,16 +47,8 @@
 
 (deflayer custom
   _    _    _    _    _    _    _    _    _    _    _    _    _    del
-  _    _    _    _    _    _    +    \(   \)   *    _    _    _    _
+  _    _    _    _    _    _    +    \(   *    \)   _    _    _    _
   _    _    _    _    _    _    left down up   rght _    _    _
-  _    _    _    caps _    _    [    ]    _    _    _    _
-  _    _    _              _              _    _    _    _
-)
-
-(deflayer symbols
-  _    _    _    _    _    _    _    _    _    _    _    _    _    del
-  _    _    _    _    _    _    _    [    ]    _    _    _    _    _
-  _    _    _    _    _    _    _    \(   \)   _    _    _    _
-  _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    caps _    _    [    ]    _    @me  _    _
   _    _    _              _              _    _    _    _
 )
