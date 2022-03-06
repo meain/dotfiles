@@ -13,7 +13,6 @@ exec --no-startup-id blueman-applet
 exec --no-startup-id kdeconnect-indicator
 exec_always --no-startup-id xset r rate 220 33
 exec_always --no-startup-id xinput set-prop "ETPS/2 Elantech Touchpad" "libinput Tapping Enabled" 1
-exec_always --no-startup-id i3-auto-layout
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
