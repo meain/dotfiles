@@ -1,0 +1,5 @@
+#!/bin/sh
+
+set -e
+
+bluetoothctl devices | ,picker | awk '{print $2}' | xargs bluetoothctl connect
