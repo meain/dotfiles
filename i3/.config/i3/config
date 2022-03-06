@@ -208,6 +208,7 @@ client.placeholder      #000000 #000000 #FFFFFF #000000   #000000
 
 # i3bar to display a workspace bar
 bar {
+   # tray_output eDP
    status_command i3status
 
    colors {
