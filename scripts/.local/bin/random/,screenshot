@@ -2,10 +2,12 @@
 
 set -e
 
-filename="$HOME/Pictures/Screenshots/$(date +%Y-%m-%d-%H-%M-%S).png"
+curdate="$(date +%Y-%m-%d-%H-%M-%S)"
+filename="$HOME/Pictures/Screenshots/$curdate.png"
 
 [ "$1" == "full" ] &&
 	import -window root "$filename" ||
 	import "$filename"
 
 echo "$filename" | pbcopy
+notify "Shotty (${1:-region})"
