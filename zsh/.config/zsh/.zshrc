@@ -123,6 +123,14 @@ fi
 
 # setup direnv
 eval "$(direnv hook zsh)"
+copy_function() {
+	test -n "$(declare -f "$1")" || return 
+	eval "${_/$1/$2}"
+}
+copy_function _direnv_hook _direnv_hook__old
+_direnv_hook() {
+	_direnv_hook__old "$@" 2> >(egrep -v '^direnv: (export|using nix|using cached|eval /)')
+}
 
 ,darkmode quiet # set dark or light mode
 export ZSH_LOADED=1
