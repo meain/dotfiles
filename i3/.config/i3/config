@@ -1,5 +1,5 @@
 set $mod Mod4
-font pango:Anka/Coder 7
+font pango:CQ Mono 9
 
 # Startup entries
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
