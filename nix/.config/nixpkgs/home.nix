@@ -213,7 +213,7 @@ in
 
     # others
     # pkgs.redis # key value db
-    # pkgs.postgresql_13 # postgres 13 (postgresql is at 11)
+    pkgs.postgresql_13 # postgres 13 (postgresql is at 11)
     # pkgs.mongodb # document db
     # pkgs.sqlite # better db
     # pkgs.minikube # mini kubernetes
