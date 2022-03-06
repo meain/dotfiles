@@ -19,18 +19,18 @@
 ;; (set-frame-parameter nil 'undecorated t)
 
 ;; Font setup
-;; iA Writer Mono S 14 | Inconsolata 16 | Fantasque Sans Mono 16 | JetBrains Mono 14
+;; iA Writer Mono S 14 | Inconsolata 16 | Fantasque Sans Mono 10 | JetBrains Mono 14
 ;; Fira Code 15 | Noto Sans Mono 15 | DankMono Nerd Font 15 | Roboto Mono 14 | Iosevka 15
 ;; Conta Mono 14 | IBM Plex Mono 13 | MonoLisa 13 | Kraft Mono 14 | SpaceMono Nerd Font Mono 14
 ;; Aglet Mono 15 | VictorMono Nerd Font 14 | NanumGothicCoding 15 | BPMono 14 | Fairfax HD 16
 ;; Liga Camingocode 15 | Oxygen Mono 14 | M+ 1m 14 | MonospaceTypewriter 14 | Luculent 14
 ;; Iosevka Slab 14 | Edlo 13 | Bront 15 | Whois 15 | Ligconsolata 16 | Operator Mono 14
 ;; PragmataPro 14 | agave 15 | Unifont 15 | Apercu Mono 14 | Binchotan_Sharp 15
-;; CMU Typewriter Text 16 | Input 14 | SF Mono 14
-;; Font (set-frame-font  "Fantasque Sans Mono 10")
-(defvar meain/font-family-default "Anka/Coder 10" "Default font family for everything in Emacs.")
+;; CMU Typewriter Text 16 | Input 14 | SF Mono 14 | CQ Mono 11
+;; Font (set-frame-font  "CQ Mono 11")
+(defvar meain/font-family-default "CQ Mono 11" "Default font family for everything in Emacs.")
 (defvar meain/font-weight-default 'regular "Default font weight for everything in Emacs.")
-(setq-default line-spacing nil)
+(setq-default line-spacing .1)
 (add-to-list 'default-frame-alist `(font . ,meain/font-family-default))
 
 ;; Wider frames by default
