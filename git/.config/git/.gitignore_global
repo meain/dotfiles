@@ -27,3 +27,7 @@ run-dev
 # programming
 .mypy_cache
 node_modules
+
+# nix
+shell.nix
+.envrc
