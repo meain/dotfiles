@@ -97,6 +97,7 @@ in
     pkgs.hub # Github integration for git
     pkgs.gh # Yet another Github integration for git
     pkgs.lynx # terminal web browser
+    pkgs.slop # select region from screen
     pkgs.imagemagick # image manip cli
     pkgs.ffmpeg # video manip cli
     pkgs.gnuplot # plotting
