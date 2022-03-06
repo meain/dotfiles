@@ -2,43 +2,46 @@ general {
         colors = true
         interval = 5
         color_good = "#FFFFFF"
+        # separator = false
 }
 
 order += "read_file shellout"
 order += "read_file weather"
-order += "wireless _first_"
-order += "ethernet _first_"
 order += "volume master"
-order += "disk /"
 order += "load"
 order += "memory"
 order += "battery 0"
+order += "disk /"
+order += "wireless _first_"
+order += "ethernet _first_"
 order += "tztime local"
 
 
 read_file shellout {
           path = "/tmp/shellout"
+          format = "%content"
           format_bad = "..."
 }
 
 read_file weather {
           path = "/tmp/weather-minimal"
+          format = "WE %content"
           format_bad = "..."
 }
 
 wireless _first_ {
-        format_up = "%quality %essid"
+        format_up = "NET %quality %essid"
         format_down = "down"
         format_quality = "%d%s"
 }
 
 ethernet _first_ {
-        format_up = "E: %ip (%speed)"
+        format_up = "ETH %ip (%speed)"
         format_down = ""
 }
 
 volume master {
-        format = "%volume"
+        format = "VOL %volume"
         format_muted = "muted (%volume)"
         device = "pulse"
         mixer = "Master"
@@ -46,21 +49,21 @@ volume master {
 }
 
 disk "/" {
-        format = "D %avail"
+        format = "AVAIL %avail"
 }
 
 load {
-        format = "C %1min"
+        format = "CPU %1min"
 }
 
 memory {
-        format = "M %used"
+        format = "MEM %used"
         threshold_degraded = "1G"
         format_degraded = "MEMORY < %available"
 }
 
 battery 0 {
-        format = "%status %percentage %remaining"
+        format = "BATT %status %percentage %remaining"
         format_down = "No battery"
         status_chr = "CHR"
         status_bat = "BAT"
