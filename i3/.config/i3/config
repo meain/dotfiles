@@ -165,6 +165,8 @@ bindsym $mod+Mod1+Control+p exec "zsh -ic \\"clipmenu -i -fn 'CQ Mono:size=10' -
 bindsym $mod+Mod1+Control+Shift+p exec "zsh -ic 'notify Clipboard \\"$(pbpaste)\\"'"
 bindsym $mod+Mod1+Control+o exec "zsh -ic ',screenshot'"
 bindsym $mod+Mod1+Control+Shift+o exec "zsh -ic ',screenshot full'"
+bindsym Print exec "zsh -ic ',screenshot full'"
+bindsym Shift+Print exec "zsh -ic ',screenshot'"
 bindsym $mod+Mod1+Control+j exec "zsh -ic ,thing-for-today-popup && i3-msg floating toggle"
 bindsym $mod+Mod1+Control+l exec pcmanfm
 bindsym $mod+Mod1+Control+Shift+l exec "zsh -ic 'dragon -x $(pbpaste)'"
