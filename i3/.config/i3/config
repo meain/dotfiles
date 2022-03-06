@@ -56,8 +56,8 @@ bindsym $mod+Mod1+q exec "zsh -ic ,lock-screen && sleep 1 && systemctl suspend"
 bindsym $mod+Mod1+Control+z exec "zsh -ic ,lock-screen && sleep 1 && systemctl suspend"
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec dmenu_run -i -fn 'Anka/Coder:size=8' -nb '#000000' -nf '#aaaaaa' -sb '#263238' -sf '#ffffff'
-bindsym $mod+Shift+d exec --no-startup-id i3-dmenu-desktop 
+bindsym $mod+d exec dmenu_run -i -fn 'CQ Mono:size=10' -nb '#000000' -nf '#aaaaaa' -sb '#263238' -sf '#ffffff'
+bindsym $mod+Shift+d exec --no-startup-id i3-dmenu-desktop
 
 # change focus
 bindsym $mod+h focus left
