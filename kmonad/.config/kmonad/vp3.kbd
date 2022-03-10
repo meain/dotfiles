@@ -20,10 +20,10 @@
   pipe (tap-hold 180 \ (around lmet (around lalt lctl)))
   bype (tap-hold 180 bspc (around lmet (around lalt lsft)))
   qctl (tap-next-release ' lctl)
-  spl (tap-next-release space lmet)
+  spl (tap-hold 180 space lmet)
   super (tap-next-release up lmet)
   dctl (tap-hold 180 down lctl)
-  nav (tap-next-release d (layer-toggle custom))
+  nav (tap-hold 180 d (layer-toggle custom))
   me (tap-macro m e a i n . i o) ;; just pointless fun
   dsh (multi-tap 200 rsft M-s)
 )
