@@ -45,6 +45,7 @@ for_window [title="^emacs-popup$"] floating enable
 # scratchpad
 bindsym $mod+Shift+i move scratchpad
 bindsym $mod+i scratchpad show
+bindsym $mod+Mod1+i [floating] resize set 1700 700, move position center
 
 # kill focused window
 bindsym $mod+q kill
