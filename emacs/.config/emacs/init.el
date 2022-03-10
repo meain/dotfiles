@@ -2112,6 +2112,65 @@ Pass ORIGINAL and ALTERNATE options."
                 [(function_definition (block (expression_statement (string)
                                                                    @python.docstring)))]))))
 
+;; Some custom text objects based on treesitter
+(use-package evil-textobj-tree-sitter
+  :defer 1
+  :straight (evil-textobj-tree-sitter :type git
+                                      :host github
+                                      :repo "meain/evil-textobj-tree-sitter"
+                                      :files (:defaults "queries"))
+  :after tree-sitter
+  :config
+  (define-key evil-outer-text-objects-map "m" (evil-textobj-tree-sitter-get-textobj "import"
+                                                '((python-mode . [(import_statement) @import])
+                                                  (go-mode . [(import_spec) @import])
+                                                  (rust-mode . [(use_declaration) @import]))))
+  (define-key evil-outer-text-objects-map "f" (evil-textobj-tree-sitter-get-textobj "function.outer"))
+  (define-key evil-inner-text-objects-map "f" (evil-textobj-tree-sitter-get-textobj "function.inner"))
+  (define-key evil-outer-text-objects-map "c" (evil-textobj-tree-sitter-get-textobj "class.outer"))
+  (define-key evil-inner-text-objects-map "c" (evil-textobj-tree-sitter-get-textobj "class.inner"))
+  (define-key evil-outer-text-objects-map "C" (evil-textobj-tree-sitter-get-textobj "comment.outer"))
+  (define-key evil-inner-text-objects-map "C" (evil-textobj-tree-sitter-get-textobj "comment.outer"))
+  (define-key evil-outer-text-objects-map "o" (evil-textobj-tree-sitter-get-textobj "loop.outer"))
+  (define-key evil-inner-text-objects-map "o" (evil-textobj-tree-sitter-get-textobj "loop.inner"))
+  (define-key evil-outer-text-objects-map "a" (evil-textobj-tree-sitter-get-textobj "conditional.outer"))
+  (define-key evil-inner-text-objects-map "a" (evil-textobj-tree-sitter-get-textobj "conditional.inner"))
+  (define-key evil-inner-text-objects-map "r" (evil-textobj-tree-sitter-get-textobj "parameter.inner"))
+  (define-key evil-outer-text-objects-map "r" (evil-textobj-tree-sitter-get-textobj "parameter.outer"))
+  (define-key evil-normal-state-map (kbd "]r") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "parameter.inner")))
+  (define-key evil-normal-state-map (kbd "[r") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "parameter.inner" t)))
+  (define-key evil-normal-state-map (kbd "]R") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "parameter.inner" nil t)))
+  (define-key evil-normal-state-map (kbd "[R") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "parameter.inner" t t)))
+  (define-key evil-normal-state-map (kbd "]a") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "conditional.outer")))
+  (define-key evil-normal-state-map (kbd "[a") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "conditional.outer" t)))
+  (define-key evil-normal-state-map (kbd "]A") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "conditional.outer" nil t)))
+  (define-key evil-normal-state-map (kbd "[A") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "conditional.outer" t t)))
+  (define-key evil-normal-state-map (kbd "]f") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "function.outer")))
+  (define-key evil-normal-state-map (kbd "[f") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "function.outer" t)))
+  (define-key evil-normal-state-map (kbd "]F") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "function.outer" nil t)))
+  (define-key evil-normal-state-map (kbd "[F") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "function.outer" t t))))
+
+(use-package ts-fold
+  :defer t
+  :after (tree-sitter)
+  :commands (ts-fold-mode)
+  :straight (ts-fold :host github
+                     :repo "jcs090218/ts-fold")
+  :config
+  (defun meain/toggle-fold ()
+    (interactive)
+    (if (equal tree-sitter-mode nil)
+        (call-interactively 'evil-toggle-fold)
+      (call-interactively 'ts-fold-toggle)))
+  :init
+  (add-hook 'tree-sitter-after-on-hook
+            (lambda ()
+              (origami-mode -1)
+              (ts-fold-mode 1)
+              (define-key evil-normal-state-map (kbd "<SPC> TAB") 'meain/toggle-fold)
+              (evil-leader/set-key "o" 'meain/toggle-fold))))
+
+
 ;; Quick lookup in a dictionary
 (use-package dictionary
   :straight t
@@ -2774,63 +2833,6 @@ Pass THING-TO-POPUP as the thing to popup."
     (select-frame frame))
   (funcall thing-to-popup))
 
-;; Some custom text objects based on treesitter
-(use-package evil-textobj-tree-sitter
-  :defer 1
-  :straight (evil-textobj-tree-sitter :type git
-                                      :host github
-                                      :repo "meain/evil-textobj-tree-sitter"
-                                      :files (:defaults "queries"))
-  :after tree-sitter
-  :config
-  (define-key evil-outer-text-objects-map "m" (evil-textobj-tree-sitter-get-textobj "import"
-                                                '((python-mode . [(import_statement) @import])
-                                                  (go-mode . [(import_spec) @import])
-                                                  (rust-mode . [(use_declaration) @import]))))
-  (define-key evil-outer-text-objects-map "f" (evil-textobj-tree-sitter-get-textobj "function.outer"))
-  (define-key evil-inner-text-objects-map "f" (evil-textobj-tree-sitter-get-textobj "function.inner"))
-  (define-key evil-outer-text-objects-map "c" (evil-textobj-tree-sitter-get-textobj "class.outer"))
-  (define-key evil-inner-text-objects-map "c" (evil-textobj-tree-sitter-get-textobj "class.inner"))
-  (define-key evil-outer-text-objects-map "C" (evil-textobj-tree-sitter-get-textobj "comment.outer"))
-  (define-key evil-inner-text-objects-map "C" (evil-textobj-tree-sitter-get-textobj "comment.outer"))
-  (define-key evil-outer-text-objects-map "o" (evil-textobj-tree-sitter-get-textobj "loop.outer"))
-  (define-key evil-inner-text-objects-map "o" (evil-textobj-tree-sitter-get-textobj "loop.inner"))
-  (define-key evil-outer-text-objects-map "a" (evil-textobj-tree-sitter-get-textobj "conditional.outer"))
-  (define-key evil-inner-text-objects-map "a" (evil-textobj-tree-sitter-get-textobj "conditional.inner"))
-  (define-key evil-inner-text-objects-map "r" (evil-textobj-tree-sitter-get-textobj "parameter.inner"))
-  (define-key evil-outer-text-objects-map "r" (evil-textobj-tree-sitter-get-textobj "parameter.outer"))
-  (define-key evil-normal-state-map (kbd "]r") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "parameter.inner")))
-  (define-key evil-normal-state-map (kbd "[r") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "parameter.inner" t)))
-  (define-key evil-normal-state-map (kbd "]R") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "parameter.inner" nil t)))
-  (define-key evil-normal-state-map (kbd "[R") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "parameter.inner" t t)))
-  (define-key evil-normal-state-map (kbd "]a") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "conditional.outer")))
-  (define-key evil-normal-state-map (kbd "[a") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "conditional.outer" t)))
-  (define-key evil-normal-state-map (kbd "]A") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "conditional.outer" nil t)))
-  (define-key evil-normal-state-map (kbd "[A") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "conditional.outer" t t)))
-  (define-key evil-normal-state-map (kbd "]f") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "function.outer")))
-  (define-key evil-normal-state-map (kbd "[f") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "function.outer" t)))
-  (define-key evil-normal-state-map (kbd "]F") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "function.outer" nil t)))
-  (define-key evil-normal-state-map (kbd "[F") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "function.outer" t t))))
-
-(use-package ts-fold
-  :defer t
-  :after (tree-sitter)
-  :commands (ts-fold-mode)
-  :straight (ts-fold :host github
-                     :repo "jcs090218/ts-fold")
-  :config
-  (defun meain/toggle-fold ()
-    (interactive)
-    (if (equal tree-sitter-mode nil)
-        (call-interactively 'evil-toggle-fold)
-      (call-interactively 'ts-fold-toggle)))
-  :init
-  (add-hook 'tree-sitter-after-on-hook
-            (lambda ()
-              (origami-mode -1)
-              (ts-fold-mode 1)
-              (define-key evil-normal-state-map (kbd "<SPC> TAB") 'meain/toggle-fold)
-              (evil-leader/set-key "o" 'meain/toggle-fold))))
 
 ;; Just some hima testing code
 (defun meain/reload-current-theme ()
