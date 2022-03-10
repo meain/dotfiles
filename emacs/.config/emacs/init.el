@@ -2757,6 +2757,7 @@ Pass THING-TO-POPUP as the thing to popup."
   (let ((frame (make-frame '((auto-raise . t)
                              (height . 40)
                              (internal-border-width . 20)
+                             (name . "emacs-popup")
                              ;; (left . 0.33)
                              (left-fringe . 0)
                              (line-spacing . 3)

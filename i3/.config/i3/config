@@ -40,6 +40,7 @@ bindsym $mod+t exec emacsclient -cne '(vterm \"terminal\")' -a ''
 
 # default floating apps
 for_window [class="blueman-manager-wrapped"] floating enable
+for_window [title="^emacs-popup$"] floating enable
 
 # scratchpad
 bindsym $mod+Shift+i move scratchpad
@@ -167,7 +168,7 @@ bindsym $mod+Mod1+Control+o exec "zsh -ic ',screenshot'"
 bindsym $mod+Mod1+Control+Shift+o exec "zsh -ic ',screenshot full'"
 bindsym Print exec "zsh -ic ',screenshot full'"
 bindsym Shift+Print exec "zsh -ic ',screenshot'"
-bindsym $mod+Mod1+Control+j exec "zsh -ic ,thing-for-today-popup && i3-msg floating toggle"
+bindsym $mod+Mod1+Control+j exec "zsh -ic ,thing-for-today-popup"
 bindsym $mod+Mod1+Control+l exec pcmanfm
 bindsym $mod+Mod1+Control+Shift+l exec "zsh -ic 'dragon -x $(pbpaste)'"
 bindsym $mod+Mod1+Control+m exec "zsh -ic ',song | xargs -0 notify'"
