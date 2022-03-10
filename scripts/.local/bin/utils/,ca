@@ -1,8 +1,7 @@
 #!/bin/sh
 
-if [ -n "$1" ]; then
-	URL=$(todo.sh -p ls | grep -E "^$1" | grep -E -o "https?://[^ ]*")
-	open "$URL"
-	todo.sh do "$1"
-fi
+[ -n "$1" ] &&
+	todo.sh do "$1" |
+	grep -E -o "https?://[^ ]*" |
+		sort -u | xargs -n1 -I{} open '{}'
 clear && todo.sh
