@@ -1603,6 +1603,7 @@ Pass ORIGINAL and ALTERNATE options."
   (evil-define-key 'normal markdown-mode-map (kbd "<RET>") 'project-find-file)
   (use-package edit-indirect :straight t)
   (setq markdown-enable-html -1)
+  (evil-define-key 'normal markdown-mode-map (kbd "<RET>") 'project-find-file)
   (setq markdown-command "pandoc -t html5")
   (setq markdown-fontify-code-blocks-natively t))
 (use-package nix-mode :straight t :defer t :mode "\\.nix\\'")
