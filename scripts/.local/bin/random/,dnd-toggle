@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -e
+
+if [ -f /tmp/dnd-enabled ]; then
+	kill -SIGUSR2 $(pidof dunst)
+    rm /tmp/dnd-enabled
+	notify "DND disabled"
+else
+	kill -SIGUSR1 $(pidof dunst)
+	touch /tmp/dnd-enabled
+fi
+
+killall -SIGUSR1 i3status # refresh i3

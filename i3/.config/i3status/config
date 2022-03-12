@@ -4,6 +4,7 @@ general {
         color_good = "#FFFFFF"
 }
 
+order += "read_file dnd"
 order += "read_file shellout"
 order += "volume master"
 order += "battery 0"
@@ -26,6 +27,12 @@ read_file weather {
           path = "/tmp/weather-minimal"
           format = "[W %content]"
           format_bad = "..."
+}
+
+read_file dnd {
+          path = "/tmp/dnd-enabled"
+          format = "DND"
+          format_bad = ""
 }
 
 wireless _first_ {
