@@ -13,4 +13,3 @@ else
 fi
 FOLDER="$(echo "$GITURL" | sed 's/.*\///g' | sed 's/\..*//g')"
 git clone "$GITURL"
-cd "$FOLDER" || exit 1
