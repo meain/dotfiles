@@ -212,11 +212,15 @@ client.placeholder      #000000 #000000 #FFFFFF #000000   #000000
 bar {
    # tray_output eDP
    status_command i3status
+   # symbol is a zero width space
+   separator_symbol "​"
+   font pango:Inconsolata 8
+   tray_padding 3
 
    colors {
-      separator #cccccc
+      separator #ded
       background  #000000
-      statusline #FFFFFF
+      statusline #ffffff
       focused_workspace  #586E75 #586E75 #FFFFFF
       active_workspace #2D2D2D #2D2D2D #FFFFFF
       inactive_workspace #1F1F1F #1F1F1F #C7C7C7

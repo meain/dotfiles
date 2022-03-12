@@ -2,18 +2,17 @@ general {
         colors = true
         interval = 5
         color_good = "#FFFFFF"
-        # separator = false
 }
 
 order += "read_file shellout"
-order += "read_file weather"
 order += "volume master"
+order += "battery 0"
 order += "load"
 order += "memory"
-order += "battery 0"
 order += "disk /"
 order += "wireless _first_"
 order += "ethernet _first_"
+order += "read_file weather"
 order += "tztime local"
 
 
@@ -25,23 +24,23 @@ read_file shellout {
 
 read_file weather {
           path = "/tmp/weather-minimal"
-          format = "WE %content"
+          format = "[W %content]"
           format_bad = "..."
 }
 
 wireless _first_ {
-        format_up = "NET %quality %essid"
+        format_up = "[%quality %essid]"
         format_down = "down"
         format_quality = "%d%s"
 }
 
 ethernet _first_ {
-        format_up = "ETH %ip (%speed)"
+        format_up = "[%ip (%speed)]"
         format_down = ""
 }
 
 volume master {
-        format = "VOL %volume"
+        format = "%volume"
         format_muted = "muted (%volume)"
         device = "pulse"
         mixer = "Master"
@@ -49,26 +48,26 @@ volume master {
 }
 
 disk "/" {
-        format = "AVAIL %avail"
+        format = "%avail]"
 }
 
 load {
-        format = "CPU %1min"
+        format = "[CMD %1min"
 }
 
 memory {
-        format = "MEM %used"
+        format = "%used"
         threshold_degraded = "1G"
         format_degraded = "MEMORY < %available"
 }
 
 battery 0 {
-        format = "BATT %status %percentage %remaining"
+        format = "[B%status %percentage %remaining]"
         format_down = "No battery"
-        status_chr = "CHR"
-        status_bat = "BAT"
+        status_chr = "+"
+        status_bat = "-"
         status_unk = "UNK"
-        status_full = "FULL"
+        status_full = ":"
         path = "/sys/class/power_supply/BAT%d/uevent"
         last_full_capacity = true
         integer_battery_capacity = true
@@ -76,5 +75,5 @@ battery 0 {
 }
 
 tztime local {
-        format = "%a,%d %h %I:%M:%S %p"
+        format = " %a,%d %h %I:%M:%S %p "
 }
