@@ -2,21 +2,30 @@
 
 set -e
 
-# used to dump all the files I don't need in my local to a github repo
+# used to dump all the files I don't need but can't accept that I
+# don't need in my system to a github repo
 
-DUMP_DIR="$HOME/.local/share/dump"
 DUMP_REPO="git@github.com:meain/dump.git"
+PFX="$(xxd -l3 -ps /dev/urandom)"
+DTE="$(date '+%Y-%m')"
+DUMP_DIR="$HOME/.local/share/dump"
 
 NO_REMOVE=0
 [ "$1" = "--no-rm" ] && NO_REMOVE=1 && shift
 
+FILENAME="$1" && shift
 [ ! -d "$DUMP_DIR/.git" ] && git clone "$DUMP_REPO" "$DUMP_DIR"
-if [ "$NO_REMOVE" = 0 ];then
-    mv -iv "$1" "$DUMP_DIR"
+mkdir -p "$DUMP_DIR/$DTE"
+if [ "$NO_REMOVE" = 0 ]; then
+	mv -iv "$FILENAME" "$DUMP_DIR/$DTE/$PFX-$FILENAME"
 else
-    cp -irv "$1" "$DUMP_DIR"
+	cp -irv "$FILENAME" "$DUMP_DIR/$DTE/$PFX-$FILENAME"
 fi
 cd "$DUMP_DIR"
+
+# add info message if available
+shift && [ -n "$1" ] &&
+	echo "$DTE/$PFX-$FILENAME;$FILENAME;$*" >>index
 git add .
-git commit -m "Added $1"
+git commit -m "Added $DTE/$PFX-$FILENAME"
 git push origin master
