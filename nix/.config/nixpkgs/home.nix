@@ -613,6 +613,17 @@ in
     Install.WantedBy = [ "timers.target" ];
   };
 
+  systemd.user.services.battery-check = {
+    Service.Type = "oneshot";
+    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic ',low-battery-notify'";
+    Install.WantedBy = [ "default.target" ];
+  };
+  systemd.user.timers.battery-check = {
+    Timer.OnCalendar = "*:0/5";
+    Timer.Persistent = true;
+    Install.WantedBy = [ "timers.target" ];
+  };
+
   # Setup direnv
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;

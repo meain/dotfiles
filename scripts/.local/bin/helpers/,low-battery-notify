@@ -1,0 +1,10 @@
+#!/bin/sh
+
+set -e
+
+state="$(upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep state | awk '{print $2}')"
+perc="$(upower -i /org/freedesktop/UPower/devices/battery_BAT0 |
+	grep percentage | sed 's/.* \([0-9][0-9]*\)\%/\1/')"
+
+[ "$state" != "charging" ] && [ "$perc" -le 20 ] &&
+	notify-desktop -t 0 -u critical 'Low battery' "Dude, I jut got $perc% left" || exit 0
