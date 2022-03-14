@@ -23,7 +23,7 @@
     ("^\\ *x.*" . font-lock-comment-face)))
 
 (defun mtodo-mark--internal (source target)
-  "Util function to facilitate cahnging mark from SOURCE to TARGET."
+  "Util function to facilitate changing mark from SOURCE to TARGET."
   (save-excursion
     (let ((end-of-line (progn
                          (end-of-line)
@@ -60,7 +60,7 @@
   fundamental-mode
   "mtodo"
   "Major mode for working with mtodo files."
-  (setq font-lock-defaults '(mtodo-mode-font-lock-keywords))
+  (setq font-lock-defaults '(mtodo-mode-font-lock-keywords t))
   (use-local-map mtodo-mode-map))
 
 ;; Automatically use mtodo-mode for .mtodo files.
