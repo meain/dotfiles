@@ -2026,7 +2026,7 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package restclient
   :straight t
   :defer t
-  :mode "\\.rest\\'"
+  :mode ("\\.rest\\'". restclient-mode)
   :config (add-hook 'restclient-mode-hook (lambda ()
                                             (setq imenu-generic-expression '((nil "^[A-Z]+\s+.+" 0))))))
 
