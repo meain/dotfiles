@@ -300,7 +300,6 @@ in
     # fonts (set-frame-font  "Anka/Coder 10")
     pkgs.iosevka
     pkgs.hermit
-    pkgs.profont
     pkgs.agave
     pkgs.inconsolata
     pkgs.victor-mono
@@ -313,6 +312,15 @@ in
     pkgs.ankacoder
     pkgs.jetbrains-mono
     pkgs.go-font
+    pkgs.unifont
+    # pkgs.tewi-font
+    pkgs.hack-font
+    pkgs.mononoki
+    pkgs.roboto-mono
+    pkgs.cozette
+    pkgs.fira-code
+    # pkgs.dina-font
+    # pkgs.envypn-font
   ];
 
   dconf.settings = {
