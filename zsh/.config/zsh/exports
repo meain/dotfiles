@@ -115,3 +115,6 @@ export FZF_DEFAULT_OPTS='
     --color fg:-1,hl:4,fg+:1,bg+:-1,hl+:4
     --color info:108,prompt:242,spinner:108,pointer:1,marker:168
 '
+
+# nix
+export NIX_PATH=$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/channels${NIX_PATH:+:$NIX_PATH}
