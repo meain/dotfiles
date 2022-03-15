@@ -115,6 +115,7 @@ in
     # pkgs.pkgs.cowsay # useless stuff
     # pkgs.podman # pod manager
     pkgs.typos # typo checker (integrated with flymake)
+    pkgs.k9s # kubernetes tui
 
     # programming
     # pkgs.gist # create gist
@@ -197,6 +198,7 @@ in
     pkgs.nodePackages.jsonlint # json linting
     pkgs.nodePackages.markdownlint-cli # markdown linter
     pkgs.hadolint # Dockerfile lint
+    pkgs.sqls # lsp server for sql
 
     # gui
     pkgs.mpv # audio/video player
@@ -259,7 +261,6 @@ in
     pkgs.blueman # bluetooth control
     pkgs.arandr # screen layout configure
     pkgs.clipmenu # clipboard history
-    pkgs.cbatticon # battery indicator
     pkgs.brightnessctl # brightness control
     pkgs.dunst # notifications with buttons (dunstify)
     pkgs.pcmanfm # gui file manager
