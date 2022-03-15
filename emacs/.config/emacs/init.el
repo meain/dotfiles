@@ -2232,11 +2232,6 @@ Pass ORIGINAL and ALTERNATE options."
   :defer t
   :commands (meain/ledger-add-entry)
   :mode "\\.ledger\\'"
-  :init
-  (evil-leader/set-key "a l"
-    (lambda ()
-      (interactive)
-      (find-file "~/.local/share/ledger/master.ledger")))
   :config
   (defun meain/ledger-add-entry (&optional no-switch)
     (interactive "P")
