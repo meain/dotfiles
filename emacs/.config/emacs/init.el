@@ -1654,6 +1654,11 @@ Pass ORIGINAL and ALTERNATE options."
 ;; still gets early loaded as it is in load path
 (use-package emacs
   :mode "\\.mtodo\\'"
+  :init
+  (add-hook 'find-file-hook (lambda ()
+                              (if (string-prefix-p "thing-for-today"
+                                                   (file-name-nondirectory (buffer-file-name)))
+                                  (mtodo-mode))))
   :config
   (load (expand-file-name "~/.config/emacs/mtodo-mode.el"))
   (evil-define-key 'normal mtodo-mode-map (kbd "g d") 'mtodo-mark-done)
