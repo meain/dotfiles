@@ -2864,7 +2864,7 @@ Pass THING-TO-POPUP as the thing to popup."
                              (undecorated . t)
                              (unsplittable . t)
                              (vertical-scroll-bars . nil)
-                             (width . 110)))))
+                             (width . 150)))))
     (select-frame frame))
   (funcall thing-to-popup))
 
