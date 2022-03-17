@@ -140,7 +140,7 @@
 (defun meain/select-font ()
   "Set font after selection using ivy."
   (interactive)
-  (let ((font-name (completing-read "Choose font: " (font-family-list))))
+  (let ((font-name (completing-read "Choose font: " (remove-duplicates (font-family-list)))))
     (set-frame-font (meain/get-font-prop font-name 'family))
     (setq-default line-spacing (meain/get-font-prop font-name 'line-spacing))))
 
