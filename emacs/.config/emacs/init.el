@@ -2634,7 +2634,7 @@ START and END comes from it being interactive."
   (interactive)
   (let ((frame-name (cdr (assq 'name (frame-parameters)))))
     (if server-clients
-        (server-edit)
+        (with-editor-finish nil)
       (if (equal frame-name "emacs-popup")
           (delete-frame)
         (message "No server editing buffers exist")))))
