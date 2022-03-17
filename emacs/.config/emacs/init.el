@@ -2574,9 +2574,9 @@ START and END comes from it being interactive."
   "Quickly print the variable your cursor is under.  `BEG' and `END' is used in visual mode."
   (interactive "r")
   (let* ((thing-to-print (if (eq evil-state 'visual)
-                            (buffer-substring beg end)
-                          (symbol-at-point)))
-        (escaped-thing-to-print (string-replace "\"" "\\\"" thing-to-print)))
+                             (buffer-substring beg end)
+                           (symbol-name (symbol-at-point))))
+         (escaped-thing-to-print (string-replace "\"" "\\\"" thing-to-print)))
     (if current-prefix-arg
         (evil-open-above 1)
       (evil-open-below 1))
