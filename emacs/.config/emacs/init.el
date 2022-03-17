@@ -1605,7 +1605,6 @@ Pass ORIGINAL and ALTERNATE options."
   :defer t
   :mode ("\\.md\\'" . gfm-mode)
   :config
-  (evil-define-key 'normal markdown-mode-map (kbd "<RET>") 'project-find-file)
   (use-package edit-indirect :straight t)
   (setq markdown-enable-html -1)
   (evil-define-key 'normal markdown-mode-map (kbd "<RET>") 'project-find-file)
@@ -2008,7 +2007,6 @@ Pass ORIGINAL and ALTERNATE options."
 ;; timing stuff
 (use-package activity-watch-mode
   :straight t
-  :disabled t
   :defer 1
   :diminish
   :config (global-activity-watch-mode))
@@ -2172,7 +2170,7 @@ Pass ORIGINAL and ALTERNATE options."
   (define-key evil-outer-text-objects-map "r" (evil-textobj-tree-sitter-get-textobj "parameter.outer"))
   (defun meain/goto-and-recenter (group &optional previous end query)
     (interactive)
-    (evil-textobj-tree-sitter-goto-textobj group previous end query )
+    (evil-textobj-tree-sitter-goto-textobj group previous end query)
     (recenter))
   (define-key evil-normal-state-map (kbd "]r") (lambda () (interactive) (meain/goto-and-recenter "parameter.inner")))
   (define-key evil-normal-state-map (kbd "[r") (lambda () (interactive) (meain/goto-and-recenter "parameter.inner" t)))
