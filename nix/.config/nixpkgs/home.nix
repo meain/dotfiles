@@ -268,6 +268,7 @@ in
     # pkgs.comby # structural search/editing of code
     # pkgs.visidata # data visualization
     pkgs.dragon-drop
+    pkgs.sct # redshift ish stuff
 
     # gnome tweaking
     # pkgs.gnome3.dconf-editor # change dconf settings
@@ -629,6 +630,17 @@ in
   };
   systemd.user.timers.battery-check = {
     Timer.OnCalendar = "*:0/5";
+    Timer.Persistent = true;
+    Install.WantedBy = [ "timers.target" ];
+  };
+
+  systemd.user.services.update-sct = {
+    Service.Type = "oneshot";
+    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic ',update-sct'";
+    Install.WantedBy = [ "default.target" ];
+  };
+  systemd.user.timers.update-sct = {
+    Timer.OnCalendar = "*:0/30";
     Timer.Persistent = true;
     Install.WantedBy = [ "timers.target" ];
   };

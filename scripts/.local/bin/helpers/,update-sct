@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -e
+
+hour="$(date '+%H')"
+
+case "$hour" in
+2[34]) sct 5500 ;;
+0[0123]) sct 5000 ;;
+*) sct ;;
+esac
