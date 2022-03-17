@@ -2100,20 +2100,22 @@ Pass ORIGINAL and ALTERNATE options."
       (pulse-momentary-highlight-region (car (tsc-node-byte-range (button-get button 'points-to)))
                                         (cdr (tsc-node-byte-range (button-get button 'points-to)))
                                         'company-template-field)))
-  (setq meain/tree-sitter-calss-like-thing '((rust-mode . impl_item)
-                                             (python-mode . class_definition)))
-  (setq meain/tree-sitter-function-like-thing '((rust-mode . function_item)
-                                                (go-mode . function_declaration)
-                                                (python-mode . function_definition)))
-  (defun meain/tree-sitter-thing-name (thing-kind)
+  (setq meain/tree-sitter-calss-like '((rust-mode . (impl_item))
+                                       (python-mode . (class_definition))))
+  (setq meain/tree-sitter-function-like '((rust-mode . (function_item))
+                                          (go-mode . (function_declaration method_declaration))
+                                          (python-mode . (function_definition))))
+  (defun meain/tree-sitter-thing-name (kind)
     "Get name of tree-sitter THING-KIND."
     (if tree-sitter-mode
-        (let* ((thing-type-alist (pcase thing-kind
-                                   ('class-like meain/tree-sitter-calss-like-thing)
-                                   ('function-like meain/tree-sitter-function-like-thing)))
-               (thing-type (alist-get major-mode thing-type-alist)))
-          (if thing-type
-              (let ((node-at-point (tree-sitter-node-at-point thing-type)))
+        (let* ((node-types-list (pcase kind
+                                  ('class-like meain/tree-sitter-calss-like)
+                                  ('function-like meain/tree-sitter-function-like)))
+               (node-types (alist-get major-mode node-types-list)))
+          (if node-types
+              (let ((node-at-point (car (remove-if (lambda (x) (eq nil x))
+                                                   (seq-map (lambda (x) (tree-sitter-node-at-point x))
+                                                            node-types)))))
                 (if node-at-point
                     (let ((node-name-node-at-point (tsc-get-child-by-field node-at-point ':name)))
                       (if node-name-node-at-point
