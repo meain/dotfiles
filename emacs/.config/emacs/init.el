@@ -384,7 +384,10 @@ Pass ORIGINAL and ALTERNATE options."
   (interactive)
   (if (= (length (mapcar #'window-buffer
                          (window-list))) 1)
-      (meain/create-or-switch-to-scratch)
+      ;; TODO: optional delete frame advice on things that close (notmuch, elfeed)
+      (if (equal "emacs-popup" (cdr (assq 'name (frame-parameters))))
+          (delete-frame)
+        (meain/create-or-switch-to-scratch))
     (cond
      ((derived-mode-p 'prog-mode)
       (evil-quit))
