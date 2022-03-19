@@ -512,6 +512,7 @@ Pass ORIGINAL and ALTERNATE options."
   :hook (org-mode . ass-activate-for-major-mode)
   :hook (prog-mode . ass-activate-for-major-mode)
   :hook (python-mode . ass-activate-for-major-mode)
+  :hook (sql-mode . ass-activate-for-major-mode)
   :config
   (defun meain/go-default-returns (type errformat)
     "Making it a function instead of an alist so that we can handle unknown TYPE."
@@ -572,6 +573,8 @@ Pass ORIGINAL and ALTERNATE options."
     ";d/" (lambda () (interactive) (insert (format-time-string "%D")))
     ";time" (lambda () (interactive) (insert (format-time-string "%T")))
     ";filename" (lambda () (interactive) (insert (file-name-nondirectory (buffer-file-name)))))
+  (aas-set-snippets 'sql-mode
+    ";bang" "SELECT * FROM information_schema.tables;")
   (aas-set-snippets 'web-mode
     ";bang" (lambda () (interactive) (insert-file-contents (expand-file-name "~/.config/datafiles/templates/index.html"))))
   (aas-set-snippets 'html-mode
