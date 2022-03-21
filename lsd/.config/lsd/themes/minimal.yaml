@@ -6,6 +6,7 @@ permission:
   exec: 0
   exec-sticky: 0
   no-access: 250
+  octal: 245
 date:
   hour-old: 0
   day-old: 0

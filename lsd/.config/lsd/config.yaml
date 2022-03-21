@@ -8,8 +8,10 @@ no-symlink: false
 icons:
     when: never
 date: relative
+permission: octal
 blocks:
     - permission
     - size
     - date
     - name
+symlink-arrow: ->
