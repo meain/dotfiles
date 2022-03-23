@@ -1558,7 +1558,10 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package neotree
   :straight t
   :commands neotree
-  :config (setq neo-window-fixed-size nil))
+  :config
+  (setq neo-window-fixed-size nil)
+  (setq neo-theme 'classic)
+  (add-hook 'neo-after-create-hook 'hl-line-mode))
 
 ;; Evil keybindings for a lot of things
 (use-package evil-collection
