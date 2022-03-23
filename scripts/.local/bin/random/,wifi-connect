@@ -3,9 +3,10 @@
 set -e
 
 notify 'Scanning for WiFi access points'
-point="$(nmcli device wifi list | tail -n+2 | sed 's/^[^\*]/Available/;s/^\*/Connected/' |
-	awk '{print $1,$3,$9}' | column -t | sort | ,picker -l 10 |
-    awk '{print $2}')"
+point="$(nmcli --fields in-use,bars,ssid device wifi list |
+	tail -n+2 | sed 's/^[^\*]/Available/;s/^\*/Connected/' | sed 's/  */ /g' |
+	sort | ,picker -l 10 | cut -d' ' -f3- | sed 's/ $//')"
+[ -z "$point" ] && echo "No access point selected" && exit 1
 notify "Connecting to to $point"
-nmcli connection up "$point" > /dev/null
+nmcli connection up "$point" >/dev/null
 notify "Connected to $point"
