@@ -4,6 +4,8 @@
 
 set -e
 
-[ "$branch" = "master" ] && echo "I won't force push to master." && return 1
+branch="$(git branch | grep '\*' | sed s:^..::g)"
+[ "$branch" = "master" ] && echo "I won't force push to master." && exit 1
+[ "$branch" = "main" ] && echo "I won't force push to main." && exit 1
 echo 'Pushing with --force-with-lease'
 git push origin "$branch" --force-with-lease
