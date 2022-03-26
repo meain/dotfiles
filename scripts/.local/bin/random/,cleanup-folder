@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# Organize folders by date.
+# One directory for each week current week is left in the root
+
+set -e
+
+[ -n "$1" ] && cd "$1"
+mkdir -p _old
+find . -maxdepth 1 -mtime +5 | grep -vE '^_out$' |
+	while read -r file; do
+		echo Moving "$file"
+		mv "$file" "_old/$file"
+	done
