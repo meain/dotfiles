@@ -645,6 +645,40 @@ in
     Install.WantedBy = [ "timers.target" ];
   };
 
+  systemd.user.services.cleanup-downloads = {
+    Service.Type = "oneshot";
+    Service.WorkingDirectory = "/home/meain/Downloads";
+    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic ',cleanup-folder'";
+    Install.WantedBy = [ "default.target" ];
+  };
+  systemd.user.timers.cleanup-downloads = {
+    Timer.OnCalendar = "*-*-* *:00:00";
+    Timer.Persistent = true;
+    Install.WantedBy = [ "timers.target" ];
+  };
+  systemd.user.services.cleanup-scratch = {
+    Service.Type = "oneshot";
+    Service.WorkingDirectory = "/home/meain/.local/share/scratch";
+    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic ',cleanup-folder'";
+    Install.WantedBy = [ "default.target" ];
+  };
+  systemd.user.timers.cleanup-scratch = {
+    Timer.OnCalendar = "*-*-* *:00:00";
+    Timer.Persistent = true;
+    Install.WantedBy = [ "timers.target" ];
+  };
+
+  systemd.user.services.update-calendar = {
+    Service.Type = "oneshot";
+    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic ',upcoming-events'";
+    Install.WantedBy = [ "default.target" ];
+  };
+  systemd.user.timers.update-calendar = {
+    Timer.OnCalendar = "*:0/10"; # the actual update only runs every hour, but this is in case a run fails
+    Timer.Persistent = true;
+    Install.WantedBy = [ "timers.target" ];
+  };
+
   # Setup direnv
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;

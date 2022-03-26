@@ -1,0 +1,47 @@
+#!/bin/sh
+
+# For notifying about upcoming events
+# Sometimes I think I should use a proper language, but nah.
+
+set -e
+
+EVENTS_FILE="/tmp/events"
+list_events() {
+	gcalendar --account work --calendar $WORK_CAL --no-of-days 3
+	gcalendar --calendar $PERSONAL_CAL --no-of-days 3
+}
+
+[ "$(find "$EVENTS_FILE-all" -mmin -60 2>/dev/null | wc -l)" != "0" ] ||
+	list_events >"$EVENTS_FILE-all"
+
+grep "Unable to find the Google Calendar server" "$EVENTS_FILE-all" &&
+	rm "$EVENTS_FILE-all" && rm "$EVENTS_FILE-next" && rm "$EVENTS_FILE-upcoming"
+
+today="$(date '+%d')"
+((tomorrow = 10#$today + 1)) # explicit base 10 conversion
+hour="$(date '+%H')"
+cat "$EVENTS_FILE-all" |
+	sort |
+	sed 's|https*://[^ $]*||' | # don't want any links (mainly in statusline)
+	sed "s/ - [0-9:-]*\s*/ /;s/^$(date '+%Y-%m')-$today:/Today /;s/^$(date '+%Y-%m')-$tomorrow:/Tomorrow /;s/^\([0-9-]*\):/\1 /;s/\s*$//" |
+	while read -r event; do
+		ehour="$(echo $event | sed 's/^[^ ]* \([^:]*\):.*/\1/')"
+		if [ $ehour -ge $hour ]; then
+			echo $event
+		fi
+	done >"$EVENTS_FILE-upcoming"
+
+((next = 10#$hour + 3)) # filter events coming up in next 3 hours (explicit conversion to base 10)
+cat "$EVENTS_FILE-upcoming" |
+	grep -E 'Today' |
+	while read -r event; do
+		ehour="$(echo $event | sed 's/^[^ ]* \([^:]*\):.*/\1/')"
+		if [ $ehour -le $next ]; then
+			echo $event
+		fi
+	done |
+	cut -c 1-50 |
+	sed 's/Today //' |
+	head -n1 >"$EVENTS_FILE-next"
+
+cat "$EVENTS_FILE-upcoming" | head -n 5

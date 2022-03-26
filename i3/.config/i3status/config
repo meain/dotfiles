@@ -4,6 +4,7 @@ general {
         color_good = "#FFFFFF"
 }
 
+order += "read_file cal"
 order += "read_file dnd"
 order += "read_file shellout"
 order += "volume master"
@@ -16,6 +17,11 @@ order += "ethernet _first_"
 order += "read_file weather"
 order += "tztime local"
 
+read_file cal {
+          path = "/tmp/events-next"
+          format = "[%content]"
+          format_bad = "No calendar"
+}
 
 read_file shellout {
           path = "/tmp/shellout"

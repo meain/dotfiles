@@ -1,0 +1,7 @@
+#!/bin/sh
+
+set -e
+
+[ -z "$2" ] &&
+	notify "$($1)" ||
+	notify "$1" "$(exec $2)"
