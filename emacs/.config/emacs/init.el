@@ -3025,7 +3025,9 @@ Pass THING-TO-POPUP as the thing to popup."
 ;; Start server once we have emacs running
 (require 'server)
 (unless (server-running-p)
-  (server-start))
+  (progn
+    (server-start)
+    (start-process-shell-command "server-start-notify" "*server-start-notify*" "notify 'Emacs server started'")))
 
 (provide 'init)
 ;;; init ends here
