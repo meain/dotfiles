@@ -574,7 +574,15 @@ Pass ORIGINAL and ALTERNATE options."
     ";time" (lambda () (interactive) (insert (format-time-string "%T")))
     ";filename" (lambda () (interactive) (insert (file-name-nondirectory (buffer-file-name)))))
   (aas-set-snippets 'sql-mode
-    ";bang" "SELECT * FROM information_schema.tables;")
+    ";bang" "SELECT * FROM information_schema.tables;"
+    ";d" (lambda ()
+           (interactive)
+           (insert "select * from ")
+           (let
+               ((company-quickhelp-delay 0.1)
+                (company-tooltip-idle-delay 0.1)
+                (company-idle-delay 0.1))
+             (consult-company))))
   (aas-set-snippets 'web-mode
     ";bang" (lambda () (interactive) (insert-file-contents (expand-file-name "~/.config/datafiles/templates/index.html"))))
   (aas-set-snippets 'html-mode
@@ -886,6 +894,13 @@ Pass ORIGINAL and ALTERNATE options."
     (define-key company-active-map [tab] 'company-select-next-if-tooltip-visible-or-complete-selection)
     (define-key company-active-map (kbd "TAB") 'company-select-next-if-tooltip-visible-or-complete-selection))
   (company-ac-setup))
+
+;; consult-interface for company for use in `sql-mode'
+(use-package consult-company
+  :straight t
+  :defer t
+  :after (consult company)
+  :commands (consult-company))
 
 ;; Company quickhelp
 (use-package company-quickhelp ; Show help in tooltip
