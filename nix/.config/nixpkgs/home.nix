@@ -267,7 +267,7 @@ in
     pkgs.unixtools.netstat # netstat
     # pkgs.comby # structural search/editing of code
     # pkgs.visidata # data visualization
-    pkgs.dragon-drop
+    pkgs.dragon-drop # drag and drop files
     pkgs.sct # redshift ish stuff
 
     # gnome tweaking
