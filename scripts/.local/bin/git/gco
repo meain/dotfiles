@@ -5,13 +5,12 @@
 set -e
 
 if [ "$1" = "-a" ]; then
-	branches="$(git branch -a)"
+	git branch -a --sort=-committerdate
 else
-	branches="$(git branch)"
-fi
-echo "$branches" |
+	git branch --sort=-committerdate
+fi |
 	grep -v '*' |
 	awk '{print $1}' |
 	fzf --height 40% --reverse --preview 'git log --oneline -20 {}' |
-	xargs basename |
-	xargs git checkout
+	xargs -r basename |
+	xargs -r git checkout
