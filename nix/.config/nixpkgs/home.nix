@@ -188,7 +188,7 @@ in
     pkgs.cargo-watch # continuously run cargo check
 
     # programming-lua
-    pkgs.nodePackages.lua-fmt
+    # pkgs.nodePackages.lua-fmt
 
     # programming-other
     pkgs.nodePackages.yaml-language-server # language server for yaml
@@ -199,6 +199,7 @@ in
     pkgs.nodePackages.markdownlint-cli # markdown linter
     pkgs.hadolint # Dockerfile lint
     pkgs.sqls # lsp server for sql
+    pkgs.python39Packages.sqlparse # sqlformat
 
     # gui
     pkgs.mpv # audio/video player
