@@ -609,6 +609,13 @@ Pass ORIGINAL and ALTERNATE options."
     (lambda ()
       (interactive)
       (insert (concat "if err != nil { " (meain/go-return-string "err") " }")))
+    ";tt"
+    (lambda ()
+      (interactive)
+      (let ((left (read-string "Left: "))
+            (right (read-string "Right: "))
+            (thing (read-string "Incorrect thing: ")))
+        (insert (concat "if " left " != " right "{ t.Errorf(\"incorrect " thing "; expected '%v', got '%v'\", " right " , " left ")}"))))
     ";ec"
     (lambda ()
       (interactive)
