@@ -2707,15 +2707,25 @@ START and END comes from it being interactive."
   (meain/kill-current-buffer-unless-scratch))
 
 ;; Copy filename to clipboard
-(defun meain/copy-file-name-to-clipboard ()
-  "Copy the current buffer file name to the clipboard."
-  (interactive)
-  (let ((filename (if (equal major-mode 'dired-mode)
-                      default-directory
-                    (buffer-file-name))))
-    (when filename
-      (kill-new filename)
-      (message "Copied buffer file name '%s' to the clipboard." filename))))
+(defun meain/copy-file-name-to-clipboard (&optional abs-path)
+  "Copy the current filename into clipboard.  Pass `ABS-PATH' if you need absolute path."
+  (interactive "P")
+  (let ((file-path (if (equal major-mode 'dired-mode)
+                       default-directory
+                     (buffer-file-name))))
+    (if file-path
+        (let* ((project-path (if (not (file-remote-p default-directory))
+                                 (cond
+                                  ((not (eq (project-current) nil))
+                                   (expand-file-name (car (project-roots (project-current)))))
+                                  (t ""))))
+               (trimmed-path (string-replace project-path "" file-path))
+               (copy-path (if abs-path
+                              file-path
+                            trimmed-path)))
+          (kill-new copy-path)
+          (message "Copied '%s' to the clipboard" copy-path))
+      (message "No file associated with buffer"))))
 
 ;; Quickly add a prog1 wrapper for logging
 (defun meain/elisp-inspect-value (&optional before)
