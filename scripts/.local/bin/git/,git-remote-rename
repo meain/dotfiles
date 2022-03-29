@@ -1,0 +1,10 @@
+#!/bin/sh
+
+set -e
+
+[ -z "$2" ] && echo "Usage: $(basename "$0") <from> <to>" && exit 1
+from="$1"
+to="$2"
+fromurl="$(git remote get-url "$from")"
+echo git remote remove "$from"
+echo git remote add "$to" "$fromurl"

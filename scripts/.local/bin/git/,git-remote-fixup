@@ -1,0 +1,13 @@
+#!/bin/sh
+
+set -e
+
+[ "$(git remote | wc -l)" -ne 2 ] && echo "Has more than two remotes, I have no idea" && exit 1
+(git remote get-url origin | grep "meain") && echo "Origin already pointing to meain" && exit 0
+
+mremote="$(git remote | xargs -n1 git remote get-url | grep meain)"
+originurl="$(git remote get-url origin)"
+
+git remote | xargs -n1 git remote remove
+git remote add origin "$mremote"
+git remote add upstream "$originurl"
