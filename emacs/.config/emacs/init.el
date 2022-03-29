@@ -2393,7 +2393,7 @@ SHORTCUT is the keybinding to use.  NAME if the func suffix and FILE is the file
 (meain/quick-file-open-builder "H" "hima-theme" "~/.dotfiles/emacs/.config/emacs/hima-theme.el")
 (meain/quick-file-open-builder "t" "evil-textobj-tree-sitter" "~/.config/emacs/straight/repos/evil-textobj-tree-sitter/evil-textobj-tree-sitter.el")
 (meain/quick-file-open-builder "l" "ledger" "~/.local/share/ledger/master.ledger")
-(meain/quick-file-open-builder "n" "interesting" "~/.local/share/notes/note/interesting-links.md")
+(meain/quick-file-open-builder "I" "interesting" "~/.local/share/notes/note/interesting-links.md")
 (meain/quick-file-open-builder "u" "useful-someday" "~/.local/share/notes/note/useful-someday.md")
 (meain/quick-file-open-builder "r" "frequent-web-references" "~/.local/share/notes/note/web-references.md")
 (meain/quick-file-open-builder "m" "thing-for-today" "~/.local/share/vime/thing-for-today")
