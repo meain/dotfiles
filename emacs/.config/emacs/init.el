@@ -1596,7 +1596,8 @@ Pass ORIGINAL and ALTERNATE options."
   (setq hl-todo-keyword-faces '(("TODO" . "#FF0000")
                                 ("FIXME" . "#FF0000")
                                 ("GOTCHA" . "#FF4500")
-                                ("STUB" . "#1E90FF")))
+                                ("STUB" . "#1E90FF")
+                                ("XXX" . "#AF0494")))
   (global-hl-todo-mode))
 
 ;; Emmet for html stuff (c-j to activate)
