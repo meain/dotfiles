@@ -182,6 +182,7 @@ bindsym $mod+Mod1+Control+d exec "zsh -ic ,dnd-toggle"
 bindsym $mod+Mod1+Control+l exec pcmanfm
 bindsym $mod+Mod1+Control+Shift+l exec "zsh -ic 'dragon -x $(pbpaste)'"
 bindsym $mod+Mod1+Control+m exec "zsh -ic ',song | xargs -0 notify'"
+bindsym $mod+Mod1+Control+v exec emacsclient -ce '(meain/vime "vime" "~/.local/share/vime" t)'
 
 # i3 keybindings
 bindsym $mod+Shift+c reload
