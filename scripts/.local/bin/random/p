@@ -1,0 +1,9 @@
+#!/bin/sh
+
+set -e
+
+if [ -t 0 ]; then
+	pbpaste
+else
+	pbcopy </dev/stdin
+fi
