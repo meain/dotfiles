@@ -4,5 +4,9 @@
 
 set -e
 
-kubectl get pods --all-namespaces | tail -n +2 | fzf --query "$*" | awk '{print "-n",$1,$2}'  |
-	xargs -I{} echo kubectl exec -it {} -- sh -c 'clear; (bash || ash || sh)'
+line="$(kubectl get pods --all-namespaces | tail -n +2 | fzf --query "$*")"
+namespace="$(echo "$line" | awk '{print $1}')"
+pod="$(echo "$line" | awk '{print $2}')"
+container="$(kubectl get pods "$pod" -n "$namespace" -o jsonpath='{.spec.containers[*].name}' | fzf -1)"
+echo Connecting to $pod"($container)" in $namespace
+kubectl exec -n "$namespace" -it "$pod" "$container" -- sh -c 'bash || ash || sh'
