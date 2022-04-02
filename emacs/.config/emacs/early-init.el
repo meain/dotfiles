@@ -27,17 +27,9 @@
 ;; Iosevka Slab 14 | Edlo 13 | Bront 15 | Whois 15 | Ligconsolata 16 | Operator Mono 14
 ;; PragmataPro 14 | agave 15 | Unifont 15 | Apercu Mono 14 | Binchotan_Sharp 15
 ;; CMU Typewriter Text 16 | Input 14 | SF Mono 14 | CQ Mono 11 | Izayoi Monospaced 10
-;; Font: (set-frame-font  "Izayoi Monospaced 10")
-;; Line spacing: (setq-default line-spacing .1)
+;; Font: (set-frame-font  "Red Hat Mono 10")
+;; Line spacing: (setq-default line-spacing nil)
 
-(defvar meain/font-list '(;; name size line-spacing weight
-                          ("CQ Mono" . '(11 .1 'regular))
-                          ("Fantasque Sans Mono" . '(10 .2 'regular))
-                          ("Inconsolata" . '(10 .2 'regular))
-                          ("Iosevka" . '(10 .1 'medium))
-                          ("Izayoi Monospaced" . '(10 .1 'regular))
-                          ("Roboto Mono" . '(9 nil 'light))
-                          ))
 (defun meain/get-font-prop (font-name prop)
   "Get PROP (property) from FONT-NAME."
   (interactive)
@@ -53,7 +45,33 @@
         ('line-spacing nil)))))
 
 
-(defvar meain/font-name "Izayoi Monospaced")
+(defvar meain/font-list '(;; name size line-spacing weight
+                          ("Adelle Mono" . '(10 .1 'regular))
+                          ("BPMono" . '(10 .1 'regular))
+                          ("CQ Mono" . '(11 .1 'regular))
+                          ("Cartograph CF" . '(10 nil 'regular))
+                          ("DM Mono" . '(9 nil 'regular))
+                          ("Dank Mono" . '(10 nil 'regular))
+                          ("DankMono Nerd Font" . '(10 nil 'regular))
+                          ("FairfaxHD" . '(12 nil 'regular))
+                          ("Fantasque Sans Mono" . '(10 .2 'regular))
+                          ("Fira Code" . '(10 .1 'thin))
+                          ("Inconsolata" . '(10 .2 'regular))
+                          ("Iosevka Comfy" . '(10 nil 'regular))
+                          ("Iosevka" . '(10 .1 'medium))
+                          ("Izayoi Monospaced" . '(10 .1 'regular))
+                          ("League Mono" . '(10 .2 'light))
+                          ("Lekton" . '(11 .1 'regular))
+                          ("Liberation Mono" . '(10 .1 'regular))
+                          ("M+ 1m" . '(10 nil 'regular))
+                          ("Mirage" . '(10 .1 'regular))
+                          ("Monofur" . '(11 nil 'regular))
+                          ("NK57 Monospace" . '(9 .2 'regular))
+                          ("PT Mono" . '(10 nil 'regular))
+                          ("Red Hat Mono" . '(9 nil 'regular))
+                          ("Roboto Mono" . '(9 nil 'light))
+                          ))
+(defvar meain/font-name "Dank Mono")
 (defvar meain/font-family-default (meain/get-font-prop meain/font-name 'family) "Default font family for everything in Emacs.")
 (defvar meain/font-weight-default (meain/get-font-prop meain/font-name 'weight) "Default font weight for everything in Emacs.")
 (setq-default line-spacing (meain/get-font-prop meain/font-name 'line-spacing))
