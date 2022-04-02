@@ -1,0 +1,5 @@
+#!/bin/sh
+
+set -e
+
+[ -z "$1" ] && open . || open "$1"

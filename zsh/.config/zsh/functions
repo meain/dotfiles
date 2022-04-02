@@ -56,10 +56,6 @@ cmosh() {
 compdef _mosh cmosh=mosh
 alias mosh=cmosh
 
-o() {
-	[ -z "$1" ] && open . || open "$1"
-}
-
 q() {
 	[ -n "$IN_NIX_SHELL" ] && exit
 	[ -z "$TMUX" ] && exit
@@ -78,19 +74,12 @@ q() {
 }
 
 m() {
-    r
+	r
 	if [ ! -d .mscripts ]; then
 		echo "Unable to find .mscripts" && return 1
 	fi
-    eval .mscripts/"$(find .mscripts/ | tail -n+2 | xargs -n1 basename | fzf)"
-    cd -
-}
-
-# add a hash for current dir
-hashdir() {
-	[ -z "$1" ] && echo "Pass hash to use for dir" && exit 1
-	hash -d "$1"="$(pwd)"
-	echo hash -d "$1"=\""$(pwd)"\" >>~/.local/share/zsh/.zsh_dir_hashes
+	eval .mscripts/"$(find .mscripts/ | tail -n+2 | xargs -n1 basename | fzf)"
+	cd -
 }
 
 # python venv setup (need to be function as we have to source)
