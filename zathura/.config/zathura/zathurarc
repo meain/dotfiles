@@ -1,5 +1,4 @@
-# Zathura configuration file
-# See man `man zathurarc'
+# keybindings
 map r reload
 map p print
 map i recolor
@@ -13,21 +12,18 @@ unmap f
 map f toggle_fullscreen
 map [fullscreen] f toggle_fullscreen
 
-# Open document in fit-width mode by default
-set adjust-open "best-fit"
-
-# One page per row by default
-set pages-per-row 1
-
-#stop at page boundries
+# stop at page boundaries
 set scroll-page-aware "true"
 set scroll-full-overlap 0.01
 set scroll-step 100
 set scroll-page-aware "true"
 set smooth-scroll "true"
 
-#zoom settings
+# update defaults
+set adjust-open "best-fit"
+set pages-per-row 1
 set zoom-min 10
 
 set font "Iosevka 8"
+set selection-clipboard clipboard # use clipboard instead of primary-selection
 
