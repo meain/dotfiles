@@ -12,6 +12,11 @@ jj() {
 	cd "./$(fd -H -td -d5 | fzf --preview 'tree -L 2 ./{}')" || return 1
 }
 
+tmp() {
+	r="/tmp/workspaces/$(xxd -l3 -ps /dev/urandom)"
+	mkdir -p "$r" && cd "$r"
+}
+
 # cd, but use lf to choose dir
 rcd() {
 	tmp="$(mktemp)"
