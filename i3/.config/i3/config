@@ -183,6 +183,7 @@ bindsym $mod+Mod1+Control+l exec pcmanfm
 bindsym $mod+Mod1+Control+Shift+l exec "zsh -ic 'dragon -x $(pbpaste)'"
 bindsym $mod+Mod1+Control+m exec "zsh -ic ',song | xargs -0 notify'"
 bindsym $mod+Mod1+Control+v exec emacsclient -ce '(meain/vime "vime" "~/.local/share/vime" t)'
+bindsym $mod+Mod1+Control+q exec emacsclient -e "(meain/emacs-popup-frame 'meain/pick-emoji)"
 
 # i3 keybindings
 bindsym $mod+Shift+c reload

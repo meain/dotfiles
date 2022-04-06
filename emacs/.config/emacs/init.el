@@ -2856,6 +2856,34 @@ Pass INSERT-TO-BUFFER to insert output to current buffer."
   (interactive)
   (async-shell-command ",mail-sync"))
 
+(defun meain/copy-to-clipboard (message)
+  "Copy `MESSAGE' into clipboard."
+  (with-temp-buffer
+    (insert message)
+    (let ((deactivate-mark t))
+    (call-process-region (point-min) (point-max) "pbcopy"))))
+
+;; Emoji picker
+(defun meain/pick-emoji ()
+  "Pick emoji using completions."
+  (interactive)
+  (let* ((selectrum-should-sort t)
+         (selectrum-display-style '(vertical))
+         ;; (selectrum-display-action 'selectrum-display-full-frame)
+         ;; (selectrum-display-action 'selectrum-max-window-height)
+         (selectrum-max-window-height 100)
+         (selectrum-fix-vertical-window-height t)
+         (filename (concat (getenv "HOME") "/.config/datafiles/emojis.txt"))
+         (emojis (with-temp-buffer (insert-file-contents filename) (buffer-string))))
+    (meain/copy-to-clipboard (car
+               (split-string
+                (completing-read
+                 "Pick emoji: "
+                 (split-string emojis "\n"))
+                " "))))
+  (if (equal "emacs-popup" (cdr (assq 'name (frame-parameters))))
+      (delete-frame)))
+
 ;; Create new blog entry
 (defun meain/blog-new-entry ()
   "Quick function to start a new blog entry from Emacs."
