@@ -1046,6 +1046,13 @@ Pass ORIGINAL and ALTERNATE options."
   (add-hook 'prog-mode-hook 'format-all-ensure-formatter)
   :init (define-key evil-normal-state-map (kbd ",,") 'format-all-buffer))
 
+;; Xref customization
+(use-package xref
+  :config
+  ;; (setq xref-show-definitions-function 'xref-show-definitions-completing-read)
+  (setq xref-auto-jump-to-first-xref 'move) ;; Use 'show to open it
+  (setq xref-auto-jump-to-first-definition 'move))
+
 ;; LSP
 (use-package eglot
   :commands eglot-ensure
