@@ -1,3 +1,10 @@
+;;; early-init -- meain's Emacs config -*- lexical-binding: t -*-
+
+;;; Commentary:
+;; Well, this is a vimmer's Emacs config.  Nothing fancy though.
+
+;;; Code:
+
 ;; Native compilation stuff
 (setq comp-speed 2)
 (setq package-native-compile t)
@@ -27,23 +34,8 @@
 ;; Iosevka Slab 14 | Edlo 13 | Bront 15 | Whois 15 | Ligconsolata 16 | Operator Mono 14
 ;; PragmataPro 14 | agave 15 | Unifont 15 | Apercu Mono 14 | Binchotan_Sharp 15
 ;; CMU Typewriter Text 16 | Input 14 | SF Mono 14 | CQ Mono 11 | Izayoi Monospaced 10
-;; Font: (set-frame-font  "Red Hat Mono 10")
+;; Font: (set-frame-font  "Dank Mono 10")
 ;; Line spacing: (setq-default line-spacing nil)
-
-(defun meain/get-font-prop (font-name prop)
-  "Get PROP (property) from FONT-NAME."
-  (interactive)
-  (let ((font-properties (assoc font-name meain/font-list)))
-    (if font-properties
-        (pcase prop
-          ('family (format "%s %s" font-name (car (nth 2 font-properties))))
-          ('weight (cadr (nth 2 (nth 2 font-properties))))
-          ('line-spacing (nth 1 (nth 2 font-properties))))
-      (pcase prop
-        ('family font-name)
-        ('weight 'regular)
-        ('line-spacing nil)))))
-
 
 (defvar meain/font-list '(;; name size line-spacing weight
                           ("Adelle Mono" . '(10 .1 'regular))
@@ -72,6 +64,20 @@
                           ("Roboto Mono" . '(9 nil 'light))
                           ))
 (defvar meain/font-name "Dank Mono")
+
+(defun meain/get-font-prop (font-name prop)
+  "Get PROP (property) from FONT-NAME."
+  (interactive)
+  (let ((font-properties (assoc font-name meain/font-list)))
+    (if font-properties
+        (pcase prop
+          ('family (format "%s %s" font-name (car (nth 2 font-properties))))
+          ('weight (cadr (nth 2 (nth 2 font-properties))))
+          ('line-spacing (nth 1 (nth 2 font-properties))))
+      (pcase prop
+        ('family font-name)
+        ('weight 'regular)
+        ('line-spacing nil)))))
 (defvar meain/font-family-default (meain/get-font-prop meain/font-name 'family) "Default font family for everything in Emacs.")
 (defvar meain/font-weight-default (meain/get-font-prop meain/font-name 'weight) "Default font weight for everything in Emacs.")
 (setq-default line-spacing (meain/get-font-prop meain/font-name 'line-spacing))
@@ -92,3 +98,5 @@
 (add-hook 'emacs-startup-hook
           (lambda ()
             (setq gc-cons-threshold 16777216 gc-cons-percentage 0.1)))
+
+;;; early-init.el ends here

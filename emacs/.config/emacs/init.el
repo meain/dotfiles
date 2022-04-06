@@ -227,7 +227,7 @@
                           (insert "\n")
                           (insert-button
                            (string-join (reverse (cl-subseq (reverse (split-string x "/")) 0 2)) "/")
-                           'action (lambda (_buton) (find-file x))
+                           'action (lambda (_button) (find-file x))
                            'follow-link t))
                         (cl-subseq recentf-list 0 (min 3 (length recentf-list))))))))
 
@@ -351,6 +351,7 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; Quick quit
 (defun meain/update-scratch-message ()
+  "Update scratch buffer contents to reflect open buffers and unread emails."
   (interactive)
   (with-current-buffer "*scratch*"
     (save-excursion
@@ -412,7 +413,7 @@ Pass ORIGINAL and ALTERNATE options."
              (- (save-excursion (forward-line) (point)) 1)))
 (define-key evil-normal-state-map (kbd "Y") 'meain/yank-till-line-end)
 
-;; Quit out of everythign with esc
+;; Quit out of everything with esc
 (defun meain/keyboard-quit ()
   "Quit out of whatever."
   (interactive)
@@ -1856,7 +1857,7 @@ Pass ORIGINAL and ALTERNATE options."
                                                        (type-of (elfeed-entry-feed (car elfeed-search-entries)))
                                                        'title
                                                        (elfeed-entry-feed entry)))))))))))
-      ;; Need \s- insted of just a simple space because elfeed has issues with space in title
+      ;; Need \s- instead of just a simple space because elfeed has issues with space in title
       (setq elfeed-search-filter (concatenate 'string
                                               elfeed-search-filter
                                               " ="
@@ -2871,7 +2872,7 @@ Pass INSERT-TO-BUFFER to insert output to current buffer."
   (with-temp-buffer
     (insert message)
     (let ((deactivate-mark t))
-    (call-process-region (point-min) (point-max) "pbcopy"))))
+      (call-process-region (point-min) (point-max) "pbcopy"))))
 
 ;; Emoji picker
 (defun meain/pick-emoji ()
@@ -2886,11 +2887,11 @@ Pass INSERT-TO-BUFFER to insert output to current buffer."
          (filename (concat (getenv "HOME") "/.config/datafiles/emojis.txt"))
          (emojis (with-temp-buffer (insert-file-contents filename) (buffer-string))))
     (meain/copy-to-clipboard (car
-               (split-string
-                (completing-read
-                 "Pick emoji: "
-                 (split-string emojis "\n"))
-                " "))))
+                              (split-string
+                               (completing-read
+                                "Pick emoji: "
+                                (split-string emojis "\n"))
+                               " "))))
   (if (equal "emacs-popup" (cdr (assq 'name (frame-parameters))))
       (delete-frame)))
 
@@ -3090,4 +3091,5 @@ Pass THING-TO-POPUP as the thing to popup."
     (start-process-shell-command "server-start-notify" "*server-start-notify*" "notify 'Emacs server started'")))
 
 (provide 'init)
-;;; init ends here
+
+;;; init.el ends here
