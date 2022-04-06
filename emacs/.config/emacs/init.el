@@ -2723,7 +2723,7 @@ START and END comes from it being interactive."
                (copy-path (if abs-path
                               file-path
                             trimmed-path)))
-          (kill-new copy-path)
+          (meain/copy-to-clipboard copy-path)
           (message "Copied '%s' to the clipboard" copy-path))
       (message "No file associated with buffer"))))
 
@@ -2809,7 +2809,7 @@ Default is after, but use BEFORE to print before."
                             (format "#L%s" (line-number-at-pos))))))
     (progn
       (message "%s coped to clipboard." web-url)
-      (kill-new web-url))))
+      (meain/copy-to-clipboard web-url))))
 (evil-leader/set-key "b G" 'meain/github-url)
 
 ;; Generate pdf from markdown document
