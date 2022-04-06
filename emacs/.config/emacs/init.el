@@ -2492,6 +2492,13 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
                               (interactive "P")
                               (meain/vime "vime" "~/.local/share/vime" createnew))))
 
+(defun meain/drop-current-file ()
+  "Use ,drop to drop files on to personal server."
+  (interactive)
+  (let ((drop-url (car (split-string (shell-command-to-string (concat "NO_COPY=1 ,drop " (buffer-file-name))) "\n"))))
+    (message drop-url)
+    (meain/copy-to-clipboard drop-url)))
+
 ;; Notes
 (use-package emacs
   :commands (meain/open-note)

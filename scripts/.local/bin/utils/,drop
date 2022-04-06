@@ -11,28 +11,27 @@ lang=""
 [ "$1" = "-md" ] && md=1 && shift
 [ "$1" = "-l" ] && shift && lang="$1" && shift
 
-
 dropMd() {
-    filepath="$1"
-    pandoc --no-highlight --template ~/.config/datafiles/github-template.html \
-        --output /tmp/formatted -f gfm -t html5 --metadata title="Document" $filepath
-    scp "$filepath" $DROP_VM:$DROP_PATH/$filename
-    scp /tmp/formatted $DROP_VM:$DROP_PATH/$filename.html
+	filepath="$1"
+	pandoc --no-highlight --template ~/.config/datafiles/github-template.html \
+		--output /tmp/formatted -f gfm -t html5 --metadata title="Document" $filepath
+	scp "$filepath" $DROP_VM:$DROP_PATH/$filename
+	scp /tmp/formatted $DROP_VM:$DROP_PATH/$filename.html
 }
 
 dropLang() {
-    filepath="$1"
-    filename="$2"
-    tmpfile="/tmp/drop-$(xxd -l12 -ps /dev/urandom)"
+	filepath="$1"
+	filename="$2"
+	tmpfile="/tmp/drop-$(xxd -l12 -ps /dev/urandom)"
 
-    echo "\`\`\`$lang" >"$tmpfile"
-    cat "$filepath" >>"$tmpfile"
-    echo "\`\`\`" >>"$tmpfile"
+	echo "\`\`\`$lang" >"$tmpfile"
+	cat "$filepath" >>"$tmpfile"
+	echo "\`\`\`" >>"$tmpfile"
 
-    pandoc --no-highlight --template ~/.config/datafiles/github-template.html \
-        --output /tmp/formatted -f gfm -t html5 --metadata title="Document" $tmpfile
-    scp "$filepath" $DROP_VM:$DROP_PATH/$filename
-    scp /tmp/formatted $DROP_VM:$DROP_PATH/$filename.html
+	pandoc --no-highlight --template ~/.config/datafiles/github-template.html \
+		--output /tmp/formatted -f gfm -t html5 --metadata title="Document" $tmpfile
+	scp "$filepath" $DROP_VM:$DROP_PATH/$filename
+	scp /tmp/formatted $DROP_VM:$DROP_PATH/$filename.html
 }
 
 if [ -z "$1" ]; then
@@ -44,26 +43,28 @@ if [ -z "$1" ]; then
 		echo "Reading from stdin"
 		cat /dev/stdin >/tmp/paste
 	fi
-    sourcefile="/tmp/paste"
+	sourcefile="/tmp/paste"
 else
 	if [ -f "$1" ]; then
 		filename="$(xxd -l4 -ps /dev/urandom)-$(basename $1)"
-        sourcefile="$1"
+		sourcefile="$1"
 	else
 		# zip if not a file
 		filename="$(xxd -l4 -ps /dev/urandom).zip"
-        sourcefile="/tmp/$filename"
+		sourcefile="/tmp/$filename"
 	fi
 fi
 
 if [ $md -eq 1 ]; then
-    dropMd "$sourcefile" "$filename"
-    filename="$filename".html
+	dropMd "$sourcefile" "$filename"
+	filename="$filename".html
 elif [ "$lang" != "" ]; then
-    dropLang "$sourcefile" "$filename"
-    filename="$filename".html
+	dropLang "$sourcefile" "$filename"
+	filename="$filename".html
 else
-    scp "$sourcefile" $DROP_VM:$DROP_PATH/$filename
+	scp "$sourcefile" $DROP_VM:$DROP_PATH/$filename
 fi
 echo "https://d.meain.io/$filename"
-echo "https://d.meain.io/$filename" | pbcopy
+
+[ -n "$NO_COPY" ] ||
+	printf "https://d.meain.io/$filename" | pbcopy
