@@ -6,7 +6,7 @@ cp $HOME/.dotfiles/nix/.config/nixpkgs/flake.* $HOME/.config/nixpkgs/
 
 if [ "$1" = update ]; then
 	cd $HOME/.dotfiles/nix/.config/nixpkgs
-	nix flake info --json | jq -r '.locks.nodes | keys[]' |
+	nix flake metadata --json | jq -r '.locks.nodes | keys[]' |
 		fzf | xargs nix flake lock --update-input
 else
 	cd $HOME/.config/nixpkgs/
