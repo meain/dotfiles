@@ -182,6 +182,9 @@
 
 ;;; [BASIC BUILTINS] ===========================================
 
+;; Use mouse to do some stuff when you are lazy
+(context-menu-mode t)
+
 ;; Show open and closing brackets
 (show-paren-mode t)
 (setq show-paren-delay 0)
