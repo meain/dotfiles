@@ -1390,6 +1390,8 @@ Pass ORIGINAL and ALTERNATE options."
   (evil-set-initial-state 'vterm-mode 'insert)
   (setq vterm-max-scrollback 100000)
   (setq vterm-kill-buffer-on-exit t)
+  (add-hook 'vterm-mode-hook (lambda ()
+                               (setq imenu-generic-expression '((nil "^![a-zA-Z0-9_-]+ .+" 0)))))
   (define-key vterm-mode-map (kbd "M-c") 'meain/shell-new)
   (define-key vterm-mode-map (kbd "M-m") 'meain/shell-other)
   (define-key vterm-mode-map (kbd "M-w") 'delete-window)
