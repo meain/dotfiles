@@ -82,6 +82,10 @@
 (defvar meain/font-weight-default (meain/get-font-prop meain/font-name 'weight) "Default font weight for everything in Emacs.")
 (setq-default line-spacing (meain/get-font-prop meain/font-name 'line-spacing))
 (add-to-list 'default-frame-alist `(font . ,meain/font-family-default))
+(custom-set-faces
+ '(fixed-pitch ((t (:inherit default))))
+ '(variable-pitch ((t (:inherit default)))))
+
 
 ;; Wider frames by default
 (add-to-list 'default-frame-alist `(width . 150))

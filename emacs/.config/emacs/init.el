@@ -127,37 +127,17 @@
 ;;; [VISUAL CONFIG] ==============================================
 
 ;; Change font everywhere
-(defun meain/setup-fonts ()
-  "Setup all the proper fonts for everything."
+(defun meain/set-fonts ()
+  "Set fonts for everything."
   (set-face-attribute 'default nil :font meain/font-family-default :weight meain/font-weight-default)
   (set-face-attribute 'fixed-pitch nil :font meain/font-family-default :weight meain/font-weight-default)
   (set-face-attribute 'variable-pitch nil :font meain/font-family-default :weight meain/font-weight-default))
-(if (daemonp)
-    (add-hook 'after-make-frame-functions
-              (lambda (frame)
-                (with-selected-frame frame (meain/setup-fonts))))
-  (meain/setup-fonts))
 (defun meain/select-font ()
-  "Set font after selection using ivy."
+  "Select and set a font."
   (interactive)
   (let ((font-name (completing-read "Choose font: " (remove-duplicates (font-family-list)))))
     (set-frame-font (meain/get-font-prop font-name 'family))
     (setq-default line-spacing (meain/get-font-prop font-name 'line-spacing))))
-
-;; emoji support
-(defun meain/set-emoji-font ()
-  "Setup proper emoji font."
-  (let ((font (cond
-               ((string-equal system-type "darwin") "Apple Color Emoji 10")
-               ((string-equal system-type "gnu/linux") "Symbola 10"))))
-    (set-fontset-font t 'unicode font nil 'prepend)))
-(defun meain/set-emoji-font-in-frame (frame)
-  "Hook to be called for setting emoji font in FRAME."
-  (with-selected-frame frame (meain/set-emoji-font))
-  (remove-hook 'after-make-frame-functions 'meain/set-emoji-font-in-frame))
-(if (daemonp)
-    (add-hook 'after-make-frame-functions 'meain/set-emoji-font-in-frame)
-  (meain/set-emoji-font))
 
 ;; Bell: audio -> visual
 (setq visible-bell nil)
