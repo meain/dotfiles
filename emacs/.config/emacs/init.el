@@ -3077,7 +3077,7 @@ Pass THING-TO-POPUP as the thing to popup."
 (unless (server-running-p)
   (progn
     (server-start)
-    (start-process-shell-command "server-start-notify" "*server-start-notify*" "notify 'Emacs server started'")))
+    (start-process-shell-command "server-start-notify" "*server-start-notify*" "notify --pri 'Emacs server started'")))
 
 (provide 'init)
 

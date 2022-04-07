@@ -4,8 +4,14 @@
 
 set -e
 
+pri=0
+[ "$1" == "--pri" ] && shift && pri=1
 if [ $OSTYPE == "linux-gnu" ]; then
-	notify-desktop "${1:-Notification}" "${2}" >/dev/null 2>/dev/null
+	if [ "$pri" == "1" ]; then
+		notify-desktop --urgency=critical "${1:-Notification}" "${2}" >/dev/null 2>/dev/null
+	else
+		notify-desktop "${1:-Notification}" "${2}" >/dev/null 2>/dev/null
+	fi
 else
 	[ -n $2 ] &&
 		osascript -e "display notification \"${2}\" with title \"${1}\"" ||
