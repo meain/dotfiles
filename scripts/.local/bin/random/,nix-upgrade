@@ -7,4 +7,4 @@ set -e
 nix-channel --update
 nice -n 19 nix-env --upgrade
 command nixos-rebuild 2>/dev/null && sudo nice -n 19 nixos-rebuild switch # skip it if we are not not nixos
-nice -n 19 home-manager switch
+nice -n 19 ,hm switch
