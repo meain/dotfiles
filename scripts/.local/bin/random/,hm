@@ -7,7 +7,16 @@ cp $HOME/.dotfiles/nix/.config/nixpkgs/flake.* $HOME/.config/nixpkgs/
 if [ "$1" = update ]; then
 	cd $HOME/.dotfiles/nix/.config/nixpkgs
 	nix flake metadata --json | jq -r '.locks.nodes | keys[]' |
-		fzf | xargs nix flake lock --update-input
+		fzf -m | xargs -n1 nix flake lock --update-input
+
+	# prep nix-shell
+	hm_nixpkgs_rev="$(nix flake metadata --json $HOME/.config/nixpkgs | jq -r '.locks.nodes.nixpkgs.locked.rev')"
+	nix-shell --run $SHELL \
+		-I "nixpkgs=https://github.com/NixOS/nixpkgs/archive/$hm_nixpkgs_rev.tar.gz" \
+		-p hello --command hello
+elif [ "$1" = lock ]; then
+	cd $HOME/.dotfiles/nix/.config/nixpkgs
+	nix flake lock
 else
 	cd $HOME/.config/nixpkgs/
 	home-manager "${1:-build}"
