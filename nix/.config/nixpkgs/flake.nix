@@ -2,12 +2,12 @@
   description = "Home Manager configurations";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-21.11";
+    nixpkgs.url = "github:nixos/nixpkgs/master";
     homeManager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    unstable.url = "github:nixos/nixpkgs/master";
+    stable.url = "nixpkgs/nixos-21.11";
     nur = {
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -19,17 +19,17 @@
     emacsOverlay.url = "github:nix-community/emacs-overlay";
   };
 
-  outputs = { self, nixpkgs, homeManager, unstable, nur, personal, emacsOverlay }: {
+  outputs = { self, nixpkgs, homeManager, stable, nur, personal, emacsOverlay }: {
     homeConfigurations = {
       "meain" = homeManager.lib.homeManagerConfiguration {
         extraSpecialArgs = {
-          inherit unstable;
+          inherit stable;
         };
 
         configuration = { pkgs, ... }:
           let
             ppkgs = personal.packages.x86_64-linux;
-            upkgs = unstable.legacyPackages.x86_64-linux;
+            spkgs = stable.legacyPackages.x86_64-linux;
           in
           {
             programs.home-manager.enable = true;
@@ -63,7 +63,6 @@
 
               # packages
               # ppkgs.notmuch-git # mail indexer
-              # pkgs.notmuch
               pkgs.notmuch
               pkgs.isync # mail synchronize with upstrem
               pkgs.htop # process monitor
@@ -92,6 +91,7 @@
               # pkgs.ledger # double entry accounting
               pkgs.dasel # jq but more versatile
               # pkgs.mosh # better ssh
+              # pkgs.haskellPackages.kmonad # key remapping
               ppkgs.kmonad # key remapping
               ppkgs.warpd # mouse control
               pkgs.trash-cli # rm -> trash
@@ -149,9 +149,9 @@
               pkgs.gopls # language server
               pkgs.godef # language server helper
               pkgs.go-langserver # go language-server
-              pkgs.goimports # go formatter
+              pkgs.gotools # go formatter
               pkgs.go-tools # installing staticcheck (technically available in golangci-lint, but for use in lsp)
-              pkgs.errcheck # available in golangci-lint, but still
+              spkgs.errcheck # available in golangci-lint, but still
               pkgs.golangci-lint # all kinds of linters for go
               pkgs.delve # debugging in go
 
@@ -162,9 +162,9 @@
               pkgs.nodePackages.stylelint # css linter
               pkgs.nodePackages.prettier # formatting for web stuff
               # pkgs.nodePackages.pnpm # package management
-              # pkgs.nodePackages.typescript # typescript
+              pkgs.nodePackages.typescript # typescript
               pkgs.nodePackages.vscode-css-languageserver-bin # css languageserver
-              pkgs.nodePackages.javascript-typescript-langserver # javascript langserver
+              pkgs.nodePackages.typescript-language-server # javascript langserver
 
               # programming-nix
               pkgs.rnix-lsp # nix language server
@@ -222,7 +222,7 @@
               # gui
               pkgs.mpv # audio/video player
               # pkgs.kitty
-              # pkgs.alacritty # terminal emulator
+              pkgs.alacritty # terminal emulator
               # pkgs.firefox # working OSS browser
               pkgs.chromium # because Google hates firefox
               # pkgs.guake # drop down terminal
@@ -276,8 +276,8 @@
               ppkgs.gloc # run stuff in all git repos
               ppkgs.tojson # convert yaml/toml/json
               pkgs.jo # create json
-              pkgs.jiq
-              upkgs.jless # json viewer  // TODO: fix this
+              pkgs.jiq # interactive jq
+              pkgs.jless # json viewer
               pkgs.blueman # bluetooth control
               pkgs.arandr # screen layout configure
               pkgs.clipmenu # clipboard history
@@ -286,7 +286,7 @@
               pkgs.pcmanfm # gui file manager
               pkgs.unixtools.netstat # netstat
               # pkgs.comby # structural search/editing of code
-              # pkgs.visidata # data visualization
+              pkgs.visidata # data visualization
               pkgs.dragon-drop # drag and drop files
               pkgs.sct # redshift ish stuff
 
