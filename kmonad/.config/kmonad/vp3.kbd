@@ -23,17 +23,23 @@
   spl (tap-hold 180 space lmet)
   super (tap-next-release up lmet)
   dctl (tap-hold 180 down lctl)
+  fsu (tap-hold 180 f lmet)
   nav (tap-hold 180 d (layer-toggle custom))
+  num (tap-hold 500 a (layer-toggle numbers))
   me (tap-macro m e a i n . i o) ;; just pointless fun
   dsh (multi-tap 200 rsft M-s)
+  laft (multi-tap 200 lsft (layer-add numbers))
+  lrft (layer-rem numbers)
+  ms M-s
+  ssft (tap-hold-next 150 lsft (layer-toggle shifted))
 )
 
 
 (deflayer qwerty
   grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
 @hype  q    w    e    r    t    y    u    i    o    p    [    ]    @pipe
- @ealt a    s    @nav f    g    h    j    k    l    ;    @qctl ret
-  lsft z    x    c    v    b    n    m    ,    .    /    @dsh
+ @ealt @num s    @nav @fsu g    h    j    k    l    ;    @qctl ret
+ @laft z    x    c    v    b    n    m    ,    .    /    @dsh
 @super @salt @dctl          @spl         left rmet cmp   rght
 )
 
@@ -46,9 +52,28 @@
 )
 
 (deflayer custom
-  _    _    _    _    _    _    _    _    _    _    _    _    _    del
+  _    _    _    _    _    _    _    _    _    _    _    _    _    bspc
   _    _    _    _    _    _    +    \(   *    \)   _    _    _    _
   _    _    _    _    _    _    left down up   rght _    _    _
   _    _    _    caps _    _    [    ]    _    @me  _    _
   _    _    _              _              _    _    _    _
+)
+
+(deflayer numbers
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    7    8    9    _    _    _    _
+  _    _    _    _    _    _    _    4    5    6    0    _    _
+@lrft  _    _    _    _    _    _    1    2    3    _    _
+  _    _    _              _              _    -    _    _
+)
+
+;; Hacky solution for https://github.com/kmonad/kmonad/issues/50
+;; Not used as we have problems when shift is combined with another
+;; key and the "another key" is pressed first, eg: super+shift+c
+(deflayer shifted
+  ~    !    @    #    $    %    ^    &    *    \(   \)   \_   +    del
+  tab  Q    W    E    R    T    Y    U    I    O    P    {    }    |
+  caps A    S    D    F    G    H    J    K    L    :    "    ret
+  lsft Z    X    C    V    B    N    M    <    >    ?    rsft
+  lctl lmet lalt           spc            ralt rmet cmp  rctl
 )

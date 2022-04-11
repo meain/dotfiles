@@ -26,7 +26,7 @@
   spl (tap-next-release space lmet)
   super (tap-next-release up lmet)
   dctl (tap-hold 180 down lctl)
-  nav (tap-next-release d (layer-toggle custom))
+  nav (tap-hold-next-release 180 d (layer-toggle custom))
 )
 
 (deflayer qwerty
