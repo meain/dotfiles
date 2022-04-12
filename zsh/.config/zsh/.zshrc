@@ -77,7 +77,7 @@ source $ZDOTDIR/functions
 # source dir hashes
 [ -f ~/.local/share/zsh/.zsh_dir_hashes ] && source ~/.local/share/zsh/.zsh_dir_hashes
 
-# Sorce fzf
+# Source fzf
 [ -f /usr/locale/opt/.fzf.zsh ] && source /usr/locale/opt/.fzf.zsh
 
 # Source colors for ls (trapd00r/LS_COLORS)
@@ -87,8 +87,8 @@ source $ZDOTDIR/functions
 autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey -v
-bindkey '^P' up-history
-bindkey '^N' down-history
+bindkey '^P' history-search-backward
+bindkey '^N' history-search-forward
 bindkey '^?' backward-delete-char
 bindkey '^h' backward-delete-char
 bindkey '^w' backward-kill-word
@@ -97,8 +97,8 @@ bindkey '^a' beginning-of-line
 bindkey '^e' end-of-line
 bindkey '^xe' edit-command-line
 bindkey '^x^e' edit-command-line
-bindkey "\e[A" history-search-backward
-bindkey "\e[B" history-search-forward
+bindkey "${key[Up]}" history-search-backward
+bindkey "${key[Down]}" history-search-forward
 export KEYTIMEOUT=1
 
 preexec() {
