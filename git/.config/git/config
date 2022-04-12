@@ -44,11 +44,11 @@
   newHighlight = green reverse
 [color "branch"]
   current = green
-  remote = yellow
+  remote = blue
 [color "diff"]
-  meta = 11
+  meta = blue
   frag = magenta
-  commit = yellow
+  commit = blue
   old = red
   new = green
   whitespace = red reverse
