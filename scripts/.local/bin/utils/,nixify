@@ -2,12 +2,22 @@
 
 set -e
 
+hm_nixpkgs_rev="$(nix flake metadata --json $HOME/.config/nixpkgs | jq -r '.locks.nodes.nixpkgs.locked.rev')"
+
+if [ "$1" == "update" ]; then
+	sed -ibk "s|archive/[^\.]*.tar.gz|archive/$hm_nixpkgs_rev.tar.gz|" shell.nix
+	exit 0
+fi
+
 if [[ ! -e shell.nix ]] && [[ ! -e default.nix ]]; then
-	cat >shell.nix <<'EOF'
-with import <nixpkgs> {};
+	cat >shell.nix <<EOF
+with (import (builtins.fetchTarball "https://github.com/NixOS/nixpkgs/archive/$hm_nixpkgs_rev.tar.gz") { });
 mkShell {
   nativeBuildInputs = [
   ];
+
+  shellHook = ''
+  '';
 }
 EOF
 	$EDITOR shell.nix
