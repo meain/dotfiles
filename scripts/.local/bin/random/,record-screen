@@ -8,17 +8,19 @@ recnamefile='/tmp/recordingname'
 	kill -15 "$(cat "$recpidfile")" &&
 	cat "$recpidfile" &&
 	notify "Recording saved" "$(cat $recnamefile)" &&
-	echo "$(cat $recnamefile)" | pbcopy &&
+	cat $recnamefile | pbcopy &&
 	exit 0
 
-curdate="$(date +%Y-%m-%d-%H-%M-%S)"
+# Don't user mp4 for file extension as that more often than not ends
+# up giving corrupt files. Obs use mvk. mkv or avi seems to work.
+filename="$HOME/screenrecord-$(date +%Y-%m-%d-%H-%M-%S).mkv"
 slop=$(slop -f "%x %y %w %h") || exit 1
 X="$(echo $slop | cut -d' ' -f1)"
 Y="$(echo $slop | cut -d' ' -f2)"
 W="$(echo $slop | cut -d' ' -f3)"
 H="$(echo $slop | cut -d' ' -f4)"
-ffmpeg -f x11grab -s "$W"x"$H" -i :0.0+$X,$Y -f pulse -ac 2 -i default -framerate 60 \
-	-r 30 -c:v h264 -crf 0 -preset ultrafast -c:a aac \
-	"$HOME/screenrecord-$curdate.mp4" &
+
+ffmpeg -f x11grab -s "$W"x"$H" -i :0.0+$X,$Y -f pulse -ac 2 -i default -framerate 30 \
+	-r 30 -c:v h264 -crf 0 -preset ultrafast -c:a aac -q 1 "$filename" &
 echo $! >/tmp/recordingpid
-echo "$HOME/screenrecord-$curdate.mp4" >/tmp/recordingname
+printf "$filename" >/tmp/recordingname
