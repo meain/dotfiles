@@ -1,10 +1,15 @@
 #!/bin/sh
 
-prevwindowname="$(xdotool getactivewindow getwindowname)"
-[ -n "$1" ] &&
-	todo.sh do "$1" |
-	grep -E -o "https?://[^ ]*" |
-		sort -u | xargs -n1 -I{} open '{}'
-clear && todo.sh | head -n -2 | sort -k1n
+if echo "$1" | grep -qE '^[0-9][0-9]*$' && [ -z "$2" ]; then
+	prevwindowname="$(xdotool getactivewindow getwindowname)"
+	[ -n "$1" ] &&
+		todo.sh do "$1" |
+		grep -E -o "https?://[^ ]*" |
+			sort -u | xargs -n1 -I{} open '{}'
+	[ "$(xdotool getactivewindow getwindowname)" == "$prevwindowname" ] || i3-msg scratchpad show >/dev/null
+elif [ -n "$1" ]; then
+	todo.sh $*
+fi
 
-[ "$(xdotool getactivewindow getwindowname)" == "$prevwindowname" ] || i3-msg scratchpad show >/dev/null
+clear
+todo.sh | head -n -2 | sort -k1n
