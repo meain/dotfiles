@@ -83,7 +83,7 @@ m() {
 	if [ ! -d .mscripts ]; then
 		echo "Unable to find .mscripts" && return 1
 	fi
-	eval .mscripts/"$(find .mscripts/ | tail -n+2 | xargs -n1 basename | fzf)"
+	eval .mscripts/"$(find .mscripts/ | tail -n+2 | xargs -n1 basename | fzf --query "$1" -1)"
 	cd -
 }
 
