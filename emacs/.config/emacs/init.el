@@ -602,6 +602,7 @@ Pass ORIGINAL and ALTERNATE options."
                       (format-time-string "%a %d %b %Y %T")
                       "\n---\n"))))
   (aas-set-snippets 'go-mode
+    "!+" "!="
     ";;" ":="
     ";ie"
     (lambda ()
