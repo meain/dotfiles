@@ -2990,6 +2990,19 @@ Pass THING-TO-POPUP as the thing to popup."
     (message "Not in a file")))
 (evil-leader/set-key "e e" 'meain/find-alternate-file)
 
+;; Splitting lists (https://github.com/AckslD/nvim-trevJ.lua)
+(defun meain/split-at-commas (start end)
+  "Split a selection at commas.  `START' and `END' are range start and end."
+  (interactive "r")
+  (if (use-region-p)
+      (let ((regionp (buffer-substring start end)))
+        (delete-active-region)
+        (insert (concat "\n" (string-replace "," ",\n" regionp)))
+        (if (equal major-mode 'go-mode)
+            (insert ",\n")
+          (insert "\n")))
+    (message "Split only works on selections")))
+
 ;; Just some hima testing code
 (defun meain/reload-current-theme ()
   "Util to reload hima theme for debugging."
