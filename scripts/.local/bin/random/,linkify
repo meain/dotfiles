@@ -1,0 +1,34 @@
+#!/bin/sh
+
+set -e
+
+url="$1"
+[ -z "$url" ] && url="$(pbpaste)"
+
+if ! echo "$url" | grep -qE '^https?://'; then
+	echo Not a link
+	exit 1
+fi
+
+get_title() {
+	curl -s "$1" | pup 'title text{}'
+}
+
+link="$(
+	if echo "$url" | grep -qE '^https://github.com/[^/]*/[^/]*/issues'; then
+		printf "$url" | sed "s|https://github.com/\([^/]*/[^/]*\)/issues/\([0-9]*\)|[\1#\2]($url)|"
+	elif echo "$url" | grep -qE '^https://github.com/[^/]*/[^/]*/pull'; then
+		printf "$url" | sed "s|https://github.com/\([^/]*/[^/]*\)/pull/\([0-9]*\)|[\1#\2]($url)|"
+	elif echo "$url" | grep -qE '^https://github.com/[^/]*/[^/]*/commit'; then
+		printf "$url" | sed "s|https://github.com/\([^/]*/[^/]*\)/commit/\([0-9a-z]\{7\}\).*|[\1\@\2]($url)|"
+	elif echo "$url" | grep -qE '^https://github.com/[^/]*/[^/]*/?$'; then
+		printf "$url" | sed "s|https://github.com/\([^/]*/[^/$]*\)|[\1]($url)|"
+	else
+		title="$(get_title "$url")"
+        [ -z "$title" ] && title="$url"
+		printf "[%s](%s)" "$title" "$url"
+	fi
+)"
+
+printf "$link" | pbcopy
+echo "$link"
