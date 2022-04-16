@@ -2196,7 +2196,7 @@ Pass ORIGINAL and ALTERNATE options."
   (defun meain/goto-and-recenter (group &optional previous end query)
     (interactive)
     (evil-textobj-tree-sitter-goto-textobj group previous end query)
-    (recenter))
+    (recenter 7))
   (define-key evil-normal-state-map (kbd "]r") (lambda () (interactive) (meain/goto-and-recenter "parameter.inner")))
   (define-key evil-normal-state-map (kbd "[r") (lambda () (interactive) (meain/goto-and-recenter "parameter.inner" t)))
   (define-key evil-normal-state-map (kbd "]R") (lambda () (interactive) (meain/goto-and-recenter "parameter.inner" nil t)))
