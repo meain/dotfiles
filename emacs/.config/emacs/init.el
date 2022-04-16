@@ -2379,10 +2379,20 @@ SHORTCUT is the keybinding to use.  NAME if the func suffix and FILE is the file
   (let ((funsymbol (intern (concat "open-" name)))
         (fullshortcut (concat "e " shortcut)))
     `(evil-leader/set-key ,fullshortcut
-       (defun ,funsymbol ()
-         (interactive)
-         (find-file ,file)))))
+       (defun ,funsymbol (&optional create)
+         (interactive "P")
+         (if (file-exists-p ,file)
+             (if (file-directory-p ,file)
+                 (find-file (concat ,file "/"
+                                    (completing-read "Choose file:"
+                                                     (directory-files ,file nil directory-files-no-dot-files-regexp))))
+               (find-file ,file))
+           (if create
+               (find-file ,file)
+             (message "Unable to find %s" ,file)))))))
 (meain/quick-file-open-builder "i" "init-el" "~/.dotfiles/emacs/.config/emacs/init.el")
+(meain/quick-file-open-builder "s" "shell-nix" "shell.nix")
+(meain/quick-file-open-builder "c" "mscripts" ".mscripts")
 (meain/quick-file-open-builder "f" "elfeed-feeds" "~/.config/emacs/elfeed-feeds.el")
 (meain/quick-file-open-builder "a" "early-init" "~/.dotfiles/emacs/.config/emacs/early-init.el")
 (meain/quick-file-open-builder "h" "home-manager" "~/.dotfiles/nix/.config/nixpkgs/flake.nix")
