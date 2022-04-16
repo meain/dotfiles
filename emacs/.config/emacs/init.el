@@ -486,6 +486,24 @@ Pass ORIGINAL and ALTERNATE options."
   :after dired
   :commands (dired-git-info-mode))
 
+;; Enable abbrev mode
+(use-package abbrev-mode
+  :defer 3
+  :init
+  (add-hook 'text-mode-hook #'abbrev-mode)
+  (add-hook 'prog-mode-hook #'abbrev-mode)
+  :config
+  (setq save-abbrevs 'silent)
+  (define-abbrev-table
+    'global-abbrev-table
+    '(
+      ;; ("!+" "!=") ;; Unfortunately abbrev mode does not support non alpha chars
+      ("funtion" "function")
+      ("udpate" "update")
+      ("happengin" "happening")
+      ("tempate" "template")
+      )))
+
 ;; auto activating snippets
 (use-package aas
   :straight t
