@@ -14,12 +14,13 @@ cat $VIME_PATH/gourcer $GOURCER_PATH/pending |
 
 if echo "$URL" | grep -q github.com; then
 	stars="$(curl -s "$URL" | pup '.js-social-count attr{aria-label}' | grep 'starred this repository' | cut -d' ' -f1)"
-	[ -n "$stars" ] && [ $stars -le 50 ] && echo "[Not enought stars ($stars)] $URL" && exit 0
+	[ -n "$stars" ] && [ $stars -le 50 ] && echo "[Not enough stars ($stars)] $URL" && exit 0
 fi
 
 if echo "$URL" | grep -qE "^http"; then
 	echo "- $URL" >>$VIME_PATH/gourcer
 	echo "[$stars] $URL added to grourcer list"
+    echo "Local gourcer list is now $(wc -l $VIME_PATH/gourcer | cut -d' ' -f1) items"
 else
 	echo "[Invalid url] $URL"
 fi
