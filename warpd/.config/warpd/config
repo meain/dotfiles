@@ -1,5 +1,20 @@
 hint_activation_key: M-m
+hint_oneshot_key: M-M
+activation_key: M-n
+grid_activation_key: M-N
+
+up: k
+down: j
+left: h
+right: l
+drag: v
+grid: x
+scroll_up: K
+scroll_down: J
+
 hint_bgcolor: #333333
 hint_fgcolor: #f1f1f1
-cursor_color: #333333
+cursor_color: #ff00ff
 cursor_size: 7
+
+hint_size: 25
