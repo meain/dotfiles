@@ -2962,25 +2962,30 @@ Pass THING-TO-POPUP as the thing to popup."
 
 :; Patterns can be regex if we want to match more precisely eg: ("/early-init.el$" "/init.el")
 (defvar meain/find-alternate-file--patterns '(("thing-for-today-personal" "thing-for-today")
-                                              ("thing-for-today" "thing-for-today-personal")
                                               ("early-init.el" "init.el")
-                                              ("init.el" "early-init.el")
                                               ("i3/config" "i3status/config")
-                                              ("i3status/config" "i3/config")
+                                              ("shell.nix" "default.nix")
                                               ("_test.go" ".go")
-                                              (".go" "_test.go")
-                                              ("-test.el" ".el")
-                                              (".el" "-test.el")))
+                                              ("-test.el" ".el")))
 (defun meain/find-alternate-file ()
   "Open alternate file.  Useful for opening test of currently active file."
   (interactive)
   (if (buffer-file-name)
-      (let ((alt-file
-             (car (remove-if (lambda (x) (equal x nil))
-                             (seq-map (lambda (f)
-                                        (if (string-match (car f) (buffer-file-name))
-                                            (s-replace-regexp (car f) (nth 1 f) (buffer-file-name))))
-                                      meain/find-alternate-file--patterns)))))
+      (let* ((file-patterns
+              (apply #'append
+                     (seq-map (lambda (x)
+                                (if (> (length (car x)) (length (cadr x)))
+                                    (list (list (car x) (cadr x))
+                                          (list (cadr x) (car x)))
+                                  (list (list (cadr x) (car x))
+                                        (list (car x) (cadr x)))))
+                              meain/find-alternate-file--patterns)))
+             (alt-file
+              (car (remove-if (lambda (x) (equal x nil))
+                              (seq-map (lambda (f)
+                                         (if (string-match (car f) (buffer-file-name))
+                                             (s-replace-regexp (car f) (nth 1 f) (buffer-file-name))))
+                                       file-patterns)))))
         (message "Switching to %s" (file-name-nondirectory alt-file))
         (if alt-file
             (if (file-exists-p alt-file)
