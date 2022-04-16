@@ -25,7 +25,7 @@ bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl specific '+3'
 
 # Music keybinding
 bindsym XF86AudioPlay exec "zsh -ic ,music-playpause"
-bindsym XF86AudioPrev exec "zsh -ic ,music-prevous"
+bindsym XF86AudioPrev exec "zsh -ic ,music-previous"
 bindsym XF86AudioNext exec "zsh -ic ,music-next"
 
 # Use Mouse+$mod to drag floating windows to their wanted position
@@ -56,7 +56,7 @@ bindsym $mod+Mod1+q exec "zsh -ic ,lock-screen && sleep 1 && systemctl suspend"
 bindsym $mod+Mod1+Control+z exec "zsh -ic ,lock-screen && sleep 1 && systemctl suspend"
 
 # Screen layout switching (better than unplugging and waiting for autorandr to trigger)
-# ...+1 is used for primary external as internal laptop keyboard cannot press that becase of no n-key rollover
+# ...+1 is used for primary external as internal laptop keyboard cannot press that because of no n-key rollover
 bindsym $mod+Mod1+Control+Shift+1 exec "zsh -ic \\"~/.screenlayout/big.sh || notify 'Unable to update monitor config'\\" "
 bindsym $mod+Mod1+Control+Shift+0 exec "zsh -ic \\"~/.screenlayout/builtin.sh || notify 'Unable to update monitor config'\\" "
 bindsym $mod+Mod1+Control+Shift+2 exec "zsh -ic \\"~/.screenlayout/builtinandbig.sh || notify 'Unable to update monitor config'\\" "
@@ -184,6 +184,7 @@ bindsym $mod+Mod1+Control+Shift+l exec "zsh -ic 'dragon -x $(pbpaste)'"
 bindsym $mod+Mod1+Control+m exec "zsh -ic ',song | xargs -0 notify'"
 bindsym $mod+Mod1+Control+v exec emacsclient -ce '(meain/vime "vime" "~/.local/share/vime" t)'
 bindsym $mod+Mod1+Control+q exec emacsclient -e "(meain/emacs-popup-frame 'meain/pick-emoji)"
+bindsym $mod+Mod1+Control+Shift+m exec chromium --new-window 'https://meet.google.com'
 
 # i3 keybindings
 bindsym $mod+Shift+c reload
