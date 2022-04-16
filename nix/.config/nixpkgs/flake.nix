@@ -289,6 +289,8 @@
               pkgs.visidata # data visualization
               pkgs.dragon-drop # drag and drop files
               pkgs.sct # redshift ish stuff
+              # pkgs.nur.repos.renesat.activitywatch-bin  # https://github.com/NixOS/nix/issues/3843
+              ppkgs.activitywatch-bin # activity tracking
 
               # gnome tweaking
               # pkgs.gnome3.dconf-editor # change dconf settings
@@ -591,6 +593,15 @@
               Service.RestartSec = 5;
             };
 
+            systemd.user.services.activitywatch = {
+              Unit.Description = "Start ActivityWatch";
+              Service.Type = "simple";
+              Service.ExecStart = "${ppkgs.activitywatch-bin}/bin/aw-qt";
+              Install.WantedBy = [ "default.target" ];
+              Service.Restart = "on-failure";
+              Service.RestartSec = 5;
+            };
+
             # make this into a function??
             systemd.user.services.note-sync = {
               Service.Type = "oneshot";
@@ -706,7 +717,7 @@
 
         pkgs = import nixpkgs {
           system = "x86_64-linux";
-          overlays = [ emacsOverlay.overlay ];
+          overlays = [ emacsOverlay.overlay nur.overlay ];
         };
 
         system = "x86_64-linux";
