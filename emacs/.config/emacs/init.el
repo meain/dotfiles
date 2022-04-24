@@ -2466,11 +2466,11 @@ SHORTCUT is the keybinding to use.  NAME if the func suffix and FILE is the file
   (let* ((scratch-major-mode
           (completing-read
            "Choose mode: "
-           '(text-mode python-mode json-mode rust-mode go-mode
+           '(text-mode python-mode json-mode yaml-mode rust-mode go-mode
                        restclient-mode markdown-mode emacs-lisp-mode
                        javascript-mode nix-mode shell-script-mode
                        web-mode css-mode sql-mode artist-mode)
-           nil nil nil nil (format "%s" major-mode)))
+           nil nil nil nil "text-mode"))
          (scratch-file-name (concatenate 'string
                                          "~/.local/share/scratch/"
                                          (format "%s" scratch-major-mode) "-"
