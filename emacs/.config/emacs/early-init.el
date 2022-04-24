@@ -58,12 +58,14 @@
                           ("M+ 1m" . '(10 nil 'regular))
                           ("Mirage" . '(10 .1 'regular))
                           ("Monofur" . '(11 nil 'regular))
+                          ("Monoid HalfLoose" . '(7 .1 'light))
+                          ("Monoisome" . '(9 .3 'light))
                           ("NK57 Monospace" . '(9 .2 'regular))
                           ("PT Mono" . '(10 nil 'regular))
                           ("Red Hat Mono" . '(9 nil 'regular))
                           ("Roboto Mono" . '(9 nil 'light))
                           ))
-(defvar meain/font-name "Dank Mono")
+(defvar meain/font-name "Iosevka Comfy")
 
 (defun meain/get-font-prop (font-name prop)
   "Get PROP (property) from FONT-NAME."
