@@ -77,7 +77,7 @@
     `(mode-line-inactive ((t (:background ,light-gray))))
     `(mode-line-buffer-id ,bold-layer)
     `(mode-line ((t (:background ,green-blue))))
-    `(minibuffer-prompt ((t (:foreground ,blue :background ,white))))
+    `(minibuffer-prompt ((t (:foreground ,blue))))
 
     ;; Basic font lock entries
     `(font-lock-keyword-face ,default-layer)
