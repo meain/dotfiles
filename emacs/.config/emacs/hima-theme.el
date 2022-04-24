@@ -160,6 +160,9 @@
     ;; shr
     `(shr-link ,underline-layer)
 
+    ;; variable-pitch
+    `(variable-pitch ((t nil)))
+
     ;; strips-mode
     `(stripe-highlight ((t (:background ,lighter-blue))))
     `(stripe-hl-line ((t (:background ,barely-orange))))
