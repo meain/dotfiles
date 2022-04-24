@@ -42,6 +42,7 @@
        (defenition-layer `((t (:foreground ,dark-orange))))
        (bold-layer `((t (:foreground ,black :weight bold))))
        (underline-layer `((t (:underline t))))
+       (disabled-layer `((t (:foreground ,medium-gray))))
        (tooltip-layer `((t (:background ,lighter-gray :foreground ,black))))
        (tooltip-selected-layer `((t (:background ,light-blue :foreground ,black))))
        (all-black-layer `((t (:background ,black :foreground ,black))))
@@ -157,6 +158,8 @@
 
     ;; dired
     `(dired-directory ((t (:weight bold :foreground ,black))))
+    `(dired-ignored ,disabled-layer)
+
     ;; shr
     `(shr-link ,underline-layer)
 
