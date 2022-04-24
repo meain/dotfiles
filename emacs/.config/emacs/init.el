@@ -62,7 +62,16 @@
                              :jump t)
   ;; Up/Down on visual instead of actual lines
   (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
-  (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line))
+  (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
+
+  (defun meain/recenter-advice (orig-fn count)
+    "Used to recenter the buffer after `ORIG-FN' which is most probably a search-next.
+`COUNT' is passed down to the search function."
+    (apply orig-fn count)
+    (recenter))
+
+  (advice-add 'evil-search-next :around #'meain/recenter-advice)
+  (advice-add 'evil-search-previous :around #'meain/recenter-advice))
 
 ;; Evil leader
 (use-package evil-leader
