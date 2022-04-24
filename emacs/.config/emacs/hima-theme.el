@@ -157,6 +157,8 @@
 
     ;; dired
     `(dired-directory ((t (:weight bold :foreground ,black))))
+    ;; shr
+    `(shr-link ,underline-layer)
 
     ;; strips-mode
     `(stripe-highlight ((t (:background ,lighter-blue))))
