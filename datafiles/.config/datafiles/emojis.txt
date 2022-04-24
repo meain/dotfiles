@@ -18,8 +18,6 @@
 🙄 Face With Rolling Eyes face #eyeroll #frustrated @people
 😬 Grimacing Face face #grimace #teeth @people
 😌 Relieved Face face #relaxed #phew #massage #happiness @people
-🙄 Face With Rolling Eyes face #eyeroll #frustrated @people
-😶 Face Without Mouth face #hellokitty @people
 😕 Confused Face face #indifference #huh #weird #hmmm #:/ @people
 😳 Flushed Face face #blush #shy #flattered @people
 ✋ Raised Hand fingers #stop #highfive #palm #ban @people
@@ -37,45 +35,25 @@
 🏃 Person Running man #walking #exercise #race #running @people
 😀 Grinning Face face #smile #happy #joy #:D #grin @people
 😃 Grinning Face With Big Eyes face #happy #joy #haha #:D #:) #smile #funny @people
-😄 Grinning Face With Smiling Eyes face #happy #joy #funny #haha #laugh #like #:D #:) @people
-😁 Beaming Face With Smiling Eyes face #happy #smile #joy #kawaii @people
 😆 Grinning Squinting Face happy #joy #lol #satisfied #haha #face #glad #XD #laugh @people
-😅 Grinning Face With Sweat face #hot #happy #laugh #sweat #smile #relief @people
 🤣 Rolling on the Floor Laughing face #rolling #floor #laughing #lol #haha @people
-😂 Face With Tears of Joy face #cry #tears #weep #happy #happytears #haha @people
-🙂 Slightly Smiling Face face #smile @people
 🙃 Upside-Down Face face #flipped #silly #smile @people
-😉 Winking Face face #happy #mischievous #secret #;) #smile #eye @people
 😊 Smiling Face With Smiling Eyes face #smile #happy #flushed #crush #embarrassed #shy #joy @people
-😇 Smiling Face With Halo face #angel #heaven #halo @people
 🥰 Smiling Face With Hearts face #love #like #affection #valentines #infatuation #crush #hearts #adore @people
 😍 Smiling Face With Heart-Eyes face #love #like #affection #valentines #infatuation #crush #heart @people
 🤩 Star-Struck face #smile #starry #eyes #grinning @people
 😘 Face Blowing a Kiss face #love #like #affection #valentines #infatuation #kiss @people
-😗 Kissing Face love #like #face #3 #valentines #infatuation #kiss @people
 😚 Kissing Face With Closed Eyes face #love #like #affection #valentines #infatuation #kiss @people
-😙 Kissing Face With Smiling Eyes face #affection #valentines #infatuation #kiss @people
 😋 Face Savoring Food happy #joy #tongue #smile #face #silly #yummy #nom #delicious #savouring @people
 😛 Face With Tongue face #prank #childish #playful #mischievous #smile #tongue @people
 😜 Winking Face With Tongue face #prank #childish #playful #mischievous #smile #wink #tongue @people
 🤪 Zany Face face #goofy #crazy @people
-😝 Squinting Face With Tongue face #prank #playful #mischievous #smile #tongue @people
 🤑 Money-Mouth Face face #rich #dollar #money @people
 🤗 Hugging Face face #smile #hug @people
 🤭 Face With Hand Over Mouth face #whoops #shock #surprise @people
-🤫 Shushing Face face #quiet #shhh @people
-🤔 Thinking Face face #hmmm #think #consider @people
 🤐 Zipper-Mouth Face face #sealed #zipper #secret @people
 🤨 Face With Raised Eyebrow face #distrust #scepticism #disapproval #disbelief #surprise @people
-😐 Neutral Face indifference #meh #:| #neutral @people
-😑 Expressionless Face face #indifferent #-_- #meh #deadpan @people
-😶 Face Without Mouth face #hellokitty @people
-😏 Smirking Face face #smile #mean #prank #smug #sarcasm @people
-😒 Unamused Face indifference #bored #straight face #serious #sarcasm #unimpressed #skeptical #dubious #side_eye @people
-🙄 Face With Rolling Eyes face #eyeroll #frustrated @people
-😬 Grimacing Face face #grimace #teeth @people
 🤥 Lying Face face #lie #pinocchio @people
-😌 Relieved Face face #relaxed #phew #massage #happiness @people
 😔 Pensive Face face #sad #depressed #upset @people
 😪 Sleepy Face face #tired #rest #nap @people
 🤤 Drooling Face face @people
@@ -96,14 +74,12 @@
 😎 Smiling Face With Sunglasses face #cool #smile #summer #beach #sunglass @people
 🤓 Nerd Face face #nerdy #geek #dork @people
 🧐 Face With Monocle face #stuffy #wealthy @people
-😕 Confused Face face #indifference #huh #weird #hmmm #:/ @people
 😟 Worried Face face #concern #nervous #:( @people
 🙁 Slightly Frowning Face face #frowning #disappointed #sad #upset @people
 ☹ Frowning Face face #sad #upset #frown @people
 😮 Face With Open Mouth face #surprise #impressed #wow #whoa #:O @people
 😯 Hushed Face face #woo #shh @people
 😲 Astonished Face face #xox #surprised #poisoned @people
-😳 Flushed Face face #blush #shy #flattered @people
 🥺 Pleading Face face #begging #mercy @people
 😦 Frowning Face With Open Mouth face #aw #what @people
 😧 Anguished Face face #stunned #nervous @people
@@ -148,32 +124,24 @@
 👋 Waving Hand hands #gesture #goodbye #solong #farewell #hello #hi #palm @people
 🤚 Raised Back of Hand fingers #raised #backhand @people
 🖐 Hand With Fingers Splayed hand #fingers #palm @people
-✋ Raised Hand fingers #stop #highfive #palm #ban @people
 🖖 Vulcan Salute hand #fingers #spock #star trek @people
-👌 OK Hand fingers #limbs #perfect #ok #okay @people
 ✌ Victory Hand fingers #ohyeah #hand #peace #victory #two @people
-🤞 Crossed Fingers good #lucky @people
 🤟 Love-You Gesture hand #fingers #gesture @people
-🤘 Sign of the Horns hand #fingers #evil_eye #sign_of_horns #rock_on @people
 🤙 Call Me Hand hands #gesture @people
 👈 Backhand Index Pointing Left direction #fingers #hand #left @people
 👉 Backhand Index Pointing Right fingers #hand #direction #right @people
 👆 Backhand Index Pointing Up fingers #hand #direction #up @people
 🖕 Middle Finger hand #fingers #rude #middle #flipping @people
 👇 Backhand Index Pointing Down fingers #hand #direction #down @people
-☝ Index Pointing Up hand #fingers #direction #up @people
-👍 Thumbs Up thumbsup #yes #awesome #good #agree #accept #cool #hand #like @people
 👎 Thumbs Down thumbsdown #no #dislike #hand @people
 ✊ Raised Fist fingers #hand #grasp @people
 👊 Oncoming Fist angry #violence #fist #hit #attack #hand @people
 🤛 Left-Facing Fist hand #fistbump @people
 🤜 Right-Facing Fist hand #fistbump @people
 👏 Clapping Hands hands #praise #applause #congrats #yay @people
-🙌 Raising Hands gesture #hooray #yea #celebration #hands @people
 👐 Open Hands fingers #butterfly #hands #open @people
 🤲 Palms Up Together hands #gesture #cupped #prayer @people
 🤝 Handshake agreement #shake @people
-🙏 Folded Hands please #hope #wish #namaste #highfive @people
 ✍ Writing Hand lower_left_ballpoint_pen #stationery #write #compose @people
 💅 Nail Polish beauty #manicure #finger #fashion #nail @people
 🤳 Selfie camera #phone @people
@@ -208,17 +176,14 @@
 🙎‍♂️ Man Pouting male #boy #man @people
 🙅 Person Gesturing No female #girl #woman #nope @people
 🙅‍♂️ Man Gesturing No male #boy #man #nope @people
-🙆 Person Gesturing OK women #girl #female #pink #human #woman @people
 🙆‍♂️ Man Gesturing OK men #boy #male #blue #human #man @people
 💁 Person Tipping Hand female #girl #woman #human #information @people
 💁‍♂️ Man Tipping Hand male #boy #man #human #information @people
-🙋 Person Raising Hand female #girl #woman @people
 🙋‍♂️ Man Raising Hand male #boy #man @people
 🙇 Person Bowing man #male #boy @people
 🙇‍♀️ Woman Bowing woman #female #girl @people
 🤦‍♂️ Man Facepalming man #male #boy #disbelief @people
 🤦‍♀️ Woman Facepalming woman #female #girl #disbelief @people
-🤷 Person Shrugging woman #female #girl #confused #indifferent #doubt @people
 🤷‍♂️ Man Shrugging man #male #boy #confused #indifferent #doubt @people
 👨‍⚕️ Man Health Worker doctor #nurse #therapist #healthcare #man #human @people
 👩‍⚕️ Woman Health Worker doctor #nurse #therapist #healthcare #woman #human @people
@@ -295,9 +260,7 @@
 💆‍♂️ Man Getting Massage male #boy #man #head @people
 💇 Person Getting Haircut female #girl #woman @people
 💇‍♂️ Man Getting Haircut male #boy #man @people
-🚶 Person Walking human #feet #steps @people
 🚶‍♀️ Woman Walking human #feet #steps #woman #female @people
-🏃 Person Running man #walking #exercise #race #running @people
 🏃‍♀️ Woman Running woman #walking #exercise #race #running #female @people
 💃 Woman Dancing female #girl #woman #fun @people
 🕺 Man Dancing male #boy #fun #dancer @people
@@ -1521,4 +1484,3 @@
 🏴󠁧󠁢󠁥󠁮󠁧󠁿 Flag: England flag #english @flags
 🏴󠁧󠁢󠁳󠁣󠁴󠁿 Flag: Scotland flag #scottish @flags
 🏴󠁧󠁢󠁷󠁬󠁳󠁿 Flag: Wales flag #welsh @flags
-
