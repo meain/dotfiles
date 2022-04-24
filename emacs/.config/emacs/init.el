@@ -406,6 +406,10 @@ Pass ORIGINAL and ALTERNATE options."
 (defun meain/keyboard-quit ()
   "Quit out of whatever."
   (interactive)
+  ;; Delete frame if it is a minbuffer only popup
+  (if (and (equal (cdr (assq 'name (frame-parameters))) "emacs-popup")
+           (equal (cdr (assq 'minibuffer (frame-parameters))) 'only))
+       (delete-frame))
   (keyboard-escape-quit)
   (minibuffer-keyboard-quit)
   (keyboard-quit))
