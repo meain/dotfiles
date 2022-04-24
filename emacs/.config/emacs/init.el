@@ -479,7 +479,7 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package dired
   :defer t
   :config
-  (require 'dired-x)
+  (require 'dired-x) ;; for dired-omit-files
   (setq delete-by-moving-to-trash t)
   (setq trash-directory "~/.Trash")
   (setq dired-listing-switches "-AGFhlgo")
@@ -491,7 +491,16 @@ Pass ORIGINAL and ALTERNATE options."
   (add-hook 'dired-mode-hook 'hl-line-mode)
   (add-hook 'dired-mode-hook 'dired-hide-details-mode)
   (define-key evil-normal-state-map (kbd "-") 'dired-jump)
-  (define-key evil-normal-state-map (kbd "_") 'find-file))
+  (define-key evil-normal-state-map (kbd "_") 'find-file)
+
+  ;; TODO: make it work with directories
+  (defun dired-dim-git-ignores ()
+    "Dim out .gitignore contents"
+    (when-let ((_ (require 'vc))
+               (ignores (magit-ignored-files))
+               (exts (make-local-variable 'completion-ignored-extensions)))
+      (dolist (item ignores) (add-to-list exts item))))
+  (add-hook 'dired-mode-hook #'dired-dim-git-ignores))
 
 ;; Github like git info in dired
 (use-package dired-git-info
