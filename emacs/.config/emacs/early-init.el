@@ -14,6 +14,9 @@
 ;; Disable package.el as we are using straight
 (setq package-enable-at-startup nil)
 
+;; Increase max specpdl size
+(setq max-specpdl-size 32123)
+
 ;; MacOS specific keybinding changes
 (setq mac-option-modifier 'meta)
 (setq mac-command-modifier 'super)
