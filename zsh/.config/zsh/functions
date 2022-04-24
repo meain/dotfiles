@@ -9,7 +9,7 @@ z() {
 }
 
 jj() {
-	cd "./$(fd -H -td -d5 | fzf --preview 'tree -L 2 ./{}')" || return 1
+	cd "${1:-.}/$(fd . "${1:-.}" -H -td -d5 | sed "s|\\${1:-.}|.|" | fzf --preview 'tree -L 2 ./{}')" || return 1
 }
 
 tmp() {
