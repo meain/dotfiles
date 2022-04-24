@@ -70,7 +70,7 @@ function +vi-git-untracked() {
 
 function _current_kubernets_namespace() {
   if [ -d helm ] || [ -d charts ] || [ -f deployment.yaml ] || [ -f .namespace ];then
-    kubectl config view --minify --output 'jsonpath={..namespace}'
+    kubectl config view --minify --output 'jsonpath={..namespace}' 2>/dev/null
   fi
 }
 
