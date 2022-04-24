@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# Do something with a specific thing which is found suing fuzzy find
+# Example usage: ,kk log --tail 10 -f
+
+set -e
+
+line="$(kubectl get all --all-namespaces | tail -n +2 | fzf)"
+namespace="$(echo "$line" | awk '{print $1}')"
+pod="$(echo "$line" | awk '{print $2}')"
+# container="$(kubectl get pods "$pod" -n "$namespace" -o jsonpath='{.spec.containers[*].name}' | fzf -1)"
+# echo Using $pod"($container)" in $namespace
+echo kubectl $* -n "$namespace" "$pod" >&2
+kubectl $* -n "$namespace" "$pod"
