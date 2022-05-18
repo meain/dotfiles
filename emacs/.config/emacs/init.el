@@ -1987,7 +1987,9 @@ Pass ORIGINAL and ALTERNATE options."
   :straight t
   :defer t
   :diminish
-  :init (beacon-mode t))
+  :config
+  (setq beacon-blink-when-window-scrolls t)
+  (beacon-mode t))
 
 ;; Ligatures
 (use-package ligature
