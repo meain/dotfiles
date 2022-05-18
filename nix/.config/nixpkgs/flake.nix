@@ -33,6 +33,7 @@
           in
           {
             programs.home-manager.enable = true;
+            nixpkgs.config.allowUnfree = true;
 
             services.emacs.package = pkgs.emacsUnstable;
             programs.emacs = {
@@ -345,6 +346,9 @@
               pkgs.fira-code
               # pkgs.dina-font
               # pkgs.envypn-font
+
+              # nonfree
+              pkgs.slack
             ];
 
             dconf.settings = {
