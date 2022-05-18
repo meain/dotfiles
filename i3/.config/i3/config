@@ -9,7 +9,7 @@ exec --no-startup-id clipmenud
 # exec --no-startup-id nm-applet
 # exec --no-startup-id blueman-applet
 # exec --no-startup-id kdeconnect-indicator
-exec_always --no-startup-id xset r rate 220 35
+exec_always --no-startup-id xset r rate 350 35
 exec_always --no-startup-id xinput set-prop "ETPS/2 Elantech Touchpad" "libinput Tapping Enabled" 1
 
 # Use pactl to adjust volume in PulseAudio.
