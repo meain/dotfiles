@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -e
+set -xe
 
 recpidfile='/tmp/recordingpid'
 recnamefile='/tmp/recordingname'
@@ -9,6 +9,7 @@ recnamefile='/tmp/recordingname'
 	cat "$recpidfile" &&
 	notify "Recording saved" "$(cat $recnamefile)" &&
 	cat $recnamefile | pbcopy &&
+    rm "$recpidfile" "$recnamefile" &&
 	exit 0
 
 # Don't user mp4 for file extension as that more often than not ends
