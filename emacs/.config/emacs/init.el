@@ -1660,7 +1660,7 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package rust-mode :straight t :defer t)
 (use-package go-mode :straight t :defer t)
 (use-package lua-mode :straight t :defer t)
-(use-package web-mode :straight t :defer t)
+(use-package web-mode :mode "\\.js\\'" :straight t :defer t)
 (use-package jinja2-mode :straight t :defer t)
 (use-package json-mode :straight t :defer t)
 (use-package config-general-mode :straight t :defer t :mode "/\\.env")
