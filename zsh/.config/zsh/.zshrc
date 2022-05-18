@@ -92,6 +92,7 @@ bindkey '^N' history-search-forward
 bindkey '^?' backward-delete-char
 bindkey '^h' backward-delete-char
 bindkey '^w' backward-kill-word
+bindkey '^H' backward-kill-word # ctrl+bspc
 bindkey '^r' history-incremental-search-backward
 bindkey '^a' beginning-of-line
 bindkey '^e' end-of-line
