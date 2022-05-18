@@ -2718,17 +2718,9 @@ START and END comes from it being interactive."
 (evil-leader/set-key "b f" 'find-file)
 (evil-leader/set-key "b d" 'delete-frame)
 
-;; Server edit complete or close popup
-(defun meain/close-thing ()
-  "Finish server edit.  Else if in popup, close popup."
-  (interactive)
-  (let ((frame-name (cdr (assq 'name (frame-parameters)))))
-    (if server-clients
-        (with-editor-finish nil)
-      (if (equal frame-name "emacs-popup")
-          (delete-frame)
-        (message "No server editing buffers exist")))))
-(evil-leader/set-key "s" 'meain/close-thing)
+;; Server edit complete
+(evil-leader/set-key "s" 'server-edit)
+
 
 ;; Bookmarks
 (setq bookmark-save-flag 1)
