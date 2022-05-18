@@ -2,12 +2,12 @@
 
 set -e
 
-unread="$(notmuch search tag:unread and tag:inbox and '-tag:nonotify' and '-tag:notified' | wc -l)"
+unread="$(notmuch search tag:unread and tag:inbox and '-tag:nonotify' and '-tag:notified' and '-tag:github' | wc -l)"
+ghunread="$(notmuch search tag:unread and tag:inbox and '-tag:nonotify' and '-tag:notified' and 'tag:github' | wc -l)"
 todo="$(notmuch search tag:todo and tag:inbox | wc -l)"
-if [ $todo -ne 0 ]; then
-	echo "M$unread.$todo"
-elif [ $unread -ne 0 ]; then
-	echo "M$unread"
-else
-	echo "M"
-fi
+
+printf "M%s:G%s:T%s" "$unread" "$ghunread" "$todo"
+# [ "$unread" -ne 0 ] && printf "M%s" "$unread"
+# [ "$ghunread" -ne 0 ] && printf "G%s" "$ghunread"
+# [ "$todo" -ne 0 ] && printf "T%s" "$todo"
+# [ "$unread" -eq 0 ] && [ "$ghunread" -eq 0 ] && [ "$todo" -eq 0 ] && printf "M"
