@@ -2,22 +2,29 @@
 
 set -e
 
-[ -z "$1" ] && exit
-if echo "$1" | grep -qE '^xhttps?\:\/\/[a-z0-9_\.\?\&\=#-]+'; then
-   URL="$(echo "$1" | cut -c2-)" # this is from the seperator in neomutt
-   tmux popup -w90% -h90% -E -d '#{pane_current_path}' "open '$URL'"
+if [ -z "$1" ]; then
+	xdotool type "rcd # prev: $2"
+	xdotool key "Return"
+elif echo "$1" | grep -qE '^xhttps?\:\/\/[a-z0-9_\.\?\&\=#-]+'; then
+	URL="$(echo "$1" | cut -c2-)" # this is from the separator in neomutt
+	tmux popup -w90% -h90% -E -d "$2" "open '$URL'"
 elif echo "$1" | grep -qE '^https?\:\/\/[a-z0-9_\.\?\&\=#-]+'; then
-   tmux popup -w90% -h90% -E -d '#{pane_current_path}' "open '$1'"
+	tmux popup -w90% -h90% -E -d "$2" "open '$1'"
 elif echo "$1" | grep -qE '^E\d{4}`\.'; then
-   ERR=$(echo "$1" | cut -c1-5)
-   tmux popup -w50% -h80% -E "rustc --explain '$ERR'"
-elif [ -f "$1" ]; then
-   tmux popup -w90% -h90% -E -d '#{pane_current_path}' "nvim '$1'"
-elif [ -d "$1" ]; then
-   tmux popup -w90% -h90% -E -d '#{pane_current_path}' "lf '$1'"
+	ERR=$(echo "$1" | cut -c1-5)
+	tmux popup -w50% -h80% -E "rustc --explain '$ERR'"
+elif [ -f "$2/$1" ]; then
+	# tmux popup -w90% -h90% -E -d "$2" "nvim '$1'"
+	dragon -x "$2/$1"
+elif [ -d "$2/$1" ] || [ -d "$1" ]; then
+	# tmux popup -w90% -h90% -E -d "$2" "lf '$1'"
+	# dragon -x "$2/$1"
+	xdotool type "cd $1 # prev: $2"
+	xdotool key "Return"
 elif git log --format=format:%H | grep -q "$1"; then
-   tmux popup -w90% -h90% -E -d '#{pane_current_path}' \
-      "git log --format=format:%H | grep '$1' | xargs git show;read"
+	tmux popup -w90% -h90% -E -d "$2" \
+		"git log --format=format:%H | grep '$1' | xargs git show;read"
 else
-   echo "$1" | pbcopy
+	printf "$1" | pbcopy
+	notify "Copied to clipboard"
 fi
