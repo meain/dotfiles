@@ -110,6 +110,7 @@
               # apps
               pkgs.kubectl # kubernetes cli
               pkgs.kubernetes-helm # helm cli
+              pkgs.stern # better way to fetch kubernetes log
               pkgs.youtube-dl # download youtube videos
               pkgs.chafa # show images in terminal using half blocks
               pkgs.hub # Github integration for git
@@ -134,6 +135,7 @@
               # pkgs.podman # pod manager
               pkgs.typos # typo checker (integrated with flymake)
               pkgs.k9s # kubernetes tui
+              pkgs.screenkey # show keys (useful when recording screen)
 
               # programming
               # pkgs.gist # create gist
@@ -218,6 +220,7 @@
               pkgs.hadolint # Dockerfile lint
               pkgs.sqls # lsp server for sql
               pkgs.python39Packages.sqlparse # sqlformat
+              pkgs.grpcurl # curl for grpc
 
               # gui
               pkgs.mpv # audio/video player
@@ -291,6 +294,7 @@
               pkgs.sct # redshift ish stuff
               # pkgs.nur.repos.renesat.activitywatch-bin  # https://github.com/NixOS/nix/issues/3843
               ppkgs.activitywatch-bin # activity tracking
+              pkgs.gforth # gnu forth interpreter
 
               # gnome tweaking
               # pkgs.gnome3.dconf-editor # change dconf settings
@@ -306,9 +310,6 @@
               # pkgs.gnomeExtensions.custom-hot-corners-extended # smokin' hot corners
               # ppkgs.gnomeExtensions.steal-my-focus # just switch, don't say
               # ppkgs.gnomeExtensions.shellout # custom info in bar
-
-              # tryout
-              # pkgs.gforth # gnu forth interpreter
 
               # symlinks (macos polyfills)
               (pkgs.runCommand "open" { } ''mkdir -p $out/bin; ln -s ${pkgs.xdg-utils}/bin/xdg-open $out/bin/open'')
