@@ -1095,6 +1095,7 @@ Pass ORIGINAL and ALTERNATE options."
   (add-to-list 'eglot-server-programs '(yaml-mode . ("yaml-language-server" "--stdio")))
   (add-to-list 'eglot-server-programs '(json-mode . ("vscode-json-languageserver" "--stdio")))
   (add-to-list 'eglot-server-programs '(javascript-mode . ("typescript-language-server" "--stdio" "--tsserver-path" "/home/meain/.nix-profile/bin/tsserver")))
+  (add-to-list 'eglot-server-programs '(web-mode . ("typescript-language-server" "--stdio" "--tsserver-path" "/home/meain/.nix-profile/bin/tsserver")))
   (add-to-list 'eglot-server-programs '(js-mode . ("typescript-language-server" "--stdio" "--tsserver-path" "/home/meain/.nix-profile/bin/tsserver")))
   (add-to-list 'eglot-server-programs '(typescipt-mode . ("typescript-language-server" "--stdio" "--tsserver-path" "/home/meain/.nix-profile/bin/tsserver")))
   ;; Can be enabled on fiction like things
@@ -2672,6 +2673,7 @@ START and END comes from it being interactive."
               ('go-mode (format "fmt.Println(\"%s:\", %s)" escaped-thing-to-print thing-to-print))
               ('lua-mode (format "print(\"%s:\", %s)" escaped-thing-to-print thing-to-print))
               ('js-mode (format "console.log(\"%s:\", %s)" escaped-thing-to-print thing-to-print))
+              ('web-mode (format "console.log(\"%s:\", %s)" escaped-thing-to-print thing-to-print))
               ('shell-script-mode (format "echo \"%s:\" %s" escaped-thing-to-print thing-to-print))
               ('python-mode (format "print(\"%s:\", %s)" escaped-thing-to-print thing-to-print)))))
   (evil-force-normal-state))
