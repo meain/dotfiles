@@ -2,4 +2,4 @@
 
 set -e
 
-zip -r "$1.zip" "$1"
+zip -r "$(echo $1|xargs basename).zip" "$1"
