@@ -23,6 +23,7 @@ run-dev
 .todo.md
 .mscripts
 .direnv
+resources
 
 # programming
 .mypy_cache
