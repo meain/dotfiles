@@ -2721,6 +2721,9 @@ START and END comes from it being interactive."
 ;; Server edit complete
 (evil-leader/set-key "s" 'server-edit)
 
+;; Next and previous buffer
+(define-key evil-normal-state-map (kbd "C-S-o") 'previous-buffer)
+(define-key evil-normal-state-map (kbd "C-S-i") 'next-buffer)
 
 ;; Bookmarks
 (setq bookmark-save-flag 1)
