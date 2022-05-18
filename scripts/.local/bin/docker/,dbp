@@ -4,8 +4,8 @@
 
 set -e
 
-[ -z "$1" ] && echo "Specify tag" && return 1
-DOCKERFILE="$(fd Dockerfile | fzf | head -n1)"
+[ -z "$1" ] && echo "Specify tag" && exit 1
+DOCKERFILE="$(fd Dockerfile | fzf -1 | head -n1)"
 echo "Building using: $DOCKERFILE"
 if docker build -f "$DOCKERFILE" -t "$1" .; then
 	docker push "$1"
