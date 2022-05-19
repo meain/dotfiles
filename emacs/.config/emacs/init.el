@@ -2171,20 +2171,15 @@ Pass ORIGINAL and ALTERNATE options."
                                           (go-mode . (function_declaration method_declaration))
                                           (python-mode . (function_definition))))
   (defun meain/tree-sitter-thing-name (kind)
-    "Get name of tree-sitter THING-KIND."
-    (if tree-sitter-mode
-        (let* ((node-types-list (pcase kind
-                                  ('class-like meain/tree-sitter-calss-like)
-                                  ('function-like meain/tree-sitter-function-like)))
-               (node-types (alist-get major-mode node-types-list)))
-          (if node-types
-              (let ((node-at-point (car (remove-if (lambda (x) (eq nil x))
-                                                   (seq-map (lambda (x) (tree-sitter-node-at-point x))
-                                                            node-types)))))
-                (if node-at-point
-                    (let ((node-name-node-at-point (tsc-get-child-by-field node-at-point ':name)))
-                      (if node-name-node-at-point
-                          (tsc-node-text node-name-node-at-point))))))))))
+    "Get name of tree-sitter KIND thing."
+    (when-let (tree-sitter-mode
+               (node-types (pcase kind
+                             ('class-like meain/tree-sitter-class-like)
+                             ('function-like meain/tree-sitter-function-like)))
+               (node-at-point (cl-some #'tree-sitter-node-at-point
+                                       (alist-get major-mode node-types)))
+               (node-name (tsc-get-child-by-field node-at-point :name)))
+      (tsc-node-text node-name))))
 
 (use-package tree-sitter-langs
   :straight t
