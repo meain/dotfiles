@@ -2165,7 +2165,7 @@ Pass ORIGINAL and ALTERNATE options."
       (pulse-momentary-highlight-region (car (tsc-node-byte-range (button-get button 'points-to)))
                                         (cdr (tsc-node-byte-range (button-get button 'points-to)))
                                         'company-template-field)))
-  (setq meain/tree-sitter-calss-like '((rust-mode . (impl_item))
+  (setq meain/tree-sitter-class-like '((rust-mode . (impl_item))
                                        (python-mode . (class_definition))))
   (setq meain/tree-sitter-function-like '((rust-mode . (function_item))
                                           (go-mode . (function_declaration method_declaration))
