@@ -78,7 +78,9 @@ source $ZDOTDIR/functions
 [ -f ~/.local/share/zsh/.zsh_dir_hashes ] && source ~/.local/share/zsh/.zsh_dir_hashes
 
 # Source fzf
-[ -f /usr/locale/opt/.fzf.zsh ] && source /usr/locale/opt/.fzf.zsh
+[ -d $HOME/.nix-profile/share/fzf ] &&
+    source $HOME/.nix-profile/share/fzf/completion.zsh &&
+    source $HOME/.nix-profile/share/fzf/key-bindings.zsh
 
 # Source colors for ls (trapd00r/LS_COLORS)
 [ "$(uname -s)" = "Darwin" ] && eval $(gdircolors -b $ZDOTDIR/dircolors) || eval $(dircolors -b $ZDOTDIR/dircolors)
@@ -93,7 +95,7 @@ bindkey '^?' backward-delete-char
 bindkey '^h' backward-delete-char
 bindkey '^w' backward-kill-word
 bindkey '^H' backward-kill-word # ctrl+bspc
-bindkey '^r' history-incremental-search-backward
+# bindkey '^r' history-incremental-search-backward
 bindkey '^a' beginning-of-line
 bindkey '^e' end-of-line
 bindkey '^xe' edit-command-line
