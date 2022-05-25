@@ -64,11 +64,10 @@
   (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
   (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
 
-  (defun meain/recenter-advice (orig-fn count)
-    "Used to recenter the buffer after `ORIG-FN' which is most probably a search-next.
-`COUNT' is passed down to the search function."
-    (apply orig-fn count)
-    (recenter))
+  (defun meain/recenter-advice (orig-fn &rest args)
+    "Used to recenter the buffer after `ORIG-FN' passing down `ARGS' down to it."
+    (apply orig-fn args)
+    (recenter 13))
 
   (advice-add 'evil-search-next :around #'meain/recenter-advice)
   (advice-add 'evil-search-previous :around #'meain/recenter-advice))
@@ -1175,6 +1174,7 @@ Pass ORIGINAL and ALTERNATE options."
   :commands consult-eglot-symbols
   :after eglot
   :config
+  (advice-add 'consult-imenu :around #'meain/recenter-advice)
   (setq consult-ripgrep-args "rg --line-buffered --color=never --max-columns=1000 --path-separator /\
    --smart-case --no-heading --line-number --hidden --follow --glob \"!.git/*\" .")
   :init
@@ -2230,26 +2230,24 @@ Pass ORIGINAL and ALTERNATE options."
   (define-key evil-inner-text-objects-map "i" (evil-textobj-tree-sitter-get-textobj "conditional.inner"))
   (define-key evil-inner-text-objects-map "a" (evil-textobj-tree-sitter-get-textobj "parameter.inner"))
   (define-key evil-outer-text-objects-map "a" (evil-textobj-tree-sitter-get-textobj "parameter.outer"))
-  (defun meain/goto-and-recenter (group &optional previous end query)
-    (interactive)
-    (evil-textobj-tree-sitter-goto-textobj group previous end query)
-    (recenter 7))
-  (define-key evil-normal-state-map (kbd "]a") (lambda () (interactive) (meain/goto-and-recenter "parameter.inner")))
-  (define-key evil-normal-state-map (kbd "[a") (lambda () (interactive) (meain/goto-and-recenter "parameter.inner" t)))
-  (define-key evil-normal-state-map (kbd "]A") (lambda () (interactive) (meain/goto-and-recenter "parameter.inner" nil t)))
-  (define-key evil-normal-state-map (kbd "[A") (lambda () (interactive) (meain/goto-and-recenter "parameter.inner" t t)))
-  (define-key evil-normal-state-map (kbd "]i") (lambda () (interactive) (meain/goto-and-recenter "conditional.outer")))
-  (define-key evil-normal-state-map (kbd "[i") (lambda () (interactive) (meain/goto-and-recenter "conditional.outer" t)))
-  (define-key evil-normal-state-map (kbd "]I") (lambda () (interactive) (meain/goto-and-recenter "conditional.outer" nil t)))
-  (define-key evil-normal-state-map (kbd "[I") (lambda () (interactive) (meain/goto-and-recenter "conditional.outer" t t)))
-  (define-key evil-normal-state-map (kbd "]c") (lambda () (interactive) (meain/goto-and-recenter "class.outer")))
-  (define-key evil-normal-state-map (kbd "[c") (lambda () (interactive) (meain/goto-and-recenter "class.outer" t)))
-  (define-key evil-normal-state-map (kbd "]C") (lambda () (interactive) (meain/goto-and-recenter "class.outer" nil t)))
-  (define-key evil-normal-state-map (kbd "[C") (lambda () (interactive) (meain/goto-and-recenter "class.outer" t t)))
-  (define-key evil-normal-state-map (kbd "]f") (lambda () (interactive) (meain/goto-and-recenter "function.outer")))
-  (define-key evil-normal-state-map (kbd "[f") (lambda () (interactive) (meain/goto-and-recenter "function.outer" t)))
-  (define-key evil-normal-state-map (kbd "]F") (lambda () (interactive) (meain/goto-and-recenter "function.outer" nil t)))
-  (define-key evil-normal-state-map (kbd "[F") (lambda () (interactive) (meain/goto-and-recenter "function.outer" t t))))
+
+  (advice-add 'evil-textobj-tree-sitter-goto-textobj :around #'meain/recenter-advice)
+  (define-key evil-normal-state-map (kbd "]a") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "parameter.inner")))
+  (define-key evil-normal-state-map (kbd "[a") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "parameter.inner" t)))
+  (define-key evil-normal-state-map (kbd "]A") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "parameter.inner" nil t)))
+  (define-key evil-normal-state-map (kbd "[A") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "parameter.inner" t t)))
+  (define-key evil-normal-state-map (kbd "]i") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "conditional.outer")))
+  (define-key evil-normal-state-map (kbd "[i") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "conditional.outer" t)))
+  (define-key evil-normal-state-map (kbd "]I") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "conditional.outer" nil t)))
+  (define-key evil-normal-state-map (kbd "[I") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "conditional.outer" t t)))
+  (define-key evil-normal-state-map (kbd "]c") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "class.outer")))
+  (define-key evil-normal-state-map (kbd "[c") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "class.outer" t)))
+  (define-key evil-normal-state-map (kbd "]C") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "class.outer" nil t)))
+  (define-key evil-normal-state-map (kbd "[C") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "class.outer" t t)))
+  (define-key evil-normal-state-map (kbd "]f") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "function.outer")))
+  (define-key evil-normal-state-map (kbd "[f") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "function.outer" t)))
+  (define-key evil-normal-state-map (kbd "]F") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "function.outer" nil t)))
+  (define-key evil-normal-state-map (kbd "[F") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "function.outer" t t))))
 
 (use-package ts-fold
   :defer t
