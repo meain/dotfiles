@@ -287,7 +287,7 @@
               pkgs.clipmenu # clipboard history
               pkgs.brightnessctl # brightness control
               pkgs.dunst # notifications with buttons (dunstify)
-              pkgs.pcmanfm # gui file manager
+              pkgs.xfce.thunar # gui file manager
               pkgs.unixtools.netstat # netstat
               # pkgs.comby # structural search/editing of code
               pkgs.visidata # data visualization
