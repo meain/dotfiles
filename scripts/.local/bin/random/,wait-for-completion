@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# Wait for a process to exit and then run something
+
+set -e
+
+psp="$(ps -elf --sort=start_time | tac | grep "$USER" |
+	tail -n+8 | # drop the ones started by this script
+	fzf -q "$*")"
+procpid="$(echo "$psp" | awk '{print $4}')"
+echo "Waiting for" "$(echo "$psp" | awk '{out=$15; for(i=16;i<=NF;i++){out=out" "$i}; print out}')"
+tail --pid="$procpid" -f /dev/null # https://stackoverflow.com/a/41613532/2724649
