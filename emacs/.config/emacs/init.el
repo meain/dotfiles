@@ -1110,8 +1110,7 @@ Pass ORIGINAL and ALTERNATE options."
          (go-mode . eglot-ensure)
          (markdown-mode . eglot-ensure)
          (gfm-mode . eglot-ensure)
-         (json-mode . eglot-ensure)
-         (yaml-mode . eglot-ensure))
+         (json-mode . eglot-ensure))
   :config
   (add-to-list 'eglot-server-programs '(lua-mode . ("~/.luarocks/bin/lua-lsp")))
   ;; yaml-mode useful for github actions
