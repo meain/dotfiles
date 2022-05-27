@@ -61,6 +61,7 @@ bindsym $mod+Mod1+Control+Shift+1 exec "zsh -ic \\"~/.screenlayout/big.sh || not
 bindsym $mod+Mod1+Control+Shift+0 exec "zsh -ic \\"~/.screenlayout/builtin.sh || notify 'Unable to update monitor config'\\" "
 bindsym $mod+Mod1+Control+Shift+2 exec "zsh -ic \\"~/.screenlayout/builtinandbig.sh || notify 'Unable to update monitor config'\\" "
 bindsym $mod+Mod1+Control+Shift+3 exec "zsh -ic \\"~/.screenlayout/three.sh || notify 'Unable to update monitor config'\\" "
+bindsym $mod+Mod1+Control+Shift+4 exec "zsh -ic \\"~/.screenlayout/two.sh || notify 'Unable to update monitor config'\\" "
 
 # start dmenu (a program launcher)
 bindsym $mod+d exec dmenu_run -i -fn 'CQ Mono:size=10' -nb '#000000' -nf '#aaaaaa' -sb '#263238' -sf '#ffffff'
