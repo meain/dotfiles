@@ -33,7 +33,6 @@
           in
           {
             programs.home-manager.enable = true;
-            nixpkgs.config.allowUnfree = true;
 
             services.emacs.package = pkgs.emacsUnstable;
             programs.emacs = {
@@ -93,7 +92,7 @@
               pkgs.dasel # jq but more versatile
               # pkgs.mosh # better ssh
               # pkgs.haskellPackages.kmonad # key remapping
-              ppkgs.kmonad # key remapping
+              # ppkgs.kmonad # key remapping
               ppkgs.warpd # mouse control
               pkgs.trash-cli # rm -> trash
               pkgs.entr # continuously run stuff
@@ -112,7 +111,7 @@
               pkgs.kubectl # kubernetes cli
               pkgs.kubernetes-helm # helm cli
               pkgs.stern # better way to fetch kubernetes log
-              pkgs.youtube-dl # download youtube videos
+              pkgs.yt-dlp # download youtube videos
               pkgs.chafa # show images in terminal using half blocks
               pkgs.hub # Github integration for git
               pkgs.gh # Yet another Github integration for git
@@ -218,6 +217,7 @@
               pkgs.nodePackages.fixjson # much better json formatter
               pkgs.nodePackages.jsonlint # json linting
               pkgs.nodePackages.markdownlint-cli # markdown linter
+              pkgs.vale # prose lint
               pkgs.hadolint # Dockerfile lint
               pkgs.sqls # lsp server for sql
               pkgs.python39Packages.sqlparse # sqlformat
@@ -291,7 +291,7 @@
               pkgs.unixtools.netstat # netstat
               # pkgs.comby # structural search/editing of code
               pkgs.visidata # data visualization
-              pkgs.dragon-drop # drag and drop files
+              pkgs.xdragon # drag and drop files
               pkgs.sct # redshift ish stuff
               # pkgs.nur.repos.renesat.activitywatch-bin  # https://github.com/NixOS/nix/issues/3843
               ppkgs.activitywatch-bin # activity tracking
@@ -346,9 +346,6 @@
               pkgs.fira-code
               # pkgs.dina-font
               # pkgs.envypn-font
-
-              # nonfree
-              pkgs.slack
             ];
 
             dconf.settings = {
