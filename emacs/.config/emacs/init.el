@@ -869,6 +869,28 @@ Pass ORIGINAL and ALTERNATE options."
             (lambda ()
               (add-hook 'flymake-diagnostic-functions 'flymake-markdownlint nil t)))
 
+  ;; https://github.com/errata-ai/vale
+  (flymake-quickdef-backend flymake-vale
+    :pre-let ((vale-exec (executable-find "vale")))
+    :pre-check (unless vale-exec (error "Cannot find vale executable"))
+    :write-type 'file
+    :proc-form (list vale-exec "--output" "line" "--config" (concat (getenv "HOME") "/.config/vale/vale.ini") fmqd-temp-file)
+    :search-regexp "^\\([^:]+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\):\\(.*\\)$"
+    :prep-diagnostic (let* ((lnum (string-to-number (match-string 2)))
+                            (col (string-to-number (match-string 3)))
+                            (text (match-string 4))
+                            (pos (flymake-diag-region fmqd-source lnum col))
+                            (beg (car pos))
+                            (end (cdr pos))
+                            (msg (format "vale> %s" text)))
+                       (list fmqd-source beg end :warning msg)))
+  (add-hook 'markdown-mode-hook
+            (lambda ()
+              (add-hook 'flymake-diagnostic-functions 'flymake-vale nil t)))
+  (add-hook 'gfm-mode-hook
+            (lambda ()
+              (add-hook 'flymake-diagnostic-functions 'flymake-vale nil t)))
+
   ;; jsonlint
   (flymake-quickdef-backend flymake-jsonlint
     :pre-let ((jsonlint-exec (executable-find "jsonlint")))
