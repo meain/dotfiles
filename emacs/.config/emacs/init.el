@@ -520,6 +520,8 @@ Pass ORIGINAL and ALTERNATE options."
       ("udpate" "update")
       ("happengin" "happening")
       ("tempate" "template")
+      ("istall" "install")
+      ("dockerfile" "Dockerfile")
       )))
 
 ;; auto activating snippets
