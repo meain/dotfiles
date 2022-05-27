@@ -170,6 +170,9 @@
     `(stripe-highlight ((t (:background ,lighter-blue))))
     `(stripe-hl-line ((t (:background ,barely-orange))))
 
+    ;; eldoc
+    `(eldoc-highlight-function-argument ((t (:foreground ,dark-blue))))
+
     ;; diff-hl
     `(diff-hl-change ((t (:background ,barely-orange))))
     `(diff-hl-insert ((t (:background ,light-green))))
