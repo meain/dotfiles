@@ -405,7 +405,7 @@ Pass ORIGINAL and ALTERNATE options."
   ;; Delete frame if it is a minbuffer only popup
   (if (and (equal (cdr (assq 'name (frame-parameters))) "emacs-popup")
            (equal (cdr (assq 'minibuffer (frame-parameters))) 'only))
-       (delete-frame))
+      (delete-frame))
   (keyboard-escape-quit)
   (minibuffer-keyboard-quit)
   (keyboard-quit))
@@ -1184,7 +1184,6 @@ Pass ORIGINAL and ALTERNATE options."
       (jsonrpc-request server :workspace/executeCommand
                        `(:command "switchConnections" :arguments [,db]:timeout 0.5))))
   (define-key evil-normal-state-map (kbd "K") 'eldoc-print-current-symbol-info)
-  (define-key evil-normal-state-map (kbd "g k") 'eldoc-print-current-symbol-info)
   (define-key evil-normal-state-map (kbd "g d") 'xref-find-definitions)
   (define-key evil-normal-state-map (kbd "g D") 'eglot-find-implementation)
   (define-key evil-normal-state-map (kbd "g r") 'xref-find-references)
