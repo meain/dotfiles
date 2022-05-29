@@ -43,6 +43,7 @@
 (defvar meain/font-list '(;; name size line-spacing weight
                           ("Adelle Mono" . '(10 .1 'regular))
                           ("Aglet Mono" . '(9 .2 'regular))
+                          ("Anka/Coder" . '(10 nil 'regular))
                           ("BPMono" . '(10 .1 'regular))
                           ("CQ Mono" . '(11 .1 'regular))
                           ("Cartograph CF" . '(9 nil 'regular))
@@ -79,11 +80,11 @@
                           ("PT Mono" . '(10 nil 'regular))
                           ("Panic Sans" . '(9 nil 'regular))
                           ("Red Hat Mono" . '(9 nil 'regular))
-                          ("Roboto Mono" . '(9 nil 'light))
+                          ("Roboto Mono" . '(10 nil 'light))
                           ("Sudo" . '(11 nil 'regular))
                           ("Whois" . '(11 nil 'regular))
                           ))
-(defvar meain/font-name "MonoLisa")
+(defvar meain/font-name "Anka/Coder")
 
 (defun meain/get-font-prop (font-name prop)
   "Get PROP (property) from FONT-NAME."
