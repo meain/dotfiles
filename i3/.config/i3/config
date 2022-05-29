@@ -39,6 +39,7 @@ bindsym $mod+t exec emacsclient -cne '(vterm \"terminal\")' -a ''
 # default floating apps
 for_window [class="blueman-manager-wrapped"] floating enable
 for_window [title="^emacs-popup$"] floating enable
+for_window [class="^mpv$"] floating enable
 
 # scratchpad
 bindsym $mod+Shift+i move scratchpad
