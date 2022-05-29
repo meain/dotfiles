@@ -1,10 +1,10 @@
 ;;; hima-theme.el --- Custom face theme for Emacs
 
 ;;; Code:
-(defgroup hima nil "Custom faces for more stuff" :prefix "hima-" :group nil)
+(defgroup hima nil "Custom faces for more stuff." :prefix "hima-" :group nil)
 (defvar hima-use-italics nil "Decides weather to use italics.")
 
-(deftheme hima "A minimal theme with simple colors")
+(deftheme hima "A minimal theme with simple colors.")
 
 (let* ((white "#FFFFFF")
        (light-white "#F5F5F5")
@@ -39,7 +39,7 @@
        (default-layer `((t (:foreground ,black))))
        (commentary-layer `((t (:foreground ,medium-gray :italic ,hima-use-italics))))
        (string-layer `((t (:foreground ,blue))))
-       (defenition-layer `((t (:foreground ,dark-orange))))
+       (definition-layer `((t (:foreground ,dark-orange))))
        (bold-layer `((t (:foreground ,black :weight bold))))
        (underline-layer `((t (:underline t))))
        (disabled-layer `((t (:foreground ,medium-gray))))
@@ -82,7 +82,7 @@
     ;; Basic font lock entries
     `(font-lock-keyword-face ,default-layer)
     `(font-lock-warning-face ,default-layer)
-    `(font-lock-function-name-face ,defenition-layer)
+    `(font-lock-function-name-face ,definition-layer)
     `(font-lock-type-face ,default-layer)
     `(font-lock-preprocessor-face ,default-layer)
     `(font-lock-builtin-face ,default-layer)
@@ -154,7 +154,7 @@
     `(tree-sitter-hl-face:method.call ,default-layer)
     `(tree-sitter-hl-face:function.call ,default-layer)
     `(tree-sitter-hl-face:function.method ,default-layer)
-    `(tree-sitter-hl-face:constructor ,defenition-layer)
+    `(tree-sitter-hl-face:constructor ,definition-layer)
 
     ;; dired
     `(dired-directory ((t (:weight bold :foreground ,black))))
@@ -179,4 +179,4 @@
     `(diff-hl-delete ((t (:background ,light-red))))))
 
 (provide-theme 'hima)
-;; hima-theme.el ends here
+;;; hima-theme.el ends here
