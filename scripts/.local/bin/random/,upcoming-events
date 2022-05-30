@@ -12,7 +12,7 @@ list_events() {
 }
 
 [ "$(find "$EVENTS_FILE-all" -mmin -60 2>/dev/null | wc -l)" != "0" ] ||
-	list_events >"$EVENTS_FILE-all"
+	list_events | grep -v "$IGNORED_EVENTS" >"$EVENTS_FILE-all"
 
 grep "Unable to find the Google Calendar server" "$EVENTS_FILE-all" &&
 	rm "$EVENTS_FILE-all" && rm "$EVENTS_FILE-next" && rm "$EVENTS_FILE-upcoming"
