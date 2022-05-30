@@ -28,7 +28,7 @@ done
 dmenu_cmd="dmenu -i -fn 'Anka/Coder:size=8' -nb '#000000' -nf '#aaaaaa' -sb '#263238' -sf '#ffffff'"
 fzf_cmd="fzf"
 
-if [ "$GUI_PICKER" == 1 ]; then
+if [ "$GUI_PICKER" = 1 ]; then
 	[ -n "$prompt" ] && dmenu_cmd="$dmenu_cmd -p '$prompt'"
 	[ -n "$lines" ] && dmenu_cmd="$dmenu_cmd -l '$lines'"
 	eval $dmenu_cmd
@@ -40,7 +40,7 @@ else
 	[ -n "$multi" ] && fzf_cmd="$fzf_cmd -m"
 	[ -n "$no_sort" ] && fzf_cmd="$fzf_cmd --no-sort"
 	[ -n "$print_query" ] && fzf_cmd="$fzf_cmd --print-query"
-	[ -n "$query" ] && fzf_cmd="$fzf_cmd --query='$1'"
+	[ -n "$query" ] && fzf_cmd="$fzf_cmd --query='$query'"
 	[ -n "$1" ] && fzf_cmd="$fzf_cmd --query='$1'"
 	eval $fzf_cmd
 fi
