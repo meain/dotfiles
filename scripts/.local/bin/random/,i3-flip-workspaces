@@ -1,0 +1,19 @@
+#!/bin/sh
+
+set -e
+
+if [ -f /tmp/i3-flipped ]; then
+    rm /tmp/i3-flipped
+	i3-msg '[workspace=1]' move workspace to output eDP
+	i3-msg '[workspace=2]' move workspace to output eDP
+	i3-msg '[workspace=9]' move workspace to output HDMI-A-0
+	i3-msg '[workspace=0]' move workspace to output HDMI-A-0
+    i3-msg workspace number 9
+else
+    touch /tmp/i3-flipped
+	i3-msg '[workspace=9]' move workspace to output eDP
+	i3-msg '[workspace=0]' move workspace to output eDP
+	i3-msg '[workspace=1]' move workspace to output HDMI-A-0
+	i3-msg '[workspace=2]' move workspace to output HDMI-A-0
+    i3-msg workspace number 1
+fi
