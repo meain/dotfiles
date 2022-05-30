@@ -6,5 +6,20 @@ state="$(upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep state | a
 perc="$(upower -i /org/freedesktop/UPower/devices/battery_BAT0 |
 	grep percentage | sed 's/.* \([0-9][0-9]*\)\%/\1/')"
 
+message="$(echo "Why won't you plug me in?
+I just need a little bit of juice to keep going.
+Where is the charger? Can't find anything in this house.
+More powwweerr. Noww.
+Come here, my fellow electrons.
+I think you forgot to switch it on if you plugged it in.
+Might not feel that way, but I work on electricity.
+I can do anything for you, but I need power.
+Come on bruh, just plug me in.
+I demand you to plug me in right now.
+You can find instructions about plugging me in in the manual
+Just plug me in for a little while and I'll leave you alone.
+I don't have much time left in this world."|shuf -n1)"
+echo "$message"
+
 [ "$state" != "charging" ] && [ "$perc" -le 20 ] &&
-	notify-desktop -t 0 -u critical 'Low battery' "Dude, I jut got $perc% left" || exit 0
+	notify-desktop -t 0 -u critical 'Low battery' "Dude, I jut got $perc% left. $message" || exit 0
