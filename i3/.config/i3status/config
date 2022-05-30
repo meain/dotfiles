@@ -33,7 +33,7 @@ read_file cal {
 
 read_file shellout {
           path = "/tmp/shellout"
-          format = "%content   ### "
+          format = "%content"
           format_bad = "..."
 }
 
@@ -61,7 +61,7 @@ ethernet _first_ {
 }
 
 volume master {
-        format = "%volume"
+        format = "V%volume   // "
         format_muted = "muted (%volume)"
         device = "pulse"
         mixer = "Master"
@@ -79,7 +79,7 @@ load {
 memory {
         format = "%used"
         threshold_degraded = "1G"
-        format_degraded = "MEMORY < %available"
+        format_degraded = "MEM < %available"
 }
 
 battery 0 {

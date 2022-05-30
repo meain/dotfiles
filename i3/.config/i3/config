@@ -1,5 +1,5 @@
 set $mod Mod4
-font pango:CQ Mono 9
+font pango:Inconsolata 9
 
 # Startup entries
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
@@ -229,11 +229,12 @@ bar {
    status_command i3status
    # symbol is a zero width space
    separator_symbol "​"
-   font pango:Inconsolata 8
+   position bottom
+   font pango:Monoid 7
    tray_padding 3
 
    colors {
-      separator #ded
+      separator #ddeedd
       background  #000000
       statusline #ffffff
       focused_workspace  #586E75 #586E75 #FFFFFF
