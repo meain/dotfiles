@@ -31,7 +31,7 @@ fzf_cmd="fzf"
 if [ "$GUI_PICKER" = 1 ]; then
 	[ -n "$prompt" ] && dmenu_cmd="$dmenu_cmd -p '$prompt'"
 	[ -n "$lines" ] && dmenu_cmd="$dmenu_cmd -l '$lines'"
-	eval $dmenu_cmd
+	eval "$dmenu_cmd"
 else
 	[ -n "$prompt" ] && fzf_cmd="$fzf_cmd --prompt '$prompt'"
 	[ -n "$preview" ] && fzf_cmd="$fzf_cmd --preview '$preview'"
@@ -42,5 +42,5 @@ else
 	[ -n "$print_query" ] && fzf_cmd="$fzf_cmd --print-query"
 	[ -n "$query" ] && fzf_cmd="$fzf_cmd --query='$query'"
 	[ -n "$1" ] && fzf_cmd="$fzf_cmd --query='$1'"
-	eval $fzf_cmd
+	eval "$fzf_cmd"
 fi
