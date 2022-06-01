@@ -14,7 +14,7 @@ jj() {
 
 tmp() {
 	r="/tmp/workspaces/$(xxd -l3 -ps /dev/urandom)"
-	mkdir -p "$r" && cd "$r"
+	mkdir -p "$r" && pushd "$r"
 }
 
 # cd, but use lf to choose dir
