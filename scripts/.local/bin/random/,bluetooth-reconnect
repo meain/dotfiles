@@ -2,6 +2,6 @@
 
 set -e
 
-device="$(bluetoothctl devices | ,picker | awk '{print $2}')"
+device="$(bluetoothctl devices | tac | ,picker | awk '{print $2}')"
 bluetoothctl disconnect "$device"
 bluetoothctl connect "$device"

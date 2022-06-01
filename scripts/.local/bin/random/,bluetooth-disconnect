@@ -2,4 +2,4 @@
 
 set -e
 
-bluetoothctl devices | ,picker | awk '{print $2}' | xargs bluetoothctl disconnect
+bluetoothctl devices | tac | ,picker | awk '{print $2}' | xargs bluetoothctl disconnect
