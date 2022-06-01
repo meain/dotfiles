@@ -65,8 +65,9 @@
   default = current
 [pull]
   ff = only
-[url "git@github.com:"]
-  insteadOf = https://github.com/
+# Automatically converts clones to use git ssh (but causes issues with cargo)
+# [url "git@github.com:"]
+#   insteadOf = https://github.com/
 [rebase]
   autosquash = true
   autostash = true
