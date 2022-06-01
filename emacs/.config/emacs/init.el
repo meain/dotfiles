@@ -1230,6 +1230,9 @@ Pass ORIGINAL and ALTERNATE options."
   (evil-leader/set-key "gc" 'magit-commit-create)
   (evil-leader/set-key "gG" 'magit-show-commit)
   :config
+  (evil-define-key 'normal magit-status-mode-map (kbd ";") 'magit-stage)
+  (evil-define-key 'visual magit-status-mode-map (kbd ";") 'magit-stage)
+
   ;; make <escape> quit(go back one level) in magit popups
   (define-key transient-map (kbd "<escape>") 'transient-quit-one)
   (setq magit-diff-refine-hunk (quote all))
