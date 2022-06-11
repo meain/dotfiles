@@ -2670,7 +2670,7 @@ START and END comes from it being interactive."
   :init
   (evil-leader/set-key "a d"
     (meain/with-alternate (call-interactively 'meain/dasht-docs)
-                          (call-interactively 'cheat-sh-maybe-region))))
+                          (call-interactively 'cheat-sh-search-topic))))
 
 ;; Quick edit (for use with hammerspoon quick edit)
 (defun meain/quick-edit-end ()
