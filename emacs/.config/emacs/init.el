@@ -1764,6 +1764,8 @@ Pass ORIGINAL and ALTERNATE options."
                                   (mtodo-mode))))
   :config
   (load (expand-file-name "~/.config/emacs/mtodo-mode.el"))
+  (add-hook 'mtodo-mode-hook (lambda ()
+                               (setq imenu-generic-expression '((nil "^#+\s+.+" 0)))))
   (evil-define-key 'normal mtodo-mode-map (kbd "g d") 'mtodo-mark-done)
   (evil-define-key 'normal mtodo-mode-map (kbd "g m") 'mtodo-mark-undone)
   (evil-define-key 'normal mtodo-mode-map (kbd "g s") 'mtodo-mark-important))
