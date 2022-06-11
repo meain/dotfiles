@@ -1085,7 +1085,11 @@ Pass ORIGINAL and ALTERNATE options."
     (:format (format-all--buffer-easy executable)))
   (setq-default format-all-formatters '(("HTML" prettier) ("Go" goimports) ("JSON" fixjson) ("Nix" nixpkgs-fmt) ("Shell" shfmt)))
   (add-hook 'prog-mode-hook 'format-all-ensure-formatter)
-  :init (define-key evil-normal-state-map (kbd ",,") 'format-all-buffer))
+  :init (define-key evil-normal-state-map (kbd ",,") '(lambda () (interactive)
+                                                        (if tree-sitter-mode
+                                                            (tree-sitter-save-excursion
+                                                              (format-all-buffer))
+                                                          (format-all-buffer)))))
 
 ;; Xref customization
 (use-package xref
