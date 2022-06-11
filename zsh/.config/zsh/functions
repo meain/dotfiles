@@ -34,7 +34,7 @@ rcd() {
 
 # Go to root of project
 r() {
-	cd "$(git rev-parse --show-toplevel 2>/dev/null)" || return 1
+	pushd "$(git rev-parse --show-toplevel 2>/dev/null)" || return 1
 }
 
 take() {
@@ -79,12 +79,12 @@ q() {
 }
 
 m() {
-	r
+	r >/dev/null
 	if [ ! -d .mscripts ]; then
 		echo "Unable to find .mscripts" && return 1
 	fi
 	eval .mscripts/"$(find .mscripts/ | tail -n+2 | xargs -n1 basename | fzf --query "$1" -1)"
-	cd -
+	popd >/dev/null
 }
 
 # python venv setup (need to be function as we have to source)
