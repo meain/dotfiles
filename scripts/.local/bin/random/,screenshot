@@ -9,5 +9,5 @@ filename="$HOME/Pictures/Screenshots/$curdate.png"
 	import -window root "$filename" ||
 	import "$filename"
 
-echo "$filename" | pbcopy
+printf "%s" "$filename" | pbcopy
 notify "Shotty (${1:-region})"
