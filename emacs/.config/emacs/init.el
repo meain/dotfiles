@@ -1621,20 +1621,22 @@ Pass ORIGINAL and ALTERNATE options."
   :after compile
   :commands (meain/test-runner meain/test-runner-full)
   :config
+  ;; if available in another frame, don't recreate in current frame
+  (push '("\\*compilation\\*" . (nil (reusable-frames . t))) display-buffer-alist)
   (defvar meain/test-runner-previous-command nil)
   (defvar meain/test-runner-run-previous-if-empty t)
   (defun meain/test-runner-full ()
     "Run the full test suite using toffee."
     (interactive)
     (compile (shell-command-to-string (format "toffee --full '%s'"
-                                                    (buffer-file-name)))))
+                                              (buffer-file-name)))))
   (defun meain/test-runner (&optional full-file)
     "Run the nearest test using toffee.  Pass `FULL-FILE' to run all test in file."
     (interactive "P")
     (let ((command (shell-command-to-string (if full-file
-                                          (format "toffee '%s'" (buffer-file-name))
-                                        (format "toffee '%s' '%s'"
-                                                (buffer-file-name) (line-number-at-pos))))))
+                                                (format "toffee '%s'" (buffer-file-name))
+                                              (format "toffee '%s' '%s'"
+                                                      (buffer-file-name) (line-number-at-pos))))))
       (if (not (s-starts-with-p "Unable to find any tests" command))
           (progn
             (setq meain/test-runner-previous-command command)
@@ -1643,7 +1645,7 @@ Pass ORIGINAL and ALTERNATE options."
             (progn
               (message "Could not find any tests, running previous test...")
               (compile meain/test-runner-previous-command))
-         (message "Unable to find any tests")))))
+          (message "Unable to find any tests")))))
   :init
   (evil-leader/set-key "d" 'meain/test-runner)
   (evil-leader/set-key "D" 'meain/test-runner-full))
