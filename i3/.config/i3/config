@@ -25,6 +25,7 @@ bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl specific '+3'
 
 # Music keybinding
 bindsym XF86AudioPlay exec "zsh -ic ,music-playpause"
+bindsym XF86AudioPause exec "zsh -ic ,music-pause"
 bindsym XF86AudioPrev exec "zsh -ic ,music-previous"
 bindsym XF86AudioNext exec "zsh -ic ,music-next"
 
