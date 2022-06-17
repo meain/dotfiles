@@ -67,7 +67,7 @@ bindsym $mod+Mod1+Control+Shift+3 exec "zsh -ic \\"~/.screenlayout/three.sh || n
 bindsym $mod+Mod1+Control+Shift+4 exec "zsh -ic \\"~/.screenlayout/two.sh || notify 'Unable to update monitor config'\\" "
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec dmenu_run -i -fn 'CQ Mono:size=10' -nb '#000000' -nf '#aaaaaa' -sb '#263238' -sf '#ffffff'
+bindsym $mod+d exec dmenu_run -i -fn 'Whois:size=10' -nb '#000000' -nf '#aaaaaa' -sb '#263238' -sf '#ffffff'
 bindsym $mod+Shift+d exec --no-startup-id i3-dmenu-desktop
 
 # change focus
@@ -172,7 +172,7 @@ bindsym $mod+Shift+0 move container to workspace number $ws10
 bindsym $mod+Mod1+Control+u exec "zsh -ic ,mail-unread-notify"
 bindsym $mod+Mod1+Control+Shift+u exec "zsh -ic 'notmuch tag +notified tag:imbox and tag:unread && notify \\"All emails marked read\\"'"
 bindsym $mod+Mod1+Control+i exec "GUI_PICKER=1 zsh -ic ,se"
-bindsym $mod+Mod1+Control+p exec "zsh -ic \\"clipmenu -i -fn 'CQ Mono:size=10' -nb '#000000' -nf '#aaaaaa' -sb '#263238' -sf '#ffffff'\\""
+bindsym $mod+Mod1+Control+p exec "zsh -ic \\"clipmenu -i -fn 'Whois:size=10' -nb '#000000' -nf '#aaaaaa' -sb '#263238' -sf '#ffffff'\\""
 bindsym $mod+Mod1+Control+Shift+p exec "zsh -ic 'notify Clipboard \\"$(pbpaste)\\"'"
 bindsym $mod+Mod1+Control+o exec "zsh -ic ',screenshot'"
 bindsym $mod+Mod1+Control+Shift+o exec "zsh -ic ',screenshot full'"
