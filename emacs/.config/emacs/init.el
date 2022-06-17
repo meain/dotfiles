@@ -3078,9 +3078,10 @@ Pass THING-TO-POPUP as the thing to popup."
                                               ("shell.nix" "default.nix")
                                               ("_test.go" ".go")
                                               ("-test.el" ".el")))
-(defun meain/find-alternate-file ()
-  "Open alternate file.  Useful for opening test of currently active file."
-  (interactive)
+(defun meain/find-alternate-file (&optional create)
+  "Open alternate file.  Useful for opening test of currently active file.
+Pass `CREATE' to create the alternate file if it does not exits."
+  (interactive "P")
   (if (buffer-file-name)
       (let* ((file-patterns
               (apply #'append
@@ -3101,7 +3102,9 @@ Pass THING-TO-POPUP as the thing to popup."
         (if alt-file
             (if (file-exists-p alt-file)
                 (find-file alt-file)
-              (message "Alternate file is not available on disk"))
+              (if create
+                  (find-file alt-file)
+                (message "Alternate file is not available on disk")))
           (message "Unable to determine alternate file")))
     (message "Not in a file")))
 (evil-leader/set-key "e e" 'meain/find-alternate-file)
