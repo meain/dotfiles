@@ -171,3 +171,20 @@ venv() {
 	*) help ;;
 	esac
 }
+
+# make clear not delete scrollback
+# https://superuser.com/a/1667623/328228
+clear() (
+   if [ "$#" -ne 0 ]; then
+      command clear "$@"
+      exit
+   fi
+   h="$(tput lines 2>/dev/null)"
+   if [ "$?" -eq 0 ]; then
+      until [ "$h" -le 1 ]; do
+         printf '\n'
+         h=$((h-1))
+      done
+   fi
+   command clear -x
+)
