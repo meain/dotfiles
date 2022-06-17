@@ -180,8 +180,6 @@ bindsym Print exec "zsh -ic ',screenshot full'"
 bindsym Shift+Print exec "zsh -ic ',screenshot'"
 bindsym $mod+Mod1+Control+h exec "zsh -ic ',output-notify \\"Upcoming events\\" ,upcoming-events'"
 bindsym $mod+Mod1+Control+j exec "zsh -ic ,thing-for-today-popup"
-bindsym $mod+Mod1+Control+n exec emacsclient -e "(meain/emacs-popup-frame 'notmuch)"
-bindsym $mod+Mod1+Control+e exec emacsclient -e "(meain/emacs-popup-frame 'elfeed)"
 bindsym $mod+Mod1+Control+d exec "zsh -ic ,dnd-toggle"
 bindsym $mod+Mod1+Control+l exec thunar
 bindsym $mod+Mod1+Control+Shift+l exec "zsh -ic 'dragon -x $(pbpaste)'"
