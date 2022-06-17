@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -e
+
+correct="$(echo "$1" |
+    aspell -a | tail -n+2 |
+    cut -d':' -f2 | tr -d ' ' | tr ',' '\n' |
+    fzf --no-sort)"
+
+printf "%s" "$correct" | pbcopy
+echo "'$correct' copied to clipboard"
