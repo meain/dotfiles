@@ -19,7 +19,6 @@ I demand you to plug me in right now.
 You can find instructions about plugging me in in the manual
 Just plug me in for a little while and I'll leave you alone.
 I don't have much time left in this world."|shuf -n1)"
-echo "$message"
 
 [ "$state" != "charging" ] && [ "$perc" -le 20 ] &&
 	notify-desktop -t 0 -u critical 'Low battery' "Dude, I jut got $perc% left. $message" || exit 0
