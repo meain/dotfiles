@@ -48,7 +48,7 @@ alias tl='tmux list-sessions'
 # editors
 alias vim='nvim'
 alias ivm='nvim'
-alias e="emacsclient  -a '' --no-wait -c"
+alias e="emacsclient  -a '' --no-wait"
 alias et='emacsclient -nw'
 
 # remote
