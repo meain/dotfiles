@@ -2206,6 +2206,24 @@ Pass ORIGINAL and ALTERNATE options."
       (pulse-momentary-highlight-region (car (tsc-node-byte-range (button-get button 'points-to)))
                                         (cdr (tsc-node-byte-range (button-get button 'points-to)))
                                         'company-template-field)))
+  (defun meain/tree-sitter-json-nesting ()
+    (if (eq major-mode 'json-mode)
+        (let* ((cur-point (point))
+               (root-node (tsc-root-node tree-sitter-tree))
+               (query (tsc-make-query tree-sitter-language "(object (pair (string (string_content) @key) (_))@item)"))
+               (matches (tsc-query-matches query root-node #'tsc--buffer-substring-no-properties)))
+          (string-join (remove-if (lambda (x) (eq x nil))
+                                  (seq-map (lambda (x)
+                                             (let (
+                                                   (item (seq-elt (cdr x) 0))
+                                                   (key (seq-elt (cdr x) 1)))
+                                               (if (and
+                                                    (> cur-point (byte-to-position (car (tsc-node-byte-range (cdr item)))))
+                                                    (< cur-point (byte-to-position (cdr (tsc-node-byte-range (cdr item))))))
+                                                   (format "%s" (tsc-node-text (cdr key)))
+                                                 nil)))
+                                           matches))
+                       "."))))
   (setq meain/tree-sitter-class-like '((rust-mode . (impl_item))
                                        (python-mode . (class_definition))))
   (setq meain/tree-sitter-function-like '((rust-mode . (function_item))
@@ -3162,6 +3180,13 @@ Pass `CREATE' to create the alternate file if it does not exits."
                     '(:eval (mode-line-idle 0.3
                                             '(:propertize (:eval (let ((thing-name (meain/tree-sitter-thing-name 'function-like)))
                                                                    (if thing-name
+                                                                       (format ":%s" thing-name))))
+                                                          face
+                                                          hima-simple-gray)
+                                            ""))
+                    '(:eval (mode-line-idle 0.3
+                                            '(:propertize (:eval (let ((thing-name (meain/tree-sitter-json-nesting)))
+                                                                   (if (and thing-name (> (length thing-name) 0))
                                                                        (format ":%s" thing-name))))
                                                           face
                                                           hima-simple-gray)
