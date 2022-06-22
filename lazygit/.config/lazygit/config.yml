@@ -1,0 +1,29 @@
+confirmOnQuit: false
+git:
+  autoFetch: false
+  merging:
+    args: ""
+    manualCommit: false
+  paging:
+    colorArg: always
+    useConfig: true
+gui:
+  commitLength:
+    show: true
+  mouseEvents: true
+  scrollHeight: 2
+  scrollPastBottom: true
+  sidePanelWidth: 0.3
+  theme:
+    activeBorderColor:
+    - cyan
+    - bold
+    inactiveBorderColor:
+    - green
+    lightTheme: true
+    optionsTextColor:
+    - blue
+    selectedLineBgColor:
+    - reverse
+    selectedRangeBgColor:
+    - blue
