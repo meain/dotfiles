@@ -1826,10 +1826,11 @@ Pass ORIGINAL and ALTERNATE options."
   (setq notmuch-message-headers-visible nil)
   (setq message-auto-save-directory "~/.local/share/mail/meain")
   (setq notmuch-saved-searches
-        '((:name "imbox" :query "tag:imbox AND tag:inbox AND -tag:github" :key "i" :sort-order newest-first)
+        '((:name "imbox" :query "tag:imbox AND tag:inbox AND -tag:github AND -tag:flagged" :key "i" :sort-order newest-first)
+          (:name "flagged" :query "tag:flagged" :key "f")
           (:name "todo" :query "tag:inbox AND tag:todo" :key "t" :sort-order oldest-first)
           (:name "watching" :query "tag:inbox AND tag:watch" :key "w" :sort-order oldest-first)
-          (:name "read" :query "tag:inbox AND -tag:imbox AND -tag:newsletter AND -tag:python and -tag:unread AND -tag:jobhunt AND -tag:git AND -tag:todo" :key "r" :sort-order oldest-first)
+          (:name "read" :query "tag:inbox AND -tag:imbox AND -tag:newsletter AND -tag:python and -tag:unread AND -tag:jobhunt AND -tag:git AND -tag:todo AND -tag:flagged" :key "r" :sort-order oldest-first)
           (:name "meain" :query "query=to:mail@meain.io AND tag:inbox" :key "m" :sort-order oldest-first)
           (:name "github" :query "tag:github AND tag:inbox" :key "h" :sort-order oldest-first)
           (:name "sent" :query "tag:sent" :key "s" :sort-order newest-first)
@@ -1839,7 +1840,7 @@ Pass ORIGINAL and ALTERNATE options."
           (:name "git" :query "tag:git AND tag:inbox" :key "g")
           (:name "newsletter" :query "tag:newsletter AND tag:inbox" :key "n")
           (:name "jobhunt" :query "tag:jobhunt AND tag:inbox" :key "j")
-          (:name "known" :query "tag:known AND tag:inbox AND -tag:todo" :key "k")
+          (:name "known" :query "tag:known AND tag:inbox AND -tag:todo AND -tag:flagged" :key "k")
           (:name "archiveable" :query "tag:bullshit AND tag:known AND tag:nonimportant AND tag:inbox" :key "a")
           (:name "all mail" :query "*" :key "A" :sort-order newest-first)))
 
