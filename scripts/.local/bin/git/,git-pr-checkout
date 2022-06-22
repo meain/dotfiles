@@ -5,11 +5,19 @@
 set -e
 
 # hub pr checkout "$(hub pr list | sed 's/^\ *//' | fzf | sed 's/.\([0-9]*\).*/\1/')"
-pr="$(gh pr list|fzf|awk '{print $1}')"
-echo Checking out "$pr"
-printf "Branch name: " && read -r
+prd="$(gh pr list|fzf)"
+[ -z "$prd" ] && echo "No PR selected" && exit 0
+
+echo "$prd"
+pr="$(echo "$prd"|awk '{print $1}')"
+prb="$(echo "$prd"|awk '{print $(NF-1)}'|cut -d':' -f2)"
+
+printf "Branch name(%s): " "$prb" && read -r
 branch="$REPLY"
+[ -z "$branch" ] && branch="$prb"
 upstream="upstream"
+
+echo Checking out "$pr" as "$branch"
 git remote | grep -q upstream || upstream="origin"
 git fetch $upstream pull/$pr/head:$branch
 git checkout $branch
