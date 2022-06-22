@@ -1074,7 +1074,7 @@ Pass ORIGINAL and ALTERNATE options."
 ;; Code formatting
 (use-package format-all
   :straight t
-  :commands (meain/auto-format)
+  :commands (format-all-buffer)
   :config
   (define-format-all-formatter fixjson
     ;; Use fixjson for formatting json files
