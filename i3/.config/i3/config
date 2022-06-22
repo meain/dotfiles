@@ -43,9 +43,21 @@ for_window [title="^emacs-popup$"] floating enable
 for_window [class="^mpv$"] floating enable
 
 # scratchpad
-bindsym $mod+Shift+i move scratchpad
-bindsym $mod+i scratchpad show
-bindsym $mod+Mod1+i [floating] resize set 1700 700, move position center
+# bindsym $mod+Shift+i move scratchpad
+# bindsym $mod+i scratchpad show, move position center
+# bindsym $mod+Mod1+i [floating] resize set 1300 700, move position center
+
+# floating terminal (started using systemd)
+for_window [instance="floatingterm"] resize set 1300 700, move position center, move scratchpad, floating enable
+bindsym $mod+i [instance="floatingterm"] scratchpad show, resize set 1300 700, move position center
+
+# floating todolist (started using systemd)
+for_window [title="floatingemacs"] resize set 1300 700, move position center, move scratchpad, floating enable
+bindsym $mod+Shift+i [title="floatingemacs"] scratchpad show, resize set 1300 700, move position center
+
+# floating calculator
+for_window [title="floatingcalc"] resize set 1300 700, move position center, move scratchpad, floating enable
+bindsym $mod+y [title="floatingcalc"] scratchpad show, resize set 1300 700, move position center
 
 # kill focused window
 bindsym $mod+q kill
@@ -184,7 +196,7 @@ bindsym $mod+Mod1+Control+d exec "zsh -ic ,dnd-toggle"
 bindsym $mod+Mod1+Control+l exec thunar
 bindsym $mod+Mod1+Control+Shift+l exec "zsh -ic 'dragon -x $(pbpaste)'"
 bindsym $mod+Mod1+Control+m exec "zsh -ic ',song | xargs -0 notify'"
-bindsym $mod+Mod1+Control+v exec emacsclient -ce '(meain/vime "vime" "~/.local/share/vime" t)'
+bindsym $mod+Mod1+Control+v exec emacsclient -e '(meain/vime "vime" "~/.local/share/vime" t)'
 bindsym $mod+Mod1+Control+q exec emacsclient -e "(meain/emacs-popup-minibuffer-frame 'meain/pick-emoji)"
 bindsym $mod+Mod1+Control+Shift+m exec chromium --new-window 'https://meet.google.com'
 

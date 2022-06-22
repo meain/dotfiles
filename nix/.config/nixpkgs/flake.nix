@@ -591,8 +591,35 @@
               Service.Type = "simple";
               Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic 'emacs --fg-daemon'";
               Install.WantedBy = [ "default.target" ];
-              Service.Restart = "on-failure";
+              Service.Restart = "always";
               Service.RestartSec = 5;
+            };
+
+            systemd.user.services.emacsclient = {
+              Unit.Description = "Start an emacs client";
+              Service.Type = "simple";
+              Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic 'emacsclient -F \\'((title . \"floatingemacs\"))\\' -c'";
+              Install.WantedBy = [ "default.target" ];
+              Service.Restart = "always";
+              Service.RestartSec = 5;
+            };
+
+            systemd.user.services.emacscalc = {
+              Unit.Description = "Start an emacs client for calculator";
+              Service.Type = "simple";
+              Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic 'emacsclient -F \\'((title . \"floatingcalc\"))\\' -ce \\'(full-calc)\\''";
+              Install.WantedBy = [ "default.target" ];
+              Service.Restart = "always";
+              Service.RestartSec = 5;
+            };
+
+            systemd.user.services.floatingterm = {
+              Unit.Description = "Start an terminal for floatingterm";
+              Service.Type = "simple";
+              Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic 'sakura --name floatingterm -x \"tmux new -s floating\"'";
+              Install.WantedBy = [ "default.target" ];
+              Service.Restart = "always";
+              Service.RestartSec = 3;
             };
 
             systemd.user.services.activitywatch = {
