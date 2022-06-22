@@ -2467,6 +2467,7 @@ SHORTCUT is the keybinding to use.  NAME if the func suffix and FILE is the file
                (find-file ,file)
              (message "Unable to find %s" ,file)))))))
 (meain/quick-file-open-builder "i" "init-el" "~/.dotfiles/emacs/.config/emacs/init.el")
+(meain/quick-file-open-builder "3" "i3-config" "~/.dotfiles/i3/.config/i3/config")
 (meain/quick-file-open-builder "s" "shell-nix" "shell.nix")
 (meain/quick-file-open-builder "c" "mscripts" ".mscripts")
 (meain/quick-file-open-builder "f" "elfeed-feeds" "~/.config/emacs/elfeed-feeds.el")
