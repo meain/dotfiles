@@ -11,5 +11,5 @@ elif [ -n "$1" ]; then
 	todo.sh $*
 fi
 
-clear
+clear -x
 todo.sh | head -n -2 | sort -k1n
