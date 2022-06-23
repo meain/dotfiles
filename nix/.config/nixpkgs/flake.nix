@@ -97,7 +97,7 @@
               pkgs.trash-cli # rm -> trash
               pkgs.entr # continuously run stuff
               pkgs.notify-desktop # desktop notifications
-              pkgs.xclip # clipboard
+              pkgs.xsel # clipboard
               # pkgs.wl-clipboard
               pkgs.bandwhich # view network stats (alt: nethogs)
               pkgs.xdotool # for window switching

@@ -1,3 +1,3 @@
 #!/bin/sh
 
-xclip -selection c -o
+xsel --clipboard --output
