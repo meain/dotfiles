@@ -67,10 +67,16 @@
   (defun meain/recenter-advice (orig-fn &rest args)
     "Used to recenter the buffer after `ORIG-FN' passing down `ARGS' down to it."
     (apply orig-fn args)
+    (recenter))
+  (defun meain/recenter-top-advice (orig-fn &rest args)
+    "Used to recenter the buffer after `ORIG-FN' passing down `ARGS' down to it."
+    (apply orig-fn args)
     (recenter 13))
 
-  (advice-add 'evil-search-next :around #'meain/recenter-advice)
-  (advice-add 'evil-search-previous :around #'meain/recenter-advice))
+  (advice-add 'evil-jump-forward :around #'meain/recenter-advice)
+  (advice-add 'evil-jump-backward :around #'meain/recenter-advice)
+  (advice-add 'evil-search-next :around #'meain/recenter-top-advice)
+  (advice-add 'evil-search-previous :around #'meain/recenter-top-advice))
 
 ;; Evil leader
 (use-package evil-leader
@@ -1201,7 +1207,7 @@ Pass ORIGINAL and ALTERNATE options."
   :commands consult-eglot-symbols
   :after eglot
   :config
-  (advice-add 'consult-imenu :around #'meain/recenter-advice)
+  (advice-add 'consult-imenu :around #'meain/recenter-top-advice)
   (setq consult-ripgrep-args "rg --line-buffered --color=never --max-columns=1000 --path-separator /\
    --smart-case --no-heading --line-number --hidden --follow --glob \"!.git/*\" .")
   :init
@@ -2295,7 +2301,7 @@ Pass ORIGINAL and ALTERNATE options."
   (define-key evil-inner-text-objects-map "a" (cons "evil-inner-parameter" (evil-textobj-tree-sitter-get-textobj "parameter.inner")))
   (define-key evil-outer-text-objects-map "a" (cons "evil-outer-parameter" (evil-textobj-tree-sitter-get-textobj "parameter.outer")))
 
-  (advice-add 'evil-textobj-tree-sitter-goto-textobj :around #'meain/recenter-advice)
+  (advice-add 'evil-textobj-tree-sitter-goto-textobj :around #'meain/recenter-top-advice)
   (define-key evil-normal-state-map (kbd "]a") (cons "goto-parameter-start" (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "parameter.inner"))))
   (define-key evil-normal-state-map (kbd "[a") (cons "goto-parameter-start" (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "parameter.inner" t))))
   (define-key evil-normal-state-map (kbd "]A") (cons "goto-parameter-end" (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "parameter.inner" nil t))))
