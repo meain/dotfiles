@@ -1867,6 +1867,14 @@ Pass ORIGINAL and ALTERNATE options."
   (setq message-sendmail-extra-arguments '("--read-envelope-from"))
   (setq message-send-mail-function 'message-send-mail-with-sendmail))
 
+;; gnus
+(use-package gnus
+  :commands gnus
+  :config
+  (setq gnus-select-method '(nnnil))
+  (setq gnus-secondary-select-methods
+        '((nntp "news.gmane.io"))))
+
 ;; elfeed
 (use-package elfeed
   :straight t
