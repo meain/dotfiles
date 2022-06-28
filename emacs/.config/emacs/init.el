@@ -1110,18 +1110,6 @@ Pass ORIGINAL and ALTERNATE options."
   :commands eglot-ensure
   :straight t
   :after (project flymake)
-  :hook ((python-mode . eglot-ensure)
-         (rust-mode . eglot-ensure)
-         (shell-script-mode . eglot-ensure)
-         (sh-mode . eglot-ensure)
-         (js-mode . eglot-ensure)
-         (javascript-mode . eglot-ensure)
-         (web-mode . eglot-ensure)
-         (lua-mode . eglot-ensure)
-         (go-mode . eglot-ensure)
-         (markdown-mode . eglot-ensure)
-         (gfm-mode . eglot-ensure)
-         (json-mode . eglot-ensure))
   :config
   (add-to-list 'eglot-server-programs '(lua-mode . ("~/.luarocks/bin/lua-lsp")))
   ;; yaml-mode useful for github actions
