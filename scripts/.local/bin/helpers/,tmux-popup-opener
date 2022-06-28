@@ -26,5 +26,5 @@ elif git log --format=format:%H | grep -q "$1"; then
 		"git log --format=format:%H | grep '$1' | xargs git show;read"
 else
 	printf "$1" | pbcopy
-	notify "Copied to clipboard"
+	notify "Copied to clipboard" "$1"
 fi
