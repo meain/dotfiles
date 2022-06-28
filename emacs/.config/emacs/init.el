@@ -3148,7 +3148,7 @@ Pass `CREATE' to create the alternate file if it does not exits."
                 (find-file alt-file)
               (if create
                   (find-file alt-file)
-                (message "Alternate file is not available on disk")))
+                (message "Alternate file '%s' is not available on disk" alt-file)))
           (message "Unable to determine alternate file")))
     (message "Not in a file")))
 (evil-leader/set-key "e e" 'meain/find-alternate-file)
