@@ -13,6 +13,7 @@ jj() {
 }
 
 tmp() {
+    [ "$1" = "view" ] && rcd /tmp/workspaces && return 0
 	r="/tmp/workspaces/$(xxd -l3 -ps /dev/urandom)"
 	mkdir -p "$r" && pushd "$r"
     git init
