@@ -1,0 +1,5 @@
+#!/bin/sh
+
+set -e
+
+convert "$1" -negate "inverted-$1"
