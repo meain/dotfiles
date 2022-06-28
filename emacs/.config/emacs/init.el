@@ -2207,11 +2207,15 @@ Pass ORIGINAL and ALTERNATE options."
       (pulse-momentary-highlight-region (car (tsc-node-byte-range (button-get button 'points-to)))
                                         (cdr (tsc-node-byte-range (button-get button 'points-to)))
                                         'company-template-field)))
-  (defun meain/tree-sitter-json-nesting ()
-    (if (eq major-mode 'json-mode)
+  (defun meain/tree-sitter-config-nesting ()
+    (if (or (eq major-mode 'json-mode) (eq major-mode 'yaml-mode) (eq major-mode 'nix-mode))
         (let* ((cur-point (point))
+               (query (pcase major-mode
+                        ('json-mode "(object (pair (string (string_content) @key) (_))@item)")
+                        ('yaml-mode "(block_mapping_pair (flow_node) @key) @item")
+                        ('nix-mode "(bind (attrpath (attr_identifier) @key)) @item")))
                (root-node (tsc-root-node tree-sitter-tree))
-               (query (tsc-make-query tree-sitter-language "(object (pair (string (string_content) @key) (_))@item)"))
+               (query (tsc-make-query tree-sitter-language query))
                (matches (tsc-query-matches query root-node #'tsc--buffer-substring-no-properties)))
           (string-join (remove-if (lambda (x) (eq x nil))
                                   (seq-map (lambda (x)
@@ -3191,7 +3195,7 @@ Pass `CREATE' to create the alternate file if it does not exits."
                                                           hima-simple-gray)
                                             ""))
                     '(:eval (mode-line-idle 0.3
-                                            '(:propertize (:eval (let ((thing-name (meain/tree-sitter-json-nesting)))
+                                            '(:propertize (:eval (let ((thing-name (meain/tree-sitter-config-nesting)))
                                                                    (if (and thing-name (> (length thing-name) 0))
                                                                        (format ":%s" thing-name))))
                                                           face
