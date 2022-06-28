@@ -70,7 +70,10 @@ function +vi-git-untracked() {
 
 function _current_kubernets_namespace() {
   if [ -d helm ] || [ -d charts ] || [ -f deployment.yaml ] || [ -f .namespace ];then
-    kubectl config view --minify --output 'jsonpath={..namespace}' 2>/dev/null
+    cluster="$(kubectl config view --minify --output 'jsonpath={..current-context}' 2>/dev/null)"
+    namespace="$(kubectl config view --minify --output 'jsonpath={..namespace}' 2>/dev/null)"
+    [ -z "$namesapce" ] && [ -n "$cluster" ] && namespace="default"
+    [ -n "$cluster" ] && printf "%s:%s" "$cluster" "$namespace" || printf "no-cluster"
   fi
 }
 
