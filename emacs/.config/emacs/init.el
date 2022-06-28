@@ -2432,6 +2432,14 @@ Pass ORIGINAL and ALTERNATE options."
   (evil-leader/set-key "f f ;" 'harpoon-go-to-8)
   (evil-leader/set-key "f f f" 'harpoon-go-to-9))
 
+(use-package denote
+  :straight t
+  :config
+  (setq denote-directory (expand-file-name "~/.local/share/til/"))
+  (add-hook 'find-file-hook #'denote-link-buttonize-buffer)
+  (add-hook 'dired-mode-hook #'denote-dired-mode-in-directories)
+  (setq denote-file-type 'markdown-yaml))
+
 ;;; [CUSTOM FUNCTIONS] ==============================================
 
 ;; Font size changes
@@ -2584,9 +2592,6 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
         (insert ":name ")
         (evil-insert 1))))
   :init
-  (evil-leader/set-key "V" '(lambda (createnew)
-                              (interactive "P")
-                              (meain/vime "til" "~/.local/share/til" createnew)))
   (evil-leader/set-key "v" '(lambda (createnew)
                               (interactive "P")
                               (meain/vime "vime" "~/.local/share/vime" createnew))))
