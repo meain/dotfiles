@@ -522,6 +522,7 @@ Pass ORIGINAL and ALTERNATE options."
       ("tempate" "template")
       ("istall" "install")
       ("dockerfile" "Dockerfile")
+      ("differnt" "different")
       )))
 
 ;; auto activating snippets
