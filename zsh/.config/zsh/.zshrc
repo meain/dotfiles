@@ -133,7 +133,7 @@ copy_function() {
 }
 copy_function _direnv_hook _direnv_hook__old
 _direnv_hook() {
-	_direnv_hook__old "$@" 2> >(egrep -v '^direnv: (export|using nix|using cached|eval /)')
+	_direnv_hook__old "$@" 2> >(grep -vE '^direnv: export')
 }
 
 ,darkmode quiet # set dark or light mode
