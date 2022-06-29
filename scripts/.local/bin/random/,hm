@@ -2,7 +2,7 @@
 
 set -e
 
-cp $HOME/.dotfiles/nix/.config/nixpkgs/flake.* $HOME/.config/nixpkgs/
+cp $HOME/.dotfiles/nix/.config/nixpkgs/home.nix $HOME/.dotfiles/nix/.config/nixpkgs/flake.* $HOME/.config/nixpkgs/
 
 if [ "$1" = update ]; then
 	cd $HOME/.dotfiles/nix/.config/nixpkgs
