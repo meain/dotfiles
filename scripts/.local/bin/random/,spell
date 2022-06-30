@@ -3,9 +3,12 @@
 set -e
 
 correct="$(echo "$1" |
-    aspell -a | tail -n+2 |
-    cut -d':' -f2 | tr -d ' ' | tr ',' '\n' |
-    fzf --no-sort)"
+	aspell -a | tail -n+2 |
+	grep -v '\*' |
+	cut -d':' -f2 | tr -d ' ' | tr ',' '\n' |
+	fzf --no-sort -1)"
 
+[ "$correct" = "" ] &&
+	echo "'$1' is already correct ;)" && correct="$1" ||
+	echo "'$correct' copied to clipboard"
 printf "%s" "$correct" | pbcopy
-echo "'$correct' copied to clipboard"
