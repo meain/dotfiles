@@ -14,13 +14,11 @@ elif echo "$1" | grep -qE '^E\d{4}`\.'; then
 	ERR=$(echo "$1" | cut -c1-5)
 	tmux popup -w50% -h80% -E "rustc --explain '$ERR'"
 elif [ -f "$2/$1" ]; then
-	# tmux popup -w90% -h90% -E -d "$2" "nvim '$1'"
 	dragon -x "$2/$1"
-elif [ -d "$2/$1" ] || [ -d "$1" ]; then
-	# tmux popup -w90% -h90% -E -d "$2" "lf '$1'"
-	# dragon -x "$2/$1"
-	xdotool type "cd $1 # prev: $2"
-	xdotool key "Return"
+elif [ -d "$1" ]; then
+	dragon -x "$1"
+elif [ -d "$2/$1" ]; then
+	dragon -x "$2/$1"
 elif git log --format=format:%H | grep -q "$1"; then
 	tmux popup -w90% -h90% -E -d "$2" \
 		"git log --format=format:%H | grep '$1' | xargs git show;read"
