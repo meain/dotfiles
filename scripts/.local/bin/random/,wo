@@ -1,0 +1,19 @@
+#!/bin/sh
+
+set -e
+
+WO_FILE="$HOME/wo"
+
+case "$1" in
+back) womsg="$(cat "$WO_FILE" | tail -n2 | head -n1 | cut -d' ' -f3-)" ;;
+edit) "$EDITOR" "$WO_FILE" && exit 0 ;;
+*) womsg="$(cat "$WO_FILE" | cut -d' ' -f3- | sort -u | fzf --print-query --exact -1 --query "$*" | tail -n1)" ;;
+esac
+
+[ -z "$womsg" ] && echo "Empty wo, I'm out." && exit 0
+echo "$(date '+%F %T')" "$womsg" >>"$WO_FILE"
+if [ "$womsg" = "afk" ]; then
+	rm /tmp/current-wo
+else
+	echo "$womsg" | tr '[:lower:]' '[:upper:]' >/tmp/current-wo
+fi

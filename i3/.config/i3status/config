@@ -4,6 +4,7 @@ general {
         color_good = "#FFFFFF"
 }
 
+order += "read_file wo"
 order += "read_file rec"
 order += "read_file cal"
 order += "read_file dnd"
@@ -18,6 +19,11 @@ order += "ethernet _first_"
 order += "read_file weather"
 order += "tztime local"
 
+read_file wo {
+          path = '/tmp/current-wo'
+          format = "{%content}"
+          format_bad = "{AFK}"
+}
 
 read_file rec {
           path = '/tmp/recordingpid'
