@@ -53,7 +53,7 @@ source $ZDOTDIR/.zsh-custom/plugins/z/z.sh
 source $ZDOTDIR/.zsh-custom/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
 source $ZDOTDIR/.zsh-custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
 
-export EDITOR='emacsclient'
+export EDITOR='nvim'
 export BROWSER= # do not set browser
 export DIFFTOOL='icdiff'
 
