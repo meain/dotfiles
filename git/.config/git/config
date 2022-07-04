@@ -31,7 +31,7 @@
   algorithm = patience
   indentHeuristic = true
 [diff "spaceman-diff"]
-  command = ~/.config/spaceman-diff/spaceman-diff
+  command = spaceman-diff
 [credential]
   helper = cache
 [init]
