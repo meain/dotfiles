@@ -512,24 +512,13 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; Enable abbrev mode
 (use-package abbrev-mode
-  :defer 3
+  :defer t
   :init
   (add-hook 'text-mode-hook #'abbrev-mode)
   (add-hook 'prog-mode-hook #'abbrev-mode)
   :config
-  (setq save-abbrevs 'silent)
-  (define-abbrev-table
-    'global-abbrev-table
-    '(
-      ;; ("!+" "!=") ;; Unfortunately abbrev mode does not support non alpha chars
-      ("funtion" "function")
-      ("udpate" "update")
-      ("happengin" "happening")
-      ("tempate" "template")
-      ("istall" "install")
-      ("dockerfile" "Dockerfile")
-      ("differnt" "different")
-      )))
+                                        ; (find-file "emacs/.config/emacs/abbrev_defs")
+  (setq save-abbrevs 'silent))
 
 ;; auto activating snippets
 (use-package aas
