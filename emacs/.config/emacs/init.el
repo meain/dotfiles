@@ -821,6 +821,25 @@ Pass ORIGINAL and ALTERNATE options."
   ;;           (lambda ()
   ;;             (add-hook 'flymake-diagnostic-functions 'flymake-errcheck nil t)))
 
+  ;; https://github.com/nerdypepper/statix
+  (flymake-quickdef-backend flymake-statix
+    :pre-let ((statix-exec (executable-find "statix")))
+    :pre-check (unless statix-exec (error "Cannot find statix executable"))
+    :write-type 'file
+    :proc-form (list statix-exec "check" "--format" "errfmt" fmqd-temp-file)
+    :search-regexp "^\\([^>]+\\)>\\([[:digit:]]+\\):\\([[:digit:]]+\\):\\(.*\\)$"
+    :prep-diagnostic (let* ((lnum (string-to-number (match-string 2)))
+                            (col (string-to-number (match-string 3)))
+                            (text (match-string 4))
+                            (pos (flymake-diag-region fmqd-source lnum col))
+                            (beg (car pos))
+                            (end (cdr pos))
+                            (msg (format "statix> %s" text)))
+                       (list fmqd-source beg end :warning msg)))
+  (add-hook 'nix-mode-hook
+            (lambda ()
+              (add-hook 'flymake-diagnostic-functions 'flymake-statix nil t)))
+
   ;; https://github.com/hadolint/hadolint
   (flymake-quickdef-backend flymake-hadolint
     :pre-let ((hadolint-exec (executable-find "hadolint")))
