@@ -4,17 +4,17 @@
 
 set -e
 
-# hub pr checkout "$(hub pr list | sed 's/^\ *//' | fzf | sed 's/.\([0-9]*\).*/\1/')"
-prd="$(gh pr list|fzf)"
+prd="$(gh pr list --json 'number,headRefName,title' | jq -r '.[]| [.number, .title, .headRefName] | @sh' | column -t -s"'" | fzf)"
 [ -z "$prd" ] && echo "No PR selected" && exit 0
 
 echo "$prd"
-pr="$(echo "$prd"|awk '{print $1}')"
-prb="$(echo "$prd"|awk '{print $(NF-1)}'|cut -d':' -f2)"
+pr="$(echo "$prd" | awk '{print $1}')"
+prb="$(echo "$prd" | awk '{print $(NF)}')"
 
-printf "Branch name(%s): " "$prb" && read -r
+dbranch="$pr-$prb"
+printf "Branch name(%s): " "$dbranch" && read -r
 branch="$REPLY"
-[ -z "$branch" ] && branch="$prb"
+[ -z "$branch" ] && branch="$dbranch"
 upstream="upstream"
 
 echo Checking out "$pr" as "$branch"
