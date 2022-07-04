@@ -1863,7 +1863,7 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package gnus
   :commands gnus
   :config
-  (setq gnus-select-method '(nnnil))
+  (setq gnus-select-method '(nnnil ""))
   (setq gnus-secondary-select-methods
         '((nntp "news.gmane.io"))))
 
