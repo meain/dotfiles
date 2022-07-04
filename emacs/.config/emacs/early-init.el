@@ -37,7 +37,7 @@
 ;; Iosevka Slab 14 | Edlo 13 | Bront 15 | Whois 15 | Ligconsolata 16 | Operator Mono 14
 ;; PragmataPro 14 | agave 15 | Unifont 15 | Apercu Mono 14 | Binchotan_Sharp 15
 ;; CMU Typewriter Text 16 | Input 14 | SF Mono 14 | CQ Mono 11 | Izayoi Monospaced 10
-;; Font: (set-frame-font  "Dank Mono 10")
+;; Font: (set-frame-font  "Whois 11")
 ;; Line spacing: (setq-default line-spacing nil)
 
 (defvar meain/font-list '(;; name size line-spacing weight
@@ -82,9 +82,10 @@
                           ("Red Hat Mono" . '(9 nil 'regular))
                           ("Roboto Mono" . '(10 nil 'light))
                           ("Sudo" . '(11 nil 'regular))
-                          ("Whois" . '(11 nil 'regular))
+                          ("Victor Mono" . '(10 .1 'regular))
+                          ("Whois" . '(11 .1 'regular))
                           ))
-(defvar meain/font-name "Anka/Coder")
+(defvar meain/font-name "Whois")
 
 (defun meain/get-font-prop (font-name prop)
   "Get PROP (property) from FONT-NAME."
