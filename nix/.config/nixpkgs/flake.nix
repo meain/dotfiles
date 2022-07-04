@@ -16,15 +16,17 @@
       url = "path:/home/meain/dev/src/nur-packages";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    emacsOverlay.url = "github:nix-community/emacs-overlay";
+    emacsOverlay = {
+      url = "github:nix-community/emacs-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, homeManager, stable, nur, personal, emacsOverlay }: {
     homeConfigurations =
       let
         homeConfig = import ./home.nix {
-          personal = personal;
-          stable = stable;
+          inherit stable personal;
         };
       in
       {
