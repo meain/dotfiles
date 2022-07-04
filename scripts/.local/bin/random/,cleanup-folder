@@ -1,13 +1,12 @@
 #!/bin/sh
 
-# Organize folders by date.
-# One directory for each week current week is left in the root
+# Move items older than 3 days to _old
 
 set -e
 
 [ -n "$1" ] && cd "$1"
 mkdir -p _old
-find . -maxdepth 1 -mtime +5 | grep -vE '^_out$' |
+find . -maxdepth 1 -mtime +3 | grep -vE '^\./_out$' |
 	while read -r file; do
 		echo Moving "$file"
 		mv "$file" "_old/$file"
