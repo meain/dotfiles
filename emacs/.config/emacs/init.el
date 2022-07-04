@@ -523,14 +523,7 @@ Pass ORIGINAL and ALTERNATE options."
 ;; auto activating snippets
 (use-package aas
   :straight t
-  :commands (ass-activate-for-major-mode)
-  :hook (text-mode . ass-activate-for-major-mode)
-  :hook (mtodo-mode . ass-activate-for-major-mode)
-  :hook (ledger-mode . ass-activate-for-major-mode)
-  :hook (org-mode . ass-activate-for-major-mode)
-  :hook (prog-mode . ass-activate-for-major-mode)
-  :hook (python-mode . ass-activate-for-major-mode)
-  :hook (sql-mode . ass-activate-for-major-mode)
+  :defer 3
   :config
   (defun meain/go-default-returns (type errformat)
     "Making it a function instead of an alist so that we can handle unknown TYPE."
@@ -573,18 +566,9 @@ Pass ORIGINAL and ALTERNATE options."
                                                                                                        ","))))
                                                               ", "))
                                                 (_ (meain/go-default-returns return-node-text errformat)))))))))
-  (aas-set-snippets 'text-mode
-    ";isodate" (lambda () (interactive) (insert (format-time-string "%a, %d %b %Y %T %z")))
-    ";date" (lambda () (interactive) (insert (format-time-string "%a %b %d %Y")))
-    ";sdate" (lambda () (interactive) (insert (format-time-string "%d %b %Y")))
-    ";d/" (lambda () (interactive) (insert (format-time-string "%D")))
-    ";time" (lambda () (interactive) (insert (format-time-string "%T")))
-    ";filename" (lambda () (interactive) (insert (file-name-nondirectory (buffer-file-name)))))
-  (aas-set-snippets 'mtodo-mode
-    ";date" (lambda () (interactive) (insert (format-time-string "%a %b %d %Y"))))
-  (aas-set-snippets 'ledger-mode
-    ";date" (lambda () (interactive) (insert (format-time-string "%Y-%m-%d"))))
-  (aas-set-snippets 'prog-mode
+  (aas-set-snippets 'global
+    ";--" "—"
+    ";->" "→"
     ";isodate" (lambda () (interactive) (insert (format-time-string "%a, %d %b %Y %T %z")))
     ";date" (lambda () (interactive) (insert (format-time-string "%a %b %d %Y")))
     ";sdate" (lambda () (interactive) (insert (format-time-string "%d %b %Y")))
@@ -672,7 +656,8 @@ Pass ORIGINAL and ALTERNATE options."
   (aas-set-snippets 'org-mode
     ";el" "#+BEGIN_SRC emacs-lisp\n\n#+END_SRC"
     ";py" "#+BEGIN_SRC python\n\n#+END_SRC"
-    ";co" "#+BEGIN_SRC\n\n#+END_SRC"))
+    ";co" "#+BEGIN_SRC\n\n#+END_SRC")
+  (aas-global-mode))
 
 ;; flyspell
 (use-package flyspell
