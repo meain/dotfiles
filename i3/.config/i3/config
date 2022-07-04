@@ -3,7 +3,6 @@ font pango:Inconsolata 9
 
 # Startup entries
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
-exec --no-startup-id warpd
 exec --no-startup-id mpd
 exec --no-startup-id clipmenud
 # exec --no-startup-id nm-applet
