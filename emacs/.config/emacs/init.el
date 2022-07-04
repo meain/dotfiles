@@ -2444,6 +2444,7 @@ Pass ORIGINAL and ALTERNATE options."
 
 (use-package denote
   :straight t
+  :commands (denote denote-dired-rename-file)
   :config
   (setq denote-directory (expand-file-name "~/.local/share/til/"))
   (add-hook 'find-file-hook #'denote-link-buttonize-buffer)
