@@ -2938,9 +2938,16 @@ Default is after, but use BEFORE to print before."
 (defun meain/markdown-pdf ()
   "Generate pdf from markdown document."
   (interactive)
-  (message "Generating markdown for %s. Just give it a moment.." (buffer-file-name))
+  (message "Generating pdf of %s. Just give it a moment.." (buffer-file-name))
   (start-process-shell-command "*markdown-pdf*" "*markdown-pdf*"
-                               (concatenate 'string "pandocmarkdownpreview " (buffer-file-name))))
+                               (concatenate 'string ",markdown-to-pdf " (buffer-file-name))))
+
+(defun meain/markdown-html ()
+  "Generate pdf from markdown document."
+  (interactive)
+  (message "Generating markdown for %s. Just give it a moment.." (buffer-file-name))
+  (start-process-shell-command "*markdown-html*" "*markdown-html*"
+                               (concatenate 'string ",markdown-to-html " (buffer-file-name))))
 
 ;; Run markdown code blocks (forest.el)
 (defun meain/run-markdown-code-block (&optional insert-to-buffer)
