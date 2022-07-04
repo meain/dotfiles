@@ -663,7 +663,17 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package flyspell
   :defer t
   :commands (flyspell-prog-mode flyspell-mode)
-  :init (add-hook 'prog-mode-hook 'flyspell-prog-mode))
+  :init
+  (add-hook 'prog-mode-hook 'flyspell-prog-mode)
+  :config
+  ;; Make flyspell work with tree-sitter
+  (setq-default flyspell-prog-text-faces
+                '(tree-sitter-hl-face:comment
+                  tree-sitter-hl-face:doc
+                  tree-sitter-hl-face:string
+                  font-lock-comment-face
+                  font-lock-doc-face
+                  font-lock-string-face)))
 (use-package flyspell-correct
   :straight t
   :after flyspell
