@@ -66,20 +66,21 @@ in
     pkgs.android-tools # adb and friends  # not available for macos
     # pkgs.restic # backup
     # pkgs.ledger # double entry accounting
-    pkgs.dasel # jq but more versatile
+    # pkgs.dasel # jq but more versatile
     # pkgs.mosh # better ssh
     # pkgs.haskellPackages.kmonad # key remapping
     ppkgs.kmonad # key remapping
-    ppkgs.warpd # mouse control
+    # ppkgs.warpd # mouse control
     pkgs.trash-cli # rm -> trash
     pkgs.entr # continuously run stuff
     pkgs.notify-desktop # desktop notifications
     pkgs.xsel # clipboard
     # pkgs.wl-clipboard
-    pkgs.bandwhich # view network stats (alt: nethogs)
+    # pkgs.bandwhich # view network stats (alt: nethogs)
     pkgs.xdotool # for window switching
     pkgs.picotts # for say
     ppkgs.dmenu # menu stuff (fork for emojis)
+    ppkgs.spaceman-diff # diff images in terminal
 
     # aspell dicts
     pkgs.aspellDicts.en
@@ -90,29 +91,28 @@ in
     pkgs.stern # better way to fetch kubernetes log
     pkgs.yt-dlp # download youtube videos
     pkgs.chafa # show images in terminal using half blocks
-    pkgs.hub # Github integration for git
+    # pkgs.hub # Github integration for git
     pkgs.gh # Yet another Github integration for git
     pkgs.lynx # terminal web browser
     pkgs.slop # select region from screen
     pkgs.imagemagick # image manip cli
     pkgs.ffmpeg # video manip cli
-    pkgs.gnuplot # plotting
+    # pkgs.gnuplot # plotting
     pkgs.ddgr # search ddg from terminal
     pkgs.dasht # terminal docs
-    # taskwarrior # task management
+    # pkgs.taskwarrior # task management
     pkgs.todo-txt-cli # todo management
-    # pkgs.pkgs.ts # task spooler
+    # pkgs.ts # task spooler
     pkgs.pup # html filtering
-    pkgs.pkgs.jiq # interactive jiq
-    # pkgs.pkgs.tldr # simpler man pages
-    # pkgs.pkgs.silicon # create pretty code screenshots
+    # pkgs.tldr # simpler man pages
+    # pkgs.silicon # create pretty code screenshots
     pkgs.pkgs.transmission # torrent stuff
-    # pkgs.pkgs.kube-prompt # interactive kubernetes cli
-    # pkgs.pkgs.cowsay # useless stuff
+    # pkgs.kube-prompt # interactive kubernetes cli
+    # pkgs.cowsay # useless stuff
     # pkgs.podman # pod manager
     pkgs.typos # typo checker (integrated with flymake)
     pkgs.k9s # kubernetes tui
-    pkgs.screenkey # show keys (useful when recording screen)
+    # pkgs.screenkey # show keys (useful when recording screen)
 
     # programming
     # pkgs.gist # create gist
@@ -127,12 +127,11 @@ in
     pkgs.go # go programming language
     pkgs.gopls # language server
     pkgs.godef # language server helper
-    pkgs.go-langserver # go language-server
     pkgs.gotools # go formatter
     pkgs.go-tools # installing staticcheck (technically available in golangci-lint, but for use in lsp)
     spkgs.errcheck # available in golangci-lint, but still
     pkgs.golangci-lint # all kinds of linters for go
-    pkgs.delve # debugging in go
+    # pkgs.delve # debugging in go
 
     # programming-web
     pkgs.html-tidy # html formatter
@@ -181,8 +180,8 @@ in
     pkgs.cargo-edit # dep management
     # pkgs.cargo-bloat # find big chunks
     # pkgs.cargo-udeps # find unnecessary deps
-    pkgs.cargo-release # for releasing packages
-    pkgs.cargo-watch # continuously run cargo check
+    # pkgs.cargo-release # for releasing packages
+    # pkgs.cargo-watch # continuously run cargo check
 
     # programming-lua
     # pkgs.nodePackages.lua-fmt
@@ -190,7 +189,7 @@ in
     # programming-other
     pkgs.nodePackages.yaml-language-server # language server for yaml
     pkgs.nodePackages.vscode-json-languageserver # language server for json
-    ppkgs.prosemd-lsp
+    ppkgs.prosemd-lsp # prose lsp
     pkgs.nodePackages.fixjson # much better json formatter
     pkgs.nodePackages.jsonlint # json linting
     pkgs.nodePackages.markdownlint-cli # markdown linter
@@ -198,12 +197,12 @@ in
     pkgs.hadolint # Dockerfile lint
     pkgs.sqls # lsp server for sql
     pkgs.python39Packages.sqlparse # sqlformat
-    pkgs.grpcurl # curl for grpc
+    # pkgs.grpcurl # curl for grpc
 
     # gui
     pkgs.mpv # audio/video player
     # pkgs.kitty
-    pkgs.alacritty # terminal emulator
+    # pkgs.alacritty # terminal emulator
     # pkgs.firefox # working OSS browser
     pkgs.chromium # because Google hates firefox
     # pkgs.guake # drop down terminal
@@ -226,7 +225,7 @@ in
     # pkgs.lens # kubernetes viewer
 
     # optional
-    pkgs.gdu # disk usage viewer tui (alt: ncdu)
+    # pkgs.gdu # disk usage viewer tui (alt: ncdu)
     pkgs.axel # download manager
     # pkgs.bat # cat with syntax highlight
     # pkgs.surfraw # search web
@@ -240,14 +239,14 @@ in
     # pkgs.tig # tui git interface
     # pkgs.lazygit # tui git interface
     # pkgs.lazydocker # tui docker interface
-    pkgs.docker-compose # docker-compose
+    # pkgs.docker-compose # docker-compose
     # pkgs.ncmpcpp # mpd tui client
     # pkgs.tokei # count lines of code
     # pkgs.navi # interactive cli launcher
     # pkgs.googler # search google from terminal
     # pkgs.cmatrix # matrix thingy in shell
-    pkgs.graphviz # draw graphs with code
-    # pkgs.groff # gnu troff
+    # pkgs.graphviz # draw graphs with code
+    pkgs.groff # gnu troff  ## needed for md->pdf conversion
     pkgs.pgcli # fancier postgres cli
     # pkgs.trivy # docker vulnerability scanner
     # pkgs.act # github ci locally
@@ -256,7 +255,7 @@ in
     # pkgs.comma # run literally anything
     ppkgs.gloc # run stuff in all git repos
     ppkgs.tojson # convert yaml/toml/json
-    pkgs.jo # create json
+    # pkgs.jo # create json
     pkgs.jiq # interactive jq
     pkgs.jless # json viewer
     pkgs.blueman # bluetooth control
@@ -267,12 +266,12 @@ in
     pkgs.xfce.thunar # gui file manager
     pkgs.unixtools.netstat # netstat
     # pkgs.comby # structural search/editing of code
-    pkgs.visidata # data visualization
+    # pkgs.visidata # data visualization
     pkgs.xdragon # drag and drop files
     pkgs.sct # redshift ish stuff
     # pkgs.nur.repos.renesat.activitywatch-bin  # https://github.com/NixOS/nix/issues/3843
     ppkgs.activitywatch-bin # activity tracking
-    pkgs.gforth # gnu forth interpreter
+    # pkgs.gforth # gnu forth interpreter
 
     # gnome tweaking
     # pkgs.gnome3.dconf-editor # change dconf settings
@@ -301,26 +300,26 @@ in
 
     # fonts (set-frame-font  "Anka/Coder 10")
     pkgs.iosevka
-    pkgs.hermit
+    # pkgs.hermit
     pkgs.agave
     pkgs.inconsolata
     pkgs.victor-mono
     pkgs.cascadia-code
-    pkgs.julia-mono
-    pkgs.sudo-font
-    pkgs.terminus-nerdfont
+    # pkgs.julia-mono
+    # pkgs.sudo-font
+    # pkgs.terminus-nerdfont
     pkgs.fantasque-sans-mono
     # pkgs.monoid
     pkgs.ankacoder
     pkgs.jetbrains-mono
-    pkgs.go-font
-    pkgs.unifont
+    # pkgs.go-font
+    # pkgs.unifont
     # pkgs.tewi-font
-    pkgs.hack-font
-    pkgs.mononoki
-    pkgs.roboto-mono
-    pkgs.cozette
-    pkgs.fira-code
+    # pkgs.hack-font
+    # pkgs.mononoki
+    # pkgs.roboto-mono
+    # pkgs.cozette
+    # pkgs.fira-code
     # pkgs.dina-font
     # pkgs.envypn-font
   ];
@@ -581,19 +580,11 @@ in
     Service.RestartSec = 5;
   };
 
-  systemd.user.services.emacscalc = {
-    Unit.Description = "Start an emacs client for calculator";
-    Service.Type = "simple";
-    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic 'emacsclient -F \\'((title . \"floatingcalc\"))\\' -ce \\'(full-calc)\\''";
-    Install.WantedBy = [ "default.target" ];
-    Service.Restart = "always";
-    Service.RestartSec = 5;
-  };
-
   systemd.user.services.floatingterm = {
     Unit.Description = "Start an terminal for floatingterm";
     Service.Type = "simple";
-    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic 'sakura --name floatingterm -x \"tmux new -s floating\"'";
+    # We need LANG to be explicitly set so that non-breaking space in prompt is not shown as _
+    Service.ExecStart = "${pkgs.sakura}/bin/sakura --name floatingterm -x 'env LANG=en_US.UTF-8 tmux new -As floating'"; # -As: new or attach
     Install.WantedBy = [ "default.target" ];
     Service.Restart = "always";
     Service.RestartSec = 3;
