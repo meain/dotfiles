@@ -13,7 +13,7 @@ esac
 [ -z "$womsg" ] && echo "Empty wo, I'm out." && exit 0
 echo "$(date '+%F %T')" "$womsg" >>"$WO_FILE"
 if [ "$womsg" = "afk" ]; then
-	rm /tmp/current-wo
+	rm -r /tmp/wo-info
 else
-	echo "$womsg" | tr '[:lower:]' '[:upper:]' >/tmp/current-wo
+	echo "$womsg" | tr '[:lower:]' '[:upper:]' >/tmp/wo-info
 fi

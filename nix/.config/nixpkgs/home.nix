@@ -560,6 +560,15 @@ in
     Service.Restart = "always";
     Service.RestartSec = 3;
   };
+
+  systemd.user.services.wo-info = {
+    Service.Type = "simple";
+    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic 'WO_WRITE=1 ,wo-info'";
+    Install.WantedBy = [ "default.target" ];
+    Service.Restart = "always";
+    Service.RestartSec = 5;
+  };
+
   # update output for shellout gnome extension
   systemd.user.services.mail-watcher = {
     Service.Type = "simple";

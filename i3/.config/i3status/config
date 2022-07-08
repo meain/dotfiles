@@ -20,7 +20,7 @@ order += "read_file weather"
 order += "tztime local"
 
 read_file wo {
-          path = '/tmp/current-wo'
+          path = '/tmp/wo-info'
           format = "{%content}"
           format_bad = "{AFK}"
 }
