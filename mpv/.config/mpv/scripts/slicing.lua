@@ -43,11 +43,12 @@ end
 function log(str)
     local logpath = utils.join_path(
         o.target_dir:gsub("~", get_homedir()),
-        "mpv_slicing.log")
+        ".cache/mpv_slicing.log")
     f = io.open(logpath, "a")
     f:write(string.format("# %s\n%s\n",
         os.date("%Y-%m-%d %H:%M:%S"),
         str))
+    osd("Slicing command available in " .. logpath)
     f:close()
 end
 
@@ -111,7 +112,7 @@ function cut(shift, endpos)
 
     msg.info(cmd)
     log(cmd)
-    os.execute(cmd)
+    -- os.execute(cmd)  // it is better to execute it later
 end
 
 function toggle_mark()
