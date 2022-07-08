@@ -1,0 +1,6 @@
+#!/bin/sh
+
+set -e
+
+[ -z "$2" ] && echo "Usage: ,image-rotate <filename> <rotation-angle>" && exit 1
+convert -rotate "$2" "$1" "$2-rotated-$1"

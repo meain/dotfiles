@@ -1,0 +1,9 @@
+#!/bin/sh
+
+set -e
+
+case "$2" in
+v*) convert -flip "$1" "flipped-$1" ;;
+h*) convert -flop "$1" "flipped-$1" ;;
+*) echo "Usage: ,image-flip <filename> [vert|horiz]" && exit 1 ;;
+esac
