@@ -1,0 +1,72 @@
+# terminal emulator
+super + Return
+	  sakura
+
+# emacs
+super + {e,t}
+	  emacsclient -cn -a '' {_,-e '(vterm "terminal")'}
+
+# audio
+super + alt + control + m
+      ,song | xargs -0 notify
+XF86Audio{Play,Pause,Prev,Next}
+      {\,music-playpause, \,music-pause, \,music-previous, \,music-next}
+
+# lock screen
+super + {shift,alt+control} + z
+      {\,lock-screen, \,lock-screen && systemctl suspend}
+
+# dmenu
+super + {d,shift+d}
+      {dmenu_run -i -fn 'Whois:size=10' -nb '#000000' -nf '#aaaaaa' -sb '#263238' -sf '#ffffff', i3-dmenu-desktop}
+
+# monitor controls
+super + alt + control + grave
+      ,i3-flip-workspaces
+super + alt + control + {0,1,2,3,4}
+      { ~/.screenlayout/builtin.sh \
+      , ~/.screenlayout/big.sh \
+      , ~/.screenlayout/builtinandbig.sh \
+      , ~/.screenlayout/three.sh \
+      , ~/.screenlayout/two.sh \
+      } || notify 'Unable to update monitor config'
+
+# screenshot
+super + alt + control + {_, shift} + o
+     {\,screenshot full, \,screenshot}
+{_,shift} + Print
+     {\,screenshot full, \,screenshot}
+
+# launch programs
+super + alt + control + {l, shift + m}
+      { thunar \
+      , google-chrome --new-window 'https://meet.google.com'
+      }
+
+# clipboard
+super + alt + control + {_, shift} + p
+      {clipmenu -i -fn 'Whois:size=10' -nb '#000000' -nf '#aaaaaa' -sb '#263238' -sf '#ffffff', notify Clipboard "$(pbpaste)"}
+
+# mail
+super + alt + control + {_, shift} + u
+      {\,mail-unread-notify, notmuch tag +notified tag:imbox and tag:unread && notify "All emails marked read"}
+
+# calendar
+super + alt + control + h
+      ,output-notify "Upcoming events" ,upcoming-events
+
+# toggles
+super + alt + control + d
+      ,dnd-toggle
+
+# drag and drop file in clipboard
+super + alt + control + shift + l
+      dragon -x "$(pbpaste)"
+
+# script runner
+super + alt + control + i
+      GUI_PICKER=1 zsh -ic ,se
+
+# emoji picker
+super + alt + control + q
+      emacsclient -e "(meain/emacs-popup-minibuffer-frame 'meain/pick-emoji)"

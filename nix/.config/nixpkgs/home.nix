@@ -553,6 +553,13 @@ in
     Install.WantedBy = [ "timers.target" ];
   };
 
+  systemd.user.services.sxhkd = {
+    Service.Type = "simple";
+    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic sxhkd";
+    Install.WantedBy = [ "default.target" ];
+    Service.Restart = "always";
+    Service.RestartSec = 3;
+  };
   # update output for shellout gnome extension
   systemd.user.services.mail-watcher = {
     Service.Type = "simple";
