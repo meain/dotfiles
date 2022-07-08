@@ -7,8 +7,13 @@ super + {e,t}
 	  emacsclient -cn -a '' {_,-e '(vterm "terminal")'}
 
 # audio
-super + alt + control + m
-      ,song | xargs -0 notify
+super + alt + control + m; {m,p,shift+p,h,l}
+      { \,song | xargs -0 notify \
+      , \,music-playpause \
+      , \,music-pause \
+      , \,music-previous \
+      , \,music-next
+      }
 XF86Audio{Play,Pause,Prev,Next}
       {\,music-playpause, \,music-pause, \,music-previous, \,music-next}
 
@@ -38,7 +43,7 @@ super + alt + control + {_, shift} + o
      {\,screenshot full, \,screenshot}
 
 # launch programs
-super + alt + control + {l, shift + m}
+super + alt + control + l ; {l, m}
       { thunar \
       , google-chrome --new-window 'https://meet.google.com'
       }
