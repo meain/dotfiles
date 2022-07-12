@@ -46,7 +46,8 @@ if [ -z "$1" ]; then
 	sourcefile="/tmp/paste"
 else
 	if [ -f "$1" ]; then
-		filename="$(xxd -l4 -ps /dev/urandom)-$(basename $1)"
+        filename="$(echo "$1"|sed -E 's|[\ ()]|__|g')"
+		filename="$(xxd -l4 -ps /dev/urandom)-$(basename "$filename")"
 		sourcefile="$1"
 	else
 		# zip if not a file
