@@ -2245,28 +2245,6 @@ Pass ORIGINAL and ALTERNATE options."
       (pulse-momentary-highlight-region (car (tsc-node-byte-range (button-get button 'points-to)))
                                         (cdr (tsc-node-byte-range (button-get button 'points-to)))
                                         'company-template-field)))
-  (defun meain/tree-sitter-config-nesting ()
-    (if (or (eq major-mode 'json-mode) (eq major-mode 'yaml-mode) (eq major-mode 'nix-mode))
-        (let* ((cur-point (point))
-               (query (pcase major-mode
-                        ('json-mode "(object (pair (string (string_content) @key) (_)) @item)")
-                        ('yaml-mode "(block_mapping_pair (flow_node) @key (_)) @item")
-                        ('nix-mode "(bind (attrpath (attr_identifier) @key)) @item")))
-               (root-node (tsc-root-node tree-sitter-tree))
-               (query (tsc-make-query tree-sitter-language query))
-               (matches (tsc-query-matches query root-node #'tsc--buffer-substring-no-properties)))
-          (string-join (remove-if (lambda (x) (eq x nil))
-                                  (seq-map (lambda (x)
-                                             (let (
-                                                   (item (seq-elt (cdr x) 0))
-                                                   (key (seq-elt (cdr x) 1)))
-                                               (if (and
-                                                    (> cur-point (byte-to-position (car (tsc-node-byte-range (cdr item)))))
-                                                    (< cur-point (byte-to-position (cdr (tsc-node-byte-range (cdr item))))))
-                                                   (format "%s" (tsc-node-text (cdr key)))
-                                                 nil)))
-                                           matches))
-                       "."))))
   (defun meain/get-config-nesting-paths ()
     "Get out all the nested paths in a config file."
     (let* ((query (pcase major-mode
@@ -2301,15 +2279,6 @@ Pass ORIGINAL and ALTERNATE options."
                     (setq prev-node-ends (cons current-end prev-node-ends))
                     (list (reverse current-key-depth) (seq-elt (cadr x) 0)))))
               item-ranges)))
-  (defun meain/goto-config-nesting-path ()
-    "Interactively go to a nested path in a config file."
-    (interactive)
-    (let* ((paths (mapcar (lambda (x)
-                            (cons (string-join (car x) ".") (cadr x)))
-                          (meain/get-config-nesting-paths))))
-      (goto-char (cdr (assoc
-                       (completing-read "Choose path: " paths)
-                       paths)))))
   (defun meain/imenu-config-nesting-path ()
     "Return config-nesting paths for use in imenu"
     (mapcar (lambda (x)
@@ -3256,6 +3225,8 @@ Pass `CREATE' to create the alternate file if it does not exits."
     (load-theme current-theme t)))
 
 ;; Better modeline
+(use-package which-func
+  :commands (which-function))
 (use-package mode-line-idle
   :straight t
   :commands (mode-line-idle))
@@ -3288,13 +3259,6 @@ Pass `CREATE' to create the alternate file if it does not exits."
                                                                        (format ":%s" thing-name)
                                                                      (if func-name
                                                                          (format ":%s" (which-function))))))
-                                                          face
-                                                          hima-simple-gray)
-                                            ""))
-                    '(:eval (mode-line-idle 0.3
-                                            '(:propertize (:eval (let ((thing-name (meain/tree-sitter-config-nesting)))
-                                                                   (if (and thing-name (> (length thing-name) 0))
-                                                                       (format ":%s" thing-name))))
                                                           face
                                                           hima-simple-gray)
                                             ""))
