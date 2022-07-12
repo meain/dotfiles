@@ -7,6 +7,9 @@ hm_nixpkgs_rev="$(nix flake metadata --json $HOME/.config/nixpkgs | jq -r '.lock
 if [ "$1" == "update" ]; then
 	sed -ibk "s|archive/[^\.]*.tar.gz|archive/$hm_nixpkgs_rev.tar.gz|" shell.nix
 	exit 0
+elif [ "$1" == "clean" ]; then
+	rm -r shell.nix .envrc .direnv
+	exit 0
 fi
 
 if [ ! -e shell.nix ] && [ ! -e default.nix ]; then
