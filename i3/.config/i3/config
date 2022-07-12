@@ -177,7 +177,7 @@ bar {
    status_command i3status
    # symbol is a zero width space
    separator_symbol "​"
-   position bottom
+   position top
    font pango:Monoid 7
    tray_padding 3
 
