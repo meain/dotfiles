@@ -12,6 +12,6 @@ set -e
 # i3lock -fec 333333
 # find $HOME/Pictures/Lockscreen -name '*.png' | shuf -n1 | xargs i3lock -ftei
 color=$"$(xxd -l3 -ps /dev/urandom | tr 'a-z' 'A-Z')"
-i3lock -ftec "$color"
+i3lock -ftec "$color" $*
 notify-send -t 5000 "Unlocked color was #$color"
 echo "#$color" | pbcopy
