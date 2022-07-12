@@ -3,9 +3,7 @@
   '(
     ("differnt" "different" nil :count 0)
     ("dockerfile" "Dockerfile" nil :count 0)
-    ("emacs" "Emacs" nil :count 6)
     ("funtion" "function" nil :count 0)
-    ("github" "GitHub" nil :count 1)
     ("happengin" "happening" nil :count 0)
     ("inclues" "includes" nil :count 0)
     ("istall" "install" nil :count 0)
