@@ -2,7 +2,9 @@
 
 set -e
 
-cp $HOME/.dotfiles/nix/.config/nixpkgs/home.nix $HOME/.dotfiles/nix/.config/nixpkgs/flake.* $HOME/.config/nixpkgs/
+# symlinking this does not work
+rm -fr $HOME/.config/nixpkgs/
+cp -r $HOME/.dotfiles/nix/.config/nixpkgs $HOME/.config/
 
 if [ "$1" = update ]; then
 	cd $HOME/.dotfiles/nix/.config/nixpkgs
