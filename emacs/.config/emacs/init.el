@@ -1722,6 +1722,7 @@ Pass ORIGINAL and ALTERNATE options."
   :config
   (use-package edit-indirect :straight t)
   (setq markdown-enable-html -1)
+  (evil-define-key 'normal gfm-mode-map (kbd "<RET>") 'project-find-file)
   (evil-define-key 'normal markdown-mode-map (kbd "<RET>") 'project-find-file)
   (setq markdown-command "pandoc -t html5")
   (setq markdown-fontify-code-blocks-natively t))
