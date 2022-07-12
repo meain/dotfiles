@@ -1,0 +1,5 @@
+#!/bin/sh
+
+set -e
+
+killall -SIGUSR1 i3status
