@@ -1197,7 +1197,7 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package consult-eglot
   :straight t
   :commands consult-eglot-symbols
-  :after eglot
+  :after (imenu eglot)
   :config
   (advice-add 'consult-imenu :around #'meain/recenter-top-advice)
   (setq consult-ripgrep-args "rg --line-buffered --color=never --max-columns=1000 --path-separator /\
@@ -1208,7 +1208,14 @@ Pass ORIGINAL and ALTERNATE options."
                                         (consult-eglot-symbols))))
 
 ;; Tagbar alternative
-(use-package imenu :straight t :defer t :commands imenu)
+(use-package imenu
+  :straight t
+  :defer t
+  :after (consult)
+  :commands imenu
+  :config
+  (setq imenu-auto-rescan t)
+  (global-set-key (kbd "M-i") 'consult-imenu))
 (use-package flimenu
   :straight t
   :defer t
