@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# Open or create new tmux session
+
+set -e
+
+FOLDER=$(pwd | xargs basename | sed 's:^\.::')
+,tmuxsession "${1:-$FOLDER}"
