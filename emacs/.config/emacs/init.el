@@ -3282,9 +3282,12 @@ Pass `CREATE' to create the alternate file if it does not exits."
                                                           hima-simple-gray)
                                             ""))
                     '(:eval (mode-line-idle 0.3
-                                            '(:propertize (:eval (let ((thing-name (meain/tree-sitter-thing-name 'function-like)))
+                                            '(:propertize (:eval (let ((thing-name (meain/tree-sitter-thing-name 'function-like))
+                                                                       (func-name (which-function)))
                                                                    (if thing-name
-                                                                       (format ":%s" thing-name))))
+                                                                       (format ":%s" thing-name)
+                                                                     (if func-name
+                                                                         (format ":%s" (which-function))))))
                                                           face
                                                           hima-simple-gray)
                                             ""))
