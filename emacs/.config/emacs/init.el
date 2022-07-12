@@ -1738,6 +1738,7 @@ Pass ORIGINAL and ALTERNATE options."
                       :background "gray100"
                       :foreground "#000000"))
 (use-package yaml-mode :straight t :defer t)
+(use-package ini-mode :straight t :defer t)
 (use-package dockerfile-mode :straight t :defer t :mode "/Dockerfile")
 (use-package docker-compose-mode :straight t :defer t)
 (use-package protobuf-mode :straight t :defer t)
