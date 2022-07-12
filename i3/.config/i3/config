@@ -11,17 +11,6 @@ exec --no-startup-id clipmenud
 exec_always --no-startup-id xset r rate 350 35
 exec_always --no-startup-id xinput set-prop "ETPS/2 Elantech Touchpad" "libinput Tapping Enabled" 1
 
-# Use pactl to adjust volume in PulseAudio.
-set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-bindsym Shift+XF86AudioRaiseVolume exec --no-startup-id pactl set-source-volume @DEFAULT_SOURCE@ +10% && $refresh_i3status
-bindsym Shift+XF86AudioLowerVolume exec --no-startup-id pactl set-source-volume @DEFAULT_SOURCE@ -10% && $refresh_i3status
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
-bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl specific '3-'
-bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl specific '+3'
-
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier Mod1
 
