@@ -32,10 +32,6 @@ bindsym $mod+i [instance="floatingterm"] scratchpad show, resize set 1300 700, m
 for_window [title="floatingemacs"] resize set 1300 700, move position center, move scratchpad, floating enable
 bindsym $mod+Shift+i [title="floatingemacs"] scratchpad show, resize set 1300 700, move position center
 
-# floating calculator
-for_window [title="floatingcalc"] resize set 1300 700, move position center, move scratchpad, floating enable
-bindsym $mod+y [title="floatingcalc"] scratchpad show, resize set 1300 700, move position center
-
 # kill focused window
 bindsym $mod+q kill
 # The middle button over a titlebar kills the window
