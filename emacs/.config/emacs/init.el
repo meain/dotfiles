@@ -1007,9 +1007,15 @@ Pass ORIGINAL and ALTERNATE options."
 ;; Consult without consultation fees
 (use-package consult
   :straight t
-  :after selectrum
+  :after (selectrum xref)
   :defer 1
   :config
+  (setq xref-show-xrefs-function (lambda (&rest args)
+                                   (let ((selectrum-display-style '(vertical)))
+                                     (apply #'consult-xref args))))
+  (setq xref-show-definitions-function (lambda (&rest args)
+                                         (let ((selectrum-display-style '(vertical)))
+                                           (apply #'consult-xref args))))
   (evil-set-command-property 'consult-imenu :jump t))
 
 ;; Embark stuff
