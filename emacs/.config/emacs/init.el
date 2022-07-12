@@ -1712,7 +1712,6 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package lua-mode :straight t :defer t)
 (use-package web-mode :straight t :defer t)
 (use-package jinja2-mode :straight t :defer t)
-(use-package json-mode :straight t :defer t)
 (use-package config-general-mode :straight t :defer t :mode "/\\.env")
 (use-package vimrc-mode :straight t :defer t)
 (use-package markdown-mode
@@ -1726,7 +1725,13 @@ Pass ORIGINAL and ALTERNATE options."
   (evil-define-key 'normal markdown-mode-map (kbd "<RET>") 'project-find-file)
   (setq markdown-command "pandoc -t html5")
   (setq markdown-fontify-code-blocks-natively t))
-(use-package nix-mode :straight t :defer t :mode "\\.nix\\'")
+(use-package nix-mode
+  :straight t
+  :defer t
+  :mode "\\.nix\\'"
+  :config
+  (add-hook 'nix-mode-hook (lambda ()
+                             (setq imenu-create-index-function #'meain/imenu-config-nesting-path))))
 ;; builtin package for scheme (for tree-sitter grammar)
 (use-package scheme-mode :defer t :mode "\\.scm\\'")
 (use-package csv-mode
@@ -1737,7 +1742,19 @@ Pass ORIGINAL and ALTERNATE options."
   (set-face-attribute 'csv-separator-face nil
                       :background "gray100"
                       :foreground "#000000"))
-(use-package yaml-mode :straight t :defer t)
+(use-package json-mode
+  :straight t
+  :defer t
+  :config
+  (add-hook 'json-mode-hook (lambda ()
+                              (setq imenu-create-index-function #'meain/imenu-config-nesting-path))))
+(use-package yaml-mode
+  :straight t
+  :defer t
+  :config
+  (remove-hook 'yaml-mode-hook 'yaml-set-imenu-generic-expression) ;; don't use default one
+  (add-hook 'yaml-mode-hook (lambda ()
+                              (setq imenu-create-index-function #'meain/imenu-config-nesting-path))))
 (use-package ini-mode :straight t :defer t)
 (use-package dockerfile-mode :straight t :defer t :mode "/Dockerfile")
 (use-package docker-compose-mode :straight t :defer t)
@@ -2232,8 +2249,8 @@ Pass ORIGINAL and ALTERNATE options."
     (if (or (eq major-mode 'json-mode) (eq major-mode 'yaml-mode) (eq major-mode 'nix-mode))
         (let* ((cur-point (point))
                (query (pcase major-mode
-                        ('json-mode "(object (pair (string (string_content) @key) (_))@item)")
-                        ('yaml-mode "(block_mapping_pair (flow_node) @key) @item")
+                        ('json-mode "(object (pair (string (string_content) @key) (_)) @item)")
+                        ('yaml-mode "(block_mapping_pair (flow_node) @key (_)) @item")
                         ('nix-mode "(bind (attrpath (attr_identifier) @key)) @item")))
                (root-node (tsc-root-node tree-sitter-tree))
                (query (tsc-make-query tree-sitter-language query))
@@ -2250,6 +2267,54 @@ Pass ORIGINAL and ALTERNATE options."
                                                  nil)))
                                            matches))
                        "."))))
+  (defun meain/get-config-nesting-paths ()
+    "Get out all the nested paths in a config file."
+    (let* ((query (pcase major-mode
+                    ('json-mode "(object (pair (string (string_content) @key) (_)) @item)")
+                    ('yaml-mode "(block_mapping_pair (flow_node) @key (_)) @item")
+                    ('nix-mode "(bind (attrpath (attr_identifier) @key)) @item")))
+           (root-node (tsc-root-node tree-sitter-tree))
+           (query (tsc-make-query tree-sitter-language query))
+           (matches (tsc-query-matches query root-node #'tsc--buffer-substring-no-properties))
+           (prev-node-ends '(0)) ;; we can get away with just end as the list is sorted
+           (current-key-depth '())
+           (item-ranges (seq-map (lambda (x)
+                                   (let ((item (seq-elt (cdr x) 0))
+                                         (key (seq-elt (cdr x) 1)))
+                                     (list (tsc-node-text (cdr key))
+                                           (tsc-node-range (cdr key))
+                                           (tsc-node-range (cdr item)))))
+                                 matches)))
+      (mapcar (lambda (x)
+                (let* ((current-end (seq-elt (cadr (cdr x)) 1))
+                       (parent-end (car prev-node-ends))
+                       (current-key (car x)))
+                  (progn
+                    (if (> current-end parent-end)
+                        (mapcar (lambda (x)
+                                  (if (> current-end x)
+                                      (progn
+                                        (setq prev-node-ends (cdr prev-node-ends))
+                                        (setq current-key-depth (cdr current-key-depth)))))
+                                prev-node-ends))
+                    (setq current-key-depth (cons current-key current-key-depth))
+                    (setq prev-node-ends (cons current-end prev-node-ends))
+                    (list (reverse current-key-depth) (seq-elt (cadr x) 0)))))
+              item-ranges)))
+  (defun meain/goto-config-nesting-path ()
+    "Interactively go to a nested path in a config file."
+    (interactive)
+    (let* ((paths (mapcar (lambda (x)
+                            (cons (string-join (car x) ".") (cadr x)))
+                          (meain/get-config-nesting-paths))))
+      (goto-char (cdr (assoc
+                       (completing-read "Choose path: " paths)
+                       paths)))))
+  (defun meain/imenu-config-nesting-path ()
+    "Return config-nesting paths for use in imenu"
+    (mapcar (lambda (x)
+              (cons (string-join (car x) ".") (cadr x)))
+            (meain/get-config-nesting-paths)))
   (setq meain/tree-sitter-class-like '((rust-mode . (impl_item))
                                        (python-mode . (class_definition))))
   (setq meain/tree-sitter-function-like '((rust-mode . (function_item))
