@@ -23,6 +23,8 @@ for_window [class="^mpv$"] floating enable
 # bindsym $mod+Shift+i move scratchpad
 # bindsym $mod+i scratchpad show, move position center
 # bindsym $mod+Mod1+i [floating] resize set 1300 700, move position center
+bindsym $mod+Mod1+i [class="floater"] scratchpad show, resize set 1300 700, move position center
+for_window [class="floater"] resize set 1300 700, move position center, move scratchpad, floating enable, scratchpad show
 
 # floating terminal (started using systemd)
 for_window [instance="floatingterm"] resize set 1300 700, move position center, move scratchpad, floating enable
