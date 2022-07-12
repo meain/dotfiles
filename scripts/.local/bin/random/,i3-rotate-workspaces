@@ -1,0 +1,12 @@
+#!/bin/sh
+
+set -e
+
+focusedws="$(i3-msg -t get_workspaces | jq -r '.[] | select(.focused==true) | .num')"
+i3-msg -t get_workspaces | jq -r '.[] | select(.visible==true) | .num' |
+	while read -r ws; do
+		[ "$focusedws" != "$ws" ] && i3-msg workspace number $ws
+		focusedws="" # reset after first
+		i3-msg move workspace to output "${1:-right}"
+	done
+i3-msg focus output 'DisplayPort-0' # switch to main monitor

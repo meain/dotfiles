@@ -68,8 +68,8 @@ bindsym $mod+Shift+l move right
 bindsym $mod+u workspace prev_on_output
 bindsym $mod+o workspace next_on_output
 bindsym $mod+s workspace back_and_forth
-bindsym $mod+Shift+u workspace prev
-bindsym $mod+Shift+o workspace next
+# bindsym $mod+Shift+u workspace prev
+# bindsym $mod+Shift+o workspace next
 
 # moving workspace
 bindsym $mod+Mod1+1 [workspace=1] move workspace to output current
