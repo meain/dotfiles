@@ -7,45 +7,51 @@ super + {e,t}
 	  emacsclient -cn -a '' {_,-e '(vterm "terminal")'}
 
 # audio
-super + alt + control + m; {m,p,shift+p,h,l}
-      { \,song | xargs -0 notify \
-      , \,music-playpause \
-      , \,music-pause \
-      , \,music-previous \
-      , \,music-next
-      }
+super + alt + control + m; m
+      ,song | xargs -0 notify
+super + alt + control + m; {p,shift+p,h,l}
+      ,music-{playpause,pause,previous,next}
 XF86Audio{Play,Pause,Prev,Next}
-      {\,music-playpause, \,music-pause, \,music-previous, \,music-next}
+      ,music-{playpause,pause,previous,next}
+{_,shift} + XF86Audio{Raise,Lower}Volume
+      pactl {set-sink-volume @DEFAULT_SINK@,set-source-volume @DEFAULT_SOURCE@} {+10%,-10%} \
+      && ,refresh-bar
+XF86Audio{_,Mic}Mute
+      pactl set-sink-mute {@DEFAULT_SINK@, @DEFAULT_SOURCE@} toggle && ,refresh-bar
+
+# brightness
+XF86MonBrightness{Down,Up}
+      brightnessctl specific {'3-','+3'}
 
 # lock screen
 super + {shift,alt+control} + z
-      {\,lock-screen, \,lock-screen && systemctl suspend}
+      ,wo locked \,afk && ,lock-screen{ -n && \,wo back, && systemctl suspend}
 
 # dmenu
 super + {d,shift+d}
       {dmenu_run -i -fn 'Whois:size=10' -nb '#000000' -nf '#aaaaaa' -sb '#263238' -sf '#ffffff', i3-dmenu-desktop}
 
 # monitor controls
+super + shift + {u, o}
+      ,i3-rotate-workspaces {left, right}
 super + alt + control + grave
       ,i3-flip-workspaces
-super + alt + control + {0,1,2,3,4}
-      { ~/.screenlayout/builtin.sh \
-      , ~/.screenlayout/big.sh \
-      , ~/.screenlayout/builtinandbig.sh \
-      , ~/.screenlayout/three.sh \
-      , ~/.screenlayout/two.sh \
-      } || notify 'Unable to update monitor config'
+super + alt + control + shift + {0,1,2,3,4}
+      ~/.screenlayout/{builtin,big,builtinandbig,three,two}.sh || notify 'Unable to update monitor config'
 
 # screenshot
 super + alt + control + {_, shift} + o
-     {\,screenshot full, \,screenshot}
+     ,screenshot {full, _}
 {_,shift} + Print
-     {\,screenshot full, \,screenshot}
+     ,screenshot {full, _}
 
 # launch programs
-super + alt + control + l ; {l, m}
+super + alt + control + l ; {l, m, f, r, shift + r}
       { thunar \
-      , google-chrome --new-window 'https://meet.google.com'
+      , i3-msg workspace number 000 && google-chrome --new-window 'https://meet.google.com' \
+      , firefox \
+      , sakura --class floater -r 40 -c 150 -x lf \
+      , \,record-screen \
       }
 
 # clipboard
@@ -56,9 +62,12 @@ super + alt + control + {_, shift} + p
 super + alt + control + {_, shift} + u
       {\,mail-unread-notify, notmuch tag +notified tag:imbox and tag:unread && notify "All emails marked read"}
 
-# calendar
-super + alt + control + h
-      ,output-notify "Upcoming events" ,upcoming-events
+# info
+super + alt + control + {h, y}
+      ,output-notify \
+      { "Upcoming events" \,upcoming-events \
+      , "Weather up there" \,weather-current \
+      }
 
 # toggles
 super + alt + control + d
