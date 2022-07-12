@@ -1,0 +1,5 @@
+#!/bin/sh
+
+set -e
+
+git stash store "$(git stash create)"
