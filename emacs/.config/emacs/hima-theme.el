@@ -173,6 +173,13 @@
     ;; eldoc
     `(eldoc-highlight-function-argument ((t (:foreground ,dark-blue))))
 
+    ;; denote
+    `(denote-faces-date ((t :foreground ,medium-gray)))
+    `(denote-faces-time ((t :foreground ,medium-gray)))
+    `(denote-faces-title ,default-layer)
+    `(denote-faces-extension ,commentary-layer)
+    `(denote-faces-keywords ((t :foreground ,medium-gray)))
+
     ;; diff-hl
     `(diff-hl-change ((t (:background ,barely-orange))))
     `(diff-hl-insert ((t (:background ,light-green))))
