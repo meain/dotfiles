@@ -40,7 +40,7 @@ cat "$EVENTS_FILE-upcoming" |
 			echo $event
 		fi
 	done |
-	cut -c 1-50 |
+	cut -c 1-70 |
 	sed 's/Today //' |
 	head -n1 >"$EVENTS_FILE-next"
 
