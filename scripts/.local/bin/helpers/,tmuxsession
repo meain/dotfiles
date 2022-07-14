@@ -6,7 +6,7 @@ SESSION="$(echo "$1" | sed 's| |-|g')"
 
 if [ -z "$TMUX" ]; then
     clear # imoprtant, do not remove
-    tmux attach -t "$SESSION" || tmux new -s "$SESSION"
+    tmux new-session -t "$SESSION" -s "$SESSION-$(xxd -l1 -ps /dev/urandom)" || tmux new -s "$SESSION"
 else
     tmux switch-client -t "$SESSION" || tmux -2 new-session -d -s "$SESSION" &&
         tmux switch-client -t "$SESSION"
