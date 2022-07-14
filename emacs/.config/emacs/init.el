@@ -1940,6 +1940,8 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package gnus
   :commands gnus
   :config
+  (evil-define-key 'normal gnus-article-mode-map (kbd "M-n") 'gnus-summary-next-article) ;; space is always available
+  (evil-define-key 'normal gnus-summary-mode-map (kbd "M-n") 'gnus-summary-next-article)
   (setq gnus-select-method '(nnnil ""))
   (setq gnus-secondary-select-methods
         '((nntp "news.gmane.io"))))
