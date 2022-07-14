@@ -7,6 +7,7 @@
     ("happengin" "happening" nil :count 0)
     ("inclues" "includes" nil :count 0)
     ("istall" "install" nil :count 0)
+    ("isntall" "install" nil :count 0)
     ("latex" "LaTeX" nil :count 0)
     ("tempate" "template" nil :count 0)
     ("udpate" "update" nil :count 0)
