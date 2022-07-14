@@ -46,12 +46,15 @@ super + alt + control + {_, shift} + o
      ,screenshot {full, _}
 
 # launch programs
-super + alt + control + l ; {l, m, f, r, shift + r}
+super + shift + a
+      ,do-stuff
+super + alt + control + l ; {l, m, f, r, shift + r, v}
       { thunar \
       , i3-msg workspace number 000 && google-chrome --new-window 'https://meet.google.com' \
       , firefox \
       , sakura --class floater -r 40 -c 150 -x lf \
       , \,record-screen \
+      , emacsclient -cn -e '(meain/vime "vime" "~/.local/share/vime" t)' \
       }
 
 # clipboard
