@@ -2,11 +2,19 @@
 
 set -e
 
+EVENTS_FILE="/tmp/events"
 WO_FILE="$HOME/wo"
+
+add_cal_event(){
+    [ ! -f "$EVENTS_FILE-next" ] && echo "Events file not available" && exit 1
+    cat "$EVENTS_FILE-next" |
+        sed "s|^\([^\ ]*\)|\1:00|;s|^|$(date '+%F') |;s|$| ,cal ,meet $1|" >>"$WO_FILE"
+}
 
 case "$1" in
 back) womsg="$(cat "$WO_FILE" | tail -n2 | head -n1 | cut -d' ' -f3-)" ;;
 edit) "$EDITOR" "$WO_FILE" && exit 0 ;;
+cal) shift && add_cal_event "$*"  && exit 0;;
 *) womsg="$(cat "$WO_FILE" | cut -d' ' -f3- |
 	sort | uniq -c | sort -h | tac |
 	grep -vE 'afk|stop' | awk '{$1=""; print $0}' |

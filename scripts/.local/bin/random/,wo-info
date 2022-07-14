@@ -20,13 +20,16 @@ min = int(date_delta.seconds / 60) - hour * 60
 sec = date_delta.seconds % 60
 
 if hour > 0:
-    message = f"{name.upper()} [{hour}h{min}m{sec}s]"
+    timestr = f"{hour}h{min}m{sec}s"
 else:
-    message = f"{name.upper()} [{min}m{sec}s]"
+    timestr = f"{min}m{sec}s"
 
+message = f"{name.upper()} [{timestr}]"
 print(message)
 if WO_WRITE:
-    if name.upper() in ["AFK", "STOP"]:
+    if " ,cal" in name:
+        open(WO_INFO_FILE, "w").write(f"CAL [{timestr}]")
+    elif name.upper() in ["AFK", "STOP"]:
         # alternating so that we can flash AFK in the bar as we have
         # synced up the time of bar update and AFK update
         if os.path.exists(WO_INFO_FILE):
