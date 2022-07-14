@@ -533,8 +533,11 @@ Pass ORIGINAL and ALTERNATE options."
 ;; auto activating snippets
 (use-package aas
   :straight t
-  :defer 3
+  ;; can't defer loading of this as we need it in every single spawned
+  ;; buffer including scratch
+  :init (add-hook 'find-file-hook #'aas-activate-for-major-mode)
   :config
+  (aas-global-mode)
   (defun meain/go-default-returns (type errformat)
     "Making it a function instead of an alist so that we can handle unknown TYPE."
     (pcase type
@@ -568,7 +571,7 @@ Pass ORIGINAL and ALTERNATE options."
                                                   (return-node-text (tsc-node-text return-node)))
                                               (pcase return-node-type
                                                 ('parameter_list
-                                                 (string-join (remove-if (lambda (x) (equal nil x))
+                                                 (string-join (remove-if #'null
                                                                          (mapcar (lambda (x) (meain/go-default-returns x errformat))
                                                                                  (mapcar 'string-trim
                                                                                          ;; TODO: maybe use ts to find actual type nodes
@@ -666,8 +669,7 @@ Pass ORIGINAL and ALTERNATE options."
   (aas-set-snippets 'org-mode
     ";el" "#+BEGIN_SRC emacs-lisp\n\n#+END_SRC"
     ";py" "#+BEGIN_SRC python\n\n#+END_SRC"
-    ";co" "#+BEGIN_SRC\n\n#+END_SRC")
-  (aas-global-mode))
+    ";co" "#+BEGIN_SRC\n\n#+END_SRC"))
 
 ;; flyspell
 (use-package flyspell
