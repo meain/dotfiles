@@ -2557,6 +2557,10 @@ Pass ORIGINAL and ALTERNATE options."
   (add-hook 'find-file-hook #'denote-link-buttonize-buffer)
   (add-hook 'dired-mode-hook #'denote-dired-mode-in-directories)
   (setq denote-file-type 'markdown-yaml))
+;; Kinda like screensavers
+(use-package zone
+  :defer t
+  :config (zone-when-idle (* 5 60)))
 
 ;;; [CUSTOM FUNCTIONS] ==============================================
 
