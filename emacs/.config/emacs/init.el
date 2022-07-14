@@ -1283,7 +1283,7 @@ Pass ORIGINAL and ALTERNATE options."
 ;; Magit
 (use-package magit
   :straight t
-  :commands (magit-status magit-commit-create)
+  :commands (magit-status magit-commit-create magit-ignored-files)
   :init
   (evil-leader/set-key "gg" 'magit-status)
   (evil-leader/set-key "gc" 'magit-commit-create)
