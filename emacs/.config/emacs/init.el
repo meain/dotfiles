@@ -252,6 +252,16 @@ Pass ORIGINAL and ALTERNATE options."
 ;; Evil text objects
 (use-package evil-textobj-line :straight t :defer 1)
 (use-package evil-textobj-syntax :straight t :defer 1)
+(use-package evil-indent-plus
+  :straight t
+  :defer 1
+  :config
+  (define-key evil-inner-text-objects-map "i" 'evil-indent-plus-i-indent)
+  (define-key evil-outer-text-objects-map "i" 'evil-indent-plus-a-indent)
+  (define-key evil-inner-text-objects-map "I" 'evil-indent-plus-i-indent-up)
+  (define-key evil-outer-text-objects-map "I" 'evil-indent-plus-a-indent-up)
+  (define-key evil-inner-text-objects-map "J" 'evil-indent-plus-i-indent-up-down)
+  (define-key evil-outer-text-objects-map "J" 'evil-indent-plus-a-indent-up-down))
 
 ;; Evil number increment
 (use-package evil-numbers
@@ -2345,8 +2355,8 @@ Pass ORIGINAL and ALTERNATE options."
   (define-key evil-inner-text-objects-map "C" (cons "evil-outer-comment" (evil-textobj-tree-sitter-get-textobj "comment.outer")))
   (define-key evil-outer-text-objects-map "o" (cons "evil-outer-loop" (evil-textobj-tree-sitter-get-textobj "loop.outer")))
   (define-key evil-inner-text-objects-map "o" (cons "evil-inner-loop" (evil-textobj-tree-sitter-get-textobj "loop.inner")))
-  (define-key evil-outer-text-objects-map "i" (cons "evil-outer-conditional" (evil-textobj-tree-sitter-get-textobj "conditional.outer")))
-  (define-key evil-inner-text-objects-map "i" (cons "evil-inner-conditional" (evil-textobj-tree-sitter-get-textobj "conditional.inner")))
+  (define-key evil-outer-text-objects-map "v" (cons "evil-outer-conditional" (evil-textobj-tree-sitter-get-textobj "conditional.outer")))
+  (define-key evil-inner-text-objects-map "v" (cons "evil-inner-conditional" (evil-textobj-tree-sitter-get-textobj "conditional.inner")))
   (define-key evil-inner-text-objects-map "a" (cons "evil-inner-parameter" (evil-textobj-tree-sitter-get-textobj "parameter.inner")))
   (define-key evil-outer-text-objects-map "a" (cons "evil-outer-parameter" (evil-textobj-tree-sitter-get-textobj "parameter.outer")))
 
@@ -2355,10 +2365,10 @@ Pass ORIGINAL and ALTERNATE options."
   (define-key evil-normal-state-map (kbd "[a") (cons "goto-parameter-start" (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "parameter.inner" t))))
   (define-key evil-normal-state-map (kbd "]A") (cons "goto-parameter-end" (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "parameter.inner" nil t))))
   (define-key evil-normal-state-map (kbd "[A") (cons "goto-parameter-end" (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "parameter.inner" t t))))
-  (define-key evil-normal-state-map (kbd "]i") (cons "goto-conditional-start" (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "conditional.outer"))))
-  (define-key evil-normal-state-map (kbd "[i") (cons "goto-conditional-start" (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "conditional.outer" t))))
-  (define-key evil-normal-state-map (kbd "]I") (cons "goto-conditional-end" (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "conditional.outer" nil t))))
-  (define-key evil-normal-state-map (kbd "[I") (cons "goto-conditional-end" (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "conditional.outer" t t))))
+  (define-key evil-normal-state-map (kbd "]v") (cons "goto-conditional-start" (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "conditional.outer"))))
+  (define-key evil-normal-state-map (kbd "[v") (cons "goto-conditional-start" (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "conditional.outer" t))))
+  (define-key evil-normal-state-map (kbd "]V") (cons "goto-conditional-end" (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "conditional.outer" nil t))))
+  (define-key evil-normal-state-map (kbd "[V") (cons "goto-conditional-end" (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "conditional.outer" t t))))
   (define-key evil-normal-state-map (kbd "]c") (cons "goto-class-start" (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "class.outer"))))
   (define-key evil-normal-state-map (kbd "[c") (cons "goto-class-start" (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "class.outer" t))))
   (define-key evil-normal-state-map (kbd "]C") (cons "goto-class-end" (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "class.outer" nil t))))
