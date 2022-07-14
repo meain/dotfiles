@@ -3373,11 +3373,16 @@ Pass `CREATE' to create the alternate file if it does not exits."
                                             ""))
                     '(:eval (mode-line-idle 0.3
                                             '(:propertize (:eval (let ((thing-name (meain/tree-sitter-thing-name 'function-like))
+                                                                       (config-nesting (meain/tree-sitter-config-nesting))
                                                                        (func-name (which-function)))
                                                                    (if thing-name
                                                                        (format ":%s" thing-name)
-                                                                     (if func-name
-                                                                         (format ":%s" (which-function))))))
+                                                                     (if config-nesting
+                                                                         (format ":%s" config-nesting)
+                                                                       (if func-name
+                                                                           (format ":%s" func-name))
+                                                                       )
+                                                                     )))
                                                           face
                                                           hima-simple-gray)
                                             ""))
