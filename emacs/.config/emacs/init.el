@@ -1113,7 +1113,7 @@ Pass ORIGINAL and ALTERNATE options."
   :straight t
   :commands rg
   :init
-  (evil-leader/set-key "p f"
+  (evil-leader/set-key "F"
     (meain/with-alternate (let ((selectrum-display-style '(vertical)))
                             (consult-ripgrep))
                           (call-interactively 'rg)))
@@ -2545,7 +2545,7 @@ Pass ORIGINAL and ALTERNATE options."
 ;; Font size changes
 (global-set-key (kbd "s-=") 'text-scale-increase)
 (global-set-key (kbd "s--") 'text-scale-decrease)
-(global-set-key (kbd "s-0") (lambda () (interactive) (text-scale-set 0)))
+(global-set-key (kbd "s-_") (lambda () (interactive) (text-scale-set 0))) ; s-0 is used by wm
 
 ;; host picker
 (defun meain/ssh-host-picker ()
