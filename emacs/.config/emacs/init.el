@@ -527,7 +527,7 @@ Pass ORIGINAL and ALTERNATE options."
   (add-hook 'text-mode-hook #'abbrev-mode)
   (add-hook 'prog-mode-hook #'abbrev-mode)
   :config
-                                        ; (find-file "emacs/.config/emacs/abbrev_defs")
+  ;; (find-file "emacs/.config/emacs/abbrev_defs")
   (setq save-abbrevs 'silent))
 
 ;; auto activating snippets
