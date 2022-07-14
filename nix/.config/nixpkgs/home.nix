@@ -636,6 +636,16 @@ in
     Timer.OnCalendar = "*-*-* *:00:00";
     Install.WantedBy = [ "timers.target" ];
   };
+  systemd.user.services.work-notes-sync = {
+    Service.Type = "oneshot";
+    Service.WorkingDirectory = "/home/meain/.local/share/work-notes";
+    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic ',git-auto-sync'";
+    Install.WantedBy = [ "default.target" ];
+  };
+  systemd.user.timers.work-notes-sync = {
+    Timer.OnCalendar = "*-*-* *:00:00";
+    Install.WantedBy = [ "timers.target" ];
+  };
   systemd.user.services.ledger-sync = {
     Service.Type = "oneshot";
     Service.WorkingDirectory = "/home/meain/.local/share/ledger";
