@@ -2550,13 +2550,70 @@ Pass ORIGINAL and ALTERNATE options."
   (evil-leader/set-key "f f f" 'harpoon-go-to-9))
 
 (use-package denote
-  :straight t
-  :commands (denote denote-dired-rename-file)
+  :straight (denote :host github
+                    :repo "protesilaos/denote")
+  :defer t
+  :commands (denote
+             denote-dired-rename-file
+             denote-link-buttonize-buffer
+             denote-dired-mode-in-directories
+             meain/personal-notes meain/work-notes
+             meain/new-interview-note meain/new-meeting-note)
+  :init
+  (add-hook 'dired-mode-hook #'denote-dired-mode)
+  ;; (add-hook 'find-file-hook #'denote-link-buttonize-buffer)
+  (evil-leader/set-key "N p" 'meain/personal-notes)
+  (evil-leader/set-key "N w" 'meain/work-notes)
   :config
-  (setq denote-directory (expand-file-name "~/.local/share/til/"))
-  (add-hook 'find-file-hook #'denote-link-buttonize-buffer)
-  (add-hook 'dired-mode-hook #'denote-dired-mode-in-directories)
-  (setq denote-file-type 'markdown-yaml))
+  (setq denote-file-type 'markdown-yaml)
+  (defun meain/denote--create-or-open (dir create)
+    (let ((denote-directory (expand-file-name dir)))
+      (if create
+          (call-interactively #'denote)
+        (find-file denote-directory))))
+  (defun meain/work-notes (&optional create)
+    "Create or view work notes."
+    (interactive "P")
+    (meain/denote--create-or-open  "~/.local/share/work-notes/" create))
+  (defun meain/personal-notes (&optional create)
+    "Create or view personal notes."
+    (interactive "P")
+    (meain/denote--create-or-open  "~/.local/share/til/" create))
+  (defun meain/new-meeting-note ()
+    "Create a new note to takes notes on a meeting."
+    (interactive)
+    (let* ((denote-directory "~/.local/share/work-notes/")
+           (current-meeting (with-temp-buffer
+                              (insert-file-contents "/tmp/events-next")
+                              (buffer-substring-no-properties (point-min)
+                                                              (progn
+                                                                (goto-char (point-min))
+                                                                (end-of-line)
+                                                                (point)))))
+           (meeting-name (string-join (cdr (split-string current-meeting " ")) " "))
+           (meeting-time (car (split-string current-meeting " ")))
+           (name (read-string "Meeting name: " meeting-name))
+           (meeting-time (read-string "Meeting time: " meeting-time))
+           (context (read-string "Context tag: ")))
+      (denote (concat "Meeting notes for " name) (list "meeting" "calendar" context))
+      (insert "Name: " name
+              "\nContext: " context
+              "\nTime: " meeting-time
+              "\nDate: " (format-time-string "%a %b %d %Y") "\n\n")))
+  (defun meain/new-interview-note ()
+    "Create a new note for takes notes on an interview candidate."
+    (interactive)
+    (let ((denote-directory "~/.local/share/work-notes/")
+          (name (read-string "Name: "))
+          (github (read-string "Github: ")))
+      (denote (concat "Interview notes for " name) '("interview")) ;; more tags?
+      (insert "Name: " name
+              "\nGithub: " github
+              "\nDate: " (format-time-string "%a %b %d %Y") "\n\n")
+      (insert-file-contents "~/.config/datafiles/ptemplates/interview-tasklist")
+      (message (concat "Now run ,evaluate-assignment " github))
+      (meain/copy-to-clipboard (concat ",evaluate-assignment " github)))))
+
 ;; Kinda like screensavers
 (use-package zone
   :defer t
