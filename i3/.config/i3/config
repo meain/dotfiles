@@ -69,6 +69,8 @@ bindsym $mod+Mod1+7 [workspace=7] move workspace to output current
 bindsym $mod+Mod1+8 [workspace=8] move workspace to output current
 bindsym $mod+Mod1+9 [workspace=9] move workspace to output current
 bindsym $mod+Mod1+0 [workspace=0] move workspace to output current
+bindsym $mod+Mod1+u focus left, move workspace to output right
+bindsym $mod+Mod1+o focus right, move workspace to output left
 bindsym $mod+Mod1+l move workspace to output right
 bindsym $mod+Mod1+h move workspace to output left
 bindsym $mod+Mod1+j move workspace to output down
