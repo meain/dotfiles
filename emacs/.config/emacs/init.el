@@ -602,6 +602,8 @@ Pass ORIGINAL and ALTERNATE options."
     ";bang" (lambda () (interactive) (insert-file-contents (expand-file-name "~/.config/datafiles/templates/index.html"))))
   (aas-set-snippets 'html-mode
     ";bang" (lambda () (interactive) (insert-file-contents (expand-file-name "~/.config/datafiles/templates/index.html"))))
+  (aas-set-snippets 'js-mode
+    ";j" (lambda () (interactive) (insert "console.log(\"\")") (backward-char 2)))
   (aas-set-snippets 'nix-mode
     ";bang" (lambda () (interactive) (insert-file-contents (expand-file-name "~/.config/datafiles/templates/default.nix"))))
   (aas-set-snippets 'markdown-mode
@@ -617,6 +619,7 @@ Pass ORIGINAL and ALTERNATE options."
   (aas-set-snippets 'go-mode
     "!+" "!="
     ";;" ":="
+    ";j" (lambda () (interactive) (insert "fmt.Println(\"\")") (backward-char 2))
     ";rr"
     (lambda ()
       (interactive)
