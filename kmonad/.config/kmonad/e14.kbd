@@ -27,13 +27,14 @@
   super (tap-next-release up lmet)
   dctl (tap-hold 180 down lctl)
   nav (tap-hold-next-release 180 d (layer-toggle custom))
+  ff (tap-hold 180 f (around lsft (around lalt lctl)))
 )
 
 (deflayer qwerty
   esc  f1     f2    f3    f4   f5   f6   f7   f8   f9   f10  f11   f12  home end ins del
   grv  1      2     3     4    5    6    7    8    9    0    -     =    bspc
 @hype  q      w     e     r    t    y    u    i    o    p    [     ]    @pipe
- @ealt a      s     @nav  f    g    h    j    k    l    ;    @qctl ret
+ @ealt a      s     @nav  @ff  g    h    j    k    l    ;    @qctl ret
   lsft z      x     c     v    b    n    m    ,    .    /     rsft
   wkup @super @salt @dctl            @spl           ralt ssrq  rctl     pgup up   pgdn
                                                                    left down rght
