@@ -617,6 +617,34 @@ Pass ORIGINAL and ALTERNATE options."
   (aas-set-snippets 'go-mode
     "!+" "!="
     ";;" ":="
+    ";rr"
+    (lambda ()
+      (interactive)
+      (kill-word -1)
+      (kill-word -1)
+      (insert "for _, ")
+      (yank)
+      (insert " := range ")
+      (yank 2)
+      (insert "{\n\n")
+      ;; (indent-for-tab-command)
+      (insert "}")
+      (forward-line -1)
+      (indent-for-tab-command))
+    ";ri"
+    (lambda ()
+      (interactive)
+      (kill-word -1)
+      (kill-word -1)
+      (insert "for i, ")
+      (yank)
+      (insert " := range ")
+      (yank 2)
+      (insert "{\n\n")
+      ;; (indent-for-tab-command)
+      (insert "}")
+      (forward-line -1)
+      (indent-for-tab-command))
     ";ie"
     (lambda ()
       (interactive)
