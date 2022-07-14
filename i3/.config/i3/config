@@ -158,7 +158,7 @@ bindsym $mod+r mode "resize"
 
 # Configure some settings
 focus_follows_mouse no
-workspace_auto_back_and_forth yes
+# workspace_auto_back_and_forth yes
 default_orientation auto
 title_align left
 force_display_urgency_hint 1000 ms
