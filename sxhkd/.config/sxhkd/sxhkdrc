@@ -41,9 +41,9 @@ super + alt + control + shift + {0,1,2,3,4}
 
 # screenshot
 super + alt + control + {_, shift} + o
-     ,screenshot {full, _}
+     ,screenshot {_, full}
 {_,shift} + Print
-     ,screenshot {full, _}
+     ,screenshot {_, full}
 
 # launch programs
 super + shift + a
