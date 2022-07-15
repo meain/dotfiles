@@ -3,6 +3,40 @@
 let
   ppkgs = personal.packages.x86_64-linux;
   spkgs = stable.legacyPackages.x86_64-linux;
+  ss-simple = { cmd, wait }: {
+    Service.Type = "simple";
+    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic '${cmd}'";
+    Install.WantedBy = [ "default.target" ];
+    Service.Restart = "always";
+    Service.RestartSec = wait;
+  };
+  ss-timer = { cmd }: {
+    Service.Type = "oneshot";
+    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic '${cmd}'";
+    Install.WantedBy = [ "default.target" ];
+  };
+  ss-git-sync = { dir }: {
+    Service.Type = "oneshot";
+    Service.WorkingDirectory = dir;
+    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic ',git-auto-sync'";
+    Install.WantedBy = [ "default.target" ];
+  };
+  ss-cleanup = { dir }: {
+    Service.Type = "oneshot";
+    Service.WorkingDirectory = dir;
+    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic ',cleanup-folder'";
+    Install.WantedBy = [ "default.target" ];
+  };
+  timer-min = { min }: {
+    Timer.OnCalendar = "*:0/${min}";
+    Timer.Persistent = true;
+    Install.WantedBy = [ "timers.target" ];
+  };
+  timer-daily = {
+    Timer.OnCalendar = "*-*-* *:00:00";
+    Timer.Persistent = true;
+    Install.WantedBy = [ "timers.target" ];
+  };
 in
 {
   home.stateVersion = "21.05";
@@ -541,71 +575,6 @@ in
 
   };
 
-
-  # systemd.user.startServices = true;  # enabling this increases switch time a lot
-  systemd.user.services.email-sync = {
-    Service.Type = "oneshot";
-    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic ',mail-sync'";
-    Install.WantedBy = [ "default.target" ];
-  };
-  systemd.user.timers.email-sync = {
-    Timer.OnCalendar = "*:0/15"; # every 15min
-    Install.WantedBy = [ "timers.target" ];
-  };
-
-  systemd.user.services.sxhkd = {
-    Service.Type = "simple";
-    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic sxhkd";
-    Install.WantedBy = [ "default.target" ];
-    Service.Restart = "always";
-    Service.RestartSec = 3;
-  };
-
-  systemd.user.services.wo-info = {
-    Service.Type = "simple";
-    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic 'WO_WRITE=1 ,wo-info'";
-    Install.WantedBy = [ "default.target" ];
-    Service.Restart = "always";
-    Service.RestartSec = 5;
-  };
-
-  # update output for shellout gnome extension
-  systemd.user.services.mail-watcher = {
-    Service.Type = "simple";
-    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic 'find /home/meain/.local/share/mail/.notmuch/xapian|entr -n ,shellout-update'";
-    Install.WantedBy = [ "default.target" ];
-    Service.Restart = "on-failure";
-    Service.RestartSec = 5;
-  };
-
-  systemd.user.services.emacs = {
-    Unit.Description = "Start emacs server";
-    Service.Type = "simple";
-    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic 'emacs --fg-daemon'";
-    Install.WantedBy = [ "default.target" ];
-    Service.Restart = "always";
-    Service.RestartSec = 5;
-  };
-
-  systemd.user.services.emacsclient = {
-    Unit.Description = "Start an emacs client";
-    Service.Type = "simple";
-    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic 'emacsclient -F \\'((title . \"floatingemacs\"))\\' -c'";
-    Install.WantedBy = [ "default.target" ];
-    Service.Restart = "always";
-    Service.RestartSec = 5;
-  };
-
-  systemd.user.services.floatingterm = {
-    Unit.Description = "Start an terminal for floatingterm";
-    Service.Type = "simple";
-    # We need LANG to be explicitly set so that non-breaking space in prompt is not shown as _
-    Service.ExecStart = "${pkgs.sakura}/bin/sakura --name floatingterm -x 'env LANG=en_US.UTF-8 tmux new -As floating'"; # -As: new or attach
-    Install.WantedBy = [ "default.target" ];
-    Service.Restart = "always";
-    Service.RestartSec = 3;
-  };
-
   systemd.user.services.activitywatch = {
     Unit.Description = "Start ActivityWatch";
     Service.Type = "simple";
@@ -615,123 +584,45 @@ in
     Service.RestartSec = 5;
   };
 
-  # make this into a function??
-  systemd.user.services.note-sync = {
-    Service.Type = "oneshot";
-    Service.WorkingDirectory = "/home/meain/.local/share/notes";
-    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic ',git-auto-sync'";
-    Install.WantedBy = [ "default.target" ];
-  };
-  systemd.user.timers.note-sync = {
-    Timer.OnCalendar = "*-*-* *:00:00";
-    Install.WantedBy = [ "timers.target" ];
-  };
-  systemd.user.services.til-sync = {
-    Service.Type = "oneshot";
-    Service.WorkingDirectory = "/home/meain/.local/share/til";
-    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic ',git-auto-sync'";
-    Install.WantedBy = [ "default.target" ];
-  };
-  systemd.user.timers.til-sync = {
-    Timer.OnCalendar = "*-*-* *:00:00";
-    Install.WantedBy = [ "timers.target" ];
-  };
-  systemd.user.services.work-notes-sync = {
-    Service.Type = "oneshot";
-    Service.WorkingDirectory = "/home/meain/.local/share/work-notes";
-    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic ',git-auto-sync'";
-    Install.WantedBy = [ "default.target" ];
-  };
-  systemd.user.timers.work-notes-sync = {
-    Timer.OnCalendar = "*-*-* *:00:00";
-    Install.WantedBy = [ "timers.target" ];
-  };
-  systemd.user.services.ledger-sync = {
-    Service.Type = "oneshot";
-    Service.WorkingDirectory = "/home/meain/.local/share/ledger";
-    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic ',git-auto-sync'";
-    Install.WantedBy = [ "default.target" ];
-  };
-  systemd.user.timers.ledger-sync = {
-    Timer.OnCalendar = "*-*-* *:00:00";
-    Install.WantedBy = [ "timers.target" ];
-  };
-  systemd.user.services.journal-sync = {
-    Service.Type = "oneshot";
-    Service.WorkingDirectory = "/home/meain/.local/share/journal";
-    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic ',git-auto-sync'";
-    Install.WantedBy = [ "default.target" ];
-  };
-  systemd.user.timers.journal-sync = {
-    Timer.OnCalendar = "*-*-* *:00:00";
-    Install.WantedBy = [ "timers.target" ];
-  };
-  systemd.user.services.weather-pull = {
-    Service.Type = "oneshot";
-    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic ',weather-current'";
-    Install.WantedBy = [ "default.target" ];
-  };
-  systemd.user.timers.weather-pull = {
-    Timer.OnCalendar = "*:0/30";
-    Timer.Persistent = true;
-    Install.WantedBy = [ "timers.target" ];
-  };
+  # systemd.user.startServices = true;  # enabling this increases switch time a lot
+  systemd.user.services.mpd = ss-simple { cmd = "mpd --no-daemon"; wait = 3; };
+  systemd.user.services.clipmenud = ss-simple { cmd = "clipmenud"; wait = 3; };
+  systemd.user.services.sxhkd = ss-simple { cmd = "sxhkd"; wait = 3; };
+  systemd.user.services.wo-info = ss-simple { cmd = "WO_WRITE=1 ,wo-info"; wait = 5; };
+  systemd.user.services.emacs = ss-simple { cmd = "emacs --fg-daemon"; wait = 3; };
+  systemd.user.services.emacsclient = ss-simple { cmd = "emacsclient -F \\'((title . \"floatingemacs\"))\\' -c"; wait = 5; };
+  systemd.user.services.floatingterm = ss-simple { cmd = "sakura --name floatingterm -x 'tmux new -As floating'"; wait = 3; };
+  systemd.user.services.mail-watcher = ss-simple { cmd = "find /home/meain/.local/share/mail/.notmuch/xapian|entr -n ,shellout-update"; wait = 5; };
 
-  systemd.user.services.battery-check = {
-    Service.Type = "oneshot";
-    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic ',low-battery-notify'";
-    Install.WantedBy = [ "default.target" ];
-  };
-  systemd.user.timers.battery-check = {
-    Timer.OnCalendar = "*:0/5";
-    Timer.Persistent = true;
-    Install.WantedBy = [ "timers.target" ];
-  };
+  # code/note sync
+  systemd.user.services.note-sync = ss-git-sync { dir = "/home/meain/.local/share/notes"; };
+  systemd.user.timers.note-sync = timer-daily;
+  systemd.user.services.til-sync = ss-git-sync { dir = "/home/meain/.local/share/til"; };
+  systemd.user.timers.til-sync = timer-daily;
+  systemd.user.services.work-notes-sync = ss-git-sync { dir = "/home/meain/.local/share/work-notes"; };
+  systemd.user.timers.work-notes-sync = timer-daily;
+  systemd.user.services.ledger-sync = ss-git-sync { dir = "/home/meain/.local/share/ledger"; };
+  systemd.user.timers.ledger-sync = timer-daily;
+  systemd.user.services.journal-sync = ss-git-sync { dir = "/home/meain/.local/share/journal"; };
+  systemd.user.timers.journal-sync = timer-daily;
 
-  systemd.user.services.update-sct = {
-    Service.Type = "oneshot";
-    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic ',update-sct'";
-    Install.WantedBy = [ "default.target" ];
-  };
-  systemd.user.timers.update-sct = {
-    Timer.OnCalendar = "*:0/30";
-    Timer.Persistent = true;
-    Install.WantedBy = [ "timers.target" ];
-  };
+  # syncing things
+  systemd.user.services.email-sync = ss-timer { cmd = ",mail-sync"; };
+  systemd.user.timers.email-sync = timer-min { min = "15"; };
+  systemd.user.services.weather-pull = ss-timer { cmd = ",weather-current"; };
+  systemd.user.timers.weather-pull = timer-min { min = "30"; };
+  systemd.user.services.battery-check = ss-timer { cmd = ",low-battery-notify"; };
+  systemd.user.timers.battery-check = timer-min { min = "5"; };
+  systemd.user.services.update-sct = ss-timer { cmd = ",update-sct"; };
+  systemd.user.timers.update-sct = timer-min { min = "30"; };
+  systemd.user.services.update-calendar = ss-timer { cmd = ",upcoming-events"; };
+  systemd.user.timers.update-calendar = timer-min { min = "10"; }; # actual pull is hourly
 
-  systemd.user.services.cleanup-downloads = {
-    Service.Type = "oneshot";
-    Service.WorkingDirectory = "/home/meain/Downloads";
-    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic ',cleanup-folder'";
-    Install.WantedBy = [ "default.target" ];
-  };
-  systemd.user.timers.cleanup-downloads = {
-    Timer.OnCalendar = "*-*-* *:00:00";
-    Timer.Persistent = true;
-    Install.WantedBy = [ "timers.target" ];
-  };
-  systemd.user.services.cleanup-scratch = {
-    Service.Type = "oneshot";
-    Service.WorkingDirectory = "/home/meain/.local/share/scratch";
-    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic ',cleanup-folder'";
-    Install.WantedBy = [ "default.target" ];
-  };
-  systemd.user.timers.cleanup-scratch = {
-    Timer.OnCalendar = "*-*-* *:00:00";
-    Timer.Persistent = true;
-    Install.WantedBy = [ "timers.target" ];
-  };
-
-  systemd.user.services.update-calendar = {
-    Service.Type = "oneshot";
-    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic ',upcoming-events'";
-    Install.WantedBy = [ "default.target" ];
-  };
-  systemd.user.timers.update-calendar = {
-    Timer.OnCalendar = "*:0/10"; # the actual update only runs every hour, but this is in case a run fails
-    Timer.Persistent = true;
-    Install.WantedBy = [ "timers.target" ];
-  };
+  # regular cleanup
+  systemd.user.services.cleanup-downloads = ss-cleanup { dir = "/home/meain/Downloads"; };
+  systemd.user.timers.cleanup-downloads = timer-daily;
+  systemd.user.services.cleanup-scratch = ss-cleanup { dir = "/home/meain/.local/share/scratch"; };
+  systemd.user.timers.cleanup-scratch = timer-daily;
 
   # Setup direnv
   programs.direnv.enable = true;
