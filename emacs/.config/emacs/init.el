@@ -2619,7 +2619,9 @@ Pass ORIGINAL and ALTERNATE options."
 ;; Kinda like screensavers
 (use-package zone
   :defer t
-  :config (zone-when-idle (* 5 60)))
+  :config
+  (setq zone-programs [zone-pgm-rotate-LR-lockstep])
+  (zone-when-idle (* 5 60)))
 
 ;;; [CUSTOM FUNCTIONS] ==============================================
 
