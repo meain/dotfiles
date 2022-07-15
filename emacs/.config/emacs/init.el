@@ -2623,6 +2623,13 @@ Pass ORIGINAL and ALTERNATE options."
   (setq zone-programs [zone-pgm-rotate-LR-lockstep])
   (zone-when-idle (* 5 60)))
 
+;; Mermaid mode
+(use-package mermaid
+  :defer t
+  :straight (mermaid :host github
+                     :repo "meain/mermaid-mode"
+                     :branch "non-root"))
+
 ;;; [CUSTOM FUNCTIONS] ==============================================
 
 ;; Font size changes
@@ -2712,10 +2719,12 @@ SHORTCUT is the keybinding to use.  NAME if the func suffix and FILE is the file
   (let* ((scratch-major-mode
           (completing-read
            "Choose mode: "
-           '(text-mode python-mode json-mode yaml-mode rust-mode go-mode
-                       restclient-mode markdown-mode emacs-lisp-mode
-                       javascript-mode nix-mode shell-script-mode
-                       web-mode css-mode sql-mode artist-mode)
+           (cons 'artist-mode
+                 (cons 'mermaid-mode
+                       (cl-loop for sym the symbols of obarray
+                                when (and (functionp sym)
+                                          (provided-mode-derived-p sym 'text-mode))
+                                collect sym)))
            nil nil nil nil "text-mode"))
          (scratch-file-name (concatenate 'string
                                          "~/.local/share/scratch/"

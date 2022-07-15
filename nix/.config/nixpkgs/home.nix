@@ -306,6 +306,7 @@ in
     # pkgs.nur.repos.renesat.activitywatch-bin  # https://github.com/NixOS/nix/issues/3843
     ppkgs.activitywatch-bin # activity tracking
     # pkgs.gforth # gnu forth interpreter
+    pkgs.nodePackages.mermaid-cli
 
     # gnome tweaking
     # pkgs.gnome3.dconf-editor # change dconf settings
