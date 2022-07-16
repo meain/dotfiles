@@ -61,6 +61,10 @@ super + alt + control + l ; {l, m, f, r, shift + r, v}
       , emacsclient -cn -e '(meain/vime "vime" "~/.local/share/vime" t)' \
       }
 
+# focus applications
+shift + alt + control + {l,j,k,h}
+      i3-msg workspace number {1,3,4,9}
+
 # clipboard
 super + alt + control + {_, shift} + p
       {clipmenu -i -fn 'Whois:size=10' -nb '#000000' -nf '#aaaaaa' -sb '#263238' -sf '#ffffff', notify Clipboard "$(pbpaste)"}
