@@ -3,8 +3,6 @@ font pango:Inconsolata 9
 
 # Startup entries
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
-exec --no-startup-id mpd
-exec --no-startup-id clipmenud
 # exec --no-startup-id nm-applet
 # exec --no-startup-id blueman-applet
 # exec --no-startup-id kdeconnect-indicator
@@ -142,7 +140,7 @@ bindsym $mod+Shift+0 move container to workspace number $ws10
 # i3 keybindings
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Yo, yo really wanna exit i3?' -B 'Ya burh!' 'i3-msg exit'"
 
 # resize window
 mode "resize" {
