@@ -3,47 +3,15 @@
 let
   ppkgs = personal.packages.x86_64-linux;
   spkgs = stable.legacyPackages.x86_64-linux;
-  ss-simple = { cmd, wait }: {
-    Service.Type = "simple";
-    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic '${cmd}'";
-    Install.WantedBy = [ "default.target" ];
-    Service.Restart = "always";
-    Service.RestartSec = wait;
-  };
-  ss-timer = { cmd }: {
-    Service.Type = "oneshot";
-    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic '${cmd}'";
-    Install.WantedBy = [ "default.target" ];
-  };
-  ss-git-sync = { dir }: {
-    Service.Type = "oneshot";
-    Service.WorkingDirectory = dir;
-    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic ',git-auto-sync'";
-    Install.WantedBy = [ "default.target" ];
-  };
-  ss-cleanup = { dir }: {
-    Service.Type = "oneshot";
-    Service.WorkingDirectory = dir;
-    Service.ExecStart = "${pkgs.zsh}/bin/zsh -ic ',cleanup-folder'";
-    Install.WantedBy = [ "default.target" ];
-  };
-  timer-min = { min }: {
-    Timer.OnCalendar = "*:0/${min}";
-    Timer.Persistent = true;
-    Install.WantedBy = [ "timers.target" ];
-  };
-  timer-daily = {
-    Timer.OnCalendar = "*-*-* *:00:00";
-    Timer.Persistent = true;
-    Install.WantedBy = [ "timers.target" ];
-  };
+  utils = import ./utils.nix { inherit pkgs; };
+  fonts = import ./fonts.nix { inherit pkgs; };
 in
 {
-  home.stateVersion = "21.05";
-  home.username = "meain";
-  home.homeDirectory = "/home/meain";
+  home. stateVersion = "21.05";
+  home. username = "meain";
+  home. homeDirectory = "/home/meain";
 
-  programs.home-manager.enable = true;
+  programs. home-manager. enable = true;
 
   services.emacs.package = pkgs.emacsUnstable;
   programs.emacs = {
@@ -56,24 +24,23 @@ in
 
   fonts.fontconfig.enable = true;
   home.packages = [
-    # core utils
-    pkgs.ripgrep
+    # core utilities
+    pkgs.coreutils
     pkgs.gnumake
-    # pkgs.lsd # installed from master
-    pkgs.fd
-    pkgs.jq
-    pkgs.git
-    pkgs.fzf
-    pkgs.tree
     pkgs.cmake
     pkgs.curl
     # pkgs.zsh
-    pkgs.coreutils
-    pkgs.neovim
     pkgs.gcc
+    pkgs.git
+    pkgs.fzf
+    pkgs.ripgrep
+    pkgs.jq
+    pkgs.fd
 
     # packages
     # ppkgs.notmuch-git # mail indexer
+    pkgs.tree
+    pkgs.neovim
     pkgs.notmuch
     pkgs.isync # mail synchronize with upstrem
     pkgs.htop # process monitor
@@ -115,6 +82,7 @@ in
     pkgs.picotts # for say
     ppkgs.dmenu # menu stuff (fork for emojis)
     ppkgs.spaceman-diff # diff images in terminal
+    pkgs.polybarFull # bar for wm
 
     # aspell dicts
     pkgs.aspellDicts.en
@@ -332,298 +300,58 @@ in
     # autostart
     # (pkgs.makeAutostartItem { name = "guake"; package = pkgs.guake; })
     # (pkgs.makeAutostartItem { name = "albert"; package = pkgs.albert; })
+  ] ++ fonts;
 
-    # fonts (set-frame-font  "Anka/Coder 10")
-    pkgs.iosevka
-    # pkgs.hermit
-    pkgs.agave
-    pkgs.inconsolata
-    pkgs.victor-mono
-    pkgs.cascadia-code
-    # pkgs.julia-mono
-    # pkgs.sudo-font
-    # pkgs.terminus-nerdfont
-    pkgs.fantasque-sans-mono
-    # pkgs.monoid
-    pkgs.ankacoder
-    pkgs.jetbrains-mono
-    # pkgs.go-font
-    # pkgs.unifont
-    # pkgs.tewi-font
-    # pkgs.hack-font
-    # pkgs.mononoki
-    # pkgs.roboto-mono
-    # pkgs.cozette
-    # pkgs.fira-code
-    # pkgs.dina-font
-    # pkgs.envypn-font
-  ];
-
-  dconf.settings = {
-    # "org/gnome/desktop/background" = {
-    #   picture-uri = "file:///home/meain/wallpaper.jpg";
-    # };
-
-    "org/gnome/desktop/interface" = {
-      clock-format = "12h";
-      clock-show-weekday = true;
-      font-antialiasing = "grayscale";
-      font-hinting = "slight";
-      font-name = "Agave 10";
-      # gtk-im-module = "gtk-im-context-simple";
-      gtk-theme = "Fluent-round-light-compact";
-      monospace-font-name = "Anka/Coder 10";
-      show-battery-percentage = true;
-    };
-
-    "org/gnome/desktop/wm/preferences" = {
-      titlebar-font = "Agave 10";
-      auto-raise = true;
-      focus-new-windows = "smart";
-    };
-
-    "org/gnome/shell" = {
-      disable-user-extensions = false;
-      disabled-extensions = [ ];
-      enabled-extensions = [
-        "dash-to-panel@jderose9.github.com"
-        "clipboard-indicator@tudmotu.com"
-        "blur-my-shell@aunetx"
-        "user-theme@gnome-shell-extensions.gcampax.github.com"
-        "caffeine@patapon.info"
-        "gsconnect@andyholmes.github.io"
-        "no-overview@fthx"
-        "bluetooth-quick-connect@bjarosze.gmail.com"
-        "bluetooth-battery@michalw.github.com"
-        "sound-output-device-chooser@kgshank.net"
-        "focus-my-window@varianto25.com"
-        "shellout@meain.io"
-        "custom-hot-corners-extended@G-dH.github.com"
-        "steal-my-focus@kagesenshi.org"
-      ];
-      favorite-apps = [
-        "org.gnome.Nautilus.desktop"
-        "org.gnome.Terminal.desktop"
-        "slack_slack.desktop"
-        "firefox.desktop"
-        "chromium-browser.desktop"
-        "org.gnome.Calendar.desktop"
-      ];
-    };
-
-    "org/gnome/shell/extensions/user-theme" = {
-      name = "Fluent-dark-compact";
-    };
-
-    "org/gnome/nautilus/preferences" = {
-      default-folder-viewer = "icon-view";
-    };
-    "org/gnome/nautilus/icon-view" = {
-      default-zoom-level = "small";
-    };
-
-    "org/gnome/shell/keybindings" = {
-      focus-active-notification = [ ]; # clashes with ,thing-for-today-popup
-      toggle-overview = [ "<Super>Space" ];
-    };
-
-    "org/gnome/shell/extensions/dash-to-panel" = {
-      appicon-margin = 0;
-      appicon-padding = 3;
-      available-monitors = [ 0 ];
-      dot-position = "BOTTOM";
-      hotkeys-overlay-combo = "TEMPORARILY";
-      leftbox-padding = -1;
-      panel-anchors = "{\"0\":\"MIDDLE\"}";
-      panel-lengths = "{\"0\":100}";
-      panel-positions = "{\"0\":\"BOTTOM\"}";
-      panel-sizes = "{\"0\":24}";
-      status-icon-padding = -1;
-      tray-padding = -1;
-      window-preview-title-position = "TOP";
-    };
-    "org/gnome/shell/extensions/clipboard-indicator" = {
-      history-size = 100;
-      toggle-menu = [ "<Alt>p" ]; # should be alt+shift+p later
-    };
-
-    "org/gtk/settings/file-chooser" = {
-      clock-format = "12h";
-    };
-    "org/gnome/desktop/wm/keybindings" = {
-      # close = ["<Super>w"];
-      switch-to-workspace-left = [ "<Super>u" ];
-      switch-to-workspace-right = [ "<Super>o" ]; # M-i/<Super>i has some issues
-      move-to-workspace-left = [ "<Super><Shift>u" ];
-      move-to-workspace-right = [ "<Super><Shift>o" ];
-      move-to-workspace-up = [ "<Super><Shift>u" ]; # for older version of GNOME
-      move-to-workspace-down = [ "<Super><Shift>o" ]; # for older version of GNOME
-    };
-    "org/gnome/settings-daemon/plugins/media-keys" = {
-      custom-keybindings = [
-        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
-        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
-        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/"
-        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/"
-        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/"
-        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/"
-        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/"
-        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/"
-        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/"
-        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom9/"
-        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom10/"
-      ];
-    };
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
-      binding = "<Super>semicolon";
-      command = "zsh -ic 'guake-toggle'";
-      name = "guake";
-    };
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
-      binding = "<Alt>t";
-      command = "gnome-terminal";
-      name = "spawn-terminal";
-    };
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2" = {
-      binding = "<Alt>Space";
-      command = "zsh -ic 'albert toggle'";
-      name = "albert";
-    };
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3" = {
-      binding = "<Alt>e";
-      command = "emacsclient  -a '' --no-wait -c";
-      name = "emacs";
-    };
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4" = {
-      binding = "<Alt>Backspace";
-      command = "zsh -ic ',open-or-search $(pbpaste)'";
-      name = "open-or-search";
-    };
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5" = {
-      binding = "<Super>s"; # this is stupid keybinding, just can't get super+' to work in vm
-      command = "zsh -ic ',editor-or-browser'";
-      name = "launch-or-focus-editor-browser";
-    };
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6" = {
-      binding = "<Alt><Shift>e";
-      command = "gnome-terminal -- zsh -ic ',mail-quick-read'";
-      name = "mail-quick-read";
-    };
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7" = {
-      binding = "<Alt><Shift>m";
-      command = "gnome-terminal -- zsh -ic ',emojipicker'";
-      name = "emoji-picker";
-    };
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8" = {
-      binding = "<Super>n";
-      command = "gnome-terminal -- zsh -ic ',thing-for-today-popup'"; # opening via gnome-terminal fixes focus issues
-      name = "thing-for-today";
-    };
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom9" = {
-      binding = "<Alt>d";
-      command = "dmenu_run";
-      name = "dmenu";
-    };
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom10" = {
-      binding = "<Ctrl>t";
-      command = "zsh -ic ',browser-newtab'";
-      name = "newtab";
-    };
-
-    "org/gnome/shell/extensions/custom-hot-corners-extended/monitor-0-top-left-0" = {
-      action = "toggle-overview";
-    };
-    "org/gnome/shell/extensions/custom-hot-corners-extended/monitor-0-top-right-0" = {
-      action = "toggle-overview";
-    };
-
-    "apps/guake/general" = {
-      abbreviate-tab-names = false;
-      compat-delete = "delete-sequence";
-      display-n = 0;
-      gtk-theme-name = "Default";
-      history-size = 10000;
-      max-tab-name-length = 100;
-      mouse-display = true;
-      open-tab-cwd = false;
-      prompt-on-quit = false;
-      quick-open-command-line = "gedit %(file_path) s";
-      restore-tabs-notify = false;
-      restore-tabs-startup = false;
-      save-tabs-when-changed = false;
-      scroll-keystroke = true;
-      start-at-login = false;
-      use-default-font = true;
-      use-popup = false;
-      use-scrollbar = false;
-      use-trayicon = false;
-      window-halignment = 0;
-      window-height = 60;
-      window-losefocus = false;
-      window-refocus = true;
-      window-tabbar = false;
-      window-width = 100;
-    };
-    "apps/guake/keybindings/global" = {
-      show-hide = "disabled";
-    };
-    "apps/guake/keybindings/local" = {
-      toggle-fullscreen = "<Super>Return";
-    };
-    "apps/guake/style/background" = {
-      transparency = 100;
-    };
-
-  };
+  dconf.settings = import ./dconf.nix;
 
   systemd.user.services.activitywatch = {
     Unit.Description = "Start ActivityWatch";
     Service.Type = "simple";
-    Service.ExecStart = "${ppkgs.activitywatch-bin}/bin/aw-qt";
+    Service.ExecStart = "${ppkgs.activitywatch-bin}/bin/aw-server";
     Install.WantedBy = [ "default.target" ];
     Service.Restart = "on-failure";
     Service.RestartSec = 5;
   };
 
   # systemd.user.startServices = true;  # enabling this increases switch time a lot
-  systemd.user.services.mpd = ss-simple { cmd = "mpd --no-daemon"; wait = 3; };
-  systemd.user.services.clipmenud = ss-simple { cmd = "clipmenud"; wait = 3; };
-  systemd.user.services.sxhkd = ss-simple { cmd = "sxhkd"; wait = 3; };
-  systemd.user.services.wo-info = ss-simple { cmd = "WO_WRITE=1 ,wo-info"; wait = 5; };
-  systemd.user.services.emacs = ss-simple { cmd = "emacs --fg-daemon"; wait = 3; };
-  systemd.user.services.emacsclient = ss-simple { cmd = "emacsclient -F \\'((title . \"floatingemacs\"))\\' -c"; wait = 5; };
-  systemd.user.services.floatingterm = ss-simple { cmd = "sakura --name floatingterm -x 'tmux new -As floating'"; wait = 3; };
-  systemd.user.services.mail-watcher = ss-simple { cmd = "find /home/meain/.local/share/mail/.notmuch/xapian|entr -n ,shellout-update"; wait = 5; };
+  systemd.user.services.mpd = utils.ss-simple { cmd = "mpd --no-daemon"; wait = 3; };
+  systemd.user.services.clipmenud = utils.ss-simple { cmd = "clipmenud"; wait = 3; };
+  systemd.user.services.sxhkd = utils.ss-simple { cmd = "sxhkd"; wait = 3; };
+  systemd.user.services.wo-info = utils.ss-simple { cmd = "WO_WRITE=1 ,wo-info"; wait = 5; };
+  systemd.user.services.emacs = utils.ss-simple { cmd = "emacs --fg-daemon"; wait = 3; };
+  systemd.user.services.emacsclient = utils.ss-simple { cmd = "emacsclient -F \\'((title . \"floatingemacs\"))\\' -c"; wait = 5; };
+  systemd.user.services.floatingterm = utils.ss-simple { cmd = "sakura --name floatingterm -x \"tmux new -As floating\""; wait = 3; };
+  systemd.user.services.mail-watcher = utils.ss-simple { cmd = "find /home/meain/.local/share/mail/.notmuch/xapian|entr -n ,shellout-update"; wait = 5; };
 
   # code/note sync
-  systemd.user.services.note-sync = ss-git-sync { dir = "/home/meain/.local/share/notes"; };
-  systemd.user.timers.note-sync = timer-daily;
-  systemd.user.services.til-sync = ss-git-sync { dir = "/home/meain/.local/share/til"; };
-  systemd.user.timers.til-sync = timer-daily;
-  systemd.user.services.work-notes-sync = ss-git-sync { dir = "/home/meain/.local/share/work-notes"; };
-  systemd.user.timers.work-notes-sync = timer-daily;
-  systemd.user.services.ledger-sync = ss-git-sync { dir = "/home/meain/.local/share/ledger"; };
-  systemd.user.timers.ledger-sync = timer-daily;
-  systemd.user.services.journal-sync = ss-git-sync { dir = "/home/meain/.local/share/journal"; };
-  systemd.user.timers.journal-sync = timer-daily;
+  systemd.user.services.note-sync = utils.ss-git-sync { dir = "/home/meain/.local/share/notes"; };
+  systemd.user.timers.note-sync = utils.timer-daily;
+  systemd.user.services.til-sync = utils.ss-git-sync { dir = "/home/meain/.local/share/til"; };
+  systemd.user.timers.til-sync = utils.timer-daily;
+  systemd.user.services.work-notes-sync = utils.ss-git-sync { dir = "/home/meain/.local/share/work-notes"; };
+  systemd.user.timers.work-notes-sync = utils.timer-daily;
+  systemd.user.services.ledger-sync = utils.ss-git-sync { dir = "/home/meain/.local/share/ledger"; };
+  systemd.user.timers.ledger-sync = utils.timer-daily;
+  systemd.user.services.journal-sync = utils.ss-git-sync { dir = "/home/meain/.local/share/journal"; };
+  systemd.user.timers.journal-sync = utils.timer-daily;
 
   # syncing things
-  systemd.user.services.email-sync = ss-timer { cmd = ",mail-sync"; };
-  systemd.user.timers.email-sync = timer-min { min = "15"; };
-  systemd.user.services.weather-pull = ss-timer { cmd = ",weather-current"; };
-  systemd.user.timers.weather-pull = timer-min { min = "30"; };
-  systemd.user.services.battery-check = ss-timer { cmd = ",low-battery-notify"; };
-  systemd.user.timers.battery-check = timer-min { min = "5"; };
-  systemd.user.services.update-sct = ss-timer { cmd = ",update-sct"; };
-  systemd.user.timers.update-sct = timer-min { min = "30"; };
-  systemd.user.services.update-calendar = ss-timer { cmd = ",upcoming-events"; };
-  systemd.user.timers.update-calendar = timer-min { min = "10"; }; # actual pull is hourly
+  systemd.user.services.email-sync = utils.ss-timer { cmd = ",mail-sync"; };
+  systemd.user.timers.email-sync = utils.timer-min { min = "15"; };
+  systemd.user.services.weather-pull = utils.ss-timer { cmd = ",weather-current"; };
+  systemd.user.timers.weather-pull = utils.timer-min { min = "30"; };
+  systemd.user.services.battery-check = utils.ss-timer { cmd = ",low-battery-notify"; };
+  systemd.user.timers.battery-check = utils.timer-min { min = "5"; };
+  systemd.user.services.update-sct = utils.ss-timer { cmd = ",update-sct"; };
+  systemd.user.timers.update-sct = utils.timer-min { min = "30"; };
+  systemd.user.services.update-calendar = utils.ss-timer { cmd = ",upcoming-events"; };
+  systemd.user.timers.update-calendar = utils.timer-min { min = "10"; }; # actual pull is hourly
 
   # regular cleanup
-  systemd.user.services.cleanup-downloads = ss-cleanup { dir = "/home/meain/Downloads"; };
-  systemd.user.timers.cleanup-downloads = timer-daily;
-  systemd.user.services.cleanup-scratch = ss-cleanup { dir = "/home/meain/.local/share/scratch"; };
-  systemd.user.timers.cleanup-scratch = timer-daily;
+  systemd.user.services.cleanup-downloads = utils.ss-cleanup { dir = "/home/meain/Downloads"; };
+  systemd.user.timers.cleanup-downloads = utils.timer-daily;
+  systemd.user.services.cleanup-scratch = utils.ss-cleanup { dir = "/home/meain/.local/share/scratch"; };
+  systemd.user.timers.cleanup-scratch = utils.timer-daily;
 
   # Setup direnv
   programs.direnv.enable = true;
