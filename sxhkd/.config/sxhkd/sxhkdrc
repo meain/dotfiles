@@ -39,6 +39,10 @@ super + alt + control + grave
 super + alt + control + shift + {0,1,2,3,4}
       ~/.screenlayout/{builtin,big,builtinandbig,three,two}.sh || notify 'Unable to update monitor config'
 
+# bar control
+shift + alt + control + i
+      ,toggle-bar
+
 # screenshot
 super + alt + control + {_, shift} + o
      ,screenshot {_, full}

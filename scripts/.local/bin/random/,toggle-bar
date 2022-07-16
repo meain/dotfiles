@@ -1,0 +1,15 @@
+#!/bin/sh
+
+set -e
+
+if pgrep polybar; then
+	pkill -9 polybar
+else
+	if type "xrandr"; then
+		for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
+			MONITOR=$m polybar --reload example &
+		done
+	else
+		polybar --reload example &
+	fi
+fi

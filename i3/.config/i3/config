@@ -174,22 +174,22 @@ client.urgent           #900000 #900000 #FFFFFF #900000   #900000
 client.placeholder      #000000 #000000 #FFFFFF #000000   #000000
 
 # i3bar to display a workspace bar
-bar {
-   # tray_output eDP
-   status_command i3status
-   # symbol is a zero width space
-   separator_symbol "​"
-   position top
-   font pango:Monoid 7
-   tray_padding 3
+# bar {
+#    # tray_output eDP
+#    status_command i3status
+#    # symbol is a zero width space
+#    separator_symbol "​"
+#    position top
+#    font pango:Monoid 7
+#    tray_padding 3
 
-   colors {
-      separator #ddeedd
-      background  #000000
-      statusline #ffffff
-      focused_workspace  #586E75 #586E75 #FFFFFF
-      active_workspace #2D2D2D #2D2D2D #FFFFFF
-      inactive_workspace #1F1F1F #1F1F1F #C7C7C7
-      urgent_workspace #AE4544 #AE4544 #FFFFFF
-   }
-}
+#    colors {
+#       separator #ddeedd
+#       background  #000000
+#       statusline #ffffff
+#       focused_workspace  #586E75 #586E75 #FFFFFF
+#       active_workspace #2D2D2D #2D2D2D #FFFFFF
+#       inactive_workspace #1F1F1F #1F1F1F #C7C7C7
+#       urgent_workspace #AE4544 #AE4544 #FFFFFF
+#    }
+# }
