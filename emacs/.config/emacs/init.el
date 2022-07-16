@@ -3033,18 +3033,21 @@ START and END comes from it being interactive."
                        default-directory
                      (buffer-file-name))))
     (if file-path
-        (let* ((project-path (if (not (file-remote-p default-directory))
-                                 (cond
-                                  ((not (eq (project-current) nil))
-                                   (expand-file-name (car (project-roots (project-current)))))
-                                  (t ""))))
-               (trimmed-path (string-replace project-path "" file-path))
+        (let* ((project-path (if (and
+                                  (project-current)
+                                  (not (file-remote-p default-directory)))
+                                 (expand-file-name (car (project-roots (project-current))))
+                               ""))
+               (trimmed-path (if (length> project-path 0)
+                                 (string-replace project-path "" file-path)
+                               file-path))
                (copy-path (if abs-path
                               file-path
                             trimmed-path)))
           (meain/copy-to-clipboard copy-path)
           (message "Copied '%s' to the clipboard" copy-path))
       (message "No file associated with buffer"))))
+(defalias #'meain/copy-path-to-clipboard #'meain/copy-file-name-to-clipboard)
 
 ;; Quickly add a prog1 wrapper for logging
 (defun meain/elisp-inspect-value (&optional before)
