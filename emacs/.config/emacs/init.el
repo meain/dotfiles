@@ -2624,11 +2624,7 @@ Pass ORIGINAL and ALTERNATE options."
   (zone-when-idle (* 5 60)))
 
 ;; Mermaid mode
-(use-package mermaid
-  :defer t
-  :straight (mermaid :host github
-                     :repo "meain/mermaid-mode"
-                     :branch "non-root"))
+(use-package mermaid-mode :defer t :straight t)
 
 ;;; [CUSTOM FUNCTIONS] ==============================================
 
