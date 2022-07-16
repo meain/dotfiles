@@ -60,11 +60,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1657037885,
-        "narHash": "sha256-wzalutNyGzuNHcQQsxdxiXy9jrxslRPCRkEgfFM8AGI=",
+        "lastModified": 1657954902,
+        "narHash": "sha256-Fhcx8CtZ/zt+LTH/hLqn4VgDQu42AIfwBRgjkPl5HM0=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "cef9b741273b63a686d58d360ef5d6452c2706b8",
+        "rev": "7fbdf335d8e120cc7f89653b39077beb35948a27",
         "type": "github"
       },
       "original": {
@@ -96,7 +96,7 @@
         ]
       },
       "locked": {
-        "narHash": "sha256-L9SsP375C+L37syLsNA9llBIn8lOZdTN6dJaVAXRE3o=",
+        "narHash": "sha256-2SCoNoo4nm2qfqO+AhzPA3aURg3aw6SC86f4Esf5IjM=",
         "path": "/home/meain/dev/src/nur-packages",
         "type": "path"
       },
