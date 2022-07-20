@@ -1017,48 +1017,64 @@ Pass ORIGINAL and ALTERNATE options."
         pos-tip-background-color "#ffffff"))
 
 ;; Completions (core framework)
-(use-package selectrum
-  :straight t
-  :defer 1
-  :bind
-  (:map selectrum-minibuffer-map ("<S-backspace>" . selectrum-backward-kill-sexp))
+(use-package vertico
+  :straight (vertico
+             :host github :repo "minad/vertico"
+             :files (:defaults "extensions/*.el"))
   :config
-  (setq selectrum-should-sort t)
-  (setq read-file-name-completion-ignore-case t)
-  (setq read-buffer-completion-ignore-case t)
-  (setq completion-ignore-case t)
-  (setq selectrum-display-style '(horizontal))
-  (selectrum-mode +1))
-;; Better sorting of completion candidates
-(use-package selectrum-prescient
+  (setq vertico-count 10)
+  (define-key vertico-map (kbd "M-q") 'vertico-multiform-vertical)
+  (define-key vertico-map (kbd "M-g") 'vertico-multiform-grid)
+  (define-key vertico-map (kbd "<S-backspace>") 'vertico-directory-up)
+
+  (defun crm-indicator (args)
+    (cons (format "[CRM%s] %s"
+                  (replace-regexp-in-string
+                   "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
+                   crm-separator)
+                  (car args))
+          (cdr args)))
+  (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
+
+  ;; Do not allow the cursor in the minibuffer prompt
+  (setq minibuffer-prompt-properties
+        '(read-only t cursor-intangible t face minibuffer-prompt))
+  (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
+
+  (setq enable-recursive-minibuffers t)
+
+  (vertico-multiform-mode)
+  (setq vertico-multiform-commands
+        '((consult-ripgrep buffer indexed)
+          (consult-xref buffer indexed)
+          (meain/pick-emoji reverse)
+          (t flat)))
+  (setq vertico-multiform-categories
+        '((file grid)
+          (consult-grep buffer)))
+  (vertico-mode))
+(use-package savehist
+  :init
+  (savehist-mode))
+(use-package orderless
   :straight t
-  :after selectrum
-  :defer 1
-  :config
-  (setq prescient-filter-method '(literal prefix regexp))
-  (setq prescient-sort-full-matches-first t)
-  (selectrum-prescient-mode +1)
-  (prescient-persist-mode +1))
-;; Extra info for completion candidates
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles basic partial-completion)))))
 (use-package marginalia
   :straight t
   :defer 1
-  :after selectrum
   :bind (:map minibuffer-local-map ("C-b" . marginalia-cycle))
   :config (marginalia-mode))
 
 ;; Consult without consultation fees
 (use-package consult
   :straight t
-  :after (selectrum xref)
+  :after (xref)
   :defer 1
   :config
-  (setq xref-show-xrefs-function (lambda (&rest args)
-                                   (let ((selectrum-display-style '(vertical)))
-                                     (apply #'consult-xref args))))
-  (setq xref-show-definitions-function (lambda (&rest args)
-                                         (let ((selectrum-display-style '(vertical)))
-                                           (apply #'consult-xref args))))
+  (setq xref-show-xrefs-function #'consult-xref args)
+  (setq xref-show-definitions-function #'consult-xref args)
   (evil-set-command-property 'consult-imenu :jump t))
 
 ;; Embark stuff
@@ -1117,9 +1133,7 @@ Pass ORIGINAL and ALTERNATE options."
   :commands rg
   :init
   (evil-leader/set-key "F"
-    (meain/with-alternate (let ((selectrum-display-style '(vertical)))
-                            (consult-ripgrep))
-                          (call-interactively 'rg)))
+    (meain/with-alternate (consult-ripgrep) (call-interactively 'rg)))
   :config (setq rg-command-line-flags '("--hidden" "--follow")))
 
 ;; dumb-jump
@@ -1296,7 +1310,7 @@ Pass ORIGINAL and ALTERNATE options."
   (define-key transient-map (kbd "<escape>") 'transient-quit-one)
   (setq magit-diff-refine-hunk (quote all))
   (define-key magit-mode-map (kbd "M-w") 'delete-window)
-  (setq magit-completing-read-function #'selectrum-completing-read))
+  (setq magit-completing-read-function #'completing-read))
 
 ;; Magit forge
 (use-package forge :straight t :defer t :after magit)
@@ -2762,7 +2776,7 @@ SHORTCUT is the keybinding to use.  NAME if the func suffix and FILE is the file
 Pass in `LISTITEMS to decide if you wanna create a new item or search for existing items."
     (interactive "P")
     (if (not createnew)
-        (let ((selectrum-should-sort nil))
+        (let ((vertico-sort-function nil))
           (find-file
            (concat
             directory "/"
@@ -3192,13 +3206,7 @@ Pass INSERT-TO-BUFFER to insert output to current buffer."
 (defun meain/pick-emoji ()
   "Pick emoji using completions."
   (interactive)
-  (let* ((selectrum-should-sort t)
-         (selectrum-display-style '(vertical))
-         ;; (selectrum-display-action 'selectrum-display-full-frame)
-         ;; (selectrum-display-action 'selectrum-max-window-height)
-         (selectrum-max-window-height 100)
-         (selectrum-fix-vertical-window-height t)
-         (filename (concat (getenv "HOME") "/.config/datafiles/emojis.txt"))
+  (let* ((filename (concat (getenv "HOME") "/.config/datafiles/emojis.txt"))
          (emojis (with-temp-buffer (insert-file-contents filename) (buffer-string))))
     (meain/copy-to-clipboard (car
                               (split-string
