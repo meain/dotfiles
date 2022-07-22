@@ -2768,10 +2768,15 @@ SHORTCUT is the keybinding to use.  NAME if the func suffix and FILE is the file
            "Choose mode: "
            (cons 'artist-mode
                  (cons 'mermaid-mode
-                       (cl-loop for sym the symbols of obarray
-                                when (and (functionp sym)
-                                          (provided-mode-derived-p sym 'text-mode))
-                                collect sym)))
+                       (append
+                        (cl-loop for sym the symbols of obarray
+                                 when (and (functionp sym)
+                                           (provided-mode-derived-p sym 'text-mode))
+                                 collect sym)
+                        (cl-loop for sym the symbols of obarray
+                                 when (and (functionp sym)
+                                           (provided-mode-derived-p sym 'prog-mode))
+                                 collect sym))))
            nil nil nil nil "text-mode"))
          (scratch-file-name (concatenate 'string
                                          "~/.local/share/scratch/"
