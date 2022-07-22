@@ -1109,10 +1109,11 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package embark
   :defer 1
   :straight t
-  :bind (("C-." . embark-act)
-         ("C-'" . embark-dwim)
-         ("C-h B" . embark-bindings))
-  :init (setq prefix-help-command #'embark-prefix-help-command))
+  :init (setq prefix-help-command #'embark-prefix-help-command)
+  :config
+  (global-set-key (kbd "C-'")  'embark-act)
+  (global-set-key (kbd "C-.")  'embark-dwim)
+  (global-set-key (kbd "C-h B")  'embark-bindings))
 (use-package embark-consult
   :straight t
   :defer t
