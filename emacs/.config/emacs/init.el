@@ -705,9 +705,10 @@ Pass ORIGINAL and ALTERNATE options."
 ;; flyspell
 (use-package flyspell
   :defer t
-  :commands (flyspell-prog-mode flyspell-mode)
+  :commands (flyspell-prog-mode flyspell-mode flyspell-goto-next-error)
   :init
   (add-hook 'prog-mode-hook 'flyspell-prog-mode)
+  (add-hook 'text-mode-hook 'flyspell-mode)
   :config
   ;; Make flyspell work with tree-sitter
   (setq-default flyspell-prog-text-faces
@@ -720,6 +721,7 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package flyspell-correct
   :straight t
   :after flyspell
+  :commands (flyspell-correct-wrapper flyspell-goto-next-error)
   :bind (:map flyspell-mode-map ("C-;" . flyspell-correct-wrapper)))
 
 ;; flymake
