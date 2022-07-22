@@ -1101,8 +1101,8 @@ Pass ORIGINAL and ALTERNATE options."
   :after (xref)
   :defer 1
   :config
-  (setq xref-show-xrefs-function #'consult-xref args)
-  (setq xref-show-definitions-function #'consult-xref args)
+  (setq xref-show-xrefs-function #'consult-xref)
+  (setq xref-show-definitions-function #'consult-xref)
   (evil-set-command-property 'consult-imenu :jump t))
 
 ;; Embark stuff
