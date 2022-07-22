@@ -1882,15 +1882,8 @@ Pass ORIGINAL and ALTERNATE options."
   :straight (kbd-mode :host github
                       :repo "kmonad/kbd-mode"))
 
-;; TODO: convert to major mode
-;; still gets early loaded as it is in load path
+;; mtodo-mode
 (use-package emacs
-  :mode "\\.mtodo\\'"
-  :init
-  (add-hook 'find-file-hook (lambda ()
-                              (if (string-prefix-p "thing-for-today"
-                                                   (file-name-nondirectory (buffer-file-name)))
-                                  (mtodo-mode))))
   :config
   (load (expand-file-name "~/.config/emacs/mtodo-mode.el"))
   (add-hook 'mtodo-mode-hook (lambda ()
