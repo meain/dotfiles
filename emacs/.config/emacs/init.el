@@ -1867,6 +1867,14 @@ Pass ORIGINAL and ALTERNATE options."
   (evil-define-key 'normal org-mode-map (kbd "gL") 'org-demote-subtree)
   (evil-define-key 'normal org-mode-map (kbd "gt") 'org-todo)
   (evil-define-key 'normal org-mode-map (kbd "gr") 'org-ctrl-c-ctrl-c))
+(use-package org-modern
+  :straight t
+  :after org
+  :commands (org-modern-mode org-modern-agenda)
+  :init
+  (add-hook 'org-mode-hook #'org-modern-mode)
+  (add-hook 'org-agenda-finalize-hook #'org-modern-agenda))
+
 ;; for kmonad files
 (use-package kbd-mode
   :defer t
