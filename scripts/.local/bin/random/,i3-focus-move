@@ -1,0 +1,20 @@
+#!/bin/sh
+
+set -e
+
+ws="$1"
+default_screen="$2"
+center_screen="$3"
+cur_screen="$(i3-msg -t get_workspaces | jq -r '.[] | select(.focused==true) | .output')"
+cur_ws="$(i3-msg -t get_workspaces | jq -r '.[] | select(.focused==true) | .name')"
+
+if [ "$cur_ws" != "$ws" ]; then
+	i3-msg workspace number "$ws"
+else
+	if [ "$cur_screen" == "$center_screen" ]; then
+		i3-msg move workspace to output "$default_screen"
+		i3-msg focus output "$center_screen"
+	else
+		i3-msg move workspace to output "$center_screen"
+	fi
+fi
