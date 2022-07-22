@@ -1053,16 +1053,42 @@ Pass ORIGINAL and ALTERNATE options."
           (t flat)))
   (setq vertico-multiform-categories
         '((file grid)
-          (consult-grep buffer)))
+          (consult-grep buffer)
+          (t flat)))
   (vertico-mode))
 (use-package savehist
   :init
   (savehist-mode))
 (use-package orderless
   :straight t
-  :custom
-  (completion-styles '(orderless basic))
-  (completion-category-overrides '((file (styles basic partial-completion)))))
+  :config
+  (setq completion-styles '(orderless basic))
+
+  (defun flex-if-twiddle (pattern _index _total)
+    (when (string-suffix-p "~" pattern)
+      `(orderless-flex . ,(substring pattern 0 -1))))
+  (defun first-initialism (pattern index _total)
+    (when (string-suffix-p "," pattern)
+      `(orderless-initialism . ,(substring pattern 0 -1))))
+  (defun without-if-bang (pattern _index _total)
+    (cond
+     ((equal "!" pattern)
+      '(orderless-literal . ""))
+     ((string-prefix-p "!" pattern)
+      `(orderless-without-literal . ,(substring pattern 1)))))
+
+  (setq orderless-style-dispatchers '(first-initialism
+                                      flex-if-twiddle
+                                      without-if-bang))
+  (orderless-define-completion-style orderless+initialism
+    (orderless-matching-styles '(orderless-initialism
+                                 orderless-literal
+                                 orderless-regexp)))
+  (setq completion-category-overrides
+        '((command (styles orderless+initialism))
+          (symbol (styles orderless+initialism))
+          (variable (styles orderless+initialism))
+          (file (styles basic partial-completion)))))
 (use-package marginalia
   :straight t
   :defer 1
