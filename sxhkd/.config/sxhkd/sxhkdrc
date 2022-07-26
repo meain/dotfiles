@@ -29,7 +29,9 @@ super + {shift,alt+control} + z
 
 # dmenu
 super + {d,shift+d}
-      {dmenu_run -i -fn 'Whois:size=10' -nb '#000000' -nf '#aaaaaa' -sb '#263238' -sf '#ffffff', i3-dmenu-desktop}
+      { dmenu_run -i -fn 'Whois:size=13' -nb '#000000' -nf '#aaaaaa' -sb '#263238' -sf '#ffffff'\
+      , i3-dmenu-desktop --dmenu "dmenu -i -fn 'Whois:size=13' -nb '#000000' -nf '#aaaaaa' -sb '#263238' -sf '#ffffff'"
+      }
 
 # monitor controls
 super + shift + {u, o}
