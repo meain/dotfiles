@@ -153,7 +153,7 @@
     `(tree-sitter-hl-face:property ,default-layer)
     `(tree-sitter-hl-face:method.call ,default-layer)
     `(tree-sitter-hl-face:function.call ,default-layer)
-    `(tree-sitter-hl-face:function.method ,default-layer)
+    `(tree-sitter-hl-face:function.method ,definition-layer)
     `(tree-sitter-hl-face:constructor ,definition-layer)
 
     ;; dired
