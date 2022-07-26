@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Start a new nix shell
+
+set -e
+
+nix shell /home/meain/dev/src/nur-packages#"$1"
