@@ -327,14 +327,17 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; Shrink and enlarge windows (not contextual as of now)
 ;; https://www.emacswiki.org/emacs/WindowResize
-(defmacro li (functionname &rest args)
+(defmacro meain/inlambda (functionname &rest args)
   "Create an interactive lambda of existing function `FUNCTIONNAME' with `ARGS'."
-  (let ((funsymbol (intern (concat "mli/" (symbol-name functionname)))))
-`(defun ,funsymbol () (interactive) (apply #',functionname ',args))))
-(global-set-key (kbd "M-H") (li shrink-window-horizontally 3))
-(global-set-key (kbd "M-L") (li enlarge-window-horizontally 3))
-(global-set-key (kbd "M-K") (li shrink-window 3))
-(global-set-key (kbd "M-J") (li enlarge-window 3))
+  (let ((funsymbol (concat "ilambda/" (symbol-name functionname))))
+`(cons ,funsymbol (lambda () (interactive) (apply #',functionname ',args)))))
+(defmacro meain/ilambda (functionname &rest args)
+  "Create an interactive lambda of existing function `FUNCTIONNAME' with `ARGS'."
+`(lambda () (interactive) (apply #',functionname ',args)))
+(global-set-key (kbd "M-H") (meain/inlambda shrink-window-horizontally 3))
+(global-set-key (kbd "M-L") (meain/inlambda enlarge-window-horizontally 3))
+(global-set-key (kbd "M-K") (meain/inlambda shrink-window 3))
+(global-set-key (kbd "M-J") (meain/inlambda enlarge-window 3))
 
 ;; Switch to other frame
 (evil-leader/set-key "a f" 'other-frame)
@@ -432,10 +435,8 @@ Pass ORIGINAL and ALTERNATE options."
 (global-set-key [escape] 'meain/keyboard-quit)
 
 ;; Quick replace
-(define-key evil-normal-state-map (kbd "<SPC> ;")
-  (lambda () (interactive) (evil-ex "%s/")))
-(define-key evil-visual-state-map (kbd "<SPC> ;")
-  (lambda () (interactive) (evil-ex "'<,'>s/")))
+(define-key evil-normal-state-map (kbd "<SPC> ;") (cons "replace in buffer" (meain/ilambda evil-ex "%s/")))
+(define-key evil-visual-state-map (kbd "<SPC> ;") (cons "replace in buffer"(meain/ilambda evil-ex "'<,'>s/")))
 
 ;; Highlight yanked region
 (defun meain/evil-yank-advice (orig-fn beg end &rest args)
@@ -2009,7 +2010,7 @@ Pass ORIGINAL and ALTERNATE options."
   (setq browse-url-browser-function 'browse-url-default-browser)
   (setq browse-url-generic-program "open")
   (setq browse-url-generic-args nil)
-  (evil-define-key 'normal elfeed-search-mode-map (kbd "o") (lambda () (interactive) (elfeed-search-browse-url t)))
+  (evil-define-key 'normal elfeed-search-mode-map (kbd "o") (meain/inlambda elfeed-search-browse-url t))
   (evil-define-key 'visual elfeed-search-mode-map (kbd "o") 'elfeed-search-browse-url)
   (evil-define-key 'normal elfeed-search-mode-map (kbd "d") 'meain/elfeed-search-filter)
   (evil-define-key 'normal elfeed-search-mode-map (kbd "f") 'meain/elfeed-search-filter-by-name)
@@ -2125,8 +2126,7 @@ Pass ORIGINAL and ALTERNATE options."
     (pulse-momentary-highlight-one-line (point))
     (call-interactively 'elfeed-search-show-entry))
   (evil-define-key 'normal elfeed-show-mode-map (kbd "M-n") 'meain/elfeed-show-next-prev)
-  (evil-define-key 'normal elfeed-show-mode-map (kbd "M-p")
-    (lambda () (interactive) (meain/elfeed-show-next-prev t)))
+  (evil-define-key 'normal elfeed-show-mode-map (kbd "M-p") (meain/inlambda meain/elfeed-show-next-prev t))
   (defun meain/elfeed-enclosure-download (base-dir extension)
     "Download podcast to `BASE-DIR' with proper heirary using feed and title using `EXTENSION'"
     (start-process "*elfeed-enclosure-download*"
@@ -2460,22 +2460,22 @@ Pass ORIGINAL and ALTERNATE options."
   (define-key evil-outer-text-objects-map "a" (cons "evil-outer-parameter" (evil-textobj-tree-sitter-get-textobj "parameter.outer")))
 
   (advice-add 'evil-textobj-tree-sitter-goto-textobj :around #'meain/recenter-top-advice)
-  (define-key evil-normal-state-map (kbd "]a") (cons "goto-parameter-start" (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "parameter.inner"))))
-  (define-key evil-normal-state-map (kbd "[a") (cons "goto-parameter-start" (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "parameter.inner" t))))
-  (define-key evil-normal-state-map (kbd "]A") (cons "goto-parameter-end" (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "parameter.inner" nil t))))
-  (define-key evil-normal-state-map (kbd "[A") (cons "goto-parameter-end" (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "parameter.inner" t t))))
-  (define-key evil-normal-state-map (kbd "]v") (cons "goto-conditional-start" (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "conditional.outer"))))
-  (define-key evil-normal-state-map (kbd "[v") (cons "goto-conditional-start" (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "conditional.outer" t))))
-  (define-key evil-normal-state-map (kbd "]V") (cons "goto-conditional-end" (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "conditional.outer" nil t))))
-  (define-key evil-normal-state-map (kbd "[V") (cons "goto-conditional-end" (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "conditional.outer" t t))))
-  (define-key evil-normal-state-map (kbd "]c") (cons "goto-class-start" (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "class.outer"))))
-  (define-key evil-normal-state-map (kbd "[c") (cons "goto-class-start" (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "class.outer" t))))
-  (define-key evil-normal-state-map (kbd "]C") (cons "goto-class-end" (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "class.outer" nil t))))
-  (define-key evil-normal-state-map (kbd "[C") (cons "goto-class-end" (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "class.outer" t t))))
-  (define-key evil-normal-state-map (kbd "]f") (cons "goto-function-start" (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "function.outer"))))
-  (define-key evil-normal-state-map (kbd "[f") (cons "goto-function-start" (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "function.outer" t))))
-  (define-key evil-normal-state-map (kbd "]F") (cons "goto-function-end" (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "function.outer" nil t))))
-  (define-key evil-normal-state-map (kbd "[F") (cons "goto-function-end" (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj "function.outer" t t)))))
+  (define-key evil-normal-state-map (kbd "]a") (cons "goto-parameter-start" (meain/ilambda evil-textobj-tree-sitter-goto-textobj "parameter.inner")))
+  (define-key evil-normal-state-map (kbd "[a") (cons "goto-parameter-start" (meain/ilambda evil-textobj-tree-sitter-goto-textobj "parameter.inner" t)))
+  (define-key evil-normal-state-map (kbd "]A") (cons "goto-parameter-end" (meain/ilambda evil-textobj-tree-sitter-goto-textobj "parameter.inner" nil t)))
+  (define-key evil-normal-state-map (kbd "[A") (cons "goto-parameter-end" (meain/ilambda evil-textobj-tree-sitter-goto-textobj "parameter.inner" t t)))
+  (define-key evil-normal-state-map (kbd "]v") (cons "goto-conditional-start" (meain/ilambda evil-textobj-tree-sitter-goto-textobj "conditional.outer")))
+  (define-key evil-normal-state-map (kbd "[v") (cons "goto-conditional-start" (meain/ilambda evil-textobj-tree-sitter-goto-textobj "conditional.outer" t)))
+  (define-key evil-normal-state-map (kbd "]V") (cons "goto-conditional-end" (meain/ilambda evil-textobj-tree-sitter-goto-textobj "conditional.outer" nil t)))
+  (define-key evil-normal-state-map (kbd "[V") (cons "goto-conditional-end" (meain/ilambda evil-textobj-tree-sitter-goto-textobj "conditional.outer" t t)))
+  (define-key evil-normal-state-map (kbd "]c") (cons "goto-class-start" (meain/ilambda evil-textobj-tree-sitter-goto-textobj "class.outer")))
+  (define-key evil-normal-state-map (kbd "[c") (cons "goto-class-start" (meain/ilambda evil-textobj-tree-sitter-goto-textobj "class.outer" t)))
+  (define-key evil-normal-state-map (kbd "]C") (cons "goto-class-end" (meain/ilambda evil-textobj-tree-sitter-goto-textobj "class.outer" nil t)))
+  (define-key evil-normal-state-map (kbd "[C") (cons "goto-class-end" (meain/ilambda evil-textobj-tree-sitter-goto-textobj "class.outer" t t)))
+  (define-key evil-normal-state-map (kbd "]f") (cons "goto-function-start" (meain/ilambda evil-textobj-tree-sitter-goto-textobj "function.outer")))
+  (define-key evil-normal-state-map (kbd "[f") (cons "goto-function-start" (meain/ilambda evil-textobj-tree-sitter-goto-textobj "function.outer" t)))
+  (define-key evil-normal-state-map (kbd "]F") (cons "goto-function-end" (meain/ilambda evil-textobj-tree-sitter-goto-textobj "function.outer" nil t)))
+  (define-key evil-normal-state-map (kbd "[F") (cons "goto-function-end" (meain/ilambda evil-textobj-tree-sitter-goto-textobj "function.outer" t t))))
 
 (use-package ts-fold
   :defer t
@@ -2683,7 +2683,7 @@ Pass ORIGINAL and ALTERNATE options."
 ;; Font size changes
 (global-set-key (kbd "s-=") 'text-scale-increase)
 (global-set-key (kbd "s--") 'text-scale-decrease)
-(global-set-key (kbd "s-_") (lambda () (interactive) (text-scale-set 0))) ; s-0 is used by wm
+(global-set-key (kbd "s-_") (meain/inlambda text-scale-set 0)) ; s-0 is used by wm
 
 ;; host picker
 (defun meain/ssh-host-picker ()
@@ -3046,13 +3046,13 @@ START and END comes from it being interactive."
     (if (buffer-narrowed-p) (fancy-widen))
     (let ((range (evil-textobj-tree-sitter--range 1 (list (intern thing)))))
       (fancy-narrow-to-region (car range) (cdr range))))
-  (evil-leader/set-key "n n" (cons "reset-narrow" (lambda () (interactive) (fancy-widen))))
-  (evil-leader/set-key "n f" (cons "narrow-function"(lambda () (interactive) (meain/fancy-narrow-to-thing "function.outer"))))
-  (evil-leader/set-key "n c" (cons "narrow-class" (lambda () (interactive) (meain/fancy-narrow-to-thing "class.outer"))))
-  (evil-leader/set-key "n C" (cons "narrow-comment" (lambda () (interactive) (meain/fancy-narrow-to-thing "comment.outer"))))
-  (evil-leader/set-key "n o" (cons "narrow-loop" (lambda () (interactive) (meain/fancy-narrow-to-thing "loop.outer"))))
-  (evil-leader/set-key "n i" (cons "narrow-conditional" (lambda () (interactive) (meain/fancy-narrow-to-thing "conditional.outer"))))
-  (evil-leader/set-key "n a" (cons "narrow-parameter" (lambda () (interactive) (meain/fancy-narrow-to-thing "parameter.outer")))))
+  (evil-leader/set-key "n f" (cons "narrow-function" (meain/ilambda meain/fancy-narrow-to-thing "function.outer")))
+  (evil-leader/set-key "n c" (cons "narrow-class" (meain/ilambda meain/fancy-narrow-to-thing "class.outer")))
+  (evil-leader/set-key "n C" (cons "narrow-comment" (meain/ilambda meain/fancy-narrow-to-thing "comment.outer")))
+  (evil-leader/set-key "n o" (cons "narrow-loop" (meain/ilambda meain/fancy-narrow-to-thing "loop.outer")))
+  (evil-leader/set-key "n i" (cons "narrow-conditional" (meain/ilambda meain/fancy-narrow-to-thing "conditional.outer")))
+  (evil-leader/set-key "n a" (cons "narrow-parameter" (meain/ilambda meain/fancy-narrow-to-thing "parameter.outer")))
+  (evil-leader/set-key "n n" (cons "reset-narrow" #'fancy-widen)))
 
 ;; Quick file rename
 (defun meain/rename-current-file ()
