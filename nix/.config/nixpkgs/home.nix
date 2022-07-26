@@ -313,6 +313,23 @@ in
     Service.Restart = "on-failure";
     Service.RestartSec = 5;
   };
+  systemd.user.services.activitywatch-afk = {
+    Unit.Description = "Start ActivityWatch AFK";
+    Service.Type = "simple";
+    Service.ExecStart = "${ppkgs.activitywatch-bin}/bin/aw-watcher-afk";
+    Install.WantedBy = [ "default.target" ];
+    Service.Restart = "on-failure";
+    Service.RestartSec = 5;
+  };
+  systemd.user.services.activitywatch-window = {
+    Unit.Description = "Start ActivityWatch Window";
+    Service.Type = "simple";
+    Service.ExecStart = "${ppkgs.activitywatch-bin}/bin/aw-watcher-window";
+    Install.WantedBy = [ "default.target" ];
+    Service.Restart = "on-failure";
+    Service.RestartSec = 5;
+  };
+
 
   # systemd.user.startServices = true;  # enabling this increases switch time a lot
   systemd.user.services.mpd = utils.ss-simple { cmd = "mpd --no-daemon"; wait = 3; };
