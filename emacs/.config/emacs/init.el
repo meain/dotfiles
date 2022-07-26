@@ -2740,8 +2740,8 @@ SHORTCUT is the keybinding to use.  NAME if the func suffix and FILE is the file
 (meain/quick-file-open-builder "I" "interesting" "~/.local/share/notes/note/interesting-links.md")
 (meain/quick-file-open-builder "u" "useful-someday" "~/.local/share/notes/note/useful-someday.md")
 (meain/quick-file-open-builder "r" "frequent-web-references" "~/.local/share/notes/note/web-references.md")
-(meain/quick-file-open-builder "m" "thing-for-today" "~/.local/share/vime/thing-for-today")
-(meain/quick-file-open-builder "M" "thing-for-today-personal" "~/.local/share/vime/thing-for-today-personal")
+(meain/quick-file-open-builder "m" "thing-for-today" "~/.local/share/vime/thing-for-today.mtodo")
+(meain/quick-file-open-builder "M" "thing-for-today-personal" "~/.local/share/vime/thing-for-today-personal.mtodo")
 
 ;; Fullscreen current buffer
 (defvar meain/window-configuration nil)
@@ -3343,7 +3343,7 @@ Pass THING-TO-POPUP as the thing to popup."
   (funcall thing-to-popup))
 
 :; Patterns can be regex if we want to match more precisely eg: ("/early-init.el$" "/init.el")
-(defvar meain/find-alternate-file--patterns '(("thing-for-today-personal" "thing-for-today")
+(defvar meain/find-alternate-file--patterns '(("thing-for-today-personal.mtodo" "thing-for-today.mtodo")
                                               ("early-init.el" "init.el")
                                               ("i3/config" "i3status/config")
                                               ("shell.nix" "default.nix")
