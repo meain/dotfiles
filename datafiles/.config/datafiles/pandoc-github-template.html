@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html>
   <title>Markdown preview</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link
     rel="stylesheet"
     href="https://unpkg.com/@highlightjs/cdn-assets@10.7.2/styles/github-gist.min.css"
   />
-  <script src="https://unpkg.com/@highlightjs/cdn-assets@10.7.2/highlight.min.js"></script>
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/3.0.1/github-markdown.min.css"
@@ -41,7 +40,6 @@ $body$
             let children = i.children;
             if (children.length === 1 && children[0].tagName === "CODE") {
               const cn = i.className;
-              console.log("cn:", cn);
               if (cn.length > 0) i.children[0].classList.add("hljs");
               if (cn.length > 0) i.children[0].classList.add(cn);
             }
@@ -54,6 +52,7 @@ $body$
           .then((con) => {
             content = con;
             fixCodeBlocks();
+            mermaid.init({}, ".mermaid");
           });
         setInterval(() => {
           fetch(window.location)
@@ -63,10 +62,13 @@ $body$
                 content = con;
                 document.getElementsByTagName("html")[0].innerHTML = con;
                 fixCodeBlocks();
+                mermaid.init({}, ".mermaid");
               }
             });
         }, 1000);
       };
     </script>
+    <script src="https://unpkg.com/@highlightjs/cdn-assets@10.7.2/highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
   </body>
 </html>

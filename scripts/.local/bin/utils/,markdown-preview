@@ -5,5 +5,5 @@
 set -e
 
 filename="/tmp/$(xxd -l2 -ps /dev/urandom).html"
-cat $DATAFILES_PATH/pandoc-github-template.html > "$filename" && open "$filename"
-echo "$1" | entr pandoc --no-highlight --template $DATAFILES_PATH/pandoc-github-template.html  --output "$filename" -f gfm -t html5 --metadata title="$1 - Preview" "$1"
+cat $DATAFILES_PATH/pandoc-github-template.html >"$filename" && open "$filename"
+echo "$1" | NO_OPEN=1 entr ,markdown-to-html "$1" "$filename"
