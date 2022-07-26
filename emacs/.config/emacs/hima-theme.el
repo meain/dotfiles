@@ -42,6 +42,7 @@
        (definition-layer `((t (:foreground ,dark-orange))))
        (bold-layer `((t (:foreground ,black :weight bold))))
        (underline-layer `((t (:underline t))))
+       (almost-invisible-layer `((t (:foreground ,light-gray))))
        (disabled-layer `((t (:foreground ,medium-gray))))
        (tooltip-layer `((t (:background ,lighter-gray :foreground ,black))))
        (tooltip-selected-layer `((t (:background ,light-blue :foreground ,black))))
@@ -155,6 +156,9 @@
     `(tree-sitter-hl-face:function.call ,default-layer)
     `(tree-sitter-hl-face:function.method ,definition-layer)
     `(tree-sitter-hl-face:constructor ,definition-layer)
+
+    ;; fancy-narrow
+    `(fancy-narrow-blocked-face ,almost-invisible-layer)
 
     ;; dired
     `(dired-directory ((t (:weight bold :foreground ,black))))
