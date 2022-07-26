@@ -2671,6 +2671,9 @@ Pass ORIGINAL and ALTERNATE options."
 ;; Mermaid mode
 (use-package mermaid-mode :defer t :straight t)
 
+;; Edit any textfield in Emacs
+(use-package emacs-everywhere :defer t :straight t)
+
 ;;; [CUSTOM FUNCTIONS] ==============================================
 
 ;; Font size changes

@@ -42,7 +42,7 @@ in
     pkgs.tree
     pkgs.neovim
     pkgs.notmuch
-    pkgs.isync # mail synchronize with upstrem
+    pkgs.isync # mail synchronize with upstream
     pkgs.htop # process monitor
     pkgs.mpc_cli # remote for mpd
     pkgs.mpd # music player
@@ -75,6 +75,7 @@ in
     pkgs.trash-cli # rm -> trash
     pkgs.entr # continuously run stuff
     pkgs.notify-desktop # desktop notifications
+    pkgs.xclip # clipboard (needed for emacs-everywhere)
     pkgs.xsel # clipboard
     # pkgs.wl-clipboard
     # pkgs.bandwhich # view network stats (alt: nethogs)
