@@ -327,10 +327,14 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; Shrink and enlarge windows (not contextual as of now)
 ;; https://www.emacswiki.org/emacs/WindowResize
-(global-set-key (kbd "M-H") 'shrink-window-horizontally)
-(global-set-key (kbd "M-L") 'enlarge-window-horizontally)
-(global-set-key (kbd "M-K") 'shrink-window)
-(global-set-key (kbd "M-J") 'enlarge-window)
+(defmacro li (functionname &rest args)
+  "Create an interactive lambda of existing function `FUNCTIONNAME' with `ARGS'."
+  (let ((funsymbol (intern (concat "mli/" (symbol-name functionname)))))
+`(defun ,funsymbol () (interactive) (apply #',functionname ',args))))
+(global-set-key (kbd "M-H") (li shrink-window-horizontally 3))
+(global-set-key (kbd "M-L") (li enlarge-window-horizontally 3))
+(global-set-key (kbd "M-K") (li shrink-window 3))
+(global-set-key (kbd "M-J") (li enlarge-window 3))
 
 ;; Switch to other frame
 (evil-leader/set-key "a f" 'other-frame)
