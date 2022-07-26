@@ -12,5 +12,9 @@
     ("tempate" "template" nil :count 0)
     ("udpate" "update" nil :count 0)
     ("udpated" "updated" nil :count 0)
+    ("simliar" "similar" nil :count 0)
+    ("resouces" "resources" nil :count 0)
+    ("resoruces" "resources" nil :count 0)
+    ("emasc" "emacs" nil :count 0)
    ))
 
