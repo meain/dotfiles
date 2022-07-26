@@ -1,0 +1,24 @@
+[general]
+	base = ~/.local/share/l2md/
+	maildir = ~/.local/share/l2md/maildir/common
+	period = 600
+# [repo bpf]
+# 	url = https://lore.kernel.org/bpf/0
+# 	maildir = ~/.local/share/l2md/maildir/bpf
+# 	initial_import = 10
+# [repo guix-devel]
+#     url = https://yhetil.org/guix-devel/0
+#  	maildir = ~/.local/share/l2md/maildir/guix-devel
+#  	initial_import = 10
+[repo git]
+	url = https://lore.kernel.org/git/0
+ 	maildir = ~/.local/share/l2md/maildir/git
+ 	initial_import = 10
+# [repo emacs-devel]
+#     url = https://yhetil.org/emacs-devel/0
+#  	maildir = ~/.local/share/l2md/maildir/emacs-devel
+#  	initial_import = 10
+[repo notmuch]
+    url = https://yhetil.org/notmuch/0
+ 	maildir = ~/.local/share/l2md/maildir/notmuch
+ 	initial_import = 10
