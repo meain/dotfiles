@@ -2831,6 +2831,7 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
         (find-file (concat directory "/_"
                            (substring (uuid-string) 0 4)))
         (insert ":name ")
+        (text-mode)
         (evil-insert 1))))
   :init
   (evil-leader/set-key "v" '(lambda (createnew)
