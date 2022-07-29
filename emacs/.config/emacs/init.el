@@ -330,14 +330,14 @@ Pass ORIGINAL and ALTERNATE options."
 (defmacro meain/inlambda (functionname &rest args)
   "Create an interactive lambda of existing function `FUNCTIONNAME' with `ARGS'."
   (let ((funsymbol (concat "ilambda/" (symbol-name functionname))))
-`(cons ,funsymbol (lambda () (interactive) (apply #',functionname ',args)))))
+    `(cons ,funsymbol (lambda () (interactive) (apply #',functionname ',args)))))
 (defmacro meain/ilambda (functionname &rest args)
   "Create an interactive lambda of existing function `FUNCTIONNAME' with `ARGS'."
-`(lambda () (interactive) (apply #',functionname ',args)))
-(global-set-key (kbd "M-H") (meain/inlambda shrink-window-horizontally 3))
-(global-set-key (kbd "M-L") (meain/inlambda enlarge-window-horizontally 3))
-(global-set-key (kbd "M-K") (meain/inlambda shrink-window 3))
-(global-set-key (kbd "M-J") (meain/inlambda enlarge-window 3))
+  `(lambda () (interactive) (apply #',functionname ',args)))
+(global-set-key (kbd "M-H") (meain/inlambda shrink-window-horizontally 5))
+(global-set-key (kbd "M-L") (meain/inlambda enlarge-window-horizontally 5))
+(global-set-key (kbd "M-K") (meain/inlambda shrink-window 5))
+(global-set-key (kbd "M-J") (meain/inlambda enlarge-window 5))
 
 ;; Switch to other frame
 (evil-leader/set-key "a f" 'other-frame)
