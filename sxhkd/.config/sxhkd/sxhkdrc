@@ -8,7 +8,7 @@ super + {e,t}
 
 # audio
 super + alt + control + m; m
-      ,song | xargs -0 notify
+      ,song-fullname | xargs -0 notify
 super + alt + control + m; {p,shift+p,h,l}
       ,music-{playpause,pause,previous,next}
 XF86Audio{Play,Pause,Prev,Next}
