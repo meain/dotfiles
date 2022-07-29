@@ -184,7 +184,7 @@ in
     # pkgs.cargo-bloat # find big chunks
     # pkgs.cargo-udeps # find unnecessary deps
     # pkgs.cargo-release # for releasing packages
-    # pkgs.cargo-watch # continuously run cargo check
+    pkgs.cargo-watch # continuously run cargo check
 
     # programming-lua
     # pkgs.nodePackages.lua-fmt
@@ -220,7 +220,7 @@ in
     # pkgs.redis # key value db
     pkgs.postgresql_13 # postgres 13 (postgresql is at 11)
     # pkgs.mongodb # document db
-    # pkgs.sqlite # better db
+    pkgs.sqlite # better db (needed by magit-forge)
     # pkgs.minikube # mini kubernetes
     pkgs.kind # better minikube
     # pkgs.awscli # manage aws
