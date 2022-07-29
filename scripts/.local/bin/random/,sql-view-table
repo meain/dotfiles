@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# View tables using vd after selecting via fzf
+
+set -e
+
+[ -z "$1" ] && echo "Usage: ,sql-view-table <dbname>" && exit 1
+
+mkdir -p /tmp/sql-view-table
+tmpfile="/tmp/sql-view-table/$(xxd -l3 -ps /dev/urandom).csv"
+psql -h localhost -U postgres $1 --csv -c 'select table_schema,table_name from information_schema.tables' |
+	tail -n+2 | fzf | awk -F',' '{print "select * from",$1"."$2";"}' |
+	xargs -I{} psql -h localhost -U postgres admindb --csv -c '{}' > "$tmpfile"
+vd "$tmpfile"
