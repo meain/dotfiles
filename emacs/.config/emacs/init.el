@@ -1074,9 +1074,11 @@ Pass ORIGINAL and ALTERNATE options."
   (defun flex-if-twiddle (pattern _index _total)
     (when (string-suffix-p "~" pattern)
       `(orderless-flex . ,(substring pattern 0 -1))))
-  (defun first-initialism (pattern index _total)
-    (when (string-suffix-p "," pattern)
-      `(orderless-initialism . ,(substring pattern 0 -1))))
+  (defun initialism-if-comma (pattern index _total)
+    (cond ((string-suffix-p "," pattern)
+           `(orderless-initialism . ,(substring pattern 0 -1)))
+          ((string-prefix-p "," pattern)
+            `(orderless-initialism . ,(substring pattern 1)))))
   (defun without-if-bang (pattern _index _total)
     (cond
      ((equal "!" pattern)
@@ -1084,7 +1086,7 @@ Pass ORIGINAL and ALTERNATE options."
      ((string-prefix-p "!" pattern)
       `(orderless-without-literal . ,(substring pattern 1)))))
 
-  (setq orderless-style-dispatchers '(first-initialism
+  (setq orderless-style-dispatchers '(initialism-if-comma
                                       flex-if-twiddle
                                       without-if-bang))
   (orderless-define-completion-style orderless+initialism
