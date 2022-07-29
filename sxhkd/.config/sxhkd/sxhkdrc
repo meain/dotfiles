@@ -96,6 +96,10 @@ super + alt + control + shift + l
 super + alt + control + i
       GUI_PICKER=1 zsh -ic ,se
 
+# wo
+super + alt + control + w
+      GUI_PICKER=1 ,wo | xargs -0 notify "WO"
+
 # emoji picker
 super + alt + control + q
       emacsclient -e "(meain/emacs-popup-minibuffer-frame 'meain/pick-emoji)"
