@@ -50,7 +50,7 @@
 (deflayer custom
   _    _    _    _    _    _    _    _    _    _    _    _    _    del
   _    _    _    _    _    _    +    \(   *    \)   _    _    _    _
-  _    _    _    _    _    _    left down up   rght _    "    _
-  _    _    _    caps _    _    [    ]    _    @me  _    _
+  _    _    _    _    _    _    left down up   rght ^    "    _
+  _    _    _    caps _    _    &    ~    %    @me  _    _
   _    _    _            @cbsp            _    _    _    _
 )
