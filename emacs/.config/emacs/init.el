@@ -2400,6 +2400,7 @@ Pass ORIGINAL and ALTERNATE options."
                                        (python-mode . (class_definition))))
   (setq meain/tree-sitter-function-like '((rust-mode . (function_item))
                                           (go-mode . (function_declaration method_declaration))
+                                          (sh-mode . (function_definition))
                                           (python-mode . (function_definition))))
   (defun meain/tree-sitter-thing-name (kind)
     "Get name of tree-sitter KIND thing."
