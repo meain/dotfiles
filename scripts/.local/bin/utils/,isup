@@ -3,11 +3,13 @@
 set -e
 
 start="$(date +%s)"
-while ! ping -c1 meain.io 1>/dev/null 2>/dev/null; do
+printf "Checking your connection...\r"
+while ! ping -c1 -W2 meain.io 1>/dev/null 2>/dev/null; do
     end="$(date +%s)"
     timedifference="$((end-start))"
     tdm="$(($timedifference/60))"
     tds="$(($timedifference%60))"
+    printf "\x1b[2K"
     printf "You have been down for %sm%ss\r" "$tdm" "$tds"
     sleep 1
 done
