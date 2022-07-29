@@ -1,0 +1,8 @@
+#!/bin/sh
+
+set -e
+
+curl -s localhost:9200/_cat/indices |
+	grep -v .geoip_databases |
+	fzf | cut -d' ' -f3 |
+	xargs -I{} curl -s "localhost:9200/{}/_search"
