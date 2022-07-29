@@ -2680,7 +2680,13 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package mermaid-mode :defer t :straight t)
 
 ;; Edit any textfield in Emacs
-(use-package emacs-everywhere :defer t :straight t)
+(use-package emacs-everywhere
+  :defer t
+  :straight t
+  :config
+  ;; Below thingy loads org-mode and we don't do that here (maybe use markdown?)
+  (setq emacs-everywhere-init-hooks
+        (remove 'emacs-everywhere-major-mode-function emacs-everywhere-init-hooks)))
 
 ;;; [CUSTOM FUNCTIONS] ==============================================
 
