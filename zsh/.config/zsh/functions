@@ -13,12 +13,12 @@ jj() {
 }
 
 tmp() {
-    [ "$1" = "view" ] && cd /tmp/workspaces &&
-        cd `ls -t | fzf --preview 'ls -A {}'` &&
-        return 0
+	[ "$1" = "view" ] && cd /tmp/workspaces &&
+		cd $(ls -t | fzf --preview 'ls -A {}') &&
+		return 0
 	r="/tmp/workspaces/$(xxd -l3 -ps /dev/urandom)"
 	mkdir -p "$r" && pushd "$r"
-    git init
+	git init
 }
 
 # cd, but use lf to choose dir
@@ -178,18 +178,18 @@ venv() {
 # make clear not delete scrollback
 # https://superuser.com/a/1667623/328228
 clear() (
-   if [ "$#" -ne 0 ]; then
-      command clear "$@"
-      exit
-   fi
-   h="$(tput lines 2>/dev/null)"
-   if [ "$?" -eq 0 ]; then
-      until [ "$h" -le 1 ]; do
-         printf '\n'
-         h=$((h-1))
-      done
-   fi
-   command clear -x
+	if [ "$#" -ne 0 ]; then
+		command clear "$@"
+		exit
+	fi
+	h="$(tput lines 2>/dev/null)"
+	if [ "$?" -eq 0 ]; then
+		until [ "$h" -le 1 ]; do
+			printf '\n'
+			h=$((h - 1))
+		done
+	fi
+	command clear -x
 )
 
 hashdir() {
