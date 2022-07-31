@@ -1938,6 +1938,13 @@ Pass ORIGINAL and ALTERNATE options."
   (evil-define-key 'normal notmuch-show-mode-map (kbd "u") 'meain/notmuch-show-close-all-but-unread)
   (evil-define-key 'normal notmuch-show-mode-map (kbd "M-k") 'meain/move-swap-up)
   (evil-define-key 'normal notmuch-show-mode-map (kbd "M-j") 'meain/move-swap-down)
+  (evil-define-key 'normal notmuch-show-mode-map (kbd "M-s m f") 'meain/find-emails-from-same-sender)
+  (defun meain/find-emails-from-same-sender ()
+    (interactive)
+    (let* ((props (notmuch-show-get-message-properties))
+           (from (plist-get (plist-get props :headers) :From)))
+      (message "Searching for %s" from)
+      (notmuch-search (concat "from:" from))))
   (defun meain/notmuch-show-close-all-but-unread ()
     "Close all messages until the first unread item."
     (interactive)
