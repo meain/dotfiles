@@ -23,4 +23,4 @@ git fetch $upstream pull/$pr/head:$branch
 
 printf "$branch" | pbcopy
 echo Branch name copied to clipboard
-echo Now you can run `git checkout $branch` or `git worktree worktree/$branch $branch`
+echo Now you can run "git checkout $branch" or "git worktree worktree/$branch $branch"
