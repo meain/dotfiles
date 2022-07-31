@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# Backup all mscript files to remote server using git
+
+SAVEPATH="$HOME/.local/share/mscripts"
+fd -HI .mscripts $HOME/dev |
+	while read -r path; do
+		cleanpath="$(echo $path | sed 's|^/home/meain/dev/||;s|/.mscripts/$||;s|/|__|g')"
+		echo "$cleanpath"
+        cp -r $path $SAVEPATH/$cleanpath
+	done
+
+cd $SAVEPATH
+git add .
+git commit -m 'Update mscripts'
+git push origin master
