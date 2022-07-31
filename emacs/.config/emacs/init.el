@@ -1078,7 +1078,7 @@ Pass ORIGINAL and ALTERNATE options."
     (cond ((string-suffix-p "," pattern)
            `(orderless-initialism . ,(substring pattern 0 -1)))
           ((string-prefix-p "," pattern)
-            `(orderless-initialism . ,(substring pattern 1)))))
+           `(orderless-initialism . ,(substring pattern 1)))))
   (defun without-if-bang (pattern _index _total)
     (cond
      ((equal "!" pattern)
@@ -2597,7 +2597,7 @@ Pass ORIGINAL and ALTERNATE options."
   :config
   (setq harpoon-cache-file (concat user-emacs-directory "harpoon/"))
   (setq harpoon-separate-by-branch nil)
-  (evil-leader/set-key "f t" 'harpoon-toggle-file)
+  (evil-leader/set-key "f H" 'harpoon-toggle-file)
   (evil-leader/set-key "f r" 'harpoon-toggle-quick-menu)
   (evil-leader/set-key "f c" 'harpoon-clear)
   (evil-leader/set-key "f h" 'harpoon-add-file)
