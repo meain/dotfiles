@@ -3051,6 +3051,8 @@ START and END comes from it being interactive."
 
 ;; Bookmarks
 (setq bookmark-save-flag 1)
+(setq bookmark-set-fringe-mark nil)
+(advice-add 'bookmark-jump :around #'meain/recenter-advice)
 (global-set-key (kbd "M-f m") 'bookmark-jump)
 (global-set-key (kbd "M-f M") 'bookmark-set)
 
