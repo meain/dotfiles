@@ -1,6 +1,6 @@
 # terminal emulator
 super + Return
-	  sakura
+	  sakura -x 'tt term'
 
 # emacs
 super + {e,t}
