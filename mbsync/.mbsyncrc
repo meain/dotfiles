@@ -22,3 +22,29 @@ Patterns *
 SyncState *
 ExpireUnread yes
 MaxMessages 500
+
+
+IMAPStore ic-remote
+Host imap.gmail.com
+Port  993
+User abin.simon@infracloud.io
+PassCmd "echo $IC_PASSWORD"
+AuthMechs LOGIN
+SSLType IMAPS
+
+MaildirStore ic-local
+Subfolders Verbatim
+Path ~/.local/share/mail/ic/
+Inbox ~/.local/share/mail/ic/INBOX
+Flatten .
+
+Channel ic
+Create Both
+Expunge Both
+Far :ic-remote:
+Near :ic-local:
+# Patterns * !"[Gmail]/All Mail"
+Patterns *
+SyncState *
+ExpireUnread yes
+MaxMessages 500
