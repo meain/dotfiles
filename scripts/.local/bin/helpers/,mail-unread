@@ -2,7 +2,7 @@
 
 # Get unread emails
 
-inbox="$(notmuch search tag:unread and tag:inbox and '-tag:nonotify' and '-tag:notified' and '-tag:github' |
+inbox="$(notmuch search tag:unread and tag:inbox and '-tag:work' and '-tag:nonotify' and '-tag:notified' and '-tag:github' |
 	sed 's|\(^[^ ]*\) [^]]*\]|\1|' | sed 's/([^(]*)$//;s/^\ */- /')"
 if echo "$inbox" | grep -q .; then
 	echo '[Imbox]'
@@ -13,5 +13,12 @@ inbox="$(notmuch search tag:unread and tag:inbox and '-tag:nonotify' and '-tag:n
 	sed 's|\(^[^ ]*\) [^]]*\]|\1|' | sed 's/([^(]*)$//;s/^\ */- /')"
 if echo "$inbox" | grep -q .; then
 	echo '[Github]'
+	echo "$inbox" | sort
+fi
+
+inbox="$(notmuch search tag:unread and tag:inbox and tag:work '-tag:nonotify' and '-tag:notified' and '-tag:github' |
+	sed 's|\(^[^ ]*\) [^]]*\]|\1|' | sed 's/([^(]*)$//;s/^\ */- /')"
+if echo "$inbox" | grep -q .; then
+	echo '[Work]'
 	echo "$inbox" | sort
 fi

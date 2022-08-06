@@ -8,7 +8,13 @@ function safeMove { mv -f "$1" "$2/$(echo "$1"|xargs basename|cut -d',' -f1)"; }
 
 # Move all archived messages from Inbox to Archive folder
 echo Moving $(notmuch count --output=files 'folder:meain/INBOX' and -tag:inbox) \
-     archived messages from Inbox to Archive folder
+     archived messages from Inbox to Archive folder for personal
 for i in $(notmuch search --output=files 'folder:meain/INBOX' and -tag:inbox|grep 'meain/INBOX'); do
-    safeMove "$i" "$MAILDIR/[Gmail].All Mail/cur"
+    safeMove "$i" "$MAILDIR/meain/[Gmail].All Mail/cur"
+done
+
+echo Moving $(notmuch count --output=files 'folder:ic/INBOX' and -tag:inbox) \
+     archived messages from Inbox to Archive folder for work
+for i in $(notmuch search --output=files 'folder:ic/INBOX' and -tag:inbox|grep 'ic/INBOX'); do
+    safeMove "$i" "$MAILDIR/ic/[Gmail].All Mail/cur"
 done

@@ -2,13 +2,14 @@
 
 set -e
 
-,mail-move || true  # move archived mails from inbox to archive
+,mail-move || true # move archived mails from inbox to archive
 
 if [ ! "$1" = "retag" ]; then
-	GPASS="${GOOGLE_PASSWORD:-$(pass show google/abinsimon10)}"
-	GOOGLE_PASSWORD="$GPASS" mbsync -a ||
+	export GOOGLE_PASSWORD="${GOOGLE_PASSWORD:-$(pass show google/abinsimon10)}"
+	export IC_PASSWORD="${IC_PASSWORD:-$(pass show google/ic)}"
+	mbsync -a ||
 		(touch /tmp/mailpullfailed && exit 1)
 	[ -f /tmp/mailpullfailed ] && rm /tmp/mailpullfailed
 fi
 
-mailtag  # tag stuff with notmuch
+mailtag # tag stuff with notmuch
