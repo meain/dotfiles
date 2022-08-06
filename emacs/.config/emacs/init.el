@@ -596,6 +596,7 @@ Pass ORIGINAL and ALTERNATE options."
   (aas-set-snippets 'global
     ";--" "—"
     ";>>" "→"
+    ";tm" "™"
     ";ghm" "[meain](https://github.com/meain)"
     ";isodate" (lambda () (interactive) (insert (format-time-string "%a, %d %b %Y %T %z")))
     ";date" (lambda () (interactive) (insert (format-time-string "%a %b %d %Y")))
@@ -603,6 +604,11 @@ Pass ORIGINAL and ALTERNATE options."
     ";d/" (lambda () (interactive) (insert (format-time-string "%D")))
     ";time" (lambda () (interactive) (insert (format-time-string "%T")))
     ";filename" (lambda () (interactive) (insert (file-name-nondirectory (buffer-file-name)))))
+  (aas-set-snippets 'emacs-lisp-mode
+    ";auto" ";;;###autoload"
+    ";la" (lambda () (interactive) (insert "(lambda ())") (backward-char 2))
+    ";li" (lambda () (interactive) (insert "(lambda () (interactive) )") (backward-char 1))
+    ";j" (lambda () (interactive) (insert "(message \"%s\" )") (backward-char 1)))
   (aas-set-snippets 'sql-mode
     ";bang" "SELECT * FROM information_schema.tables;"
     ";d" (lambda ()
@@ -671,7 +677,7 @@ Pass ORIGINAL and ALTERNATE options."
     (lambda ()
       (interactive)
       (insert (concat "if err != nil { " (meain/go-return-string "err") " }")))
-    ";tt"
+    ";tr"
     (lambda ()
       (interactive)
       (let ((left (read-string "Left: "))
@@ -687,7 +693,19 @@ Pass ORIGINAL and ALTERNATE options."
                                (read-string "Error message: ")
                                "; %v\", err)"))
                       " }")))
-    ";te"
+    ";test"
+    (lambda ()
+      (interactive)
+      (insert (concat "func "
+                      (read-string "Test function name: ")
+                      "(t *testing.T) {
+    want :=
+    got, err :=
+    if !cmp.Equal(want, got) {
+        t.Fatalf(\"values are not the same %s\", cmp.Diff(tc.want, got))
+    }
+    }")))
+    ";ttest"
     (lambda ()
       (interactive)
       (insert (concat "func "
@@ -702,14 +720,13 @@ Pass ORIGINAL and ALTERNATE options."
 	}
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
-			// got, err := _
+			got, err :=
 			if !cmp.Equal(tc.want, got) {
 				t.Fatalf(\"values are not the same %s\", cmp.Diff(tc.want, got))
 			}
-
 		})
 	}
-}"))))
+  }"))))
   (aas-set-snippets 'python-mode
     ";ip" "__import__('ipdb').set_trace()")
   (aas-set-snippets 'org-mode
