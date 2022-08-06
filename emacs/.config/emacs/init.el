@@ -824,63 +824,27 @@ Pass ORIGINAL and ALTERNATE options."
             (lambda ()
               (add-hook 'flymake-diagnostic-functions 'flymake-pylint nil t)))
 
-  ;; TODO: vet/golangci-lint/errcheck cannot be run on temp file nor or a single file (it needs project context)
-  ;; ;; https://pkg.go.dev/cmd/vet
-  ;; (flymake-quickdef-backend flymake-govet
-  ;;   :pre-let ((govet-exec (executable-find "go")))
-  ;;   :pre-check (unless govet-exec (error "Cannot find govet executable"))
-  ;;   :write-type 'file
-  ;;   :proc-form (list govet-exec "vet" fmqd-temp-file)
-  ;;   :search-regexp "^\\([^:]+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\): \\(.*\\)$"
-  ;;   :prep-diagnostic (let* ((lnum (string-to-number (match-string 2)))
-  ;;                           (col (string-to-number (match-string 3)))
-  ;;                           (text (match-string 4))
-  ;;                           (pos (flymake-diag-region fmqd-source lnum col))
-  ;;                           (beg (car pos))
-  ;;                           (end (cdr pos))
-  ;;                           (msg (format "govet> %s" text)))
-  ;;                      (list fmqd-source beg end :warning msg)))
-  ;; (add-hook 'go-mode-hook
-  ;;           (lambda ()
-  ;;             (add-hook 'flymake-diagnostic-functions 'flymake-govet nil t)))
-
-  ;; ;; https://github.com/golangci/golangci-lint
-  ;; (flymake-quickdef-backend flymake-golangci
-  ;;   :pre-let ((golangci-exec (executable-find "golangci-lint")))
-  ;;   :pre-check (unless golangci-exec (error "Cannot find golangci-lint executable"))
-  ;;   :write-type 'file
-  ;;   :proc-form (list golangci-exec "run" "--print-issued-lines=false" "--out-format=line-number" fmqd-temp-file)
-  ;;   :search-regexp "^\\([^:]+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\): \\(.*\\)$"
-  ;;   :prep-diagnostic (let* ((lnum (string-to-number (match-string 2)))
-  ;;                           (col (string-to-number (match-string 3)))
-  ;;                           (text (match-string 4))
-  ;;                           (pos (flymake-diag-region fmqd-source lnum col))
-  ;;                           (beg (car pos))
-  ;;                           (end (cdr pos))
-  ;;                           (msg (format "golangci> %s" text)))
-  ;;                      (list fmqd-source beg end :warning msg)))
-  ;; (add-hook 'go-mode-hook
-  ;;           (lambda ()
-  ;;             (add-hook 'flymake-diagnostic-functions 'flymake-golangci nil t)))
-
-  ;; ;; https://github.com/kisielk/errcheck
-  ;; (flymake-quickdef-backend flymake-errcheck
-  ;;   :pre-let ((errcheck-exec (executable-find "errcheck")))
-  ;;   :pre-check (unless errcheck-exec (error "Cannot find errcheck executable"))
-  ;;   :write-type 'file
-  ;;   :proc-form (list errcheck-exec fmqd-temp-file)
-  ;;   :search-regexp "^\\([^:]+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\): \\(.*\\)$"
-  ;;   :prep-diagnostic (let* ((lnum (string-to-number (match-string 2)))
-  ;;                           (col (string-to-number (match-string 3)))
-  ;;                           (text (match-string 4))
-  ;;                           (pos (flymake-diag-region fmqd-source lnum col))
-  ;;                           (beg (car pos))
-  ;;                           (end (cdr pos))
-  ;;                           (msg (format "golangci> %s" text)))
-  ;;                      (list fmqd-source beg end :warning msg)))
-  ;; (add-hook 'go-mode-hook
-  ;;           (lambda ()
-  ;;             (add-hook 'flymake-diagnostic-functions 'flymake-errcheck nil t)))
+  ;; https://github.com/golangci/golangci-lint
+  (flymake-quickdef-backend flymake-golangci
+    :pre-let ((golangci-exec (executable-find "golangci-lint")))
+    :pre-check (unless golangci-exec (error "Cannot find golangci-lint executable"))
+    :write-type 'file ; don't really use this
+    :proc-form (list golangci-exec "run" "--print-issued-lines=false" "--out-format=line-number" "./...")
+    :search-regexp (concat "^"
+                           (string-replace (expand-file-name (project-root (project-current)))
+                                           "" (with-current-buffer fmqd-source (buffer-file-name)))
+                           ":\\([[:digit:]]+\\):\\([[:digit:]]+\\): \\(.*\\)$")
+    :prep-diagnostic (let* ((lnum (string-to-number (match-string 1)))
+                            (col (string-to-number (match-string 2)))
+                            (text (match-string 3))
+                            (pos (flymake-diag-region fmqd-source lnum col))
+                            (beg (car pos))
+                            (end (cdr pos))
+                            (msg (format "golangci> %s" text)))
+                       (list fmqd-source beg end :warning msg)))
+  (add-hook 'go-mode-hook
+            (lambda ()
+              (add-hook 'flymake-diagnostic-functions 'flymake-golangci nil t)))
 
   ;; https://github.com/nerdypepper/statix
   (flymake-quickdef-backend flymake-statix
