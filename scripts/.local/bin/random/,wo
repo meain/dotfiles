@@ -26,16 +26,19 @@ last="$(cat "$WO_FILE" | tail -n1 | cut -d' ' -f3-)"
 [ "$last" = "$womsg" ] && echo "You are already doing that" && exit 0
 
 timestamp="$(date "+%s")"
-ftime="$(echo $timestamp|awk '{print strftime("%F %T", $0);}')"
+ftime="$(echo $timestamp | awk '{print strftime("%F %T", $0);}')"
 if echo "$womsg" | awk -F' ' '{print $NF}' | grep -qE '\-[0-9][0-9]*'; then
-    timed="$(echo "$womsg"|awk -F' ' '{print $NF}' | sed 's|^.||')"
-    womsg="$(echo "$womsg"|awk -F' ' '{$NF="";print $0}')"
-    timedm="$(($timed * 60))"
-    timestamp="$(("$timestamp"-$timedm))"
-    ftime="$(echo $timestamp|awk '{print strftime("%F %T", $0);}')"
+	timed="$(echo "$womsg" | awk -F' ' '{print $NF}' | sed 's|^.||')"
+	womsg="$(echo "$womsg" | awk -F' ' '{$NF="";print $0}')"
+	timedm="$(($timed * 60))"
+	timestamp="$(("$timestamp" - $timedm))"
+	ftime="$(echo $timestamp | awk '{print strftime("%F %T", $0);}')"
 fi
 
-echo "$ftime" "$womsg"
+tty -s && echo -en "\e[32m"
+,wo-info
+tty -s && echo -en "\e[0m"
+echo "$womsg" "$ftime" | tr '[:lower:]' '[:upper:]'
 echo "$ftime" "$womsg" >>"$WO_FILE"
 if [ "$womsg" = "afk" ]; then
 	rm -r /tmp/wo-info
