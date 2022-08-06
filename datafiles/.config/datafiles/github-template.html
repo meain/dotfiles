@@ -38,6 +38,7 @@
     >
 $body$
     </article>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>
       // TODO: find some way to avoid js completely
       // gotoRaw just in case the user clicks before onload fires
@@ -54,6 +55,7 @@ $body$
             if (cn.length > 0) i.children[0].classList.add(cn);
           }
         });
+        mermaid.init({}, ".mermaid");
         hljs.highlightAll();
       }
     </script>

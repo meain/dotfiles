@@ -14,7 +14,8 @@ lang=""
 dropMd() {
 	filepath="$1"
 	pandoc --no-highlight --template ~/.config/datafiles/github-template.html \
-		--output /tmp/formatted -f gfm -t html5 --metadata title="Document" $filepath
+		-f gfm -t html5 --metadata title="Document" $filepath |
+		sed -z 's|<pre class="mermaid"><code>\([^<]*\)</code></pre>|<div class="mermaid">\1</div>|g' >/tmp/formatted
 	scp "$filepath" $DROP_VM:$DROP_PATH/$filename
 	scp /tmp/formatted $DROP_VM:$DROP_PATH/$filename.html
 }
@@ -29,7 +30,8 @@ dropLang() {
 	echo "\`\`\`" >>"$tmpfile"
 
 	pandoc --no-highlight --template ~/.config/datafiles/github-template.html \
-		--output /tmp/formatted -f gfm -t html5 --metadata title="Document" $tmpfile
+		-f gfm -t html5 --metadata title="Document" $tmpfile |
+		sed -z 's|<pre class="mermaid"><code>\([^<]*\)</code></pre>|<div class="mermaid">\1</div>|g' >/tmp/formatted
 	scp "$filepath" $DROP_VM:$DROP_PATH/$filename
 	scp /tmp/formatted $DROP_VM:$DROP_PATH/$filename.html
 }
@@ -46,7 +48,7 @@ if [ -z "$1" ]; then
 	sourcefile="/tmp/paste"
 else
 	if [ -f "$1" ]; then
-        filename="$(echo "$1"|sed -E 's|[\ ()]|__|g')"
+		filename="$(echo "$1" | sed -E 's|[\ ()]|__|g')"
 		filename="$(xxd -l4 -ps /dev/urandom)-$(basename "$filename")"
 		sourcefile="$1"
 	else
