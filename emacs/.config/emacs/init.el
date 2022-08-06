@@ -279,27 +279,36 @@ Pass ORIGINAL and ALTERNATE options."
 (evil-leader/set-key "u" 'universal-argument)
 (global-set-key (kbd "M-u") 'universal-argument)
 
+;; Auto resize windows (useful in go buffer, folks don't stop at 80)
+(use-package golden-ratio
+  :straight t
+  ;; Enable minor-mode manually when required
+  :commands (golden-ratio golden-ratio-mode))
+
 ;; Window mappings (not using meain/with-alternate as I need functions)
 (defun meain/move-swap-right (&optional swap)
   "Move to window on right or move window to right if SWAP."
   (interactive "P")
   (if swap
       (windmove-swap-states-right)
-    (windmove-right)))
+    (windmove-right))
+  (golden-ratio))
 (global-set-key (kbd "M-l") 'meain/move-swap-right)
 (defun meain/move-swap-left (&optional swap)
   "Move to window on left or move window to left if SWAP."
   (interactive "P")
   (if swap
       (windmove-swap-states-left)
-    (windmove-left)))
+    (windmove-left))
+  (golden-ratio))
 (global-set-key (kbd "M-h") 'meain/move-swap-left)
 (defun meain/move-swap-up (&optional swap)
   "Move to window on top or move window to top if SWAP."
   (interactive "P")
   (if swap
       (windmove-swap-states-up)
-    (windmove-up)))
+    (windmove-up))
+  (golden-ratio))
 (global-set-key (kbd "M-k") 'meain/move-swap-up)
 (defun meain/move-swap-down (&optional swap)
   "Move to window on bottom or move window to bottom if SWAP."
@@ -307,7 +316,7 @@ Pass ORIGINAL and ALTERNATE options."
   (if swap
       (windmove-swap-states-down)
     (windmove-down))
-  'meain/move-swap-down)
+  (golden-ratio))
 (global-set-key (kbd "M-j") 'meain/move-swap-down)
 (global-set-key (kbd "M-b")
                 (lambda (&optional open-term)
