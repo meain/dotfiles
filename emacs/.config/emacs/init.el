@@ -450,7 +450,7 @@ Pass ORIGINAL and ALTERNATE options."
 ;; Highlight yanked region
 (defun meain/evil-yank-advice (orig-fn beg end &rest args)
   "Advice to be added to `evil-yank' to highlight yanked region.  Pass ORIG-FN, BEG, END, TYPE, ARGS."
-  (pulse-momentary-highlight-region beg end 'company-template-field)
+  (pulse-momentary-highlight-region beg end 'mode-line)
   (apply orig-fn beg end args))
 (advice-add 'evil-yank :around 'meain/evil-yank-advice)
 
@@ -986,6 +986,7 @@ Pass ORIGINAL and ALTERNATE options."
 ;; Company for autocompletions
 (use-package company
   :straight t
+  :disabled t
   :defer 1
   :diminish
   :config
@@ -1021,6 +1022,7 @@ Pass ORIGINAL and ALTERNATE options."
 ;; consult-interface for company for use in `sql-mode'
 (use-package consult-company
   :straight t
+  :disabled t
   :defer t
   :after (consult company)
   :commands (consult-company))
@@ -1028,11 +1030,61 @@ Pass ORIGINAL and ALTERNATE options."
 ;; Company quickhelp
 (use-package company-quickhelp ; Show help in tooltip
   :straight t
+  :disabled t
   :after company
   :config
   (company-quickhelp-mode)
   (setq pos-tip-foreground-color "#000000"
         pos-tip-background-color "#ffffff"))
+
+(use-package corfu
+  :straight t
+  :config
+  (setq completion-cycle-threshold 3)
+  (setq corfu-auto t)
+  (setq corfu-cycle t)
+  (setq corfu-auto-delay .2)
+  (setq corfu-auto-prefix 2)
+  (setq corfu-history-mode t)
+  (setq corfu-count 5)
+
+  (defun corfu-move-to-minibuffer ()
+    "Move completion to minibuffer instead of corfu."
+    (interactive)
+    (let ((completion-extra-properties corfu--extra)
+          completion-cycle-threshold completion-cycling)
+      (apply #'consult-completion-in-region completion-in-region--data)))
+  (define-key corfu-map "\M-m" #'corfu-move-to-minibuffer)
+
+  (global-corfu-mode))
+
+(use-package corfu-doc
+  :straight t
+  :after (corfu)
+  :config
+  ;; (add-hook 'corfu-mode-hook #'corfu-doc-mode)
+  (define-key corfu-map (kbd "M-p") #'corfu-doc-scroll-down) ;; corfu-next
+  (define-key corfu-map (kbd "M-n") #'corfu-doc-scroll-up)  ;; corfu-previous
+  (define-key corfu-map (kbd "M-d") #'corfu-doc-toggle))
+
+;; Add completion extensions
+(use-package cape
+  :straight t
+  :bind (("M-p" . completion-at-point) ;; capf
+         ("M-f p t" . complete-tag)        ;; etags
+         ("M-f p d" . cape-dabbrev)        ;; or dabbrev-completion
+         ("M-f p h" . cape-history)
+         ("M-f p f" . cape-file)
+         ("M-f p k" . cape-keyword)
+         ("M-f p s" . cape-symbol)
+         ("M-f p a" . cape-abbrev)
+         ("M-f p i" . cape-ispell)
+         ("M-f p l" . cape-line)
+         ("M-f p w" . cape-dict)
+         ("M-f p &" . cape-sgml))
+  :init
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-file))
 
 ;; Completions (core framework)
 (use-package vertico
@@ -1081,8 +1133,10 @@ Pass ORIGINAL and ALTERNATE options."
   (setq completion-styles '(orderless basic))
 
   (defun flex-if-twiddle (pattern _index _total)
-    (when (string-suffix-p "~" pattern)
-      `(orderless-flex . ,(substring pattern 0 -1))))
+    (cond ((string-suffix-p "~" pattern)
+           `(orderless-flex . ,(substring pattern 0 -1)))
+          ((string-prefix-p "~" pattern)
+           `(orderless-flex . ,(substring pattern 1)))))
   (defun initialism-if-comma (pattern index _total)
     (cond ((string-suffix-p "," pattern)
            `(orderless-initialism . ,(substring pattern 0 -1)))
@@ -1092,6 +1146,8 @@ Pass ORIGINAL and ALTERNATE options."
     (cond
      ((equal "!" pattern)
       '(orderless-literal . ""))
+     ((string-suffix-p "!" pattern)
+      `(orderless-without-literal . ,(substring pattern 0 -1)))
      ((string-prefix-p "!" pattern)
       `(orderless-without-literal . ,(substring pattern 1)))))
 
@@ -2359,7 +2415,7 @@ Pass ORIGINAL and ALTERNATE options."
     (with-current-buffer tree-sitter-debug--source-code-buffer
       (pulse-momentary-highlight-region (car (tsc-node-byte-range (button-get button 'points-to)))
                                         (cdr (tsc-node-byte-range (button-get button 'points-to)))
-                                        'company-template-field)))
+                                        'mode-line)))
   (defvar meain/tree-sitter-config-nesting--queries '((json-mode . "(object (pair (string (string_content) @key) (_)) @item)")
                                                       (yaml-mode . "(block_mapping_pair (flow_node) @key (_)) @item")
                                                       (nix-mode . "(bind (attrpath (attr_identifier) @key)) @item")))
@@ -3242,7 +3298,7 @@ Pass INSERT-TO-BUFFER to insert output to current buffer."
          (snippet (string-join (cdr (butlast (split-string snippet-with-markers "\n"))) "\n"))
          (snippet-runner (car (last (split-string (car (split-string snippet-with-markers "\n")) "[ `]+")))))
     (setq temp-source-file (make-temp-file "thing-to-run"))
-    (pulse-momentary-highlight-region start end 'company-template-field)
+    (pulse-momentary-highlight-region start end 'mode-line)
     (message "Code: %s" snippet)
     (message "Runner: %s" snippet-runner)
     (append-to-file snippet nil temp-source-file)
