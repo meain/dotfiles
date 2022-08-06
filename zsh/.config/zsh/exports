@@ -59,7 +59,7 @@ export PATH="$PATH":"$HOME/.pub-cache/bin"
 export PATH="$PATH":"$HOME/.dotnet"
 
 # mail
-export MAILDIR=$HOME/.local/share/mail/meain
+export MAILDIR=$HOME/.local/share/mail
 
 # notmuch
 export NOTMUCH_CONFIG="$HOME/.config/notmuch/config"
