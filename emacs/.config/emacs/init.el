@@ -842,15 +842,21 @@ Pass ORIGINAL and ALTERNATE options."
               (add-hook 'flymake-diagnostic-functions 'flymake-pylint nil t)))
 
   ;; https://github.com/golangci/golangci-lint
+  ;; Most linters in golangci-lint requires the project context. We
+  ;; can hack it together to make it work in a project context, but
+  ;; they will need the file to be save for it to work which creates
+  ;; more problems. So we are only enabling --fast linters as all of
+  ;; them are ones that can work on single file.
+  ;; https://github.com/golangci/golangci-lint/issues/1574#issuecomment-804500358
+  ;; TODO: Find some way to run linters like errcheck, govet, staticcheck etc
   (flymake-quickdef-backend flymake-golangci
     :pre-let ((golangci-exec (executable-find "golangci-lint")))
     :pre-check (unless golangci-exec (error "Cannot find golangci-lint executable"))
     :write-type 'file ; don't really use this
-    :proc-form (list golangci-exec "run" "--print-issued-lines=false" "--out-format=line-number" "./...")
-    :search-regexp (concat "^"
-                           (string-replace (expand-file-name (project-root (project-current)))
-                                           "" (with-current-buffer fmqd-source (buffer-file-name)))
-                           ":\\([[:digit:]]+\\):\\([[:digit:]]+\\): \\(.*\\)$")
+    :proc-form (list golangci-exec "run"
+                     "--print-issued-lines=false" "--out-format=line-number" "./..."
+                     "--disable-all" "--fast") ; --fast ones can run on single file
+    :search-regexp "[^:]*:\\([[:digit:]]+\\):\\([[:digit:]]+\\): \\(.*\\)$"
     :prep-diagnostic (let* ((lnum (string-to-number (match-string 1)))
                             (col (string-to-number (match-string 2)))
                             (text (match-string 3))
