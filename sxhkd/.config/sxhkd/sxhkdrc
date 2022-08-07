@@ -105,4 +105,4 @@ super + alt + control + w
 
 # emoji picker
 super + alt + control + q
-      emacsclient -e "(meain/emacs-popup-minibuffer-frame 'meain/pick-emoji)"
+      emacsclient -e "(meain/emacs-mini-popup-frame 'meain/pick-emoji)"

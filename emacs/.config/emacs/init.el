@@ -1104,7 +1104,6 @@ Pass ORIGINAL and ALTERNATE options."
   (setq vertico-multiform-commands
         '((consult-ripgrep buffer indexed)
           (consult-xref buffer indexed)
-          (meain/pick-emoji reverse)
           (t flat)))
   (setq vertico-multiform-categories
         '((file grid)
@@ -3343,16 +3342,17 @@ Pass INSERT-TO-BUFFER to insert output to current buffer."
 
 ;; Emoji picker
 (defun meain/pick-emoji ()
-  "Pick emoji using completions."
+  "Pick emoji using completions.
+This contains a lot of hacks to get it working with H-q keybinding and a popup."
   (interactive)
   (let* ((filename (concat (getenv "HOME") "/.config/datafiles/emojis.txt"))
-         (emojis (with-temp-buffer (insert-file-contents filename) (buffer-string))))
-    (meain/copy-to-clipboard (car
-                              (split-string
-                               (completing-read
-                                "Pick emoji: "
-                                (split-string emojis "\n"))
-                               " "))))
+         (contents (with-temp-buffer (insert-file-contents filename) (buffer-string)))
+         (emojis (split-string contents "\n"))
+         (header-line-format " You are now going to pick an emoji, choose wisely"))
+    (switch-to-buffer "*pick-emoji*")
+    (run-with-timer 0.5 nil 'vertico-multiform-grid) ; FIXME: can't do it in a sane way
+    (meain/copy-to-clipboard (car (split-string
+                                   (completing-read "Pick emoji: " emojis nil t)))))
   (if (equal "emacs-popup" (cdr (assq 'name (frame-parameters))))
       (delete-frame)))
 
@@ -3416,6 +3416,28 @@ Pass THING-TO-POPUP as the thing to popup."
                              (unsplittable . t)
                              (vertical-scroll-bars . nil)
                              (width . 150)))))
+    (select-frame frame))
+  (funcall thing-to-popup))
+(defun meain/emacs-mini-popup-frame (thing-to-popup)
+  "Popup and interactive frame thingy.  For use from hammerspoon.
+Pass THING-TO-POPUP as the thing to popup."
+  (interactive)
+  (let ((frame (make-frame '((auto-raise . t)
+                             (height . 20)
+                             (width . 100)
+                             (internal-border-width . 20)
+                             (name . "emacs-popup")
+                             ;; (left . 0.33)
+                             (left-fringe . 0)
+                             (line-spacing . 3)
+                             (menu-bar-lines . 0)
+                             (right-fringe . 0)
+                             (tool-bar-lines . 0)
+                             ;; (top . 48)
+                             (undecorated . t)
+                             (unsplittable . t)
+                             (background-color . "#E1F5FE")
+                             (vertical-scroll-bars . nil)))))
     (select-frame frame))
   (funcall thing-to-popup))
 (defun meain/emacs-popup-minibuffer-frame (thing-to-popup)
