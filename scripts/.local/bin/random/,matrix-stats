@@ -1,0 +1,49 @@
+#!/bin/sh
+
+# Find out when is a matrix room most active. This script plots the
+# hours against how many messages where sent in that hour.
+# Make sure to use $MATRIX_ACCESS_TOKEN with access to that room
+# eg: ,matrix-stats '!PbtOpdWBSRFbEZRLIf:numtide.com'  # fetches last 1000 messages
+# eg: ,matrix-stats '!KuaCUVGoCiunYyKEpm:libera.chat' 10000  # fetches last 10000 messages
+
+set -e
+
+[ -z $1 ] && echo "usage: ,matrix-stats <room-id> <max-messages:1000>" && exit 1
+ROOM="$1"
+COUNT="${2:-1000}"
+
+rand="$(xxd -l2 -ps /dev/urandom)"
+mf="/tmp/matrix-stats-messages-$rand"
+
+tmpf="/tmp/matrix-stats-room-download-$rand"
+counter=1
+
+# First download
+echo Donloading messages to $mf
+curl -# "https://matrix.org/_matrix/client/r0/rooms/$ROOM/messages?access_token=$MATRIX_ACCESS_TOKEN&limit=$COUNT&dir=b" >$tmpf-$counter
+cat "$tmpf-$counter" | jq '.chunk[]' >$mf
+
+while true; do
+	prev="$(cat "$tmpf-$counter" | jq -r .end)"
+
+	COUNT="$(($COUNT - 1000))"
+	echo Pending: $COUNT
+	[ "$COUNT" -le 1 ] && break
+	counter="$((counter + 1))"
+
+	curl -# "https://matrix.org/_matrix/client/r0/rooms/$ROOM/messages?access_token=$MATRIX_ACCESS_TOKEN&limit=$COUNT&dir=b&from=$prev" >"$tmpf-$counter"
+	cat "$tmpf-$counter" | jq '.chunk[]' >>$mf
+done
+
+echo -n "First chat from "
+cat $mf | jq '.origin_server_ts' |
+	head -n1 | cut -c -10 |
+	xargs -n1 -I{} date -d@"{}" '+%F'
+
+cat $mf | jq '.origin_server_ts' |
+	cut -c -10 |
+	xargs -n1 -I{} date -d@"{}" '+%H:%M:%S' |
+	cut -d: -f1 | sort | uniq -c |
+	awk '{print $2,$1}' | sort -h |
+	gnuplot -p -e "plot '<cat' using 2:xticlabels(1) with lines" 2>/dev/null ||
+	echo You might not access to that room
