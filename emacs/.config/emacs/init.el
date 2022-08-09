@@ -2251,10 +2251,16 @@ Pass ORIGINAL and ALTERNATE options."
 ;; Beacon mode
 (use-package beacon
   :straight t
-  :defer t
+  :defer 1
   :diminish
   :config
   (setq beacon-blink-when-window-scrolls t)
+  (advice-add 'evil-forward-section-begin
+              :after (lambda (&rest r) (beacon-blink) (recenter))
+              '((name . "beacon-blink")))
+  (advice-add 'evil-backward-section-begin
+              :after (lambda (&rest r) (beacon-blink) (recenter))
+              '((name . "beacon-blink")))
   (beacon-mode t))
 
 ;; Ligatures
