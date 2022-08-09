@@ -2032,7 +2032,8 @@ Pass ORIGINAL and ALTERNATE options."
   (setq notmuch-message-headers-visible nil)
   (setq message-auto-save-directory "~/.local/share/mail/meain")
   (setq notmuch-saved-searches
-        '((:name "Imbox" :query "tag:imbox AND tag:inbox AND -tag:github AND -tag:flagged" :key "i" :sort-order newest-first)
+        '((:name "Mails" :query "((tag:inbox AND tag:imbox) OR (tag:inbox AND tag:github) OR (tag:inbox AND tag:work)) AND -tag:flagged" :key "J" :sort-order newest-first)
+          (:name "Imbox" :query "tag:imbox AND tag:inbox AND -tag:github AND -tag:flagged" :key "i" :sort-order newest-first)
           (:name "WInbox" :query "tag:work and tag:inbox" :key "I" :sort-order newest-first)
           (:name "Github" :query "tag:github AND tag:inbox" :key "h" :sort-order oldest-first)
           (:name "Meain" :query "query=to:mail@meain.io AND tag:inbox" :key "m" :sort-order oldest-first)
@@ -2040,7 +2041,7 @@ Pass ORIGINAL and ALTERNATE options."
           (:name "Python" :query "tag:python AND tag:inbox AND -tag:work" :key "p")
           (:name "Git" :query "tag:git AND tag:inbox AND -tag:work" :key "g")
           (:name "Newsletter" :query "tag:newsletter AND tag:inbox AND -tag:work" :key "n")
-          (:name "Jobhunt" :query "tag:jobhunt AND tag:inbox AND -tag:work" :key "j")
+          (:name "Jobhunt" :query "tag:jobhunt AND tag:inbox AND -tag:work")
           (:name "Known" :query "tag:known AND tag:inbox AND -tag:todo AND -tag:flagged AND -tag:work" :key "k")
           (:name "Archiveable" :query "tag:bullshit AND tag:known AND tag:nonimportant AND tag:inbox AND -tag:work" :key "a")
           (:name "Todo" :query "tag:inbox AND tag:todo AND -tag:work" :key "t" :sort-order oldest-first)
