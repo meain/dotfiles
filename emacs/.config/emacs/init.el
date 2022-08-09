@@ -757,6 +757,25 @@ Pass ORIGINAL and ALTERNATE options."
   :commands (flyspell-correct-wrapper flyspell-goto-next-error)
   :bind (:map flyspell-mode-map ("C-:" . flyspell-correct-wrapper)))
 
+;; Advanced spell checking
+(use-package wucuo
+  :straight t
+  :disabled t
+  :after flyspell
+  :commands (wucuo-start)
+  :init
+  (add-hook 'prog-mode-hook #'wucuo-start)
+  (add-hook 'text-mode-hook #'wucuo-start)
+  :config
+  (add-to-list 'wucuo-font-faces-to-check 'tree-sitter-hl-face:comment)
+  (add-to-list 'wucuo-font-faces-to-check 'tree-sitter-hl-face:doc)
+  (add-to-list 'wucuo-font-faces-to-check 'tree-sitter-hl-face:string)
+  (add-to-list 'wucuo-font-faces-to-check 'tree-sitter-hl-face:property)
+  (add-to-list 'wucuo-font-faces-to-check 'tree-sitter-hl-face:method.call)
+  (add-to-list 'wucuo-font-faces-to-check 'tree-sitter-hl-face:function.call)
+  (add-to-list 'wucuo-font-faces-to-check 'tree-sitter-hl-face:function.method)
+  (add-to-list 'wucuo-font-faces-to-check 'tree-sitter-hl-face:constructor))
+
 ;; flymake
 (use-package flymake
   :defer 1
