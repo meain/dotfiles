@@ -734,6 +734,16 @@ Pass ORIGINAL and ALTERNATE options."
     ";py" "#+BEGIN_SRC python\n\n#+END_SRC"
     ";co" "#+BEGIN_SRC\n\n#+END_SRC"))
 
+;; Templates
+(use-package tempel
+  :straight t
+  :disabled t
+  :commands (tempel-complete tempel-expand tempel-insert)
+  :init
+  (global-set-key (kbd "M-*") 'tempel-complete)
+  (global-set-key (kbd "M-)") 'tempel-next)
+  (global-set-key (kbd "M-(") 'tempel-previous))
+
 ;; flyspell
 (use-package flyspell
   :defer t
