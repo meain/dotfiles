@@ -2906,6 +2906,14 @@ SHORTCUT is the keybinding to use.  NAME if the func suffix and FILE is the file
                         ""
                         (car (split-string (buffer-string) "\n")))
                      ""))))
+  (defun meain/vime--get-new-filename (directory)
+    "Get a nonexistent file in `DIRECTORY'.
+After a while you start repeating filenames as we have just 4 so checking for exists."
+    (let ((filename (concat directory "/_"
+                            (substring (uuid-string) 0 4))))
+      (if (file-exists-p filename)
+          (meain/vime--get-new-filename)
+        filename)))
   (defun meain/vime (name directory &optional createnew)
     "Load a random file inside vime dir.  Used as a temp notes dir.
 Pass in `LISTITEMS to decide if you wanna create a new item or search for existing items."
@@ -2924,8 +2932,7 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
                                                 (directory-files-and-attributes directory))
                                  #'(lambda (x y) (time-less-p (nth 6 y) (nth 6 x)))))))))))
       (progn
-        (find-file (concat directory "/_"
-                           (substring (uuid-string) 0 4)))
+        (find-file (meain/vime--get-new-filename directory))
         (insert ":name ")
         (text-mode)
         (evil-insert 1))))
