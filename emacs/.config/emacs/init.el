@@ -1230,7 +1230,9 @@ Pass ORIGINAL and ALTERNATE options."
   :straight t
   :commands dumb-jumb-go
   :init (evil-leader/set-key "J" 'dumb-jump-go)
-  :config (evil-set-command-property 'dumb-jumb-go :jump t))
+  :config
+  (advice-add 'dumb-jump-go :around #'meain/recenter-advice)
+  (evil-set-command-property 'dumb-jumb-go :jump t))
 
 
 ;; Code formatting
