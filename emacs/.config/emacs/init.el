@@ -597,6 +597,7 @@ Pass ORIGINAL and ALTERNATE options."
     ";--" "—"
     ";>>" "→"
     ";tm" "™"
+    ";shr" "¯\\_(ツ)_/¯"
     ";ghm" "[meain](https://github.com/meain)"
     ";isodate" (lambda () (interactive) (insert (format-time-string "%a, %d %b %Y %T %z")))
     ";date" (lambda () (interactive) (insert (format-time-string "%a %b %d %Y")))
