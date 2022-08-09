@@ -3618,7 +3618,7 @@ Pass `CREATE' to create the alternate file if it does not exits."
                                   (format ";; %d packages loaded in %s" package-count time))))
 
 ;; Auto updating scratch message
-(run-at-time "10 minutes" (* 5 60) 'meain/update-scratch-message)
+(run-at-time "3 minutes" (* 5 60) 'meain/update-scratch-message)
 
 ;; Start server once we have emacs running
 (require 'server)
