@@ -1070,6 +1070,7 @@ Pass ORIGINAL and ALTERNATE options."
   (setq corfu-auto-prefix 2)
   (setq corfu-history-mode t)
   (setq corfu-count 5)
+  (define-key corfu-map (kbd "RET") 'newline-and-indent) ; default: corfu-insert
 
   (defun corfu-move-to-minibuffer ()
     "Move completion to minibuffer instead of corfu."
