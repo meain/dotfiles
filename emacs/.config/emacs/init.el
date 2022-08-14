@@ -1141,6 +1141,10 @@ Pass ORIGINAL and ALTERNATE options."
   (setq vertico-multiform-commands
         '((consult-ripgrep buffer indexed)
           (consult-xref buffer indexed)
+          (consult-imenu buffer)
+          (xref-find-references buffer)
+          (meain/imenu-or-eglot buffer)
+          (consult-buffer flat)
           (t flat)))
   (setq vertico-multiform-categories
         '((file grid)
@@ -1394,9 +1398,14 @@ Pass ORIGINAL and ALTERNATE options."
   (setq consult-ripgrep-args "rg --line-buffered --color=never --max-columns=1000 --path-separator /\
    --smart-case --no-heading --line-number --hidden --follow --glob \"!.git/*\" .")
   :init
-  (global-set-key (kbd "M-i")
-                  (meain/with-alternate (call-interactively 'consult-imenu)
-                                        (consult-eglot-symbols))))
+  (defun meain/imenu-or-eglot (&optional alternate)
+    "Create a func to alternate between goto thingy stuff.
+Giving it a name so that I can target it in vertico mode and make it use buffer."
+    (interactive "P")
+    (if alternate
+        (consult-eglot-symbols)
+      (consult-imenu)))
+  (global-set-key (kbd "M-i") #'meain/imenu-or-eglot))
 
 ;; Tagbar alternative
 (use-package imenu
