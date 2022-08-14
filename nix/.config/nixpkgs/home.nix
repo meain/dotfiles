@@ -31,7 +31,7 @@ in
     pkgs.curl
     # pkgs.zsh
     pkgs.gcc
-    pkgs.git
+    pkgs.gitFull # full for send-email
     pkgs.fzf
     pkgs.ripgrep
     pkgs.jq
@@ -97,10 +97,10 @@ in
     # pkgs.hub # Github integration for git
     pkgs.gh # Yet another Github integration for git
     pkgs.lynx # terminal web browser
-    pkgs.slop # select region from screen
+    spkgs.slop # select region from screen
     pkgs.imagemagick # image manip cli
     pkgs.ffmpeg # video manip cli
-    # pkgs.gnuplot # plotting
+    pkgs.gnuplot # plotting
     pkgs.ddgr # search ddg from terminal
     pkgs.dasht # terminal docs
     # pkgs.taskwarrior # task management
@@ -188,6 +188,10 @@ in
 
     # programming-lua
     # pkgs.nodePackages.lua-fmt
+
+    # programming-haskell
+    # pkgs.ghc # haskell compiler
+    # pkgs.haskellPackages.brittany # haskell code formatter
 
     # programming-other
     pkgs.nodePackages.yaml-language-server # language server for yaml
