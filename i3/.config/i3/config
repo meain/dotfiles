@@ -90,7 +90,10 @@ bindsym button3 floating toggle
 bindsym $mod+space focus mode_toggle
 
 # focus the parent container
-bindsym $mod+a focus parent
+# bindsym $mod+a focus parent
+
+# focus urgent window
+bindsym $mod+a [urgent=latest] focus
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
@@ -164,6 +167,7 @@ force_display_urgency_hint 1000 ms
 hide_edge_borders smart
 default_border pixel 5
 # gaps inner all set 20
+focus_on_window_activation none
 
 # Styling               border  backgr. text    indicator child_border
 client.focused          #F1F1F1 #F1F1F1 #000000 #F2F2F2   #F1F1F1
