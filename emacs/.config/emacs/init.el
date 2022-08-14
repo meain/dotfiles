@@ -2837,6 +2837,9 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
   (defun emacs-everywhere-major-mode-org-or-markdown () (gfm-mode))
   (defun emacs-everywhere-major-mode-function () (gfm-mode)))
 
+;; Fontify face (useful to debug themes)
+(use-package fontify-face :straight t :defer t)
+
 ;;; [CUSTOM FUNCTIONS] ==============================================
 
 ;; Font size changes
