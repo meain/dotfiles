@@ -2828,9 +2828,9 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
   :defer t
   :straight t
   :config
-  ;; Below thingy loads org-mode and we don't do that here (maybe use markdown?)
-  (setq emacs-everywhere-init-hooks
-        (remove 'emacs-everywhere-major-mode-function emacs-everywhere-init-hooks)))
+  (defun emacs-everywhere-markdown-p () t)
+  (defun emacs-everywhere-major-mode-org-or-markdown () (gfm-mode))
+  (defun emacs-everywhere-major-mode-function () (gfm-mode)))
 
 ;;; [CUSTOM FUNCTIONS] ==============================================
 
