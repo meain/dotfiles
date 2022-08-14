@@ -4,7 +4,7 @@ let
   ppkgs = personal.packages.x86_64-linux;
   spkgs = stable.legacyPackages.x86_64-linux;
   utils = import ./utils.nix { inherit pkgs; };
-  fonts = import ./fonts.nix { inherit pkgs; };
+  fonts = import ./fonts.nix { inherit pkgs; inherit spkgs;};
 in
 {
   home. stateVersion = "21.05";

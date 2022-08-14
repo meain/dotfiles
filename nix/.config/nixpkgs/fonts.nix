@@ -1,6 +1,6 @@
 # fonts (set-frame-font  "Anka/Coder 10")
-{ pkgs }: [
-  pkgs.iosevka
+{ pkgs, spkgs }: [
+  spkgs.iosevka
   # pkgs.hermit
   pkgs.agave
   pkgs.inconsolata
