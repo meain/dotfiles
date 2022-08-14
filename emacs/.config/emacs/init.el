@@ -2774,7 +2774,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
     (interactive "P")
     (meain/denote--create-or-open  "~/.local/share/til/" create))
   (defun meain/new-meeting-note ()
-    "Create a new note to takes notes on a meeting."
+    "Create a new note to take meeting notes with info fetched from ,cal."
     (interactive)
     (let* ((denote-directory "~/.local/share/work-notes/")
            (current-meeting (with-temp-buffer
@@ -2795,7 +2795,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
               "\nTime: " meeting-time
               "\nDate: " (format-time-string "%a %b %d %Y") "\n\n")))
   (defun meain/new-interview-note ()
-    "Create a new note for takes notes on an interview candidate."
+    "Create a new note for taking notes on an interview candidate."
     (interactive)
     (let ((denote-directory "~/.local/share/work-notes/")
           (name (read-string "Name: "))
