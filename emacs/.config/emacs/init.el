@@ -1939,6 +1939,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
   :defer t
   :mode ("\\.md\\'" . gfm-mode)
   :config
+  (setq markdown-url-compose-char '(8230 8943 35 9733 9875))
   (use-package edit-indirect :straight t)
   (setq markdown-enable-html -1)
   (evil-define-key 'normal gfm-mode-map (kbd "<RET>") 'project-find-file)
