@@ -519,6 +519,9 @@ Pass ORIGINAL and ALTERNATE options."
   (define-key evil-normal-state-map (kbd "-") 'dired-jump)
   (define-key evil-normal-state-map (kbd "_") 'find-file)
 
+  (add-hook 'dired-mode-hook (lambda ()
+                               (setq imenu-generic-expression '((nil "\s+.+$" 0)))))
+
   ;; TODO: make it work with directories
   (defun dired-dim-git-ignores ()
     "Dim out .gitignore contents"
@@ -1416,6 +1419,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
   :commands imenu
   :config
   (setq imenu-auto-rescan t)
+  (setq imenu-max-item-length 300)
   (global-set-key (kbd "M-i") 'consult-imenu))
 (use-package flimenu
   :straight t
