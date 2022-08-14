@@ -890,8 +890,8 @@ Pass ORIGINAL and ALTERNATE options."
     :pre-check (unless golangci-exec (error "Cannot find golangci-lint executable"))
     :write-type 'file ; don't really use this
     :proc-form (list golangci-exec "run"
-                     "--print-issued-lines=false" "--out-format=line-number" "./..."
-                     "--disable-all" "--fast") ; --fast ones can run on single file
+                     "--print-issued-lines=false" "--out-format=line-number"
+                     "--disable-all" "--fast" fmqd-temp-file) ; --fast ones can run on single file
     :search-regexp "[^:]*:\\([[:digit:]]+\\):\\([[:digit:]]+\\): \\(.*\\)$"
     :prep-diagnostic (let* ((lnum (string-to-number (match-string 1)))
                             (col (string-to-number (match-string 2)))
