@@ -595,10 +595,16 @@ Pass ORIGINAL and ALTERNATE options."
                                                 (_ (meain/go-default-returns return-node-text errformat)))))))))
   (aas-set-snippets 'global
     ";--" "—"
-    ";>>" "→"
+    ";>>" "⟶"
+    ";<<" "⟵"
+    ";<>" "⇌"
+    ";>~" "↝"
+    ";<~" "↜"
     ";tm" "™"
     ";shr" "¯\\_(ツ)_/¯"
-    ";ghm" "[meain](https://github.com/meain)"
+    ";ch" "[meain](https://github.com/meain)"
+    ";gh" "https://github.com/"
+    ";gm" "https://github.com/meain"
     ";isodate" (lambda () (interactive) (insert (format-time-string "%a, %d %b %Y %T %z")))
     ";date" (lambda () (interactive) (insert (format-time-string "%a %b %d %Y")))
     ";sdate" (lambda () (interactive) (insert (format-time-string "%d %b %Y")))
