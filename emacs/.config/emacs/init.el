@@ -1203,6 +1203,8 @@ Pass ORIGINAL and ALTERNATE options."
   :after (xref)
   :defer 1
   :config
+  (setq consult-ripgrep-args "rg --null --line-buffered --color=never --max-columns=1000 --path-separator /\
+      --smart-case --no-heading --line-number --hidden --follow --glob \"!.git/*\" .")
   (setq xref-show-xrefs-function #'consult-xref)
   (setq xref-show-definitions-function #'consult-xref)
   (evil-set-command-property 'consult-imenu :jump t))
@@ -1396,8 +1398,6 @@ Pass ORIGINAL and ALTERNATE options."
   :after (imenu eglot)
   :config
   (advice-add 'consult-imenu :around #'meain/recenter-top-advice)
-  (setq consult-ripgrep-args "rg --line-buffered --color=never --max-columns=1000 --path-separator /\
-   --smart-case --no-heading --line-number --hidden --follow --glob \"!.git/*\" .")
   :init
   (defun meain/imenu-or-eglot (&optional alternate)
     "Create a func to alternate between goto thingy stuff.
