@@ -1447,6 +1447,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
   (evil-leader/set-key "gg" 'magit-status)
   (evil-leader/set-key "gc" 'magit-commit-create)
   (evil-leader/set-key "gG" 'magit-show-commit)
+  (evil-leader/set-key "gT" 'magit-log-trace-definition)
   :config
   (evil-define-key 'normal magit-status-mode-map (kbd ";") 'magit-stage)
   (evil-define-key 'visual magit-status-mode-map (kbd ";") 'magit-stage)
