@@ -18,9 +18,10 @@ if [ ! -e shell.nix ] && [ ! -e default.nix ]; then
 
 	echo Setting up your env with "$REPLY".
 	cat >shell.nix <<EOF
-with (import (builtins.fetchTarball "https://github.com/NixOS/nixpkgs/archive/$hm_nixpkgs_rev.tar.gz") { });
-mkShell {
-  nativeBuildInputs = [
+{ pkgs ? import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/$hm_nixpkgs_rev.tar.gz") { });
+
+pkgs.mkShell {
+  buildInputs = with pkgs; [
   $REPLY
   ];
 
