@@ -1,0 +1,61 @@
+#!/bin/bash
+# Reverse sshfs (GPLv3)
+# Source: https://github.com/rom1v/rsshfs
+#
+# Usage:
+#   rsshfs <localpath> <remotehost>:<remotepath> [-o ro]
+#   rsshfs -u <remotehost>:<remotepath>
+#
+# Romain Vimont (®om) <rom@rom1v.com>
+
+quote() {
+    [[ $# != 0 ]] && printf '%q ' "$@" | sed 's/.$//'
+}
+
+if [[ $# -lt 2 ]]
+then
+    printf "Error: missing parameters\n" >&2
+    printf "Usage:\n" >&2
+    printf "  $0 <localpath> <remotehost>:<remotepath> [-o ro]\n" >&2
+    printf "  $0 -u <remotehost>:<remotepath>\n" >&2
+    exit 1;
+fi
+
+lpath="$1"
+IFS=: read rhost rpath <<< "$2"
+qrpath="$(quote "$rpath")"
+
+if [[ "-u" = "$lpath" ]]
+then
+    printf "Unmounting '$rhost:$rpath'...\n"
+    ssh "$rhost" fusermount -u "$qrpath"
+else
+    qlpath=$(quote "$lpath")
+    shift 2 # remove the two main pamars to keep the remainder
+    # warning: the array will be flatten to a string anyway
+    qall=$(quote "$@")
+
+    # detect sshfs read-only from consecutive args '-o' 'ro'
+    unset readonly
+    args=("$@")
+    for (( i = 1; i < $#; i++ ))
+    do
+        if [[ "${args[$i]}" == ro && "${args[(($i-1))]}" == -o ]]
+        then
+            readonly=:
+            break
+        fi
+    done
+
+    # also set read-only on the server side (the local host)
+    unset sftpargs
+    [[ "$readonly" ]] && sftpargs=(-R)
+
+    printf "Mounting '$lpath' on '$rhost:$rpath'...\n"
+    fifo=/tmp/rsshfs-$$
+    rm -f "$fifo"
+    mkfifo -m600 "$fifo" &&
+    < "$fifo" /usr/lib/openssh/sftp-server "${sftpargs[@]}" |
+      ssh "$rhost" sshfs -o slave ":$qlpath" "$qrpath" "$qall" > "$fifo"
+    rm "$fifo"
+fi
