@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# Flip workspaces between two side monitors
+
 set -e
 
 if [ -f /tmp/i3-flipped ]; then
