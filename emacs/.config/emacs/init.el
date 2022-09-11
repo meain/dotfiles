@@ -3620,6 +3620,29 @@ Pass `CREATE' to create the alternate file if it does not exits."
           (insert "\n")))
     (message "Split only works on selections")))
 
+
+;; Screenshot Emacs frame
+(defvar meain/frameshot-directory "~/Pictures/Screenshots/"
+  "Default directory for frame shots.")
+(defvar meain/frameshot-format 'png
+  "Default frame shot format.")
+(defun meain/frameshot ()
+  "Save Emacs frame as frame shot.
+Directory is determined by variable `frameshot-directory' and if
+not defined, it will be saved in the `$HOME' directory."
+  (interactive)
+  (let* ((image (x-export-frames nil (or frameshot-format 'png)))
+	     (directory (or frameshot-directory (getenv "HOME")))
+	     (file (concat directory (format-time-string "EMACS-Screenshot-%Y-%m-%d-%T.")
+		               (symbol-name frameshot-format))))
+    (make-directory directory t)
+    (with-temp-file file
+      (insert image))
+    (dired directory)
+    (revert-buffer)
+    (dired-goto-file (expand-file-name file))
+    (message "Frame shot saved as `%s'" file)))
+
 ;; Just some hima testing code
 (defun meain/reload-current-theme ()
   "Util to reload hima theme for debugging."
