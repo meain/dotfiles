@@ -18,7 +18,7 @@ if [ ! -e shell.nix ] && [ ! -e default.nix ]; then
 
 	echo Setting up your env with "$REPLY".
 	cat >shell.nix <<EOF
-{ pkgs ? import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/$hm_nixpkgs_rev.tar.gz") { });
+{ pkgs ? import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/$hm_nixpkgs_rev.tar.gz") { } }:
 
 pkgs.mkShell {
   buildInputs = with pkgs; [
