@@ -1888,11 +1888,11 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
       (if (not (s-starts-with-p "Unable to find any tests" command))
           (progn
             (setq meain/test-runner-previous-command command)
-            (compile command))
+            (compile (concat "nice " command)))
         (if (and meain/test-runner-run-previous-if-empty meain/test-runner-previous-command)
             (progn
               (message "Could not find any tests, running previous test...")
-              (compile meain/test-runner-previous-command))
+              (compile (concat "nice " meain/test-runner-previous-command)))
           (message "Unable to find any tests")))))
   :init
   (evil-leader/set-key "d" 'meain/test-runner)
