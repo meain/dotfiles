@@ -9,6 +9,11 @@ if ! echo "$URL" | grep -qE '^http'; then
 fi
 echo "$URL" | grep -q '[#?]' && echo "Invalid git url. Url contains [#?]" && exit 1
 
+# Github started adding /tree/<commit-sha> at the end to the copied urls
+if echo "$URL" | grep -q '^https://github.com'; then
+	URL="$(echo "$URL" | grep -o "https://github.com/[^/]*/[^/]*")"
+fi
+
 cat $VIME_PATH/gourcer $GOURCER_PATH/pending |
 	grep -q "$URL" && echo "[Already available] $URL" && exit 0
 
@@ -20,7 +25,7 @@ fi
 if echo "$URL" | grep -qE "^http"; then
 	echo "- $URL" >>$VIME_PATH/gourcer
 	echo "[$stars] $URL added to grourcer list"
-    echo "Local gourcer list is now $(wc -l $VIME_PATH/gourcer | cut -d' ' -f1) items"
+	echo "Local gourcer list is now $(wc -l $VIME_PATH/gourcer | cut -d' ' -f1) items"
 else
 	echo "[Invalid url] $URL"
 fi
