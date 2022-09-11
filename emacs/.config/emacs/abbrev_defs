@@ -16,5 +16,6 @@
     ("resouces" "resources" nil :count 0)
     ("resoruces" "resources" nil :count 0)
     ("emasc" "emacs" nil :count 0)
+    ("reponse" "response" nil :count 0)
    ))
 
