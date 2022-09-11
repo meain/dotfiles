@@ -10,7 +10,7 @@ cat $DATAFILES_PATH/pandoc-github-template.html >"$outfile"
 pandoc --no-highlight \
 	--template $DATAFILES_PATH/pandoc-github-template.html \
 	--output - -f gfm -t html5 \
-	--metadata title="$1 - Preview" "$1" |
+	--metadata title="$(basename $1)" "$1" |
 	sed -z 's|<pre class="mermaid"><code>\([^<]*\)</code></pre>|<div class="mermaid">\1</div>|g' >"$outfile"
 # we can safely use `<` in sed as pandoc will convert < in code to &le
 
