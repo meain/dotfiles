@@ -2588,7 +2588,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
          (lambda () (meain/tree-sitter-thing-name 'class-like)))))
 
 (use-package tree-sitter-langs
-  :straight t
+  :load-path "/home/meain/dev/src/tree-sitter-langs"
   :defer 1
   :after tree-sitter
   :config
@@ -2614,10 +2614,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
 ;; Some custom text objects based on treesitter
 (use-package evil-textobj-tree-sitter
   :defer 1
-  :straight (evil-textobj-tree-sitter :type git
-                                      :host github
-                                      :repo "meain/evil-textobj-tree-sitter"
-                                      :files (:defaults "queries"))
+  :load-path "/home/meain/dev/src/evil-textobj-tree-sitter/"
   :after tree-sitter
   :config
   (define-key evil-outer-text-objects-map "m" (evil-textobj-tree-sitter-get-textobj "import"
