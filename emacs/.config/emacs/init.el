@@ -2580,7 +2580,12 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
                (node-at-point (cl-some #'tree-sitter-node-at-point
                                        (alist-get major-mode node-types)))
                (node-name (tsc-get-child-by-field node-at-point :name)))
-      (tsc-node-text node-name))))
+      (tsc-node-text node-name)))
+  ;; Connect to which-function for magit-log-trace-definition
+  (setq which-func-functions
+        (list
+         (lambda () (meain/tree-sitter-thing-name 'function-like))
+         (lambda () (meain/tree-sitter-thing-name 'class-like)))))
 
 (use-package tree-sitter-langs
   :straight t
