@@ -11,11 +11,11 @@ in
   home. username = "meain";
   home. homeDirectory = "/home/meain";
 
-  programs. home-manager. enable = true;
+  programs.home-manager.enable = true;
 
-  services.emacs.package = pkgs.emacsUnstable;
+  services.emacs.package = pkgs.emacsGit;
   programs.emacs = {
-    package = pkgs.emacsUnstable;
+    package = pkgs.emacsGit;
     enable = true;
     extraPackages = epkgs: [ epkgs.vterm ];
   };
