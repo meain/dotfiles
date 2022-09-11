@@ -3210,8 +3210,15 @@ START and END comes from it being interactive."
 ;; Narrow region
 (use-package fancy-narrow
   :straight t
-  :commands (fancy-narrow-to-region fancy-widen)
-  :init
+  :commands (fancy-narrow-to-region fancy-widen evil-fancy-narrow)
+  :config
+  ;; TODO: remove extra args
+  (evil-define-operator evil-fancy-narrow (beg end type register _handler)
+    "Narrow to region"
+    :move-point nil
+    :repeat nil
+    (interactive "<R><x><y>")
+    (fancy-narrow-to-region beg end))
   (defun meain/narrow-region-dwim (&optional basic)
     "Narrow or widen the region (dwim)."
     (interactive)
@@ -3222,6 +3229,8 @@ START and END comes from it being interactive."
       (if basic
           (call-interactively 'widen)
         (call-interactively 'fancy-widen))))
+  :init
+  (define-key evil-normal-state-map (kbd "X") 'evil-fancy-narrow)
   (global-set-key (kbd "M-N") 'meain/narrow-region-dwim))
 
 ;; Buffer/Frame/Window keybinds
@@ -3243,23 +3252,6 @@ START and END comes from it being interactive."
 (advice-add 'bookmark-jump :around #'meain/recenter-advice)
 (global-set-key (kbd "M-f m") 'bookmark-jump)
 (global-set-key (kbd "M-f M") 'bookmark-set)
-
-;; Fancy narrow to textobj
-(use-package emacs
-  :commands (meain/fancy-narrow-to-thing)
-  :config
-  (defun meain/fancy-narrow-to-thing (thing)
-    (interactive)
-    (if (buffer-narrowed-p) (fancy-widen))
-    (let ((range (evil-textobj-tree-sitter--range 1 (list (intern thing)))))
-      (fancy-narrow-to-region (car range) (cdr range))))
-  (evil-leader/set-key "n f" (cons "narrow-function" (meain/ilambda meain/fancy-narrow-to-thing "function.outer")))
-  (evil-leader/set-key "n c" (cons "narrow-class" (meain/ilambda meain/fancy-narrow-to-thing "class.outer")))
-  (evil-leader/set-key "n C" (cons "narrow-comment" (meain/ilambda meain/fancy-narrow-to-thing "comment.outer")))
-  (evil-leader/set-key "n o" (cons "narrow-loop" (meain/ilambda meain/fancy-narrow-to-thing "loop.outer")))
-  (evil-leader/set-key "n i" (cons "narrow-conditional" (meain/ilambda meain/fancy-narrow-to-thing "conditional.outer")))
-  (evil-leader/set-key "n a" (cons "narrow-parameter" (meain/ilambda meain/fancy-narrow-to-thing "parameter.outer")))
-  (evil-leader/set-key "n n" (cons "reset-narrow" #'fancy-widen)))
 
 ;; Quick file rename
 (defun meain/rename-current-file ()
