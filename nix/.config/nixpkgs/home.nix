@@ -386,7 +386,7 @@ in
   systemd.user.timers.update-calendar = utils.timer-min { min = "10"; }; # actual pull is hourly
   systemd.user.services.wo-notify = utils.ss-timer { cmd = ",output-notify \"Working on...\" ,wo-info"; };
   systemd.user.timers.wo-notify = utils.timer-min { min = "15"; };
-  systemd.user.services.mscripts-backup = utils.ss-timer { cmd = ",mscripts-backup"; };
+  systemd.user.services.mscripts-backup = utils.ss-timer { cmd = ",projects-config-backup"; };
   systemd.user.timers.mscripts-backup = utils.timer-daily;
 
   # regular cleanup

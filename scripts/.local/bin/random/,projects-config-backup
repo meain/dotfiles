@@ -1,0 +1,27 @@
+#!/bin/sh
+
+# Backup all project config files not backed up to project git to a separate git server
+
+SAVEPATH="$HOME/.local/share/untracked-project-configs"
+mkdir -p $SAVEPATH
+
+backup_loc() {
+	fd -HI '.git$' $HOME/dev | grep -v '/temp/' |
+		while read -r path; do
+			dir="$(dirname $path)"
+			[ -e "$dir/$1" ] || continue
+			cleanpath="$(echo $dir | sed 's|^/home/meain/dev/||;s|/|__|g')"
+			echo "$cleanpath"
+            mkdir -p "$SAVEPATH/$cleanpath"
+			cp -r "$dir/$1" "$SAVEPATH/$cleanpath/$1"
+		done
+}
+
+backup_loc .mscripts
+backup_loc shell.nix
+backup_loc default.nix
+
+cd $SAVEPATH
+git add .
+git commit -m 'Update project configs'
+git push origin master
