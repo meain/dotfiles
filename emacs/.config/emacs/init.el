@@ -2140,7 +2140,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
   (setq message-sendmail-envelope-from 'header)
   (setq mail-envelope-from 'header)
   (setq notmuch-fcc-dirs "\"[Gmail].Sent Mail\" +sent -unread") ; stores sent mail to the specified directory
-  (setq message-directory "~/.local/share/mail/meain/[Gmail].Drafts") ; stores postponed messages to the specified directory
+  (setq message-directory "~/.local/share/mail") ; stores postponed messages to the specified directory
   (setq sendmail-program "msmtp")
   (setq send-mail-function 'smtpmail-send-it)
   (setq message-sendmail-f-is-evil t)
@@ -2398,7 +2398,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
   (setq vc-ignore-dir-regexp (format "%s\\|%s" vc-ignore-dir-regexp tramp-file-name-regexp))
   (setq tramp-verbose 3)
   (defun meain/tramp-open ()
-    "Opern dired in a server by selcting a host via autocomplete."
+    "Opern dired in a server by selecting a host via autocomplete."
     (interactive)
     (dired (concatenate 'string "/ssh:" (meain/ssh-host-picker) ":"))))
 
