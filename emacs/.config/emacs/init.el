@@ -2940,6 +2940,10 @@ SHORTCUT is the keybinding to use.  NAME if the func suffix and FILE is the file
 (meain/quick-file-open-builder "m" "thing-for-today" "~/.local/share/vime/thing-for-today.mtodo")
 (meain/quick-file-open-builder "M" "thing-for-today-personal" "~/.local/share/vime/thing-for-today-personal.mtodo")
 
+(evil-leader/set-key "E e" (meain/ilambda project-switch-project "~/dev/rafay/eaas/eaas-playground/"))
+(evil-leader/set-key "E p" (meain/ilambda project-switch-project "~/dev/rafay/paralus/paralus/"))
+(evil-leader/set-key "E n" (meain/ilambda project-switch-project "~/dev/src/nur-packages/"))
+
 ;; Fullscreen current buffer
 (defvar meain/window-configuration nil)
 (define-minor-mode meain/monacle-mode
