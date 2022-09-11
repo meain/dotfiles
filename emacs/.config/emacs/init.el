@@ -462,8 +462,13 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package compile
   :commands (compile recompile)
   :config
-  (setq compilation-scroll-output nil)
+  (setq compilation-scroll-output t)
   (evil-set-initial-state 'comint-mode 'normal)
+  (defun meain/compilation-colorcode (_buffer string)
+    "Change background color of compilation `_BUFFER' to red on failure."
+    (unless (string-prefix-p "finished" string) ; Having color for success was distracting
+      (face-remap-add-relative 'default 'diff-hl-delete)))
+  (add-to-list 'compilation-finish-functions 'meain/compilation-colorcode)
   (defun meain/recompile-or-compile (&optional arg)
     "Compile or recompile based on universal `ARG'."
     (interactive "P")
