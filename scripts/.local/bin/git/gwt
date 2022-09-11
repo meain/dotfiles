@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# Simplifying worktree stuff
+
+set -e
+
+[ -z "$1" ] && echo 'usage: gwt <branch>' && exit 1
+
+branch="$1"
+pushd "$(git rev-parse --show-toplevel 2>/dev/null)" || exit 1
+proj="$(basename "$PWD")"
+git worktree add "../,$proj--$branch" "$branch"
+echo Created new worktree at "../,$proj--$branch"
+# TODO: might have to be a func so that we can cd at the end
