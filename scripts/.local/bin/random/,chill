@@ -9,7 +9,7 @@ download() {
     name="$(echo "$1" | awk '{print $1}')"
     url="$(echo "$1" | awk '{print $2}')"
     if [ ! -f "$name" ]; then
-        youtube-dl -f 'bestaudio[ext=m4a]' --output "$name" "$url"
+        yt-dlp -f 'bestaudio[ext=m4a]' --output "$name" "$url"
     else
         echo INFO: "$name" already available
     fi
