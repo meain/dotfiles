@@ -1512,6 +1512,14 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
   (setq blamer-border-lines '(?+ ?- ?+ ?| ?+ ?+ )) ;; default one creates issues with spacing
   :init (evil-leader/set-key "G" 'blamer-show-commit-info))
 
+;; Magit todo
+(use-package magit-todos
+  :straight t
+  :defer 1
+  :after (magit)
+  :config
+  (magit-todos-mode))
+
 ;; Matchit
 (use-package evil-matchit
   :straight t
