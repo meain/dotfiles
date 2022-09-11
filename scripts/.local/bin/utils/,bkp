@@ -1,17 +1,19 @@
 #!/bin/sh
 
+# Quick way to rename files to $NAME.bkp
+
 set -e
 
-FILENAME="$1"
-if [ ! -f "$FILENAME" ];then
-    if [ -f "$FILENAME.bkp" ];then
-        FILENAME="$FILENAME.bkp"
-    fi
-fi
+FILENAME=$(echo "$1" | sed 's|\.bkp$||')
 
-if echo "$FILENAME" | sed "s|.*\.\(.*\)|\1|" | grep 'bkp' > /dev/null;then
-    BASNAME="$(echo "$FILENAME" | sed "s|\(.*\)\.bkp|\1|")"
-    mv -iv "$FILENAME" "$BASNAME"
+[ -e "$FILENAME" ] && [ -e "$FILENAME.bkp" ] &&
+	echo "Both $FILENAME and $FILENAME.bkp exists, exiting" && exit 1
+
+[ ! -e "$FILENAME" ] && [ ! -e "$FILENAME.bkp" ] &&
+	echo "$FILENAME does not exist" && exit 1
+
+if [ -e "$FILENAME" ]; then
+	mv -iv "$FILENAME" "$FILENAME.bkp"
 else
-    mv -iv "$FILENAME" "$FILENAME.bkp"
+	mv -iv "$FILENAME.bkp" "$FILENAME"
 fi
