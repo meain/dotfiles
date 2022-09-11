@@ -1197,14 +1197,13 @@ Pass ORIGINAL and ALTERNATE options."
   (setq orderless-style-dispatchers '(initialism-if-comma
                                       flex-if-twiddle
                                       without-if-bang))
-  (orderless-define-completion-style orderless+initialism
-    (orderless-matching-styles '(orderless-initialism
-                                 orderless-literal
+  (orderless-define-completion-style orderless+basic
+    (orderless-matching-styles '(orderless-literal
                                  orderless-regexp)))
   (setq completion-category-overrides
-        '((command (styles orderless+initialism))
-          (symbol (styles orderless+initialism))
-          (variable (styles orderless+initialism))
+        '((command (styles orderless+basic))
+          (symbol (styles orderless+basic))
+          (variable (styles orderless+basic))
           (file (styles basic partial-completion)))))
 (use-package marginalia
   :straight t
