@@ -1134,6 +1134,9 @@ Pass ORIGINAL and ALTERNATE options."
   (define-key vertico-map (kbd "M-g") 'vertico-multiform-grid)
   (define-key vertico-map (kbd "<S-backspace>") 'vertico-directory-up)
 
+  (define-key vertico-map (kbd "M-n") 'vertico-next-group)
+  (define-key vertico-map (kbd "M-p") 'vertico-previous-group)
+
   (defun crm-indicator (args)
     (cons (format "[CRM%s] %s"
                   (replace-regexp-in-string
