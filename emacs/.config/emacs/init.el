@@ -3035,11 +3035,12 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
                            (sort (remove-if-not #'(lambda (x)
                                                     (eq (nth 1 x) nil))
                                                 (directory-files-and-attributes directory))
-                                 #'(lambda (x y) (time-less-p (nth 6 y) (nth 6 x)))))))))))
+                                 #'(lambda (x y) (time-less-p (nth 6 y) (nth 6 x))))))))))
+          (mtodo-mode))
       (progn
         (find-file (meain/vime--get-new-filename directory))
         (insert ":name ")
-        (text-mode)
+        (mtodo-mode)
         (evil-insert 1))))
   :init
   (evil-leader/set-key "v" '(lambda (createnew)
