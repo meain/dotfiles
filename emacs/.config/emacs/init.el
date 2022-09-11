@@ -2870,6 +2870,9 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
 
 ;;; [CUSTOM FUNCTIONS] ==============================================
 
+;; Automatic chmod +x when you save a file that starts with a #! shebang:
+(add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
+
 ;; Font size changes
 (global-set-key (kbd "s-=") 'text-scale-increase)
 (global-set-key (kbd "s--") 'text-scale-decrease)
