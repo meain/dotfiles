@@ -2005,6 +2005,16 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
   :defer t
   :config
   (evil-set-command-property 'godef-jump :jump t))
+(use-package go-fill-struct
+  :straight t
+  :commands (go-fill-struct))
+(use-package go-tag
+  :straight t
+  :commands (go-tag-add go-tag-remove go-tag-refresh)
+  :config (setq go-tag-args (list "-transform" "camelcase")))
+(use-package go-impl
+  :straight t
+  :commands (go-impl))
 (use-package lua-mode :straight t :defer t)
 (use-package web-mode :straight t :defer t)
 (use-package jinja2-mode :straight t :defer t)

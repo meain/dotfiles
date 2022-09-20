@@ -134,6 +134,8 @@ in
     pkgs.go-tools # installing staticcheck (technically available in golangci-lint, but for use in lsp)
     spkgs.errcheck # available in golangci-lint, but still
     pkgs.golangci-lint # all kinds of linters for go
+    pkgs.gomodifytags # modify struct tags
+    pkgs.impl # generate implementations for a struct
     # pkgs.delve # debugging in go
 
     # programming-web
