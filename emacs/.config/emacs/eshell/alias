@@ -1,0 +1,8 @@
+alias e find-file-other-window
+alias ff find-file
+alias ll ls -l
+alias g git status --short
+alias k kubectl
+alias q exit
+alias gd magit-diff-unstaged
+alias gds magit-diff-staged
