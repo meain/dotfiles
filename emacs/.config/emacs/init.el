@@ -1354,13 +1354,13 @@ Pass ORIGINAL and ALTERNATE options."
   :straight t
   :commands (format-all-buffer format-all-ensure-formatter)
   :config
-  (define-format-all-formatter fixjson
-    ;; Use fixjson for formatting json files
-    (:executable "fixjson")
-    (:install "npm i -g fixjson")
-    (:languages "JSON")
-    (:features)
-    (:format (format-all--buffer-easy executable)))
+  (define-format-all-formatter
+   fixjson ; Use fixjson for formatting json files
+   (:executable "fixjson")
+   (:install "npm i -g fixjson")
+   (:languages "JSON")
+   (:features)
+   (:format (format-all--buffer-easy executable)))
   (setq-default format-all-formatters '(("HTML" prettier) ("Go" goimports) ("JSON" fixjson) ("Nix" nixpkgs-fmt) ("Shell" shfmt)))
   :init
   (define-key evil-normal-state-map (kbd ",,") '(lambda () (interactive)
