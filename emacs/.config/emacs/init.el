@@ -614,18 +614,18 @@ Pass ORIGINAL and ALTERNATE options."
     "Making it a function instead of an alist so that we can handle unknown TYPE."
     (pcase type
       ("error" errformat)
-      ("string" "\"\"")
-      ("rune" "0")
-      ("int" "0")
-      ("float64" "0.0")
       ("bool" "false")
+      ("string" "\"\"")
+      ("byte" "0") ("rune" "0")
+      ("int" "0") ("int32" "0") ("int64" "0")
+      ("float32" "0.0") ("float64" "0.0")
       ("chan" "nil")
+      ("interface" "nil")
+      ("map" "nil")
+      ("func" "nil")
       ((pred (string-prefix-p "<-")) "nil")
       ((pred (string-prefix-p "[")) "nil")
       ((pred (string-match " ")) nil) ; for situations with return name
-      ;; ((pred (string-match " "))
-      ;;  (meain/go-default-returns (nth 1
-      ;;                                 (split-string type " "))))
       ((pred (string-prefix-p "*")) (concat (replace-regexp-in-string "\*" "&" type) "{}"))
       (_ (concat type "{}"))))
   (defun meain/go-return-string (errformat)
