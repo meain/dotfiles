@@ -359,6 +359,28 @@ Pass ORIGINAL and ALTERNATE options."
                                 (define-key eshell-mode-map (kbd "M-h") 'meain/move-swap-left)
                                 (define-key eshell-mode-map (kbd "M-k") 'meain/move-swap-up)
                                 (define-key eshell-mode-map (kbd "M-j") 'meain/move-swap-down))))
+
+
+;; ansi-term config
+(use-package term
+  :config
+  (defun meain/term-exec-hook ()
+    "Automatically close `ansi-term' buffer on exit."
+    (let* ((buff (current-buffer))
+           (proc (get-buffer-process buff)))
+      (set-process-sentinel
+       proc
+       `(lambda (process event)
+          (if (string= event "finished\n")
+              (kill-buffer ,buff))))))
+  (add-hook 'term-exec-hook 'meain/term-exec-hook)
+  (add-hook 'term-mode-hook (lambda ()
+                              (setenv "TERM" "xterm-256color")
+                              (define-key term-mode-map (kbd "M-l") 'meain/move-swap-right)
+                              (define-key term-mode-map (kbd "M-h") 'meain/move-swap-left)
+                              (define-key term-mode-map (kbd "M-k") 'meain/move-swap-up)
+                              (define-key term-mode-map (kbd "M-j") 'meain/move-swap-down))))
+
 ;; Shrink and enlarge windows (not contextual as of now)
 ;; https://www.emacswiki.org/emacs/WindowResize
 (defmacro meain/inlambda (functionname &rest args)
