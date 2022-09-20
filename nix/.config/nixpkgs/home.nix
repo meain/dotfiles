@@ -361,7 +361,7 @@ in
   systemd.user.services.wo-info = utils.ss-simple { cmd = "WO_WRITE=1 ,wo-info"; wait = 5; };
   systemd.user.services.emacs = utils.ss-simple { cmd = "emacs --fg-daemon"; wait = 1; };
   systemd.user.services.emacsclient = utils.ss-simple { cmd = "emacsclient -F \\'((title . \"floatingemacs\"))\\' -c"; wait = 1; };
-  systemd.user.services.floatingterm = utils.ss-simple { cmd = "sakura --name floatingterm -x \"tmux new -As floating\""; wait = 1; };
+  systemd.user.services.floatingterm = utils.ss-simple { cmd = "sakura --name floatingterm -x \"tt floating\""; wait = 1; };
   systemd.user.services.mail-watcher = utils.ss-simple { cmd = "find /home/meain/.local/share/mail/.notmuch/xapian|entr -n ,shellout-update"; wait = 5; };
 
   # code/note sync
