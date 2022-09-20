@@ -1453,13 +1453,13 @@ Pass ORIGINAL and ALTERNATE options."
                                   menu-items nil t nil nil (car menu-items)))))
       (jsonrpc-request server :workspace/executeCommand
                        `(:command "switchConnections" :arguments [,db]:timeout 0.5))))
-  (define-key evil-normal-state-map (kbd "K") 'eldoc-print-current-symbol-info)
-  (define-key evil-normal-state-map (kbd "g d") 'xref-find-definitions)
-  (define-key evil-normal-state-map (kbd "g D") 'eglot-find-implementation)
-  (define-key evil-normal-state-map (kbd "g r") 'xref-find-references)
-  (define-key evil-normal-state-map (kbd "g R") 'eglot-rename)
-  (define-key evil-normal-state-map (kbd "g ,") 'eglot-format-buffer)
-  (define-key evil-normal-state-map (kbd "g a") 'eglot-code-actions))
+  (evil-define-key 'normal eglot-mode-map (kbd "K") 'eldoc-print-current-symbol-info)
+  (evil-define-key 'normal eglot-mode-map (kbd "g d") 'xref-find-definitions)
+  (evil-define-key 'normal eglot-mode-map (kbd "g D") 'eglot-find-implementation)
+  (evil-define-key 'normal eglot-mode-map (kbd "g r") 'xref-find-references)
+  (evil-define-key 'normal eglot-mode-map (kbd "g R") 'eglot-rename)
+  (evil-define-key 'normal eglot-mode-map (kbd "g ,") 'eglot-format-buffer)
+  (evil-define-key 'normal eglot-mode-map (kbd "g a") 'eglot-code-actions))
 
 ;; consult-eglot
 (use-package consult-eglot
