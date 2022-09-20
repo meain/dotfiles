@@ -706,6 +706,16 @@ Pass ORIGINAL and ALTERNATE options."
     "!+" "!="
     ";;" ":="
     ";j" (lambda () (interactive) (insert "fmt.Println(\"\")") (backward-char 2))
+    ;; create `name = append(name, )` forms
+    ";ap" (lambda ()
+            (interactive)
+            (delete-char -1)
+            (kill-word -1)
+            (yank)
+            (insert " = append(")
+            (yank)
+            (insert ", )")
+            (forward-char -1))
     ";rr"
     (lambda ()
       (interactive)
