@@ -133,6 +133,16 @@
     `(vterm-color-white ((t (:foreground "#F5F5F5" :background "#FFFFFF"))))
     `(vterm-color-underline ,underline-layer)
 
+    `(term-color-black ((t (:foreground "#444444" :background "#969694"))))
+    `(term-color-red ((t (:foreground "#9E0047" :background "#FF0072"))))
+    `(term-color-green ((t (:foreground "#718C00" :background "#8EB200"))))
+    `(term-color-yellow ((t (:foreground "#B25000" :background "#FF7200"))))
+    `(term-color-blue ((t (:foreground "#4271AE" :background "#5EA2F9"))))
+    `(term-color-magenta ((t (:foreground "#8959A8" :background "#A56CCC"))))
+    `(term-color-cyan ((t (:foreground "#3E999F" :background "#51C8D1"))))
+    `(term-color-white ((t (:foreground "#F5F5F5" :background "#FFFFFF"))))
+    `(term-color-underline ,underline-layer)
+
     ;; magit
     `(diff-refine-removed ,reder-light-red-layer)
     `(diff-refine-added ,greener-light-green-layer)
