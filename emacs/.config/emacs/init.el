@@ -469,6 +469,7 @@ Pass ORIGINAL and ALTERNATE options."
     (unless (string-prefix-p "finished" string) ; Having color for success was distracting
       (face-remap-add-relative 'default 'diff-hl-delete)))
   (add-to-list 'compilation-finish-functions 'meain/compilation-colorcode)
+  (add-to-list 'compilation-finish-functions 'toggle-truncate-lines)
   (defun meain/recompile-or-compile (&optional arg)
     "Compile or recompile based on universal `ARG'."
     (interactive "P")
