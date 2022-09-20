@@ -185,7 +185,7 @@ in
     pkgs.cargo-edit # dep management
     # pkgs.cargo-bloat # find big chunks
     # pkgs.cargo-udeps # find unnecessary deps
-    # pkgs.cargo-release # for releasing packages
+    pkgs.cargo-release # for releasing packages
     pkgs.cargo-watch # continuously run cargo check
 
     # programming-lua
@@ -281,7 +281,8 @@ in
     # pkgs.nur.repos.renesat.activitywatch-bin  # https://github.com/NixOS/nix/issues/3843
     ppkgs.activitywatch-bin # activity tracking
     # pkgs.gforth # gnu forth interpreter
-    pkgs.nodePackages.mermaid-cli
+    pkgs.nodePackages.mermaid-cli # cli for generating mermaid charts
+    pkgs.genact # become a movie "hacker"
 
     # gnome tweaking
     # pkgs.gnome3.dconf-editor # change dconf settings
