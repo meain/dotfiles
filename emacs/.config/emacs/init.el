@@ -336,6 +336,29 @@ Pass ORIGINAL and ALTERNATE options."
                     (vterm t))))
 (global-set-key (kbd "M-w") 'delete-window)
 
+;; Eshell config
+(use-package eshell
+  :config
+  (setq eshell-prompt-function
+        (lambda ()
+          (concat
+           (propertize (string-join
+                        (reverse
+                         (ntake 2 (reverse
+                                   (split-string
+                                    (eshell/pwd) "/")))) "/")
+                       'face `(:foreground "#93a1a1"))
+           (propertize (if (car (vc-git-branches))
+                           (concat "[" (car (vc-git-branches)) "]")
+                         "") 'face `(:foreground "#93a1a1"))
+           " "
+           )))
+  (add-hook 'eshell-mode-hook (lambda ()
+                                (setenv "TERM" "xterm-256color")
+                                (define-key eshell-mode-map (kbd "M-l") 'meain/move-swap-right)
+                                (define-key eshell-mode-map (kbd "M-h") 'meain/move-swap-left)
+                                (define-key eshell-mode-map (kbd "M-k") 'meain/move-swap-up)
+                                (define-key eshell-mode-map (kbd "M-j") 'meain/move-swap-down))))
 ;; Shrink and enlarge windows (not contextual as of now)
 ;; https://www.emacswiki.org/emacs/WindowResize
 (defmacro meain/inlambda (functionname &rest args)
