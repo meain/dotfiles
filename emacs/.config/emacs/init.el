@@ -1184,7 +1184,7 @@ Pass ORIGINAL and ALTERNATE options."
              :host github :repo "minad/vertico"
              :files (:defaults "extensions/*.el"))
   :config
-  (setq vertico-count 10)
+  (setq vertico-count 13)
   (setq vertico-cycle t) ; useful for consult-imenu
   (define-key vertico-map (kbd "M-q") 'vertico-multiform-vertical)
   (define-key vertico-map (kbd "M-g") 'vertico-multiform-grid)
