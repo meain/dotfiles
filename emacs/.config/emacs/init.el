@@ -2492,6 +2492,11 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
   :diminish
   :config (global-activity-watch-mode))
 
+;; Control bluetooth devices
+(use-package bluetooth
+  :straight t
+  :commands (bluetooth-list-devices))
+
 ;; Markdown preview
 (defun meain/kill-markdown-preview ()
   "Preview markdown.  Using pandoc under the hood."
