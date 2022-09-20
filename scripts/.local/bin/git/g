@@ -1,0 +1,10 @@
+#!/bin/sh
+# Show short status or alias git based on args
+
+set -e
+
+if [ -z "$1" ]; then
+	git status -sb
+else
+	git $*
+fi

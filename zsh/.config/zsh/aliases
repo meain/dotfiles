@@ -55,12 +55,9 @@ alias et='emacsclient -nw'
 alias ,remote-work="ssh $EXPERIMENT_VM"
 
 # git
-alias g='git status -sb'
 alias gs='git status'
 alias gma='git commit --amend'
 alias gl='git lg'
-alias ggg='git lh'
-alias gggg='git hi'
 alias gd='git diff'
 alias gds='git diff --staged'
 alias gdp="git diff @{1}.."
