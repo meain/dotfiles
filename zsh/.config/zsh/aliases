@@ -26,6 +26,7 @@ alias j=z
 alias rr=lf
 alias rm=trash
 alias k=kubectl
+alias wk="watch kubectl"
 alias brew='HOMEBREW_NO_AUTO_UPDATE=1 brew'
 alias ax="axel -a -n 10"
 alias lynx='lynx -lss="~/.config/lynx/.lynx.lss" -cfg="~/.config/lynx/.lynx.cfg"'
