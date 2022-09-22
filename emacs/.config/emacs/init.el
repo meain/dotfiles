@@ -2397,6 +2397,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
   :defer 1
   :diminish
   :config
+  (add-to-list 'beacon-dont-blink-major-modes 'notmuch-search-mode) ; makes the line move around horizontally
   (setq beacon-blink-when-window-scrolls t)
   (advice-add 'evil-forward-section-begin
               :after (lambda (&rest r) (beacon-blink) (recenter))
