@@ -117,6 +117,11 @@ workspace $ws5 output DisplayPort-0
 workspace $ws9 output HDMI-A-0
 workspace $ws10 output HDMI-A-0
 
+## replace when just two screens one above other
+# workspace $ws3 output HDMI-A-0
+# workspace $ws4 output HDMI-A-0
+# workspace $ws5 output HDMI-A-0
+
 # switch to workspace
 bindsym $mod+1 workspace number $ws1
 bindsym $mod+2 workspace number $ws2
