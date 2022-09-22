@@ -1,9 +1,9 @@
 #!/bin/sh
 
-# Delete remote branchs
+# Delete remote branches
 
 set -e
 
 git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d
-printf "Delete upstream ones?(y/N): "
+printf "Delete upstream ones?(y/N): " && read
 [ "$REPLY" == "y" ] && git remote prune $(git remote | fzf --height 40% --reverse)
