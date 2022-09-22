@@ -2,25 +2,17 @@
 
 set -e
 
-_get_image() {
-    docker images | tail -n+2 |
-        grep -v 'none' | grep -v 'gcr.io' | grep -v 'amazonaws' | grep -vE '^\d+' |
-        awk '{print $1":"$2}' | fzf
-}
-
-GROUND="$1"
-if [ -z "$GROUND" ]; then
-    GROUND="$(_get_image)"
-fi
-
-
-if echo "$GROUND" | grep -q ':';then
-    IMAGE="$GROUND"
+if [ -z "$1" ]; then
+	IMG="$(docker images | grep -v '<none>' | tail -n+2 | ,picker -p 'Select image:' | awk '{print $1":"$2}')"
+elif echo "$1" | grep -qv ":"; then
+	printf "Fetching available tags...\r"
+	IMG="$(curl -sk "https://registry.hub.docker.com/v2/repositories/library/$1/tags?page_size=1024" |
+		jq -r '.results[].name' | sed "s/^/$1:/" | ,picker -p 'Select tag: ')"
 else
-    TAG="$(curl -sk "https://registry.hub.docker.com/v1/repositories/$GROUND/tags" | jq -r '.[].name' | fzf)"
-    [ -z "$TAG" ] && exit 1
-    IMAGE="$GROUND:$TAG"
+	IMG="$1"
 fi
-echo "IMAGE: $IMAGE"
 
-docker run --rm -v "$(pwd):/code" --workdir /code -it "$IMAGE" sh
+[ -z "$IMG" ] && echo "No image selected" && exit 1
+
+echo "Starting playground using image $IMG"
+docker run --rm -v "$(pwd):/code" --workdir /code -it "$IMG" sh
