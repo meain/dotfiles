@@ -3719,16 +3719,13 @@ Pass `CREATE' to create the alternate file if it does not exits."
 Directory is determined by variable `frameshot-directory' and if
 not defined, it will be saved in the `$HOME' directory."
   (interactive)
-  (let* ((image (x-export-frames nil (or frameshot-format 'png)))
-	     (directory (or frameshot-directory (getenv "HOME")))
+  (let* ((image (x-export-frames nil (or meain/frameshot-format 'png)))
+	     (directory (or meain/frameshot-directory (getenv "HOME")))
 	     (file (concat directory (format-time-string "EMACS-Screenshot-%Y-%m-%d-%T.")
-		               (symbol-name frameshot-format))))
+		               (symbol-name meain/frameshot-format))))
     (make-directory directory t)
-    (with-temp-file file
-      (insert image))
-    (dired directory)
-    (revert-buffer)
-    (dired-goto-file (expand-file-name file))
+    (with-temp-file file (insert image))
+    (meain/copy-to-clipboard (expand-file-name file))
     (message "Frame shot saved as `%s'" file)))
 
 ;; Just some hima testing code
