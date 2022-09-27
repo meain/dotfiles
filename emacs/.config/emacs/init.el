@@ -1268,6 +1268,24 @@ Pass ORIGINAL and ALTERNATE options."
   :bind (:map minibuffer-local-map ("C-b" . marginalia-cycle))
   :config (marginalia-mode))
 
+;; Aggressive completions
+(use-package aggressive-completion
+  :straight t
+  :defer 1
+  :disabled t
+  :config
+  (setq aggressive-completion-delay 1.0)
+  (setq aggressive-completion-auto-completion-help nil)
+  (defun meain/vertico-complete ()
+    (interactive)
+    ;; (minibuffer-complete)
+    (when vertico--count-ov ;; Only if vertico is active.
+      (when vertico-flat-mode
+        (vertico-multiform-vertical 'vertico-grid-mode)
+        (vertico--exhibit))))
+  (setq aggressive-completion-auto-complete-fn #'meain/vertico-complete)
+  (aggressive-completion-mode t))
+
 ;; Consult without consultation fees
 (use-package consult
   :straight t
