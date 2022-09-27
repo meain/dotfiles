@@ -9,7 +9,7 @@ if [ "$1" = "-a" ]; then
 else
 	git branch --sort=-committerdate
 fi |
-	grep -v '*' |
+	grep -v '^[^ ]' |
 	awk '{print $1}' |
 	fzf --height 40% --reverse --preview 'git log --oneline -20 {}' |
 	xargs -r basename |
