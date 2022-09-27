@@ -13,8 +13,9 @@ recnamefile='/tmp/recordingname'
 	exit 0
 
 # Don't user mp4 for file extension as that more often than not ends
-# up giving corrupt files. Obs use mvk. mkv or avi seems to work.
-filename="$HOME/screenrecord-$(date +%Y-%m-%d-%H-%M-%S).mkv"
+# up giving corrupt files. mkv or avi should work ideally, but avi
+# seems to work more often than mkv.
+filename="$HOME/screenrecord-$(date +%Y-%m-%d-%H-%M-%S).avi"
 slop=$(slop -f "%x %y %w %h") || exit 1
 X="$(echo $slop | cut -d' ' -f1)"
 Y="$(echo $slop | cut -d' ' -f2)"
