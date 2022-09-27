@@ -10,11 +10,11 @@ for folder in *;do
     branch="$(git rev-parse --abbrev-ref HEAD)"
     count="$(git log master..origin/master 2>/dev/null |grep -c .)"
     if ! [ 0 = "$count" ]; then
-        echo "# $folder ($count)"
+        echo "### $folder ($count)"
         git log $branch..origin/$branch --oneline |
-            sed "s|\([a-z0-9]*\) \(.*\)$|\1 \2 [view]($gurl/commit/\1)|"
+            sed "s|\([a-z0-9]*\) \(.*\)$|\1 \2 [view]($gurl/commit/\1)|;s|^|- |"
         echo ""
     fi
     popd > /dev/null
 done > /tmp/straight-available-updates.md
-$EDITOR /tmp/straight-available-updates.md
+emacsclient -n /tmp/straight-available-updates.md
