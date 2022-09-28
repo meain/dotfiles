@@ -6,17 +6,34 @@ SAVEPATH="$HOME/.local/share/untracked-project-configs"
 mkdir -p $SAVEPATH
 
 backup_loc() {
-	fd -HI '.git$' $HOME/dev | grep -v '/temp/' |
+	tput el && echo "Saving $1..."
+	fd -HI '^\.git$' $HOME/dev | grep -v '/temp/' |
 		while read -r path; do
 			dir="$(dirname $path)"
 			[ -e "$dir/$1" ] || continue
-			cleanpath="$(echo $dir | sed 's|^/home/meain/dev/||;s|/|__|g')"
-			echo "$cleanpath"
-            mkdir -p "$SAVEPATH/$cleanpath"
+			cleanpath="$(echo $dir | sed 's|^/home/meain/dev/||')"
+			tput el && printf "$cleanpath\r"
+			mkdir -p "$SAVEPATH/$cleanpath"
 			cp -r "$dir/$1" "$SAVEPATH/$cleanpath/$1"
 		done
 }
 
+backup_remotes() {
+	echo "Saving git remotes..."
+	fd -HI '^\.git$' $HOME/dev | grep -v '/temp/' |
+		while read -r path; do
+			dir="$(dirname $path)"
+			cleanpath="$(echo $dir | sed 's|^/home/meain/dev/||')"
+			tput el && printf "$cleanpath\r"
+			mkdir -p "$SAVEPATH/$cleanpath"
+			git --git-dir="$path" remote |
+				while read -r remote; do
+					echo "$remote $(git --git-dir="$path" remote get-url "$remote")"
+				done >"$SAVEPATH/$cleanpath/GIT_REMOTES"
+		done
+}
+
+backup_remotes
 backup_loc .mscripts
 backup_loc shell.nix
 backup_loc default.nix
