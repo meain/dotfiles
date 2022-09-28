@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Ammend commit with new changes
+# Amend commit with new changes
 
 set -e
 
