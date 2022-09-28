@@ -9,6 +9,18 @@ set -e
 branch="$1"
 pushd "$(git rev-parse --show-toplevel 2>/dev/null)" || exit 1
 proj="$(basename "$PWD")"
+
+if [ "$1" == "prune" ]; then
+	[ -z "$(git worktree list | grep -v "\[$(git rev-parse --abbrev-ref HEAD)\]$")" ] &&
+		echo No worktrees to prune && exit 1
+	FORCE=""
+	[ "$2" == "-f" ] && FORCE="-f"
+	git worktree list | grep -v "\[$(git rev-parse --abbrev-ref HEAD)\]$" |
+		fzf -m | awk '{print $1}' | xargs git worktree remove $FORCE
+	git worktree prune
+	exit 0
+fi
+
 git worktree add "../,$proj--$branch" "$branch"
 echo Created new worktree at "../,$proj--$branch"
 # TODO: might have to be a func so that we can cd at the end
