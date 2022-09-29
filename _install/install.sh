@@ -10,7 +10,7 @@ defaults write NSGlobalDomain NSTableViewDefaultSizeMode -int 2              # m
 defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false  # save to disk instead of iCloud by default
 defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true # quit printer app after print
 # defaults write com.apple.LaunchServices LSQuarantine -bool false  # disable "Are you sure you want to open this app" thing
-defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -int 1 # use tap instead of click on trackpad  ## TODO: maybe -bool true
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -int 1 # use tap instead of click on trackpad
 defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1     # use tap instead of click on trackpad
 defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1                  # use tap instead of click on trackpad
 defaults write NSGlobalDomain KeyRepeat -int 1                                    # key repeat speed
@@ -21,7 +21,7 @@ defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"             
 defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"               # set listview as preferred view in finder
 defaults write com.apple.dock tilesize -int 20                                    # smaller dock icons
 defaults write com.apple.dock mouse-over-hilite-stack -bool false                 # no highlight effect on docker grid view
-defaults write com.apple.dock minimize-to-application -bool false                 # minimise to indivual app spots
+defaults write com.apple.dock minimize-to-application -bool false                 # minimise to individual app spots
 defaults write com.apple.dashboard mcx-disabled -bool true                        # disable dashboard
 defaults write com.apple.dock dashboard-in-overlay -bool true                     # do not show dashboard as a space
 defaults write com.apple.dock mru-spaces -bool false                              # do not rearrange spaces based on recently used
