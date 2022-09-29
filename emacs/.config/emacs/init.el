@@ -1529,6 +1529,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
   :init
   (evil-leader/set-key "gg" 'magit-status)
   (evil-leader/set-key "gc" 'magit-commit-create)
+  (evil-leader/set-key "gb" 'magit-blame)
   (evil-leader/set-key "gG" 'magit-show-commit)
   (evil-leader/set-key "gT" 'magit-log-trace-definition)
   :config
