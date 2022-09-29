@@ -1785,7 +1785,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
                                              (vterm t))))
   (add-to-list 'display-buffer-alist
                '((lambda (bufname _)
-                   (s-starts-with-p "*popup-shell" bufname))
+                   (s-starts-with-p "*popup-shell" (buffer-name bufname)))
                  (display-buffer-reuse-window display-buffer-at-bottom)
                  (reusable-frames . visible)
                  (window-height . 0.3)))
