@@ -3760,24 +3760,24 @@ not defined, it will be saved in the `$HOME' directory."
                                               'help-echo
                                               (buffer-file-name))))
                     '(:eval (mode-line-idle 0.3
-                                            '(:propertize (:eval (let ((thing-name (meain/tree-sitter-thing-name 'class-like)))
-                                                                   (if thing-name
-                                                                       (format ":%s" thing-name))))
+                                            '(:propertize (:eval
+                                                           (if (boundp 'tree-sitter-mode)
+                                                               (let ((thing-name (meain/tree-sitter-thing-name 'class-like)))
+                                                                 (if thing-name (format ":%s" thing-name)))))
                                                           face
                                                           hima-simple-gray)
                                             ""))
                     '(:eval (mode-line-idle 0.3
-                                            '(:propertize (:eval (let ((thing-name (meain/tree-sitter-thing-name 'function-like))
-                                                                       (config-nesting (meain/tree-sitter-config-nesting))
-                                                                       (func-name (which-function)))
-                                                                   (if thing-name
-                                                                       (format ":%s" thing-name)
-                                                                     (if config-nesting
-                                                                         (format ":%s" config-nesting)
-                                                                       (if func-name
-                                                                           (format ":%s" func-name))
-                                                                       )
-                                                                     )))
+                                            '(:propertize (:eval
+                                                           (if (boundp 'tree-sitter-mode)
+                                                               (let ((thing-name (meain/tree-sitter-thing-name 'function-like))
+                                                                     (config-nesting (meain/tree-sitter-config-nesting)))
+                                                                 (if thing-name
+                                                                     (format ":%s" thing-name)
+                                                                   (if config-nesting
+                                                                       (format ":%s" config-nesting))))
+                                                             (when-let (func-name (which-function))
+                                                               (format ":%s" func-name))))
                                                           face
                                                           hima-simple-gray)
                                             ""))
