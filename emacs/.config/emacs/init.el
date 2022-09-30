@@ -2171,6 +2171,9 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
   (evil-define-key 'normal notmuch-show-mode-map (kbd "M-k") 'meain/move-swap-up)
   (evil-define-key 'normal notmuch-show-mode-map (kbd "M-j") 'meain/move-swap-down)
   (evil-define-key 'normal notmuch-show-mode-map (kbd "M-s m f") 'meain/find-emails-from-same-sender)
+  ;; Advice to reset unread mail counter on exit
+  (advice-add 'notmuch-bury-or-kill-this-buffer
+              :after (lambda (&rest r) (meain/update-scratch-message)))
   (defun meain/find-emails-from-same-sender ()
     (interactive)
     (let* ((props (notmuch-show-get-message-properties))
