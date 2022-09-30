@@ -2993,45 +2993,50 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
       (save-selected-window (other-window 1)
                             (switch-to-buffer (other-buffer))))))
 
-;; Quick open important files
-;; Doing this using a macro so that which key will show proper func name
-(defmacro meain/quick-file-open-builder (shortcut name file)
-  "Macro to create quick-file-open functions.
-SHORTCUT is the keybinding to use.  NAME if the func suffix and FILE is the filename."
-  (declare (debug t) (indent defun))
-  (let ((funsymbol (intern (concat "open-" name)))
-        (fullshortcut (concat "e " shortcut)))
-    `(evil-leader/set-key ,fullshortcut
-       (defun ,funsymbol (&optional create)
-         (interactive "P")
-         (if (file-exists-p ,file)
-             (if (file-directory-p ,file)
-                 (find-file (concat ,file "/"
-                                    (completing-read "Choose file:"
-                                                     (directory-files ,file nil directory-files-no-dot-files-regexp))))
-               (find-file ,file))
-           (if create
-               (find-file ,file)
-             (message "Unable to find %s" ,file)))))))
-(meain/quick-file-open-builder "i" "init-el" "~/.dotfiles/emacs/.config/emacs/init.el")
-(meain/quick-file-open-builder "3" "i3-config" "~/.dotfiles/i3/.config/i3/config")
-(meain/quick-file-open-builder "s" "shell-nix" "shell.nix")
-(meain/quick-file-open-builder "c" "mscripts" ".mscripts")
-(meain/quick-file-open-builder "f" "elfeed-feeds" "~/.config/emacs/elfeed-feeds.el")
-(meain/quick-file-open-builder "a" "early-init" "~/.dotfiles/emacs/.config/emacs/early-init.el")
-(meain/quick-file-open-builder "h" "home-manager" "~/.dotfiles/nix/.config/nixpkgs/home.nix")
-(meain/quick-file-open-builder "H" "hima-theme" "~/.dotfiles/emacs/.config/emacs/hima-theme.el")
-(meain/quick-file-open-builder "t" "evil-textobj-tree-sitter" "~/.config/emacs/straight/repos/evil-textobj-tree-sitter/evil-textobj-tree-sitter.el")
-(meain/quick-file-open-builder "l" "ledger" "~/.local/share/ledger/master.ledger")
-(meain/quick-file-open-builder "I" "interesting" "~/.local/share/notes/note/interesting-links.md")
-(meain/quick-file-open-builder "u" "useful-someday" "~/.local/share/notes/note/useful-someday.md")
-(meain/quick-file-open-builder "r" "frequent-web-references" "~/.local/share/notes/note/web-references.md")
-(meain/quick-file-open-builder "m" "thing-for-today" "~/.local/share/vime/thing-for-today.mtodo")
-(meain/quick-file-open-builder "M" "thing-for-today-personal" "~/.local/share/vime/thing-for-today-personal.mtodo")
+(defun meain/qa--get-entries (filename)
+  "Helper function to parse qa files.  `FILENAME' is the name of the file to parse."
+  (let* ((contents (with-temp-buffer
+                     (insert-file-contents filename)
+                     (buffer-string)))
+         (qa-entries (mapcar (lambda (x)
+                               (string-split x " "))
+                             (string-split contents "\n"))))
+    qa-entries))
 
-(evil-leader/set-key "E e" (cons "eaas-playground" (meain/ilambda project-switch-project "~/dev/rafay/eaas/eaas-playground/")))
-(evil-leader/set-key "E p" (cons "paralus" (meain/ilambda project-switch-project "~/dev/rafay/paralus/paralus/")))
-(evil-leader/set-key "E n" (cons "nur-packages" (meain/ilambda project-switch-project "~/dev/src/nur-packages/")))
+;; Add keybindings to access important files.
+(mapcar (lambda (e)
+          (let ((key (car e))
+                (name (cadr e))
+                (file (caddr e)))
+            (evil-leader/set-key (concat "e " key)
+              (cons name (lambda ()
+                           (interactive)
+                           (if (file-exists-p file)
+                               (if (file-directory-p file)
+                                   (find-file
+                                    (concat file "/"
+                                            (completing-read
+                                             "Choose file:"
+                                             (directory-files file nil
+                                                              directory-files-no-dot-files-regexp))))
+                                 (find-file file))
+                             (if create
+                                 (find-file file)
+                               (message "Unable to find %s" file))))))))
+        (meain/qa--get-entries "~/.config/datafiles/qa-files"))
+
+;; Add keybinding to access common projects quickly.
+;; qa-projects (quick-access-projects) file contains the list of
+;; projects that will be added here.
+(mapcar (lambda (e)
+          (let ((key (car e))
+                (name (cadr e))
+                (folder (caddr e)))
+            (evil-leader/set-key (concat "E " key)
+              (cons name (lambda ()
+                           (interactive)
+                           (project-switch-project folder))))))
+        (meain/qa--get-entries "~/.config/datafiles/qa-projects"))
 
 ;; Fullscreen current buffer
 (defvar meain/window-configuration nil)
