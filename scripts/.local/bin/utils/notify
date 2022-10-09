@@ -5,12 +5,14 @@
 set -e
 
 pri=0
+to=5000
 [ "$1" == "--pri" ] && shift && pri=1
+[ "$1" == "-t" ] && shift && to="$1" && shift
 if [ $OSTYPE == "linux-gnu" ]; then
 	if [ "$pri" == "1" ]; then
-		notify-desktop --urgency=critical "${1:-Notification}" "${2}" >/dev/null 2>/dev/null
+		notify-desktop --urgency=critical -t "$to" "${1:-Notification}" "${2}" >/dev/null 2>/dev/null
 	else
-		notify-desktop "${1:-Notification}" "${2}" >/dev/null 2>/dev/null
+		notify-desktop -t "$to" "${1:-Notification}" "${2}" >/dev/null 2>/dev/null
 	fi
 else
 	[ -n $2 ] &&
