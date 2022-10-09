@@ -164,6 +164,10 @@
                              (invert-face 'header-line)
                              (run-with-timer 0.1 nil 'invert-face 'mode-line)
                              (run-with-timer 0.1 nil 'invert-face 'header-line))))
+(defun meain/what-font-am-i-using ()
+  "Show the name/details for the current font in use."
+  (interactive)
+  (message "%s" (face-attribute 'default :font)))
 
 ;; Theme
 (load-theme 'hima t)
