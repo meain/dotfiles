@@ -74,8 +74,14 @@ q() {
 	[ -z "$TMUX_PANE" ] && exit                                         # tmux popup
 	[ -n "$NVIM_LISTEN_ADDRESS" ] && exit                               # nvim popup
 	echo "$CURRENT_PANE" | grep ".*popup" && tmux detach-client && exit # floating one
+
+	# switch to last non floating tmux client if all windows in the
+	# session are closed
 	if [ "$PANES" = "1" ] && [ "$WINDOWS" = "1" ]; then
-		tmux switch-client -l || tmux switch-client -n
+		tmux ls | cut -d':' -f1 |
+			grep -vE '^floating-' |
+			grep -v "$(tmux display-message -p '#S')" |
+			head -n1 | xargs tmux switch-client -t
 		exit
 	else
 		exit
