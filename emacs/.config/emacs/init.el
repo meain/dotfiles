@@ -622,7 +622,7 @@ Pass ORIGINAL and ALTERNATE options."
       ("bool" "false")
       ("string" "\"\"")
       ("byte" "0") ("rune" "0")
-      ("int" "0") ("int32" "0") ("int64" "0")
+      ("int" "0") ("int32" "0") ("int64" "0") ("uint64" "0")
       ("float32" "0.0") ("float64" "0.0")
       ("chan" "nil")
       ("interface" "nil")
