@@ -198,7 +198,11 @@
     ;; diff-hl
     `(diff-hl-change ((t (:background ,barely-orange))))
     `(diff-hl-insert ((t (:background ,light-green))))
-    `(diff-hl-delete ((t (:background ,light-red))))))
+    `(diff-hl-delete ((t (:background ,light-red))))
+
+    ;; keycast
+    `(keycast-key ((t (:background ,light-blue))))
+    ))
 
 (provide-theme 'hima)
 ;;; hima-theme.el ends here
