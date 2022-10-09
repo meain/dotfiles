@@ -2695,15 +2695,18 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
   :defer 1
   :after tree-sitter
   :config
+  ;; Don't highlight constructors in rust with hima
   (add-function :before-until tree-sitter-hl-face-mapping-function
                 (lambda (capture-name)
                   (pcase capture-name
-                    ("python.class.name" 'font-lock-function-name-face))))
-  (add-hook 'python-mode-hook
+                    ("rust.constructor" 'tree-sitter-hl-face:function.call))))
+  (add-hook 'rust-mode-hook
             (lambda ()
               (tree-sitter-hl-add-patterns nil
-                [(class_definition (identifier)
-                                   @python.class.name)])))
+                [((identifier) @rust.constructor
+                  (.match? @rust.constructor "^[A-Z]"))])))
+
+  ;; Treat python docstring as doc instead of string
   (add-function :before-until tree-sitter-hl-face-mapping-function
                 (lambda (capture-name)
                   (pcase capture-name
