@@ -9,19 +9,29 @@ recnamefile='/tmp/recordingname'
 	cat "$recpidfile" &&
 	notify "Recording saved" "$(cat $recnamefile)" &&
 	cat $recnamefile | pbcopy &&
-    rm "$recpidfile" "$recnamefile" &&
+	rm "$recpidfile" "$recnamefile" &&
 	exit 0
 
 # Don't user mp4 for file extension as that more often than not ends
 # up giving corrupt files. mkv or avi should work ideally, but avi
 # seems to work more often than mkv.
 filename="$HOME/screenrecord-$(date +%Y-%m-%d-%H-%M-%S).avi"
-slop=$(slop -f "%x %y %w %h") || exit 1
-X="$(echo $slop | cut -d' ' -f1)"
-Y="$(echo $slop | cut -d' ' -f2)"
-W="$(echo $slop | cut -d' ' -f3)"
-H="$(echo $slop | cut -d' ' -f4)"
 
+if [ "$1" = "--select" ]; then
+	slop=$(slop -f "%x %y %w %h") || exit 1
+	X="$(echo $slop | cut -d' ' -f1)"
+	Y="$(echo $slop | cut -d' ' -f2)"
+	W="$(echo $slop | cut -d' ' -f3)"
+	H="$(echo $slop | cut -d' ' -f4)"
+else
+	dims="$(xrandr --query | grep -E "connected (primary )[0-9]+" | grep -Eo '[0-9]{3,4}x[0-9]{3,4}\+[0-9]+\+[0-9]+')"
+	X="$(echo $dims | cut -d'+' -f2)"
+	Y="$(echo $dims | cut -d'+' -f3)"
+	W="$(echo $dims | cut -d'x' -f1)"
+	H="$(echo $dims | cut -d'+' -f1 | cut -d'x' -f2)"
+fi
+
+notify -t 2000 "Starting recording in 3" && sleep 3
 ffmpeg -f x11grab -s "$W"x"$H" -i :0.0+$X,$Y -f pulse -ac 2 -i default -framerate 30 \
 	-r 30 -c:v h264 -crf 0 -preset ultrafast -c:a aac -q 1 "$filename" &
 echo $! >/tmp/recordingpid
