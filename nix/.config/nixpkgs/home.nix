@@ -90,6 +90,7 @@ in
 
     # apps
     pkgs.kubectl # kubernetes cli
+    pkgs.kubecolor # colorful kubectl
     pkgs.kubernetes-helm # helm cli
     pkgs.stern # better way to fetch kubernetes log
     pkgs.yt-dlp # download youtube videos
