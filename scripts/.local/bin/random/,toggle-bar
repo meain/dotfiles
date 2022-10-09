@@ -6,10 +6,12 @@ if pgrep polybar; then
 	pkill -9 polybar
 else
 	if type "xrandr"; then
-		for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
-			MONITOR=$m polybar --reload example &
-		done
+        # We could look for specific connected monitor using `xrandr --listactivemonitors`
+        MONITOR="$(xrandr --query | grep " connected primary" | cut -d" " -f1)" polybar --reload main &
+		# for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
+		# 	MONITOR=$m polybar --reload main &
+		# done
 	else
-		polybar --reload example &
+		polybar --reload main &
 	fi
 fi
