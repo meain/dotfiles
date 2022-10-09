@@ -1547,7 +1547,11 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
   (setq magit-completing-read-function #'completing-read))
 
 ;; Magit forge
-(use-package forge :straight t :defer t :after magit)
+(use-package forge
+  :straight t
+  :defer t
+  :after magit
+  :config (evil-leader/set-key "gF" 'forge-browse-dwim))
 
 ;; Github review
 (use-package github-review
