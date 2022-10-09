@@ -6,7 +6,7 @@ set -e
 
 cd "$BLOG_PATH"
 DATE=$(date +%Y-%m-%d)
-FIXED="$(echo "$*" | sed 's/ /-/g')"
+FIXED="$(echo "$*" | sed 's/ /-/g' | tr '[A-Z]' '[a-z]')"
 NAME="$DATE-$FIXED.md"
 [ -d "posts" ] && NAME="posts/$NAME"
 if [ ! -f "$NAME" ]; then
