@@ -24,8 +24,8 @@ XF86MonBrightness{Down,Up}
       brightnessctl specific {'3-','+3'}
 
 # lock screen
-super + {shift,alt+control} + z
-      ,wo locked \,afk && ,lock-screen{ -n && \,wo back, && systemctl suspend}
+super + {shift, alt+control} + z
+      ,lock-screen{ -n && \,wo back, && systemctl suspend }
 
 # dmenu
 super + {d,shift+d}
