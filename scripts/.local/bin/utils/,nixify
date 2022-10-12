@@ -5,7 +5,7 @@ set -e
 hm_nixpkgs_rev="$(nix flake metadata --json $HOME/.config/nixpkgs | jq -r '.locks.nodes.nixpkgs.locked.rev')"
 
 if [ "$1" == "update" ]; then
-	sed -ibk "s|archive/[^\.]*.tar.gz|archive/$hm_nixpkgs_rev.tar.gz|" shell.nix
+	sed -ibk "s|archive/[^\.]*.tar.gz|archive/$hm_nixpkgs_rev.tar.gz|" shell.nix && rm shell.nixbk
 	exit 0
 elif [ "$1" == "clean" ]; then
 	rm -r shell.nix .envrc .direnv
