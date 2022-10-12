@@ -4,6 +4,7 @@ set -e
 
 EVENTS_FILE="/tmp/events"
 WO_FILE="$HOME/wo"
+[ -f $WO_FILE ] && touch $WO_FILE
 
 add_cal_event() {
 	[ ! -f "$EVENTS_FILE-next" ] && echo "Events file not available" && exit 1
