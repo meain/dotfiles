@@ -594,8 +594,11 @@ Pass ORIGINAL and ALTERNATE options."
 ;; Github like git info in dired
 (use-package dired-git-info
   :straight t
+  :defer 3
   :after dired
-  :commands (dired-git-info-mode))
+  :commands (dired-git-info-mode dired-git-info-auto-enable)
+  :init
+  (add-hook 'dired-after-readin-hook 'dired-git-info-auto-enable))
 
 ;; Enable abbrev mode
 (use-package abbrev-mode
