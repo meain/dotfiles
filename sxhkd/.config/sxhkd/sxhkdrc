@@ -14,7 +14,7 @@ super + alt + control + m; {p,shift+p,h,l}
 XF86Audio{Play,Pause,Prev,Next}
       ,music-{playpause,pause,previous,next}
 {_,shift} + XF86Audio{Raise,Lower}Volume
-      pactl {set-sink-volume @DEFAULT_SINK@,set-source-volume @DEFAULT_SOURCE@} {+10%,-10%} \
+      pactl {set-sink-volume @DEFAULT_SINK@,set-source-volume @DEFAULT_SOURCE@} {+5%,-5%} \
       && ,refresh-bar
 XF86Audio{_,Mic}Mute
       pactl set-sink-mute {@DEFAULT_SINK@, @DEFAULT_SOURCE@} toggle && ,refresh-bar
