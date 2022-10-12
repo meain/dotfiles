@@ -2257,6 +2257,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
   (evil-define-key 'normal gnus-article-mode-map (kbd "P") 'gnus-summary-refer-parent-article)
   (evil-define-key 'normal gnus-summary-mode-map (kbd "P") 'gnus-summary-refer-parent-article)
   (setq gnus-select-method '(nnnil ""))
+  (setq gnus-directory "~/.config/emacs/news")
   (setq gnus-secondary-select-methods
         '((nntp "news.gmane.io")))
   (add-hook 'gnus-group-mode-hook 'hl-line-mode)
