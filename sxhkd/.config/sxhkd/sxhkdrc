@@ -59,9 +59,12 @@ super + alt + control + l ; {l, m, f, r, shift + r, v}
       , i3-msg workspace number 000 && google-chrome --new-window 'https://meet.google.com' \
       , firefox \
       , \,record-screen \
-      , \,record-screen --select\
+      , \,record-screen --select \
       , emacsclient -cn -e '(meain/vime "vime" "~/.local/share/vime" t)' \
       }
+
+super + alt + control + k
+	  i3-msg focus output eDP && sleep .3 && xdotool key ctrl+k
 
 # focus applications
 shift + alt + control + {l,j,k,h}
