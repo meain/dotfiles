@@ -1,0 +1,90 @@
+#!/bin/sh
+
+# Help message
+usage() {
+    echo "Usage: $0 [-p pipe_filename] [-n source_name] [-f format]"
+    echo "       [-r rate] [-c channels] [-v] [-d] [-h] [input_filename]"
+    echo
+    echo "  input_filename  This file is piped to the virtual mic (can be an url) (default: stdin)"
+    echo "  -p, --pipe      Set audio pipe filename (use mktemp otherwise)"
+    echo "  -n, --name      Set PulseAudio source_name (default: virtualmic)"
+    echo "  -f, --format    Set audio format (default: s16le)"
+    echo "  -r, --rate      Set audio sampling frequency (default: 44100)"
+    echo "  -c, --channels  Set number of audio channels (default: 1)"
+    echo "  -v, --verbose   Make output verbose"
+    echo "  -d, --default   Set virtual microphone as PulseAudio default source"
+    echo "  -h, --help      Show this help"
+}
+
+# Default variables
+input_filename='-'        # Positional argument
+pipe_filename=            # -p / --pipe
+source_name='virtualmic'  # -n / --name
+format='s16le'            # -f / --format
+rate='44100'              # -r / --rate
+channels='1'              # -c / --channels
+verbose=                  # -v / --verbose
+default=                  # -d / --default
+
+# Read arguments
+while [ "$1" != '' ]
+do
+    case "$1" in
+        -p | --pipe    )  shift ; pipe_filename="$1" ;;
+        -n | --name    )  shift ; source_name="$1"   ;;
+        -f | --format  )  shift ; format="$1"        ;;
+        -r | --rate    )  shift ; rate="$1"          ;;
+        -c | --channels)  shift ; channels="$1"      ;;
+        -v | --verbose )  verbose='1'                ;;
+        -d | --default )  default='1'                ;;
+        -h | --help    )  usage ; exit 0             ;;
+        -* )              echo "$0: invalid option '$1'"
+                          usage ; exit 1             ;;
+        *)                input_filename="$1"
+    esac
+    shift
+done
+
+# If no --pipe, use mktemp
+[ "$pipe_filename" ] || pipe_filename="$(mktemp -u)"
+
+# Print variables
+[ "$verbose" ] && {
+    echo "input_filename: $input_filename"
+    echo "pipe_filename:  $pipe_filename"
+    echo "source_name:    $source_name"
+    echo "format:         $format"
+    echo "rate:           $rate"
+    echo "channels:       $channels"
+    echo "default:        $default"
+}
+
+# Create source
+pulseaudio_module_index="$(pactl load-module module-pipe-source \
+    source_name=$source_name \
+    file=$pipe_filename      \
+    format=$format           \
+    rate=$rate               \
+    channels=$channels)"     && {
+
+        # Cleanup
+        trap "pactl unload-module $pulseaudio_module_index" EXIT INT
+
+        [ "$verbose" ] && {
+            echo "pulseaudio_module_index: $pulseaudio_module_index"
+            ffmpeg_loglevel='verbose'
+        } || ffmpeg_loglevel='panic'
+
+        # Set source as default
+        [ "$default" ] && pactl set-default-source "$source_name"
+
+        # Redirect input to source
+        ffmpeg \
+            -loglevel "$ffmpeg_loglevel" \
+            -re -i "$input_filename"     \
+            -f "$format"                 \
+            -ar "$rate"                  \
+            -ac "$channels"              \
+            '-' > "$pipe_filename"
+
+}
