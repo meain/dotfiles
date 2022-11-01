@@ -207,8 +207,10 @@ in
     pkgs.vale # prose lint
     pkgs.hadolint # Dockerfile lint
     pkgs.sqls # lsp server for sql
+    pkgs.sqlfluff # sql linter
     pkgs.python39Packages.sqlparse # sqlformat
     # pkgs.grpcurl # curl for grpc
+    pkgs.zprint # clojure formatter
 
     # gui
     pkgs.mpv # audio/video player
