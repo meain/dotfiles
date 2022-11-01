@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/master";
+    bleeding.url = "github:nixos/nixpkgs/master"; # same as stable, but updated more often
     homeManager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -22,11 +23,11 @@
     };
   };
 
-  outputs = { self, nixpkgs, homeManager, stable, nur, personal, emacsOverlay }: {
+  outputs = { self, nixpkgs, homeManager, stable, bleeding, nur, personal, emacsOverlay }: {
     homeConfigurations =
       let
         homeConfig = import ./home.nix {
-          inherit stable personal;
+          inherit stable personal bleeding;
         };
       in
       {

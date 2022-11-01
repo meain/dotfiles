@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "bleeding": {
+      "locked": {
+        "lastModified": 1666942837,
+        "narHash": "sha256-oaI4enxCszy8zGaz2zqd8oaoaAXwKKMw4WPVo8alS7U=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "bcee2c29936d1e2ef276278e6df6c03248628de5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "master",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "emacsOverlay": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -76,11 +92,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1664968038,
-        "narHash": "sha256-UFBIffwRvPv4lc6B0XoJlK0pl1Fg+X6xCxrKIkUBarU=",
+        "lastModified": 1666936945,
+        "narHash": "sha256-4P+HUfTMX3Mh6KKgaaO8XvNspbD4jIUk5OENNT2S8vQ=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "1d6bf0b65f4e4cd96acb631d646164aed27e56ba",
+        "rev": "cf6554a1efbb2e5cbce50c9170019934d7ca2605",
         "type": "github"
       },
       "original": {
@@ -96,7 +112,7 @@
         ]
       },
       "locked": {
-        "narHash": "sha256-q+RkVVxD+hufwjAkD8uUyXfBFXhzpAMtGgfA5RuAoGo=",
+        "narHash": "sha256-1Iak83nnssagBO77XQ3ppr75WV0hI3rzPlHozgD5ZQ8=",
         "path": "/home/meain/dev/src/nur-packages",
         "type": "path"
       },
@@ -107,6 +123,7 @@
     },
     "root": {
       "inputs": {
+        "bleeding": "bleeding",
         "emacsOverlay": "emacsOverlay",
         "homeManager": "homeManager",
         "nixpkgs": "nixpkgs",

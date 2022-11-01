@@ -1,8 +1,9 @@
-{ personal, stable, ... }:
+{ personal, stable, bleeding, ... }:
 { pkgs, ... }:
 let
   ppkgs = personal.packages.x86_64-linux;
   spkgs = stable.legacyPackages.x86_64-linux;
+  bpkgs = bleeding.legacyPackages.x86_64-linux;
   utils = import ./utils.nix { inherit pkgs; };
   fonts = import ./fonts.nix { inherit pkgs; inherit spkgs; };
 in
@@ -284,6 +285,7 @@ in
     # pkgs.gforth # gnu forth interpreter
     pkgs.nodePackages.mermaid-cli # cli for generating mermaid charts
     pkgs.genact # become a movie "hacker"
+    bpkgs.logseq # tracking life
 
     # gnome tweaking
     # pkgs.gnome3.dconf-editor # change dconf settings
@@ -361,6 +363,7 @@ in
   systemd.user.services.sxhkd = utils.ss-simple { cmd = "sxhkd"; wait = 3; };
   systemd.user.services.wo-info = utils.ss-simple { cmd = "WO_WRITE=1 ,wo-info"; wait = 5; };
   systemd.user.services.emacs = utils.ss-simple { cmd = "emacs --fg-daemon"; wait = 1; };
+  systemd.user.services.logseq = utils.ss-simple { cmd = "logseq"; wait = 1; };
   systemd.user.services.emacsclient = utils.ss-simple { cmd = "emacsclient -F \\'((title . \"floatingemacs\"))\\' -c"; wait = 1; };
   systemd.user.services.floatingterm = utils.ss-simple { cmd = "sakura --name floatingterm -x \"tt floating\""; wait = 1; };
   systemd.user.services.mail-watcher = utils.ss-simple { cmd = "find /home/meain/.local/share/mail/.notmuch/xapian|entr -n ,shellout-update"; wait = 5; };
@@ -376,6 +379,8 @@ in
   systemd.user.timers.ledger-sync = utils.timer-daily;
   systemd.user.services.journal-sync = utils.ss-git-sync { dir = "/home/meain/.local/share/journal"; };
   systemd.user.timers.journal-sync = utils.timer-daily;
+  systemd.user.services.logseq-sync = utils.ss-git-sync { dir = "/home/meain/.local/share/logseq"; };
+  systemd.user.timers.logseq-sync = utils.timer-daily;
 
   # syncing things
   systemd.user.services.email-sync = utils.ss-timer { cmd = ",mail-sync"; };
