@@ -4,7 +4,6 @@ general {
         color_good = "#FFFFFF"
 }
 
-order += "read_file wo"
 order += "read_file rec"
 order += "read_file cal"
 order += "read_file dnd"
