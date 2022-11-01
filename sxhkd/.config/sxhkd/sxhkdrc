@@ -39,7 +39,7 @@ super + shift + {u, o}
 super + alt + control + grave
       ,i3-flip-workspaces
 super + alt + control + shift + {0,1,2,3,4}
-      ~/.screenlayout/{builtin,big,builtinandbig,three,two}.sh && feh --bg-fill Pictures/Wallpapers/current || notify 'Unable to update monitor config'
+      ~/.screenlayout/{builtin,big,builtinandbig,three,two}.sh && feh --bg-fill docs/Pictures/Wallpapers/current || notify 'Unable to update monitor config'
 
 # bar control
 shift + alt + control + i
