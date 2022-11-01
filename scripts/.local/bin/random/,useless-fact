@@ -1,0 +1,10 @@
+#!/bin/sh
+
+set -e
+
+CACHE_FILE="$HOME/.cache/useless-facts"
+
+find $HOME/.cache -maxdepth 1 -mtime +7 -name "useless-facts" >/dev/null || printf "Pulling facts...\r" &&
+curl -s# https://api.github.com/gists/9b348faca71f23302c13a15f988f2323 | jq -r '.files["useless-facts"].content' > $CACHE_FILE
+
+shuf -n1 $CACHE_FILE
