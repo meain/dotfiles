@@ -2031,6 +2031,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
 ;;; [FILETYPE PUGINS] ===============================================
 
 (use-package rust-mode :straight t :defer t)
+(use-package clojure-mode :straight t :defer t)
 (use-package go-mode
   :straight t
   :defer t
