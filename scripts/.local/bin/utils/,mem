@@ -1,3 +1,4 @@
 #!/bin/sh
 
-ps axhc -o command,%mem -m | head
+ps axhc -o command,%mem | awk '{print $NF,$0}' |
+	sort -rhk1 | cut -d' ' -f2- | head

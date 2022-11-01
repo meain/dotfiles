@@ -1,3 +1,4 @@
 #!/bin/sh
 
-ps axhc -o command,%cpu -r | head
+ps axhc -o command,%cpu | awk '{print $NF,$0}' |
+	sort -rhk1 | cut -d' ' -f2- | head
