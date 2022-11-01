@@ -99,8 +99,10 @@ super + alt + control + shift + l
       dragon -x "$(pbpaste)"
 
 # script runner
-super + alt + control + i
-      GUI_PICKER=1 zsh -ic ,se
+super + alt + control + {_, shift} + i
+      { GUI_PICKER=1 zsh -ic \,se \
+      , GUI_PICKER=1 zsh -ic \,run-command \
+      }
 
 # wo
 super + alt + control + w

@@ -79,7 +79,7 @@ q() {
 	# session are closed
 	if [ "$PANES" = "1" ] && [ "$WINDOWS" = "1" ]; then
 		tmux ls | cut -d':' -f1 |
-			grep -vE '^floating-' |
+			grep -vE '^floating-' | grep -vE '^_run_cmd' |
 			grep -v "$(tmux display-message -p '#S')" |
 			head -n1 | xargs tmux switch-client -t
 		exit

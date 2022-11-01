@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -e
+
+command="$(echo | ,picker --print-query -p "Command to run: ")"
+
+TMUX_SESSION_NAME="_run_cmd"
+tmux has-session -t $TMUX_SESSION_NAME || tmux new-session -ds $TMUX_SESSION_NAME
+tmux new-window -t $TMUX_SESSION_NAME
+tmux send-keys -t $TMUX_SESSION_NAME "zsh -ice '$command' && exit" C-m
+tmux rename-window -t $TMUX_SESSION_NAME "$(echo ${command::10})"
