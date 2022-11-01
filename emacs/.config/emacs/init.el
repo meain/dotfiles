@@ -3051,7 +3051,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
           (let ((key (car e))
                 (name (cadr e))
                 (folder (caddr e)))
-            (evil-leader/set-key (concat "E " key)
+            (evil-leader/set-key (concat "s e " key)
               (cons name (lambda ()
                            (interactive)
                            (project-switch-project folder))))))
@@ -3353,7 +3353,7 @@ START and END comes from it being interactive."
 (evil-leader/set-key "b d" 'delete-frame)
 
 ;; Server edit complete
-(evil-leader/set-key "s" 'server-edit)
+(evil-leader/set-key "s s" 'server-edit)
 
 ;; Next and previous buffer
 (define-key evil-normal-state-map (kbd "C-S-o") 'previous-buffer)
