@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MUSIC_FOLDER="$HOME/Documents/Media/Music"
+MUSIC_FOLDER="$HOME/docs/Music"
 FOLDER="$(find "$MUSIC_FOLDER" -type d | grep -v "^$MUSIC_FOLDER$" | sed "s|$MUSIC_FOLDER/||" | ,picker "$1")"
 
 if [ -n "$FOLDER" ];then
