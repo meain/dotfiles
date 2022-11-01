@@ -25,7 +25,7 @@ XF86MonBrightness{Down,Up}
 
 # lock screen
 super + {shift, alt+control} + z
-      ,lock-screen{ -n && \,wo back, && systemctl suspend }
+      ,lock-screen{ -n && systemctl suspend }
 
 # dmenu
 super + {d,shift+d}
@@ -103,10 +103,6 @@ super + alt + control + {_, shift} + i
       { GUI_PICKER=1 zsh -ic \,se \
       , GUI_PICKER=1 zsh -ic \,run-command \
       }
-
-# wo
-super + alt + control + w
-      GUI_PICKER=1 ,wo | xargs -0 notify "WO"
 
 # emoji picker
 super + alt + control + q
