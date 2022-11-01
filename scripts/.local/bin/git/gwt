@@ -23,6 +23,6 @@ if [ "$1" == "prune" ]; then
 	exit 0
 fi
 
-git worktree add "../,$proj--$branch" "$branch"
-echo Created new worktree at "../,$proj--$branch"
+git worktree add "../gwt--$proj--$branch" "$branch"
+echo Created new worktree at "../gwt--$proj--$branch"
 # TODO: might have to be a func so that we can cd at the end
