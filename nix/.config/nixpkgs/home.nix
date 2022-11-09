@@ -363,7 +363,6 @@ in
   systemd.user.services.mpd = utils.ss-simple { cmd = "mpd --no-daemon"; wait = 3; };
   systemd.user.services.clipmenud = utils.ss-simple { cmd = "clipmenud"; wait = 3; };
   systemd.user.services.sxhkd = utils.ss-simple { cmd = "sxhkd"; wait = 3; };
-  systemd.user.services.wo-info = utils.ss-simple { cmd = "WO_WRITE=1 ,wo-info"; wait = 5; };
   systemd.user.services.emacs = utils.ss-simple { cmd = "emacs --fg-daemon"; wait = 1; };
   systemd.user.services.logseq = utils.ss-simple { cmd = "logseq"; wait = 1; };
   systemd.user.services.emacsclient = utils.ss-simple { cmd = "emacsclient -F \\'((title . \"floatingemacs\"))\\' -c"; wait = 1; };
@@ -395,8 +394,6 @@ in
   systemd.user.timers.update-sct = utils.timer-min { min = "30"; };
   systemd.user.services.update-calendar = utils.ss-timer { cmd = ",upcoming-events"; };
   systemd.user.timers.update-calendar = utils.timer-min { min = "10"; }; # actual pull is hourly
-  systemd.user.services.wo-notify = utils.ss-timer { cmd = ",output-notify \"Working on...\" ,wo-info"; };
-  systemd.user.timers.wo-notify = utils.timer-min { min = "15"; };
   systemd.user.services.mscripts-backup = utils.ss-timer { cmd = ",projects-config-backup"; };
   systemd.user.timers.mscripts-backup = utils.timer-daily;
 
