@@ -2996,6 +2996,26 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
 ;; Fontify face (useful to debug themes)
 (use-package fontify-face :straight t :defer t)
 
+;; Keycast mode for demos
+(use-package keycast
+  :straight t
+  :defer t
+  :commands (keycast-mode keycast-background-mode keycast-log-mode keycast-tab-bar-mode)
+  :config
+  (add-hook 'keycast-mode-hook (lambda () (setq header-line-format nil)))
+  (defvar keycast-background-mode)
+  ;; TODO: fix not clearing the last thing on exit
+  (define-minor-mode keycast-background-mode
+    "Activate keycast mode in the background.  Enables variable to be used in header-line."
+    :global t
+    (cond
+     (keycast-background-mode
+      (add-hook 'post-command-hook #'keycast--update t)
+      (add-hook 'minibuffer-exit-hook #'keycast--minibuffer-exit t))
+     ((not (keycast--mode-active-p))
+      (remove-hook 'post-command-hook #'keycast--update)
+      (remove-hook 'minibuffer-exit-hook #'keycast--minibuffer-exit)))))
+
 ;;; [CUSTOM FUNCTIONS] ==============================================
 
 ;; Automatic chmod +x when you save a file that starts with a #! shebang:
@@ -3847,6 +3867,7 @@ not defined, it will be saved in the `$HOME' directory."
                                                           face
                                                           hima-simple-gray)
                                             ""))
+                    '(:eval (if (boundp 'keycast-mode-line) keycast-mode-line))
                     '(:eval (propertize " "
                                         'display
                                         `((space :align-to (- (+ right right-fringe right-margin)
