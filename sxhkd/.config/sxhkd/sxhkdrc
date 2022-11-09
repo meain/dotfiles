@@ -25,7 +25,7 @@ XF86MonBrightness{Down,Up}
 
 # lock screen
 super + {shift, alt+control} + z
-      ,lock-screen{ -n && systemctl suspend }
+      ,lock-screen{ -n , && systemctl suspend }
 
 # dmenu
 super + {d,shift+d}
