@@ -1536,6 +1536,12 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
   (setq imenu-list-after-jump-hook nil)
   (setq imenu-list-auto-resize t))
 
+;; Symbol overlay
+(use-package symbol-overlay
+  :straight t
+  :defer t
+  :commands (symbol-overlay-mode symbol-overlay-put))
+
 ;; Magit
 (use-package magit
   :straight t
