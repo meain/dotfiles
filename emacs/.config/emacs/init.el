@@ -2726,18 +2726,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
             (lambda ()
               (tree-sitter-hl-add-patterns nil
                 [((identifier) @rust.constructor
-                  (.match? @rust.constructor "^[A-Z]"))])))
-
-  ;; Treat python docstring as doc instead of string
-  (add-function :before-until tree-sitter-hl-face-mapping-function
-                (lambda (capture-name)
-                  (pcase capture-name
-                    ("python.docstring" 'tree-sitter-hl-face:doc))))
-  (add-hook 'python-mode-hook
-            (lambda ()
-              (tree-sitter-hl-add-patterns nil
-                [(function_definition (block (expression_statement (string)
-                                                                   @python.docstring)))]))))
+                  (.match? @rust.constructor "^[A-Z]"))]))))
 
 ;; Some custom text objects based on treesitter
 (use-package evil-textobj-tree-sitter
