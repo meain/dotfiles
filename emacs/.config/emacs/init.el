@@ -2604,7 +2604,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
 (use-package rotate
   :straight t
   :commands (rotate-layout rotate-window)
-  :config
+  :init
   (define-key evil-normal-state-map (kbd "M-f <SPC>") 'rotate-layout))
 
 ;; Remember
