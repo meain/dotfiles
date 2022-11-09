@@ -32,3 +32,6 @@ node_modules
 # nix
 shell.nix
 .envrc
+
+# emacs
+.dir-locals.el
