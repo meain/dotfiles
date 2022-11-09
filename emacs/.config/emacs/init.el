@@ -2060,6 +2060,10 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
 (use-package go-impl
   :straight t
   :commands (go-impl))
+(use-package go-dlv
+  :straight t
+  :defer t
+  :commands (dlv dlv-current-func))
 (use-package lua-mode :straight t :defer t)
 (use-package web-mode :straight t :defer t)
 (use-package jinja2-mode :straight t :defer t)
