@@ -1988,11 +1988,18 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
       (if (not (s-starts-with-p "Unable to find any tests" command))
           (progn
             (setq meain/test-runner-previous-command command)
-            (compile (concat "nice " command)))
+            ;; custom-src-directory is supposed to come from .dir-locals.el
+            (let ((default-directory (if (boundp 'custom-src-directory)
+                                         custom-src-directory
+                                       default-directory)))
+              (compile (concat "nice " command))))
         (if (and meain/test-runner-run-previous-if-empty meain/test-runner-previous-command)
             (progn
               (message "Could not find any tests, running previous test...")
-              (compile (concat "nice " meain/test-runner-previous-command)))
+              (let ((default-directory (if (boundp custom-src-directory)
+                                           custom-src-directory
+                                         default-directory)))
+                (compile (concat "nice " meain/test-runner-previous-command))))
           (message "Unable to find any tests")))))
   :init
   (evil-leader/set-key "d" 'meain/test-runner)
@@ -2063,7 +2070,14 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
 (use-package go-dlv
   :straight t
   :defer t
-  :commands (dlv dlv-current-func))
+  :config
+  (defun meain/dlv ()
+    (interactive)
+    (let ((default-directory (if (boundp 'custom-src-directory)
+                                 custom-src-directory
+                               default-directory)))
+      (call-interactively 'dlv)))
+  :commands (dlv dlv-current-func meain/dlv))
 (use-package lua-mode :straight t :defer t)
 (use-package web-mode :straight t :defer t)
 (use-package jinja2-mode :straight t :defer t)
