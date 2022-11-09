@@ -1385,6 +1385,15 @@ Pass ORIGINAL and ALTERNATE options."
    (:languages "JSON")
    (:features)
    (:format (format-all--buffer-easy executable)))
+  (define-format-all-formatter
+   gofumpt
+   (:executable "gofumpt")
+   (:install
+    (macos "brew install go")
+    (windows "scoop install go"))
+   (:languages "Go")
+   (:features)
+   (:format (format-all--buffer-easy executable)))
   (setq-default format-all-formatters '(("HTML" prettier) ("Go" goimports) ("JSON" fixjson) ("Nix" nixpkgs-fmt) ("Shell" shfmt)))
   :init
   (define-key evil-normal-state-map (kbd ",,") '(lambda () (interactive)
