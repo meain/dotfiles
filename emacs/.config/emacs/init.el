@@ -22,8 +22,10 @@
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
-(setq use-package-verbose t)
+
+;; Use package config
 (straight-use-package 'use-package)
+(setq use-package-verbose t)
 (setq use-package-always-demand (getenv "LOAD_FULL_EMACS"))
 
 ;; Benchmark emacs startup (enable when necessary)
