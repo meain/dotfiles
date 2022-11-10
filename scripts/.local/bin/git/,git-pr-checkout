@@ -11,7 +11,7 @@ echo "$prd"
 pr="$(echo "$prd" | awk '{print $1}')"
 prb="$(echo "$prd" | awk '{print $(NF)}')"
 
-dbranch="$pr/$prb"
+dbranch="pr$pr/$prb"
 printf "Branch name(%s): " "$dbranch" && read -r
 branch="$REPLY"
 [ -z "$branch" ] && branch="$dbranch"
