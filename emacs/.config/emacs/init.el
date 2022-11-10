@@ -3740,7 +3740,7 @@ Pass THING-TO-POPUP as the thing to popup."
     (select-frame frame))
   (funcall thing-to-popup))
 
-:; Patterns can be regex if we want to match more precisely eg: ("/early-init.el$" "/init.el")
+:; Patterns for replacing filenames with
 (defvar meain/find-alternate-file--patterns '(("thing-for-today-personal.mtodo" "thing-for-today.mtodo")
                                               ("early-init.el" "init.el")
                                               ("i3/config" "i3status/config")
