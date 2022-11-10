@@ -514,22 +514,34 @@ Pass ORIGINAL and ALTERNATE options."
   :commands (compile recompile)
   :config
   (setq compilation-scroll-output t)
+  (setq compilation-error-regexp-alist-alist '(nil)) ; Remove all highlighting for errors in compilation buffer
   (evil-set-initial-state 'comint-mode 'normal)
+  (defun meain/prettify-compilation (&optional _)
+    "Few thing to prettify compilation buffer."
+    (with-current-buffer "*compilation*"
+      (toggle-truncate-lines -1)
+      (highlight-regexp "FAIL: .*" 'diff-refine-removed)
+      (highlight-regexp "=== RUN .*" 'ffap)))
+  (advice-add 'compile :after 'meain/prettify-compilation)
   (defun meain/compilation-colorcode (_buffer string)
     "Change background color of compilation `_BUFFER' to red on failure."
     (unless (string-prefix-p "finished" string) ; Having color for success was distracting
       (face-remap-add-relative 'default 'diff-hl-delete)))
-  (add-to-list 'compilation-finish-functions 'meain/compilation-colorcode)
-  (add-to-list 'compilation-finish-functions (lambda (&rest _) (toggle-truncate-lines -1)))
-  (add-to-list 'compilation-finish-functions (lambda (&rest _) (highlight-regexp "FAIL: .*" 'diff-refine-removed)))
+  (add-to-list 'compilation-finish-functions 'meain/compilation-colorcode))
+
+(use-package multi-compile
+  :straight t
+  :defer t
+  :after compile
+  :commands (meain/recompile-or-compile)
+  :config
   (defun meain/recompile-or-compile (&optional arg)
     "Compile or recompile based on universal `ARG'."
     (interactive "P")
     (if arg
-        (call-interactively 'compile)
+        (call-interactively 'multi-compile-run)
       (compile compile-command t)))
-  :init
-  (evil-leader/set-key "r" 'meain/recompile-or-compile))
+  :init (evil-leader/set-key "r" 'meain/recompile-or-compile))
 
 ;; Simplify how Async Shell Command buffers get displayed
 ;; (add-to-list 'display-buffer-alist
