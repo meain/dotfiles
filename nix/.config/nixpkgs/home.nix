@@ -288,6 +288,10 @@ in
     pkgs.nodePackages.mermaid-cli # cli for generating mermaid charts
     pkgs.genact # become a movie "hacker"
     bpkgs.logseq # tracking life
+    # pkgs.obs-studio # video/screen recording
+    # pkgs.postman # REST api testing tool
+    pkgs.minicom # connect to rpi
+    pkgs.mitmproxy # mitm proxy
 
     # gnome tweaking
     # pkgs.gnome3.dconf-editor # change dconf settings
