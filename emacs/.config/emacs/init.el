@@ -2745,6 +2745,10 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
   :defer 1
   :after tree-sitter
   :config
+  (push '(markdown-mode . markdown) tree-sitter-major-mode-language-alist)
+  (push '(gfm-mode . markdown) tree-sitter-major-mode-language-alist)
+  (setq tree-sitter-load-path '("/home/meain/dev/src/tree-sitter-langs/bin/"))
+
   ;; Don't highlight constructors in rust with hima
   (add-function :before-until tree-sitter-hl-face-mapping-function
                 (lambda (capture-name)
