@@ -1990,30 +1990,27 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
   (defun meain/test-runner-full ()
     "Run the full test suite using toffee."
     (interactive)
-    (compile (shell-command-to-string (format "toffee --full '%s'"
-                                              (buffer-file-name)))))
+    (compile (shell-command-to-string
+              (format "toffee --verbose --full '%s'" (buffer-file-name)))))
   (defun meain/test-runner (&optional full-file)
     "Run the nearest test using toffee.  Pass `FULL-FILE' to run all test in file."
     (interactive "P")
-    (let ((command (shell-command-to-string (if full-file
-                                                (format "toffee '%s'" (buffer-file-name))
-                                              (format "toffee '%s' '%s'"
-                                                      (buffer-file-name) (line-number-at-pos))))))
+    (let* ((default-directory (if (boundp 'custom-src-directory)
+                                  custom-src-directory
+                                default-directory))
+           (command (shell-command-to-string
+                     (if full-file
+                         (format "toffee --verbose '%s'" (buffer-file-name))
+                       (format "toffee --verbose '%s' '%s'" (buffer-file-name) (line-number-at-pos))))))
       (if (not (s-starts-with-p "Unable to find any tests" command))
           (progn
             (setq meain/test-runner-previous-command command)
             ;; custom-src-directory is supposed to come from .dir-locals.el
-            (let ((default-directory (if (boundp 'custom-src-directory)
-                                         custom-src-directory
-                                       default-directory)))
-              (compile (concat "nice " command))))
+            (compile (concat "nice " command)))
         (if (and meain/test-runner-run-previous-if-empty meain/test-runner-previous-command)
             (progn
               (message "Could not find any tests, running previous test...")
-              (let ((default-directory (if (boundp custom-src-directory)
-                                           custom-src-directory
-                                         default-directory)))
-                (compile (concat "nice " meain/test-runner-previous-command))))
+                (compile (concat "nice " meain/test-runner-previous-command)))
           (message "Unable to find any tests")))))
   :init
   (evil-leader/set-key "d" 'meain/test-runner)
