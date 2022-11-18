@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# Used to refile completed items from logseq backlogs
+
+set -e
+
+[ -z "$1" ] && echo "usage: ,logseq-refile <filename>" && exit 1
+[ ! -f "$1" ] && echo "File $1 does not exist" && exit 1
+type tree-grepper || exit 1 # https://github.com/BrianHicks/tree-grepper
+
+FILE="${1%.*}" # strip off md
+cp "$FILE.md" "$FILE.bk.md"
+
+# DONE/CANCELLED items
+tree-grepper -q markdown '((document (tight_list (list_item (paragraph) @_p) @item (#match? @_p "^(DONE|CANCELLED)"))))' -f json "$FILE.bk.md" | jq -r '.[]|.matches[].text' >> "$FILE%2FComplete.md"
+
+# Header
+tree-grepper -q markdown '(document . (paragraph) @header)' -f json "$FILE.bk.md" | jq -r '.[]|.matches[].text' > tee "$FILE.md"
+
+# Non DONE items
+tree-grepper -q markdown '((document (tight_list (list_item (paragraph) @_p) @item (#match? @_p "^[^(DONE|CANCELLED)]"))))' -f json "$FILE.bk.md" | jq -r '.[]|.matches[].text' >> "$FILE.md"
+
+rm "$FILE.bk.md"
