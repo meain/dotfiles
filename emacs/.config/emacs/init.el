@@ -2021,7 +2021,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
         (if (and meain/test-runner-run-previous-if-empty meain/test-runner-previous-command)
             (progn
               (message "Could not find any tests, running previous test...")
-                (compile (concat "nice " meain/test-runner-previous-command)))
+              (compile (concat "nice " meain/test-runner-previous-command)))
           (message "Unable to find any tests")))))
   :init
   (evil-leader/set-key "d" 'meain/test-runner)
@@ -2095,9 +2095,15 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
   :config
   (defun meain/dlv ()
     (interactive)
-    (let ((default-directory (if (boundp 'custom-src-directory)
-                                 custom-src-directory
-                               default-directory)))
+    (let* ((default-default-directory (if (boundp 'custom-src-directory)
+                                          custom-src-directory
+                                        default-directory))
+           (default-directory (completing-read
+                               "Directory: "
+                               (remove-if (lambda (x) (equalp x ""))
+                                          (mapcar (lambda (x) (concat default-directory x))
+                                                  (string-split (shell-command-to-string "fd -t d") "\n")))
+                               nil t default-default-directory)))
       (call-interactively 'dlv)))
   :commands (dlv dlv-current-func meain/dlv))
 (use-package lua-mode :straight t :defer t)
