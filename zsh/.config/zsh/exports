@@ -85,8 +85,8 @@ export SNIPPETS_PATH="$HOME/dev/src/snippets"
 
 # others
 export DOWNLOADS_PATH="$HOME/Downloads"
-export SCREENSHOTS_PATH="$HOME/screenshots"
-export MUSIC_PATH="$HOME/Documents/Media/Music"
+export SCREENSHOTS_PATH="$HOME/docs/Pictures/Screenshots"
+export MUSIC_PATH="$HOME/docs/Music"
 
 ## =============================================================== :settings
 
