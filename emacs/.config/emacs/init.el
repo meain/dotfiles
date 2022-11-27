@@ -3535,17 +3535,24 @@ Default is after, but use BEFORE to print before."
       (insert (format "[%s](%s)" orig-thang lurl)))))
 
 ;; Open current file in Github
-(defun meain/github-url (&optional no-linenumber)
-  "Open the Github page for the current file.  Pass NO-LINENUMBER to not add a line number."
+(defun meain/github-url (&optional use-branch)
+  "Open the Github page for the current file.  Pass USE-BRANCH to use branch name instead of commit hash."
   (interactive "P")
-  (let* ((git-url (replace-regexp-in-string "\.git$"
-                                            ""
-                                            (s-replace "git@github\.com:"
-                                                       "https://github.com/"
-                                                       (car (split-string
-                                                             (shell-command-to-string "git config --get remote.origin.url") "\n")))))
-         ;; would love to remove abbrev-ref once we have some logic to check if we have pushed the latest version
-         (git-branch (car (split-string (shell-command-to-string "git rev-parse --abbrev-ref HEAD") "\n")))
+  (let* ((git-url (replace-regexp-in-string
+                   "\.git$"
+                   ""
+                   (s-replace "git@github\.com:"
+                              "https://github.com/"
+                              (car (split-string
+                                    (shell-command-to-string
+                                     "git config --get remote.origin.url") "\n")))))
+         (git-branch (car (split-string
+                           (shell-command-to-string
+                            (if use-branch
+                                "git rev-parse --abbrev-ref HEAD"
+                              "git log --format='%H' -n 1"
+                              ))
+                           "\n")))
          (web-url (format "%s/blob/%s/%s%s"
                           git-url
                           git-branch
@@ -3553,13 +3560,13 @@ Default is after, but use BEFORE to print before."
                                                   default-directory
                                                 buffer-file-name)
                                               (car (project-roots (project-current))))
-                          (if (or no-linenumber (equal major-mode 'dired-mode))
+                          (if (equal major-mode 'dired-mode)
                               ""
                             (format "#L%s" (line-number-at-pos))))))
     (progn
       (message "%s coped to clipboard." web-url)
       (meain/copy-to-clipboard web-url))))
-(evil-leader/set-key "b G" 'meain/github-url)
+(evil-leader/set-key "g l" 'meain/github-url)
 
 ;; Generate pdf from markdown document
 (defun meain/markdown-pdf ()
