@@ -2911,6 +2911,13 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
   :commands (redacted-mode)
   :config (add-hook 'redacted-mode-hook (lambda () (read-only-mode (if redacted-mode 1 -1)))))
 
+(use-package avy
+  :straight t
+  :defer 3
+  :config
+  (setq avy-timeout-seconds 0.3)
+  (evil-leader/set-key "f" 'avy-goto-char-timer))
+
 (use-package harpoon
   :straight t
   :config
