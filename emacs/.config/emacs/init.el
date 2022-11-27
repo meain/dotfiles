@@ -687,6 +687,7 @@ Pass ORIGINAL and ALTERNATE options."
     ";date" (lambda () (interactive) (insert (format-time-string "%a %b %d %Y")))
     ";sdate" (lambda () (interactive) (insert (format-time-string "%d %b %Y")))
     ";d/" (lambda () (interactive) (insert (format-time-string "%D")))
+    ";d-" (lambda () (interactive) (insert (format-time-string "%F")))
     ";time" (lambda () (interactive) (insert (format-time-string "%T")))
     ";filename" (lambda () (interactive) (insert (file-name-nondirectory (buffer-file-name)))))
   (aas-set-snippets 'emacs-lisp-mode
