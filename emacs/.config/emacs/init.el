@@ -833,7 +833,6 @@ Pass ORIGINAL and ALTERNATE options."
 ;; Templates
 (use-package tempel
   :straight t
-  :disabled t
   :commands (tempel-complete tempel-expand tempel-insert)
   :init
   (global-set-key (kbd "M-*") 'tempel-complete)
