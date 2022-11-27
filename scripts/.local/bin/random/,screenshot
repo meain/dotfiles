@@ -3,9 +3,9 @@
 set -e
 
 curdate="$(date +%Y-%m-%d-%H-%M-%S)"
-filename="$HOME/Pictures/Screenshots/$curdate.png"
+filename="$HOME/docs/Pictures/Screenshots/$curdate.png"
 
-[ "$1" == "full" ] &&
+[ "$1" = "full" ] &&
 	import -window root "$filename" ||
 	import "$filename"
 
