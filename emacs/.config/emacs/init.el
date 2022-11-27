@@ -2164,6 +2164,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
   (evil-define-key 'normal org-mode-map (kbd "gr") 'org-ctrl-c-ctrl-c))
 (use-package org-modern
   :straight t
+  :disabled t
   :after org
   :commands (org-modern-mode org-modern-agenda)
   :init
