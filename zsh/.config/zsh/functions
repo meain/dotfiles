@@ -9,7 +9,7 @@ z() {
 }
 
 jj() {
-	cd "${1:-.}/$(fd . "${1:-.}" -H -td -d5 | sed "s|\\${1:-.}|.|" | fzf --preview 'tree -L 2 ./{}')" || return 1
+	cd "${1:-.}/$(find . -maxdepth 5 -type d -name .git|sed 's|/.git$||' | fzf --preview 'tree -L 2 ./{}')" || return 1
 }
 
 tmp() {
@@ -93,7 +93,9 @@ m() {
 	if [ ! -d .mscripts ]; then
 		echo "Unable to find .mscripts" && return 1
 	fi
-	eval .mscripts/"$(find .mscripts/ | tail -n+2 | xargs -n1 basename | fzf --query "$1" -1)"
+    script="$1"
+    [ -n "$1" ] && shift
+	eval .mscripts/"$(find .mscripts/ | tail -n+2 | xargs -n1 basename | fzf --query "$script" -1)" $*
 	popd >/dev/null
 }
 
@@ -202,4 +204,10 @@ hashdir() {
 	[ -z "$1" ] && echo "Pass hash to use for dir" && return 1
 	hash -d "$1"="$(pwd)"
 	echo hash -d "$1"=\""$(pwd)"\" >>~/.local/share/zsh/.zsh_dir_hashes
+}
+
+er() {
+    entry="$(fd | fzf)"
+    [ -f "$entry" ] && cd "$(dirname "$entry")" || return 1
+    [ -d "$entry" ] && cd "$entry" || return 1
 }
