@@ -74,7 +74,7 @@
     `(widget-button ((t (:foreground ,dark-blue))))
 
     ;; Gui items
-    `(header-line ((t (:background ,light-gray))))
+    `(header-line ,default-layer)
     `(mode-line-inactive ((t (:background ,light-gray))))
     `(mode-line-buffer-id ,bold-layer)
     `(mode-line ((t (:background ,green-blue))))

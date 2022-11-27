@@ -2821,6 +2821,12 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
               (define-key evil-normal-state-map (kbd "<SPC> TAB") 'meain/toggle-fold)
               (evil-leader/set-key "o" 'meain/toggle-fold))))
 
+;; Show definition beyond top of buffer in header
+(use-package topsy
+  :defer t
+  :straight t
+  :init
+  (add-hook 'find-file-hook #'topsy-mode))
 
 ;; Quick lookup in a dictionary
 (use-package dictionary
@@ -3823,8 +3829,7 @@ not defined, it will be saved in the `$HOME' directory."
 (use-package mode-line-idle
   :straight t
   :commands (mode-line-idle))
-(setq-default mode-line-format nil)
-(setq-default header-line-format
+(setq-default mode-line-format
               (list '(:eval (if (eq 'emacs evil-state) "[E] " " ")) ;; vim or emacs mode
                     '(:eval (list (if (eq buffer-file-name nil)
                                       ""
