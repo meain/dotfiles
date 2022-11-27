@@ -1337,11 +1337,11 @@ Pass ORIGINAL and ALTERNATE options."
   :straight t
   :commands (helpful-callable helpful-variable helpful-at-point helpful-key)
   :init
-  (evil-leader/set-key "h p" 'helpful-at-point)
-  (evil-leader/set-key "h k" 'helpful-key)
-  (evil-leader/set-key "h f" 'helpful-function)
-  (evil-leader/set-key "h v" 'helpful-variable)
-  (evil-leader/set-key "h o" 'helpful-symbol))
+  (evil-leader/set-key "H p" 'helpful-at-point)
+  (evil-leader/set-key "H k" 'helpful-key)
+  (evil-leader/set-key "H f" 'helpful-function)
+  (evil-leader/set-key "H v" 'helpful-variable)
+  (evil-leader/set-key "H o" 'helpful-symbol))
 
 ;; ibuffer
 (use-package ibuffer
@@ -2923,19 +2923,19 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
   :config
   (setq harpoon-cache-file (concat user-emacs-directory "harpoon/"))
   (setq harpoon-separate-by-branch nil)
-  (evil-leader/set-key "f H" 'harpoon-toggle-file)
-  (evil-leader/set-key "f r" 'harpoon-toggle-quick-menu)
-  (evil-leader/set-key "f c" 'harpoon-clear)
-  (evil-leader/set-key "f h" 'harpoon-add-file)
-  (evil-leader/set-key "f j" 'harpoon-go-to-1)
-  (evil-leader/set-key "f k" 'harpoon-go-to-2)
-  (evil-leader/set-key "f l" 'harpoon-go-to-3)
-  (evil-leader/set-key "f ;" 'harpoon-go-to-4)
-  (evil-leader/set-key "f f j" 'harpoon-go-to-5)
-  (evil-leader/set-key "f f k" 'harpoon-go-to-6)
-  (evil-leader/set-key "f f l" 'harpoon-go-to-7)
-  (evil-leader/set-key "f f ;" 'harpoon-go-to-8)
-  (evil-leader/set-key "f f f" 'harpoon-go-to-9))
+  (evil-leader/set-key "h H" 'harpoon-toggle-file)
+  (evil-leader/set-key "h r" 'harpoon-toggle-quick-menu)
+  (evil-leader/set-key "h c" 'harpoon-clear)
+  (evil-leader/set-key "h f" 'harpoon-add-file)
+  (evil-leader/set-key "h j" 'harpoon-go-to-1)
+  (evil-leader/set-key "h k" 'harpoon-go-to-2)
+  (evil-leader/set-key "h l" 'harpoon-go-to-3)
+  (evil-leader/set-key "h ;" 'harpoon-go-to-4)
+  (evil-leader/set-key "h h j" 'harpoon-go-to-5)
+  (evil-leader/set-key "h h k" 'harpoon-go-to-6)
+  (evil-leader/set-key "h h l" 'harpoon-go-to-7)
+  (evil-leader/set-key "h h ;" 'harpoon-go-to-8)
+  (evil-leader/set-key "h h f" 'harpoon-go-to-9))
 
 (use-package denote
   :straight (denote :host github
