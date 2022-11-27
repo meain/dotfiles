@@ -2559,12 +2559,6 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
     (interactive)
     (tramp-term (list (meain/ssh-host-picker)))))
 
-;; connect to docker via tramp
-(use-package docker-tramp
-  :straight t
-  :defer t
-  :after tramp)
-
 ;; timing stuff
 (use-package activity-watch-mode
   :straight t
