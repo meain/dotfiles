@@ -1,4 +1,4 @@
-{ personal, stable, bleeding, ... }:
+{ personal, stable, bleeding, tree-grepper, ... }:
 { pkgs, ... }:
 let
   ppkgs = personal.packages.x86_64-linux;
@@ -211,6 +211,7 @@ in
     pkgs.python39Packages.sqlparse # sqlformat
     # pkgs.grpcurl # curl for grpc
     pkgs.zprint # clojure formatter
+    tree-grepper.outputs.packages.x86_64-linux.tree-grepper # grep with tree-sitter
 
     # gui
     pkgs.mpv # audio/video player

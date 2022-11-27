@@ -21,13 +21,16 @@
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    tree-grepper = {
+      url = "github:BrianHicks/tree-grepper";
+    };
   };
 
-  outputs = { self, nixpkgs, homeManager, stable, bleeding, nur, personal, emacsOverlay }: {
+  outputs = { self, nixpkgs, homeManager, stable, bleeding, nur, personal, emacsOverlay, tree-grepper }: {
     homeConfigurations =
       let
         homeConfig = import ./home.nix {
-          inherit stable personal bleeding;
+          inherit stable personal bleeding tree-grepper;
         };
       in
       {
