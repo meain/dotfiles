@@ -6,11 +6,15 @@ set -e
 
 FILENAME=$(echo "$1" | sed 's|\.bkp$||')
 
-[ -e "$FILENAME" ] && [ -e "$FILENAME.bkp" ] &&
-	echo "Both $FILENAME and $FILENAME.bkp exists, exiting" && exit 1
-
 [ ! -e "$FILENAME" ] && [ ! -e "$FILENAME.bkp" ] &&
 	echo "$FILENAME does not exist" && exit 1
+
+[ -e "$FILENAME" ] && [ -e "$FILENAME.bkp" ] &&
+	echo "Both $FILENAME and $FILENAME.bkp exists, flipping" &&
+	mv -iv "$FILENAME" "$FILENAME.bkp.tmp" &&
+	mv -iv "$FILENAME.bkp" "$FILENAME" &&
+	mv -iv "$FILENAME.bkp.tmp" "$FILENAME.bkp" &&
+	exit 0
 
 if [ -e "$FILENAME" ]; then
 	mv -iv "$FILENAME" "$FILENAME.bkp"
