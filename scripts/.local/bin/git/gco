@@ -4,13 +4,8 @@
 
 set -e
 
-if [ "$1" = "-a" ]; then
-	git branch -a --sort=-committerdate
-else
-	git branch --sort=-committerdate
-fi |
+git branch --sort=-committerdate |
 	grep -v '^[^ ]' |
 	awk '{print $1}' |
 	fzf --height 40% --reverse --preview 'git log --oneline -20 {}' |
-	xargs -r basename |
 	xargs -r git checkout
