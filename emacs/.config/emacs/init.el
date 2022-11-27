@@ -1317,6 +1317,17 @@ Pass ORIGINAL and ALTERNATE options."
   (setq xref-show-definitions-function #'consult-xref)
   (evil-set-command-property 'consult-imenu :jump t))
 
+(use-package consult-notmuch
+  :straight t
+  :commands (consult-notmuch consult-notmuch-tree consult-notmuch-address))
+
+(use-package consult-git-log-grep
+  :after (consult)
+  :commands (consult-git-log-grep)
+  :straight (consult-git-log-grep
+             :host github
+             :repo "ghosty141/consult-git-log-grep"))
+
 ;; Embark stuff
 (use-package embark
   :defer 1
