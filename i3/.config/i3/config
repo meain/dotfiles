@@ -20,7 +20,7 @@ for_window [class="^mpv$"] floating enable
 for_window [class="^VirtualBox Manager$"] floating enable, resize set 700 500, move position center
 
 # scratchpad
-# bindsym $mod+Shift+i move scratchpad
+bindsym $mod+Mod1+s move scratchpad
 # bindsym $mod+i scratchpad show, move position center
 # bindsym $mod+Mod1+i [floating] resize set 1300 700, move position center
 bindsym $mod+Mod1+i [class="floater"] scratchpad show, resize set 1300 700, move position center
