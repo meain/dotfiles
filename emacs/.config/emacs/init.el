@@ -382,7 +382,23 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; Eshell config
 (use-package eshell
+  :init (global-set-key (kbd "M-;") 'meain/eshell-toggle)
   :config
+  (defun meain/eshell-name ()
+    "Get the name of the eshell based on project info."
+    (format "*popup-eshell-%s*"
+            (if (project-current)
+                (meain/project-name)
+              "-")))
+  (defun meain/eshell-toggle ()
+    (interactive)
+    (if (s-starts-with-p "*popup-eshell" (buffer-name))
+        (quit-window)
+      (let ((existing-eshell (get-buffer (meain/eshell-name))))
+        (if existing-eshell (pop-to-buffer (meain/eshell-name))
+          (progn
+            (eshell t)
+            (rename-buffer (meain/eshell-name)))))))
   (setq eshell-prompt-function
         (lambda ()
           (concat
@@ -397,6 +413,12 @@ Pass ORIGINAL and ALTERNATE options."
                          "") 'face `(:foreground "#93a1a1"))
            " "
            )))
+  (add-to-list 'display-buffer-alist
+               '((lambda (bufname _)
+                   (s-starts-with-p "*popup-eshell" (buffer-name bufname)))
+                 (display-buffer-reuse-window display-buffer-at-bottom)
+                 (reusable-frames . visible)
+                 (window-height . 0.3)))
   (add-hook 'eshell-mode-hook (lambda ()
                                 (setenv "TERM" "xterm-256color")
                                 (define-key eshell-mode-map (kbd "M-l") 'meain/move-swap-right)
@@ -1841,7 +1863,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
   :straight t
   :defer t
   :commands (vterm meain/shell-toggle)
-  :init (global-set-key (kbd "M-;") 'meain/shell-toggle)
+  ;; :init (global-set-key (kbd "M-;") 'meain/shell-toggle)
   :config
   (evil-set-initial-state 'vterm-mode 'insert)
   (setq vterm-max-scrollback 100000)
