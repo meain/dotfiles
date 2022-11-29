@@ -2055,40 +2055,51 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
 ;; Quick run current test
 (use-package emacs
   :after compile
-  :commands (meain/test-runner meain/test-runner-full)
+  :commands (meain/toffee-run-test meain/toffee--get-test-command)
   :config
   ;; if available in another frame, don't recreate in current frame
   (push '("\\*compilation\\*" . (nil (reusable-frames . t))) display-buffer-alist)
-  (defvar meain/test-runner-previous-command nil)
-  (defvar meain/test-runner-run-previous-if-empty t)
-  (defun meain/test-runner-full ()
-    "Run the full test suite using toffee."
-    (interactive)
-    (compile (shell-command-to-string
-              (format "toffee --verbose --full '%s'" (buffer-file-name)))))
-  (defun meain/test-runner (&optional full-file)
-    "Run the nearest test using toffee.  Pass `FULL-FILE' to run all test in file."
-    (interactive "P")
-    (let* ((default-directory (if (boundp 'custom-src-directory)
-                                  custom-src-directory
-                                default-directory))
-           (command (shell-command-to-string
-                     (if full-file
-                         (format "toffee --verbose '%s'" (buffer-file-name))
-                       (format "toffee --verbose '%s' '%s'" (buffer-file-name) (line-number-at-pos))))))
-      (if (not (s-starts-with-p "Unable to find any tests" command))
-          (progn
-            (setq meain/test-runner-previous-command command)
+  (defvar meain/toffee--previous-command nil)
+  (defvar meain/toffee-run-previous-if-empty t)
+  (defun meain/toffee--get-test-command (mode)
+    (let ((default-directory
+           (expand-file-name
             ;; custom-src-directory is supposed to come from .dir-locals.el
+            (if (boundp 'custom-src-directory)
+                custom-src-directory
+              default-directory)))
+          (command
+           (shell-command-to-string
+            (cond
+             ((eq mode 'function) (format "toffee --verbose '%s' '%s'" (buffer-file-name) (line-number-at-pos)))
+             ((eq mode 'suite) (format "toffee --verbose '%s'" (buffer-file-name)))
+             ((eq mode 'project) (format "toffee --verbose --full '%s'" (buffer-file-name)))
+             (t (error "Unknown mode for meain/toffee--get-test-command"))))))
+      (if (s-starts-with-p "Unable to find any test" command)
+          (cons default-directory nil)
+        (cons default-directory (s-trim command)))))
+  (defun meain/toffee-run-test (&optional mode)
+    "Run test based on `MODE'. By default runs current function.
+Pass universal args to run suite or project level tests."
+    (interactive "P")
+    (let* ((mode (cond
+                  ((equal current-prefix-arg nil) 'function)
+                  ((equal current-prefix-arg '(4)) 'suite)
+                  ((equal current-prefix-arg '(16)) 'project)))
+           (dir-cmd (meain/toffee--get-test-command  mode))
+           (default-directory (car dir-cmd))
+           (command (cdr dir-cmd)))
+      (if command
+          (progn
+            (setq meain/toffee--previous-command command)
             (compile (concat "nice " command)))
-        (if (and meain/test-runner-run-previous-if-empty meain/test-runner-previous-command)
+        (if (and meain/toffee-run-previous-if-empty meain/toffee--previous-command)
             (progn
               (message "Could not find any tests, running previous test...")
-              (compile (concat "nice " meain/test-runner-previous-command)))
+              (compile (concat "nice " meain/toffee--previous-command)))
           (message "Unable to find any tests")))))
   :init
-  (evil-leader/set-key "d" 'meain/test-runner)
-  (evil-leader/set-key "D" 'meain/test-runner-full))
+  (evil-leader/set-key "d" 'meain/toffee-run-test))
 
 ;; Neotree
 (use-package neotree
@@ -2156,8 +2167,8 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
   :straight t
   :defer t
   :config
-  (defun meain/dlv ()
-    (interactive)
+  (defun meain/dlv (&optional test)
+    (interactive "P")
     (let* ((default-default-directory (if (boundp 'custom-src-directory)
                                           custom-src-directory
                                         default-directory))
@@ -2167,7 +2178,21 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
                                           (mapcar (lambda (x) (concat default-directory x))
                                                   (string-split (shell-command-to-string "fd -t d") "\n")))
                                nil t default-default-directory)))
-      (call-interactively 'dlv)))
+      (if test
+          (let* ((dir-cmd (meain/toffee--get-test-command 'function))
+                 (default-directory (car dir-cmd))
+                 (command (cdr dir-cmd))
+                 (test-dir (progn
+                             (if (eq nil command)
+                                 (error "No tests available"))
+                             (car (reverse (string-split command " ")))))
+                 (command-without-dir (string-join (reverse (cdr (reverse (string-split command " ")))) " "))
+                 (dlv-command (s-replace-regexp
+                               "^go test -v -run"
+                               (format "dlv test %s -- -test.v -test.run" test-dir)
+                               command-without-dir)))
+            (dlv dlv-command))
+        (call-interactively 'dlv))))
   :commands (dlv dlv-current-func meain/dlv))
 (use-package lua-mode :straight t :defer t)
 (use-package web-mode :straight t :defer t)
