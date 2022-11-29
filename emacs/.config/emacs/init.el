@@ -3615,11 +3615,13 @@ Default is after, but use BEFORE to print before."
 (defun meain/set-proper-default-dir ()
   "Function to set the `default-directory' value as the project root if available."
   (interactive)
-  (if (not (file-remote-p default-directory))
-      (setq default-directory (cond
-                               ((not (eq (project-current) nil))
-                                (car (project-roots (project-current))))
-                               (t "~/")))))
+  (let ((go-base (locate-dominating-file default-directory "go.mod")))
+    (if (not (file-remote-p default-directory))
+        (setq default-directory (cond
+                                 ((not (eq (project-current) nil))
+                                  (car (project-roots (project-current))))
+                                 ((not (eq go-base nil)) go-base)
+                                 (t "~/"))))))
 (add-hook 'find-file-hook 'meain/set-proper-default-dir)
 
 ;; Quikly add markdown links to document
