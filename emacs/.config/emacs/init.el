@@ -693,22 +693,25 @@ Pass ORIGINAL and ALTERNATE options."
            (func-node (if (eq f-declaration nil) m-declaration f-declaration))
            (return-node (tsc-get-child-by-field func-node ':result)))
       ;; remove extra whitespace if nothing at end
-      (replace-regexp-in-string " $"
-                                ""
-                                (concat "return "
-                                        (if return-node
-                                            (let ((return-node-type (tsc-node-type return-node))
-                                                  (return-node-text (tsc-node-text return-node)))
-                                              (pcase return-node-type
-                                                ('parameter_list
-                                                 (string-join (remove-if #'null
-                                                                         (mapcar (lambda (x) (meain/go-default-returns x errformat))
-                                                                                 (mapcar 'string-trim
-                                                                                         ;; TODO: maybe use ts to find actual type nodes
-                                                                                         (split-string (string-trim return-node-text "(" ")")
-                                                                                                       ","))))
-                                                              ", "))
-                                                (_ (meain/go-default-returns return-node-text errformat)))))))))
+      (replace-regexp-in-string
+       " $"
+       ""
+       (concat "return "
+               (if return-node
+                   (let ((return-node-type (tsc-node-type return-node))
+                         (return-node-text (tsc-node-text return-node)))
+                     (pcase return-node-type
+                       ('parameter_list
+                        (string-join (remove-if
+                                      #'null
+                                      (mapcar (lambda (x) (meain/go-default-returns x errformat))
+                                              (mapcar 'string-trim
+                                                      ;; TODO: maybe use ts to find actual type nodes
+                                                      (split-string
+                                                       (string-trim return-node-text "(" ")")
+                                                       ","))))
+                                     ", "))
+                       (_ (meain/go-default-returns return-node-text errformat)))))))))
   (aas-set-snippets 'global
     ";--" "—"
     ";>>" "⟶"
