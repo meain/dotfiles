@@ -1,0 +1,17 @@
+#!/bin/sh
+
+set -e
+
+dir="$HOME/.local/share/logseq/pages"
+find "$dir" -name 'Backlog*.md' |
+	grep -i "$1" | sort |
+	while read -r file; do
+		basename "$file" | awk -F '%2F' '{print $2$3}' | sed 's|\.md$||'
+		tree-grepper -q markdown \
+			'((document (tight_list (list_item (paragraph) @_p) @item (#match? @_p "^(DONE)"))))' \
+			-f json "$file" |
+			jq |
+			grep "completed:: \[\[$(date '+%a, %d-%m-%Y')\]\]" |
+			sed 's|\\n.*||;s|^.*"text": "- DONE |- |'
+		echo # newline
+	done
