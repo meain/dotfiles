@@ -1580,7 +1580,11 @@ Pass ORIGINAL and ALTERNATE options."
   (evil-define-key 'normal eglot-mode-map (kbd "g r") 'xref-find-references)
   (evil-define-key 'normal eglot-mode-map (kbd "g R") 'eglot-rename)
   (evil-define-key 'normal eglot-mode-map (kbd "g ,") 'eglot-format-buffer)
-  (evil-define-key 'normal eglot-mode-map (kbd "g a") 'eglot-code-actions))
+  (evil-define-key 'normal eglot-mode-map (kbd "g a") 'eglot-code-actions)
+
+  ;; evil collection in go-mode was remapping them
+  (evil-define-key 'normal go-mode-map (kbd "K") 'eldoc-print-current-symbol-info)
+  (evil-define-key 'normal go-mode-map (kbd "g d") 'xref-find-definitions))
 
 ;; consult-eglot
 (use-package consult-eglot
