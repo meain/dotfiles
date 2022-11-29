@@ -125,7 +125,7 @@
   (evil-leader/set-leader "s"))
 
 ;; Some keybindings
-(evil-leader/set-key "h l" 'find-library)
+(evil-leader/set-key "H l" 'find-library)
 
 ;;; [BASIC SETTINGS] =============================================
 
