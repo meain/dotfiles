@@ -15,7 +15,7 @@ cp "$FILE.md" "$FILE.bk.md"
 tree-grepper -q markdown '((document (tight_list (list_item (paragraph) @_p) @item (#match? @_p "^(DONE|CANCELLED)"))))' -f json "$FILE.bk.md" | jq -r '.[]|.matches[].text' >> "$FILE%2FComplete.md"
 
 # Header
-tree-grepper -q markdown '(document . (paragraph) @header)' -f json "$FILE.bk.md" | jq -r '.[]|.matches[].text' > tee "$FILE.md"
+tree-grepper -q markdown '(document . (paragraph) @header)' -f json "$FILE.bk.md" | jq -r '.[]|.matches[].text' > "$FILE.md"
 
 # Non DONE items
 tree-grepper -q markdown '((document (tight_list (list_item (paragraph) @_p) @item (#match? @_p "^[^(DONE|CANCELLED)]"))))' -f json "$FILE.bk.md" | jq -r '.[]|.matches[].text' >> "$FILE.md"
