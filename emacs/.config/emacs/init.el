@@ -2163,6 +2163,12 @@ Pass universal args to run suite or project level tests."
 (use-package go-impl
   :straight t
   :commands (go-impl))
+(use-package go-stacktracer
+  :straight t
+  :commands (go-stacktracer-region))
+(use-package go-guru
+  :defer t
+  :straight t)
 (use-package go-dlv
   :straight t
   :defer t
