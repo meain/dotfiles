@@ -1460,36 +1460,42 @@ Pass ORIGINAL and ALTERNATE options."
   (advice-add 'dumb-jump-go :around #'meain/recenter-advice)
   (evil-set-command-property 'dumb-jumb-go :jump t))
 
-
 ;; Code formatting
-(use-package format-all
+(use-package apheleia
   :straight t
-  :commands (format-all-buffer format-all-ensure-formatter)
+  :commands (apheleia-format-buffer)
   :config
-  (define-format-all-formatter
-   fixjson ; Use fixjson for formatting json files
-   (:executable "fixjson")
-   (:install "npm i -g fixjson")
-   (:languages "JSON")
-   (:features)
-   (:format (format-all--buffer-easy executable)))
-  (define-format-all-formatter
-   gofumpt
-   (:executable "gofumpt")
-   (:install
-    (macos "brew install go")
-    (windows "scoop install go"))
-   (:languages "Go")
-   (:features)
-   (:format (format-all--buffer-easy executable)))
-  (setq-default format-all-formatters '(("HTML" prettier) ("Go" goimports) ("JSON" fixjson) ("Nix" nixpkgs-fmt) ("Shell" shfmt)))
+  ;; json
+  (setf (alist-get 'fixjson apheleia-formatters)
+        '("fixjson"))
+  (setf (alist-get 'json-mode apheleia-mode-alist)
+        '(fixjson))
+
+  ;; golang
+  (setf (alist-get 'goimports apheleia-formatters)
+        '("goimports"))
+  (setf (alist-get 'gofumpt apheleia-formatters)
+        '("gofumpt"))
+  (setf (alist-get 'go-mode apheleia-mode-alist)
+        '(goimports))
+
+  ;; markdown
+  (setf (alist-get 'markdown-mode apheleia-mode-alist)
+        '(prettier-markdown))
+
+  ;; clojure
+  (setf (alist-get 'zprint apheleia-formatters)
+        '("zprint"))
+  (setf (alist-get 'clojure-mode apheleia-mode-alist)
+        '(zprint))
+
   :init
-  (define-key evil-normal-state-map (kbd ",,") '(lambda () (interactive)
-                                                  (format-all-ensure-formatter)
-                                                  (if tree-sitter-mode
-                                                      (tree-sitter-save-excursion
-                                                        (format-all-buffer))
-                                                    (format-all-buffer)))))
+  (define-key evil-normal-state-map (kbd ",,")
+              (defun meain/format-buffer ()
+                (interactive)
+                (if (eq major-mode 'emacs-lisp-mode)
+                    (indent-region (point-min) (point-max))
+                  (call-interactively 'apheleia-format-buffer)))))
 
 ;; Xref customization
 (use-package xref
