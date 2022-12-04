@@ -161,6 +161,7 @@
     `(tree-sitter-hl-face:comment ,commentary-layer)
     `(tree-sitter-hl-face:doc ((t (:foreground ,dark-green))))
     `(tree-sitter-hl-face:string ,string-layer)
+    `(tree-sitter-hl-face:punctuation.delimiter ,default-layer)
     `(tree-sitter-hl-face:keyword ,default-layer)
     `(tree-sitter-hl-face:property ,default-layer)
     `(tree-sitter-hl-face:method.call ,default-layer)
