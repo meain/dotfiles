@@ -1510,6 +1510,7 @@ Pass ORIGINAL and ALTERNATE options."
   :straight t
   :after (project flymake)
   :config
+  (setq eglot-extend-to-xref t) ;; extend eglot to files gone to with go-to-def
   (add-to-list 'eglot-server-programs '(lua-mode . ("~/.luarocks/bin/lua-lsp")))
   ;; yaml-mode useful for github actions
   (add-to-list 'eglot-server-programs '(yaml-mode . ("yaml-language-server" "--stdio")))
