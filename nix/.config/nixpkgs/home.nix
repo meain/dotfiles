@@ -293,6 +293,8 @@ in
     # pkgs.postman # REST api testing tool
     pkgs.minicom # connect to rpi
     pkgs.mitmproxy # mitm proxy
+    pkgs.spotifyd # spotify daemon
+    pkgs.spotify-tui # control spotify
 
     # gnome tweaking
     # pkgs.gnome3.dconf-editor # change dconf settings
@@ -373,6 +375,7 @@ in
   systemd.user.services.sxhkd = utils.ss-simple { cmd = "sxhkd"; wait = 3; };
   systemd.user.services.emacs = utils.ss-simple { cmd = "emacs --fg-daemon"; wait = 1; };
   systemd.user.services.logseq = utils.ss-simple { cmd = "logseq"; wait = 1; };
+  systemd.user.services.spotifyd = utils.ss-simple { cmd = "spotifyd --no-daemon"; wait = 1; };
   systemd.user.services.emacsclient = utils.ss-simple { cmd = "emacsclient -F \\'((title . \"floatingemacs\"))\\' -c"; wait = 1; };
   systemd.user.services.floatingterm = utils.ss-simple { cmd = "sakura --name floatingterm -x \"tt floating\""; wait = 1; };
   systemd.user.services.mail-watcher = utils.ss-simple { cmd = "find /home/meain/.local/share/mail/.notmuch/xapian|entr -n ,shellout-update"; wait = 5; };
