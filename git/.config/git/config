@@ -22,6 +22,7 @@
   editor = emacsclient
   pager = diff-so-fancy | less --tabs=4 -RFX
   excludesfile = ~/.config/git/.gitignore_global
+  longpaths = true
 [diff]
   difftool = vimdiff
   algorithm = patience
