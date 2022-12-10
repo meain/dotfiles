@@ -24,6 +24,7 @@
   super (tap-next-release up lmet)
   dctl (tap-hold 180 down lctl)
   nav (tap-hold 180 d (layer-toggle custom))
+  num (tap-hold 180 g (layer-toggle num))
   ff (tap-hold 180 f (around lsft (around lalt lctl)))
   me (tap-macro m e a i n . i o) ;; just pointless fun
   dsh (multi-tap 200 rsft M-s)
@@ -34,7 +35,7 @@
 (deflayer qwerty
   grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
 @hype  q    w    e    r    t    y    u    i    o    p    [    ]    @pipe
- @ealt a    s    @nav @ff  g    h    j    k    l    ;    @qctl ret
+ @ealt a    s    @nav @ff  @num h    j    k    l    ;    @qctl ret
   lsft z    x    c    v    b    n    m    ,    .    /    @dsh
 @super @salt @dctl          @spl         left rmet cmp   rght
 )
@@ -53,4 +54,12 @@
   _    _    _    _    _    _    left down up   rght ^    "    _
   _    _    _    caps _    _    %    ~    &    @me  _    _
   _    _    _            @cbsp            _    _    _    _
+)
+
+(deflayer num
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    1    2    3    _    _    _    _
+  _    _    _    _    _    _    0    4    5    6    .    _    _
+  _    _    _    _    _    _    7    7    8    9    _    _
+  _    _    _              _              _    _    _    _
 )
