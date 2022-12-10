@@ -15,7 +15,7 @@ elif [ "$1" = lock ]; then
 	nix flake lock
 elif [ "$1" = build ]; then
 	cd $HOME/.config/nixpkgs/
-	nix build -L .#homeConfigurations.meain.activationPackage
+	nix build --show-trace -L .#homeConfigurations.meain.activationPackage
 elif [ "$1" = switch ]; then
 	cd $HOME/.config/nixpkgs/
 	nix build -L .#homeConfigurations.meain.activationPackage
