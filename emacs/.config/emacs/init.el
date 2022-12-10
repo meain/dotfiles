@@ -574,7 +574,6 @@ Pass ORIGINAL and ALTERNATE options."
   :commands (compile recompile)
   :config
   (setq compilation-scroll-output t)
-  (setq compilation-error-regexp-alist-alist '(nil)) ; Remove all highlighting for errors in compilation buffer
   (evil-set-initial-state 'comint-mode 'normal)
   (defun meain/prettify-compilation (&optional _)
     "Few thing to prettify compilation buffer."
