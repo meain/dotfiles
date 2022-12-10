@@ -74,7 +74,7 @@
     `(widget-button ((t (:foreground ,dark-blue))))
 
     ;; Gui items
-    `(header-line ,default-layer)
+    `(header-line ((t (:foreground ,black :box (:line-width 1 :color ,lighter-gray :style nil))))) ; Works best for topsy-mode
     `(mode-line-inactive ((t (:background ,light-gray))))
     `(mode-line-buffer-id ,bold-layer)
     `(mode-line ((t (:background ,green-blue))))
