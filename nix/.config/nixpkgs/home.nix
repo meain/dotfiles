@@ -346,22 +346,25 @@ in
     Service.Restart = "on-failure";
     Service.RestartSec = 5;
   };
-  systemd.user.services.activitywatch-mpd = {
-    Unit.Description = "Start ActivityWatch mpd";
-    Service.Type = "simple";
-    Service.ExecStart = "${ppkgs.aw-watcher-mpd}/bin/aw-watcher-mpd";
-    Install.WantedBy = [ "default.target" ];
-    Service.Restart = "on-failure";
-    Service.RestartSec = 5;
-  };
-  systemd.user.services.activitywatch-input = {
-    Unit.Description = "Start ActivityWatch input";
-    Service.Type = "simple";
-    Service.ExecStart = "${ppkgs.aw-watcher-input}/bin/aw-watcher-input";
-    Install.WantedBy = [ "default.target" ];
-    Service.Restart = "on-failure";
-    Service.RestartSec = 5;
-  };
+
+  # systemd.user.services.activitywatch-mpd = {
+  #   Unit.Description = "Start ActivityWatch mpd";
+  #   Service.Type = "simple";
+  #   Service.ExecStart = "${ppkgs.aw-watcher-mpd}/bin/aw-watcher-mpd";
+  #   Install.WantedBy = [ "default.target" ];
+  #   Service.Restart = "on-failure";
+  #   Service.RestartSec = 5;
+  # };
+
+  # https://github.com/nix-community/poetry2nix/issues/750
+  # systemd.user.services.activitywatch-input = {
+  #   Unit.Description = "Start ActivityWatch input";
+  #   Service.Type = "simple";
+  #   Service.ExecStart = "${ppkgs.aw-watcher-input}/bin/aw-watcher-input";
+  #   Install.WantedBy = [ "default.target" ];
+  #   Service.Restart = "on-failure";
+  #   Service.RestartSec = 5;
+  # };
 
 
   # systemd.user.startServices = true;  # enabling this increases switch time a lot
