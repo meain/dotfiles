@@ -1478,6 +1478,8 @@ Pass ORIGINAL and ALTERNATE options."
         '("goimports"))
   (setf (alist-get 'gofumpt apheleia-formatters)
         '("gofumpt"))
+  (setf (alist-get 'gci apheleia-formatters)
+        '("gci" "/dev/stdin"))
   (setf (alist-get 'go-mode apheleia-mode-alist)
         '(goimports))
 
