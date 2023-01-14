@@ -2316,6 +2316,32 @@ Pass universal args to run suite or project level tests."
 
 ;;; [EXTRA PLUGINS] =================================================
 
+(use-package gud
+  :after hydra
+  :init
+  (defhydra hydra-gud ()
+    "gud"
+    ("n" gud-next "next")
+    ("c" gud-cont "continue")
+    ("r" 'gud-reset "reset")
+    ("b" 'gud-break "break")
+    ("s" 'gud-step "step")
+    ("u" 'gud-up "up")
+    ("g" 'gud-until "go till"))
+
+  (define-key evil-normal-state-map (kbd "<SPC> d d") 'hydra-gud/body)
+  (define-key evil-normal-state-map (kbd "<SPC> d r") 'gud-reset)
+  (define-key evil-normal-state-map (kbd "<SPC> d b") 'gud-break)
+  (define-key evil-normal-state-map (kbd "<SPC> d c") 'gud-cont)
+  (define-key evil-normal-state-map (kbd "<SPC> d n") 'gud-next)
+  (define-key evil-normal-state-map (kbd "<SPC> d s") 'gud-step)
+  (define-key evil-normal-state-map (kbd "<SPC> d u") 'gud-up)
+  (define-key evil-normal-state-map (kbd "<SPC> d g") 'gud-until))
+
+(use-package hydra
+  :straight t
+  :commands (defhydra))
+
 ;; Dashboard
 (use-package dashboard
   :disabled t
