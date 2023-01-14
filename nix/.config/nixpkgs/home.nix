@@ -64,7 +64,7 @@ in
     pkgs.tmux # terminal multiplexer
     pkgs.aspell # spell checker
     pkgs.mpvc # mpv remote control  # not available on macos
-    pkgs.msmtp # smtp client
+    spkgs.msmtp # smtp client
     pkgs.android-tools # adb and friends  # not available for macos
     # pkgs.restic # backup
     # pkgs.ledger # double entry accounting
@@ -138,7 +138,10 @@ in
     pkgs.golangci-lint # all kinds of linters for go
     pkgs.gomodifytags # modify struct tags
     pkgs.impl # generate implementations for a struct
+    # pkgs.golines # long line format golang
+    # pkgs.gofumpt # better go formatting
     # pkgs.delve # debugging in go
+    # pkgs.rr # record replay debugging
 
     # programming-web
     pkgs.html-tidy # html formatter
@@ -158,7 +161,7 @@ in
 
     # programming-python
     pkgs.python39 # python language
-    pkgs.poetry # better package manager
+    # pkgs.poetry # better package manager
     pkgs.black # python code formatter
     pkgs.python39Packages.pip
     pkgs.python39Packages.flake8 # linter
@@ -218,7 +221,7 @@ in
     # pkgs.kitty
     # pkgs.alacritty # terminal emulator
     # pkgs.firefox # working OSS browser
-    pkgs.chromium # because Google hates firefox
+    # pkgs.chromium # because Google hates firefox
     # pkgs.guake # drop down terminal
     # pkgs.insomnia # simpler postman
     # pkgs.beekeeper-studio # db viewer
@@ -264,7 +267,7 @@ in
     pkgs.pgcli # fancier postgres cli
     # pkgs.trivy # docker vulnerability scanner
     # pkgs.act # github ci locally
-    # pkgs.pkgs.pstree # view process tree
+    pkgs.pstree # view process tree
     ppkgs.traffic # simple network stats
     # pkgs.comma # run literally anything
     ppkgs.gloc # run stuff in all git repos
@@ -295,6 +298,7 @@ in
     pkgs.mitmproxy # mitm proxy
     pkgs.spotifyd # spotify daemon
     pkgs.spotify-tui # control spotify
+    pkgs.helix # alternate editor
 
     # gnome tweaking
     # pkgs.gnome3.dconf-editor # change dconf settings
