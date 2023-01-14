@@ -2968,6 +2968,14 @@ Pass universal args to run suite or project level tests."
               (define-key evil-normal-state-map (kbd "<SPC> TAB") 'meain/toggle-fold)
               (evil-leader/set-key "o" 'meain/toggle-fold))))
 
+;; Show scope info of block
+;; (remove-overlays (point-min) (point-max))
+(use-package scopeline
+  :commands (scopeline-mode)
+  :load-path "/home/meain/dev/src/scopeline.el"
+  :after tree-sitter
+  :init (add-hook 'tree-sitter-mode-hook #'scopeline-mode))
+
 ;; Show definition beyond top of buffer in header
 (use-package topsy
   :defer t
