@@ -578,7 +578,7 @@ Pass ORIGINAL and ALTERNATE options."
   :config
   (setq compilation-scroll-output t)
   (evil-set-initial-state 'comint-mode 'normal)
-  (defun meain/prettify-compilation (&optional _)
+  (defun meain/prettify-compilation (&rest _)
     "Few thing to prettify compilation buffer."
     (with-current-buffer "*compilation*"
       (toggle-truncate-lines -1)
