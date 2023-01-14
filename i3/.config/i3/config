@@ -17,6 +17,8 @@ floating_modifier Mod1
 for_window [class="blueman-manager-wrapped"] floating enable
 for_window [title="^emacs-popup$"] floating enable, move position center
 for_window [class="^mpv$"] floating enable
+for_window [class="^zoom$"] floating enable
+for_window [class="^Thunar$"] floating enable
 for_window [class="^VirtualBox Manager$"] floating enable, resize set 700 500, move position center
 
 # scratchpad
