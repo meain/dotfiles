@@ -1706,10 +1706,10 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
 (use-package blamer
   :straight t
   :commands (blamer-show-commit-info blamer-mode global-blamer-mode)
-  :custom
-  (blamer-idle-time 0.1)
-  (blamer-min-offset 30)
   :config
+  (setq blamer-idle-time 0.1)
+  (setq blamer-min-offset 30)
+  (setq blamer-commit-formatter ":: %s")
   (set-face-attribute 'blamer-face nil :height 0.9)
   (setq blamer-max-commit-message-length 90)
   (setq blamer-border-lines '(?+ ?- ?+ ?| ?+ ?+ )) ;; default one creates issues with spacing
