@@ -1,0 +1,6 @@
+#!/bin/sh
+
+set -e
+
+cd "$HOME/.local/share/logseq/pages" || exit 1
+ls|grep 'Backlog%2F[^%]*.md'|xargs -n1 ,logseq-refile
