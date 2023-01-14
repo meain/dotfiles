@@ -203,6 +203,9 @@
 
     ;; keycast
     `(keycast-key ((t (:background ,light-blue))))
+
+    ;; scopeline
+    `(scopeline-face ((t  (:foreground ,light-gray))))
     ))
 
 (provide-theme 'hima)
