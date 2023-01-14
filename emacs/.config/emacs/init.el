@@ -3514,16 +3514,19 @@ START and END comes from it being interactive."
     (if current-prefix-arg
         (evil-open-above 1)
       (evil-open-below 1))
-    (insert (pcase major-mode
-              ('emacs-lisp-mode (format "(message \"%s: %%s\" %s)" escaped-thing-to-print thing-to-print thing-to-print))
-              ('lisp-interaction-mode (format "(message \"%s: %%s\" %s)" escaped-thing-to-print thing-to-print thing-to-print))
-              ('rust-mode (format "println!(\"%s: {:?}\", %s);" escaped-thing-to-print thing-to-print))
-              ('go-mode (format "fmt.Println(\"%s:\", %s)" escaped-thing-to-print thing-to-print))
-              ('lua-mode (format "print(\"%s:\", %s)" escaped-thing-to-print thing-to-print))
-              ('js-mode (format "console.log(\"%s:\", %s)" escaped-thing-to-print thing-to-print))
-              ('web-mode (format "console.log(\"%s:\", %s)" escaped-thing-to-print thing-to-print))
-              ('shell-script-mode (format "echo \"%s:\" %s" escaped-thing-to-print thing-to-print))
-              ('python-mode (format "print(\"%s:\", %s)" escaped-thing-to-print thing-to-print)))))
+    (let* (
+           (filename (car (reverse (string-split (buffer-file-name) "/"))))
+           (prefix (format "%s:%s" filename (line-number-at-pos))))
+      (insert (pcase major-mode
+                ('emacs-lisp-mode (format "(message \"%s %s: %%s\" %s)" prefix escaped-thing-to-print thing-to-print thing-to-print))
+                ('lisp-interaction-mode (format "(message \"%s %s: %%s\" %s)" prefix escaped-thing-to-print thing-to-print thing-to-print))
+                ('rust-mode (format "println!(\"%s %s: {:?}\", %s);" prefix escaped-thing-to-print thing-to-print))
+                ('go-mode (format "fmt.Println(\"%s %s:\", %s)" prefix escaped-thing-to-print thing-to-print))
+                ('lua-mode (format "print(\"%s %s:\", %s)" prefix escaped-thing-to-print thing-to-print))
+                ('js-mode (format "console.log(\"%s %s:\", %s)" prefix escaped-thing-to-print thing-to-print))
+                ('web-mode (format "console.log(\"%s %s:\", %s)" prefix escaped-thing-to-print thing-to-print))
+                ('shell-script-mode (format "echo \"%s %s:\" %s" prefix escaped-thing-to-print thing-to-print))
+                ('python-mode (format "print(\"%s %s:\", %s)" prefix escaped-thing-to-print thing-to-print))))))
   (evil-force-normal-state))
 (define-key evil-normal-state-map (kbd "g p") 'meain/quick-print)
 
