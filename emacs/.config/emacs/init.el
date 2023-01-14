@@ -253,6 +253,9 @@
 ;; auto-pair
 (electric-pair-mode t)
 
+;; move the mouse out of the way on cursor
+(mouse-avoidance-mode 'cat-and-mouse)
+
 ;; Enable recentf
 (use-package recentf
   :init
