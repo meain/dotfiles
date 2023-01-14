@@ -76,3 +76,4 @@ alias suspend='systemctl suspend'
 # shorthand
 alias to=',ca'
 alias dict=',dict'
+alias lk=',let-me-know'

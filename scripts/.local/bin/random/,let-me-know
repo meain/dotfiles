@@ -1,0 +1,10 @@
+#!/bin/sh
+
+mpv /usr/share/sounds/ubuntu/notifications/Blip.ogg >/dev/null 2>&1
+if eval "$*"; then
+    mpv /usr/share/sounds/gnome/default/alerts/glass.ogg >/dev/null 2>&1
+    echo "Success"
+else
+    mpv /usr/share/sounds/gnome/default/alerts/sonar.ogg >/dev/null 2>&1
+    echo "Failure"
+fi
