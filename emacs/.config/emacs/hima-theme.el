@@ -66,7 +66,7 @@
     `(nobreak-space ,default-layer)
     `(underline ,underline-layer)
     `(cursor ((t (:background ,black))))
-    `(fringe ((t (:background ,white :foreground ,light-gray))))
+    `(fringe ((t (:background ,white :foreground ,medium-gray))))
     `(highlight ((t (:background ,light-blue))))
     `(region ((t (:background ,lighter-blue :foreground ,black))))
     `(tooltip ((t (:background ,light-black :foreground ,medium-gray))))
