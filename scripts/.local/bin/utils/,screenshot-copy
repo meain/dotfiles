@@ -5,4 +5,4 @@
 set -e
 
 FILE="$(\ls -t $SCREENSHOTS_PATH | fzf)"
-cp "$HOME/Pictures/Screenshots/$FILE" "${1:-$FILE}"
+cp "$SCREENSHOTS_PATH/$FILE" "${1:-$FILE}"
