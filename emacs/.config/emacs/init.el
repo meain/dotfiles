@@ -3933,7 +3933,7 @@ Pass `CREATE' to create the alternate file if it does not exits."
 
 
 ;; Screenshot Emacs frame
-(defvar meain/frameshot-directory "~/Pictures/Screenshots/"
+(defvar meain/frameshot-directory "~/docs/Pictures/Screenshots/"
   "Default directory for frame shots.")
 (defvar meain/frameshot-format 'png
   "Default frame shot format.")
