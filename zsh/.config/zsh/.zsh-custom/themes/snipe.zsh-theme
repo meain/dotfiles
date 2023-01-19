@@ -149,7 +149,7 @@ function generate_lpropmpt() {
 }
 
 function generate_rpropmpt() {
-  echo "%F{003}$(virtualenv_info)%F{blue}$(_current_kubernetes_namespace)$FG[240]$(_git_pushable)%{$reset_color%} $(_cur_folder_with_git_base)%{%B%F{cyan}%}$(_hosthame_custom)"
+  echo "%F{003}$(virtualenv_info)%F{blue}$(_current_kubernetes_namespace)$FG[240]$(_git_pushable)%{$reset_color%} $(_cur_folder_with_git_base)%{%B%F{cyan}%}$(_hosthame_custom)%{$reset_color%}"
 }
 
 ASYNC_LPROC=0
