@@ -435,6 +435,13 @@ Pass ORIGINAL and ALTERNATE options."
                                 (define-key eshell-mode-map (kbd "M-k") 'meain/move-swap-up)
                                 (define-key eshell-mode-map (kbd "M-j") 'meain/move-swap-down))))
 
+(use-package sticky-shell
+  :straight (sticky-shell :host github
+                          :repo "andyjda/sticky-shell")
+  :after eshell
+  :commands (sticky-shell-mode)
+  :init
+  (add-hook 'eshell-mode-hook 'sticky-shell-mode))
 
 ;; ansi-term config
 (use-package term
