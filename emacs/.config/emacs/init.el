@@ -2384,6 +2384,12 @@ Pass universal args to run suite or project level tests."
   (global-set-key (kbd "M-f <right>") 'winner-redo)
   (winner-mode))
 
+;; Process management
+(use-package proced
+  :commands proced
+  :config
+  (setq proced-enable-color-flag t))
+
 ;; notmuch
 (use-package notmuch
   :straight t
