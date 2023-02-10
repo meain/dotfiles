@@ -1512,9 +1512,12 @@ Pass ORIGINAL and ALTERNATE options."
   (define-key evil-normal-state-map (kbd ",,")
               (defun meain/format-buffer ()
                 (interactive)
-                (if (eq major-mode 'emacs-lisp-mode)
-                    (indent-region (point-min) (point-max))
-                  (call-interactively 'apheleia-format-buffer)))))
+                (cond
+                 ((eq major-mode 'emacs-lisp-mode)
+                  (indent-region (point-min) (point-max)))
+                 ((eq major-mode 'ledger-mode)
+                  (ledger-mode-clean-buffer))
+                 (t (call-interactively 'apheleia-format-buffer))))))
 
 ;; Xref customization
 (use-package xref
