@@ -97,8 +97,14 @@
   (evil-mode t)
   (defalias #'forward-evil-word #'forward-evil-symbol)
 
+  ;; Enable/disable certain jump targets for C-o and C-i
   (evil-set-command-property 'evil-visual-char :jump t)
   (evil-set-command-property 'evil-visual-line :jump t)
+  (evil-set-command-property 'evil-backward-paragraph :jump nil)
+  (evil-set-command-property 'evil-forward-paragraph :jump nil)
+  (evil-set-command-property 'evil-search-next :jump nil)
+  (evil-set-command-property 'evil-search-previous :jump nil)
+
   ;; Up/Down on visual instead of actual lines
   (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
   (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
