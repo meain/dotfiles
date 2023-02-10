@@ -768,6 +768,8 @@ Pass ORIGINAL and ALTERNATE options."
     ";d-" (lambda () (interactive) (insert (format-time-string "%F")))
     ";time" (lambda () (interactive) (insert (format-time-string "%T")))
     ";filename" (lambda () (interactive) (insert (file-name-nondirectory (buffer-file-name)))))
+  (aas-set-snippets 'ledger-mode
+    ";e" (lambda () (interactive) (insert (format-time-string "%Y/%m/%d"))))
   (aas-set-snippets 'emacs-lisp-mode
     ";auto" ";;;###autoload"
     ";la" (lambda () (interactive) (insert "(lambda ())") (backward-char 2))
