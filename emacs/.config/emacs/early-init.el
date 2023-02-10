@@ -39,12 +39,14 @@
 ;; CMU Typewriter Text 16 | Input 14 | SF Mono 14 | CQ Mono 11 | Izayoi Monospaced 10
 ;; Font: (set-frame-font  "Whois 14")
 ;; Line spacing: (setq-default line-spacing nil)
+;; Fine grained size control (set-face-attribute 'default nil :height 105)
 
 (defvar meain/font-list '(;; name size line-spacing weight
                           ("Adelle Mono" . '(10 .1 'regular))
                           ("Aglet Mono" . '(11 .2 'regular))
                           ("Anka/Coder" . '(11 nil 'regular))
                           ("Anonymous Pro" . '(11 .1 'regular))
+                          ("Apercu Mono" . '(11 nil 'regular))
                           ("BPMono" . '(10 .1 'regular))
                           ("Cartograph CF" . '(11 nil 'regular))
                           ("Cascadia Code" . '(11 nil 'regular))
@@ -93,6 +95,7 @@
                           ("Monoisome" . '(9 .3 'light))
                           ("MonoLisa" . '(10 .2 'regular))
                           ("monoOne" . '(11 nil 'regular))
+                          ("MonospaceTypewriter" . '(10 nil 'regular))
                           ("NanumGothicCoding" . '(12 .2 'regular))
                           ("NK57 Monospace" . '(10 .2 'regular))
                           ("Operator Mono" . '(11 .1 'regular))
@@ -110,6 +113,7 @@
                           ("TerminessTTF Nerd Font" . '(13 nil 'regular))
                           ("TT2020Base" . '(13 .1 'regular))
                           ("TT2020 Style E" . '(13 .2 'regular))
+                          ("Ubuntu Mono" . '(12 .1 'regular))
                           ("Unifont" . '(12 .1 'regular))
                           ("Victor Mono" . '(11 .1 'regular))
                           ("Whois" . '(13 .1 'regular))
