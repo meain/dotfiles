@@ -589,7 +589,12 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package compile
   :commands (compile recompile)
   :config
-  (setq compilation-scroll-output t)
+  (setq compilation-scroll-output nil)
+  (defun meian/toggle-compilation-scroll-output ()
+    "Toggle `compilation-scroll-output'."
+    (interactive)
+    (setq compilation-scroll-output (not compilation-scroll-output))
+    (message "Compilation scroll set to %s" compilation-scroll-output))
   (evil-set-initial-state 'comint-mode 'normal)
   (defun meain/prettify-compilation (&rest _)
     "Few thing to prettify compilation buffer."
