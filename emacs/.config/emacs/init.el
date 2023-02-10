@@ -2162,6 +2162,7 @@ Pass universal args to run suite or project level tests."
                                 ("FIXME" . "#FF0000")
                                 ("GOTCHA" . "#FF4500")
                                 ("STUB" . "#1E90FF")
+                                ("NOTE" . "#0090FF")
                                 ("XXX" . "#AF0494")))
   (global-hl-todo-mode))
 
