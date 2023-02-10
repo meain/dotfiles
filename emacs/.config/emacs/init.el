@@ -2252,6 +2252,7 @@ Pass universal args to run suite or project level tests."
   (evil-define-key 'normal markdown-mode-map (kbd "g d") 'markdown-do)
   (setq markdown-command "pandoc -t html5")
   (setq markdown-fontify-code-blocks-natively t))
+(use-package reformatter :straight t :defer t) ;; needed by nix-mode
 (use-package nix-mode
   :straight t
   :defer t
