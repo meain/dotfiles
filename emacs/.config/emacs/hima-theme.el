@@ -206,6 +206,9 @@
 
     ;; scopeline
     `(scopeline-face ((t  (:foreground ,light-gray))))
+
+    ;; ledger
+    `(ledger-font-xact-highlight-face ((t (:background ,lighter-gray))))
     ))
 
 (provide-theme 'hima)
