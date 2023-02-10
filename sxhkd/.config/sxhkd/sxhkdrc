@@ -3,8 +3,8 @@ super + Return
 	  sakura -x 'tt default'
 
 # emacs
-super + {e,t}
-	  emacsclient -cn -a '' {_,-e '(vterm "terminal")'}
+super + e
+	  emacsclient -cn -a ''
 
 # audio
 super + alt + control + m; m
@@ -54,13 +54,12 @@ super + alt + control + {_, shift} + o
 # launch programs
 super + shift + a
       ,do-stuff
-super + alt + control + l ; {l, m, f, r, shift + r, v}
+super + alt + control + l ; {l, m, f, r, shift + r}
       { thunar \
       , i3-msg workspace number 000 && google-chrome --new-window 'https://meet.google.com' \
       , firefox \
       , \,record-screen \
-      , \,record-screen --select \
-      , emacsclient -cn -e '(meain/vime "vime" "~/.local/share/vime" t)' \
+      , \,record-screen --select
       }
 
 super + alt + control + k
