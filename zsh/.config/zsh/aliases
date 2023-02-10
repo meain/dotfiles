@@ -37,7 +37,7 @@ alias yd='youtube-dl'
 alias ydp='youtube-dl -o "%(playlist_index)s_%(title)s.%(ext)s"'
 
 # ledger
-alias ledger='ledger -f ~/.local/share/ledger/master.ledger --strict --price-db ~/.local/cache/ledger/pricedb --market'
+alias ledger='ledger -f ~/.local/share/ledger/master.ledger --strict'
 alias ,ledger-bal='ledger bal'
 alias ,ledger-cashflow='ledger bal ^Income ^Expenses'
 alias ,ledger-networth='ledger bal ^Assets ^Liabilities'
@@ -77,3 +77,7 @@ alias suspend='systemctl suspend'
 alias to=',ca'
 alias dict=',dict'
 alias lk=',let-me-know'
+
+# just be nice dammit
+alias go="nice go"
+alias dlv="nice dlv"
