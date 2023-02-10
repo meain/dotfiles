@@ -42,7 +42,7 @@ autoload -Uz compinit
 zmodload zsh/complist
 compinit
 
-# some settings
+# autosuggestions settings
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=244"
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 ZSH_AUTOSUGGEST_USE_ASYNC="true"
