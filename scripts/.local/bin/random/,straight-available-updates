@@ -3,7 +3,7 @@
 # set -e
 
 cd "$HOME/.config/emacs/straight/repos"
-gloc 'git fetch' .
+gloc 'git fetch origin' .
 for folder in *;do
     pushd "$folder" > /dev/null
     gurl="$(git remote get-url origin|sed 's|.git$||;s|git@github.com:|https://github.com/|')"
