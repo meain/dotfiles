@@ -40,13 +40,13 @@ in
 
     # packages
     # ppkgs.notmuch-git # mail indexer
-    pkgs.tree
+    # pkgs.tree
     pkgs.neovim
     pkgs.notmuch
     pkgs.isync # mail synchronize with upstream
     pkgs.htop # process monitor
     pkgs.mpc_cli # remote for mpd
-    pkgs.mpd # music player
+    spkgs.mpd # music player
     pkgs.pandoc # convert document between different formats
     pkgs.xsv # view/manage csv from terminal
     pkgs.parallel # exec things in parallel
@@ -67,7 +67,7 @@ in
     spkgs.msmtp # smtp client
     pkgs.android-tools # adb and friends  # not available for macos
     # pkgs.restic # backup
-    # pkgs.ledger # double entry accounting
+    pkgs.ledger # double entry accounting
     # pkgs.dasel # jq but more versatile
     # pkgs.mosh # better ssh
     # pkgs.haskellPackages.kmonad # key remapping
@@ -90,10 +90,10 @@ in
     pkgs.aspellDicts.en
 
     # apps
-    pkgs.kubectl # kubernetes cli
-    pkgs.kubecolor # colorful kubectl
-    pkgs.kubernetes-helm # helm cli
-    pkgs.stern # better way to fetch kubernetes log
+    # pkgs.kubectl # kubernetes cli
+    # pkgs.kubecolor # colorful kubectl
+    # pkgs.kubernetes-helm # helm cli
+    # pkgs.stern # better way to fetch kubernetes log
     pkgs.yt-dlp # download youtube videos
     pkgs.chafa # show images in terminal using half blocks
     # pkgs.hub # Github integration for git
@@ -116,7 +116,7 @@ in
     # pkgs.cowsay # useless stuff
     # pkgs.podman # pod manager
     pkgs.typos # typo checker (integrated with flymake)
-    pkgs.k9s # kubernetes tui
+    # pkgs.k9s # kubernetes tui
     # pkgs.screenkey # show keys (useful when recording screen)
 
     # programming
@@ -160,22 +160,22 @@ in
     pkgs.statix # linter for nix
 
     # programming-python
-    pkgs.python39 # python language
+    spkgs.python39 # python language
     # pkgs.poetry # better package manager
-    pkgs.black # python code formatter
-    pkgs.python39Packages.pip
-    pkgs.python39Packages.flake8 # linter
-    pkgs.python39Packages.ipdb # interactive debugging
+    spkgs.black # python code formatter
+    spkgs.python39Packages.pip
+    spkgs.python39Packages.flake8 # linter
+    spkgs.python39Packages.ipdb # interactive debugging
     # pkgs.python39Packages.pynvim # neovim python support
-    pkgs.python39Packages.pycodestyle # code style check
-    pkgs.python39Packages.pydocstyle # doc style check
+    spkgs.python39Packages.pycodestyle # code style check
+    spkgs.python39Packages.pydocstyle # doc style check
     # pkgs.python39Packages.requests # http lib for quick stuff
-    pkgs.python39Packages.virtualenv # virtual envs
+    spkgs.python39Packages.virtualenv # virtual envs
     # pkgs.python39Packages.bandit # analyze code for security issues
     # pkgs.python39Packages.mypy # check types in code
     # pkgs.python39Packages.isort # fix sort order
     # pkgs.python39Packages.pygments # generic syntax highlight
-    pkgs.python39Packages.python-lsp-server # python lsp
+    spkgs.python39Packages.python-lsp-server # python lsp
     # pkgs.python38Packages.python-language-server # python lsp (using below one as tests are failing)
     # (pkgs.python38Packages.python-language-server.overridePythonAttrs (oldAttrs: { checkPhase = ""; checkInputs = []; }))
 
@@ -190,7 +190,7 @@ in
     pkgs.cargo-edit # dep management
     # pkgs.cargo-bloat # find big chunks
     # pkgs.cargo-udeps # find unnecessary deps
-    pkgs.cargo-release # for releasing packages
+    # pkgs.cargo-release # for releasing packages
     pkgs.cargo-watch # continuously run cargo check
 
     # programming-lua
@@ -232,11 +232,11 @@ in
 
     # others
     # pkgs.redis # key value db
-    pkgs.postgresql_13 # postgres 13 (postgresql is at 11)
+    # pkgs.postgresql_13 # postgres 13 (postgresql is at 11)
     # pkgs.mongodb # document db
     pkgs.sqlite # better db (needed by magit-forge)
     # pkgs.minikube # mini kubernetes
-    pkgs.kind # better minikube
+    # pkgs.kind # better minikube
     # pkgs.awscli # manage aws
     # pkgs.google-cloud-sdk # manage google cloud
     # pkgs.lens # kubernetes viewer
@@ -264,7 +264,7 @@ in
     # pkgs.cmatrix # matrix thingy in shell
     # pkgs.graphviz # draw graphs with code
     pkgs.groff # gnu troff  ## needed for md->pdf conversion
-    pkgs.pgcli # fancier postgres cli
+    # pkgs.pgcli # fancier postgres cli
     # pkgs.trivy # docker vulnerability scanner
     # pkgs.act # github ci locally
     pkgs.pstree # view process tree
@@ -295,7 +295,7 @@ in
     # pkgs.obs-studio # video/screen recording
     # pkgs.postman # REST api testing tool
     pkgs.minicom # connect to rpi
-    pkgs.mitmproxy # mitm proxy
+    # pkgs.mitmproxy # mitm proxy
     pkgs.spotifyd # spotify daemon
     pkgs.spotify-tui # control spotify
     pkgs.helix # alternate editor
