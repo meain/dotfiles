@@ -653,6 +653,9 @@ Pass ORIGINAL and ALTERNATE options."
   :defer t
   :config
   (setq eldoc-echo-area-use-multiline-p nil)
+  ;; (add-to-list 'display-buffer-alist
+  ;;              '("^\\*eldoc" display-buffer-at-bottom
+  ;;                (window-height . 7)))
   (global-eldoc-mode nil))
 
 ;; dired
