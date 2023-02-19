@@ -658,6 +658,17 @@ Pass ORIGINAL and ALTERNATE options."
   ;;                (window-height . 7)))
   (global-eldoc-mode nil))
 
+;; Show eldoc messages in a popup at point
+(use-package eldoc-box
+  :straight t
+  :commands (eldoc-box-help-at-point eldoc-box-hover-mode eldoc-box-hover-at-point-mode)
+  :config
+  (global-set-key (kbd "M-d")
+                  (lambda ()
+                    (interactive)
+                    (let ((eldoc-echo-area-use-multiline-p t))
+                      (call-interactively #'eldoc-box-help-at-point)))))
+
 ;; dired
 (use-package dired
   :defer t
