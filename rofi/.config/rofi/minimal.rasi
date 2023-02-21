@@ -1,0 +1,68 @@
+// https://github.com/davatorium/rofi/blob/next/doc/rofi-theme.5.markdown#basic-structure-1
+
+configuration {
+  font: "Overpass Mono 10";
+
+  timeout {
+    delay: 10;
+    action: "kb-cancel";
+  }
+}
+
+* {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  spacing: 0;
+
+  bg: #FFFFFF;
+  bg-alt: #F1F1F1;
+  fg: #E75600;
+  fg-alt: #000000;
+  blue: #C1E7F4;
+
+  background-color: @bg;
+  text-color: @fg;
+}
+
+window {
+  transparency: "real";
+  border: 1;
+  border-color: #CCCCCC;
+  // border-radius: 5px;
+}
+
+mainbox {
+  children: [inputbar, listview];
+}
+
+inputbar {
+  children: [prompt, entry];
+  background-color: @blue;
+}
+
+entry {
+  padding: 12px 5px 12px 0;
+}
+
+prompt {
+  text-color: @fg-alt;
+  padding: 12px 5px;
+}
+
+listview {
+  lines: 8;
+}
+
+element {
+  children: [element-text];
+}
+
+element-text {
+  padding: 5px;
+  text-color: @fg-alt;
+}
+
+element-text selected {
+  text-color: @fg;
+}

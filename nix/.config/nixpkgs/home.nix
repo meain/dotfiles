@@ -83,6 +83,7 @@ in
     pkgs.xdotool # for window switching
     pkgs.picotts # for say
     ppkgs.dmenu # menu stuff (fork for emojis)
+    pkgs.rofi # menu stuff
     ppkgs.spaceman-diff # diff images in terminal
     pkgs.polybarFull # bar for wm
 

@@ -1,0 +1,10 @@
+@theme "minimal"
+
+listview {
+	lines: 7;
+	columns: 1;
+}
+
+window {
+	width: 30%;
+}
