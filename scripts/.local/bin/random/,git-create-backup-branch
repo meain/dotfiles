@@ -1,0 +1,8 @@
+#!/bin/sh
+
+set -e
+
+newbranch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)--backup--$(date '+%F--%H-%M-%S')"
+echo Creating "$newbranch"
+git branch "$newbranch"
+printf "%s" "$newbranch" | pbcopy
