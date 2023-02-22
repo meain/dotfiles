@@ -670,6 +670,11 @@ Pass ORIGINAL and ALTERNATE options."
                     (let ((eldoc-echo-area-use-multiline-p t))
                       (call-interactively #'eldoc-box-help-at-point)))))
 
+;; Highlight addresses in files
+(use-package goto-addr
+  :disabled t ; vim gx can do it
+  :config (global-goto-address-mode))
+
 ;; dired
 (use-package dired
   :defer t
