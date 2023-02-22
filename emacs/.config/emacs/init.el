@@ -127,12 +127,16 @@
 ;; Evil leader
 (use-package evil-leader
   :straight t
+  :after evil
   :config
   (global-evil-leader-mode)
   (evil-leader/set-leader "s"))
 
 ;; Some keybindings
-(evil-leader/set-key "H l" 'find-library)
+(use-package emacs
+  :after evil-leader
+  :config
+  (evil-leader/set-key "H l" 'find-library))
 
 ;;; [BASIC SETTINGS] =============================================
 
@@ -245,11 +249,17 @@
 (setq auto-revert-verbose t)
 
 ;; Disable line wrapping
-(setq-default truncate-lines 1)
-(evil-leader/set-key "b w" 'toggle-truncate-lines)
+(use-package emacs
+  :after evil-leader
+  :config
+  (setq-default truncate-lines 1)
+  (evil-leader/set-key "b w" 'toggle-truncate-lines))
 
 ;; auto-fill
-(evil-leader/set-key "b F" 'auto-fill-mode)
+(use-package emacs
+  :after evil-leader
+  :config
+  (evil-leader/set-key "b F" 'auto-fill-mode))
 
 ;; Cursor blink
 (blink-cursor-mode -1)
@@ -322,6 +332,7 @@ Pass ORIGINAL and ALTERNATE options."
 ;; Evil number increment
 (use-package evil-numbers
   :straight t
+  :after (evil)
   :commands (evil-numbers/inc-at-pt-incremental evil-numbers/dec-at-pt-incremental)
   :init
   ;; cannot directly use C-x (in use by emacs)
@@ -329,10 +340,17 @@ Pass ORIGINAL and ALTERNATE options."
   (define-key evil-normal-state-map (kbd "g C-x") 'evil-numbers/dec-at-pt-incremental))
 
 ;; Save buffer
-(define-key evil-normal-state-map (kbd "<SPC> <SPC>") 'evil-write)
+(use-package emacs
+  :after evil
+  :init
+  (define-key evil-normal-state-map (kbd "<SPC> <SPC>") 'evil-write))
 
 ;; Hit universal arg without ctrl
-(evil-leader/set-key "u" 'universal-argument)
+
+(use-package emacs
+  :after evil-leader
+  :config
+  (evil-leader/set-key "u" 'universal-argument))
 (global-set-key (kbd "M-u") 'universal-argument)
 
 ;; Auto resize windows (useful in go buffer, folks don't stop at 80)
@@ -393,6 +411,7 @@ Pass ORIGINAL and ALTERNATE options."
 ;; Eshell config
 (use-package eshell
   :init (global-set-key (kbd "M-;") 'meain/eshell-toggle)
+  :after s
   :config
   (defun meain/eshell-name ()
     "Get the name of the eshell based on project info."
@@ -479,22 +498,34 @@ Pass ORIGINAL and ALTERNATE options."
 (global-set-key (kbd "M-J") (meain/inlambda enlarge-window 5))
 
 ;; Switch to other frame
-(evil-leader/set-key "a f" 'other-frame)
+(use-package emacs
+  :after evil-leader
+  :config
+  (evil-leader/set-key "a f" 'other-frame))
 
 ;; Easier C-c C-c
-(evil-leader/set-key "i"
-  '(lambda ()
-     (interactive)
-     (execute-kbd-macro (kbd "C-c C-c"))))
+(use-package emacs
+  :after evil-leader
+  :config
+  (evil-leader/set-key "i"
+    '(lambda ()
+       (interactive)
+       (execute-kbd-macro (kbd "C-c C-c")))))
 
 ;; Remap macro recoring key
-(define-key evil-normal-state-map "Q" 'evil-record-macro)
+(use-package emacs
+  :after evil
+  :init
+  (define-key evil-normal-state-map "Q" 'evil-record-macro))
 
 ;; Eval region
-(define-key evil-visual-state-map (kbd ";") (lambda ()
-                                              (interactive)
-                                              (call-interactively 'eval-region)
-                                              (evil-force-normal-state)))
+(use-package emacs
+  :after evil
+  :init
+  (define-key evil-visual-state-map (kbd ";") (lambda ()
+                                                (interactive)
+                                                (call-interactively 'eval-region)
+                                                (evil-force-normal-state))))
 
 ;; Quick quit
 (defun meain/update-scratch-message ()
@@ -532,35 +563,42 @@ Pass ORIGINAL and ALTERNATE options."
   (with-current-buffer "*scratch*")
   (erase-buffer)
   (meain/update-scratch-message))
-(defun meain/kill-current-buffer-unless-scratch ()
-  "Kill current buffer if it is not scratch."
-  (interactive)
-  (if (= (length (mapcar #'window-buffer
-                         (window-list))) 1)
-      ;; TODO: optional delete frame advice on things that close (notmuch, elfeed)
-      (if (equal "emacs-popup" (cdr (assq 'name (frame-parameters))))
-          (delete-frame)
-        (meain/create-or-switch-to-scratch))
-    (cond
-     ((derived-mode-p 'prog-mode)
-      (evil-quit))
-     ((member major-mode '(imenu-list-major-mode magit-mode))
-      (evil-quit))
-     ((equal major-mode 'vterm-mode)
-      (progn
-        (evil-insert 1)
-        (vterm-reset-cursor-point)))
-     (t (previous-buffer)))))
-(define-key evil-normal-state-map (kbd "q") 'meain/kill-current-buffer-unless-scratch)
+
+(use-package emacs
+  :after evil
+  :init
+  (defun meain/kill-current-buffer-unless-scratch ()
+    "Kill current buffer if it is not scratch."
+    (interactive)
+    (if (= (length (mapcar #'window-buffer
+                           (window-list))) 1)
+        ;; TODO: optional delete frame advice on things that close (notmuch, elfeed)
+        (if (equal "emacs-popup" (cdr (assq 'name (frame-parameters))))
+            (delete-frame)
+          (meain/create-or-switch-to-scratch))
+      (cond
+       ((derived-mode-p 'prog-mode)
+        (evil-quit))
+       ((member major-mode '(imenu-list-major-mode magit-mode))
+        (evil-quit))
+       ((equal major-mode 'vterm-mode)
+        (progn
+          (evil-insert 1)
+          (vterm-reset-cursor-point)))
+       (t (previous-buffer)))))
+  (define-key evil-normal-state-map (kbd "q") 'meain/kill-current-buffer-unless-scratch))
 
 ;; Y to y$
-(defun meain/yank-till-line-end ()
-  "Yank till end of line."
-  (interactive)
-  (evil-yank (point)
-             ;; subtracting 1 for newline
-             (- (save-excursion (forward-line) (point)) 1)))
-(define-key evil-normal-state-map (kbd "Y") 'meain/yank-till-line-end)
+(use-package emacs
+  :after evil
+  :init
+  (defun meain/yank-till-line-end ()
+    "Yank till end of line."
+    (interactive)
+    (evil-yank (point)
+               ;; subtracting 1 for newline
+               (- (save-excursion (forward-line) (point)) 1)))
+  (define-key evil-normal-state-map (kbd "Y") 'meain/yank-till-line-end))
 
 ;; Quit out of everything with esc
 (defun meain/keyboard-quit ()
@@ -576,8 +614,11 @@ Pass ORIGINAL and ALTERNATE options."
 (global-set-key [escape] 'meain/keyboard-quit)
 
 ;; Quick replace
-(define-key evil-normal-state-map (kbd "<SPC> ;") (cons "replace in buffer" (meain/ilambda evil-ex "%s/")))
-(define-key evil-visual-state-map (kbd "<SPC> ;") (cons "replace in buffer"(meain/ilambda evil-ex "'<,'>s/")))
+(use-package emacs
+  :after evil
+  :init
+  (define-key evil-normal-state-map (kbd "<SPC> ;") (cons "replace in buffer" (meain/ilambda evil-ex "%s/")))
+  (define-key evil-visual-state-map (kbd "<SPC> ;") (cons "replace in buffer"(meain/ilambda evil-ex "'<,'>s/"))))
 
 ;; Highlight yanked region
 (defun meain/evil-yank-advice (orig-fn beg end &rest args)
@@ -589,6 +630,7 @@ Pass ORIGINAL and ALTERNATE options."
 ;; Recompile binding
 (use-package compile
   :commands (compile recompile)
+  :after evil
   :config
   (setq compilation-scroll-output nil)
   (defun meian/toggle-compilation-scroll-output ()
@@ -614,7 +656,7 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package multi-compile
   :straight t
   :defer t
-  :after compile
+  :after (compile evil-leader)
   :commands (meain/recompile-or-compile)
   :config
   (defun meain/recompile-or-compile (&optional arg)
@@ -639,6 +681,7 @@ Pass ORIGINAL and ALTERNATE options."
 ;; project
 (use-package project
   :defer t
+  :after (evil evil-leader)
   :commands (project-switch-project project-find-file project-roots project-current)
   :config
   (setq project-switch-commands 'project-find-file)
@@ -679,6 +722,7 @@ Pass ORIGINAL and ALTERNATE options."
 ;; dired
 (use-package dired
   :defer t
+  :after evil
   :config
   (require 'dired-x) ;; for dired-omit-files
   (setq delete-by-moving-to-trash t)
@@ -990,13 +1034,14 @@ Pass ORIGINAL and ALTERNATE options."
 ;; flymake
 (use-package flymake
   :defer 1
+  :after evil
   :config
   (add-hook 'find-file-hook 'flymake-find-file-hook)
   (evil-set-command-property 'flymake-goto-next-error :jump t)
   (evil-set-command-property 'flymake-goto-prev-error :jump t))
 (use-package flymake-diagnostic-at-point
   :straight t
-  :after flymake
+  :after (flymake evil-leader)
   :config
   (setq flymake-diagnostic-at-point-error-prefix "! ")
   (setq flymake-diagnostic-at-point-display-diagnostic-function 'flymake-diagnostic-at-point-display-minibuffer)
@@ -1452,6 +1497,7 @@ Pass ORIGINAL and ALTERNATE options."
 ;; Helpful package
 (use-package helpful
   :straight t
+  :after evil-leader
   :commands (helpful-callable helpful-variable helpful-at-point helpful-key)
   :init
   (evil-leader/set-key "H p" 'helpful-at-point)
@@ -1489,6 +1535,7 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package rg
   :straight t
   :commands rg
+  :after evil-leader
   :init
   (evil-leader/set-key "F"
     (meain/with-alternate (consult-ripgrep) (call-interactively 'rg)))
@@ -1497,6 +1544,7 @@ Pass ORIGINAL and ALTERNATE options."
 ;; dumb-jump
 (use-package dumb-jump
   :straight t
+  :after evil-leader
   :commands dumb-jumb-go
   :init (evil-leader/set-key "J" 'dumb-jump-go)
   :config
@@ -1506,6 +1554,7 @@ Pass ORIGINAL and ALTERNATE options."
 ;; Code formatting
 (use-package apheleia
   :straight t
+  :after evil
   :commands (apheleia-format-buffer)
   :config
   ;; json
@@ -1660,7 +1709,6 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
 
 ;; Tagbar alternative
 (use-package imenu
-  :straight t
   :defer t
   :after (consult)
   :commands imenu
@@ -1692,6 +1740,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
 ;; Magit
 (use-package magit
   :straight t
+  :after evil-leader
   :commands (magit-status magit-commit-create magit-ignored-files)
   :init
   (evil-leader/set-key "gg" 'magit-status)
@@ -1713,7 +1762,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
 (use-package forge
   :straight t
   :defer t
-  :after magit
+  :after (magit evil-leader)
   :config (evil-leader/set-key "gF" 'forge-browse-dwim))
 
 ;; Github review
@@ -1727,6 +1776,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
 (use-package diff-hl
   :straight t
   :defer 1
+  :after evil-leader
   :config
   (diff-hl-flydiff-mode)
   (global-diff-hl-mode)
@@ -1749,6 +1799,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
 ;; Git blame info
 (use-package blamer
   :straight t
+  :after evil-leader
   :commands (blamer-show-commit-info blamer-mode global-blamer-mode)
   :config
   (setq blamer-idle-time 0.1)
@@ -1782,7 +1833,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
 ;; Code folding
 (use-package origami
   :straight t
-  :after evil
+  :after (evil evil-leader)
   :defer 1
   :config (global-origami-mode)
   :init
@@ -1792,6 +1843,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
 ;; drag-stuff
 (use-package drag-stuff
   :straight t
+  :after evil
   :diminish
   :commands (drag-stuff-up drag-stuff-down drag-stuff-left drag-stuff-right)
   :init
@@ -1805,7 +1857,6 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
 
 ;; Saveplace
 (use-package saveplace
-  :straight t
   :init
   (save-place-mode t)
   (setq save-place-file "~/.local/share/emacs/saveplace"))
@@ -1823,7 +1874,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
 
 ;; Fancier tab managerment
 (use-package tab-bar
-  :straight t
+  :after evil-leader
   :defer 3
   :commands (tab-close tab-new tab-next tab-bar-rename-tab
                        meain/switch-tab-dwim meain/create-or-delete-tab
@@ -1921,6 +1972,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
 (use-package vterm
   :straight t
   :defer t
+  :after evil
   :commands (vterm meain/shell-toggle)
   ;; :init (global-set-key (kbd "M-;") 'meain/shell-toggle)
   :config
@@ -2030,7 +2082,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
                                              (list filename)))))
     (with-current-buffer (vterm (concat "*popup-shell-" command "*"))
       (set-process-sentinel vterm--process #'meain/run-in-vterm-kill)
-      (vterm-send-string (concatenate 'string command ";exit 0"))
+      (vterm-send-string (concat command ";exit 0"))
       (vterm-send-return)))
   (defun meain/clear-and-exec ()
     (interactive)
@@ -2073,6 +2125,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
 (use-package eros
   :straight t
   :commands (eros-eval-last-sexp meain/eval-last-sexp)
+  :after evil-leader
   :init
   (evil-leader/set-key ";" 'meain/eval-last-sexp)
   :config
@@ -2091,6 +2144,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
 ;; Quick calculations
 (use-package emacs
   :commands (meain/calc-eval)
+  :after evil-leader
   :init
   (evil-leader/set-key ":" 'meain/calc-eval)
   :config
@@ -2352,6 +2406,7 @@ Pass universal args to run suite or project level tests."
 
 ;; mtodo-mode
 (use-package emacs
+  :after evil
   :config
   (load (expand-file-name "~/.config/emacs/mtodo-mode.el"))
   (add-hook 'mtodo-mode-hook (lambda ()
@@ -2363,7 +2418,7 @@ Pass universal args to run suite or project level tests."
 ;;; [EXTRA PLUGINS] =================================================
 
 (use-package gud
-  :after hydra
+  :after (evil hydra)
   :init
   (defhydra hydra-gud ()
     "gud"
@@ -2421,6 +2476,7 @@ Pass universal args to run suite or project level tests."
 (use-package notmuch
   :straight t
   :commands notmuch
+  :after evil-leader
   :init
   (evil-leader/set-key "a n" 'notmuch)
   :config
@@ -2515,6 +2571,7 @@ Pass universal args to run suite or project level tests."
 (use-package elfeed
   :straight t
   :commands (elfeed elfeed-update)
+  :after evil-leader
   :init
   ;; first run after 1 hour
   (run-at-time "1 hour" (* 6 60 60) (lambda () (elfeed-update) (elfeed-db-save)))
@@ -2725,18 +2782,22 @@ Pass universal args to run suite or project level tests."
   :straight t
   :defer t
   :commands (writegood-mode))
-;; TODO: convert writing-mode to minor mode
-(defvar meain/writing-mode-enabled -1 "State to store if `writing-mode' is enabled.")
-(defun meain/toggle-writing-mode ()
-  "Toggle `writing-mode'."
-  (interactive)
-  (toggle-truncate-lines meain/writing-mode-enabled)
-  (setq meain/writing-mode-enabled (if (eq meain/writing-mode-enabled t) -1 t))
-  (writeroom-mode meain/writing-mode-enabled)
-  (focus-mode meain/writing-mode-enabled)
-  (writegood-mode meain/writing-mode-enabled)
-  (flyspell-mode meain/writing-mode-enabled))
-(evil-leader/set-key "b W" 'meain/toggle-writing-mode)
+
+(use-package emacs
+  :after (writeroom-mode writeroom-mode evil-leader)
+  :config
+  ;; TODO: convert writing-mode to minor mode
+  (defvar meain/writing-mode-enabled -1 "State to store if `writing-mode' is enabled.")
+  (defun meain/toggle-writing-mode ()
+    "Toggle `writing-mode'."
+    (interactive)
+    (toggle-truncate-lines meain/writing-mode-enabled)
+    (setq meain/writing-mode-enabled (if (eq meain/writing-mode-enabled t) -1 t))
+    (writeroom-mode meain/writing-mode-enabled)
+    (focus-mode meain/writing-mode-enabled)
+    (writegood-mode meain/writing-mode-enabled)
+    (flyspell-mode meain/writing-mode-enabled))
+  (evil-leader/set-key "b W" 'meain/toggle-writing-mode))
 
 ;; tramp dired
 (use-package tramp
@@ -2827,6 +2888,7 @@ Pass universal args to run suite or project level tests."
 ;; Window layout changer
 (use-package rotate
   :straight t
+  :after evil
   :commands (rotate-layout rotate-window)
   :init
   (define-key evil-normal-state-map (kbd "M-f <SPC>") 'rotate-layout))
@@ -2960,7 +3022,7 @@ Pass universal args to run suite or project level tests."
 (use-package evil-textobj-tree-sitter
   :defer 1
   :load-path "/home/meain/dev/src/evil-textobj-tree-sitter/"
-  :after tree-sitter
+  :after (evil tree-sitter)
   :config
   (define-key evil-outer-text-objects-map "m" (evil-textobj-tree-sitter-get-textobj "import"
                                                 '((python-mode . [(import_statement) @import])
@@ -3000,7 +3062,7 @@ Pass universal args to run suite or project level tests."
 
 (use-package ts-fold
   :defer t
-  :after (tree-sitter)
+  :after (tree-sitter evil-leader)
   :commands (ts-fold-mode)
   :straight (ts-fold :host github
                      :repo "jcs090218/ts-fold")
@@ -3109,6 +3171,7 @@ Pass universal args to run suite or project level tests."
 (use-package 0x0
   :straight t
   :defer t
+  :after evil-leader
   :commands (0x0-dwim 0x0-popup 0x0-upload-file 0x0-upload-text)
   :init (evil-leader/set-key "a 0" '0x0-dwim))
 
@@ -3120,12 +3183,14 @@ Pass universal args to run suite or project level tests."
 (use-package avy
   :straight t
   :defer 3
+  :after evil-leader
   :config
   (setq avy-timeout-seconds 0.3)
   (evil-leader/set-key "f" 'avy-goto-char-timer))
 
 (use-package harpoon
   :straight t
+  :after evil-leader
   :config
   (setq harpoon-cache-file (concat user-emacs-directory "harpoon/"))
   (setq harpoon-separate-by-branch nil)
@@ -3147,6 +3212,7 @@ Pass universal args to run suite or project level tests."
   :straight (denote :host github
                     :repo "protesilaos/denote")
   :defer t
+  :after (evil-leader)
   :commands (denote
              denote-dired-rename-file
              denote-link-buttonize-buffer
@@ -3286,50 +3352,52 @@ Pass universal args to run suite or project level tests."
       (save-selected-window (other-window 1)
                             (switch-to-buffer (other-buffer))))))
 
-(defun meain/qa--get-entries (filename)
-  "Helper function to parse qa files.  `FILENAME' is the name of the file to parse."
-  (let* ((contents (with-temp-buffer
-                     (insert-file-contents filename)
-                     (buffer-string)))
-         (qa-entries (mapcar (lambda (x)
-                               (string-split x " "))
-                             (string-split contents "\n"))))
-    qa-entries))
-
 ;; Add keybindings to access important files.
-(mapcar (lambda (e)
-          (let ((key (car e))
-                (name (cadr e))
-                (file (caddr e)))
-            (evil-leader/set-key (concat "e " key)
-              (cons name (lambda ()
-                           (interactive)
-                           (if (file-exists-p file)
-                               (if (file-directory-p file)
-                                   (find-file
-                                    (concat file "/"
-                                            (completing-read
-                                             "Choose file:"
-                                             (directory-files file nil
-                                                              directory-files-no-dot-files-regexp))))
-                                 (find-file file))
-                             (if create
-                                 (find-file file)
-                               (message "Unable to find %s" file))))))))
-        (meain/qa--get-entries "~/.config/datafiles/qa-files"))
+(use-package emacs
+  :after (evil-leader)
+  :init
+  (defun meain/qa--get-entries (filename)
+    "Helper function to parse qa files.  `FILENAME' is the name of the file to parse."
+    (let* ((contents (with-temp-buffer
+                       (insert-file-contents filename)
+                       (buffer-string)))
+           (qa-entries (mapcar (lambda (x)
+                                 (string-split x " "))
+                               (string-split contents "\n"))))
+      qa-entries))
+  (mapcar (lambda (e)
+            (let ((key (car e))
+                  (name (cadr e))
+                  (file (caddr e)))
+              (evil-leader/set-key (concat "e " key)
+                (cons name (lambda ()
+                             (interactive)
+                             (if (file-exists-p file)
+                                 (if (file-directory-p file)
+                                     (find-file
+                                      (concat file "/"
+                                              (completing-read
+                                               "Choose file:"
+                                               (directory-files file nil
+                                                                directory-files-no-dot-files-regexp))))
+                                   (find-file file))
+                               (if create
+                                   (find-file file)
+                                 (message "Unable to find %s" file))))))))
+          (meain/qa--get-entries "~/.config/datafiles/qa-files"))
 
-;; Add keybinding to access common projects quickly.
-;; qa-projects (quick-access-projects) file contains the list of
-;; projects that will be added here.
-(mapcar (lambda (e)
-          (let ((key (car e))
-                (name (cadr e))
-                (folder (caddr e)))
-            (evil-leader/set-key (concat "s e " key)
-              (cons name (lambda ()
-                           (interactive)
-                           (project-switch-project folder))))))
-        (meain/qa--get-entries "~/.config/datafiles/qa-projects"))
+  ;; Add keybinding to access common projects quickly.
+  ;; qa-projects (quick-access-projects) file contains the list of
+  ;; projects that will be added here.
+  (mapcar (lambda (e)
+            (let ((key (car e))
+                  (name (cadr e))
+                  (folder (caddr e)))
+              (evil-leader/set-key (concat "s e " key)
+                (cons name (lambda ()
+                             (interactive)
+                             (project-switch-project folder))))))
+          (meain/qa--get-entries "~/.config/datafiles/qa-projects")))
 
 ;; Fullscreen current buffer
 (defvar meain/window-configuration nil)
@@ -3345,35 +3413,40 @@ Pass universal args to run suite or project level tests."
 (global-set-key (kbd "M-f f") 'meain/monacle-mode)
 
 ;; Quick open scratch buffers
-(defun meain/scratchy ()
-  "Open scratch buffer in a specific mode."
-  (interactive "P")
-  (let* ((scratch-major-mode
-          (completing-read
-           "Choose mode: "
-           (cons 'artist-mode
-                 (cons 'mermaid-mode
-                       (append
-                        (cl-loop for sym the symbols of obarray
-                                 when (and (functionp sym)
-                                           (provided-mode-derived-p sym 'text-mode))
-                                 collect sym)
-                        (cl-loop for sym the symbols of obarray
-                                 when (and (functionp sym)
-                                           (provided-mode-derived-p sym 'prog-mode))
-                                 collect sym))))
-           nil nil nil nil "text-mode"))
-         (scratch-file-name (concatenate 'string
-                                         "~/.local/share/scratch/"
-                                         (format "%s" scratch-major-mode) "-"
-                                         (substring (uuid-string) 0 4))))
-    (find-file scratch-file-name)
-    (funcall (intern scratch-major-mode))
-    (if (eq (intern scratch-major-mode) 'artist-mode)
-        (evil-local-mode -1))))
-(evil-leader/set-key "c"
-  (meain/with-alternate (meain/create-or-switch-to-scratch)
-                        (meain/scratchy)))
+(use-package emacs
+  :after evil-leader
+  :commands (meain/scratchy)
+  :config
+  (defun meain/scratchy ()
+    "Open scratch buffer in a specific mode."
+    (interactive "P")
+    (let* ((scratch-major-mode
+            (completing-read
+             "Choose mode: "
+             (cons 'artist-mode
+                   (cons 'mermaid-mode
+                         (append
+                          (cl-loop for sym the symbols of obarray
+                                   when (and (functionp sym)
+                                             (provided-mode-derived-p sym 'text-mode))
+                                   collect sym)
+                          (cl-loop for sym the symbols of obarray
+                                   when (and (functionp sym)
+                                             (provided-mode-derived-p sym 'prog-mode))
+                                   collect sym))))
+             nil nil nil nil "text-mode"))
+           (scratch-file-name (concatenate 'string
+                                           "~/.local/share/scratch/"
+                                           (format "%s" scratch-major-mode) "-"
+                                           (substring (uuid-string) 0 4))))
+      (find-file scratch-file-name)
+      (funcall (intern scratch-major-mode))
+      (if (eq (intern scratch-major-mode) 'artist-mode)
+          (evil-local-mode -1))))
+  :init
+  (evil-leader/set-key "c"
+    (meain/with-alternate (meain/create-or-switch-to-scratch)
+                          (meain/scratchy))))
 
 ;; vime functionality within emacs
 (use-package uuid :straight t :commands uuid-string)
@@ -3555,51 +3628,60 @@ START and END comes from it being interactive."
     (gfm-mode)))
 
 ;; vim-printer remake in elisp
-(defun meain/quick-print (beg end)
-  "Quickly print the variable your cursor is under.  `BEG' and `END' is used in visual mode."
-  (interactive "r")
-  (let* ((thing-to-print (if (use-region-p)
-                             (buffer-substring beg end)
-                           (symbol-name (symbol-at-point))))
-         (escaped-thing-to-print (string-replace "\"" "\\\"" thing-to-print)))
-    (if current-prefix-arg
-        (evil-open-above 1)
-      (evil-open-below 1))
-    (let* (
-           (filename (car (reverse (string-split (buffer-file-name) "/"))))
-           (prefix (format "%s:%s" filename (line-number-at-pos))))
-      (insert (pcase major-mode
-                ('emacs-lisp-mode (format "(message \"%s %s: %%s\" %s)" prefix escaped-thing-to-print thing-to-print thing-to-print))
-                ('lisp-interaction-mode (format "(message \"%s %s: %%s\" %s)" prefix escaped-thing-to-print thing-to-print thing-to-print))
-                ('rust-mode (format "println!(\"%s %s: {:?}\", %s);" prefix escaped-thing-to-print thing-to-print))
-                ('go-mode (format "fmt.Println(\"%s %s:\", %s)" prefix escaped-thing-to-print thing-to-print))
-                ('lua-mode (format "print(\"%s %s:\", %s)" prefix escaped-thing-to-print thing-to-print))
-                ('js-mode (format "console.log(\"%s %s:\", %s)" prefix escaped-thing-to-print thing-to-print))
-                ('web-mode (format "console.log(\"%s %s:\", %s)" prefix escaped-thing-to-print thing-to-print))
-                ('shell-script-mode (format "echo \"%s %s:\" %s" prefix escaped-thing-to-print thing-to-print))
-                ('python-mode (format "print(\"%s %s:\", %s)" prefix escaped-thing-to-print thing-to-print))))))
-  (evil-force-normal-state))
-(define-key evil-normal-state-map (kbd "g p") 'meain/quick-print)
+(use-package emacs
+  :after evil
+  :commands (meain/quick-print)
+  :config
+  (defun meain/quick-print (beg end)
+    "Quickly print the variable your cursor is under.  `BEG' and `END' is used in visual mode."
+    (interactive "r")
+    (let* ((thing-to-print (if (use-region-p)
+                               (buffer-substring beg end)
+                             (symbol-name (symbol-at-point))))
+           (escaped-thing-to-print (string-replace "\"" "\\\"" thing-to-print)))
+      (if current-prefix-arg
+          (evil-open-above 1)
+        (evil-open-below 1))
+      (let* (
+             (filename (car (reverse (string-split (buffer-file-name) "/"))))
+             (prefix (format "%s:%s" filename (line-number-at-pos))))
+        (insert (pcase major-mode
+                  ('emacs-lisp-mode (format "(message \"%s %s: %%s\" %s)" prefix escaped-thing-to-print thing-to-print thing-to-print))
+                  ('lisp-interaction-mode (format "(message \"%s %s: %%s\" %s)" prefix escaped-thing-to-print thing-to-print thing-to-print))
+                  ('rust-mode (format "println!(\"%s %s: {:?}\", %s);" prefix escaped-thing-to-print thing-to-print))
+                  ('go-mode (format "fmt.Println(\"%s %s:\", %s)" prefix escaped-thing-to-print thing-to-print))
+                  ('lua-mode (format "print(\"%s %s:\", %s)" prefix escaped-thing-to-print thing-to-print))
+                  ('js-mode (format "console.log(\"%s %s:\", %s)" prefix escaped-thing-to-print thing-to-print))
+                  ('web-mode (format "console.log(\"%s %s:\", %s)" prefix escaped-thing-to-print thing-to-print))
+                  ('shell-script-mode (format "echo \"%s %s:\" %s" prefix escaped-thing-to-print thing-to-print))
+                  ('python-mode (format "print(\"%s %s:\", %s)" prefix escaped-thing-to-print thing-to-print))))))
+    (evil-force-normal-state))
+  :init
+  (define-key evil-normal-state-map (kbd "g p") 'meain/quick-print))
 
 ;; Journal entry
-(add-hook 'find-file-hook
-          (lambda ()
-            (if (string-prefix-p (expand-file-name "~/.local/share/journal")
-                                 default-directory)
-                (progn
-                  (company-mode -1)
-                  (auto-fill-mode)))))
-(evil-leader/set-key "a J"
-  (lambda ()
-    "Start writing journal entry.  `journal' invokes emacsclient and gives control back over to Emacs."
-    (interactive)
-    (start-process-shell-command "journal" "*journal*"
-                                 "EDITOR='emacsclient' ,journal")))
+(use-package emacs
+  :after evil-leader
+  :init
+  (add-hook 'find-file-hook
+            (lambda ()
+              (if (string-prefix-p (expand-file-name "~/.local/share/journal")
+                                   default-directory)
+                  (progn
+                    (company-mode -1)
+                    (auto-fill-mode)))))
+  (evil-leader/set-key "a J"
+    (lambda ()
+      "Start writing journal entry.  `journal' invokes emacsclient and gives control back over to Emacs."
+      (interactive)
+      (start-process-shell-command "journal" "*journal*"
+                                   "EDITOR='emacsclient' ,journal"))))
 
 
 ;; Narrow region
 (use-package fancy-narrow
   :straight t
+  :after evil
   :commands (fancy-narrow-to-region fancy-widen evil-fancy-narrow)
   :config
   ;; TODO: remove extra args
@@ -3624,17 +3706,26 @@ START and END comes from it being interactive."
   (global-set-key (kbd "M-N") 'meain/narrow-region-dwim))
 
 ;; Buffer/Frame/Window keybinds
-(evil-leader/set-key "b k" 'kill-buffer)
-(evil-leader/set-key "b o" 'previous-buffer)
-(evil-leader/set-key "b f" 'find-file)
-(evil-leader/set-key "b d" 'delete-frame)
+(use-package emacs
+  :after evil-leader
+  :init
+  (evil-leader/set-key "b k" 'kill-buffer)
+  (evil-leader/set-key "b o" 'previous-buffer)
+  (evil-leader/set-key "b f" 'find-file)
+  (evil-leader/set-key "b d" 'delete-frame))
 
 ;; Server edit complete
-(evil-leader/set-key "s s" 'server-edit)
+(use-package emacs
+  :after evil-leader
+  :init
+  (evil-leader/set-key "s s" 'server-edit))
 
 ;; Next and previous buffer
-(define-key evil-normal-state-map (kbd "C-S-o") 'previous-buffer)
-(define-key evil-normal-state-map (kbd "C-S-i") 'next-buffer)
+(use-package emacs
+  :after evil
+  :init
+  (define-key evil-normal-state-map (kbd "C-S-o") 'previous-buffer)
+  (define-key evil-normal-state-map (kbd "C-S-i") 'next-buffer))
 
 ;; Bookmarks
 (setq bookmark-save-flag 1)
@@ -3753,38 +3844,43 @@ Default is after, but use BEFORE to print before."
       (insert (format "[%s](%s)" orig-thang lurl)))))
 
 ;; Open current file in Github
-(defun meain/github-url (&optional use-branch)
-  "Open the Github page for the current file.  Pass USE-BRANCH to use branch name instead of commit hash."
-  (interactive "P")
-  (let* ((git-url (replace-regexp-in-string
-                   "\.git$"
-                   ""
-                   (s-replace "git@github\.com:"
-                              "https://github.com/"
-                              (car (split-string
-                                    (shell-command-to-string
-                                     "git config --get remote.origin.url") "\n")))))
-         (git-branch (car (split-string
-                           (shell-command-to-string
-                            (if use-branch
-                                "git rev-parse --abbrev-ref HEAD"
-                              "git log --format='%H' -n 1"
-                              ))
-                           "\n")))
-         (web-url (format "%s/blob/%s/%s%s"
-                          git-url
-                          git-branch
-                          (file-relative-name (if (equal major-mode 'dired-mode)
-                                                  default-directory
-                                                buffer-file-name)
-                                              (car (project-roots (project-current))))
-                          (if (equal major-mode 'dired-mode)
-                              ""
-                            (format "#L%s" (line-number-at-pos))))))
-    (progn
-      (message "%s coped to clipboard." web-url)
-      (meain/copy-to-clipboard web-url))))
-(evil-leader/set-key "g l" 'meain/github-url)
+(use-package emacs
+  :after evil-leader
+  :commands (meain/github-url)
+  :config
+  (defun meain/github-url (&optional use-branch)
+    "Open the Github page for the current file.  Pass USE-BRANCH to use branch name instead of commit hash."
+    (interactive "P")
+    (let* ((git-url (replace-regexp-in-string
+                     "\.git$"
+                     ""
+                     (s-replace "git@github\.com:"
+                                "https://github.com/"
+                                (car (split-string
+                                      (shell-command-to-string
+                                       "git config --get remote.origin.url") "\n")))))
+           (git-branch (car (split-string
+                             (shell-command-to-string
+                              (if use-branch
+                                  "git rev-parse --abbrev-ref HEAD"
+                                "git log --format='%H' -n 1"
+                                ))
+                             "\n")))
+           (web-url (format "%s/blob/%s/%s%s"
+                            git-url
+                            git-branch
+                            (file-relative-name (if (equal major-mode 'dired-mode)
+                                                    default-directory
+                                                  buffer-file-name)
+                                                (car (project-roots (project-current))))
+                            (if (equal major-mode 'dired-mode)
+                                ""
+                              (format "#L%s" (line-number-at-pos))))))
+      (progn
+        (message "%s coped to clipboard." web-url)
+        (meain/copy-to-clipboard web-url))))
+  :init
+  (evil-leader/set-key "g l" 'meain/github-url))
 
 ;; Generate pdf from markdown document
 (defun meain/markdown-pdf ()
@@ -3867,18 +3963,23 @@ This contains a lot of hacks to get it working with H-q keybinding and a popup."
   (start-process-shell-command "blog" "*blog*"
                                (concat "zsh -ic ',blog " (read-string "Blog slug: ") "'")))
 ;; Search from Emacs
-(defun meain/eww-search-ddg (&optional open)
-  "Search using eww on ddg.  Pass OPEN to open in browser instead."
-  (interactive "P")
-  (let* ((thing (if (use-region-p)
-                    (buffer-substring start end)
-                  (thing-at-point 'symbol)))
-         (searchterm (replace-regexp-in-string " " "+" (read-from-minibuffer "Search query: "))))
-    (if open
-        (start-process-shell-command "browser-open-ddg" "*browser-open-ddg*"
-                                     (concat "open 'https://duckduckgo.com/?q=" searchterm "'"))
-      (eww (concat "http://lite.duckduckgo.com/lite/?q=" searchterm)))))
-(evil-leader/set-key "a s" 'meain/eww-search-ddg)
+(use-package emacs
+  :after evil-leader
+  :commands (meain/eww-search-ddg)
+  :config
+  (defun meain/eww-search-ddg (&optional open)
+    "Search using eww on ddg.  Pass OPEN to open in browser instead."
+    (interactive "P")
+    (let* ((thing (if (use-region-p)
+                      (buffer-substring start end)
+                    (thing-at-point 'symbol)))
+           (searchterm (replace-regexp-in-string " " "+" (read-from-minibuffer "Search query: "))))
+      (if open
+          (start-process-shell-command "browser-open-ddg" "*browser-open-ddg*"
+                                       (concat "open 'https://duckduckgo.com/?q=" searchterm "'"))
+        (eww (concat "http://lite.duckduckgo.com/lite/?q=" searchterm)))))
+  :init
+  (evil-leader/set-key "a s" 'meain/eww-search-ddg))
 
 ;; search from Emacs using xwidgets
 (defun meain/search-xwidget ()
@@ -3968,43 +4069,48 @@ Pass THING-TO-POPUP as the thing to popup."
     (select-frame frame))
   (funcall thing-to-popup))
 
-:; Patterns for replacing filenames with
-(defvar meain/find-alternate-file--patterns '(("thing-for-today-personal.mtodo" "thing-for-today.mtodo")
-                                              ("early-init.el" "init.el")
-                                              ("i3/config" "i3status/config")
-                                              ("shell.nix" "default.nix")
-                                              ("_test.go" ".go")
-                                              ("-test.el" ".el")))
-(defun meain/find-alternate-file (&optional create)
-  "Open alternate file.  Useful for opening test of currently active file.
+;; Patterns for replacing filenames with
+(use-package emacs
+  :after evil-leader
+  :commands (meain/find-alternate-file)
+  :config
+  (defvar meain/find-alternate-file--patterns '(("thing-for-today-personal.mtodo" "thing-for-today.mtodo")
+                                                ("early-init.el" "init.el")
+                                                ("i3/config" "i3status/config")
+                                                ("shell.nix" "default.nix")
+                                                ("_test.go" ".go")
+                                                ("-test.el" ".el")))
+  (defun meain/find-alternate-file (&optional create)
+    "Open alternate file.  Useful for opening test of currently active file.
 Pass `CREATE' to create the alternate file if it does not exits."
-  (interactive "P")
-  (if (buffer-file-name)
-      (let* ((file-patterns
-              (apply #'append
-                     (seq-map (lambda (x)
-                                (if (> (length (car x)) (length (cadr x)))
-                                    (list (list (car x) (cadr x))
-                                          (list (cadr x) (car x)))
-                                  (list (list (cadr x) (car x))
-                                        (list (car x) (cadr x)))))
-                              meain/find-alternate-file--patterns)))
-             (alt-file
-              (car (remove-if (lambda (x) (equal x nil))
-                              (seq-map (lambda (f)
-                                         (if (string-match (car f) (buffer-file-name))
-                                             (s-replace-regexp (car f) (nth 1 f) (buffer-file-name))))
-                                       file-patterns)))))
-        (message "Switching to %s" (file-name-nondirectory alt-file))
-        (if alt-file
-            (if (file-exists-p alt-file)
-                (find-file alt-file)
-              (if create
+    (interactive "P")
+    (if (buffer-file-name)
+        (let* ((file-patterns
+                (apply #'append
+                       (seq-map (lambda (x)
+                                  (if (> (length (car x)) (length (cadr x)))
+                                      (list (list (car x) (cadr x))
+                                            (list (cadr x) (car x)))
+                                    (list (list (cadr x) (car x))
+                                          (list (car x) (cadr x)))))
+                                meain/find-alternate-file--patterns)))
+               (alt-file
+                (car (remove-if (lambda (x) (equal x nil))
+                                (seq-map (lambda (f)
+                                           (if (string-match (car f) (buffer-file-name))
+                                               (s-replace-regexp (car f) (nth 1 f) (buffer-file-name))))
+                                         file-patterns)))))
+          (message "Switching to %s" (file-name-nondirectory alt-file))
+          (if alt-file
+              (if (file-exists-p alt-file)
                   (find-file alt-file)
-                (message "Alternate file '%s' is not available on disk" alt-file)))
-          (message "Unable to determine alternate file")))
-    (message "Not in a file")))
-(evil-leader/set-key "e e" 'meain/find-alternate-file)
+                (if create
+                    (find-file alt-file)
+                  (message "Alternate file '%s' is not available on disk" alt-file)))
+            (message "Unable to determine alternate file")))
+      (message "Not in a file")))
+  :init
+  (evil-leader/set-key "e e" 'meain/find-alternate-file))
 
 ;; Splitting lists (https://github.com/AckslD/nvim-trevJ.lua)
 (defun meain/split-at-commas (start end)
