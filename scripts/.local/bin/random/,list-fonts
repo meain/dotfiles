@@ -2,4 +2,7 @@
 
 set -e
 
-fc-list -f '%{file}\n' | sort
+fc-list |                                    # get all fonts
+    cut -d: -f2 | tr , '\n' | sed 's/^ //' | # get all names
+    grep -v '[^a-Z0-9\+\/\_\(\)\. ]' |       # filter out weird ones
+    sort -u
