@@ -22,7 +22,13 @@ if [ "$1" = "cache" ]; then
     exit 0
 fi
 
-item="$(,picker -l 10 <"$HOME/.config/datafiles/chills")"
+if echo "$1" | grep -q '^https://'; then
+    key="$(echo "$1" | grep -o 'v=.*$')"
+    item="$key $1"
+else
+    item="$(,picker -l 10 <"$HOME/.config/datafiles/chills")"
+fi
+
 download "$item"
 name="$(echo "$item" | awk '{print $1}')"
 mpv --loop-file "$name" --input-ipc-server=/tmp/mpvsocket
