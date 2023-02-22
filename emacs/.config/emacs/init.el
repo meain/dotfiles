@@ -663,7 +663,7 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package eldoc-box
   :straight t
   :commands (eldoc-box-help-at-point eldoc-box-hover-mode eldoc-box-hover-at-point-mode)
-  :config
+  :init
   (global-set-key (kbd "M-d")
                   (lambda ()
                     (interactive)
