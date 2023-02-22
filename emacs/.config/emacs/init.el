@@ -118,10 +118,11 @@
     (apply orig-fn args)
     (recenter 13))
 
-  (advice-add 'evil-jump-forward :around #'meain/recenter-advice)
-  (advice-add 'evil-jump-backward :around #'meain/recenter-advice)
-  (advice-add 'evil-search-next :around #'meain/recenter-top-advice)
-  (advice-add 'evil-search-previous :around #'meain/recenter-top-advice))
+  ;; (advice-add 'evil-jump-forward :around #'meain/recenter-advice)
+  ;; (advice-add 'evil-jump-backward :around #'meain/recenter-advice)
+  ;; (advice-add 'evil-search-next :around #'meain/recenter-top-advice)
+  ;; (advice-add 'evil-search-previous :around #'meain/recenter-top-advice)
+  )
 
 ;; Evil leader
 (use-package evil-leader
