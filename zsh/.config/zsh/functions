@@ -106,7 +106,7 @@ mm(){
 	fi
 
     .mscripts/default "$@"
-    cd -
+	popd >/dev/null
 }
 
 # python venv setup (need to be function as we have to source)
