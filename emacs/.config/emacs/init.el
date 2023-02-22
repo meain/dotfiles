@@ -605,9 +605,10 @@ Pass ORIGINAL and ALTERNATE options."
   (advice-add 'compile :after 'meain/prettify-compilation)
   (defun meain/compilation-colorcode (_buffer string)
     "Change background color of compilation `_BUFFER' to red on failure."
-    (unless (string-prefix-p "finished" string) ; Having color for success was distracting
+    (if (string-prefix-p "finished" string)
+        (face-remap-add-relative 'default 'diff-hl-insert)
       (face-remap-add-relative 'default 'diff-hl-delete)))
-  (add-to-list 'compilation-finish-functions 'meain/compilation-colorcode))
+  (add-to-list 'compilation-finish-functions 'meain/compilation-colorcode)
 
 (use-package multi-compile
   :straight t
