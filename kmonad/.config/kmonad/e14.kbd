@@ -28,6 +28,7 @@
   dctl (tap-hold 180 down lctl)
   nav (tap-hold-next-release 180 d (layer-toggle custom))
   ff (tap-hold 180 f (around lsft (around lalt lctl)))
+  cbsp (around lctl bspc)
 )
 
 (deflayer qwerty
@@ -57,6 +58,6 @@
   _   _   _   _    _   _   _    \(   *  \)    _   _   _   _
   _   _   _   _    _   _   left down up  rght _   _   _
   _   _   _   caps _   _   &    ~    %   _    _   _
-  _   _   _   _            _          _   _    _          _  _  _
+  _   _   _   _          @cbsp         _   _    _          _  _  _
                                                       _  _  _
 )
