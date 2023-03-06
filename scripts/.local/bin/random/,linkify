@@ -16,13 +16,15 @@ get_title() {
 
 link="$(
 	if echo "$url" | grep -qE '^https://github.com/[^/]*/[^/]*/issues'; then
-		printf "$url" | sed "s|https://github.com/\([^/]*/[^/]*\)/issues/\([0-9]*\)|[\1#\2]($url)|"
+		printf "%s" "$url" | sed "s|https://github.com/\([^/]*/[^/]*\)/issues/\([0-9]*\)|[\1#\2]($url)|"
 	elif echo "$url" | grep -qE '^https://github.com/[^/]*/[^/]*/pull'; then
-		printf "$url" | sed "s|https://github.com/\([^/]*/[^/]*\)/pull/\([0-9]*\)|[\1#\2]($url)|"
+		printf "%s" "$url" | sed "s|https://github.com/\([^/]*/[^/]*\)/pull/\([0-9]*\)|[\1#\2]($url)|"
 	elif echo "$url" | grep -qE '^https://github.com/[^/]*/[^/]*/commit'; then
-		printf "$url" | sed "s|https://github.com/\([^/]*/[^/]*\)/commit/\([0-9a-z]\{7\}\).*|[\1\@\2]($url)|"
+		printf "%s" "$url" | sed "s|https://github.com/\([^/]*/[^/]*\)/commit/\([0-9a-z]\{7\}\).*|[\1\@\2]($url)|"
 	elif echo "$url" | grep -qE '^https://github.com/[^/]*/[^/]*/?$'; then
-		printf "$url" | sed "s|https://github.com/\([^/]*/[^/$]*\)|[\1]($url)|"
+		printf "%s" "$url" | sed "s|https://github.com/\([^/]*/[^/$]*\)|[\1]($url)|"
+	elif echo "$url" | grep -qE '^https://linear.app/[^/]*/issue/[^/]*/[^/]*$'; then
+		printf "%s" "$url" | sed "s|https://linear.app/\([^/]*\)/issue/\([^/]*\)/\([^/]*\)|[linear:\1#\2]($url)|"
 	else
 		title="$(get_title "$url")"
         [ -z "$title" ] && title="$url"
@@ -30,5 +32,5 @@ link="$(
 	fi
 )"
 
-printf "$link" | pbcopy
+printf "%s" "$link" | pbcopy
 echo "$link"
