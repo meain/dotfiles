@@ -3197,27 +3197,27 @@ Pass universal args to run suite or project level tests."
   :after evil-leader
   :config
   (setq avy-timeout-seconds 0.3)
-  (evil-leader/set-key "f" 'avy-goto-char-timer))
+  (evil-leader/set-key "h" 'avy-goto-char-timer))
 
 (use-package harpoon
   :straight t
   :after evil-leader
   :config
   (setq harpoon-cache-file (concat user-emacs-directory "harpoon/"))
-  (setq harpoon-separate-by-branch nil)
-  (evil-leader/set-key "h H" 'harpoon-toggle-file)
-  (evil-leader/set-key "h r" 'harpoon-toggle-quick-menu)
-  (evil-leader/set-key "h c" 'harpoon-clear)
-  (evil-leader/set-key "h f" 'harpoon-add-file)
-  (evil-leader/set-key "h j" 'harpoon-go-to-1)
-  (evil-leader/set-key "h k" 'harpoon-go-to-2)
-  (evil-leader/set-key "h l" 'harpoon-go-to-3)
-  (evil-leader/set-key "h ;" 'harpoon-go-to-4)
-  (evil-leader/set-key "h h j" 'harpoon-go-to-5)
-  (evil-leader/set-key "h h k" 'harpoon-go-to-6)
-  (evil-leader/set-key "h h l" 'harpoon-go-to-7)
-  (evil-leader/set-key "h h ;" 'harpoon-go-to-8)
-  (evil-leader/set-key "h h f" 'harpoon-go-to-9))
+  (setq harpoon-separate-by-branch t)
+  (evil-leader/set-key "f F" 'harpoon-toggle-file)
+  (evil-leader/set-key "f r" 'harpoon-toggle-quick-menu)
+  (evil-leader/set-key "f c" 'harpoon-clear)
+  (evil-leader/set-key "f f" 'harpoon-add-file)
+  (evil-leader/set-key "f j" 'harpoon-go-to-1)
+  (evil-leader/set-key "f k" 'harpoon-go-to-2)
+  (evil-leader/set-key "f l" 'harpoon-go-to-3)
+  (evil-leader/set-key "f ;" 'harpoon-go-to-4)
+  (evil-leader/set-key "f h j" 'harpoon-go-to-5)
+  (evil-leader/set-key "f h k" 'harpoon-go-to-6)
+  (evil-leader/set-key "f h l" 'harpoon-go-to-7)
+  (evil-leader/set-key "f h ;" 'harpoon-go-to-8)
+  (evil-leader/set-key "f h f" 'harpoon-go-to-9))
 
 (use-package denote
   :straight (denote :host github
