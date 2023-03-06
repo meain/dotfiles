@@ -72,11 +72,12 @@ bindsym $mod+Mod1+j move workspace to output down
 bindsym $mod+Mod1+k move workspace to output up
 
 # window arrangement
+# workspace_layout tabbed
 bindsym $mod+v split toggle
 bindsym $mod+Shift+f fullscreen toggle
 bindsym $mod+Shift+s layout stacking
 bindsym $mod+Shift+t layout tabbed
-bindsym $mod+Shift+v layout toggle split
+bindsym $mod+Shift+v layout split
 
 # toggle tiling / floating
 bindsym $mod+f floating toggle
