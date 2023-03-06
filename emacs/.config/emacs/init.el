@@ -352,6 +352,7 @@ Pass ORIGINAL and ALTERNATE options."
   :config
   (evil-leader/set-key "u" 'universal-argument))
 (global-set-key (kbd "M-u") 'universal-argument)
+(define-key universal-argument-map (kbd "M-u") 'universal-argument-more)
 
 ;; Auto resize windows (useful in go buffer, folks don't stop at 80)
 (use-package golden-ratio
