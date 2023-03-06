@@ -2794,6 +2794,7 @@ Pass universal args to run suite or project level tests."
 
 (use-package emacs
   :after (writeroom-mode writeroom-mode evil-leader)
+  :commands (meain/toggle-writing-mode)
   :config
   ;; TODO: convert writing-mode to minor mode
   (defvar meain/writing-mode-enabled -1 "State to store if `writing-mode' is enabled.")
@@ -2806,6 +2807,7 @@ Pass universal args to run suite or project level tests."
     (focus-mode meain/writing-mode-enabled)
     (writegood-mode meain/writing-mode-enabled)
     (flyspell-mode meain/writing-mode-enabled))
+  :init
   (evil-leader/set-key "b W" 'meain/toggle-writing-mode))
 
 ;; tramp dired
