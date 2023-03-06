@@ -1584,6 +1584,14 @@ Pass ORIGINAL and ALTERNATE options."
   (setf (alist-get 'clojure-mode apheleia-mode-alist)
         '(zprint))
 
+  (setf (alist-get 'shell-script-mode apheleia-mode-alist)
+        '(shfmt))
+
+  (setf (alist-get 'nixpkgsfmt apheleia-formatters)
+        '("nixpkgs-fmt"))
+  (setf (alist-get 'nix-mode apheleia-mode-alist)
+        '(nixpkgsfmt))
+
   :init
   (define-key evil-normal-state-map (kbd ",,")
               (defun meain/format-buffer ()
