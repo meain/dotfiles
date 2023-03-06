@@ -1388,6 +1388,7 @@ Pass ORIGINAL and ALTERNATE options."
           (consult-imenu buffer)
           (xref-find-references buffer)
           (meain/imenu-or-eglot buffer)
+          (meain/symbol-search buffer)
           (consult-buffer flat)
           (t flat)))
   (setq vertico-multiform-categories
@@ -1711,10 +1712,31 @@ Pass ORIGINAL and ALTERNATE options."
     "Create a func to alternate between goto thingy stuff.
 Giving it a name so that I can target it in vertico mode and make it use buffer."
     (interactive "P")
-    (if alternate
-        (consult-eglot-symbols)
-      (consult-imenu)))
+    (cond
+     ((equal alternate nil) (consult-imenu))
+     ((equal alternate '(4)) (consult-eglot-symbols))
+     ((equal alternate '(16)) (meain/symbol-search))))
   (global-set-key (kbd "M-i") #'meain/imenu-or-eglot))
+
+;; Hacky symbol search using tree-sitter
+(use-package emacs
+  :commands (meain/symbol-search)
+  :config
+  (defun meain/symbol-search ()
+    "Search for a symbol in the entire project."
+    (interactive)
+    (when-let* ((symbols (shell-command-to-string ",symbol-search"))
+                (choices (butlast (string-split symbols "\n")))
+                (choice (completing-read "Choose entry:" choices))
+                (splits (string-split choice ":"))
+                (file (car splits))
+                (line (string-to-number (car (cdr splits))))
+                (column (string-to-number (car (cdr (cdr splits))))))
+      (find-file file)
+      (goto-char 0)
+      (forward-line (- line 1))
+      (forward-char (- column 1))))
+(global-set-key (kbd "M-I") #'meain/symbol-search))
 
 ;; Tagbar alternative
 (use-package imenu

@@ -1,0 +1,6 @@
+#!/bin/sh
+
+set -e
+
+tree-grepper -q go '(function_declaration name: (identifier) @function)'
+tree-grepper -q go '(method_declaration name: (field_identifier) @function)'
