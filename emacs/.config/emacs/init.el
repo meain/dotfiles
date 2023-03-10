@@ -4194,7 +4194,16 @@ not defined, it will be saved in the `$HOME' directory."
   :straight t
   :commands (mode-line-idle))
 (setq-default mode-line-format
-              (list '(:eval (if (eq 'emacs evil-state) "[E] " " ")) ;; vim or emacs mode
+              (list '(:eval (propertize
+                             "█"
+                             'font-lock-face
+                             (list :foreground (concat "#"
+                                                       (substring
+                                                        (md5 (if (project-current)
+                                                                 ;; TODO: encode worktree information?
+                                                                 (meain/project-name)
+                                                               "")) 0 6)))))
+                    '(:eval (if (eq 'emacs evil-state) "[E] " " ")) ;; vim or emacs mode
                     '(:eval (list (if (eq buffer-file-name nil)
                                       ""
                                     (concatenate 'string
