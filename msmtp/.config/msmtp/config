@@ -1,9 +1,9 @@
 account        default
-host           smtp.gmail.com
+host           smtppro.zoho.com
 port           587
 tls            on
 tls_starttls   on
 auth           on
-user           abinsimon10
-passwordeval   "pass show google/abinsimon10"
+user           mail@meain.io
+passwordeval   "pass show zoho/mail"
 from           mail@meain.io
