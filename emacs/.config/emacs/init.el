@@ -2777,6 +2777,10 @@ Pass universal args to run suite or project level tests."
               '((name . "beacon-blink")))
   (beacon-mode t))
 
+(use-package hl-line
+  :disabled t
+  :config (global-hl-line-mode t))
+
 ;; Ligatures
 (use-package ligature
   :defer 3
