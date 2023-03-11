@@ -1736,7 +1736,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
       (goto-char 0)
       (forward-line (- line 1))
       (forward-char (- column 1))))
-(global-set-key (kbd "M-I") #'meain/symbol-search))
+  (global-set-key (kbd "M-I") #'meain/symbol-search))
 
 ;; Tagbar alternative
 (use-package imenu
