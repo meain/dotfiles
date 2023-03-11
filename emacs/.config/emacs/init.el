@@ -1036,8 +1036,9 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package flymake
   :defer 1
   :after evil
-  :config
+  :init
   (add-hook 'find-file-hook 'flymake-find-file-hook)
+  :config
   (evil-set-command-property 'flymake-goto-next-error :jump t)
   (evil-set-command-property 'flymake-goto-prev-error :jump t))
 (use-package flymake-diagnostic-at-point
