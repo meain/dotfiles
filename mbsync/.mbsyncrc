@@ -48,3 +48,27 @@ Patterns *
 SyncState *
 ExpireUnread yes
 MaxMessages 500
+
+IMAPStore mail-remote
+Host imappro.zoho.com
+Port  993
+User mail@meain.io
+PassCmd "echo $MAIL_PASSWORD"
+AuthMechs LOGIN
+SSLType IMAPS
+
+MaildirStore mail-local
+Subfolders Verbatim
+Path ~/.local/share/mail/mail/
+Inbox ~/.local/share/mail/mail/INBOX
+Flatten .
+
+Channel mail
+Create Both
+Expunge Both
+Far :mail-remote:
+Near :mail-local:
+Patterns *
+SyncState *
+ExpireUnread yes
+MaxMessages 500
