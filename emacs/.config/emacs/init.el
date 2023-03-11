@@ -2547,7 +2547,7 @@ Pass universal args to run suite or project level tests."
           (:name "Imbox" :query "tag:imbox AND tag:inbox AND -tag:github AND -tag:flagged" :key "i" :sort-order newest-first)
           (:name "WInbox" :query "tag:work and tag:inbox" :key "I" :sort-order newest-first)
           (:name "Github" :query "tag:github AND tag:inbox" :key "h" :sort-order newest-first)
-          (:name "Meain" :query "query=to:mail@meain.io AND tag:inbox" :key "m" :sort-order newest-first)
+          (:name "Meain" :query "tag:meain AND tag:inbox" :key "m" :sort-order newest-first)
           (:name "Unread" :query "tag:unread AND tag:inbox AND -tag:python AND -tag:git AND -tag:newsletter AND -tag:jobhunt AND -tag:imbox AND -tag:work" :key "u" :sort-order newest-first)
           (:name "Python" :query "tag:python AND tag:inbox AND -tag:work" :key "p" :sort-order newest-first)
           (:name "Git" :query "tag:git AND tag:inbox AND -tag:work" :key "g" :sort-order newest-first)
@@ -2564,7 +2564,7 @@ Pass universal args to run suite or project level tests."
           (:name "WRead" :query "tag:inbox AND -tag:imbox AND -tag:newsletter AND -tag:python and -tag:unread AND -tag:jobhunt AND -tag:git AND -tag:todo AND -tag:flagged AND tag:work" :key "R" :sort-order oldest-first)
           (:name "Sent" :query "tag:sent" :key "s" :sort-order newest-first)
           (:name "Drafts" :query "tag:draft AND tag:inbox" :key "d")
-          (:name "All mail" :query "path:meain/**" :key "A" :sort-order newest-first)
+          (:name "All mail" :query "path:meain/** OR path:mail/**" :key "A" :sort-order newest-first)
           (:name "All work mail" :query "path:ic/**" :key "Z" :sort-order newest-first)))
 
   ;; sending emails
