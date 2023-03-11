@@ -4174,6 +4174,7 @@ not defined, it will be saved in the `$HOME' directory."
                                                 'font-lock-builtin-face)
                                               'help-echo
                                               (buffer-file-name))))
+                    (propertize ":%l:%c")
                     '(:eval (mode-line-idle 0.3
                                             '(:propertize (:eval
                                                            (if (boundp 'tree-sitter-mode)
@@ -4223,9 +4224,9 @@ not defined, it will be saved in the `$HOME' directory."
                                         'display
                                         `((space :align-to (- (+ right right-fringe right-margin)
                                                               ,(+ 2
-                                                                  (+ (string-width (format-mode-line "%l:%c %p"))
+                                                                  (+ (string-width (format-mode-line "%p"))
                                                                      (string-width (format-mode-line "%m"))))))))) ;; spacer
-                    (propertize "%l:%c %p") ;; position in file
+                    (propertize "%p") ;; position in file
                     (propertize " %m ")))
 
 ;; Print emacs startup time
