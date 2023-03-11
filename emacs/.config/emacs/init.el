@@ -3584,56 +3584,10 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
                                    (meain/nested-list-dir "~/.local/share/notes")))))
   :init (evil-leader/set-key "a N" 'meain/open-note))
 
-
-;; dasht docs
-(defvar meain/dasht-server-port "1111" "Server port to be used for dast server.")
-(defun meain/dasht-docs (start end)
-  "Look up word at point in dasht.
-START and END comes from it being interactive."
-  (interactive "r")
-  (let ((thing (if (use-region-p)
-                   (buffer-substring start end)
-                 (thing-at-point 'symbol))))
-    (progn
-      (if (eq (get-buffer "*dasht-server*") nil)
-          (progn
-            (message "Starting dasht-server")
-            (start-process-shell-command "dasht-server"
-                                         "*dasht-server*"
-                                         (concat "dasht-server " meain/dasht-server-port))))
-      (let* ((lookup-term (read-from-minibuffer "Lookup term: " thing))
-             (dasht-server-url (concat "http://127.0.0.1:" meain/dasht-server-port))
-             (full-url (concatenate 'string
-                                    dasht-server-url
-                                    "/?"
-                                    "query="
-                                    lookup-term
-                                    "&docsets="
-                                    (completing-read "Docset: "
-                                                     (split-string (shell-command-to-string "dasht-docsets"))))))
-        (message full-url)
-        (eww full-url)))))
-
-;; TODO: merge this with previous function
-(defun meain/xwidgets-dasht-docs (start end)
-  "Look up word at point in dasht.
-START and END comes from it being interactive."
-  (interactive "r")
-  ;; http://127.0.0.1:54321/?query=print&docsets=Python
-  (let ((thing (if (use-region-p)
-                   (buffer-substring start end)
-                 (thing-at-point 'symbol))))
-    (if (eq (length thing) 0)
-        (message "Nothing to look up.")
-      (progn
-        (let ((lookup-term (read-from-minibuffer "Lookup term: " thing)))
-          (xwidget-webkit-browse-url
-           (concatenate 'string
-                        "http://127.0.0.1:54321/?query="
-                        lookup-term
-                        "&docsets="
-                        (completing-read "Docset: "
-                                         (split-string (shell-command-to-string "dasht-docsets"))))))))))
+;; devdocs
+(use-package devdocs
+  :straight t
+  :commands (devdocs-search devdocs-lookup devdocs-install))
 
 ;; cheat.sh
 (use-package cheat-sh
@@ -3641,7 +3595,7 @@ START and END comes from it being interactive."
   :commands (cheat-sh cheat-sh-maybe-region)
   :init
   (evil-leader/set-key "a d"
-    (meain/with-alternate (call-interactively 'meain/dasht-docs)
+    (meain/with-alternate (call-interactively 'devdocs-lookup)
                           (call-interactively 'cheat-sh-search-topic))))
 
 ;; Quick edit (for use with hammerspoon quick edit)
