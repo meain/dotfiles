@@ -1,7 +1,7 @@
 #!/bin/sh
 # https://notmuchmail.org/pipermail/notmuch/2019/028956.html
 
-set -e
+# set -e
 
 # Move a message file while removing its UID-part
 function safeMove { mv -f "$1" "$2/$(echo "$1"|xargs basename|cut -d',' -f1)"; }
@@ -17,4 +17,10 @@ echo Moving $(notmuch count --output=files 'folder:ic/INBOX' and -tag:inbox) \
      archived messages from Inbox to Archive folder for work
 for i in $(notmuch search --output=files 'folder:ic/INBOX' and -tag:inbox|grep 'ic/INBOX'); do
     safeMove "$i" "$MAILDIR/ic/[Gmail].All Mail/cur"
+done
+
+echo Moving $(notmuch count --output=files 'folder:mail/INBOX' and -tag:inbox) \
+     archived messages from Inbox to Archive folder for mail
+for i in $(notmuch search --output=files 'folder:mail/INBOX' and -tag:inbox|grep 'mail/INBOX'); do
+    safeMove "$i" "$MAILDIR/mail/Archived/cur"
 done

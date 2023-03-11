@@ -2,11 +2,13 @@
 
 set -e
 
+notmuch new
 ,mail-move || true # move archived mails from inbox to archive
 
 if [ ! "$1" = "retag" ]; then
 	export GOOGLE_PASSWORD="${GOOGLE_PASSWORD:-$(pass show google/abinsimon10)}"
 	export IC_PASSWORD="${IC_PASSWORD:-$(pass show google/ic)}"
+	export MAIL_PASSWORD="${MAIL_PASSWORD:-$(pass show zoho/mail)}"
 	mbsync -a ||
 		(touch /tmp/mailpullfailed && exit 1)
 	[ -f /tmp/mailpullfailed ] && rm /tmp/mailpullfailed
