@@ -1315,7 +1315,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
         pos-tip-background-color "#ffffff"))
 
 (use-package corfu
-  :straight t
+  :straight (:files (:defaults "extensions/*"))
   :config
   (setq completion-cycle-threshold 3)
   (setq corfu-auto t)
@@ -1334,16 +1334,13 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
       (apply #'consult-completion-in-region completion-in-region--data)))
   (define-key corfu-map "\M-m" #'corfu-move-to-minibuffer)
 
-  (global-corfu-mode))
+  (global-corfu-mode)
+  (corfu-popupinfo-mode)
 
-(use-package corfu-doc
-  :straight t
-  :after (corfu)
-  :config
-  ;; (add-hook 'corfu-mode-hook #'corfu-doc-mode)
-  (define-key corfu-map (kbd "M-p") #'corfu-doc-scroll-down) ;; corfu-next
-  (define-key corfu-map (kbd "M-n") #'corfu-doc-scroll-up)  ;; corfu-previous
-  (define-key corfu-map (kbd "M-d") #'corfu-doc-toggle))
+  (define-key corfu-map (kbd "M-p") #'corfu-popupinfo-scroll-down) ;; corfu-next
+  (define-key corfu-map (kbd "M-n") #'corfu-popupinfo-scroll-up)  ;; corfu-previous
+  (define-key corfu-map (kbd "M-d") #'corfu-popupinfo-documentation)
+  (define-key corfu-map (kbd "M-D") #'corfu-popupinfo-location))
 
 ;; Add completion extensions
 (use-package cape
