@@ -1366,9 +1366,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
 ;; Completions (core framework)
 (use-package vertico
-  :straight (vertico
-             :host github :repo "minad/vertico"
-             :files (:defaults "extensions/*.el"))
+  :straight (:files (:defaults "extensions/*.el"))
   :config
   (setq vertico-count 13)
   (setq vertico-cycle t) ; useful for consult-imenu
