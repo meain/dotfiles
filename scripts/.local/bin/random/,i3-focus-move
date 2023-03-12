@@ -2,19 +2,29 @@
 
 set -e
 
-ws="$1"
-default_screen="$2"
-center_screen="$3"
-cur_screen="$(i3-msg -t get_workspaces | jq -r '.[] | select(.focused==true) | .output')"
-cur_ws="$(i3-msg -t get_workspaces | jq -r '.[] | select(.focused==true) | .name')"
+worksapce="$1"
 
-if [ "$cur_ws" != "$ws" ]; then
-	i3-msg workspace number "$ws"
+workspace_monitor="$2" # monitor assigned to workspace
+if [ -z "$workspace_monitor" ]; then
+    workspace_monitor="$(grep '^workspace' "$HOME/.config/i3/config" |
+        awk '{print $2,$4}' | sed 's/\$ws//' |
+        grep "^$worksapce " | cut -d' ' -f2-)"
+fi
+
+current_monitor="$(i3-msg -t get_workspaces | jq -r '.[] | select(.focused==true) | .output')"
+current_worksapce="$(i3-msg -t get_workspaces | jq -r '.[] | select(.focused==true) | .name')"
+
+primary_monitor="$3"
+[ -z "$primary_monitor" ] &&
+    primary_monitor="$(i3-msg -t get_outputs | jq -r '.[] | select(.primary==true) | .name')"
+
+if [ "$current_worksapce" != "$worksapce" ]; then
+    i3-msg workspace number "$worksapce"
 else
-	if [ "$cur_screen" == "$center_screen" ]; then
-		i3-msg move workspace to output "$default_screen"
-		i3-msg focus output "$center_screen"
-	else
-		i3-msg move workspace to output "$center_screen"
-	fi
+    if [ "$current_monitor" = "$primary_monitor" ]; then
+        i3-msg move workspace to output "$workspace_monitor"
+        i3-msg focus output "$primary_monitor"
+    else
+        i3-msg move workspace to output "$primary_monitor"
+    fi
 fi

@@ -67,7 +67,7 @@ super + alt + control + k
 
 # focus applications
 shift + alt + control + {l,j,k,h}
-      ,i3-focus-move {1 "eDP",3 "DisplayPort-0",4 "DisplayPort-0",9 "HDMI-A-0"} "DisplayPort-0"
+      ,i3-focus-move {1,3,4,9}
 shift + alt + control + semicolon
       emacsclient --eval '(emacs-everywhere)'
 
