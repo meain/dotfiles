@@ -686,7 +686,18 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   :after (evil evil-leader)
   :commands (project-switch-project project-find-file project-roots project-current)
   :config
-  (setq project-switch-commands 'project-find-file)
+  (setq project-vc-ignores '("target/" "bin/" "obj/" "node_modules/")) ; default ignores
+  (setq project-switch-commands 'project-find-file) ; start `project-find-file' by default
+
+  ;; Find root for go projects without vcs
+  (defun meain/project-try-explicit (dir)
+    "Find root based on go.mod for `dir'."
+    (locate-dominating-file dir "go.mod"))
+  (cl-defmethod project-root ((project string))
+    project)
+  (add-hook 'project-find-functions
+            #'meain/project-try-explicit 100)
+
   (defun meain/project-name ()
     (file-name-nondirectory (directory-file-name (car (project-roots (project-current))))))
   :init
