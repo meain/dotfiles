@@ -699,7 +699,8 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
             #'meain/project-try-explicit 100)
 
   (defun meain/project-name ()
-    (file-name-nondirectory (directory-file-name (car (project-roots (project-current))))))
+    (file-name-nondirectory (directory-file-name
+                             (project-root (project-current)))))
   :init
   (evil-leader/set-key "p p"
     (meain/with-alternate (call-interactively 'project-switch-project)
