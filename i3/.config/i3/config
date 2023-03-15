@@ -108,11 +108,13 @@ set $ws10 "10"
 # specify monitors for workspaces
 workspace $ws1 output eDP
 workspace $ws2 output eDP
+workspace $ws9 output HDMI-A-0
+workspace $ws10 output HDMI-A-0
+
+# usual setup
 workspace $ws3 output DisplayPort-0
 workspace $ws4 output DisplayPort-0
 workspace $ws5 output DisplayPort-0
-workspace $ws9 output HDMI-A-0
-workspace $ws10 output HDMI-A-0
 
 ## replace when just two screens one above other
 # workspace $ws3 output HDMI-A-0
