@@ -132,12 +132,6 @@
   (global-evil-leader-mode)
   (evil-leader/set-leader "s"))
 
-;; Some keybindings
-(use-package emacs
-  :after evil-leader
-  :config
-  (evil-leader/set-key "H l" 'find-library))
-
 ;;; [BASIC SETTINGS] =============================================
 
 ;; Consistent window title
@@ -1511,11 +1505,17 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   :after evil-leader
   :commands (helpful-callable helpful-variable helpful-at-point helpful-key)
   :init
-  (evil-leader/set-key "H p" 'helpful-at-point)
-  (evil-leader/set-key "H k" 'helpful-key)
-  (evil-leader/set-key "H f" 'helpful-function)
-  (evil-leader/set-key "H v" 'helpful-variable)
-  (evil-leader/set-key "H o" 'helpful-symbol))
+  (global-set-key (kbd "C-h f") #'helpful-callable)
+  (global-set-key (kbd "C-h v") #'helpful-variable)
+  (global-set-key (kbd "C-h k") #'helpful-key)
+  (global-set-key (kbd "C-h x") #'helpful-command)
+  (global-set-key (kbd "C-h o") #'helpful-symbol)
+  (global-set-key (kbd "C-c C-d") #'helpful-at-point))
+
+;; Map find-library along with helpful keybinds
+(use-package emacs
+  :init
+  (global-set-key (kbd "C-h l") #'find-library))
 
 ;; ibuffer
 (use-package ibuffer
