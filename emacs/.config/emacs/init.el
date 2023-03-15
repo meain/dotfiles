@@ -4112,19 +4112,13 @@ Pass `CREATE' to create the alternate file if it does not exits."
   :init
   (evil-leader/set-key "e e" 'meain/find-alternate-file))
 
-;; Splitting lists (https://github.com/AckslD/nvim-trevJ.lua)
-(defun meain/split-at-commas (start end)
-  "Split a selection at commas.  `START' and `END' are range start and end."
-  (interactive "r")
-  (if (use-region-p)
-      (let ((regionp (buffer-substring start end)))
-        (delete-active-region)
-        (insert (concat "\n" (string-replace "," ",\n" regionp)))
-        (if (equal major-mode 'go-mode)
-            (insert ",\n")
-          (insert "\n")))
-    (message "Split only works on selections")))
-
+;; Splitting and joining list (https://github.com/AckslD/nvim-trevJ.lua)
+(use-package emacs
+  :after (tree-sitter)
+  :commands (meain/split-join-args)
+  :config
+  (load-file "/home/meain/.config/emacs/tree-surgeon-split-join.el")
+  (evil-leader/set-key "H j" 'tree-surgeon-split-join))
 
 ;; Screenshot Emacs frame
 (defvar meain/frameshot-directory "~/docs/Pictures/Screenshots/"
