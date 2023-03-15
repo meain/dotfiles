@@ -2583,7 +2583,7 @@ Pass universal args to run suite or project level tests."
   (setq mail-specify-envelope-from t) ; Settings to work with msmtp
   (setq message-sendmail-envelope-from 'header)
   (setq mail-envelope-from 'header)
-  (setq notmuch-fcc-dirs "\"[Gmail].Sent Mail\" +sent -unread") ; stores sent mail to the specified directory
+  (setq notmuch-fcc-dirs "Sent +sent -unread") ; stores sent mail to the specified directory
   (setq message-directory "~/.local/share/mail") ; stores postponed messages to the specified directory
   (setq sendmail-program "msmtp")
   (setq send-mail-function 'smtpmail-send-it)
