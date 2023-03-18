@@ -5,7 +5,7 @@
 ;;; Code:
 
 (defun tree-surgeon-split-join--closest-node (nodes)
-  "Find node closes to point from `NODES'."
+  "Find node closest to point from `NODES'."
   (let ((distance 999999)
         (node nil)
         (point (point)))
@@ -26,10 +26,13 @@
       node)))
 
 (defvar tree-surgeon-split-join-settings
-  '( ; (mode . ((node_types) . trailing_comma))
-    (json-mode . ((object) . nil))
-    (rust-mode . ((parameters arguments) . t))
-    (go-mode . ((argument_list parameter_list) . t))))
+  '( ; (mode . ((node_types) . comma))
+    (json-mode . ((object) . none))
+    (rust-mode . ((parameters arguments) . trailing))
+    (python-mode . ((parameters argument_list) . trailing))
+    (nix-mode .((formals) . leading))
+    (js-mode . ((formal_parameters arguments) . trailing))
+    (go-mode . ((argument_list parameter_list) . trailing))))
 
 (defun tree-surgeon-split-join--get-named-children (node)
   "Get list of direct children of NODE."
@@ -55,20 +58,15 @@
               (end (byte-to-position (cdr range)))
               (text-pieces (seq-map (lambda (x) (tsc-node-text x)) children))
               (joined (string-join text-pieces ", ")))
-    (let* ((use-trailing (cdr settings))
-           (join (s-contains-p "\n" (tsc-node-text node))))
+    (let* ((comma (cdr settings))
+           (join (s-contains-p "\n" (tsc-node-text node)))
+           (split (cond
+                   ((equal comma 'none) (concat "\n" (string-join text-pieces ",\n") "\n"))
+                   ((equal comma 'trailing) (concat "\n" (string-join text-pieces ",\n") ",\n"))
+                   ((equal comma 'leading) (concat " " (string-join text-pieces "\n, ") "\n")))))
       (unless (= (length children) 0)
         (goto-char (+ start 1))
         (delete-char (- end start 2))
-        (if join
-            (insert joined)
-          (progn
-            (mapc (lambda (x)
-                    (newline-and-indent)
-                    (insert (concat x ",")))
-                  text-pieces)
-            (unless use-trailing (delete-char -1)) ; delete trailing comma
-            (forward-line)
-            ;; We could also use `indent-region' on the whole thing
-            (indent-for-tab-command)))
+        (insert (if join joined split))
+        (indent-region start (+ 1 (point)))
         (goto-char start)))))
