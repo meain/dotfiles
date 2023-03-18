@@ -2601,6 +2601,8 @@ Pass universal args to run suite or project level tests."
   (evil-define-key 'normal gnus-summary-mode-map (kbd "M-n") 'gnus-summary-next-article)
   (evil-define-key 'normal gnus-article-mode-map (kbd "P") 'gnus-summary-refer-parent-article)
   (evil-define-key 'normal gnus-summary-mode-map (kbd "P") 'gnus-summary-refer-parent-article)
+  (evil-define-key 'normal gnus-summary-mode-map (kbd "a") 'gnus-summary-kill-thread)
+  (evil-define-key 'normal gnus-group-mode-map (kbd "a") 'gnus-group-catchup-current-all)
   (setq gnus-select-method '(nnnil ""))
   (setq gnus-directory "~/.config/emacs/news")
   (setq gnus-secondary-select-methods
