@@ -1,8 +1,9 @@
-{ personal, stable, bleeding, tree-grepper, ... }:
+{ personal, stable, rock, bleeding, tree-grepper, ... }:
 { pkgs, ... }:
 let
   ppkgs = personal.packages.x86_64-linux;
   spkgs = stable.legacyPackages.x86_64-linux;
+  rpkgs = rock.legacyPackages.x86_64-linux;
   bpkgs = bleeding.legacyPackages.x86_64-linux;
   utils = import ./utils.nix { inherit pkgs; };
   fonts = import ./fonts.nix { inherit pkgs; inherit spkgs; };
@@ -221,7 +222,7 @@ in
     pkgs.mpv # audio/video player
     # pkgs.kitty
     # pkgs.alacritty # terminal emulator
-    # pkgs.firefox # working OSS browser
+    rpkgs.firefox # working OSS browser
     # pkgs.chromium # because Google hates firefox
     # pkgs.guake # drop down terminal
     # pkgs.insomnia # simpler postman
