@@ -10,10 +10,7 @@
     };
     stable.url = "nixpkgs/nixos-21.11";
     rock.url = "nixpkgs/nixos-21.11"; # not updated often
-    nur = {
-      url = "github:nix-community/NUR";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nur.url = "github:nix-community/NUR";
     personal = {
       url = "path:/home/meain/dev/src/nur-packages";
       inputs.nixpkgs.follows = "nixpkgs";
