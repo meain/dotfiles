@@ -25,7 +25,7 @@ for_window [class="^VirtualBox Manager$"] floating enable, resize set 700 500, m
 bindsym $mod+Mod1+s move scratchpad
 bindsym $mod+Shift+i scratchpad show, move position center
 for_window [instance="floatingterm"] resize set 1300 700, move position center, move scratchpad, floating enable
-bindsym $mod+i [instance="floatingterm"] scratchpad show, resize set 1300 700, move position center
+bindsym $mod+i [instance="floatingterm"] scratchpad show, resize set 90 ppt 70 ppt, move position center
 for_window [class="Logseq"] resize set 1300 700, move position center, move scratchpad, floating enable
 bindsym $mod+y [class="Logseq"] scratchpad show, resize set 1300 700, move position center
 
