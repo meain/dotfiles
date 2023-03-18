@@ -106,7 +106,7 @@ in
     pkgs.ffmpeg # video manip cli
     pkgs.gnuplot # plotting
     pkgs.ddgr # search ddg from terminal
-    pkgs.dasht # terminal docs
+    # pkgs.dasht # terminal docs
     # pkgs.taskwarrior # task management
     pkgs.todo-txt-cli # todo management
     # pkgs.ts # task spooler
@@ -158,6 +158,7 @@ in
 
     # programming-nix
     pkgs.rnix-lsp # nix language server
+    # pkgs.nixfmt # nix formatter
     pkgs.nixpkgs-fmt # nix formatter
     pkgs.statix # linter for nix
 
@@ -255,7 +256,7 @@ in
     # pkgs.jrnl # journaling
     # pkgs.figlet # make big text
     # pkgs.gource # source tree visualisation
-    # pkgs.tig # tui git interface
+    pkgs.tig # tui git interface
     # pkgs.lazygit # tui git interface
     # pkgs.lazydocker # tui docker interface
     # pkgs.docker-compose # docker-compose
