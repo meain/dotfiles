@@ -1,6 +1,6 @@
 #!/bin/sh
 
-[ "$1" = "with-clear" ] && shift; icatclear  # use to be && instead of ;
+[ "$1" = "with-clear" ] && shift; ,icat-clear  # use to be && instead of ;
 imagepreview() {
     if [ -n "$KITTY_WINDOW_ID" ]; then
         timeout 4 kitty +kitten icat --place 60x"$2"@65x2 --transfer-mode file --silent "$1"
@@ -45,7 +45,7 @@ everythingelse() {
             file -b "$1"
         fi
     else
-        cat "$1" || file "$1"
+        jq <"$1" 2>/dev/null || cat "$1" || file "$1"
     fi
 }
 
