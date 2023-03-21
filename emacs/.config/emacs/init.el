@@ -1756,12 +1756,13 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
 (use-package emacs
   :commands (meain/symbol-search)
   :config
+  ;; TODO Convert to a dumb-jump like package
   (defun meain/symbol-search ()
     "Search for a symbol in the entire project."
     (interactive)
     (when-let* ((symbols (shell-command-to-string ",symbol-search"))
                 (choices (butlast (string-split symbols "\n")))
-                (choice (completing-read "Choose entry:" choices))
+                (choice (completing-read "Choose entry:" choices nil t (thing-at-point 'symbol)))
                 (splits (string-split choice ":"))
                 (file (car splits))
                 (line (string-to-number (car (cdr splits))))
