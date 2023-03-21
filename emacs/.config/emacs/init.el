@@ -1586,7 +1586,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 (use-package apheleia
   :straight t
   :after evil
-  :commands (apheleia-format-buffer)
+  :commands (apheleia-format-buffer meain/format-buffer)
   :config
   ;; json
   (setf (alist-get 'fixjson apheleia-formatters)
@@ -1616,22 +1616,27 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
   (setf (alist-get 'shell-script-mode apheleia-mode-alist)
         '(shfmt))
+  (setf (alist-get 'sh-mode apheleia-mode-alist)
+        '(shfmt))
 
   (setf (alist-get 'nixpkgsfmt apheleia-formatters)
         '("nixpkgs-fmt"))
   (setf (alist-get 'nix-mode apheleia-mode-alist)
         '(nixpkgsfmt))
 
+  (defun meain/format-buffer ()
+    "Format a buffer."
+    (interactive)
+    (cond
+     ((eq major-mode 'emacs-lisp-mode)
+      (indent-region (point-min) (point-max)))
+     ((eq major-mode 'ledger-mode)
+      (ledger-mode-clean-buffer))
+     (t (call-interactively 'apheleia-format-buffer))))
+
   :init
-  (define-key evil-normal-state-map (kbd ",,")
-              (defun meain/format-buffer ()
-                (interactive)
-                (cond
-                 ((eq major-mode 'emacs-lisp-mode)
-                  (indent-region (point-min) (point-max)))
-                 ((eq major-mode 'ledger-mode)
-                  (ledger-mode-clean-buffer))
-                 (t (call-interactively 'apheleia-format-buffer))))))
+  (add-hook 'go-mode-hook 'apheleia-mode)
+  (define-key evil-normal-state-map (kbd ",,") #'meain/format-buffer))
 
 ;; Xref customization
 (use-package xref
