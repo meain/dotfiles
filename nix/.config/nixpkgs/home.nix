@@ -218,6 +218,8 @@ in
     # pkgs.grpcurl # curl for grpc
     pkgs.zprint # clojure formatter
     tree-grepper.outputs.packages.x86_64-linux.tree-grepper # grep with tree-sitter
+    # pkgs.ruby # ruby language
+    pkgs.actionlint # linting for gihtub actions
 
     # gui
     pkgs.mpv # audio/video player

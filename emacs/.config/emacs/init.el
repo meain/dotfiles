@@ -1078,6 +1078,26 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
                        (list fmqd-source beg end :warning msg)))
   (add-hook 'flymake-diagnostic-functions 'flymake-check-typos)
 
+  ;; https://github.com/rhysd/actionlint
+  (flymake-quickdef-backend flymake-check-actionlint
+    :pre-let ((actionlint-exec (executable-find "actionlint")))
+    :pre-check (unless actionlint-exec (error "Cannot find actionlint executable"))
+    :write-type 'file
+    :proc-form (list actionlint-exec "-format" "{{range $err := .}}{{$err.Filepath}}:{{$err.Line}}:{{$err.Column}}:{{$err.Message}}\n{{end}}" fmqd-temp-file)
+    :search-regexp "^\\([^:]+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\):\\(.*\\)$"
+    :prep-diagnostic (let* ((lnum (string-to-number (match-string 2)))
+                            (col (string-to-number (match-string 3)))
+                            (text (match-string 4))
+                            (pos (flymake-diag-region fmqd-source lnum col))
+                            (beg (car pos))
+                            (end (cdr pos))
+                            (msg (format "actionlint> %s" text)))
+                       (list fmqd-source beg end :warning msg)))
+  (add-hook 'yaml-mode-hook
+            (lambda ()
+              (if (string-match-p ".*\\.github/workflows/.*\\.ya?ml" (buffer-file-name))
+                  (add-hook 'flymake-diagnostic-functions 'flymake-check-actionlint nil t))))
+
   ;; Bandit (sec issues in python)
   (flymake-quickdef-backend flymake-check-bandit
     :pre-let ((bandit-exec (executable-find "bandit")))
