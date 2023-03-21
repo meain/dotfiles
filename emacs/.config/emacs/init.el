@@ -3001,7 +3001,7 @@ Pass universal args to run suite or project level tests."
                                         'mode-line)))
   (defvar meain/tree-sitter-config-nesting--queries '((json-mode . "(object (pair (string (string_content) @key) (_)) @item)")
                                                       (yaml-mode . "(block_mapping_pair (flow_node) @key (_)) @item")
-                                                      (nix-mode . "(bind (attrpath (attr_identifier) @key)) @item")))
+                                                      (nix-mode . "(binding (attrpath (identifier) @key)) @item")))
   (defun meain/tree-sitter-config-nesting ()
     (when-let* ((query-s (cdr (assq major-mode meain/tree-sitter-config-nesting--queries)))
                 (query (tsc-make-query tree-sitter-language query-s))
