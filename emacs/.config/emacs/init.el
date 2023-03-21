@@ -3734,6 +3734,17 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
   (define-key evil-normal-state-map (kbd "X") 'evil-fancy-narrow)
   (global-set-key (kbd "M-N") 'meain/narrow-region-dwim))
 
+;; Copilot, I guess
+(use-package copilot
+  :straight (:host github
+                   :repo "zerolfx/copilot.el"
+                   :files ("dist" "*.el"))
+  :config
+  (global-copilot-mode t)
+  (setq copilot-idle-delay 2)
+  (define-key copilot-mode-map (kbd "M-f M-f") #'copilot-complete)
+  (define-key copilot-mode-map (kbd "M-f M-j") #'copilot-accept-completion))
+
 ;; Buffer/Frame/Window keybinds
 (use-package emacs
   :after evil-leader
