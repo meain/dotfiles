@@ -1652,6 +1652,8 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   :after (project flymake)
   :config
   (setq eglot-extend-to-xref t) ;; extend eglot to files gone to with go-to-def
+  ;; https://www.masteringemacs.org/article/seamlessly-merge-multiple-documentation-sources-eldoc
+  (setq eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)
   (add-to-list 'eglot-server-programs '(lua-mode . ("~/.luarocks/bin/lua-lsp")))
   ;; yaml-mode useful for github actions
   (add-to-list 'eglot-server-programs '(yaml-mode . ("yaml-language-server" "--stdio")))
