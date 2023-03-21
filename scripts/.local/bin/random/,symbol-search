@@ -2,5 +2,8 @@
 
 set -e
 
-tree-grepper -q go '(function_declaration name: (identifier) @function)'
-tree-grepper -q go '(method_declaration name: (field_identifier) @function)'
+GO_FUNCTION='(function_declaration name: (identifier) @function)
+             (method_declaration name: (field_identifier) @function)'
+GO_TYPE='(type_declaration (type_spec name: (type_identifier) @type))'
+
+tree-grepper -q go "$GO_FUNCTION $GO_TYPE"
