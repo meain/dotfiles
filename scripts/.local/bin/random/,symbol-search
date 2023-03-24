@@ -2,8 +2,21 @@
 
 set -e
 
-GO_FUNCTION='(function_declaration name: (identifier) @function)
-             (method_declaration name: (field_identifier) @function)'
-GO_TYPE='(type_declaration (type_spec name: (type_identifier) @type))'
+mode="$1"
+[ -z "$mode" ] && mode="def"
 
-tree-grepper -q go "$GO_FUNCTION $GO_TYPE"
+GO_FUNCTION='(function_declaration name: (identifier) @function)
+            (method_declaration name: (field_identifier) @function)'
+GO_TYPE='(type_declaration (type_spec name: (type_identifier) @type))'
+GO_CALLS='(call_expression (selector_expression field: (field_identifier) @call))'
+
+RUST_FUNCTION="(function_item name: (identifier) @function)"
+RUST_TYPE="(struct_item name: (type_identifier) @type)
+           (enum_item name: (type_identifier) @type)"
+
+if [ $mode = "def" ]; then
+    tree-grepper -q go "$GO_FUNCTION $GO_TYPE"
+    tree-grepper -q rust "$RUST_FUNCTION $RUST_TYPE"
+elif [ $mode = "ref" ]; then
+    tree-grepper -q go "$GO_CALLS"
+fi

@@ -1411,7 +1411,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
           (consult-imenu buffer)
           (xref-find-references buffer)
           (meain/imenu-or-eglot buffer)
-          (meain/symbol-search buffer)
+          (tree-jump-search buffer)
           (consult-buffer flat)
           (t flat)))
   (setq vertico-multiform-categories
@@ -1641,6 +1641,10 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 ;; Xref customization
 (use-package xref
   :config
+  (define-key evil-normal-state-map (kbd "M-.") #'xref-find-definitions)
+  (define-key evil-normal-state-map (kbd "M-?") #'xref-find-references)
+  (define-key evil-normal-state-map (kbd "g d") 'xref-find-definitions)
+  (define-key evil-normal-state-map (kbd "g r") 'xref-find-references)
   ;; (setq xref-show-definitions-function 'xref-show-definitions-completing-read)
   (setq xref-auto-jump-to-first-xref 'move) ;; Use 'show to open it
   (setq xref-auto-jump-to-first-definition 'move))
@@ -1725,9 +1729,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
       (jsonrpc-request server :workspace/executeCommand
                        `(:command "switchConnections" :arguments [,db]:timeout 0.5))))
   (evil-define-key 'normal eglot-mode-map (kbd "K") 'eldoc-print-current-symbol-info)
-  (evil-define-key 'normal eglot-mode-map (kbd "g d") 'xref-find-definitions)
   (evil-define-key 'normal eglot-mode-map (kbd "g D") 'eglot-find-implementation)
-  (evil-define-key 'normal eglot-mode-map (kbd "g r") 'xref-find-references)
   (evil-define-key 'normal eglot-mode-map (kbd "g R") 'eglot-rename)
   (evil-define-key 'normal eglot-mode-map (kbd "g ,") 'eglot-format-buffer)
   (evil-define-key 'normal eglot-mode-map (kbd "g a") 'eglot-code-actions)
@@ -1751,30 +1753,16 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
     (cond
      ((equal alternate nil) (consult-imenu))
      ((equal alternate '(4)) (consult-eglot-symbols))
-     ((equal alternate '(16)) (meain/symbol-search))))
+     ((equal alternate '(16)) (tree-jump-search))))
   (global-set-key (kbd "M-i") #'meain/imenu-or-eglot))
 
 ;; Hacky symbol search using tree-sitter
 (use-package emacs
-  :commands (meain/symbol-search)
+  ;; TODO: Lazy load tree-jump
   :config
-  ;; TODO Convert to a dumb-jump like package
-  (defun meain/symbol-search ()
-    "Search for a symbol in the entire project."
-    (interactive)
-    (when-let* ((symbols (shell-command-to-string ",symbol-search"))
-                (choices (butlast (string-split symbols "\n")))
-                (choice (completing-read "Choose entry:" choices nil t (thing-at-point 'symbol)))
-                (splits (string-split choice ":"))
-                (file (car splits))
-                (line (string-to-number (car (cdr splits))))
-                (column (string-to-number (car (cdr (cdr splits))))))
-      (find-file file)
-      (goto-char 0)
-      (forward-line (- line 1))
-      (forward-char (- column 1))
-      (reposition-window)))
-  (global-set-key (kbd "M-I") #'meain/symbol-search))
+  (load-file "/home/meain/.config/emacs/tree-jump.el")
+  (add-to-list 'xref-backend-functions 'tree-jump-xref-backend)
+  (global-set-key (kbd "M-I") #'tree-jump-search))
 
 ;; Tagbar alternative
 (use-package imenu
