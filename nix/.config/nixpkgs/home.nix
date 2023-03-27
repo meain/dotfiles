@@ -1,10 +1,8 @@
-{ personal, stable, rock, bleeding, tree-grepper, ... }:
+{ personal, stable, pinned-firefox, pinned-logseq, tree-grepper, ... }:
 { pkgs, ... }:
 let
   ppkgs = personal.packages.x86_64-linux;
   spkgs = stable.legacyPackages.x86_64-linux;
-  rpkgs = rock.legacyPackages.x86_64-linux;
-  bpkgs = bleeding.legacyPackages.x86_64-linux;
   utils = import ./utils.nix { inherit pkgs; };
   fonts = import ./fonts.nix { inherit pkgs; inherit spkgs; };
 in
@@ -225,7 +223,7 @@ in
     pkgs.mpv # audio/video player
     # pkgs.kitty
     # pkgs.alacritty # terminal emulator
-    rpkgs.firefox # working OSS browser
+    pkgs.firefox # working OSS browser (can use pinned-firefox if necessary)
     # pkgs.chromium # because Google hates firefox
     # pkgs.guake # drop down terminal
     # pkgs.insomnia # simpler postman
@@ -296,7 +294,7 @@ in
     # pkgs.gforth # gnu forth interpreter
     pkgs.nodePackages.mermaid-cli # cli for generating mermaid charts
     pkgs.genact # become a movie "hacker"
-    bpkgs.logseq # tracking life
+    pinned-logseq.legacyPackages.x86_64-linux.logseq # tracking life
     # pkgs.obs-studio # video/screen recording
     # pkgs.postman # REST api testing tool
     pkgs.minicom # connect to rpi

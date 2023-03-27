@@ -3,13 +3,15 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/master";
-    bleeding.url = "github:nixos/nixpkgs/master"; # same as stable, but updated more often
     homeManager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     stable.url = "nixpkgs/nixos-21.11";
-    rock.url = "nixpkgs/nixos-21.11"; # not updated often
+
+    pinned-firefox.url = "github:nixos/nixpkgs/c1329a147a5fc2bb49367f6c2cd84bdfeccade43";
+    pinned-logseq.url = "github:nixos/nixpkgs/63f96b8e028fa93e63722a41e13d8d35b059a388";
+
     nur.url = "github:nix-community/NUR";
     personal = {
       url = "path:/home/meain/dev/src/nur-packages";
@@ -29,8 +31,8 @@
     , nixpkgs
     , homeManager
     , stable
-    , rock
-    , bleeding
+    , pinned-logseq
+    , pinned-firefox
     , nur
     , personal
     , emacsOverlay
@@ -39,7 +41,7 @@
       homeConfigurations =
         let
           homeConfig = import ./home.nix {
-            inherit stable rock personal bleeding tree-grepper;
+            inherit stable pinned-firefox pinned-logseq personal tree-grepper;
           };
         in
         {
