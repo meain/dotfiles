@@ -2,8 +2,6 @@
 
 # Used to refile completed items from logseq backlogs
 
-set -e
-
 [ -z "$1" ] && echo "usage: ,logseq-refile <filename>" && exit 1
 [ ! -f "$1" ] && echo "File $1 does not exist" && exit 1
 type tree-grepper >/dev/null || exit 1 # https://github.com/BrianHicks/tree-grepper
@@ -12,13 +10,24 @@ FILE="${1%.*}" # strip off md
 cp "$FILE.md" "$FILE.bk.md"
 
 # DONE/CANCELLED items
-tree-grepper -q markdown '((document (tight_list (list_item (paragraph) @_p) @item (#match? @_p "^(DONE|CANCELLED)"))))' -f json "$FILE.bk.md" | jq -r '.[]|.matches[].text' >> "$FILE%2FComplete.md"
+tree-grepper -q markdown \
+    '(document (tight_list (list_item) @item))' \
+    -f json "$FILE.bk.md" |
+    jq -e -r '.[0].matches[] | select(.text|test("^- (DONE|COMPLETED)")) | .text' \
+        >>"$FILE"___Complete.md
 
 # Header
-tree-grepper -q markdown '(document . (paragraph) @header)' -f json "$FILE.bk.md" | jq -r '.[]|.matches[].text' > "$FILE.md"
+tree-grepper -q markdown '(document . (paragraph) @header)' \
+    -f json "$FILE.bk.md" |
+    jq -e -r '.[]|.matches[].text' >"$FILE.md"
+echo "" >>"$FILE.md" # newline
 
 # Non DONE items
-tree-grepper -q markdown '((document (tight_list (list_item (paragraph) @_p) @item (#match? @_p "^[^(DONE|CANCELLED)]"))))' -f json "$FILE.bk.md" | jq -r '.[]|.matches[].text' >> "$FILE.md"
+tree-grepper -q markdown \
+    '(document (tight_list (list_item) @item))' \
+    -f json "$FILE.bk.md" |
+    jq -e -r '.[0].matches[] | select(.text|test("^- (?!(DONE|COMPLETED))")) | .text' \
+        >>"$FILE.md"
 
 rm "$FILE.bk.md"
 
