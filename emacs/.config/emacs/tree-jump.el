@@ -84,7 +84,7 @@ Pass `MODE' to switch between definitions and references."
       (symbol-name current-symbol))))
 
 (cl-defmethod xref-backend-identifier-completion-table ((_ (eql tree-jump)))
-  "Return list of symbols in the current buffer."
+  "Return the completion table for identifiers."
   (mapcar (lambda (x)
             (cadddr (cdr (string-split x ":"))))
           (tree-jump--get-definitions)))
