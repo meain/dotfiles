@@ -3,24 +3,24 @@
 set -e
 
 # symlinking this does not work
-rm -fr $HOME/.config/home-manager/
-cp -r $HOME/.dotfiles/home-manager/.config/home-manager $HOME/.config/
+rm -fr "$HOME/.config/home-manager/"
+cp -r "$HOME/.dotfiles/home-manager/.config/home-manager" "$HOME/.config/"
 
 if [ "$1" = update ]; then
-	cd $HOME/.dotfiles/home-manager/.config/home-manager
-	nix flake metadata --json | jq -r '.locks.nodes | keys[]' |
-		fzf -m | xargs -n1 nix flake lock --update-input
+    cd "$HOME/.dotfiles/home-manager/.config/home-manager"
+    nix flake metadata --json | jq -r '.locks.nodes | keys[]' |
+        fzf -m | xargs -n1 nix flake lock --update-input
 elif [ "$1" = lock ]; then
-	cd $HOME/.dotfiles/home-manager/.config/home-manager
-	nix flake lock
+    cd "$HOME/.dotfiles/home-manager/.config/home-manager"
+    nix flake lock
 elif [ "$1" = build ]; then
-	cd $HOME/.config/home-manager/
-	nix build --show-trace -L .#homeConfigurations.meain.activationPackage
+    cd "$HOME/.config/home-manager/"
+    nix build --show-trace -L .#homeConfigurations.meain.activationPackage
 elif [ "$1" = switch ]; then
-	cd $HOME/.config/home-manager/
-	nix build -L .#homeConfigurations.meain.activationPackage
+    cd "$HOME/.config/home-manager/"
+    nix build -L .#homeConfigurations.meain.activationPackage
     home-manager switch
 else
-	cd $HOME/.config/home-manager/
+    cd "$HOME/.config/home-manager/"
     home-manager "${1:-build}"
 fi
