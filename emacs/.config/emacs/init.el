@@ -185,6 +185,9 @@
 ;; Disable visual line mode (this causes issues with $ and a few other things in evil)
 (global-visual-line-mode -1)
 
+;; Let Emacs know that I can handle `narrow'
+(put 'narrow-to-region 'disabled nil)
+
 ;;; [VISUAL CONFIG] ==============================================
 
 ;; Change font everywhere
