@@ -2929,6 +2929,14 @@ Pass universal args to run suite or project level tests."
   :config (add-hook 'restclient-mode-hook (lambda ()
                                             (setq imenu-generic-expression '((nil "^#+\s+.+" 0))))))
 
+;; Restclient jq integration
+(use-package restclient-jq
+  :straight t
+  :after restclient
+  :defer
+  :init
+  (add-hook 'restclient-mode-hook (lambda () (require 'restclient-jq))))
+
 ;; Link opening
 (use-package ace-link
   :straight t
