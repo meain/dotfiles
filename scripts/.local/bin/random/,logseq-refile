@@ -20,7 +20,6 @@ tree-grepper -q markdown \
 tree-grepper -q markdown '(document . (paragraph) @header)' \
     -f json "$FILE.bk.md" |
     jq -e -r '.[]|.matches[].text' >"$FILE.md"
-echo "" >>"$FILE.md" # newline
 
 # Non DONE items
 tree-grepper -q markdown \
