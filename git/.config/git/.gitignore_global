@@ -36,3 +36,4 @@ shell.nix
 # emacs
 .dir-locals.el
 .rworkspaceignore
+default.rest
