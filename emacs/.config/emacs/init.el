@@ -3493,9 +3493,9 @@ Pass universal args to run suite or project level tests."
   :after evil-leader
   :commands (meain/scratchy)
   :config
-  (defun meain/scratchy ()
+  (defun meain/scratchy (beg end)
     "Open scratch buffer in a specific mode."
-    (interactive "P")
+    (interactive "r")
     (let* ((scratch-major-mode
             (completing-read
              "Choose mode: "
@@ -3514,15 +3514,17 @@ Pass universal args to run suite or project level tests."
            (scratch-file-name (concatenate 'string
                                            "~/.local/share/scratch/"
                                            (format "%s" scratch-major-mode) "-"
-                                           (substring (uuid-string) 0 4))))
+                                           (substring (uuid-string) 0 4)))
+           (text (if (use-region-p) (buffer-substring beg end))))
       (find-file scratch-file-name)
+      (if text (insert text))
       (funcall (intern scratch-major-mode))
       (if (eq (intern scratch-major-mode) 'artist-mode)
           (evil-local-mode -1))))
   :init
   (evil-leader/set-key "c"
     (meain/with-alternate (meain/create-or-switch-to-scratch)
-                          (meain/scratchy))))
+                          (call-interactively 'meain/scratchy))))
 
 ;; vime functionality within emacs
 (use-package uuid :straight t :commands uuid-string)
