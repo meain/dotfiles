@@ -38,6 +38,7 @@ backup_loc .mscripts
 backup_loc shell.nix
 backup_loc default.nix
 backup_loc .dir-locals.el
+backup_loc default.rest
 
 cd $SAVEPATH
 git add .
