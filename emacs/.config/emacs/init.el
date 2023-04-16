@@ -3446,8 +3446,8 @@ Pass universal args to run suite or project level tests."
                   (name (cadr e))
                   (file (caddr e)))
               (evil-leader/set-key (concat "e " key)
-                (cons name (lambda ()
-                             (interactive)
+                (cons name (lambda (&optional create)
+                             (interactive "P")
                              (if (file-exists-p file)
                                  (if (file-directory-p file)
                                      (find-file
