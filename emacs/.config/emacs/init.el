@@ -3700,7 +3700,7 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
               (if (string-prefix-p (expand-file-name "~/.local/share/journal")
                                    default-directory)
                   (progn
-                    (company-mode -1)
+                    (copilot-mode -1) ; noooope
                     (auto-fill-mode)))))
   (evil-leader/set-key "a J"
     (lambda ()
