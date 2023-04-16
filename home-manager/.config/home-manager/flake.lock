@@ -128,11 +128,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1679121953,
-        "narHash": "sha256-UzGX36C5iHGHPaSuJxWL2ezmfc4NNwcnO6/bMoNEk9w=",
+        "lastModified": 1681541221,
+        "narHash": "sha256-lt+iea1TlHzWGfbShveXj6FOE8FXC5nHnBOjz8ftfHM=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "a98f30134c75cd570c2f14f1333e1b7e090bd1dc",
+        "rev": "425b65fc5dca82de0d628b43638ee93599660f57",
         "type": "github"
       },
       "original": {
@@ -148,8 +148,8 @@
         ]
       },
       "locked": {
-        "lastModified": 1671770462,
-        "narHash": "sha256-mQgJTYkBOcUCrmXRGrI3cjP5tOuMb27SQ7Fhinkh8q0=",
+        "lastModified": 1681551745,
+        "narHash": "sha256-khhPpWhtKW3pTBNSpTxGzGlkKZuAQ4GYu+lK9xgdm5Q=",
         "path": "/home/meain/dev/src/nur-packages",
         "type": "path"
       },
