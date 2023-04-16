@@ -632,7 +632,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   :after evil
   :config
   (setq compilation-scroll-output nil)
-  (defun meian/toggle-compilation-scroll-output ()
+  (defun meain/toggle-compilation-scroll-output ()
     "Toggle `compilation-scroll-output'."
     (interactive)
     (setq compilation-scroll-output (not compilation-scroll-output))
