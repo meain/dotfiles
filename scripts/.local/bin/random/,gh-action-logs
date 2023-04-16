@@ -1,0 +1,6 @@
+#!/bin/sh
+
+set -e
+
+gh run list --branch "$(git rev-parse --abbrev-ref HEAD)" --json databaseId |
+    jq '.[0].databaseId' | xargs gh run view --log-failed | less -R
