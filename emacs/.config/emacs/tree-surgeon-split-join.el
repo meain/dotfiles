@@ -33,7 +33,7 @@
     (ruby-mode  . ((method_parameters argument_list) . none))
     (nix-mode .((formals) . leading))
     (js-mode . ((formal_parameters arguments) . trailing))
-    (go-mode . ((argument_list parameter_list) . trailing))))
+    (go-mode . ((argument_list parameter_list literal_value) . trailing))))
 
 (defun tree-surgeon-split-join--get-named-children (node)
   "Get list of direct children of NODE."
