@@ -1,4 +1,4 @@
-{ personal, stable, pinned-firefox, pinned-logseq, tree-grepper, ... }:
+{ personal, stable, pinned-firefox, tree-grepper, ... }:
 { pkgs, ... }:
 let
   ppkgs = personal.packages.x86_64-linux;
@@ -294,7 +294,7 @@ in
     # pkgs.gforth # gnu forth interpreter
     pkgs.nodePackages.mermaid-cli # cli for generating mermaid charts
     pkgs.genact # become a movie "hacker"
-    pinned-logseq.legacyPackages.x86_64-linux.logseq # tracking life
+    pkgs.logseq # tracking life
     # pkgs.obs-studio # video/screen recording
     # pkgs.postman # REST api testing tool
     pkgs.minicom # connect to rpi

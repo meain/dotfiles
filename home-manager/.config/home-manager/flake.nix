@@ -10,7 +10,6 @@
     stable.url = "nixpkgs/nixos-21.11";
 
     pinned-firefox.url = "github:nixos/nixpkgs/c1329a147a5fc2bb49367f6c2cd84bdfeccade43";
-    pinned-logseq.url = "github:nixos/nixpkgs/63f96b8e028fa93e63722a41e13d8d35b059a388";
 
     nur.url = "github:nix-community/NUR";
     personal = {
@@ -31,7 +30,6 @@
     , nixpkgs
     , homeManager
     , stable
-    , pinned-logseq
     , pinned-firefox
     , nur
     , personal
@@ -41,7 +39,7 @@
       homeConfigurations =
         let
           homeConfig = import ./home.nix {
-            inherit stable pinned-firefox pinned-logseq personal tree-grepper;
+            inherit stable pinned-logseq personal tree-grepper;
           };
         in
         {
