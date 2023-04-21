@@ -3444,10 +3444,11 @@ Pass universal args to run suite or project level tests."
                                  (string-split x " "))
                                (string-split contents "\n"))))
       qa-entries))
+
   (mapcar (lambda (e)
-            (let ((key (car e))
-                  (name (cadr e))
-                  (file (caddr e)))
+            (when-let ((key (car e))
+                       (name (cadr e))
+                       (file (caddr e)))
               (evil-leader/set-key (concat "e " key)
                 (cons name (lambda (&optional create)
                              (interactive "P")
@@ -3469,7 +3470,7 @@ Pass universal args to run suite or project level tests."
   ;; qa-projects (quick-access-projects) file contains the list of
   ;; projects that will be added here.
   (mapcar (lambda (e)
-            (let ((key (car e))
+            (when-let ((key (car e))
                   (name (cadr e))
                   (folder (caddr e)))
               (evil-leader/set-key (concat "s e " key)
