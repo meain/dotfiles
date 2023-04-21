@@ -221,8 +221,6 @@
 (use-package hima-theme
   :load-path "/home/meain/dev/src/hima-theme"
   :config
-  ;; https://github.com/jwiegley/use-package/issues/963
-  (add-to-list 'custom-theme-load-path "/home/meain/dev/src/hima-theme")
   (load-theme 'hima t))
 
 ;; Diminish
