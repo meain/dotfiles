@@ -27,13 +27,7 @@ jobs:
       uses: cachix/install-nix-action@v13
       with:
         nix_path: "nixpkgs=${{ steps.pinned_nixpkgs.outputs.url }}"
-    - name: "Install home-manager"
-      run: |
-          nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
-          nix-channel --update
-          export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
-          nix-shell '<home-manager>' -A install
-    - name: "Run home-manager build"
+    - name: "Build home"
       run: |
           export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
           mkdir -p ~/.config/nix
@@ -41,4 +35,3 @@ jobs:
           cd home-manager/.config/home-manager/
           sed -i 's|path:/home/meain/dev/src/nur-packages|github:meain/nur-packages|' flake.nix
           nix build .#homeConfigurations.meain.activationPackage
-          home-manager build
