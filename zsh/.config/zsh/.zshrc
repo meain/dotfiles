@@ -5,15 +5,15 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export TERM="xterm-256color"
 
-source $ZDOTDIR/exports
+source "$ZDOTDIR/exports"
 
 # zsh settings
 export DISABLE_AUTO_TITLE="true"
 export COMPLETION_WAITING_DOTS="false"
 export HIST_STAMPS="dd.mm.yyyy"
-HISTSIZE=5000
-SAVEHIST=5000
-HISTFILE=~/.local/share/zsh/.zsh_history
+export HISTSIZE=5000
+export SAVEHIST=5000
+export HISTFILE="$HOME/.local/share/zsh/.zsh_history"
 setopt HIST_IGNORE_SPACE
 setopt appendhistory
 setopt sharehistory
@@ -34,7 +34,7 @@ setopt interactive_comments                            # allow comments in inter
 zstyle ':completion:*' menu select                     # select completions with arrow keys
 zstyle ':completion:*' group-name ''                   # group results by category
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}' # non case sensitive complete
-zstyle ':completion:*' list-colors $LS_COLORS
+zstyle ':completion:*' list-colors "$LS_COLORS"
 zstyle ':completion:::::' completer _expand _complete _ignored _approximate # enable approximate matches for completion
 
 # autocompletions
@@ -48,17 +48,17 @@ ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 ZSH_AUTOSUGGEST_USE_ASYNC="true"
 
 # sourcing plugins & themes
-source $ZDOTDIR/.zsh-custom/themes/snipe.zsh-theme
-source $ZDOTDIR/.zsh-custom/plugins/z/z.sh
-source $ZDOTDIR/.zsh-custom/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
-source $ZDOTDIR/.zsh-custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
+source "$ZDOTDIR/.zsh-custom/themes/snipe.zsh-theme"
+source "$ZDOTDIR/.zsh-custom/plugins/z/z.sh"
+source "$ZDOTDIR/.zsh-custom/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh"
+source "$ZDOTDIR/.zsh-custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh"
 
 export EDITOR='nvim'
 export BROWSER= # do not set browser
 export DIFFTOOL='icdiff'
 
 # Make CTRL-Z background things and unbackground them.
-function fg-bg() {
+fg-bg() {
 	if [[ $#BUFFER -eq 0 ]]; then
 		fg
 	else
@@ -69,22 +69,24 @@ zle -N fg-bg
 bindkey '^Z' fg-bg
 
 # Credentials
-[ -f $HOME/.credentials ] && source $HOME/.credentials
+[ -f "$HOME/.credentials" ] && source "$HOME/.credentials"
 
 # Source aliases
-source $ZDOTDIR/aliases
-source $ZDOTDIR/functions
+source "$ZDOTDIR/aliases"
+source "$ZDOTDIR/functions"
 
 # source dir hashes
-[ -f ~/.local/share/zsh/.zsh_dir_hashes ] && source ~/.local/share/zsh/.zsh_dir_hashes
+[ -f "$HOME/.local/share/zsh/.zsh_dir_hashes" ] && source "$HOME/.local/share/zsh/.zsh_dir_hashes"
 
 # Source fzf
-[ -d $HOME/.nix-profile/share/fzf ] &&
-    source $HOME/.nix-profile/share/fzf/completion.zsh &&
-    source $HOME/.nix-profile/share/fzf/key-bindings.zsh
+[ -d "$HOME/.nix-profile/share/fzf" ] &&
+    source "$HOME/.nix-profile/share/fzf/completion.zsh" &&
+    source "$HOME/.nix-profile/share/fzf/key-bindings.zsh"
 
 # Source colors for ls (trapd00r/LS_COLORS)
-[ "$(uname -s)" = "Darwin" ] && eval $(gdircolors -b $ZDOTDIR/dircolors) || eval $(dircolors -b $ZDOTDIR/dircolors)
+[ "$(uname -s)" = "Darwin" ] &&
+    eval $(gdircolors -b "$ZDOTDIR/dircolors") ||
+        eval $(dircolors -b "$ZDOTDIR/dircolors")
 
 # Use vim mode in zsh
 autoload -Uz edit-command-line
@@ -123,7 +125,7 @@ fi
 
 # load nix
 . /etc/profile.d/nix.sh
-. $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh
+. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
 
 # setup direnv
 eval "$(direnv hook zsh)"
