@@ -3368,9 +3368,9 @@ Pass universal args to run suite or project level tests."
   :defer t
   :straight t
   :config
-  (defun emacs-everywhere-markdown-p () t)
-  (defun emacs-everywhere-major-mode-org-or-markdown () (gfm-mode))
-  (defun emacs-everywhere-major-mode-function () (gfm-mode)))
+  (remove-hook 'emacs-everywhere-init-hooks #'emacs-everywhere-major-mode-org-or-markdown)
+  (remove-hook 'emacs-everywhere-init-hooks #'emacs-everywhere-apply-major-mode)
+  (add-hook 'emacs-everywhere-init-hooks #'gfm-mode))
 
 ;; Fontify face (useful to debug themes)
 (use-package fontify-face :straight t :defer t)
