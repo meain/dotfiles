@@ -2,7 +2,7 @@ IMAPStore meain-remote
 Host imap.gmail.com
 Port  993
 User abinsimon10@gmail.com
-PassCmd "echo $GOOGLE_PASSWORD"
+PassCmd "pass show google/abinsimon10"
 AuthMechs LOGIN
 SSLType IMAPS
 
@@ -28,7 +28,7 @@ IMAPStore ic-remote
 Host imap.gmail.com
 Port  993
 User abin.simon@infracloud.io
-PassCmd "echo $IC_PASSWORD"
+PassCmd "pass show google/ic"
 AuthMechs LOGIN
 SSLType IMAPS
 
@@ -53,7 +53,7 @@ IMAPStore mail-remote
 Host imappro.zoho.com
 Port  993
 User mail@meain.io
-PassCmd "echo $MAIL_PASSWORD"
+PassCmd "pass show zoho/mail"
 AuthMechs LOGIN
 SSLType IMAPS
 
