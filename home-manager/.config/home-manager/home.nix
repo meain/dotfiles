@@ -418,7 +418,7 @@ in
   systemd.user.timers.mscripts-backup = utils.timer-daily;
 
   # regular cleanup
-  systemd.user.services.cleanup-downloads = utils.ss-cleanup { dir = "/home/meain/Downloads"; };
+  systemd.user.services.cleanup-downloads = utils.ss-cleanup { dir = "/home/meain/down"; };
   systemd.user.timers.cleanup-downloads = utils.timer-daily;
   systemd.user.services.cleanup-scratch = utils.ss-cleanup { dir = "/home/meain/.local/share/scratch"; };
   systemd.user.timers.cleanup-scratch = utils.timer-daily;
