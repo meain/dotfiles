@@ -38,7 +38,7 @@ jobs:
           export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
           mkdir -p ~/.config/nix
           echo 'experimental-features = nix-command flakes' > ~/.config/nix/nix.conf
-          cd nix/.config/nixpkgs
+          cd home-manager/.config/home-manager/
           sed -i 's|path:/home/meain/dev/src/nur-packages|github:meain/nur-packages|' flake.nix
           nix build .#homeConfigurations.meain.activationPackage
           home-manager build
