@@ -3471,8 +3471,8 @@ Pass universal args to run suite or project level tests."
   ;; projects that will be added here.
   (mapcar (lambda (e)
             (when-let ((key (car e))
-                  (name (cadr e))
-                  (folder (caddr e)))
+                       (name (cadr e))
+                       (folder (caddr e)))
               (evil-leader/set-key (concat "s e " key)
                 (cons name (lambda ()
                              (interactive)
