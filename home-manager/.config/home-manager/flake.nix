@@ -39,7 +39,7 @@
       homeConfigurations =
         let
           homeConfig = import ./home.nix {
-            inherit stable pinned-logseq personal tree-grepper;
+            inherit stable pinned-firefox personal tree-grepper;
           };
         in
         {
