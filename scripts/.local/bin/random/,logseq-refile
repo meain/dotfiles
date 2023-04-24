@@ -9,11 +9,11 @@ type tree-grepper >/dev/null || exit 1 # https://github.com/BrianHicks/tree-grep
 FILE="${1%.*}" # strip off md
 cp "$FILE.md" "$FILE.bk.md"
 
-# DONE/CANCELLED items
+# DONE/CANCELED items
 tree-grepper -q markdown \
     '(document (tight_list (list_item) @item))' \
     -f json "$FILE.bk.md" |
-    jq -e -r '.[0].matches[] | select(.text|test("^- (DONE|COMPLETED)")) | .text' \
+    jq -e -r '.[0].matches[] | select(.text|test("^- (DONE|CANCELED)")) | .text' \
         >>"$FILE"___Complete.md
 
 # Header
@@ -25,7 +25,7 @@ tree-grepper -q markdown '(document . (paragraph) @header)' \
 tree-grepper -q markdown \
     '(document (tight_list (list_item) @item))' \
     -f json "$FILE.bk.md" |
-    jq -e -r '.[0].matches[] | select(.text|test("^- (?!(DONE|COMPLETED))")) | .text' \
+    jq -e -r '.[0].matches[] | select(.text|test("^- (?!(DONE|CANCELED))")) | .text' \
         >>"$FILE.md"
 
 rm "$FILE.bk.md"
