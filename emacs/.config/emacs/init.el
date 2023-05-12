@@ -3686,6 +3686,7 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
                   ('lisp-interaction-mode (format "(message \"%s %s: %%s\" %s)" prefix escaped-thing-to-print thing-to-print thing-to-print))
                   ('rust-mode (format "println!(\"%s %s: {:?}\", %s);" prefix escaped-thing-to-print thing-to-print))
                   ('go-mode (format "fmt.Println(\"%s %s:\", %s)" prefix escaped-thing-to-print thing-to-print))
+                  ('go-ts-mode (format "fmt.Println(\"%s %s:\", %s)" prefix escaped-thing-to-print thing-to-print))
                   ('lua-mode (format "print(\"%s %s:\", %s)" prefix escaped-thing-to-print thing-to-print))
                   ('js-mode (format "console.log(\"%s %s:\", %s)" prefix escaped-thing-to-print thing-to-print))
                   ('web-mode (format "console.log(\"%s %s:\", %s)" prefix escaped-thing-to-print thing-to-print))
