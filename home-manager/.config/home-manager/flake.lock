@@ -147,8 +147,8 @@
         ]
       },
       "locked": {
-        "lastModified": 1681554264,
-        "narHash": "sha256-+1sjideOISL+L7FJJ/q5ie+mGMMP+SZvETRg/pVt+eY=",
+        "lastModified": 1683870992,
+        "narHash": "sha256-83inxRue6e5A9AdCuTm7JrVO46WttK8eDNbikedFlxQ=",
         "path": "/home/meain/dev/src/nur-packages",
         "type": "path"
       },
@@ -173,22 +173,6 @@
         "type": "github"
       }
     },
-    "pinned-logseq": {
-      "locked": {
-        "lastModified": 1673534521,
-        "narHash": "sha256-C+aS4JWki6ngZJwIEDzduCzk/HJVVa6qpd5hMT9E4Zc=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "63f96b8e028fa93e63722a41e13d8d35b059a388",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "63f96b8e028fa93e63722a41e13d8d35b059a388",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "emacsOverlay": "emacsOverlay",
@@ -197,7 +181,6 @@
         "nur": "nur",
         "personal": "personal",
         "pinned-firefox": "pinned-firefox",
-        "pinned-logseq": "pinned-logseq",
         "stable": "stable",
         "tree-grepper": "tree-grepper"
       }
