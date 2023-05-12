@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# Using ChatGPT for various tasks
+
+set -e
+
+cmd="$1"
+[ -z "$cmd" ] && cmd="$(echo "summarize,commit-message" | tr ',' '\n' | ,picker -p "Task: ")"
+
+get_git_diff() {
+    if git diff --staged | grep -q .; then
+        git diff --staged
+    else
+        git diff
+    fi
+}
+
+case "$cmd" in
+summarize) lynx -dump "$(pbpaste)" | chatgpt 'Summarize the following article' ;;
+commit-message) get_git_diff | chatgpt "Write a commit message header (limit to 80 chars) and a description for the following diff. The response should only contain the message and should not contain any extra markers or unnecessary quotes." ;;
+*) echo "We don't do that here!" && exit 1 ;;
+esac
