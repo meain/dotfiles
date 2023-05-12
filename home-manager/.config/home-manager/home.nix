@@ -159,10 +159,11 @@ in
     # pkgs.nixfmt # nix formatter
     pkgs.nixpkgs-fmt # nix formatter
     pkgs.statix # linter for nix
+    pkgs.nix-init # auto create nix expressions
 
     # programming-python
     spkgs.python39 # python language
-    # pkgs.poetry # better package manager
+    pkgs.poetry # better package manager
     spkgs.black # python code formatter
     spkgs.python39Packages.pip
     spkgs.python39Packages.flake8 # linter
@@ -304,6 +305,8 @@ in
     pkgs.cloc # line count code
     pkgs.helix # alternate editor
     pkgs.iamb # matrix chat client
+    ppkgs.chatgpt-cli # chatgpt cli
+    pkgs.shell_gpt # another chatgpt cli
 
     # gnome tweaking
     # pkgs.gnome3.dconf-editor # change dconf settings
