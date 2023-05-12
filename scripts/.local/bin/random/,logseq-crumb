@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# Create crumb template(for LogSeq) for different link types
+
+set -e
+
+[ -z "$1" ] && url="$(pbpaste)" || url="$1"
+
+if echo "$url" | grep -q '^https://www.youtube.com'; then
+    title_and_creator="$(yt-dlp --print title --print uploader "$url")"
+    title="$(echo "$title_and_creator" | head -n 1)"
+    creator="$(echo "$title_and_creator" | tail -n 1)"
+    printf "##### %s\nproducer:: [[YT:%s]]\ntype:: [[video]]\nlink:: %s\ntags::" "$title" "$creator" "$url"
+else
+    page="$(curl -s "$url")"
+    title="$(echo "$page" | pup 'title text{}')"
+    creator="$(echo "$page" | pup 'meta[name="author"] attr{content}')"
+    [ -z "$creator" ] && creator="$(echo "$url" | awk -F/ '{print $3}')" || creator="[[$creator]]"
+    printf "##### %s\nproducer:: %s\ntype:: [[article]]\nlink:: %s\ntags::" "$title" "$creator" "$url"
+fi | tee /dev/stderr | pbcopy
