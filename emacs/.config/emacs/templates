@@ -99,9 +99,8 @@ org-mode
 (src "#+begin_src " p n> r> n> "#+end_src" :post (org-edit-src-code))
 (elisp "#+begin_src emacs-lisp" n> r> n "#+end_src" :post (org-edit-src-code))
 
-go-mode
+go-mode go-ts-mode
 
-(impn "import (" n> q n ")")
 (pr "fmt.Printf(\"\\n" p ":\\n%#v\\n\", " q ")")
 (pl "fmt.Println(" q ")")
 (db "Debug.Printf(\"\\n" p "\\n\\n%#v\\n\", " q ")")
@@ -110,10 +109,10 @@ go-mode
 (ln "log.Println(" q ")")
 (struct "type " p " struct {" n> q n> "}")
 (interface "type " p " interface {" n> q n> "}")
-(err "if err != nil {" n> q n> "}")
+(err "if err != nil {" n> (meain/go-return-string "err") n> "}")
 (range "for " p ", " p " := range " p " {" n> q n> "}")
-(fnc "func " p "(" p ") {" n> q n> "}")
 (test "func Test" p " (t *testing.T) { " n> q n> "}")
+(app (s dest) " = append(" (s dest) ", " q ")")
 
 ;; Local Variables:
 ;; mode: lisp-data
