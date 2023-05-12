@@ -3749,11 +3749,30 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
                    :files ("dist" "*.el"))
   :config
   (global-copilot-mode t)
-  (setq copilot-idle-delay 1)
+  (setq copilot-idle-delay 0)
   (define-key copilot-mode-map (kbd "M-f M-f") #'copilot-complete)
   (define-key copilot-mode-map (kbd "M-f M-j") #'copilot-next-completion)
   (define-key copilot-mode-map (kbd "M-f M-k") #'copilot-previous-completion)
   (define-key copilot-mode-map (kbd "M-f M-l") #'copilot-accept-completion))
+
+;; Better GPT-3 interaction
+(use-package c3po
+  :straight (:host github :repo "d1egoaz/c3po.el")
+  :commands (c3po-chat c3po-dev-chat c3po-reply
+                       c3po-correct-grammar c3po-correct-grammar-and-replace
+                       c3po-rewrite-text c3po-rewrite-and-replace
+                       c3po-explain-code c3po-summarize)
+  :config
+  (setq c3po-api-key (car (string-split
+                           (shell-command-to-string "pass show openai/apikey 2>/dev/null") "\n"))))
+
+;; OpenAI GPT-3 interaction
+(use-package gptel
+  :straight t
+  :commands (gptel)
+  :config
+  (setq gptel-api-key (car (string-split
+                            (shell-command-to-string "pass show openai/apikey 2>/dev/null") "\n"))))
 
 ;; Buffer/Frame/Window keybinds
 (use-package emacs
