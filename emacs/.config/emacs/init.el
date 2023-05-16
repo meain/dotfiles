@@ -1469,6 +1469,11 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   :bind (:map minibuffer-local-map ("C-b" . marginalia-cycle))
   :config (marginalia-mode))
 
+;; Show completions option even when there is a typo
+;; (use-package typo
+;;   :straight t
+;;   :config (add-to-list 'completion-styles 'typo t))
+
 ;; Aggressive completions
 (use-package aggressive-completion
   :straight t
