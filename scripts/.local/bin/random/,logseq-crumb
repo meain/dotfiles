@@ -11,6 +11,14 @@ if echo "$url" | grep -q '^https://www.youtube.com'; then
     title="$(echo "$title_and_creator" | head -n 1)"
     creator="$(echo "$title_and_creator" | tail -n 1)"
     printf "##### %s\nproducer:: [[YT:%s]]\ntype:: [[video]]\nlink:: %s\ntags::" "$title" "$creator" "$url"
+elif echo "$url" | grep -q '^https://github.com'; then
+    echo "$url" | head -n1 | sed 's|github.com|api.github.com/repos|' | xargs curl >/tmp/gh-repo-page
+    name="$(jq -r '.name' /tmp/gh-repo-page)"
+    desc="$(jq -r '.description' /tmp/gh-repo-page)"
+    creator="$(jq -r '.owner.login' /tmp/gh-repo-page)"
+    license="$(jq -r '.license.name' /tmp/gh-repo-page)"
+    # tags="$(jq -r '.topics[]' /tmp/gh-repo-page | sed 's/^/[[/;s/$/]]/' | tr '\n' ' ')" # has unnecessary tags
+    printf "##### %s - %s\nproducer:: [[GH:%s]]\ntype:: [[project]]\nlink:: %s\nlicense:: [[%s]]\ntags::" "$name" "$desc" "$creator" "$url" "$license"
 else
     page="$(curl -s "$url")"
     title="$(echo "$page" | pup 'title text{}')"
