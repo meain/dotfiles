@@ -4,10 +4,14 @@
 
 set -e
 
+chatgpt -c
+gptcli="sgpt" # chatgpt
+
 cmd="$1"
 [ -z "$cmd" ] && cmd="$(echo "
 summarize (summarize content of an article)
 video-summary (summarize content of a video)
+proofread (proofread a piece of text)
 commit-message (write a commit message for the current diff)
 declickbait (convert title to something less clickbaity)" | sed -e '/^$/d' | ,picker -p "Task: " | cut -d' ' -f1)"
 
@@ -22,17 +26,19 @@ get_git_diff() {
 get_subtitle() {
     filename="/tmp/,g/$(date '+%s')"
     yt-dlp --write-auto-sub --skip-download "$1" -o "$filename" >/dev/null
-    /home/meain/.nix-profile/bin/ffmpeg -i "$filename.en.vtt" "$filename.srt" >/dev/null 2>&1
+    /home/meain/.nix-profile/bin/ffmpeg -i "$filename".*.vtt "$filename.srt" >/dev/null 2>&1
     # TODO: Provide title for more context (maybe even trim out ad section using sponsorblock api)
     # Adding a `tr -d '\n' was not giving useful output
     sed -e '/^[0-9][0-9][0-9:,>]*/d;/^ *$/d' <"$filename.srt" | tr -d '\r' | uniq |
-        chatgpt "Summarize the details mentioned in the following subtitle content in bullet points"
+        $gptcli "Summarize the details mentioned in the following subtitle content in bullet points"
 }
+
 
 case "$cmd" in
 summarize) lynx -dump "$(pbpaste)" | chatgpt 'Summarize the following article. First write 2 or 3 lines with a quick summary. Then convert the article to major bullet points if possible and add a single emoji to represent each bullet point when useful.' ;;
-commit-message) get_git_diff | chatgpt "Write a commit message header (limit to 80 chars) and a description for the following diff. The response should only contain the message and should not contain any extra markers or unnecessary quotes." ;;
-declickbait) pbpaste | chatgpt "Make the following title less clickbaity, do not use quotes" ;;
+commit-message) get_git_diff | $gptcli "Write a commit message header (limit to 80 chars) and a description for the following diff. The response should only contain the message and should not contain any extra markers or unnecessary quotes." ;;
+declickbait) pbpaste | $gptcli "Make the following title less clickbaity, do not use quotes" ;;
 video-summary) get_subtitle "$(pbpaste)" ;;
+proofread) pbpaste | $gptcli "Proofread the following text for spelling grammar and readability:" ;;
 *) echo "We don't do that here!" && exit 1 ;;
 esac | tee /dev/stderr | pbcopy
