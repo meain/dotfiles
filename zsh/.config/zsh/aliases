@@ -81,6 +81,7 @@ alias lk=',let-me-know'
 # just be nice dammit
 alias go="nice go"
 alias dlv="nice dlv"
+alias golangci-lint="nice golangci-lint"
 
 # global
 alias -g JL="cut -d{ -f2-|sed 's|^|{|'"
