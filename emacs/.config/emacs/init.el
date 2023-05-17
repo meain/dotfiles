@@ -171,6 +171,7 @@
 ;; Will have to call load-file in case I actually need this on next startup
 ;; Just keeping it as a file so that I can copy paste
 (setq custom-file "~/.config/emacs/custom-config.el")
+(load-file "~/.config/emacs/custom-config.el") ;; TODO: only load `safe-local-variable-values'
 
 ;; Tab settings
 (setq-default tab-width 4)
