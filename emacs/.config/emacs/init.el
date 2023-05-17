@@ -3180,6 +3180,10 @@ Pass universal args to run suite or project level tests."
   :init
   (add-hook 'find-file-hook #'topsy-mode))
 
+;; Does not use imenu populated by eglot
+;; (use-package breadcrumb
+;;   :straight (:repo "joaotavora/breadcrumb" :host github))
+
 ;; Quick lookup in a dictionary
 (use-package dictionary
   :straight t
