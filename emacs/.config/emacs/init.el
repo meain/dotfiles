@@ -48,40 +48,72 @@
 ;; Basic setup
 (setq user-mail-address "mail@meain.io" user-full-name "Abin Simon")
 
-;; Setup straight.el
-(setq straight-repository-branch "develop")
-(defvar bootstrap-version)
-(let ((bootstrap-file (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 5))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-                                    'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
+;; Setup elpaca
+(defvar elpaca-installer-version 0.4)
+(defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
+(defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
+(defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
+(defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
+                              :ref nil
+                              :files (:defaults (:exclude "extensions"))
+                              :build (:not elpaca--activate-package)))
+(let* ((repo  (expand-file-name "elpaca/" elpaca-repos-directory))
+       (build (expand-file-name "elpaca/" elpaca-builds-directory))
+       (order (cdr elpaca-order))
+       (default-directory repo))
+  (add-to-list 'load-path (if (file-exists-p build) build repo))
+  (unless (file-exists-p repo)
+    (make-directory repo t)
+    (when (< emacs-major-version 28) (require 'subr-x))
+    (condition-case-unless-debug err
+        (if-let ((buffer (pop-to-buffer-same-window "*elpaca-bootstrap*"))
+                 ((zerop (call-process "git" nil buffer t "clone"
+                                       (plist-get order :repo) repo)))
+                 ((zerop (call-process "git" nil buffer t "checkout"
+                                       (or (plist-get order :ref) "--"))))
+                 (emacs (concat invocation-directory invocation-name))
+                 ((zerop (call-process emacs nil buffer nil "-Q" "-L" "." "--batch"
+                                       "--eval" "(byte-recompile-directory \".\" 0 'force)")))
+                 ((require 'elpaca))
+                 ((elpaca-generate-autoloads "elpaca" repo)))
+            (kill-buffer buffer)
+          (error "%s" (with-current-buffer buffer (buffer-string))))
+      ((error) (warn "%s" err) (delete-directory repo 'recursive))))
+  (unless (require 'elpaca-autoloads nil t)
+    (require 'elpaca)
+    (elpaca-generate-autoloads "elpaca" repo)
+    (load "./elpaca-autoloads")))
+(add-hook 'after-init-hook #'elpaca-process-queues)
+(elpaca `(,@elpaca-order))
+
+;; Install use-package support
+(elpaca elpaca-use-package
+  ;; Enable :elpaca use-package keyword.
+  (elpaca-use-package-mode))
+
+;; Block until current queue processed.
+(elpaca-wait)
 
 ;; Use package config
-(straight-use-package 'use-package)
 (setq use-package-verbose t)
 (setq use-package-always-demand (getenv "LOAD_FULL_EMACS"))
 
 ;; Benchmark emacs startup (enable when necessary)
 (use-package benchmark-init
-  :straight t
+  :elpaca t
   :disabled :config
   (add-hook 'after-init-hook 'benchmark-init/deactivate))
 
 ;; Get proper PATH (not used as we are launching from shell)
 (use-package exec-path-from-shell
-  :straight t
+  :elpaca t
   :config (exec-path-from-shell-initialize))
 
 ;;; [BASE EVIL] =================================================
 
 ;; Evil mode (set this up first)
 (use-package evil
-  :straight t
+  :elpaca t
 
   :init
   (setq evil-want-integration t)
@@ -126,7 +158,7 @@
 
 ;; Evil leader
 (use-package evil-leader
-  :straight t
+  :elpaca t
   :after evil
   :config
   (global-evil-leader-mode)
@@ -226,7 +258,7 @@
 
 ;; Diminish
 (use-package diminish
-  :straight t
+  :elpaca t
   :defer t
   :init
   (diminish 'eldoc-mode)
@@ -235,7 +267,8 @@
 ;;; [BASIC BUILTINS] ===========================================
 
 ;; Use mouse to do some stuff when you are lazy
-(context-menu-mode t)
+;; TODO: Causes Emacs to freeze when open
+(context-menu-mode nil)
 
 ;; Show open and closing brackets
 (show-paren-mode t)
@@ -305,7 +338,7 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; Evil commentary
 (use-package evil-commentary
-  :straight t
+  :elpaca t
   :defer 1
   :diminish
   :config (evil-commentary-mode))
@@ -313,14 +346,14 @@ Pass ORIGINAL and ALTERNATE options."
 ;; Evil surround
 (use-package evil-surround
   :defer 1
-  :straight t
+  :elpaca t
   :config (global-evil-surround-mode 1))
 
 ;; Evil text objects
-(use-package evil-textobj-line :straight t :defer 1)
-(use-package evil-textobj-syntax :straight t :defer 1)
+(use-package evil-textobj-line :elpaca t :defer 1)
+(use-package evil-textobj-syntax :elpaca t :defer 1)
 (use-package evil-indent-plus
-  :straight t
+  :elpaca t
   :defer 1
   :config
   (define-key evil-inner-text-objects-map "i" 'evil-indent-plus-i-indent)
@@ -332,7 +365,7 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; Evil number increment
 (use-package evil-numbers
-  :straight t
+  :elpaca t
   :after (evil)
   :commands (evil-numbers/inc-at-pt-incremental evil-numbers/dec-at-pt-incremental)
   :init
@@ -357,7 +390,7 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; Auto resize windows (useful in go buffer, folks don't stop at 80)
 (use-package golden-ratio
-  :straight t
+  :elpaca t
   ;; Enable minor-mode manually when required
   :commands (golden-ratio golden-ratio-mode))
 
@@ -458,7 +491,7 @@ Pass ORIGINAL and ALTERNATE options."
                                 (define-key eshell-mode-map (kbd "M-j") 'meain/move-swap-down))))
 
 (use-package sticky-shell
-  :straight (sticky-shell :host github
+  :elpaca (sticky-shell :host github
                           :repo "andyjda/sticky-shell")
   :after eshell
   :commands (sticky-shell-mode)
@@ -633,7 +666,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 ;; Recompile binding
 (use-package compile
   :commands (compile recompile)
-  :after evil
+  :after (evil)
   :config
   (setq compilation-scroll-output nil)
   (defun meain/toggle-compilation-scroll-output ()
@@ -654,10 +687,10 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
     (if (string-prefix-p "finished" string)
         (face-remap-add-relative 'default 'diff-hl-insert)
       (face-remap-add-relative 'default 'diff-hl-delete)))
-  (add-to-list 'compilation-finish-functions 'meain/compilation-colorcode)
+  (add-to-list 'compilation-finish-functions 'meain/compilation-colorcode))
 
 (use-package multi-compile
-  :straight t
+  :elpaca t
   :defer t
   :after (compile evil-leader)
   :commands (meain/recompile-or-compile)
@@ -720,7 +753,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
 ;; Show eldoc messages in a popup at point
 (use-package eldoc-box
-  :straight t
+  :elpaca t
   :commands (eldoc-box-help-at-point eldoc-box-hover-mode eldoc-box-hover-at-point-mode)
   :init
   (global-set-key (kbd "M-d")
@@ -767,7 +800,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
 ;; Github like git info in dired
 (use-package dired-git-info
-  :straight t
+  :elpaca t
   :defer t
   :after dired
   :commands (dired-git-info-mode dired-git-info-auto-enable))
@@ -784,7 +817,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
 ;; auto activating snippets
 (use-package aas
-  :straight t
+  :elpaca t
   ;; can't defer loading of this as we need it in every single spawned
   ;; buffer including scratch
   :init (add-hook 'find-file-hook #'aas-activate-for-major-mode)
@@ -997,7 +1030,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
 ;; Templates
 (use-package tempel
-  :straight t
+  :elpaca t
   :commands (tempel-complete tempel-expand tempel-insert)
   :init
   (global-set-key (kbd "M-*") 'tempel-complete)
@@ -1022,14 +1055,14 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
                   font-lock-doc-face
                   font-lock-string-face)))
 (use-package flyspell-correct
-  :straight t
+  :elpaca t
   :after flyspell
   :commands (flyspell-correct-wrapper flyspell-goto-next-error)
   :bind (:map flyspell-mode-map ("C-:" . flyspell-correct-wrapper)))
 
 ;; Advanced spell checking
 (use-package wucuo
-  :straight t
+  :elpaca t
   :disabled t
   :after flyspell
   :commands (wucuo-start)
@@ -1056,7 +1089,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   (evil-set-command-property 'flymake-goto-next-error :jump t)
   (evil-set-command-property 'flymake-goto-prev-error :jump t))
 (use-package flymake-diagnostic-at-point
-  :straight t
+  :elpaca t
   :after (flymake evil-leader)
   :config
   (setq flymake-diagnostic-at-point-error-prefix "! ")
@@ -1065,7 +1098,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   (evil-leader/set-key "k" 'flymake-goto-prev-error)
   (add-hook 'flymake-mode-hook #'flymake-diagnostic-at-point-mode))
 (use-package flymake-quickdef
-  :straight t
+  :elpaca t
   :after flymake
   :config
   ;; https://github.com/crate-ci/typos
@@ -1283,7 +1316,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
 ;; Company for autocompletions
 (use-package company
-  :straight t
+  :elpaca t
   :disabled t
   :defer 1
   :diminish
@@ -1319,7 +1352,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
 ;; consult-interface for company for use in `sql-mode'
 (use-package consult-company
-  :straight t
+  :elpaca t
   :disabled t
   :defer t
   :after (consult company)
@@ -1327,7 +1360,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
 ;; Company quickhelp
 (use-package company-quickhelp ; Show help in tooltip
-  :straight t
+  :elpaca t
   :disabled t
   :after company
   :config
@@ -1336,7 +1369,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
         pos-tip-background-color "#ffffff"))
 
 (use-package corfu
-  :straight (:files (:defaults "extensions/*"))
+  :elpaca (:files (:defaults "extensions/*"))
   :config
   (setq completion-cycle-threshold 3)
   (setq corfu-auto t)
@@ -1365,7 +1398,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
 ;; Add completion extensions
 (use-package cape
-  :straight t
+  :elpaca t
   :bind (("M-p" . completion-at-point) ;; capf
          ("M-f p t" . complete-tag)        ;; etags
          ("M-f p d" . cape-dabbrev)        ;; or dabbrev-completion
@@ -1384,7 +1417,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
 ;; Completions (core framework)
 (use-package vertico
-  :straight (:files (:defaults "extensions/*.el"))
+  :elpaca (:files (:defaults "extensions/*.el"))
   :config
   (setq vertico-count 13)
   (setq vertico-cycle t) ; useful for consult-imenu
@@ -1430,7 +1463,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   :init
   (savehist-mode))
 (use-package orderless
-  :straight t
+  :elpaca t
   :config
   (setq completion-styles '(orderless basic))
 
@@ -1465,19 +1498,19 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
           (variable (styles orderless+basic))
           (file (styles basic partial-completion)))))
 (use-package marginalia
-  :straight t
+  :elpaca t
   :defer 1
   :bind (:map minibuffer-local-map ("C-b" . marginalia-cycle))
   :config (marginalia-mode))
 
 ;; Show completions option even when there is a typo
 ;; (use-package typo
-;;   :straight t
+;;   :elpaca t
 ;;   :config (add-to-list 'completion-styles 'typo t))
 
 ;; Aggressive completions
 (use-package aggressive-completion
-  :straight t
+  :elpaca t
   :defer 1
   :disabled t
   :config
@@ -1495,7 +1528,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
 ;; Consult without consultation fees
 (use-package consult
-  :straight t
+  :elpaca t
   :after (xref)
   :defer 1
   :config
@@ -1506,34 +1539,34 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   (evil-set-command-property 'consult-imenu :jump t))
 
 (use-package consult-notmuch
-  :straight t
+  :elpaca t
   :commands (consult-notmuch consult-notmuch-tree consult-notmuch-address))
 
 (use-package consult-git-log-grep
   :after (consult)
   :commands (consult-git-log-grep)
-  :straight (consult-git-log-grep
+  :elpaca (consult-git-log-grep
              :host github
              :repo "ghosty141/consult-git-log-grep"))
 
 ;; Embark stuff
 (use-package embark
   :defer 1
-  :straight t
+  :elpaca t
   :init (setq prefix-help-command #'embark-prefix-help-command)
   :config
   (global-set-key (kbd "C-'")  'embark-act)
   (global-set-key (kbd "C-.")  'embark-dwim)
   (global-set-key (kbd "C-h B")  'embark-bindings))
 (use-package embark-consult
-  :straight t
+  :elpaca t
   :defer t
   :after (embark consult)
   :hook (embark-collect-mode . consult-preview-at-point-mode))
 
 ;; Helpful package
 (use-package helpful
-  :straight t
+  :elpaca t
   :after evil-leader
   :commands (helpful-callable helpful-variable helpful-at-point helpful-key)
   :init
@@ -1558,7 +1591,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
                   (meain/with-alternate (call-interactively 'switch-to-buffer)
                                         (ibuffer-other-window))))
 (use-package ibuffer-project
-  :straight t
+  :elpaca t
   :after (ibuffer project)
   :config
   (add-to-list 'ibuffer-project-root-functions '(file-remote-p . "Remote"))
@@ -1576,7 +1609,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
 ;; rg.el
 (use-package rg
-  :straight t
+  :elpaca t
   :commands rg
   :after evil-leader
   :init
@@ -1586,7 +1619,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
 ;; dumb-jump
 (use-package dumb-jump
-  :straight t
+  :elpaca t
   :after evil-leader
   :commands dumb-jumb-go
   :init (evil-leader/set-key "J" 'dumb-jump-go)
@@ -1596,7 +1629,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
 ;; Code formatting
 (use-package apheleia
-  :straight t
+  :elpaca t
   :after evil
   :commands (apheleia-format-buffer meain/format-buffer)
   :config
@@ -1652,6 +1685,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
 ;; Xref customization
 (use-package xref
+  :after (evil)
   :config
   (define-key evil-normal-state-map (kbd "M-.") #'xref-find-definitions)
   (define-key evil-normal-state-map (kbd "M-?") #'xref-find-references)
@@ -1664,7 +1698,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 ;; LSP
 (use-package eglot
   :commands eglot-ensure
-  :straight t
+  :elpaca t
   :after (project flymake)
   :config
   (setq eglot-extend-to-xref t) ;; extend eglot to files gone to with go-to-def
@@ -1752,7 +1786,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
 ;; consult-eglot
 (use-package consult-eglot
-  :straight t
+  :elpaca t
   :commands consult-eglot-symbols
   :after (imenu eglot)
   :config
@@ -1786,12 +1820,12 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
   (setq imenu-max-item-length 300)
   (global-set-key (kbd "M-i") 'consult-imenu))
 (use-package flimenu
-  :straight t
+  :elpaca t
   :defer t
   :after imenu
   :config (flimenu-global-mode 1))
 (use-package imenu-list
-  :straight t
+  :elpaca t
   :defer t
   :after (imenu consult)
   :commands imenu-list-smart-toggle
@@ -1802,13 +1836,13 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
 
 ;; Symbol overlay
 (use-package symbol-overlay
-  :straight t
+  :elpaca t
   :defer t
   :commands (symbol-overlay-mode symbol-overlay-put))
 
 ;; Magit
 (use-package magit
-  :straight t
+  :elpaca t
   :after evil-leader
   :commands (magit-status magit-commit-create magit-ignored-files)
   :init
@@ -1829,21 +1863,21 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
 
 ;; Magit forge
 (use-package forge
-  :straight t
+  :elpaca t
   :defer t
   :after (magit evil-leader)
   :config (evil-leader/set-key "gF" 'forge-browse-dwim))
 
 ;; Github review
 (use-package github-review
-  :straight t
+  :elpaca t
   :defer t
   :after forge
   :commands (github-review-start github-review-forge-pr-at-point))
 
 ;; Diff hl
 (use-package diff-hl
-  :straight t
+  :elpaca t
   :defer 1
   :after evil-leader
   :config
@@ -1867,7 +1901,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
 
 ;; Git blame info
 (use-package blamer
-  :straight t
+  :elpaca t
   :after evil-leader
   :commands (blamer-show-commit-info blamer-mode global-blamer-mode)
   :config
@@ -1881,7 +1915,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
 
 ;; Magit todo
 (use-package magit-todos
-  :straight t
+  :elpaca t
   :defer 1
   :after (magit)
   :config
@@ -1889,19 +1923,19 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
 
 ;; Matchit
 (use-package evil-matchit
-  :straight t
+  :elpaca t
   :defer 1
   :config (global-evil-matchit-mode 1))
 
 ;; Highlight color codes
 (use-package rainbow-mode
-  :straight t
+  :elpaca t
   :commands (rainbow-mode)
   :init (add-hook 'css-mode-hook 'rainbow-mode))
 
 ;; Code folding
 (use-package origami
-  :straight t
+  :elpaca t
   :after (evil evil-leader)
   :defer 1
   :config (global-origami-mode)
@@ -1911,7 +1945,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
 
 ;; drag-stuff
 (use-package drag-stuff
-  :straight t
+  :elpaca t
   :after evil
   :diminish
   :commands (drag-stuff-up drag-stuff-down drag-stuff-left drag-stuff-right)
@@ -1932,7 +1966,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
 
 ;; Persistent undo using undo-tree
 (use-package undo-tree
-  :straight t
+  :elpaca t
   :diminish
   :config
   (global-undo-tree-mode t)
@@ -2003,7 +2037,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
 
 ;; which-key mode
 (use-package which-key
-  :straight t
+  :elpaca t
   :defer 1
   :diminish
   :config
@@ -2011,7 +2045,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
 
 ;; Expand region
 (use-package expand-region
-  :straight t
+  :elpaca t
   :commands (er/expand-region)
   :config
   ;; make evil jump list work with expand-region
@@ -2021,13 +2055,13 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
 
 ;; dtrt (atuo find indend setting)
 (use-package dtrt-indent
-  :straight t
+  :elpaca t
   :defer 1
   :diminish
   :config (dtrt-indent-global-mode))
 
 (use-package indent-guide
-  :straight t
+  :elpaca t
   :commands (indent-guide-global-mode indent-guide-mode)
   :init
   (setq indent-guide-delay nil)
@@ -2039,7 +2073,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
 
 ;; vterm setup
 (use-package vterm
-  :straight t
+  :elpaca t
   :defer t
   :after evil
   :commands (vterm meain/shell-toggle)
@@ -2177,22 +2211,22 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
 
 ;; ranger in emacs
 (use-package ranger
-  :straight t
+  :elpaca t
   :commands ranger
   :config
   (use-package image-dired+
-    :straight t
+    :elpaca t
     :config (image-diredx-async-mode)))
 
 ;; editorconfig
 (use-package editorconfig
   :defer 1
-  :straight t
+  :elpaca t
   :config (editorconfig-mode 1))
 
 ;; eros for eval
 (use-package eros
-  :straight t
+  :elpaca t
   :commands (eros-eval-last-sexp meain/eval-last-sexp)
   :after evil-leader
   :init
@@ -2230,7 +2264,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
 
 ;; Virtualenv
 (use-package virtualenvwrapper
-  :straight t
+  :elpaca t
   :commands venv-workon
   :init (setq venv-location "~/.local/share/virtual_envs"))
 
@@ -2285,7 +2319,7 @@ Pass universal args to run suite or project level tests."
 
 ;; Neotree
 (use-package neotree
-  :straight t
+  :elpaca t
   :commands neotree
   :config
   (setq neo-window-fixed-size nil)
@@ -2295,7 +2329,7 @@ Pass universal args to run suite or project level tests."
 ;; Evil keybindings for a lot of things
 (use-package evil-collection
   :defer 1
-  :straight t
+  :elpaca t
   :after evil
   :config
   (setq evil-collection-magit-want-horizontal-movement t)
@@ -2304,7 +2338,7 @@ Pass universal args to run suite or project level tests."
 
 ;; Highlight TODO items
 (use-package hl-todo
-  :straight t
+  :elpaca t
   :defer 1
   :config
   (setq hl-todo-keyword-faces '(("TODO" . "#FF0000")
@@ -2317,43 +2351,43 @@ Pass universal args to run suite or project level tests."
 
 ;; Emmet for html stuff (c-j to activate)
 (use-package emmet-mode
-  :straight t
+  :elpaca t
   :defer t
   :commands (emmet-mode))
 
 ;; Direnv support
 (use-package envrc
-  :straight t
+  :elpaca t
   :defer 1
   :config (envrc-global-mode))
 
 ;;; [FILETYPE PUGINS] ===============================================
 
-(use-package rust-mode :straight t :defer t)
-(use-package clojure-mode :straight t :defer t)
+(use-package rust-mode :elpaca t :defer t)
+(use-package clojure-mode :elpaca t :defer t)
 (use-package go-mode
-  :straight t
+  :elpaca t
   :defer t
   :config
   (evil-set-command-property 'godef-jump :jump t))
 (use-package go-fill-struct
-  :straight t
+  :elpaca t
   :commands (go-fill-struct))
 (use-package go-tag
-  :straight t
+  :elpaca t
   :commands (go-tag-add go-tag-remove go-tag-refresh)
   :config (setq go-tag-args (list "-transform" "camelcase")))
 (use-package go-impl
-  :straight t
+  :elpaca t
   :commands (go-impl))
 (use-package go-stacktracer
-  :straight t
+  :elpaca t
   :commands (go-stacktracer-region))
 (use-package go-guru
   :defer t
-  :straight t)
+  :elpaca t)
 (use-package go-dlv
-  :straight t
+  :elpaca t
   :defer t
   :config
   (defun meain/dlv (&optional test)
@@ -2383,18 +2417,18 @@ Pass universal args to run suite or project level tests."
             (dlv dlv-command))
         (call-interactively 'dlv))))
   :commands (dlv dlv-current-func meain/dlv))
-(use-package lua-mode :straight t :defer t)
-(use-package web-mode :straight t :defer t)
-(use-package jinja2-mode :straight t :defer t)
-(use-package config-general-mode :straight t :defer t :mode "/\\.env")
-(use-package vimrc-mode :straight t :defer t)
+(use-package lua-mode :elpaca t :defer t)
+(use-package web-mode :elpaca t :defer t)
+(use-package jinja2-mode :elpaca t :defer t)
+(use-package config-general-mode :elpaca t :defer t :mode "/\\.env")
+(use-package vimrc-mode :elpaca t :defer t)
 (use-package markdown-mode
-  :straight t
+  :elpaca t
   :defer t
   :mode ("\\.md\\'" . gfm-mode)
   :config
   (setq markdown-url-compose-char '(8230 8943 35 9733 9875))
-  (use-package edit-indirect :straight t)
+  (use-package edit-indirect :elpaca t)
   (setq markdown-enable-html -1)
   (evil-define-key 'normal gfm-mode-map (kbd "<RET>") 'project-find-file)
   (evil-define-key 'normal gfm-mode-map (kbd "g d") 'markdown-do)
@@ -2402,9 +2436,9 @@ Pass universal args to run suite or project level tests."
   (evil-define-key 'normal markdown-mode-map (kbd "g d") 'markdown-do)
   (setq markdown-command "pandoc -t html5")
   (setq markdown-fontify-code-blocks-natively t))
-(use-package reformatter :straight t :defer t) ;; needed by nix-mode
+(use-package reformatter :elpaca t :defer t) ;; needed by nix-mode
 (use-package nix-mode
-  :straight t
+  :elpaca t
   :defer t
   :mode "\\.nix\\'"
   :config
@@ -2413,7 +2447,7 @@ Pass universal args to run suite or project level tests."
 ;; builtin package for scheme (for tree-sitter grammar)
 (use-package scheme-mode :defer t :mode "\\.scm\\'")
 (use-package csv-mode
-  :straight t
+  :elpaca t
   :defer t
   :config
   (setq csv-align-mode t)
@@ -2421,22 +2455,22 @@ Pass universal args to run suite or project level tests."
                       :background "gray100"
                       :foreground "#000000"))
 (use-package json-mode
-  :straight t
+  :elpaca t
   :defer t
   :config
   (add-hook 'json-mode-hook (lambda ()
                               (setq imenu-create-index-function #'meain/imenu-config-nesting-path))))
 (use-package yaml-mode
-  :straight t
+  :elpaca t
   :defer t
   :config
   (remove-hook 'yaml-mode-hook 'yaml-set-imenu-generic-expression) ;; don't use default one
   (add-hook 'yaml-mode-hook (lambda ()
                               (setq imenu-create-index-function #'meain/imenu-config-nesting-path))))
-(use-package ini-mode :straight t :defer t)
-(use-package dockerfile-mode :straight t :defer t :mode "/Dockerfile")
-(use-package docker-compose-mode :straight t :defer t)
-(use-package protobuf-mode :straight t :defer t)
+(use-package ini-mode :elpaca t :defer t)
+(use-package dockerfile-mode :elpaca t :defer t :mode "/Dockerfile")
+(use-package docker-compose-mode :elpaca t :defer t)
+(use-package protobuf-mode :elpaca t :defer t)
 (use-package org
   :commands (org-mode)
   :mode "/\\.org\\'"
@@ -2458,7 +2492,7 @@ Pass universal args to run suite or project level tests."
   (evil-define-key 'normal org-mode-map (kbd "gt") 'org-todo)
   (evil-define-key 'normal org-mode-map (kbd "gr") 'org-ctrl-c-ctrl-c))
 (use-package org-modern
-  :straight t
+  :elpaca t
   :disabled t
   :after org
   :commands (org-modern-mode org-modern-agenda)
@@ -2470,7 +2504,7 @@ Pass universal args to run suite or project level tests."
 (use-package kbd-mode
   :defer t
   :mode "\\.kbd\\'"
-  :straight (kbd-mode :host github
+  :elpaca (kbd-mode :host github
                       :repo "kmonad/kbd-mode"))
 
 ;; mtodo-mode
@@ -2509,13 +2543,13 @@ Pass universal args to run suite or project level tests."
   (define-key evil-normal-state-map (kbd "<SPC> d g") 'gud-until))
 
 (use-package hydra
-  :straight t
+  :elpaca t
   :commands (defhydra))
 
 ;; Dashboard
 (use-package dashboard
   :disabled t
-  :straight t
+  :elpaca t
   :config
   (setq dashboard-banner-logo-title nil)
   (setq dashboard-center-content t)
@@ -2543,7 +2577,7 @@ Pass universal args to run suite or project level tests."
 
 ;; notmuch
 (use-package notmuch
-  :straight t
+  :elpaca t
   :commands notmuch
   :after evil-leader
   :init
@@ -2640,7 +2674,7 @@ Pass universal args to run suite or project level tests."
 
 ;; elfeed
 (use-package elfeed
-  :straight t
+  :elpaca t
   :commands (elfeed elfeed-update)
   :after evil-leader
   :init
@@ -2793,7 +2827,7 @@ Pass universal args to run suite or project level tests."
 ;; command log
 (use-package command-log-mode
   :commands global-command-log-mode
-  :straight t
+  :elpaca t
   :init
   (defun meain/command-log-start ()
     "Enable command-log-mode and open command-log buffer."
@@ -2803,7 +2837,7 @@ Pass universal args to run suite or project level tests."
 
 ;; Beacon mode
 (use-package beacon
-  :straight t
+  :elpaca t
   :defer 1
   :diminish
   :config
@@ -2825,7 +2859,7 @@ Pass universal args to run suite or project level tests."
 (use-package ligature
   :defer 3
   :disabled t
-  :straight (ligature :host github
+  :elpaca (ligature :host github
                       :repo "mickeynp/ligature.el")
   :config
   (ligature-set-ligatures 't '("www"))
@@ -2845,16 +2879,16 @@ Pass universal args to run suite or project level tests."
   (global-ligature-mode 1))
 
 ;; Focus mode
-(use-package focus :straight t :commands focus-mode)
+(use-package focus :elpaca t :commands focus-mode)
 ;; Writing mode
 (use-package writeroom-mode
-  :straight t
+  :elpaca t
   :commands writeroom-mode
   :config
   (setq writeroom-global-effects (remove 'writeroom-set-fullscreen writeroom-global-effects)))
 ;; Naive linter for English prose
 (use-package writegood-mode
-  :straight t
+  :elpaca t
   :defer t
   :commands (writegood-mode))
 
@@ -2893,7 +2927,7 @@ Pass universal args to run suite or project level tests."
 ;; tramp-term
 (use-package tramp-term
   :after tramp
-  :straight t
+  :elpaca t
   :commands (tramp-term meain/tramp-shell)
   :config
   (defun meain/tramp-shell ()
@@ -2903,14 +2937,14 @@ Pass universal args to run suite or project level tests."
 
 ;; timing stuff
 (use-package activity-watch-mode
-  :straight t
+  :elpaca t
   :defer 1
   :diminish
   :config (global-activity-watch-mode))
 
 ;; Control bluetooth devices
 (use-package bluetooth
-  :straight t
+  :elpaca t
   :commands (bluetooth-list-devices))
 
 ;; Markdown preview
@@ -2932,7 +2966,7 @@ Pass universal args to run suite or project level tests."
 
 ;; Restclient
 (use-package restclient
-  :straight t
+  :elpaca t
   :defer t
   :mode ("\\.rest\\'". restclient-mode)
   :config (add-hook 'restclient-mode-hook (lambda ()
@@ -2940,7 +2974,7 @@ Pass universal args to run suite or project level tests."
 
 ;; Restclient jq integration
 (use-package restclient-jq
-  :straight t
+  :elpaca t
   :after restclient
   :defer
   :init
@@ -2948,31 +2982,31 @@ Pass universal args to run suite or project level tests."
 
 ;; Link opening
 (use-package ace-link
-  :straight t
+  :elpaca t
   :commands ace-link
   :init (global-set-key (kbd "M-f l") 'ace-link))
 
 ;; Docker
 (use-package docker
-  :straight t
+  :elpaca t
   :defer t
   :commands (docker))
 
 ;; Kubernetes
 (use-package kubernetes
-  :straight t
+  :elpaca t
   :defer t
   :commands (meain/kube)
   :config
   (defun meain/kube ()
     "Hacky function to load `kubernetes-evil' as it was not loading otherwise."
     (interactive)
-    (use-package kubernetes-evil :straight t)
+    (use-package kubernetes-evil :elpaca t)
     (kubernetes-overview)))
 
 ;; Window layout changer
 (use-package rotate
-  :straight t
+  :elpaca t
   :after evil
   :commands (rotate-layout rotate-window)
   :init
@@ -2989,7 +3023,7 @@ Pass universal args to run suite or project level tests."
 ;; Tree sitter
 (use-package tree-sitter
   :defer 1
-  :straight t
+  :elpaca t
   :config
   (global-tree-sitter-mode)
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
@@ -3149,7 +3183,7 @@ Pass universal args to run suite or project level tests."
   :defer t
   :after (tree-sitter evil-leader)
   :commands (ts-fold-mode)
-  :straight (ts-fold :host github
+  :elpaca (ts-fold :host github
                      :repo "jcs090218/ts-fold")
   :config
   (defun meain/toggle-fold ()
@@ -3177,17 +3211,17 @@ Pass universal args to run suite or project level tests."
 ;; Show definition beyond top of buffer in header
 (use-package topsy
   :defer t
-  :straight t
+  :elpaca t
   :init
   (add-hook 'find-file-hook #'topsy-mode))
 
 ;; Does not use imenu populated by eglot
 ;; (use-package breadcrumb
-;;   :straight (:repo "joaotavora/breadcrumb" :host github))
+;;   :elpaca (:repo "joaotavora/breadcrumb" :host github))
 
 ;; Quick lookup in a dictionary
 (use-package dictionary
-  :straight t
+  :elpaca t
   :commands (dictionary-search)
   :init
   (global-set-key (kbd "C-c d") #'dictionary-search)
@@ -3196,25 +3230,25 @@ Pass universal args to run suite or project level tests."
 ;; Highlight enclosing parenthesis
 (use-package highlight-parentheses
   :defer t
-  :straight t
+  :elpaca t
   :init (add-hook 'prog-mode-hook #'highlight-parentheses-mode)
   :config (setq highlight-parentheses-colors '("coral1")))
 
 ;; Auto recompile on save (useful for running tests)
 (use-package recompile-on-save
-  :straight t
+  :elpaca t
   :commands (recompile-on-save-mode))
 
 ;; RFC reader
 (use-package rfc-mode
-  :straight t
+  :elpaca t
   :commands (rfc-mode-browse rfc-mode-read)
   :config
   (setq rfc-mode-directory (expand-file-name "~/.local/share/rfc/"))
   (add-hook 'rfc-mode-hook 'writeroom-mode))
 
 (use-package ledger-mode
-  :straight t
+  :elpaca t
   :defer t
   :commands (meain/ledger-add-entry)
   :mode "\\.ledger\\'"
@@ -3247,7 +3281,7 @@ Pass universal args to run suite or project level tests."
       (ledger-mode-clean-buffer))))
 
 (use-package scroll-on-drag
-  :straight t
+  :elpaca t
   :defer 3
   :config
   (setq scroll-on-drag-motion-scale 0.1)
@@ -3258,19 +3292,19 @@ Pass universal args to run suite or project level tests."
                       (mouse-yank-primary t)))))
 
 (use-package 0x0
-  :straight t
+  :elpaca t
   :defer t
   :after evil-leader
   :commands (0x0-dwim 0x0-popup 0x0-upload-file 0x0-upload-text)
   :init (evil-leader/set-key "a 0" '0x0-dwim))
 
 (use-package redacted
-  :straight t
+  :elpaca t
   :commands (redacted-mode)
   :config (add-hook 'redacted-mode-hook (lambda () (read-only-mode (if redacted-mode 1 -1)))))
 
 (use-package avy
-  :straight t
+  :elpaca t
   :defer 3
   :after evil-leader
   :config
@@ -3278,7 +3312,7 @@ Pass universal args to run suite or project level tests."
   (evil-leader/set-key "h" 'avy-goto-char-timer))
 
 (use-package harpoon
-  :straight t
+  :elpaca t
   :after evil-leader
   :config
   (setq harpoon-cache-file (concat user-emacs-directory "harpoon/"))
@@ -3298,7 +3332,7 @@ Pass universal args to run suite or project level tests."
   (evil-leader/set-key "f h f" 'harpoon-go-to-9))
 
 (use-package denote
-  :straight (denote :host github
+  :elpaca (denote :host github
                     :repo "protesilaos/denote")
   :defer t
   :after (evil-leader)
@@ -3371,23 +3405,23 @@ Pass universal args to run suite or project level tests."
   (zone-when-idle (* 5 60)))
 
 ;; Mermaid mode
-(use-package mermaid-mode :defer t :straight t)
+(use-package mermaid-mode :defer t :elpaca t)
 
 ;; Edit any textfield in Emacs
 (use-package emacs-everywhere
   :defer t
-  :straight t
+  :elpaca t
   :config
   (remove-hook 'emacs-everywhere-init-hooks #'emacs-everywhere-major-mode-org-or-markdown)
   (remove-hook 'emacs-everywhere-init-hooks #'emacs-everywhere-apply-major-mode)
   (add-hook 'emacs-everywhere-init-hooks #'gfm-mode))
 
 ;; Fontify face (useful to debug themes)
-(use-package fontify-face :straight t :defer t)
+(use-package fontify-face :elpaca t :defer t)
 
 ;; Keycast mode for demos
 (use-package keycast
-  :straight t
+  :elpaca t
   :defer t
   :commands (keycast-mode keycast-background-mode keycast-log-mode keycast-tab-bar-mode)
   :config
@@ -3541,7 +3575,7 @@ Pass universal args to run suite or project level tests."
                           (call-interactively 'meain/scratchy))))
 
 ;; vime functionality within emacs
-(use-package uuid :straight t :commands uuid-string)
+(use-package uuid :elpaca t :commands uuid-string)
 (use-package emacs
   :commands (meain/vime)
   :after (marginalia)
@@ -3645,12 +3679,12 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 
 ;; devdocs
 (use-package devdocs
-  :straight t
+  :elpaca t
   :commands (devdocs-search devdocs-lookup devdocs-install))
 
 ;; cheat.sh
 (use-package cheat-sh
-  :straight t
+  :elpaca t
   :commands (cheat-sh cheat-sh-maybe-region)
   :init
   (evil-leader/set-key "a d"
@@ -3727,7 +3761,7 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 
 ;; Narrow region
 (use-package fancy-narrow
-  :straight t
+  :elpaca t
   :after evil
   :commands (fancy-narrow-to-region fancy-widen evil-fancy-narrow)
   :config
@@ -3754,7 +3788,7 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 
 ;; Copilot, I guess
 (use-package copilot
-  :straight (:host github
+  :elpaca (:host github
                    :repo "zerolfx/copilot.el"
                    :files ("dist" "*.el"))
   :config
@@ -3767,7 +3801,7 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 
 ;; Better GPT-3 interaction
 (use-package c3po
-  :straight (:host github :repo "d1egoaz/c3po.el")
+  :elpaca (:host github :repo "d1egoaz/c3po.el")
   :commands (c3po-chat c3po-dev-chat c3po-reply
                        c3po-correct-grammar c3po-correct-grammar-and-replace
                        c3po-rewrite-text c3po-rewrite-and-replace
@@ -3778,7 +3812,7 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 
 ;; OpenAI GPT-3 interaction
 (use-package gptel
-  :straight t
+  :elpaca t
   :commands (gptel)
   :config
   (setq gptel-api-key (car (string-split
@@ -4069,18 +4103,18 @@ This contains a lot of hacks to get it working with H-q keybinding and a popup."
   (xwidget-webkit-browse-url (concat "https://duckduckgo.com/?q="
                                      (read-string "Search term: " (thing-at-point 'symbol)))))
 
-;; Check available update for straight managed packages
+;; Check available update for elpaca managed packages
 (add-hook 'markdown-mode-hook
           (lambda ()
-            (if (equal "/tmp/straight-available-updates.md" (buffer-file-name))
+            (if (equal "/tmp/elpaca-available-updates.md" (buffer-file-name))
                 (markdown-toggle-url-hiding 1))))
-(defun meain/straight-available-updates ()
-  "Check available update for straight managed packages."
+(defun meain/elpaca-available-updates ()
+  "Check available update for elpaca managed packages."
   (interactive)
   (message "Fetching updates and calculating changes...")
-  ;; (async-shell-command "zsh -ic 'straight-available-updates'"))
-  (start-process-shell-command "straight-available-updates" "*straight-available-updates*"
-                               "zsh -ic 'straight-available-updates'"))
+  ;; (async-shell-command "zsh -ic 'elpaca-available-updates'"))
+  (start-process-shell-command "elpaca-available-updates" "*elpaca-available-updates*"
+                               "zsh -ic 'elpaca-available-updates'"))
 
 ;; popup frame thingy
 (defun meain/emacs-popup-frame (thing-to-popup)
@@ -4233,7 +4267,7 @@ not defined, it will be saved in the `$HOME' directory."
 (use-package which-func
   :commands (which-function))
 (use-package mode-line-idle
-  :straight t
+  :elpaca t
   :commands (mode-line-idle))
 (setq-default mode-line-format
               (list '(:eval (propertize
@@ -4325,11 +4359,12 @@ not defined, it will be saved in the `$HOME' directory."
                                     (time (emacs-init-time)))
                                 (when (bound-and-true-p package-alist)
                                   (setq package-count (length package-activated-list)))
-                                (when (boundp 'straight--profile-cache)
-                                  (setq package-count (+ (hash-table-size straight--profile-cache)
-                                                         package-count)))
+                                ;; TODO: figure out how to get elpaca package count
+                                ;; (when (boundp 'straight--profile-cache)
+                                ;;   (setq package-count (+ (hash-table-size straight--profile-cache)
+                                ;;                          package-count)))
                                 (if (zerop package-count)
-                                    (format "Emacs started in %s" time)
+                                    (format ";; Emacs started in %s" time)
                                   (format ";; %d packages loaded in %s" package-count time))))
 
 ;; Auto updating scratch message
