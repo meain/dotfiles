@@ -54,7 +54,8 @@ in
     pkgs.diff-so-fancy # really good diff
     pkgs.icdiff # simple colorful diff replacement
     pkgs.ctags # code tag stuff
-    pkgs.pass # password management
+    # pkgs.pass # password management (not using nix version as we cannot make it use nix gpg-agent and we need both to use same version)
+    # pkgs.gnupg # gpg
     # pkgs.sshfs # mount vm as fs using ssh
     pkgs.stow # symlink management
     pkgs.git-absorb # automatic git commit --fixup
@@ -66,7 +67,7 @@ in
     spkgs.msmtp # smtp client
     pkgs.android-tools # adb and friends  # not available for macos
     # pkgs.restic # backup
-    pkgs.ledger # double entry accounting
+    # pkgs.ledger # double entry accounting
     # pkgs.dasel # jq but more versatile
     # pkgs.mosh # better ssh
     # pkgs.haskellPackages.kmonad # key remapping
@@ -85,6 +86,8 @@ in
     pkgs.rofi # menu stuff
     ppkgs.spaceman-diff # diff images in terminal
     pkgs.polybarFull # bar for wm
+    pkgs.python39Packages.pipx # pipx for installing stuff
+    ppkgs.logseq-doctor # logseq utils
 
     # aspell dicts
     pkgs.aspellDicts.en
@@ -160,6 +163,7 @@ in
     pkgs.nixpkgs-fmt # nix formatter
     pkgs.statix # linter for nix
     pkgs.nix-init # auto create nix expressions
+    pkgs.nix-update # update package in nix
 
     # programming-python
     spkgs.python39 # python language
@@ -291,7 +295,7 @@ in
     pkgs.xdragon # drag and drop files
     pkgs.sct # redshift ish stuff
     # pkgs.nur.repos.renesat.activitywatch-bin  # https://github.com/NixOS/nix/issues/3843
-    ppkgs.activitywatch-bin # activity tracking
+    pkgs.activitywatch # activity tracking
     # pkgs.gforth # gnu forth interpreter
     pkgs.nodePackages.mermaid-cli # cli for generating mermaid charts
     # pkgs.genact # become a movie "hacker"
@@ -339,7 +343,7 @@ in
   systemd.user.services.activitywatch = {
     Unit.Description = "Start ActivityWatch";
     Service.Type = "simple";
-    Service.ExecStart = "${ppkgs.activitywatch-bin}/bin/aw-server";
+    Service.ExecStart = "${pkgs.activitywatch}/bin/aw-server";
     Install.WantedBy = [ "default.target" ];
     Service.Restart = "on-failure";
     Service.RestartSec = 5;
@@ -347,7 +351,7 @@ in
   systemd.user.services.activitywatch-afk = {
     Unit.Description = "Start ActivityWatch AFK";
     Service.Type = "simple";
-    Service.ExecStart = "${ppkgs.activitywatch-bin}/bin/aw-watcher-afk";
+    Service.ExecStart = "${pkgs.activitywatch}/bin/aw-watcher-afk";
     Install.WantedBy = [ "default.target" ];
     Service.Restart = "on-failure";
     Service.RestartSec = 5;
@@ -355,7 +359,7 @@ in
   systemd.user.services.activitywatch-window = {
     Unit.Description = "Start ActivityWatch Window";
     Service.Type = "simple";
-    Service.ExecStart = "${ppkgs.activitywatch-bin}/bin/aw-watcher-window";
+    Service.ExecStart = "${pkgs.activitywatch}/bin/aw-watcher-window";
     Install.WantedBy = [ "default.target" ];
     Service.Restart = "on-failure";
     Service.RestartSec = 5;
