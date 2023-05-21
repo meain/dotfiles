@@ -1533,7 +1533,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   :defer 1
   :config
   (setq consult-ripgrep-args "rg --null --line-buffered --color=never --max-columns=1000 --path-separator /\
-      --smart-case --no-heading --line-number --hidden --follow --glob \"!.git/*\" .")
+      --smart-case --no-heading --line-number --hidden --follow --glob \"!.git/*\"")
   (setq xref-show-xrefs-function #'consult-xref)
   (setq xref-show-definitions-function #'consult-xref)
   (evil-set-command-property 'consult-imenu :jump t))
