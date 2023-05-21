@@ -2507,6 +2507,10 @@ Pass universal args to run suite or project level tests."
   :elpaca (kbd-mode :host github
                     :repo "kmonad/kbd-mode"))
 
+;; Show metadata for binary files instead of opening them
+(use-package eff-mode
+  :elpaca (:host github :repo "oxidase/eff-mode"))
+
 ;; mtodo-mode
 (use-package emacs
   :after evil
