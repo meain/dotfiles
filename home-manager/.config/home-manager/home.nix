@@ -399,10 +399,6 @@ in
   # code/note sync
   systemd.user.services.note-sync = utils.ss-git-sync { dir = "/home/meain/.local/share/notes"; };
   systemd.user.timers.note-sync = utils.timer-daily;
-  systemd.user.services.til-sync = utils.ss-git-sync { dir = "/home/meain/.local/share/til"; };
-  systemd.user.timers.til-sync = utils.timer-daily;
-  systemd.user.services.work-notes-sync = utils.ss-git-sync { dir = "/home/meain/.local/share/work-notes"; };
-  systemd.user.timers.work-notes-sync = utils.timer-daily;
   systemd.user.services.ledger-sync = utils.ss-git-sync { dir = "/home/meain/.local/share/ledger"; };
   systemd.user.timers.ledger-sync = utils.timer-daily;
   systemd.user.services.journal-sync = utils.ss-git-sync { dir = "/home/meain/.local/share/journal"; };
