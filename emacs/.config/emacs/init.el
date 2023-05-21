@@ -3183,6 +3183,10 @@ Pass universal args to run suite or project level tests."
   (define-key evil-normal-state-map (kbd "]F") (cons "goto-function-end" (lambda () (interactive) (progn (evil-textobj-tree-sitter-goto-textobj "function.outer" nil t) (reposition-window)))))
   (define-key evil-normal-state-map (kbd "[F") (cons "goto-function-end" (lambda () (interactive) (progn (evil-textobj-tree-sitter-goto-textobj "function.outer" t t) (reposition-window))))))
 
+(use-package combobulate
+  :commands (combobulate)
+  :elpaca (:repo "mickeynp/combobulate" :host github))
+
 (use-package ts-fold
   :defer t
   :after (tree-sitter evil-leader)
