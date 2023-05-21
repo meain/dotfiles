@@ -3214,7 +3214,7 @@ Pass universal args to run suite or project level tests."
   :load-path "/home/meain/dev/src/scopeline.el"
   :after tree-sitter
   :config (setq scopeline-overlay-prefix " ~")
-  :init (add-hook 'tree-sitter-mode-hook #'scopeline-mode))
+  :init (add-hook 'prog-mode-hook #'scopeline-mode))
 
 ;; Show definition beyond top of buffer in header
 (use-package topsy
