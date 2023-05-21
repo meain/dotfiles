@@ -4278,82 +4278,86 @@ not defined, it will be saved in the `$HOME' directory."
   :elpaca t
   :commands (mode-line-idle))
 (setq-default mode-line-format
-              (list '(:eval (propertize
-                             "█"
-                             'font-lock-face
-                             (list :foreground (concat "#"
-                                                       (substring
-                                                        (md5 (if (project-current)
-                                                                 ;; TODO: encode worktree information?
-                                                                 (meain/project-name)
-                                                               "")) 0 6)))))
-                    '(:eval (if (eq 'emacs evil-state) "[E] " " ")) ;; vim or emacs mode
-                    '(:eval (list (if (eq buffer-file-name nil)
-                                      ""
-                                    (concatenate 'string
-                                                 (car (cdr (reverse (split-string (buffer-file-name) "/"))))
-                                                 "/"))
-                                  (propertize "%b"
-                                              'face
-                                              (if (buffer-modified-p)
-                                                  'font-lock-string-face
-                                                'font-lock-builtin-face)
-                                              'help-echo
-                                              (buffer-file-name))))
-                    (propertize ":%l:%c")
-                    '(:eval (mode-line-idle 0.3
-                                            '(:propertize (:eval
-                                                           (if (boundp 'tree-sitter-mode)
-                                                               (let ((thing-name (meain/tree-sitter-thing-name 'class-like)))
-                                                                 (if thing-name (format ":%s" thing-name)))))
-                                                          face
-                                                          hima-simple-gray)
-                                            ""))
-                    '(:eval (mode-line-idle 0.3
-                                            '(:propertize (:eval
-                                                           (if (boundp 'tree-sitter-mode)
-                                                               (let ((thing-name (meain/tree-sitter-thing-name 'function-like))
-                                                                     (config-nesting (meain/tree-sitter-config-nesting)))
-                                                                 (if thing-name
-                                                                     (format ":%s" thing-name)
-                                                                   (if config-nesting
-                                                                       (format ":%s" config-nesting))))
-                                                             (when-let (func-name (which-function))
-                                                               (format ":%s" func-name))))
-                                                          face
-                                                          hima-simple-gray)
-                                            ""))
-                    '(:eval (mode-line-idle 1.0
-                                            '(:propertize (:eval (if (and (project-current)
-                                                                          (not (file-remote-p default-directory)))
-                                                                     (list " "
-                                                                           (let* ((explicit (cdr (car (cdr (cdr (tab-bar--current-tab))))))
-                                                                                  (name (cdr (car (cdr (tab-bar--current-tab)))))
-                                                                                  (out-name (if explicit
-                                                                                                (concatenate 'string ":" name)
-                                                                                              (if (project-current)
-                                                                                                  (concat ";"
-                                                                                                          (meain/project-name))
-                                                                                                ""))))
-                                                                             (format "%s" out-name)))))
-                                                          face
-                                                          hima-simple-gray)
-                                            ""))
-                    '(:eval (mode-line-idle 1.0
-                                            '(:propertize (:eval (when-let (vc vc-mode)
-                                                                   (list " @" (substring vc 5))))
-                                                          face
-                                                          hima-simple-gray)
-                                            ""))
-                    '(:eval (if (boundp 'keycast-mode-line) keycast-mode-line))
-                    '(:eval (propertize " "
-                                        'display
-                                        `((space :align-to (- (+ right right-fringe right-margin)
-                                                              ,(+ 2
-                                                                  (+ (string-width (format-mode-line "%p"))
-                                                                     (string-width (format-mode-line "%m"))))))))) ;; spacer
-                    (propertize "%p") ;; position in file
-                    (propertize " %m ")))
+              (list
+               '(:eval
+                 (mode-line-idle 0.3
+                                 '(:eval (propertize
+                                          "█"
+                                          'font-lock-face
+                                          (list :foreground (concat "#"
+                                                                    (substring
+                                                                     (md5 (if (project-current)
+                                                                              ;; TODO: encode worktree information?
+                                                                              (meain/project-name)
+                                                                            "")) 0 6)))))
+                                 "░"))
+               '(:eval (if (eq 'emacs evil-state) "[E] " " ")) ;; vim or emacs mode
+               '(:eval (list (if (eq buffer-file-name nil)
+                                 ""
+                               (concatenate 'string
+                                            (car (cdr (reverse (split-string (buffer-file-name) "/"))))
+                                            "/"))
+                             (propertize "%b"
+                                         'face
+                                         (if (buffer-modified-p)
+                                             'font-lock-string-face
+                                           'font-lock-builtin-face)
+                                         'help-echo
+                                         (buffer-file-name))))
+               (propertize ":%l:%c")
+               '(:eval (mode-line-idle 0.3
+                                       '(:propertize (:eval
+                                                      (if (boundp 'tree-sitter-mode)
+                                                          (let ((thing-name (meain/tree-sitter-thing-name 'class-like)))
+                                                            (if thing-name (format ":%s" thing-name)))))
+                                                     face
+                                                     hima-simple-gray)
+                                       ""))
+               '(:eval (mode-line-idle 0.3
+                                       '(:propertize (:eval
+                                                      (if (boundp 'tree-sitter-mode)
+                                                          (let ((thing-name (meain/tree-sitter-thing-name 'function-like))
+                                                                (config-nesting (meain/tree-sitter-config-nesting)))
+                                                            (if thing-name
+                                                                (format ":%s" thing-name)
+                                                              (if config-nesting
+                                                                  (format ":%s" config-nesting))))
+                                                        (when-let (func-name (which-function))
+                                                          (format ":%s" func-name))))
+                                                     face
+                                                     hima-simple-gray)
+                                       ""))
+               '(:eval (mode-line-idle 1.0
+                                       '(:propertize (:eval (if (and (project-current)
+                                                                     (not (file-remote-p default-directory)))
+                                                                (list " "
+                                                                      (let* ((explicit (cdr (car (cdr (cdr (tab-bar--current-tab))))))
+                                                                             (name (cdr (car (cdr (tab-bar--current-tab)))))
+                                                                             (out-name (if explicit
+                                                                                           (concatenate 'string ":" name)
+                                                                                         (if (project-current)
+                                                                                             (concat ";"
+                                                                                                     (meain/project-name))
+                                                                                           ""))))
+                                                                        (format "%s" out-name)))))
+                                                     face
+                                                     hima-simple-gray)
+                                       ""))
+               '(:eval (mode-line-idle 1.0
+                                       '(:propertize (:eval (when-let (vc vc-mode)
+                                                              (list " @" (substring vc 5))))
+                                                     face
+                                                     hima-simple-gray)
+                                       ""))
+               '(:eval (if (boundp 'keycast-mode-line) keycast-mode-line))
+               '(:eval (propertize " "
+                                   'display
+                                   `((space :align-to (- (+ right right-fringe right-margin)
+                                                         ,(+ 2
+                                                             (+ (string-width (format-mode-line "%p"))
+                                                                (string-width (format-mode-line "%m"))))))))) ;; spacer
+               (propertize "%p") ;; position in file
+               (propertize " %m ")))
 
 ;; Print emacs startup time
 (add-hook 'emacs-startup-hook
