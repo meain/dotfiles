@@ -492,7 +492,7 @@ Pass ORIGINAL and ALTERNATE options."
 
 (use-package sticky-shell
   :elpaca (sticky-shell :host github
-                          :repo "andyjda/sticky-shell")
+                        :repo "andyjda/sticky-shell")
   :after eshell
   :commands (sticky-shell-mode)
   :init
@@ -1546,8 +1546,8 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   :after (consult)
   :commands (consult-git-log-grep)
   :elpaca (consult-git-log-grep
-             :host github
-             :repo "ghosty141/consult-git-log-grep"))
+           :host github
+           :repo "ghosty141/consult-git-log-grep"))
 
 ;; Embark stuff
 (use-package embark
@@ -2505,7 +2505,7 @@ Pass universal args to run suite or project level tests."
   :defer t
   :mode "\\.kbd\\'"
   :elpaca (kbd-mode :host github
-                      :repo "kmonad/kbd-mode"))
+                    :repo "kmonad/kbd-mode"))
 
 ;; mtodo-mode
 (use-package emacs
@@ -2860,7 +2860,7 @@ Pass universal args to run suite or project level tests."
   :defer 3
   :disabled t
   :elpaca (ligature :host github
-                      :repo "mickeynp/ligature.el")
+                    :repo "mickeynp/ligature.el")
   :config
   (ligature-set-ligatures 't '("www"))
   (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
@@ -3184,7 +3184,7 @@ Pass universal args to run suite or project level tests."
   :after (tree-sitter evil-leader)
   :commands (ts-fold-mode)
   :elpaca (ts-fold :host github
-                     :repo "jcs090218/ts-fold")
+                   :repo "jcs090218/ts-fold")
   :config
   (defun meain/toggle-fold ()
     (interactive)
@@ -3789,8 +3789,8 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 ;; Copilot, I guess
 (use-package copilot
   :elpaca (:host github
-                   :repo "zerolfx/copilot.el"
-                   :files ("dist" "*.el"))
+                 :repo "zerolfx/copilot.el"
+                 :files ("dist" "*.el"))
   :config
   (global-copilot-mode t)
   (setq copilot-idle-delay 0)
