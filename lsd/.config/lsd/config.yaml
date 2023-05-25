@@ -12,5 +12,6 @@ blocks:
     - permission
     - size
     - date
+    - git
     - name
 symlink-arrow: ->
