@@ -2684,8 +2684,9 @@ Pass universal args to run suite or project level tests."
   :config
   (evil-define-key 'normal gnus-article-mode-map (kbd "M-n") 'gnus-summary-next-article) ;; <space> is always available
   (evil-define-key 'normal gnus-summary-mode-map (kbd "M-n") 'gnus-summary-next-article)
-  (evil-define-key 'normal gnus-article-mode-map (kbd "P") 'gnus-summary-refer-parent-article)
-  (evil-define-key 'normal gnus-summary-mode-map (kbd "P") 'gnus-summary-refer-parent-article)
+  (evil-define-key 'normal gnus-article-mode-map (kbd "p") 'gnus-summary-refer-parent-article)
+  (evil-define-key 'normal gnus-summary-mode-map (kbd "p") 'gnus-summary-refer-parent-article)
+  (evil-define-key 'normal gnus-summary-mode-map (kbd "P") 'gnus-summary-refer-thread) ; fetch all the messages in thread (useful for bookmarked)
   (evil-define-key 'normal gnus-summary-mode-map (kbd "a") 'gnus-summary-kill-thread)
   (evil-define-key 'normal gnus-group-mode-map (kbd "a") 'gnus-group-catchup-current-all)
   (setq gnus-select-method '(nnnil ""))
