@@ -15,6 +15,7 @@
   mff = merge --ff-only
   wip = for-each-ref --sort='authordate:iso8601' --format=' %(color:green)%(authordate:relative)%09%(color:reset)%(refname:short)' refs/heads
   undo = !"git reset --soft HEAD^ && git reset"
+  update = pull --ff-only
 [color]
   ui = true
 [core]
