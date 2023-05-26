@@ -3342,6 +3342,14 @@ Pass universal args to run suite or project level tests."
 (use-package harpoon
   :elpaca t
   :after evil-leader
+  :commands (harpoon-toggle-file
+             harpoon-toggle-quick-menu
+             harpoon-clear harpoon-add-file
+             harpoon-go-to-1 harpoon-go-to-2
+             harpoon-go-to-3 harpoon-go-to-4
+             harpoon-go-to-5 harpoon-go-to-6
+             harpoon-go-to-7 harpoon-go-to-8
+             harpoon-go-to-9)
   :config
   (setq harpoon-cache-file (concat user-emacs-directory "harpoon/"))
   (setq harpoon-separate-by-branch nil)
