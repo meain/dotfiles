@@ -1085,8 +1085,10 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
 ;; flymake
 (use-package flymake
-  :defer 1
   :after evil
+  :commands (flymake flymake-find-file-hook
+                     flymake-goto-next-error
+                     flymake-goto-prev-error)
   :init
   (add-hook 'find-file-hook 'flymake-find-file-hook)
   :config
