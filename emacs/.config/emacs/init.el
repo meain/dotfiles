@@ -106,9 +106,12 @@
   (add-hook 'after-init-hook 'benchmark-init/deactivate))
 
 ;; Get proper PATH (not used as we are launching from shell)
-(use-package exec-path-from-shell
-  :elpaca t
-  :config (exec-path-from-shell-initialize))
+;; (use-package exec-path-from-shell
+;;   :elpaca t
+;;   :config
+;;   ;; https://github.com/purcell/exec-path-from-shell#making-exec-path-from-shell-faster
+;;   (setq exec-path-from-shell-arguments '("-l")) ;; removing -i
+;;   (exec-path-from-shell-initialize))
 
 ;;; [BASE EVIL] =================================================
 
