@@ -504,6 +504,7 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; ansi-term config
 (use-package term
+  :disabled t
   :config
   (defun meain/term-exec-hook ()
     "Automatically close `ansi-term' buffer on exit."
