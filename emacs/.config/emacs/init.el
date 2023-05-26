@@ -3759,6 +3759,7 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 
 ;; Copilot, I guess
 (use-package copilot
+  :defer t
   :elpaca (:host github
                  :repo "zerolfx/copilot.el"
                  :files ("dist" "*.el"))
