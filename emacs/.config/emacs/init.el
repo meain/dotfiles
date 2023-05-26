@@ -2401,13 +2401,10 @@ Pass universal args to run suite or project level tests."
   :config (setq go-tag-args (list "-transform" "camelcase")))
 (use-package go-impl
   :elpaca t
-  :commands (go-impl))
-(use-package go-stacktracer
-  :elpaca t
-  :commands (go-stacktracer-region))
-(use-package go-guru
-  :defer t
-  :elpaca t)
+  :commands (go-impl)
+  :config (advice-add 'go-impl :around #'meain/use-custom-src-directory))
+(use-package go-stacktracer :elpaca t :commands (go-stacktracer-region))
+(use-package go-guru :defer t :elpaca t)
 (use-package go-dlv
   :elpaca t
   :defer t
