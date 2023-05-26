@@ -450,7 +450,7 @@ Pass ORIGINAL and ALTERNATE options."
 ;; Eshell config
 (use-package eshell
   :init (global-set-key (kbd "M-;") 'meain/eshell-toggle)
-  :after s
+  :commands (meain/eshell-toggle eshell)
   :config
   (defun meain/eshell-name ()
     "Get the name of the eshell based on project info."
@@ -2364,6 +2364,20 @@ Pass universal args to run suite or project level tests."
   :elpaca t
   :defer 1
   :config (envrc-global-mode))
+
+(use-package emacs
+  :config
+  :commands (meain/use-custom-src-directory)
+  :config
+  (defun meain/use-custom-src-directory (orig-fn &rest args)
+    "Use custom src directory as default directory instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
+    (let ((default-directory
+           (expand-file-name
+            ;; custom-src-directory is supposed to come from .dir-locals.el
+            (if (boundp 'custom-src-directory)
+                custom-src-directory
+              default-directory))))
+      (apply orig-fn args))))
 
 ;;; [FILETYPE PUGINS] ===============================================
 
