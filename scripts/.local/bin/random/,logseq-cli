@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# Ways to interact with logseq from the cli
+# Will include things like quick capture of journal entries, org-capture like things
+
+set -e
+
+LOGSEQ_DIR="$HOME/.local/share/logseq"
+
+opt="$1"
+[ -z "$opt" ] && echo "Usage: $0 <opt> <args>" && exit 1
+
+journal() {
+    entry="$*"
+    [ -z "$1" ] && printf "Entry: " && read -r entry
+    printf "\n- **%s** %s" "$(date '+%H:%M')" "$entry" >>"$LOGSEQ_DIR/journals/$(date '+%Y_%m_%d').md"
+}
+
+case "$1" in
+journal)
+    shift
+    journal "$@"
+    ;;
+esac
