@@ -1685,6 +1685,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
   :init
   (add-hook 'go-mode-hook 'apheleia-mode)
+  (add-hook 'go-mode-hook 'apheleia-mode)
   (define-key evil-normal-state-map (kbd ",,") #'meain/format-buffer))
 
 ;; Xref customization
