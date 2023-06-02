@@ -1,7 +1,8 @@
-{ personal, stable, pinned-firefox, tree-grepper, ... }:
+{ personal, bleeding, stable, pinned-firefox, tree-grepper, ... }:
 { pkgs, ... }:
 let
   ppkgs = personal.packages.x86_64-linux;
+  bpkgs = bleeding.legacyPackages.x86_64-linux;
   spkgs = stable.legacyPackages.x86_64-linux;
   utils = import ./utils.nix { inherit pkgs; };
   fonts = import ./fonts.nix { inherit pkgs; inherit spkgs; };
@@ -299,7 +300,7 @@ in
     # pkgs.gforth # gnu forth interpreter
     pkgs.nodePackages.mermaid-cli # cli for generating mermaid charts
     # pkgs.genact # become a movie "hacker"
-    pkgs.logseq # tracking life
+    bpkgs.logseq # tracking life
     # pkgs.obs-studio # video/screen recording
     # pkgs.postman # REST api testing tool
     # pkgs.minicom # connect to rpi

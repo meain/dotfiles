@@ -7,6 +7,8 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    bleeding.url = "github:nixos/nixpkgs/master"; # another experimental commit of nixpkgs
     stable.url = "nixpkgs/nixos-21.11";
 
     pinned-firefox.url = "github:nixos/nixpkgs/c1329a147a5fc2bb49367f6c2cd84bdfeccade43";
@@ -29,6 +31,7 @@
     { self
     , nixpkgs
     , homeManager
+    , bleeding
     , stable
     , pinned-firefox
     , nur
@@ -39,7 +42,7 @@
       homeConfigurations =
         let
           homeConfig = import ./home.nix {
-            inherit stable pinned-firefox personal tree-grepper;
+            inherit bleeding stable pinned-firefox personal tree-grepper;
           };
         in
         {

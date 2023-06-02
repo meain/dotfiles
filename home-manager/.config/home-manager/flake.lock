@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "bleeding": {
+      "locked": {
+        "lastModified": 1685434003,
+        "narHash": "sha256-QwFznWjxsPalL70lWac22eLtUuZUiiPlW/xCAYelPUA=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "2afeffbf7f06e707b7b6abd56fde2199a3ae030c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "master",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "emacsOverlay": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -175,6 +191,7 @@
     },
     "root": {
       "inputs": {
+        "bleeding": "bleeding",
         "emacsOverlay": "emacsOverlay",
         "homeManager": "homeManager",
         "nixpkgs": "nixpkgs",
