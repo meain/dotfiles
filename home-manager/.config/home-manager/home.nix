@@ -37,6 +37,7 @@ in
     pkgs.ripgrep
     pkgs.jq
     pkgs.fd
+    pkgs.gawk # for tmux-fingers
 
     # packages
     # ppkgs.notmuch-git # mail indexer
