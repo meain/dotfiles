@@ -313,6 +313,7 @@
 
 ;; Enable recentf
 (use-package recentf
+  :defer t
   :init
   (recentf-mode t)
   (add-hook 'after-init-hook
@@ -3354,6 +3355,7 @@ Pass universal args to run suite or project level tests."
   (setq harpoon-cache-file (concat user-emacs-directory "harpoon/"))
   (setq harpoon-separate-by-branch nil)
   (set harpoon-project-package 'project)
+  :init
   (evil-leader/set-key "f F" 'harpoon-toggle-file)
   (evil-leader/set-key "f r" 'harpoon-toggle-quick-menu)
   (evil-leader/set-key "f c" 'harpoon-clear)
