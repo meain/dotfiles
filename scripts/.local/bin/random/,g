@@ -5,7 +5,7 @@
 set -e
 
 chatgpt -c
-gptcli="sgpt" # chatgpt
+gptcli="chatgpt" # sgpt
 
 cmd="$1"
 [ -z "$cmd" ] && cmd="$(echo "
