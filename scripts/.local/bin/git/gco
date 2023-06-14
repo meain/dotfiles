@@ -4,8 +4,11 @@
 
 set -e
 
+[ -n "$1" ] && git checkout "$1" && exit 0
+
 git branch --sort=-committerdate |
 	grep -v '^[^ ]' |
 	awk '{print $1}' |
+    grep -v '^dura/' |
 	fzf --height 40% --reverse --preview 'git log --oneline -20 {}' |
 	xargs -r git checkout
