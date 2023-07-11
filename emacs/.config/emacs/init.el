@@ -2507,12 +2507,13 @@ Pass universal args to run suite or project level tests."
 (use-package docker-compose-mode :elpaca t :defer t)
 (use-package protobuf-mode :elpaca t :defer t)
 (use-package org
-  :commands (org-mode)
+  :commands (org-mode org-timer org-timer-set-timer)
   :mode "/\\.org\\'"
   :config
   (setq org-agenda-files (list "~/.local/share/org/master.org"))
   (setq org-log-done 'time)
   (setq org-todo-keywords '((sequence "TODO" "|" "DONE" "CANCELLED")))
+  (setq org-clock-sound "~/.config/datafiles/sounds/timer.mp3")
   (global-set-key (kbd "M-f j") 'org-agenda-list)
   (evil-define-key 'normal org-mode-map (kbd "M-l") 'meain/move-swap-right)
   (evil-define-key 'normal org-mode-map (kbd "M-h") 'meain/move-swap-left)
@@ -4336,7 +4337,10 @@ not defined, it will be saved in the `$HOME' directory."
                                    `((space :align-to (- (+ right right-fringe right-margin)
                                                          ,(+ 2
                                                              (+ (string-width (format-mode-line "%p"))
-                                                                (string-width (format-mode-line "%m"))))))))) ;; spacer
+                                                                (string-width (format-mode-line "%m"))
+                                                                (if (boundp 'org-timer-mode-line-string)
+                                                                    (1+ (string-width org-timer-mode-line-string)) 0)))))))) ;; spacer
+               '(:eval (if (boundp 'org-timer-mode-line-string) (concat org-timer-mode-line-string " ")))
                (propertize "%p") ;; position in file
                (propertize " %m ")))
 
