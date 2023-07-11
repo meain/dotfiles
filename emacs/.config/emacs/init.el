@@ -2307,7 +2307,16 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
       (if (s-starts-with-p "Unable to find any test" command)
           (cons default-directory nil)
         (cons default-directory (s-trim command)))))
-  (defun meain/toffee-run-test (&optional mode)
+  (defun meain/toffee-run-previous-test ()
+    "Run previous test."
+    (interactive)
+    (let* ((dir-cmd (meain/toffee--get-test-command  'function))
+           (default-directory (car dir-cmd))
+           (command meain/toffee--previous-command))
+      (if command
+          (progn (compile (concat "nice " command)))
+        (message "Unable to find any tests"))))
+  (defun meain/toffee-run-test (&optional _)
     "Run test based on `MODE'. By default runs current function.
 Pass universal args to run suite or project level tests."
     (interactive "P")
@@ -2328,7 +2337,8 @@ Pass universal args to run suite or project level tests."
               (compile (concat "nice " meain/toffee--previous-command)))
           (message "Unable to find any tests")))))
   :init
-  (evil-leader/set-key "d" 'meain/toffee-run-test))
+  (evil-leader/set-key "d" 'meain/toffee-run-test)
+  (evil-leader/set-key "D" 'meain/toffee-run-previous-test))
 
 ;; Neotree
 (use-package neotree
