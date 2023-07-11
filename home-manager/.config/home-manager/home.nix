@@ -123,6 +123,7 @@ in
     pkgs.typos # typo checker (integrated with flymake)
     # pkgs.k9s # kubernetes tui
     # pkgs.screenkey # show keys (useful when recording screen)
+    pkgs.lnav # log viewer
 
     # programming
     # pkgs.gist # create gist
