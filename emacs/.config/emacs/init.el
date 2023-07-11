@@ -2448,6 +2448,7 @@ Pass universal args to run suite or project level tests."
                                "^go test -v -run"
                                (format "dlv test %s -- -test.v -test.run" test-dir)
                                command-without-dir)))
+            (message dlv-command)
             (dlv dlv-command))
         (call-interactively 'dlv))))
   :commands (dlv dlv-current-func meain/dlv))
