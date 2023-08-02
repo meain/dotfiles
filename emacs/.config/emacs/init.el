@@ -750,8 +750,10 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 ;; eldoc load
 (use-package eldoc
   :defer t
+  :after (evil)
   :config
   (setq eldoc-echo-area-use-multiline-p nil)
+  (define-key evil-normal-state-map (kbd "K") 'eldoc-print-current-symbol-info)
   ;; (add-to-list 'display-buffer-alist
   ;;              '("^\\*eldoc" display-buffer-at-bottom
   ;;                (window-height . 7)))
@@ -1783,7 +1785,6 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
                                   menu-items nil t nil nil (car menu-items)))))
       (jsonrpc-request server :workspace/executeCommand
                        `(:command "switchConnections" :arguments [,db]:timeout 0.5))))
-  (evil-define-key 'normal eglot-mode-map (kbd "K") 'eldoc-print-current-symbol-info)
   (evil-define-key 'normal eglot-mode-map (kbd "g D") 'eglot-find-implementation)
   (evil-define-key 'normal eglot-mode-map (kbd "g R") 'eglot-rename)
   (evil-define-key 'normal eglot-mode-map (kbd "g ,") 'eglot-format-buffer)
