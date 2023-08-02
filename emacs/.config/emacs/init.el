@@ -3087,6 +3087,12 @@ Pass universal args to run suite or project level tests."
         remember-notes-initial-major-mode 'org-mode
         remember-notes-auto-save-visited-file-name t))
 
+;; Automatically install treesit grammars
+(use-package treesit-auto
+  :elpaca t
+  :config
+  (global-treesit-auto-mode))
+
 ;; Tree sitter
 (use-package tree-sitter
   :defer 1
