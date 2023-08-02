@@ -2,12 +2,12 @@
 
 set -e
 
-name="$1"
+name="$(echo "$*" | sed 's/ /%20/g')"
 fc="$(echo "$name" | cut -c1)"
 tfile="/tmp/imdb-search.json"
 
 printf "Querying imdb...\r"
-curl -s https://v2.sg.media-imdb.com/suggestion/"$fc"/"$name".json > $tfile
+curl -s "https://v2.sg.media-imdb.com/suggestion/$fc/$name.json" > $tfile
 id="$(jq -r '.d[] | "\(.l) :: \(.q) (\(.id))                                                                                         \(.i.imageUrl)"' <"$tfile" |
     fzf --height 100 --preview 'curl -s {-1}|chafa' | cut -d'(' -f2 | cut -d')' -f1)"
 
@@ -18,5 +18,6 @@ lpath="../assets/storages/via-cli/$iname.jpg"
 jq -r '.d[] | select(.id == "'"$id"'") | .i.imageUrl' <"$tfile" |
     xargs curl -s >"$ipath"
 
-jq -r '.d[] | select(.id == "'"$id"'") | "[\(.l)](https://www.imdb.com/title/\(.id)/)\nkind:: [[\(.q)]]\nlanguage:: [[English]]\nyear:: \(.yr)\nrating:: \nposter:: ![]('"$lpath"'){:height 100 :width 100}"' <"$tfile" |
+jq -r '.d[] | select(.id == "'"$id"'") | "[\(.l)](https://www.imdb.com/title/\(.id)/)\nkind:: [[\(.q)]]\nlanguage:: [[English]]\nActors:: \(.s)\nrating:: \nposter:: ![]('"$lpath"'){:height 100 :width 100}"' <"$tfile" |
+    sed -E 's|\[\[feature\]\]|[[Movie]]|' |
     tee /dev/stderr | pbcopy
