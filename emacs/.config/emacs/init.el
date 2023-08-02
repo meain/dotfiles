@@ -695,6 +695,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
       (face-remap-add-relative 'default 'diff-hl-delete)))
   (add-to-list 'compilation-finish-functions 'meain/compilation-colorcode))
 
+;; TODO: Alternateive - https://github.com/mohkale/compile-multi
 (use-package multi-compile
   :elpaca t
   :defer t
@@ -1391,6 +1392,9 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   (setq corfu-count 5)
   (define-key corfu-map (kbd "RET") 'newline-and-indent) ; default: corfu-insert
 
+  ;; Plugin in case we need in buffer overlay for completions
+  ;; https://code.bsdgeek.org/adam/corfu-candidate-overlay
+
   (defun corfu-move-to-minibuffer ()
     "Move completion to minibuffer instead of corfu."
     (interactive)
@@ -1816,6 +1820,9 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
      ((equal alternate '(4)) (consult-eglot-symbols))
      ((equal alternate '(16)) (tree-jump-search))))
   (global-set-key (kbd "M-i") #'meain/imenu-or-eglot))
+
+;; TODO Try out and add support for go mode
+;; (use-package dwim-coder-mode :elpaca t)
 
 ;; Peek into files/definitions without opening them
 (use-package peek
@@ -2563,7 +2570,7 @@ Pass universal args to run suite or project level tests."
                     :repo "kmonad/kbd-mode"))
 
 ;; Show metadata for binary files instead of opening them
-(use-package eff-mode
+(use-package eff
   :elpaca (:host github :repo "oxidase/eff-mode"))
 
 ;; mtodo-mode
@@ -4193,7 +4200,7 @@ Pass THING-TO-POPUP as the thing to popup."
     (select-frame frame))
   (funcall thing-to-popup))
 
-;; Patterns for replacing filenames with
+;; Patterns for replacing filenames with (builtin option: find-sibling-file)
 (use-package emacs
   :after evil-leader
   :commands (meain/find-alternate-file)
@@ -4238,7 +4245,7 @@ Pass `CREATE' to create the alternate file if it does not exits."
 
 ;; Splitting and joining list (https://github.com/AckslD/nvim-trevJ.lua)
 (use-package emacs
-  :after (tree-sitter)
+  :after (evil-leader tree-sitter)
   :commands (meain/split-join-args)
   :config
   (load-file "/home/meain/.config/emacs/tree-surgeon-split-join.el")
@@ -4272,9 +4279,10 @@ not defined, it will be saved in the `$HOME' directory."
     (disable-theme current-theme)
     (load-theme current-theme t)))
 
+(use-package which-func :commands (which-function))
+
 ;; Better modeline
-(use-package which-func
-  :commands (which-function))
+;; TODO: `mode-line-format-right-align' can be used to right align items in modeline
 (use-package mode-line-idle
   :elpaca t
   :commands (mode-line-idle))
