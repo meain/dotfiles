@@ -1096,6 +1096,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   :init
   (add-hook 'find-file-hook 'flymake-find-file-hook)
   :config
+  (setq flymake-show-diagnostics-at-end-of-line nil)
   (evil-set-command-property 'flymake-goto-next-error :jump t)
   (evil-set-command-property 'flymake-goto-prev-error :jump t))
 (use-package flymake-diagnostic-at-point
