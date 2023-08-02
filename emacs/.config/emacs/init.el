@@ -1898,6 +1898,15 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
   :after forge
   :commands (github-review-start github-review-forge-pr-at-point))
 
+(use-package smerge-mode
+  :after (evil evil-leader)
+  :config
+  (evil-leader/set-key "gmn" 'smerge-next)
+  (evil-leader/set-key "gmp" 'smerge-prev)
+  (evil-leader/set-key "gmu" 'smerge-keep-upper)
+  (evil-leader/set-key "gml" 'smerge-keep-lower)
+  (evil-leader/set-key "gma" 'smerge-keep-all))
+
 ;; Diff hl
 (use-package diff-hl
   :elpaca t
