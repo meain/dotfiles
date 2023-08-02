@@ -14,9 +14,9 @@ in
 
   programs.home-manager.enable = true;
 
-  services.emacs.package = pkgs.emacsGit;
+  services.emacs.package = pkgs.emacs-git;
   programs.emacs = {
-    package = pkgs.emacsGit;
+    package = pkgs.emacs-git;
     enable = true;
     extraPackages = epkgs: [ epkgs.vterm ];
   };
@@ -302,7 +302,7 @@ in
     # pkgs.gforth # gnu forth interpreter
     pkgs.nodePackages.mermaid-cli # cli for generating mermaid charts
     # pkgs.genact # become a movie "hacker"
-    bpkgs.logseq # tracking life
+    # bpkgs.logseq # tracking life (using flatpak version)
     # pkgs.obs-studio # video/screen recording
     # pkgs.postman # REST api testing tool
     # pkgs.minicom # connect to rpi
@@ -374,7 +374,7 @@ in
   systemd.user.services.clipmenud = utils.ss-simple { cmd = "clipmenud"; wait = 3; };
   systemd.user.services.sxhkd = utils.ss-simple { cmd = "sxhkd"; wait = 3; };
   systemd.user.services.emacs = utils.ss-simple { cmd = "emacs --fg-daemon"; wait = 1; };
-  systemd.user.services.logseq = utils.ss-simple { cmd = "logseq"; wait = 1; };
+  systemd.user.services.logseq = utils.ss-simple { cmd = "/var/lib/flatpak/app/com.logseq.Logseq/current/active/export/bin/com.logseq.Logseq"; wait = 1; };
   systemd.user.services.floatingterm = utils.ss-simple { cmd = "sakura --name floatingterm -x \"tt floating\""; wait = 1; };
   systemd.user.services.mail-watcher = utils.ss-simple { cmd = "find /home/meain/.local/share/mail/.notmuch/xapian|entr -n ,shellout-update"; wait = 5; };
   systemd.user.services.dura = utils.ss-simple { cmd = "${pkgs.dura}/bin/dura serve"; wait = 3; };

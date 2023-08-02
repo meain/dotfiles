@@ -18,13 +18,8 @@
       url = "path:/home/meain/dev/src/nur-packages";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    emacsOverlay = {
-      url = "github:nix-community/emacs-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    tree-grepper = {
-      url = "github:BrianHicks/tree-grepper";
-    };
+    emacsOverlay.url = "github:nix-community/emacs-overlay";
+    tree-grepper.url = "github:BrianHicks/tree-grepper";
   };
 
   outputs =
