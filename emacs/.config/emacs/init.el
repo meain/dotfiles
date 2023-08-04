@@ -4250,12 +4250,10 @@ Pass `CREATE' to create the alternate file if it does not exits."
   (evil-leader/set-key "e e" 'meain/find-alternate-file))
 
 ;; Splitting and joining list (https://github.com/AckslD/nvim-trevJ.lua)
-(use-package emacs
-  :after (evil-leader tree-sitter)
-  :commands (meain/split-join-args)
-  :config
-  (load-file "/home/meain/.config/emacs/tree-surgeon-split-join.el")
-  (evil-leader/set-key "H j" 'tree-surgeon-split-join))
+(use-package tree-surgeon
+  :load-path "/home/meain/dev/src/tree-surgeon"
+  :after (evil-leader)
+  :config (evil-leader/set-key "H j" 'tree-surgeon-split-join))
 
 ;; Screenshot Emacs frame
 (defvar meain/frameshot-directory "~/docs/Pictures/Screenshots/"
