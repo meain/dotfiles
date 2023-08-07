@@ -3838,6 +3838,7 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
   :elpaca t
   :commands (gptel)
   :config
+  (setq gptel-model "gpt4")
   (setq gptel-api-key (car (string-split
                             (shell-command-to-string "pass show openai/apikey 2>/dev/null") "\n"))))
 
