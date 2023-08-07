@@ -1812,11 +1812,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 Giving it a name so that I can target it in vertico mode and make it use buffer."
     (interactive "P")
     (cond
-     ((equal alternate nil) (progn
-                              ;; We usually want the previous .rest buffer
-                              (if (equal (buffer-name) "*HTTP Response*")
-                                  (previous-window-any-frame))
-                              (consult-imenu)))
+     ((equal alternate nil) (consult-imenu))
      ((equal alternate '(4)) (consult-eglot-symbols))
      ((equal alternate '(16)) (tree-jump-search))))
   (global-set-key (kbd "M-i") #'meain/imenu-or-eglot))
@@ -1848,6 +1844,12 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
   :config
   (setq imenu-auto-rescan t)
   (setq imenu-max-item-length 300)
+  (advice-add 'consult-imenu
+              :before
+              (lambda ()
+                ;; We want the previous .rest buffer if http response buffer
+                (if (equal (buffer-name) "*HTTP Response*")
+                    (previous-window-any-frame))))
   (global-set-key (kbd "M-i") 'consult-imenu))
 (use-package flimenu
   :elpaca t
