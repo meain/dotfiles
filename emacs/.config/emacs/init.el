@@ -280,7 +280,16 @@
 (setq show-paren-style 'parenthesis)
 
 ;; Keep files in sync with filesystem
+;; TODO: Use use-package
 (global-auto-revert-mode t)
+
+(defun meain/silence-auto-revert-errors (orig-fun &rest args)
+  "Silence errors from `auto-revert-buffers'.
+`ORIG-FUN' will be `auto-revert-buffer' and `ARGS' are args to it."
+  (ignore-errors
+    (apply orig-fun args)))
+(advice-add 'auto-revert-buffers :around #'meain/silence-auto-revert-errors)
+
 (setq auto-revert-interval 2)
 (setq auto-revert-check-vc-info t)
 (setq global-auto-revert-non-file-buffers t)
