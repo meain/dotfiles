@@ -2,11 +2,10 @@
 
 set -e
 
-unread="$(notmuch search tag:unread and tag:inbox and '-tag:nonotify' and '-tag:notified' and '-tag:github' | wc -l)"
-ghunread="$(notmuch search tag:unread and tag:inbox and '-tag:nonotify' and '-tag:notified' and 'tag:github' | wc -l)"
-todo="$(notmuch search tag:todo and tag:inbox | wc -l)"
+unread="$(notmuch search tag:important and tag:unread and tag:inbox and '-tag:notified' | wc -l)"
+todo="$(notmuch search tag:todo | wc -l)"
 
-printf "M%s:G%s:T%s" "$unread" "$ghunread" "$todo"
+printf "M%s:T%s" "$unread" "$todo"
 # [ "$unread" -ne 0 ] && printf "M%s" "$unread"
 # [ "$ghunread" -ne 0 ] && printf "G%s" "$ghunread"
 # [ "$todo" -ne 0 ] && printf "T%s" "$todo"
