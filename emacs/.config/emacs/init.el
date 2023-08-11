@@ -3268,6 +3268,21 @@ Pass universal args to run suite or project level tests."
   (define-key evil-normal-state-map (kbd "]F") (cons "goto-function-end" (lambda () (interactive) (progn (evil-textobj-tree-sitter-goto-textobj "function.outer" nil t) (reposition-window)))))
   (define-key evil-normal-state-map (kbd "[F") (cons "goto-function-end" (lambda () (interactive) (progn (evil-textobj-tree-sitter-goto-textobj "function.outer" t t) (reposition-window))))))
 
+;; Show context using tree-sitter
+(use-package treesitter-context
+  :elpaca (:type git :host github :repo "zbelial/treesitter-context.el")
+  :init
+  (use-package posframe-plus
+    :elpaca (:host github :type git :repo "zbelial/posframe-plus" ))
+  :config
+  (setq treesitter-context-idle-time 0.5)
+  (setq treesitter-context-show-context-always t)
+  (setq treesitter-context-frame-autohide-timeout 15)
+  (setq meain/treesitter-context-shown nil)
+
+  (require 'treesitter-context-utils)
+  (global-set-key (kbd "M-r") #'treesitter-context-toggle-show))
+
 (use-package combobulate
   :commands (combobulate)
   :elpaca (:repo "mickeynp/combobulate" :host github))
