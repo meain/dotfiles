@@ -2698,27 +2698,23 @@ Pass universal args to run suite or project level tests."
   (setq notmuch-message-headers-visible nil)
   (setq message-auto-save-directory "~/.local/share/mail/meain")
   (setq notmuch-saved-searches
-        '((:name "Mails" :query "((tag:inbox AND tag:imbox) OR (tag:inbox AND tag:github) OR (tag:inbox AND tag:work)) AND -tag:flagged" :key "J" :sort-order newest-first)
-          (:name "Imbox" :query "tag:imbox AND tag:inbox AND -tag:github AND -tag:flagged" :key "i" :sort-order newest-first)
-          (:name "WInbox" :query "tag:work and tag:inbox" :key "I" :sort-order newest-first)
-          (:name "Github" :query "tag:github AND tag:inbox" :key "h" :sort-order newest-first)
-          (:name "Meain" :query "tag:meain AND tag:inbox" :key "m" :sort-order newest-first)
-          (:name "Unread" :query "tag:unread AND tag:inbox AND -tag:python AND -tag:git AND -tag:newsletter AND -tag:jobhunt AND -tag:imbox AND -tag:work" :key "u" :sort-order newest-first)
-          (:name "Python" :query "tag:python AND tag:inbox AND -tag:work" :key "p" :sort-order newest-first)
-          (:name "Git" :query "tag:git AND tag:inbox AND -tag:work" :key "g" :sort-order newest-first)
-          (:name "Newsletter" :query "tag:newsletter AND tag:inbox AND -tag:work" :key "n" :sort-order newest-first)
-          (:name "Jobhunt" :query "tag:jobhunt AND tag:inbox AND -tag:work" :sort-order newest-first)
-          (:name "Known" :query "tag:known AND tag:inbox AND -tag:todo AND -tag:flagged AND -tag:work" :key "k" :sort-order newest-first)
-          (:name "Archiveable" :query "tag:bullshit AND tag:known AND tag:nonimportant AND tag:inbox AND -tag:work" :key "a" :sort-order newest-first)
-          (:name "Todo" :query "tag:inbox AND tag:todo AND -tag:work" :key "t" :sort-order oldest-first)
-          (:name "WTodo" :query "tag:inbox AND tag:todo AND tag:work" :key "T" :sort-order oldest-first)
-          (:name "Flagged" :query "tag:flagged AND -tag:work" :key "f")
-          (:name "WFlagged" :query "tag:flagged AND tag:work" :key "F")
-          (:name "Watching" :query "tag:inbox AND tag:watch AND -tag:work" :key "w" :sort-order oldest-first)
-          (:name "Read" :query "tag:inbox AND -tag:imbox AND -tag:newsletter AND -tag:python and -tag:unread AND -tag:jobhunt AND -tag:git AND -tag:todo AND -tag:flagged AND -tag:work" :key "r" :sort-order oldest-first)
-          (:name "WRead" :query "tag:inbox AND -tag:imbox AND -tag:newsletter AND -tag:python and -tag:unread AND -tag:jobhunt AND -tag:git AND -tag:todo AND -tag:flagged AND tag:work" :key "R" :sort-order oldest-first)
-          (:name "Sent" :query "tag:sent" :key "s" :sort-order newest-first)
-          (:name "Drafts" :query "tag:draft AND tag:inbox" :key "d")
+        '(
+          (:name "Important" :query "tag:important AND tag:inbox" :key "i" :sort-order newest-first)
+          (:name "Low priority" :query "tag:lowpri AND tag:inbox" :key "l" :sort-order newest-first)
+          (:name "Flagged" :query "tag:flagged" :key "f")
+          (:name "Todo" :query "tag:todo" :key "t")
+          (:name "Github" :query "tag:github AND tag:inbox" :key "h")
+
+          (:name "Alerts" :query "tag:alert AND tag:inbox" :key "a")
+          (:name "Updates" :query "tag:update AND tag:inbox" :key "u")
+
+          (:name "Newsletter" :query "tag:newsletter AND tag:inbox" :key "n")
+          (:name "Unnecessary" :query "tag:unnecessary AND tag:inbox" :key "N" :sort-order newest-first)
+
+          (:name "Untagged" :query "tag:untagged AND tag:inbox AND -tag:work" :key "U" :sort-order newest-first)
+          (:name "Work untagged" :query "tag:untagged AND tag:inbox AND tag:work" :key "W" :sort-order newest-first)
+
+          (:name "All Inbox" :query "tag:inbox" :key "B" :sort-order newest-first)
           (:name "All mail" :query "path:meain/** OR path:mail/**" :key "A" :sort-order newest-first)
           (:name "All work mail" :query "path:ic/**" :key "Z" :sort-order newest-first)))
 
@@ -3403,6 +3399,7 @@ Pass universal args to run suite or project level tests."
 (use-package 0x0
   :elpaca t
   :defer t
+  :disabled t
   :after evil-leader
   :commands (0x0-dwim 0x0-popup 0x0-upload-file 0x0-upload-text)
   :init (evil-leader/set-key "a 0" '0x0-dwim))
