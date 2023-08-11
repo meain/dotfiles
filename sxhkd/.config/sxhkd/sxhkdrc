@@ -78,8 +78,7 @@ super + alt + control + {_, shift} + p
 # mail
 super + alt + control + {_, shift} + u
       {\,mail-unread-notify, \
-      notmuch tag +notified tag:imbox and tag:unread && \
-      notmuch tag +notified tag:inbox and tag:work and tag:unread && \
+      notmuch tag +notified tag:important and tag:unread && \
       notify "All emails marked read"}
 
 # info
