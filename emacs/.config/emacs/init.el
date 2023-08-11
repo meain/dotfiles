@@ -2499,13 +2499,14 @@ Pass universal args to run suite or project level tests."
 (use-package jinja2-mode :elpaca t :defer t)
 (use-package config-general-mode :elpaca t :defer t :mode "/\\.env")
 (use-package vimrc-mode :elpaca t :defer t)
+(use-package edit-indirect :elpaca t)
 (use-package markdown-mode
   :elpaca t
   :defer t
+  :after (edit-indirect)
   :mode ("\\.md\\'" . gfm-mode)
   :config
   (setq markdown-url-compose-char '(8230 8943 35 9733 9875))
-  (use-package edit-indirect :elpaca t)
   (setq markdown-enable-html -1)
   (evil-define-key 'normal gfm-mode-map (kbd "<RET>") 'project-find-file)
   (evil-define-key 'normal gfm-mode-map (kbd "g d") 'markdown-do)
