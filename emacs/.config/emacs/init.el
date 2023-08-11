@@ -1638,7 +1638,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   :commands rg
   :after evil-leader
   :init
-  (evil-leader/set-key "F"
+  (evil-leader/set-key "f"
     (meain/with-alternate (consult-ripgrep) (call-interactively 'rg)))
   :config (setq rg-command-line-flags '("--hidden" "--follow")))
 
@@ -3420,19 +3420,19 @@ Pass universal args to run suite or project level tests."
   (setq harpoon-separate-by-branch nil)
   (set harpoon-project-package 'project)
   :init
-  (evil-leader/set-key "f F" 'harpoon-toggle-file)
-  (evil-leader/set-key "f r" 'harpoon-toggle-quick-menu)
-  (evil-leader/set-key "f c" 'harpoon-clear)
-  (evil-leader/set-key "f f" 'harpoon-add-file)
-  (evil-leader/set-key "f j" 'harpoon-go-to-1)
-  (evil-leader/set-key "f k" 'harpoon-go-to-2)
-  (evil-leader/set-key "f l" 'harpoon-go-to-3)
-  (evil-leader/set-key "f ;" 'harpoon-go-to-4)
-  (evil-leader/set-key "f h j" 'harpoon-go-to-5)
-  (evil-leader/set-key "f h k" 'harpoon-go-to-6)
-  (evil-leader/set-key "f h l" 'harpoon-go-to-7)
-  (evil-leader/set-key "f h ;" 'harpoon-go-to-8)
-  (evil-leader/set-key "f h f" 'harpoon-go-to-9))
+  (evil-leader/set-key "F F" 'harpoon-toggle-file)
+  (evil-leader/set-key "F r" 'harpoon-toggle-quick-menu)
+  (evil-leader/set-key "F c" 'harpoon-clear)
+  (evil-leader/set-key "F f" 'harpoon-add-file)
+  (evil-leader/set-key "F j" 'harpoon-go-to-1)
+  (evil-leader/set-key "F k" 'harpoon-go-to-2)
+  (evil-leader/set-key "F l" 'harpoon-go-to-3)
+  (evil-leader/set-key "F ;" 'harpoon-go-to-4)
+  (evil-leader/set-key "F h j" 'harpoon-go-to-5)
+  (evil-leader/set-key "F h k" 'harpoon-go-to-6)
+  (evil-leader/set-key "F h l" 'harpoon-go-to-7)
+  (evil-leader/set-key "F h ;" 'harpoon-go-to-8)
+  (evil-leader/set-key "F h f" 'harpoon-go-to-9))
 
 ;; Kinda like screensavers
 (use-package zone
