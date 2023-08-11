@@ -1467,6 +1467,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
           (xref-find-references buffer)
           (meain/imenu-or-eglot buffer)
           (tree-jump-search buffer)
+          (consult-tree-jump-search buffer) ;; TODO: does not work
           (consult-buffer flat)
           (t flat)))
   (setq vertico-multiform-categories
@@ -1831,10 +1832,15 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
 ;; Hacky symbol search using tree-sitter
 (use-package emacs
   ;; TODO: Lazy load tree-jump
+  :after (consult)
+  :commands (tree-jump-search consult-tree-jump-search tree-jump-xref-backend)
   :config
   (load-file "/home/meain/.config/emacs/tree-jump.el")
+  :init
   (add-to-list 'xref-backend-functions 'tree-jump-xref-backend)
-  (global-set-key (kbd "M-I") #'tree-jump-search))
+  (global-set-key (kbd "M-I")
+                  (meain/with-alternate (consult-tree-jump-search)
+                                        (tree-jump-search))))
 
 ;; Tagbar alternative
 (use-package imenu

@@ -24,6 +24,7 @@
 (require 'cl-seq)
 (require 'cl-generic)
 (require 'xref)
+(require 'consult)
 
 (defun tree-jump--get-definitions ()
   "Get a list of all the items available for tree-jump."
@@ -39,20 +40,53 @@
                 (choices (butlast (string-split symbols "\n"))))
       choices)))
 
+(defun tree-jump--goto-entry (entry)
+  "Navigate to the `ENTRY'."
+  (when-let* ((splits (string-split entry ":"))
+              (file (car splits))
+              (line (string-to-number (car (cdr splits))))
+              (column (string-to-number (car (cdr (cdr splits))))))
+    (when (file-exists-p file)
+      (find-file file)
+      (goto-char 0)
+      (forward-line (- line 1))
+      (forward-char (- column 1))
+      (reposition-window))))
+
 (defun tree-jump-search ()
   "Search for a symbol in the entire project."
   (interactive)
   (when-let* ((choices (tree-jump--get-definitions))
-              (choice (completing-read "Choose entry:" choices))
-              (splits (string-split choice ":"))
-              (file (car splits))
-              (line (string-to-number (car (cdr splits))))
-              (column (string-to-number (car (cdr (cdr splits))))))
-    (find-file file)
-    (goto-char 0)
-    (forward-line (- line 1))
-    (forward-char (- column 1))
-    (reposition-window)))
+              (choice (completing-read "Choose entry:" choices)))
+    (tree-jump--goto-entry choice)))
+
+(defun consult-tree-jump--lookup (selected &rest _)
+  "Lookup `SELECTED' candidate from consult."
+  (ignore-errors
+    (tree-jump--goto-entry selected)))
+
+(defun consult-tree-jump--state (_)
+  "State function for previewing consult item."
+  (lambda (action choice)
+    (if (and choice (eq action 'preview))
+        (tree-jump--goto-entry choice))))
+
+(defun consult-tree-jump-search (&optional initial)
+  "Search for a symbol in the entire project with live preview.
+Starts with `INITIAL' as the input if provided."
+  (interactive)
+  (when-let ((candidates (tree-jump--get-definitions)))
+    (consult--read
+     candidates
+     :prompt "Go to symbol:"
+     ;; :annotate (consult--line-prefix curr-line)
+     :sort nil
+     :require-match t
+     ;; :add-history (list (thing-at-point 'symbol) isearch-string)
+     ;; :history '(:input consult--line-history)
+     :lookup #'consult-tree-jump--lookup
+     ;; :initial (concat ":" (thing-at-point 'symbol))
+     :state (consult-tree-jump--state candidates))))
 
 (defun tree-jump--find-symbol (symbol mode)
   "Show symbols matching `SYMBOL'.
