@@ -2,7 +2,8 @@
 
 # set -e
 
-cd "$HOME/.config/emacs/straight/repos"
+cd "$HOME/.config/emacs/elpaca/repos" || exit 1
+
 gloc 'git fetch origin' .
 for folder in *;do
     pushd "$folder" > /dev/null
@@ -11,10 +12,10 @@ for folder in *;do
     count="$(git log master..origin/master 2>/dev/null |grep -c .)"
     if ! [ 0 = "$count" ]; then
         echo "### $folder ($count)"
-        git log $branch..origin/$branch --oneline |
+        git log "$branch"..origin/"$branch" --oneline |
             sed "s|\([a-z0-9]*\) \(.*\)$|\1 \2 [view]($gurl/commit/\1)|;s|^|- |"
         echo ""
     fi
     popd > /dev/null
-done > /tmp/straight-available-updates.md
-emacsclient -n /tmp/straight-available-updates.md
+done > /tmp/emacs-available-updates.md
+emacsclient -n /tmp/emacs-available-updates.md
