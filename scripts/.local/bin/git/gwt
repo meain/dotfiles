@@ -29,7 +29,7 @@ git worktree add "$dir" "$branch"
 # copy nix files
 [ ! -f "$dir/shell.nix" ] && [ -f shell.nix ] && cp shell.nix "$dir/shell.nix"
 [ ! -f "$dir/.envrc" ] && [ -f .envrc ] && cp .envrc "$dir/.envrc"
-[ ! -f "$dir/.dir-loclas.el" ] && [ -f .dir-loclas.el ] && cp .dir-loclas.el "$dir/.dir-loclas.el"
+[ ! -f "$dir/.dir-locals.el" ] && [ -f .dir-locals.el ] && cp .dir-locals.el "$dir/.dir-locals.el"
 
 echo Created new worktree at "$dir"
 # TODO: might have to be a func so that we can cd at the end
