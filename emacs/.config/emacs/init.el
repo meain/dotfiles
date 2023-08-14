@@ -797,7 +797,6 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   (setq dired-dwim-target t)
   ;; (setq dired-kill-when-opening-new-dired-buffer t)
   (define-key dired-mode-map (kbd "-") 'dired-up-directory)
-  (setq dired-omit-files "\\.DS_Store$\\|__pycache__$\\|.pytest_cache$\\|\\.mypy_cache$\\|\\.egg-info$")
   (add-hook 'dired-mode-hook 'dired-omit-mode)
   (add-hook 'dired-mode-hook 'hl-line-mode)
   (add-hook 'dired-mode-hook 'dired-hide-details-mode)
@@ -815,6 +814,10 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
                (exts (make-local-variable 'completion-ignored-extensions)))
       (dolist (item ignores) (add-to-list exts item))))
   (add-hook 'dired-mode-hook #'dired-dim-git-ignores))
+
+(use-package dired-x
+  :config
+  (setq dired-omit-files "\\.DS_Store$\\|__pycache__$\\|.pytest_cache$\\|\\.mypy_cache$\\|\\.egg-info$"))
 
 ;; Github like git info in dired
 (use-package dired-git-info
@@ -2031,7 +2034,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
   (setq undo-tree-auto-save-history t)
   (setq undo-tree-history-directory-alist '(("." . "~/.local/share/emacs/undo"))))
 
-;; Fancier tab managerment
+;; Fancier tab management
 (use-package tab-bar
   :after evil-leader
   :defer 3
@@ -2075,7 +2078,8 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
             (tab-close))
         (tab-new))))
   (defun meain/switch-tab-dwim (&optional chooser)
-    "Switch between available tabs.  Pass CLOSE as t to close the current tab if it is not the last one."
+    "Switch between available tabs.
+Pass `CHOOSER' as t to not automatically select the previous tab."
     (interactive "P")
     (let ((tabs (cl-remove-if (lambda (x)
                                 (equal x "scratch"))
@@ -2431,7 +2435,8 @@ Pass universal args to run suite or project level tests."
   :commands (meain/use-custom-src-directory)
   :config
   (defun meain/use-custom-src-directory (orig-fn &rest args)
-    "Use custom src directory as default directory instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
+    "Use custom src directory as default directory.
+Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
     (let ((default-directory
            (expand-file-name
             ;; custom-src-directory is supposed to come from .dir-locals.el
@@ -2553,10 +2558,12 @@ Pass universal args to run suite or project level tests."
   :commands (org-mode org-timer org-timer-set-timer)
   :mode "/\\.org\\'"
   :config
+  (use-package org-timer
+    :config
+    (setq org-clock-sound "~/.config/datafiles/sounds/timer.mp3"))
   (setq org-agenda-files (list "~/.local/share/org/master.org"))
   (setq org-log-done 'time)
   (setq org-todo-keywords '((sequence "TODO" "|" "DONE" "CANCELLED")))
-  (setq org-clock-sound "~/.config/datafiles/sounds/timer.mp3")
   (global-set-key (kbd "M-f j") 'org-agenda-list)
   (evil-define-key 'normal org-mode-map (kbd "M-l") 'meain/move-swap-right)
   (evil-define-key 'normal org-mode-map (kbd "M-h") 'meain/move-swap-left)
@@ -2753,8 +2760,10 @@ Pass universal args to run suite or project level tests."
   (add-hook 'gnus-summary-mode-hook 'hl-line-mode))
 
 ;; elfeed
+(use-package avl-tree)
 (use-package elfeed
   :elpaca t
+  :after (avl-tree)
   :commands (elfeed elfeed-update)
   :after evil-leader
   :init
@@ -3000,7 +3009,7 @@ Pass universal args to run suite or project level tests."
   (setq vc-ignore-dir-regexp (format "%s\\|%s" vc-ignore-dir-regexp tramp-file-name-regexp))
   (setq tramp-verbose 3)
   (defun meain/tramp-open ()
-    "Opern dired in a server by selecting a host via autocomplete."
+    "Open dired in a server by selecting a host via autocomplete."
     (interactive)
     (dired (concatenate 'string "/ssh:" (meain/ssh-host-picker) ":"))))
 
