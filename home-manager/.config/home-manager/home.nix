@@ -55,6 +55,7 @@ in
     pkgs.lf # better ranger alternative
     pkgs.diff-so-fancy # really good diff
     pkgs.icdiff # simple colorful diff replacement
+    pkgs.difftastic # syntax aware diff (useful for conflicts)
     pkgs.ctags # code tag stuff
     # pkgs.pass # password management (not using nix version as we cannot make it use nix gpg-agent and we need both to use same version)
     # pkgs.gnupg # gpg
