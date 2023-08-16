@@ -12,7 +12,7 @@ if echo "$url" | grep -q '^https://www.youtube.com'; then
     creator="$(echo "$title_and_creator" | tail -n 1)"
     printf "##### %s\nproducer:: [[YT:%s]]\ntype:: [[video]]\nlink:: %s\ntags::" "$title" "$creator" "$url"
 elif echo "$url" | grep -q '^https://github.com'; then
-    echo "$url" | head -n1 | sed 's|github.com|api.github.com/repos|' | xargs curl >/tmp/gh-repo-page
+    echo "$url" | head -n1 | sed 's|github.com|api.github.com/repos|' | xargs curl -s >/tmp/gh-repo-page
     name="$(jq -r '.name' /tmp/gh-repo-page)"
     desc="$(jq -r '.description' /tmp/gh-repo-page)"
     creator="$(jq -r '.owner.login' /tmp/gh-repo-page)"
