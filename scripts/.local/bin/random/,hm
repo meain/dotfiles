@@ -13,6 +13,7 @@ if [ "$1" = update ]; then
     nix flake metadata | grep '^.───' |
         sed -r "s/\x1B\[(([0-9]{1,2})?(;)?([0-9]{1,2})?)?[m,K,H,f,J]//g" | # remove ANSII escape codes
         sed 's/^....//' | cut -d: -f1 |
+        grep -v '^pinned-' | # don't show pinned versions
         fzf -m | xargs -n1 nix flake lock --update-input
 elif [ "$1" = lock ]; then
     cd "$HOME/.dotfiles/home-manager/.config/home-manager"
