@@ -2,11 +2,11 @@
   "nodes": {
     "bleeding": {
       "locked": {
-        "lastModified": 1691735843,
-        "narHash": "sha256-a6XOnI91foCE7gPMTHnF3O7XIONpDSTLJ0GAEnOVYYo=",
+        "lastModified": 1692184643,
+        "narHash": "sha256-SaZ9XCtZoL1JNG8lfw5EF6SKV4EzUvLpdhsUbd6uycE=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "11717e91b4c5e62d5d67453ea4cde8c368b70439",
+        "rev": "31c3909ef9012e97a895578e479aa546b8a3cc7a",
         "type": "github"
       },
       "original": {
@@ -23,11 +23,11 @@
         "nixpkgs-stable": "nixpkgs-stable"
       },
       "locked": {
-        "lastModified": 1691722951,
-        "narHash": "sha256-V6ERc3gVbITjNDljQsfFRz/s68717aPjK+e94uZbLvQ=",
+        "lastModified": 1692181692,
+        "narHash": "sha256-wpLsGJb2zEUpQ5SqZSeMCDMg8nqlsw9/bP9IcpDyMds=",
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "f6a346762491a4655c3b43da5f2f154b57237a44",
+        "rev": "50bd61195c8f9ddbaa862a2fcf4f40f82769a5ba",
         "type": "github"
       },
       "original": {
@@ -76,11 +76,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1691672736,
-        "narHash": "sha256-HNPA/dKHerA0p4OsToEcW/DtTSXBcK5gFRsy/yPgV/Y=",
+        "lastModified": 1692131549,
+        "narHash": "sha256-MFjI8NL63/6HjMZpvJgnB/Pgg2dht22t45jOYtipZig=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "6e1eff9aac0e8d84bda7f2d60ba6108eea9b7e79",
+        "rev": "75cfe974e2ca05a61b66768674032b4c079e55d4",
         "type": "github"
       },
       "original": {
@@ -113,11 +113,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1691654369,
-        "narHash": "sha256-gSILTEx1jRaJjwZxRlnu3ZwMn1FVNk80qlwiCX8kmpo=",
+        "lastModified": 1692084312,
+        "narHash": "sha256-Za++qKVK6ovjNL9poQZtLKRM/re663pxzbJ+9M4Pgwg=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "ce5e4a6ef2e59d89a971bc434ca8ca222b9c7f5e",
+        "rev": "8353344d3236d3fda429bb471c1ee008857d3b7c",
         "type": "github"
       },
       "original": {
@@ -129,11 +129,11 @@
     },
     "nixpkgs-stable": {
       "locked": {
-        "lastModified": 1691592289,
-        "narHash": "sha256-Lqpw7lrXlLkYra33tp57ms8tZ0StWhbcl80vk4D90F8=",
+        "lastModified": 1692134936,
+        "narHash": "sha256-Z68O969cioC6I3k/AFBxsuEwpJwt4l9fzwuAMUhCCs0=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "9034b46dc4c7596a87ab837bb8a07ef2d887e8c7",
+        "rev": "bfd953b2c6de4f550f75461bcc5768b6f966be10",
         "type": "github"
       },
       "original": {
@@ -145,11 +145,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1691735843,
-        "narHash": "sha256-a6XOnI91foCE7gPMTHnF3O7XIONpDSTLJ0GAEnOVYYo=",
+        "lastModified": 1692184643,
+        "narHash": "sha256-SaZ9XCtZoL1JNG8lfw5EF6SKV4EzUvLpdhsUbd6uycE=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "11717e91b4c5e62d5d67453ea4cde8c368b70439",
+        "rev": "31c3909ef9012e97a895578e479aa546b8a3cc7a",
         "type": "github"
       },
       "original": {
@@ -177,11 +177,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1691731336,
-        "narHash": "sha256-u79J3EmFJl/JCcOI5RyAWL+JMZYTimKEjfg/s5GpiYk=",
+        "lastModified": 1692182715,
+        "narHash": "sha256-uwLmGEQNsXJX8QHhVL+DGGk7okmmNH5ONSA99PLf+2w=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "895586de92f803296b7c6a7599acb5f90ea4d9f4",
+        "rev": "204dc2bf0eb03a607902876dec266516c44c4bfa",
         "type": "github"
       },
       "original": {
@@ -288,11 +288,11 @@
         "tree-sitter-typescript": "tree-sitter-typescript"
       },
       "locked": {
-        "lastModified": 1691488988,
-        "narHash": "sha256-A7Eb5OMYJ+zqdi8pWVbH0b3OKqLEbxivkmu6qa/fp/I=",
+        "lastModified": 1692182901,
+        "narHash": "sha256-Hw1BxWYgFHSIApPGYPF3fcz0OJFEo9W0m3RMT925wh0=",
         "owner": "BrianHicks",
         "repo": "tree-grepper",
-        "rev": "49431e6616c1718f2fc1d95dd25df7090110e0fe",
+        "rev": "52e18737fb93d40177c3a6e565d2577a4744b6aa",
         "type": "github"
       },
       "original": {
