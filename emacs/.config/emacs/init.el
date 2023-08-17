@@ -47,6 +47,9 @@
 
 ;; Basic setup
 (setq user-mail-address "mail@meain.io" user-full-name "Abin Simon")
+(defvar openai-api-key
+  (string-trim (shell-command-to-string "pass show openai/apikey 2>/dev/null") "\n" "\n")
+  "OpenAI API key.")
 
 ;; Setup elpaca
 (defvar elpaca-installer-version 0.5)
@@ -3867,17 +3870,22 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
                        c3po-rewrite-text c3po-rewrite-and-replace
                        c3po-explain-code c3po-summarize)
   :config
-  (setq c3po-api-key (car (string-split
-                           (shell-command-to-string "pass show openai/apikey 2>/dev/null") "\n"))))
+  (setq c3po-api-key openai-api-key))
 
 ;; OpenAI GPT-3 interaction
 (use-package gptel
   :elpaca t
   :commands (gptel)
   :config
-  (setq gptel-model "gpt4")
-  (setq gptel-api-key (car (string-split
-                            (shell-command-to-string "pass show openai/apikey 2>/dev/null") "\n"))))
+  (setq gptel-model "gpt-4")
+  (setq gptel-api-key openai-api-key))
+
+;; Chatgpt shell
+(use-package chatgpt-shell
+  :elpaca t
+  :config
+  (setq chatgpt-shell-model-version "gpt-4")
+  (setq chatgpt-shell-openai-key openai-api-key))
 
 ;; Buffer/Frame/Window keybinds
 (use-package emacs
