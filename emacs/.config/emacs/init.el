@@ -463,9 +463,10 @@ Pass ORIGINAL and ALTERNATE options."
 ;; Eshell config
 (use-package eshell
   :init (global-set-key (kbd "M-;") 'meain/eshell-toggle)
-  :after (vc)
+  :after (vc copilot)
   :commands (meain/eshell-toggle eshell)
   :config
+  (add-hook 'eshell-mode-hook (lambda () (copilot-mode -1)))
   (defun meain/eshell-name ()
     "Get the name of the eshell based on project info."
     (format "*popup-eshell-%s*"
@@ -812,7 +813,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   ;; TODO: make it work with directories
   (defun dired-dim-git-ignores ()
     "Dim out .gitignore contents"
-    (when-let ((_ (require 'vc))
+    (when-let (((require 'vc))
                (ignores (magit-ignored-files))
                (exts (make-local-variable 'completion-ignored-extensions)))
       (dolist (item ignores) (add-to-list exts item))))
@@ -3303,11 +3304,11 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   (define-key evil-normal-state-map (kbd "[F") (cons "goto-function-end" (lambda () (interactive) (progn (evil-textobj-tree-sitter-goto-textobj "function.outer" t t) (reposition-window))))))
 
 ;; Show context using tree-sitter
+(use-package posframe-plus
+  :elpaca (:host github :type git :repo "zbelial/posframe-plus" ))
 (use-package treesitter-context
+  :after (tree-sitter posframe-plus)
   :elpaca (:type git :host github :repo "zbelial/treesitter-context.el")
-  :init
-  (use-package posframe-plus
-    :elpaca (:host github :type git :repo "zbelial/posframe-plus" ))
   :config
   (setq treesitter-context-idle-time 0.5)
   (setq treesitter-context-show-context-always t)
