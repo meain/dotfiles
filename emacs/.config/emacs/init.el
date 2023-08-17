@@ -2728,6 +2728,31 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
           (:name "All mail" :query "path:meain/** OR path:mail/**" :key "A" :sort-order newest-first)
           (:name "All work mail" :query "path:ic/**" :key "Z" :sort-order newest-first)))
 
+  ;; Updating mailtag scripts
+  (defun meain/update-mailtag-entry ()
+    "Update the mailtag entry in current line to the tags from previous line."
+    (interactive)
+
+    ;; Get prev line format
+    (next-line -1)
+    (beginning-of-line)
+    (kill-line)
+    (yank)
+
+    ;; Get current line
+    (next-line)
+    (beginning-of-line)
+    (kill-line)
+
+    ;; Update line with prev format
+    (yank 2)
+    (beginning-of-line)
+    (search-forward ":")
+    (kill-line)
+    (yank 2)
+    (insert "'"))
+
+
   ;; sending emails
   (setq mail-signature t)
   (setq mail-signature-file "~/.config/datafiles/mailsignature")
