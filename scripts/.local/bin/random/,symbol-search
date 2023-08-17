@@ -7,7 +7,8 @@ mode="$1"
 
 GO_FUNCTION='(function_declaration name: (identifier) @function)
             (method_declaration name: (field_identifier) @function)'
-GO_TYPE='(type_declaration (type_spec name: (type_identifier) @type))'
+GO_TYPE='(type_declaration (type_spec name: (type_identifier) @type))
+         (var_spec name: (identifier) @type)'
 GO_CALLS='(call_expression (selector_expression field: (field_identifier) @call))'
 
 RUST_FUNCTION="(function_item name: (identifier) @function)"
