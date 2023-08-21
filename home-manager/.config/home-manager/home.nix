@@ -315,7 +315,6 @@ in
     pkgs.iamb # matrix chat client
     ppkgs.chatgpt-cli # chatgpt cli
     pkgs.shell_gpt # another chatgpt cli
-    pkgs.dura # git based local backups
 
     # gnome tweaking
     # pkgs.gnome3.dconf-editor # change dconf settings
@@ -378,7 +377,6 @@ in
   systemd.user.services.logseq = utils.ss-simple { cmd = "/var/lib/flatpak/app/com.logseq.Logseq/current/active/export/bin/com.logseq.Logseq"; wait = 1; };
   systemd.user.services.floatingterm = utils.ss-simple { cmd = "sakura --name floatingterm -x \"tt floating\""; wait = 1; };
   systemd.user.services.mail-watcher = utils.ss-simple { cmd = "find /home/meain/.local/share/mail/.notmuch/xapian|entr -n ,shellout-update"; wait = 5; };
-  systemd.user.services.dura = utils.ss-simple { cmd = "${pkgs.dura}/bin/dura serve"; wait = 3; };
 
   # code/note sync
   systemd.user.services.note-sync = utils.ss-git-sync { dir = "/home/meain/.local/share/notes"; };
