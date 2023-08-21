@@ -16,10 +16,9 @@ alias chmox='chmod +x'
 
 # ls
 alias ls='lsd'
-alias ll='ls -Alh'
-alias llg='ls -Alh --group-directories-first'
 alias l='ls'
 alias la='ls -A'
+alias ll='ls -Alh'
 
 # random
 alias j=z
