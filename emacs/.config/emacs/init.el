@@ -1713,7 +1713,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
   :init
   (add-hook 'go-mode-hook 'apheleia-mode)
-  (add-hook 'go-mode-hook 'apheleia-mode)
+  (add-hook 'go-ts-mode-hook 'apheleia-mode)
   (define-key evil-normal-state-map (kbd ",,") #'meain/format-buffer))
 
 ;; Xref customization
@@ -2126,6 +2126,7 @@ Pass `CHOOSER' as t to not automatically select the previous tab."
 
 (use-package indent-guide
   :elpaca t
+  :after (evil-leader)
   :commands (indent-guide-global-mode indent-guide-mode)
   :init
   (setq indent-guide-delay nil)
@@ -2792,9 +2793,8 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 (use-package avl-tree)
 (use-package elfeed
   :elpaca t
-  :after (avl-tree)
   :commands (elfeed elfeed-update)
-  :after evil-leader
+  :after (avl-tree evil-leader)
   :init
   ;; first run after 1 hour
   (run-at-time "1 hour" (* 6 60 60) (lambda () (elfeed-update) (elfeed-db-save)))
@@ -3309,13 +3309,15 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 (use-package treesitter-context
   :after (tree-sitter posframe-plus)
   :elpaca (:type git :host github :repo "zbelial/treesitter-context.el")
+  :commands (treesitter-context-toggle-show)
   :config
   (setq treesitter-context-idle-time 0.5)
   (setq treesitter-context-show-context-always t)
   (setq treesitter-context-frame-autohide-timeout 15)
   (setq meain/treesitter-context-shown nil)
 
-  (require 'treesitter-context-utils)
+  (require 'treesitter-context-utils) ;; for `treesitter-context-toggle-show'
+  :init
   (global-set-key (kbd "M-r") #'treesitter-context-toggle-show))
 
 (use-package combobulate
