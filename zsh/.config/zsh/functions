@@ -213,7 +213,7 @@ clear() (
 hashdir() {
 	[ -z "$1" ] && echo "Pass hash to use for dir" && return 1
 	hash -d "$1"="$(pwd)"
-	echo hash -d "$1"=\""$(pwd)"\" >>~/.local/share/zsh/.zsh_dir_hashes
+	echo hash -d "$1"=\""$(pwd)"\" >> "$HOME/.local/share/zsh/.zsh_dir_hashes"
 }
 
 er() {
