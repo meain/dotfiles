@@ -1,8 +1,8 @@
 # fonts (set-frame-font  "Anka/Coder 10")
 { pkgs, spkgs }: [
   # spkgs.iosevka
-  pkgs.iosevka-comfy.comfy-wide-motion
-  pkgs.iosevka-comfy.comfy-motion
+  # pkgs.iosevka-comfy.comfy-wide-motion
+  # pkgs.iosevka-comfy.comfy-motion
   # pkgs.hermit
   pkgs.agave
   pkgs.inconsolata

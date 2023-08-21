@@ -218,7 +218,7 @@ in
     pkgs.nodePackages.jsonlint # json linting
     pkgs.nodePackages.markdownlint-cli # markdown linter
     pkgs.vale # prose lint
-    pkgs.hadolint # Dockerfile lint
+    # pkgs.hadolint # Dockerfile lint
     pkgs.sqls # lsp server for sql
     pkgs.sqlfluff # sql linter
     pkgs.python39Packages.sqlparse # sqlformat
