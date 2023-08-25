@@ -1990,6 +1990,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
 (use-package smerge-mode
   :after (evil evil-leader)
   :config
+  (evil-leader/set-key "gmr" 'smerge-refine)
   (evil-leader/set-key "gmn" 'smerge-next)
   (evil-leader/set-key "gmp" 'smerge-prev)
   (evil-leader/set-key "gmu" 'smerge-keep-upper)
