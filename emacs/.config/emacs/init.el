@@ -1960,15 +1960,17 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
   (defun meain/git-how-was-it ()
     (interactive)
     (let* ((filepath (magit-file-relative-name))
-          (filename (file-name-nondirectory (magit-file-relative-name)))
-          (mm major-mode)
-          (branch (completing-read "Branch: " (magit-list-local-branch-names)))
-          (buffer (get-buffer-create (format "*git-how-was-it %s:%s*" branch filename))))
+           (filename (file-name-nondirectory (magit-file-relative-name)))
+           (line-no (line-number-at-pos))
+           (mm major-mode)
+           (branch (completing-read "Branch: " (magit-list-local-branch-names)))
+           (buffer (get-buffer-create (format "*git-how-was-it %s:%s*" branch filename))))
       (message (concat "git show " branch ":" filepath))
       (other-window 1)
       (switch-to-buffer buffer)
       (erase-buffer)
       (insert (shell-command-to-string (concat "git show " branch ":" filepath)))
+      (goto-line line-no) ;; will be different, but just a start
       (funcall mm))))
 
 ;; Magit forge
