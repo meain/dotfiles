@@ -1,9 +1,15 @@
 #!/bin/sh
 
-# Get unread emails
+show() {
+    name="$1" && shift
+    mails="$(notmuch search "$@" |
+        sed 's|\(^[^ ]*\) [^]]*\]|\1|' |
+        sed 's/([^(]*)$//;s/^\ */- /')"
+    if [ -n "$mails" ]; then
+        echo "[$name]
+$mails"
+    fi
+}
 
-inbox="$(notmuch search tag:important and tag:unread and tag:inbox and '-tag:notified' |
-    sed 's|\(^[^ ]*\) [^]]*\]|\1|' | sed 's/([^(]*)$//;s/^\ */- /')"
-if echo "$inbox" | grep -q .; then
-    echo "$inbox"
-fi
+show INBOX tag:important and tag:unread and tag:inbox and '-tag:notified'
+show TODO tag:todo

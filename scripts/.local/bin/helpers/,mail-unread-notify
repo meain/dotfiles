@@ -10,4 +10,4 @@ notiresp="$(,mail-unread | cut -d' ' -f3- |
 	xargs -0 -I{} dunstify -A "read,Mark all read" "Unread emails" "{}")"
 
 [ "$notiresp" == "read" ] && notify "Marking all emails as read" &&
-	notmuch tag +notified tag:imbox and tag:unread
+	notmuch tag +notified tag:important and tag:unread and tag:inbox
