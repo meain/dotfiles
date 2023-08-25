@@ -706,22 +706,64 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
     (if (string-prefix-p "finished" string)
         (face-remap-add-relative 'default 'diff-hl-insert)
       (face-remap-add-relative 'default 'diff-hl-delete)))
-  (add-to-list 'compilation-finish-functions 'meain/compilation-colorcode))
+  (add-to-list 'compilation-finish-functions 'meain/compilation-colorcode)
+  :init
+  (evil-leader/set-key "r"
+    (meain/with-alternate
+     (call-interactively 'recompile)
+     (call-interactively 'compile))))
 
-;; TODO: Alternateive - https://github.com/mohkale/compile-multi
-(use-package multi-compile
+(use-package compile-multi
   :elpaca t
   :defer t
   :after (compile evil-leader)
-  :commands (meain/recompile-or-compile)
+  :commands (compile-multi)
   :config
-  (defun meain/recompile-or-compile (&optional arg)
-    "Compile or recompile based on universal `ARG'."
-    (interactive "P")
-    (if arg
-        (call-interactively 'multi-compile-run)
-      (compile compile-command t)))
-  :init (evil-leader/set-key "r" 'meain/recompile-or-compile))
+
+  ;; (setq compile-multi-config '())
+  (defun meain/compile-multi-mscripts-targets ()
+    "Targets from mscripts"
+    (let ((mscripts-dir (expand-file-name (concat (project-root (project-current)) "/.mscripts"))))
+      (message "init.el:728 mscripts-dir: %s" mscripts-dir)
+      (if (file-exists-p mscripts-dir)
+          (mapcar (lambda (x)
+                    (cons (concat "mscripts:" (file-name-base x))
+                          (concat ".mscripts/" (file-name-base x))))
+                  (remove-if
+                   (lambda (x) (file-directory-p (concat ".mscripts/" x)))
+                   (directory-files mscripts-dir t "^[^\.]"))))))
+
+  (push `((file-directory-p (concat (project-root (project-current)) "/.mscripts"))
+          ,#'meain/compile-multi-mscripts-targets)
+        compile-multi-config)
+
+  (setq compile-multi-default-directory
+        (lambda ()
+          (if (boundp 'custom-src-directory)
+              custom-src-directory
+            default-directory)))
+
+  (push '((file-exists-p "Makefile")
+          ("make:build" . "make build")
+          ("make:test" . "make test")
+          ("make:all" . "make all"))
+        compile-multi-config)
+
+  (push '((file-exists-p "go.mod")
+          ("go:run" . "go run ./...")
+          ("go:build" . "go build ./...")
+          ("go:build-tests" . "go test ./... -run xxxxx")
+          ("go:test" . "go test ./..."))
+        compile-multi-config)
+
+  (defun meian/byte-compile-this-file ()
+    "`byte-compile' current file."
+    (byte-compile-file (buffer-file-name)))
+  (push `(emacs-lisp-mode
+          ("emacs:bytecompile" . ,#'meain/byte-compile-this-file))
+        compile-multi-config)
+
+  :init (evil-leader/set-key "R" 'compile-multi))
 
 ;; Simplify how Async Shell Command buffers get displayed
 ;; (add-to-list 'display-buffer-alist
