@@ -1794,8 +1794,8 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   (add-to-list 'eglot-server-programs '(python-mode . ("pylsp")))
   (add-to-list 'eglot-server-programs '(nix-mode . ("rnix-lsp")))
   (setq-default eglot-workspace-configuration
-                '((:json.schemas . [((:fileMatch . ["package.json"]) (:url . "https://json.schemastore.org/package.json"))])
-                  (:gopls . ((staticcheck . t)))))
+                ;; (:gopls . ((staticcheck . t))) ;; Huge mem usage penalty
+                '((:json.schemas . [((:fileMatch . ["package.json"]) (:url . "https://json.schemastore.org/package.json"))])))
   (add-to-list 'display-buffer-alist
                '("\\*sqls\\*"
                  (display-buffer-reuse-window display-buffer-at-bottom)
