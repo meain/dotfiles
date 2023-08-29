@@ -594,7 +594,7 @@ Pass ORIGINAL and ALTERNATE options."
         (delete-region (point) (save-excursion (end-of-line 2) (point)))
         (insert (format ";; Time is %s. You have %s unread mails and %s buffers.\n;; %s"
                         (format-time-string "%l %p")
-                        (car (split-string (shell-command-to-string ",mail-unread|wc -l") "\n"))
+                        (car (split-string (shell-command-to-string ",mail-unread notodo|wc -l") "\n"))
                         (cl-count-if (lambda (b)
                                        (or (buffer-file-name b)
                                            (not (string-match "^ " (buffer-name b)))))
