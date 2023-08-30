@@ -776,6 +776,18 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
                (reusable-frames . visible)
                (window-height . 0.1)))
 
+;; Code coverage in buffer
+;; To get coverage, run `go test -coverprofile=coverage.out ./...`
+;; and then convert this to lcov using
+;; gcov2lcov -infile coverage.out -outfile coverage.lcov -use-absolute-source-paths
+;; Now you can load this into coverlay
+(use-package coverlay
+  :elpaca t
+  :config
+  (setq coverlay:tested-line-background-color "#C9F3D2")
+  (setq coverlay:untested-line-background-color "#F8CED3")
+  (setq coverlay:mark-tested-lines nil))
+
 ;;; [OTHER PACKAGES] =============================================
 
 ;; project
