@@ -4343,6 +4343,10 @@ Pass THING-TO-POPUP as the thing to popup."
   (funcall thing-to-popup))
 
 ;; Patterns for replacing filenames with (builtin option: find-sibling-file)
+;; Sticking with custom version as we have an option to create the file if it does not exist
+;; Example for find-sibling-file:
+;; (cl-pushnew '("\\([^/]+\\)\\.el\\'" "\\1-test.el") find-sibling-rules :test #'equal)
+;; (cl-pushnew '("\\([^/]+\\)-test\\.el\\'" "\\1.el") find-sibling-rules :test #'equal)
 (use-package emacs
   :after evil-leader
   :commands (meain/find-alternate-file)
