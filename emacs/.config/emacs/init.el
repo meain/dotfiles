@@ -687,6 +687,8 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   :commands (compile recompile)
   :after (evil)
   :config
+  (setq compilation-always-kill t)
+  (setq compilation-ask-about-save nil)
   (setq compilation-scroll-output nil)
   (defun meain/toggle-compilation-scroll-output ()
     "Toggle `compilation-scroll-output'."
