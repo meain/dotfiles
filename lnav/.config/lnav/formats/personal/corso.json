@@ -1,0 +1,43 @@
+{
+    "$schema": "https://lnav.org/schemas/format-v1.schema.json",
+    "corso" : {
+        "title" : "Corso Log Format",
+        "description" : "Log format used by corso.",
+        "url" : "http://github.com/alcionai/corso",
+        "regex" : {
+            "basic" : {
+                "pattern" : "^(?<timestamp>[0-9:ZT.+-]*) *(?<level>[A-Z]*) *(?<file>[^:]*):(?<line>[0-9]*) *(?<body>[^{]+)(?<content>({.+})?)$"
+            }
+        },
+        "level-field" : "level",
+        "level" : {
+            "error" : "ERROR",
+            "info" : "INFO",
+            "debug" : "DEBUG",
+            "warning" : "WARNING"
+        },
+        "value" : {
+            "file" : {
+                "kind" : "string",
+                "identifier" : true
+            },
+            "line_no" : {
+                "kind" : "integer",
+                "identifier" : true
+            },
+            "body" : {
+                "kind" : "string",
+                "identifier" : true
+            },
+            "content" : {
+                "kind" : "json",
+                "identifier" : true
+            }
+        },
+        "sample" : [
+            {
+                "line" : "2023-06-01T15:51:46.303+0530    INFO    cli/cli.go:98   cli command     {\"command\": \"corso backup list sharepoint\", \"flags\": [\"hide-progress\"], \"version\": \"dev-v0.8.0\"}"
+	    }
+        ]
+    }
+}
