@@ -2701,19 +2701,8 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 ;;; [EXTRA PLUGINS] =================================================
 
 (use-package gud
-  :after (evil hydra)
+  :after (evil)
   :init
-  (defhydra hydra-gud ()
-    "gud"
-    ("n" gud-next "next")
-    ("c" gud-cont "continue")
-    ("r" 'gud-reset "reset")
-    ("b" 'gud-break "break")
-    ("s" 'gud-step "step")
-    ("u" 'gud-up "up")
-    ("g" 'gud-until "go till"))
-
-  (define-key evil-normal-state-map (kbd "<SPC> d d") 'hydra-gud/body)
   (define-key evil-normal-state-map (kbd "<SPC> d r") 'gud-reset)
   (define-key evil-normal-state-map (kbd "<SPC> d b") 'gud-break)
   (define-key evil-normal-state-map (kbd "<SPC> d c") 'gud-cont)
@@ -2725,6 +2714,22 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 (use-package hydra
   :elpaca t
   :commands (defhydra))
+
+(use-package emacs
+  :after (evil hydra gud)
+  :commands (hydra-gud/body)
+  :init
+  (defhydra hydra-gud ()
+    "gud"
+    ("n" gud-next "next")
+    ("c" gud-cont "continue")
+    ("r" 'gud-reset "reset")
+    ("b" 'gud-break "break")
+    ("s" 'gud-step "step")
+    ("u" 'gud-up "up")
+    ("g" 'gud-until "go till"))
+
+  (define-key evil-normal-state-map (kbd "<SPC> d d") 'hydra-gud/body))
 
 ;; Dashboard
 (use-package dashboard
