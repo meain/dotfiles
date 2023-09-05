@@ -13,7 +13,7 @@ opt="$1"
 journal() {
     entry="$*"
     [ -z "$1" ] && printf "Entry: " && read -r entry
-    printf "\n- **%s** %s" "$(date '+%H:%M')" "$entry" >>"$LOGSEQ_DIR/journals/$(date '+%Y_%m_%d').md"
+    printf "\n- **%s** %s #jrnl" "$(date '+%H:%M')" "$entry" >>"$LOGSEQ_DIR/journals/$(date '+%Y_%m_%d').md"
 }
 
 case "$1" in
