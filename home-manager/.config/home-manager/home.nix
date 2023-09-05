@@ -67,6 +67,7 @@ in
     pkgs.tmux # terminal multiplexer
     pkgs.aspell # spell checker
     pkgs.mpvc # mpv remote control  # not available on macos
+    pkgs.playerctl # control any sort of audio playback (mpris cli)
     spkgs.msmtp # smtp client
     pkgs.android-tools # adb and friends  # not available for macos
     # pkgs.restic # backup
@@ -252,6 +253,7 @@ in
     # pkgs.awscli # manage aws
     # pkgs.google-cloud-sdk # manage google cloud
     # pkgs.lens # kubernetes viewer
+    pkgs.qpdf # for zlib-flate
 
     # optional
     # pkgs.gdu # disk usage viewer tui (alt: ncdu)
