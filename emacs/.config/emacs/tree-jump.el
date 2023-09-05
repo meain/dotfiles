@@ -79,6 +79,7 @@ Starts with `INITIAL' as the input if provided."
     (consult--read
      candidates
      :prompt "Go to symbol:"
+     :category 'consult-location
      ;; :annotate (consult--line-prefix curr-line)
      :sort nil
      :require-match t
