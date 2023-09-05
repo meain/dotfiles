@@ -1896,10 +1896,10 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
 ;; Peek into files/definitions without opening them
 (use-package peek
   :elpaca (:host github :repo "Ziqi-Yang/peek")
-  :commands (peek-overlay-dwim peek-xref-definition-dwim)
+  :commands (peek-overlay-dwim peek-xref-definition)
   :init
-  (define-key evil-normal-state-map (kbd "g l") 'peek-xref-definition-dwim)
-  (define-key evil-normal-state-map (kbd "g L") 'peek-overlay-dwim))
+  (define-key evil-normal-state-map (kbd "g L") 'peek-xref-definition)
+  (define-key evil-normal-state-map (kbd "g l") 'peek-overlay-dwim))
 
 ;; Hacky symbol search using tree-sitter
 (use-package emacs
