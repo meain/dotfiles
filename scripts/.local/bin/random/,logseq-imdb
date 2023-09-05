@@ -20,4 +20,4 @@ jq -r '.d[] | select(.id == "'"$id"'") | .i.imageUrl' <"$tfile" |
 
 jq -r '.d[] | select(.id == "'"$id"'") | "[\(.l)](https://www.imdb.com/title/\(.id)/)\nkind:: [[\(.q)]]\nlanguage:: [[English]]\nActors:: \(.s)\nrating:: \nposter:: ![]('"$lpath"'){:height 100 :width 100}"' <"$tfile" |
     sed -E 's|\[\[feature\]\]|[[Movie]]|' |
-    tee /dev/stderr | pbcopy
+    tee /dev/stderr | head -c-1 | pbcopy
