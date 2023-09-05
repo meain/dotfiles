@@ -3716,6 +3716,9 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
     (delete-other-windows)))
 (global-set-key (kbd "M-f f") 'meain/monacle-mode)
 
+;; Revert buffer quickly
+(global-set-key (kbd "M-f r") 'revert-buffer-quick)
+
 ;; Quick open scratch buffers
 (use-package emacs
   :after evil-leader
