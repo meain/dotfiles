@@ -1,0 +1,15 @@
+#!/bin/sh
+
+set -e
+
+title="$(git log -1 --pretty=format:%s)"
+body="$(git log -1 --pretty=format:%b)"
+
+base="$(git branch | grep -v '\*' | sed 's|^..||' | fzf)"
+labels="$(gh label list | fzf -m | awk '{print $1}' | tr '\n' ',' | head -c-1)"
+
+# TODO: let users preview the body before submitting
+echo "$body" | cat - .github/pull_request_template.md |
+    gh pr create --title "$title" \
+        --body-file '-' --assignee meain \
+        --base "$base" --label "$labels"
