@@ -1,0 +1,8 @@
+#!/bin/sh
+
+set -e
+
+unset GITHUB_TOKEN # use login and not token
+
+gh pr review "$1" --approve
+gh pr edit --add-label 'mergequeue' "$1"
