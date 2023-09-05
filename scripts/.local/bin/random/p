@@ -2,8 +2,14 @@
 
 set -e
 
+if [ -n "$1" ]; then
+    pbcopy <"$1"
+    echo File copied to clipboard
+    exit
+fi
+
 if [ -t 0 ]; then
-	pbpaste
+    pbpaste
 else
-	pbcopy </dev/stdin
+    pbcopy </dev/stdin
 fi
