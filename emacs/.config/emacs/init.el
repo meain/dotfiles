@@ -1987,6 +1987,15 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
       (goto-line line-no) ;; will be different, but just a start
       (funcall mm))))
 
+;; Structural diff using difftastic
+(use-package difftastic
+  :elpaca (:host github :repo "pkryger/difftastic.el")
+  :config
+  (eval-after-load 'magit-diff
+    '(transient-append-suffix 'magit-diff '(-1 -1)
+       [("D" "Difftastic diff (dwim)" difftastic-magit-diff)
+        ("S" "Difftastic show" difftastic-magit-show)])))
+
 ;; Magit forge
 (use-package forge
   :elpaca t
