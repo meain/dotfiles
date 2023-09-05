@@ -71,6 +71,7 @@ alias ppid='ps -o ppid= -p'
 # other
 alias caffienate='systemd-inhibit tail -f /dev/null'
 alias suspend='systemctl suspend'
+alias dr="dragon -x"
 
 # shorthand
 alias to=',ca'
