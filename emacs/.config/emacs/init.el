@@ -2549,6 +2549,18 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   :elpaca t
   :defer t
   :config
+  (defun meain/dlv-replay ()
+    (interactive)
+    (let* ((default-default-directory (if (boundp 'custom-src-directory)
+                                          custom-src-directory
+                                        default-directory))
+           (default-directory (completing-read
+                               "Directory: "
+                               (remove-if (lambda (x) (equalp x ""))
+                                          (mapcar (lambda (x) (concat default-directory x))
+                                                  (string-split (shell-command-to-string "fd -t d") "\n")))
+                               nil t default-default-directory)))
+      (dlv "dlv replay /home/meain/.local/share/rr/latest-trace")))
   (defun meain/dlv (&optional test)
     (interactive "P")
     (let* ((default-default-directory (if (boundp 'custom-src-directory)
@@ -2576,7 +2588,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
             (message dlv-command)
             (dlv dlv-command))
         (call-interactively 'dlv))))
-  :commands (dlv dlv-current-func meain/dlv))
+  :commands (dlv dlv-current-func meain/dlv meain/dlv-replay))
 (use-package lua-mode :elpaca t :defer t)
 (use-package web-mode :elpaca t :defer t)
 (use-package jinja2-mode :elpaca t :defer t)
