@@ -150,6 +150,7 @@ in
     # pkgs.gofumpt # better go formatting
     # pkgs.delve # debugging in go
     # pkgs.rr # record replay debugging
+    # pkgs.gotests # test generation for golang
 
     # programming-web
     pkgs.html-tidy # html formatter
@@ -226,6 +227,7 @@ in
     # pkgs.grpcurl # curl for grpc
     pkgs.zprint # clojure formatter
     tree-grepper.outputs.packages.x86_64-linux.tree-grepper # grep with tree-sitter
+    pkgs.comby # code mod
     # pkgs.ruby # ruby language
     pkgs.actionlint # linting for gihtub actions
 
@@ -317,6 +319,7 @@ in
     pkgs.iamb # matrix chat client
     ppkgs.chatgpt-cli # chatgpt cli
     pkgs.shell_gpt # another chatgpt cli
+    pkgs.feh # image viewer (for desktop background)
 
     # gnome tweaking
     # pkgs.gnome3.dconf-editor # change dconf settings
