@@ -11,9 +11,17 @@ opt="$1"
 [ -z "$opt" ] && echo "Usage: $0 <opt> <args>" && exit 1
 
 journal() {
+    TAG="#jrnl"
+    JRNL_FILE="$LOGSEQ_DIR/journals/$(date '+%Y_%m_%d').md"
+
+    if [ "$1" == "-s" ]; then
+        shift
+        TAG="#privatejrnl"
+        JRNL_FILE="$LOGSEQ_DIR/pages/jrnl___$(date '+%Y_%m_%d').md"
+    fi
     entry="$*"
     [ -z "$1" ] && printf "Entry: " && read -r entry
-    printf "\n- **%s** %s #jrnl" "$(date '+%H:%M')" "$entry" >>"$LOGSEQ_DIR/journals/$(date '+%Y_%m_%d').md"
+    printf "\n- **%s** %s %s" "$(date '+%H:%M')" "$entry" "$TAG" >>"$JRNL_FILE"
 }
 
 case "$1" in
