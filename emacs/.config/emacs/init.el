@@ -709,6 +709,10 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
         (face-remap-add-relative 'default 'diff-hl-insert)
       (face-remap-add-relative 'default 'diff-hl-delete)))
   (add-to-list 'compilation-finish-functions 'meain/compilation-colorcode)
+  (defun meain/run-default ()
+    (interactive)
+    (compile (concat ".mscripts/default "
+                     (read-string ".mscripts/default "))))
   :init
   (evil-leader/set-key "r"
     (meain/with-alternate
