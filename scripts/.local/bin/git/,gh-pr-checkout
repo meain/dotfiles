@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# Checking a pr using hub
+
+set -e
+
+prd="$(gh pr list --json 'number,headRefName,title' | jq -r '.[]| [.number, .title, .headRefName] | @sh' | column -t -s"'" | fzf)"
+[ -z "$prd" ] && echo "No PR selected" && exit 0
+
+echo "$prd"
+pr="$(echo "$prd" | awk '{print $1}')"
+prb="$(echo "$prd" | awk '{print $(NF)}')"
+
+dbranch="pr$pr/$prb"
+printf "Branch name(%s): " "$dbranch" && read -r
+branch="$REPLY"
+[ -z "$branch" ] && branch="$dbranch"
+upstream="upstream"
+
+gh pr checkout "$pr" --branch "$branch"
+
+printf "$branch" | pbcopy
+echo Branch name copied to clipboard
