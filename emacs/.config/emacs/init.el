@@ -1906,6 +1906,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
 ;; Peek into files/definitions without opening them
 (use-package peek
   :elpaca (:host github :repo "Ziqi-Yang/peek")
+  :after (evil)
   :commands (peek-overlay-dwim peek-xref-definition)
   :init
   (define-key evil-normal-state-map (kbd "g L") 'peek-xref-definition)
