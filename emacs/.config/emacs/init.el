@@ -1798,6 +1798,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   :elpaca t
   :after (project flymake)
   :config
+  (setq eglot-autoshutdown t)
   (setq eglot-extend-to-xref t) ;; extend eglot to files gone to with go-to-def
   ;; https://www.masteringemacs.org/article/seamlessly-merge-multiple-documentation-sources-eldoc
   (setq eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)
