@@ -3470,6 +3470,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   :init (add-hook 'prog-mode-hook #'scopeline-mode))
 
 ;; Show definition beyond top of buffer in header
+;; Similar: breadcrumb
 (use-package topsy
   :defer t
   :elpaca t
