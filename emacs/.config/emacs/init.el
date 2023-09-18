@@ -2427,7 +2427,7 @@ Pass `CHOOSER' as t to not automatically select the previous tab."
 
 ;; Quick run current test
 (use-package emacs
-  :after compile
+  :after (compile evil-leader)
   :commands (meain/toffee-run-test meain/toffee--get-test-command)
   :config
   ;; if available in another frame, don't recreate in current frame
@@ -2569,6 +2569,12 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   :elpaca t
   :defer t
   :config
+  (defun meain/dlv-current-func ()
+    (interactive)
+    (let ((default-directory (if (boundp 'custom-src-directory)
+                                 custom-src-directory
+                               default-directory)))
+      (call-interactively 'dlv-current-func)))
   (defun meain/dlv-replay ()
     (interactive)
     (let* ((default-default-directory (if (boundp 'custom-src-directory)
@@ -2608,7 +2614,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
             (message dlv-command)
             (dlv dlv-command))
         (call-interactively 'dlv))))
-  :commands (dlv dlv-current-func meain/dlv meain/dlv-replay))
+  :commands (dlv dlv-current-func meain/dlv meain/dlv-replay meain/dlv-current-func))
 (use-package lua-mode :elpaca t :defer t)
 (use-package web-mode :elpaca t :defer t)
 (use-package jinja2-mode :elpaca t :defer t)
