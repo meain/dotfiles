@@ -1742,6 +1742,8 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
         '("gci" "/dev/stdin"))
   (setf (alist-get 'go-mode apheleia-mode-alist)
         '(goimports))
+  (setf (alist-get 'go-ts-mode apheleia-mode-alist)
+        '(goimports))
 
   ;; markdown
   (setf (alist-get 'markdown-mode apheleia-mode-alist)
