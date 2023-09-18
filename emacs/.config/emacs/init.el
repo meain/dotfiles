@@ -1883,6 +1883,11 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   (evil-define-key 'normal go-mode-map (kbd "K") 'eldoc-print-current-symbol-info)
   (evil-define-key 'normal go-mode-map (kbd "g d") 'xref-find-definitions))
 
+;; Get hierarchy
+(use-package eglot-hierarchy
+  :commands (eglot-hierarchy-call-hierarchy eglot-hierarchy-type-hierarchy)
+  :elpaca (:host github :repo "dolmens/eglot-hierarchy"))
+
 ;; consult-eglot
 (use-package consult-eglot
   :elpaca t
