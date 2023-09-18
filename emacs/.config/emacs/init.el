@@ -1462,7 +1462,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   (setq completion-cycle-threshold 3)
   (setq corfu-auto t)
   (setq corfu-cycle t)
-  (setq corfu-auto-delay .2)
+  (setq corfu-auto-delay 0)
   (setq corfu-auto-prefix 2)
   (setq corfu-history-mode t)
   (setq corfu-count 5)
