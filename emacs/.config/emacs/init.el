@@ -1628,7 +1628,9 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
       --smart-case --no-heading --line-number --hidden --follow --glob \"!.git/*\"")
   (setq xref-show-xrefs-function #'consult-xref)
   (setq xref-show-definitions-function #'consult-xref)
-  (evil-set-command-property 'consult-imenu :jump t))
+  (evil-set-command-property 'consult-imenu :jump t)
+  :init
+  (define-key evil-normal-state-map (kbd "<SPC> /") 'consult-line))
 
 (use-package consult-notmuch
   :elpaca t
