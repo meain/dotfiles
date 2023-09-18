@@ -108,7 +108,7 @@ bindkey "${key[Down]}" history-search-forward
 export KEYTIMEOUT=1
 
 preexec() {
-	if ! grep -q "$1" "$DATAFILES_PATH/long_runnable_jobs"; then
+	if ! grep -qF "$1" "$DATAFILES_PATH/long_runnable_jobs"; then
 		CMD_START_DATE=$(date +%s)
 		CMD_NAME=$1
 	fi
