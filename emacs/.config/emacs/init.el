@@ -1539,6 +1539,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   (setq vertico-multiform-commands
         '((consult-ripgrep buffer indexed)
           (consult-xref buffer indexed)
+          (eglot-find-implementation indexed) ;; TODO: change to vertical
           (consult-imenu buffer)
           (xref-find-references buffer)
           (meain/imenu-or-eglot buffer)
