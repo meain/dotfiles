@@ -4005,7 +4005,8 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
                  :files ("dist" "*.el"))
   :config
   (global-copilot-mode t)
-  (setq copilot-idle-delay 0)
+  (setq copilot-idle-delay .2)
+  (setq copilot-max-char -1)
   (define-key copilot-mode-map (kbd "M-f M-f") #'copilot-complete)
   (define-key copilot-mode-map (kbd "M-f M-j") #'copilot-next-completion)
   (define-key copilot-mode-map (kbd "M-f M-k") #'copilot-previous-completion)
