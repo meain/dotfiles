@@ -2609,7 +2609,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
                  (command-without-dir (string-join (reverse (cdr (reverse (string-split command " ")))) " "))
                  (dlv-command (s-replace-regexp
                                "^go test -v -run"
-                               (format "dlv test %s -- -test.v -test.run" test-dir)
+                               (format "dlv --backend rr test %s -- -test.v -test.run" test-dir)
                                command-without-dir)))
             (message dlv-command)
             (dlv dlv-command))
