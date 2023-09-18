@@ -1873,6 +1873,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
       (jsonrpc-request server :workspace/executeCommand
                        `(:command "switchConnections" :arguments [,db]:timeout 0.5))))
   (evil-define-key 'normal eglot-mode-map (kbd "g D") 'eglot-find-implementation)
+  (evil-define-key 'normal eglot-mode-map (kbd "g Y") 'eglot-find-typeDefinition)
   (evil-define-key 'normal eglot-mode-map (kbd "g R") 'eglot-rename)
   (evil-define-key 'normal eglot-mode-map (kbd "g ,") 'eglot-format-buffer)
   (evil-define-key 'normal eglot-mode-map (kbd "g a") 'eglot-code-actions)
