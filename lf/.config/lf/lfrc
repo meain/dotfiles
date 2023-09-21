@@ -1,4 +1,4 @@
-set mouse on
+set mouse true
 map <m-up> up
 map <m-down> down
 map <m-1> open
