@@ -7,4 +7,5 @@ sudo apt upgrade -y
 flatpak update -y
 sudo snap refresh
 gh extension upgrade --all
-,hm update-all && ,hm build
+
+[ "$1" != "nonix" ] && ,hm update-all && ,hm build
