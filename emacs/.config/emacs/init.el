@@ -1963,7 +1963,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
   :init
   (add-to-list 'xref-backend-functions 'tree-jump-xref-backend)
   (global-set-key (kbd "M-I")
-                  (meain/with-alternate (consult-tree-jump-search)
+                  (meain/with-alternate (consult-tree-jump-search "!mock !_test ")
                                         (tree-jump-search))))
 
 ;; Tagbar alternative
