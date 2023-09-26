@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# Create logseq task from a url
+
+set -e
+
+url="$1"
+if [ -z "$url" ] && pbpaste | grep -qs '^http'; then
+    url="$(pbpaste)"
+fi
+
+[ -z "$url" ] && echo "Usage: $0 <url>" && exit 1
+
+if echo "$url" | grep -q '^https://github.com'; then
+    kind="$(echo "$url" | awk -F '/' '{print $6}')"
+    number="$(echo "$url" | awk -F '/' '{print $7}')"
+    if [ "$kind" = "issues" ]; then
+        title=$(gh issue view "$number" --json title | jq -r '.title')
+    else
+        title=$(gh pr view "$number" --json title | jq -r '.title')
+    fi
+
+    echo "TODO $title ([$kind/$number]($url))"
+fi | tee /dev/stderr | pbcopy
