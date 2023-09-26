@@ -1967,6 +1967,85 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
                   (meain/with-alternate (consult-tree-jump-search "!mock !_test ")
                                         (tree-jump-search))))
 
+;; LogSeq related things
+(use-package emacs
+  :config
+  (defvar logseq-directory "~/.local/share/logseq/"
+    "The directory where logseq files are stored.")
+
+  (defun logseq-journal-today ()
+    "Open the journal for today."
+    (interactive)
+    (let ((date (format-time-string "%Y_%m_%d")))
+      (find-file (concat logseq-directory "journals/" date ".md"))))
+
+  (defun logseq-journal-previous (&optional count)
+    "If we are already in a journal page, go to the previous journal
+by getting the date from filename.  Does not do anything if we are not
+in a journal page.
+
+COUNT is the number of journal entries to go back by.  You can pass
+negative values to go forward."
+    (interactive)
+    (let ((dir (file-name-nondirectory (directory-file-name (file-name-directory (buffer-file-name)))))
+          (fn (file-name-nondirectory (buffer-file-name))))
+      (if (equal dir "journals")
+          ;; filename will be in the format %Y_%m_%d
+          (when-let* ((time-segments (split-string (substring fn 0 10) "_"))
+                      (year (string-to-number (car time-segments)))
+                      (month (string-to-number (cadr time-segments)))
+                      (day (string-to-number (caddr time-segments)))
+                      (date (encode-time (list 0 0 0 day month year)))
+                      (fname (format-time-string
+                              "%Y_%m_%d"
+                              (time-subtract date
+                                             (days-to-time (if count count 1)))))
+                      (path (concat logseq-directory "journals/" fname ".md")))
+            (when (or
+                 (file-exists-p path)
+                 (yes-or-no-p "Journal page does not exist.  Create new?"))
+                (find-file path)))
+        (message "Not in a journal page."))))
+
+  (defun logseq-journal-next ()
+    "Go to next journal page.
+Use `logseq-journal-previous' with a negative argument when using
+interactively."
+    (declare (interactive-only t))
+    (interactive)
+    (logseq-journal-previous -1))
+
+  (defun logseq-journal-entry ()
+    "Add an entry to today's journal.
+The journal entry line will be prefixed by the current timestamp."
+    (interactive)
+    (when-let ((text (read-string "Entry: "))
+               (time (format-time-string "**%H:%M**"))
+               (date (format-time-string "%Y_%m_%d")))
+      ;; Append an entry to today's journal
+      (with-temp-buffer
+        (insert-file-contents (concat logseq-directory "journals/" date ".md"))
+        (goto-char (point-max))
+        (insert (concat "\n- " time " " text))
+        (write-file (concat logseq-directory "journals/" date ".md")))))
+
+  (defun logseq-journal-open (date)
+    "Open a journal for a given date.
+DATE is a string in the format YYYY_MM_DD.
+In case it is called interactively, the date can be picked using the calendar."
+    (interactive (list (let ((event (calendar-read-date)))
+                         (format "%04d_%02d_%02d" (caddr event) (car event) (cadr event)))))
+    (find-file (concat logseq-directory "journals/" date ".md")))
+
+  (defun logseq-page-open (page)
+    "Open a page in logseq.
+In case it is called interactively, the page is autocompleted from the
+list of available pages."
+    (interactive (list (completing-read
+                        "Page: "
+                        (directory-files (concat logseq-directory "pages/") nil "\\.md$"))))
+    (find-file (concat logseq-directory "pages/" page))))
+
 ;; Tagbar alternative
 (use-package imenu
   :defer t
