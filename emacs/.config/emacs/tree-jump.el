@@ -53,11 +53,11 @@
       (forward-char (- column 1))
       (reposition-window))))
 
-(defun tree-jump-search ()
-  "Search for a symbol in the entire project."
+(defun tree-jump-search (&optional initial)
+  "Search for a symbol in the entire project, start with `INITIAL'."
   (interactive)
   (when-let* ((choices (tree-jump--get-definitions))
-              (choice (completing-read "Choose entry:" choices)))
+              (choice (completing-read "Choose entry:" choices nil t initial)))
     (tree-jump--goto-entry choice)))
 
 (defun consult-tree-jump--lookup (selected &rest _)
@@ -86,6 +86,7 @@ Starts with `INITIAL' as the input if provided."
      ;; :add-history (list (thing-at-point 'symbol) isearch-string)
      ;; :history '(:input consult--line-history)
      :lookup #'consult-tree-jump--lookup
+     :initial initial
      ;; :initial (concat ":" (thing-at-point 'symbol))
      :state (consult-tree-jump--state candidates))))
 
