@@ -4327,6 +4327,7 @@ This contains a lot of hacks to get it working with H-q keybinding and a popup."
          (header-line-format " You are now going to pick an emoji, choose wisely"))
     (switch-to-buffer "*pick-emoji*")
     (run-with-timer 0.5 nil 'vertico-multiform-grid) ; FIXME: can't do it in a sane way
+    (run-at-time "0.1 sec" nil #'vertico--exhibit)
     (meain/copy-to-clipboard (car (split-string
                                    (completing-read "Pick emoji: " emojis nil t)))))
   (if (equal "emacs-popup" (cdr (assq 'name (frame-parameters))))
