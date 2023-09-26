@@ -2044,7 +2044,15 @@ list of available pages."
     (interactive (list (completing-read
                         "Page: "
                         (directory-files (concat logseq-directory "pages/") nil "\\.md$"))))
-    (find-file (concat logseq-directory "pages/" page))))
+    (find-file (concat logseq-directory "pages/" page)))
+  :init
+  (evil-leader/set-key "le" 'logseq-journal-entry)
+  (evil-leader/set-key "ll" 'logseq-journal-entry)
+  (evil-leader/set-key "lj" 'logseq-journal-today)
+  (evil-leader/set-key "lJ" 'logseq-journal-open)
+  (evil-leader/set-key "lp" 'logseq-journal-previous)
+  (evil-leader/set-key "ln" 'logseq-journal-next)
+  (evil-leader/set-key "lP" 'logseq-page-open))
 
 ;; Tagbar alternative
 (use-package imenu
