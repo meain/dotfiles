@@ -91,7 +91,7 @@ in
     ppkgs.spaceman-diff # diff images in terminal
     pkgs.polybarFull # bar for wm
     pkgs.python39Packages.pipx # pipx for installing stuff
-    ppkgs.logseq-doctor # logseq utils
+    # ppkgs.logseq-doctor # logseq utils
 
     # aspell dicts
     pkgs.aspellDicts.en
@@ -177,10 +177,10 @@ in
     spkgs.black # python code formatter
     spkgs.python39Packages.pip
     spkgs.python39Packages.flake8 # linter
-    spkgs.python39Packages.ipdb # interactive debugging
+    # spkgs.python39Packages.ipdb # interactive debugging
     # pkgs.python39Packages.pynvim # neovim python support
-    spkgs.python39Packages.pycodestyle # code style check
-    spkgs.python39Packages.pydocstyle # doc style check
+    # spkgs.python39Packages.pycodestyle # code style check
+    # spkgs.python39Packages.pydocstyle # doc style check
     # pkgs.python39Packages.requests # http lib for quick stuff
     spkgs.python39Packages.virtualenv # virtual envs
     # pkgs.python39Packages.bandit # analyze code for security issues
@@ -199,11 +199,11 @@ in
     pkgs.rustfmt # formatter
     pkgs.clippy # the useful clippy
     pkgs.rust-analyzer # lsp for rust
-    pkgs.cargo-edit # dep management
+    # pkgs.cargo-edit # dep management
     # pkgs.cargo-bloat # find big chunks
     # pkgs.cargo-udeps # find unnecessary deps
     # pkgs.cargo-release # for releasing packages
-    pkgs.cargo-watch # continuously run cargo check
+    # pkgs.cargo-watch # continuously run cargo check
 
     # programming-lua
     # pkgs.nodePackages.lua-fmt
@@ -270,7 +270,7 @@ in
     # pkgs.figlet # make big text
     # pkgs.gource # source tree visualisation
     pkgs.tig # tui git interface
-    # pkgs.lazygit # tui git interface
+    pkgs.lazygit # tui git interface
     # pkgs.lazydocker # tui docker interface
     # pkgs.docker-compose # docker-compose
     # pkgs.ncmpcpp # mpd tui client
@@ -349,39 +349,45 @@ in
 
   dconf.settings = import ./dconf.nix;
 
-  systemd.user.services.activitywatch = {
-    Unit.Description = "Start ActivityWatch";
-    Service.Type = "simple";
-    Service.ExecStart = "${pkgs.activitywatch}/bin/aw-server";
-    Install.WantedBy = [ "default.target" ];
-    Service.Restart = "on-failure";
-    Service.RestartSec = 5;
-  };
-  systemd.user.services.activitywatch-afk = {
-    Unit.Description = "Start ActivityWatch AFK";
-    Service.Type = "simple";
-    Service.ExecStart = "${pkgs.activitywatch}/bin/aw-watcher-afk";
-    Install.WantedBy = [ "default.target" ];
-    Service.Restart = "on-failure";
-    Service.RestartSec = 5;
-  };
-  systemd.user.services.activitywatch-window = {
-    Unit.Description = "Start ActivityWatch Window";
-    Service.Type = "simple";
-    Service.ExecStart = "${pkgs.activitywatch}/bin/aw-watcher-window";
-    Install.WantedBy = [ "default.target" ];
-    Service.Restart = "on-failure";
-    Service.RestartSec = 5;
+  systemd.user.services = {
+    activitywatch = {
+      Unit.Description = "Start ActivityWatch";
+      Service.Type = "simple";
+      Service.ExecStart = "${pkgs.activitywatch}/bin/aw-server";
+      Install.WantedBy = [ "default.target" ];
+      Service.Restart = "on-failure";
+      Service.RestartSec = 5;
+    };
+
+    activitywatch-afk = {
+      Unit.Description = "Start ActivityWatch AFK";
+      Service.Type = "simple";
+      Service.ExecStart = "${pkgs.activitywatch}/bin/aw-watcher-afk";
+      Install.WantedBy = [ "default.target" ];
+      Service.Restart = "on-failure";
+      Service.RestartSec = 5;
+    };
+
+    activitywatch-window = {
+      Unit.Description = "Start ActivityWatch Window";
+      Service.Type = "simple";
+      Service.ExecStart = "${pkgs.activitywatch}/bin/aw-watcher-window";
+      Install.WantedBy = [ "default.target" ];
+      Service.Restart = "on-failure";
+      Service.RestartSec = 5;
+    };
   };
 
   # systemd.user.startServices = true;  # enabling this increases switch time a lot
-  systemd.user.services.mpd = utils.ss-simple { cmd = "mpd --no-daemon"; wait = 3; };
-  systemd.user.services.clipmenud = utils.ss-simple { cmd = "clipmenud"; wait = 3; };
-  systemd.user.services.sxhkd = utils.ss-simple { cmd = "sxhkd"; wait = 3; };
-  systemd.user.services.emacs = utils.ss-simple { cmd = "emacs --fg-daemon"; wait = 1; };
-  systemd.user.services.logseq = utils.ss-simple { cmd = "/var/lib/flatpak/app/com.logseq.Logseq/current/active/export/bin/com.logseq.Logseq"; wait = 1; };
-  systemd.user.services.floatingterm = utils.ss-simple { cmd = "sakura --name floatingterm -x \"tt floating\""; wait = 1; };
-  systemd.user.services.mail-watcher = utils.ss-simple { cmd = "find /home/meain/.local/share/mail/.notmuch/xapian|entr -n ,shellout-update"; wait = 5; };
+  systemd.user.services = {
+    mpd = utils.ss-simple { cmd = "mpd --no-daemon"; wait = 3; };
+    clipmenud = utils.ss-simple { cmd = "clipmenud"; wait = 3; };
+    sxhkd = utils.ss-simple { cmd = "sxhkd"; wait = 3; };
+    emacs = utils.ss-simple { cmd = "emacs --fg-daemon"; wait = 1; };
+    logseq = utils.ss-simple { cmd = "/var/lib/flatpak/app/com.logseq.Logseq/current/active/export/bin/com.logseq.Logseq"; wait = 1; };
+    floatingterm = utils.ss-simple { cmd = "sakura --name floatingterm -x \"tt floating\""; wait = 1; };
+    mail-watcher = utils.ss-simple { cmd = "find /home/meain/.local/share/mail/.notmuch/xapian|entr -n ,shellout-update"; wait = 5; };
+  };
 
   # code/note sync
   systemd.user.services.note-sync = utils.ss-git-sync { dir = "/home/meain/.local/share/notes"; };
