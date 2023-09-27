@@ -1980,6 +1980,23 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
     (let ((date (format-time-string "%Y_%m_%d")))
       (find-file (concat logseq-directory "journals/" date ".md"))))
 
+  ;; TODO: It does not open in a popup the first time
+  (add-to-list 'display-buffer-alist '("\\*logseq-journal\\*"
+                                       (display-buffer-reuse-window display-buffer-at-bottom)
+                                       (reusable-frames . visible)
+                                       (window-height . 0.3)))
+
+  (defun logseq-journal-toggle ()
+    "Open the journal for today."
+    (interactive)
+    (let* ((date (format-time-string "%Y_%m_%d"))
+           (file (expand-file-name (concat logseq-directory "journals/" date ".md"))))
+      (if (equal (buffer-file-name) file)
+          (delete-window)
+        (progn
+          (find-file file)
+          (rename-buffer "*logseq-journal*")))))
+
   (defun logseq-journal-previous (&optional count)
     "If we are already in a journal page, go to the previous journal
 by getting the date from filename.  Does not do anything if we are not
@@ -2003,9 +2020,9 @@ negative values to go forward."
                                              (days-to-time (if count count 1)))))
                       (path (concat logseq-directory "journals/" fname ".md")))
             (when (or
-                 (file-exists-p path)
-                 (yes-or-no-p "Journal page does not exist.  Create new?"))
-                (find-file path)))
+                   (file-exists-p path)
+                   (yes-or-no-p "Journal page does not exist.  Create new?"))
+              (find-file path)))
         (message "Not in a journal page."))))
 
   (defun logseq-journal-next ()
@@ -2022,13 +2039,15 @@ The journal entry line will be prefixed by the current timestamp."
     (interactive)
     (when-let ((text (read-string "Entry: "))
                (time (format-time-string "**%H:%M**"))
-               (date (format-time-string "%Y_%m_%d")))
+               (date (format-time-string "%Y_%m_%d"))
+               (file (concat logseq-directory "journals/" date ".md")))
       ;; Append an entry to today's journal
       (with-temp-buffer
-        (insert-file-contents (concat logseq-directory "journals/" date ".md"))
+        (when (file-exists-p file)
+          (insert-file-contents file))
         (goto-char (point-max))
         (insert (concat "\n- " time " " text))
-        (write-file (concat logseq-directory "journals/" date ".md")))))
+        (write-file file))))
 
   (defun logseq-journal-open (date)
     "Open a journal for a given date.
@@ -2048,7 +2067,7 @@ list of available pages."
     (find-file (concat logseq-directory "pages/" page)))
   :init
   (evil-leader/set-key "le" 'logseq-journal-entry)
-  (evil-leader/set-key "ll" 'logseq-journal-entry)
+  (evil-leader/set-key "ll" 'logseq-journal-toggle)
   (evil-leader/set-key "lj" 'logseq-journal-today)
   (evil-leader/set-key "lJ" 'logseq-journal-open)
   (evil-leader/set-key "lp" 'logseq-journal-previous)
