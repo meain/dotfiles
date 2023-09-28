@@ -1980,7 +1980,6 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
     (let ((date (format-time-string "%Y_%m_%d")))
       (find-file (concat logseq-directory "journals/" date ".md"))))
 
-  ;; TODO: It does not open in a popup the first time
   (add-to-list 'display-buffer-alist '("\\*logseq-journal\\*"
                                        (display-buffer-reuse-window display-buffer-at-bottom)
                                        (reusable-frames . visible)
@@ -1990,12 +1989,19 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
     "Open the journal for today."
     (interactive)
     (let* ((date (format-time-string "%Y_%m_%d"))
-           (file (expand-file-name (concat logseq-directory "journals/" date ".md"))))
+           (file (expand-file-name (concat logseq-directory "journals/" date ".md")))
+           (buffer (get-buffer "*logseq-journal*")))
       (if (equal (buffer-file-name) file)
           (delete-window)
         (progn
-          (find-file file)
-          (rename-buffer "*logseq-journal*")))))
+          (if buffer
+              (when (not (equal (buffer-file-name buffer) file))
+                (kill-buffer buffer)
+                (with-current-buffer (find-file-noselect file)
+                  (rename-buffer "*logseq-journal*")))
+            (with-current-buffer (find-file-noselect file)
+              (rename-buffer "*logseq-journal*")))
+          (pop-to-buffer "*logseq-journal*")))))
 
   (defun logseq-journal-previous (&optional count)
     "If we are already in a journal page, go to the previous journal
