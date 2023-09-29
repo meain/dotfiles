@@ -1970,6 +1970,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
 
 ;; LogSeq related things
 (use-package emacs
+  :after (evil-leader)
   :config
   (defvar logseq-directory "~/.local/share/logseq/"
     "The directory where logseq files are stored.")
