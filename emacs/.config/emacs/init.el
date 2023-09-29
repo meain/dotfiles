@@ -3020,8 +3020,10 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 
     ;; Update line with prev format
     (yank 2)
-    (beginning-of-line)
-    (search-forward ":")
+
+    (end-of-line)
+    (search-backward ":")
+    (forward-char)
     (kill-line)
     (yank 2)
     (insert "'"))
