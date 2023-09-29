@@ -3213,6 +3213,11 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
     (meain/elfeed-enclosure-download "Downloads/podcasts" ".mp3"))
   (load-file "~/.config/emacs/elfeed-feeds.el"))
 
+;; erc
+(use-package erc
+  :config
+  (setq erc-timestamp-format "[%I:%M %p]"))
+
 ;; command log
 (use-package command-log-mode
   :commands global-command-log-mode
