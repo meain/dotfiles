@@ -1,0 +1,19 @@
+#!/bin/sh
+
+set -e
+
+LGOSEQ_DIR="/home/meain/.local/share/logseq"
+ASSETS_DIR="$LGOSEQ_DIR/assets/storages/via-cli"
+
+f="$1"
+[ -z "$1" ] && f=$(pbpaste)
+
+if [ ! -f "$f" ]; then
+    [ -z "$1" ] && echo "No file in clipboard" || echo "File $1 does not exist"
+    exit 1
+fi
+
+cp "$1" "$ASSETS_DIR"
+echo "Copied $(basename "$1") to $ASSETS_DIR" >&2
+
+echo "![](../assets/storages/via-cli/$(basename "$1"))" | pbcopy
