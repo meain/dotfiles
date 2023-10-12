@@ -220,4 +220,12 @@ er() {
     entry="$(fd | fzf)"
     [ -f "$entry" ] && cd "$(dirname "$entry")" || return 1
     [ -d "$entry" ] && cd "$entry" || return 1
+}}
+
+# Create a tmp dir, unzip file into it, cd into it
+,showme() {
+    [ -z "$1" ] && echo "Pass file to show" && return 1
+    tmp="$(mktemp -d)"
+    unzip "$1" -d "$tmp"
+    cd "$tmp" || return 1
 }
