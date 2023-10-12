@@ -15,10 +15,10 @@ if echo "$url" | grep -q '^https://github.com'; then
     kind="$(echo "$url" | awk -F '/' '{print $6}')"
     number="$(echo "$url" | awk -F '/' '{print $7}')"
     if [ "$kind" = "issues" ]; then
-        title=$(gh issue view "$number" --json title | jq -r '.title')
+        title=$(gh issue view "$url" --json title | jq -r '.title')
     else
-        title=$(gh pr view "$number" --json title | jq -r '.title')
+        title=$(gh pr view "$url" --json title | jq -r '.title')
     fi
 
-    echo "TODO $title ([$kind/$number]($url))"
+    printf "TODO %s ([%s/%s](%s))" "$title" "$kind" "$number" "$url"
 fi | tee /dev/stderr | pbcopy
