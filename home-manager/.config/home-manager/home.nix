@@ -316,10 +316,11 @@ in
     # pkgs.spotify-tui # control spotify
     pkgs.cloc # line count code
     pkgs.helix # alternate editor
-    pkgs.iamb # matrix chat client
+    # pkgs.iamb # matrix chat client
     ppkgs.chatgpt-cli # chatgpt cli
     pkgs.shell_gpt # another chatgpt cli
     pkgs.feh # image viewer (for desktop background)
+    pkgs.kopia # backup
 
     # gnome tweaking
     # pkgs.gnome3.dconf-editor # change dconf settings
@@ -376,6 +377,16 @@ in
       Service.Restart = "on-failure";
       Service.RestartSec = 5;
     };
+  };
+
+
+  systemd.user.services.kopia-ui = {
+    Unit.Description = "Kopia UI";
+    Service.Type = "simple";
+    Service.ExecStart = "kopia-ui"; # currently not installed via nix
+    Install.WantedBy = [ "default.target" ];
+    Service.Restart = "on-failure";
+    Service.RestartSec = 5;
   };
 
   # systemd.user.startServices = true;  # enabling this increases switch time a lot
