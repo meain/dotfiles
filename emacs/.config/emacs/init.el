@@ -1822,6 +1822,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   (define-key evil-normal-state-map (kbd "M-.") #'xref-find-definitions)
   (define-key evil-normal-state-map (kbd "M-?") #'xref-find-references)
   (define-key evil-normal-state-map (kbd "g d") 'xref-find-definitions)
+  (define-key evil-normal-state-map (kbd "g D") 'xref-find-implementations)
   (define-key evil-normal-state-map (kbd "g r") 'xref-find-references)
   ;; (setq xref-show-definitions-function 'xref-show-definitions-completing-read)
   (setq xref-auto-jump-to-first-xref 'move) ;; Use 'show to open it
