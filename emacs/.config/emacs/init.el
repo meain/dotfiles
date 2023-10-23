@@ -2704,8 +2704,17 @@ Pass universal args to run suite or project level tests."
 
 (use-package emacs
   :config
-  :commands (meain/use-custom-src-directory)
+  :commands (meain/cwd-fn meain/use-custom-src-directory)
   :config
+  (defun meain/cwd-fn ()
+    (expand-file-name
+     ;; custom-src-directory is supposed to come from .dir-locals.el
+     (if (boundp 'custom-src-directory)
+         custom-src-directory
+       (or (when-let ((project (project-current)))
+             (project-root project))
+           default-directory))))
+
   (defun meain/use-custom-src-directory (orig-fn &rest args)
     "Use custom src directory as default directory.
 Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
@@ -2899,6 +2908,31 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   (evil-define-key 'normal mtodo-mode-map (kbd "g s") 'mtodo-mark-important))
 
 ;;; [EXTRA PLUGINS] =================================================
+
+;; DAP client for Emacs
+(use-package dape
+  :elpaca (dape :type git :host github :repo "svaante/dape")
+  :config
+  (setq dape-inline-variables t) ;; Add inline variable hints, this feature is highly experimental
+  (setq dape-repl-use-shorthand t) ;; Use n for next etc. in REPL
+  (setq dape-cwd-fn 'meain/cwd-fn)
+  ;; (remove-hook 'dape-on-start-hooks 'dape-info) ;; To remove info buffer on startup
+  ;; (remove-hook 'dape-on-start-hooks 'dape-repl) ;; To remove repl buffer on startup
+  ;; (add-hook 'dape-compile-compile-hooks 'kill-buffer) ;; Kill compile buffer on build success
+
+  ;; Golang config
+  (add-to-list 'dape-configs
+               `(delve
+                 modes (go-mode go-ts-mode)
+                 command "dlv"
+                 command-args ("dap" "--listen" "127.0.0.1:55878")
+                 command-cwd meain/cwd-fn
+                 host "127.0.0.1"
+                 port 55878
+                 :type "debug"
+                 :request "launch"
+                 :cwd meain/cwd-fn
+                 :program meain/cwd-fn)))
 
 (use-package gud
   :after (evil)
