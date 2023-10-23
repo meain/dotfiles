@@ -730,7 +730,6 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   (defun meain/compile-multi-mscripts-targets ()
     "Targets from mscripts"
     (let ((mscripts-dir (expand-file-name (concat (project-root (project-current)) "/.mscripts"))))
-      (message "init.el:728 mscripts-dir: %s" mscripts-dir)
       (if (file-exists-p mscripts-dir)
           (mapcar (lambda (x)
                     (cons (concat "mscripts:" (file-name-base x))
