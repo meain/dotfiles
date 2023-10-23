@@ -3371,7 +3371,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   :commands (writegood-mode))
 
 (use-package emacs
-  :after (writeroom-mode writeroom-mode evil-leader)
+  :after (writeroom-mode evil-leader)
   :commands (meain/toggle-writing-mode)
   :config
   ;; TODO: convert writing-mode to minor mode
