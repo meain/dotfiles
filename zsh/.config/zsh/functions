@@ -228,4 +228,5 @@ er() {
     tmp="$(mktemp -d)"
     unzip "$1" -d "$tmp"
     cd "$tmp" || return 1
+    clear && echo && echo "$1" && ls
 }
