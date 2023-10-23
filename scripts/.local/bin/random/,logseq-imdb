@@ -12,7 +12,7 @@ id="$(jq -r '.d[] | "\(.l) :: \(.q) (\(.id))                                    
     fzf --height 100 --preview 'curl -s {-1}|chafa' | cut -d'(' -f2 | cut -d')' -f1)"
 
 printf "Fetching image...\r"
-iname="imdb--$(jq -r '.d[] | select(.id == "'"$id"'") | "\(.id)--\(.l)--\(.q)"' <"$tfile")"
+iname="imdb--$(jq -r '.d[] | select(.id == "'"$id"'") | "\(.id)--\(.l)--\(.q)"' <"$tfile" | sed 's/[^a-zA-Z0-9_\.-]//g')"
 ipath="/home/meain/.local/share/logseq/assets/storages/via-cli/$iname.jpg"
 lpath="../assets/storages/via-cli/$iname.jpg"
 jq -r '.d[] | select(.id == "'"$id"'") | .i.imageUrl' <"$tfile" |
