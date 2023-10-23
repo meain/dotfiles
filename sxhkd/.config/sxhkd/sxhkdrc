@@ -54,10 +54,11 @@ super + alt + control + {_, shift} + o
 # launch programs
 super + shift + a
       ,do-stuff
-super + alt + control + l ; {l, m, f, r, shift + r}
+super + alt + control + l ; {l, m, f, i, r, shift + r}
       { thunar \
       , i3-msg workspace number 000 && google-chrome --new-window 'https://meet.google.com' \
       , firefox \
+      , \,linkify | xargs -I\{\} notify Linkify '\{\}' \
       , \,record-screen \
       , \,record-screen --select
       }
