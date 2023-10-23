@@ -3080,6 +3080,35 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
     (yank 2)
     (insert "'"))
 
+  (defun meain/add-to-mailtag ()
+    "Add current email to mailtag file."
+    (interactive)
+    (let* (;; email sender
+           (props (notmuch-show-get-message-properties))
+           (sender (plist-get (plist-get props :headers) :From))
+           (email (string-trim (car (string-split (cadr (string-split sender "<")) ">"))))
+
+           ;; location to paste
+           (mailtag-file (car (string-split (shell-command-to-string "where mailtag") "\n")))
+           (contents (with-temp-buffer
+                       (insert-file-contents mailtag-file)
+                       (buffer-string)))
+           (lines (split-string contents "\n"))
+           (headers (seq-filter (lambda (x) (string-prefix-p "##" x)) lines))
+           (header (completing-read "Header: " headers)))
+      (find-file mailtag-file) ;; (with-temp-buffer) was causing a lot of trouble somehow
+      (goto-char (point-min))
+      (re-search-forward (concat "^" header "$"))
+      (forward-paragraph)
+      (insert (concat email "\n"))
+      (message "Post insert: %s %s %s" (point) (line-number-at-pos) (thing-at-point 'line))
+      (goto-char (1- (point))) ;; (previous-line) does not seem to work
+      (meain/update-mailtag-entry)
+      (save-buffer mailtag-file)
+      (previous-buffer)
+      (message "Setup %s under %s" email header)
+      (shell-command "mailtag")))
+
 
   ;; sending emails
   (setq mail-signature t)
