@@ -1828,6 +1828,24 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   (setq xref-auto-jump-to-first-xref 'move) ;; Use 'show to open it
   (setq xref-auto-jump-to-first-definition 'move))
 
+
+;; LSP using lspce
+;; (use-package yasnippet :elpaca t)
+;; (use-package lspce
+;;   :load-path "/home/meain/dev/src/lspce"
+;;   :after (yasnippet)
+;;   :config (progn
+;;             (setq lspce-send-changes-idle-time 1)
+;;             (lspce-set-log-file "/tmp/lspce.log")
+;;             (lspce-enable-logging)
+;;             ;; (add-hook 'rust-mode-hook 'lspce-mode)
+;;             (add-hook 'go-ts-mode-hook 'lspce-mode)
+;;             (setq lspce-server-programs `(("rust"  "rust-analyzer" "" lspce-ra-initializationOptions)
+;;                                           ("python" "pylsp" "" )
+;;                                           ("go" "gopls" "")
+;;                                           ("C" "clangd" "--all-scopes-completion --clang-tidy --enable-config --header-insertion-decorators=0")
+;;                                           ("java" "java" lspce-jdtls-cmd-args lspce-jdtls-initializationOptions)))))
+
 ;; LSP
 (use-package eglot
   :commands eglot-ensure
