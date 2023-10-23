@@ -4191,6 +4191,7 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
                   ('go-ts-mode (format "fmt.Println(\"%s %s:\", %s)" prefix escaped-thing-to-print thing-to-print))
                   ('lua-mode (format "print(\"%s %s:\", %s)" prefix escaped-thing-to-print thing-to-print))
                   ('js-mode (format "console.log(\"%s %s:\", %s)" prefix escaped-thing-to-print thing-to-print))
+                  ('typescript-ts-mode (format "console.log(\"%s %s:\", %s)" prefix escaped-thing-to-print thing-to-print))
                   ('web-mode (format "console.log(\"%s %s:\", %s)" prefix escaped-thing-to-print thing-to-print))
                   ('shell-script-mode (format "echo \"%s %s:\" %s" prefix escaped-thing-to-print thing-to-print))
                   ('python-mode (format "print(\"%s %s:\", %s)" prefix escaped-thing-to-print thing-to-print))))))
