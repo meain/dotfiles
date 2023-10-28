@@ -2,14 +2,14 @@
   description = "Home Manager configurations";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/master";
+    nixpkgs.url = "nixpkgs/nixos-unstable";
     homeManager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    bleeding.url = "github:nixos/nixpkgs/master"; # another experimental commit of nixpkgs
-    stable.url = "nixpkgs/nixos-21.11";
+    bleeding.url = "nixpkgs/nixos-unstable"; # another experimental commit of nixpkgs
+    stable.url = "nixpkgs/nixos-23.05";
 
     pinned-firefox.url = "github:nixos/nixpkgs/c1329a147a5fc2bb49367f6c2cd84bdfeccade43";
 
