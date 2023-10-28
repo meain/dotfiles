@@ -5,10 +5,10 @@
 set -e
 
 if [ -z "$1" ]; then
-	nix-shell --run $SHELL
+    nix-shell --run "$SHELL"
 else
-	hm_nixpkgs_rev="$(nix flake metadata --json $HOME/.config/nixpkgs | jq -r '.locks.nodes.nixpkgs.locked.rev')"
-	nix-shell --run $SHELL \
-		-I "nixpkgs=https://github.com/NixOS/nixpkgs/archive/$hm_nixpkgs_rev.tar.gz" \
-		-p $*
+    hm_nixpkgs_rev="$(nix flake metadata --json "$HOME"/.config/nixpkgs |
+        jq -r '.locks.nodes.nixpkgs.locked.rev')"
+    nixpkgs="https://github.com/NixOS/nixpkgs/archive/$hm_nixpkgs_rev.tar.gz"
+    nix-shell --run "$SHELL" -I "nixpkgs=$nixpkgs" -p $*
 fi

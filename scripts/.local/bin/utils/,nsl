@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# Start a new nix shell with latest nixpkgs
+
+set -e
+
+if [ -z "$1" ]; then
+	nix-shell --run "$SHELL"
+else
+    nixpkgs="https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz"
+	nix-shell --run "$SHELL" -I "nixpkgs=$nixpkgs" -p $*
+fi
