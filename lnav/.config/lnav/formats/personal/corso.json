@@ -21,7 +21,7 @@
                 "kind" : "string",
                 "identifier" : true
             },
-            "line_no" : {
+            "line" : {
                 "kind" : "integer",
                 "identifier" : true
             },
