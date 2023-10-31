@@ -68,15 +68,19 @@ fg-bg() {
 zle -N fg-bg
 bindkey '^Z' fg-bg
 
+ifsource(){
+    [ -f "$1" ] && source "$1"
+}
+
 # Credentials
-[ -f "$HOME/.credentials" ] && source "$HOME/.credentials"
+ifsource "$HOME/.credentials"
 
 # Source aliases
 source "$ZDOTDIR/aliases"
 source "$ZDOTDIR/functions"
 
 # source dir hashes
-[ -f "$HOME/.local/share/zsh/.zsh_dir_hashes" ] && source "$HOME/.local/share/zsh/.zsh_dir_hashes"
+ifsource "$HOME/.local/share/zsh/.zsh_dir_hashes"
 
 # Source fzf
 [ -d "$HOME/.nix-profile/share/fzf" ] &&
@@ -124,8 +128,8 @@ if [[ ${chpwd_functions[(r)list_all]} != "list_all" ]];then
 fi
 
 # load nix
-. /etc/profile.d/nix.sh
-. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+ifsource /etc/profile.d/nix.sh
+ifsource "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
 
 # setup direnv
 eval "$(direnv hook zsh)"
