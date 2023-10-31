@@ -107,8 +107,8 @@ bindkey '^a' beginning-of-line
 bindkey '^e' end-of-line
 bindkey '^xe' edit-command-line
 bindkey '^x^e' edit-command-line
-bindkey "${key[Up]}" history-search-backward
-bindkey "${key[Down]}" history-search-forward
+bindkey "^[[A" history-search-backward
+bindkey "^[[B" history-search-forward
 export KEYTIMEOUT=1
 
 preexec() {
