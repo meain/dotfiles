@@ -221,21 +221,21 @@ in
     pkgs.nodePackages.markdownlint-cli # markdown linter
     pkgs.vale # prose lint
     # pkgs.hadolint # Dockerfile lint
-    pkgs.sqls # lsp server for sql
-    pkgs.sqlfluff # sql linter
-    pkgs.python39Packages.sqlparse # sqlformat
+    # pkgs.sqls # lsp server for sql
+    # pkgs.sqlfluff # sql linter
+    # pkgs.python39Packages.sqlparse # sqlformat
     # pkgs.grpcurl # curl for grpc
     pkgs.zprint # clojure formatter
     tree-grepper.outputs.packages.x86_64-linux.tree-grepper # grep with tree-sitter
     pkgs.comby # code mod
     # pkgs.ruby # ruby language
-    pkgs.actionlint # linting for gihtub actions
+    # pkgs.actionlint # linting for gihtub actions
 
     # gui
     pkgs.mpv # audio/video player
     # pkgs.kitty
     # pkgs.alacritty # terminal emulator
-    pkgs.firefox # working OSS browser (can use pinned-firefox if necessary)
+    pinned-firefox.legacyPackages.x86_64-linux.firefox # working OSS browser (using pinned version as the latest one has issues with overriding font)
     # pkgs.chromium # because Google hates firefox
     # pkgs.guake # drop down terminal
     # pkgs.insomnia # simpler postman
@@ -279,7 +279,7 @@ in
     # pkgs.googler # search google from terminal
     # pkgs.cmatrix # matrix thingy in shell
     # pkgs.graphviz # draw graphs with code
-    pkgs.groff # gnu troff  ## needed for md->pdf conversion
+    # pkgs.groff # gnu troff  ## needed for md->pdf conversion
     # pkgs.pgcli # fancier postgres cli
     # pkgs.trivy # docker vulnerability scanner
     # pkgs.act # github ci locally
@@ -321,6 +321,7 @@ in
     pkgs.shell_gpt # another chatgpt cli
     pkgs.feh # image viewer (for desktop background)
     pkgs.kopia # backup
+    pkgs.distrobox # run other distros and packages
 
     # gnome tweaking
     # pkgs.gnome3.dconf-editor # change dconf settings

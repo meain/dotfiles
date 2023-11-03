@@ -11,7 +11,7 @@
     bleeding.url = "nixpkgs/nixos-unstable"; # another experimental commit of nixpkgs
     stable.url = "nixpkgs/nixos-23.05";
 
-    pinned-firefox.url = "github:nixos/nixpkgs/c1329a147a5fc2bb49367f6c2cd84bdfeccade43";
+    pinned-firefox.url = "github:nixos/nixpkgs/5ba549eafcf3e33405e5f66decd1a72356632b96";
 
     nur.url = "github:nix-community/NUR";
     personal = {
