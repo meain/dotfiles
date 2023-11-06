@@ -3145,13 +3145,14 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   (add-hook 'gnus-summary-mode-hook 'hl-line-mode))
 
 ;; elfeed
-(use-package avl-tree)
 (use-package elfeed
   :elpaca t
+  :disabled t
   :commands (elfeed elfeed-update)
   :after (avl-tree evil-leader)
   :init
   ;; first run after 1 hour
+  (use-package avl-tree)
   (run-at-time "1 hour" (* 6 60 60) (lambda () (elfeed-update) (elfeed-db-save)))
   (evil-leader/set-key "a e" 'elfeed)
   :config
