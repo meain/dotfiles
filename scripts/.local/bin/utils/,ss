@@ -4,6 +4,9 @@
 
 set -e
 
+dn="$(dirname "$1")"
+mkdir -p "$SCRIPTS_DIR/$dn"
+
 if [ -z "$1" ]; then
 	file=$(find "$SCRIPTS_DIR"/* -type f | sed "s|$SCRIPTS_DIR/||" | ,picker --preview "cat $SCRIPTS_DIR/{}" --print-query | tail -n 1)
 	[ -z "$file" ] && exit 1
