@@ -94,7 +94,10 @@ function _git_repo_base(){
 
 _tmux_indicator='!'
 
-if [[ -n "$IN_NIX_SHELL" ]] ; then
+
+if [[ -n "$DISTROBOX_ENTER_PATH" ]] ; then
+  local _tmux_indicator="@"
+elif [[ -n "$IN_NIX_SHELL" ]] ; then
   local _tmux_indicator="#"
 elif [[ -n "$TMUX" ]] ; then
   local _tmux_indicator="="
