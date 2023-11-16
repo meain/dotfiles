@@ -4,9 +4,10 @@
 
 set -e
 
-package=$(ls /nix/store | grep -vE '\.drv$' | sed 's/[^-]*-//' | sort -u | ,picker)
-[ -z $package ] && return 0
+package=$(ls /nix/store | grep -vE '\.drv$|\.patch$|\.diff$|\.gz$|\.sh$|\.service$' | sed 's/[^-]*-//' | sort -u | ,picker)
+[ -z "$package" ] && return 0
 fullname=$(ls /nix/store | grep -E "$package$" | head -n1)
 echo "Visualizing $fullname"
-nix-store -q --graph "/nix/store/$fullname" | dot -Tsvg >/tmp/nixgraph.svg
+# nix-store -q --tree "/nix/store/$fullname"
+nix-store -q --graph "/nix/store/$fullname" | tee /tmp/nixgraph.dot | dot -Tsvg >/tmp/nixgraph.svg
 open /tmp/nixgraph.svg
