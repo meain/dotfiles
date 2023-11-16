@@ -25,7 +25,7 @@ XF86MonBrightness{Down,Up}
 
 # lock screen
 super + {shift, alt+control} + z
-      ,lock-screen{ -n , && systemctl suspend }
+      ,lock-screen{ -n , && sleep 3 && systemctl suspend }
 
 # dmenu
 super + {d,shift+d}
@@ -60,8 +60,7 @@ super + alt + control + l ; {l, m, f, i, r, shift + r}
       , firefox \
       , \,linkify | xargs -I\{\} notify Linkify '\{\}' \
       , \,record-screen \
-      , \,record-screen --select
-      }
+      , \,record-screen --select}
 
 super + alt + control + k
 	  i3-msg focus output eDP && sleep .3 && xdotool key ctrl+k
