@@ -4,4 +4,4 @@
 
 set -e
 
-git diff --name-only --diff-filter=U | xargs "$EDIOR"
+git diff --name-only --diff-filter=U | xargs -n1 "$EDITOR"
