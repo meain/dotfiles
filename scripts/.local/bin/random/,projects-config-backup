@@ -3,44 +3,29 @@
 # Backup all project config files not backed up to project git to a separate git server
 
 SAVEPATH="$HOME/.local/share/untracked-project-configs"
-mkdir -p $SAVEPATH
+mkdir -p "$SAVEPATH"
 
 backup_loc() {
 	tput el && echo "Saving $1..."
-	fd -HI '^\.git$' $HOME/dev | grep -v '/temp/' |
+	fd -HI '^\.git$' "$HOME/dev" | grep -v '/temp/' |
 		while read -r path; do
-			dir="$(dirname $path)"
+			dir="$(dirname "$path")"
 			[ -e "$dir/$1" ] || continue
-			cleanpath="$(echo $dir | sed 's|^/home/meain/dev/||')"
-			tput el && printf "$cleanpath\r"
+			cleanpath="$(echo "$dir" | sed 's|^/home/meain/dev/||')"
+			tput el && printf "%s\r" "$cleanpath"
 			mkdir -p "$SAVEPATH/$cleanpath"
 			cp -r "$dir/$1" "$SAVEPATH/$cleanpath/$1"
 		done
 }
 
-backup_remotes() {
-	echo "Saving git remotes..."
-	fd -HI '^\.git$' $HOME/dev | grep -v '/temp/' |
-		while read -r path; do
-			dir="$(dirname $path)"
-			cleanpath="$(echo $dir | sed 's|^/home/meain/dev/||')"
-			tput el && printf "$cleanpath\r"
-			mkdir -p "$SAVEPATH/$cleanpath"
-			git --git-dir="$path" remote |
-				while read -r remote; do
-					echo "$remote $(git --git-dir="$path" remote get-url "$remote")"
-				done >"$SAVEPATH/$cleanpath/GIT_REMOTES"
-		done
-}
-
-backup_remotes
+backup_loc .git/config
 backup_loc .mscripts
 backup_loc shell.nix
 backup_loc default.nix
 backup_loc .dir-locals.el
 backup_loc default.rest
 
-cd $SAVEPATH
+cd "$SAVEPATH" || exit 1
 git add .
 git commit -m 'Update project configs'
 git push origin master
