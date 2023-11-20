@@ -11,8 +11,6 @@
     bleeding.url = "nixpkgs/nixos-unstable"; # another experimental commit of nixpkgs
     stable.url = "nixpkgs/nixos-23.05";
 
-    pinned-firefox.url = "github:nixos/nixpkgs/5ba549eafcf3e33405e5f66decd1a72356632b96";
-
     nur.url = "github:nix-community/NUR";
     personal = {
       url = "path:/home/meain/dev/src/nur-packages";
@@ -28,7 +26,6 @@
     , homeManager
     , bleeding
     , stable
-    , pinned-firefox
     , nur
     , personal
     , emacsOverlay
@@ -37,7 +34,7 @@
       homeConfigurations =
         let
           homeConfig = import ./home.nix {
-            inherit bleeding stable pinned-firefox personal tree-grepper;
+            inherit bleeding stable personal tree-grepper;
           };
         in
         {

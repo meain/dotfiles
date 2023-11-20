@@ -1,4 +1,4 @@
-{ personal, bleeding, stable, pinned-firefox, tree-grepper, ... }:
+{ personal, bleeding, stable, tree-grepper, ... }:
 { pkgs, ... }:
 let
   ppkgs = personal.packages.x86_64-linux;
@@ -235,7 +235,7 @@ in
     pkgs.mpv # audio/video player
     # pkgs.kitty
     # pkgs.alacritty # terminal emulator
-    pinned-firefox.legacyPackages.x86_64-linux.firefox # working OSS browser (using pinned version as the latest one has issues with overriding font)
+    pkgs.firefox # browser
     # pkgs.chromium # because Google hates firefox
     # pkgs.guake # drop down terminal
     # pkgs.insomnia # simpler postman
