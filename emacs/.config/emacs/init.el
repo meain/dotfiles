@@ -1852,6 +1852,11 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   :elpaca t
   :after (project flymake)
   :config
+  ;; Supposedly speed up eglot
+  ;; https://www.reddit.com/r/emacs/comments/17jrsmv/comment/k74b3tg/
+  (advice-add 'jsonrpc--log-event :override #'ignore)
+  (setopt eglot-events-buffer-size 10)
+
   (setq eglot-autoshutdown t)
   (setq eglot-sync-connect nil)
   (setq eglot-extend-to-xref t) ;; extend eglot to files gone to with go-to-def
