@@ -202,6 +202,8 @@
 (setq gc-cons-threshold most-positive-fixnum gc-cons-percentage 0.6)
 (add-hook 'emacs-startup-hook
           (lambda ()
-            (setq gc-cons-threshold 16777216 gc-cons-percentage 0.1)))
+            (setq gc-cons-threshold (* 1024 1024 300) gc-cons-percentage 0.1)
+            (run-with-idle-timer 2 t (lambda () (garbage-collect)))))
+
 
 ;;; early-init.el ends here
