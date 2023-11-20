@@ -2179,6 +2179,7 @@ list of available pages."
 
 ;; Structural diff using difftastic
 (use-package difftastic
+  :disabled t
   :elpaca (:host github :repo "pkryger/difftastic.el")
   :config
   (eval-after-load 'magit-diff
@@ -2735,6 +2736,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 
 (use-package rust-mode :elpaca t :defer t)
 (use-package clojure-mode :elpaca t :defer t)
+(use-package zig-mode :elpaca t :defer t)
 (use-package go-mode
   :elpaca t
   :defer t
@@ -3481,6 +3483,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 ;; Kubernetes
 (use-package kubernetes
   :elpaca t
+  :disabled t
   :defer t
   :commands (meain/kube)
   :config
