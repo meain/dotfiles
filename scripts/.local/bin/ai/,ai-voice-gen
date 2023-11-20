@@ -1,0 +1,29 @@
+#!/bin/sh
+
+set -e
+
+prompt="$*"
+[ -z "$prompt" ] && prompt="$(cat /dev/stdin)"
+
+printf "Generating clip...\r"
+
+voices="alloy|echo|fable|onyx|nova|shimmer"
+voice=$(echo $voices | tr "|" "\n" | fzf)
+
+dir="$HOME/.cache/openai/audio/generated"
+fname="$(date '+%F')-$voice"
+
+mkdir -p "$dir"
+
+curl -s https://api.openai.com/v1/audio/speech \
+    -H "Authorization: Bearer $OPENAI_API_KEY" \
+    -H "Content-Type: application/json" \
+    -d "{
+    \"model\": \"tts-1\",
+    \"input\": \"$prompt\",
+    \"voice\": \"$voice\"
+  }" \
+    --output "$dir/$fname.mp3"
+
+echo "$prompt" >"$dir/$fname.txt"
+mpv "$dir/$fname.mp3"

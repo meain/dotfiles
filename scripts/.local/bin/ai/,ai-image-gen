@@ -1,0 +1,28 @@
+#!/bin/sh
+# https://openai.com/blog/dall-e-api-now-available-in-public-beta
+
+set -e
+
+prompt="$*"
+[ -z "$prompt" ] && prompt="$(cat /dev/stdin)"
+
+echo "$prompt"
+printf "Generating image...\r"
+
+out=$(curl -s https://api.openai.com/v1/images/generations \
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer $OPENAI_API_KEY" \
+    -d "{\"prompt\": \"$prompt\", \"n\":1, \"size\":\"1024x1024\"}")
+
+dir="$HOME/.cache/openai/images/generated"
+fname="$(date '+%F')-$(echo "$out" | jq -r '.created')"
+
+mkdir -p "$dir"
+
+printf "Downloading image...\r"
+echo "$out" | jq -r '.data[0].url' | xargs curl -s -o "$dir/$fname.png"
+echo "$prompt" > "$dir/$fname.txt"
+echo "$out" >> "$dir/$fname.txt"
+
+echo "Generated image: $dir/$fname.png"
+printf "$dir/$fname.png" | pbcopy

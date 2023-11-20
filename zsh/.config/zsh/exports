@@ -39,6 +39,7 @@ PATH=$HOME/.local/bin/docker:$PATH
 PATH=$HOME/.local/bin/kubernetes:$PATH
 PATH=$HOME/.local/bin/music:$PATH
 PATH=$HOME/.local/bin/tmux:$PATH
+PATH=$HOME/.local/bin/ai:$PATH
 export PATH
 
 # rustup and cargo
