@@ -4202,6 +4202,7 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
                   ('typescript-ts-mode (format "console.log(\"%s %s:\", %s)" prefix escaped-thing-to-print thing-to-print))
                   ('web-mode (format "console.log(\"%s %s:\", %s)" prefix escaped-thing-to-print thing-to-print))
                   ('shell-script-mode (format "echo \"%s %s:\" %s" prefix escaped-thing-to-print thing-to-print))
+                  ('python-ts-mode (format "print(\"%s %s:\", %s)" prefix escaped-thing-to-print thing-to-print))
                   ('python-mode (format "print(\"%s %s:\", %s)" prefix escaped-thing-to-print thing-to-print))))))
     (evil-force-normal-state))
   :init
