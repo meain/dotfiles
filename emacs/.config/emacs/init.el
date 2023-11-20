@@ -3091,7 +3091,9 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
     (let* (;; email sender
            (props (notmuch-show-get-message-properties))
            (sender (plist-get (plist-get props :headers) :From))
-           (email (string-trim (car (string-split (cadr (string-split sender "<")) ">"))))
+           (email (if (s-contains-p "<" sender)
+                      (string-trim (car (string-split (cadr (string-split sender "<")) ">")))
+                    sender))
 
            ;; location to paste
            (mailtag-file (car (string-split (shell-command-to-string "where mailtag") "\n")))
