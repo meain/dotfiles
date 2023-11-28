@@ -33,4 +33,51 @@
     Timer.Persistent = true;
     Install.WantedBy = [ "timers.target" ];
   };
+
+  # generate github bookmarks
+  gh-bookmarks = { repo, basename, basekeyword }:
+    [
+      {
+        name = basename;
+        tags = [ "github" ];
+        keyword = basekeyword;
+        url = "https://github.com/" + repo;
+      }
+      {
+        name = basename + " Issues";
+        tags = [ "github" ];
+        keyword = basekeyword + "i";
+        url = "https://github.com/" + repo + "/issues";
+      }
+      {
+        name = basename + " Issues Assigned to me";
+        tags = [ "github" ];
+        keyword = basekeyword + "im";
+        url = "https://github.com/" + repo + "/issues/assigned/@me";
+      }
+      {
+        name = basename + " Pull Requests";
+        tags = [ "github" ];
+        keyword = basekeyword + "p";
+        url = "https://github.com/" + repo + "/pulls";
+      }
+      {
+        name = basename + " Pull Requests Assigned to me";
+        tags = [ "github" ];
+        keyword = basekeyword + "pm";
+        url = "https://github.com/" + repo + "/pulls/assigned/@me";
+      }
+      {
+        name = basename + " Pull Requests Review Requested to me";
+        tags = [ "github" ];
+        keyword = basekeyword + "pr";
+        url = "https://github.com/" + repo + "/pulls/review-requested/@me";
+      }
+      {
+        name = basename + " Actions";
+        tags = [ "github" ];
+        keyword = basekeyword + "a";
+        url = "https://github.com/" + repo + "/actions";
+      }
+    ];
 }
