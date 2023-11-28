@@ -1,0 +1,20 @@
+#!/bin/sh
+
+set -ex
+
+printf "Hardcore? [y/N] "
+read -r answer
+
+trash-empty
+command rm -rf ~/.local/share/rr
+
+nix-collect-garbage
+nix-store --optimize
+
+docker system prune -a
+
+[ "$answer" != "y" ] && exit 0
+
+nix-collect-garbage -d
+go clean -cache
+command rm -rf ~/.local/share/{go,containers} # kinda hardcore
