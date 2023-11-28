@@ -120,7 +120,9 @@ in
 
         # other
         "devtools.cache.disabled" = true; # disable caching in devtools
+        "devtools.toolbox.host" = "right"; # move devtools to right
         # "browser.ssb.enabled" = true; # enable site specific browser
+        "media.autoplay.default" = 0; # enable autoplay on open
 
         # override fonts (Set tracking protection to custom without "Suspected fingerprinters")
         "font.minimum-size.x-western" = 13;
