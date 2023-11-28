@@ -35,6 +35,29 @@
         "type": "github"
       }
     },
+    "firefox-addons": {
+      "inputs": {
+        "flake-utils": "flake-utils_2",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "dir": "pkgs/firefox-addons",
+        "lastModified": 1701057768,
+        "narHash": "sha256-QGOGCykgZTigwUplp0NQpgyjcCEoOyvPU06ULeU+UDY=",
+        "owner": "rycee",
+        "repo": "nur-expressions",
+        "rev": "68923e728ab16b1bb90c77cf2b991342109316c3",
+        "type": "gitlab"
+      },
+      "original": {
+        "dir": "pkgs/firefox-addons",
+        "owner": "rycee",
+        "repo": "nur-expressions",
+        "type": "gitlab"
+      }
+    },
     "flake-utils": {
       "inputs": {
         "systems": "systems"
@@ -54,6 +77,21 @@
       }
     },
     "flake-utils_2": {
+      "locked": {
+        "lastModified": 1629284811,
+        "narHash": "sha256-JHgasjPR0/J1J3DRm4KxM4zTyAj4IOJY8vIl75v/kPI=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "c5d161cc0af116a2e17f54316f0bf43f0819785c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "flake-utils_3": {
       "inputs": {
         "systems": "systems_2"
       },
@@ -198,8 +236,8 @@
         ]
       },
       "locked": {
-        "lastModified": 1699082082,
-        "narHash": "sha256-1GQAs/NczdRt3LmAJjerKMv582tFWB4bnS9aoKVn98E=",
+        "lastModified": 1701061094,
+        "narHash": "sha256-u2LFGNxTHBGxIgd9g3dpgNbILYpBdSTekswyINqGA80=",
         "path": "/home/meain/dev/src/nur-packages",
         "type": "path"
       },
@@ -212,6 +250,7 @@
       "inputs": {
         "bleeding": "bleeding",
         "emacsOverlay": "emacsOverlay",
+        "firefox-addons": "firefox-addons",
         "homeManager": "homeManager",
         "nixpkgs": "nixpkgs_2",
         "nur": "nur",
@@ -267,7 +306,7 @@
     },
     "tree-grepper": {
       "inputs": {
-        "flake-utils": "flake-utils_2",
+        "flake-utils": "flake-utils_3",
         "naersk": "naersk",
         "nixpkgs": "nixpkgs_3",
         "tree-sitter-c": "tree-sitter-c",

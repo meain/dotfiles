@@ -1,11 +1,11 @@
-{ personal, bleeding, stable, tree-grepper, ... }:
+{ personal, bleeding, stable, tree-grepper, firefox-addons, ... }:
 { pkgs, ... }:
 let
   ppkgs = personal.packages.x86_64-linux;
   bpkgs = bleeding.legacyPackages.x86_64-linux;
   spkgs = stable.legacyPackages.x86_64-linux;
   utils = import ./utils.nix { inherit pkgs; };
-  fonts = import ./fonts.nix { inherit pkgs; inherit spkgs; };
+  fonts = import ./fonts.nix { inherit pkgs spkgs; };
 in
 {
   home.stateVersion = "21.05";
@@ -19,6 +19,158 @@ in
     package = pkgs.emacs-git;
     enable = true;
     extraPackages = epkgs: [ epkgs.vterm ];
+  };
+
+  programs.firefox = {
+    enable = true;
+    profiles.meain = {
+      # TODO: How to set default search engine?
+      search.engines = {
+        "DuckDuckGo" = {
+          urls = [{
+            template = "https://duckduckgo.com";
+            params = [
+              { name = "q"; value = "{searchTerms}"; }
+            ];
+          }];
+          definedAliases = [ ",d" ];
+        };
+        "Google" = {
+          urls = [{
+            template = "https://google.com/search";
+            params = [
+              { name = "q"; value = "{searchTerms}"; }
+            ];
+          }];
+          definedAliases = [ ",g" ];
+        };
+        "Nix Packages" = {
+          urls = [{
+            template = "https://search.nixos.org/packages";
+            params = [
+              { name = "type"; value = "packages"; }
+              { name = "query"; value = "{searchTerms}"; }
+            ];
+          }];
+          definedAliases = [ ",ns" ];
+        };
+        "Wikipedia" = {
+          urls = [{
+            template = "https://en.wikipedia.org/wiki/Special:Search";
+            params = [
+              { name = "search"; value = "{searchTerms}"; }
+            ];
+          }];
+          definedAliases = [ ",w" ];
+        };
+      };
+      search.force = true;
+
+      bookmarks = [
+        {
+          name = "GitHub Notifications";
+          tags = [ "work" ];
+          keyword = "gn";
+          url = "https://github.com/notifications";
+        }
+      ];
+
+      settings = {
+        "dom.security.https_only_mode" = true; # force https
+        "browser.download.panel.shown" = true; # show download panel
+        "identity.fxaccounts.enabled" = false; # disable firefox accounts
+        "signon.rememberSignons" = false; # disable saving passwords
+        "extensions.pocket.enabled" = false; # disable pocket
+        "app.shield.optoutstudies.enabled" = false; # disable shield studies
+        "app.update.auto" = false; # disable auto update
+        "browser.bookmarks.restore_default_bookmarks" = false; # don't restore default bookmarks
+        "browser.quitShortcut.disabled" = true; # disable ctrl+q
+        "browser.shell.checkDefaultBrowser" = false; # don't check if default browser
+
+        # download handling
+        "browser.download.dir" = "/home/meain/down"; # default download dir
+        "browser.startup.page" = 3; # restore previous session
+
+        # ui changes
+        "browser.aboutConfig.showWarning" = false; # disable warning about about:config
+        "browser.compactmode.show" = true; # disable compact mode
+        "browser.uidensity" = 1;
+        "general.autoScroll" = true; # enable autoscroll
+        "browser.tabs.firefox-view" = false; # enable firefox view
+        "browser.toolbars.bookmarks.visibility" = "never"; # hide bookmarks toolbar
+        "media.videocontrols.picture-in-picture.video-toggle.enabled" = false; # disable picture in picture button
+        "startup.homepage_welcome_url" = ""; # disable welcome page
+        "browser.newtabpage.enabled" = false; # disable new tab page
+
+        # privacy
+        "browser.contentblocking.category" = "custom"; # set tracking protection to custom
+        "browser.discovery.enabled" = false; # disable discovery
+        "browser.search.suggest.enabled" = false; # disable search suggestions
+        "browser.protections_panel.infoMessage.seen" = true; # disable tracking protection info
+
+        # let me close and open tabs without confirmation
+        "browser.tabs.closeWindowWithLastTab" = false; # don't close window when last tab is closed
+        "browser.tabs.loadBookmarksInTabs" = true; # open bookmarks in new tab
+        "browser.tabs.loadDivertedInBackground" = true; # open new tab in background
+        "browser.tabs.loadInBackground" = true; # open new tab in background
+        "browser.tabs.warnOnClose" = false; # don't warn when closing multiple tabs
+        "browser.tabs.warnOnCloseOtherTabs" = false; # don't warn when closing multiple tabs
+        "browser.tabs.warnOnOpen" = false; # don't warn when opening multiple tabs
+        "browser.tabs.warnOnQuit" = false; # don't warn when closing multiple tabs
+
+        # other
+        "devtools.cache.disabled" = true; # disable caching in devtools
+        # "browser.ssb.enabled" = true; # enable site specific browser
+
+        # override fonts (Set tracking protection to custom without "Suspected fingerprinters")
+        "font.minimum-size.x-western" = 13;
+        "font.size.fixed.x-western" = 15;
+        "font.size.monospace.x-western" = 15;
+        "font.size.variable.x-western" = 15;
+        "font.name.monospace.x-western" = "Monaspace Neon";
+        "font.name.sans-serif.x-western" = "Monaspace Neon";
+        "font.name.serif.x-western" = "Monaspace Neon";
+        "browser.display.use_document_fonts" = 0;
+      };
+
+      userChrome = ''
+        /* some css */
+      '';
+
+      extensions = with firefox-addons.packages."x86_64-linux"; [
+        bitwarden
+        clearurls
+        darkreader
+        decentraleyes
+        greasemonkey
+        multi-account-containers
+        privacy-badger
+        redirector
+        refined-github
+        return-youtube-dislikes
+        sidebery
+        sponsorblock
+        stylus
+        ublock-origin
+        vimium
+        wallabagger
+        youtube-shorts-block
+
+        # missing
+        # https://addons.mozilla.org/en-US/firefox/addon/awesome-rss/
+        # https://addons.mozilla.org/en-US/firefox/addon/aw-watcher-web/
+        # https://addons.mozilla.org/en-US/firefox/addon/containerise/
+        # https://addons.mozilla.org/en-US/firefox/addon/ghostpage/
+        # https://addons.mozilla.org/en-US/firefox/addon/mastodon4-redirect/
+        # https://addons.mozilla.org/en-US/firefox/addon/nattynote/
+        # https://addons.mozilla.org/en-US/firefox/addon/netflix-prime-auto-skip/
+        # https://addons.mozilla.org/en-US/firefox/addon/notifications-preview-github/
+        # https://addons.mozilla.org/en-US/firefox/addon/smartreader/
+        # https://addons.mozilla.org/en-US/firefox/addon/unofficial-hypothesis/
+        # https://addons.mozilla.org/en-US/firefox/addon/watchmarker-for-youtube/
+      ];
+
+    };
   };
 
   services.syncthing.enable = true;
@@ -235,7 +387,7 @@ in
     pkgs.mpv # audio/video player
     # pkgs.kitty
     # pkgs.alacritty # terminal emulator
-    pkgs.firefox # browser
+    # pkgs.firefox # browser
     # pkgs.chromium # because Google hates firefox
     # pkgs.guake # drop down terminal
     # pkgs.insomnia # simpler postman

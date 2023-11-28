@@ -18,6 +18,11 @@
     };
     emacsOverlay.url = "github:nix-community/emacs-overlay";
     tree-grepper.url = "github:BrianHicks/tree-grepper";
+
+    firefox-addons = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -30,11 +35,12 @@
     , personal
     , emacsOverlay
     , tree-grepper
+    , firefox-addons
     }: {
       homeConfigurations =
         let
           homeConfig = import ./home.nix {
-            inherit bleeding stable personal tree-grepper;
+            inherit bleeding stable personal tree-grepper firefox-addons;
           };
         in
         {
