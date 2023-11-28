@@ -138,6 +138,7 @@ in
       '';
 
       extensions = with firefox-addons.packages."x86_64-linux"; [
+        # https://gitlab.com/rycee/nur-expressions/-/blob/master/pkgs/firefox-addons/addons.json?ref_type=heads
         bitwarden
         clearurls
         darkreader
@@ -156,18 +157,20 @@ in
         wallabagger
         youtube-shorts-block
 
-        # missing
-        # https://addons.mozilla.org/en-US/firefox/addon/awesome-rss/
-        # https://addons.mozilla.org/en-US/firefox/addon/aw-watcher-web/
-        # https://addons.mozilla.org/en-US/firefox/addon/containerise/
-        # https://addons.mozilla.org/en-US/firefox/addon/ghostpage/
-        # https://addons.mozilla.org/en-US/firefox/addon/mastodon4-redirect/
-        # https://addons.mozilla.org/en-US/firefox/addon/nattynote/
-        # https://addons.mozilla.org/en-US/firefox/addon/netflix-prime-auto-skip/
-        # https://addons.mozilla.org/en-US/firefox/addon/notifications-preview-github/
-        # https://addons.mozilla.org/en-US/firefox/addon/smartreader/
-        # https://addons.mozilla.org/en-US/firefox/addon/unofficial-hypothesis/
-        # https://addons.mozilla.org/en-US/firefox/addon/watchmarker-for-youtube/
+        # personally packaged
+        ppkgs.firefox-addons.awesome-rss
+        ppkgs.firefox-addons.aw-watcher-web
+        ppkgs.firefox-addons.containerise
+        ppkgs.firefox-addons.ghostpage
+        ppkgs.firefox-addons.mastodon4-redirect
+        ppkgs.firefox-addons.nattynote
+        ppkgs.firefox-addons.netflix-prime-auto-skip
+        ppkgs.firefox-addons.notifications-preview-github
+        ppkgs.firefox-addons.smartreader
+        ppkgs.firefox-addons.unofficial-hypothesis
+        ppkgs.firefox-addons.watchmarker-for-youtube
+        ppkgs.firefox-addons.a-n-i-m-a-t-e-d-kitty-cat
+        ppkgs.firefox-addons.global-speed
       ];
 
     };
@@ -474,6 +477,7 @@ in
     pkgs.feh # image viewer (for desktop background)
     pkgs.kopia # backup
     pkgs.distrobox # run other distros and packages
+    pkgs.nur.repos.rycee.mozilla-addons-to-nix # package firefox addons
 
     # gnome tweaking
     # pkgs.gnome3.dconf-editor # change dconf settings
