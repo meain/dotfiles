@@ -54,6 +54,15 @@ in
           }];
           definedAliases = [ ",ns" ];
         };
+        "YouTube" = {
+          urls = [{
+            template = "https://www.youtube.com/results";
+            params = [
+              { name = "search_query"; value = "{searchTerms}"; }
+            ];
+          }];
+          definedAliases = [ ",yt" ];
+        };
         "Wikipedia" = {
           urls = [{
             template = "https://en.wikipedia.org/wiki/Special:Search";
@@ -63,17 +72,64 @@ in
           }];
           definedAliases = [ ",w" ];
         };
+        "DockerHub" = {
+          urls = [{
+            template = "https://hub.docker.com/search";
+            params = [
+              { name = "q"; value = "{searchTerms}"; }
+            ];
+          }];
+          definedAliases = [ ",dh" ];
+        };
+        "GitHub" = {
+          urls = [{
+            template = "https://github.com/search";
+            params = [
+              { name = "q"; value = "{searchTerms}"; }
+            ];
+          }];
+          definedAliases = [ ",gh" ];
+        };
       };
       search.force = true;
 
       bookmarks = [
         {
           name = "GitHub Notifications";
-          tags = [ "work" ];
           keyword = "gn";
           url = "https://github.com/notifications";
         }
-      ];
+        {
+          name = "Calendar";
+          keyword = "cal";
+          url = "https://calendar.google.com/calendar/r";
+        }
+        {
+          name = "Email";
+          keyword = "mail";
+          url = "https://mail.google.com/mail/u/0/#inbox";
+        }
+        {
+          name = "Outlook Calendar";
+          keyword = "ocal";
+          url = "https://outlook.office.com/calendar/view/month";
+        }
+        {
+          name = "Outlook Mail";
+          keyword = "omail";
+          url = "https://outlook.office.com/mail/inbox";
+        }
+      ] ++
+      utils.gh-bookmarks {
+        repo = "NixOS/nixpkgs";
+        basename = "nixpkgs";
+        basekeyword = "nip";
+      } ++
+      utils.gh-bookmarks {
+        repo = "alcionai/corso";
+        basename = "Corso";
+        basekeyword = "cor";
+      };
 
       settings = {
         "dom.security.https_only_mode" = true; # force https
@@ -158,6 +214,7 @@ in
         vimium
         wallabagger
         youtube-shorts-block
+        youtube-recommended-videos
 
         # personally packaged
         ppkgs.firefox-addons.awesome-rss
@@ -173,6 +230,7 @@ in
         ppkgs.firefox-addons.watchmarker-for-youtube
         ppkgs.firefox-addons.a-n-i-m-a-t-e-d-kitty-cat
         ppkgs.firefox-addons.global-speed
+        ppkgs.firefox-addons.try-another-search-engine
       ];
 
     };
