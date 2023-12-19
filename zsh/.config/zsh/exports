@@ -24,6 +24,9 @@ export PATH=$HOME/.local/cache/gems/bin:$PATH
 # node
 export NVM_DIR="$HOME/.local/cache/nvm"
 
+# deno
+export PATH="/home/meain/.deno/bin:$PATH"
+
 # Latex (macos)
 PATH=/Library/TeX/texbin:$PATH
 
