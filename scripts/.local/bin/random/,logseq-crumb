@@ -19,6 +19,15 @@ elif echo "$url" | grep -q '^https://github.com'; then
     license="$(jq -r '.license.name' /tmp/gh-repo-page)"
     # tags="$(jq -r '.topics[]' /tmp/gh-repo-page | sed 's/^/[[/;s/$/]]/' | tr '\n' ' ')" # has unnecessary tags
     printf "##### %s - %s\nproducer:: [[GH:%s]]\ntype:: [[project]]\nlink:: %s\nlicense:: [[%s]]\ntags::" "$name" "$desc" "$creator" "$url" "$license"
+elif echo "$url" | grep -q '^https://www.amazon'; then
+    out="$(curl -sL -H 'Accept-Encoding:text/html' "$url")"
+
+    price="$(echo "$out" | pup 'span.a-price span.a-offscreen text{}' | head -n1)"
+    ratingValue="$(echo "$out" | pup 'div[data-csa-c-painter="seo-schema-card-cards"] script text{}' | jq -r '.aggregateRating.ratingValue')"
+    reviewCount="$(echo "$out" | pup 'div[data-csa-c-painter="seo-schema-card-cards"] script text{}' | jq -r '.aggregateRating.reviewCount')"
+    name="$(echo "$out" | pup 'div[data-csa-c-painter="seo-schema-card-cards"] script text{}' | jq -r '.name')"
+
+    printf "%s\nlink:: %s\nprice:: %s\nrating:: %s (%s)\ntags::" "$name" "$url" "$price" "$ratingValue" "$reviewCount"
 else
     page="$(curl -s "$url")"
     title="$(echo "$page" | pup 'title text{}')"
