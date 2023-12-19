@@ -6,6 +6,7 @@ let
   spkgs = stable.legacyPackages.x86_64-linux;
   utils = import ./utils.nix { inherit pkgs; };
   fonts = import ./fonts.nix { inherit pkgs spkgs; };
+  rbm = import ./repo_bookmarks.nix { inherit utils; };
 in
 {
   home.stateVersion = "21.05";
@@ -24,74 +25,81 @@ in
   programs.firefox = {
     enable = true;
     profiles.meain = {
-      # TODO: How to set default search engine?
-      search.engines = {
-        "DuckDuckGo" = {
-          urls = [{
-            template = "https://duckduckgo.com";
-            params = [
-              { name = "q"; value = "{searchTerms}"; }
-            ];
-          }];
-          definedAliases = [ ",d" ];
-        };
-        "Google" = {
-          urls = [{
-            template = "https://google.com/search";
-            params = [
-              { name = "q"; value = "{searchTerms}"; }
-            ];
-          }];
-          definedAliases = [ ",g" ];
-        };
-        "Nix Packages" = {
-          urls = [{
-            template = "https://search.nixos.org/packages";
-            params = [
-              { name = "type"; value = "packages"; }
-              { name = "query"; value = "{searchTerms}"; }
-            ];
-          }];
-          definedAliases = [ ",ns" ];
-        };
-        "YouTube" = {
-          urls = [{
-            template = "https://www.youtube.com/results";
-            params = [
-              { name = "search_query"; value = "{searchTerms}"; }
-            ];
-          }];
-          definedAliases = [ ",yt" ];
-        };
-        "Wikipedia" = {
-          urls = [{
-            template = "https://en.wikipedia.org/wiki/Special:Search";
-            params = [
-              { name = "search"; value = "{searchTerms}"; }
-            ];
-          }];
-          definedAliases = [ ",w" ];
-        };
-        "DockerHub" = {
-          urls = [{
-            template = "https://hub.docker.com/search";
-            params = [
-              { name = "q"; value = "{searchTerms}"; }
-            ];
-          }];
-          definedAliases = [ ",dh" ];
-        };
-        "GitHub" = {
-          urls = [{
-            template = "https://github.com/search";
-            params = [
-              { name = "q"; value = "{searchTerms}"; }
-            ];
-          }];
-          definedAliases = [ ",gh" ];
+      search = {
+        default = "DuckDuckGo";
+        force = true;
+        engines = {
+          # don't need these default ones
+          "Amazon.com".metaData.hidden = true;
+          "Bing".metaData.hidden = true;
+          "eBay".metaData.hidden = true;
+
+          "DuckDuckGo" = {
+            urls = [{
+              template = "https://duckduckgo.com";
+              params = [
+                { name = "q"; value = "{searchTerms}"; }
+              ];
+            }];
+            definedAliases = [ ",d" ];
+          };
+          "Google" = {
+            urls = [{
+              template = "https://google.com/search";
+              params = [
+                { name = "q"; value = "{searchTerms}"; }
+              ];
+            }];
+            definedAliases = [ ",g" ];
+          };
+          "Nix Packages" = {
+            urls = [{
+              template = "https://search.nixos.org/packages";
+              params = [
+                { name = "type"; value = "packages"; }
+                { name = "query"; value = "{searchTerms}"; }
+              ];
+            }];
+            definedAliases = [ ",ns" ];
+          };
+          "YouTube" = {
+            urls = [{
+              template = "https://www.youtube.com/results";
+              params = [
+                { name = "search_query"; value = "{searchTerms}"; }
+              ];
+            }];
+            definedAliases = [ ",yt" ];
+          };
+          "Wikipedia" = {
+            urls = [{
+              template = "https://en.wikipedia.org/wiki/Special:Search";
+              params = [
+                { name = "search"; value = "{searchTerms}"; }
+              ];
+            }];
+            definedAliases = [ ",w" ];
+          };
+          "DockerHub" = {
+            urls = [{
+              template = "https://hub.docker.com/search";
+              params = [
+                { name = "q"; value = "{searchTerms}"; }
+              ];
+            }];
+            definedAliases = [ ",dh" ];
+          };
+          "GitHub" = {
+            urls = [{
+              template = "https://github.com/search";
+              params = [
+                { name = "q"; value = "{searchTerms}"; }
+              ];
+            }];
+            definedAliases = [ ",gh" ];
+          };
         };
       };
-      search.force = true;
 
       bookmarks = [
         {
@@ -119,17 +127,7 @@ in
           keyword = "omail";
           url = "https://outlook.office.com/mail/inbox";
         }
-      ] ++
-      utils.gh-bookmarks {
-        repo = "NixOS/nixpkgs";
-        basename = "nixpkgs";
-        basekeyword = "nip";
-      } ++
-      utils.gh-bookmarks {
-        repo = "alcionai/corso";
-        basename = "Corso";
-        basekeyword = "cor";
-      };
+      ] ++ rbm;
 
       settings = {
         "dom.security.https_only_mode" = true; # force https
@@ -157,6 +155,8 @@ in
         "media.videocontrols.picture-in-picture.video-toggle.enabled" = false; # disable picture in picture button
         "startup.homepage_welcome_url" = ""; # disable welcome page
         "browser.newtabpage.enabled" = false; # disable new tab page
+        # "toolkit.legacyUserProfileCustomizations.stylesheets" = true; # enable userChrome.css
+        "full-screen-api.ignore-widgets" = true; # fullscreen within window
 
         # privacy
         "browser.contentblocking.category" = "custom"; # set tracking protection to custom
@@ -179,6 +179,8 @@ in
         "devtools.toolbox.host" = "right"; # move devtools to right
         # "browser.ssb.enabled" = true; # enable site specific browser
         "media.autoplay.default" = 0; # enable autoplay on open
+        "media.ffmpeg.vaapi.enabled" = true; # enable hardware acceleration
+        "media.rdd-vpx.enabled" = true; # enable hardware acceleration
 
         # override fonts (Set tracking protection to custom without "Suspected fingerprinters")
         "font.minimum-size.x-western" = 13;
@@ -195,7 +197,7 @@ in
         /* some css */
       '';
 
-      extensions = with firefox-addons.packages."x86_64-linux"; [
+      extensions = with firefox-addons.packages."${pkgs.system}"; [
         # https://gitlab.com/rycee/nur-expressions/-/blob/master/pkgs/firefox-addons/addons.json?ref_type=heads
         bitwarden
         clearurls
