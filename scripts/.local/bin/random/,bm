@@ -1,0 +1,55 @@
+#!/bin/sh
+
+# Global bookmarking (uses sqlite to store data)
+# Usage: bm [add|pick|list|remove] [bookmark]
+
+set -e
+
+VIEW_FORMAT='{print "["$NF"]",$2,"("$1")"}'
+QUERY="SELECT url, name, count FROM bookmarks ORDER BY count DESC, date DESC;"
+BM_FILE="${BM_FILE:-$HOME/.local/share/bm.db}"
+OPERATION="${1:-pick}"
+
+if [ ! -f "$BM_FILE" ]; then
+    sqlite3 "$BM_FILE" "CREATE TABLE bookmarks (url TEXT PRIMARY KEY, name TEXT, title TEXT, date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, count INTEGER DEFAULT 0);"
+fi
+
+# alter prev db to make sure date has default by modifying existing column
+# sqlite3 "$BM_FILE" "ALTER TABLE bookmarks RENAME TO bookmarks_old;"
+# sqlite3 "$BM_FILE" "CREATE TABLE bookmarks (url TEXT PRIMARY KEY, name TEXT, title TEXT, date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, count INTEGER DEFAULT 0);"
+# sqlite3 "$BM_FILE" "INSERT INTO bookmarks (url, name, title, date, count) SELECT url, name, title, date, count FROM bookmarks_old;"
+# sqlite3 "$BM_FILE" "DROP TABLE bookmarks_old;"
+
+case "$OPERATION" in
+add)
+    URL="${2:-$(pbpaste)}"
+    NAME="$3"
+    if [ -z "$NAME" ]; then
+        printf "Name: "
+        read -r name # name can include tags (comma prefix as hash is harder to enter in cli)
+    fi
+    title="$(curl -s "$URL" | grep -Eo '<title>[^<]+</title>' | sed -E 's/<title>([^<]+)<\/title>/\1/')"
+    date="$(date +%s)"
+    sqlite3 "$BM_FILE" "INSERT INTO bookmarks (url, name, title, date) VALUES ('$URL', '$name', '$title', '$date');"
+    ;;
+pick)
+    url=$(sqlite3 "$BM_FILE" "$QUERY" |
+        awk -F'|' "$VIEW_FORMAT" | ,picker |
+        awk '{print $NF}' | cut -d'(' -f2 | cut -d')' -f1)
+    if [ -n "$url" ]; then
+        sqlite3 "$BM_FILE" "UPDATE bookmarks SET count=count+1 WHERE url='$url';"
+        open "$url"
+    fi
+    ;;
+list)
+    sqlite3 "$BM_FILE" "$QUERY" |
+        awk -F'|' "$VIEW_FORMAT" | ,picker |
+        awk '{print $NF}' | cut -d'(' -f2 | cut -d')' -f1
+    ;;
+remove)
+    sqlite3 "$BM_FILE" "$QUERY" |
+        awk -F'|' "$VIEW_FORMAT" | ,picker |
+        awk '{print $NF}' | cut -d'(' -f2 | cut -d')' -f1 |
+        xargs -r -I{} sqlite3 "$BM_FILE" "DELETE FROM bookmarks WHERE url='{}';"
+    ;;
+esac

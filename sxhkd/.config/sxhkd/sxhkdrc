@@ -1,3 +1,6 @@
+# Restarting sxhkd
+# pkill -SIGUSR1 sxhkd
+
 # terminal emulator
 super + Return
 	  sakura -x 'tt default'
@@ -101,6 +104,10 @@ super + alt + control + {_, shift} + i
       { GUI_PICKER=1 zsh -ic \,se \
       , GUI_PICKER=1 zsh -ic \,run-command \
       }
+
+# bookmark manager
+super + alt + control + b
+      GUI_PICKER=1 zsh -ic \,bm pick
 
 # emoji picker
 super + alt + control + q
