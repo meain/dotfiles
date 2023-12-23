@@ -107,7 +107,7 @@ super + alt + control + {_, shift} + i
 
 # bookmark manager
 super + alt + control + b
-      GUI_PICKER=1 zsh -ic \,bm pick
+      GUI_PICKER=1 ,bm pick
 
 # emoji picker
 super + alt + control + q
