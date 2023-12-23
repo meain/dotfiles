@@ -2145,15 +2145,15 @@ list of available pages."
   :defer t
   :commands (symbol-overlay-mode symbol-overlay-put))
 
+;; magit dependency
+(use-package transient :elpaca t)
+
 ;; Magit
 (use-package magit
   :elpaca t
   :after (evil-leader transient)
   :commands (magit-status magit-commit-create magit-ignored-files)
   :init
-  ;; magit dependency
-  (use-package transient :elpaca t)
-
   (evil-leader/set-key "gg" 'magit-status)
   (evil-leader/set-key "gc" 'magit-commit-create)
   (evil-leader/set-key "gb" 'magit-blame)
@@ -2260,8 +2260,8 @@ list of available pages."
 ;; Magit todo
 (use-package magit-todos
   :elpaca t
+  :disabled t
   :defer 1
-  :after (magit)
   :config
   (magit-todos-mode))
 
