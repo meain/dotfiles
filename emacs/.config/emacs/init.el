@@ -4275,6 +4275,11 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
   (global-copilot-mode t)
   (setq copilot-idle-delay .2)
   (setq copilot-max-char -1)
+
+  ;; Suppress indentation warning from copilot
+  ;; https://github.com/zerolfx/copilot.el/pull/212#issuecomment-1862487382
+  (add-to-list 'warning-suppress-types '(copilot copilot-no-mode-indent))
+
   (define-key copilot-mode-map (kbd "M-f M-f") #'copilot-complete)
   (define-key copilot-mode-map (kbd "M-f M-j") #'copilot-next-completion)
   (define-key copilot-mode-map (kbd "M-f M-k") #'copilot-previous-completion)
