@@ -2818,6 +2818,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 (use-package jinja2-mode :elpaca t :defer t)
 (use-package config-general-mode :elpaca t :defer t :mode "/\\.env")
 (use-package vimrc-mode :elpaca t :defer t)
+(use-package sxhkdrc-mode :elpaca t :defer t)
 (use-package edit-indirect :elpaca t)
 (use-package markdown-mode
   :elpaca t
