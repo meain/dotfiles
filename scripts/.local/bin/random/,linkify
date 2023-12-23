@@ -6,31 +6,31 @@ url="$1"
 [ -z "$url" ] && url="$(pbpaste)"
 
 if ! echo "$url" | grep -qE '^https?://'; then
-	echo Not a link
-	exit 1
+    echo Not a link
+    exit 1
 fi
 
 get_title() {
-	curl -s "$1" | pup 'title text{}'
+    curl -s "$1" | pup 'title text{}'
 }
 
-link="$(
-	if echo "$url" | grep -qE '^https://github.com/[^/]*/[^/]*/issues'; then
-		printf "%s" "$url" | sed "s|https://github.com/\([^/]*/[^/]*\)/issues/\([0-9]*\)|[\1#\2]($url)|"
-	elif echo "$url" | grep -qE '^https://github.com/[^/]*/[^/]*/pull'; then
-		printf "%s" "$url" | sed "s|https://github.com/\([^/]*/[^/]*\)/pull/\([0-9]*\)|[\1#\2]($url)|"
-	elif echo "$url" | grep -qE '^https://github.com/[^/]*/[^/]*/commit'; then
-		printf "%s" "$url" | sed "s|https://github.com/\([^/]*/[^/]*\)/commit/\([0-9a-z]\{7\}\).*|[\1\@\2]($url)|"
-	elif echo "$url" | grep -qE '^https://github.com/[^/]*/[^/]*/?$'; then
-		printf "%s" "$url" | sed "s|https://github.com/\([^/]*/[^/$]*\)|[\1]($url)|"
-	elif echo "$url" | grep -qE '^https://linear.app/[^/]*/issue/[^/]*/[^/]*$'; then
-		printf "%s" "$url" | sed "s|https://linear.app/\([^/]*\)/issue/\([^/]*\)/\([^/]*\)|[linear:\1#\2]($url)|"
-	else
-		title="$(get_title "$url")"
-        [ -z "$title" ] && title="$url"
-		printf "[%s](%s)" "$title" "$url"
-	fi
-)"
-
-printf "%s" "$link" | pbcopy
-echo "$link"
+if echo "$url" | grep -qE '^https://github.com/[^/]*/[^/]*/issues'; then
+    printf "%s" "$url" | sed "s|https://github.com/\([^/]*/[^/]*\)/issues/\([0-9]*\)|[\1#\2]($url)|"
+elif echo "$url" | grep -qE '^https://github.com/[^/]*/[^/]*/pull'; then
+    printf "%s" "$url" | sed "s|https://github.com/\([^/]*/[^/]*\)/pull/\([0-9]*\)|[\1#\2]($url)|"
+elif echo "$url" | grep -qE '^https://github.com/[^/]*/[^/]*/commit'; then
+    printf "%s" "$url" | sed "s|https://github.com/\([^/]*/[^/]*\)/commit/\([0-9a-z]\{7\}\).*|[\1\@\2]($url)|"
+elif echo "$url" | grep -qE '^https://github.com/[^/]*/[^/]*/?$'; then
+    printf "%s" "$url" | sed "s|https://github.com/\([^/]*/[^/$]*\)|[\1]($url)|"
+elif echo "$url" | grep -qE '^https://linear.app/[^/]*/issue/[^/]*/[^/]*$'; then
+    printf "%s" "$url" | sed "s|https://linear.app/\([^/]*\)/issue/\([^/]*\)/\([^/]*\)|[linear:\1#\2]($url)|"
+elif echo "$url" | grep -qE '^https://teams.microsoft.com'; then
+    # Using sed here was causing issues
+    team="$(echo "$url" | grep -o 'teamName=[^&]*' | cut -d= -f2)"
+    channel="$(echo "$url" | grep -o 'channelName=[^&]*' | cut -d= -f2)"
+    printf "[Teams message in %s](%s)" "$team#$channel" "$url"
+else
+    title="$(get_title "$url")"
+    [ -z "$title" ] && title="$url"
+    printf "[%s](%s)" "$title" "$url"
+fi | tee /dev/stderr | pbcopy
