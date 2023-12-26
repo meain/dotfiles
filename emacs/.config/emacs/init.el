@@ -3485,6 +3485,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 ;; Tree sitter
 (use-package tree-sitter
   :defer 1
+  :disabled t
   :elpaca t
   :config
   (global-tree-sitter-mode)
@@ -3582,6 +3583,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 (use-package tree-sitter-langs
   :load-path "/home/meain/dev/src/tree-sitter-langs"
   :defer 1
+  :disabled t
   :after tree-sitter
   :config
   (push '(markdown-mode . markdown) tree-sitter-major-mode-language-alist)
@@ -3603,7 +3605,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 (use-package evil-textobj-tree-sitter
   :defer 1
   :load-path "/home/meain/dev/src/evil-textobj-tree-sitter/"
-  :after (evil tree-sitter)
+  :after (evil)
   :config
   (define-key evil-outer-text-objects-map "m" (evil-textobj-tree-sitter-get-textobj "import"
                                                 '((python-mode . [(import_statement) @import])
@@ -3687,7 +3689,6 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 (use-package scopeline
   :commands (scopeline-mode)
   :load-path "/home/meain/dev/src/scopeline.el"
-  :after tree-sitter
   :config (setq scopeline-overlay-prefix " ~")
   :init (add-hook 'prog-mode-hook #'scopeline-mode))
 
@@ -4752,28 +4753,28 @@ not defined, it will be saved in the `$HOME' directory."
                                          'help-echo
                                          (buffer-file-name))))
                (propertize ":%l:%c")
-               '(:eval (mode-line-idle 0.3
-                                       '(:propertize (:eval
-                                                      (if (boundp 'tree-sitter-mode)
-                                                          (let ((thing-name (meain/tree-sitter-thing-name 'class-like)))
-                                                            (if thing-name (format ":%s" thing-name)))))
-                                                     face
-                                                     hima-simple-gray)
-                                       ""))
-               '(:eval (mode-line-idle 0.3
-                                       '(:propertize (:eval
-                                                      (if (boundp 'tree-sitter-mode)
-                                                          (let ((thing-name (meain/tree-sitter-thing-name 'function-like))
-                                                                (config-nesting (meain/tree-sitter-config-nesting)))
-                                                            (if thing-name
-                                                                (format ":%s" thing-name)
-                                                              (if config-nesting
-                                                                  (format ":%s" config-nesting))))
-                                                        (when-let (func-name (which-function))
-                                                          (format ":%s" func-name))))
-                                                     face
-                                                     hima-simple-gray)
-                                       ""))
+               ;; '(:eval (mode-line-idle 0.3
+               ;;                         '(:propertize (:eval
+               ;;                                        (if (boundp 'tree-sitter-mode)
+               ;;                                            (let ((thing-name (meain/tree-sitter-thing-name 'class-like)))
+               ;;                                              (if thing-name (format ":%s" thing-name)))))
+               ;;                                       face
+               ;;                                       hima-simple-gray)
+               ;;                         ""))
+               ;; '(:eval (mode-line-idle 0.3
+               ;;                         '(:propertize (:eval
+               ;;                                        (if (boundp 'tree-sitter-mode)
+               ;;                                            (let ((thing-name (meain/tree-sitter-thing-name 'function-like))
+               ;;                                                  (config-nesting (meain/tree-sitter-config-nesting)))
+               ;;                                              (if thing-name
+               ;;                                                  (format ":%s" thing-name)
+               ;;                                                (if config-nesting
+               ;;                                                    (format ":%s" config-nesting))))
+               ;;                                          (when-let (func-name (which-function))
+               ;;                                            (format ":%s" func-name))))
+               ;;                                       face
+               ;;                                       hima-simple-gray)
+               ;;                         ""))
                '(:eval (mode-line-idle 1.0
                                        '(:propertize (:eval (if (and (project-current)
                                                                      (not (file-remote-p default-directory)))
