@@ -1812,7 +1812,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 ;; LSP
 (use-package eglot
   :commands eglot-ensure
-  :elpaca t
+  ;; :elpaca t ;; use builtin version
   :after (project flymake)
   :config
   ;; Supposedly speed up eglot
