@@ -65,6 +65,7 @@
        (order (cdr elpaca-order))
        (default-directory repo))
   (add-to-list 'load-path (if (file-exists-p build) build repo))
+  (defvar elpaca--core-date (list (string-to-number (format-time-string "%Y%m%d" emacs-build-time)))) ;; XXX: Hack to get elpaca to work
   (unless (file-exists-p repo)
     (make-directory repo t)
     (when (< emacs-major-version 28) (require 'subr-x))
@@ -88,6 +89,10 @@
     (load "./elpaca-autoloads")))
 (add-hook 'after-init-hook #'elpaca-process-queues)
 (elpaca `(,@elpaca-order))
+
+;; XXX: Hack since elpaca cannot figure out versions
+(require 'cl-lib)
+(setq elpaca-build-steps (cl-remove 'elpaca--check-version elpaca-build-steps))
 
 ;; Install use-package support
 (elpaca elpaca-use-package
