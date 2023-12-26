@@ -912,55 +912,12 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 ;; auto activating snippets
 (use-package aas
   :elpaca t
+  :after (tree-surgeon)
   ;; can't defer loading of this as we need it in every single spawned
   ;; buffer including scratch
   :init (add-hook 'find-file-hook #'aas-activate-for-major-mode)
   :config
   (aas-global-mode)
-  (defun meain/go-default-returns (type errformat)
-    "Making it a function instead of an alist so that we can handle unknown TYPE."
-    (pcase type
-      ("error" errformat)
-      ("bool" "false")
-      ("string" "\"\"")
-      ("byte" "0") ("rune" "0")
-      ("int" "0") ("int32" "0") ("int64" "0") ("uint64" "0")
-      ("float32" "0.0") ("float64" "0.0")
-      ("chan" "nil")
-      ("interface" "nil")
-      ("map" "nil")
-      ("func" "nil")
-      ((pred (string-prefix-p "<-")) "nil")
-      ((pred (string-prefix-p "[")) "nil")
-      ((pred (string-match " ")) nil) ; for situations with return name
-      ((pred (string-prefix-p "*")) (concat (replace-regexp-in-string "\*" "&" type) "{}"))
-      (_ (concat type "{}"))))
-  (defun meain/go-return-string (errformat)
-    "Get return string for go by looking up the return type of current func."
-    (let* ((f-declaration (tree-sitter-node-at-pos 'function_declaration))
-           (m-declaration (tree-sitter-node-at-pos 'method_declaration))
-           (func-node (if (eq f-declaration nil) m-declaration f-declaration))
-           (return-node (tsc-get-child-by-field func-node ':result)))
-      ;; remove extra whitespace if nothing at end
-      (replace-regexp-in-string
-       " $"
-       ""
-       (concat "return "
-               (if return-node
-                   (let ((return-node-type (tsc-node-type return-node))
-                         (return-node-text (tsc-node-text return-node)))
-                     (pcase return-node-type
-                       ('parameter_list
-                        (string-join (remove-if
-                                      #'null
-                                      (mapcar (lambda (x) (meain/go-default-returns x errformat))
-                                              (mapcar 'string-trim
-                                                      ;; TODO: maybe use ts to find actual type nodes
-                                                      (split-string
-                                                       (string-trim return-node-text "(" ")")
-                                                       ","))))
-                                     ", "))
-                       (_ (meain/go-default-returns return-node-text errformat)))))))))
   (aas-set-snippets 'global
     ";--" "—"
     ";>>" "⟶"
@@ -1015,7 +972,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
                       "\ncreated: "
                       (format-time-string "%a %d %b %Y %T")
                       "\n---\n"))))
-  (aas-set-snippets 'go-mode
+  (aas-set-snippets 'go-ts-mode
     "!+" "!="
     ";;" ":="
     ";j" (lambda () (interactive) (insert "fmt.Println(\"\")") (backward-char 2))
@@ -1057,14 +1014,18 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
       (insert "}")
       (forward-line -1)
       (indent-for-tab-command))
-    ";ie"
+    ";lf"
     (lambda ()
       (interactive)
-      (insert (concat "if err != nil { fmt.Println(\"" (read-string "Error message: ") "\", err) }")))
+      (insert (concat "if err != nil { log.Fatal(\"" (read-string "Error message: ") ": %v\", err) }")))
     ";er"
     (lambda ()
       (interactive)
-      (insert (concat "if err != nil { " (meain/go-return-string "err") " }")))
+      (call-interactively 'tree-surgeon-go-error))
+    ";ew"
+    (lambda ()
+      (interactive)
+      (call-interactively 'tree-surgeon-go-error tree-surgeon-go-error-format-with-wrap))
     ";tr"
     (lambda ()
       (interactive)
@@ -1072,15 +1033,6 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
             (right (read-string "Right: "))
             (thing (read-string "Incorrect thing: ")))
         (insert (concat "if " left " != " right "{ t.Errorf(\"incorrect " thing "; expected '%v', got '%v'\", " right " , " left ")}"))))
-    ";ec"
-    (lambda ()
-      (interactive)
-      (insert (concat "if err != nil { "
-                      (meain/go-return-string
-                       (concat "fmt.Errorf(\""
-                               (read-string "Error message: ")
-                               "; %v\", err)"))
-                      " }")))
     ";test"
     (lambda ()
       (interactive)
