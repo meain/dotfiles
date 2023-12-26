@@ -1630,6 +1630,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   (define-key evil-normal-state-map (kbd "<SPC> /") 'consult-line))
 
 (use-package consult-notmuch
+  :after (notmuch)
   :elpaca t
   :commands (consult-notmuch consult-notmuch-tree consult-notmuch-address))
 
