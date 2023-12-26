@@ -4248,12 +4248,12 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 ;; Better GPT-3 interaction
 (use-package c3po
   :elpaca (:host github :repo "d1egoaz/c3po.el")
-  :commands (c3po-chat c3po-dev-chat c3po-reply
-                       c3po-correct-grammar c3po-correct-grammar-and-replace
-                       c3po-rewrite-text c3po-rewrite-and-replace
-                       c3po-explain-code c3po-summarize)
-  :config
-  (setq c3po-api-key openai-api-key))
+  :commands (c3po-assistant-new-chat
+             c3po-assistant-new-chat-replace-region
+             c3po-grammar-checker-new-chat c3po-grammar-checker-new-chat-replace-region
+             c3po-developer-new-chat c3po-developer-new-chat-replace-region
+             c3po-rewriter-new-chat c3po-rewriter-new-chat-replace-region)
+  :config (setq c3po-api-key openai-api-key))
 
 ;; OpenAI GPT-3 interaction
 (use-package gptel
@@ -4261,7 +4261,8 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
   :commands (gptel)
   :config
   (setq gptel-model "gpt-4")
-  (setq gptel-api-key openai-api-key))
+  (setq gptel-api-key openai-api-key)
+  (global-set-key (kbd "M-f i i") (lambda () (interactive) (gptel-send t))))
 
 ;; Chatgpt shell
 (use-package chatgpt-shell
