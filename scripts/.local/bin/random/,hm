@@ -25,15 +25,18 @@ elif [ "$1" = update-all ]; then
         grep -v '^pinned-' | # don't show pinned versions
         xargs -n1 nix flake lock --update-input
 elif [ "$1" = lock ]; then
+    shift
     cd "$HOME/.dotfiles/home-manager/.config/home-manager"
-    nix flake lock
+    nix flake lock "$@"
 elif [ "$1" = build ]; then
+    shift
     cd "$HOME/.config/home-manager/"
-    nix build --show-trace -L .#homeConfigurations.meain.activationPackage
+    nix build --show-trace -L .#homeConfigurations.meain.activationPackage "$@"
 elif [ "$1" = switch ]; then
+    shift
     cd "$HOME/.config/home-manager/"
     nix build -L .#homeConfigurations.meain.activationPackage
-    home-manager switch
+    home-manager switch "$@"
 else
     cd "$HOME/.config/home-manager/"
     home-manager "${1:-build}"
