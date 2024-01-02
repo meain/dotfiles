@@ -4258,11 +4258,13 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 ;; OpenAI GPT-3 interaction
 (use-package gptel
   :elpaca t
-  :commands (gptel)
+  :commands (gptel gptel-send gptel-rewrite-menu)
   :config
   (setq gptel-model "gpt-4")
   (setq gptel-api-key openai-api-key)
-  (global-set-key (kbd "M-f i i") (lambda () (interactive) (gptel-send t))))
+  :init
+  (global-set-key (kbd "M-f i i") (lambda () (interactive) (gptel-send t)))
+  (global-set-key (kbd "M-f i r") (lambda () (interactive) (gptel-rewrite-menu))))
 
 ;; Chatgpt shell
 (use-package chatgpt-shell
