@@ -7,11 +7,14 @@ let
   utils = import ./utils.nix { inherit pkgs; };
   fonts = import ./fonts.nix { inherit pkgs spkgs; };
   rbm = import ./repo_bookmarks.nix { inherit utils; };
+  defaultFont = "Sarasa Mono SC Nerd";
 in
 {
-  home.stateVersion = "21.05";
-  home.username = "meain";
-  home.homeDirectory = "/home/meain";
+  home = {
+    stateVersion = "21.05";
+    username = "meain";
+    homeDirectory = "/home/meain";
+  };
 
   programs.home-manager.enable = true;
 
@@ -187,9 +190,9 @@ in
         "font.size.fixed.x-western" = 15;
         "font.size.monospace.x-western" = 15;
         "font.size.variable.x-western" = 15;
-        "font.name.monospace.x-western" = "Monaspace Neon";
-        "font.name.sans-serif.x-western" = "Monaspace Neon";
-        "font.name.serif.x-western" = "Monaspace Neon";
+        "font.name.monospace.x-western" = "${defaultFont}";
+        "font.name.sans-serif.x-western" = "${defaultFont}";
+        "font.name.serif.x-western" = "${defaultFont}";
         "browser.display.use_document_fonts" = 0;
       };
 
@@ -454,6 +457,7 @@ in
     # pkgs.alacritty # terminal emulator
     # pkgs.firefox # browser
     # pkgs.chromium # because Google hates firefox
+    # pkgs.nyxt # browser in common-lisp
     # pkgs.guake # drop down terminal
     # pkgs.insomnia # simpler postman
     # pkgs.beekeeper-studio # db viewer
@@ -461,6 +465,7 @@ in
     # pkgs.foot # wayland terminal emulator
     pkgs.zathura # pdf viewer
     pkgs.sxiv # image viewer
+    # pkgs.vscode-fhs # vscode
 
     # others
     # pkgs.redis # key value db
@@ -567,7 +572,30 @@ in
     # (pkgs.makeAutostartItem { name = "albert"; package = pkgs.albert; })
   ] ++ fonts;
 
-  dconf.settings = import ./dconf.nix;
+  # dconf.settings = import ./dconf.nix;
+  gtk = {
+    enable = true;
+    font.name = "${defaultFont}"; # gui font
+    theme.name = "Clearlooks";
+    iconTheme.name = "breeze";
+    cursorTheme = {
+      name = "Graphite light Cursors"; # original: DMZ-White
+      package = pkgs.graphite-cursors;
+    };
+
+    gtk3.extraConfig = {
+      gtk-menu-images = 1;
+      gtk-xft-hinting = 1;
+      gtk-xft-rgba = "rgb";
+      gtk-application-prefer-dark-theme = 0;
+      gtk-decoration-layout = ":";
+      gtk-toolbar-style = "GTK_TOOLBAR_ICONS";
+      gtk-toolbar-icon-size = "GTK_ICON_SIZE_LARGE_TOOLBAR";
+      gtk-enable-even-sounds = 1;
+      gtk-enable-input-feedback-sounds = 1;
+      gtk-button-images = 1;
+    };
+  };
 
   systemd.user.services = {
     activitywatch = {
