@@ -219,7 +219,7 @@ in
         vimium
         wallabagger
         youtube-shorts-block
-        youtube-recommended-videos
+        # youtube-recommended-videos
 
         # personally packaged
         ppkgs.firefox-addons.awesome-rss
@@ -233,8 +233,8 @@ in
         ppkgs.firefox-addons.smartreader
         ppkgs.firefox-addons.unofficial-hypothesis
         ppkgs.firefox-addons.watchmarker-for-youtube
-        ppkgs.firefox-addons.a-n-i-m-a-t-e-d-kitty-cat
-        ppkgs.firefox-addons.global-speed
+        # ppkgs.firefox-addons.a-n-i-m-a-t-e-d-kitty-cat
+        # ppkgs.firefox-addons.global-speed
         ppkgs.firefox-addons.try-another-search-engine
       ];
 
@@ -640,7 +640,8 @@ in
   systemd.user.services = {
     mpd = utils.ss-simple { cmd = "mpd --no-daemon"; wait = 3; };
     clipmenud = utils.ss-simple { cmd = "clipmenud"; wait = 3; };
-    sxhkd = utils.ss-simple { cmd = "sxhkd"; wait = 3; };
+    sxhkd = utils.ss-simple { cmd = "${pkgs.sxhkd}/bin/sxhkd"; wait = 3; };
+    qutebrowser = utils.ss-simple { cmd = "qutebrowser"; wait = 3; };
     emacs = utils.ss-simple { cmd = "emacs --fg-daemon"; wait = 1; };
     logseq = utils.ss-simple { cmd = "/var/lib/flatpak/app/com.logseq.Logseq/current/active/export/bin/com.logseq.Logseq"; wait = 1; };
     floatingterm = utils.ss-simple { cmd = "sakura --name floatingterm -x \"tt floating\""; wait = 1; };
