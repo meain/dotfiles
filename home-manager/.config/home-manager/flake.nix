@@ -45,11 +45,11 @@
         in
         {
           meain = homeManager.lib.homeManagerConfiguration {
-            modules = [
-              homeConfig
-            ];
+            modules = [ homeConfig ];
 
             pkgs = import nixpkgs {
+              # config.allowBroken = true;
+              # config.allowUnfree = true; # resistance is futile
               system = "x86_64-linux";
               overlays = [ emacsOverlay.overlay nur.overlay ];
             };
