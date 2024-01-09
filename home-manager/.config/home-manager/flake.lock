@@ -236,8 +236,8 @@
         ]
       },
       "locked": {
-        "lastModified": 1703478250,
-        "narHash": "sha256-VTgHcxyA7y9OAN8UqziWdG/uf2iCTs5LZsN3CR6AB+s=",
+        "lastModified": 1704214584,
+        "narHash": "sha256-dRU1Ctd7zqaLtEo8v3+PK/Z6R2KsTR27WLsfnrFenCA=",
         "path": "/home/meain/dev/src/nur-packages",
         "type": "path"
       },
