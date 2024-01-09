@@ -97,7 +97,7 @@ super + alt + control + d
 
 # drag and drop file in clipboard
 super + alt + control + shift + l
-      dragon -x "$(pbpaste)"
+      dragon -x "$(pbpaste)" || notify "Unable to open item in paste buffer"
 
 # script runner
 super + alt + control + {_, shift} + i
