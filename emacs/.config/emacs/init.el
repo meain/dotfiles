@@ -1820,6 +1820,10 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   (advice-add 'jsonrpc--log-event :override #'ignore)
   (setopt eglot-events-buffer-size 10)
 
+  ;; Speed up eglot by converting json to bytecode outside of Emacs
+  (require 'eglot-booster (concat user-emacs-directory "eglot-booster.el"))
+  (eglot-booster)
+
   (setq eglot-autoshutdown t)
   (setq eglot-sync-connect nil)
   (setq eglot-extend-to-xref t) ;; extend eglot to files gone to with go-to-def
