@@ -2114,7 +2114,7 @@ list of available pages."
 (use-package magit
   :elpaca t
   :after (evil-leader transient)
-  :commands (magit-status magit-commit-create magit-ignored-files)
+  :commands (magit-status magit-commit-create magit-ignored-files meain/git-how-was-it)
   :init
   (evil-leader/set-key "gg" 'magit-status)
   (evil-leader/set-key "gc" 'magit-commit-create)
