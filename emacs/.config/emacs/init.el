@@ -4237,7 +4237,7 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
                  :files ("dist" "*.el"))
   :config
   (global-copilot-mode t)
-  (setq copilot-idle-delay .2)
+  (setq copilot-idle-delay 0)
   (setq copilot-max-char -1)
 
   ;; Suppress indentation warning from copilot
