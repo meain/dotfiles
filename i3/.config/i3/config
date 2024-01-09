@@ -32,8 +32,8 @@ bindsym $mod+i [instance="floatingterm"] scratchpad show, resize set 90 ppt 70 p
 for_window [class="Logseq"] resize set 1300 700, move position center, move scratchpad, floating enable
 bindsym $mod+y [class="Logseq"] scratchpad show, resize set 1300 700, move position center
 
-for_window [class="Nyxt"] resize set 1300 700, move position center, move scratchpad, floating enable
-bindsym $mod+m [class="Nyxt"] scratchpad show, resize set 90 ppt 80 ppt, move position center
+# for_window [class="Nyxt"] resize set 1300 700, move position center, move scratchpad, floating enable
+# bindsym $mod+m [class="Nyxt"] scratchpad show, resize set 90 ppt 80 ppt, move position center
 for_window [class="qutebrowser"] resize set 1300 700, move position center, move scratchpad, floating enable
 bindsym $mod+m [class="qutebrowser"] scratchpad show, resize set 90 ppt 80 ppt, move position center
 
