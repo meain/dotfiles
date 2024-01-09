@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -e
+
+pr="$(gh issue list --assignee "@me" | tail -n+3 |
+    fzf --header "Issue" --preview "gh issue view {1}" | awk '{print $1}')"
+
+git remote get-url origin |
+    head -c-1 | # remove newline
+    sed "s|^git@github.com:|https://github.com/|;s|\.git$|/issues/$pr|" |
+    tee /dev/stderr | pbcopy
