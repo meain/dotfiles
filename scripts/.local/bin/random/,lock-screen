@@ -5,17 +5,13 @@ set -e
 # Create a pixelated image and use that as lockscreen
 if [ "$1" == "pixelated" ]; then
     shift
-    message="$(xxd -l13 -ps /dev/urandom | base64)" # just some weirdness
-    font="$(convert -list font | grep Font: | awk '{print $NF}' | grep -viE '(bold|italic|thin|extra|light|medium|mathjax)' | shuf -n1)"
-    notify "Locking with $font..."
+    notify "Locking..."
 
     # screenshot, pixelate, tint and add text
     import -window root /tmp/screen.png             # piping image seems to take double the time
     convert /tmp/screen.png -scale 10% -scale 1000% \
         -fill black -colorize 50% \
-        -font "$font" -fill white -pointsize 30 \
-        -stroke black -strokewidth 1 -gravity west \
-        -annotate +0+0 "$message\n$font" /tmp/lockscreen.png
+        /tmp/lockscreen.png
     i3lock -fei /tmp/lockscreen.png "$@"
 elif [ "$1" == "wallpaper" ]; then
     shift
