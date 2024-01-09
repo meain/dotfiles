@@ -5,13 +5,28 @@ set -eo pipefail
 title="$(git log -1 --pretty=format:%s)"
 body="$(git log -1 --pretty=format:%b)"
 
-base="$(git branch | grep -v '\*' | sed 's|^..||' | fzf)"
-labels="$(gh label list | { printf '\n'; cat; } | fzf -m | awk '{print $1}' | tr '\n' ',' | head -c-1)"
+base="$(git branch --sort=-committerdate |
+    grep -v '\*' |
+    sed 's|^..||' |
+    fzf --header "Base branch" --height 40% --reverse --preview 'git log --oneline -20 {}')"
+
+labels=""
+printf "Add labels [y/N]: " && read -r add_labels
+if [ "$add_labels" = "y" ]; then
+    labels="$(gh label list | {
+        printf '\n'
+        cat
+    } | fzf --header "Labels" -m | awk '{print $1}' | tr '\n' ',' | head -c-1)"
+fi
 
 cd "$(git rev-parse --show-toplevel 2>/dev/null)"
 
-# TODO: let users preview the body before submitting
-echo "$body" | cat - .github/pull_request_template.md |
-    gh pr create --title "$title" \
-        --body-file '-' --assignee meain \
-        --base "$base" --label "$labels"
+echo "$body" | cat - .github/pull_request_template.md >/tmp/pr_body
+"${EDITOR:-vi}" /tmp/pr_body
+
+url="$(gh pr create --title "$title" \
+    --body-file /tmp/pr_body --assignee meain \
+    --base "$base" --label "$labels")"
+
+echo "$url"
+open "$url"
