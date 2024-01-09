@@ -28,7 +28,10 @@ resources
 # programming
 .mypy_cache
 node_modules
+
+# dlv
 __debug_bin*
+debug.test*
 
 # nix
 shell.nix
