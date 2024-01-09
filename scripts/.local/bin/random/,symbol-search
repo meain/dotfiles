@@ -15,9 +15,15 @@ RUST_FUNCTION="(function_item name: (identifier) @function)"
 RUST_TYPE="(struct_item name: (type_identifier) @type)
            (enum_item name: (type_identifier) @type)"
 
-if [ $mode = "def" ]; then
+C_FUNCTION='(function_definition (function_declarator (identifier)@func))
+            (function_definition (pointer_declarator (function_declarator (identifier)@func)))'
+C_CALLS='(call_expression function: (identifier) @call)'
+
+if [ "$mode" = "def" ]; then
     tree-grepper -q go "$GO_FUNCTION $GO_TYPE"
     tree-grepper -q rust "$RUST_FUNCTION $RUST_TYPE"
-elif [ $mode = "ref" ]; then
+    tree-grepper -q c "$C_FUNCTION"
+elif [ "$mode" = "ref" ]; then
     tree-grepper -q go "$GO_CALLS"
+    tree-grepper -q c "$C_CALLS"
 fi
