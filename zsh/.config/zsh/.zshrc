@@ -107,8 +107,8 @@ bindkey '^a' beginning-of-line
 bindkey '^e' end-of-line
 bindkey '^xe' edit-command-line
 bindkey '^x^e' edit-command-line
-bindkey "^[[A" history-search-backward
-bindkey "^[[B" history-search-forward
+bindkey "${terminfo[kcuu1]}" history-search-backward
+bindkey "${terminfo[kcud1]}" history-search-forward
 export KEYTIMEOUT=1
 
 preexec() {
