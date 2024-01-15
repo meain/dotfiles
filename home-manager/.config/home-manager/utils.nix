@@ -74,6 +74,12 @@
         url = "https://github.com/" + repo + "/pulls/review-requested/@me";
       }
       {
+        name = basename + " Pull Requests Review Requested to me and not approved";
+        tags = [ "github" ];
+        keyword = basekeyword + "prr";
+        url = "https://github.com/" + repo + "/pulls?q=is%3Aopen+is%3Apr+review-requested%3A%40me+-review%3Aapproved";
+      }
+      {
         name = basename + " Actions";
         tags = [ "github" ];
         keyword = basekeyword + "a";
