@@ -1,0 +1,20 @@
+#!/bin/sh
+
+set -e
+
+[ -z "$1" ] && echo "Pass URL of package" && exit 1
+
+url="$1"
+name="$(basename "$url")"
+prefix="$(echo "$name" | head -c2)"
+
+git checkout master
+git pull upstream master --ff-only
+
+git checkout -b "$name"
+mkdir -p "pkgs/by-name/$prefix/$name"
+cd "pkgs/by-name/$prefix/$name"
+nix-init -C -u "$url" package.nix
+
+vim package.nix
+nix-build -A "$name"
