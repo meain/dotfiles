@@ -1820,10 +1820,6 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   (advice-add 'jsonrpc--log-event :override #'ignore)
   (setopt eglot-events-buffer-size 10)
 
-  ;; Speed up eglot by converting json to bytecode outside of Emacs
-  (require 'eglot-booster (concat user-emacs-directory "eglot-booster.el"))
-  (eglot-booster)
-
   (setq eglot-autoshutdown t)
   (setq eglot-sync-connect nil)
   (setq eglot-extend-to-xref t) ;; extend eglot to files gone to with go-to-def
@@ -1909,6 +1905,12 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   ;; evil collection in go-mode was remapping them
   (evil-define-key 'normal go-mode-map (kbd "K") 'eldoc-print-current-symbol-info)
   (evil-define-key 'normal go-mode-map (kbd "g d") 'xref-find-definitions))
+
+;; Speed up eglot communication by translating to bycode externally
+(use-package eglot-booster
+  :elpaca (:host github :repo "jdtsmith/eglot-booster")
+  :after eglot
+  :config (eglot-booster-mode))
 
 ;; Get hierarchy
 (use-package eglot-hierarchy
