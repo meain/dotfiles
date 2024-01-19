@@ -12,6 +12,7 @@ no_sort=""
 query=""
 print_query=""
 exact=""
+ignore_case=""
 while [[ "$1" = -* ]]; do
 	[ "$1" = "-p" ] && shift && prompt="$1" && shift && continue
 	[ "$1" = "--preview" ] && shift && preview="$1" && shift && continue
@@ -24,6 +25,7 @@ while [[ "$1" = -* ]]; do
 	[ "$1" = "--query" ] && shift && query="$1" && shift && continue
 	[ "$1" = "--print-query" ] && shift && print_query="1" && continue
 	[ "$1" = "--exact" ] && shift && exact="1" && continue
+	[ "$1" = "-i" ] && shift && ignore_case="1" && continue
     echo "Unknown option $1" && exit 1
 done
 
@@ -34,6 +36,7 @@ fzf_cmd="fzf"
 if [ "$GUI_PICKER" = 1 ]; then
 	[ -n "$prompt" ] && dmenu_cmd="$dmenu_cmd -p '$prompt'"
 	[ -n "$lines" ] && dmenu_cmd="$dmenu_cmd -l '$lines'"
+	[ -n "$ignore_case" ] && dmenu_cmd="$dmenu_cmd -i '$lines'"
 	eval "$dmenu_cmd"
 else
 	[ -n "$prompt" ] && fzf_cmd="$fzf_cmd --prompt '$prompt'"

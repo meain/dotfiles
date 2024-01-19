@@ -34,7 +34,7 @@ add)
     ;;
 pick)
     url=$(sqlite3 "$BM_FILE" "$QUERY" |
-        awk -F'|' "$VIEW_FORMAT" | ,picker |
+        awk -F'|' "$VIEW_FORMAT" | ,picker -i |
         awk '{print $NF}' | cut -d'(' -f2 | cut -d')' -f1)
     if [ -n "$url" ]; then
         sqlite3 "$BM_FILE" "UPDATE bookmarks SET count=count+1 WHERE url='$url';"
@@ -43,12 +43,12 @@ pick)
     ;;
 list)
     sqlite3 "$BM_FILE" "$QUERY" |
-        awk -F'|' "$VIEW_FORMAT" | ,picker |
+        awk -F'|' "$VIEW_FORMAT" | ,picker -i |
         awk '{print $NF}' | cut -d'(' -f2 | cut -d')' -f1
     ;;
 remove)
     sqlite3 "$BM_FILE" "$QUERY" |
-        awk -F'|' "$VIEW_FORMAT" | ,picker |
+        awk -F'|' "$VIEW_FORMAT" | ,picker -i |
         awk '{print $NF}' | cut -d'(' -f2 | cut -d')' -f1 |
         xargs -r -I{} sqlite3 "$BM_FILE" "DELETE FROM bookmarks WHERE url='{}';"
     ;;
