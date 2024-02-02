@@ -7,7 +7,7 @@ mkdir -p "$SAVEPATH"
 
 backup_loc() {
 	tput el && echo "Saving $1..."
-	fd -HI '^\.git$' "$HOME/dev" | grep -v '/temp/' |
+	find "$HOME/dev" -type d -name '.git' | grep -v '/temp/' |
 		while read -r path; do
 			dir="$(dirname "$path")"
 			[ -e "$dir/$1" ] || continue
