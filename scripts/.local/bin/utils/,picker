@@ -36,7 +36,7 @@ fzf_cmd="fzf"
 if [ "$GUI_PICKER" = 1 ]; then
 	[ -n "$prompt" ] && dmenu_cmd="$dmenu_cmd -p '$prompt'"
 	[ -n "$lines" ] && dmenu_cmd="$dmenu_cmd -l '$lines'"
-	[ -n "$ignore_case" ] && dmenu_cmd="$dmenu_cmd -i '$lines'"
+	[ -n "$ignore_case" ] && dmenu_cmd="$dmenu_cmd -i"
 	eval "$dmenu_cmd"
 else
 	[ -n "$prompt" ] && fzf_cmd="$fzf_cmd --prompt '$prompt'"
