@@ -233,6 +233,10 @@
 ;; Let Emacs know that I can handle `narrow'
 (put 'narrow-to-region 'disabled nil)
 
+;; Highlight trailing whitespace
+(setq-default show-trailing-whitespace t)
+;; (set-face-background 'trailing-whitespace "red")
+
 ;;; [VISUAL CONFIG] ==============================================
 
 ;; Change font everywhere
