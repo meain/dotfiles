@@ -4238,12 +4238,14 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 ;; Copilot, I guess
 (use-package copilot
   :defer 3
+  :after jsonrpc
   :elpaca (:host github
                  :repo "zerolfx/copilot.el"
                  :files ("dist" "*.el"))
   :config
+  (copilot-mode t) ; https://github.com/copilot-emacs/copilot.el/issues/226
   (global-copilot-mode t)
-  (setq copilot-idle-delay 0)
+  (setq copilot-idle-delay .2)
   (setq copilot-max-char -1)
 
   ;; Suppress indentation warning from copilot
