@@ -226,7 +226,16 @@ er() {
 ,showme() {
     [ -z "$1" ] && echo "Pass file to show" && return 1
     tmp="$(mktemp -d)"
-    unzip "$1" -d "$tmp"
+    extension="${1##*.}"
+    if [ "$extension" = "zip" ]; then
+        unzip "$1" -d "$tmp"
+    elif [ "$extension" = "tar" ]; then
+        tar -xvf "$1" -C "$tmp"
+    elif [ "$extension" = "gz" ]; then
+        tar -xzf "$1" -C "$tmp"
+    else
+        echo "Unknown extension $extension" && return 1
+    fi
+
     cd "$tmp" || return 1
-    clear && echo && echo "$1" && ls
 }
