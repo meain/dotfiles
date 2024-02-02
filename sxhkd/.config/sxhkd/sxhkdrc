@@ -39,8 +39,8 @@ super + shift + {u, o}
       ,i3-rotate-workspaces {left, right}
 super + alt + control + grave
       ,i3-flip-workspaces
-super + alt + control + shift + {0,1,2,3,4,5}
-      ,screen-layout {0,1,2,3,4,5} && feh --bg-fill docs/Pictures/Wallpapers/current || notify 'Unable to update monitor config'
+super + alt + control + shift + {0,1,2,3,4,5,6,7,8,9}
+      ,screen-layout {0,1,2,3,4,5,6,7,8,9} || notify 'Unable to update monitor config'
 super + alt + control + shift + grave
       find docs/Pictures/Wallpapers -type f | shuf -n1 | xargs feh --bg-fill
 
