@@ -4319,6 +4319,12 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 
 ;; Quick file rename
 (defun meain/rename-current-file ()
+  "Rename current file in the same directory."
+  (interactive)
+  (let ((newname (read-string "New name: " (file-name-nondirectory (buffer-file-name)))))
+    (rename-file (buffer-file-name) (concat (file-name-directory (buffer-file-name)) newname))
+    (find-alternate-file (concat (file-name-directory (buffer-file-name)) newname))))
+(defun meain/move-current-file ()
   "Rename the current visiting file and switch buffer focus to it."
   (interactive)
   (if (null (buffer-file-name))
@@ -4333,7 +4339,6 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 (defun meain/expand-filename-prompt (prompt)
   "Return expanded filename PROMPT."
   (expand-file-name (read-file-name prompt)))
-(defalias 'rename 'meain/rename-current-file)
 
 ;; Delete current file
 (defun meain/delete-current-file ()
