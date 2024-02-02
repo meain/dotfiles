@@ -5,7 +5,7 @@
 
 set -e
 
-VIEW_FORMAT='{print "["$NF"]",$2,"("$1")"}'
+VIEW_FORMAT='{printf "[%02d] %s (%s)\n", $NF, $2, $1}'
 QUERY="SELECT url, name, count FROM bookmarks ORDER BY count DESC, date DESC;"
 BM_FILE="${BM_FILE:-$HOME/.local/share/bm.db}"
 OPERATION="${1:-pick}"
