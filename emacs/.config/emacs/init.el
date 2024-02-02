@@ -1636,6 +1636,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 (use-package consult-notmuch
   :after (notmuch)
   :elpaca t
+  :disabled t
   :commands (consult-notmuch consult-notmuch-tree consult-notmuch-address))
 
 (use-package consult-git-log-grep
@@ -1813,11 +1814,13 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 ;;                                           ("C" "clangd" "--all-scopes-completion --clang-tidy --enable-config --header-insertion-decorators=0")
 ;;                                           ("java" "java" lspce-jdtls-cmd-args lspce-jdtls-initializationOptions)))))
 
+(use-package jsonrpc :elpaca t)
+
 ;; LSP
 (use-package eglot
   :commands eglot-ensure
   ;; :elpaca t ;; use builtin version
-  :after (project flymake)
+  :after (project flymake jsonrpc)
   :config
   ;; Supposedly speed up eglot
   ;; https://www.reddit.com/r/emacs/comments/17jrsmv/comment/k74b3tg/
@@ -2836,7 +2839,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 (use-package ini-mode :elpaca t :defer t)
 (use-package dockerfile-mode :elpaca t :defer t :mode "/Dockerfile")
 (use-package docker-compose-mode :elpaca t :defer t)
-(use-package protobuf-mode :elpaca t :defer t)
+(use-package protobuf-mode :elpaca t :defer t :disabled t)
 (use-package org
   :commands (org-mode org-timer org-timer-set-timer)
   :mode "/\\.org\\'"
