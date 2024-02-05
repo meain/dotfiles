@@ -1548,9 +1548,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
           (consult-grep buffer)
           (t flat)))
   (vertico-mode))
-(use-package savehist
-  :init
-  (savehist-mode))
+(use-package savehist :config (savehist-mode t))
 (use-package orderless
   :elpaca t
   :config
