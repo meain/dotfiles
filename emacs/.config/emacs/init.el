@@ -4240,8 +4240,13 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
                  :repo "zerolfx/copilot.el"
                  :files ("dist" "*.el"))
   :config
-  (copilot-mode t) ; https://github.com/copilot-emacs/copilot.el/issues/226
-  (global-copilot-mode t)
+  ;; https://github.com/copilot-emacs/copilot.el/issues/226
+  (defun copilot-turn-on-unless-buffer-read-only ()
+    "Turn on `copilot-mode' if the buffer is writable."
+    (unless buffer-read-only (copilot-mode 1)))
+  (add-hook 'text-mode-hook #'copilot-turn-on-unless-buffer-read-only)
+  (add-hook 'prog-mode-hook #'copilot-turn-on-unless-buffer-read-only)
+
   (setq copilot-idle-delay .2)
   (setq copilot-max-char -1)
 
