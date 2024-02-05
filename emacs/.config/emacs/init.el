@@ -4339,6 +4339,23 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
   "Return expanded filename PROMPT."
   (expand-file-name (read-file-name prompt)))
 
+;; Fix any escaped escape code in selection
+(defun meain/fix-escapes ()
+  "Replace \\n to \n, \\t to \t and \\r to empty on selection."
+  (interactive)
+  (save-excursion
+    (let ((start (region-beginning))
+          (end (region-end)))
+      (goto-char start)
+      (while (search-forward "\\n" end t)
+        (replace-match "\n" nil t))
+      (goto-char start)
+      (while (search-forward "\\t" end t)
+        (replace-match "\t" nil t))
+      (goto-char start)
+      (while (search-forward "\\r" end t)
+        (replace-match "" nil t)))))
+
 ;; Delete current file
 (defun meain/delete-current-file ()
   "Delete current file and close buffer."
