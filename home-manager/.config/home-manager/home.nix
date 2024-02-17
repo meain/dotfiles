@@ -7,7 +7,7 @@ let
   utils = import ./utils.nix { inherit pkgs; };
   fonts = import ./fonts.nix { inherit pkgs spkgs; };
   rbm = import ./repo_bookmarks.nix { inherit utils; };
-  defaultFont = "Sarasa Mono SC Nerd";
+  defaultFont = "SF Mono";
 in
 {
   home = {
@@ -170,7 +170,7 @@ in
         # let me close and open tabs without confirmation
         "browser.tabs.closeWindowWithLastTab" = false; # don't close window when last tab is closed
         "browser.tabs.loadBookmarksInTabs" = true; # open bookmarks in new tab
-        "browser.tabs.loadDivertedInBackground" = true; # open new tab in background
+        "browser.tabs.loadDivertedInBackground" = false; # open new tab in background
         "browser.tabs.loadInBackground" = true; # open new tab in background
         "browser.tabs.warnOnClose" = false; # don't warn when closing multiple tabs
         "browser.tabs.warnOnCloseOtherTabs" = false; # don't warn when closing multiple tabs
