@@ -56,6 +56,7 @@
                           ("Cascadia Mono Light" . '(11 nil 'regular))
                           ("Codename Coder Free 4F" . '(13 nil 'regular))
                           ("Comic Mono" . '(11 nil 'regular))
+                          ("CommitMono" . '(11 .1 'regular))
                           ("Consolas" . '(12 nil 'regular))
                           ("Conta" . '(11 nil 'regular))
                           ("Courier New" . '(11 nil 'regular))
@@ -90,7 +91,7 @@
                           ("Iosevka Light" . '(12 .1 'regular))
                           ("Iosevka Slab" . '(12 nil 'regular))
                           ("Iosevka Thin" . '(11 nil 'regular))
-                          ("Izayoi Monospaced" . '(10 .1 'regular))
+                          ("Izayoi Monospaced" . '(12 .2 'regular))
                           ("JetBrains Mono" . '(11 nil 'regular))
                           ("JetBrains Mono Light" . '(11 nil 'light))
                           ("JuliaMono" . '(11 nil 'light))
@@ -166,6 +167,10 @@
                           ("Victor Mono" . '(11 .1 'regular))
                           ("Whois" . '(13 .1 'regular))
                           ("Xanh Mono" . '(13 nil 'regular))
+                          ("OCRA" . '(12 nil 'regular))
+                          ("Martian Mono SemiCondensed" . '(10 nil 'regular))
+                          ("Gintronic" . '(11 nil 'regular))
+                          ("CMU Typewriter Text" . '(13 nil 'regular))
                           ))
 (defvar meain/font-name "Monaspace Neon Light") ; saxMono ; Syne Mono ; Dank Mono ; Overpass Mono ; Fantasque Sans Mono
 
