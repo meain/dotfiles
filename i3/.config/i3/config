@@ -21,21 +21,25 @@ for_window [class="^zoom$"] floating enable
 for_window [class="^Thunar$"] floating enable
 for_window [title="Emacs Everywhere"] floating enable
 for_window [class="^VirtualBox Manager$"] floating enable, resize set 700 500, move position center
+for_window [class="^Spotube$"] floating enable
 
 # scratchpad
 bindsym $mod+Mod1+s move scratchpad
-bindsym $mod+Shift+i scratchpad show, move position center
+bindsym $mod+Mod1+Shift+s scratchpad show
 
 for_window [instance="floatingterm"] resize set 1300 700, move position center, move scratchpad, floating enable
 bindsym $mod+i [instance="floatingterm"] scratchpad show, resize set 90 ppt 70 ppt, move position center
+bindsym $mod+Shift+i [instance="floatingterm"] scratchpad show, resize set 90 ppt 70 ppt, move position center
 
 for_window [class="Logseq"] resize set 1300 700, move position center, move scratchpad, floating enable
-bindsym $mod+y [class="Logseq"] scratchpad show, resize set 1300 700, move position center
+bindsym $mod+y [class="Logseq"] scratchpad show
+bindsym $mod+Shift+y [class="Logseq"] scratchpad show, resize set 1300 700, move position center
 
 # for_window [class="Nyxt"] resize set 1300 700, move position center, move scratchpad, floating enable
 # bindsym $mod+m [class="Nyxt"] scratchpad show, resize set 90 ppt 80 ppt, move position center
 for_window [class="qutebrowser"] resize set 1300 700, move position center, move scratchpad, floating enable
-bindsym $mod+m [class="qutebrowser"] scratchpad show, resize set 90 ppt 80 ppt, move position center
+bindsym $mod+m [class="qutebrowser"] scratchpad show
+bindsym $mod+Shift+m [class="qutebrowser"] scratchpad show, resize set 90 ppt 80 ppt, move position center
 
 # kill focused window
 bindsym $mod+q kill
