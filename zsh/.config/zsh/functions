@@ -13,7 +13,7 @@ jj() {
 }
 
 tmp() {
-    [ -z "$1" ] && cd /tmp/workspaces &&
+    [ -n "$1" ] && cd /tmp/workspaces &&
         cd $(ls -t | fzf --preview 'ls -A {}') &&
         return 0
     r="/tmp/workspaces/$(xxd -l3 -ps /dev/urandom)"
