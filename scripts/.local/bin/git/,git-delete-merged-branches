@@ -6,4 +6,4 @@ set -e
 
 git branch --merged | egrep -v "(^\*|master|main|dev)" | xargs git branch -d
 printf "Delete upstream ones?(y/N): " && read
-[ "$REPLY" == "y" ] && git remote prune $(git remote | fzf --height 40% --reverse)
+[ "$REPLY" = "y" ] && git remote prune $(git remote | fzf --height 40% --reverse)

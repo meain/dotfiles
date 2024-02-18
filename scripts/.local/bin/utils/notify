@@ -6,16 +6,18 @@ set -e
 
 pri=0
 to=5000
-[ "$1" == "--pri" ] && shift && pri=1
-[ "$1" == "-t" ] && shift && to="$1" && shift
-if [ $OSTYPE == "linux-gnu" ]; then
-	if [ "$pri" == "1" ]; then
-		notify-desktop --urgency=critical -t "$to" "${1:-Notification}" "${2}" >/dev/null 2>/dev/null
-	else
-		notify-desktop -t "$to" "${1:-Notification}" "${2}" >/dev/null 2>/dev/null
-	fi
+[ "$1" = "--pri" ] && shift && pri=1
+[ "$1" = "-t" ] && shift && to="$1" && shift
+if [ "$(uname)" = "Linux" ]; then
+    if [ "$pri" = "1" ]; then
+        notify-desktop --urgency=critical -t "$to" "${1:-Notification}" "${2}" >/dev/null 2>/dev/null
+    else
+        notify-desktop -t "$to" "${1:-Notification}" "${2}" >/dev/null 2>/dev/null
+    fi
 else
-	[ -n $2 ] &&
-		osascript -e "display notification \"${2}\" with title \"${1}\"" ||
-		osascript -e "display notification \"${1}\" with title \"Notification\""
+    if [ -n "$2" ]; then
+        osascript -e "display notification \"${2}\" with title \"${1}\""
+    else
+        osascript -e "display notification \"${1}\" with title \"Notification\""
+    fi
 fi

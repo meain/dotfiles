@@ -9,6 +9,6 @@ dir='/tmp/bing-images/'
 pic="$dir$(date +%y%m%d).jpg"
 
 mkdir -p $dir
-[ "$url" == "$(cat /tmp/bing-images/picurl)" ] || curl -so "$pic" "$url"
+[ "$url" = "$(cat /tmp/bing-images/picurl)" ] || curl -so "$pic" "$url"
 echo "$url" > /tmp/bing-images/picurl
 echo "$pic"

@@ -3,7 +3,7 @@
 set -e
 
 # Create a pixelated image and use that as lockscreen
-if [ "$1" == "pixelated" ]; then
+if [ "$1" = "pixelated" ]; then
     shift
     notify "Locking..."
 
@@ -13,7 +13,7 @@ if [ "$1" == "pixelated" ]; then
         -fill black -colorize 50% \
         /tmp/lockscreen.png
     i3lock -fei /tmp/lockscreen.png "$@"
-elif [ "$1" == "wallpaper" ]; then
+elif [ "$1" = "wallpaper" ]; then
     shift
     find "$HOME/docs/Pictures/Lockscreen" -name '*.png' | shuf -n1 | xargs i3lock -ftei "$@"
 else

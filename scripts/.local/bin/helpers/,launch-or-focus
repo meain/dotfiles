@@ -55,7 +55,7 @@ function focusApplication() {
             global              
             .get_window_actors()
             .map(a=>a.meta_window)                                   
-            .filter(w=>w.get_wm_class() == '$1')
+            .filter(w=>w.get_wm_class() = '$1')
             .forEach(w => w.activate(true))"
 }
 
@@ -69,7 +69,7 @@ function launchOrFocus() {
 }
 
 echo "Available windows: $all"
-if [ $current == "$1" ]; then
+if [ $current = "$1" ]; then
 	if [ -n "$3" ]; then
 		launchOrFocus "$3" "$4"
 	fi

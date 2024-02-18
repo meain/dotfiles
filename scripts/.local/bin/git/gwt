@@ -12,11 +12,11 @@ fi
 pushd "$(git rev-parse --show-toplevel 2>/dev/null)" || exit 1
 proj="$(basename "$PWD")"
 
-if [ "$1" == "prune" ]; then
+if [ "$1" = "prune" ]; then
 	[ -z "$(git worktree list | grep -v "\[$(git rev-parse --abbrev-ref HEAD)\]$")" ] &&
 		echo No worktrees to prune && exit 1
 	FORCE=""
-	[ "$2" == "-f" ] && FORCE="-f"
+	[ "$2" = "-f" ] && FORCE="-f"
 	git worktree list | grep -v "\[$(git rev-parse --abbrev-ref HEAD)\]$" |
 		fzf -m | awk '{print $1}' | xargs -n1 git worktree remove $FORCE
 	git worktree prune

@@ -196,7 +196,7 @@ else
   ## In case it is the start of week, we need to
   ## show the commits since the last weekend
   shopt -s nocasematch
-  if [[ ${WEEKSTART} == "$(date +%a)" ]] ; then
+  if [[ ${WEEKSTART} = "$(date +%a)" ]] ; then
     SINCE="last $WEEKEND";
   fi
 fi

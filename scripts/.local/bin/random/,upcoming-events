@@ -11,7 +11,7 @@ list_events() {
 	gcalendar --calendar $PERSONAL_CAL --no-of-days 3
 }
 
-[ "$1" == "sync" ] && shift && rm "$EVENTS_FILE-all"
+[ "$1" = "sync" ] && shift && rm "$EVENTS_FILE-all"
 [ "$(find "$EVENTS_FILE-all" -mmin -60 2>/dev/null | wc -l)" != "0" ] ||
 	list_events | grep -v "$IGNORED_EVENTS" >"$EVENTS_FILE-all"
 

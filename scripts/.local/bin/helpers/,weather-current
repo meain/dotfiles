@@ -7,7 +7,7 @@ fetch_weather() {
 		sed 's/  / /g;s/| /|/g;s/^ //;s/°C//g' /tmp/weather-current | awk -F'|' '{print $2"/"$3":"$4}' >/tmp/weather-minimal
 }
 
-[ "$1" == 'fetch' ] && fetch_weather && exit 0
+[ "$1" = 'fetch' ] && fetch_weather && exit 0
 [ -f /tmp/weather-current ] || fetch_weather
 
 sed 's/  / /g;s/| /|/g;s/^ //' /tmp/weather-current |

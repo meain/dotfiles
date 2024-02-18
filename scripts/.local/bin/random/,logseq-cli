@@ -14,7 +14,7 @@ journal() {
     TAG="#jrnl"
     JRNL_FILE="$LOGSEQ_DIR/journals/$(date '+%Y_%m_%d').md"
 
-    if [ "$1" == "-s" ]; then
+    if [ "$1" = "-s" ]; then
         shift
         TAG="#privatejrnl"
         JRNL_FILE="$LOGSEQ_DIR/pages/jrnl___$(date '+%Y_%m_%d').md"

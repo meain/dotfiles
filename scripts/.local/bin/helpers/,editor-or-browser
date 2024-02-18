@@ -5,7 +5,7 @@ set -e
 # ,launch-or-focus Emacs 'emacsclient  -a "" --no-wait -c' Firefox firefox
 
 window="$(xdotool getwindowfocus | xargs xdotool getwindowname)"
-if [ $window == "Emacs" ]; then
+if [ $window = "Emacs" ]; then
 	if echo $window | grep "Emacs"; then
 		xdotool getwindowfocus >/tmp/last-editor-window
 	fi

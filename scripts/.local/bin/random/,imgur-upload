@@ -57,10 +57,10 @@ if [ "$CLIENT_ID" = "Your Client ID" ]; then
 fi
 
 # check arguments
-if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+if [[ "$1" = "-h" || "$1" = "--help" ]]; then
 	usage
 	exit 0
-elif [[ "$1" == "-x" || "$1" == "--no-clipboard" ]]; then
+elif [[ "$1" = "-x" || "$1" = "--no-clipboard" ]]; then
 	CLIPBOARD=false
 	shift
 fi
@@ -133,7 +133,7 @@ done
 IFS=$ifs_old
 
 # put the URL on the clipboard if we have xsel or xclip
-if [ $CLIPBOARD == true ]; then
+if [ $CLIPBOARD = true ]; then
 	{ which pbcopy &>/dev/null && echo -n "$list_urls" | pbcopy; } \
 		|| { which xsel &>/dev/null && echo -n "$list_urls" | xsel --input --clipboard; } \
 		|| { which xclip &>/dev/null && echo -n "$list_urls" | xclip -selection clipboard; } \

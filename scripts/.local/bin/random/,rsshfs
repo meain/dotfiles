@@ -40,7 +40,7 @@ else
     args=("$@")
     for (( i = 1; i < $#; i++ ))
     do
-        if [[ "${args[$i]}" == ro && "${args[(($i-1))]}" == -o ]]
+        if [[ "${args[$i]}" = ro && "${args[(($i-1))]}" = -o ]]
         then
             readonly=:
             break
