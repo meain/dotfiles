@@ -2,12 +2,15 @@
 
 # set -e
 
-notmuch new
+# fix up tags
+notmuch new 2>/dev/null
 ,mail-move || true # move archived mails from inbox to archive
 
+# push pull mail
 if [ ! "$1" = "retag" ]; then
 	[ -f /tmp/mailpullfailed ] && rm /tmp/mailpullfailed
 	mbsync -a || touch /tmp/mailpullfailed
 fi
 
-mailtag # tag stuff with notmuch
+# tag new mails
+mailtag

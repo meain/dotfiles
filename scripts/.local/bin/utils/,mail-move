@@ -4,23 +4,17 @@
 # set -e
 
 # Move a message file while removing its UID-part
-function safeMove { mv -f "$1" "$2/$(echo "$1"|xargs basename|cut -d',' -f1)"; }
+safeMove() {
+    mv -f "$1" "$2/$(echo "$1"|xargs basename|cut -d',' -f1)"
+}
 
-# Move all archived messages from Inbox to Archive folder
-echo Moving $(notmuch count --output=files 'folder:meain/INBOX' and -tag:inbox) \
-     archived messages from Inbox to Archive folder for personal
-for i in $(notmuch search --output=files 'folder:meain/INBOX' and -tag:inbox|grep 'meain/INBOX'); do
-    safeMove "$i" "$MAILDIR/meain/[Gmail].All Mail/cur"
-done
+doMove(){
+    echo Archiving "$(notmuch count --output=files "folder:$1/INBOX" and -tag:inbox)" mails for "$1"
+    for i in $(notmuch search --output=files "folder:$1/INBOX" and -tag:inbox|grep "$1/INBOX"); do
+        safeMove "$i" "$MAILDIR/$1/[Gmail].All Mail/cur"
+    done
+}
 
-echo Moving $(notmuch count --output=files 'folder:ic/INBOX' and -tag:inbox) \
-     archived messages from Inbox to Archive folder for work
-for i in $(notmuch search --output=files 'folder:ic/INBOX' and -tag:inbox|grep 'ic/INBOX'); do
-    safeMove "$i" "$MAILDIR/ic/[Gmail].All Mail/cur"
-done
-
-echo Moving $(notmuch count --output=files 'folder:mail/INBOX' and -tag:inbox) \
-     archived messages from Inbox to Archive folder for mail
-for i in $(notmuch search --output=files 'folder:mail/INBOX' and -tag:inbox|grep 'mail/INBOX'); do
-    safeMove "$i" "$MAILDIR/mail/Archived/cur"
-done
+doMove meain
+doMove ic
+doMove mail
