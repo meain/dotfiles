@@ -26,9 +26,9 @@ XF86Audio{_,Mic}Mute
 XF86MonBrightness{Down,Up}
       brightnessctl specific {'3-','+3'}
 
-# lock screen (-n is so that the notification afterwards is not shown until unlocked)
+# lock screen
 super + {shift, alt+control} + z
-      ,lock-screen{ pixelated -n, && systemctl suspend } 
+      ,lock-screen pixelated , systemctl suspend
 
 # dmenu
 super + {d,shift+d}
