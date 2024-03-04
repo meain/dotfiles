@@ -92,7 +92,7 @@
 
 ;; Install use-package support
 (elpaca elpaca-use-package
-  ;; Enable :elpaca use-package keyword.
+  ;; Enable :ensure use-package keyword.
   (elpaca-use-package-mode))
 
 ;; Block until current queue processed.
@@ -105,13 +105,13 @@
 
 ;; Benchmark emacs startup (enable when necessary)
 (use-package benchmark-init
-  :elpaca t
+  :ensure t
   :disabled :config
   (add-hook 'after-init-hook 'benchmark-init/deactivate))
 
 ;; Get proper PATH (not used as we are launching from shell)
 ;; (use-package exec-path-from-shell
-;;   :elpaca t
+;;   :ensure t
 ;;   :config
 ;;   ;; https://github.com/purcell/exec-path-from-shell#making-exec-path-from-shell-faster
 ;;   (setq exec-path-from-shell-arguments '("-l")) ;; removing -i
@@ -121,7 +121,7 @@
 
 ;; Evil mode (set this up first)
 (use-package evil
-  :elpaca t
+  :ensure t
 
   :init
   (setq evil-want-integration t)
@@ -166,7 +166,7 @@
 
 ;; Evil leader
 (use-package evil-leader
-  :elpaca t
+  :ensure t
   :after evil
   :config
   (global-evil-leader-mode)
@@ -275,9 +275,9 @@
 
 ;; Diminish
 (use-package diminish
-  :elpaca t
+  :ensure t
   :defer t
-  :init
+  :config
   (diminish 'eldoc-mode)
   (diminish 'auto-revert-mode))
 
@@ -365,7 +365,7 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; Evil commentary
 (use-package evil-commentary
-  :elpaca t
+  :ensure t
   :defer 1
   :diminish
   :config (evil-commentary-mode))
@@ -373,14 +373,14 @@ Pass ORIGINAL and ALTERNATE options."
 ;; Evil surround
 (use-package evil-surround
   :defer 1
-  :elpaca t
+  :ensure t
   :config (global-evil-surround-mode 1))
 
 ;; Evil text objects
-(use-package evil-textobj-line :elpaca t :defer 1)
-(use-package evil-textobj-syntax :elpaca t :defer 1)
+(use-package evil-textobj-line :ensure t :defer 1)
+(use-package evil-textobj-syntax :ensure t :defer 1)
 (use-package evil-indent-plus
-  :elpaca t
+  :ensure t
   :defer 1
   :config
   (define-key evil-inner-text-objects-map "i" 'evil-indent-plus-i-indent)
@@ -392,7 +392,7 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; Evil number increment
 (use-package evil-numbers
-  :elpaca t
+  :ensure t
   :after (evil)
   :commands (evil-numbers/inc-at-pt-incremental evil-numbers/dec-at-pt-incremental)
   :init
@@ -417,7 +417,7 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; Auto resize windows (useful in go buffer, folks don't stop at 80)
 (use-package golden-ratio
-  :elpaca t
+  :ensure t
   ;; Enable minor-mode manually when required
   :commands (golden-ratio golden-ratio-mode))
 
@@ -519,7 +519,7 @@ Pass ORIGINAL and ALTERNATE options."
                                 (define-key eshell-mode-map (kbd "M-j") 'meain/move-swap-down))))
 
 (use-package sticky-shell
-  :elpaca (sticky-shell :host github
+  :ensure (sticky-shell :host github
                         :repo "andyjda/sticky-shell")
   :after eshell
   :commands (sticky-shell-mode)
@@ -730,7 +730,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
      (call-interactively 'compile))))
 
 (use-package compile-multi
-  :elpaca t
+  :ensure t
   :defer t
   :after (compile evil-leader)
   :commands (compile-multi)
@@ -795,7 +795,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 ;; gcov2lcov -infile coverage.out -outfile coverage.lcov -use-absolute-source-paths
 ;; Now you can load this into coverlay
 (use-package coverlay
-  :elpaca t
+  :ensure t
   :config
   (setq coverlay:tested-line-background-color "#C9F3D2")
   (setq coverlay:untested-line-background-color "#F8CED3")
@@ -844,7 +844,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
 ;; Show eldoc messages in a popup at point
 (use-package eldoc-box
-  :elpaca t
+  :ensure t
   :commands (eldoc-box-help-at-point eldoc-box-hover-mode eldoc-box-hover-at-point-mode)
   :init
   (global-set-key (kbd "M-d")
@@ -894,7 +894,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
 ;; Github like git info in dired
 (use-package dired-git-info
-  :elpaca t
+  :ensure t
   :defer t
   :after dired
   :commands (dired-git-info-mode dired-git-info-auto-enable))
@@ -911,7 +911,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
 ;; auto activating snippets
 (use-package aas
-  :elpaca t
+  :ensure t
   :after (tree-surgeon)
   ;; can't defer loading of this as we need it in every single spawned
   ;; buffer including scratch
@@ -1076,7 +1076,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
 ;; Templates
 (use-package tempel
-  :elpaca t
+  :ensure t
   :commands (tempel-complete tempel-expand tempel-insert)
   :init
   (global-set-key (kbd "M-*") 'tempel-complete)
@@ -1101,14 +1101,14 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
                   font-lock-doc-face
                   font-lock-string-face)))
 (use-package flyspell-correct
-  :elpaca t
+  :ensure t
   :after flyspell
   :commands (flyspell-correct-wrapper flyspell-goto-next-error)
   :bind (:map flyspell-mode-map ("C-:" . flyspell-correct-wrapper)))
 
 ;; Advanced spell checking
 (use-package wucuo
-  :elpaca t
+  :ensure t
   :disabled t
   :after flyspell
   :commands (wucuo-start)
@@ -1138,7 +1138,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   (evil-set-command-property 'flymake-goto-next-error :jump t)
   (evil-set-command-property 'flymake-goto-prev-error :jump t))
 (use-package flymake-diagnostic-at-point
-  :elpaca t
+  :ensure t
   :after (flymake evil-leader)
   :config
   (setq flymake-diagnostic-at-point-error-prefix "! ")
@@ -1147,7 +1147,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   (evil-leader/set-key "k" 'flymake-goto-prev-error)
   (add-hook 'flymake-mode-hook #'flymake-diagnostic-at-point-mode))
 (use-package flymake-quickdef
-  :elpaca t
+  :ensure t
   :after flymake
   :config
   ;; tree-grepper based lints
@@ -1400,7 +1400,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
 ;; Company for autocompletions
 (use-package company
-  :elpaca t
+  :ensure t
   :disabled t
   :defer 1
   :diminish
@@ -1436,7 +1436,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
 ;; consult-interface for company for use in `sql-mode'
 (use-package consult-company
-  :elpaca t
+  :ensure t
   :disabled t
   :defer t
   :after (consult company)
@@ -1444,7 +1444,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
 ;; Company quickhelp
 (use-package company-quickhelp ; Show help in tooltip
-  :elpaca t
+  :ensure t
   :disabled t
   :after company
   :config
@@ -1453,7 +1453,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
         pos-tip-background-color "#ffffff"))
 
 (use-package corfu
-  :elpaca (:files (:defaults "extensions/*"))
+  :ensure (:files (:defaults "extensions/*"))
   :config
   (setq completion-cycle-threshold 3)
   (setq corfu-auto t)
@@ -1485,7 +1485,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
 ;; Add completion extensions
 (use-package cape
-  :elpaca t
+  :ensure t
   :bind (("M-p" . completion-at-point) ;; capf
          ("M-f p t" . complete-tag)        ;; etags
          ("M-f p d" . cape-dabbrev)        ;; or dabbrev-completion
@@ -1504,7 +1504,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
 ;; Completions (core framework)
 (use-package vertico
-  :elpaca (:files (:defaults "extensions/*.el"))
+  :ensure (:files (:defaults "extensions/*.el"))
   :config
   (setq vertico-count 13)
   (setq vertico-cycle t) ; useful for consult-imenu
@@ -1550,7 +1550,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   (vertico-mode))
 (use-package savehist :config (savehist-mode t))
 (use-package orderless
-  :elpaca t
+  :ensure t
   :config
   (setq completion-styles '(orderless basic))
 
@@ -1585,19 +1585,19 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
           (variable (styles orderless+basic))
           (file (styles basic partial-completion)))))
 (use-package marginalia
-  :elpaca t
+  :ensure t
   :defer 1
   :bind (:map minibuffer-local-map ("C-b" . marginalia-cycle))
   :config (marginalia-mode))
 
 ;; Show completions option even when there is a typo
 ;; (use-package typo
-;;   :elpaca t
+;;   :ensure t
 ;;   :config (add-to-list 'completion-styles 'typo t))
 
 ;; Aggressive completions
 (use-package aggressive-completion
-  :elpaca t
+  :ensure t
   :defer 1
   :disabled t
   :config
@@ -1615,7 +1615,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
 ;; Consult without consultation fees
 (use-package consult
-  :elpaca t
+  :ensure t
   :after (xref)
   :defer 1
   :config
@@ -1629,35 +1629,35 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
 (use-package consult-notmuch
   :after (notmuch)
-  :elpaca t
+  :ensure t
   :disabled t
   :commands (consult-notmuch consult-notmuch-tree consult-notmuch-address))
 
 (use-package consult-git-log-grep
   :after (consult)
   :commands (consult-git-log-grep)
-  :elpaca (consult-git-log-grep
+  :ensure (consult-git-log-grep
            :host github
            :repo "ghosty141/consult-git-log-grep"))
 
 ;; Embark stuff
 (use-package embark
   :defer 1
-  :elpaca t
+  :ensure t
   :init (setq prefix-help-command #'embark-prefix-help-command)
   :config
   (global-set-key (kbd "C-'")  'embark-act)
   (global-set-key (kbd "C-.")  'embark-dwim)
   (global-set-key (kbd "C-h B")  'embark-bindings))
 (use-package embark-consult
-  :elpaca t
+  :ensure t
   :defer t
   :after (embark consult)
   :hook (embark-collect-mode . consult-preview-at-point-mode))
 
 ;; Helpful package
 (use-package helpful
-  :elpaca t
+  :ensure t
   :after evil-leader
   :commands (helpful-callable helpful-variable helpful-at-point helpful-key)
   :init
@@ -1682,7 +1682,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
                   (meain/with-alternate (call-interactively 'switch-to-buffer)
                                         (ibuffer-other-window))))
 (use-package ibuffer-project
-  :elpaca t
+  :ensure t
   :after (ibuffer project)
   :config
   (add-to-list 'ibuffer-project-root-functions '(file-remote-p . "Remote"))
@@ -1700,7 +1700,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
 ;; rg.el
 (use-package rg
-  :elpaca t
+  :ensure t
   :commands rg
   :after evil-leader
   :init
@@ -1710,7 +1710,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
 ;; dumb-jump
 (use-package dumb-jump
-  :elpaca t
+  :ensure t
   :after evil-leader
   :commands dumb-jumb-go
   :init (evil-leader/set-key "J" 'dumb-jump-go)
@@ -1720,7 +1720,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
 ;; Code formatting
 (use-package apheleia
-  :elpaca t
+  :ensure t
   :after evil
   :commands (apheleia-format-buffer meain/format-buffer)
   :config
@@ -1792,7 +1792,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
 
 ;; LSP using lspce
-;; (use-package yasnippet :elpaca t)
+;; (use-package yasnippet :ensure t)
 ;; (use-package lspce
 ;;   :load-path "/home/meain/dev/src/lspce"
 ;;   :after (yasnippet)
@@ -1808,12 +1808,12 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 ;;                                           ("C" "clangd" "--all-scopes-completion --clang-tidy --enable-config --header-insertion-decorators=0")
 ;;                                           ("java" "java" lspce-jdtls-cmd-args lspce-jdtls-initializationOptions)))))
 
-(use-package jsonrpc :elpaca t)
+;; (use-package jsonrpc :ensure t)
 
 ;; LSP
 (use-package eglot
   :commands eglot-ensure
-  ;; :elpaca t ;; use builtin version
+  ;; :ensure t ;; use builtin version
   :after (project flymake jsonrpc)
   :config
   ;; Supposedly speed up eglot
@@ -1909,18 +1909,18 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
 ;; Speed up eglot communication by translating to bycode externally
 (use-package eglot-booster
-  :elpaca (:host github :repo "jdtsmith/eglot-booster")
+  :ensure (:host github :repo "jdtsmith/eglot-booster")
   :after eglot
   :config (eglot-booster-mode))
 
 ;; Get hierarchy
 (use-package eglot-hierarchy
   :commands (eglot-hierarchy-call-hierarchy eglot-hierarchy-type-hierarchy)
-  :elpaca (:host github :repo "dolmens/eglot-hierarchy"))
+  :ensure (:host github :repo "dolmens/eglot-hierarchy"))
 
 ;; consult-eglot
 (use-package consult-eglot
-  :elpaca t
+  :ensure t
   :commands consult-eglot-symbols
   :after (imenu eglot)
   :config
@@ -1937,11 +1937,11 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
   (global-set-key (kbd "M-i") #'meain/imenu-or-eglot))
 
 ;; TODO Try out and add support for go mode
-;; (use-package dwim-coder-mode :elpaca t)
+;; (use-package dwim-coder-mode :ensure t)
 
 ;; Peek into files/definitions without opening them
 (use-package peek
-  :elpaca (:host github :repo "Ziqi-Yang/peek")
+  :ensure (:host github :repo "Ziqi-Yang/peek")
   :after (evil)
   :commands (peek-overlay-dwim peek-xref-definition)
   :init
@@ -2090,12 +2090,12 @@ list of available pages."
                     (previous-window-any-frame))))
   (global-set-key (kbd "M-i") 'consult-imenu))
 (use-package flimenu
-  :elpaca t
+  :ensure t
   :defer t
   :after imenu
   :config (flimenu-global-mode 1))
 (use-package imenu-list
-  :elpaca t
+  :ensure t
   :defer t
   :after (imenu consult)
   :commands imenu-list-smart-toggle
@@ -2106,22 +2106,23 @@ list of available pages."
 
 ;; Symbol overlay
 (use-package symbol-overlay
-  :elpaca t
+  :ensure t
   :defer t
   :commands (symbol-overlay-mode symbol-overlay-put))
 
 ;; magit dependency
-(use-package transient :elpaca t)
+(use-package transient :ensure t)
 
 ;; Magit
 (use-package magit
-  :elpaca t
+  :ensure t
   :after (evil-leader transient)
   :commands (magit-status magit-commit-create magit-ignored-files meain/git-how-was-it)
   :init
   (evil-leader/set-key "gg" 'magit-status)
   (evil-leader/set-key "gc" 'magit-commit-create)
-  (evil-leader/set-key "gb" 'magit-blame)
+  (evil-leader/set-key "gB" 'magit-blame)
+  (evil-leader/set-key "gb" 'magit-branch)
   (evil-leader/set-key "gG" 'magit-show-commit)
   (evil-leader/set-key "gT" 'magit-log-trace-definition)
   :config
@@ -2153,7 +2154,7 @@ list of available pages."
 ;; Structural diff using difftastic
 (use-package difftastic
   :disabled t
-  :elpaca (:host github :repo "pkryger/difftastic.el")
+  :ensure (:host github :repo "pkryger/difftastic.el")
   :config
   (eval-after-load 'magit-diff
     '(transient-append-suffix 'magit-diff '(-1 -1)
@@ -2162,14 +2163,14 @@ list of available pages."
 
 ;; Magit forge
 (use-package forge
-  :elpaca t
+  :ensure t
   :defer t
   :after (magit evil-leader)
   :config (evil-leader/set-key "gF" 'forge-browse-dwim))
 
 ;; Github review
 (use-package github-review
-  :elpaca t
+  :ensure t
   :defer t
   :after forge
   :commands (github-review-start github-review-forge-pr-at-point))
@@ -2186,7 +2187,7 @@ list of available pages."
 
 ;; Diff hl
 (use-package diff-hl
-  :elpaca t
+  :ensure t
   :defer 1
   :after evil-leader
   :config
@@ -2210,7 +2211,7 @@ list of available pages."
 
 ;; Git blame info
 (use-package blamer
-  :elpaca t
+  :ensure t
   :after evil-leader
   :commands (blamer-show-commit-info blamer-mode global-blamer-mode)
   :config
@@ -2224,7 +2225,7 @@ list of available pages."
 
 ;; Magit todo
 (use-package magit-todos
-  :elpaca t
+  :ensure t
   :disabled t
   :defer 1
   :config
@@ -2232,19 +2233,19 @@ list of available pages."
 
 ;; Matchit
 (use-package evil-matchit
-  :elpaca t
+  :ensure t
   :defer 1
   :config (global-evil-matchit-mode 1))
 
 ;; Highlight color codes
 (use-package rainbow-mode
-  :elpaca t
+  :ensure t
   :commands (rainbow-mode)
   :init (add-hook 'css-mode-hook 'rainbow-mode))
 
 ;; Code folding
 (use-package origami
-  :elpaca t
+  :ensure t
   :after (evil evil-leader)
   :defer 1
   :config (global-origami-mode)
@@ -2254,7 +2255,7 @@ list of available pages."
 
 ;; drag-stuff
 (use-package drag-stuff
-  :elpaca t
+  :ensure t
   :after evil
   :diminish
   :commands (drag-stuff-up drag-stuff-down drag-stuff-left drag-stuff-right)
@@ -2275,7 +2276,7 @@ list of available pages."
 
 ;; Persistent undo using undo-tree
 (use-package undo-tree
-  :elpaca t
+  :ensure t
   :diminish
   :config
   (global-undo-tree-mode t)
@@ -2352,7 +2353,7 @@ Pass `CHOOSER' as t to not automatically select the previous tab."
 
 ;; which-key mode
 (use-package which-key
-  :elpaca t
+  :ensure t
   :defer 1
   :diminish
   :config
@@ -2360,7 +2361,7 @@ Pass `CHOOSER' as t to not automatically select the previous tab."
 
 ;; Expand region
 (use-package expand-region
-  :elpaca t
+  :ensure t
   :commands (er/expand-region)
   :config
   ;; make evil jump list work with expand-region
@@ -2370,13 +2371,13 @@ Pass `CHOOSER' as t to not automatically select the previous tab."
 
 ;; dtrt (atuo find indend setting)
 (use-package dtrt-indent
-  :elpaca t
+  :ensure t
   :defer 1
   :diminish
   :config (dtrt-indent-global-mode))
 
 (use-package indent-guide
-  :elpaca t
+  :ensure t
   :after (evil-leader)
   :commands (indent-guide-global-mode indent-guide-mode)
   :init
@@ -2389,7 +2390,7 @@ Pass `CHOOSER' as t to not automatically select the previous tab."
 
 ;; vterm setup
 (use-package vterm
-  :elpaca t
+  :ensure t
   :defer t
   :after evil
   :commands (vterm meain/shell-toggle)
@@ -2526,22 +2527,22 @@ Pass `CHOOSER' as t to not automatically select the previous tab."
 
 ;; ranger in emacs
 (use-package ranger
-  :elpaca t
+  :ensure t
   :commands ranger
   :config
   (use-package image-dired+
-    :elpaca t
+    :ensure t
     :config (image-diredx-async-mode)))
 
 ;; editorconfig
 (use-package editorconfig
   :defer 1
-  :elpaca t
+  :ensure t
   :config (editorconfig-mode 1))
 
 ;; eros for eval
 (use-package eros
-  :elpaca t
+  :ensure t
   :commands (eros-eval-last-sexp meain/eval-last-sexp)
   :after evil-leader
   :init
@@ -2579,7 +2580,7 @@ Pass `CHOOSER' as t to not automatically select the previous tab."
 
 ;; Virtualenv
 (use-package virtualenvwrapper
-  :elpaca t
+  :ensure t
   :commands venv-workon
   :init (setq venv-location "~/.local/share/virtual_envs"))
 
@@ -2644,7 +2645,7 @@ Pass universal args to run suite or project level tests."
 
 ;; Neotree
 (use-package neotree
-  :elpaca t
+  :ensure t
   :commands neotree
   :config
   (setq neo-window-fixed-size nil)
@@ -2654,7 +2655,7 @@ Pass universal args to run suite or project level tests."
 ;; Evil keybindings for a lot of things
 (use-package evil-collection
   :defer 1
-  :elpaca t
+  :ensure t
   :after evil
   :config
   (setq evil-collection-magit-want-horizontal-movement t)
@@ -2663,7 +2664,7 @@ Pass universal args to run suite or project level tests."
 
 ;; Highlight TODO items
 (use-package hl-todo
-  :elpaca t
+  :ensure t
   :defer 1
   :config
   (setq hl-todo-keyword-faces '(("TODO" . "#FF0000")
@@ -2676,13 +2677,13 @@ Pass universal args to run suite or project level tests."
 
 ;; Emmet for html stuff (c-j to activate)
 (use-package emmet-mode
-  :elpaca t
+  :ensure t
   :defer t
   :commands (emmet-mode))
 
 ;; Direnv support
 (use-package envrc
-  :elpaca t
+  :ensure t
   :defer 1
   :config (envrc-global-mode))
 
@@ -2712,29 +2713,29 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 
 ;;; [FILETYPE PUGINS] ===============================================
 
-(use-package rust-mode :elpaca t :defer t)
-(use-package clojure-mode :elpaca t :defer t)
-(use-package zig-mode :elpaca t :defer t)
+(use-package rust-mode :ensure t :defer t)
+(use-package clojure-mode :ensure t :defer t)
+(use-package zig-mode :ensure t :defer t)
 (use-package go-mode
-  :elpaca t
+  :ensure t
   :defer t
   :config
   (evil-set-command-property 'godef-jump :jump t))
 (use-package go-fill-struct
-  :elpaca t
+  :ensure t
   :commands (go-fill-struct))
 (use-package go-tag
-  :elpaca t
+  :ensure t
   :commands (go-tag-add go-tag-remove go-tag-refresh)
   :config (setq go-tag-args (list "-transform" "camelcase")))
 (use-package go-impl
-  :elpaca t
+  :ensure t
   :commands (go-impl)
   :config (advice-add 'go-impl :around #'meain/use-custom-src-directory))
-(use-package go-stacktracer :elpaca t :commands (go-stacktracer-region))
-(use-package go-guru :defer t :elpaca t)
+(use-package go-stacktracer :ensure t :commands (go-stacktracer-region))
+(use-package go-guru :defer t :ensure t)
 (use-package go-dlv
-  :elpaca t
+  :ensure t
   :defer t
   :config
   (defun meain/dlv-current-func ()
@@ -2783,15 +2784,15 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
             (dlv dlv-command))
         (call-interactively 'dlv))))
   :commands (dlv dlv-current-func meain/dlv meain/dlv-replay meain/dlv-current-func))
-(use-package lua-mode :elpaca t :defer t)
-(use-package web-mode :elpaca t :defer t)
-(use-package jinja2-mode :elpaca t :defer t)
-(use-package config-general-mode :elpaca t :defer t :mode "/\\.env")
-(use-package vimrc-mode :elpaca t :defer t)
-(use-package sxhkdrc-mode :elpaca t :defer t)
-(use-package edit-indirect :elpaca t)
+(use-package lua-mode :ensure t :defer t)
+(use-package web-mode :ensure t :defer t)
+(use-package jinja2-mode :ensure t :defer t)
+(use-package config-general-mode :ensure t :defer t :mode "/\\.env")
+(use-package vimrc-mode :ensure t :defer t)
+(use-package sxhkdrc-mode :ensure t :defer t)
+(use-package edit-indirect :ensure t)
 (use-package markdown-mode
-  :elpaca t
+  :ensure t
   :defer t
   :after (edit-indirect)
   :mode ("\\.md\\'" . gfm-mode)
@@ -2804,9 +2805,9 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   (evil-define-key 'normal markdown-mode-map (kbd "g d") 'markdown-do)
   (setq markdown-command "pandoc -t html5")
   (setq markdown-fontify-code-blocks-natively t))
-(use-package reformatter :elpaca t :defer t) ;; needed by nix-mode
+(use-package reformatter :ensure t :defer t) ;; needed by nix-mode
 (use-package nix-mode
-  :elpaca t
+  :ensure t
   :defer t
   :mode "\\.nix\\'"
   :config
@@ -2815,7 +2816,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 ;; builtin package for scheme (for tree-sitter grammar)
 (use-package scheme-mode :defer t :mode "\\.scm\\'")
 (use-package csv-mode
-  :elpaca t
+  :ensure t
   :defer t
   :config
   (setq csv-align-mode t)
@@ -2823,22 +2824,22 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
                       :background "gray100"
                       :foreground "#000000"))
 (use-package json-mode
-  :elpaca t
+  :ensure t
   :defer t
   :config
   (add-hook 'json-mode-hook (lambda ()
                               (setq imenu-create-index-function #'meain/imenu-config-nesting-path))))
 (use-package yaml-mode
-  :elpaca t
+  :ensure t
   :defer t
   :config
   (remove-hook 'yaml-mode-hook 'yaml-set-imenu-generic-expression) ;; don't use default one
   (add-hook 'yaml-mode-hook (lambda ()
                               (setq imenu-create-index-function #'meain/imenu-config-nesting-path))))
-(use-package ini-mode :elpaca t :defer t)
-(use-package dockerfile-mode :elpaca t :defer t :mode "/Dockerfile")
-(use-package docker-compose-mode :elpaca t :defer t)
-(use-package protobuf-mode :elpaca t :defer t :disabled t)
+(use-package ini-mode :ensure t :defer t)
+(use-package dockerfile-mode :ensure t :defer t :mode "/Dockerfile")
+(use-package docker-compose-mode :ensure t :defer t)
+(use-package protobuf-mode :ensure t :defer t :disabled t)
 (use-package org
   :commands (org-mode org-timer org-timer-set-timer)
   :mode "/\\.org\\'"
@@ -2863,7 +2864,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   (evil-define-key 'normal org-mode-map (kbd "gt") 'org-todo)
   (evil-define-key 'normal org-mode-map (kbd "gr") 'org-ctrl-c-ctrl-c))
 (use-package org-modern
-  :elpaca t
+  :ensure t
   :disabled t
   :after org
   :commands (org-modern-mode org-modern-agenda)
@@ -2875,12 +2876,12 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 (use-package kbd-mode
   :defer t
   :mode "\\.kbd\\'"
-  :elpaca (kbd-mode :host github
+  :ensure (kbd-mode :host github
                     :repo "kmonad/kbd-mode"))
 
 ;; Show metadata for binary files instead of opening them
 (use-package eff
-  :elpaca (:host github :repo "oxidase/eff-mode"))
+  :ensure (:host github :repo "oxidase/eff-mode"))
 
 ;; mtodo-mode
 (use-package emacs
@@ -2897,7 +2898,8 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 
 ;; DAP client for Emacs
 (use-package dape
-  :elpaca (dape :type git :host github :repo "svaante/dape")
+  :ensure (dape :type git :host github :repo "svaante/dape")
+  :disabled t
   :config
   (setq dape-inline-variables t) ;; Add inline variable hints, this feature is highly experimental
   (setq dape-repl-use-shorthand t) ;; Use n for next etc. in REPL
@@ -2932,7 +2934,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   (define-key evil-normal-state-map (kbd "<SPC> d g") 'gud-until))
 
 (use-package hydra
-  :elpaca t
+  :ensure t
   :commands (defhydra))
 
 (use-package emacs
@@ -2954,7 +2956,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 ;; Dashboard
 (use-package dashboard
   :disabled t
-  :elpaca t
+  :ensure t
   :config
   (setq dashboard-banner-logo-title nil)
   (setq dashboard-center-content t)
@@ -2983,7 +2985,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 
 ;; notmuch
 (use-package notmuch
-  :elpaca t
+  :ensure t
   :commands notmuch
   :after evil-leader
   :init
@@ -3135,7 +3137,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 
 ;; elfeed
 (use-package elfeed
-  :elpaca t
+  :ensure t
   :disabled t
   :commands (elfeed elfeed-update)
   :after (avl-tree evil-leader)
@@ -3295,7 +3297,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 ;; command log
 (use-package command-log-mode
   :commands global-command-log-mode
-  :elpaca t
+  :ensure t
   :init
   (defun meain/command-log-start ()
     "Enable command-log-mode and open command-log buffer."
@@ -3305,7 +3307,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 
 ;; Beacon mode
 (use-package beacon
-  :elpaca t
+  :ensure t
   :defer 1
   :diminish
   :config
@@ -3327,7 +3329,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 (use-package ligature
   :defer 3
   :disabled t
-  :elpaca (ligature :host github
+  :ensure (ligature :host github
                     :repo "mickeynp/ligature.el")
   :config
   (ligature-set-ligatures 't '("www"))
@@ -3347,16 +3349,16 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   (global-ligature-mode 1))
 
 ;; Focus mode
-(use-package focus :elpaca t :commands focus-mode)
+(use-package focus :ensure t :commands focus-mode)
 ;; Writing mode
 (use-package writeroom-mode
-  :elpaca t
+  :ensure t
   :commands writeroom-mode
   :config
   (setq writeroom-global-effects (remove 'writeroom-set-fullscreen writeroom-global-effects)))
 ;; Naive linter for English prose
 (use-package writegood-mode
-  :elpaca t
+  :ensure t
   :defer t
   :commands (writegood-mode))
 
@@ -3395,7 +3397,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 ;; tramp-term
 (use-package tramp-term
   :after tramp
-  :elpaca t
+  :ensure t
   :commands (tramp-term meain/tramp-shell)
   :config
   (defun meain/tramp-shell ()
@@ -3405,14 +3407,14 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 
 ;; timing stuff
 (use-package activity-watch-mode
-  :elpaca t
+  :ensure t
   :defer 1
   :diminish
   :config (global-activity-watch-mode))
 
 ;; Control bluetooth devices
 (use-package bluetooth
-  :elpaca t
+  :ensure t
   :commands (bluetooth-list-devices))
 
 ;; Markdown preview
@@ -3434,7 +3436,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 
 ;; Restclient
 (use-package restclient
-  :elpaca t
+  :ensure t
   :defer t
   :mode ("\\.rest\\'". restclient-mode)
   :config (add-hook 'restclient-mode-hook (lambda ()
@@ -3442,7 +3444,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 
 ;; Restclient jq integration
 (use-package restclient-jq
-  :elpaca t
+  :ensure t
   :after restclient
   :defer
   :init
@@ -3450,19 +3452,19 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 
 ;; Link opening
 (use-package ace-link
-  :elpaca t
+  :ensure t
   :commands ace-link
   :init (global-set-key (kbd "M-f l") 'ace-link))
 
 ;; Docker
 (use-package docker
-  :elpaca t
+  :ensure t
   :defer t
   :commands (docker))
 
 ;; Kubernetes
 (use-package kubernetes
-  :elpaca t
+  :ensure t
   :disabled t
   :defer t
   :commands (meain/kube)
@@ -3470,12 +3472,12 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   (defun meain/kube ()
     "Hacky function to load `kubernetes-evil' as it was not loading otherwise."
     (interactive)
-    (use-package kubernetes-evil :elpaca t)
+    (use-package kubernetes-evil :ensure t)
     (kubernetes-overview)))
 
 ;; Window layout changer
 (use-package rotate
-  :elpaca t
+  :ensure t
   :after evil
   :commands (rotate-layout rotate-window)
   :init
@@ -3491,7 +3493,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 
 ;; Automatically install treesit grammars
 (use-package treesit-auto
-  :elpaca t
+  :ensure t
   :config
   (global-treesit-auto-mode))
 
@@ -3499,7 +3501,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 (use-package tree-sitter
   :defer 1
   :disabled t
-  :elpaca t
+  :ensure t
   :config
   (global-tree-sitter-mode)
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
@@ -3658,10 +3660,10 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 
 ;; Show context using tree-sitter
 (use-package posframe-plus
-  :elpaca (:host github :type git :repo "zbelial/posframe-plus" ))
+  :ensure (:host github :type git :repo "zbelial/posframe-plus" ))
 (use-package treesitter-context
   :after (tree-sitter posframe-plus)
-  :elpaca (:type git :host github :repo "zbelial/treesitter-context.el")
+  :ensure (:type git :host github :repo "zbelial/treesitter-context.el")
   :commands (treesitter-context-toggle-show)
   :config
   (setq treesitter-context-idle-time 0.5)
@@ -3675,13 +3677,13 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 
 (use-package combobulate
   :commands (combobulate)
-  :elpaca (:repo "mickeynp/combobulate" :host github))
+  :ensure (:repo "mickeynp/combobulate" :host github))
 
 (use-package ts-fold
   :defer t
   :after (tree-sitter evil-leader)
   :commands (ts-fold-mode)
-  :elpaca (ts-fold :host github
+  :ensure (ts-fold :host github
                    :repo "jcs090218/ts-fold")
   :config
   (defun meain/toggle-fold ()
@@ -3709,17 +3711,17 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 ;; Similar: breadcrumb
 (use-package topsy
   :defer t
-  :elpaca t
+  :ensure t
   :init
   (add-hook 'find-file-hook #'topsy-mode))
 
 ;; Does not use imenu populated by eglot
 ;; (use-package breadcrumb
-;;   :elpaca (:repo "joaotavora/breadcrumb" :host github))
+;;   :ensure (:repo "joaotavora/breadcrumb" :host github))
 
 ;; Quick lookup in a dictionary
 (use-package dictionary
-  :elpaca t
+  :ensure t
   :commands (dictionary-search)
   :init
   (global-set-key (kbd "C-c d") #'dictionary-search)
@@ -3728,25 +3730,25 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 ;; Highlight enclosing parenthesis
 (use-package highlight-parentheses
   :defer t
-  :elpaca t
+  :ensure t
   :init (add-hook 'prog-mode-hook #'highlight-parentheses-mode)
   :config (setq highlight-parentheses-colors '("coral1")))
 
 ;; Auto recompile on save (useful for running tests)
 (use-package recompile-on-save
-  :elpaca t
+  :ensure t
   :commands (recompile-on-save-mode))
 
 ;; RFC reader
 (use-package rfc-mode
-  :elpaca t
+  :ensure t
   :commands (rfc-mode-browse rfc-mode-read)
   :config
   (setq rfc-mode-directory (expand-file-name "~/.local/share/rfc/"))
   (add-hook 'rfc-mode-hook 'writeroom-mode))
 
 (use-package ledger-mode
-  :elpaca t
+  :ensure t
   :defer t
   :commands (meain/ledger-add-entry)
   :mode "\\.ledger\\'"
@@ -3779,7 +3781,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
       (ledger-mode-clean-buffer))))
 
 (use-package scroll-on-drag
-  :elpaca t
+  :ensure t
   :defer 3
   :config
   (setq scroll-on-drag-motion-scale 0.1)
@@ -3790,7 +3792,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
                       (mouse-yank-primary t)))))
 
 (use-package 0x0
-  :elpaca t
+  :ensure t
   :defer t
   :disabled t
   :after evil-leader
@@ -3798,12 +3800,12 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   :init (evil-leader/set-key "a 0" '0x0-dwim))
 
 (use-package redacted
-  :elpaca t
+  :ensure t
   :commands (redacted-mode)
   :config (add-hook 'redacted-mode-hook (lambda () (read-only-mode (if redacted-mode 1 -1)))))
 
 (use-package avy
-  :elpaca t
+  :ensure t
   :defer 3
   :after evil-leader
   :config
@@ -3811,7 +3813,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   (evil-leader/set-key "h" 'avy-goto-char-timer))
 
 (use-package harpoon
-  :elpaca t
+  :ensure t
   :after evil-leader
   :commands (harpoon-toggle-file
              harpoon-toggle-quick-menu
@@ -3848,23 +3850,23 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   (zone-when-idle (* 5 60)))
 
 ;; Mermaid mode
-(use-package mermaid-mode :defer t :elpaca t)
+(use-package mermaid-mode :defer t :ensure t)
 
 ;; Edit any textfield in Emacs
 (use-package emacs-everywhere
   :defer t
-  :elpaca t
+  :ensure t
   :config
   (remove-hook 'emacs-everywhere-init-hooks #'emacs-everywhere-major-mode-org-or-markdown)
   (remove-hook 'emacs-everywhere-init-hooks #'emacs-everywhere-apply-major-mode)
   (add-hook 'emacs-everywhere-init-hooks #'gfm-mode))
 
 ;; Fontify face (useful to debug themes)
-(use-package fontify-face :elpaca t :defer t)
+(use-package fontify-face :ensure t :defer t)
 
 ;; Keycast mode for demos
 (use-package keycast
-  :elpaca t
+  :ensure t
   :defer t
   :commands (keycast-mode keycast-background-mode keycast-log-mode keycast-tab-bar-mode)
   :config
@@ -4024,7 +4026,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
                           (call-interactively 'meain/scratchy))))
 
 ;; vime functionality within emacs
-(use-package uuid :elpaca t :commands uuid-string)
+(use-package uuid :ensure t :commands uuid-string)
 (use-package emacs
   :commands (meain/vime)
   :after (marginalia)
@@ -4128,12 +4130,12 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 
 ;; devdocs
 (use-package devdocs
-  :elpaca t
+  :ensure t
   :commands (devdocs-search devdocs-lookup devdocs-install))
 
 ;; cheat.sh
 (use-package cheat-sh
-  :elpaca t
+  :ensure t
   :commands (cheat-sh cheat-sh-maybe-region)
   :init
   (evil-leader/set-key "a d"
@@ -4213,7 +4215,7 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 
 ;; Narrow region
 (use-package fancy-narrow
-  :elpaca t
+  :ensure t
   :after evil
   :commands (fancy-narrow-to-region fancy-widen evil-fancy-narrow)
   :config
@@ -4240,9 +4242,9 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 
 ;; Copilot, I guess
 (use-package copilot
-  :defer 3
+  :defer t
   :after jsonrpc
-  :elpaca (:host github
+  :ensure (:host github
                  :repo "zerolfx/copilot.el"
                  :files ("dist" "*.el"))
   :config
@@ -4267,7 +4269,7 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 
 ;; Better GPT-3 interaction
 (use-package c3po
-  :elpaca (:host github :repo "d1egoaz/c3po.el")
+  :ensure (:host github :repo "d1egoaz/c3po.el")
   :commands (c3po-assistant-new-chat
              c3po-assistant-new-chat-replace-region
              c3po-grammar-checker-new-chat c3po-grammar-checker-new-chat-replace-region
@@ -4277,7 +4279,7 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 
 ;; OpenAI GPT-3 interaction
 (use-package gptel
-  :elpaca t
+  :ensure t
   :commands (gptel gptel-send gptel-rewrite-menu)
   :config
   (setq gptel-model "gpt-4")
@@ -4288,7 +4290,7 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 
 ;; Chatgpt shell
 (use-package chatgpt-shell
-  :elpaca t
+  :ensure t
   :config
   (setq chatgpt-shell-model-version "gpt-4")
   (setq chatgpt-shell-openai-key openai-api-key))
@@ -4768,7 +4770,7 @@ not defined, it will be saved in the `$HOME' directory."
 ;; Better modeline
 ;; TODO: `mode-line-format-right-align' can be used to right align items in modeline
 (use-package mode-line-idle
-  :elpaca t
+  :ensure t
   :commands (mode-line-idle))
 (setq-default mode-line-format
               (list
