@@ -16,6 +16,7 @@
   wip = for-each-ref --sort='authordate:iso8601' --format=' %(color:green)%(authordate:relative)%09%(color:reset)%(refname:short)' refs/heads
   undo = !"git reset --soft HEAD^ && git reset"
   update = pull --ff-only
+  udpate = pull --ff-only # common misspelling
 [color]
   ui = true
 [core]
