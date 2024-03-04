@@ -1,0 +1,9 @@
+#!/bin/sh
+
+set -e
+
+if playerctl status 2>/dev/null | grep -q Playing; then
+    playerctl metadata --format "> {{ title }} - {{ artist }}" 2>/dev/null | head -n1
+else
+    echo "No music playing"
+fi
