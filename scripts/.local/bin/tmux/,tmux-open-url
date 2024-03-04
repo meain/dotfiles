@@ -1,0 +1,7 @@
+#!/bin/sh
+
+set -e
+
+tmux capture-pane -J -p |
+    grep -oE '(https?|ftp|file):/?//[-A-Za-z0-9+&@#/%?=~_|!:,.;]*[-A-Za-z0-9+&@#/%=~_|]' |
+    sort -u | fzf-tmux --prompt "Select URL: " | xargs open
