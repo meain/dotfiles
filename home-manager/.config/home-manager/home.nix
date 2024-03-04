@@ -18,9 +18,10 @@ in
 
   programs.home-manager.enable = true;
 
-  services.emacs.package = pkgs.emacs-git;
+  # uncomment to use emacs-git
+  # services.emacs.package = pkgs.emacs-git;
   programs.emacs = {
-    package = pkgs.emacs-git;
+    # package = pkgs.emacs-git;
     enable = true;
     extraPackages = epkgs: [ epkgs.vterm ];
   };
