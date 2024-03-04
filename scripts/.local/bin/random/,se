@@ -2,12 +2,12 @@
 
 # se -> script execute
 
-set -eo pipefail
+set -e
 
 script="$(find -L "$HOME/.local/bin" -type f | sed "s|$HOME/.local/bin/||" |
 	,picker -p "Run script: ")"
 
 tmpfile="/tmp/$(xxd -l13 -ps /dev/urandom)"
-zsh -ic "$HOME/.local/bin/$script" | tee $tmpfile
+zsh -ic "$HOME/.local/bin/$script" | tee "$tmpfile"
 
-[ "$GUI_PICKER" = 1 ] && notify-send "[DONE] $script" "$(cat $tmpfile)"
+[ "$GUI_PICKER" = 1 ] && notify-send "[DONE] $script" "$(cat "$tmpfile")"

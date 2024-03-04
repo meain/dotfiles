@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # For notifying about upcoming events
 # Sometimes I think I should use a proper language, but nah.
@@ -7,8 +7,8 @@ set -e
 
 EVENTS_FILE="/tmp/events"
 list_events() {
-	gcalendar --account work --calendar $WORK_CAL --no-of-days 3
-	gcalendar --calendar $PERSONAL_CAL --no-of-days 3
+	gcalendar --account work --calendar "$WORK_CAL" --no-of-days 3
+	gcalendar --calendar "$PERSONAL_CAL" --no-of-days 3
 }
 
 [ "$1" = "sync" ] && shift && rm "$EVENTS_FILE-all"

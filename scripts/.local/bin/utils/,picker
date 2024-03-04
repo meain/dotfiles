@@ -13,7 +13,7 @@ query=""
 print_query=""
 exact=""
 ignore_case=""
-while [[ "$1" = -* ]]; do
+while expr "$1" : '-.*' >/dev/null; do
 	[ "$1" = "-p" ] && shift && prompt="$1" && shift && continue
 	[ "$1" = "--preview" ] && shift && preview="$1" && shift && continue
 	[ "$1" = "--preview-window" ] && shift && preview_window="$1" && shift && continue

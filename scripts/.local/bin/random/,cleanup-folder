@@ -7,7 +7,7 @@ set -e
 fold="_old"
 [ -n "$1" ] && cd "$1"
 mkdir -p $fold
-find . -maxdepth 1 -mtime +3 | grep -vE "^\./$fold$" |
+find . -mindepth 1 -maxdepth 1 -mtime +3 | grep -vE "^\./$fold$" |
 	while read -r file; do
 		echo Moving "$file"
 		mv "$file" "_old/$file"

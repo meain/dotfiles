@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 set -e
 
@@ -15,7 +15,7 @@ fi
 
 if [ ! -e shell.nix ] && [ ! -e default.nix ]; then
 	printf "Packages: "
-	read -r
+	read -r REPLY
 
 	echo Setting up your env with "$REPLY".
 	cat >shell.nix <<EOF
