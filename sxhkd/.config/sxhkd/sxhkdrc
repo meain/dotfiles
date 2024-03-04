@@ -28,7 +28,8 @@ XF86MonBrightness{Down,Up}
 
 # lock screen
 super + {shift, alt+control} + z
-      ,lock-screen pixelated , systemctl suspend
+      { \,lock-screen pixelated \
+      , systemctl suspend }
 
 # dmenu
 super + {d,shift+d}
