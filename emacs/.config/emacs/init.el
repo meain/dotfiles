@@ -4845,7 +4845,16 @@ not defined, it will be saved in the `$HOME' directory."
                                                      hima-simple-gray)
                                        ""))
                '(:eval (if (boundp 'keycast-mode-line) keycast-mode-line))
-               'mode-line-format-right-align
+               '(:eval (if (boundp 'mode-line-format-right-align)
+                           mode-line-format-right-align
+                         (propertize " "
+                                     'display
+                                     `((space :align-to (- (+ right right-fringe right-margin)
+                                                           ,(+ 2
+                                                               (+ (string-width (format-mode-line "%p"))
+                                                                  (string-width (format-mode-line "%m"))
+                                                                  (if (boundp 'org-timer-mode-line-string)
+                                                                      (1+ (string-width org-timer-mode-line-string)) 0)))))))))
                '(:eval (if (boundp 'org-timer-mode-line-string) (concat org-timer-mode-line-string " ")))
                (propertize "%p") ;; position in file
                (propertize " %m ")))
