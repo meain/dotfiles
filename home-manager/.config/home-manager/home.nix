@@ -316,7 +316,7 @@ in
     pkgs.rofi # menu stuff
     ppkgs.spaceman-diff # diff images in terminal
     pkgs.polybarFull # bar for wm
-    pkgs.python39Packages.pipx # pipx for installing stuff
+    # pkgs.python39Packages.pipx # pipx for installing stuff
     # ppkgs.logseq-doctor # logseq utils
 
     # aspell dicts
@@ -390,7 +390,6 @@ in
     pkgs.nodePackages.typescript-language-server # javascript langserver
 
     # programming-nix
-    pkgs.rnix-lsp # nix language server
     # pkgs.nixfmt # nix formatter
     pkgs.nixpkgs-fmt # nix formatter
     pkgs.statix # linter for nix
