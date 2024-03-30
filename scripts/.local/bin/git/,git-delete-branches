@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Select and delete brances
+# Select and delete branches
 
 set -e
 
@@ -8,5 +8,5 @@ git branch | grep -v "^[^ ]" |
 	grep -vE "  (master|main)$" |
 	grep -vE "  dura/" |
 	sed s:^..::g |
-	fzf -m --height 40% --reverse |
+	fzf -m --height 40% --reverse --preview 'git log --oneline -20 {}' |
 	xargs git branch -D
