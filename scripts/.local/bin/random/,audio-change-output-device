@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -eo pipefail
+set -e
 
 default="$(pactl info | awk '/Default Sink/{print $3}')"
 pacmd list-sinks |
