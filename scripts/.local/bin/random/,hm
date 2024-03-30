@@ -37,6 +37,7 @@ elif [ "$1" = switch ]; then
     cd "$HOME/.config/home-manager/"
     nix build -L .#homeConfigurations.meain.activationPackage
     home-manager switch "$@"
+    echo "git maintenance might be broken, do rerun"
 else
     cd "$HOME/.config/home-manager/"
     home-manager "${1:-build}"
