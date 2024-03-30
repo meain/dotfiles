@@ -4391,6 +4391,15 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
   (delete-file (buffer-file-name))
   (meain/kill-current-buffer-unless-scratch))
 
+(use-package emacs
+  :commands (meain/copy-debugger-break-statement)
+  :config
+  (defun meain/copy-debugger-break-statement ()
+    (interactive)
+    (let ((file-name (buffer-file-name))
+          (line-number (line-number-at-pos)))
+        (meain/copy-to-clipboard (format "b %s:%s" file-name line-number)))))
+
 ;; Copy filename to clipboard
 (defun meain/copy-file-name-to-clipboard (&optional abs-path)
   "Copy the current filename into clipboard.  Pass `ABS-PATH' if you need absolute path."
