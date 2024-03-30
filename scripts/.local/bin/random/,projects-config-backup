@@ -1,24 +1,36 @@
 #!/bin/sh
 
 # Backup all project config files not backed up to project git to a separate git server
+# TODO(meain): optimize this to run `find` only once. It is pretty expensive
+set -e
 
 SAVEPATH="$HOME/.local/share/untracked-project-configs"
 mkdir -p "$SAVEPATH"
 
 backup_loc() {
-	tput el && echo "Saving $1..."
-	find "$HOME/dev" -type d -name '.git' | grep -v '/temp/' |
-		while read -r path; do
-			dir="$(dirname "$path")"
-			[ -e "$dir/$1" ] || continue
-			cleanpath="$(echo "$dir" | sed 's|^/home/meain/dev/||')"
-			tput el && printf "%s\r" "$cleanpath"
-			mkdir -p "$SAVEPATH/$cleanpath"
-			cp -r "$dir/$1" "$SAVEPATH/$cleanpath/$1"
-		done
+    tput el && echo "Saving $1..."
+    find "$HOME/dev" -type d -name '.git' | grep -v '/temp/' |
+        while read -r path; do
+            dest="$2"
+            [ -z "$dest" ] && dest="$1"
+
+            dir="$(dirname "$path")"
+            [ -e "$dir/$1" ] || continue
+            cleanpath="$(echo "$dir" | sed 's|^/home/meain/dev/||')"
+            tput el && printf "%s\r" "$cleanpath"
+
+            # if dir, copy contents else the file directly as we specifically set the dest
+            if [ -d "$dir/$1" ]; then
+                mkdir -p "$SAVEPATH/$cleanpath/$dest"
+                cp -r "$dir/$1/"* "$SAVEPATH/$cleanpath/$dest"
+            else
+                mkdir -p "$SAVEPATH/$cleanpath"
+                cp -r "$dir/$1" "$SAVEPATH/$cleanpath/$dest"
+            fi
+        done
 }
 
-backup_loc .git/config
+backup_loc .git/config git-config
 backup_loc .mscripts
 backup_loc shell.nix
 backup_loc default.nix
