@@ -23,7 +23,8 @@ elif echo "$url" | grep -qE '^https://github.com/[^/]*/[^/]*/commit'; then
 elif echo "$url" | grep -qE '^https://github.com/[^/]*/[^/]*/?$'; then
     printf "%s" "$url" | sed "s|https://github.com/\([^/]*/[^/$]*\)|[\1]($url)|"
 elif echo "$url" | grep -qE '^https://linear.app/[^/]*/issue/[^/]*/[^/]*$'; then
-    printf "%s" "$url" | sed "s|https://linear.app/\([^/]*\)/issue/\([^/]*\)/\([^/]*\)|[linear:\1#\2]($url)|"
+    # printf "%s" "$url" | sed "s|https://linear.app/\([^/]*\)/issue/\([^/]*\)/\([^/]*\)|[linear:\1#\2]($url)|"
+    printf "%s" "$url" | sed "s|https://linear.app/\([^/]*\)/issue/\([^/]*\)/\([^/]*\)|[\2]($url)|"
 elif echo "$url" | grep -qE '^https://teams.microsoft.com'; then
     # Using sed here was causing issues
     team="$(echo "$url" | grep -o 'teamName=[^&]*' | cut -d= -f2)"
