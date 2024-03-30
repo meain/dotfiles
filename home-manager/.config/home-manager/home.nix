@@ -644,6 +644,7 @@ in
   # systemd.user.startServices = true;  # enabling this increases switch time a lot
   systemd.user.services = {
     mpd = utils.ss-simple { cmd = "mpd --no-daemon"; wait = 3; };
+    mpd-mpris = utils.ss-simple { cmd = "${pkgs.mpd-mpris}/bin/mpd-mpris"; wait = 3; }; # playerctl for mpd
     clipmenud = utils.ss-simple { cmd = "clipmenud"; wait = 3; };
     sxhkd = utils.ss-simple { cmd = "${pkgs.sxhkd}/bin/sxhkd"; wait = 3; };
     qutebrowser = utils.ss-simple { cmd = "qutebrowser"; wait = 3; };
