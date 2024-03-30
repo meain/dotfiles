@@ -3,7 +3,16 @@
 set -e
 
 if playerctl status 2>/dev/null | grep -q Playing; then
-    playerctl metadata --format "> {{ title }} - {{ artist }}" 2>/dev/null | head -n1
+    title="$(playerctl metadata --format "{{ title }}" 2>/dev/null | head -n1)"
+    artist="$(playerctl metadata --format "{{ artist }}" 2>/dev/null | head -n1)"
+
+    if [ -n "$title" ] && [ -n "$artist" ]; then
+        echo "$title - $artist"
+    elif [ -n "$title" ]; then
+        echo "$title"
+    else
+        echo "Playing"
+    fi
 else
-    echo "No music playing"
+    echo "No media playing"
 fi
