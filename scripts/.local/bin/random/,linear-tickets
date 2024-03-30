@@ -1,0 +1,29 @@
+#!/bin/sh
+
+# List and open linear tickets assigned to you
+# https://developers.linear.app/docs
+# https://studio.apollographql.com/public/Linear-API/variant/current/schema/reference
+
+set -e
+
+tmpfile="/tmp/linear-tickets"
+
+if [ "$(find "$tmpfile" -mmin -10 2>/dev/null)" = "" ]; then
+    printf "Fetching linear tickets...\r"
+    curl -sX POST \
+        -H "Content-Type: application/json" \
+        -H "Authorization: $LINEAR_TOKEN" \
+        -d '{"query": "query {user(id: \"'"$LINEAR_USER_ID"'\") {id organization { urlKey } name assignedIssues {nodes {identifier state {type} title}}}}"}' \
+        https://api.linear.app/graphql >"$tmpfile"
+fi
+
+format_issues() {
+    jq -r '.data.user.assignedIssues.nodes[]|"[\(.state.type)] \(.identifier) \(.title)"' <"$tmpfile"
+}
+
+urlkey="$(jq -r '.data.user.organization.urlKey' <"$tmpfile")"
+
+{
+    format_issues | grep -E "^\[started"
+    format_issues | grep -E "^\[unstarted"
+} | ,picker -m | cut -d' ' -f2 | xargs -I{} open "https://linear.app/$urlkey/issue/{}"
