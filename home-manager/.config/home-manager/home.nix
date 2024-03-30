@@ -113,12 +113,12 @@ in
         }
         {
           name = "Calendar";
-          keyword = "cal";
+          keyword = "gcal";
           url = "https://calendar.google.com/calendar/r";
         }
         {
           name = "Email";
-          keyword = "mail";
+          keyword = "gmail";
           url = "https://mail.google.com/mail/u/0/#inbox";
         }
         {
@@ -130,6 +130,11 @@ in
           name = "Outlook Mail";
           keyword = "omail";
           url = "https://outlook.office.com/mail/inbox";
+        }
+        {
+          name = "Syncthing";
+          keyword = "sync";
+          url = "http://localhost:8384/";
         }
       ] ++ rbm;
 
