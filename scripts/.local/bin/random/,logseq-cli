@@ -24,9 +24,21 @@ journal() {
     printf "\n- **%s** %s %s" "$(date '+%H:%M')" "$entry" "$TAG" >>"$JRNL_FILE"
 }
 
+todo(){
+    JRNL_FILE="$LOGSEQ_DIR/journals/$(date '+%Y_%m_%d').md"
+
+    entry="$*"
+    [ -z "$1" ] && printf "Entry: " && read -r entry
+    printf "\n- TODO %s" "$entry" >>"$JRNL_FILE"
+}
+
 case "$1" in
 journal)
     shift
     journal "$@"
+    ;;
+todo)
+    shift
+    todo "$@"
     ;;
 esac

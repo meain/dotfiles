@@ -90,4 +90,5 @@ alias golangci-lint="nice golangci-lint"
 alias -g JL="cut -d{ -f2-|sed 's|^|{|'"
 
 # logseq
-alias jrnl=",logseq-cli journal"
+alias jrnl=" ,logseq-cli journal"
+alias todo=" ,logseq-cli todo"
