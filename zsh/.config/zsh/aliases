@@ -64,6 +64,9 @@ alias gds='git diff --staged'
 alias gdp="git diff @{1}.."
 alias glp="git lg @{1}.."
 alias gcob='git checkout -b'
+alias gffu='git pull upstream --ff-only $(git rev-parse --abbrev-ref HEAD)'
+alias gffo='git pull origin --ff-only $(git rev-parse --abbrev-ref HEAD)'
+alias ncg='NO_CHECKS=1 ,gpuf'
 
 # utils
 alias ppid='ps -o ppid= -p'
