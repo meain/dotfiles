@@ -684,6 +684,11 @@ in
   systemd.user.services.cleanup-scratch = utils.ss-cleanup { dir = "/home/meain/.local/share/scratch"; };
   systemd.user.timers.cleanup-scratch = utils.timer-daily;
 
+  # other
+  systemd.user.services.drink-water = utils.ss-timer { cmd = ",drink-water-notify"; };
+  systemd.user.timers.drink-water = utils.timer-min { min = "40"; };
+
+
   # Setup direnv
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
