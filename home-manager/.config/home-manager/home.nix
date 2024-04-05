@@ -263,6 +263,7 @@ in
     pkgs.ripgrep
     pkgs.jq
     pkgs.fd
+    pkgs.lsd
     pkgs.gawk # for tmux-fingers
 
     # packages
