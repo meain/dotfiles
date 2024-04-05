@@ -85,5 +85,17 @@
         keyword = basekeyword + "a";
         url = "https://github.com/" + repo + "/actions";
       }
+      {
+        name = basename + " Queue";
+        tags = [ "github" ];
+        keyword = basekeyword + "q";
+        url = "https://github.com/" + repo + "/queue/main";
+      }
+      {
+        name = basename + " Queue";
+        tags = [ "github" ];
+        keyword = basekeyword + "qq";
+        url = "https://github.com/" + repo + "/queue/master";
+      }
     ];
 }
