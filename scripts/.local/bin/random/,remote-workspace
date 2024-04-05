@@ -4,47 +4,47 @@
 
 set -e
 
-TNAME="$(pwd | xargs basename)"
-IGNORE_STRING=""
+[ -z "$EXPERIMENT_VM" ] && echo "Set EXPERIMENT_VM variable" && exit 1
 
-echo Navigating to project root : "$(git rev-parse --show-toplevel 2>/dev/null)"
+printf "Connecting to %s...\n" "$EXPERIMENT_VM"
 cd "$(git rev-parse --show-toplevel 2>/dev/null)"
 
-# git status --ignored|grep -E '^\s'|grep -v '^  ('|sed 's|\s||'>.rworkspaceignore
-if [ -f .rworkspaceignore ]; then
-    IGNORE_STRING="$(sed '/^\ *$/d;s|^|--exclude |' .rworkspaceignore | tr '\n' ' ')"
-elif [ -f .dockerignore ]; then
-    IGNORE_STRING="$(sed '/^\ *$/d;s|^|--exclude |' .dockerignore | tr '\n' ' ')"
-elif [ -f .gitignore ]; then
-    IGNORE_STRING="$(sed '/^\ *$/d;s|^|--exclude |' .gitignore | tr '\n' ' ')"
-fi
+TNAME="$(pwd | xargs basename)"
+IGNORE_STRING=""
+VM_IP="$(sed -n "/Host $EXPERIMENT_VM/,/^$/p" ~/.ssh/config | grep HostName | awk '{print $2}')"
+OP="$1"
+if [ -n "$1" ]; then shift; fi
 
-if [ "$1" = "shell" ]; then
+generate_ignore_string() {
+    echo "Getting ignore list from $1" >&2
+    grep -v '#' "$1" | sed '/^\ *$/d;s|^|--exclude |' | tr '\n' ' '
+}
+
+get_ignore_string() {
+    # git status --ignored|grep -E '^\s'|grep -v '^  ('|sed 's|\s||'>.rworkspaceignore
+    if [ -f .rworkspaceignore ]; then
+        IGNORE_STRING="$(generate_ignore_string .rworkspaceignore)"
+    elif [ -f .gitignore ]; then
+        IGNORE_STRING="$(generate_ignore_string .gitignore)"
+    elif [ -f .dockerignore ]; then
+        IGNORE_STRING="$(generate_ignore_string .dockerignore)"
+    fi
+}
+
+case "$OP" in
+shell) echo "Data not synced" && ssh "$EXPERIMENT_VM" -t "cd workspace/$TNAME && bash" ;;                     # start simple shell
+nix) echo "Data not synced" && ssh "$EXPERIMENT_VM" -t "cd workspace/$TNAME && bash -ic nix-shell" ;;         # start with nix shell
+sync) rsync -azvr --exclude '.git' $(get_ignore_string) . "$EXPERIMENT_VM:workspace/$TNAME" ;;                # sync
+rsync) rsync -azvr --exclude '.git' $(get_ignore_string) "$EXPERIMENT_VM:workspace/$TNAME/" . ;;              # reverse sync
+dsync) rsync -azvr --exclude '.git' $(get_ignore_string) . "$EXPERIMENT_VM:workspace/$TNAME" --delete ;;      # sync with delete
+csync) find . | entr rsync -azvr --exclude '.git' $(get_ignore_string) . "$EXPERIMENT_VM:workspace/$TNAME" ;; # continuous sync
+run) echo "Data not synced" && ssh "$EXPERIMENT_VM" -t "cd workspace/$TNAME && bash -ic '$1'" ;;              # run a command
+web) open "http://$VM_IP" ;;                                                                                  # open likely webpage
+copy) scp -r "$EXPERIMENT_VM:workspace/$TNAME/$1" "${2:-$1}" ;;                                               # copy contents
+rcopy) scp -r "$1" "$EXPERIMENT_VM:workspace/$TNAME/${2:-$1}" ;;                                              # reverse copy contents
+
+*) # sync and start shell
+    rsync -azvr --exclude '.git' $(get_ignore_string) . "$EXPERIMENT_VM:workspace/$TNAME" --delete
     ssh "$EXPERIMENT_VM" -t "cd workspace/$TNAME && bash"
-    exit 0
-elif [ "$1" = "nix" ]; then
-    ssh "$EXPERIMENT_VM" -t "cd workspace/$TNAME && bash -ic nix-shell"
-    exit 0
-elif [ "$1" = "web" ]; then
-    sed -n "/Host $EXPERIMENT_VM/,/^$/p" ~/.ssh/config |
-        grep HostName | awk '{print $2}' | xargs -I{} open "http://{}"
-    exit 0
-fi
-
-# sync with deletion
-[ "$1" = "dsync" ] && rsync -azvr --exclude '.git' $IGNORE_STRING . "$EXPERIMENT_VM:workspace/$TNAME" --delete && exit 0
-
-[ "$1" != "cnys" ] && rsync -azvr --exclude '.git' $IGNORE_STRING . "$EXPERIMENT_VM:workspace/$TNAME"
-[ "$1" = "sync" ] && exit 0
-
-if [ "$1" = "run" ]; then
-    shift
-    ssh "$EXPERIMENT_VM" -t "cd workspace/$TNAME && bash -ic '$1'"
-elif [ "$1" = "cnys" ]; then
-    # sync in reverse
-    rsync -azvr --exclude '.git' $IGNORE_STRING "$EXPERIMENT_VM:workspace/$TNAME/" .
-elif [ "$1" = "csync" ]; then
-    find . | entr rsync -azvr --exclude '.git' $IGNORE_STRING . "$EXPERIMENT_VM:workspace/$TNAME"
-else
-    ssh "$EXPERIMENT_VM" -t "cd workspace/$TNAME && bash"
-fi
+    ;;
+esac
