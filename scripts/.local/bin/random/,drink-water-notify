@@ -2,4 +2,6 @@
 
 set -e
 
-shuf -n1 < ~/.config/datafiles/drink-water-oneliners | sed "s|'|\'|g" | xargs -I{} notify "Drink water 💧" '{}'
+shuf -n1 <"$HOME/.config/datafiles/drink-water-oneliners" |
+    sed "s|'|\'|g" |
+    xargs -I{} notify -t 0 "Drink water 💧" '{}'
