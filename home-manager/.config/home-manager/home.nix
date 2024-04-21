@@ -310,7 +310,7 @@ in
     # pkgs.dasel # jq but more versatile
     # pkgs.mosh # better ssh
     # pkgs.haskellPackages.kmonad # key remapping
-    ppkgs.kmonad # key remapping
+    ppkgs.haskellPackages.kmonad # key remapping (https://github.com/kmonad/kmonad/pull/524)
     # ppkgs.warpd # mouse control
     pkgs.trash-cli # rm -> trash
     pkgs.entr # continuously run stuff
@@ -327,6 +327,7 @@ in
     pkgs.polybarFull # bar for wm
     # pkgs.python39Packages.pipx # pipx for installing stuff
     # ppkgs.logseq-doctor # logseq utils
+    pkgs.emacs-lsp-booster # lsp json translation proxy
 
     # aspell dicts
     pkgs.aspellDicts.en
@@ -558,7 +559,11 @@ in
     pkgs.feh # image viewer (for desktop background)
     pkgs.kopia # backup
     pkgs.distrobox # run other distros and packages
+    pkgs.piper-tts # text to speech
+    pkgs.workrave # break reminder
+    pkgs.cpulimit # limit cpu usage
     pkgs.nur.repos.rycee.mozilla-addons-to-nix # package firefox addons
+    pkgs.pamixer # pulseaudio mixer
 
     # gnome tweaking
     # pkgs.gnome3.dconf-editor # change dconf settings
@@ -695,7 +700,7 @@ in
 
   # other
   systemd.user.services.drink-water = utils.ss-timer { cmd = ",drink-water-notify"; };
-  systemd.user.timers.drink-water = utils.timer-min { min = "40"; };
+  systemd.user.timers.drink-water = utils.timer-min { min = "120"; };
 
 
   # Setup direnv
