@@ -3830,7 +3830,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   :defer 3
   :after evil-leader
   :config
-  (setq avy-timeout-seconds 0.3)
+  (setq avy-timeout-seconds 0.2)
   (evil-leader/set-key "h" 'avy-goto-char-timer))
 
 (use-package harpoon
