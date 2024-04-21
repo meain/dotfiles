@@ -91,11 +91,20 @@ q() {
 m() {
     r >/dev/null
     if [ ! -d .mscripts ]; then
+        popd >/dev/null
         echo "Unable to find .mscripts" && return 1
     fi
     script="$1"
     [ -n "$1" ] && shift
-    eval .mscripts/"$(find .mscripts/ | tail -n+2 | xargs -n1 basename | fzf --query "$script" -1)" $*
+    mscript="$(find .mscripts/ | tail -n+2 | xargs -n1 basename | fzf --query "$script" -1)"
+
+    if [ -z "$mscript" ]; then
+        echo "No mscript avaialble for $script"
+        popd >/dev/null
+        return 1
+    fi
+
+    eval .mscripts/"$mscript" $*
     popd >/dev/null
 }
 
