@@ -200,12 +200,20 @@ in
         "font.name.sans-serif.x-western" = "${defaultFont}";
         "font.name.serif.x-western" = "${defaultFont}";
         "browser.display.use_document_fonts" = 0;
+
+        # do not open a tab in a new window
+        # ascentpayroll.net open link in a new without without any
+        # chrome and I can't even use my password manager
+        # https://support.mozilla.org/eu/questions/1151067?&mobile=1
+        "browser.link.open_newwindow.restriction" = 0;
       };
 
       userChrome = ''
         /* some css */
       '';
 
+      # Configuring addons can be done via
+      # https://discourse.nixos.org/t/declare-firefox-extensions-and-settings/36265/7
       extensions = with firefox-addons.packages."${pkgs.system}"; [
         # https://gitlab.com/rycee/nur-expressions/-/blob/master/pkgs/firefox-addons/addons.json?ref_type=heads
         bitwarden
