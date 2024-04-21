@@ -2782,6 +2782,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
                                (format "dlv --backend rr test %s -- -test.v -test.run" test-dir)
                                command-without-dir)))
             (message dlv-command)
+            (meain/copy-to-clipboard dlv-command)
             (dlv dlv-command))
         (call-interactively 'dlv))))
   :commands (dlv dlv-current-func meain/dlv meain/dlv-replay meain/dlv-current-func))
