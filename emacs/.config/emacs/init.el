@@ -1959,7 +1959,9 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
   :init
   (add-to-list 'xref-backend-functions 'tree-jump-xref-backend)
   (global-set-key (kbd "M-I")
-                  (meain/with-alternate (consult-tree-jump-search "!mock !_test ")
+                  (meain/with-alternate (if (s-ends-with-p "_test.go" (buffer-file-name))
+                                            (consult-tree-jump-search)
+                                          (consult-tree-jump-search "!mock !_test "))
                                         (tree-jump-search))))
 
 ;; LogSeq related things
