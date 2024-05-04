@@ -111,12 +111,12 @@
   (add-hook 'after-init-hook 'benchmark-init/deactivate))
 
 ;; Get proper PATH (not used as we are launching from shell)
-;; (use-package exec-path-from-shell
-;;   :ensure t
-;;   :config
-;;   ;; https://github.com/purcell/exec-path-from-shell#making-exec-path-from-shell-faster
-;;   (setq exec-path-from-shell-arguments '("-l")) ;; removing -i
-;;   (exec-path-from-shell-initialize))
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  ;; https://github.com/purcell/exec-path-from-shell#making-exec-path-from-shell-faster
+  ;; (setq exec-path-from-shell-arguments '("-l")) ;; removing -i
+  (exec-path-from-shell-initialize))
 
 ;;; [BASE EVIL] =================================================
 
@@ -269,8 +269,9 @@
   (message "%s" (face-attribute 'default :font)))
 
 ;; Theme
+(setq hima-theme-load-path (concat (getenv "HOME") "/dev/src/hima-theme"))
 (use-package hima-theme
-  :load-path "/home/meain/dev/src/hima-theme"
+  :load-path hima-theme-load-path
   :config
   (load-theme 'hima t))
 
@@ -1955,7 +1956,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
   :after (consult)
   :commands (tree-jump-search consult-tree-jump-search tree-jump-xref-backend)
   :config
-  (load-file "/home/meain/.config/emacs/tree-jump.el")
+  (load-file (concat (getenv "HOME") "/.config/emacs/tree-jump.el"))
   :init
   (add-to-list 'xref-backend-functions 'tree-jump-xref-backend)
   (global-set-key (kbd "M-I")
@@ -2620,7 +2621,7 @@ Pass `CHOOSER' as t to not automatically select the previous tab."
            (default-directory (car dir-cmd))
            (command meain/toffee--previous-command))
       (if command
-          (progn (compile (concat "nice " command)))
+          (progn (compile command))
         (message "Unable to find any tests"))))
   (defun meain/toffee-run-test (&optional _)
     "Run test based on `MODE'. By default runs current function.
@@ -2636,7 +2637,7 @@ Pass universal args to run suite or project level tests."
       (if command
           (progn
             (setq meain/toffee--previous-command command)
-            (compile (concat "nice " command)))
+            (compile command))
         (if (and meain/toffee-run-previous-if-empty meain/toffee--previous-command)
             (progn
               (message "Could not find any tests, running previous test...")
@@ -3724,9 +3725,10 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 
 ;; Show scope info of block
 ;; (remove-overlays (point-min) (point-max))
+(setq scopeline-load-path (concat (getenv "HOME") "/dev/src/scopeline.el"))
 (use-package scopeline
   :commands (scopeline-mode)
-  :load-path "/home/meain/dev/src/scopeline.el"
+  :load-path scopeline-load-path
   :config (setq scopeline-overlay-prefix " ~")
   :init (add-hook 'prog-mode-hook #'scopeline-mode))
 
@@ -4764,8 +4766,9 @@ Pass `CREATE' to create the alternate file if it does not exits."
   (evil-leader/set-key "e e" 'meain/find-alternate-file))
 
 ;; Splitting and joining list (https://github.com/AckslD/nvim-trevJ.lua)
+(setq tree-surgeon-load-path (concat (getenv "HOME") "/dev/src/tree-surgeon"))
 (use-package tree-surgeon
-  :load-path "/home/meain/dev/src/tree-surgeon"
+  :load-path tree-surgeon-load-path
   :after (evil-leader)
   :config (evil-leader/set-key "H j" 'tree-surgeon-split-join))
 
