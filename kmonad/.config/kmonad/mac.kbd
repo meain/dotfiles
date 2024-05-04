@@ -1,0 +1,58 @@
+(defcfg
+  input (iokit-name "Apple Internal Keyboard / Trackpad")
+  output (kext)
+  fallthrough true
+)
+
+(defsrc
+  esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+  caps a    s    d    f    g    h    j    k    l    ;    '    ret
+  lsft z    x    c    v    b    n    m    ,    .    /    rsft up
+  fn   lctl lalt lmet           spc            rmet ralt left down rght
+)
+
+;; Below, I use `around' to compose `layer-toggle' with `fn' (instead
+;; of using `layer-toggle' directly) so that the `fn' keypress
+;; actually gets emitted. This matters when using an application that
+;; can use `fn' as a modifier (like Emacs).
+
+(defalias fn (around (layer-toggle function) fn))
+
+(defalias
+  ealt (tap-hold 180 esc lalt)
+  nav (tap-hold 180 d (layer-toggle custom))
+  ff (tap-hold 180 f (around lmet (around lalt lctl)))
+  qctl (tap-next-release ' lctl)
+  salt (around lalt lsft)
+  cbsp (around lctl bspc)
+  me (tap-macro m e a i n . i o) ;; just pointless fun
+)
+
+(deflayer default
+  _    brdn brup lp   mctl bldn blup prev pp   next mute vold volu
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+@ealt  _    _   @nav @ff   _    _    _    _    _    _  @qctl  _
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  @fn  _  @salt  _              _              _    _    _    _    _
+)
+
+(deflayer function
+  _    f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _              _              _    _    _    _    _
+)
+
+(deflayer custom
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    \(    *   \)   _    _    _    _
+  _    _    _    _    _    _  left  down  up right  _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _              _              _    _    _    _    _
+)
