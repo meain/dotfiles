@@ -1,0 +1,12 @@
+#!/bin/sh
+
+set -e
+
+[ -z "$1" ] && echo "Usage: script <machine>" && exit 1
+
+eval "$(ssh-agent -s)"
+# ssh-add -l
+ssh-add ~/.ssh/id_ed25519
+ssh-add ~/.ssh/id_rsa
+ssh-add -l
+ssh -A "$1"

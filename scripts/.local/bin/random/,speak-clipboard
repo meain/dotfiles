@@ -1,0 +1,19 @@
+#!/bin/sh
+
+if [ -z "$1" ]; then
+    pbpaste | piper -m ~/.cache/piper/en_US-ryan-high.onnx -f /tmp/piper.wav
+    mpv --speed=2 /tmp/piper.wav --no-resume-playback
+else
+    prev=""
+    clip="Starting the engine."
+    while sleep 0.3; do
+        if [ "$clip" != "$prev" ] && [ "${#clip}" -ge 10 ]; then
+            echo "$clip" | piper -m ~/.cache/piper/en_US-ryan-medium.onnx -f /tmp/piper.wav
+            pkill mpv
+            mpv --speed=2 /tmp/piper.wav --no-resume-playback &
+            prev="$clip"
+        fi
+
+        clip="$(xclip -selection primary -o -)"
+    done
+fi

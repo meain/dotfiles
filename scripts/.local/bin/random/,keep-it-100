@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -e
+
+src="$(pamixer --list-sources |
+    grep Blue |
+    cut -d' ' -f1)"
+
+while sleep 0.1; do
+    pamixer --set-volume 100 --source "$src"
+done

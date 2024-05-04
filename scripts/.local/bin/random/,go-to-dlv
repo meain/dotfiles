@@ -1,0 +1,10 @@
+#!/bin/sh
+
+set -e
+
+shift
+cmd="$*"
+
+if echo "$cmd" | grep -q 'go test'; then
+	eval "$(echo "$cmd" | awk '{print "dlv test --backend rr",$NF,"-- -test.v -test.run",$(NF-1)}')"
+fi
