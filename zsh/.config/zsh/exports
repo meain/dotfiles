@@ -7,6 +7,9 @@ export GOPATH=$HOME/.local/share/go
 export GOBIN=$GOPATH/bin
 PATH=$PATH:$GOPATH/bin
 
+# Homebrew
+PATH=$PATH:/opt/homebrew/bin
+
 # Poetry
 PATH="$HOME/.loca/share/poetry/bin:$PATH"
 
