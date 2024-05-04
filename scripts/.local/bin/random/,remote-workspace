@@ -21,23 +21,38 @@ generate_ignore_string() {
 }
 
 get_ignore_string() {
-    # git status --ignored|grep -E '^\s'|grep -v '^  ('|sed 's|\s||'>.rworkspaceignore
+    # git status --ignored | grep -E '^\s' |
+    #     grep -v '^  (' | sed 's|\s||' |
+    #     grep -v shell.nix |
+    #     grep -v .mscripts >.rworkspaceignore
+
     if [ -f .rworkspaceignore ]; then
-        IGNORE_STRING="$(generate_ignore_string .rworkspaceignore)"
+        generate_ignore_string .rworkspaceignore
     elif [ -f .gitignore ]; then
-        IGNORE_STRING="$(generate_ignore_string .gitignore)"
+        # generate_ignore_string .gitignore
+        git status --ignored | grep -E '^\s' |
+            grep -v '^  (' | sed 's|\s||' |
+            grep -v shell.nix |
+            grep -v .mscripts
     elif [ -f .dockerignore ]; then
-        IGNORE_STRING="$(generate_ignore_string .dockerignore)"
+        generate_ignore_string .dockerignore
     fi
 }
 
 case "$OP" in
 shell) echo "Data not synced" && ssh "$EXPERIMENT_VM" -t "cd workspace/$TNAME && bash" ;;                     # start simple shell
 nix) echo "Data not synced" && ssh "$EXPERIMENT_VM" -t "cd workspace/$TNAME && bash -ic nix-shell" ;;         # start with nix shell
+
 sync) rsync -azvr --exclude '.git' $(get_ignore_string) . "$EXPERIMENT_VM:workspace/$TNAME" ;;                # sync
 rsync) rsync -azvr --exclude '.git' $(get_ignore_string) "$EXPERIMENT_VM:workspace/$TNAME/" . ;;              # reverse sync
 dsync) rsync -azvr --exclude '.git' $(get_ignore_string) . "$EXPERIMENT_VM:workspace/$TNAME" --delete ;;      # sync with delete
 csync) find . | entr rsync -azvr --exclude '.git' $(get_ignore_string) . "$EXPERIMENT_VM:workspace/$TNAME" ;; # continuous sync
+
+gsync) rsync -azvr $(get_ignore_string) . "$EXPERIMENT_VM:workspace/$TNAME" ;;                # with-git sync
+grsync) rsync -azvr $(get_ignore_string) "$EXPERIMENT_VM:workspace/$TNAME/" . ;;              # with-git reverse sync
+gdsync) rsync -azvr $(get_ignore_string) . "$EXPERIMENT_VM:workspace/$TNAME" --delete ;;      # with-git sync with delete
+gcsync) find . | entr rsync -azvr $(get_ignore_string) . "$EXPERIMENT_VM:workspace/$TNAME" ;; # with-git continuous sync
+
 run) echo "Data not synced" && ssh "$EXPERIMENT_VM" -t "cd workspace/$TNAME && bash -ic '$1'" ;;              # run a command
 web) open "http://$VM_IP" ;;                                                                                  # open likely webpage
 copy) scp -r "$EXPERIMENT_VM:workspace/$TNAME/$1" "${2:-$1}" ;;                                               # copy contents
