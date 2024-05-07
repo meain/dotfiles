@@ -16,6 +16,8 @@
       "emacs-app"
       "google-chrome"
       "slack"
+      "hiddenbar"
+      "ext4fuse" # ext4 support
     ];
   };
 }
