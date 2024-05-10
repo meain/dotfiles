@@ -40,7 +40,7 @@
       homeConfigurations =
         let
           homeConfig = import ./home.nix {
-            inherit bleeding stable personal tree-grepper firefox-addons;
+            inherit system bleeding stable personal tree-grepper firefox-addons;
           };
         in
         {
@@ -50,7 +50,7 @@
             pkgs = import nixpkgs {
               # config.allowBroken = true;
               # config.allowUnfree = true; # resistance is futile
-              system = "x86_64-linux";
+              inherit system;
               overlays = [ emacsOverlay.overlay nur.overlay ];
             };
           };
