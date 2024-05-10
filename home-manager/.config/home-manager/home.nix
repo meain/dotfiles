@@ -1,259 +1,35 @@
-{ personal, bleeding, stable, tree-grepper, firefox-addons, ... }:
+{ system, personal, bleeding, stable, tree-grepper, firefox-addons, ... }:
 { pkgs, ... }:
 let
-  ppkgs = personal.packages.x86_64-linux;
-  bpkgs = bleeding.legacyPackages.x86_64-linux;
-  spkgs = stable.legacyPackages.x86_64-linux;
+  ppkgs = personal.packages.${system};
+  bpkgs = bleeding.legacyPackages.${system};
+  spkgs = stable.legacyPackages.${system};
   utils = import ./utils.nix { inherit pkgs; };
   fonts = import ./fonts.nix { inherit pkgs spkgs; };
   rbm = import ./repo_bookmarks.nix { inherit utils; };
-  defaultFont = "SF Mono";
+  linuxpkgs = import ./linuxpkgs.nix { inherit pkgs spkgs; };
+  firefox = import ./firefox.nix { inherit pkgs ppkgs firefox-addons defaultFont rbm; };
+  defaultFont = "Victor Mono";
 in
 {
   home = {
     stateVersion = "21.05";
     username = "meain";
-    homeDirectory = "/home/meain";
+    # homeDirectory = "/home/meain";
+    homeDirectory = "/Users/meain";
   };
 
+  # NOTE: On macOS: Have to manually launch it via finder and not hammerspoon
+  programs.firefox = firefox;
   programs.home-manager.enable = true;
 
-  # uncomment to use emacs-git
-  # services.emacs.package = pkgs.emacs-git;
-  programs.emacs = {
-    # package = pkgs.emacs-git;
-    enable = true;
-    extraPackages = epkgs: [ epkgs.vterm ];
-  };
-
-  programs.firefox = {
-    enable = true;
-    profiles.meain = {
-      search = {
-        default = "DuckDuckGo";
-        force = true;
-        engines = {
-          # don't need these default ones
-          "Amazon.com".metaData.hidden = true;
-          "Bing".metaData.hidden = true;
-          "eBay".metaData.hidden = true;
-
-          "DuckDuckGo" = {
-            urls = [{
-              template = "https://duckduckgo.com";
-              params = [
-                { name = "q"; value = "{searchTerms}"; }
-              ];
-            }];
-            definedAliases = [ ",d" ];
-          };
-          "Google" = {
-            urls = [{
-              template = "https://google.com/search";
-              params = [
-                { name = "q"; value = "{searchTerms}"; }
-              ];
-            }];
-            definedAliases = [ ",g" ];
-          };
-          "Nix Packages" = {
-            urls = [{
-              template = "https://search.nixos.org/packages";
-              params = [
-                { name = "type"; value = "packages"; }
-                { name = "query"; value = "{searchTerms}"; }
-              ];
-            }];
-            definedAliases = [ ",ns" ];
-          };
-          "YouTube" = {
-            urls = [{
-              template = "https://www.youtube.com/results";
-              params = [
-                { name = "search_query"; value = "{searchTerms}"; }
-              ];
-            }];
-            definedAliases = [ ",yt" ];
-          };
-          "Wikipedia" = {
-            urls = [{
-              template = "https://en.wikipedia.org/wiki/Special:Search";
-              params = [
-                { name = "search"; value = "{searchTerms}"; }
-              ];
-            }];
-            definedAliases = [ ",w" ];
-          };
-          "DockerHub" = {
-            urls = [{
-              template = "https://hub.docker.com/search";
-              params = [
-                { name = "q"; value = "{searchTerms}"; }
-              ];
-            }];
-            definedAliases = [ ",dh" ];
-          };
-          "GitHub" = {
-            urls = [{
-              template = "https://github.com/search";
-              params = [
-                { name = "q"; value = "{searchTerms}"; }
-              ];
-            }];
-            definedAliases = [ ",gh" ];
-          };
-        };
-      };
-
-      bookmarks = [
-        {
-          name = "GitHub Notifications";
-          keyword = "gn";
-          url = "https://github.com/notifications";
-        }
-        {
-          name = "Calendar";
-          keyword = "gcal";
-          url = "https://calendar.google.com/calendar/r";
-        }
-        {
-          name = "Email";
-          keyword = "gmail";
-          url = "https://mail.google.com/mail/u/0/#inbox";
-        }
-        {
-          name = "Outlook Calendar";
-          keyword = "ocal";
-          url = "https://outlook.office.com/calendar/view/month";
-        }
-        {
-          name = "Outlook Mail";
-          keyword = "omail";
-          url = "https://outlook.office.com/mail/inbox";
-        }
-        {
-          name = "Syncthing";
-          keyword = "sync";
-          url = "http://localhost:8384/";
-        }
-      ] ++ rbm;
-
-      settings = {
-        "dom.security.https_only_mode" = true; # force https
-        "browser.download.panel.shown" = true; # show download panel
-        "identity.fxaccounts.enabled" = false; # disable firefox accounts
-        "signon.rememberSignons" = false; # disable saving passwords
-        "extensions.pocket.enabled" = false; # disable pocket
-        "app.shield.optoutstudies.enabled" = false; # disable shield studies
-        "app.update.auto" = false; # disable auto update
-        "browser.bookmarks.restore_default_bookmarks" = false; # don't restore default bookmarks
-        "browser.quitShortcut.disabled" = true; # disable ctrl+q
-        "browser.shell.checkDefaultBrowser" = false; # don't check if default browser
-
-        # download handling
-        "browser.download.dir" = "/home/meain/down"; # default download dir
-        "browser.startup.page" = 3; # restore previous session
-
-        # ui changes
-        "browser.aboutConfig.showWarning" = false; # disable warning about about:config
-        "browser.compactmode.show" = true; # disable compact mode
-        "browser.uidensity" = 1;
-        "general.autoScroll" = true; # enable autoscroll
-        "browser.tabs.firefox-view" = false; # enable firefox view
-        "browser.toolbars.bookmarks.visibility" = "never"; # hide bookmarks toolbar
-        "media.videocontrols.picture-in-picture.video-toggle.enabled" = false; # disable picture in picture button
-        "startup.homepage_welcome_url" = ""; # disable welcome page
-        "browser.newtabpage.enabled" = false; # disable new tab page
-        # "toolkit.legacyUserProfileCustomizations.stylesheets" = true; # enable userChrome.css
-        "full-screen-api.ignore-widgets" = true; # fullscreen within window
-
-        # privacy
-        "browser.contentblocking.category" = "custom"; # set tracking protection to custom
-        "browser.discovery.enabled" = false; # disable discovery
-        "browser.search.suggest.enabled" = false; # disable search suggestions
-        "browser.protections_panel.infoMessage.seen" = true; # disable tracking protection info
-
-        # let me close and open tabs without confirmation
-        "browser.tabs.closeWindowWithLastTab" = false; # don't close window when last tab is closed
-        "browser.tabs.loadBookmarksInTabs" = true; # open bookmarks in new tab
-        "browser.tabs.loadDivertedInBackground" = false; # open new tab in background
-        "browser.tabs.loadInBackground" = true; # open new tab in background
-        "browser.tabs.warnOnClose" = false; # don't warn when closing multiple tabs
-        "browser.tabs.warnOnCloseOtherTabs" = false; # don't warn when closing multiple tabs
-        "browser.tabs.warnOnOpen" = false; # don't warn when opening multiple tabs
-        "browser.tabs.warnOnQuit" = false; # don't warn when closing multiple tabs
-
-        # other
-        "devtools.cache.disabled" = true; # disable caching in devtools
-        "devtools.toolbox.host" = "right"; # move devtools to right
-        # "browser.ssb.enabled" = true; # enable site specific browser
-        "media.autoplay.default" = 0; # enable autoplay on open
-        "media.ffmpeg.vaapi.enabled" = true; # enable hardware acceleration
-        "media.rdd-vpx.enabled" = true; # enable hardware acceleration
-
-        # override fonts (Set tracking protection to custom without "Suspected fingerprinters")
-        "font.minimum-size.x-western" = 13;
-        "font.size.fixed.x-western" = 15;
-        "font.size.monospace.x-western" = 15;
-        "font.size.variable.x-western" = 15;
-        "font.name.monospace.x-western" = "${defaultFont}";
-        "font.name.sans-serif.x-western" = "${defaultFont}";
-        "font.name.serif.x-western" = "${defaultFont}";
-        "browser.display.use_document_fonts" = 0;
-
-        # do not open a tab in a new window
-        # ascentpayroll.net open link in a new without without any
-        # chrome and I can't even use my password manager
-        # https://support.mozilla.org/eu/questions/1151067?&mobile=1
-        "browser.link.open_newwindow.restriction" = 0;
-      };
-
-      userChrome = ''
-        /* some css */
-      '';
-
-      # Configuring addons can be done via
-      # https://discourse.nixos.org/t/declare-firefox-extensions-and-settings/36265/7
-      extensions = with firefox-addons.packages."${pkgs.system}"; [
-        # https://gitlab.com/rycee/nur-expressions/-/blob/master/pkgs/firefox-addons/addons.json?ref_type=heads
-        bitwarden
-        clearurls
-        darkreader
-        decentraleyes
-        greasemonkey
-        multi-account-containers
-        privacy-badger
-        redirector
-        refined-github
-        return-youtube-dislikes
-        sidebery
-        sponsorblock
-        stylus
-        ublock-origin
-        vimium
-        wallabagger
-        youtube-shorts-block
-        # youtube-recommended-videos
-
-        # personally packaged
-        ppkgs.firefox-addons.awesome-rss
-        ppkgs.firefox-addons.aw-watcher-web
-        ppkgs.firefox-addons.containerise
-        ppkgs.firefox-addons.ghostpage
-        ppkgs.firefox-addons.mastodon4-redirect
-        ppkgs.firefox-addons.nattynote
-        ppkgs.firefox-addons.netflix-prime-auto-skip
-        ppkgs.firefox-addons.notifications-preview-github
-        ppkgs.firefox-addons.smartreader
-        ppkgs.firefox-addons.unofficial-hypothesis
-        ppkgs.firefox-addons.watchmarker-for-youtube
-        # ppkgs.firefox-addons.a-n-i-m-a-t-e-d-kitty-cat
-        # ppkgs.firefox-addons.global-speed
-        ppkgs.firefox-addons.try-another-search-engine
-      ];
-
-    };
-  };
+  # # uncomment to use emacs-git
+  # # services.emacs.package = pkgs.emacs-git;
+  # programs.emacs = {
+  #   # package = pkgs.emacs-git;
+  #   enable = true;
+  #   extraPackages = epkgs: [ epkgs.vterm ];
+  # };
 
   services.syncthing.enable = true;
 
@@ -261,6 +37,7 @@ in
   home.packages = [
     # core utilities
     pkgs.coreutils
+    pkgs.coreutils-prefixed # macOS (for gdircolors)
     pkgs.gnumake
     pkgs.cmake
     pkgs.curl
@@ -270,6 +47,7 @@ in
     pkgs.fzf
     pkgs.ripgrep
     pkgs.jq
+    pkgs.lsd
     pkgs.fd
     pkgs.lsd
     pkgs.gawk # for tmux-fingers
@@ -292,8 +70,8 @@ in
     pkgs.icdiff # simple colorful diff replacement
     pkgs.difftastic # syntax aware diff (useful for conflicts)
     pkgs.ctags # code tag stuff
-    # pkgs.pass # password management (not using nix version as we cannot make it use nix gpg-agent and we need both to use same version)
-    # pkgs.gnupg # gpg
+    pkgs.pass # password management
+    pkgs.gnupg # gpg
     # pkgs.sshfs # mount vm as fs using ssh
     pkgs.stow # symlink management
     pkgs.git-absorb # automatic git commit --fixup
@@ -301,8 +79,6 @@ in
     pkgs.wget # get stuff from internet
     pkgs.tmux # terminal multiplexer
     pkgs.aspell # spell checker
-    pkgs.mpvc # mpv remote control  # not available on macos
-    pkgs.playerctl # control any sort of audio playback (mpris cli)
     spkgs.msmtp # smtp client
     pkgs.android-tools # adb and friends  # not available for macos
     # pkgs.restic # backup
@@ -310,21 +86,13 @@ in
     # pkgs.dasel # jq but more versatile
     # pkgs.mosh # better ssh
     # pkgs.haskellPackages.kmonad # key remapping
-    ppkgs.haskellPackages.kmonad # key remapping (https://github.com/kmonad/kmonad/pull/524)
+    # ppkgs.kmonad # key remapping
     # ppkgs.warpd # mouse control
     pkgs.trash-cli # rm -> trash
     pkgs.entr # continuously run stuff
-    pkgs.notify-desktop # desktop notifications
-    pkgs.xclip # clipboard (needed for emacs-everywhere)
-    pkgs.xsel # clipboard
-    # pkgs.wl-clipboard
     # pkgs.bandwhich # view network stats (alt: nethogs)
-    pkgs.xdotool # for window switching
-    pkgs.picotts # for say
-    ppkgs.dmenu # menu stuff (fork for emojis)
-    pkgs.rofi # menu stuff
-    ppkgs.spaceman-diff # diff images in terminal
-    pkgs.polybarFull # bar for wm
+    # pkgs.picotts # for say
+    # ppkgs.spaceman-diff # diff images in terminal
     # pkgs.python39Packages.pipx # pipx for installing stuff
     # ppkgs.logseq-doctor # logseq utils
     pkgs.emacs-lsp-booster # lsp json translation proxy
@@ -342,7 +110,6 @@ in
     # pkgs.hub # Github integration for git
     pkgs.gh # Yet another Github integration for git
     pkgs.lynx # terminal web browser
-    spkgs.slop # select region from screen
     pkgs.imagemagick # image manip cli
     pkgs.ffmpeg # video manip cli
     pkgs.gnuplot # plotting
@@ -422,7 +189,7 @@ in
     # pkgs.python39Packages.mypy # check types in code
     # pkgs.python39Packages.isort # fix sort order
     # pkgs.python39Packages.pygments # generic syntax highlight
-    spkgs.python39Packages.python-lsp-server # python lsp
+    # spkgs.python39Packages.python-lsp-server # python lsp
     # pkgs.python38Packages.python-language-server # python lsp (using below one as tests are failing)
     # (pkgs.python38Packages.python-language-server.overridePythonAttrs (oldAttrs: { checkPhase = ""; checkInputs = []; }))
 
@@ -450,7 +217,7 @@ in
     # programming-other
     pkgs.nodePackages.yaml-language-server # language server for yaml
     pkgs.nodePackages.vscode-json-languageserver # language server for json
-    ppkgs.prosemd-lsp # prose lsp
+    # ppkgs.prosemd-lsp # prose lsp
     pkgs.nodePackages.fixjson # much better json formatter
     pkgs.nodePackages.jsonlint # json linting
     pkgs.nodePackages.markdownlint-cli # markdown linter
@@ -461,7 +228,7 @@ in
     # pkgs.python39Packages.sqlparse # sqlformat
     # pkgs.grpcurl # curl for grpc
     pkgs.zprint # clojure formatter
-    tree-grepper.outputs.packages.x86_64-linux.tree-grepper # grep with tree-sitter
+    tree-grepper.outputs.packages.${system}.tree-grepper # grep with tree-sitter
     pkgs.comby # code mod
     # pkgs.ruby # ruby language
     # pkgs.actionlint # linting for gihtub actions
@@ -476,10 +243,8 @@ in
     # pkgs.guake # drop down terminal
     # pkgs.insomnia # simpler postman
     # pkgs.beekeeper-studio # db viewer
-    pkgs.sakura # x11 terminal emulator
-    # pkgs.foot # wayland terminal emulator
     pkgs.zathura # pdf viewer
-    pkgs.sxiv # image viewer
+    # pkgs.sxiv # image viewer
     # pkgs.vscode-fhs # vscode
 
     # others
@@ -493,6 +258,7 @@ in
     # pkgs.google-cloud-sdk # manage google cloud
     # pkgs.lens # kubernetes viewer
     pkgs.qpdf # for zlib-flate
+    pkgs.emacs-lsp-booster # helps translate json to emacs objects
 
     # optional
     # pkgs.gdu # disk usage viewer tui (alt: ncdu)
@@ -528,19 +294,11 @@ in
     # pkgs.jo # create json
     pkgs.jiq # interactive jq
     pkgs.jless # json viewer
-    pkgs.blueman # bluetooth control
-    pkgs.arandr # screen layout configure
-    pkgs.clipmenu # clipboard history
-    pkgs.brightnessctl # brightness control
-    pkgs.dunst # notifications with buttons (dunstify)
-    pkgs.xfce.thunar # gui file manager
     pkgs.unixtools.netstat # netstat
     # pkgs.comby # structural search/editing of code
     # pkgs.visidata # data visualization
-    pkgs.xdragon # drag and drop files
-    pkgs.sct # redshift ish stuff
     # pkgs.nur.repos.renesat.activitywatch-bin  # https://github.com/NixOS/nix/issues/3843
-    pkgs.activitywatch # activity tracking
+    # pkgs.activitywatch # activity tracking
     # pkgs.gforth # gnu forth interpreter
     pkgs.nodePackages.mermaid-cli # cli for generating mermaid charts
     # pkgs.genact # become a movie "hacker"
@@ -555,15 +313,11 @@ in
     pkgs.helix # alternate editor
     # pkgs.iamb # matrix chat client
     ppkgs.chatgpt-cli # chatgpt cli
-    pkgs.shell_gpt # another chatgpt cli
+    pkgs.shell-gpt # another chatgpt cli
     pkgs.feh # image viewer (for desktop background)
     pkgs.kopia # backup
-    pkgs.distrobox # run other distros and packages
     pkgs.piper-tts # text to speech
-    pkgs.workrave # break reminder
-    pkgs.cpulimit # limit cpu usage
     pkgs.nur.repos.rycee.mozilla-addons-to-nix # package firefox addons
-    pkgs.pamixer # pulseaudio mixer
 
     # gnome tweaking
     # pkgs.gnome3.dconf-editor # change dconf settings
@@ -580,16 +334,12 @@ in
     # ppkgs.gnomeExtensions.steal-my-focus # just switch, don't say
     # ppkgs.gnomeExtensions.shellout # custom info in bar
 
-    # symlinks (macos polyfills)
-    (pkgs.runCommand "open" { } ''mkdir -p $out/bin; ln -s ${pkgs.xdg-utils}/bin/xdg-open $out/bin/open'')
-    # (pkgs.runCommand "pbcopy" { } ''mkdir -p $out/bin; ln -s ${pkgs.wl-clipboard}/bin/wl-copy $out/bin/pbcopy'')
-    # (pkgs.runCommand "pbpaste" { } ''mkdir -p $out/bin; ln -s ${pkgs.wl-clipboard}/bin/wl-paste $out/bin/pbpaste'')
-    # (pkgs.runCommand "say" { } ''mkdir -p $out/bin; ln -s ${pkgs.espeak}/bin/espeak $out/bin/say'')
-
     # autostart
     # (pkgs.makeAutostartItem { name = "guake"; package = pkgs.guake; })
     # (pkgs.makeAutostartItem { name = "albert"; package = pkgs.albert; })
-  ] ++ fonts;
+  ]
+  # ++ linuxpkgs
+  ++ fonts;
 
   # dconf.settings = import ./dconf.nix;
   gtk = {

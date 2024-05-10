@@ -8,16 +8,19 @@
       "jimeh/emacs-builds"
     ];
     casks = [
-      "firefox"
+      # "firefox" # installed via nix
       "hammerspoon"
       "logseq"
       "microsoft-teams"
       "zed"
-      "emacs-app"
+      "emacs-app-nightly"
       "google-chrome"
       "slack"
       "hiddenbar"
-      "ext4fuse" # ext4 support
+      "spotify"
+      "maccy" # clipboard history
+      "choose-gui" # dmenu alternative
+      "http-toolkit"
     ];
   };
 }
