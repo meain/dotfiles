@@ -22,21 +22,23 @@
 
 (defalias
   ealt (tap-hold 180 esc lalt)
+  hype (tap-hold 180 tab (around lsft (around lmet (around lalt lctl))))
   nav (tap-hold 180 d (layer-toggle custom))
   ff (tap-hold 180 f (around lmet (around lalt lctl)))
   qctl (tap-next-release ' lctl)
   salt (around lalt lsft)
-  cbsp (around lctl bspc)
+  cbsp (around lmet bspc)
+  cspc (tap-hold 180 spc lctl)
   me (tap-macro m e a i n . i o) ;; just pointless fun
 )
 
 (deflayer default
   _    brdn brup lp   mctl bldn blup prev pp   next mute vold volu
   _    _    _    _    _    _    _    _    _    _    _    _    _    _
-  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+@hype  _    _    _    _    _    _    _    _    _    _    _    _    _
 @ealt  _    _   @nav @ff   _    _    _    _    _    _  @qctl  _
   _    _    _    _    _    _    _    _    _    _    _    _    _
-  @fn  _  @salt  _              _              _    _    _    _    _
+  @fn  _  @salt  _            @cspc            _    _    _    _    _
 )
 
 (deflayer function
@@ -50,9 +52,9 @@
 
 (deflayer custom
   _    _    _    _    _    _    _    _    _    _    _    _    _
-  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _   del
   _    _    _    _    _    _    _    \(    *   \)   _    _    _    _
   _    _    _    _    _    _  left  down  up right  _    _    _
-  _    _    _    _    _    _    _    _    _    _    _    _    _
-  _    _    _    _              _              _    _    _    _    _
+  _    _    _    _    _    _    %    ~    _    _    _    _    _
+  _    _    _    _            @cbsp            _    _    _    _    _
 )

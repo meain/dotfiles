@@ -15,20 +15,22 @@
 
 (defalias
   ealt (tap-hold 180 esc lalt)
+  hype (tap-hold 180 tab (around lsft (around lmet (around lalt lctl))))
   nav (tap-hold 180 d (layer-toggle custom))
   ff (tap-hold 180 f (around lmet (around lalt lctl)))
   qctl (tap-next-release ' lctl)
   salt (around lalt lsft)
-  cbsp (around lctl bspc)
+  cbsp (around lalt bspc)
+  cspc (tap-hold 180 spc lctl)
   me (tap-macro m e a i n . i o) ;; just pointless fun
 )
 
 (deflayer qwerty
   grv  1     2    3    4    5    6    7    8    9    0    -    =    bspc
-  tab  q     w    e    r    t    y    u    i    o    p    [    ]    \
+ @hype q     w    e    r    t    y    u    i    o    p    [    ]    \
  @ealt a     s  @nav  @ff   g    h    j    k    l    ;  @qctl  ret
   lsft z     x    c    v    b    n    m    ,    .    /    rsft
-  lctl @salt lmet           spc            left rmet cmp  rght
+  lctl @salt lmet         @cspc            left rmet cmp  rght
 )
 
 (deflayer blank
