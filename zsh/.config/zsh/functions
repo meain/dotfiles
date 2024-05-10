@@ -90,8 +90,10 @@ q() {
 
 m() {
     r >/dev/null
+
+    trap popd>/dev/null 1 2 3 6
+
     if [ ! -d .mscripts ]; then
-        popd >/dev/null
         echo "Unable to find .mscripts" && return 1
     fi
     script="$1"
@@ -100,22 +102,21 @@ m() {
 
     if [ -z "$mscript" ]; then
         echo "No mscript avaialble for $script"
-        popd >/dev/null
         return 1
     fi
 
     eval .mscripts/"$mscript" $*
-    popd >/dev/null
 }
 
 mm() {
     r >/dev/null
+    trap popd>/dev/null 1 2 3 6
+
     if [ ! -f .mscripts/default ]; then
         echo "Unable to find default mscript" && return 1
     fi
 
     .mscripts/default "$@"
-    popd >/dev/null
 }
 
 # python venv setup (need to be function as we have to source)
