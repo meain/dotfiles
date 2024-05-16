@@ -131,11 +131,11 @@
       # ui changes
       "browser.aboutConfig.showWarning" = false; # disable warning about about:config
       "browser.compactmode.show" = true; # enable compact mode
-      "browser.uidensity" = 1;
+      "browser.uidensity" = 1; # enable dense UI
       "general.autoScroll" = true; # enable autoscroll
       "browser.tabs.firefox-view" = false; # enable firefox view
       "browser.toolbars.bookmarks.visibility" = "never"; # hide bookmarks toolbar
-      "media.videocontrols.picture-in-picture.video-toggle.enabled" = false; # disable picture in picture button
+      "media.videocontrols.picture-in-picture.video-toggle.enabled" = true; # disable picture in picture button
       "startup.homepage_welcome_url" = ""; # disable welcome page
       "browser.newtabpage.enabled" = false; # disable new tab page
       # "toolkit.legacyUserProfileCustomizations.stylesheets" = true; # enable userChrome.css
@@ -221,10 +221,10 @@
       ppkgs.firefox-addons.smartreader
       ppkgs.firefox-addons.unofficial-hypothesis
       ppkgs.firefox-addons.watchmarker-for-youtube
+      # ppkgs.firefox-addons.markdown-viewer-webext
       # ppkgs.firefox-addons.a-n-i-m-a-t-e-d-kitty-cat
       # ppkgs.firefox-addons.global-speed
       ppkgs.firefox-addons.try-another-search-engine
     ];
-
   };
 }
