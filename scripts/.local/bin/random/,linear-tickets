@@ -6,24 +6,108 @@
 
 set -e
 
-tmpfile="/tmp/linear-tickets"
-
-if [ "$(find "$tmpfile" -mmin -10 2>/dev/null)" = "" ]; then
-    printf "Fetching linear tickets...\r"
-    curl -sX POST \
-        -H "Content-Type: application/json" \
-        -H "Authorization: $LINEAR_TOKEN" \
-        -d '{"query": "query {user(id: \"'"$LINEAR_USER_ID"'\") {id organization { urlKey } name assignedIssues {nodes {identifier state {type} title}}}}"}' \
-        https://api.linear.app/graphql >"$tmpfile"
-fi
+SB_PATH="$HOME/.local/share/sbdb/"
+listtempfile="/tmp/linear-tickets"
 
 format_issues() {
-    jq -r '.data.user.assignedIssues.nodes[]|"[\(.state.type)] \(.identifier) \(.title)"' <"$tmpfile"
+    jq -r '.data.user.assignedIssues.nodes[]|"[\(.state.type)] \(.identifier) \(.title)"' <"$listtempfile"
 }
 
-urlkey="$(jq -r '.data.user.organization.urlKey' <"$tmpfile")"
+list_issues() {
+    if [ "$(find "$listtempfile" -mmin -10 2>/dev/null)" = "" ]; then
+        printf "Fetching linear tickets...\r" >&2
+        curl -sX POST \
+            -H "Content-Type: application/json" \
+            -H "Authorization: $LINEAR_TOKEN" \
+            -d '{"query": "query {user(id: \"'"$LINEAR_USER_ID"'\") {id organization { urlKey } name assignedIssues {nodes {identifier state {type} title}}}}"}' \
+            https://api.linear.app/graphql >"$listtempfile"
+    fi
 
-{
-    format_issues | grep -E "^\[started"
-    format_issues | grep -E "^\[unstarted"
-} | ,picker -m | cut -d' ' -f2 | xargs -I{} open "https://linear.app/$urlkey/issue/{}"
+    {
+        format_issues | grep -E "^\[started"
+        format_issues | grep -E "^\[unstarted"
+    }
+}
+
+list_and_open_issue() {
+    urlkey="$(jq -r '.data.user.organization.urlKey' <"$listtempfile")"
+    list_issues | ,picker -m | cut -d' ' -f2 | xargs -I{} open "https://linear.app/$urlkey/issue/{}"
+}
+
+get_issue_description() {
+    team="$(echo "$1" | cut -d'-' -f1)"
+    number="$(echo "$1" | cut -d'-' -f2)"
+
+    tmpfile="/tmp/linear-issue-$1"
+    printf "Fetching linear issue %s...\n" "$team-$number" >&2
+
+    curl -sX POST \
+        -H 'content-type: application/json' \
+        -H "Authorization: $LINEAR_TOKEN" \
+        --data '{"query":"query Issues { issues(filter: { number : { eq: '"$number"' } team : {key: {eq: \"'"$team"'\"}}}) { nodes { assignee {name}, state{name}, labels {nodes{name}}, title, description, team { organization {urlKey}}}}}"}' \
+        https://api.linear.app/graphql >"$tmpfile"
+
+    urlKey="$(jq -r '.data.issues.nodes[0].team.organization.urlKey' <"$tmpfile")"
+    title="$(jq -r '.data.issues.nodes[0].title' <"$tmpfile")"
+    desc="$(jq -r '.data.issues.nodes[0].description // empty' <"$tmpfile")"
+    assignee="$(jq -r '.data.issues.nodes[0].assignee.name // empty' <"$tmpfile")"
+    state="$(jq -r '.data.issues.nodes[0].state.name // empty' <"$tmpfile")"
+    labels="$(jq -r '.data.issues.nodes[0].labels.nodes[].name' <"$tmpfile" | tr '\n' ',' | sed 's/,$//')"
+
+    if [ -z "$title" ]; then
+        printf "Issue %s not found\n" "$team-$number" >&2
+        return 1
+    fi
+
+    echo "---"
+    echo "type: linear-issue"
+    echo "title: $title"
+    echo "url: https://linear.app/$urlKey/issue/$1"
+    if [ -n "$assignee" ]; then
+        echo "assignee: $assignee"
+    fi
+    echo "state: $state"
+    if [ -n "$labels" ]; then
+        echo "labels: $labels"
+    fi
+    echo "---"
+
+    printf "[%s](%s)\n" "$title" "https://linear.app/$urlKey/issue/$1"
+    echo
+    printf "%s" "$desc"
+}
+
+update_silverbullet() {
+    if [ -n "$1" ]; then
+        desc="$(get_issue_description "$1")"
+        if [ -n "$desc" ]; then
+            echo "$desc" >"$SB_PATH/Linear/Alcion/$1.md"
+        fi
+        return
+    fi
+
+    list_all_issues |
+        while read -r issue; do
+            desc="$(get_issue_description "$issue")"
+            if [ -n "$desc" ]; then
+                echo "$desc" >"$SB_PATH/Linear/Alcion/$issue.md"
+            fi
+        done
+}
+
+list_all_issues() {
+    assigned_issues="$(list_issues | cut -d' ' -f2)"
+    existing_issues="$(find "$SB_PATH/Linear/Alcion" -type f | xargs -n1 basename | cut -d'.' -f1)"
+    printf "%s\n%s" "$assigned_issues" "$existing_issues" | sort -u
+}
+
+if [ -n "$1" ]; then
+    case "$1" in
+    list) list_issues ;;
+    list-all) list_all_issues ;;
+    sb) update_silverbullet "$2" ;;
+    *) get_issue_description "$1" ;;
+    esac
+else
+    list_and_open_issue
+fi
