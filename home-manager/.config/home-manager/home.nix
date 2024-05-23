@@ -259,6 +259,7 @@ in
     # pkgs.lens # kubernetes viewer
     pkgs.qpdf # for zlib-flate
     pkgs.emacs-lsp-booster # helps translate json to emacs objects
+    pkgs.cachix # nix external cache server
 
     # optional
     # pkgs.gdu # disk usage viewer tui (alt: ncdu)
