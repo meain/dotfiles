@@ -2,10 +2,18 @@
 
 set -e
 
-sudo apt update -y
-sudo apt upgrade -y
-flatpak update -y
-sudo snap refresh
+if [ "$(uname -s)" = "Darwin" ]; then
+    brew update && brew upgrade
+
+    # https://stackoverflow.com/a/31994862
+    brew upgrade --cask --greedy
+else
+    sudo apt update -y
+    sudo apt upgrade -y
+    flatpak update -y
+    sudo snap refresh
+fi
+
 gh extension upgrade --all
 
 [ "$1" != "nonix" ] && ,hm update-all && ,hm switch
