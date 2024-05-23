@@ -2,9 +2,11 @@
 
 set -e
 
-shift
 cmd="$*"
 
 if echo "$cmd" | grep -q 'go test'; then
-	eval "$(echo "$cmd" | awk '{print "dlv test --backend rr",$NF,"-- -test.v -test.run",$(NF-1)}')"
+	cmd="$(echo "$cmd" | awk '{print "dlv test --backend rr",$NF,"-- -test.v -test.run",$(NF-1)}')"
+    echo "$cmd"
+else
+    echo "Not a go test command"
 fi
