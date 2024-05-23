@@ -2,6 +2,9 @@
 
 set -e
 
-pbpaste | # we have to have some input for chooser to work
+entry="$(pbpaste)"
+[ -n "$entry" ] || entry="..."
+
+echo "$entry" | # we have to have some input for chooser to work
     ,picker -p 'Search term: ' --print-query -l 2 |
     xargs -I{} open 'https://duckduckgo.com/?q=!ducky+{}'
