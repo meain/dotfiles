@@ -25,3 +25,11 @@ zsh/.config/zsh/.zsh_sessions/
 /emacs/.config/emacs/straight/
 /emacs/.config/emacs/transient/
 /emacs/.config/emacs/var/
+/emacs/.config/emacs/eln-cache/
+/emacs/.config/emacs/elpa/
+/emacs/.config/emacs/elpaca/
+/emacs/.config/emacs/history
+/emacs/.config/emacs/recentf
+/emacs/.config/emacs/tree-sitter/
+/emacs/.config/emacs/url/
+/scripts/.local/bin/kmonad
