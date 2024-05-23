@@ -1,0 +1,15 @@
+#!/bin/sh
+
+set -e
+
+[ -z "$1" ] && echo "Usage: $0 <prefix>" && exit 1
+
+FILE="$DATAFILES_PATH/urlmap"
+
+prefix="$1" && shift
+
+grep -vE '^#' "$FILE" | grep -vE "^$" |
+    grep -E "^$prefix " |
+    cut -d ' ' -f 2- |
+    xargs -I{} printf '{}' "$@" |
+    xargs open
