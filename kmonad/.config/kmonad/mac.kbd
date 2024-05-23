@@ -27,7 +27,7 @@
   ff (tap-hold 180 f (around lmet (around lalt lctl)))
   qctl (tap-next-release ' lctl)
   salt (around lalt lsft)
-  cbsp (around lmet bspc)
+  cbsp (around lalt bspc)
   cspc (tap-hold 180 spc lctl)
   me (tap-macro m e a i n . i o) ;; just pointless fun
 )
