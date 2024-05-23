@@ -24,6 +24,7 @@ run-dev
 .mscripts
 .direnv
 resources
+.tint.toml
 
 # programming
 .mypy_cache
