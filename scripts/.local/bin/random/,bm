@@ -32,7 +32,7 @@ add)
     date="$(date +%s)"
     sqlite3 "$BM_FILE" "INSERT INTO bookmarks (url, name, title, date) VALUES ('$URL', '$name', '$title', '$date');"
     ;;
-pick)
+open)
     url=$(sqlite3 "$BM_FILE" "$QUERY" |
         awk -F'|' "$VIEW_FORMAT" | ,picker -i |
         awk '{print $NF}' | cut -d'(' -f2 | cut -d')' -f1)
@@ -41,10 +41,13 @@ pick)
         open "$url"
     fi
     ;;
-list)
+pick)
     sqlite3 "$BM_FILE" "$QUERY" |
         awk -F'|' "$VIEW_FORMAT" | ,picker -i |
         awk '{print $NF}' | cut -d'(' -f2 | cut -d')' -f1
+    ;;
+list)
+    sqlite3 "$BM_FILE" "$QUERY" | awk -F'|' "$VIEW_FORMAT"
     ;;
 remove)
     sqlite3 "$BM_FILE" "$QUERY" |
