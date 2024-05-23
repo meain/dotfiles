@@ -1,19 +1,37 @@
 #!/bin/sh
 
+CACHE_DIR="$HOME/.cache/piper"
+
+download_model() {
+    model="$1-$2-$3.onnx"
+    echo Downloading "$1-$2-$3"
+    curl -Ls "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/$1/$2/$3/$model?download=true" --output "$CACHE_DIR/$model"
+    curl -Ls "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/$1/$2/$3/$model.json?download=true.json" --output "$CACHE_DIR/$model.json"
+}
+
+# https://github.com/rhasspy/piper/blob/master/VOICES.md
+if [ ! -f "$CACHE_DIR/en_US-ryan-high.onnx" ]; then
+    echo "Downloading models..."
+    mkdir -p "$CACHE_DIR"
+    download_model en_US ryan medium
+    download_model en_US ryan high
+fi
+
 if [ -z "$1" ]; then
-    pbpaste | piper -m ~/.cache/piper/en_US-ryan-high.onnx -f /tmp/piper.wav
+    pbpaste | piper -m "$CACHE_DIR/en_US-ryan-high.onnx" -f /tmp/piper.wav
     mpv --speed=2 /tmp/piper.wav --no-resume-playback
 else
     prev=""
     clip="Starting the engine."
     while sleep 0.3; do
         if [ "$clip" != "$prev" ] && [ "${#clip}" -ge 10 ]; then
-            echo "$clip" | piper -m ~/.cache/piper/en_US-ryan-medium.onnx -f /tmp/piper.wav
+            echo "$clip" | piper -m "$CACHE_DIR/en_US-ryan-medium.onnx" -f /tmp/piper.wav
             pkill mpv
             mpv --speed=2 /tmp/piper.wav --no-resume-playback &
             prev="$clip"
         fi
 
-        clip="$(xclip -selection primary -o -)"
+        # clip="$(xclip -selection primary -o -)"
+        clip="$(pbpaste)"
     done
 fi
