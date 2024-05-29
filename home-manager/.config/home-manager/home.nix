@@ -318,6 +318,8 @@ in
     pkgs.feh # image viewer (for desktop background)
     pkgs.kopia # backup
     pkgs.piper-tts # text to speech
+    pkgs.readability-cli # simplify articles
+    pkgs.glow # markdown renderer
     pkgs.nur.repos.rycee.mozilla-addons-to-nix # package firefox addons
 
     # gnome tweaking
