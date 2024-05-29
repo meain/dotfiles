@@ -3,15 +3,24 @@
 set -e
 
 if echo "$1" | grep -qE '^[0-9][0-9]*$' && [ -z "$2" ]; then
-	prevwindowname="$(xdotool getactivewindow getwindowname)"
-	[ -n "$1" ] &&
-		todo.sh do "$1" |
-		grep -E -o "https?://[^ ]*" |
-			sort -u | xargs -I{} open '{}'
-	[ "$(xdotool getactivewindow getwindowname)" = "$prevwindowname" ] || i3-msg scratchpad show >/dev/null
+    if [ "$(uname)" = "Linux" ]; then
+        prevwindowname="$(xdotool getactivewindow getwindowname)"
+    fi
+
+    [ -n "$1" ] &&
+        todo.sh do "$1" |
+        grep -E -o "https?://[^ ]*" |
+            sort -u | xargs -I{} open '{}'
+
+    if [ "$(uname)" = "Linux" ]; then
+        [ "$(xdotool getactivewindow getwindowname)" = "$prevwindowname" ] || i3-msg scratchpad show >/dev/null
+    else
+        # flip back to previous application
+        osascript -e 'tell application "System Events" to keystroke tab using {command down, shift down}'
+    fi
 elif [ -n "$1" ]; then
-	todo.sh $*
+    todo.sh $*
 fi
 
 clear -x
-todo.sh | head -n -2 | sort -k1n
+todo.sh list | head -n -2 | sort -k1n
