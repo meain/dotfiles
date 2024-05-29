@@ -1,0 +1,32 @@
+#!/bin/sh
+
+set -e
+
+[ -z "$1" ] && echo "Usage: $0 <filename>" && exit 1
+[ ! -f "$1" ] && echo "File $1 does not exist" && exit 1
+type tree-grepper >/dev/null || exit 1 # https://github.com/BrianHicks/tree-grepper
+
+FILE="${1%.*}" # strip off md
+mv "$FILE.md" "$FILE.bk.md"
+
+tree-grepper "$FILE.bk.md" \
+    -q markdown '(list (list_item (task_list_marker_unchecked)) @x)' \
+    -f json |
+    jq -er '.[0].matches[]|.text' |
+    sed '/^$/d' >>"$FILE.md"
+
+DIR="$(dirname "$FILE")"
+FILENAME="$(basename "$FILE")"
+
+RF_DIR="$DIR/Refiled/$(date +%Y)/$(date +%m)"
+mkdir -p "$RF_DIR"
+tree-grepper "$FILE.bk.md" \
+    -q markdown "(list (list_item (task_list_marker_checked)) @x)
+(list (list_item (list_marker_star) . (paragraph)) @y)" \
+    -f json |
+    jq -er '.[0].matches[]|.text' |
+    sed '/^$/d' >>"$RF_DIR/$FILENAME.md"
+
+
+rm "$FILE.bk.md"
+echo Refiled "$1"
