@@ -205,6 +205,7 @@ venv() {
 
 # make clear not delete scrollback
 # https://superuser.com/a/1667623/328228
+if echo "$OSTYPE" | grep -qv darwin; then
 clear() (
     if [ "$#" -ne 0 ]; then
         command clear "$@"
@@ -219,6 +220,7 @@ clear() (
     fi
     command clear -x
 )
+fi
 
 hashdir() {
     [ -z "$1" ] && echo "Pass hash to use for dir" && return 1
