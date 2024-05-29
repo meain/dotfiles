@@ -1,0 +1,49 @@
+#!/bin/sh
+
+set -e
+
+# generate frontmatter (primarily for silverbullet)
+
+set -e
+
+[ -z "$1" ] && url="$(pbpaste)" || url="$1"
+
+# TODO(meain): print out length of video
+if echo "$url" | grep -q '^https://www.youtube.com'; then
+    title_and_creator="$(yt-dlp --print title --print uploader "$url")"
+    title="$(echo "$title_and_creator" | head -n 1)"
+    creator="$(echo "$title_and_creator" | tail -n 1)"
+    tags="youtube,video"
+    folder="YouTube"
+else
+    page="$(curl -s "$url")"
+    title="$(echo "$page" | pup 'title text{}')"
+    creator="$(echo "$page" | pup 'meta[name="author"] attr{content}')"
+    if [ -z "$creator" ]; then
+        creator="$(echo "$url" | awk -F/ '{print $3}')"
+    fi
+    tags="article"
+    folder="Article"
+fi
+
+if [ -z "$2" ]; then
+    echo "---"
+    printf 'title: "%s"\nproducer: "%s"\nurl: "%s"\ntags: %s\nrating:0\nconsumed:"%s"\n---\n' "$title" "$creator" "$url" "$tags" "$(date +'%Y-%m-%d')"
+else
+    filename="$2/$folder/$title.md"
+    if [ -e "$filename" ]; then
+        echo "File already exists: $filename"
+        exit 1
+    fi
+
+    echo "---" >"$filename"
+    printf 'title: "%s"\nproducer: "%s"\nurl: "%s"\ntags: %s\nrating:0\nconsumed:"%s"\n---\n' "$title" "$creator" "$url" "$tags" "$(date +'%Y-%m-%d')" >>"$filename"
+
+    if [ "$folder" = "YouTube" ]; then
+        echo "# Chapters" >> "$filename"
+        ,yt-chapters "$url" >> "$filename"
+        echo "" >> "$filename"
+        echo "# Notes" >> "$filename"
+    fi
+    echo "Wrote $filename"
+fi
