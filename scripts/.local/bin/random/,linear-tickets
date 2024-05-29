@@ -61,10 +61,10 @@ get_issue_description() {
 
     echo "---"
     echo "type: linear-issue"
-    echo "title: $title"
+    echo 'title: "'"$title"'"'
     echo "url: https://linear.app/$urlKey/issue/$1"
     if [ -n "$assignee" ]; then
-        echo "assignee: $assignee"
+        echo 'assignee: "'"$assignee"'"'
     fi
     echo "state: $state"
     if [ -n "$labels" ]; then
