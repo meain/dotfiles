@@ -78,7 +78,7 @@ alias dr="dragon -x"
 alias lim="cpulimit -l 200 -i --"
 
 # shorthand
-alias to='todo.sh'
+alias to=',ca'
 alias dict=',dict'
 alias lk=',let-me-know'
 alias um=",urlmap"
