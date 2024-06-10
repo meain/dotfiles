@@ -28,16 +28,24 @@ fi
 
 if [ -z "$2" ]; then
     echo "---"
-    printf 'title: "%s"\nproducer: "%s"\nurl: "%s"\ntags: %s\nrating:0\nconsumed:"%s"\n---\n' "$title" "$creator" "$url" "$tags" "$(date +'%Y-%m-%d')"
+    printf 'title: "%s"\nproducer: "%s"\nurl: "%s"\ntags: %s\nrating: 0\nconsumed: "%s"\n---\n' "$title" "$creator" "$url" "$tags" "$(date +'%Y-%m-%d')"
 else
-    filename="$2/$folder/$title.md"
+    fn="$title"
+    printf "%s" "$fn" | pbcopy
+    printf "Name(%s): " "$fn"
+    read -r resp
+    if [ -n "$resp" ]; then
+        fn="$resp"
+    fi
+
+    filename="$2/$folder/$fn.md"
     if [ -e "$filename" ]; then
         echo "File already exists: $filename"
         exit 1
     fi
 
     echo "---" >"$filename"
-    printf 'title: "%s"\nproducer: "%s"\nurl: "%s"\ntags: %s\nrating:0\nconsumed:"%s"\n---\n' "$title" "$creator" "$url" "$tags" "$(date +'%Y-%m-%d')" >>"$filename"
+    printf 'title: "%s"\nproducer: "%s"\nurl: "%s"\ntags: %s\nrating: 0\nconsumed: "%s"\n---\n' "$title" "$creator" "$url" "$tags" "$(date +'%Y-%m-%d')" >>"$filename"
 
     if [ "$folder" = "YouTube" ]; then
         echo "# Chapters" >> "$filename"
