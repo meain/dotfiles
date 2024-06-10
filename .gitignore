@@ -33,3 +33,4 @@ zsh/.config/zsh/.zsh_sessions/
 /emacs/.config/emacs/tree-sitter/
 /emacs/.config/emacs/url/
 /scripts/.local/bin/kmonad
+/chatgpt/.chatgpt-cli/history/
