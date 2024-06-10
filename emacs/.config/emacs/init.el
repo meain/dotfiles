@@ -3515,11 +3515,26 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
         remember-notes-initial-major-mode 'org-mode
         remember-notes-auto-save-visited-file-name t))
 
-;; Automatically install treesit grammars
-(use-package treesit-auto
-  :ensure t
+(use-package emacs
   :config
-  (global-treesit-auto-mode))
+  (setq treesit-language-source-alist
+        '((typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src"))
+          (tsx . ("https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src"))
+          (go . ("https://github.com/meain/tree-sitter-go" "e395081"))
+          (python . ("https://github.com/tree-sitter/tree-sitter-python"))))
+
+  (defun meain/install-treesit-grammars ()
+    (interactive)
+    (mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist)))
+
+  (setq treesit-load-name-override-list '((js "libtree-sitter-go" "tree_sitter_go")))
+
+  (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
+  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
+  (add-to-list 'auto-mode-alist '("\\.go\\'" . go-ts-mode))
+
+  (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
+  (add-to-list 'major-mode-remap-alist '(go-mode . go-ts-mode)))
 
 ;; Tree sitter
 (use-package tree-sitter
