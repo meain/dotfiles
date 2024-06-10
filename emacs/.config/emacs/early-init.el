@@ -27,6 +27,7 @@
 (menu-bar-mode -1)  ;; causes focus issue if disabled in railwaycat/homebrew-emacsmacport
 (setq inhibit-startup-screen t)
 ;; (set-frame-parameter nil 'undecorated t)
+(add-to-list 'default-frame-alist '(undecorated-round . t))
 
 ;; Font setup
 ;; iA Writer Mono S 14 | Inconsolata 16 | Fantasque Sans Mono 10 | JetBrains Mono 14
