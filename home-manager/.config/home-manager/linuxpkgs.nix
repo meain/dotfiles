@@ -31,6 +31,25 @@
     pkgs.cpulimit # limit cpu usage
     pkgs.pamixer # pulseaudio mixer
 
+    # gnome tweaking
+    # pkgs.gnome3.dconf-editor # change dconf settings
+    # pkgs.gnome.gnome-tweaks # tweak gnome settings
+    # ppkgs.fluent-theme # a good simple theme
+    # pkgs.gnomeExtensions.dash-to-panel # move dash and make it a panel
+    # pkgs.gnomeExtensions.blur-my-shell # use blurred wallpaper for overview
+    # pkgs.gnomeExtensions.clipboard-indicator # clipboard history
+    # ppkgs.gnomeExtensions.gsconnect # kdeconnect
+    # pkgs.gnomeExtensions.caffeine # don't sleep
+    # pkgs.gnomeExtensions.no-overview # no overview on start
+    # pkgs.gnomeExtensions.bluetooth-quick-connect # better bluetooth menu
+    # pkgs.gnomeExtensions.custom-hot-corners-extended # smokin' hot corners
+    # ppkgs.gnomeExtensions.steal-my-focus # just switch, don't say
+    # ppkgs.gnomeExtensions.shellout # custom info in bar
+
+    # autostart
+    # (pkgs.makeAutostartItem { name = "guake"; package = pkgs.guake; })
+    # (pkgs.makeAutostartItem { name = "albert"; package = pkgs.albert; })
+
     # symlinks (macos polyfills)
     # (pkgs.runCommand "open" { } ''mkdir -p $out/bin; ln -s ${pkgs.xdg-utils}/bin/xdg-open $out/bin/open'')
     # (pkgs.runCommand "pbcopy" { } ''mkdir -p $out/bin; ln -s ${pkgs.wl-clipboard}/bin/wl-copy $out/bin/pbcopy'')

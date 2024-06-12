@@ -23,6 +23,7 @@
   pkgs.roboto-mono
   pkgs.cozette
   pkgs.fira-code
+  pkgs.maple-mono
   # pkgs.dina-font
   # pkgs.envypn-font
 ]

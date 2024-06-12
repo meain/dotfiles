@@ -20,7 +20,7 @@ in
   };
 
   # NOTE: On macOS: Have to manually launch it via finder and not hammerspoon
-  programs.firefox = firefox;
+  # programs.firefox = firefox;
   programs.home-manager.enable = true;
 
   # # uncomment to use emacs-git
@@ -321,140 +321,13 @@ in
     pkgs.readability-cli # simplify articles
     pkgs.glow # markdown renderer
     pkgs.nur.repos.rycee.mozilla-addons-to-nix # package firefox addons
-
-    # gnome tweaking
-    # pkgs.gnome3.dconf-editor # change dconf settings
-    # pkgs.gnome.gnome-tweaks # tweak gnome settings
-    # ppkgs.fluent-theme # a good simple theme
-    # pkgs.gnomeExtensions.dash-to-panel # move dash and make it a panel
-    # pkgs.gnomeExtensions.blur-my-shell # use blurred wallpaper for overview
-    # pkgs.gnomeExtensions.clipboard-indicator # clipboard history
-    # ppkgs.gnomeExtensions.gsconnect # kdeconnect
-    # pkgs.gnomeExtensions.caffeine # don't sleep
-    # pkgs.gnomeExtensions.no-overview # no overview on start
-    # pkgs.gnomeExtensions.bluetooth-quick-connect # better bluetooth menu
-    # pkgs.gnomeExtensions.custom-hot-corners-extended # smokin' hot corners
-    # ppkgs.gnomeExtensions.steal-my-focus # just switch, don't say
-    # ppkgs.gnomeExtensions.shellout # custom info in bar
-
-    # autostart
-    # (pkgs.makeAutostartItem { name = "guake"; package = pkgs.guake; })
-    # (pkgs.makeAutostartItem { name = "albert"; package = pkgs.albert; })
   ]
   # ++ linuxpkgs
   ++ fonts;
 
   # dconf.settings = import ./dconf.nix;
-  gtk = {
-    enable = true;
-    font.name = "${defaultFont}"; # gui font
-    theme.name = "Clearlooks";
-    iconTheme.name = "breeze";
-    cursorTheme = {
-      name = "Graphite light Cursors"; # original: DMZ-White
-      package = pkgs.graphite-cursors;
-    };
-
-    gtk3.extraConfig = {
-      gtk-menu-images = 1;
-      gtk-xft-hinting = 1;
-      gtk-xft-rgba = "rgb";
-      gtk-application-prefer-dark-theme = 0;
-      gtk-decoration-layout = ":";
-      gtk-toolbar-style = "GTK_TOOLBAR_ICONS";
-      gtk-toolbar-icon-size = "GTK_ICON_SIZE_LARGE_TOOLBAR";
-      gtk-enable-even-sounds = 1;
-      gtk-enable-input-feedback-sounds = 1;
-      gtk-button-images = 1;
-    };
-  };
-
-  systemd.user.services = {
-    activitywatch = {
-      Unit.Description = "Start ActivityWatch";
-      Service.Type = "simple";
-      Service.ExecStart = "${pkgs.activitywatch}/bin/aw-server";
-      Install.WantedBy = [ "default.target" ];
-      Service.Restart = "on-failure";
-      Service.RestartSec = 5;
-    };
-
-    activitywatch-afk = {
-      Unit.Description = "Start ActivityWatch AFK";
-      Service.Type = "simple";
-      Service.ExecStart = "${pkgs.activitywatch}/bin/aw-watcher-afk";
-      Install.WantedBy = [ "default.target" ];
-      Service.Restart = "on-failure";
-      Service.RestartSec = 5;
-    };
-
-    activitywatch-window = {
-      Unit.Description = "Start ActivityWatch Window";
-      Service.Type = "simple";
-      Service.ExecStart = "${pkgs.activitywatch}/bin/aw-watcher-window";
-      Install.WantedBy = [ "default.target" ];
-      Service.Restart = "on-failure";
-      Service.RestartSec = 5;
-    };
-  };
-
-
-  systemd.user.services.kopia-ui = {
-    Unit.Description = "Kopia UI";
-    Service.Type = "simple";
-    Service.ExecStart = "kopia-ui"; # currently not installed via nix
-    Install.WantedBy = [ "default.target" ];
-    Service.Restart = "on-failure";
-    Service.RestartSec = 5;
-  };
-
-  # systemd.user.startServices = true;  # enabling this increases switch time a lot
-  systemd.user.services = {
-    mpd = utils.ss-simple { cmd = "mpd --no-daemon"; wait = 3; };
-    mpd-mpris = utils.ss-simple { cmd = "${pkgs.mpd-mpris}/bin/mpd-mpris"; wait = 3; }; # playerctl for mpd
-    clipmenud = utils.ss-simple { cmd = "clipmenud"; wait = 3; };
-    sxhkd = utils.ss-simple { cmd = "${pkgs.sxhkd}/bin/sxhkd"; wait = 3; };
-    qutebrowser = utils.ss-simple { cmd = "qutebrowser"; wait = 3; };
-    emacs = utils.ss-simple { cmd = "emacs --fg-daemon"; wait = 1; };
-    logseq = utils.ss-simple { cmd = "/var/lib/flatpak/app/com.logseq.Logseq/current/active/export/bin/com.logseq.Logseq"; wait = 1; };
-    floatingterm = utils.ss-simple { cmd = "sakura --name floatingterm -x \"tt floating\""; wait = 1; };
-    mail-watcher = utils.ss-simple { cmd = "find /home/meain/.local/share/mail/.notmuch/xapian|entr -n ,shellout-update"; wait = 5; };
-  };
-
-  # code/note sync
-  systemd.user.services.note-sync = utils.ss-git-sync { dir = "/home/meain/.local/share/notes"; };
-  systemd.user.timers.note-sync = utils.timer-daily;
-  systemd.user.services.ledger-sync = utils.ss-git-sync { dir = "/home/meain/.local/share/ledger"; };
-  systemd.user.timers.ledger-sync = utils.timer-daily;
-  systemd.user.services.journal-sync = utils.ss-git-sync { dir = "/home/meain/.local/share/journal"; };
-  systemd.user.timers.journal-sync = utils.timer-daily;
-  systemd.user.services.logseq-sync = utils.ss-git-sync { dir = "/home/meain/.local/share/logseq"; };
-  systemd.user.timers.logseq-sync = utils.timer-daily;
-
-  # syncing things
-  systemd.user.services.email-sync = utils.ss-timer { cmd = ",mail-sync"; };
-  systemd.user.timers.email-sync = utils.timer-min { min = "15"; };
-  systemd.user.services.weather-pull = utils.ss-timer { cmd = ",weather-current"; };
-  systemd.user.timers.weather-pull = utils.timer-min { min = "30"; };
-  systemd.user.services.battery-check = utils.ss-timer { cmd = ",low-battery-notify"; };
-  systemd.user.timers.battery-check = utils.timer-min { min = "5"; };
-  systemd.user.services.update-sct = utils.ss-timer { cmd = ",update-sct"; };
-  systemd.user.timers.update-sct = utils.timer-min { min = "30"; };
-  systemd.user.services.update-calendar = utils.ss-timer { cmd = ",upcoming-events"; };
-  systemd.user.timers.update-calendar = utils.timer-min { min = "10"; }; # actual pull is hourly
-  systemd.user.services.mscripts-backup = utils.ss-timer { cmd = ",projects-config-backup"; };
-  systemd.user.timers.mscripts-backup = utils.timer-daily;
-
-  # regular cleanup
-  systemd.user.services.cleanup-downloads = utils.ss-cleanup { dir = "/home/meain/down"; };
-  systemd.user.timers.cleanup-downloads = utils.timer-daily;
-  systemd.user.services.cleanup-scratch = utils.ss-cleanup { dir = "/home/meain/.local/share/scratch"; };
-  systemd.user.timers.cleanup-scratch = utils.timer-daily;
-
-  # other
-  systemd.user.services.drink-water = utils.ss-timer { cmd = ",drink-water-notify"; };
-  systemd.user.timers.drink-water = utils.timer-min { min = "120"; };
-
+  # gtk = import ./gtk.nix;
+  # systemd.user = import ./systemd.nix;
 
   # Setup direnv
   programs.direnv.enable = true;

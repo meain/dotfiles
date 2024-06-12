@@ -13,7 +13,7 @@
 
     nur.url = "github:nix-community/NUR";
     personal = {
-      url = "path:/home/meain/dev/src/nur-packages";
+      url = "path:/Users/meain/dev/src/nur-packages";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     emacsOverlay.url = "github:nix-community/emacs-overlay";
@@ -39,6 +39,8 @@
     }: {
       homeConfigurations =
         let
+          # system = "x86_64-linux";
+          system = "aarch64-darwin";
           homeConfig = import ./home.nix {
             inherit system bleeding stable personal tree-grepper firefox-addons;
           };
