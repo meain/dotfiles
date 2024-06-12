@@ -14,7 +14,28 @@
         system.defaults = {
           NSGlobalDomain = {
             "com.apple.mouse.tapBehavior" = 1;
-            KeyRepeat = 1;
+
+            AppleShowScrollBars = "Automatic"; # show scroll bars for mouse
+            AppleScrollerPagingBehavior = true; # jump to the click spot
+            AppleShowAllExtensions = false; # do not show all file extensions (gets ugly in spotlight)
+
+            KeyRepeat = 2; # fast key repeat
+            InitialKeyRepeat = 10; # delay before key repeat
+
+            NSAutomaticCapitalizationEnabled = false; # disable auto capitalization
+            NSAutomaticDashSubstitutionEnabled = false; # disable auto dash substitution
+            NSAutomaticPeriodSubstitutionEnabled = false; # disable auto period substitution
+            NSAutomaticQuoteSubstitutionEnabled = false; # disable auto quote substitution
+            NSAutomaticSpellingCorrectionEnabled = false; # disable auto spelling correction
+
+            NSAutomaticWindowAnimationsEnabled = true; # enable window animations
+            NSDisableAutomaticTermination = false; # enable automatic termination
+            NSDocumentSaveNewDocumentsToCloud = false; # save to disk by default
+
+            NSTableViewDefaultSizeMode = 2; # medium row size
+            NSWindowResizeTime = 0.001; # fastest window resize
+            ApplePressAndHoldEnabled = false; # disable press and hold (for accents)
+
             "com.apple.swipescrolldirection" = false;
           };
 
@@ -23,7 +44,7 @@
             mru-spaces = false; # do not rearrange spaces based on most recent use
             orientation = "right"; # dock on right side
             show-recents = false; # do not show recently closed apps
-            tilesize = 10; # smallest icon size
+            tilesize = 20; # smal icon size
             magnification = true; # magnify icons on hover
 
             # set hot corners
