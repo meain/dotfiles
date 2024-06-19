@@ -137,7 +137,7 @@ in
     # programming-shell
     pkgs.shellcheck # shell checker
     pkgs.shfmt # shell code format
-    pkgs.nodePackages.bash-language-server # bash language-server
+    pkgs.bash-language-server # bash language-server
 
     # programming-go
     pkgs.go # go programming language
@@ -320,6 +320,7 @@ in
     pkgs.piper-tts # text to speech
     pkgs.readability-cli # simplify articles
     pkgs.glow # markdown renderer
+    pkgs.markdown-oxide # PKM via LSP
     pkgs.nur.repos.rycee.mozilla-addons-to-nix # package firefox addons
   ]
   # ++ linuxpkgs
