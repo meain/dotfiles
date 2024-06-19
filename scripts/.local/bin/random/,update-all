@@ -1,12 +1,14 @@
 #!/bin/sh
 
-set -e
-
 if [ "$(uname -s)" = "Darwin" ]; then
-    brew update && brew upgrade
+    brew update
+    echo "Brew upgrades are taken care of by nix"
+
+    # brew upgrade
 
     # https://stackoverflow.com/a/31994862
-    brew upgrade --cask --greedy
+    # Need --greedy to ensure we do update casks
+    # brew upgrade --cask --greedy
 else
     sudo apt update -y
     sudo apt upgrade -y
@@ -21,6 +23,6 @@ if [ "$1" != "nonix" ]; then
         darwin-rebuild switch --flake ~/.dotfiles/nix-darwin/.config/nix-darwin
         killall Dock Finder
     fi
-    hm update-all
+    ,hm update-all
     ,hm switch
 fi
