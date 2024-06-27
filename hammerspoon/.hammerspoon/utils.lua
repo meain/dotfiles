@@ -208,4 +208,25 @@ function utils.waitTillClipChanges(maxTime)
     return false
 end
 
+function utils.moveMouseToCurrentWindowScreen()
+    local currentApp = hs.window.focusedWindow()
+    local screen = currentApp:screen()
+    local pt = hs.geometry.rectMidPoint(screen:fullFrame())
+    hs.mouse.setAbsolutePosition(pt)
+end
+
+function utils.dump(o)
+   if type(o) == 'table' then
+      local s = '{ '
+      for k,v in pairs(o) do
+         if type(k) ~= 'number' then k = '"'..k..'"' end
+         s = s .. '['..k..'] = ' .. dump(v) .. ','
+      end
+      return s .. '} '
+   else
+      return tostring(o)
+   end
+end
+
+
 return utils
