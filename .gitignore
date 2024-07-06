@@ -35,3 +35,4 @@ zsh/.config/zsh/.zsh_sessions/
 /scripts/.local/bin/kmonad
 /chatgpt/.chatgpt-cli/history/
 /emacs/.config/emacs/custom-config.el
+/emacs/.config/emacs/eshell/history
