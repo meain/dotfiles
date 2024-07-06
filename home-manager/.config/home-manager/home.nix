@@ -121,7 +121,7 @@ in
     pkgs.pup # html filtering
     # pkgs.tldr # simpler man pages
     # pkgs.silicon # create pretty code screenshots
-    pkgs.pkgs.transmission # torrent stuff
+    # pkgs.pkgs.transmission_4 # torrent stuff
     # pkgs.kube-prompt # interactive kubernetes cli
     # pkgs.cowsay # useless stuff
     # pkgs.podman # pod manager
@@ -163,7 +163,7 @@ in
     pkgs.nodePackages.prettier # formatting for web stuff
     # pkgs.nodePackages.pnpm # package management
     pkgs.nodePackages.typescript # typescript
-    pkgs.nodePackages.vscode-css-languageserver-bin # css languageserver
+    pkgs.vscode-langservers-extracted # css languageserver
     pkgs.nodePackages.typescript-language-server # javascript langserver
 
     # programming-nix
@@ -304,6 +304,7 @@ in
     pkgs.nodePackages.mermaid-cli # cli for generating mermaid charts
     # pkgs.genact # become a movie "hacker"
     # bpkgs.logseq # tracking life (using flatpak version)
+    pkgs.silverbullet # another simpler PKM
     # pkgs.obs-studio # video/screen recording
     # pkgs.postman # REST api testing tool
     # pkgs.minicom # connect to rpi
@@ -314,6 +315,7 @@ in
     pkgs.helix # alternate editor
     # pkgs.iamb # matrix chat client
     ppkgs.chatgpt-cli # chatgpt cli
+    pkgs.llm # package to access multiple llms
     pkgs.shell-gpt # another chatgpt cli
     pkgs.feh # image viewer (for desktop background)
     pkgs.kopia # backup
