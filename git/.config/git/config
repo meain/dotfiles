@@ -69,6 +69,7 @@
 [rebase]
   autosquash = true
   autostash = true
+  updateRefs = true
 [merge]
   conflictstyle = diff3
 [rerere]
