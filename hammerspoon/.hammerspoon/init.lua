@@ -113,7 +113,19 @@ function miniMode()
 end
 
 function centerMode()
-   customModes(200, 200, 1500, 750)
+   local currentWindow = hs.window.focusedWindow()
+   local screenFrame = hs.mouse.getCurrentScreen():frame()
+   local windowFrame = currentWindow:frame()
+
+   local wscaleFactor = 0.7
+   local hscaleFactor = 0.6
+
+   windowFrame.x = screenFrame.x + (screenFrame.w * ((1 - wscaleFactor)/2))
+   windowFrame.y = screenFrame.y + (screenFrame.h * ((1 - hscaleFactor)/2))
+   windowFrame.w = screenFrame.w * wscaleFactor
+   windowFrame.h = screenFrame.h * hscaleFactor
+
+   currentWindow:setFrame(windowFrame)
 end
 
 function mainMode(x,y,w,h)
