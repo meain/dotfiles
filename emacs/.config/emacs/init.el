@@ -4328,6 +4328,17 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
   (global-set-key (kbd "M-f i i") (lambda () (interactive) (gptel-send t)))
   (global-set-key (kbd "M-f i r") (lambda () (interactive) (gptel-rewrite-menu))))
 
+(use-package yap
+  :load-path "/Users/meain/dev/src/yap"
+  :config
+  (setq yap-api-key:openai openai-api-key)
+  (setq yap-respond-in-buffer nil)
+  (setq yap-show-diff-before-rewrite t)
+
+  (global-set-key (kbd "M-f y y") 'yap-prompt)
+  (global-set-key (kbd "M-f y r") 'yap-rewrite)
+  (global-set-key (kbd "M-f y w") 'yap-write))
+
 ;; Chatgpt shell
 (use-package chatgpt-shell
   :ensure t
@@ -4891,6 +4902,11 @@ not defined, it will be saved in the `$HOME' directory."
                '(:eval (mode-line-idle 1.0
                                        '(:propertize (:eval (when-let (vc vc-mode)
                                                               (list " @" (substring vc 5))))
+                                                     face
+                                                     hima-simple-gray)
+                                       ""))
+               '(:eval (mode-line-idle 1.0
+                                       '(:propertize (:eval (concat " [" yap-model "]"))
                                                      face
                                                      hima-simple-gray)
                                        ""))
