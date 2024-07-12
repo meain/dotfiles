@@ -7,7 +7,7 @@
     AppleShowAllExtensions = false; # do not show all file extensions (gets ugly in spotlight)
 
     KeyRepeat = 2; # fast key repeat
-    InitialKeyRepeat = 10; # delay before key repeat
+    InitialKeyRepeat = 20; # delay before key repeat
 
     NSAutomaticCapitalizationEnabled = false; # disable auto capitalization
     NSAutomaticDashSubstitutionEnabled = false; # disable auto dash substitution
