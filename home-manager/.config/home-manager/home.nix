@@ -37,7 +37,7 @@ in
   home.packages = [
     # core utilities
     pkgs.coreutils
-    pkgs.coreutils-prefixed # macOS (for gdircolors)
+    # pkgs.coreutils-prefixed # macOS (for gdircolors)
     pkgs.gnumake
     pkgs.cmake
     pkgs.curl
@@ -105,7 +105,7 @@ in
     # pkgs.kubecolor # colorful kubectl
     # pkgs.kubernetes-helm # helm cli
     # pkgs.stern # better way to fetch kubernetes log
-    pkgs.yt-dlp # download youtube videos
+    spkgs.yt-dlp # download youtube videos
     pkgs.chafa # show images in terminal using half blocks
     # pkgs.hub # Github integration for git
     pkgs.gh # Yet another Github integration for git
@@ -234,7 +234,7 @@ in
     # pkgs.actionlint # linting for gihtub actions
 
     # gui
-    pkgs.mpv # audio/video player
+    spkgs.mpv # audio/video player
     # pkgs.kitty
     # pkgs.alacritty # terminal emulator
     # pkgs.firefox # browser
