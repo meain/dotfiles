@@ -1,11 +1,16 @@
-# https://github.com/kardolus/chatgpt-cli?tab=readme-ov-file#configuration
 name: openai
-model: gpt-3.5-turbo
+api_key: ""
+model: gpt-4o-mini
 max_tokens: 4096
 role: You are a helpful assistant for a software engineer
 temperature: 1
 top_p: 1
 frequency_penalty: 0
 presence_penalty: 0
+thread: default
 omit_history: false
-command_prompt: >
+url: https://api.openai.com
+completions_path: /v1/chat/completions
+models_path: /v1/models
+auth_header: Authorization
+auth_token_prefix: 'Bearer '
