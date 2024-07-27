@@ -27,7 +27,7 @@
   };
 
   dock = {
-    autohide = false; # autohide dock
+    autohide = true; # autohide dock
     mru-spaces = false; # do not rearrange spaces based on most recent use
     orientation = "right"; # dock on right side
     show-recents = false; # do not show recently closed apps
