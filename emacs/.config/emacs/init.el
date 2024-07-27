@@ -2296,11 +2296,11 @@ list of available pages."
   :commands (tab-close tab-new tab-next tab-bar-rename-tab
                        meain/switch-tab-dwim meain/create-or-delete-tab
                        tab-bar-switch-to-tab)
-  :init
+  :config
   (setq tab-bar-history-limit 100)
-  (tab-bar-history-mode t)
-  (global-set-key (kbd "M-f <left>") 'tab-bar-history-back)
-  (global-set-key (kbd "M-f <right>") 'tab-bar-history-forward)
+  ;; (tab-bar-history-mode t)
+  ;; (global-set-key (kbd "M-f <left>") 'tab-bar-history-back)
+  ;; (global-set-key (kbd "M-f <right>") 'tab-bar-history-forward)
 
   (global-set-key (kbd "M-f ,") 'tab-bar-rename-tab)
   (global-set-key (kbd "M-o") 'meain/switch-tab-dwim)
@@ -2995,7 +2995,6 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 ;; Winner mode
 (use-package winner
   :defer 1
-  :disabled t ; using tab-bar history instead
   :config
   (global-set-key (kbd "M-f <left>") 'winner-undo)
   (global-set-key (kbd "M-f <right>") 'winner-redo)
