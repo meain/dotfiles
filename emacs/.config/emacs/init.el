@@ -4338,6 +4338,12 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
   (global-set-key (kbd "M-f i i") (lambda () (interactive) (gptel-send t)))
   (global-set-key (kbd "M-f i r") (lambda () (interactive) (gptel-rewrite-menu))))
 
+(use-package gptel-quick
+  :ensure (:host github :repo "karthink/gptel-quick")
+  :commands (gptel-quick)
+  :config
+  (setq gptel-quick-timeout 100))
+
 (use-package yap
   :load-path "/Users/meain/dev/src/yap"
   :config
