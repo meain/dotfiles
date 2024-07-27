@@ -2,7 +2,8 @@
 
 set -e
 
-curl -L# "$1" | readable - 2>/dev/null |
+chatgpt --clear-history >/dev/null
+curl -Ls "$1" | readable - 2>/dev/null |
     chatgpt "Summarize this article. Give a 2 line summary at the top with a point by point breakdown of the article (max 10 points).
 Use markdown when necessary. Retain the relative order in which data is presented in the article. Use emojies to make it more engaging.
 No need to have headers like Article summary or point by point breakdown." |
