@@ -2847,6 +2847,13 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   (set-face-attribute 'csv-separator-face nil
                       :background "gray100"
                       :foreground "#000000"))
+(use-package emacs
+  :config
+  (add-hook 'nxml-mode-hook (lambda ()
+                              (define-key nxml-mode-map (kbd "M-l") 'meain/move-swap-right)
+                              (define-key nxml-mode-map (kbd "M-h") 'meain/move-swap-left)
+                              (define-key nxml-mode-map (kbd "M-k") 'meain/move-swap-up)
+                              (define-key nxml-mode-map (kbd "M-j") 'meain/move-swap-down))))
 (use-package json-mode
   :ensure t
   :defer t
