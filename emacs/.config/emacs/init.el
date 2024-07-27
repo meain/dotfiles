@@ -4350,10 +4350,12 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
   (setq yap-api-key:openai openai-api-key)
   (setq yap-respond-in-buffer nil)
   (setq yap-show-diff-before-rewrite t)
+  (setq yap-log-requests "/Users/meain/.cache/yap")
 
   (global-set-key (kbd "M-f y y") 'yap-prompt)
   (global-set-key (kbd "M-f y r") 'yap-rewrite)
-  (global-set-key (kbd "M-f y w") 'yap-write))
+  (global-set-key (kbd "M-f y w") 'yap-write)
+  (global-set-key (kbd "M-f y e") (lambda () (interactive) (yap-prompt 'explain-code))))
 
 ;; Chatgpt shell
 (use-package chatgpt-shell
