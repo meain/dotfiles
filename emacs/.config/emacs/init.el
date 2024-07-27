@@ -4313,6 +4313,10 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
   (define-key copilot-mode-map (kbd "M-f M-k") #'copilot-previous-completion)
   (define-key copilot-mode-map (kbd "M-f M-l") #'copilot-accept-completion))
 
+;; Copilot chat
+(use-package copilot-chat
+  :ensure (:host github :repo "chep/copilot-chat.el" :files ("*.el")))
+
 ;; Better GPT-3 interaction
 (use-package c3po
   :ensure (:host github :repo "d1egoaz/c3po.el")
