@@ -88,11 +88,7 @@ ifsource "$HOME/.local/share/zsh/.zsh_dir_hashes"
     source "$HOME/.nix-profile/share/fzf/key-bindings.zsh"
 
 # Source colors for ls (trapd00r/LS_COLORS)
-if [ "$OSTYPE" = "linux-gnu" ]; then
-    eval $(dircolors -b "$ZDOTDIR/dircolors")
-else
-    eval $(gdircolors -b "$ZDOTDIR/dircolors")
-fi
+eval "$(dircolors -b "$ZDOTDIR/dircolors")"
 
 # Use vim mode in zsh
 autoload -Uz edit-command-line
