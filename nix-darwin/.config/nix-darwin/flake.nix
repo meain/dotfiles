@@ -27,7 +27,7 @@
     {
       # Build darwin flake using:
       # $ darwin-rebuild build --flake .#Abins-MacBook-Air
-      darwinConfigurations."Machine" = nix-darwin.lib.darwinSystem {
+      darwinConfigurations."machine" = nix-darwin.lib.darwinSystem {
         modules = [
           configuration
           ./modules/homebrew.nix
@@ -35,6 +35,6 @@
       };
 
       # Expose the package set, including overlays, for convenience.
-      darwinPackages = self.darwinConfigurations."Machine".pkgs;
+      darwinPackages = self.darwinConfigurations."machine".pkgs;
     };
 }
