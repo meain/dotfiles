@@ -36,3 +36,6 @@ zsh/.config/zsh/.zsh_sessions/
 /chatgpt/.chatgpt-cli/history/
 /emacs/.config/emacs/custom-config.el
 /emacs/.config/emacs/eshell/history
+/emacs/.config/emacs/awesome-chatgpt-prompts-cache
+/emacs/.config/emacs/.chatgpt-shell.el
+/emacs/.config/emacs/chatgpt/
