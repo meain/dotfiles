@@ -3664,7 +3664,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 ;; Some custom text objects based on treesitter
 (use-package evil-textobj-tree-sitter
   :defer 1
-  :load-path "/home/meain/dev/src/evil-textobj-tree-sitter/"
+  :load-path "/Users/meain/dev/src/evil-textobj-tree-sitter/"
   :after (evil)
   :config
   (define-key evil-outer-text-objects-map "m" (evil-textobj-tree-sitter-get-textobj "import"
@@ -4314,7 +4314,9 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
   (define-key copilot-mode-map (kbd "M-f M-l") #'copilot-accept-completion))
 
 ;; Copilot chat
+(use-package request :ensure t) ; dependency for copilot-chat
 (use-package copilot-chat
+  :after (request)
   :ensure (:host github :repo "chep/copilot-chat.el" :files ("*.el")))
 
 ;; Better GPT-3 interaction
@@ -4447,7 +4449,7 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
     (interactive)
     (let ((file-name (buffer-file-name))
           (line-number (line-number-at-pos)))
-        (meain/copy-to-clipboard (format "b %s:%s" file-name line-number)))))
+      (meain/copy-to-clipboard (format "b %s:%s" file-name line-number)))))
 
 ;; Copy filename to clipboard
 (defun meain/copy-file-name-to-clipboard (&optional abs-path)
