@@ -156,6 +156,7 @@ in
     # pkgs.gotests # test generation for golang
 
     # programming-web
+    pkgs.deno # for running deno binaries (eg: silverbullet)
     pkgs.html-tidy # html formatter
     pkgs.nodejs # nodejs
     # pkgs.nodePackages.neovim # neovim package for js support
@@ -304,7 +305,7 @@ in
     pkgs.nodePackages.mermaid-cli # cli for generating mermaid charts
     # pkgs.genact # become a movie "hacker"
     # bpkgs.logseq # tracking life (using flatpak version)
-    pkgs.silverbullet # another simpler PKM
+    # pkgs.silverbullet # another simpler PKM (installed from GH)
     # pkgs.obs-studio # video/screen recording
     # pkgs.postman # REST api testing tool
     # pkgs.minicom # connect to rpi
@@ -315,6 +316,7 @@ in
     pkgs.helix # alternate editor
     # pkgs.iamb # matrix chat client
     ppkgs.chatgpt-cli # chatgpt cli
+    pkgs.mods # another llm cli
     pkgs.llm # package to access multiple llms
     pkgs.shell-gpt # another chatgpt cli
     pkgs.feh # image viewer (for desktop background)
