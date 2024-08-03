@@ -29,6 +29,8 @@
       "signal"
 
       "logseq"
+      "obsidian"
+      "ollama"
       "zed"
       "wezterm"
       "vscodium"
