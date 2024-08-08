@@ -251,8 +251,3 @@ er() {
 
     cd "$tmp" || return 1
 }
-
-ayo(){
-    chatgpt --clear-history >/dev/null
-    chatgpt "$*"
-}

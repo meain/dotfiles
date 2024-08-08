@@ -1,0 +1,30 @@
+#!/bin/sh
+
+set -e
+
+chatgpt --clear-history >/dev/null
+
+# get the input text from stdin else ask for input
+if [ -p /dev/stdin ]; then
+    input=$(cat)
+else
+    printf "Content: " >&2
+    read -r input
+fi
+
+if [ -n "$2" ]; then
+    chatgpt "$*"
+else
+    echo "$input" |
+        case "$1" in
+        "professional")
+            chatgpt "Make this message sound more professional but not lame. This is a chat message and so no need for signing like in an email."
+            ;;
+        "lame")
+            chatgpt "Make this into a dead serious corporate sounding message. This is a chat message and so no need for signing like in an email."
+            ;;
+        "email")
+            chatgpt "Make this into a casual business email."
+            ;;
+        esac
+fi
