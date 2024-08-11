@@ -7,4 +7,4 @@ set -e
 UNPUSHED="$(git rev-list --count "origin/$(git rev-parse --abbrev-ref HEAD 2>/dev/null).." 2>/dev/null || true)"
 [ -n "$UNPUSHED" ] && UNPUSHED="$(tput setaf 245)($UNPUSHED unpushed)" &&
 	echo "$(git rev-list --count HEAD 2>/dev/null) total commits $UNPUSHED"
-git log --pretty --oneline --abbrev-commit -10
+git log --pretty --oneline --abbrev-commit -"${1:-10}"
