@@ -325,6 +325,7 @@ in
     pkgs.readability-cli # simplify articles
     pkgs.glow # markdown renderer
     pkgs.markdown-oxide # PKM via LSP
+    pkgs.poppler_utils # pdf utils
     pkgs.nur.repos.rycee.mozilla-addons-to-nix # package firefox addons
   ]
   # ++ linuxpkgs
