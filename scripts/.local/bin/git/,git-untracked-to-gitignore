@@ -4,4 +4,6 @@
 
 set -e
 
-git status | grep -P \"^\\t\" | grep -vF .gitignore | sed \"s/^\\t//\" >>.gitignore
+git status | grep -P \"^\\t\" |
+    grep -vF .gitignore | sed \"s/^\\t//\" >>.gitignore.bak
+mv .gitignore.bak .gitignore
