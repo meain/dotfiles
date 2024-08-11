@@ -4,17 +4,17 @@ set -e
 
 chatgpt --clear-history >/dev/null
 
-# get the input text from stdin else ask for input
-if [ -p /dev/stdin ]; then
-    input=$(cat)
-else
-    printf "Content: " >&2
-    read -r input
-fi
-
 if [ -n "$2" ]; then
     chatgpt "$*"
 else
+    # get the input text from stdin else ask for input
+    if [ -p /dev/stdin ]; then
+        input=$(cat)
+    else
+        printf "Content: " >&2
+        read -r input
+    fi
+
     echo "$input" |
         case "$1" in
         "professional")
@@ -25,6 +25,18 @@ else
             ;;
         "email")
             chatgpt "Make this into a casual business email."
+            ;;
+        "summarize")
+            chatgpt "Can you summarize this message?"
+            ;;
+        "summary")
+            chatgpt "Can you summarize this message?"
+            ;;
+        "keypoints")
+            chatgpt "List the key points of this message."
+            ;;
+        *)
+            chatgpt "$1"
             ;;
         esac
 fi
