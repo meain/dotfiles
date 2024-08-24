@@ -31,9 +31,11 @@
       "logseq"
       "obsidian"
       "ollama"
+      "lm-studio"
       "zed"
       "wezterm"
       "vscodium"
+      "thunderbird"
 
       "firefox"
       "google-chrome"
@@ -43,6 +45,7 @@
       # "http-toolkit" # intercept http traffic
       # "utm" # virtualization
       "rectangle" # window management
+      "tailscale" # vpn
     ];
   };
 }
