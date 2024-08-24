@@ -146,6 +146,7 @@
       "browser.discovery.enabled" = false; # disable discovery
       "browser.search.suggest.enabled" = false; # disable search suggestions
       "browser.protections_panel.infoMessage.seen" = true; # disable tracking protection info
+      "dom.private-attribution.submission.enabled" = false; # stop doing dumb stuff mozilla
 
       # let me close and open tabs without confirmation
       "browser.tabs.closeWindowWithLastTab" = false; # don't close window when last tab is closed
