@@ -3526,14 +3526,15 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   (setq treesit-language-source-alist
         '((typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src"))
           (tsx . ("https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src"))
-          (go . ("https://github.com/meain/tree-sitter-go" "e395081"))
+          (go . ("https://github.com/meain/tree-sitter-go" "e395081")) ;; method_spec was removed from upstream grammar, but treesit depends on it
+          (go-mod . ("https://github.com/camdencheek/tree-sitter-go-mod" "main"))
           (python . ("https://github.com/tree-sitter/tree-sitter-python"))))
 
   (defun meain/install-treesit-grammars ()
     (interactive)
     (mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist)))
 
-  (setq treesit-load-name-override-list '((js "libtree-sitter-go" "tree_sitter_go")))
+  (setq treesit-load-name-override-list '((gomod "libtree-sitter-go-mod"  "tree_sitter_gomod")))
 
   (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
   (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
