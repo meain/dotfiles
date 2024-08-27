@@ -3642,14 +3642,13 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
          (lambda () (meain/tree-sitter-thing-name 'class-like)))))
 
 (use-package tree-sitter-langs
-  :load-path "/home/meain/dev/src/tree-sitter-langs"
   :defer 1
+  :ensure t
   :disabled t
   :after tree-sitter
   :config
   (push '(markdown-mode . markdown) tree-sitter-major-mode-language-alist)
   (push '(gfm-mode . markdown) tree-sitter-major-mode-language-alist)
-  (setq tree-sitter-load-path '("/home/meain/dev/src/tree-sitter-langs/bin/"))
 
   ;; Don't highlight constructors in rust with hima
   (add-function :before-until tree-sitter-hl-face-mapping-function
