@@ -20,7 +20,7 @@
     ];
     casks = [
       "hammerspoon" # make macOS usable
-      "hiddenbar" # hide items in bar
+      # "hiddenbar" # hide items in bar
       "maccy" # clipboard history
       "caffeine" # caffinate
 
@@ -28,14 +28,14 @@
       "slack"
       "signal"
 
-      "logseq"
+      # "logseq"
       "obsidian"
       "ollama"
-      "lm-studio"
+      # "lm-studio"
       "zed"
       "wezterm"
       "vscodium"
-      "thunderbird"
+      # "thunderbird"
 
       "firefox"
       "google-chrome"
