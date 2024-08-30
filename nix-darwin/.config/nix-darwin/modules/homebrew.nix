@@ -46,6 +46,7 @@
       # "utm" # virtualization
       "rectangle" # window management
       "tailscale" # vpn
+      "chatgpt" # quick shortcut is awesome
     ];
   };
 }
