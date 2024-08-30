@@ -3526,7 +3526,8 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   (setq treesit-language-source-alist
         '((typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src"))
           (tsx . ("https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src"))
-          (go . ("https://github.com/meain/tree-sitter-go" "e395081")) ;; method_spec was removed from upstream grammar, but treesit depends on it
+          ;; method_spec was removed from upstream go grammar, but emacs treesit depends on it
+          (go . ("https://github.com/meain/tree-sitter-go" "e395081"))
           (go-mod . ("https://github.com/camdencheek/tree-sitter-go-mod" "main"))
           (python . ("https://github.com/tree-sitter/tree-sitter-python"))))
 
@@ -3534,6 +3535,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
     (interactive)
     (mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist)))
 
+  ;; You can find out the function by running "strings" in the so or dylib
   (setq treesit-load-name-override-list '((gomod "libtree-sitter-go-mod"  "tree_sitter_gomod")))
 
   (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
