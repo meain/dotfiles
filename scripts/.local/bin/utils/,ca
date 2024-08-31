@@ -16,7 +16,7 @@ if echo "$1" | grep -qE '^[0-9][0-9]*$' && [ -z "$2" ]; then
         [ "$(xdotool getactivewindow getwindowname)" = "$prevwindowname" ] || i3-msg scratchpad show >/dev/null
     else
         # flip back to previous application
-        osascript -e 'tell application "System Events" to keystroke tab using {command down, shift down}'
+        osascript -e 'tell application "System Events" to keystroke tab using {command down}'
     fi
 elif [ -n "$1" ]; then
     todo.sh $*
