@@ -4357,10 +4357,10 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
   (setq yap-log-requests "/Users/meain/.cache/yap")
 
   (global-unset-key (kbd "M-m"))
-  (global-set-key (kbd "M-m y") 'yap-prompt)
-  (global-set-key (kbd "M-m r") 'yap-rewrite)
-  (global-set-key (kbd "M-m w") 'yap-write)
-  (global-set-key (kbd "M-m e") (lambda () (interactive) (yap-prompt 'explain-code))))
+  (global-set-key (kbd "M-m M-m") 'yap-prompt)
+  (global-set-key (kbd "M-m M-r") 'yap-rewrite)
+  (global-set-key (kbd "M-m M-w") 'yap-write)
+  (global-set-key (kbd "M-m M-e") (lambda () (interactive) (yap-prompt 'explain-code))))
 
 ;; Chatgpt shell
 (use-package chatgpt-shell
