@@ -4348,8 +4348,10 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
   :config
   (setq gptel-quick-timeout 100))
 
+(use-package plz :ensure t)
 (use-package yap
   :load-path "/Users/meain/dev/src/yap"
+  :after (plz)
   :config
   (setq yap-api-key:openai openai-api-key)
   (setq yap-respond-in-buffer nil)
