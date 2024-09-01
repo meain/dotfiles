@@ -423,6 +423,11 @@ Pass ORIGINAL and ALTERNATE options."
   ;; Enable minor-mode manually when required
   :commands (golden-ratio golden-ratio-mode))
 
+;; A silly little package to encourage on save
+(use-package emacs
+  :config
+  (load (concat user-emacs-directory "encourage")))
+
 ;; Window mappings (not using meain/with-alternate as I need functions)
 (defun meain/move-swap-right (&optional swap)
   "Move to window on right or move window to right if SWAP."
