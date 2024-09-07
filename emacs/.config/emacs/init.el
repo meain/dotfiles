@@ -4731,6 +4731,15 @@ This contains a lot of hacks to get it working with H-q keybinding and a popup."
   (start-process-shell-command "elpaca-available-updates" "*elpaca-available-updates*"
                                "zsh -ic 'elpaca-available-updates'"))
 
+(defun meain/emacs-revert-all-project-buffers ()
+  "Revert all editable buffers belonging to the current project."
+  (interactive)
+  (seq-do
+   (lambda (b)
+     (when (buffer-local-value 'buffer-read-only b)
+       (revert-buffer-quick b)))
+   (project-buffers (project-current))))
+
 ;; popup frame thingy
 (defun meain/emacs-popup-frame (thing-to-popup)
   "Popup and interactive frame thingy.  For use from hammerspoon.
