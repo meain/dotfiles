@@ -111,6 +111,7 @@
   (add-hook 'after-init-hook 'benchmark-init/deactivate))
 
 ;; Get proper PATH (not used as we are launching from shell)
+;; TODO: Convert to async: https://br0g.0brg.net/2024/emacs-async-exec-path-from-shell.html
 (use-package exec-path-from-shell
   :ensure t
   :config
