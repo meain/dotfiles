@@ -31,7 +31,11 @@ elif echo "$url" | grep -qE '^https://teams.microsoft.com'; then
     channel="$(echo "$url" | grep -o 'channelName=[^&]*' | cut -d= -f2)"
     printf "[Teams message in %s](%s)" "$team#$channel" "$url"
 else
-    title="$(get_title "$url")"
+    title="$(get_title "$url" | sed 's| - YouTube$||')"
     [ -z "$title" ] && title="$url"
     printf "[%s](%s)" "$title" "$url"
-fi | tee /dev/stderr | pbcopy
+fi | tee /tmp/linkify | pbcopy
+
+title="$(cat /tmp/linkify | sed 's|.*\[\(.*\)\](.*)|\1|')"
+notify "$title" "$url"
+cat /tmp/linkify
