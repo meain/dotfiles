@@ -4470,6 +4470,9 @@ guaranteed to be the response buffer."
   :load-path "/Users/meain/dev/src/yap"
   :after (plz)
   :config
+  (setq yap-service "openai")
+  (setq yap-model "gpt-4o-mini") ; start with something cheap
+
   (setq yap-api-key:openai openai-api-key)
   (setq yap-api-key:anthropic anthropic-api-key)
   (setq yap-respond-in-buffer nil)
