@@ -2,41 +2,85 @@
 
 set -e
 
-chatgpt --clear-history >/dev/null
-
-if [ -n "$2" ]; then
-    chatgpt "$*"
-else
-    # get the input text from stdin else ask for input
-    if [ -p /dev/stdin ]; then
-        input=$(cat)
+get_git_diff() {
+    if git diff --staged | grep -q .; then
+        git diff --staged
     else
-        printf "Content: " >&2
-        read -r input
+        git diff
     fi
+}
 
-    echo "$input" |
-        case "$1" in
-        "professional")
-            chatgpt "Make this message sound more professional but not lame. This is a chat message and so no need for signing like in an email."
-            ;;
-        "lame")
-            chatgpt "Make this into a dead serious corporate sounding message. This is a chat message and so no need for signing like in an email."
-            ;;
-        "email")
-            chatgpt "Make this into a casual business email."
-            ;;
-        "summarize")
-            chatgpt "Can you summarize this message?"
-            ;;
-        "summary")
-            chatgpt "Can you summarize this message?"
-            ;;
-        "keypoints")
-            chatgpt "List the key points of this message."
-            ;;
-        *)
-            chatgpt "$1"
-            ;;
-        esac
+get_youtube_subtitle() {
+    printf "Downloading subtitles from youtube...\r" >&2
+    filename="/tmp/ayo/$(date '+%s')"
+    yt-dlp --write-auto-sub --skip-download "$1" -o "$filename" >/dev/null
+    ffmpeg -i "$filename".*.vtt "$filename.srt" >/dev/null 2>&1
+    # todo: provide title for more context (maybe even trim out ad section using sponsorblock api)
+    # adding a `tr -d '\n' was not giving useful output
+    sed -e '/^[0-9][0-9][0-9:,>]*/d;/^ *$/d' <"$filename.srt" | tr -d '\r' | uniq
+}
+
+# get the input text from stdin else ask for input
+if [ -p /dev/stdin ]; then
+    input=$(cat)
 fi
+
+case "$1" in
+professional)
+    echo "$input" |
+        aichat "Make this message sound more professional but not lame. This is a chat message and so no need for signing like in an email."
+    ;;
+lame)
+    echo "$input" |
+        aichat "Make this into a dead serious corporate sounding message. This is a chat message and so no need for signing like in an email."
+    ;;
+email)
+    echo "$input" |
+        aichat "Make this into a casual business email."
+    ;;
+summarize | summary)
+    if [ -n "$input" ]; then
+        echo "$input" |
+            aichat "Summarize the given text."
+    elif [ -n "$2" ]; then
+        # if YouTube link then get subtitles and summarize that
+        if echo "$2" | grep -q youtube.com; then
+            get_youtube_subtitle "$2" |
+                aichat "Summarize the video using the subtitles provided."
+        else
+            printf "Downloading article from the web...\r" >&2
+            readable "$2" 2>/dev/null |
+                aichat 'Summarize the given article.'
+        fi
+    fi
+    ;;
+article-summary)
+    echo "$input" |
+        aichat "Summarize this article. Give a 2 line summary at the top with a point by point breakdown of the article (max 10 points).
+Use markdown when necessary. Retain the relative order in which data is presented in the article. Use emojies to make it more engaging.
+No need to have headers like Article summary or point by point breakdown."
+    ;;
+keypoints)
+    echo "$input" |
+        aichat "List the key points of this message."
+    ;;
+explain)
+    echo "$input" |
+        aichat "Can you explain this?"
+    ;;
+commit-message)
+    get_git_diff |
+        aichat "Write a commit message header (limit to 80 chars) and a description for the following diff. The response should only contain the message and should not contain any extra markers or unnecessary quotes."
+    ;;
+declickbait)
+    echo "$input" |
+        aichat "Can you make this less clickbaity?"
+    ;;
+proofread)
+    echo "$input" |
+        aichat "Can you proofread this for spelling, grammar and readability?"
+    ;;
+*)
+    aichat "$1"
+    ;;
+esac
