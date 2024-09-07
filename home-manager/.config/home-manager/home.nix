@@ -315,10 +315,9 @@ in
     pkgs.cloc # line count code
     pkgs.helix # alternate editor
     # pkgs.iamb # matrix chat client
-    ppkgs.chatgpt-cli # chatgpt cli
-    pkgs.mods # another llm cli
-    pkgs.llm # package to access multiple llms
-    pkgs.shell-gpt # another chatgpt cli
+    ppkgs.fabric # llm interaction with predefined prompts
+    pkgs.aichat # a better aichat
+    # pkgs.aider-chat # work on full codebase
     pkgs.feh # image viewer (for desktop background)
     pkgs.kopia # backup
     pkgs.piper-tts # text to speech
