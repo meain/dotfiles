@@ -4407,27 +4407,27 @@ guaranteed to be the response buffer."
         (pulse-momentary-highlight-region beg end))))
   (add-hook 'gptel-post-response-functions #'my/clean-up-gptel-refactored-code)
 
-;; https://github.com/karthink/gptel/wiki/Defining-custom-gptel-commands
-(defvar gptel-lookup--history nil)
-(defun gptel-lookup (prompt)
-  "Ask ChatGPT for a response to PROMPT."
-  (interactive (list (read-string "Ask ChatGPT: " nil gptel-lookup--history)))
-  (when (string= prompt "") (user-error "A prompt is required."))
-  (gptel-request
-   prompt
-   :callback
-   (lambda (response info)
-     (if (not response)
-         (message "gptel-lookup failed with message: %s" (plist-get info :status))
-       (with-current-buffer (get-buffer-create "*gptel-lookup*")
-         (let ((inhibit-read-only t))
-           (erase-buffer)
-           (insert response))
-         (special-mode)
-         (display-buffer (current-buffer)
-                         `((display-buffer-in-side-window)
-                           (side . bottom)
-                           (window-height . ,#'fit-window-to-buffer))))))))
+  ;; https://github.com/karthink/gptel/wiki/Defining-custom-gptel-commands
+  (defvar gptel-lookup--history nil)
+  (defun gptel-lookup (prompt)
+    "Ask ChatGPT for a response to PROMPT."
+    (interactive (list (read-string "Ask ChatGPT: " nil gptel-lookup--history)))
+    (when (string= prompt "") (user-error "A prompt is required."))
+    (gptel-request
+     prompt
+     :callback
+     (lambda (response info)
+       (if (not response)
+           (message "gptel-lookup failed with message: %s" (plist-get info :status))
+         (with-current-buffer (get-buffer-create "*gptel-lookup*")
+           (let ((inhibit-read-only t))
+             (erase-buffer)
+             (insert response))
+           (special-mode)
+           (display-buffer (current-buffer)
+                           `((display-buffer-in-side-window)
+                             (side . bottom)
+                             (window-height . ,#'fit-window-to-buffer))))))))
 
   (global-set-key (kbd "M-f i m") 'gptel)
   (global-set-key (kbd "M-f i s") 'gptel-send)
