@@ -4343,17 +4343,107 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
   :ensure t
   :commands (gptel gptel-send gptel-rewrite-menu)
   :config
-  (setq gptel-model "gpt-4")
+  (setq gptel-model "gpt-4o-mini")
   (setq gptel-api-key openai-api-key)
+  (setq gptel-expert-commands t)
   :init
-  (global-set-key (kbd "M-f i i") (lambda () (interactive) (gptel-send t)))
-  (global-set-key (kbd "M-f i r") (lambda () (interactive) (gptel-rewrite-menu))))
+  (defun gptel-context-clear-all ()
+    (interactive)
+    (gptel-add -1))
+  (defun gptel-context-add-website (url &optional no-cache)
+    "Add content from a website to the GPTel context.
+URL is the website address to fetch content from.
+When NO-CACHE is non-nil, force fetching fresh content even if cached."
+    (interactive "sURL: ")
+    (let ((buffer-name (format "*gptel-context-website:%s*" url)))
+      (with-current-buffer (get-buffer-create buffer-name)
+        (if (and (not no-cache) (> (buffer-size) 0))
+            (gptel-add)
+          (let* ((url-buffer (url-retrieve-synchronously url))
+                 (content-without-header (with-current-buffer url-buffer
+                                           (buffer-substring-no-properties
+                                            (search-forward "\n\n")
+                                            (point-max)))))
+            (erase-buffer)
+            (insert content-without-header)
+            (gptel-add))))))
+  (defun gptel-context-add-shell-command (command &optional cache)
+    "Add context to gptel from the output of a shell command.
+If CACHE is non-nil, the output is cached."
+    (interactive "sCommand: ")
+    (let ((buffer (get-buffer-create (format "*gptel-context-shell:%s*" command))))
+      (with-current-buffer buffer
+        (if cache
+            (when (> (buffer-size) 0)
+              (gptel-add))
+          (erase-buffer)
+          (insert (shell-command-to-string command))
+          (gptel-add)))))
+  (defun gptel-context-add-website-content (url &optional no-cache)
+    "Add context to gptel from the readable content of a website URL.
+For optional NO-CACHE, use caching by default."
+    (interactive "sEnter website URL: ")
+    (gptel-context-add-shell-command (format "readable %s" url) (not no-cache)))
+
+  ;; Pulled from https://github.com/karthink/gptel/wiki/Tweaking-LLM-responses
+  (cl-defun meain/clean-up-gptel-refactored-code (beg end)
+    "Clean up the code responses for refactored code in the current buffer.
+
+The response is placed between BEG and END.  The current buffer is
+guaranteed to be the response buffer."
+    (when gptel-mode          ; Don't want this to happen in the dedicated buffer.
+      (cl-return-from my/clean-up-gptel-refactored-code))
+    (when (and beg end)
+      (save-excursion
+        (let ((contents
+               (replace-regexp-in-string
+                "\n*``.*\n*" ""
+                (buffer-substring-no-properties beg end))))
+          (delete-region beg end)
+          (goto-char beg)
+          (insert contents))
+        ;; Indent the code to match the buffer indentation if it's messed up.
+        (indent-region beg end)
+        (pulse-momentary-highlight-region beg end))))
+  (add-hook 'gptel-post-response-functions #'my/clean-up-gptel-refactored-code)
+
+;; https://github.com/karthink/gptel/wiki/Defining-custom-gptel-commands
+(defvar gptel-lookup--history nil)
+(defun gptel-lookup (prompt)
+  "Ask ChatGPT for a response to PROMPT."
+  (interactive (list (read-string "Ask ChatGPT: " nil gptel-lookup--history)))
+  (when (string= prompt "") (user-error "A prompt is required."))
+  (gptel-request
+   prompt
+   :callback
+   (lambda (response info)
+     (if (not response)
+         (message "gptel-lookup failed with message: %s" (plist-get info :status))
+       (with-current-buffer (get-buffer-create "*gptel-lookup*")
+         (let ((inhibit-read-only t))
+           (erase-buffer)
+           (insert response))
+         (special-mode)
+         (display-buffer (current-buffer)
+                         `((display-buffer-in-side-window)
+                           (side . bottom)
+                           (window-height . ,#'fit-window-to-buffer))))))))
+
+  (global-set-key (kbd "M-f i m") 'gptel)
+  (global-set-key (kbd "M-f i s") 'gptel-send)
+  (global-set-key (kbd "M-f i p") 'gptel-lookup)
+  (global-set-key (kbd "M-f i c") 'gptel-context-clear-all)
+  (global-set-key (kbd "M-f i a") 'gptel-add)
+  (global-set-key (kbd "M-f i i") 'gptel-menu)
+  (global-set-key (kbd "M-f i r") 'gptel-rewrite-menu))
 
 (use-package gptel-quick
   :ensure (:host github :repo "karthink/gptel-quick")
   :commands (gptel-quick)
   :config
-  (setq gptel-quick-timeout 100))
+  (setq gptel-quick-timeout 100)
+  :init
+  (global-set-key (kbd "M-f i j") 'gptel-quick))
 
 (use-package plz :ensure t)
 (use-package yap
