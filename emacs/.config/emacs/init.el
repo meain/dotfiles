@@ -47,9 +47,8 @@
 
 ;; Basic setup
 (setq user-mail-address "mail@meain.io" user-full-name "Abin Simon")
-(defvar openai-api-key
-  (string-trim (shell-command-to-string "pass show openai/apikey 2>/dev/null") "\n" "\n")
-  "OpenAI API key.")
+(defvar openai-api-key (string-trim (shell-command-to-string "pass show openai/apikey 2>/dev/null") "\n" "\n"))
+(defvar anthropic-api-key (string-trim (shell-command-to-string "pass show anthropic/apikey 2>/dev/null") "\n" "\n"))
 
 ;; Setup elpaca
 (defvar elpaca-installer-version 0.7)
@@ -4362,6 +4361,7 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
   :after (plz)
   :config
   (setq yap-api-key:openai openai-api-key)
+  (setq yap-api-key:anthropic anthropic-api-key)
   (setq yap-respond-in-buffer nil)
   (setq yap-show-diff-before-rewrite t)
   (setq yap-log-requests "/Users/meain/.cache/yap")
