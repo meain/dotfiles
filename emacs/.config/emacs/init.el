@@ -4326,7 +4326,27 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 (use-package request :ensure t) ; dependency for copilot-chat
 (use-package copilot-chat
   :after (request)
-  :ensure (:host github :repo "chep/copilot-chat.el" :files ("*.el")))
+  :ensure (:host github :repo "chep/copilot-chat.el" :files ("*.el"))
+  :config
+  ;; From https://github.com/chep/copilot-chat.el/issues/24
+  (defun meain/copilot-chat-display (prefix)
+    "Opens the Copilot chat window, adding the current buffer to the context.
+
+Called with a PREFIX, resets the context buffer list before opening"
+    (interactive "P")
+
+    (require 'copilot-chat)
+    (let ((buf (current-buffer)))
+
+      ;; Explicit reset before doing anything, avoid it resetting later on
+      ;; target-fn and ignoring the added buffers
+      (unless (copilot-chat--ready-p)
+        (copilot-chat-reset))
+
+      (when prefix (copilot-chat--clear-buffers))
+
+      (copilot-chat--add-buffer buf)
+      (copilot-chat-display))))
 
 ;; Better GPT-3 interaction
 (use-package c3po
