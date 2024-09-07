@@ -101,6 +101,7 @@
 
 ;; Use package config
 (setq use-package-verbose t)
+(setq use-package-enable-imenu-support t)
 (setq use-package-always-demand (getenv "LOAD_FULL_EMACS"))
 (setq use-package-compute-statistics t) ;; Run `use-package-statistics' to get load timings
 
