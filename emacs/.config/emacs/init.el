@@ -2125,9 +2125,10 @@ list of available pages."
 (use-package transient :ensure t)
 
 ;; Magit
+(use-package git-commit :ensure t)
 (use-package magit
   :ensure t
-  :after (evil-leader transient)
+  :after (git-commit evil-leader transient)
   :commands (magit-status magit-commit-create magit-ignored-files meain/git-how-was-it)
   :init
   (evil-leader/set-key "gg" 'magit-status)
