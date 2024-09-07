@@ -39,3 +39,5 @@ zsh/.config/zsh/.zsh_sessions/
 /emacs/.config/emacs/awesome-chatgpt-prompts-cache
 /emacs/.config/emacs/.chatgpt-shell.el
 /emacs/.config/emacs/chatgpt/
+/aichat/Library/Application Support/aichat/rags/
+/aichat/Library/Application Support/aichat/*.md

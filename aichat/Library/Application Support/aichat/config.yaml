@@ -1,0 +1,18 @@
+model: openai:gpt-4o-mini
+save: true
+
+highlight: true
+light_theme: true
+
+clients:
+  - type: openai
+  - type: claude
+  - type: openai-compatible
+    name: ollama
+    api_base: http://localhost:11434/v1
+
+# rag_embedding_model: null # TODO: how to use local model
+
+document_loaders:
+  pdf: "pdftotext $1 -"
+  docx: "pandoc --to plain $1"
