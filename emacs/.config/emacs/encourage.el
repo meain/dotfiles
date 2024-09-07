@@ -29,19 +29,19 @@
   :group 'encourage)
 
 (defun save-message ()
-  "Display a message in the minibuffer every time a document is saved."
-  (let ((egmt (nth (random (length encourage-encouragements))
-                   encourage-encouragements)))
-    (if (and (featurep 'posframe) (fboundp 'posframe-show))
-        ;; Shot at top right of frame
-        (posframe-show "*encourage*"
-                       :string (concat " " egmt " ")
-                       :timeout 2
-                       :poshandler 'posframe-poshandler-frame-top-right-corner
-                       :background-color "skyblue"
-                       :foreground-color "white"
-                       :poshandler (lambda (_info) pos))
-      (message egmt))))
+  "Display a message in the minibuffer every time a document is saved, at random."
+  (when (< (random 100) 30)  ; 30% chance to display the message
+    (let ((egmt (nth (random (length encourage-encouragements))
+                     encourage-encouragements)))
+      (if (and (featurep 'posframe) (fboundp 'posframe-show))
+          ;; Shot at top right of frame
+          (posframe-show "*encourage*"
+                         :string (concat " " egmt " ")
+                         :timeout 2
+                         :poshandler 'posframe-poshandler-frame-top-right-corner
+                         :background-color "skyblue"
+                         :foreground-color "white")
+        (message egmt)))))
 
 (add-hook 'after-save-hook 'save-message)
 
