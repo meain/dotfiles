@@ -4366,11 +4366,33 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
   (setq yap-show-diff-before-rewrite t)
   (setq yap-log-requests "/Users/meain/.cache/yap")
 
+  ;; Add window rules for *yap-response* buffer so that it shows up at
+  ;; top of the frame
+  (add-to-list 'display-buffer-alist
+               `(,(rx bos "*yap-response*" eos)
+                 (display-buffer-reuse-window
+                  display-buffer-in-side-window)
+                 (reusable-frames . visible)
+                 (side            . top)
+                 (window-height   . 0.3)))
+
+  (defun meain/yap-set-default-model ()
+    (interactive)
+    (setq yap-service "openai")
+    (setq yap-model "gpt-4o-mini"))
+
   (global-unset-key (kbd "M-m"))
   (global-set-key (kbd "M-m M-m") 'yap-prompt)
   (global-set-key (kbd "M-m M-r") 'yap-rewrite)
   (global-set-key (kbd "M-m M-w") 'yap-write)
   (global-set-key (kbd "M-m M-e") (lambda () (interactive) (yap-prompt 'explain-code))))
+
+;; Sourcegraph cody
+;; TODO: Does not work as of now
+(use-package cody
+  :ensure (:host github :repo "sourcegraph/emacs-cody")
+  :config
+  (setq cody--access-token (shell-command-to-string "pass show sourcegraph/apikey")))
 
 ;; Chatgpt shell
 (use-package chatgpt-shell
