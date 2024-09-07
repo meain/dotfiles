@@ -4495,6 +4495,7 @@ guaranteed to be the response buffer."
     (setq yap-model "gpt-4o-mini"))
 
   (global-unset-key (kbd "M-m"))
+  (global-set-key (kbd "M-m M-c") 'yap-buffer-toggle)
   (global-set-key (kbd "M-m M-m") 'yap-prompt)
   (global-set-key (kbd "M-m M-r") 'yap-rewrite)
   (global-set-key (kbd "M-m M-w") 'yap-write)
