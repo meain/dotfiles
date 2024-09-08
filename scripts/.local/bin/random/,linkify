@@ -11,7 +11,7 @@ if ! echo "$url" | grep -qE '^https?://'; then
 fi
 
 get_title() {
-    curl -s "$1" | pup 'title text{}'
+    curl -s "$1" | pup 'head title text{}'
 }
 
 if echo "$url" | grep -qE '^https://github.com/[^/]*/[^/]*/issues'; then
