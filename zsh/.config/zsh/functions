@@ -2,8 +2,7 @@
 
 # Only things that cannot really be script like thigs that need to `cd`
 
-unalias z 2>/dev/null
-z() {
+j() {
     [ $# -gt 0 ] && _z "$*" && return
     cd "$(_z -l 2>&1 | cat | sed 's/^[^ ]*\ *//' | fzf --height 40% --reverse --inline-info +s --tac --query "$*" --preview "ls {}")" || return
 }
@@ -235,7 +234,7 @@ er() {
 }
 
 # Create a tmp dir, unzip file into it, cd into it
-,showme() {
+showme() {
     [ -z "$1" ] && echo "Pass file to show" && return 1
     tmp="$(mktemp -d)"
     extension="${1##*.}"
