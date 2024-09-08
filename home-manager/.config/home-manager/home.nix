@@ -317,7 +317,7 @@ in
     # pkgs.iamb # matrix chat client
     ppkgs.fabric # llm interaction with predefined prompts
     pkgs.aichat # a better aichat
-    # pkgs.aider-chat # work on full codebase
+    ppkgs.aider # work on full codebase
     pkgs.feh # image viewer (for desktop background)
     pkgs.kopia # backup
     pkgs.piper-tts # text to speech
