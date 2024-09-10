@@ -4659,9 +4659,24 @@ Default is after, but use BEFORE to print before."
                                  (t "~/"))))))
 (add-hook 'find-file-hook 'meain/set-proper-default-dir)
 
-;; Quikly add markdown links to document
+(defun meain/speak ()
+  "Speak buffer or selection paragraph by paragraph."
+  (interactive)
+  (let ((start (if (use-region-p) (region-beginning) (point-min)))
+        (end (if (use-region-p) (region-end) (point-max))))
+    (save-excursion
+      (goto-char start)
+      (while (< (point) end)
+        (let ((para-end (save-excursion
+                          (forward-paragraph)
+                          (min (point) end))))
+          (call-shell-region (point) para-end ",speak" nil "*speak*")
+          (goto-char para-end))))))
+
+;; Quickly add markdown links to document
 (defun meain/markdown-linkify-thing (start end)
-  "Function to search and add markdown links to document.  START and END for position."
+  "Function to search and add markdown links to document.
+START and END for position."
   (interactive "r")
   (let* ((orig-thang (if (use-region-p)
                          (buffer-substring start end)
