@@ -29,6 +29,7 @@
   salt (around lalt lsft)
   cbsp (around lalt bspc)
   cspc (tap-hold 180 spc lctl)
+  dsh (multi-tap 200 rsft (around lmet tab))
   me (tap-macro m e a i n . i o) ;; just pointless fun
 )
 
@@ -37,7 +38,7 @@
   _    _    _    _    _    _    _    _    _    _    _    _    _    _
 @hype  _    _    _    _    _    _    _    _    _    _    _    _    _
 @ealt  _    _   @nav @ff   _    _    _    _    _    _  @qctl  _
-  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _  @dsh   _
   @fn  _  @salt  _            @cspc            _    _    _    _    _
 )
 
