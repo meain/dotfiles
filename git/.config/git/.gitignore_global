@@ -42,3 +42,6 @@ shell.nix
 .dir-locals.el
 .rworkspaceignore
 default.rest
+
+# aider
+.aider.*
