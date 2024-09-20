@@ -1539,12 +1539,43 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
   (setq enable-recursive-minibuffers t)
 
+(defun common-directory-levels (path1 path2)
+  "Return the number of common directory components between PATH1 and PATH2."
+  (let ((dirs1 (split-string (file-name-directory (expand-file-name path1)) "/" t))
+        (dirs2 (split-string (file-name-directory (expand-file-name path2)) "/" t)))
+    (cl-loop for d1 in dirs1
+             for d2 in dirs2
+             while (string= d1 d2)
+             count 1)))
+
+(defun sort-files-by-closeness (files target-file)
+  "Sort FILES based on how close each file is to TARGET-FILE.
+Closeness is determined by the number of common directory levels."
+  (let* ((target-dir (file-name-directory target-file))
+         (files-with-levels
+          (cl-loop for file in files
+                   unless (string= file target-file)
+                   collect (cons file (common-directory-levels file target-dir)))))
+    (mapcar #'car
+            (sort files-with-levels
+                  (lambda (a b) (> (cdr a) (cdr b)))))))
+
+  (defun meain/sort-proximity (files)
+    (let* ((prev-buffer (window-buffer (minibuffer-selected-window)))
+           (current-file (if (buffer-file-name prev-buffer)
+                             (buffer-file-name prev-buffer)
+                           "."))
+           (project-path (expand-file-name (project-root (project-current))))
+           (current-file-sans-project (string-remove-prefix project-path current-file)))
+      (sort-files-by-closeness files current-file-sans-project)))
+
   (vertico-multiform-mode)
   (setq vertico-multiform-commands
         '((consult-ripgrep buffer indexed)
           (consult-xref buffer indexed)
           (eglot-find-implementation indexed) ;; TODO: change to vertical
           (consult-imenu buffer)
+          (project-find-file flat (vertico-sort-function . meain/sort-proximity))
           (xref-find-references buffer)
           (meain/imenu-or-eglot buffer)
           (tree-jump-search buffer)
