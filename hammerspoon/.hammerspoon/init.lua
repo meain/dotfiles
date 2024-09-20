@@ -5,12 +5,20 @@ local utils = require("utils")
 
 local pasteboard = require("hs.pasteboard")
 
-local editor = "org.gnu.Emacs"
-local browser = "org.mozilla.firefox"
+local emacs = "org.gnu.Emacs"
+local firefox = "org.mozilla.firefox"
 local safari = "com.apple.Safari"
 local teams = "com.microsoft.teams2"
 local slack = "com.tinyspeck.slackmacgap"
 local chrome = "com.google.Chrome"
+local obsidian = "md.obsidian"
+local silverbullet =  "com.pake.87a70c"
+local cursor = "com.todesktop.230313mzl4w4u92"
+local vscodium = "com.vscodium" -- used for sourcegraph cody
+
+local browser = firefox
+local notesApp = chrome
+local editor = emacs
 
 -- key combinations
 local fkey = {"alt", "ctrl", "cmd"}
@@ -39,15 +47,15 @@ function bindFocus(key, app, id)
 end
 
 -- quick focus
-bindFocus("j", "/opt/homebrew/opt/emacs-mac/Emacs.app")
--- bindFocus("k", "/Users/meain/Applications/Home Manager Apps/Firefox.app")
+-- bindFocus("o", "/opt/homebrew/opt/emacs-mac/Emacs.app")
 bindFocus("k", "/Applications/Firefox.app")
 bindFocus("s", slack, true)
 bindFocus("l", teams, true)
-bindFocus("h", chrome, true)
+bindFocus("h", notesApp, true)
+bindFocus("j", editor, true)
+bindFocus("o", cursor, true)
 
 hs.hotkey.bind(fkey, "i", function() focusandback("wezterm") end)
--- hs.hotkey.bind(fkey, "n", function() focusandback("logseq") end)
 
 hs.hotkey.bind(fkey, "w", function() hs.alert("BundleID: "..hs.application.frontmostApplication():bundleID()) end)
 hs.hotkey.bind(fkey, "r", hs.reload)
@@ -76,7 +84,7 @@ function noteTaker()
    -- Have firefox and chrome side by side with firefox on left taking
    -- up 3/4 of the window space
    local ffw = hs.window.focusedWindow()
-   hs.application.launchOrFocus("google chrome")
+   hs.application.launchOrFocusByBundleID(notesApp)
    local chw = hs.window.focusedWindow()
 
    local scf = hs.mouse.getCurrentScreen():frame()
