@@ -215,6 +215,11 @@ function utils.moveMouseToCurrentWindowScreen()
     hs.mouse.setAbsolutePosition(pt)
 end
 
+function utils.moveMouseToScreen(screen)
+    local pt = hs.geometry.rectMidPoint(screen:fullFrame())
+    hs.mouse.setAbsolutePosition(pt)
+end
+
 function utils.dump(o)
    if type(o) == 'table' then
       local s = '{ '

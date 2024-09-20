@@ -65,6 +65,7 @@ hs.hotkey.bind(fkey, 'm', function()
   local win = hs.window.focusedWindow()
   local screen = win:screen()
   win:moveToScreen(screen:next(), true, true)
+  utils.moveMouseToScreen(screen:next())
 end)
 
 hs.hotkey.bind(hyper, "l", function() hs.alert(customshellrun.run(",linkify")) end)
