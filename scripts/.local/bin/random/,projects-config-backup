@@ -4,7 +4,7 @@
 # TODO(meain): optimize this to run `find` only once. It is pretty expensive
 set -e
 
-SAVEPATH="$HOME/.local/share/untracked-project-configs"
+SAVEPATH="$HOME/.local/share/project-configs-backup"
 mkdir -p "$SAVEPATH"
 
 backup_loc() {
@@ -16,7 +16,7 @@ backup_loc() {
 
             dir="$(dirname "$path")"
             [ -e "$dir/$1" ] || continue
-            cleanpath="$(echo "$dir" | sed 's|^/home/meain/dev/||')"
+            cleanpath="$(echo "$dir" | sed "s|^$HOME/dev/||")"
             tput el && printf "%s\r" "$cleanpath"
 
             # if dir, copy contents else the file directly as we specifically set the dest
