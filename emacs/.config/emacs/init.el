@@ -1539,35 +1539,36 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
   (setq enable-recursive-minibuffers t)
 
-(defun common-directory-levels (path1 path2)
-  "Return the number of common directory components between PATH1 and PATH2."
-  (let ((dirs1 (split-string (file-name-directory (expand-file-name path1)) "/" t))
-        (dirs2 (split-string (file-name-directory (expand-file-name path2)) "/" t)))
-    (cl-loop for d1 in dirs1
-             for d2 in dirs2
-             while (string= d1 d2)
-             count 1)))
+  (defun common-path-length (path1 path2)
+    "Return the number of common directories in PATH1 and PATH2."
+    (let* ((split-path1 (split-string path1 "/"))
+           (split-path2 (split-string path2 "/"))
+           (common-length 0)
+           (i 0))
+      ;; Iterate over the directory parts and compare
+      (while (and (< i (min (length split-path1) (length split-path2)))
+                  (string= (nth i split-path1) (nth i split-path2)))
+        (setq common-length (1+ common-length))
+        (setq i (1+ i)))
+      common-length))
 
-(defun sort-files-by-closeness (files target-file)
-  "Sort FILES based on how close each file is to TARGET-FILE.
-Closeness is determined by the number of common directory levels."
-  (let* ((target-dir (file-name-directory target-file))
-         (files-with-levels
-          (cl-loop for file in files
-                   unless (string= file target-file)
-                   collect (cons file (common-directory-levels file target-dir)))))
-    (mapcar #'car
-            (sort files-with-levels
-                  (lambda (a b) (> (cdr a) (cdr b)))))))
+  (defun sort-by-proximity (files target-file)
+    "Sort FILES by how close they are in structure to TARGET-FILE."
+    (sort files
+          (lambda (file1 file2)
+            (> (common-path-length file1 target-file)
+               (common-path-length file2 target-file)))))
 
   (defun meain/sort-proximity (files)
-    (let* ((prev-buffer (window-buffer (minibuffer-selected-window)))
-           (current-file (if (buffer-file-name prev-buffer)
-                             (buffer-file-name prev-buffer)
-                           "."))
-           (project-path (expand-file-name (project-root (project-current))))
-           (current-file-sans-project (string-remove-prefix project-path current-file)))
-      (sort-files-by-closeness files current-file-sans-project)))
+    (if (project-current)
+        (let* ((prev-buffer (window-buffer (minibuffer-selected-window)))
+               (current-file (if (buffer-file-name prev-buffer)
+                                 (buffer-file-name prev-buffer)
+                               "."))
+               (project-path (expand-file-name (project-root (project-current))))
+               (current-file-sans-project (string-remove-prefix project-path current-file)))
+          (sort-by-proximity files current-file-sans-project))
+      files))
 
   (vertico-multiform-mode)
   (setq vertico-multiform-commands
