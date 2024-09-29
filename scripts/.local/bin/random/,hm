@@ -9,19 +9,15 @@ cp -r "$HOME/.dotfiles/home-manager/.config/home-manager" "$HOME/.config/"
 if [ "$1" = update ]; then
     cd "$HOME/.dotfiles/home-manager/.config/home-manager"
 
-    # nix flake metadata --json | jq -r '.locks.nodes | keys[]' | # was giving dependent inputs
-    nix flake metadata | grep '^.───' |
-        sed -r "s/\x1B\[(([0-9]{1,2})?(;)?([0-9]{1,2})?)?[m,K,H,f,J]//g" | # remove ANSII escape codes
-        sed 's/^....//' | cut -d: -f1 |
+    nix flake metadata --json |
+        jq -r '.locks.nodes.root.inputs|keys[]' |
         grep -v '^pinned-' | # don't show pinned versions
         fzf -m | xargs -n1 nix flake lock --update-input
 elif [ "$1" = update-all ]; then
     cd "$HOME/.dotfiles/home-manager/.config/home-manager"
 
-    # nix flake metadata --json | jq -r '.locks.nodes | keys[]' | # was giving dependent inputs
-    nix flake metadata | grep '^.───' |
-        sed -r "s/\x1B\[(([0-9]{1,2})?(;)?([0-9]{1,2})?)?[m,K,H,f,J]//g" | # remove ANSII escape codes
-        sed 's/^....//' | cut -d: -f1 |
+    nix flake metadata --json |
+        jq -r '.locks.nodes.root.inputs|keys[]' |
         grep -v '^pinned-' | # don't show pinned versions
         xargs -n1 nix flake lock --update-input
 elif [ "$1" = lock ]; then
