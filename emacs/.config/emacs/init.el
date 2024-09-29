@@ -1541,16 +1541,12 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
   (defun common-path-length (path1 path2)
     "Return the number of common directories in PATH1 and PATH2."
-    (let* ((split-path1 (split-string path1 "/"))
-           (split-path2 (split-string path2 "/"))
-           (common-length 0)
-           (i 0))
-      ;; Iterate over the directory parts and compare
-      (while (and (< i (min (length split-path1) (length split-path2)))
-                  (string= (nth i split-path1) (nth i split-path2)))
-        (setq common-length (1+ common-length))
-        (setq i (1+ i)))
-      common-length))
+    (let ((split-path1 (split-string path1 "/"))
+          (split-path2 (split-string path2 "/")))
+      (cl-loop for dir1 in split-path1
+               for dir2 in split-path2
+               while (string= dir1 dir2)
+               count 1)))
 
   (defun sort-by-proximity (files target-file)
     "Sort FILES by how close they are in structure to TARGET-FILE."
