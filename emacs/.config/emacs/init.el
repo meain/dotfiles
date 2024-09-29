@@ -3704,9 +3704,11 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   :after (evil)
   :config
   (define-key evil-outer-text-objects-map "m" (evil-textobj-tree-sitter-get-textobj "import"
-                                                '((python-mode . [(import_statement) @import])
-                                                  (go-mode . [(import_spec) @import])
-                                                  (rust-mode . [(use_declaration) @import]))))
+                                                '((python-mode . ((import_statement) @import))
+                                                  (python-ts-mode . ((import_statement) @import))
+                                                  (go-mode . ((import_spec) @import))
+                                                  (go-ts-mode . ((import_spec) @import))
+                                                  (rust-mode . ((use_declaration) @import)))))
   (define-key evil-outer-text-objects-map "f" (cons "evil-outer-function" (evil-textobj-tree-sitter-get-textobj "function.outer")))
   (define-key evil-inner-text-objects-map "f" (cons "evil-inner-function" (evil-textobj-tree-sitter-get-textobj "function.inner")))
   (define-key evil-outer-text-objects-map "c" (cons "evil-outer-class" (evil-textobj-tree-sitter-get-textobj "class.outer")))
