@@ -4507,6 +4507,7 @@ guaranteed to be the response buffer."
   (setq yap-respond-in-buffer nil)
   (setq yap-show-diff-before-rewrite t)
   (setq yap-log-requests "/Users/meain/.cache/yap")
+  (setq yap-follow-output t)
 
   ;; Add window rules for *yap-response* buffer so that it shows up at
   ;; top of the frame
