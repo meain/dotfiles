@@ -4523,13 +4523,20 @@ guaranteed to be the response buffer."
     (interactive)
     (setq yap-service "openai")
     (setq yap-model "gpt-4o-mini"))
+  (defun meain/yap-set-sonnet-model ()
+    (interactive)
+    (setq yap-service "anthropic")
+    (setq yap-model "claude-3-5-sonnet-20240620"))
+  (defun meain/yap-set-local-model ()
+    (interactive)
+    (setq yap-service "ollama")
+    (setq yap-model "llama3.2:3b-instruct-fp16"))
   :init
   (global-unset-key (kbd "M-m"))
   (global-set-key (kbd "M-m M-c") 'yap-buffer-toggle)
   (global-set-key (kbd "M-m M-m") 'yap-prompt)
   (global-set-key (kbd "M-m M-r") 'yap-rewrite)
   (global-set-key (kbd "M-m M-w") 'yap-write)
-  (global-set-key (kbd "M-m M-k") (lambda () (interactive) (yap-write 'complete-code)))
   (global-set-key (kbd "M-m M-e") (lambda () (interactive) (yap-prompt 'explain-code))))
 
 ;; Sourcegraph cody
