@@ -131,3 +131,7 @@ export DOCKER_BUILDKIT=1
 
 # open dlv breakpoint in Emacs
 export DELVE_EDITOR=",emacs-no-wait"
+
+# aider
+export AIDER_GITIGNORE=false # present in global gitignore
+export AIDER_CHECK_UPDATE=false # managed via nix
