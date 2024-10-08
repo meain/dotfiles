@@ -14,6 +14,7 @@
     taps = [
       # "railwaycat/emacsmacport"
       # "d12frosted/emacs-plus"
+      "zackelia/formulae" # for bclm
     ];
     brews = [
       # {
@@ -26,6 +27,7 @@
       #   link = true;
       # }
       "choose-gui" # dmenu alternative
+      "bclm" # limit battery charge
     ];
     casks = [
       "hammerspoon" # make macOS usable
