@@ -4544,6 +4544,7 @@ guaranteed to be the response buffer."
   (global-set-key (kbd "M-m M-m") 'yap-prompt)
   (global-set-key (kbd "M-m M-r") 'yap-rewrite)
   (global-set-key (kbd "M-m M-w") 'yap-write)
+  (global-set-key (kbd "M-m M-f") (lambda () (interactive) (yap-rewrite 'fix-diagnostic-error)))
   (global-set-key (kbd "M-m M-e") (lambda () (interactive) (yap-prompt 'explain-code))))
 
 ;; Sourcegraph cody
