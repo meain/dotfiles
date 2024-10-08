@@ -38,7 +38,7 @@
     wvous-tl-corner = 2;
     wvous-tr-corner = 2;
     wvous-bl-corner = 1;
-    wvous-br-corner = 12;
+    wvous-br-corner = 1;
 
     persistent-apps = [ ];
     # persistent-others = ["~/Desktop" "~/Downloads"];
