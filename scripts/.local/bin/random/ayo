@@ -80,6 +80,10 @@ proofread)
     echo "$input" |
         aichat "Can you proofread this for spelling, grammar and readability?"
     ;;
+shell)
+    shift
+    aichat --prompt "You are in a bash shell on $(uname -o). Give me the shell command to do the task I ask for." "$@"
+    ;;
 *)
     aichat "$1"
     ;;
