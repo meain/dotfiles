@@ -4324,6 +4324,12 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
   (define-key evil-normal-state-map (kbd "X") 'evil-fancy-narrow)
   (global-set-key (kbd "M-N") 'meain/narrow-region-dwim))
 
+(use-package auto-highlight-symbol
+  :ensure t
+  :commands (auto-highlight-symbol-mode)
+  :init
+  (add-hook 'prog-mode-hook #'auto-highlight-symbol-mode))
+
 ;; Copilot, I guess
 (use-package copilot
   :defer t
