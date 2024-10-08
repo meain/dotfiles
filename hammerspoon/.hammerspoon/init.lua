@@ -12,14 +12,14 @@ local teams = "com.microsoft.teams2"
 local slack = "com.tinyspeck.slackmacgap"
 local chrome = "com.google.Chrome"
 local obsidian = "md.obsidian"
-local silverbullet = "com.pake.87a70c"
+local silverbullet = "com.google.Chrome.app.cclocababegeddonigidihmbicdhcakc" -- installed pwa
 local cursor = "com.todesktop.230313mzl4w4u92"
 local vscodium = "com.vscodium" -- used for sourcegraph cody
 local mail = "com.apple.mail"
 local zed = "dev.zed.Zed"
 
 local browser = firefox
-local notesApp = chrome
+local notesApp = silverbullet
 local editor = emacs
 
 -- key combinations
@@ -55,12 +55,16 @@ bindFocus("s", slack, true)
 bindFocus("l", teams, true)
 bindFocus("h", notesApp, true)
 bindFocus("j", editor, true)
-bindFocus("o", cursor, true)
+bindFocus("o", zed, true)
 bindFocus("e", mail, true)
 
 hs.hotkey.bind(fkey, "i", function() focusandback("wezterm") end)
 
-hs.hotkey.bind(fkey, "w", function() hs.alert("BundleID: " .. hs.application.frontmostApplication():bundleID()) end)
+hs.hotkey.bind(fkey, "w", function()
+    local bundleID = hs.application.frontmostApplication():bundleID()
+    hs.pasteboard.setContents(bundleID)
+    hs.alert("BundleID: " .. bundleID)
+end)
 hs.hotkey.bind(fkey, "r", hs.reload)
 hs.hotkey.bind(fkey, "z", function() hs.application.frontmostApplication():focusedWindow():maximize() end)
 
