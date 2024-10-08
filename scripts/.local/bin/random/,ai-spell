@@ -1,0 +1,9 @@
+#!/bin/sh
+
+set -e
+
+aichat --prompt \
+    "Correct the spelling of the provided first word or give me the word.
+        Any following data is just to explain what the word should be.
+        Only respond with the corrected word." -- "$*" |
+    tee /dev/stderr | tr -d '\n' | pbcopy
