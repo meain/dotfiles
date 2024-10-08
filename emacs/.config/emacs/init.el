@@ -4355,6 +4355,7 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
   (define-key copilot-mode-map (kbd "M-f M-f") #'copilot-complete)
   (define-key copilot-mode-map (kbd "M-f M-j") #'copilot-next-completion)
   (define-key copilot-mode-map (kbd "M-f M-k") #'copilot-previous-completion)
+  (define-key copilot-mode-map (kbd "M-f M-;") #'copilot-accept-completion-by-word)
   (define-key copilot-mode-map (kbd "M-f M-l") #'copilot-accept-completion))
 
 ;; Copilot chat
