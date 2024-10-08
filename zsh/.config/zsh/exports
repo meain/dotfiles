@@ -92,7 +92,7 @@ export SNIPPETS_PATH="$HOME/dev/src/snippets"
 
 # others
 export DOWNLOADS_PATH="$HOME/Downloads"
-export SCREENSHOTS_PATH="$HOME/docs/Pictures/Screenshots"
+export SCREENSHOTS_PATH="$HOME/Documents/Screenshots"
 export MUSIC_PATH="$HOME/docs/Music"
 
 ## =============================================================== :settings
