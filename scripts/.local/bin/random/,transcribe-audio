@@ -1,0 +1,16 @@
+#!/bin/sh
+
+set -e
+
+echo "$(date) --- $(pgrep -x "raus")" >> /tmp/raus.log # TODO(meain): remove logging
+if pgrep -x "raus" > /dev/null; then
+    kill -s HUP $(pgrep -x "raus")
+    echo .
+    exit
+fi
+
+# TODO: have a module to do simple text transformation. Or even make use of llms.
+raus 2>> /tmp/raus.log | # TODO(meain): remove logging
+    whisper-cpp -m "$HOME/dev/src/record-audio-until-silence/ggml-medium.en.bin" -f - -np -nt |
+    tr -d '\n' |
+    sed 's/^[[:space:]]*//;s/[[:space:]]*$//'

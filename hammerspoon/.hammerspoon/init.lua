@@ -177,4 +177,29 @@ hs.hotkey.bind(fkey, "g", centerMode)
 hs.hotkey.bind(fkey, "a", mainMode)
 hs.hotkey.bind(fkey, "d", sideMode)
 
+function transcribeAudio()
+    local path = io.open("/Users/meain/.local/share/latestpath"):read()
+    local task = hs.task.new("/bin/sh", function(exitCode, output, stdErr)
+        if exitCode ~= 0 then
+            hs.alert.show("Transcription failed: " .. (stdErr or "Unknown error"))
+            return
+        end
+
+        output = utils.trim(output)
+
+        if output == "." then
+            -- Just stopped previous one
+            return
+        elseif output == "" then
+            hs.alert.show("Speak up")
+        else
+            hs.eventtap.keyStrokes(output)
+        end
+    end, {"-c", "PATH='"..path.."' ,transcribe-audio"})
+
+    task:start()
+end
+
+hs.hotkey.bind(fkey, ";", transcribeAudio)
+
 hs.alert("Hammerspoon loaded!")
