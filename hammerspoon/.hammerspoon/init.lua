@@ -200,6 +200,7 @@ function transcribeAudio()
     task:start()
 end
 
-hs.hotkey.bind(fkey, ";", transcribeAudio)
+hs.hotkey.bind(fkey, "space", transcribeAudio)
+
 
 hs.alert("Hammerspoon loaded!")
