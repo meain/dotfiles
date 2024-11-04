@@ -202,5 +202,20 @@ end
 
 hs.hotkey.bind(fkey, "space", transcribeAudio)
 
+-- cmd+t from anywhere to open a new tab in browser
+browsernewtab =
+    hs.hotkey.bind(
+    {"cmd"},
+    "t",
+    function()
+        local brow = hs.application.applicationsForBundleID(browser)
+        if not brow[1]:isFrontmost() then
+            hs.application.launchOrFocusByBundleID(browser)
+        end
+        browsernewtab:disable()
+        hs.eventtap.keyStroke({"cmd"}, "t")
+        browsernewtab:enable()
+    end
+)
 
 hs.alert("Hammerspoon loaded!")
