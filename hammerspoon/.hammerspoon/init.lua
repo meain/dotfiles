@@ -190,7 +190,7 @@ function transcribeAudio()
         if output == "." then
             -- Just stopped previous one
             return
-        elseif output == "" then
+        elseif output == "" or output == "[BLANK_AUDIO]" then
             hs.alert.show("Speak up")
         else
             hs.eventtap.keyStrokes(output)
