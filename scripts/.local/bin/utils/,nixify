@@ -2,7 +2,7 @@
 
 set -e
 
-hm_nixpkgs_rev="$(nix flake metadata --json $HOME/.config/nixpkgs | jq -r '.locks.nodes.nixpkgs.locked.rev')"
+hm_nixpkgs_rev="$(nix flake metadata --json $HOME/.config/home-manager | jq -r '.locks.nodes.nixpkgs.locked.rev')"
 
 if [ "$1" = "update" ]; then
     echo Updating to "$hm_nixpkgs_rev"
