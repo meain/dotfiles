@@ -1,0 +1,9 @@
+#!/bin/sh
+
+set -e
+
+[ -z "$1" ] && echo "Usage: script <filename>" && exit 1
+
+tmp="$(mktemp -d)/audio.wav"
+ffmpeg -i "$1" -ar 16000 "$tmp" 2>/dev/null
+whisper-cpp -m "$HOME/dev/src/record-audio-until-silence/ggml-medium.en.bin" -np -nt "$tmp"
