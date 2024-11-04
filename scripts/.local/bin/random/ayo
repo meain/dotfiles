@@ -84,6 +84,11 @@ shell)
     shift
     aichat --prompt "You are in a bash shell on $(uname -o). Give me the shell command to do the task I ask for." "$@"
     ;;
+rec)
+    shift
+    echo "$input" |
+        aichat --prompt "This is the transcription of a thinking session where I was talking to myself. Can you summarize the important points  in short as well as list out any todo items I set up for myself? The todo items should be one liner markdown tasks"
+    ;;
 *)
     aichat "$1"
     ;;
