@@ -51,6 +51,7 @@ in
     pkgs.fd
     pkgs.lsd
     pkgs.gawk # for tmux-fingers
+    pkgs.unixtools.watch
 
     # packages
     # ppkgs.notmuch-git # mail indexer
@@ -230,7 +231,7 @@ in
     # pkgs.grpcurl # curl for grpc
     pkgs.zprint # clojure formatter
     tree-grepper.outputs.packages.${system}.tree-grepper # grep with tree-sitter
-    pkgs.comby # code mod
+    # pkgs.comby # code mod
     # pkgs.ruby # ruby language
     # pkgs.actionlint # linting for gihtub actions
 
@@ -302,7 +303,7 @@ in
     # pkgs.nur.repos.renesat.activitywatch-bin  # https://github.com/NixOS/nix/issues/3843
     # pkgs.activitywatch # activity tracking
     # pkgs.gforth # gnu forth interpreter
-    pkgs.nodePackages.mermaid-cli # cli for generating mermaid charts
+    pkgs.mermaid-cli # cli for generating mermaid charts
     # pkgs.genact # become a movie "hacker"
     # bpkgs.logseq # tracking life (using flatpak version)
     # pkgs.silverbullet # another simpler PKM (installed from GH)
@@ -314,10 +315,13 @@ in
     # pkgs.spotify-tui # control spotify
     pkgs.cloc # line count code
     pkgs.helix # alternate editor
+    # pkgs.hurl # api testing
     # pkgs.iamb # matrix chat client
-    ppkgs.fabric # llm interaction with predefined prompts
+    # ppkgs.fabric # llm interaction with predefined prompts
     pkgs.aichat # a better aichat
-    ppkgs.aider # work on full codebase
+    # ppkgs.aider # work on full codebase
+    pkgs.aider-chat # work on full codebase
+    pkgs.openai-whisper-cpp # speech to text
     pkgs.feh # image viewer (for desktop background)
     pkgs.kopia # backup
     pkgs.piper-tts # text to speech
