@@ -53,6 +53,7 @@
       "wezterm"
       "vscodium"
       # "thunderbird"
+      "orbstack" # better docker
 
       "firefox"
       "google-chrome"
@@ -65,6 +66,7 @@
       # "rectangle" # window management
       "tailscale" # vpn
       "chatgpt" # quick shortcut is awesome
+      "meetingbar" # next meeting in bar
     ];
   };
 }
