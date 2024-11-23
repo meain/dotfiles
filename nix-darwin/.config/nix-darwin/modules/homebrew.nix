@@ -17,15 +17,17 @@
       "zackelia/formulae" # for bclm
     ];
     brews = [
+      # emacs-mac has not been updated in a long time
       # {
       #   name = "emacs-mac";
       #   args = [ "with-natural-title-bar" "with-starter" "with-mac-metal" "with-native-comp"];
       # }
       # {
-      #   name = "emacs-plus@30";
+      #   name = "emacs-plus@31";
       #   args = [ "with-imagemagick" "with-native-comp" ];
       #   link = true;
       # }
+
       "choose-gui" # dmenu alternative
       "bclm" # limit battery charge
     ];
@@ -39,7 +41,7 @@
       "slack"
       "signal"
 
-      "emacs" # also emacs@pretest
+      # "emacs" # also emacs@pretest
       # "emacs-app" # ???
       # "logseq"
       "obsidian"
