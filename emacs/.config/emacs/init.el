@@ -4525,18 +4525,17 @@ guaranteed to be the response buffer."
                  (side            . top)
                  (window-height   . 0.3)))
 
-  (defun meain/yap-set-default-model ()
+  (defun meain/yap-pick-model ()
+    "Pick a model from a list of preferred models."
     (interactive)
-    (setq yap-service "openai")
-    (setq yap-model "gpt-4o-mini"))
-  (defun meain/yap-set-sonnet-model ()
-    (interactive)
-    (setq yap-service "anthropic")
-    (setq yap-model "claude-3-5-sonnet-20240620"))
-  (defun meain/yap-set-local-model ()
-    (interactive)
-    (setq yap-service "ollama")
-    (setq yap-model "llama3.2:3b-instruct-fp16"))
+    (let* ((models '(("4o-mini" ("openai" "gpt-4o-mini"))
+                     ("sonnet" ("anthropic" "claude-3-5-sonnet-20240620"))
+                     ("llama3.2" ("ollama" "llama3.2:3b-instruct-q8_0"))))
+           (name (completing-read "Name: " (mapcar 'car models)))
+           (vals (cadr (assoc name models))))
+      (when vals
+        (setq yap-service (car vals))
+        (setq yap-model (cadr vals)))))
   :init
   (global-unset-key (kbd "M-m"))
   (global-set-key (kbd "M-m M-c") 'yap-buffer-toggle)
