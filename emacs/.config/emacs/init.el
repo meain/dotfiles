@@ -296,20 +296,16 @@
 (setq show-paren-style 'parenthesis)
 
 ;; Keep files in sync with filesystem
-;; TODO: Use use-package
-(global-auto-revert-mode t)
+;; Tweak these settings carefully. This makes things quite slow if not
+;; configured correctly.
+(use-package emacs
+  :config
+  (setq auto-revert-interval 5)
+  (setq auto-revert-check-vc-info nil)
+  (setq global-auto-revert-non-file-buffers nil)
 
-(defun meain/silence-auto-revert-errors (orig-fun &rest args)
-  "Silence errors from `auto-revert-buffers'.
-`ORIG-FUN' will be `auto-revert-buffer' and `ARGS' are args to it."
-  (ignore-errors
-    (apply orig-fun args)))
-(advice-add 'auto-revert-buffers :around #'meain/silence-auto-revert-errors)
-
-(setq auto-revert-interval 2)
-(setq auto-revert-check-vc-info t)
-(setq global-auto-revert-non-file-buffers t)
-(setq auto-revert-verbose t)
+  (setq auto-revert-verbose nil)
+  (global-auto-revert-mode t))
 
 ;; Disable line wrapping
 (use-package emacs
