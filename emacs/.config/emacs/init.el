@@ -606,15 +606,11 @@ Pass ORIGINAL and ALTERNATE options."
         (goto-char 1)
         ;; kill-line without copying to clipboard
         (delete-region (point) (save-excursion (end-of-line 2) (point)))
-        (insert (format ";; Time is %s. You have %s unread mails and %s buffers.\n;; %s"
-                        (format-time-string "%l %p")
-                        (car (split-string (shell-command-to-string ",mail-unread notodo|wc -l") "\n"))
+        (insert (format ";; Time to go write code in one of those %s buffers.\n;; If you need anything, don't hesitate to ask the llm."
                         (cl-count-if (lambda (b)
                                        (or (buffer-file-name b)
                                            (not (string-match "^ " (buffer-name b)))))
-                                     (buffer-list))
-                        (car (split-string (shell-command-to-string ",weather-current")
-                                           "\n"))))))))
+                                     (buffer-list))))))))
 (defun meain/create-or-switch-to-scratch ()
   "Switch to scratch buffer if exists, else create a scratch buffer with our config."
   (cond
