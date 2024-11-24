@@ -32,7 +32,25 @@ elif echo "$url" | grep -qE '^https://teams.microsoft.com'; then
     channel="$(echo "$url" | grep -o 'channelName=[^&]*' | cut -d= -f2)"
     printf "[Teams message in %s](%s)" "$team#$channel" "$url"
 else
-    title="$(get_title "$url" | sed 's| - YouTube$||')"
+    # TODO: Make this generic work even if path is changed
+    # Using FF based way to get the title makes it faster as well as
+    # let us fetch names of pages which will need authentication to
+    # get the names.
+    title="$(dejsonlz4 "$HOME/Library/Application Support/Firefox/Profiles/68pk86vd.default-release/sessionstore-backups/recovery.jsonlz4" |
+        jq -r '.windows[].tabs[].entries[] | "\(.url) \(.title)"' |
+        grep "$url" | head -n1 | cut -d' ' -f2-)"
+
+    if [ -n "$title" ]; then
+        if echo "$title" | grep -q "^http"; then
+            # Some tabs end up reporting title as the url
+            title=""
+        fi
+    fi
+
+    if [ -z "$title" ]; then
+        title="$(get_title "$url" | sed 's| - YouTube$||')"
+    fi
+
     [ -z "$title" ] && title="$url"
     printf "[%s](%s)" "$title" "$url"
 fi | tee /tmp/linkify | pbcopy

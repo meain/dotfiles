@@ -293,6 +293,7 @@ in
     ppkgs.traffic # simple network stats
     # pkgs.comma # run literally anything
     ppkgs.gloc # run stuff in all git repos
+    pkgs.dejsonlz4 # decode ff session data
     ppkgs.tojson # convert yaml/toml/json
     # pkgs.jo # create json
     pkgs.jiq # interactive jq
