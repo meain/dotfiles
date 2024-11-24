@@ -1083,9 +1083,15 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   (global-set-key (kbd "M-)") 'tempel-next)
   (global-set-key (kbd "M-(") 'tempel-previous))
 
+(use-package ispell
+  :config
+  ;; Was having some trouble with aspell not detecting dicts
+  (setq ispell-program-name "ispell"))
+
 ;; flyspell
 (use-package flyspell
   :defer t
+  :after ispell
   :commands (flyspell-prog-mode flyspell-mode flyspell-goto-next-error)
   :init
   (add-hook 'prog-mode-hook 'flyspell-prog-mode)
