@@ -3556,6 +3556,8 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   (setq treesit-language-source-alist
         '((typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src"))
           (tsx . ("https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src"))
+          (javascript . ("https://github.com/tree-sitter/tree-sitter-javascript" "master"))
+          (jsdoc . ("https://github.com/tree-sitter/tree-sitter-jsdoc" "master"))
           ;; method_spec was removed from upstream go grammar, but emacs treesit depends on it
           (go . ("https://github.com/meain/tree-sitter-go" "e395081"))
           (go-mod . ("https://github.com/camdencheek/tree-sitter-go-mod" "main"))
@@ -3566,9 +3568,10 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
     (mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist)))
 
   ;; You can find out the function by running "strings" in the so or dylib
-  (setq treesit-load-name-override-list '((gomod "libtree-sitter-go-mod"  "tree_sitter_gomod")))
+  (setq treesit-load-name-override-list '((go-mod "libtree-sitter-go-mod"  "tree_sitter_gomod")))
 
   (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
+  (add-to-list 'auto-mode-alist '("\\.js\\'" . js-ts-mode))
   (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
   (add-to-list 'auto-mode-alist '("\\.go\\'" . go-ts-mode))
 
