@@ -178,7 +178,7 @@ in
     # programming-python
     spkgs.python39 # python language
     pkgs.poetry # better package manager
-    spkgs.black # python code formatter
+    pkgs.black # python code formatter
     spkgs.python39Packages.pip
     spkgs.python39Packages.flake8 # linter
     # spkgs.python39Packages.ipdb # interactive debugging
