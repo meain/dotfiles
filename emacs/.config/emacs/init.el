@@ -1742,15 +1742,12 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
     (meain/with-alternate (consult-ripgrep) (call-interactively 'rg)))
   :config (setq rg-command-line-flags '("--hidden" "--follow")))
 
-;; dumb-jump
-(use-package dumb-jump
+;; dumber-jump
+(use-package dumber-jump
   :ensure t
   :after evil-leader
-  :commands dumb-jumb-go
-  :init (evil-leader/set-key "J" 'dumb-jump-go)
   :config
-  (advice-add 'dumb-jump-go :around #'meain/recenter-advice)
-  (evil-set-command-property 'dumb-jumb-go :jump t))
+  (add-hook 'xref-backend-functions #'dumber-jump-xref-activate))
 
 ;; Code formatting
 (use-package apheleia
