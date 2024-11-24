@@ -3467,6 +3467,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 ;; timing stuff
 (use-package activity-watch-mode
   :ensure t
+  :disabled t
   :defer 1
   :diminish
   :config (global-activity-watch-mode))
