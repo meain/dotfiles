@@ -17,6 +17,7 @@ local cursor = "com.todesktop.230313mzl4w4u92"
 local vscodium = "com.vscodium" -- used for sourcegraph cody
 local mail = "com.apple.mail"
 local zed = "dev.zed.Zed"
+local cal = "com.apple.iCal"
 
 local browser = firefox
 local notesApp = obsidian
@@ -57,6 +58,7 @@ bindFocus("h", notesApp, true)
 bindFocus("j", editor, true)
 bindFocus("o", zed, true)
 bindFocus("e", mail, true)
+bindFocus("y", cal, true)
 
 hs.hotkey.bind(fkey, "i", function() focusandback("wezterm") end)
 
