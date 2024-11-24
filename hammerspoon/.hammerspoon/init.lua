@@ -19,7 +19,7 @@ local mail = "com.apple.mail"
 local zed = "dev.zed.Zed"
 
 local browser = firefox
-local notesApp = silverbullet
+local notesApp = obsidian
 local editor = emacs
 
 -- key combinations
@@ -102,14 +102,14 @@ function noteTaker()
 
     fff.x = scf.x
     fff.y = scf.y
-    fff.w = scf.w * 0.75 - 20
+    fff.w = scf.w * 0.75
     fff.h = scf.h
     ffw:setFrame(fff)
 
 
     chf.x = scf.x + fff.w
     chf.y = scf.y
-    chf.w = scf.w * 0.25
+    chf.w = scf.w - fff.w
     chf.h = scf.h
     chw:setFrame(chf)
 end
