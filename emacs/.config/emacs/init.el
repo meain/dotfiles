@@ -4559,6 +4559,26 @@ guaranteed to be the response buffer."
   (setq chatgpt-shell-model-version "gpt-4")
   (setq chatgpt-shell-openai-key openai-api-key))
 
+;; Text to speech stuff
+;; Useful for reading out llm explanations
+(use-package read-aloud
+  :after evil-leader
+  :ensure (:host github :repo "gromnitsky/read-aloud.el")
+  :commands (read-aloud-buf read-aloud-this)
+  :init
+  (define-key evil-normal-state-map (kbd "<SPC> r b") 'read-aloud-buf)
+  (define-key evil-normal-state-map (kbd "<SPC> r r") 'read-aloud-this)
+  (define-key evil-normal-state-map (kbd "<SPC> r s") 'read-aloud-stop)
+
+  (define-key evil-visual-state-map (kbd "<SPC> r b") 'read-aloud-buf)
+  (define-key evil-visual-state-map (kbd "<SPC> r r") 'read-aloud-this)
+  (define-key evil-visual-state-map (kbd "<SPC> r s") 'read-aloud-stop)
+  :config
+  (setq read-aloud-engine "macos")
+  (setq read-aloud-engines
+        '("custom" (cmd ",speak" args nil)
+          "macos" (cmd "/usr/bin/say" args ("-r" "250")))))
+
 ;; Buffer/Frame/Window keybinds
 (use-package emacs
   :after evil-leader
