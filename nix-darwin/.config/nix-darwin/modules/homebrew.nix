@@ -17,6 +17,7 @@
       "zackelia/formulae" # for bclm
     ];
     brews = [
+      # Switching away from these builds onto installing the builds from jimeh/build-emacs-for-macos
       # emacs-mac has not been updated in a long time
       # {
       #   name = "emacs-mac";
@@ -30,6 +31,10 @@
 
       "choose-gui" # dmenu alternative
       "bclm" # limit battery charge
+      "obs" # screen recording
+      "keycastr" # show keys being typed (for recording)
+
+      "ispell" # Emacs does not pick up nix version
     ];
     casks = [
       "hammerspoon" # make macOS usable
