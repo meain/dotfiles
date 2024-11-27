@@ -4398,7 +4398,7 @@ Called with a PREFIX, resets the context buffer list before opening"
   :ensure t
   :commands (gptel gptel-send gptel-rewrite-menu)
   :config
-  (setq gptel-model "gpt-4o-mini")
+  (setq gptel-model 'gpt-4o-mini)
   (setq gptel-api-key openai-api-key)
   (setq gptel-expert-commands t)
   :init
