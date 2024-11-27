@@ -217,6 +217,13 @@
 ;; (add-to-list 'default-frame-alist '(internal-border-width . 10))
 ;; (add-to-list 'default-frame-alist '(ns-appearance . dark))
 
+;; Perf: fontify when idle, speed ups scroll
+;; https://www.reddit.com/r/emacs/comments/14c4l8j/comment/joku4bh/
+;; https://codeberg.org/ideasman42/emacs-jit-lock-stealth-progress
+(setq jit-lock-stealth-time 1.25)
+(setq jit-lock-stealth-nice 0.5) ;; Seconds between font locking.
+(setq jit-lock-chunk-size 4096)
+
 ;; Bump up gc threshold until emacs startup
 (setq gc-cons-threshold most-positive-fixnum gc-cons-percentage 0.6)
 (add-hook 'emacs-startup-hook
