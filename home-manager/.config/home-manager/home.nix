@@ -177,6 +177,7 @@ in
 
     # programming-python
     spkgs.python39 # python language
+    pkgs.uv # a better python env
     pkgs.poetry # better package manager
     pkgs.black # python code formatter
     spkgs.python39Packages.pip
