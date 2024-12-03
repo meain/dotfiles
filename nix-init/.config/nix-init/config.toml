@@ -1,2 +1,2 @@
-# maintainers that will get added to the package meta
-maintainers = ["meain"]
+maintainers = ["meain"] # add me to maintainers
+commit = true # auto commit
