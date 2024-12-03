@@ -1876,7 +1876,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   (add-to-list 'eglot-server-programs '(gfm-mode . ("logseqlsp" "-t" "logseqlsp-token")))
   ;; Can be enabled on fiction like things
   ;; (add-to-list 'eglot-server-programs '(markdown-mode . ("unified-language-server" "--parser=remark-parse" "--stdio")))
-  (add-to-list 'eglot-server-programs '(markdown-mode . ("prosemd-lsp" "--stdio"))) ;; to be used in combination with flyspell
+  (add-to-list 'eglot-server-programs '(markdown-mode . ("markdown-oxide" "--stdio"))) ;; (also: prosemd-lsp)
   (add-to-list 'eglot-server-programs '(rust-mode . ("rust-analyzer")))
   (add-to-list 'eglot-server-programs '(python-mode . ("pylsp")))
   (add-to-list 'eglot-server-programs '(nix-mode . ("rnix-lsp")))
