@@ -1098,6 +1098,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   (add-hook 'text-mode-hook 'flyspell-mode)
   :bind (:map flyspell-mode-map ("C-;" . flyspell-auto-correct-word))
   :config
+  (setq flyspell-delay-use-timer t) ;; use timer instead of sit-for
   ;; Make flyspell work with tree-sitter
   (setq-default flyspell-prog-text-faces
                 '(tree-sitter-hl-face:comment
