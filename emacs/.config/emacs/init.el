@@ -4500,8 +4500,6 @@ For optional NO-CACHE, use caching by default."
 
   (setq yap-api-key:openai openai-api-key)
   (setq yap-api-key:anthropic anthropic-api-key)
-  (setq yap-respond-in-buffer nil)
-  (setq yap-show-diff-before-rewrite t)
   (setq yap-log-requests "/Users/meain/.cache/yap")
   (setq yap-follow-output t)
 
@@ -4519,8 +4517,11 @@ For optional NO-CACHE, use caching by default."
     "Pick a model from a list of preferred models."
     (interactive)
     (let* ((models '(("4o-mini" ("openai" "gpt-4o-mini"))
-                     ("sonnet" ("anthropic" "claude-3-5-sonnet-20240620"))
-                     ("llama3.2" ("ollama" "llama3.2:3b-instruct-q8_0"))))
+                     ("3.5sonnet" ("anthropic" "claude-3-5-sonnet-20240620"))
+                     ("llama3.2" ("ollama" "llama3.2:3b-instruct-q8_0"))
+                     ("qwen2.5-coder" ("ollama" "qwen2.5-coder:3b-instruct-q8_0"))
+                     ("gemma" ("ollama" "gemma:2b-instruct-q8_0"))
+                     ("macro-o1" ("ollama" "marco-o1:7b-q8_0"))))
            (name (completing-read "Name: " (mapcar 'car models)))
            (vals (cadr (assoc name models))))
       (when vals
