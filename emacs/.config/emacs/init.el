@@ -1773,6 +1773,12 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   (setf (alist-get 'go-ts-mode apheleia-mode-alist)
         '(goimports))
 
+  ;; cedar
+  (setf (alist-get 'cedar-format apheleia-formatters)
+        '("cedar" "format"))
+  (setf (alist-get 'cedar-mode apheleia-mode-alist)
+        '(cedar-format))
+
   ;; markdown
   (setf (alist-get 'markdown-mode apheleia-mode-alist)
         '(prettier-markdown))
