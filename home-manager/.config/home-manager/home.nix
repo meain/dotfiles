@@ -169,10 +169,10 @@ in
     pkgs.nodePackages.typescript-language-server # javascript langserver
 
     # programming-nix
-    # pkgs.nixfmt # nix formatter
-    pkgs.nixpkgs-fmt # nix formatter
+    pkgs.nixfmt-rfc-style # nix formatter
     pkgs.statix # linter for nix
     pkgs.nix-init # auto create nix expressions
+    pkgs.nixpkgs-review # review upstream PRs
     pkgs.nix-update # update package in nix
 
     # programming-python
@@ -319,11 +319,12 @@ in
     pkgs.helix # alternate editor
     # pkgs.hurl # api testing
     # pkgs.iamb # matrix chat client
-    # ppkgs.fabric # llm interaction with predefined prompts
+    # pkgs.fabric-ai # llm interaction with predefined prompts
     pkgs.aichat # a better aichat
     # ppkgs.aider # work on full codebase
     pkgs.aider-chat # work on full codebase
     pkgs.openai-whisper-cpp # speech to text
+    # pkgs.open-webui # webui for llms
     pkgs.feh # image viewer (for desktop background)
     pkgs.kopia # backup
     pkgs.piper-tts # text to speech
