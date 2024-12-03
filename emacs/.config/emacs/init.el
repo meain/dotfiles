@@ -2884,6 +2884,10 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   (set-face-attribute 'csv-separator-face nil
                       :background "gray100"
                       :foreground "#000000"))
+
+;; Just the syntax files for cedar mode
+(use-package cedar-mode :load-path "/Users/meain/dev/src/cedar-mode")
+
 (use-package emacs
   :config
   (add-hook 'nxml-mode-hook (lambda ()
