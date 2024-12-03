@@ -1796,8 +1796,10 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
   (setf (alist-get 'nixpkgsfmt apheleia-formatters)
         '("nixpkgs-fmt"))
+  (setf (alist-get 'nixfmt apheleia-formatters)
+        '("nixfmt"))
   (setf (alist-get 'nix-mode apheleia-mode-alist)
-        '(nixpkgsfmt))
+        '(nixfmt))
 
   (defun meain/format-buffer ()
     "Format a buffer."
