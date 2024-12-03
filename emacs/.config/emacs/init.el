@@ -4087,9 +4087,9 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   :after evil-leader
   :commands (meain/scratchy)
   :config
-  (defun meain/scratchy (beg end)
+  (defun meain/scratchy ()
     "Open scratch buffer in a specific mode."
-    (interactive "r")
+    (interactive)
     (let* ((scratch-major-mode
             (completing-read
              "Choose mode: "
@@ -4109,7 +4109,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
                                            "~/.local/share/scratch/"
                                            (format "%s" scratch-major-mode) "-"
                                            (substring (uuid-string) 0 4)))
-           (text (if (use-region-p) (buffer-substring beg end))))
+           (text (if (use-region-p) (buffer-substring (region-beginning) (region-end)))))
       (find-file scratch-file-name)
       (if text (insert text))
       (funcall (intern scratch-major-mode))
