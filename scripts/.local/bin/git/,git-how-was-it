@@ -1,0 +1,36 @@
+#!/bin/sh
+
+set -e
+
+REF=$1
+TMP_DIR=${TMP_DIR:-/tmp}
+
+# Validate input
+if [ -z "$REF" ]; then
+  echo "Usage: $0 <branch-or-commit>"
+  exit 1
+fi
+
+# Check if REF is a branch or a commit
+if git show-ref --verify --quiet refs/heads/"$REF"; then
+  # REF is a branch; resolve the latest commit
+  COMMIT=$(git rev-parse "$REF")
+  echo "Resolved branch '$REF' to commit '$COMMIT'"
+else
+  # Assume REF is a commit and validate
+  if git cat-file -e "$REF"^{commit} 2>/dev/null; then
+    COMMIT=$REF
+    echo "Using commit '$COMMIT'"
+  else
+    echo "Error: '$REF' is neither a valid branch nor a commit."
+    exit 1
+  fi
+fi
+
+# Create a unique directory name for the worktree
+WORKTREE_DIR="$TMP_DIR/worktree-$COMMIT"
+
+# Add a new worktree
+git worktree add "$WORKTREE_DIR" "$COMMIT"
+
+echo "Worktree created at: $WORKTREE_DIR"
