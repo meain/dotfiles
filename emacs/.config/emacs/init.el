@@ -4484,6 +4484,7 @@ For optional NO-CACHE, use caching by default."
 
 (use-package gptel-quick
   :ensure (:host github :repo "karthink/gptel-quick")
+  :disabled t
   :commands (gptel-quick)
   :config
   (setq gptel-quick-timeout 100)
@@ -4546,8 +4547,9 @@ For optional NO-CACHE, use caching by default."
 ;; Chatgpt shell
 (use-package chatgpt-shell
   :ensure t
+  :disabled t
   :config
-  (setq chatgpt-shell-model-version "gpt-4")
+  (setq chatgpt-shell-model-version "gpt-4o-mini")
   (setq chatgpt-shell-openai-key openai-api-key))
 
 ;; Text to speech stuff
