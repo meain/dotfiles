@@ -1,0 +1,18 @@
+#!/bin/sh
+
+set -e
+
+marker="/tmp/clipread"
+
+if [ -f "$marker" ]; then
+    notify "Read" "📘📘📘📘📘"
+    pkill piper || true
+    pkill mpv || true
+    rm "$marker"
+    exit 0
+fi
+
+notify "Read" "📖📖📖📖📖"
+touch "$marker"
+pbpaste | ,speak
+rm "$marker"

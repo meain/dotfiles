@@ -16,4 +16,21 @@ module.run = function(script, use_zsh)
     return utils.trim(result)
 end
 
+module.launch = function(script)
+    local path = io.open("/Users/meain/.local/share/latestpath"):read()
+    local scriptPath = hs.execute("PATH='"..path.."' which " .. script):match("([^\n]*)")
+
+    if scriptPath == "" then
+        error("Script not found in PATH")
+    end
+
+    local tsk = hs.task.new(scriptPath, nil)
+
+    local env = tsk:environment()
+    env['PATH'] = path
+    tsk:setEnvironment(env)
+
+    tsk:start()
+end
+
 return module
