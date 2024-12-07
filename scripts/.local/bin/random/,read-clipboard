@@ -5,9 +5,14 @@ set -e
 marker="/tmp/clipread"
 
 if [ -f "$marker" ]; then
+    # Just making sure this is killed as it is running in a loop
+    for i in {1..10}; do
+        sleep .1
+        pkill piper || true
+        pkill mpv || true
+    done
+
     notify "Read" "📘📘📘📘📘"
-    pkill piper || true
-    pkill mpv || true
     rm "$marker"
     exit 0
 fi
