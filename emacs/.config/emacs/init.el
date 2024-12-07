@@ -2903,19 +2903,26 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
                               (define-key nxml-mode-map (kbd "M-h") 'meain/move-swap-left)
                               (define-key nxml-mode-map (kbd "M-k") 'meain/move-swap-up)
                               (define-key nxml-mode-map (kbd "M-j") 'meain/move-swap-down))))
-(use-package json-mode
-  :ensure t
-  :defer t
+(use-package json-mode :ensure t :defer t)
+(use-package yaml-mode :ensure t :defer t)
+(use-package yaml-ts-mode
+  :after (tree-surgeon)
   :config
-  (add-hook 'json-mode-hook (lambda ()
-                              (setq imenu-create-index-function #'meain/imenu-config-nesting-path))))
-(use-package yaml-mode
-  :ensure t
-  :defer t
+  (add-hook 'yaml-ts-mode-hook
+            (lambda ()
+              (setq imenu-create-index-function
+                    (tree-surgeon-kv-imenu-index-function 'yaml
+                                                          "(block_mapping_pair key: (flow_node)) @body"
+                                                          "key: (flow_node) @key")))))
+(use-package json-ts-mode
+  :after (tree-surgeon)
   :config
-  (remove-hook 'yaml-mode-hook 'yaml-set-imenu-generic-expression) ;; don't use default one
-  (add-hook 'yaml-mode-hook (lambda ()
-                              (setq imenu-create-index-function #'meain/imenu-config-nesting-path))))
+  (add-hook 'json-ts-mode-hook
+            (lambda ()
+              (setq imenu-create-index-function
+                    (tree-surgeon-kv-imenu-index-function 'json
+                                                          "(pair key: (string)) @body"
+                                                          "key: (string (string_content) @key)")))))
 (use-package ini-mode :ensure t :defer t)
 (use-package dockerfile-mode :ensure t :defer t :mode "/Dockerfile")
 (use-package docker-compose-mode :ensure t :defer t)
@@ -3578,6 +3585,9 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
           (tsx . ("https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src"))
           (javascript . ("https://github.com/tree-sitter/tree-sitter-javascript" "master"))
           (jsdoc . ("https://github.com/tree-sitter/tree-sitter-jsdoc" "master"))
+          (yaml . ("https://github.com/ikatyang/tree-sitter-yaml" "master"))
+          (json . ("https://github.com/tree-sitter/tree-sitter-json" "master"))
+          ;; (nix . ("https://github.com/nix-community/tree-sitter-nix" "master")) ;; no nix-ts-mode
           ;; method_spec was removed from upstream go grammar, but emacs treesit depends on it
           (go . ("https://github.com/meain/tree-sitter-go" "e395081"))
           (go-mod . ("https://github.com/camdencheek/tree-sitter-go-mod" "main"))
@@ -3594,6 +3604,11 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   (add-to-list 'auto-mode-alist '("\\.js\\'" . js-ts-mode))
   (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
   (add-to-list 'auto-mode-alist '("\\.go\\'" . go-ts-mode))
+
+  (add-to-list 'auto-mode-alist '("\\.yaml\\'" . yaml-ts-mode))
+  (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-ts-modmodee))
+  (add-to-list 'auto-mode-alist '("\\.json\\'" . json-ts-mode))
+  ;; (add-to-list 'auto-mode-alist '("\\.nix\\'" . nix-mode))
 
   (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
   (add-to-list 'major-mode-remap-alist '(go-mode . go-ts-mode)))
