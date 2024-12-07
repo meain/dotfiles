@@ -127,17 +127,13 @@ function customModes(x, y, w, h)
     chw:setFrame(chf)
 end
 
-function miniMode()
-    customModes(700, 200, 500, 750)
-end
-
-function centerMode()
+function centerMode(w, h)
     local currentWindow = hs.window.focusedWindow()
     local screenFrame = hs.mouse.getCurrentScreen():frame()
     local windowFrame = currentWindow:frame()
 
-    local wscaleFactor = 0.8
-    local hscaleFactor = 0.7
+    local wscaleFactor = w
+    local hscaleFactor = h
 
     windowFrame.x = screenFrame.x + (screenFrame.w * ((1 - wscaleFactor) / 2))
     windowFrame.y = screenFrame.y + (screenFrame.h * ((1 - hscaleFactor) / 2))
@@ -174,8 +170,8 @@ function sideMode(x, y, w, h)
 end
 
 hs.hotkey.bind(fkey, "n", noteTaker)
-hs.hotkey.bind(fkey, "b", miniMode)
-hs.hotkey.bind(fkey, "g", centerMode)
+hs.hotkey.bind(fkey, "b", function () centerMode(0.6, 0.6) end)
+hs.hotkey.bind(fkey, "g", function () centerMode(0.8, 0.7) end)
 hs.hotkey.bind(fkey, "a", mainMode)
 hs.hotkey.bind(fkey, "d", sideMode)
 
