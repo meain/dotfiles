@@ -4415,7 +4415,9 @@ Called with a PREFIX, resets the context buffer list before opening"
 
 ;; OpenAI GPT-3 interaction
 (use-package gptel
-  :ensure t
+  ;; :ensure t
+  :ensure (:host github :repo "karthink/gptel")
+  ;; :ensure (:host github :repo "karthink/gptel" :branch "feature-templates")
   :commands (gptel gptel-send gptel-rewrite-menu)
   :config
   (setq gptel-model 'gpt-4o-mini)
@@ -4488,7 +4490,7 @@ For optional NO-CACHE, use caching by default."
   (global-set-key (kbd "M-f i c") 'gptel-context-clear-all)
   (global-set-key (kbd "M-f i a") 'gptel-add)
   (global-set-key (kbd "M-f i i") 'gptel-menu)
-  (global-set-key (kbd "M-f i r") 'gptel-rewrite-menu))
+  (global-set-key (kbd "M-f i r") 'gptel-rewrite))
 
 (use-package gptel-quick
   :ensure (:host github :repo "karthink/gptel-quick")
