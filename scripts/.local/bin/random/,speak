@@ -26,8 +26,8 @@ if [ -z "$1" ]; then
     input="$(cat /dev/stdin)"
     mkdir -p /tmp/piper-stuff
     # piper outputs filenames for each line which we can consume and playback
-    echo "$input" | tr '.' '\n' | piper -m "$CACHE_DIR/$modelhigh.onnx" --output-dir /tmp/piper-stuff |
-        xargs -I{} mpv --speed=2 {} --no-resume-playback
+    echo "$input" | sed 's/\. /\n/g' | piper -m "$CACHE_DIR/$modelhigh.onnx" --output-dir /tmp/piper-stuff |
+        xargs -I{} mpv --speed=2.5 {} --no-resume-playback
 else
     prev=""
     clip="Starting the engine."
@@ -35,7 +35,7 @@ else
         if [ "$clip" != "$prev" ] && [ "${#clip}" -ge 10 ]; then
             echo "$clip" | piper -m "$CACHE_DIR/$modellow.onnx" -f /tmp/piper.wav
             pkill mpv || true # for set -e
-            mpv --speed=2 /tmp/piper.wav --no-resume-playback &
+            mpv --speed=2.5 /tmp/piper.wav --no-resume-playback &
             prev="$clip"
         fi
 
