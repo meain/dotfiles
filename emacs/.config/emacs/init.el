@@ -551,6 +551,12 @@ Pass ORIGINAL and ALTERNATE options."
                               (define-key term-mode-map (kbd "M-k") 'meain/move-swap-up)
                               (define-key term-mode-map (kbd "M-j") 'meain/move-swap-down))))
 
+;; Midnight: Kill unused buffers at midnight
+(use-package emacs
+  :config
+  (setq clean-buffer-list-delay-general 1)
+  (midnight-mode t))
+
 ;; Shrink and enlarge windows (not contextual as of now)
 ;; https://www.emacswiki.org/emacs/WindowResize
 (defmacro meain/inlambda (functionname &rest args)
