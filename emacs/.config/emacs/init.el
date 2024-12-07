@@ -5121,6 +5121,13 @@ not defined, it will be saved in the `$HOME' directory."
                                          'help-echo
                                          (buffer-file-name))))
                (propertize ":%l:%c")
+               '(:eval (mode-line-idle 0.3
+                                       '(:propertize (:eval
+                                                      (when-let (func-name (which-function))
+                                                        (format ":%s" func-name)))
+                                                     face
+                                                     hima-simple-gray)
+                                       ""))
                ;; '(:eval (mode-line-idle 0.3
                ;;                         '(:propertize (:eval
                ;;                                        (if (boundp 'tree-sitter-mode)
