@@ -48,6 +48,7 @@
 ;; Basic setup
 (setq user-mail-address "mail@meain.io" user-full-name "Abin Simon")
 (defvar groq-api-key (string-trim (shell-command-to-string "pass show groq/apikey 2>/dev/null") "\n" "\n"))
+(defvar openrouter-api-key (string-trim (shell-command-to-string "pass show openrouter/apikey 2>/dev/null") "\n" "\n"))
 (defvar openai-api-key (string-trim (shell-command-to-string "pass show openai/apikey 2>/dev/null") "\n" "\n"))
 (defvar anthropic-api-key (string-trim (shell-command-to-string "pass show anthropic/apikey 2>/dev/null") "\n" "\n"))
 
@@ -4527,6 +4528,7 @@ For optional NO-CACHE, use caching by default."
   (setq yap-model "gpt-4o-mini") ; start with something cheap
 
   (setq yap-api-key:groq groq-api-key)
+  (setq yap-api-key:openrouter openrouter-api-key)
   (setq yap-api-key:openai openai-api-key)
   (setq yap-api-key:anthropic anthropic-api-key)
   (setq yap-log-requests "/Users/meain/.cache/yap")
@@ -4545,15 +4547,16 @@ For optional NO-CACHE, use caching by default."
   (defun meain/yap-pick-model ()
     "Pick a model from a list of preferred models."
     (interactive)
-    (let* ((models '(("openai:4o-mini" ("openai" "gpt-4o-mini"))
-                     ("groq:llama-3.3-70b" ("groq" "llama-3.3-70b-versatile"))
-                     ("anthropic:3.5sonnet" ("anthropic" "claude-3-5-sonnet-20240620"))
-                     ("ollama:llama3.2" ("ollama" "llama3.2:3b-instruct-q8_0"))
-                     ("ollama:qwen2.5-coder" ("ollama" "qwen2.5-coder:3b-instruct-q8_0"))
-                     ("ollama:gemma" ("ollama" "gemma:2b-instruct-q8_0"))
-                     ("ollama:macro-o1" ("ollama" "marco-o1:7b-q8_0"))))
-           (name (completing-read "Name: " (mapcar 'car models)))
-           (vals (cadr (assoc name models))))
+    (let* ((models '(("openai:4o-mini" . ("openai" "gpt-4o-mini"))
+                     ("groq:llama-3.3-70b" . ("groq" "llama-3.3-70b-versatile"))
+                     ("openrouter:qwen2.5-coder-32b" . ("openrouter" "qwen/qwen-2.5-coder-32b-instruct"))
+                     ("anthropic:3.5sonnet" . ("anthropic" "claude-3-5-sonnet-20240620"))
+                     ("ollama:llama3.2" . ("ollama" "llama3.2:3b-instruct-q8_0"))
+                     ("ollama:qwen2.5-coder-3b" . ("ollama" "qwen2.5-coder:3b-instruct-q8_0"))
+                     ("ollama:gemma" . ("ollama" "gemma:2b-instruct-q8_0"))
+                     ("ollama:macro-o1" . ("ollama" "marco-o1:7b-q8_0"))))
+           (name (completing-read "Model: " models nil t))
+           (vals (cdr (assoc name models))))
       (when vals
         (setq yap-service (car vals))
         (setq yap-model (cadr vals)))))
