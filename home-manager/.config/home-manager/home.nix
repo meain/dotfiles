@@ -97,6 +97,7 @@ in
     # pkgs.python39Packages.pipx # pipx for installing stuff
     # ppkgs.logseq-doctor # logseq utils
     pkgs.emacs-lsp-booster # lsp json translation proxy
+    pkgs.jujutsu # better git wrapper
 
     # aspell dicts
     pkgs.aspellDicts.en
