@@ -4361,6 +4361,26 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
   (define-key evil-normal-state-map (kbd "X") 'evil-fancy-narrow)
   (global-set-key (kbd "M-N") 'meain/narrow-region-dwim))
 
+(use-package emacs
+  :disabled t
+  :config
+  ;; https://emacs.stackexchange.com/a/38511
+  (defun meain/ad-timestamp-message (FORMAT-STRING &rest args)
+    "Advice to run before `message' that prepends a timestamp to each message.
+        Activate this advice with:
+          (advice-add 'message :before 'meain/ad-timestamp-message)
+        Deactivate this advice with:
+          (advice-remove 'message 'meain/ad-timestamp-message)"
+    (if message-log-max
+        (let ((deactivate-mark nil)
+              (inhibit-read-only t))
+          (with-current-buffer "*Messages*"
+            (goto-char (point-max))
+            (if (not (bolp))
+                (newline))
+            (insert (format-time-string "[%F %T.%3N] "))))))
+  (advice-add 'message :before 'meain/ad-timestamp-message))
+
 (use-package auto-highlight-symbol
   :ensure t
   :commands (auto-highlight-symbol-mode)
