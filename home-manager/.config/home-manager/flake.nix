@@ -26,23 +26,32 @@
   };
 
   outputs =
-    { self
-    , nixpkgs
-    , homeManager
-    , bleeding
-    , stable
-    , nur
-    , personal
-    , emacsOverlay
-    , tree-grepper
-    , firefox-addons
-    }: {
+    {
+      self,
+      nixpkgs,
+      homeManager,
+      bleeding,
+      stable,
+      nur,
+      personal,
+      emacsOverlay,
+      tree-grepper,
+      firefox-addons,
+    }:
+    {
       homeConfigurations =
         let
           # system = "x86_64-linux";
           system = "aarch64-darwin";
           homeConfig = import ./home.nix {
-            inherit system bleeding stable personal tree-grepper firefox-addons;
+            inherit
+              system
+              bleeding
+              stable
+              personal
+              tree-grepper
+              firefox-addons
+              ;
           };
         in
         {
@@ -53,7 +62,10 @@
               # config.allowBroken = true;
               # config.allowUnfree = true; # resistance is futile
               inherit system;
-              overlays = [ emacsOverlay.overlay nur.overlay ];
+              overlays = [
+                emacsOverlay.overlay
+                nur.overlay
+              ];
             };
           };
         };
