@@ -1,0 +1,16 @@
+#!/bin/sh
+
+set -e
+
+# Install refer from https://github.com/meain/refer
+
+[ -z "$1" ] && echo "Usage: ,ask [s] <your question>"
+
+if [ "$1" = "s" ]; then
+    shift
+    refer search --format llm "$*" |
+        aichat --prompt "Using the provided context, answer my follow-up question concisely." "$*"
+else
+    refer search --format llm "$*" |
+        aichat --prompt "Using the provided context, answer my follow-up question." "$*"
+fi

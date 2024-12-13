@@ -25,6 +25,8 @@ run-dev
 .direnv
 resources
 .tint.toml
+.litdb
+.referdb
 
 # programming
 .mypy_cache
