@@ -7,10 +7,6 @@ j() {
     cd "$(_z -l 2>&1 | cat | sed 's/^[^ ]*\ *//' | fzf --height 40% --reverse --inline-info +s --tac --query "$*" --preview "ls {}")" || return
 }
 
-jj() {
-    cd "${1:-.}/$(find . -maxdepth 5 -type d -name .git | sed 's|/.git$||' | fzf --preview 'tree -L 2 ./{}')" || return 1
-}
-
 tmp() {
     [ -n "$1" ] && cd /tmp/workspaces &&
         cd $(ls -t | fzf --preview 'ls -A {}') &&
