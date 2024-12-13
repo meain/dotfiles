@@ -2230,6 +2230,18 @@ list of available pages."
 (use-package smerge-mode
   :after (evil evil-leader)
   :config
+
+  ;; Builtin smerge mode function has some issues (override it)
+  (defun smerge-keep-n (n)
+    (let* ((match-begin-0 (match-beginning 0))
+           (match-begin-n (match-beginning n))
+           (match-end-0 (match-end 0))
+           (match-end-n (match-end n)))
+      (smerge-remove-props match-begin-0 match-end-0)
+      (delete-region match-end-n match-end-0)
+      (delete-region match-begin-0 match-begin-n)))
+
+  (evil-leader/set-key "gmm" 'smerge-mode)
   (evil-leader/set-key "gmr" 'smerge-refine)
   (evil-leader/set-key "gmn" 'smerge-next)
   (evil-leader/set-key "gmp" 'smerge-prev)
