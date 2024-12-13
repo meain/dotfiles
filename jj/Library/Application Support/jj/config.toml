@@ -14,14 +14,13 @@ format = "git"
 "diff added token" = { underline = false }
 
 [templates]
-log = 'meain_log_oneline'
+log = 'personal_log_oneline'
 
 [template-aliases]
-'format_short_signature(signature)' = "signature"
 'format_timestamp(timestamp)' = 'timestamp.ago()'
 
 # Refer to jj/cli/src/config/templates.toml
-meain_log_oneline = '''
+personal_log_oneline = '''
 if(root,
   format_root_commit(self),
   label(if(current_working_copy, "working_copy"),
@@ -38,9 +37,6 @@ if(root,
           description.first_line(),
           label(if(empty, "empty"), description_placeholder),
         ),
-        if(author.email(), author.name(), email_placeholder),
-        "(" ++ format_timestamp(committer.timestamp()) ++ ")",
-        format_short_commit_id(commit_id),
       ) ++ "\n",
     ),
   )
