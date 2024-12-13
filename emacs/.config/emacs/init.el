@@ -4409,6 +4409,11 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
   :init
   (add-hook 'prog-mode-hook #'auto-highlight-symbol-mode))
 
+(use-package aider
+  :ensure (:host github :repo "tninja/aider.el" :files ("aider.el"))
+  :config
+  (define-key evil-normal-state-map (kbd "<SPC> a") 'aider-transient-menu))
+
 ;; Copilot, I guess
 (use-package copilot
   :defer t
