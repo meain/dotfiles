@@ -4393,6 +4393,16 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
             (insert (format-time-string "[%F %T.%3N] "))))))
   (advice-add 'message :before 'meain/ad-timestamp-message))
 
+(use-package browse-url
+  :config
+  ;; Convert anything which looks like CP-<digits> to
+  ;; https://veeam-vdc.atlassian.net/browse/CP-<digits>
+  (defun meain/browse-jira (url &rest _)
+    (let ((jira-id (replace-regexp-in-string "^http://\\(\\S+\\)" "\\1" url)))
+      (browse-url (concat "https://veeam-vdc.atlassian.net/browse/" jira-id))))
+  (setq browse-url-handlers
+        '(("^http://CP-[0-9]+" . meain/browse-jira))))
+
 (use-package auto-highlight-symbol
   :ensure t
   :commands (auto-highlight-symbol-mode)
