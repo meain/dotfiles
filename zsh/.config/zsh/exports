@@ -41,6 +41,7 @@ PATH=$HOME/.local/bin/utils:$PATH
 PATH=$HOME/.local/bin/backpocket:$PATH
 PATH=$HOME/.local/bin/macos:$PATH
 PATH=$HOME/.local/bin/git:$PATH
+PATH=$HOME/.local/bin/jj:$PATH
 PATH=$HOME/.local/bin/docker:$PATH
 PATH=$HOME/.local/bin/kubernetes:$PATH
 PATH=$HOME/.local/bin/music:$PATH
