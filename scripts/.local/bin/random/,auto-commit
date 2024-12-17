@@ -1,0 +1,55 @@
+#!/bin/sh
+
+set -e
+
+SYSTEM_PROMPT="You are tasked with generating a git commit message based on a provided diff. Your goal is to create a concise, informative first line of a commit message that summarizes the changes made.
+
+To create an effective commit message:
+
+1. Carefully review the diff, paying attention to:
+   - Files that were modified, added, or deleted
+   - The nature of the changes (e.g., bug fixes, new features, refactoring)
+   - Any patterns or themes in the changes
+
+2. Summarize the main purpose or effect of the changes in a brief, clear statement.
+
+3. Use the imperative mood, as if giving a command (e.g., \Fix bug\ instead of \Fixed bug\ or \Fixes bug\).
+
+4. Keep the message concise, aiming for 50 characters or less if possible, but no more than 72 characters.
+
+5. Focus on the \what\ and \why\ of the changes, rather than the \how\.
+
+6. If the changes are related to a specific issue or ticket, consider including the issue number.
+
+Provide your commit message as a single line, without any additional explanation or formatting. Do not use conventional commit format or include a detailed body - just provide the first line of the commit message."
+
+if [ -d ".jj" ]; then
+    commit_msg=$(jj diff | aichat --prompt "$SYSTEM_PROMPT")
+    echo "$commit_msg"
+    read -p "Do you want to proceed with this commit message? (y/n) " confirm
+    if [ "$confirm" = "y" ]; then
+        jj describe -m "$commit_msg"
+    else
+        echo "Commit aborted"
+        exit 1
+    fi
+elif [ -d ".git" ]; then
+    # Check if there are staged changes
+    if git diff --staged --quiet; then
+        echo "No changes staged for commit"
+        exit 1
+    fi
+
+    commit_msg=$(git diff --staged | aichat --prompt "$SYSTEM_PROMPT")
+    echo "$commit_msg"
+    read -p "Do you want to proceed with this commit message? (y/n) " confirm
+    if [ "$confirm" = "y" ]; then
+        git commit -m "$commit_msg"
+    else
+        echo "Commit aborted"
+        exit 1
+    fi
+else
+    echo "No git or jj repository found"
+    exit 1
+fi
