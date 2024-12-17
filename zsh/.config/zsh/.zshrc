@@ -151,4 +151,7 @@ _direnv_hook() {
 }
 
 ,darkmode quiet # set dark or light mode
+# Completions for jj
+source <(jj util completion zsh)
+
 export ZSH_LOADED=1
