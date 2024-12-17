@@ -3,7 +3,7 @@ name = "Abin Simon"
 email = "mail@meain.io"
 
 [ui]
-default-command = "log"
+default-command = "l"
 pager = ["sh", "-c", "diff-so-fancy | less -RFX"]
 
 [ui.diff]
@@ -18,10 +18,14 @@ format = "git"
 
 [aliases]
 stack = ["log", "-r", "stack(@)"]
+l = ["log", "--limit", "10"]
+
 [templates]
 log = 'personal_log_oneline'
 
 [template-aliases]
+# https://martinvonz.github.io/jj/latest/config/#display-of-commit-and-change-ids
+'format_short_id(id)' = 'id.shortest(5)'
 'format_timestamp(timestamp)' = 'timestamp.ago()'
 
 # Refer to jj/cli/src/config/templates.toml
