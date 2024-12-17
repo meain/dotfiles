@@ -97,7 +97,7 @@ in
     # pkgs.python39Packages.pipx # pipx for installing stuff
     # ppkgs.logseq-doctor # logseq utils
     pkgs.emacs-lsp-booster # lsp json translation proxy
-    pkgs.jujutsu # better git wrapper
+    bpkgs.jujutsu # better git wrapper
 
     # aspell dicts
     pkgs.aspellDicts.en
@@ -323,7 +323,7 @@ in
     # pkgs.fabric-ai # llm interaction with predefined prompts
     pkgs.aichat # a better aichat
     # ppkgs.aider # work on full codebase
-    pkgs.aider-chat # work on full codebase
+    ppkgs.aider-chat # work on full codebase
     pkgs.openai-whisper-cpp # speech to text
     # pkgs.open-webui # webui for llms
     pkgs.feh # image viewer (for desktop background)

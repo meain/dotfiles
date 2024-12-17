@@ -2,11 +2,11 @@
   "nodes": {
     "bleeding": {
       "locked": {
-        "lastModified": 1732014248,
-        "narHash": "sha256-y/MEyuJ5oBWrWAic/14LaIr/u5E0wRVzyYsouYY3W6w=",
+        "lastModified": 1734119587,
+        "narHash": "sha256-AKU6qqskl0yf2+JdRdD0cfxX4b9x3KKV5RqA6wijmPM=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "23e89b7da85c3640bbc2173fe04f4bd114342367",
+        "rev": "3566ab7246670a43abd2ffa913cc62dad9cdf7d5",
         "type": "github"
       },
       "original": {
@@ -217,8 +217,8 @@
         ]
       },
       "locked": {
-        "lastModified": 1732518514,
-        "narHash": "sha256-61BSzSqv2Hq9SuAyrD9BIbMZF5gTzOS12ocg1P4Fas8=",
+        "lastModified": 1734408800,
+        "narHash": "sha256-EovxnJ+JIYaVFv327Ulx9EideVPJvxQNlfed7qEtkek=",
         "path": "/Users/meain/dev/src/nur-packages",
         "type": "path"
       },
