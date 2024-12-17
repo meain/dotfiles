@@ -13,6 +13,11 @@ format = "git"
 "diff removed token" = { underline = false }
 "diff added token" = { underline = false }
 
+[revset-aliases]
+"stack(r)" = "r | ancestors(descendants(immutable_heads()..r), 2)"
+
+[aliases]
+stack = ["log", "-r", "stack(@)"]
 [templates]
 log = 'personal_log_oneline'
 
