@@ -6,6 +6,7 @@ email = "mail@meain.io"
 default-command = "l"
 pager = ["sh", "-c", "diff-so-fancy | less -RFX"]
 conflict-marker-style = "git"
+diff-editor = ":builtin"
 
 [ui.diff]
 format = "git"
