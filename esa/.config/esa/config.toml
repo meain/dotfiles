@@ -1,0 +1,32 @@
+[[functions]]
+name = "set_alarm"
+description = "Set an alarm on the system"
+command = ",apple-alarm '{{time}}'"
+
+[[functions.parameters]]
+name = "time"
+type = "string"
+description = "Time to set the alarm (HH:mm)"
+required = true
+
+[[functions]]
+name = "open_website"
+description = "Open a website in the default browser"
+command = "open '{{url}}'"
+
+[[functions.parameters]]
+name = "url"
+type = "string"
+description = "URL of the website to open"
+required = true
+
+[[functions]]
+name = "adjust_brightness"
+description = "Adjust screen brightness"
+command = ",adjust-brightness '{{level}}'"
+
+[[functions.parameters]]
+name = "level"
+type = "string"
+description = "Direction to adjust brightness (increase/decrease)"
+required = true

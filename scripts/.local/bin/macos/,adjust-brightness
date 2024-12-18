@@ -1,0 +1,15 @@
+#!/usr/bin/osascript
+
+on run argv
+	set brightnessLevel to item 1 of argv
+	
+	tell application "System Events"
+		if brightnessLevel is "decrease" then
+			key code 107  # Brightness down
+		else if brightnessLevel is "increase" then
+			key code 113  # Brightness up
+		end if
+	end tell
+	
+	return "Brightness " & brightnessLevel & "d"
+end run
