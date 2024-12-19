@@ -1,0 +1,33 @@
+#!/bin/sh
+
+set -e
+
+if [ "$#" -ne 2 ]; then
+    echo "Usage: $0 <file> <line>"
+    exit 1
+fi
+
+REPOURL=$(git remote get-url upstream 2>/dev/null || true)
+if [ -z "$REPOURL" ]; then
+    REPOURL=$(git remote get-url origin)
+fi
+
+if [ -z "$REPOURL" ]; then
+    echo "Could not determine repository"
+    exit 1
+fi
+
+REPO=$(echo "$REPOURL" | cut -d: -f2 | sed 's/\.git$//')
+
+URL="$(git blame -l -L "$2","$2" -s "$1" |
+    cut -d' ' -f1 |
+    xargs -I{} gh api "repos/$REPO/commits/{}/pulls" |
+    jq -r '.[0].html_url')"
+
+if [ "$URL" = "null" ]; then
+    echo "No associated PR $2:$1"
+    exit 1
+fi
+
+echo "$URL" | pbcopy
+echo "$URL"

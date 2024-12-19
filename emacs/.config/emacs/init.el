@@ -4841,6 +4841,19 @@ START and END for position."
   :after evil-leader
   :commands (meain/github-url)
   :config
+  (defun meain/github-pr-url ()
+    "Open the Github PR page for the current file and line."
+    (interactive)
+    (let* ((project-root (locate-dominating-file default-directory ".git")) ; Find the project root
+           (relative-path (if project-root
+                              (file-relative-name (buffer-file-name) project-root) ; Get relative path
+                            (buffer-file-name)))) ; Fallback to absolute path
+      (message "%s"
+               (shell-command-to-string
+                (format ",git-pr-for-line %s %s"
+                        relative-path
+                        (line-number-at-pos))))))
+
   (defun meain/github-url (&optional use-branch)
     "Open the Github page for the current file.  Pass USE-BRANCH to use branch name instead of commit hash."
     (interactive "P")
