@@ -17,7 +17,7 @@ format = "git"
 
 [revset-aliases]
 "stack(r)" = "r | ancestors(descendants(immutable_heads()..r), 2)"
-"mine" = "remote_bookmarks() & (mine() | committer('mail@meain.io'))"
+"mine" = "remote_bookmarks() & (mine() | committer('mail@meain.io') | bookmarks('main') | bookmarks('master'))"
 
 [aliases]
 stack = ["log", "-r", "stack(@)"]
