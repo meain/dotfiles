@@ -27,6 +27,7 @@ resources
 .tint.toml
 .litdb
 .referdb
+.llmrules
 
 # programming
 .mypy_cache
