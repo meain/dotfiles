@@ -1,0 +1,29 @@
+#!/usr/bin/osascript
+
+on run argv
+    try
+        -- Get the first argument (input time in HH:mm format)
+        set inputTime to item 1 of argv
+
+        -- Parse input time (HH:mm) into an AppleScript date object
+        set theTime to (current date)
+        set hours of theTime to (word 1 of inputTime as integer)
+        set minutes of theTime to (word 2 of inputTime as integer)
+        set seconds of theTime to 0
+
+        tell application "Calendar"
+            set theCalendar to calendar "Calendar" -- Replace with your calendar name
+            -- Find events matching the time and title "Alarm"
+            set theEvents to (every event of theCalendar whose start date = theTime and summary = "Alarm")
+
+            -- Delete matching events
+            repeat with e in theEvents
+                delete e
+            end repeat
+        end tell
+
+        return "Event(s) deleted successfully."
+    on error errMsg
+        return "Error: " & errMsg
+    end try
+end run

@@ -10,6 +10,17 @@ description = "Time to set the alarm (HH:mm)"
 required = true
 
 [[functions]]
+name = "delete_alarm"
+description = "Delete an alarm already based on time"
+command = ",alarm-delete '{{time}}'"
+
+[[functions.parameters]]
+name = "time"
+type = "string"
+description = "Time of the alarm to be deleted (HH:mm)"
+required = true
+
+[[functions]]
 name = "open_website"
 description = "Open a website in the default browser"
 command = "open '{{url}}'"
