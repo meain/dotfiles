@@ -2228,6 +2228,12 @@ list of available pages."
   :after forge
   :commands (github-review-start github-review-forge-pr-at-point))
 
+(use-package ediff
+  :after (evil-leader)
+  :config
+  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+  (setq ediff-split-window-function 'split-window-horizontally))
+
 (use-package smerge-mode
   :after (evil evil-leader)
   :config
