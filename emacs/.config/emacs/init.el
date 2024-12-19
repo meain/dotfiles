@@ -2658,13 +2658,20 @@ Pass `CHOOSER' as t to not automatically select the previous tab."
   (push '("\\*compilation\\*" . (nil (reusable-frames . t))) display-buffer-alist)
   (defvar meain/toffee--previous-command nil)
   (defvar meain/toffee-run-previous-if-empty t)
+  (defun meain/toffee--get-cwd ()
+    "Get the current working directory to run the test.
+For example if it is go-mod file, look up the go.mod file and use that directory."
+    (pcase major-mode
+      ('go-mode (locate-dominating-file (buffer-file-name) "go.mod"))
+      ('go-ts-mode (locate-dominating-file (buffer-file-name) "go.mod"))
+      (_ default-directory)))
   (defun meain/toffee--get-test-command (mode)
     (let ((default-directory
            (expand-file-name
             ;; custom-src-directory is supposed to come from .dir-locals.el
             (if (boundp 'custom-src-directory)
                 custom-src-directory
-              default-directory)))
+              (meain/toffee--get-cwd))))
           (command
            (shell-command-to-string
             (cond
@@ -2692,7 +2699,7 @@ Pass universal args to run suite or project level tests."
                   ((equal current-prefix-arg nil) 'function)
                   ((equal current-prefix-arg '(4)) 'suite)
                   ((equal current-prefix-arg '(16)) 'project)))
-           (dir-cmd (meain/toffee--get-test-command  mode))
+           (dir-cmd (meain/toffee--get-test-command mode))
            (default-directory (car dir-cmd))
            (command (cdr dir-cmd)))
       (if command
