@@ -23,6 +23,8 @@ To create an effective commit message:
 
 Provide your commit message as a single line, without any additional explanation or formatting. Do not use conventional commit format or include a detailed body - just provide the first line of the commit message."
 
+cd "$(git rev-parse --show-toplevel 2>/dev/null)"
+
 if [ -d ".jj" ]; then
     commit_msg=$(jj diff | aichat --prompt "$SYSTEM_PROMPT")
     echo "$commit_msg"
