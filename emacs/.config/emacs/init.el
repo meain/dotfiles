@@ -4607,6 +4607,19 @@ For optional NO-CACHE, use caching by default."
       (when vals
         (setq yap-service (car vals))
         (setq yap-model (cadr vals)))))
+
+  (defun meain/yap-template-with-refer (prompt-type)
+    (let ((prompt (read-string "Prompt: ")))
+      (yap-template-external-context
+       (if (eq prompt-type 'rewrite)
+           yap--default-system-prompt-for-rewrite
+         yap--default-system-prompt-for-prompt)
+       prompt
+       (current-buffer)
+       (shell-command-to-string (concat "refer search --format llm '" prompt "'")))))
+  (add-to-list 'yap-templates '(yap-rewrite-with-refer . (lambda () (meain/yap-template-with-refer 'rewrite))))
+  (add-to-list 'yap-templates '(yap-prompt-with-refer . (lambda () (meain/yap-template-with-refer 'prompt))))
+
   :init
   (global-unset-key (kbd "M-m"))
   (global-set-key (kbd "M-m M-c") 'yap-buffer-toggle)
