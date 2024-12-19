@@ -1,7 +1,6 @@
 # https://aider.chat/docs/config/options.html
-mini: true # use 4o-mini by default
 gitignore: false # added in global gitignore
-auto-commits: true # commit, I'll figure out later
+auto-commits: false # messes with jj and watch-files
 check-update: false # I'll update separately
 attribute-author: false # disable attribution (it looked ugly)
 attribute-committer: false # disable committer
@@ -9,3 +8,4 @@ vim: true # need them keybinds
 analytics: false # I want to, but shit breaks
 light-mode: false # I use light mode, but this is better
 cache-prompts: true # not sure why this is disabled by default
+read: .llmrules
