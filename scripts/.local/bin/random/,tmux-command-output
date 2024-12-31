@@ -24,4 +24,4 @@ done < /tmp/ee-dump
 {
     echo "$L"
     echo "$OUTPUT"
-} | pbcopy
+}
