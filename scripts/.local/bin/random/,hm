@@ -12,18 +12,14 @@ if [ "$1" = update ]; then
     nix flake metadata --json |
         jq -r '.locks.nodes.root.inputs|keys[]' |
         grep -v '^pinned-' | # don't show pinned versions
-        fzf -m | xargs -n1 nix flake lock --update-input
+        fzf -m | xargs -n1 nix flake update
 elif [ "$1" = update-all ]; then
     cd "$HOME/.dotfiles/home-manager/.config/home-manager"
 
     nix flake metadata --json |
         jq -r '.locks.nodes.root.inputs|keys[]' |
         grep -v '^pinned-' | # don't show pinned versions
-        xargs -n1 nix flake lock --update-input
-elif [ "$1" = lock ]; then
-    shift
-    cd "$HOME/.dotfiles/home-manager/.config/home-manager"
-    nix flake lock "$@"
+        xargs -n1 nix flake update
 elif [ "$1" = build ]; then
     shift
     cd "$HOME/.config/home-manager/"
