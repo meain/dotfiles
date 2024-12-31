@@ -2236,10 +2236,11 @@ list of available pages."
   (setq ediff-split-window-function 'split-window-horizontally))
 
 (use-package smerge-mode
-  :after (evil evil-leader)
+  :after (evil evil-leader ediff)
   :config
 
   ;; Builtin smerge mode function has some issues (override it)
+  ;; TODO: Submit bug to bug-gnu-emacs once verified
   (defun smerge-keep-n (n)
     (let* ((match-begin-0 (match-beginning 0))
            (match-begin-n (match-beginning n))
@@ -2250,6 +2251,7 @@ list of available pages."
       (delete-region match-begin-0 match-begin-n)))
 
   (evil-leader/set-key "gmm" 'smerge-mode)
+  (evil-leader/set-key "gme" 'smerge-ediff)
   (evil-leader/set-key "gmr" 'smerge-refine)
   (evil-leader/set-key "gmn" 'smerge-next)
   (evil-leader/set-key "gmp" 'smerge-prev)
