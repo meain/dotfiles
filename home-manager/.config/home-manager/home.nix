@@ -43,7 +43,7 @@ in
     pkgs.curl
     # pkgs.zsh
     pkgs.gcc
-    pkgs.gitFull # full for send-email
+    pkgs.git
     pkgs.fzf
     pkgs.ripgrep
     pkgs.jq
@@ -80,7 +80,7 @@ in
     pkgs.wget # get stuff from internet
     pkgs.tmux # terminal multiplexer
     pkgs.aspell # spell checker
-    spkgs.msmtp # smtp client
+    pkgs.msmtp # smtp client
     pkgs.android-tools # adb and friends  # not available for macos
     # pkgs.restic # backup
     # pkgs.ledger # double entry accounting
@@ -97,7 +97,8 @@ in
     # pkgs.python39Packages.pipx # pipx for installing stuff
     # ppkgs.logseq-doctor # logseq utils
     pkgs.emacs-lsp-booster # lsp json translation proxy
-    bpkgs.jujutsu # better git wrapper
+    pkgs.jujutsu # better git wrapper
+    pkgs.lazyjj # tui for jj
 
     # aspell dicts
     pkgs.aspellDicts.en
@@ -107,7 +108,7 @@ in
     # pkgs.kubecolor # colorful kubectl
     # pkgs.kubernetes-helm # helm cli
     # pkgs.stern # better way to fetch kubernetes log
-    spkgs.yt-dlp # download youtube videos
+    pkgs.yt-dlp # download youtube videos
     pkgs.chafa # show images in terminal using half blocks
     # pkgs.hub # Github integration for git
     pkgs.gh # Yet another Github integration for git
@@ -147,7 +148,7 @@ in
     pkgs.godef # language server helper
     pkgs.gotools # go formatter
     pkgs.go-tools # installing staticcheck (technically available in golangci-lint, but for use in lsp)
-    spkgs.errcheck # available in golangci-lint, but still
+    pkgs.errcheck # available in golangci-lint, but still
     pkgs.golangci-lint # all kinds of linters for go
     pkgs.gomodifytags # modify struct tags
     pkgs.impl # generate implementations for a struct
@@ -177,25 +178,25 @@ in
     pkgs.nix-update # update package in nix
 
     # programming-python
-    spkgs.python39 # python language
-    pkgs.uv # a better python env
-    pkgs.poetry # better package manager
-    pkgs.black # python code formatter
-    spkgs.python39Packages.pip
-    spkgs.python39Packages.flake8 # linter
-    # spkgs.python39Packages.ipdb # interactive debugging
-    # pkgs.python39Packages.pynvim # neovim python support
-    # spkgs.python39Packages.pycodestyle # code style check
-    # spkgs.python39Packages.pydocstyle # doc style check
-    # pkgs.python39Packages.requests # http lib for quick stuff
-    spkgs.python39Packages.virtualenv # virtual envs
-    # pkgs.python39Packages.bandit # analyze code for security issues
-    # pkgs.python39Packages.mypy # check types in code
-    # pkgs.python39Packages.isort # fix sort order
-    # pkgs.python39Packages.pygments # generic syntax highlight
-    # spkgs.python39Packages.python-lsp-server # python lsp
-    # pkgs.python38Packages.python-language-server # python lsp (using below one as tests are failing)
-    # (pkgs.python38Packages.python-language-server.overridePythonAttrs (oldAttrs: { checkPhase = ""; checkInputs = []; }))
+    spkgs.python3 # python language
+    spkgs.uv # a better python env
+    spkgs.poetry # better package manager
+    spkgs.black # python code formatter
+    spkgs.python3Packages.pip
+    spkgs.python3Packages.flake8 # linter
+    # pkgs.python3Packages.ipdb # interactive debugging
+    # pkgs.python3Packages.pynvim # neovim python support
+    # pkgs.python3Packages.pycodestyle # code style check
+    # pkgs.python3Packages.pydocstyle # doc style check
+    # pkgs.python3Packages.requests # http lib for quick stuff
+    spkgs.python3Packages.virtualenv # virtual envs
+    # pkgs.python3Packages.bandit # analyze code for security issues
+    # pkgs.python3Packages.mypy # check types in code
+    # pkgs.python3Packages.isort # fix sort order
+    # pkgs.python3Packages.pygments # generic syntax highlight
+    # pkgs.python3Packages.python-lsp-server # python lsp
+    # pkgs.python3Packages.python-language-server # python lsp (using below one as tests are failing)
+    # (pkgs.python3Packages.python-language-server.overridePythonAttrs (oldAttrs: { checkPhase = ""; checkInputs = []; }))
 
     # programming-rust
     # pkgs.rustup # rust toolchain
@@ -232,13 +233,13 @@ in
     # pkgs.python39Packages.sqlparse # sqlformat
     # pkgs.grpcurl # curl for grpc
     pkgs.zprint # clojure formatter
-    tree-grepper.outputs.packages.${system}.tree-grepper # grep with tree-sitter
+    # tree-grepper.outputs.packages.${system}.tree-grepper # grep with tree-sitter
     # pkgs.comby # code mod
     # pkgs.ruby # ruby language
     # pkgs.actionlint # linting for gihtub actions
 
     # gui
-    spkgs.mpv # audio/video player
+    pkgs.mpv # audio/video player
     # pkgs.kitty
     # pkgs.alacritty # terminal emulator
     # pkgs.firefox # browser
@@ -323,12 +324,12 @@ in
     # pkgs.fabric-ai # llm interaction with predefined prompts
     pkgs.aichat # a better aichat
     # ppkgs.aider # work on full codebase
-    ppkgs.aider-chat # work on full codebase
+    ppkgs.aider-chat.withPlaywright # work on full codebase
     pkgs.openai-whisper-cpp # speech to text
     # pkgs.open-webui # webui for llms
     pkgs.feh # image viewer (for desktop background)
     pkgs.kopia # backup
-    pkgs.piper-tts # text to speech
+    spkgs.piper-tts # text to speech
     pkgs.readability-cli # simplify articles
     pkgs.glow # markdown renderer
     pkgs.markdown-oxide # PKM via LSP

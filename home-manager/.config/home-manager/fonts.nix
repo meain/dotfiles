@@ -10,7 +10,7 @@
   # pkgs.cascadia-code
   pkgs.julia-mono
   pkgs.sudo-font
-  pkgs.terminus-nerdfont
+  pkgs.nerd-fonts.terminess-ttf
   pkgs.fantasque-sans-mono
   pkgs.monoid
   pkgs.ankacoder

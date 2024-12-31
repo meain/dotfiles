@@ -9,7 +9,7 @@
     };
 
     bleeding.url = "nixpkgs/nixos-unstable"; # another experimental commit of nixpkgs
-    stable.url = "nixpkgs/nixos-24.05";
+    stable.url = "nixpkgs/nixos-24.11";
 
     nur.url = "github:nix-community/NUR";
     personal = {
@@ -64,7 +64,7 @@
               inherit system;
               overlays = [
                 emacsOverlay.overlay
-                nur.overlay
+                nur.overlays.default
               ];
             };
           };
