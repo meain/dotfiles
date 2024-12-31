@@ -56,7 +56,8 @@
       # "cursor"
       "zed"
       "wezterm"
-      "vscodium"
+      "vscodium" # cody and cline
+      "visual-studio-code" # copilot
       # "thunderbird"
       "orbstack" # better docker
 
