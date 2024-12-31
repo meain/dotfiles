@@ -4619,6 +4619,7 @@ For optional NO-CACHE, use caching by default."
                      ;; ("github:o1-preview" . ("github" "o1-preview"))
                      ("groq:llama-3.3-70b" . ("groq" "llama-3.3-70b-versatile"))
                      ("openrouter:qwen2.5-coder-32b" . ("openrouter" "qwen/qwen-2.5-coder-32b-instruct"))
+                     ("openrouter:deepseek-v3" . ("openrouter" "deepseek/deepseek-chat"))
                      ("anthropic:3.5sonnet" . ("anthropic" "claude-3-5-sonnet-latest"))
                      ("anthropic:3.5haiku" . ("anthropic" "claude-3-5-haiku-latest"))
                      ("ollama:llama3.2" . ("ollama" "llama3.2:3b-instruct-q8_0"))
