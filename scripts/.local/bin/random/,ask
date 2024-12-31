@@ -9,8 +9,8 @@ set -e
 if [ "$1" = "s" ]; then
     shift
     refer search --format llm "$*" |
-        aichat --prompt "Using the provided context, answer my follow-up question concisely." "$*"
+        aichat --prompt "Using the provided context, answer my follow-up question concisely. Do not make up answers if not available in the provided context." "$*"
 else
     refer search --format llm "$*" |
-        aichat --prompt "Using the provided context, answer my follow-up question." "$*"
+        aichat --prompt "Using the provided context, answer my follow-up question. Do not make up answers if not available in the provided context." "$*"
 fi
