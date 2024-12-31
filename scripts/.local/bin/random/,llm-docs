@@ -1,0 +1,15 @@
+#!/bin/sh
+
+set -e
+
+cd "$(git rev-parse --show-toplevel)"
+mkdir -p .llmdocs
+
+LLM_DOCS_DIR="$HOME/dev/src/llmdocs"
+find "$LLM_DOCS_DIR/docs/summary/" -type f |
+    sed "s|$LLM_DOCS_DIR/docs/summary/||" |
+    fzf -m | while read -r file; do
+    echo "$file"
+    nf="$(echo "$file" | sed 's|/|-|g')"
+    ln -s "$LLM_DOCS_DIR/docs/$file" ".llmdocs/$nf"
+done

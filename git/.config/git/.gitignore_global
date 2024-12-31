@@ -28,6 +28,7 @@ resources
 .litdb
 .referdb
 .llmrules
+.llmdocs
 
 # programming
 .mypy_cache
