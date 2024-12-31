@@ -1,0 +1,15 @@
+#!/usr/bin/osascript
+
+on run argv
+    set recipientEmail to item 1 of argv
+    set emailSubject to item 2 of argv
+    set emailBody to item 3 of argv
+
+    tell application "Mail"
+        set newMessage to make new outgoing message with properties {subject:emailSubject, content:emailBody, visible:true}
+        tell newMessage
+            make new to recipient at end of to recipients with properties {address:recipientEmail}
+        end tell
+        send newMessage
+    end tell
+end run

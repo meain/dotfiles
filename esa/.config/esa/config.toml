@@ -10,6 +10,11 @@ description = "Time to set the alarm (HH:mm)"
 required = true
 
 [[functions]]
+name = "get_datetime"
+description = "Get current date and time"
+command = "date"
+
+[[functions]]
 name = "delete_alarm"
 description = "Delete an alarm already based on time"
 command = ",alarm-delete '{{time}}'"
@@ -40,4 +45,56 @@ command = ",adjust-brightness '{{level}}'"
 name = "level"
 type = "string"
 description = "Direction to adjust brightness (increase/decrease)"
+required = true
+
+[[functions]]
+name = "get_weather"
+description = "Get weather forecast for a location"
+command = "curl -s wttr.in/{{location}}?format=j1"
+safe = true
+
+[[functions.parameters]]
+name = "location"
+type = "string"
+description = "Location to check weather for (If none is provided, current location is used)"
+required = false
+
+[[functions]]
+name = "send_email"
+description = "Send an email"
+command = ",send-email \"{{recipient}}\" \"{{subject}}\" \"{{body}}\""
+
+[[functions.parameters]]
+name = "recipient"
+type = "string"
+description = "Recipient email address"
+required = true
+
+[[functions.parameters]]
+name = "subject"
+type = "string"
+description = "Email subject (with double quotes escaped)"
+required = true
+
+[[functions.parameters]]
+name = "body"
+type = "string"
+description = "Email body (with double quotes escaped)"
+required = true
+
+[[functions]]
+name = "send_notification"
+description = "Send a system notification"
+command = "notify \"{{title}}\" \"{{message}}\""
+
+[[functions.parameters]]
+name = "title"
+type = "string"
+description = "Title of the notification (with double quotes escaped)"
+required = true
+
+[[functions.parameters]]
+name = "message"
+type = "string"
+description = "Message content of the notification (with double quotes escaped)"
 required = true
