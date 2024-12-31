@@ -51,6 +51,7 @@ prepare-list ./python3.packages | xargs -n1 pip3 install
 prepare-list ./go.packages | xargs -n go get -vu
 prepare-list ./tlmgr.packages | xargs -n1 sudo tlmgr install
 prepare-list ./dasht.packages | xargs -n1 dasht-docsets-install -f
+prepare-list ./gh.packages | xargs -n1 gh extension install
 
 # Setup rust using rustup
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
