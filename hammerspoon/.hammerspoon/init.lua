@@ -12,7 +12,6 @@ local teams = "com.microsoft.teams2"
 local slack = "com.tinyspeck.slackmacgap"
 local chrome = "com.google.Chrome"
 local obsidian = "md.obsidian"
-local silverbullet = "com.google.Chrome.app.cclocababegeddonigidihmbicdhcakc" -- installed pwa
 local cursor = "com.todesktop.230313mzl4w4u92"
 local vscodium = "com.vscodium" -- used for sourcegraph cody
 local mail = "com.apple.mail"
@@ -56,11 +55,11 @@ bindFocus("s", slack, true)
 bindFocus("l", teams, true)
 bindFocus("h", notesApp, true)
 bindFocus("j", editor, true)
-bindFocus("o", zed, true)
+bindFocus("o", vscodium, true)
 bindFocus("e", mail, true)
 bindFocus("y", cal, true)
 
-hs.hotkey.bind(fkey, "i", function() focusandback("wezterm") end)
+hs.hotkey.bind(fkey, "i", function() focusandback("ghostty") end)
 
 hs.hotkey.bind(fkey, "w", function()
     local bundleID = hs.application.frontmostApplication():bundleID()
