@@ -4429,6 +4429,7 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
 (use-package aider
   :ensure (:host github :repo "tninja/aider.el" :files ("aider.el"))
   :config
+  (setq aider-args '("--no-auto-commit" "--watch-files"))
   (define-key evil-normal-state-map (kbd "<SPC> a") 'aider-transient-menu))
 
 ;; Copilot, I guess
