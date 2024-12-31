@@ -11,19 +11,15 @@ clients:
   - type: openai-compatible
     name: ollama
     api_base: http://localhost:11434/v1
-    models:
-      - name: llama3.2
-        model: llama3.2:latest
-        max_input_tokens: 131072
-      - name: llama3.2-instruct-1b
-        model: llama3.2:1b-instruct-fp16
-        max_input_tokens: 131072
-      - name: llama3.2-instruct-3b
-        model: llama3.2:3b-instruct-fp16
-        max_input_tokens: 131072
-      - name: llama3.2-instruct-3b-q8
-        model: llama3.2:3b-instruct-q8_0
-        max_input_tokens: 131072
+  - type: openai-compatible
+    name: github
+    api_base: https://models.inference.ai.azure.com
+  - type: openai-compatible
+    name: openrouter
+    api_base: https://openrouter.ai/api/v1
+  - type: openai-compatible
+    name: groq
+    api_base: https://api.groq.com/openai/v1
 
 # rag_embedding_model: null # TODO: how to use local model
 
