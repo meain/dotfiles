@@ -1,0 +1,22 @@
+#!/bin/sh
+
+set -e
+
+pandoc -t html -f gfm | ,html-clipboard-copy
+
+# Below is a less reliable option but without using a swift
+# script. This was the older version of the same script, just keeping
+# it there around for reference.
+
+# https://superuser.com/questions/912712/how-to-send-rich-text-to-the-clipboard-from-command-line
+# This is still not as useful as it cannot translate blockquote or
+# code segments properly because RTF is not support it.  Also this
+# works only in input fields that can read rtf, Teams works, but slack
+# and browsers does not.  You can kinda do the same thing with `pandoc
+# -t rtf -s` but the output generated is worse looking
+
+# pandoc -t html -f gfm |
+#     textutil -stdin -format html -convert rtf -stdout |
+#     pbcopy
+
+
