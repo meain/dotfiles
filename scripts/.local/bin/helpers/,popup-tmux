@@ -6,9 +6,22 @@ CURRENT_PANE="$(tmux display-message -p -F "#{session_name}")"
 if echo "$CURRENT_PANE" | grep -q '^popup.*'; then
     tmux detach-client
 else
-    if [ "$1" = "single" ]; then
+    case "$1" in
+    "single")
         tmux popup -d '#{pane_current_path}' -x100% -y0% -w50% -h50% -E "tmux attach -t 'popup-$CURRENT_PANE' || tmux new -s 'popup-$CURRENT_PANE'" || true
-    else
+        ;;
+    "folder")
+        # Get current folder path from tmux pane, defaulting to git root if available
+        FOLDER="$(
+            cd "$(tmux display-message -p "#{pane_current_path}")" &&
+                git rev-parse --show-toplevel 2>/dev/null ||
+                tmux display-message -p "#{pane_current_path}"
+        )"
+        FOLDER_NAME="$(basename "$FOLDER")"
+        tmux popup -d "$FOLDER" -x100% -y0% -w70% -h80% -E "tmux attach -t 'popup-$FOLDER_NAME' || tmux new -s 'popup-$FOLDER_NAME'" || true
+        ;;
+    *)
         tmux popup -x100% -y0% -w50% -h50% -E "tmux attach -t popup-master || tmux new -s popup-master" || true
-    fi
+        ;;
+    esac
 fi
