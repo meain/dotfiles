@@ -1,0 +1,9 @@
+theme = Raycast_Light
+font-family = Victor Mono
+font-size = 14
+window-decoration = true
+macos-titlebar-style = hidden
+window-padding-x = 8
+window-padding-y = 8
+window-padding-balance = true
+window-padding-color = extend-always
