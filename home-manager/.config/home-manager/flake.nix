@@ -17,7 +17,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     emacsOverlay.url = "github:nix-community/emacs-overlay";
-    tree-grepper.url = "github:BrianHicks/tree-grepper";
+    tree-grepper.url = "github:BrianHicks/tree-grepper/82d31cca29d9926ee4db91de88b84729901f93a7";
 
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";

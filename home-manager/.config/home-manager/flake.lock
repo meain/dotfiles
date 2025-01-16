@@ -259,8 +259,8 @@
         ]
       },
       "locked": {
-        "lastModified": 1735359786,
-        "narHash": "sha256-+bCUXuNKT7WeCxqL1YshqDopVBnQlteHUyFpppT7op8=",
+        "lastModified": 1735901578,
+        "narHash": "sha256-ufXUy7a6q9jpK4GM/TYcHg1CLsdrzuhz55UDpdmrSAQ=",
         "path": "/Users/meain/dev/src/nur-packages",
         "type": "path"
       },
@@ -329,7 +329,6 @@
         "tree-sitter-markdown": "tree-sitter-markdown",
         "tree-sitter-nix": "tree-sitter-nix",
         "tree-sitter-php": "tree-sitter-php",
-        "tree-sitter-powershell": "tree-sitter-powershell",
         "tree-sitter-python": "tree-sitter-python",
         "tree-sitter-ruby": "tree-sitter-ruby",
         "tree-sitter-rust": "tree-sitter-rust",
@@ -337,16 +336,17 @@
         "tree-sitter-typescript": "tree-sitter-typescript"
       },
       "locked": {
-        "lastModified": 1734799638,
-        "narHash": "sha256-4udhc5Z8oQ+xJWgD6eJgBDtovp7RGl6pg0gpqybA0Hk=",
+        "lastModified": 1734568896,
+        "narHash": "sha256-AjdU2GjMw+db2fhvSDfTZ/atiQ+2ivdqOIoF5slFQRo=",
         "owner": "BrianHicks",
         "repo": "tree-grepper",
-        "rev": "551d793c5fafcf680df96b48c61083c1ef3313dd",
+        "rev": "82d31cca29d9926ee4db91de88b84729901f93a7",
         "type": "github"
       },
       "original": {
         "owner": "BrianHicks",
         "repo": "tree-grepper",
+        "rev": "82d31cca29d9926ee4db91de88b84729901f93a7",
         "type": "github"
       }
     },
@@ -542,22 +542,6 @@
       "original": {
         "owner": "tree-sitter",
         "repo": "tree-sitter-php",
-        "type": "github"
-      }
-    },
-    "tree-sitter-powershell": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1717078129,
-        "narHash": "sha256-bkLdC3pedo228UDiO7ZZ2E1r3WP2aq2Ud6Ni88ulsNc=",
-        "owner": "airbus-cert",
-        "repo": "tree-sitter-powershell",
-        "rev": "6de5d48649aa7086e2a7ba72660bcabe01c8b258",
-        "type": "github"
-      },
-      "original": {
-        "owner": "airbus-cert",
-        "repo": "tree-sitter-powershell",
         "type": "github"
       }
     },
