@@ -4499,13 +4499,15 @@ Called with a PREFIX, resets the context buffer list before opening"
 ;; OpenAI GPT-3 interaction
 (use-package gptel
   ;; :ensure t
-  :ensure (:host github :repo "karthink/gptel")
-  ;; :ensure (:host github :repo "karthink/gptel" :branch "feature-templates")
+  ;; :ensure (:host github :repo "karthink/gptel")
+  ;; https://github.com/karthink/gptel/issues/514
+  :ensure (:host github :repo "karthink/gptel" :branch "feature-tool-use")
   :commands (gptel gptel-send gptel-rewrite-menu)
   :config
   (setq gptel-model 'gpt-4o-mini)
   (setq gptel-api-key openai-api-key)
   (setq gptel-expert-commands t)
+  (setq gptel-use-tools t)
   :init
   (defun gptel-context-clear-all ()
     (interactive)
@@ -4550,7 +4552,7 @@ For optional NO-CACHE, use caching by default."
   (defun gptel-lookup (prompt)
     "Ask ChatGPT for a response to PROMPT."
     (interactive (list (read-string "Ask ChatGPT: " nil gptel-lookup--history)))
-    (when (string= prompt "") (user-error "A prompt is required."))
+    (when (string= prompt "") (user-error "A prompt is required"))
     (gptel-request
      prompt
      :callback
