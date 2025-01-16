@@ -4633,16 +4633,52 @@ For optional NO-CACHE, use caching by default."
         (setq yap-model (cadr vals)))))
 
   (defun meain/yap-template-with-refer (prompt-type)
-    (let ((prompt (read-string "Prompt: ")))
+    "Enhance YAP templates with refer integration.
+PROMPT-TYPE specifies the type of prompt to use ('rewrite or 'prompt)."
+    (let ((prompt (read-string "Prompt: "))
+          (buffer-content (or (yap--get-selected-text (current-buffer)) "")))
       (yap-template-external-context
        (if (eq prompt-type 'rewrite)
            yap--default-system-prompt-for-rewrite
          yap--default-system-prompt-for-prompt)
        prompt
        (current-buffer)
-       (shell-command-to-string (concat "refer search --format llm '" prompt "'")))))
+       (with-temp-buffer
+         (insert (concat prompt "\n" buffer-content))
+         (shell-command-on-region
+          (point-min) (point-max)
+          (concat "refer search --threshold 25 --format llm")
+          (current-buffer))
+         (buffer-string)))))
   (add-to-list 'yap-templates '(yap-rewrite-with-refer . (lambda () (meain/yap-template-with-refer 'rewrite))))
   (add-to-list 'yap-templates '(yap-prompt-with-refer . (lambda () (meain/yap-template-with-refer 'prompt))))
+
+  (defun meain/get-llm-prompt (name)
+    "Get the prompt for NAME."
+    (with-temp-buffer
+      (insert-file-contents
+       (string-join (list (expand-file-name user-emacs-directory)
+                          "prompts"
+                          (format "%s.md" name)) "/"))
+      (buffer-string)))
+  (meain/get-llm-prompt "identify-actionable-change")
+
+  (add-to-list
+   'yap-templates
+   '(identify-actionable-change . (lambda ()
+                                    (yap-template-prompt (meain/get-llm-prompt "identify-actionable-change")))))
+
+  (add-to-list
+   'yap-templates
+   '(perform-proposed-change . (lambda ()
+                                 (yap-template-buffer-context
+                                  (meain/get-llm-prompt "perform-proposed-change")
+                                  (let ((proposal (read-string "Proposal (default: prev yap response): ")))
+                                    (if (string= proposal "")
+                                        (with-current-buffer "*yap-response*"
+                                          (buffer-substring-no-properties (point-min) (point-max)))
+                                      proposal))
+                                  (current-buffer)))))
 
   :init
   (global-unset-key (kbd "M-m"))
@@ -4650,7 +4686,10 @@ For optional NO-CACHE, use caching by default."
   (global-set-key (kbd "M-m M-m") 'yap-prompt)
   (global-set-key (kbd "M-m M-r") 'yap-rewrite)
   (global-set-key (kbd "M-m M-w") 'yap-write)
+  (global-set-key (kbd "M-m M-x M-m") (lambda () (interactive) (yap-prompt 'yap-prompt-with-refer)))
+  (global-set-key (kbd "M-m M-x M-r") (lambda () (interactive) (yap-rewrite 'yap-rewrite-with-refer)))
   (global-set-key (kbd "M-m M-o") (lambda () (interactive) (yap-rewrite 'optimize-code)))
+  (global-set-key (kbd "M-m M-i") (lambda () (interactive) (yap-rewrite 'identify-actionable-change)))
   (global-set-key (kbd "M-m M-f") (lambda () (interactive) (yap-rewrite 'fix-diagnostic-error)))
   (global-set-key (kbd "M-m M-e") (lambda () (interactive) (yap-prompt 'explain-code))))
 
