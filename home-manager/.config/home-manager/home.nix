@@ -233,7 +233,7 @@ in
     # pkgs.python39Packages.sqlparse # sqlformat
     # pkgs.grpcurl # curl for grpc
     pkgs.zprint # clojure formatter
-    # tree-grepper.outputs.packages.${system}.tree-grepper # grep with tree-sitter
+    tree-grepper.outputs.packages.${system}.tree-grepper # grep with tree-sitter
     # pkgs.comby # code mod
     # pkgs.ruby # ruby language
     # pkgs.actionlint # linting for gihtub actions
@@ -334,6 +334,9 @@ in
     pkgs.glow # markdown renderer
     pkgs.markdown-oxide # PKM via LSP
     pkgs.poppler_utils # pdf utils
+    pkgs.jira-cli-go # jira cli
+    ppkgs.prr # local pr review
+
     pkgs.nur.repos.rycee.mozilla-addons-to-nix # package firefox addons
   ]
   # ++ linuxpkgs
