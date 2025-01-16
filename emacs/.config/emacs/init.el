@@ -4668,6 +4668,22 @@ PROMPT-TYPE specifies the type of prompt to use ('rewrite or 'prompt)."
       (while (search-forward "\\r" end t)
         (replace-match "" nil t)))))
 
+(use-package emacs
+  :config
+  (defun meain/set-read-only-if-do-not-edit ()
+    "Set the buffer to read-only if buffer contents has 'DO NOT EDIT' in it.
+We limit the search to just top 10 lines so as to only check the header."
+    (save-excursion
+      (goto-char (point-min))
+      (let ((content
+             (buffer-substring (point)
+                               (save-excursion (forward-line 10) (point)))))
+        (when (and (not buffer-read-only)
+                   (string-match "DO NOT EDIT" content))
+          (read-only-mode 1)
+          (message "Buffer seems to be generated. Set to read-only mode.")))))
+  (add-hook 'find-file-hook 'meain/set-read-only-if-do-not-edit))
+
 ;; Delete current file
 (defun meain/delete-current-file ()
   "Delete current file and close buffer."
