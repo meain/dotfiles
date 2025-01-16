@@ -58,7 +58,11 @@ function _git_pushable() {
 }
 _vcs_info_wrapper() {
   vcs_info
-  echo "${vcs_info_msg_0_}"
+  if echo "${vcs_info_msg_0_}" | grep -qE 'jj/keep'; then
+    echo "@" # controlled by jujutsu
+  else
+    echo "${vcs_info_msg_0_}"
+  fi
 }
 
 function +vi-git-untracked() {
