@@ -38,6 +38,7 @@ backup_loc .dir-locals.el
 backup_loc default.rest
 backup_loc flake.nix
 backup_loc flake.lock
+backup_loc .llmrules
 
 cd "$SAVEPATH" || exit 1
 git add .
