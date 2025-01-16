@@ -929,160 +929,29 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   :config
   (aas-global-mode)
   (aas-set-snippets 'global
-    ";--" "—"
-    ";>>" "⟶"
-    ";<<" "⟵"
-    ";<>" "⇌"
-    ";>~" "↝"
-    ";<~" "↜"
-    ";tm" "™"
-    ";shr" "¯\\_(ツ)_/¯"
-    ";ch" "[meain](https://github.com/meain)"
-    ";gh" "https://github.com/"
-    ";gm" "https://github.com/meain"
-    ";isodate" (lambda () (interactive) (insert (format-time-string "%a, %d %b %Y %T %z")))
-    ";date" (lambda () (interactive) (insert (format-time-string "%a %b %d %Y")))
-    ";sdate" (lambda () (interactive) (insert (format-time-string "%d %b %Y")))
-    ";d/" (lambda () (interactive) (insert (format-time-string "%D")))
-    ";d-" (lambda () (interactive) (insert (format-time-string "%F")))
-    ";time" (lambda () (interactive) (insert (format-time-string "%T")))
-    ";filename" (lambda () (interactive) (insert (file-name-nondirectory (buffer-file-name)))))
-  (aas-set-snippets 'ledger-mode
-    ";e" (lambda () (interactive) (insert (format-time-string "%Y/%m/%d"))))
+    ";date" '(tempel (format-time-string "%a %b %d %Y"))
+    ";time" '(tempel (format-time-string "%H:%M"))
+    ";file" '(tempel (file-name-nondirectory (buffer-file-name)))
+    ";path" '(tempel (string-remove-prefix
+                      (expand-file-name (project-root (project-current)))
+                      (buffer-file-name))))
   (aas-set-snippets 'emacs-lisp-mode
     ";auto" ";;;###autoload"
-    ";la" (lambda () (interactive) (insert "(lambda ())") (backward-char 2))
-    ";li" (lambda () (interactive) (insert "(lambda () (interactive) )") (backward-char 1))
-    ";j" (lambda () (interactive) (insert "(message \"%s\" )") (backward-char 1)))
+    ";la" '(tempel "(lambda (" p ") " r ")")
+    ";li" '(tempel "(lambda () (interactive) " r ")")
+    ";j" '(tempel "(message \"" r "\")"))
   (aas-set-snippets 'sql-mode
-    ";bang" "SELECT * FROM information_schema.tables;"
-    ";d" (lambda ()
-           (interactive)
-           (insert "select * from ")
-           (let
-               ((company-quickhelp-delay 0.1)
-                (company-tooltip-idle-delay 0.1)
-                (company-idle-delay 0.1))
-             (consult-company))))
-  (aas-set-snippets 'web-mode
-    ";bang" (lambda () (interactive) (insert-file-contents (expand-file-name "~/.config/datafiles/templates/index.html"))))
-  (aas-set-snippets 'html-mode
-    ";bang" (lambda () (interactive) (insert-file-contents (expand-file-name "~/.config/datafiles/templates/index.html"))))
+    ";base" "SELECT * FROM information_schema.tables;")
   (aas-set-snippets 'js-mode
-    ";j" (lambda () (interactive) (insert "console.log(\"\")") (backward-char 2)))
-  (aas-set-snippets 'nix-mode
-    ";bang" (lambda () (interactive) (insert-file-contents (expand-file-name "~/.config/datafiles/templates/default.nix"))))
-  (aas-set-snippets 'markdown-mode
-    ";month" (lambda () (interactive) (insert (format-time-string "%B %Y")))
-    ";bang"
-    (lambda ()
-      (interactive)
-      (insert (concat "---\ntitle: "
-                      (file-name-nondirectory (file-name-sans-extension (buffer-file-name)))
-                      "\ncreated: "
-                      (format-time-string "%a %d %b %Y %T")
-                      "\n---\n"))))
+    ";j" '(tempel "console.log(\"" r "\")"))
   (aas-set-snippets 'go-ts-mode
     "!+" "!="
     ";;" ":="
-    ";j" (lambda () (interactive) (insert "fmt.Println(\"\")") (backward-char 2))
-    ;; create `name = append(name, )` forms
-    ";ap" (lambda ()
-            (interactive)
-            (delete-char -1)
-            (kill-word -1)
-            (yank)
-            (insert " = append(")
-            (yank)
-            (insert ", )")
-            (forward-char -1))
-    ";rr"
-    (lambda ()
-      (interactive)
-      (kill-word -1)
-      (kill-word -1)
-      (insert "for _, ")
-      (yank)
-      (insert " := range ")
-      (yank 2)
-      (insert "{\n\n")
-      ;; (indent-for-tab-command)
-      (insert "}")
-      (forward-line -1)
-      (indent-for-tab-command))
-    ";ri"
-    (lambda ()
-      (interactive)
-      (kill-word -1)
-      (kill-word -1)
-      (insert "for i, ")
-      (yank)
-      (insert " := range ")
-      (yank 2)
-      (insert "{\n\n")
-      ;; (indent-for-tab-command)
-      (insert "}")
-      (forward-line -1)
-      (indent-for-tab-command))
-    ";lf"
-    (lambda ()
-      (interactive)
-      (insert (concat "if err != nil { log.Fatal(\"" (read-string "Error message: ") ": %v\", err) }")))
-    ";er"
-    (lambda ()
-      (interactive)
-      (call-interactively 'tree-surgeon-go-error))
-    ";ew"
-    (lambda ()
-      (interactive)
-      (call-interactively 'tree-surgeon-go-error tree-surgeon-go-error-format-with-wrap))
-    ";tr"
-    (lambda ()
-      (interactive)
-      (let ((left (read-string "Left: "))
-            (right (read-string "Right: "))
-            (thing (read-string "Incorrect thing: ")))
-        (insert (concat "if " left " != " right "{ t.Errorf(\"incorrect " thing "; expected '%v', got '%v'\", " right " , " left ")}"))))
-    ";test"
-    (lambda ()
-      (interactive)
-      (insert (concat "func "
-                      (read-string "Test function name: ")
-                      "(t *testing.T) {
-    want :=
-    got, err :=
-    if !cmp.Equal(want, got) {
-        t.Fatalf(\"values are not the same %s\", cmp.Diff(tc.want, got))
-    }
-    }")))
-    ";ttest"
-    (lambda ()
-      (interactive)
-      (insert (concat "func "
-                      (read-string "Test function name: ")
-                      "(t *testing.T) {
-	tests := []struct {
-		name  string
-		input string
-		want  _
-	}{
-		{},
-	}
-	for _, tc := range tests {
-		t.Run(tc.name, func(t *testing.T) {
-			got, err :=
-			if !cmp.Equal(tc.want, got) {
-				t.Fatalf(\"values are not the same %s\", cmp.Diff(tc.want, got))
-			}
-		})
-	}
-  }"))))
-  (aas-set-snippets 'python-mode
-    ";ip" "__import__('ipdb').set_trace()")
-  (aas-set-snippets 'org-mode
-    ";el" "#+BEGIN_SRC emacs-lisp\n\n#+END_SRC"
-    ";py" "#+BEGIN_SRC python\n\n#+END_SRC"
-    ";co" "#+BEGIN_SRC\n\n#+END_SRC"))
+    ";j" '(tempel "fmt.Println(\"" r "\")")
+    ";ap" '(tempel (s slice) " = append(" (s slice) ", " r ")")
+    ";rr" '(tempel "for _, " p " := range " p "{" n> r> n> "}")
+    ";ri" '(tempel "for i, " p " := range " p "{" n> r> n> "}")
+    ";er" '(tempel "if err != nil {" n> r> n> "}")))
 
 ;; Templates
 (use-package tempel
