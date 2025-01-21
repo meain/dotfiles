@@ -47,6 +47,7 @@ in
     pkgs.fzf
     pkgs.ripgrep
     pkgs.jq
+    pkgs.tree
     pkgs.lsd
     pkgs.fd
     pkgs.lsd
