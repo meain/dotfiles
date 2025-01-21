@@ -1424,7 +1424,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   :init (setq prefix-help-command #'embark-prefix-help-command)
   :config
   (global-set-key (kbd "C-'")  'embark-act)
-  (global-set-key (kbd "C-.")  'embark-dwim)
+  (global-set-key (kbd "C-.")  'embark-export)
   (global-set-key (kbd "C-h B")  'embark-bindings))
 (use-package embark-consult
   :ensure t
