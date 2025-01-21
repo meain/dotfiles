@@ -1036,40 +1036,23 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   :ensure t
   :after flymake
   :config
-  ;; tree-grepper based lints
-  (flymake-quickdef-backend flymake-check-end-in-comma
-    :pre-let ((tree-grepper-exec (executable-find "tree-grepper")))
-    :pre-check (unless tree-grepper-exec (error "Cannot find tree-grepper executable"))
+  ;; tint lints
+  (flymake-quickdef-backend flymake-check-tint
+    :pre-let ((tint-exec (executable-find "tint")))
+    :pre-check (unless tint-exec (error "Cannot find tint executable"))
     :write-type 'file
-    :proc-form (list tree-grepper-exec fmqd-temp-file "-q" "go" "(argument_list \",\" @no-trailing-comma .)")
-    :search-regexp "^\\([^:]+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\):no-trailing-comma:\\(.*\\)$"
+    :proc-form (list tint-exec "lint" fmqd-temp-file)
+    :search-regexp "^\\([^:]+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\): \\(.*\\)$"
     :prep-diagnostic (let* ((lnum (string-to-number (match-string 2)))
                             (col (string-to-number (match-string 3)))
                             (pos (flymake-diag-region fmqd-source lnum col))
                             (beg (car pos))
                             (end (cdr pos))
-                            (msg (format "tree-grepper-exec> No trailing comma")))
+                            (msg (format "tint> %s" (match-string 6))))
                        (list fmqd-source beg end :warning msg)))
   (add-hook 'go-ts-mode-hook
             (lambda ()
-              (add-hook 'flymake-diagnostic-functions 'flymake-check-end-in-comma nil t)))
-
-  (flymake-quickdef-backend flymake-check-empty-string
-    :pre-let ((tree-grepper-exec (executable-find "tree-grepper")))
-    :pre-check (unless tree-grepper-exec (error "Cannot find tree-grepper executable"))
-    :write-type 'file
-    :proc-form (list tree-grepper-exec fmqd-temp-file "-q" "go" "((binary_expression (identifier) [\"==\" \"!=\"] (interpreted_string_literal) @_ri) @exp (#eq? @_ri \"\\\"\\\"\"))")
-    :search-regexp "^\\([^:]+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\):exp:\\(.*\\)$"
-    :prep-diagnostic (let* ((lnum (string-to-number (match-string 2)))
-                            (col (string-to-number (match-string 3)))
-                            (pos (flymake-diag-region fmqd-source lnum col))
-                            (beg (car pos))
-                            (end (cdr pos))
-                            (msg (format "tree-grepper-exec> Use len based checks")))
-                       (list fmqd-source beg end :warning msg)))
-  (add-hook 'go-ts-mode-hook
-            (lambda ()
-              (add-hook 'flymake-diagnostic-functions 'flymake-check-empty-string nil t)))
+              (add-hook 'flymake-diagnostic-functions 'flymake-check-tint nil t)))
 
   ;; https://github.com/crate-ci/typos
   (flymake-quickdef-backend flymake-check-typos
