@@ -24,13 +24,14 @@ elif echo "$url" | grep -qE '^https://github.com/[^/]*/[^/]*/commit'; then
 elif echo "$url" | grep -qE '^https://github.com/[^/]*/[^/]*/?$'; then
     printf "%s" "$url" | sed "s|https://github.com/\([^/]*/[^/$]*\)|[\1]($url)|"
 elif echo "$url" | grep -qE '^https://linear.app/[^/]*/issue/[^/]*/[^/]*$'; then
-    # printf "%s" "$url" | sed "s|https://linear.app/\([^/]*\)/issue/\([^/]*\)/\([^/]*\)|[linear:\1#\2]($url)|"
     printf "%s" "$url" | sed "s|https://linear.app/\([^/]*\)/issue/\([^/]*\)/\([^/]*\)|[\2]($url)|"
+elif echo "$url" | grep -qE '^https://.*\.atlassian\.net/browse/.*$'; then
+    printf "%s" "$url" | sed "s|https://.*/browse/\([^/]*\)|[\1]($url)|"
 elif echo "$url" | grep -qE '^https://teams.microsoft.com'; then
     # Using sed here was causing issues
     team="$(echo "$url" | grep -o 'teamName=[^&]*' | cut -d= -f2)"
     channel="$(echo "$url" | grep -o 'channelName=[^&]*' | cut -d= -f2)"
-    printf "[Teams message in %s](%s)" "$team#$channel" "$url"
+    printf "[%s](%s)" "$team#$channel" "$url"
 else
     # TODO: Make this generic work even if path is changed
     # Using FF based way to get the title makes it faster as well as
