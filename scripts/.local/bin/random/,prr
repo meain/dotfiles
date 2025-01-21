@@ -1,0 +1,28 @@
+#!/bin/sh
+
+set -euo pipefail
+
+# Review PRs using prr, fetching them via gh
+
+export EDITOR="emacsclient" # use emacsclient instead of nvim(default)
+
+prs="$(gh pr list --json number,url,author,title,reviewRequests,reviewDecision)"
+ids="$(echo "$prs" |
+    jq -r '.[] | select(.reviewDecision != "APPROVED" and (.reviewRequests[]? | select(.login == "meain"))) | "\(.number) \(.title) :: \(.author.login)"')"
+
+id="$(echo "$ids" | fzf --height 100% --preview-window=down:80%:wrap --preview "gh pr view {1}" | awk '{print $1}')"
+url="$(echo "$prs" | jq -r ".[] | select(.number == $id) | .url")"
+
+# Convert https://github.com/org/repo/pull/437 to org/repo/437
+prrid="$(echo "$url" | sed -E 's|https://github.com/([^/]+)/([^/]+)/pull/([0-9]+)|\1/\2/\3|' | sed 's|.git$||')"
+echo "$prrid"
+prr get "$prrid"
+prr edit "$prrid"
+
+printf "Submit [y/N]: "
+read -r submit
+if [ "$submit" = "y" ]; then
+    prr submit "$prrid"
+else
+    echo You can use prr submit "$prrid" to submit the PR later
+fi
