@@ -1,0 +1,27 @@
+#!/bin/sh
+
+set -e
+
+if [ $# -gt 0 ]; then
+    transcript="$*"
+else
+    # Get transcribed audio and save to variable
+    transcript=$(,transcribe-audio 2>/dev/null)
+
+    # Output transcript to terminal
+    echo "$transcript"
+    /usr/bin/say --rate 250 "$transcript"
+fi
+
+# Load API key
+# Necessary when being executed by hammerspoon
+source ~/.credentials
+
+# Send to ESA and get summary
+esa_output=$(esa "$transcript")
+echo "$esa_output"
+
+summary=$(echo "$esa_output" | aichat "summarize this naturally and briefly while keeping key info, format as a conversational response")
+
+# Text-to-speech output
+/usr/bin/say --rate 250 "$summary"

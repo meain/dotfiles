@@ -82,7 +82,7 @@ hs.hotkey.bind(hyper, "b", function() customshellrun.run("GUI_PICKER=1 ,bm open"
 hs.hotkey.bind(hyper, "o", function() hs.alert(customshellrun.run(",open-or-search " .. pasteboard.getContents())) end)
 hs.hotkey.bind(hyper, "i",
     function() hs.urlevent.openURL("https://duckduckgo.com/?q=!ducky+" .. pasteboard.getContents()) end)
-hs.hotkey.bind(hyper, "u", function() customshellrun.launch(",read-clipboard") end)
+hs.hotkey.bind(hyper, "u", function() customshellrun.launch(",voice-assistant") end)
 hs.hotkey.bind(hyper, "s", function() hs.alert(customshellrun.run("GUI_PICKER=1 ,se", true)) end)
 
 hs.hotkey.bind(fkey, ";", function()

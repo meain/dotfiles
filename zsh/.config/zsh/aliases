@@ -37,7 +37,7 @@ alias sbnoah='noah -o ~sbdb/Resources'
 alias lg='lazygit'
 alias lj='lazyjj'
 alias mk=',mk'
-alias asi=',transcribe-audio 2>/dev/null | {tee /dev/stderr;echo >/dev/stderr} | xargs -I{} esa "{}"'
+alias asi=',voice-assistant'
 
 # ledger
 alias ledger='ledger -f ~/.local/share/ledger/master.ledger --strict'
