@@ -1091,53 +1091,6 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
               (if (string-match-p ".*\\.github/workflows/.*\\.ya?ml" (buffer-file-name))
                   (add-hook 'flymake-diagnostic-functions 'flymake-check-actionlint nil t))))
 
-  ;; Bandit (sec issues in python)
-  (flymake-quickdef-backend flymake-check-bandit
-    :pre-let ((bandit-exec (executable-find "bandit")))
-    :pre-check (unless bandit-exec (error "Cannot find bandit executable"))
-    :write-type 'file
-    :proc-form (list bandit-exec "--format" "custom" "--msg-template"
-                     "diag:{line} {severity} {test_id}: {msg}" fmqd-temp-file)
-    :search-regexp "^diag:\\([[:digit:]]+\\) \\(HIGH\\|LOW\\|MEDIUM\\|UNDEFINED\\) \\([[:alpha:]][[:digit:]]+\\): \\(.*\\)$"
-    :prep-diagnostic (let* ((lnum (string-to-number (match-string 1)))
-                            (severity (match-string 2))
-                            (code (match-string 3))
-                            (text (match-string 4))
-                            (pos (flymake-diag-region fmqd-source lnum))
-                            (beg (car pos))
-                            (end (cdr pos))
-                            (type (cond
-                                   ((string= severity "HIGH") :error)
-                                   ((string= severity "MEDIUM") :warning)
-                                   (t :note)))
-                            (msg (format "bandit> %s (%s)" text code)))
-                       (list fmqd-source beg end type msg)))
-  (add-hook 'python-mode-hook
-            (lambda ()
-              (add-hook 'flymake-diagnostic-functions 'flymake-check-bandit nil t)))
-
-  ;; https://github.com/PyCQA/pylint
-  (flymake-quickdef-backend flymake-pylint
-    ;; TODO: filter out warnings and errors properly
-    :pre-let ((pylint-exec (executable-find "pylint")))
-    :pre-check (unless pylint-exec (error "Cannot find pylint executable"))
-    :write-type 'file
-    :proc-form (list pylint-exec "-f" "parseable" "-r" "n"
-                     "-s" "n" "--msg-template" "{line}:{column}: {msg_id}({symbol}) {msg}"
-                     "-d" "E0401,W0511,C0103,C0330" fmqd-temp-file)
-    :search-regexp "\\([[:digit:]]+\\):\\([[:digit:]]+\\): \\(.*\\)$"
-    :prep-diagnostic (let* ((lnum (string-to-number (match-string 1)))
-                            (col (string-to-number (match-string 2)))
-                            (text (match-string 3))
-                            (pos (flymake-diag-region fmqd-source lnum col))
-                            (beg (car pos))
-                            (end (cdr pos))
-                            (msg (format "pylint> %s" text)))
-                       (list fmqd-source beg end :warning msg)))
-  (add-hook 'python-mode-hook
-            (lambda ()
-              (add-hook 'flymake-diagnostic-functions 'flymake-pylint nil t)))
-
   ;; https://github.com/golangci/golangci-lint
   ;; Most linters in golangci-lint requires the project context. We
   ;; can hack it together to make it work in a project context, but
@@ -1162,28 +1115,9 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
                             (end (cdr pos))
                             (msg (format "golangci> %s" text)))
                        (list fmqd-source beg end :warning msg)))
-  (add-hook 'go-mode-hook
+  (add-hook 'go-ts-mode-hook
             (lambda ()
               (add-hook 'flymake-diagnostic-functions 'flymake-golangci nil t)))
-
-  ;; https://github.com/nerdypepper/statix
-  (flymake-quickdef-backend flymake-statix
-    :pre-let ((statix-exec (executable-find "statix")))
-    :pre-check (unless statix-exec (error "Cannot find statix executable"))
-    :write-type 'file
-    :proc-form (list statix-exec "check" "--format" "errfmt" fmqd-temp-file)
-    :search-regexp "^\\([^>]+\\)>\\([[:digit:]]+\\):\\([[:digit:]]+\\):\\(.*\\)$"
-    :prep-diagnostic (let* ((lnum (string-to-number (match-string 2)))
-                            (col (string-to-number (match-string 3)))
-                            (text (match-string 4))
-                            (pos (flymake-diag-region fmqd-source lnum col))
-                            (beg (car pos))
-                            (end (cdr pos))
-                            (msg (format "statix> %s" text)))
-                       (list fmqd-source beg end :warning msg)))
-  (add-hook 'nix-mode-hook
-            (lambda ()
-              (add-hook 'flymake-diagnostic-functions 'flymake-statix nil t)))
 
   ;; https://github.com/hadolint/hadolint
   (flymake-quickdef-backend flymake-hadolint
@@ -1202,70 +1136,11 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
                        (list fmqd-source beg end :warning msg)))
   (add-hook 'dockerfile-mode-hook
             (lambda ()
-              (add-hook 'flymake-diagnostic-functions 'flymake-hadolint nil t)))
+              (add-hook 'flymake-diagnostic-functions 'flymake-hadolint nil t))))
 
-  ;; https://github.com/DavidAnson/markdownlint
-  (flymake-quickdef-backend flymake-markdownlint
-    :pre-let ((markdownlint-exec (executable-find "markdownlint")))
-    :pre-check (unless markdownlint-exec (error "Cannot find markdownlint executable"))
-    :write-type 'file
-    :proc-form (list markdownlint-exec "-c" (concat (getenv "HOME") "/.config/markdownlint/config.yaml") fmqd-temp-file)
-    :search-regexp "^\\([^:]+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\) \\(.*\\)$"
-    :prep-diagnostic (let* ((lnum (string-to-number (match-string 2)))
-                            (col (string-to-number (match-string 3)))
-                            (text (match-string 4))
-                            (pos (flymake-diag-region fmqd-source lnum col))
-                            (beg (car pos))
-                            (end (cdr pos))
-                            (msg (format "markdownlint> %s" text)))
-                       (list fmqd-source beg end :warning msg)))
-  (add-hook 'markdown-mode-hook
-            (lambda ()
-              (add-hook 'flymake-diagnostic-functions 'flymake-markdownlint nil t)))
-  (add-hook 'gfm-mode-hook
-            (lambda ()
-              (add-hook 'flymake-diagnostic-functions 'flymake-markdownlint nil t)))
-
-  ;; https://github.com/errata-ai/vale
-  (flymake-quickdef-backend flymake-vale
-    :pre-let ((vale-exec (executable-find "vale")))
-    :pre-check (unless vale-exec (error "Cannot find vale executable"))
-    :write-type 'file
-    :proc-form (list vale-exec "--output" "line" "--config" (concat (getenv "HOME") "/.config/vale/vale.ini") fmqd-temp-file)
-    :search-regexp "^\\([^:]+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\):\\(.*\\)$"
-    :prep-diagnostic (let* ((lnum (string-to-number (match-string 2)))
-                            (col (string-to-number (match-string 3)))
-                            (text (match-string 4))
-                            (pos (flymake-diag-region fmqd-source lnum col))
-                            (beg (car pos))
-                            (end (cdr pos))
-                            (msg (format "vale> %s" text)))
-                       (list fmqd-source beg end :warning msg)))
-  (add-hook 'markdown-mode-hook
-            (lambda ()
-              (add-hook 'flymake-diagnostic-functions 'flymake-vale nil t)))
-  (add-hook 'gfm-mode-hook
-            (lambda ()
-              (add-hook 'flymake-diagnostic-functions 'flymake-vale nil t)))
-
-  ;; jsonlint
-  (flymake-quickdef-backend flymake-jsonlint
-    :pre-let ((jsonlint-exec (executable-find "jsonlint")))
-    :pre-check (unless jsonlint-exec (error "Cannot find jsonlint executable"))
-    :write-type 'file
-    :proc-form (list jsonlint-exec "-c" "-q" fmqd-temp-file)
-    :search-regexp "^\\([^:]+\\): line \\([[:digit:]]+\\), col \\([[:digit:]]+\\), \\(.*\\)$"
-    :prep-diagnostic (let* ((lnum (string-to-number (match-string 2)))
-                            (col (string-to-number (match-string 3)))
-                            (text (match-string 4))
-                            (pos (flymake-diag-region fmqd-source lnum col))
-                            (beg (car pos))
-                            (end (cdr pos))
-                            (msg (format "jsonlint> %s" text)))
-                       (list fmqd-source beg end :warning msg)))
-  (add-hook 'json-mode-hook
-            (lambda ()
-              (add-hook 'flymake-diagnostic-functions 'flymake-jsonlint nil t))))
+(use-package flymake-collection
+  :ensure t
+  :hook (after-init . flymake-collection-hook-setup))
 
 ;; Company for autocompletions
 (use-package company
