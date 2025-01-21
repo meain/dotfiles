@@ -136,3 +136,6 @@ export DELVE_EDITOR=",emacs-no-wait"
 # aider
 export AIDER_GITIGNORE=false # present in global gitignore
 export AIDER_CHECK_UPDATE=false # managed via nix
+
+# esa
+export ESA_MODEL="gpt-4o-mini"
