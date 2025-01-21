@@ -4412,9 +4412,10 @@ PROMPT-TYPE specifies the type of prompt to use ('rewrite or 'prompt)."
     "Get the prompt for NAME."
     (with-temp-buffer
       (insert-file-contents
-       (string-join (list (expand-file-name user-emacs-directory)
-                          "prompts"
-                          (format "%s.md" name)) "/"))
+       (string-join (list
+                     (expand-file-name user-emacs-directory)
+                     "prompts"
+                     (format "%s.md" name)) "/"))
       (buffer-string)))
   (meain/get-llm-prompt "identify-actionable-change")
 
@@ -5010,9 +5011,9 @@ Directory is determined by variable `frameshot-directory' and if
 not defined, it will be saved in the `$HOME' directory."
   (interactive)
   (let* ((image (x-export-frames nil (or meain/frameshot-format 'png)))
-	     (directory (or meain/frameshot-directory (getenv "HOME")))
-	     (file (concat directory (format-time-string "EMACS-Screenshot-%Y-%m-%d-%T.")
-		               (symbol-name meain/frameshot-format))))
+         (directory (or meain/frameshot-directory (getenv "HOME")))
+         (file (concat directory (format-time-string "EMACS-Screenshot-%Y-%m-%d-%T.")
+                       (symbol-name meain/frameshot-format))))
     (make-directory directory t)
     (with-temp-file file (insert image))
     (meain/copy-to-clipboard (expand-file-name file))
