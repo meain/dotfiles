@@ -4414,6 +4414,13 @@ PROMPT-TYPE specifies the type of prompt to use ('rewrite or 'prompt)."
                                       proposal))
                                   (current-buffer)))))
 
+  (defun meain/select-enclosing-defun ()
+    (when (not (use-region-p))
+      (let ((bounds (bounds-of-thing-at-point 'defun)))
+        (when bounds
+          (goto-char (car bounds))
+          (push-mark (cdr bounds) t t)))))
+
   :init
   (global-unset-key (kbd "M-m"))
   (global-set-key (kbd "M-m M-c") 'yap-buffer-toggle)
@@ -4423,7 +4430,11 @@ PROMPT-TYPE specifies the type of prompt to use ('rewrite or 'prompt)."
   (global-set-key (kbd "M-m M-x M-m") (lambda () (interactive) (yap-prompt 'yap-prompt-with-refer)))
   (global-set-key (kbd "M-m M-x M-r") (lambda () (interactive) (yap-rewrite 'yap-rewrite-with-refer)))
   (global-set-key (kbd "M-m M-o") (lambda () (interactive) (yap-rewrite 'optimize-code)))
-  (global-set-key (kbd "M-m M-i") (lambda () (interactive) (yap-rewrite 'identify-actionable-change)))
+  (global-set-key (kbd "M-m M-i")
+                  (lambda ()
+                    (interactive)
+                    (meain/select-enclosing-defun)
+                    (yap-rewrite 'identify-actionable-change)))
   (global-set-key (kbd "M-m M-f") (lambda () (interactive) (yap-rewrite 'fix-diagnostic-error)))
   (global-set-key (kbd "M-m M-e") (lambda () (interactive) (yap-prompt 'explain-code))))
 
