@@ -35,6 +35,7 @@
       "keycastr" # show keys being typed (for recording)
 
       "ispell" # Emacs does not pick up nix version
+      "ical-buddy" # Read from macos calendar
     ];
     casks = [
       "hammerspoon" # make macOS usable
