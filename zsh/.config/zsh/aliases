@@ -84,10 +84,10 @@ if [ "$OSTYPE" = "linux" ]; then
 fi
 
 # shorthand
-alias to=',ca'
-alias dict=',dict'
-alias lk=',let-me-know'
-alias um=",urlmap"
+alias to=,ca
+alias dict=,dict
+alias lk=,let-me-know
+alias um=,urlmap
 
 # just be nice dammit
 alias go="nice go"
@@ -100,3 +100,14 @@ alias -g JL="cut -d{ -f2-|sed 's|^|{|'"
 # logseq
 alias jrnl=" ,logseq-cli journal"
 alias todo=" ,logseq-cli todo"
+
+# aider
+alias aider-flash="aider --model gemini/gemini-2.0-flash-exp"
+alias aider-deepseek="aider --model openrouter/deepseek/deepseek-chat --edit-format=diff --no-show-model-warnings"
+
+# jira
+alias jira-issues="jira issue list --plain --assignee '$JIRA_EMAIL' -s 'To Do' -s 'In Progress'"
+alias jira-edit="jira-issues|tail -n+2|fzf|awk '{print \$2}'|xargs jira issue edit"
+alias jira-move="jira-issues|tail -n+2|fzf|awk '{print \$2}'|xargs jira issue move"
+alias jira-view="jira-issues|tail -n+2|fzf|awk '{print \$2}'|xargs jira issue view"
+alias jira-comment="jira-issues|tail -n+2|fzf|awk '{print \$2}'|xargs jira issue comment add"
