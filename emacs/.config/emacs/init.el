@@ -423,6 +423,11 @@ Pass ORIGINAL and ALTERNATE options."
   ;; Enable minor-mode manually when required
   :commands (golden-ratio golden-ratio-mode))
 
+;; Major mode for editing prr files
+;; https://doc.dxuuu.xyz/prr/index.html
+(use-package prr-mode
+  :ensure (:host github :repo "elliotekj/prr-mode.el"))
+
 ;; A silly little package to encourage on save
 (use-package emacs
   :config
