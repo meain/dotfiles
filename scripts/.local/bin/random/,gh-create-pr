@@ -1,32 +1,9 @@
 #!/bin/sh
 
-set -eo pipefail
+set -euo pipefail
 
-title="$(git log -1 --pretty=format:%s)"
-body="$(git log -1 --pretty=format:%b)"
+branches="$(git branch --sort=-committerdate | sed 's|^..||' | grep -v 'HEAD detached')"
+head="$(echo "$branches" | fzf --prompt "Head branch: " --preview "git show {1}")"
+base="$(echo "$branches" | grep -v "$head" | fzf --prompt "Base branch: " --preview "git show {1}")"
 
-base="$(git branch --sort=-committerdate |
-    grep -v '\*' |
-    sed 's|^..||' |
-    fzf --header "Base branch" --height 40% --reverse --preview 'git log --oneline -20 {}')"
-
-labels=""
-printf "Add labels [y/N]: " && read -r add_labels
-if [ "$add_labels" = "y" ]; then
-    labels="$(gh label list | {
-        printf '\n'
-        cat
-    } | fzf --header "Labels" -m | awk '{print $1}' | tr '\n' ',' | head -c-1)"
-fi
-
-cd "$(git rev-parse --show-toplevel 2>/dev/null)"
-
-echo "$body" | cat - .github/pull_request_template.md >/tmp/pr_body
-"${EDITOR:-vi}" /tmp/pr_body
-
-url="$(gh pr create --title "$title" \
-    --body-file /tmp/pr_body --assignee meain \
-    --base "$base" --label "$labels")"
-
-echo "$url"
-open "$url"
+gh pr create --base "$base" --head "$head" --web
