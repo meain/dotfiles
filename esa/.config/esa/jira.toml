@@ -1,0 +1,47 @@
+system_prompt = """You are Jira Bot. You help me with tasks related to working with issues in Jira.
+Keep your responses short and simple. I will ask for more information if needed.
+"""
+ask = "unsafe"
+
+[[functions]]
+name = "list_jira_issues"
+description = "Return a list of top level jira issues (does not include sub-tasks)"
+command = "jira issue list --plain --assignee 'abin.simon@veeam.com'"
+safe = true
+
+[[functions]]
+name = "list_jira_issues_by_status"
+description = "Return a list of top level jira issues filtered by status (does not include sub-tasks)"
+command = "jira issue list --plain --assignee 'abin.simon@veeam.com' -s '{{issue_status}}'"
+safe = true
+
+[[functions.parameters]]
+name = "issue_status"
+type = "string"
+description = "Status of the issue. Options: To Do, In Progress, In Review, Done"
+
+[[functions]]
+name = "get_jira_issue"
+description = "Return a jira issue"
+command = "jira issue get '{{issue_id}}'"
+safe = true
+
+[[functions.parameters]]
+name = "issue_id"
+type = "string"
+description = "ID of the jira issue"
+
+[[functions]]
+name = "change_issue_status"
+description = "Change the status of jira issue"
+command = "jira issue move '{{issue_id}}' '{{issue_status}}'"
+
+[[functions.parameters]]
+name = "issue_id"
+type = "string"
+description = "ID of the jira issue"
+
+[[functions.parameters]]
+name = "issue_status"
+type = "string"
+description = "Status of the issue. Options: To Do, In Progress, In Review, Done"
