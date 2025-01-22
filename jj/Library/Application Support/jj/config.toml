@@ -27,6 +27,24 @@ l = ["log", "--limit", "10"]
 [templates]
 log = 'personal_log_oneline'
 
+draft_commit_description = '''
+concat(
+  description,
+  "\n",
+  indent(
+    "JJ: ",
+    concat(
+      "Author: " ++ format_detailed_signature(author) ++ "\n",
+      "Committer: " ++ format_detailed_signature(committer)  ++ "\n",
+      "\n",
+      diff.stat(76),
+      "\n",
+      diff.git(),
+    ),
+  ),
+)
+'''
+
 [template-aliases]
 # https://martinvonz.github.io/jj/latest/config/#display-of-commit-and-change-ids
 'format_short_id(id)' = 'id.shortest(5)'
