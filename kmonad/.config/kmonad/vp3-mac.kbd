@@ -24,14 +24,15 @@
   cspc (tap-hold 180 spc lctl)
   dsh (multi-tap 200 rsft (around lmet tab))
   me (tap-macro m e a i n . i o) ;; just pointless fun
+  music (tap-hold 180 q (layer-toggle music))
 )
 
 (deflayer qwerty
-  grv  1     2    3    4    5    6    7    8    9    0    -    =    bspc
- @hype q     w    e    r    t    y    u    i    o    p    [    ]    \
- @ealt a     s  @nav  @ff   g    h    j    k    l    ;    '    ret
-  lsft z     x    c    v    b    n    m    ,    .    /    @dsh
-  lctl @salt lmet         @cspc            left rmet cmp  rght
+  grv  1      2    3    4    5    6    7    8    9    0    -    =    bspc
+ @hype @music w    e    r    t    y    u    i    o    p    [    ]    \
+ @ealt a      s  @nav  @ff   g    h    j    k    l    ;    '    ret
+  lsft z      x    c    v    b    n    m    ,    .    /    @dsh
+  lctl @salt  lmet         @cspc            left rmet cmp  rght
 )
 
 (deflayer blank
@@ -55,5 +56,13 @@
   _    _    _    _    _    _    _    1    2    3    _    _    _    _
   _    _    _    _    _    _    0    4    5    6    .    _    _
   _    _    _    _    _    _    7    7    8    9    _    _
+  _    _    _              _              _    _    _    _
+)
+
+(deflayer music
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _   volu mute vold  _    _    _    _
+  _    _    _    _    _    _    _   prev  pp  next  _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _
   _    _    _              _              _    _    _    _
 )
