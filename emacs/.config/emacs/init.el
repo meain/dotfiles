@@ -4252,15 +4252,39 @@ Called with a PREFIX, resets the context buffer list before opening"
 ;; OpenAI GPT-3 interaction
 (use-package gptel
   ;; :ensure t
-  ;; :ensure (:host github :repo "karthink/gptel")
+  :ensure (:host github :repo "karthink/gptel")
   ;; https://github.com/karthink/gptel/issues/514
-  :ensure (:host github :repo "karthink/gptel" :branch "feature-tool-use")
+  ;; :ensure (:host github :repo "karthink/gptel" :branch "feature-tool-use")
   :commands (gptel gptel-send gptel-rewrite-menu)
   :config
   (setq gptel-model 'gpt-4o-mini)
   (setq gptel-api-key openai-api-key)
   (setq gptel-expert-commands t)
   (setq gptel-use-tools t)
+
+  (gptel-make-openai "Github Models"
+    :host "models.inference.ai.azure.com"
+    :endpoint "/chat/completions?api-version=2024-05-01-preview"
+    :stream t
+    :key github-models-api-key
+    :models '(gpt-4o gpt-4o-mini))
+
+  (gptel-make-openai "Groq"
+    :host "api.groq.com"
+    :endpoint "/openai/v1/chat/completions"
+    :stream t
+    :key groq-api-key
+    :models '(llama-3.1-70b-versatile
+              llama-3.1-8b-instant
+              llama3-70b-8192
+              llama3-8b-8192
+              mixtral-8x7b-32768
+              gemma-7b-it))
+
+  (gptel-make-anthropic "Claude"
+    :stream t
+    :key anthropic-api-key)
+
   :init
   (defun gptel-context-clear-all ()
     (interactive)
@@ -4307,20 +4331,20 @@ For optional NO-CACHE, use caching by default."
     (interactive (list (read-string "Ask ChatGPT: " nil gptel-lookup--history)))
     (when (string= prompt "") (user-error "A prompt is required"))
     (gptel-request
-     prompt
-     :callback
-     (lambda (response info)
-       (if (not response)
-           (message "gptel-lookup failed with message: %s" (plist-get info :status))
-         (with-current-buffer (get-buffer-create "*gptel-lookup*")
-           (let ((inhibit-read-only t))
-             (erase-buffer)
-             (insert response))
-           (special-mode)
-           (display-buffer (current-buffer)
-                           `((display-buffer-in-side-window)
-                             (side . bottom)
-                             (window-height . ,#'fit-window-to-buffer))))))))
+        prompt
+      :callback
+      (lambda (response info)
+        (if (not response)
+            (message "gptel-lookup failed with message: %s" (plist-get info :status))
+          (with-current-buffer (get-buffer-create "*gptel-lookup*")
+            (let ((inhibit-read-only t))
+              (erase-buffer)
+              (insert response))
+            (special-mode)
+            (display-buffer (current-buffer)
+                            `((display-buffer-in-side-window)
+                              (side . bottom)
+                              (window-height . ,#'fit-window-to-buffer))))))))
 
   (global-set-key (kbd "M-f i m") 'gptel)
   (global-set-key (kbd "M-f i s") 'gptel-send)
@@ -4473,7 +4497,9 @@ PROMPT-TYPE specifies the type of prompt to use ('rewrite or 'prompt)."
   :disabled t
   :config
   (setq chatgpt-shell-model-version "gpt-4o-mini")
-  (setq chatgpt-shell-openai-key openai-api-key))
+  (setq chatgpt-shell-openai-key openai-api-key)
+  (setq chatgpt-shell-openrouter-key openrouter-api-key)
+  )
 
 ;; Text to speech stuff
 ;; Useful for reading out llm explanations
