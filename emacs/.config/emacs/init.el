@@ -3713,7 +3713,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   :after evil-leader
   :config
   (setq avy-timeout-seconds 0.2)
-  (evil-leader/set-key "h" 'avy-goto-char-timer))
+  (evil-leader/set-key "n" 'avy-goto-char-timer))
 
 (use-package harpoon
   :ensure t
@@ -3731,19 +3731,19 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   (setq harpoon-separate-by-branch nil)
   (set harpoon-project-package 'project)
   :init
-  (evil-leader/set-key "F F" 'harpoon-toggle-file)
-  (evil-leader/set-key "F r" 'harpoon-toggle-quick-menu)
-  (evil-leader/set-key "F c" 'harpoon-clear)
-  (evil-leader/set-key "F f" 'harpoon-add-file)
-  (evil-leader/set-key "F j" 'harpoon-go-to-1)
-  (evil-leader/set-key "F k" 'harpoon-go-to-2)
-  (evil-leader/set-key "F l" 'harpoon-go-to-3)
-  (evil-leader/set-key "F ;" 'harpoon-go-to-4)
-  (evil-leader/set-key "F h j" 'harpoon-go-to-5)
-  (evil-leader/set-key "F h k" 'harpoon-go-to-6)
-  (evil-leader/set-key "F h l" 'harpoon-go-to-7)
-  (evil-leader/set-key "F h ;" 'harpoon-go-to-8)
-  (evil-leader/set-key "F h f" 'harpoon-go-to-9))
+  (define-key evil-normal-state-map (kbd "<SPC> k") 'harpoon-toggle-quick-menu)
+  (evil-leader/set-key "h t" 'harpoon-toggle-file)
+  (evil-leader/set-key "h C" 'harpoon-clear)
+  (evil-leader/set-key "h a" 'harpoon-add-file)
+  (evil-leader/set-key "h j" 'harpoon-go-to-1)
+  (evil-leader/set-key "h k" 'harpoon-go-to-2)
+  (evil-leader/set-key "h l" 'harpoon-go-to-3)
+  (evil-leader/set-key "h ;" 'harpoon-go-to-4)
+  (evil-leader/set-key "h h j" 'harpoon-go-to-5)
+  (evil-leader/set-key "h h k" 'harpoon-go-to-6)
+  (evil-leader/set-key "h h l" 'harpoon-go-to-7)
+  (evil-leader/set-key "h h ;" 'harpoon-go-to-8)
+  (evil-leader/set-key "h h f" 'harpoon-go-to-9))
 
 ;; Kinda like screensavers
 (use-package zone
