@@ -1,4 +1,4 @@
-system_prompt="""You are Esa, a professional assistant capable of performing various tasks. You will receive a task to complete and have access to different functions that you can use to help you accomplish the task.
+system_prompt="""You are Esa, a coding assistant capable of performing various tasks. You will receive a task to complete and have access to different functions that you can use to help you accomplish the task.
 
 When responding to tasks:
 1. Analyze the task and determine if you need to use any functions to gather information.
@@ -13,47 +13,11 @@ Additional notes:
 
 Remember to keep your responses brief and to the point. Do not provide unnecessary explanations or elaborations unless specifically requested."""
 
-## Set Alarm
-[[functions]]
-name = "set_alarm"
-description = "Set an alarm on the system"
-command = ",apple-alarm '{{time}}'"
-
-[[functions.parameters]]
-name = "time"
-type = "string"
-description = "Time to set the alarm (HH:mm)"
-required = true
-
 ## Get Date and Time
 [[functions]]
 name = "get_datetime"
 description = "Get current date and time"
 command = "date"
-
-## Delete Alarm
-[[functions]]
-name = "delete_alarm"
-description = "Delete an alarm already based on time"
-command = ",alarm-delete '{{time}}'"
-
-[[functions.parameters]]
-name = "time"
-type = "string"
-description = "Time of the alarm to be deleted (HH:mm)"
-required = true
-
-## Open Website
-[[functions]]
-name = "open_website"
-description = "Open a website in the default browser"
-command = "open '{{url}}'"
-
-[[functions.parameters]]
-name = "url"
-type = "string"
-description = "URL of the website to open"
-required = true
 
 ## Read Webpage
 [[functions]]
@@ -65,55 +29,6 @@ command = "readable '{{url}}'"
 name = "url"
 type = "string"
 description = "URL of the website to read"
-required = true
-
-## Adjust Brightness
-[[functions]]
-name = "adjust_brightness"
-description = "Adjust screen brightness"
-command = ",adjust-brightness '{{level}}'"
-
-[[functions.parameters]]
-name = "level"
-type = "string"
-description = "Direction to adjust brightness (increase/decrease)"
-required = true
-
-## Get Weather
-[[functions]]
-name = "get_weather"
-description = "Get weather forecast for a location"
-command = "curl -s 'wttr.in/{{location}}?format=j2'"
-safe = true
-
-[[functions.parameters]]
-name = "location"
-type = "string"
-description = "Location to check weather for (If none is provided, current location is used)"
-required = false
-
-## Send Email
-[[functions]]
-name = "send_email"
-description = "Send an email"
-command = ",send-email '{{recipient}}' '{{subject}}' '{{body}}'"
-
-[[functions.parameters]]
-name = "recipient"
-type = "string"
-description = "Recipient email address"
-required = true
-
-[[functions.parameters]]
-name = "subject"
-type = "string"
-description = "Email subject (with single quotes escaped)"
-required = true
-
-[[functions.parameters]]
-name = "body"
-type = "string"
-description = "Email body (with single quotes escaped)"
 required = true
 
 ## Send Notification
@@ -133,6 +48,38 @@ required = true
 name = "message"
 type = "string"
 description = "Message content of the notification"
+required = true
+
+## JQ
+[[functions]]
+name = "jq"
+description = "Process JSON with jq"
+command = "jq '{{filter}}' {{file}}"
+safe = true
+
+[[functions.parameters]]
+name = "filter"
+type = "string"
+description = "jq filter to apply"
+required = true
+
+[[functions.parameters]]
+name = "file"
+type = "string"
+description = "JSON file to process"
+required = true
+
+## Read File
+[[functions]]
+name = "read_file"
+description = "Read a file"
+command = "cat {{file}}"
+safe = true
+
+[[functions.parameters]]
+name = "file"
+type = "string"
+description = "File to read"
 required = true
 
 ## List Directory
@@ -161,6 +108,43 @@ type = "string"
 description = "Directory to print tree"
 required = true
 
+## Convert to JSON
+[[functions]]
+name = "tojson"
+description = "Convert from different formats to json"
+command = "tojson {{flags}} {{options}} {{filename}}"
+safe = true
+
+[[functions.parameters]]
+name = "flags"
+type = "string"
+description = "Flags to use with tojson (e.g. -p, --pretty)"
+required = false
+
+[[functions.parameters]]
+name = "options"
+type = "string"
+description = "Options to use with tojson (e.g. -f yaml, -t json)"
+required = false
+
+[[functions.parameters]]
+name = "filename"
+type = "string"
+description = "File to convert"
+required = false
+
+[[functions.parameters]]
+name = "from"
+type = "string"
+description = "Format to convert from (possible values: auto, yaml, toml, json) (default: auto)"
+required = false
+
+[[functions.parameters]]
+name = "to"
+type = "string"
+description = "Format to convert to (possible values: json, yaml, toml) (default: json)"
+required = false
+
 ## Grep
 [[functions]]
 name = "search_pattern"
@@ -180,6 +164,41 @@ type = "string"
 description = "Directory or file to search in"
 required = true
 
+## Tree Grepper
+[[functions]]
+name = "tree_grepper"
+description = """Search for matches using tree-grepper.
+This is a tool to search for code using tree-sitter queries.
+If this fails, you can fall back to using grep or printing file contents."""
+command = "tree-grepper -q {{language}} '{{query}}' {{paths}}"
+safe = true
+
+[[functions.parameters]]
+name = "paths"
+type = "string"
+description = "Places to search for matches (default: .)"
+required = false
+
+[[functions.parameters]]
+name = "query"
+type = "string"
+description = """tree-sitter query which will be used to return the output.
+Example of a golang query: (function_declaration name: (identifier) @func_name (#eq? @func_name "functionName")) @func_body"""
+required = true
+
+[[functions.parameters]]
+name = "language"
+type = "string"
+description = "Language for the query. Find the language by inspecting the files in the directory."
+required = true
+
+## Tree Grepper Languages
+[[functions]]
+name = "tree_grepper_languages"
+description = "List available languages for tree-grepper"
+command = "tree-grepper --languages"
+safe = true
+
 ## Refer
 [[functions]]
 name = "refer"
@@ -194,17 +213,4 @@ safe = true
 name = "query"
 type = "string"
 description = "Query to search for in the referdb file"
-required = true
-
-## Calendar
-[[functions]]
-name = "list_events"
-description = "List events in the calendar"
-command = "icalbuddy eventsToday+{{days}}"
-safe = true
-
-[[functions.parameters]]
-name = "days"
-type = "string"
-description = "Number of days to list events for. Use 0 for today."
 required = true

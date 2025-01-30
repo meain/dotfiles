@@ -1,0 +1,63 @@
+system_prompt = """You are senior software engineer, help me fix this issue reported by the linter.
+I'll povide you with the linter output.
+You should request to read the necessary files and write the fixed code to the file.
+Use any of the provided tools as necessary."""
+ask = "unsafe"
+
+## Print Directory Tree
+[[functions]]
+name = "print_tree"
+description = "Print directory tree (only folders)"
+command = "tree -d ./{{directory}}"
+safe = true
+
+[[functions.parameters]]
+name = "directory"
+type = "string"
+description = "Directory to print tree"
+required = true
+
+## List Directory
+[[functions]]
+name = "list_directory"
+description = "List files in a directory. You only have access to the files in the current and sub directory."
+command = "ls ./{{directory}}"
+safe = true
+
+[[functions.parameters]]
+name = "directory"
+type = "string"
+description = "Directory to list"
+required = true
+
+## Read File
+[[functions]]
+name = "read_file"
+description = "Read a file"
+command = "cat {{file}}"
+safe = true
+
+[[functions.parameters]]
+name = "file"
+type = "string"
+description = "File to read"
+required = true
+
+## Write file
+[[functions]]
+name = "write_file"
+description = "Write to a file"
+command = "tee {{file}}"
+stdin = "{{content}}"
+
+[[functions.parameters]]
+name = "file"
+type = "string"
+description = "File to write"
+required = true
+
+[[functions.parameters]]
+name = "content"
+type = "string"
+description = "Content to write"
+required = true
