@@ -6,4 +6,4 @@ branches="$(git branch --sort=-committerdate | sed 's|^..||' | grep -v 'HEAD det
 head="$(echo "$branches" | fzf --prompt "Head branch: " --preview "git show {1}")"
 base="$(echo "$branches" | grep -v "$head" | fzf --prompt "Base branch: " --preview "git show {1}")"
 
-gh pr create --base "$base" --head "$head" --web
+gh pr create --base "$base" --head "$head" --assignee "@me" --web
