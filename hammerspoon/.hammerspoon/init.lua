@@ -56,10 +56,11 @@ bindFocus("l", teams, true)
 bindFocus("h", notesApp, true)
 bindFocus("j", editor, true)
 bindFocus("o", vscodium, true)
+bindFocus("p", zed, true)
 bindFocus("e", mail, true)
 bindFocus("y", cal, true)
 
-hs.hotkey.bind(fkey, "i", function() focusandback("ghostty") end)
+hs.hotkey.bind(fkey, "i", function() focusandback("kitty") end)
 
 hs.hotkey.bind(fkey, "w", function()
     local bundleID = hs.application.frontmostApplication():bundleID()
