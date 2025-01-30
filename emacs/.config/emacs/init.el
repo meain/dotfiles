@@ -4200,7 +4200,7 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
   (add-hook 'text-mode-hook #'copilot-turn-on-unless-buffer-read-only)
   (add-hook 'prog-mode-hook #'copilot-turn-on-unless-buffer-read-only)
 
-  (setq copilot-idle-delay .2)
+  (setq copilot-idle-delay 0)
   (setq copilot-max-char -1)
 
   ;; Suppress indentation warning from copilot
