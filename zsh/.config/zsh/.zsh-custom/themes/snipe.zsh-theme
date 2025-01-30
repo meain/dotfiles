@@ -59,9 +59,16 @@ function _git_pushable() {
 _vcs_info_wrapper() {
   vcs_info
   if echo "${vcs_info_msg_0_}" | grep -qE 'jj/keep'; then
-    echo "@" # controlled by jujutsu
+    line="$(jj log -r @ --no-graph)"
+    if echo "$line" | grep -q "(empty)"; then
+        echo -e "%F{002}$(echo "$line" | cut -d' ' -f1)%{$reset_color%}"
+    elif echo "$line" | grep -q "(no description set)"; then
+        echo -e "%F{003}$(echo "$line" | cut -d' ' -f1)%{$reset_color%}"
+    else
+        echo "$line" | cut -d' ' -f1
+    fi
   else
-    echo "${vcs_info_msg_0_}"
+    echo "%F{green}${vcs_info_msg_0_}%{$reset_color%}"
   fi
 }
 
@@ -152,7 +159,7 @@ function generate_lpropmpt() {
   if [[ -n "$TMUX" ]] ; then
     PROMPT_GREPPER=" "
   fi
-  echo "${${KEYMAP/vicmd/$NORMAL_COLOR}/(main|viins)/$INSERT_COLOR}${_return_status}${_tmux_indicator}%F{green}$( _vcs_info_wrapper )%F{yellow}%B%(1j.#.)%{$reset_color%}$PROMPT_GREPPER"
+  echo "${${KEYMAP/vicmd/$NORMAL_COLOR}/(main|viins)/$INSERT_COLOR}${_return_status}${_tmux_indicator}$( _vcs_info_wrapper )%F{yellow}%B%(1j.#.)%{$reset_color%}$PROMPT_GREPPER"
 }
 
 function generate_rpropmpt() {
