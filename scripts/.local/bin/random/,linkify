@@ -26,6 +26,7 @@ elif echo "$url" | grep -qE '^https://github.com/[^/]*/[^/]*/?$'; then
 elif echo "$url" | grep -qE '^https://linear.app/[^/]*/issue/[^/]*/[^/]*$'; then
     printf "%s" "$url" | sed "s|https://linear.app/\([^/]*\)/issue/\([^/]*\)/\([^/]*\)|[\2]($url)|"
 elif echo "$url" | grep -qE '^https://.*\.atlassian\.net/browse/.*$'; then
+    url="$(echo "$url" | sed "s|\?atlOrigin=[a-zA-Z0-9]*$||")"
     printf "%s" "$url" | sed "s|https://.*/browse/\([^/]*\)|[\1]($url)|"
 elif echo "$url" | grep -qE '^https://teams.microsoft.com'; then
     # Using sed here was causing issues
