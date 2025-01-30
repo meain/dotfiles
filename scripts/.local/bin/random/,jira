@@ -1,0 +1,33 @@
+#!/bin/sh
+
+set -e
+
+list_issues() {
+    jira issue list --plain --assignee "$JIRA_EMAIL" -s 'To Do' -s 'In Progress'
+}
+
+pick_issue() {
+    if [ -n "$2" ]; then
+        echo "$2"
+    else
+        list_issues | tail -n+2 | fzf | awk '{print $2}'
+    fi
+}
+
+case "$1" in
+e | edit)
+    jira issue edit "$(pick_issue "$@")"
+    ;;
+m | move)
+    jira issue move "$(pick_issue "$@")"
+    ;;
+v | view)
+    jira issue view "$(pick_issue "$@")"
+    ;;
+c | comment)
+    jira issue comment "$(pick_issue "$@")"
+    ;;
+*)
+    list_issues
+    ;;
+esac
