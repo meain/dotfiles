@@ -1,0 +1,17 @@
+#!/bin/sh
+
+set -e
+
+PROMPT="Give me a branch name based on the provided git commit message.
+Keep it to 3 words or less.
+Only return the branch name without anything else in your response.
+"
+
+branch="$(jj log --template=description -r @ --no-graph | aichat "$PROMPT")"
+read -p "Use 'meain/$branch' (y/n) " confirm
+if [ "$confirm" = "y" ]; then
+    jj bookmark set "meain/$branch"
+else
+    echo "Commit aborted"
+    exit 1
+fi
