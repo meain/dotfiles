@@ -23,6 +23,7 @@
   pkgs.roboto-mono
   # pkgs.cozette
   pkgs.fira-code
+  pkgs.monaspace
   # pkgs.maple-mono
   # pkgs.comic-mono
   # pkgs.dina-font

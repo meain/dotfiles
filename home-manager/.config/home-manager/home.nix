@@ -99,7 +99,7 @@ in
     # ppkgs.logseq-doctor # logseq utils
     pkgs.emacs-lsp-booster # lsp json translation proxy
     pkgs.jujutsu # better git wrapper
-    pkgs.lazyjj # tui for jj
+    spkgs.lazyjj # tui for jj
 
     # aspell dicts
     pkgs.aspellDicts.en
@@ -337,6 +337,7 @@ in
     pkgs.poppler_utils # pdf utils
     pkgs.jira-cli-go # jira cli
     ppkgs.prr # local pr review
+    pkgs.ddgr # ddg search from terminal
 
     pkgs.nur.repos.rycee.mozilla-addons-to-nix # package firefox addons
   ]
