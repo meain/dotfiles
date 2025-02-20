@@ -3588,25 +3588,24 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   :commands (combobulate)
   :ensure (:repo "mickeynp/combobulate" :host github))
 
-(use-package ts-fold
+(use-package treesit-fold
   :defer t
-  :after (tree-sitter evil-leader)
-  :commands (ts-fold-mode)
-  :ensure (ts-fold :host github
-                   :repo "jcs090218/ts-fold")
+  :after (evil-leader)
+  :commands (treesit-fold-mode meain/toggle-fold)
+  :ensure (treesit-fold :host github
+                        :repo "emacs-tree-sitter/treesit-fold")
   :config
+  (setq treesit-fold-line-count-show t)
+  (setq treesit-fold-line-count-format "- %d lines -")
+
   (defun meain/toggle-fold ()
     (interactive)
-    (if (equal tree-sitter-mode nil)
+    (if (equal treesit-primary-parser  nil)
         (call-interactively 'evil-toggle-fold)
-      (call-interactively 'ts-fold-toggle)))
+      (call-interactively 'treesit-fold-toggle)))
   :init
-  (add-hook 'tree-sitter-after-on-hook
-            (lambda ()
-              (origami-mode -1)
-              (ts-fold-mode 1)
-              (define-key evil-normal-state-map (kbd "<SPC> TAB") 'meain/toggle-fold)
-              (evil-leader/set-key "o" 'meain/toggle-fold))))
+  (define-key evil-normal-state-map (kbd "<SPC> TAB") 'meain/toggle-fold)
+  (evil-leader/set-key "o" 'meain/toggle-fold))
 
 ;; Show scope info of block
 ;; (remove-overlays (point-min) (point-max))
