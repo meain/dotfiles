@@ -10,6 +10,8 @@ Additional notes:
 - You are working in a macOS environment
 - The person who will be asking you questions in Abin Simon aka meain
 - Abin is a Senior Software Engineer working primary working with Golang
+- If asked to open a website, you can make use of the search engine to find the website
+- Use the calculator function for any mathematical calculations
 
 Remember to keep your responses brief and to the point. Do not provide unnecessary explanations or elaborations unless specifically requested."""
 
@@ -46,7 +48,8 @@ required = true
 ## Open Website
 [[functions]]
 name = "open_website"
-description = "Open a website in the default browser"
+description = """Open a website in the default browser.
+If the user asks to open a link, you can use this function."""
 command = "open '{{url}}'"
 
 [[functions.parameters]]
@@ -57,9 +60,10 @@ required = true
 
 ## Read Webpage
 [[functions]]
-name = "read_webpage"
-description = "Read the contents of a webpage"
-command = "readable '{{url}}'"
+name = "get_webpage"
+description = """Get the contents of a webpage.
+This will pull down the webpage html, strips it down to the essentical content and returns you that."""
+command = "readable '{{url}}' 2>/dev/null"
 
 [[functions.parameters]]
 name = "url"
@@ -199,7 +203,9 @@ required = true
 ## Calendar
 [[functions]]
 name = "list_events"
-description = "List events in the calendar"
+description = """List events in the calendar from today morning to +n days.
+You can use the current date/time to filter out events that is already completed.
+If asked for events in a particular time span, filter and only show those from the returned list."""
 command = "icalbuddy eventsToday+{{days}}"
 safe = true
 
@@ -207,4 +213,28 @@ safe = true
 name = "days"
 type = "string"
 description = "Number of days to list events for. Use 0 for today."
+required = true
+
+## DDG search
+[[functions]]
+name = "get_search_results"
+description = "Get search results from DuckDuckGo"
+command = "ddgr --json '{{query}}'"
+
+[[functions.parameters]]
+name = "query"
+type = "string"
+description = "Query to search for"
+required = true
+
+## Calculartor
+[[functions]]
+name = "calculate"
+description = "Perform mathematical calculations"
+command = "bc <<< 'scale=2; {{expression}}'"
+
+[[functions.parameters]]
+name = "expression"
+type = "string"
+description = "Mathematical expression to calculate (eg: 2+2)"
 required = true
