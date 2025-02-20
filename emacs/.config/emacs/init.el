@@ -1317,7 +1317,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
             (> (common-path-length file1 target-file)
                (common-path-length file2 target-file)))))
 
-  (defun meain/sort-proximity (files)
+  (defun meain/sort-files-list (files)
     (if (project-current)
         (let* ((prev-buffer (window-buffer (minibuffer-selected-window)))
                (current-file (if (buffer-file-name prev-buffer)
@@ -1325,7 +1325,14 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
                                "."))
                (project-path (expand-file-name (project-root (project-current))))
                (current-file-sans-project (string-remove-prefix project-path current-file)))
-          (sort-by-proximity files current-file-sans-project))
+          (sort (sort-by-proximity files current-file-sans-project)
+                ;; Also give less priority to "/mock/" files
+                (lambda (file1 file2)
+                  (if (string-match-p "/mock/" file1)
+                      nil
+                    (if (string-match-p "/mock/" file2)
+                        t
+                      nil)))))
       files))
 
   (vertico-multiform-mode)
@@ -1334,7 +1341,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
           (consult-xref buffer indexed)
           (eglot-find-implementation indexed) ;; TODO: change to vertical
           (consult-imenu buffer)
-          (project-find-file flat (vertico-sort-function . meain/sort-proximity))
+          (project-find-file flat (vertico-sort-function . meain/sort-files-list))
           (xref-find-references buffer)
           (meain/imenu-or-eglot buffer)
           (tree-jump-search buffer)
