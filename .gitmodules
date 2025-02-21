@@ -7,3 +7,6 @@
 [submodule "zsh/.config/zsh/.zsh-custom/plugins/zsh-syntax-highlighting"]
 	path = zsh/.config/zsh/.zsh-custom/plugins/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting
+[submodule "zsh/.config/zsh/.zsh-custom/plugins/fzf-tab"]
+	path = zsh/.config/zsh/.zsh-custom/plugins/fzf-tab
+	url = https://github.com/Aloxaf/fzf-tab.git

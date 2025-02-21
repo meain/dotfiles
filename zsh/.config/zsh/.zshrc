@@ -52,6 +52,12 @@ source "$ZDOTDIR/.zsh-custom/themes/snipe.zsh-theme"
 source "$ZDOTDIR/.zsh-custom/plugins/z/z.sh"
 source "$ZDOTDIR/.zsh-custom/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh"
 source "$ZDOTDIR/.zsh-custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh"
+source "$ZDOTDIR/.zsh-custom/plugins/fzf-tab/fzf-tab.plugin.zsh"
+
+# fzf-tab
+zstyle ':completion:*:git-checkout:*' sort false # disable sorting for git-checkout
+zstyle ':fzf-tab:*' use-fzf-default-opts yes # use fzf default options
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls -1 --color=always $realpath' # preview for cd
 
 export EDITOR='nvim'
 export BROWSER= # do not set browser
@@ -150,8 +156,8 @@ _direnv_hook() {
 	_direnv_hook__old "$@" 2> >(grep -vE '^direnv: export')
 }
 
-,darkmode quiet # set dark or light mode
 # Completions for jj
 source <(jj util completion zsh)
 
+# ,darkmode quiet # set dark or light mode
 export ZSH_LOADED=1
