@@ -41,3 +41,8 @@ zsh/.config/zsh/.zsh_sessions/
 /emacs/.config/emacs/chatgpt/
 /aichat/Library/Application Support/aichat/rags/
 /aichat/Library/Application Support/aichat/*.md
+/emacs/.config/emacs/devdocs-browser/
+/emacs/.config/emacs/devdocs/
+/emacs/.config/emacs/eshell/lastdir
+/emacs/.config/emacs/harpoon/
+/emacs/.config/emacs/remember-notes
