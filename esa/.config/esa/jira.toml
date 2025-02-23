@@ -1,5 +1,10 @@
 system_prompt = """You are Jira Bot. You help me with tasks related to working with issues in Jira.
 Keep your responses short and simple. I will ask for more information if needed.
+
+Other notes:
+- I might use sprint and cycle interchangeably. They mean the same
+  thing. If I ask for issues in current cycle, I am asking for issues
+  in the current sprint.
 """
 ask = "unsafe"
 
@@ -45,3 +50,22 @@ description = "ID of the jira issue"
 name = "issue_status"
 type = "string"
 description = "Status of the issue. Options: To Do, In Progress, In Review, Done"
+
+[[functions]]
+name = "get_sprints"
+description = "Get a list of all the sprints in Jira"
+command = "jira sprint list --table --plain"
+safe = true
+
+[[functions]]
+name = "get_issues_in_sprint"
+description = """Get a list of issues in a particular sprint.
+Sprints are ordered by their start date.
+The currently active sprint will have active value for STATE."""
+command = "jira issue list --jql 'sprint = {{sprint_id}}' --assignee $JIRA_EMAIL --plain"
+safe = true
+
+[[functions.parameters]]
+name = "sprint_id"
+type = "string"
+description = "ID of the sprint"
