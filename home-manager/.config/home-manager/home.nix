@@ -64,7 +64,7 @@ in
     pkgs.mpc_cli # remote for mpd
     spkgs.mpd # music player
     pkgs.pandoc # convert document between different formats
-    pkgs.xsv # view/manage csv from terminal
+    # pkgs.xsv # view/manage csv from terminal
     pkgs.parallel # exec things in parallel
     # pkgs.fortune # give me a fortune
     pkgs.lf # better ranger alternative
@@ -241,7 +241,7 @@ in
 
     # gui
     pkgs.mpv # audio/video player
-    # pkgs.kitty
+    # pkgs.kitty # terminal emulator
     # pkgs.alacritty # terminal emulator
     # pkgs.firefox # browser
     # pkgs.chromium # because Google hates firefox
