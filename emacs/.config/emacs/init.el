@@ -860,10 +860,21 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   (defun meain/project-name ()
     (file-name-nondirectory (directory-file-name
                              (project-root (project-current)))))
+
+  (defun meain/find-file-git-changed ()
+  "Fuzzy find git changed files."
+  (interactive)
+  (let* ((untracked-files (shell-command-to-string "git ls-files --others --exclude-standard"))
+         (changed-files (shell-command-to-string "git diff --name-only"))
+         (files (split-string (concat untracked-files "\n" changed-files) "\n" t)))
+    (find-file (completing-read "Pick file: " files))))
+
   :init
   (evil-leader/set-key "p p"
     (meain/with-alternate (call-interactively 'project-switch-project)
                           (project-find-file)))
+
+  (define-key evil-normal-state-map (kbd "<SPC> <RET>") 'meain/find-file-git-changed)
   (define-key evil-normal-state-map (kbd "<RET>") 'project-find-file))
 
 ;; eldoc load
