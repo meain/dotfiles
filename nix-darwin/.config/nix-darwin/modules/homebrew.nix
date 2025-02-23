@@ -31,8 +31,6 @@
 
       "choose-gui" # dmenu alternative
       "bclm" # limit battery charge
-      "obs" # screen recording
-      "keycastr" # show keys being typed (for recording)
 
       "ispell" # Emacs does not pick up nix version
       "ical-buddy" # Read from macos calendar
@@ -61,6 +59,7 @@
       "visual-studio-code" # copilot
       # "thunderbird"
       "orbstack" # better docker
+      "kitty" # terminal emulator
 
       "firefox"
       "google-chrome"
@@ -71,9 +70,11 @@
       # "http-toolkit" # intercept http traffic
       # "utm" # virtualization
       # "rectangle" # window management
-      "tailscale" # vpn
+      # "tailscale" # vpn
       "chatgpt" # quick shortcut is awesome
       "meetingbar" # next meeting in bar
+      "obs" # screen recording
+      "keycastr" # show keys being typed (for recording)
     ];
   };
 }
