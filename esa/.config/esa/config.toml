@@ -20,6 +20,7 @@ Remember to keep your responses brief and to the point. Do not provide unnecessa
 name = "set_alarm"
 description = "Set an alarm on the system"
 command = ",apple-alarm '{{time}}'"
+safe = true
 
 [[functions.parameters]]
 name = "time"
@@ -32,12 +33,14 @@ required = true
 name = "get_datetime"
 description = "Get current date and time"
 command = "date"
+safe = true
 
 ## Delete Alarm
 [[functions]]
 name = "delete_alarm"
 description = "Delete an alarm already based on time"
 command = ",alarm-delete '{{time}}'"
+safe = true
 
 [[functions.parameters]]
 name = "time"
@@ -51,6 +54,7 @@ name = "open_website"
 description = """Open a website in the default browser.
 If the user asks to open a link, you can use this function."""
 command = "open '{{url}}'"
+safe = true
 
 [[functions.parameters]]
 name = "url"
@@ -64,6 +68,7 @@ name = "get_webpage"
 description = """Get the contents of a webpage.
 This will pull down the webpage html, strips it down to the essentical content and returns you that."""
 command = "readable '{{url}}' 2>/dev/null"
+safe = true
 
 [[functions.parameters]]
 name = "url"
@@ -76,6 +81,7 @@ required = true
 name = "adjust_brightness"
 description = "Adjust screen brightness"
 command = ",adjust-brightness '{{level}}'"
+safe = true
 
 [[functions.parameters]]
 name = "level"
@@ -220,6 +226,7 @@ required = true
 name = "get_search_results"
 description = "Get search results from DuckDuckGo"
 command = "ddgr --json '{{query}}'"
+safe = true
 
 [[functions.parameters]]
 name = "query"
@@ -232,6 +239,7 @@ required = true
 name = "calculate"
 description = "Perform mathematical calculations"
 command = "bc <<< 'scale=2; {{expression}}'"
+safe = true
 
 [[functions.parameters]]
 name = "expression"
