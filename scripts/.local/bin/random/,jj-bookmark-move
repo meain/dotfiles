@@ -1,0 +1,7 @@
+#!/bin/sh
+
+set -e
+
+jj stack --template='bookmarks++"\n"' --no-graph | 
+	grep -vE '^$' | grep -vE '^main$' |
+	fzf | xargs jj bookmark move
