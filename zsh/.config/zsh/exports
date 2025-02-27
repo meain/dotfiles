@@ -139,3 +139,6 @@ export AIDER_CHECK_UPDATE=false # managed via nix
 
 # esa
 export ESA_MODEL="gpt-4o-mini"
+
+# k9s
+export K9S_CONFIG_DIR="$HOME/.config/k9s"
