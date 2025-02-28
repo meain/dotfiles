@@ -4247,7 +4247,6 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
   (define-key copilot-mode-map (kbd "M-f M-l") #'copilot-accept-completion))
 
 ;; Copilot chat
-(use-package request :ensure t) ; dependency for copilot-chat
 (use-package copilot-chat
   :after (request)
   :ensure (:host github :repo "chep/copilot-chat.el" :files ("*.el"))
