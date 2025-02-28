@@ -866,12 +866,12 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
                              (project-root (project-current)))))
 
   (defun meain/find-file-git-changed ()
-  "Fuzzy find git changed files."
-  (interactive)
-  (let* ((untracked-files (shell-command-to-string "git ls-files --others --exclude-standard"))
-         (changed-files (shell-command-to-string "git diff --name-only"))
-         (files (split-string (concat untracked-files "\n" changed-files) "\n" t)))
-    (find-file (completing-read "Pick file: " files))))
+    "Fuzzy find git changed files."
+    (interactive)
+    (let* ((untracked-files (shell-command-to-string "git ls-files --others --exclude-standard"))
+           (changed-files (shell-command-to-string "git diff --name-only"))
+           (files (split-string (concat untracked-files "\n" changed-files) "\n" t)))
+      (find-file (completing-read "Pick file: " files))))
 
   :init
   (evil-leader/set-key "p p"
