@@ -3636,13 +3636,14 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 ;; Similar: breadcrumb
 (use-package topsy
   :defer t
+  :disabled t
   :ensure t
   :init
   (add-hook 'find-file-hook #'topsy-mode))
 
-;; Does not use imenu populated by eglot
-;; (use-package breadcrumb
-;;   :ensure (:repo "joaotavora/breadcrumb" :host github))
+(use-package breadcrumb
+  :ensure (:repo "joaotavora/breadcrumb" :host github)
+  :config (breadcrumb-mode))
 
 ;; Quick lookup in a dictionary
 (use-package dictionary
