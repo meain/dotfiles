@@ -4,9 +4,20 @@
 
 set -e
 
-psp="$(ps -elf --sort=start_time | tac | grep "$USER" |
-	tail -n+8 | # drop the ones started by this script
-	fzf -q "$*")"
-procpid="$(echo "$psp" | awk '{print $4}')"
-echo "Waiting for" "$(echo "$psp" | awk '{out=$15; for(i=16;i<=NF;i++){out=out" "$i}; print out}')"
+# Get process listing with compatible fields on both Linux and macOS
+if [[ "$(uname)" == "Darwin" ]]; then
+    psp="$(ps -ewwo user,pid,start,command | tail -n+2 | tac | grep "$USER" |
+        tail -n+8 | # drop the ones started by this script
+        fzf -q "$*")"
+    procpid="$(echo "$psp" | awk '{print $2}')"
+    procname="$(echo "$psp" | awk '{out=$4; for(i=5;i<=NF;i++){out=out" "$i}; print out}')"
+else
+    psp="$(ps -elf --sort=start_time | tac | grep "$USER" |
+        tail -n+8 | # drop the ones started by this script
+        fzf -q "$*")"
+    procpid="$(echo "$psp" | awk '{print $4}')"
+    procname="$(echo "$psp" | awk '{out=$15; for(i=16;i<=NF;i++){out=out" "$i}; print out}')"
+fi
+
+echo "Waiting for" "$procname"
 tail --pid="$procpid" -f /dev/null # https://stackoverflow.com/a/41613532/2724649
