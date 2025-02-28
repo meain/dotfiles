@@ -2240,6 +2240,7 @@ Pass `CHOOSER' as t to not automatically select the previous tab."
 ;; vterm setup
 (use-package vterm
   :ensure t
+  :disabled t
   :defer t
   :after evil
   :commands (vterm meain/shell-toggle)
@@ -4200,11 +4201,22 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
   :init
   (add-hook 'prog-mode-hook #'auto-highlight-symbol-mode))
 
+;; Using aidermacs instead
 (use-package aider
   :ensure (:host github :repo "tninja/aider.el" :files ("aider.el"))
+  :disabled t
   :config
   (setq aider-args '("--no-auto-commit" "--watch-files"))
   (define-key evil-normal-state-map (kbd "<SPC> a") 'aider-transient-menu))
+
+(use-package aidermacs
+  :ensure (:host github :repo "MatthewZMD/aidermacs")
+  :after (evil)
+  :config
+  (setq aidermacs-auto-commits nil)
+  (setq aidermacs-use-architect-mode nil)
+  (setq aidermacs-backend 'comint)
+  (define-key evil-normal-state-map (kbd "<SPC> a") 'aidermacs-transient-menu))
 
 ;; Copilot, I guess
 (use-package copilot
