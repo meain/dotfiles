@@ -26,8 +26,12 @@
   longpaths = true
 [diff]
   difftool = vimdiff
-  algorithm = patience
   indentHeuristic = true
+  # https://blog.gitbutler.com/how-git-core-devs-configure-git/
+  algorithm = histogram
+  colorMoved = plain
+  mnemonicPrefix = true
+  renames = true
 [diff "spaceman-diff"]
   command = spaceman-diff
 [credential]
@@ -71,6 +75,6 @@
   autostash = true
   updateRefs = true
 [merge]
-  conflictstyle = diff3
+  conflictstyle = zdiff3
 [rerere]
   enabled = true
