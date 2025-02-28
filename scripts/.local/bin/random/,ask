@@ -6,11 +6,82 @@ set -e
 
 [ -z "$1" ] && echo "Usage: ,ask [s] <your question>"
 
+questionsPrompt="You are a document search who helps people find the right search statements.
+They will provide you with a query and you'll provide them with possible search statements to find the relevant docs.
+Give only the statements. Each question should be a single line.
+
+Additional instructions:
+- Keep statements simple and broad
+- Try to cover all aspects of the query
+- Split the different aspects of the question into different statements
+- Only give 15
+- No additional formatting like numbering
+
+Example output for the query 'How can I create a user-role and bind that to a custom role? Show me curl commands':
+
+creating roles
+creating user-roles
+api routes for roles
+api routes for user-roles
+binding user-roles to custom roles"
+
+short=""
 if [ "$1" = "s" ]; then
     shift
-    refer search --format llm "$*" |
-        aichat --prompt "Using the provided context, answer my follow-up question concisely. Do not make up answers if not available in the provided context." "$*"
-else
-    refer search --format llm "$*" |
-        aichat --prompt "Using the provided context, answer my follow-up question. Do not make up answers if not available in the provided context." "$*"
+    short="true"
 fi
+query="$*"
+
+printf "Finding the right questions to ask...\r" >&2
+questions="$(aichat --prompt "$questionsPrompt" "$query" | grep -v '^$')"
+
+printf "\033[2K"
+printf "\033[90m%s\033[0m\n" "# Refined questions" >&2
+echo "$questions" | while read -r question; do
+    printf "\033[90m%s\033[0m\n" "$question" >&2
+done
+
+printf "\nFinding the right documents to refer...\r" >&2
+allDocuments="$( { echo "$questions"; echo "$query"; } | xargs -I{} refer search '{}')"
+uniqueDocuments="$(echo "$allDocuments" | cut -d: -f1 | sort | uniq)"
+
+# TODO(meain): Introduce a reranker and limit to maybe 5
+context="$(echo "$uniqueDocuments" | while read -r doc; do
+    echo "--------------------------------------------------------------"
+    echo
+    printf "Filename: "
+    refer show "$doc"
+    echo
+done)"
+
+printf "\033[2K"
+printf "\033[90m%s\033[0m\n" "# Files referred" >&2
+echo "$uniqueDocuments" | while read -r doc; do
+    printf "\033[90m%s\033[0m\n" "$(refer show "$doc" | head -n1)" >&2
+done
+echo >&2
+
+responseQuery="You will be given a context and a follow-up question. Your task is to answer the question concisely using only the information provided in the context. Here's how to approach this task:
+
+To answer the question:
+
+1. Carefully analyze the context to find relevant information.
+2. If the answer is explicitly stated in the context, provide that answer.
+3. If the answer can be inferred from the information given, explain your reasoning briefly.
+4. If the question cannot be answered based on the context provided, state that the information is not available.
+
+Important guidelines:
+- Only use information from the given context. Do not include any external knowledge or assumptions.
+- Be concise in your response. Aim for clarity and brevity.
+- If the context doesn't provide enough information to answer the question fully, it's okay to say so.
+- Do not make up or speculate on information that is not present in the context.
+- If you quote directly from the context, use quotation marks.
+
+Remember, it's better to admit when information is not available than to provide an incorrect or speculative answer."
+
+echo "$context" |
+    if [ -n "$short" ]; then
+        aichat --prompt "$responseQuery Keep your answers super short and concise." "$query"
+    else
+        aichat --prompt "$responseQuery" "$query"
+    fi
