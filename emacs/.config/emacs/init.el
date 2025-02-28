@@ -4444,12 +4444,23 @@ For optional NO-CACHE, use caching by default."
                      ;; ("ollama:gemma" . ("ollama" "gemma:2b-instruct-q8_0"))
                      ;; ("ollama:macro-o1" . ("ollama" "marco-o1:7b-q8_0"))
                      ("anthropic:3.5sonnet" . ("anthropic" "claude-3-5-sonnet-latest"))
+                     ("anthropic:3.7sonnet" . ("anthropic" "claude-3-7-sonnet-latest"))
                      ("anthropic:3.5haiku" . ("anthropic" "claude-3-5-haiku-latest"))))
            (name (completing-read "Model: " models nil t))
            (vals (cdr (assoc name models))))
       (when vals
+        (setq yap-llm-provider-override nil)
         (setq yap-service (car vals))
         (setq yap-model (cadr vals)))))
+
+  (defun meain/yap-use-vscode-llm ()
+    (interactive)
+    (let ((vscode-llm (make-llm-openai-compatible
+                       :chat-model "claude-3.5-sonnet"
+                       :url "http://localhost:3838/v1")))
+      (setq yap-service "vscode-llm")
+      (setq yap-model "v:claude-3.5-sonnet")
+      (setq yap-llm-provider-override vscode-llm)))
 
   (defun meain/yap-template-with-refer (prompt-type)
     "Enhance YAP templates with refer integration.
