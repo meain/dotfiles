@@ -3,5 +3,7 @@
 set -e
 
 jj stack --template='bookmarks++"\n"' --no-graph | 
+    sed 's|\*$||;s|@origin$||' |
+    sort | uniq |
 	grep -vE '^$' | grep -vE '^main$' |
 	fzf | xargs jj bookmark move
