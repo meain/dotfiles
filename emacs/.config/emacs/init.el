@@ -728,6 +728,10 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   (apply orig-fn beg end args))
 (advice-add 'evil-yank :around 'meain/evil-yank-advice)
 
+(use-package comint
+  :config
+  (add-hook 'comint-mode-hook (lambda () (setq-local show-trailing-whitespace nil))))
+
 ;; Recompile binding
 (use-package compile
   :commands (compile recompile)
