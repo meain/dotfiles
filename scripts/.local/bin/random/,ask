@@ -43,22 +43,12 @@ done
 
 printf "\nFinding the right documents to refer...\r" >&2
 
-allDocuments="$({
-    echo "$questions"
-    echo "$query"
-} | while read -r doc; do
-    printf "\033[2K" >&2
-    printf "\033[90mSearching for '%s'...\033[0m\r" "$doc" >&2
-    refer search "$doc"
-done)"
-printf "\033[2K"
-
-# Remove all empty lines
-allDocuments="$(echo "$allDocuments" | grep -v '^$')"
-uniqueDocuments="$(echo "$allDocuments" | cut -d: -f1 | sort | uniq)"
+allDocuments="$(refer search "$query" $(echo "$questions" | awk '{printf "\"%s\" ", $0}'))"
 
 # TODO(meain): Introduce a reranker and limit to maybe 5
-context="$(echo "$uniqueDocuments" | while read -r doc; do
+selectedDocuments="$(echo "$allDocuments" | head -n10 | cut -d: -f1)"
+
+context="$(echo "$selectedDocuments" | while read -r doc; do
     echo "--------------------------------------------------------------"
     echo
     printf "Filename: "
@@ -68,7 +58,7 @@ done)"
 
 printf "\033[2K"
 printf "\033[90m%s\033[0m" "# Files referred #" >&2
-echo "$uniqueDocuments" | while read -r doc; do
+echo "$selectedDocuments" | while read -r doc; do
     printf "\033[90m | %s\033[0m" "$(refer show "$doc" | head -n1)" >&2
 done
 echo >&2
