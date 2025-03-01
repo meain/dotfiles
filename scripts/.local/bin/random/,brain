@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -e
+
+cd ~/.local/share/sbdb >/dev/null
+if [ "$1" = "update" ]; then
+    printf "Refreshing memories...\r" >&2
+    refer add **/*.md >/dev/null
+    refer reindex >/dev/null
+    exit 0
+fi
+
+printf "Looking it up in your rusty brain...\r" >&2
+,ask "$*" 2>/dev/null
