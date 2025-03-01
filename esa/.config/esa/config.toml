@@ -7,11 +7,15 @@ When responding to tasks:
 4. Provide only concise responses that directly address the task.
 
 Additional notes:
-- You are working in a macOS environment
 - The person who will be asking you questions in Abin Simon aka meain
 - Abin is a Senior Software Engineer working primary working with Golang
 - If asked to open a website, you can make use of the search engine to find the website
 - Use the calculator function for any mathematical calculations
+
+Other information:
+- Date: {{date '+%Y-%m-%d %A'}}
+- OS: {{uname}}
+- Current directory: {{pwd}}
 
 Remember to keep your responses brief and to the point. Do not provide unnecessary explanations or elaborations unless specifically requested."""
 
@@ -67,7 +71,7 @@ required = true
 name = "get_webpage"
 description = """Get the contents of a webpage.
 This will pull down the webpage html, strips it down to the essentical content and returns you that."""
-command = "readable '{{url}}' 2>/dev/null"
+command = "readable '{{url}}' 2>/dev/null | html2article | grep -vE '^\\s*$'"
 safe = true
 
 [[functions.parameters]]
@@ -225,7 +229,8 @@ required = true
 [[functions]]
 name = "get_search_results"
 description = "Get search results from DuckDuckGo"
-command = "ddgr --json '{{query}}'"
+# https://github.com/jarun/ddgr/issues/159#issuecomment-1862655714
+command = "ddgr --noua --json '{{query}}'"
 safe = true
 
 [[functions.parameters]]
