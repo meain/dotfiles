@@ -72,15 +72,22 @@ required = true
 ## Read File
 [[functions]]
 name = "read_file"
-description = "Read a file"
-command = "cat {{file}}"
+description = "Read the contents of a file"
+command = "cat {{show_line_numbers}} {{file}}"
 safe = true
 
 [[functions.parameters]]
 name = "file"
 type = "string"
-description = "File to read"
+description = "Path to the file to read"
 required = true
+
+[[functions.parameters]]
+name = "show_line_numbers"
+type = "boolean"
+description = "Should show line number"
+required = false
+format = "-n"
 
 ## List Directory
 [[functions]]

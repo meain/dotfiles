@@ -13,9 +13,9 @@ Additional notes:
 - Use the calculator function for any mathematical calculations
 
 Other information:
-- Date: {{date '+%Y-%m-%d %A'}}
-- OS: {{uname}}
-- Current directory: {{pwd}}
+- Date: {{$date '+%Y-%m-%d %A'}}
+- OS: {{$uname}}
+- Current directory: {{$pwd}}
 
 Remember to keep your responses brief and to the point. Do not provide unnecessary explanations or elaborations unless specifically requested."""
 
@@ -71,13 +71,28 @@ required = true
 name = "get_webpage"
 description = """Get the contents of a webpage.
 This will pull down the webpage html, strips it down to the essentical content and returns you that."""
-command = "readable '{{url}}' 2>/dev/null | html2article | grep -vE '^\\s*$'"
+command = "readable '{{url}}' 2>/dev/null | html2markdown"
 safe = true
 
 [[functions.parameters]]
 name = "url"
 type = "string"
 description = "URL of the website to read"
+required = true
+
+# Doing this as a separate small agents makes sure that one single
+# agent will not have to fit unnecessary information into their
+# context.
+[[functions]]
+name = "get_webpage_summary"
+description = """Get the summary of contents of a webpage."""
+command = "esa +summarizer '{{url}}'"
+safe = true
+
+[[functions.parameters]]
+name = "url"
+type = "string"
+description = "URL of the website to summarize"
 required = true
 
 ## Adjust Brightness
@@ -189,6 +204,13 @@ description = "Pattern to search for"
 required = true
 
 [[functions.parameters]]
+name = "context"
+type = "string"
+description = "Context lines to show"
+required = false
+format = "--context %d"
+
+[[functions.parameters]]
 name = "directory"
 type = "string"
 description = "Directory or file to search in"
@@ -228,7 +250,8 @@ required = true
 ## DDG search
 [[functions]]
 name = "get_search_results"
-description = "Get search results from DuckDuckGo"
+description = """Get search results from DuckDuckGo.
+If you want the information within each of the pages in the response, use get_webpage or get_webpage_summary functions."""
 # https://github.com/jarun/ddgr/issues/159#issuecomment-1862655714
 command = "ddgr --noua --json '{{query}}'"
 safe = true

@@ -1,0 +1,13 @@
+system_prompt="You are a bot that helps summarize webpages."
+
+[[functions]]
+name = "get_webpage_content"
+description = """Get the contents of a webpage."""
+command = "readable '{{url}}' 2>/dev/null | html2markdown"
+safe = true
+
+[[functions.parameters]]
+name = "url"
+type = "string"
+description = "URL of the website to summarize"
+required = true
