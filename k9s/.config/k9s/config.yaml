@@ -6,10 +6,10 @@ k9s:
   noExitOnCtrlC: false
   ui:
     skin: personal
-    enableMouse: true
+    enableMouse: false
     headless: false
-    logoless: false
-    crumbsless: false
+    logoless: true
+    crumbsless: true
     reactive: true
     noIcons: false
   skipLatestRevCheck: true
