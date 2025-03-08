@@ -4,12 +4,12 @@ set -euo pipefail
 
 if jj stack >/dev/null 2>&1; then
     branches="$(jj stack --template='bookmarks++"\n"' --no-graph |
-        grep -vE '^$' | sed 's|\*$||;s|@origin$||' | sort | uniq)"
+        grep -vE '^$' | sed 's|\*$||;s|@origin$||' | uniq)"
 else
     branches="$(git branch --sort=-committerdate | sed 's|^..||' | grep -v 'HEAD detached')"
 fi
 
 head="$(echo "$branches" | fzf --prompt "Head branch: " --preview "git show {1}")"
-base="$(echo "$branches" | grep -v "$head" | fzf --prompt "Base branch: " --preview "git show {1}")"
+base="$(echo "$branches" | grep -v "^$head$" | fzf --prompt "Base branch: " --preview "git show {1}")"
 
 gh pr create --base "$base" --head "$head" --assignee "@me" --web
