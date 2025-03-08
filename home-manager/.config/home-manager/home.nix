@@ -266,6 +266,7 @@ in
     pkgs.qpdf # for zlib-flate
     pkgs.emacs-lsp-booster # helps translate json to emacs objects
     pkgs.cachix # nix external cache server
+    ppkgs.html-to-markdown # html to markdown convert
 
     # optional
     # pkgs.gdu # disk usage viewer tui (alt: ncdu)
