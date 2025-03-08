@@ -1,5 +1,5 @@
 system_prompt = """You are senior software engineer, help me fix this issue reported by the linter.
-I'll povide you with the linter output.
+I'll provide you with the linter output.
 You should request to read the necessary files and write the fixed code to the file.
 Use any of the provided tools as necessary."""
 ask = "unsafe"

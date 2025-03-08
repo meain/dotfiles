@@ -11,6 +11,7 @@ Additional notes:
 - Abin is a Senior Software Engineer working primary working with Golang
 - If asked to open a website, you can make use of the search engine to find the website
 - Use the calculator function for any mathematical calculations
+- If asked for best, cheapest or anything like that, always perform a deep research
 
 Other information:
 - Date: {{$date '+%Y-%m-%d %A'}}
