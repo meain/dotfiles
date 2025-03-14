@@ -12,6 +12,7 @@ echo "Cleaning up rr..."
 command rm -rf ~/.local/share/rr
 
 echo "Cleaning up nix..."
+nix-collect-garbage -d
 nix-collect-garbage
 nix-store --optimize
 
@@ -19,9 +20,6 @@ echo "Cleaning up docker..."
 docker system prune -a
 
 [ "$answer" != "y" ] && exit 0
-
-echo "Cleaning all but last nix generation..."
-nix-collect-garbage -d
 
 echo "Cleaning up go cache..."
 go clean -cache
