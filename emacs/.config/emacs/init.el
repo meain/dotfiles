@@ -4415,7 +4415,6 @@ For optional NO-CACHE, use caching by default."
   (setq yap-api-key:openai openai-api-key)
   (setq yap-api-key:anthropic anthropic-api-key)
   (setq yap-log-requests "/Users/meain/.cache/yap")
-  (setq yap-follow-output t)
 
   ;; Add window rules for *yap-response* buffer so that it shows up at
   ;; top of the frame
