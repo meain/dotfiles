@@ -4432,6 +4432,7 @@ For optional NO-CACHE, use caching by default."
     (let* ((models '(("github:4o-mini" . ("github" "gpt-4o-mini"))
                      ("github:4o" . ("github" "gpt-4o"))
                      ("github:o3-mini" . ("github" "o3-mini"))
+                     ("github:deepseekV3" . ("github" "DeepSeek-V3"))
                      ;; ("github:o1-mini" . ("github" "o1-mini"))
                      ;; ("github:o1-preview" . ("github" "o1-preview"))
                      ("groq:llama-3.3-70b" . ("groq" "llama-3.3-70b-versatile"))
