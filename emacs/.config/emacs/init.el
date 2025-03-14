@@ -2087,6 +2087,7 @@ list of available pages."
   :config (global-evil-matchit-mode 1))
 
 ;; Highlight color codes
+;; Alternative: https://github.com/DevelopmentCool2449/colorful-mode
 (use-package rainbow-mode
   :ensure t
   :commands (rainbow-mode)
@@ -3330,6 +3331,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
                  ",markdown-preview" buffer-file-name))
 
 ;; Restclient
+;; Alternative: https://github.com/federicotdn/verb
 (use-package restclient
   :ensure t
   :defer t
