@@ -3538,8 +3538,8 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   (add-hook 'rust-mode-hook
             (lambda ()
               (tree-sitter-hl-add-patterns nil
-                [((identifier) @rust.constructor
-                  (.match? @rust.constructor "^[A-Z]"))]))))
+                                           [((identifier) @rust.constructor
+                                             (.match? @rust.constructor "^[A-Z]"))]))))
 
 ;; Some custom text objects based on treesitter
 (use-package evil-textobj-tree-sitter
@@ -5142,51 +5142,30 @@ not defined, it will be saved in the `$HOME' directory."
                                          'help-echo
                                          (buffer-file-name))))
                (propertize ":%l:%c")
-               '(:eval (mode-line-idle 0.3
-                                       '(:propertize (:eval
-                                                      (when-let (func-name (which-function))
-                                                        (format ":%s" func-name)))
-                                                     face
-                                                     hima-simple-gray)
-                                       ""))
+               ;; Now available in header-line via breadcrumb-mode
                ;; '(:eval (mode-line-idle 0.3
                ;;                         '(:propertize (:eval
-               ;;                                        (if (boundp 'tree-sitter-mode)
-               ;;                                            (let ((thing-name (meain/tree-sitter-thing-name 'class-like)))
-               ;;                                              (if thing-name (format ":%s" thing-name)))))
+               ;;                                        (when-let (func-name (which-function))
+               ;;                                          (format ":%s" func-name)))
                ;;                                       face
                ;;                                       hima-simple-gray)
                ;;                         ""))
-               ;; '(:eval (mode-line-idle 0.3
-               ;;                         '(:propertize (:eval
-               ;;                                        (if (boundp 'tree-sitter-mode)
-               ;;                                            (let ((thing-name (meain/tree-sitter-thing-name 'function-like))
-               ;;                                                  (config-nesting (meain/tree-sitter-config-nesting)))
-               ;;                                              (if thing-name
-               ;;                                                  (format ":%s" thing-name)
-               ;;                                                (if config-nesting
-               ;;                                                    (format ":%s" config-nesting))))
-               ;;                                          (when-let (func-name (which-function))
-               ;;                                            (format ":%s" func-name))))
+               ;; '(:eval (mode-line-idle 1.0
+               ;;                         '(:propertize (:eval (if (and (project-current)
+               ;;                                                       (not (file-remote-p default-directory)))
+               ;;                                                  (list " "
+               ;;                                                        (let* ((explicit (cdr (car (cdr (cdr (tab-bar--current-tab))))))
+               ;;                                                               (name (cdr (car (cdr (tab-bar--current-tab)))))
+               ;;                                                               (out-name (if explicit
+               ;;                                                                             (concatenate 'string ":" name)
+               ;;                                                                           (if (project-current)
+               ;;                                                                               (concat ";"
+               ;;                                                                                       (meain/project-name))
+               ;;                                                                             ""))))
+               ;;                                                          (format "%s" out-name)))))
                ;;                                       face
                ;;                                       hima-simple-gray)
                ;;                         ""))
-               '(:eval (mode-line-idle 1.0
-                                       '(:propertize (:eval (if (and (project-current)
-                                                                     (not (file-remote-p default-directory)))
-                                                                (list " "
-                                                                      (let* ((explicit (cdr (car (cdr (cdr (tab-bar--current-tab))))))
-                                                                             (name (cdr (car (cdr (tab-bar--current-tab)))))
-                                                                             (out-name (if explicit
-                                                                                           (concatenate 'string ":" name)
-                                                                                         (if (project-current)
-                                                                                             (concat ";"
-                                                                                                     (meain/project-name))
-                                                                                           ""))))
-                                                                        (format "%s" out-name)))))
-                                                     face
-                                                     hima-simple-gray)
-                                       ""))
                '(:eval (mode-line-idle 1.0
                                        '(:propertize (:eval (when-let (vc vc-mode)
                                                               (list " @" (substring vc 5))))
