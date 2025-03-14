@@ -7,9 +7,15 @@ set -e
 SAVEPATH="$HOME/.local/share/project-configs-backup"
 mkdir -p "$SAVEPATH"
 
+# Ignores
+# - temp directories
+# - .build/checkouts (swift builds)
+# - node_modules
+
 backup_loc() {
     tput el && echo "Saving $1..."
-    find "$HOME/dev" -type d -name '.git' | grep -v '/temp/' |
+    find "$HOME/dev" -type d -name '.git' |
+        grep -v '/temp/' | grep -v '.build/checkouts' | grep -v '/node_modules/' |
         while read -r path; do
             dest="$2"
             [ -z "$dest" ] && dest="$1"
