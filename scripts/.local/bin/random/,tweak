@@ -2,4 +2,17 @@
 
 set -e
 
-pbpaste | aichat "$*" | tee /dev/stderr | pbcopy
+prompt="$*"
+if [ -z "$prompt" ]; then
+    prompt="You are a seasoned software engineer.
+
+Enhance the given message by:
+- Fixing typos and grammar mistakes.
+- Properly formatting it using Markdown if necessary.
+- For things that look like variables, enclose them in backticks.
+- Do not change the meaning of the message or add more information.
+
+Only return the improved message."
+fi
+
+pbpaste | aichat "$prompt" | tee /dev/stderr | pbcopy
