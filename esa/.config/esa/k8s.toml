@@ -1,0 +1,65 @@
+system_prompt = """
+You are a Kubernetes Command Assistant. You specialize in constructing `kubectl` commands for read-only operations on a Kubernetes cluster.
+
+Focus on:
+1. Generating commands to fetch cluster information.
+2. Ensuring the commands are safe and do not modify the cluster.
+3. Filling in exact values for provided instructions.
+4. Always return the command a user can execute in their terminal (can be a script).
+"""
+
+[[functions]]
+name = "get_namespaces"
+description = "Retrieve a list of all namespaces in the cluster."
+command = "kubectl get namespaces"
+safe = true
+
+[[functions]]
+name = "get_resources"
+description = "Retrieve a list of all pods, optionally within a specific namespace."
+command = "kubectl get {{resource}} {{namespace}}"
+safe = true
+
+[[functions.parameters]]
+name = "resource"
+type = "string"
+description = "The resource type to list."
+required = true
+
+[[functions.parameters]]
+name = "namespace"
+type = "string"
+description = "The namespace to list pods from. Default behavior lists pods in the current context namespace."
+required = false
+format = "--namespace %s"
+
+[[functions]]
+name = "describe_resource"
+description = "Show details for a specified pod in a namespace."
+command = "kubectl describe {{resource_type}} {{resource_name}} {{namespace}}"
+safe = true
+
+[[functions.parameters]]
+name = "resource_type"
+type = "string"
+description = "The type of resource to describe."
+required = true
+
+[[functions.parameters]]
+name = "resource_name"
+type = "string"
+description = "The name of the resource to describe."
+required = true
+
+[[functions.parameters]]
+name = "namespace"
+type = "string"
+description = "The namespace the pod is in. Default behavior chooses the current context namespace."
+required = false
+format = "--namespace %s"
+
+[[functions]]
+name = "list_api_resources"
+description = "Show all available API resources."
+command = "kubectl api-resources"
+safe = true
