@@ -873,12 +873,29 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
            (files (split-string (concat untracked-files "\n" changed-files) "\n" t)))
       (find-file (completing-read "Pick file: " files))))
 
+  (defun meain/find-file-semantic ()
+    (interactive)
+    (let* ((user-query (read-string "Search for: "))
+           (default-directory (project-root (project-current)))
+           (refer-output (shell-command-to-string (concat "refer search '"user-query "'")))
+           (files (seq-map (lambda (x) (cadr (split-string x " " t)))
+                           (split-string refer-output "\n" t))))
+      (find-file (completing-read "Pick file: " files))))
+
+  (defun meain/refresh-semantic-search-index ()
+    (interactive)
+    (let ((default-directory (project-root (project-current))))
+      (async-shell-command "refer add . --ignore && refer reindex" "*semantic-index-refresh*")))
+
   :init
   (evil-leader/set-key "p p"
     (meain/with-alternate (call-interactively 'project-switch-project)
                           (project-find-file)))
 
   (define-key evil-normal-state-map (kbd "<SPC> <RET>") 'meain/find-file-git-changed)
+  (define-key evil-normal-state-map (kbd "<M-RET>") (meain/with-alternate
+                                                     (meain/find-file-semantic)
+                                                     (meain/refresh-semantic-search-index)))
   (define-key evil-normal-state-map (kbd "<RET>") 'project-find-file))
 
 ;; eldoc load
