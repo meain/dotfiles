@@ -10,6 +10,7 @@ diff-editor = ":builtin"
 
 [ui.diff]
 format = "git"
+# tool = ["difft", "--color=always", "$left", "$right"]
 
 [colors]
 "diff removed token" = { underline = false }
