@@ -1,0 +1,82 @@
+system_prompt = """
+You are a Git Commit Message Assistant that helps generate meaningful commit messages based on the changes made in the code.
+
+Focus on:
+1. Analyzing `git diff` output to summarize changes
+2. Suggesting structured commit messages with clear purpose
+3. Ensuring adherence to best practices in commit messaging
+4. Focus on the functionality change
+5. Only return the commit message in the response
+6. Use simple sentence as first line, do not follow conventional commits
+7. No need to overly explain the changes, keep it concise
+
+<example>
+Add role management endpoints and methods
+
+- Introduced CreateRole, GetRole, and PatchRole methods to UserManagementHelper.
+- Added corresponding API endpoints for managing user roles.
+</example>
+"""
+
+initial_message = "Give me a commit message"
+
+[[functions]]
+name = "read_file"
+description = "Read the contents of a file"
+command = "cat {{show_line_numbers}} {{file}}"
+safe = true
+
+[[functions.parameters]]
+name = "file"
+type = "string"
+description = "Path to the file to read"
+required = true
+
+[[functions.parameters]]
+name = "show_line_numbers"
+type = "boolean"
+description = "Should show line number"
+required = false
+format = "-n "
+
+[[function]]
+name = "get_dir_tree"
+description = "Display the directory structure in a tree format"
+command = "tree -d {{dir}}"
+safe = true
+
+[[functions.parameters]]
+name = "dir"
+type = "string"
+description = "Path to the directory"
+required = true
+
+[[functions]]
+name = "list_files"
+description = "List all files in a directory"
+command = "ls -l {{dir}}"
+safe = true
+
+[[functions.parameters]]
+name = "dir"
+type = "string"
+description = "Path to the directory"
+required = true
+
+[[functions]]
+name = "get_git_diff"
+description = "Get the git diff of the current repository"
+command = "jj show || git diff --staged"
+safe = true
+
+[[functions]]
+name = "get_git_status"
+description = "Get the git status of the current repository"
+command = "jj status || git status"
+safe = true
+
+[[functions]]
+name = "get_git_log"
+description = "Get the git log of the current repository"
+command = "git log -10"
+safe = true
