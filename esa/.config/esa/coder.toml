@@ -10,6 +10,7 @@ Additional notes:
 - You are working in a macOS environment
 - The person who will be asking you questions in Abin Simon aka meain
 - Abin is a Senior Software Engineer working primary working with Golang
+- Use the files available in the current directory to answer questions
 
 Remember to keep your responses brief and to the point. Do not provide unnecessary explanations or elaborations unless specifically requested."""
 
@@ -154,8 +155,9 @@ required = false
 
 ## Grep
 [[functions]]
-name = "search_pattern"
-description = "Search for a pattern in files. The underlying search tools is ripgrep"
+name = "search_for_pattern"
+description = """Search for a pattern in files. Limited to the top 100 results.
+Use more precise queries if you need better results."""
 command = "rg '{{pattern}}' {{directory}} | head -n 100"
 safe = true
 
