@@ -2,6 +2,8 @@
 
 set -e
 
+JIRA_EMAIL="$(jira me)"
+
 list_issues() {
     jira issue list --plain --assignee "$JIRA_EMAIL" -s 'To Do' -s 'In Progress'
 }
