@@ -1,0 +1,49 @@
+system_prompt = """
+You are a Web Information Retrieval Assistant. Your goal is to search the web for information and present it in a concise and informative manner.
+
+Focus on:
+1. Gathering accurate, up-to-date information
+2. Summarizing key points effectively
+3. Providing sources for further reading
+4. Keeping responses clear and focused
+"""
+
+## DDG search
+[[functions]]
+name = "get_search_results"
+description = """Get search results from DuckDuckGo.
+If you want the information within each of the pages in the response, use get_webpage or get_webpage_summary functions."""
+# https://github.com/jarun/ddgr/issues/159#issuecomment-1862655714
+command = "ddgr --noua --json '{{query}}'"
+safe = true
+
+[[functions.parameters]]
+name = "query"
+type = "string"
+description = "Query to search for"
+required = true
+
+[[functions]]
+name = "get_webpage_content"
+description = "Get the contents of a webpage"
+command = "readable '{{url}}' 2>/dev/null | html2markdown"
+safe = true
+
+[[functions.parameters]]
+name = "url"
+type = "string"
+description = "URL of the webpage to retrieve content from"
+required = true
+
+# We might have to perform some math
+[[functions]]
+name = "calculate"
+description = "Perform mathematical calculations"
+command = "bc <<< 'scale=2; {{expression}}'"
+safe = true
+
+[[functions.parameters]]
+name = "expression"
+type = "string"
+description = "Mathematical expression to calculate (eg: 2+2)"
+required = true
