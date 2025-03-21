@@ -9,7 +9,19 @@ else
     branches="$(git branch --sort=-committerdate | sed 's|^..||' | grep -v 'HEAD detached')"
 fi
 
-head="$(echo "$branches" | fzf --prompt "Head branch: " --preview "git show {1}")"
-base="$(echo "$branches" | grep -v "^$head$" | fzf --prompt "Base branch: " --preview "git show {1}")"
+if [ -n "$*" ]; then
+    branches="$(echo "$branches" | fzf -m --prompt "Pick branches: " --preview "git show {1}")"
+fi
 
-gh pr create --base "$base" --head "$head" --assignee "@me" --web
+if [ "$(echo "$branches" | wc -l)" -le 1 ]; then
+    echo "Invalid number of branches selected $(echo "$branches" | wc -l)"
+    exit 1
+fi
+
+# Create PR from each pair
+top="$(echo "$branches" | head -n 1)"
+echo "$branches" | tail -n+2 | while read -r branch; do
+    echo "Creating PR for $top <- $branch"
+    gh pr create --base "$branch" --head "$top" --assignee "@me" --web
+    top="$branch"
+done
