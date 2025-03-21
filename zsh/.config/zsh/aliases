@@ -38,6 +38,9 @@ alias lg='lazygit'
 alias lj='lazyjj'
 alias mk=',mk'
 alias asi=',voice-assistant'
+alias jjj='jj new'
+alias lll='aichat --model ollama:granite3-dense:2b'
+alias tk=',tweak'
 
 # ledger
 alias ledger='ledger -f ~/.local/share/ledger/master.ledger --strict'
