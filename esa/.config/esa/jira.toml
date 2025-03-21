@@ -11,13 +11,13 @@ ask = "unsafe"
 [[functions]]
 name = "list_jira_issues"
 description = "Return a list of top level jira issues (does not include sub-tasks)"
-command = "jira issue list --plain --assignee 'abin.simon@veeam.com'"
+command = "jira issue list --plain --assignee '{{$jira me}}'"
 safe = true
 
 [[functions]]
 name = "list_jira_issues_by_status"
 description = "Return a list of top level jira issues filtered by status (does not include sub-tasks)"
-command = "jira issue list --plain --assignee 'abin.simon@veeam.com' -s '{{issue_status}}'"
+command = "jira issue list --plain --assignee '{{$jira me}}' -s '{{issue_status}}'"
 safe = true
 
 [[functions.parameters]]
