@@ -1,3 +1,6 @@
+name = "Git Commit Assistant"
+description = "Helps generate meaningful commit messages based on git diffs"
+
 system_prompt = """
 You are a Git Commit Message Assistant that helps generate meaningful commit messages based on the changes made in the code.
 

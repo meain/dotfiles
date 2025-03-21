@@ -1,3 +1,6 @@
+name = "Web Summarizer"
+description = "A tool that summarizes web content using LLMs"
+
 system_prompt="You are a bot that helps summarize webpages."
 
 [[functions]]

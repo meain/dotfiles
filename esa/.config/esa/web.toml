@@ -1,3 +1,6 @@
+name = "Web Search Assistant"
+description = "A tool for retrieving and summarizing information from the web"
+
 system_prompt = """
 You are a Web Information Retrieval Assistant. Your goal is to search the web for information and present it in a concise and informative manner.
 

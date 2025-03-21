@@ -1,3 +1,6 @@
+name = "Help"
+description = "Command documentation assistant that provides help for various commands and tools"
+
 system_prompt = """
 You are a Command Documentation Assistant that continuously looks up help documentation for commands and their subcommands of a specified tool.
 
