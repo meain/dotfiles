@@ -32,7 +32,7 @@ read -n 1 -p "Use commit message (Y/n): " confirm
 echo
 if [ "$confirm" != "n" ]; then
     if [ -d ".jj" ]; then
-        jj describe -m "$commit_msg"
+        jj commit -m "$commit_msg"
     else
         git commit -m "$commit_msg"
     fi
