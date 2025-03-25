@@ -23,16 +23,23 @@ if [ -z "$changes" ]; then
 fi
 
 printf "Generating message...\r"
-commit_msg=$(echo "$changes" | esa +commit)
+echo "$changes" | esa +commit "$*" >/tmp/auto-pr-message
 printf "\033[2K" # clear line
 
-echo "$commit_msg"
+cat /tmp/auto-pr-message
+read -n 1 -p "Edit commit message? (y/N): " edit_confirm
+
+if [ "$edit_confirm" = "y" ]; then
+    vim /tmp/auto-pr-message
+fi
+
 read -n 1 -p "Use commit message (Y/n): " confirm
+commit_msg="$(cat /tmp/auto-pr-message)"
 
 echo
 if [ "$confirm" != "n" ]; then
     if [ -d ".jj" ]; then
-        jj commit -m "$commit_msg"
+        jj desc -m "$commit_msg"
     else
         git commit -m "$commit_msg"
     fi
