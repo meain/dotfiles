@@ -8,9 +8,9 @@ Only return the branch name without anything else in your response.
 "
 
 branch="$(jj log --template=description -r @ --no-graph | aichat "$PROMPT")"
-read -p "Use 'meain/$branch' (y/n) " confirm
-if [ "$confirm" = "y" ]; then
-    jj bookmark set "meain/$branch"
+read -p "Use 'meain/$branch' (Y/n) " confirm
+if [ "$confirm" != "n" ]; then
+    jj bookmark set "meain/$branch" -r @
 else
     echo "Commit aborted"
     exit 1
