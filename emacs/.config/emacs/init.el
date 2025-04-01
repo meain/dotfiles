@@ -4482,6 +4482,15 @@ For optional NO-CACHE, use caching by default."
         (setq yap-service (car vals))
         (setq yap-model (cadr vals)))))
 
+  (defun meain/yap-use-openrouter-free ()
+    (interactive)
+    (let* ((models (seq-filter (lambda (x) (string-suffix-p ":free" x))
+                               (yap--get-models:openrouter)))
+           (model (completing-read "Model: " models)))
+      (setq yap-llm-provider-override nil)
+      (setq yap-service "openrouter")
+      (setq yap-model model)))
+
   (defun meain/yap-use-vscode-llm ()
     (interactive)
     (let ((vscode-llm (make-llm-openai-compatible
