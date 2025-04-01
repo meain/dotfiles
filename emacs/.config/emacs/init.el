@@ -1671,6 +1671,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   (advice-add 'jsonrpc--log-event :override #'ignore)
   (setopt eglot-events-buffer-size 10)
 
+  (setq jsonrpc-event-hook nil)
   (setq eglot-autoshutdown t)
   (setq eglot-sync-connect nil)
   (setq eglot-extend-to-xref t) ;; extend eglot to files gone to with go-to-def
