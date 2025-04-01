@@ -138,7 +138,8 @@ export AIDER_GITIGNORE=false # present in global gitignore
 export AIDER_CHECK_UPDATE=false # managed via nix
 
 # esa
-export ESA_MODEL="gpt-4o-mini"
+export ESA_MODEL="openai/gpt-4o-mini"
+# export ESA_MODEL="openrouter/google/gemini-2.0-flash-exp:free"
 
 # k9s
 export K9S_CONFIG_DIR="$HOME/.config/k9s"
