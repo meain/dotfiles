@@ -743,6 +743,11 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   (setq compilation-always-kill t)
   (setq compilation-ask-about-save nil)
   (setq compilation-scroll-output nil)
+
+  ;; Ensure ansi escape sequences are rendered properly
+  (setq ansi-color-for-compilation-mode t)
+  (add-hook 'compilation-filter-hook #'ansi-color-compilation-filter)
+
   (defun meain/toggle-compilation-scroll-output ()
     "Toggle `compilation-scroll-output'."
     (interactive)
