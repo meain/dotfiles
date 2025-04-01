@@ -40,7 +40,7 @@ alias mk=',mk'
 alias asi=',voice-assistant'
 alias jjj='jj new'
 alias lll='aichat --model ollama:granite3-dense:2b'
-alias tk=',tweak'
+alias tk=',tweak && pbpaste|mdclip'
 
 # ledger
 alias ledger='ledger -f ~/.local/share/ledger/master.ledger --strict'
