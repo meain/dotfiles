@@ -14,6 +14,9 @@ Additional notes:
 - The person who will be asking you questions in Abin Simon aka meain
 - Abin is a Senior Software Engineer working primary working with Golang
 - Use the files available in the current directory to answer questions
+- All functions you run will be run in the specific project
+
+Current directory: {{$pwd}}
 
 Remember to keep your responses brief and to the point. Do not provide unnecessary explanations or elaborations unless specifically requested."""
 

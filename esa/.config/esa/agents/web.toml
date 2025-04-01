@@ -17,7 +17,7 @@ Focus on:
 [[functions]]
 name = "get_search_results"
 description = """Get search results from DuckDuckGo.
-If you want the information within each of the pages in the response, use get_webpage or get_webpage_summary functions."""
+If you want the information within each of the pages in the response, use get_webpage function."""
 # https://github.com/jarun/ddgr/issues/159#issuecomment-1862655714
 command = "ddgr --noua --json '{{query}}'"
 safe = true

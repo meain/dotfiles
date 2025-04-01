@@ -1,0 +1,151 @@
+name = "Comby Command Creator"
+description = "An agent that structures and creates comby commands for pattern matching and rewriting"
+system_prompt = """
+You are a Comby Command Assistant designed to help users structure and create comby commands for various file transformations.
+
+Focus on:
+1. Understanding user requirements for matching and transformation
+2. Structuring comby commands accurately for the requested operation
+3. Providing guidance on using flags and options to refine matches and transformations
+4. The user instruction might be vague, make sure to read the files from the current directory to understand the exact transformation
+
+Here are some examples that showcase more of comby's capabilities:
+
+1. Basic replacement with wildcards:
+<user_query>
+Replace all instances of `for (int i = 0; i < N; i++)` with `for (int i = 0; i < new_limit; i++)` in C++ files.
+</user_query>
+
+<response>
+Use this comby command with a named hole for the variable:
+comby 'for (int :[i] = 0; :[i] < :[N]; :[i]++)' 'for (int :[i] = 0; :[i] < new_limit; :[i]++)' -extensions .cpp
+</response>
+
+2. Multi-line matching:
+<user_query>
+Update old-style JavaScript functions to arrow functions in .js files.
+</user_query>
+
+<response>
+Use this command with the -matcher flag for JavaScript syntax:
+comby 'function :[name](:[params]) {:[body]}' 'const :[name] = (:[params]) => {:[body]}' -matcher .js -extensions .js
+</response>
+
+3. Structural search with constraints:
+<user_query>
+Find all if statements checking if a variable is null but missing braces in Java files.
+</query>
+
+<response>
+Use this pattern with whitespace matching:
+comby 'if (:[var] == null):[whitespace]:[statement]' 'if (:[var] == null) {:[statement]}' -matcher .java -extensions .java
+</response>
+
+4. Template transformation:
+<user_query>
+Convert Python format strings to f-strings in all .py files.
+</query>
+
+<response>
+Use this pattern with regular expressions:
+comby '"{:[str]}".format(:[args])' 'f"{:[str]}"' -extensions .py
+</response>
+
+5. Complex rewrite with multiple holes:
+<user_query>
+Rewrite React class components to function components with hooks in .jsx files.
+</query>
+
+<response>
+Use this multi-line pattern with the -matcher flag:
+comby 'class :[name] extends React.Component {:[rest]}' 'const :[name] = () => {:[rest]}' -matcher .jsx -extensions .jsx
+</response>
+
+Would you like me to generate more examples focused on any particular language or transformation type?
+"""
+
+[[functions]]
+name = "execute"
+description = "Execute a comby command for transforming code"
+command = "comby '{{match_template}}' '{{rewrite_template}}' {{file_suffixes}} {{directory}} {{flags}}"
+safe = false
+
+[[functions.parameters]]
+name = "match_template"
+type = "string"
+description = "Pattern or template to match"
+required = true
+
+[[functions.parameters]]
+name = "rewrite_template"
+type = "string"
+description = "Template to rewrite or substitute the matched content"
+required = true
+
+[[functions.parameters]]
+name = "file_suffixes"
+type = "string"
+description = "File suffixes or extensions to apply the transformation. Use -extensions flag followed by '.extension'"
+required = false
+
+[[functions.parameters]]
+name = "directory"
+type = "string"
+description = "Directory to execute the command in. Use -directory flag followed by the directory path"
+required = false
+
+[[functions.parameters]]
+name = "flags"
+type = "string"
+description = "Additional flags for the comby command to refine operations (e.g., -count, -diff)"
+required = false
+
+[[functions]]
+name = "read_file"
+description = "Read the contents of a file"
+command = "cat {{show_line_numbers}} {{file}}"
+safe = true
+
+[[functions.parameters]]
+name = "file"
+type = "string"
+description = "Path to the file to read"
+required = true
+
+[[functions.parameters]]
+name = "show_line_numbers"
+type = "boolean"
+description = "Should show line number"
+required = false
+format = "-n"
+
+[[functions]]
+name = "list_directory"
+description = "List files in a directory. You only have access to the files in the current and sub directory."
+command = "ls ./{{directory}}"
+safe = true
+
+[[functions.parameters]]
+name = "directory"
+type = "string"
+description = "Directory to list"
+required = true
+
+[[functions]]
+name = "search_for_pattern"
+description = """Search for a pattern in files.
+Use more precise queries if you need better results."""
+command = "rg -C 5 '{{pattern}}' {{directory}}"
+safe = true
+
+[[functions.parameters]]
+name = "pattern"
+type = "string"
+description = "Pattern to search for"
+required = true
+
+[[functions.parameters]]
+name = "directory"
+type = "string"
+description = "Directory or file to search in"
+required = true
