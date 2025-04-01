@@ -294,9 +294,12 @@
 (context-menu-mode nil)
 
 ;; Show open and closing brackets
-(show-paren-mode t)
-(setq show-paren-delay 0)
-(setq show-paren-style 'parenthesis)
+(use-package emacs
+  :hook (after-init . show-paren-mode)
+  :config
+  (setq show-paren-delay 0)
+  (setq show-paren-context-when-offscreen t)
+  (setq show-paren-style 'parenthesis))
 
 ;; Keep files in sync with filesystem
 ;; Tweak these settings carefully. This makes things quite slow if not
