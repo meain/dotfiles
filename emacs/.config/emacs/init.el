@@ -137,6 +137,7 @@
   (setq evil-kill-on-visual-paste nil)
   (setq evil-respect-visual-line-mode nil)
   (setq evil-symbol-word-search t)
+  (define-key evil-normal-state-map (kbd "Y") 'meain/yank-till-line-end)
 
   :config
   (evil-mode t)
@@ -167,7 +168,12 @@
   ;; (advice-add 'evil-jump-backward :around #'meain/recenter-advice)
   ;; (advice-add 'evil-search-next :around #'meain/recenter-top-advice)
   ;; (advice-add 'evil-search-previous :around #'meain/recenter-top-advice)
-  )
+
+  (defun meain/yank-till-line-end ()
+    "Yank till end of line."
+    (interactive)
+    (evil-yank (point) ;; subtracting 1 for newline
+               (- (save-excursion (forward-line) (point)) 1))))
 
 ;; Evil leader
 (use-package evil-leader
@@ -593,7 +599,9 @@ Pass ORIGINAL and ALTERNATE options."
           (switch-to-buffer "*scratch*")
           (setq default-directory "~/")
           (lisp-interaction-mode)
-          (meain/update-scratch-message)))))
+          (meain/update-scratch-message))))
+    :init
+    (evil-leader/set-key "c" 'meain/create-or-switch-to-scratch))
 
   (defun meain/kill-current-buffer-unless-scratch ()
     "Kill current buffer if it is not scratch."
@@ -3282,169 +3290,29 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
                                 (save-buffer)
                                 (revert-buffer-quick)))
 
-;; Quick open scratch buffers
+;; Quick notes
 (use-package emacs
-  :after evil-leader
-  :commands (meain/scratchy)
   :config
-  (defun meain/scratchy ()
-    "Open scratch buffer in a specific mode."
+  (setq meain/quick-notes-directory "~/.local/share/vime/")
+  (setq meain/quick-notes-templates-directory "~/dev/src/templates")
+  (defun meain/create-quick-note ()
     (interactive)
-    (let* ((scratch-major-mode
-            (completing-read
-             "Choose mode: "
-             (cons 'artist-mode
-                   (cons 'mermaid-mode
-                         (append
-                          (cl-loop for sym the symbols of obarray
-                                   when (and (functionp sym)
-                                             (provided-mode-derived-p sym 'text-mode))
-                                   collect sym)
-                          (cl-loop for sym the symbols of obarray
-                                   when (and (functionp sym)
-                                             (provided-mode-derived-p sym 'prog-mode))
-                                   collect sym))))
-             nil nil nil nil "text-mode"))
-           (scratch-file-name (concatenate 'string
-                                           "~/.local/share/scratch/"
-                                           (format "%s" scratch-major-mode) "-"
-                                           (substring (uuid-string) 0 4)))
-           (text (if (use-region-p) (buffer-substring (region-beginning) (region-end)))))
-      (find-file scratch-file-name)
-      (if text (insert text))
-      (funcall (intern scratch-major-mode))
-      (if (eq (intern scratch-major-mode) 'artist-mode)
-          (evil-local-mode -1))))
-  :init
-  (evil-leader/set-key "c"
-    (meain/with-alternate (meain/create-or-switch-to-scratch)
-                          (call-interactively 'meain/scratchy))))
-
-;; vime functionality within emacs
-(use-package uuid :ensure t :commands uuid-string)
-(use-package emacs
-  :commands (meain/vime)
-  :after (marginalia)
-  :config
-  (defun meain/marginalia-annotate-vime (cand)
-    (when-let (root "~/.local/share/vime/")
-      (marginalia-annotate-file (expand-file-name (car (split-string cand " ")) root))))
-  (add-to-list 'marginalia-annotator-registry '(vime meain/marginalia-annotate-vime builtin none))
-  (add-to-list 'marginalia-prompt-categories '("Choose vime:" . vime))
-  (defun meain/vime-name-append (filename directory)
-    "Util function used to parse :name block for vime entries.  FILENAME is the name of the vime file."
-    (with-temp-buffer
-      (insert-file-contents (concatenate 'string directory "/" filename))
-      (concatenate 'string
-                   filename
-                   (if (s-starts-with-p ":name" (car (split-string (buffer-string) "\n")))
-                       (replace-regexp-in-string
-                        (regexp-quote ":name")
-                        ""
-                        (car (split-string (buffer-string) "\n")))
-                     ""))))
-  (defun meain/vime--get-new-filename (directory)
-    "Get a nonexistent file in `DIRECTORY'.
-After a while you start repeating filenames as we have just 4 so checking for exists."
-    (let ((filename (concat directory "/_"
-                            (substring (uuid-string) 0 4))))
-      (if (file-exists-p filename)
-          (meain/vime--get-new-filename)
-        filename)))
-  (defun meain/vime (name directory &optional createnew)
-    "Load a random file inside vime dir.  Used as a temp notes dir.
-Pass in `LISTITEMS to decide if you wanna create a new item or search for existing items."
-    (interactive "P")
-    (if (not createnew)
-        (let ((vertico-sort-function nil))
-          (find-file
-           (concat
-            directory "/"
-            (car (split-string
-                  (completing-read
-                   (concat "Choose " name ": ")
-                   (mapcar (lambda (x) (meain/vime-name-append (car x) directory))
-                           (sort (remove-if-not #'(lambda (x)
-                                                    (eq (nth 1 x) nil))
-                                                (directory-files-and-attributes directory))
-                                 #'(lambda (x y) (time-less-p (nth 6 y) (nth 6 x))))))))))
-          (gfm-mode))
-      (progn
-        (find-file (meain/vime--get-new-filename directory))
-        (insert ":name ")
-        (gfm-mode)
-        (evil-insert 1))))
-  :init
-  (evil-leader/set-key "v" '(lambda (createnew)
-                              (interactive "P")
-                              (meain/vime "vime" "~/.local/share/vime" createnew))))
-
-;; Notes
-(use-package emacs
-  :commands (meain/open-note)
-  :after (marginalia)
-  :config
-  ;; Open note
-  (defun meain/nested-list-dir (directory)
-    "List items two level deep in DIRECTORY."
-    (apply 'concatenate
-           'list
-           (mapcar (lambda (x)
-                     (mapcar (lambda (y) (concatenate 'string (car x) "/" (car y)))
-                             (remove-if #'(lambda (x) (or (eq (nth 1 x) t)
-                                                          (equal (substring (nth 0 x) 0 1) ".")))
-                                        (directory-files-and-attributes
-                                         (concatenate 'string directory "/" (car x))))))
-                   (remove-if #'(lambda (x)
-                                  (or (eq (nth 1 x) nil)
-                                      (equal (substring (nth 0 x) 0 1) ".")
-                                      (equal (nth 0 x) "archive")
-                                      (equal (nth 0 x) "temp")))
-                              (directory-files-and-attributes directory)))))
-  (defun meain/marginalia-annotate-note (cand)
-    (when-let (root "~/.local/share/notes/")
-      (marginalia-annotate-file (expand-file-name cand root))))
-  (add-to-list 'marginalia-annotator-registry '(note meain/marginalia-annotate-note builtin none))
-  (add-to-list 'marginalia-prompt-categories '("Choose note:" . note))
-  (defun meain/open-note ()
-    "Quick open a note from `.notes` directory."
-    (interactive)
-    (find-file
-     (concatenate 'string
-                  "~/.local/share/notes/"
-                  (completing-read "Choose note: "
-                                   (meain/nested-list-dir "~/.local/share/notes")))))
-  :init (evil-leader/set-key "a N" 'meain/open-note))
-
-;; devdocs
-(use-package devdocs
-  :ensure t
-  :commands (devdocs-search devdocs-lookup devdocs-install))
-
-;; cheat.sh
-(use-package cheat-sh
-  :ensure t
-  :commands (cheat-sh cheat-sh-maybe-region)
-  :init
-  (evil-leader/set-key "a d"
-    (meain/with-alternate (call-interactively 'devdocs-lookup)
-                          (call-interactively 'cheat-sh-search-topic))))
-
-;; Quick edit (for use with hammerspoon quick edit)
-(defun meain/quick-edit-end ()
-  "Util function to be executed on qed completion."
-  (interactive)
-  (mark-whole-buffer)
-  (call-interactively 'kill-ring-save)
-  (meain/kill-current-buffer-unless-scratch))
-(defun meain/quick-edit ()
-  "Util function for use with hammerspoon quick edit functionality."
-  (interactive)
-  (let ((qed-buffer-name (concatenate 'string "qed-" (substring (uuid-string) 0 4))))
-    (generate-new-buffer qed-buffer-name)
-    (switch-to-buffer qed-buffer-name)
-    (evil-paste-after 1)
-    (gfm-mode)))
+    (let* ((templates (directory-files meain/quick-notes-templates-directory nil ".+\\..+"))
+           (name-input (completing-read "Title: " templates nil nil))
+           (is-template (member name-input templates))
+           (extension (if is-template "" ; template would have the extension
+                        (concat "." (completing-read "Extension: " '("md") nil nil))))
+           (filename (concat meain/quick-notes-directory "/"
+                             (format-time-string "%Y-%m/%d %H:%M " (current-time))
+                             name-input extension)))
+      (find-file filename)
+      (when is-template
+        (insert-file-contents (concat meain/quick-notes-templates-directory "/" name-input))
+        (goto-char (point-min)))))
+  (evil-leader/set-key "v"
+    (meain/with-alternate
+     (project-switch-project meain/quick-notes-directory) ; TODO: sort files by timestamp
+     (meain/create-quick-note))))
 
 ;; vim-printer remake in elisp
 (use-package emacs
