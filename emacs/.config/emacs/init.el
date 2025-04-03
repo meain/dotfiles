@@ -563,37 +563,38 @@ Pass ORIGINAL and ALTERNATE options."
                 (call-interactively 'eval-region)
                 (evil-force-normal-state))))
 
-;; Quick quit
-(defun meain/update-scratch-message ()
-  "Update scratch buffer contents to reflect open buffers and unread emails."
-  (interactive)
-  (with-current-buffer "*scratch*"
-    (save-restriction
-      (widen)
-      (save-excursion
-        (goto-char 1)
-        ;; kill-line without copying to clipboard
-        (delete-region (point) (save-excursion (end-of-line 2) (point)))
-        (insert (format ";; The LLMs have been going through your %s buffers\n;; FYI, I have been up for the last %s"
-                        (cl-count-if (lambda (b)
-                                       (or (buffer-file-name b)
-                                           (not (string-match "^ " (buffer-name b)))))
-                                     (buffer-list))
-                        (emacs-uptime "%D, %H")))))))
-(defun meain/create-or-switch-to-scratch ()
-  "Switch to scratch buffer if exists, else create a scratch buffer with our config."
-  (cond
-   ((get-buffer "*scratch*")
-    (switch-to-buffer "*scratch*"))
-   (t (progn
-        (switch-to-buffer "*scratch*")
-        (setq default-directory "~/")
-        (lisp-interaction-mode)
-        (meain/update-scratch-message)))))
-
 (use-package emacs
   :after evil
-  :init
+  :commands ()
+  :config
+  (defun meain/update-scratch-message ()
+    "Update scratch buffer contents to reflect open buffers and unread emails."
+    (interactive)
+    (with-current-buffer "*scratch*"
+      (save-restriction
+        (widen)
+        (save-excursion
+          (goto-char 1)
+          ;; kill-line without copying to clipboard
+          (delete-region (point) (save-excursion (end-of-line 2) (point)))
+          (insert (format ";; The LLMs have been going through your %s buffers\n;; FYI, I have been up for the last %s"
+                          (cl-count-if (lambda (b)
+                                         (or (buffer-file-name b)
+                                             (not (string-match "^ " (buffer-name b)))))
+                                       (buffer-list))
+                          (emacs-uptime "%D, %H")))))))
+
+  (defun meain/create-or-switch-to-scratch ()
+    "Switch to scratch buffer if exists, else create a scratch buffer with our config."
+    (cond
+     ((get-buffer "*scratch*")
+      (switch-to-buffer "*scratch*"))
+     (t (progn
+          (switch-to-buffer "*scratch*")
+          (setq default-directory "~/")
+          (lisp-interaction-mode)
+          (meain/update-scratch-message)))))
+
   (defun meain/kill-current-buffer-unless-scratch ()
     "Kill current buffer if it is not scratch."
     (interactive)
@@ -613,6 +614,7 @@ Pass ORIGINAL and ALTERNATE options."
           (evil-insert 1)
           (vterm-reset-cursor-point)))
        (t (previous-buffer)))))
+  :init
   (define-key evil-normal-state-map (kbd "q") 'meain/kill-current-buffer-unless-scratch))
 
 ;; Quit out of everything with esc
@@ -688,66 +690,6 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
     (meain/with-alternate
      (call-interactively 'recompile)
      (call-interactively 'compile))))
-
-(use-package compile-multi
-  :ensure t
-  :defer t
-  :after (compile evil-leader)
-  :commands (compile-multi)
-  :config
-
-  ;; (setq compile-multi-config '())
-  (defun meain/compile-multi-mscripts-targets ()
-    "Targets from mscripts"
-    (let ((mscripts-dir (expand-file-name (concat (project-root (project-current)) "/.mscripts"))))
-      (if (file-exists-p mscripts-dir)
-          (mapcar (lambda (x)
-                    (cons (concat "mscripts:" (file-name-base x))
-                          (concat ".mscripts/" (file-name-base x))))
-                  (remove-if
-                   (lambda (x) (file-directory-p (concat ".mscripts/" x)))
-                   (directory-files mscripts-dir t "^[^\.]"))))))
-
-  (push `((file-directory-p (concat (project-root (project-current)) "/.mscripts"))
-          ,#'meain/compile-multi-mscripts-targets)
-        compile-multi-config)
-
-  (setq compile-multi-default-directory
-        (lambda ()
-          (if (boundp 'custom-src-directory)
-              custom-src-directory
-            default-directory)))
-
-  (push '((file-exists-p "Makefile")
-          ("make:build" . "make build")
-          ("make:test" . "make test")
-          ("make:all" . "make all"))
-        compile-multi-config)
-
-  (push '((file-exists-p "go.mod")
-          ("go:run" . "go run ./...")
-          ("go:build" . "go build ./...")
-          ("go:build-tests" . "go test ./... -run xxxxx")
-          ("go:test" . "go test ./..."))
-        compile-multi-config)
-
-  (defun meian/byte-compile-this-file ()
-    "`byte-compile' current file."
-    (byte-compile-file (buffer-file-name)))
-  (push `(emacs-lisp-mode
-          ("emacs:bytecompile" . ,#'meain/byte-compile-this-file))
-        compile-multi-config)
-
-  :init (evil-leader/set-key "R" 'compile-multi))
-
-;; Simplify how Async Shell Command buffers get displayed
-;; (add-to-list 'display-buffer-alist
-;;   '("\\*Async Shell Command\\*.*" display-buffer-no-window))
-(add-to-list 'display-buffer-alist
-             '("\\*Async Shell Command\\*.*"
-               (display-buffer-reuse-window display-buffer-at-bottom)
-               (reusable-frames . visible)
-               (window-height . 0.1)))
 
 ;; Code coverage in buffer
 ;; To get coverage, run `go test -coverprofile=coverage.out ./...`
@@ -826,9 +768,6 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   :config
   (setq eldoc-echo-area-use-multiline-p nil)
   (define-key evil-normal-state-map (kbd "K") 'eldoc-print-current-symbol-info)
-  ;; (add-to-list 'display-buffer-alist
-  ;;              '("^\\*eldoc" display-buffer-at-bottom
-  ;;                (window-height . 7)))
   (global-eldoc-mode nil))
 
 ;; Show eldoc messages in a popup at point
@@ -875,13 +814,6 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 (use-package dired-x
   :config
   (setq dired-omit-files "\\.DS_Store$\\|__pycache__$\\|.pytest_cache$\\|\\.mypy_cache$\\|\\.egg-info$"))
-
-;; Github like git info in dired
-(use-package dired-git-info
-  :ensure t
-  :defer t
-  :after dired
-  :commands (dired-git-info-mode dired-git-info-auto-enable))
 
 ;; Enable abbrev mode
 (use-package abbrev-mode
@@ -1299,19 +1231,6 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   :init
   (define-key evil-normal-state-map (kbd "<SPC> /") 'consult-line))
 
-(use-package consult-notmuch
-  :after (notmuch)
-  :ensure t
-  :disabled t
-  :commands (consult-notmuch consult-notmuch-tree consult-notmuch-address))
-
-(use-package consult-git-log-grep
-  :after (consult)
-  :commands (consult-git-log-grep)
-  :ensure (consult-git-log-grep
-           :host github
-           :repo "ghosty141/consult-git-log-grep"))
-
 ;; Embark stuff
 (use-package embark
   :defer 1
@@ -1394,59 +1313,42 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   :commands (apheleia-format-buffer meain/format-buffer)
   :config
   ;; json
-  (setf (alist-get 'fixjson apheleia-formatters)
-        '("fixjson"))
-  (setf (alist-get 'json-mode apheleia-mode-alist)
-        '(fixjson))
+  (setf (alist-get 'fixjson apheleia-formatters) '("fixjson"))
+  (setf (alist-get 'json-mode apheleia-mode-alist) '(fixjson))
 
   ;; golang
-  (setf (alist-get 'goimports apheleia-formatters)
-        '("goimports"))
-  (setf (alist-get 'gofumpt apheleia-formatters)
-        '("gofumpt"))
-  (setf (alist-get 'gci apheleia-formatters)
-        '("gci" "/dev/stdin"))
-  (setf (alist-get 'go-mode apheleia-mode-alist)
-        '(goimports))
-  (setf (alist-get 'go-ts-mode apheleia-mode-alist)
-        '(goimports))
+  (setf (alist-get 'goimports apheleia-formatters) '("goimports"))
+  (setf (alist-get 'gofumpt apheleia-formatters) '("gofumpt"))
+  (setf (alist-get 'gci apheleia-formatters) '("gci" "/dev/stdin"))
+  (setf (alist-get 'go-mode apheleia-mode-alist) '(goimports))
+  (setf (alist-get 'go-ts-mode apheleia-mode-alist) '(goimports))
 
   ;; cedar
-  (setf (alist-get 'cedar-format apheleia-formatters)
-        '("cedar" "format"))
-  (setf (alist-get 'cedar-mode apheleia-mode-alist)
-        '(cedar-format))
+  (setf (alist-get 'cedar-format apheleia-formatters) '("cedar" "format"))
+  (setf (alist-get 'cedar-mode apheleia-mode-alist) '(cedar-format))
 
   ;; markdown
-  (setf (alist-get 'markdown-mode apheleia-mode-alist)
-        '(prettier-markdown))
+  (setf (alist-get 'markdown-mode apheleia-mode-alist) '(prettier-markdown))
 
   ;; clojure
-  (setf (alist-get 'zprint apheleia-formatters)
-        '("zprint"))
-  (setf (alist-get 'clojure-mode apheleia-mode-alist)
-        '(zprint))
+  (setf (alist-get 'zprint apheleia-formatters) '("zprint"))
+  (setf (alist-get 'clojure-mode apheleia-mode-alist) '(zprint))
 
-  (setf (alist-get 'shell-script-mode apheleia-mode-alist)
-        '(shfmt))
-  (setf (alist-get 'sh-mode apheleia-mode-alist)
-        '(shfmt))
+  ;; shell
+  (setf (alist-get 'shell-script-mode apheleia-mode-alist) '(shfmt))
+  (setf (alist-get 'sh-mode apheleia-mode-alist) '(shfmt))
 
-  (setf (alist-get 'nixpkgsfmt apheleia-formatters)
-        '("nixpkgs-fmt"))
-  (setf (alist-get 'nixfmt apheleia-formatters)
-        '("nixfmt"))
-  (setf (alist-get 'nix-mode apheleia-mode-alist)
-        '(nixfmt))
+  ;; nix
+  (setf (alist-get 'nixpkgsfmt apheleia-formatters) '("nixpkgs-fmt"))
+  (setf (alist-get 'nixfmt apheleia-formatters) '("nixfmt"))
+  (setf (alist-get 'nix-mode apheleia-mode-alist) '(nixfmt))
 
   (defun meain/format-buffer ()
     "Format a buffer."
     (interactive)
     (cond
-     ((eq major-mode 'emacs-lisp-mode)
-      (indent-region (point-min) (point-max)))
-     ((eq major-mode 'ledger-mode)
-      (ledger-mode-clean-buffer))
+     ((eq major-mode 'emacs-lisp-mode) (indent-region (point-min) (point-max)))
+     ((eq major-mode 'ledger-mode) (ledger-mode-clean-buffer))
      (t (call-interactively 'apheleia-format-buffer))))
 
   :init
@@ -1504,7 +1406,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   (setq eglot-extend-to-xref t) ;; extend eglot to files gone to with go-to-def
   ;; https://www.masteringemacs.org/article/seamlessly-merge-multiple-documentation-sources-eldoc
   (setq eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)
-  (add-to-list 'eglot-server-programs '(lua-mode . ("~/.luarocks/bin/lua-lsp")))
+
   ;; yaml-mode useful for github actions
   (add-to-list 'eglot-server-programs '(yaml-mode . ("yaml-language-server" "--stdio")))
   (add-to-list 'eglot-server-programs '(json-mode . ("vscode-json-languageserver" "--stdio")))
@@ -1524,59 +1426,11 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
                 ;; https://cs.opensource.google/go/x/tools/+/master:gopls/doc/settings.md
                 ;; (:gopls . ((staticcheck . t))) ;; Huge mem usage penalty
                 '((:json.schemas . [((:fileMatch . ["package.json"]) (:url . "https://json.schemastore.org/package.json"))])))
-  (add-to-list 'display-buffer-alist
-               '("\\*sqls\\*"
-                 (display-buffer-reuse-window display-buffer-at-bottom)
-                 (reusable-frames . visible)
-                 (window-height . 0.3)))
+
   ;; add flymake backend separately so that I can add other things as well to flymake
   (add-to-list 'eglot-stay-out-of 'flymake)
   (add-hook 'flymake-diagnostic-functions 'eglot-flymake-backend)
-  (defclass eglot-sqls (eglot-lsp-server) ()
-    :documentation "SQL's Language Server")
-  (add-to-list 'eglot-server-programs '(sql-mode . (eglot-sqls "sqls" "-config" "~/.config/sqls/config.yaml")))
-  (cl-defmethod eglot-execute-command ((server eglot-sqls) (command (eql executeQuery)) arguments)
-    "For executeQuery."
-    (let* ((beg (eglot--pos-to-lsp-position (if (use-region-p) (region-beginning) (point-min))))
-           (end (eglot--pos-to-lsp-position (if (use-region-p) (region-end) (point-max))))
-           (res (jsonrpc-request server
-                                 :workspace/executeCommand `(:command ,(format "%s" command)
-                                                                      :arguments ,arguments
-                                                                      :timeout 0.5
-                                                                      :range (:start ,beg :end ,end))))
-           (buffer (generate-new-buffer "*sqls*")))
-      (with-current-buffer buffer
-        (eglot--apply-text-edits `[(:range (:start (:line 0 :character 0)
-                                                   :end (:line 0 :character 0))
-                                           :newText ,res)])
-        (org-mode))
-      (pop-to-buffer buffer)))
-  (cl-defmethod eglot-execute-command ((server eglot-sqls) (_cmd (eql switchDatabase)) arguments)
-    "For switchDatabase."
-    (let* ((res (jsonrpc-request server :workspace/executeCommand
-                                 `(:command "showDatabases" :arguments ,arguments :timeout 0.5)))
-           (menu-items (split-string res "\n"))
-           (menu `("Eglot code actions:" ("dummy" ,@menu-items)))
-           (db (if (listp last-nonmenu-event)
-                   (x-popup-menu last-nonmenu-event menu)
-                 (completing-read "[eglot] Pick an database: "
-                                  menu-items nil t nil nil (car menu-items)))))
-      (jsonrpc-request server
-                       :workspace/executeCommand `(:command "switchDatabase"
-                                                            :arguments [,db]:timeout
-                                                            0.5))))
-  (cl-defmethod eglot-execute-command ((server eglot-sqls) (_cmd (eql switchConnections)) arguments)
-    "For switchConnections"
-    (let* ((res (jsonrpc-request server :workspace/executeCommand
-                                 `(:command "switchConnections" :arguments ,arguments :timeout 0.5)))
-           (menu-items (split-string res "\n"))
-           (menu `("Eglot code actions:" ("dummy" ,@menu-items)))
-           (db (if (listp last-nonmenu-event)
-                   (x-popup-menu last-nonmenu-event menu)
-                 (completing-read "[eglot] Pick an connection "
-                                  menu-items nil t nil nil (car menu-items)))))
-      (jsonrpc-request server :workspace/executeCommand
-                       `(:command "switchConnections" :arguments [,db]:timeout 0.5))))
+
   (evil-define-key 'normal eglot-mode-map (kbd "g D") 'eglot-find-implementation)
   (evil-define-key 'normal eglot-mode-map (kbd "g Y") 'eglot-find-typeDefinition)
   (evil-define-key 'normal eglot-mode-map (kbd "g R") 'eglot-rename)
@@ -1842,20 +1696,6 @@ list of available pages."
     '(transient-append-suffix 'magit-diff '(-1 -1)
        [("D" "Difftastic diff (dwim)" difftastic-magit-diff)
         ("S" "Difftastic show" difftastic-magit-show)])))
-
-;; Magit forge
-(use-package forge
-  :ensure t
-  :defer t
-  :after (magit evil-leader)
-  :config (evil-leader/set-key "gF" 'forge-browse-dwim))
-
-;; Github review
-(use-package github-review
-  :ensure t
-  :defer t
-  :after forge
-  :commands (github-review-start github-review-forge-pr-at-point))
 
 (use-package ediff
   :after (evil-leader)
@@ -2469,14 +2309,6 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   (evil-define-key 'normal org-mode-map (kbd "gL") 'org-demote-subtree)
   (evil-define-key 'normal org-mode-map (kbd "gt") 'org-todo)
   (evil-define-key 'normal org-mode-map (kbd "gr") 'org-ctrl-c-ctrl-c))
-(use-package org-modern
-  :ensure t
-  :disabled t
-  :after org
-  :commands (org-modern-mode org-modern-agenda)
-  :init
-  (add-hook 'org-mode-hook #'org-modern-mode)
-  (add-hook 'org-agenda-finalize-hook #'org-modern-agenda))
 
 ;; for kmonad files
 (use-package kbd-mode
@@ -2492,6 +2324,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 ;; mtodo-mode
 (use-package emacs
   :after evil
+  :disabled t
   :config
   (load (expand-file-name "~/.config/emacs/mtodo-mode.el"))
   (add-hook 'mtodo-mode-hook (lambda ()
@@ -2539,41 +2372,6 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   (define-key evil-normal-state-map (kbd "<SPC> d u") 'gud-up)
   (define-key evil-normal-state-map (kbd "<SPC> d g") 'gud-until))
 
-(use-package hydra
-  :ensure t
-  :commands (defhydra))
-
-(use-package emacs
-  :after (evil hydra gud)
-  :commands (hydra-gud/body)
-  :init
-  (defhydra hydra-gud ()
-    "gud"
-    ("n" gud-next "next")
-    ("c" gud-cont "continue")
-    ("r" 'gud-reset "reset")
-    ("b" 'gud-break "break")
-    ("s" 'gud-step "step")
-    ("u" 'gud-up "up")
-    ("g" 'gud-until "go till"))
-
-  (define-key evil-normal-state-map (kbd "<SPC> d d") 'hydra-gud/body))
-
-;; Dashboard
-(use-package dashboard
-  :disabled t
-  :ensure t
-  :config
-  (setq dashboard-banner-logo-title nil)
-  (setq dashboard-center-content t)
-  (setq dashboard-show-shortcuts t)
-  (setq dashboard-startup-banner 'official)
-  (setq dashboard-items '((recents . 3) (projects . 7)))
-  (setq dashboard-projects-backend 'project)
-  (setq dashboard-set-navigator t)
-  (setq dashboard-set-footer nil)
-  (dashboard-setup-startup-hook))
-
 ;; Winner mode
 (use-package winner
   :defer 1
@@ -2581,146 +2379,6 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   (global-set-key (kbd "M-f <left>") 'winner-undo)
   (global-set-key (kbd "M-f <right>") 'winner-redo)
   (winner-mode))
-
-;; Process management
-(use-package proced
-  :commands proced
-  :config
-  (setq proced-enable-color-flag t))
-
-;; notmuch
-(use-package notmuch
-  :ensure t
-  :commands notmuch
-  :after evil-leader
-  :init
-  (evil-leader/set-key "a n" 'notmuch)
-  :config
-  (evil-define-key 'normal notmuch-search-mode-map (kbd "u") 'evil-collection-notmuch-search-toggle-unread)
-  (evil-define-key 'normal notmuch-show-mode-map (kbd "U") 'notmuch-show-browse-urls)
-  (evil-define-key 'normal notmuch-show-mode-map (kbd "u") 'meain/notmuch-show-close-all-but-unread)
-  (evil-define-key 'normal notmuch-show-mode-map (kbd "M-k") 'meain/move-swap-up)
-  (evil-define-key 'normal notmuch-show-mode-map (kbd "M-j") 'meain/move-swap-down)
-  (evil-define-key 'normal notmuch-show-mode-map (kbd "M-s m f") 'meain/find-emails-from-same-sender)
-  ;; Advice to reset unread mail counter on exit
-  (advice-add 'notmuch-bury-or-kill-this-buffer
-              :after (lambda (&rest r) (meain/update-scratch-message)))
-  (defun meain/find-emails-from-same-sender ()
-    (interactive)
-    (let* ((props (notmuch-show-get-message-properties))
-           (from (plist-get (plist-get props :headers) :From)))
-      (message "Searching for %s" from)
-      (notmuch-search (concat "from:" from))))
-  (defun meain/notmuch-show-close-all-but-unread ()
-    "Close all messages until the first unread item."
-    (interactive)
-    (goto-char (point-min))
-    (cl-loop do
-             (notmuch-show-message-visible (notmuch-show-get-message-properties) nil)
-             until
-             (or (not (notmuch-show-goto-message-next))
-                 (member "unread" (plist-get (notmuch-show-get-message-properties) :tags))))
-    ;; make sure last message is open
-    (notmuch-show-message-visible (notmuch-show-get-message-properties) t)
-    (force-window-update))
-  (setq notmuch-hello-logo nil)
-  (setq notmuch-search-oldest-first nil)
-  (setq notmuch-message-headers-visible nil)
-  (setq message-auto-save-directory "~/.local/share/mail/meain")
-  (setq notmuch-saved-searches
-        '(
-          (:name "Important" :query "tag:important AND tag:inbox" :key "i" :sort-order newest-first)
-          (:name "Low priority" :query "tag:lowpri AND tag:inbox" :key "l" :sort-order newest-first)
-          (:name "Flagged" :query "tag:flagged" :key "f")
-          (:name "Todo" :query "tag:todo" :key "t")
-          (:name "Github" :query "tag:github AND tag:inbox" :key "h")
-
-          (:name "Alerts" :query "tag:alert AND tag:inbox" :key "a")
-          (:name "Updates" :query "tag:update AND tag:inbox" :key "u")
-
-          (:name "Newsletter" :query "tag:newsletter AND tag:inbox" :key "n")
-          (:name "Unnecessary" :query "tag:unnecessary AND tag:inbox" :key "N" :sort-order newest-first)
-
-          (:name "Untagged" :query "tag:untagged AND tag:inbox AND -tag:work" :key "U" :sort-order newest-first)
-          (:name "Work untagged" :query "tag:untagged AND tag:inbox AND tag:work" :key "W" :sort-order newest-first)
-
-          (:name "All Inbox" :query "tag:inbox" :key "B" :sort-order newest-first)
-          (:name "All mail" :query "path:meain/** OR path:mail/**" :key "A" :sort-order newest-first)
-          (:name "All work mail" :query "path:ic/**" :key "Z" :sort-order newest-first)))
-
-  ;; Updating mailtag scripts
-  (defun meain/update-mailtag-entry ()
-    "Update the mailtag entry in current line to the tags from previous line."
-    (interactive)
-
-    ;; Get prev line format
-    (next-line -1)
-    (beginning-of-line)
-    (kill-line)
-    (yank)
-
-    ;; Get current line
-    (next-line)
-    (beginning-of-line)
-    (kill-line)
-
-    ;; Update line with prev format
-    (yank 2)
-
-    (end-of-line)
-    (search-backward ":")
-    (forward-char)
-    (kill-line)
-    (yank 2)
-    (insert "'"))
-
-  (defun meain/add-to-mailtag ()
-    "Add current email to mailtag file."
-    (interactive)
-    (let* (;; email sender
-           (props (notmuch-show-get-message-properties))
-           (sender (plist-get (plist-get props :headers) :From))
-           (email (if (s-contains-p "<" sender)
-                      (string-trim (car (string-split (cadr (string-split sender "<")) ">")))
-                    sender))
-
-           ;; location to paste
-           (mailtag-file (car (string-split (shell-command-to-string "where mailtag") "\n")))
-           (contents (with-temp-buffer
-                       (insert-file-contents mailtag-file)
-                       (buffer-string)))
-           (lines (split-string contents "\n"))
-           (headers (seq-filter (lambda (x) (string-prefix-p "##" x)) lines))
-           (header (completing-read "Header: " headers)))
-      (find-file mailtag-file) ;; (with-temp-buffer) was causing a lot of trouble somehow
-      (goto-char (point-min))
-      (re-search-forward (concat "^" header "$"))
-      (forward-paragraph)
-      (insert (concat email "\n"))
-      (message "Post insert: %s %s %s" (point) (line-number-at-pos) (thing-at-point 'line))
-      (goto-char (1- (point))) ;; (previous-line) does not seem to work
-      (meain/update-mailtag-entry)
-      (save-buffer mailtag-file)
-      (previous-buffer)
-      (message "Setup %s under %s" email header)
-      (shell-command "mailtag")))
-
-
-  ;; sending emails
-  (setq mail-signature t)
-  (setq mail-signature-file "~/.config/datafiles/mailsignature")
-  (setq message-kill-buffer-on-exit t) ; kill buffer after sending mail
-  (setq mail-specify-envelope-from t) ; Settings to work with msmtp
-  (setq message-sendmail-envelope-from 'header)
-  (setq mail-envelope-from 'header)
-  (setq notmuch-fcc-dirs "Sent +sent -unread") ; stores sent mail to the specified directory
-  (setq message-directory "~/.local/share/mail") ; stores postponed messages to the specified directory
-  (setq sendmail-program "msmtp")
-  (setq send-mail-function 'smtpmail-send-it)
-  (setq message-sendmail-f-is-evil t)
-  (setq message-default-mail-headers "Cc: \nBcc: \n")
-  (setq message-sendmail-extra-arguments '("--read-envelope-from"))
-  (setq message-send-mail-function 'message-send-mail-with-sendmail))
 
 ;; gnus
 (use-package gnus
@@ -2735,8 +2393,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   (evil-define-key 'normal gnus-group-mode-map (kbd "a") 'gnus-group-catchup-current-all)
   (setq gnus-select-method '(nnnil ""))
   (setq gnus-directory "~/.config/emacs/news")
-  (setq gnus-secondary-select-methods
-        '((nntp "news.gmane.io")))
+  (setq gnus-secondary-select-methods '((nntp "news.gmane.io")))
   (add-hook 'gnus-group-mode-hook 'hl-line-mode)
   (add-hook 'gnus-summary-mode-hook 'hl-line-mode))
 
@@ -3722,13 +3379,6 @@ Pass in `LISTITEMS to decide if you wanna create a new item or search for existi
                               (interactive "P")
                               (meain/vime "vime" "~/.local/share/vime" createnew))))
 
-(defun meain/drop-current-file ()
-  "Use ,drop to drop files on to personal server."
-  (interactive)
-  (let ((drop-url (car (split-string (shell-command-to-string (concat "NO_COPY=1 ,drop " (buffer-file-name))) "\n"))))
-    (message drop-url)
-    (meain/copy-to-clipboard drop-url)))
-
 ;; Notes
 (use-package emacs
   :commands (meain/open-note)
@@ -4588,144 +4238,17 @@ Pass INSERT-TO-BUFFER to insert output to current buffer."
     (let ((deactivate-mark t))
       (call-process-region (point-min) (point-max) "pbcopy"))))
 
-;; Emoji picker
-(defun meain/pick-emoji ()
-  "Pick emoji using completions.
-This contains a lot of hacks to get it working with H-q keybinding and a popup."
-  (interactive)
-  (let* ((filename (concat (getenv "HOME") "/.config/datafiles/emojis.txt"))
-         (contents (with-temp-buffer (insert-file-contents filename) (buffer-string)))
-         (emojis (split-string contents "\n"))
-         (header-line-format " You are now going to pick an emoji, choose wisely"))
-    (switch-to-buffer "*pick-emoji*")
-    (run-with-timer 0.5 nil 'vertico-multiform-grid) ; FIXME: can't do it in a sane way
-    (run-at-time "0.1 sec" nil #'vertico--exhibit)
-    (meain/copy-to-clipboard (car (split-string
-                                   (completing-read "Pick emoji: " emojis nil t)))))
-  (if (equal "emacs-popup" (cdr (assq 'name (frame-parameters))))
-      (delete-frame)))
-
-;; Create new blog entry
-(defun meain/blog-new-entry ()
-  "Quick function to start a new blog entry from Emacs."
-  (interactive)
-  (start-process-shell-command "blog" "*blog*"
-                               (concat "zsh -ic ',blog " (read-string "Blog slug: ") "'")))
-;; Search from Emacs
 (use-package emacs
-  :after evil-leader
-  :commands (meain/eww-search-ddg)
+  :commands (meain/emacs-revert-all-project-buffers)
   :config
-  (defun meain/eww-search-ddg (&optional open)
-    "Search using eww on ddg.  Pass OPEN to open in browser instead."
-    (interactive "P")
-    (let* ((thing (if (use-region-p)
-                      (buffer-substring start end)
-                    (thing-at-point 'symbol)))
-           (searchterm (replace-regexp-in-string " " "+" (read-from-minibuffer "Search query: "))))
-      (if open
-          (start-process-shell-command "browser-open-ddg" "*browser-open-ddg*"
-                                       (concat "open 'https://duckduckgo.com/?q=" searchterm "'"))
-        (eww (concat "http://lite.duckduckgo.com/lite/?q=" searchterm)))))
-  :init
-  (evil-leader/set-key "a s" 'meain/eww-search-ddg))
-
-;; search from Emacs using xwidgets
-(defun meain/search-xwidget ()
-  "Search from Emacs using xwidgets."
-  (interactive)
-  (xwidget-webkit-browse-url (concat "https://duckduckgo.com/?q="
-                                     (read-string "Search term: " (thing-at-point 'symbol)))))
-
-;; Check available update for elpaca managed packages
-(add-hook 'markdown-mode-hook
-          (lambda ()
-            (if (equal "/tmp/elpaca-available-updates.md" (buffer-file-name))
-                (markdown-toggle-url-hiding 1))))
-(defun meain/elpaca-available-updates ()
-  "Check available update for elpaca managed packages."
-  (interactive)
-  (message "Fetching updates and calculating changes...")
-  ;; (async-shell-command "zsh -ic 'elpaca-available-updates'"))
-  (start-process-shell-command "elpaca-available-updates" "*elpaca-available-updates*"
-                               "zsh -ic 'elpaca-available-updates'"))
-
-(defun meain/emacs-revert-all-project-buffers ()
-  "Revert all editable buffers belonging to the current project."
-  (interactive)
-  (seq-do
-   (lambda (b)
-     (when (buffer-local-value 'buffer-read-only b)
-       (revert-buffer-quick b)))
-   (project-buffers (project-current))))
-
-;; popup frame thingy
-(defun meain/emacs-popup-frame (thing-to-popup)
-  "Popup and interactive frame thingy.  For use from hammerspoon.
-Pass THING-TO-POPUP as the thing to popup."
-  (interactive)
-  (let ((frame (make-frame '((auto-raise . t)
-                             (height . 40)
-                             (internal-border-width . 20)
-                             (name . "emacs-popup")
-                             ;; (left . 0.33)
-                             (left-fringe . 0)
-                             (line-spacing . 3)
-                             (menu-bar-lines . 0)
-                             (right-fringe . 0)
-                             (tool-bar-lines . 0)
-                             ;; (top . 48)
-                             (undecorated . t)
-                             (unsplittable . t)
-                             (vertical-scroll-bars . nil)
-                             (width . 150)))))
-    (select-frame frame))
-  (funcall thing-to-popup))
-(defun meain/emacs-mini-popup-frame (thing-to-popup)
-  "Popup and interactive frame thingy.  For use from hammerspoon.
-Pass THING-TO-POPUP as the thing to popup."
-  (interactive)
-  (let ((frame (make-frame '((auto-raise . t)
-                             (height . 20)
-                             (width . 100)
-                             (internal-border-width . 20)
-                             (name . "emacs-popup")
-                             ;; (left . 0.33)
-                             (left-fringe . 0)
-                             (line-spacing . 3)
-                             (menu-bar-lines . 0)
-                             (right-fringe . 0)
-                             (tool-bar-lines . 0)
-                             ;; (top . 48)
-                             (undecorated . t)
-                             (unsplittable . t)
-                             (background-color . "#E1F5FE")
-                             (vertical-scroll-bars . nil)))))
-    (select-frame frame))
-  (funcall thing-to-popup))
-(defun meain/emacs-popup-minibuffer-frame (thing-to-popup)
-  "Popup and interactive frame thingy.  For use from hammerspoon.
-Pass THING-TO-POPUP as the thing to popup."
-  (interactive)
-  (let ((frame (make-frame '((auto-raise . t)
-                             (height . 20)
-                             (internal-border-width . 20)
-                             (name . "emacs-popup")
-                             ;; (left . 0.33)
-                             (left-fringe . 0)
-                             (line-spacing . 3)
-                             (menu-bar-lines . 0)
-                             (right-fringe . 0)
-                             (tool-bar-lines . 0)
-                             (minibuffer . only)
-                             ;; (top . 48)
-                             (undecorated . t)
-                             (unsplittable . t)
-                             (vertical-scroll-bars . nil)
-                             (background-color . "#E1F5FE")
-                             (width . 150)))))
-    (select-frame frame))
-  (funcall thing-to-popup))
+  (defun meain/emacs-revert-all-project-buffers ()
+    "Revert all editable buffers belonging to the current project."
+    (interactive)
+    (seq-do
+     (lambda (b)
+       (when (buffer-local-value 'buffer-read-only b)
+         (revert-buffer-quick b)))
+     (project-buffers (project-current)))))
 
 ;; Patterns for replacing filenames with (builtin option: find-sibling-file)
 ;; Sticking with custom version as we have an option to create the file if it does not exist
@@ -4781,33 +4304,17 @@ Pass `CREATE' to create the alternate file if it does not exits."
   :after (evil-leader)
   :config (evil-leader/set-key "H j" 'tree-surgeon-split-join))
 
-;; Screenshot Emacs frame
-(defvar meain/frameshot-directory "~/docs/Pictures/Screenshots/"
-  "Default directory for frame shots.")
-(defvar meain/frameshot-format 'svg
-  "Default frame shot format.")
-(defun meain/frameshot ()
-  "Save Emacs frame as frame shot.
-Directory is determined by variable `frameshot-directory' and if
-not defined, it will be saved in the `$HOME' directory."
-  (interactive)
-  (let* ((image (x-export-frames nil (or meain/frameshot-format 'png)))
-         (directory (or meain/frameshot-directory (getenv "HOME")))
-         (file (concat directory (format-time-string "EMACS-Screenshot-%Y-%m-%d-%T.")
-                       (symbol-name meain/frameshot-format))))
-    (make-directory directory t)
-    (with-temp-file file (insert image))
-    (meain/copy-to-clipboard (expand-file-name file))
-    (message "Frame shot saved as `%s'" file)))
-
 ;; Just some hima testing code
-(defun meain/reload-current-theme ()
-  "Util to reload hima theme for debugging."
-  (interactive)
-  (message "%s" custom-enabled-themes)
-  (let ((current-theme (car custom-enabled-themes)))
-    (disable-theme current-theme)
-    (load-theme current-theme t)))
+(use-package emacs
+  :commands (meain/reload-current-theme)
+  :config
+  (defun meain/reload-current-theme ()
+    "Util to reload hima theme for debugging."
+    (interactive)
+    (message "%s" custom-enabled-themes)
+    (let ((current-theme (car custom-enabled-themes)))
+      (disable-theme current-theme)
+      (load-theme current-theme t))))
 
 (use-package which-func :commands (which-function))
 
