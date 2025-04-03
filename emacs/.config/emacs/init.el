@@ -279,14 +279,6 @@
   :config
   (load-theme 'hima t))
 
-;; Diminish
-(use-package diminish
-  :ensure t
-  :defer t
-  :config
-  (diminish 'eldoc-mode)
-  (diminish 'auto-revert-mode))
-
 ;;; [BASIC BUILTINS] ===========================================
 
 ;; Use mouse to do some stuff when you are lazy
@@ -411,10 +403,8 @@ Pass ORIGINAL and ALTERNATE options."
   :config
   (define-key evil-inner-text-objects-map "i" 'evil-indent-plus-i-indent)
   (define-key evil-outer-text-objects-map "i" 'evil-indent-plus-a-indent)
-  (define-key evil-inner-text-objects-map "I" 'evil-indent-plus-i-indent-up)
-  (define-key evil-outer-text-objects-map "I" 'evil-indent-plus-a-indent-up)
-  (define-key evil-inner-text-objects-map "J" 'evil-indent-plus-i-indent-up-down)
-  (define-key evil-outer-text-objects-map "J" 'evil-indent-plus-a-indent-up-down))
+  (define-key evil-inner-text-objects-map "I" 'evil-indent-plus-i-indent-up-down)
+  (define-key evil-outer-text-objects-map "I" 'evil-indent-plus-a-indent-up-down))
 
 ;; Evil number increment
 (use-package evil-numbers
@@ -433,7 +423,6 @@ Pass ORIGINAL and ALTERNATE options."
   (define-key evil-normal-state-map (kbd "<SPC> <SPC>") 'evil-write))
 
 ;; Hit universal arg without ctrl
-
 (use-package emacs
   :after evil-leader
   :config
@@ -447,64 +436,40 @@ Pass ORIGINAL and ALTERNATE options."
   ;; Enable minor-mode manually when required
   :commands (golden-ratio golden-ratio-mode))
 
-;; Major mode for editing prr files
-;; https://doc.dxuuu.xyz/prr/index.html
-(use-package prr-mode
-  :ensure (:host github :repo "elliotekj/prr-mode.el"))
-
 ;; A silly little package to encourage on save
 (use-package emacs
   :config
   (load (concat user-emacs-directory "encourage")))
 
-;; Window mappings (not using meain/with-alternate as I need functions)
-(defun meain/move-swap-right (&optional swap)
-  "Move to window on right or move window to right if SWAP."
-  (interactive "P")
-  (if swap
-      (windmove-swap-states-right)
-    (windmove-right))
-  (golden-ratio))
-(global-set-key (kbd "M-l") 'meain/move-swap-right)
-(defun meain/move-swap-left (&optional swap)
-  "Move to window on left or move window to left if SWAP."
-  (interactive "P")
-  (if swap
-      (windmove-swap-states-left)
-    (windmove-left))
-  (golden-ratio))
-(global-set-key (kbd "M-h") 'meain/move-swap-left)
-(defun meain/move-swap-up (&optional swap)
-  "Move to window on top or move window to top if SWAP."
-  (interactive "P")
-  (if swap
-      (windmove-swap-states-up)
-    (windmove-up))
-  (golden-ratio))
-(global-set-key (kbd "M-k") 'meain/move-swap-up)
-(defun meain/move-swap-down (&optional swap)
-  "Move to window on bottom or move window to bottom if SWAP."
-  (interactive "P")
-  (if swap
-      (windmove-swap-states-down)
-    (windmove-down))
-  (golden-ratio))
-(global-set-key (kbd "M-j") 'meain/move-swap-down)
-(global-set-key (kbd "M-b")
-                (lambda (&optional open-term)
-                  (interactive "P")
-                  (split-window-below)
-                  (windmove-down)
-                  (when open-term
-                    (vterm t))))
-(global-set-key (kbd "M-v")
-                (lambda (&optional open-term)
-                  (interactive "P")
-                  (split-window-right)
-                  (windmove-right)
-                  (when open-term
-                    (vterm t))))
-(global-set-key (kbd "M-w") 'delete-window)
+;; Window commands
+(use-package emacs
+  :config
+  (defun meain/move-or-swap (direction &optional swap)
+    "Move to or swap window in DIRECTION (up/down/left/right) based on SWAP."
+    (funcall (if swap
+                 (intern (format "windmove-swap-states-%s" direction))
+               (intern (format "windmove-%s" direction)))))
+
+  ;; These are used a lot and so we need to defined these as functions
+  (defun meain/move-swap-right () (interactive) (meain/move-or-swap "right"))
+  (defun meain/move-swap-left () (interactive) (meain/move-or-swap "left"))
+  (defun meain/move-swap-up () (interactive) (meain/move-or-swap "up"))
+  (defun meain/move-swap-down () (interactive) (meain/move-or-swap "down"))
+
+  (global-set-key (kbd "M-l") 'meain/move-swap-right)
+  (global-set-key (kbd "M-h") 'meain/move-swap-left)
+  (global-set-key (kbd "M-k") 'meain/move-swap-up)
+  (global-set-key (kbd "M-j") 'meain/move-swap-down)
+
+  (defun meain/split-window (direction &optional open-term)
+    "Split window in DIRECTION and optionally OPEN-TERM."
+    (funcall (intern (format "split-window-%s" direction)))
+    (funcall (intern (format "windmove-%s" (if (equal direction "below") "down" "right"))))
+    (when open-term (meain/eshell-toggle)))
+
+  (global-set-key (kbd "M-b") (lambda (&optional term) (interactive "P") (meain/split-window "below" term)))
+  (global-set-key (kbd "M-v") (lambda (&optional term) (interactive "P") (meain/split-window "right" term)))
+  (global-set-key (kbd "M-w") 'delete-window))
 
 ;; Eshell config
 (use-package eshell
@@ -516,9 +481,7 @@ Pass ORIGINAL and ALTERNATE options."
   (defun meain/eshell-name ()
     "Get the name of the eshell based on project info."
     (format "*popup-eshell-%s*"
-            (if (project-current)
-                (meain/project-name)
-              "-")))
+            (if (project-current) (meain/project-name) "-")))
   (defun meain/eshell-toggle ()
     (interactive)
     (if (s-starts-with-p "*popup-eshell" (buffer-name))
@@ -540,13 +503,7 @@ Pass ORIGINAL and ALTERNATE options."
            (propertize (if (car (vc-git-branches))
                            (concat "[" (car (vc-git-branches)) "]")
                          "") 'face `(:foreground "#93a1a1"))
-           " "
-           )))
-
-  (add-to-list 'display-buffer-alist '("\\*popup-eshell-.*"
-                                       (display-buffer-reuse-window display-buffer-at-bottom)
-                                       (reusable-frames . visible)
-                                       (window-height . 0.3)))
+           " ")))
   (add-hook 'eshell-mode-hook (lambda ()
                                 (setenv "TERM" "xterm-256color")
                                 (define-key eshell-mode-map (kbd "M-l") 'meain/move-swap-right)
@@ -554,6 +511,7 @@ Pass ORIGINAL and ALTERNATE options."
                                 (define-key eshell-mode-map (kbd "M-k") 'meain/move-swap-up)
                                 (define-key eshell-mode-map (kbd "M-j") 'meain/move-swap-down))))
 
+;; Show the last command in the shell at top
 (use-package sticky-shell
   :ensure (sticky-shell :host github
                         :repo "andyjda/sticky-shell")
@@ -561,27 +519,6 @@ Pass ORIGINAL and ALTERNATE options."
   :commands (sticky-shell-mode)
   :init
   (add-hook 'eshell-mode-hook 'sticky-shell-mode))
-
-;; ansi-term config
-(use-package term
-  :disabled t
-  :config
-  (defun meain/term-exec-hook ()
-    "Automatically close `ansi-term' buffer on exit."
-    (let* ((buff (current-buffer))
-           (proc (get-buffer-process buff)))
-      (set-process-sentinel
-       proc
-       `(lambda (process event)
-          (if (string= event "finished\n")
-              (kill-buffer ,buff))))))
-  (add-hook 'term-exec-hook 'meain/term-exec-hook)
-  (add-hook 'term-mode-hook (lambda ()
-                              (setenv "TERM" "xterm-256color")
-                              (define-key term-mode-map (kbd "M-l") 'meain/move-swap-right)
-                              (define-key term-mode-map (kbd "M-h") 'meain/move-swap-left)
-                              (define-key term-mode-map (kbd "M-k") 'meain/move-swap-up)
-                              (define-key term-mode-map (kbd "M-j") 'meain/move-swap-down))))
 
 ;; Midnight: Kill unused buffers at midnight
 (use-package emacs
@@ -609,15 +546,6 @@ Pass ORIGINAL and ALTERNATE options."
   :config
   (evil-leader/set-key "a f" 'other-frame))
 
-;; Easier C-c C-c
-(use-package emacs
-  :after evil-leader
-  :config
-  (evil-leader/set-key "i"
-    '(lambda ()
-       (interactive)
-       (execute-kbd-macro (kbd "C-c C-c")))))
-
 ;; Remap macro recoring key
 (use-package emacs
   :after evil
@@ -628,10 +556,12 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package emacs
   :after evil
   :init
-  (define-key evil-visual-state-map (kbd ";") (lambda ()
-                                                (interactive)
-                                                (call-interactively 'eval-region)
-                                                (evil-force-normal-state))))
+  (define-key evil-visual-state-map
+              (kbd ";")
+              (lambda ()
+                (interactive)
+                (call-interactively 'eval-region)
+                (evil-force-normal-state))))
 
 ;; Quick quit
 (defun meain/update-scratch-message ()
@@ -660,12 +590,6 @@ Pass ORIGINAL and ALTERNATE options."
         (setq default-directory "~/")
         (lisp-interaction-mode)
         (meain/update-scratch-message)))))
-(defun meain/recreate-scratch ()
-  "Recreate scratch buffer by just replacing the entire thing with new fortune."
-  (interactive)
-  (with-current-buffer "*scratch*")
-  (erase-buffer)
-  (meain/update-scratch-message))
 
 (use-package emacs
   :after evil
@@ -690,18 +614,6 @@ Pass ORIGINAL and ALTERNATE options."
           (vterm-reset-cursor-point)))
        (t (previous-buffer)))))
   (define-key evil-normal-state-map (kbd "q") 'meain/kill-current-buffer-unless-scratch))
-
-;; Y to y$
-(use-package emacs
-  :after evil
-  :init
-  (defun meain/yank-till-line-end ()
-    "Yank till end of line."
-    (interactive)
-    (evil-yank (point)
-               ;; subtracting 1 for newline
-               (- (save-excursion (forward-line) (point)) 1)))
-  (define-key evil-normal-state-map (kbd "Y") 'meain/yank-till-line-end))
 
 ;; Quit out of everything with esc
 (defun meain/keyboard-quit ()
@@ -844,6 +756,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 ;; Now you can load this into coverlay
 (use-package coverlay
   :ensure t
+  :commands (coverlay-load-file)
   :config
   (setq coverlay:tested-line-background-color "#C9F3D2")
   (setq coverlay:untested-line-background-color "#F8CED3")
@@ -928,11 +841,6 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
                     (interactive)
                     (let ((eldoc-echo-area-use-multiline-p t))
                       (call-interactively #'eldoc-box-help-at-point)))))
-
-;; Highlight addresses in files
-(use-package goto-addr
-  :disabled t ; vim gx can do it
-  :config (global-goto-address-mode))
 
 ;; dired
 (use-package dired
@@ -1052,30 +960,6 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
                   font-lock-comment-face
                   font-lock-doc-face
                   font-lock-string-face)))
-(use-package flyspell-correct
-  :ensure t
-  :after flyspell
-  :commands (flyspell-correct-wrapper flyspell-goto-next-error)
-  :bind (:map flyspell-mode-map ("C-:" . flyspell-correct-wrapper)))
-
-;; Advanced spell checking
-(use-package wucuo
-  :ensure t
-  :disabled t
-  :after flyspell
-  :commands (wucuo-start)
-  :init
-  (add-hook 'prog-mode-hook #'wucuo-start)
-  (add-hook 'text-mode-hook #'wucuo-start)
-  :config
-  (add-to-list 'wucuo-font-faces-to-check 'tree-sitter-hl-face:comment)
-  (add-to-list 'wucuo-font-faces-to-check 'tree-sitter-hl-face:doc)
-  (add-to-list 'wucuo-font-faces-to-check 'tree-sitter-hl-face:string)
-  (add-to-list 'wucuo-font-faces-to-check 'tree-sitter-hl-face:property)
-  (add-to-list 'wucuo-font-faces-to-check 'tree-sitter-hl-face:method.call)
-  (add-to-list 'wucuo-font-faces-to-check 'tree-sitter-hl-face:function.call)
-  (add-to-list 'wucuo-font-faces-to-check 'tree-sitter-hl-face:function.method)
-  (add-to-list 'wucuo-font-faces-to-check 'tree-sitter-hl-face:constructor))
 
 ;; flymake
 (use-package flymake
@@ -1181,9 +1065,6 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
                             (end (cdr pos))
                             (msg (format "golangci> %s" text)))
                        (list fmqd-source beg end :warning msg)))
-  (add-hook 'go-ts-mode-hook
-            (lambda ()
-              (add-hook 'flymake-diagnostic-functions 'flymake-golangci nil t)))
 
   ;; https://github.com/hadolint/hadolint
   (flymake-quickdef-backend flymake-hadolint
@@ -1207,60 +1088,6 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 (use-package flymake-collection
   :ensure t
   :hook (after-init . flymake-collection-hook-setup))
-
-;; Company for autocompletions
-(use-package company
-  :ensure t
-  :disabled t
-  :defer 1
-  :diminish
-  :config
-  (setq company-dabbrev-downcase nil) ;; Do not lowercase my completions
-  (setq company-idle-delay 0)
-  (setq company-tooltip-idle-delay 1)
-  (setq company-quickhelp-delay 0.3)
-  (setq company-tooltip-maximum-width 35)
-  (setq company-tooltip-align-annotations t)
-  (setq company-minimum-prefix-length 2)
-  (setq company-format-margin-function nil)
-  (global-company-mode)
-  (evil-declare-change-repeat 'company-complete-common-or-cycle) ; make evil repeat working with completions
-  (define-key company-active-map (kbd "TAB") 'company-complete-common-or-cycle)
-  (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle)
-  (define-key company-active-map (kbd "S-TAB") 'company-select-previous)
-  (define-key company-active-map (kbd "<backtab>") 'company-select-previous)
-  (setq company-frontends '(company-pseudo-tooltip-unless-just-one-frontend
-                            company-preview-frontend company-echo-metadata-frontend))
-  (setq company-require-match 'never)
-  (defun my-company-visible-and-explicit-action-p ()
-    (and (company-tooltip-visible-p) (company-explicit-action-p)))
-  (defun company-ac-setup ()
-    "Sets up `company-mode' to behave similarly to `auto-complete-mode'."
-    (setq company-require-match nil)
-    (setq company-auto-complete #'my-company-visible-and-explicit-action-p)
-    (setq company-frontends '(company-echo-metadata-frontend company-pseudo-tooltip-unless-just-one-frontend-with-delay
-                                                             company-preview-frontend))
-    (define-key company-active-map [tab] 'company-select-next-if-tooltip-visible-or-complete-selection)
-    (define-key company-active-map (kbd "TAB") 'company-select-next-if-tooltip-visible-or-complete-selection))
-  (company-ac-setup))
-
-;; consult-interface for company for use in `sql-mode'
-(use-package consult-company
-  :ensure t
-  :disabled t
-  :defer t
-  :after (consult company)
-  :commands (consult-company))
-
-;; Company quickhelp
-(use-package company-quickhelp ; Show help in tooltip
-  :ensure t
-  :disabled t
-  :after company
-  :config
-  (company-quickhelp-mode)
-  (setq pos-tip-foreground-color "#000000"
-        pos-tip-background-color "#ffffff"))
 
 (use-package corfu
   :ensure (:files (:defaults "extensions/*"))
@@ -1644,14 +1471,14 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 ;; LSP using lspce
 ;; (use-package yasnippet :ensure t)
 ;; (use-package lspce
-;;   :load-path "/home/meain/dev/src/lspce"
+;;   :load-path "/Users/meain/dev/src/lspce"
 ;;   :after (yasnippet)
 ;;   :config (progn
-;;             (setq lspce-send-changes-idle-time 1)
-;;             (lspce-set-log-file "/tmp/lspce.log")
-;;             (lspce-enable-logging)
+;;             ;; (setq lspce-send-changes-idle-time 1)
+;;             ;; (lspce-set-log-file "/tmp/lspce.log")
+;;             ;; (lspce-enable-logging)
 ;;             ;; (add-hook 'rust-mode-hook 'lspce-mode)
-;;             (add-hook 'go-ts-mode-hook 'lspce-mode)
+;;             ;; (add-hook 'go-ts-mode-hook 'lspce-mode)
 ;;             (setq lspce-server-programs `(("rust"  "rust-analyzer" "" lspce-ra-initializationOptions)
 ;;                                           ("python" "pylsp" "" )
 ;;                                           ("go" "gopls" "")
@@ -2264,147 +2091,10 @@ Pass `CHOOSER' as t to not automatically select the previous tab."
   :config
   (set-face-attribute 'indent-guide-face nil :foreground "#DDD"))
 
-;; vterm setup
-(use-package vterm
-  :ensure t
-  :disabled t
-  :defer t
-  :after evil
-  :commands (vterm meain/shell-toggle)
-  ;; :init (global-set-key (kbd "M-;") 'meain/shell-toggle)
-  :config
-  (evil-set-initial-state 'vterm-mode 'insert)
-  (setq vterm-max-scrollback 100000)
-  (setq vterm-kill-buffer-on-exit t)
-  (add-hook 'vterm-mode-hook (lambda ()
-                               (setq imenu-generic-expression '((nil "^![a-zA-Z0-9_-]+ .+" 0)))))
-  (define-key vterm-mode-map (kbd "M-c") 'meain/shell-new)
-  (define-key vterm-mode-map (kbd "M-m") 'meain/shell-other)
-  (define-key vterm-mode-map (kbd "M-w") 'delete-window)
-  (define-key vterm-mode-map (kbd "M-u") 'universal-argument)
-  (define-key vterm-mode-map (kbd "M-l") 'meain/move-swap-right)
-  (define-key vterm-mode-map (kbd "M-h") 'meain/move-swap-left)
-  (define-key vterm-mode-map (kbd "M-k") 'meain/move-swap-up)
-  (define-key vterm-mode-map (kbd "M-j") 'meain/move-swap-down)
-  (define-key vterm-mode-map (kbd "M-H") 'shrink-window-horizontally)
-  (define-key vterm-mode-map (kbd "M-L") 'enlarge-window-horizontally)
-  (define-key vterm-mode-map (kbd "M-K") 'shrink-window)
-  (define-key vterm-mode-map (kbd "M-J") 'enlarge-window)
-  ;; (define-key vterm-mode-map (kbd "M-f l") 'ace-link)
-  (define-key vterm-mode-map (kbd "M-b") (lambda (&optional open-term)
-                                           (interactive "P")
-                                           (split-window-below)
-                                           (windmove-down)
-                                           (when open-term
-                                             (vterm t))))
-  (define-key vterm-mode-map (kbd "M-v") (lambda (&optional open-term)
-                                           (interactive "P")
-                                           (split-window-right)
-                                           (windmove-right)
-                                           (when open-term
-                                             (vterm t))))
-  (add-to-list 'display-buffer-alist '("\\*popup-shell-.*"
-                                       (display-buffer-reuse-window display-buffer-at-bottom)
-                                       (reusable-frames . visible)
-                                       (window-height . 0.3)))
-  
-  (defun meain/shell-name ()
-    "Get the name of the shell based on project info."
-    (format "*popup-shell-%s*"
-            (if (project-current)
-                (meain/project-name)
-              "-")))
-  (defun meain/shell-toggle (&optional rerun-previous)
-    "Create/toggle shell for current project."
-    (interactive "P")
-    (let ((shell-buffers (remove-if-not (lambda (x)
-                                          (s-starts-with-p (meain/shell-name)
-                                                           (buffer-name x)))
-                                        (buffer-list))))
-      (cond
-       ((s-starts-with-p (meain/shell-name)
-                         (buffer-name (current-buffer)))
-        (progn
-          (if rerun-previous
-              (progn
-                (vterm-clear)
-                (vterm-clear-scrollback))
-            (delete-window))))
-       ((equal (length shell-buffers) 0)
-        (meain/shell-new t))
-       (t (progn
-            (pop-to-buffer (car shell-buffers))
-            (if rerun-previous
-                (progn
-                  (vterm-clear)
-                  (vterm-clear-scrollback)
-                  (vterm-send-up)
-                  (vterm-send-return))))))))
-  (defun meain/shell-new (&optional always-create)
-    "Create a new shell for the current project."
-    (interactive)
-    (if (or always-create
-            (s-starts-with-p "*popup-shell" (buffer-name)))
-        (progn
-          (if (s-starts-with-p "*popup-shell" (buffer-name))
-              (delete-window))
-          (vterm (meain/shell-name)))
-      (call-interactively 'switch-to-buffer)))
-  (defun meain/shell-other (&optional alternate)
-    "Switch to previous shell in current project. Use ALTERNATE to get a list of shell in current project."
-    (interactive "P")
-    (let ((shell-buffers (remove-if-not (lambda (x)
-                                          (s-starts-with-p (meain/shell-name) (buffer-name x)))
-                                        (buffer-list))))
-      (cond
-       ((equal (length shell-buffers) 0) (message "No shells bruh!"))
-       ((equal (length shell-buffers) 1) (message "Only one shell"))
-       (alternate (switch-to-buffer
-                   (completing-read "Choose shell: "
-                                    (mapcar (lambda (x) (buffer-name x)) shell-buffers))))
-       (t (switch-to-buffer (car (cdr shell-buffers)))))))
-  (defun meain/run-in-vterm-kill (process event)
-    "A process sentinel. Kills PROCESS's buffer if it is live."
-    (let ((b (process-buffer process)))
-      (and (buffer-live-p b) (kill-buffer b) (delete-window))))
-  (defun meain/run-in-vterm (command)
-    "Execute string COMMAND in a new vterm and kill the shell once done.  Useful for interactive items."
-    (interactive (list (let* ((f (cond (buffer-file-name)
-                                       ((eq major-mode 'dired-mode) (dired-get-filename nil t))))
-                              (filename (concat " " (shell-quote-argument (and f (file-relative-name f))))))
-                         (read-shell-command "Terminal command: "
-                                             (cons filename 0)
-                                             (cons 'shell-command-history 1)
-                                             (list filename)))))
-    (with-current-buffer (vterm (concat "*popup-shell-" command "*"))
-      (set-process-sentinel vterm--process #'meain/run-in-vterm-kill)
-      (vterm-send-string (concat command ";exit 0"))
-      (vterm-send-return)))
-  (defun meain/clear-and-exec ()
-    (interactive)
-    (vterm-clear)
-    (vterm-clear-scrollback)
-    (vterm-send-return))
-  (define-key vterm-mode-map [(S-return)] 'meain/clear-and-exec)
-  (defun meain/vterm--kill-vterm-buffer-and-window (process event)
-    "Kill buffer and window on vterm PROCESS termination.  EVENT is the close event."
-    (when (not (process-live-p process))
-      (let ((buf (process-buffer process))
-            (bufname (buffer-name (current-buffer))))
-        (when (buffer-live-p buf)
-          (with-current-buffer buf
-            (kill-buffer)
-            (ignore-errors (delete-window))
-            (when (s-starts-with-p "terminal" bufname) ; wm opened term
-              (delete-frame)))))))
-  (add-hook 'vterm-mode-hook
-            (lambda ()
-              (set-process-sentinel (get-buffer-process (buffer-name))
-                                    #'meain/vterm--kill-vterm-buffer-and-window))))
-
 ;; ranger in emacs
 (use-package ranger
   :ensure t
+  :disabled t
   :commands ranger
   :config
   (use-package image-dired+
@@ -2691,13 +2381,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   (setq markdown-command "pandoc -t html5")
   (setq markdown-fontify-code-blocks-natively t))
 (use-package reformatter :ensure t :defer t) ;; needed by nix-mode
-(use-package nix-mode
-  :ensure t
-  :defer t
-  :mode "\\.nix\\'"
-  :config
-  (add-hook 'nix-mode-hook (lambda ()
-                             (setq imenu-create-index-function #'meain/imenu-config-nesting-path))))
+(use-package nix-mode :ensure t :defer t :mode "\\.nix\\'")
 ;; builtin package for scheme (for tree-sitter grammar)
 (use-package scheme-mode :defer t :mode "\\.scm\\'")
 (use-package csv-mode
@@ -4417,7 +4101,6 @@ For optional NO-CACHE, use caching by default."
 
 (use-package gptel-quick
   :ensure (:host github :repo "karthink/gptel-quick")
-  :disabled t
   :commands (gptel-quick)
   :config
   (setq gptel-quick-timeout 100)
@@ -4572,23 +4255,6 @@ PROMPT-TYPE specifies the type of prompt to use ('rewrite or 'prompt)."
                     (yap-rewrite 'identify-actionable-change)))
   (global-set-key (kbd "M-m M-f") (lambda () (interactive) (yap-rewrite 'fix-diagnostic-error)))
   (global-set-key (kbd "M-m M-e") (lambda () (interactive) (yap-prompt 'explain-code))))
-
-;; Sourcegraph cody
-;; TODO: Does not work as of now
-(use-package cody
-  :ensure (:host github :repo "sourcegraph/emacs-cody")
-  :config
-  (setq cody--access-token (shell-command-to-string "pass show sourcegraph/apikey")))
-
-;; Chatgpt shell
-(use-package chatgpt-shell
-  :ensure t
-  :disabled t
-  :config
-  (setq chatgpt-shell-model-version "gpt-4o-mini")
-  (setq chatgpt-shell-openai-key openai-api-key)
-  (setq chatgpt-shell-openrouter-key openrouter-api-key)
-  )
 
 ;; Text to speech stuff
 ;; Useful for reading out llm explanations
