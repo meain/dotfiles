@@ -47,11 +47,15 @@
 
 ;; Basic setup
 (setq user-mail-address "mail@meain.io" user-full-name "Abin Simon")
-(defvar groq-api-key (string-trim (shell-command-to-string "pass show groq/apikey 2>/dev/null") "\n" "\n"))
-(defvar openrouter-api-key (string-trim (shell-command-to-string "pass show openrouter/apikey 2>/dev/null") "\n" "\n"))
-(defvar openai-api-key (string-trim (shell-command-to-string "pass show openai/apikey 2>/dev/null") "\n" "\n"))
-(defvar anthropic-api-key (string-trim (shell-command-to-string "pass show anthropic/apikey 2>/dev/null") "\n" "\n"))
-(defvar github-models-api-key (string-trim (shell-command-to-string "pass show github-models/apikey 2>/dev/null") "\n" "\n"))
+
+(defun get-api-key (key)
+  "Retrieve the API key for the specified KEY from 'pass'."
+  (string-trim (shell-command-to-string (format "pass show %s 2>/dev/null" key)) "\n" "\n"))
+(defvar groq-api-key (get-api-key "groq/apikey"))
+(defvar openrouter-api-key (get-api-key "openrouter/apikey"))
+(defvar openai-api-key (get-api-key "openai/apikey"))
+(defvar anthropic-api-key (get-api-key "anthropic/apikey"))
+(defvar github-models-api-key (get-api-key "github-models/apikey"))
 
 ;; Setup elpaca
 (defvar elpaca-installer-version 0.10)
@@ -110,13 +114,15 @@
 ;; Benchmark emacs startup (enable when necessary)
 (use-package benchmark-init
   :ensure t
-  :disabled :config
+  :disabled t
+  :config
   (add-hook 'after-init-hook 'benchmark-init/deactivate))
 
 ;; Get proper PATH (not used as we are launching from shell)
 ;; TODO: Convert to async: https://br0g.0brg.net/2024/emacs-async-exec-path-from-shell.html
 (use-package exec-path-from-shell
   :ensure t
+  :disabled t
   :config
   ;; https://github.com/purcell/exec-path-from-shell#making-exec-path-from-shell-faster
   ;; (setq exec-path-from-shell-arguments '("-l")) ;; removing -i
@@ -137,7 +143,6 @@
   (setq evil-kill-on-visual-paste nil)
   (setq evil-respect-visual-line-mode nil)
   (setq evil-symbol-word-search t)
-  (define-key evil-normal-state-map (kbd "Y") 'meain/yank-till-line-end)
 
   :config
   (evil-mode t)
@@ -154,6 +159,19 @@
   ;; Up/Down on visual instead of actual lines
   (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
   (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
+  (define-key evil-normal-state-map (kbd "Y") 'meain/yank-till-line-end)
+
+  ;; Buffer navigation
+  (define-key evil-normal-state-map (kbd "C-S-o") 'previous-buffer)
+  (define-key evil-normal-state-map (kbd "C-S-i") 'next-buffer)
+
+  (define-key evil-normal-state-map "Q" 'evil-record-macro)
+  (define-key evil-visual-state-map
+              (kbd ";")
+              (lambda ()
+                (interactive)
+                (call-interactively 'eval-region)
+                (evil-force-normal-state)))
 
   (defun meain/recenter-advice (orig-fn &rest args)
     "Used to recenter the buffer after `ORIG-FN' passing down `ARGS' down to it."
@@ -179,9 +197,19 @@
 (use-package evil-leader
   :ensure t
   :after evil
+  :defer nil
   :config
   (global-evil-leader-mode)
-  (evil-leader/set-leader "s"))
+  (evil-leader/set-leader "s")
+
+  ;; server edit
+  (evil-leader/set-key "s s" 'server-edit)
+
+  ;; buffer commands
+  (evil-leader/set-key "b k" 'kill-buffer)
+  (evil-leader/set-key "b o" 'previous-buffer)
+  (evil-leader/set-key "b f" 'find-file)
+  (evil-leader/set-key "b d" 'delete-frame))
 
 ;;; [BASIC SETTINGS] =============================================
 
@@ -246,37 +274,37 @@
 
 ;;; [VISUAL CONFIG] ==============================================
 
-;; Change font everywhere
-(defun meain/set-fonts ()
-  "Set fonts for everything."
-  (set-face-attribute 'default nil :font meain/font-family-default :weight meain/font-weight-default)
-  (set-face-attribute 'fixed-pitch nil :font meain/font-family-default :weight meain/font-weight-default)
-  (set-face-attribute 'variable-pitch nil :font meain/font-family-default :weight meain/font-weight-default))
-(defun meain/select-font ()
-  "Select and set a font."
-  (interactive)
-  (let ((font-name (completing-read "Choose font: " (remove-duplicates (font-family-list)))))
-    (let ((family (meain/get-font-prop font-name 'family))
-          (weight (meain/get-font-prop font-name 'weight)))
-      (set-frame-font family)
-      (set-face-attribute 'default nil :font family :weight weight)
-      (set-face-attribute 'fixed-pitch nil :font family :weight weight)
-      (set-face-attribute 'variable-pitch nil :font family :weight weight)
-      (setq-default line-spacing (meain/get-font-prop font-name 'line-spacing)))))
+;; Set up fonts
+(use-package emacs
+  :commands (meain/select-font meain/what-font-am-i-using)
+  :config
+  (defun meain/select-font ()
+    "Select and set a font."
+    (interactive)
+    (let ((font-name (completing-read "Choose font: " (remove-duplicates (font-family-list)))))
+      (let ((family (meain/get-font-prop font-name 'family))
+            (weight (meain/get-font-prop font-name 'weight)))
+        (set-frame-font family)
+        (set-face-attribute 'default nil :font family :weight weight)
+        (set-face-attribute 'fixed-pitch nil :font family :weight weight)
+        (set-face-attribute 'variable-pitch nil :font family :weight weight)
+        (setq-default line-spacing (meain/get-font-prop font-name 'line-spacing)))))
+  (defun meain/what-font-am-i-using ()
+    "Show the name/details for the current font in use."
+    (interactive)
+    (message "%s" (face-attribute 'default :font))))
 
 ;; Bell: audio -> visual
-(setq visible-bell nil)
-(setq ring-bell-function (lambda ()
-                           (unless (memq this-command
-                                         '(isearch-abort abort-recursive-edit exit-minibuffer keyboard-quit))
-                             (invert-face 'mode-line)
-                             (invert-face 'header-line)
-                             (run-with-timer 0.1 nil 'invert-face 'mode-line)
-                             (run-with-timer 0.1 nil 'invert-face 'header-line))))
-(defun meain/what-font-am-i-using ()
-  "Show the name/details for the current font in use."
-  (interactive)
-  (message "%s" (face-attribute 'default :font)))
+(use-package emacs
+  :config
+  (setq visible-bell nil)
+  (setq ring-bell-function (lambda ()
+                             (unless (memq this-command
+                                           '(isearch-abort abort-recursive-edit exit-minibuffer keyboard-quit))
+                               (invert-face 'mode-line)
+                               (invert-face 'header-line)
+                               (run-with-timer 0.1 nil 'invert-face 'mode-line)
+                               (run-with-timer 0.1 nil 'invert-face 'header-line)))))
 
 ;; Theme
 (setq hima-theme-load-path (concat (getenv "HOME") "/dev/src/hima-theme"))
@@ -292,28 +320,29 @@
 (context-menu-mode nil)
 
 ;; Show open and closing brackets
-(use-package emacs
-  :hook (after-init . show-paren-mode)
+(use-package show-paren
+  :defer t
   :config
   (setq show-paren-delay 0)
   (setq show-paren-context-when-offscreen t)
-  (setq show-paren-style 'parenthesis))
+  (setq show-paren-style 'parenthesis)
+  (show-paren-mode t))
 
 ;; Keep files in sync with filesystem
 ;; Tweak these settings carefully. This makes things quite slow if not
 ;; configured correctly.
-(use-package emacs
+(use-package autorevert
   :config
   (setq auto-revert-interval 5)
   (setq auto-revert-check-vc-info nil)
   (setq global-auto-revert-non-file-buffers nil)
-
   (setq auto-revert-verbose nil)
   (global-auto-revert-mode t))
 
 ;; Disable line wrapping
 (use-package emacs
   :after evil-leader
+  :defer t
   :config
   (setq-default truncate-lines 1)
   (evil-leader/set-key "b w" 'toggle-truncate-lines))
@@ -321,6 +350,7 @@
 ;; auto-fill
 (use-package emacs
   :after evil-leader
+  :defer t
   :config
   (evil-leader/set-key "b F" 'auto-fill-mode))
 
@@ -331,7 +361,8 @@
 (setq vc-follow-symlinks t)
 
 ;; auto-pair
-(use-package emacs
+(use-package electric
+  :defer t
   :config
   ;; https://www.reddit.com/r/emacs/comments/1hwf46n/comment/m63mddk
   ;; This ensures multiple quotes are not added at the beginning or end of a word
@@ -351,7 +382,6 @@
       (eq (preceding-char) char)
       (not (eq (char-syntax (preceding-char)) ?\()))))
   (setq electric-pair-inhibit-predicate 'meain/electric-pair-conservative-inhibit)
-
   (electric-pair-mode t))
 
 ;; move the mouse out of the way on cursor
@@ -378,7 +408,7 @@
 
 
 ;; macro for alternate pattern
-(defmacro meain/with-alternate (original alternate)
+(defmacro alambda (original alternate)
   "Macro for easily creating commands with alternate on `universal-argument'.
 Pass ORIGINAL and ALTERNATE options."
   `(lambda (&optional use-alternate)
@@ -390,22 +420,21 @@ Pass ORIGINAL and ALTERNATE options."
 ;; Evil commentary
 (use-package evil-commentary
   :ensure t
-  :defer 1
-  :diminish
+  :defer nil
   :config (evil-commentary-mode))
 
 ;; Evil surround
 (use-package evil-surround
-  :defer 1
   :ensure t
+  :defer nil
   :config (global-evil-surround-mode 1))
 
 ;; Evil text objects
-(use-package evil-textobj-line :ensure t :defer 1)
-(use-package evil-textobj-syntax :ensure t :defer 1)
+(use-package evil-textobj-line :ensure t :defer nil)
+(use-package evil-textobj-syntax :ensure t :defer nil)
 (use-package evil-indent-plus
   :ensure t
-  :defer 1
+  :defer nil
   :config
   (define-key evil-inner-text-objects-map "i" 'evil-indent-plus-i-indent)
   (define-key evil-outer-text-objects-map "i" 'evil-indent-plus-a-indent)
@@ -415,6 +444,7 @@ Pass ORIGINAL and ALTERNATE options."
 ;; Evil number increment
 (use-package evil-numbers
   :ensure t
+  :defer t
   :after (evil)
   :commands (evil-numbers/inc-at-pt-incremental evil-numbers/dec-at-pt-incremental)
   :init
@@ -426,15 +456,27 @@ Pass ORIGINAL and ALTERNATE options."
 (use-package emacs
   :after evil
   :init
-  (define-key evil-normal-state-map (kbd "<SPC> <SPC>") 'evil-write))
+  (define-key evil-normal-state-map
+              (kbd "<SPC> <SPC>")
+              (lambda ()
+                (interactive)
+                (if (equal (buffer-name) "*scratch*")
+                    (with-temp-file
+                        (concat
+                         "/tmp/emacs-scratch-"
+                         (format-time-string "%Y-%m-%d-%H-%M-%S"))
+                      (message "Saved scratch to a temporary location")
+                      (insert (with-current-buffer "*scratch*" (buffer-string))))
+                  (call-interactively 'evil-write)))))
 
 ;; Hit universal arg without ctrl
 (use-package emacs
   :after evil-leader
+  :defer t
   :config
-  (evil-leader/set-key "u" 'universal-argument))
-(global-set-key (kbd "M-u") 'universal-argument)
-(define-key universal-argument-map (kbd "M-u") 'universal-argument-more)
+  (evil-leader/set-key "u" 'universal-argument)
+  (global-set-key (kbd "M-u") 'universal-argument)
+  (define-key universal-argument-map (kbd "M-u") 'universal-argument-more))
 
 ;; Auto resize windows (useful in go buffer, folks don't stop at 80)
 (use-package golden-ratio
@@ -444,6 +486,7 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; A silly little package to encourage on save
 (use-package emacs
+  :defer t
   :config
   (load (concat user-emacs-directory "encourage")))
 
@@ -527,51 +570,36 @@ Pass ORIGINAL and ALTERNATE options."
   (add-hook 'eshell-mode-hook 'sticky-shell-mode))
 
 ;; Midnight: Kill unused buffers at midnight
-(use-package emacs
+(use-package midnight
+  :defer t
   :config
   (setq clean-buffer-list-delay-general 1)
   (midnight-mode t))
 
 ;; Shrink and enlarge windows (not contextual as of now)
 ;; https://www.emacswiki.org/emacs/WindowResize
-(defmacro meain/inlambda (functionname &rest args)
+(defmacro ilambda (functionname &rest args)
   "Create an interactive lambda of existing function `FUNCTIONNAME' with `ARGS'."
-  (let ((funsymbol (concat "ilambda/" (symbol-name functionname))))
+  (let ((funsymbol (concat "i/" (symbol-name functionname))))
     `(cons ,funsymbol (lambda () (interactive) (apply #',functionname ',args)))))
-(defmacro meain/ilambda (functionname &rest args)
-  "Create an interactive lambda of existing function `FUNCTIONNAME' with `ARGS'."
-  `(lambda () (interactive) (apply #',functionname ',args)))
-(global-set-key (kbd "M-H") (meain/inlambda shrink-window-horizontally 5))
-(global-set-key (kbd "M-L") (meain/inlambda enlarge-window-horizontally 5))
-(global-set-key (kbd "M-K") (meain/inlambda shrink-window 5))
-(global-set-key (kbd "M-J") (meain/inlambda enlarge-window 5))
+(global-set-key (kbd "M-H") (ilambda shrink-window-horizontally 5))
+(global-set-key (kbd "M-L") (ilambda enlarge-window-horizontally 5))
+(global-set-key (kbd "M-K") (ilambda shrink-window 5))
+(global-set-key (kbd "M-J") (ilambda enlarge-window 5))
 
 ;; Switch to other frame
-(use-package emacs
+(use-package frame
   :after evil-leader
+  :defer t
   :config
   (evil-leader/set-key "a f" 'other-frame))
 
-;; Remap macro recoring key
 (use-package emacs
   :after evil
   :init
-  (define-key evil-normal-state-map "Q" 'evil-record-macro))
-
-;; Eval region
-(use-package emacs
-  :after evil
-  :init
-  (define-key evil-visual-state-map
-              (kbd ";")
-              (lambda ()
-                (interactive)
-                (call-interactively 'eval-region)
-                (evil-force-normal-state))))
-
-(use-package emacs
-  :after evil
-  :commands ()
+  (evil-leader/set-key "c" 'meain/create-or-switch-to-scratch)
+  (define-key evil-normal-state-map (kbd "q") 'meain/kill-current-buffer-unless-scratch)
+  :commands (meain/update-scratch-message meain/create-or-switch-to-scratch meain/kill-current-buffer-unless-scratch)
   :config
   (defun meain/update-scratch-message ()
     "Update scratch buffer contents to reflect open buffers and unread emails."
@@ -592,6 +620,7 @@ Pass ORIGINAL and ALTERNATE options."
 
   (defun meain/create-or-switch-to-scratch ()
     "Switch to scratch buffer if exists, else create a scratch buffer with our config."
+    (interactive)
     (cond
      ((get-buffer "*scratch*")
       (switch-to-buffer "*scratch*"))
@@ -599,9 +628,7 @@ Pass ORIGINAL and ALTERNATE options."
           (switch-to-buffer "*scratch*")
           (setq default-directory "~/")
           (lisp-interaction-mode)
-          (meain/update-scratch-message))))
-    :init
-    (evil-leader/set-key "c" 'meain/create-or-switch-to-scratch))
+          (meain/update-scratch-message)))))
 
   (defun meain/kill-current-buffer-unless-scratch ()
     "Kill current buffer if it is not scratch."
@@ -621,9 +648,7 @@ Pass ORIGINAL and ALTERNATE options."
         (progn
           (evil-insert 1)
           (vterm-reset-cursor-point)))
-       (t (previous-buffer)))))
-  :init
-  (define-key evil-normal-state-map (kbd "q") 'meain/kill-current-buffer-unless-scratch))
+       (t (previous-buffer))))))
 
 ;; Quit out of everything with esc
 (defun meain/keyboard-quit ()
@@ -641,9 +666,10 @@ Pass ORIGINAL and ALTERNATE options."
 ;; Quick replace
 (use-package emacs
   :after evil
+  :defer t
   :init
-  (define-key evil-normal-state-map (kbd "<SPC> ;") (cons "replace in buffer" (meain/ilambda evil-ex "%s/")))
-  (define-key evil-visual-state-map (kbd "<SPC> ;") (cons "replace in buffer"(meain/ilambda evil-ex "'<,'>s/"))))
+  (define-key evil-normal-state-map (kbd "<SPC> ;") (cons "replace in buffer" (ilambda evil-ex "%s/")))
+  (define-key evil-visual-state-map (kbd "<SPC> ;") (cons "replace in buffer"(ilambda evil-ex "'<,'>s/"))))
 
 ;; Highlight yanked region
 (defun meain/evil-yank-advice (orig-fn beg end &rest args)
@@ -654,6 +680,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 (advice-add 'evil-yank :around 'meain/evil-yank-advice)
 
 (use-package comint
+  :defer t
   :config
   (add-hook 'comint-mode-hook (lambda () (setq-local show-trailing-whitespace nil))))
 
@@ -695,7 +722,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
                      (read-string ".mscripts/default "))))
   :init
   (evil-leader/set-key "r"
-    (meain/with-alternate
+    (alambda
      (call-interactively 'recompile)
      (call-interactively 'compile))))
 
@@ -760,11 +787,11 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
   :init
   (evil-leader/set-key "p p"
-    (meain/with-alternate (call-interactively 'project-switch-project)
-                          (project-find-file)))
+    (alambda (call-interactively 'project-switch-project)
+             (project-find-file)))
 
   (define-key evil-normal-state-map (kbd "<SPC> <RET>") 'meain/find-file-git-changed)
-  (define-key evil-normal-state-map (kbd "<M-RET>") (meain/with-alternate
+  (define-key evil-normal-state-map (kbd "<M-RET>") (alambda
                                                      (meain/find-file-semantic)
                                                      (meain/refresh-semantic-search-index)))
   (define-key evil-normal-state-map (kbd "<RET>") 'project-find-file))
@@ -820,6 +847,8 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   (add-hook 'dired-mode-hook #'dired-dim-git-ignores))
 
 (use-package dired-x
+  :after dired
+  :defer t
   :config
   (setq dired-omit-files "\\.DS_Store$\\|__pycache__$\\|.pytest_cache$\\|\\.mypy_cache$\\|\\.egg-info$"))
 
@@ -877,6 +906,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   (global-set-key (kbd "M-(") 'tempel-previous))
 
 (use-package ispell
+  :defer t
   :config
   ;; Was having some trouble with aspell not detecting dicts
   (setq ispell-program-name "ispell"))
@@ -903,6 +933,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
 ;; flymake
 (use-package flymake
+  :defer t
   :after evil
   :commands (flymake flymake-find-file-hook
                      flymake-goto-next-error
@@ -915,6 +946,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   (evil-set-command-property 'flymake-goto-prev-error :jump t))
 (use-package flymake-diagnostic-at-point
   :ensure t
+  :defer t
   :after (flymake evil-leader)
   :config
   (setq flymake-diagnostic-at-point-error-prefix "! ")
@@ -924,58 +956,59 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   (add-hook 'flymake-mode-hook #'flymake-diagnostic-at-point-mode))
 (use-package flymake-quickdef
   :ensure t
+  :defer t
   :after flymake
   :config
   ;; tint lints
   (flymake-quickdef-backend flymake-check-tint
-    :pre-let ((tint-exec (executable-find "tint")))
-    :pre-check (unless tint-exec (error "Cannot find tint executable"))
-    :write-type 'file
-    :proc-form (list tint-exec "lint" fmqd-temp-file)
-    :search-regexp "^\\([^:]+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\): \\(.*\\)$"
-    :prep-diagnostic (let* ((lnum (string-to-number (match-string 2)))
-                            (col (string-to-number (match-string 3)))
-                            (pos (flymake-diag-region fmqd-source lnum col))
-                            (beg (car pos))
-                            (end (cdr pos))
-                            (msg (format "tint> %s" (match-string 6))))
-                       (list fmqd-source beg end :warning msg)))
+                            :pre-let ((tint-exec (executable-find "tint")))
+                            :pre-check (unless tint-exec (error "Cannot find tint executable"))
+                            :write-type 'file
+                            :proc-form (list tint-exec "lint" fmqd-temp-file)
+                            :search-regexp "^\\([^:]+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\): \\(.*\\)$"
+                            :prep-diagnostic (let* ((lnum (string-to-number (match-string 2)))
+                                                    (col (string-to-number (match-string 3)))
+                                                    (pos (flymake-diag-region fmqd-source lnum col))
+                                                    (beg (car pos))
+                                                    (end (cdr pos))
+                                                    (msg (format "tint> %s" (match-string 6))))
+                                               (list fmqd-source beg end :warning msg)))
   (add-hook 'go-ts-mode-hook
             (lambda ()
               (add-hook 'flymake-diagnostic-functions 'flymake-check-tint nil t)))
 
   ;; https://github.com/crate-ci/typos
   (flymake-quickdef-backend flymake-check-typos
-    :pre-let ((typos-exec (executable-find "typos")))
-    :pre-check (unless typos-exec (error "Cannot find typos executable"))
-    :write-type 'file
-    :proc-form (list typos-exec "--hidden" "--format" "brief" fmqd-temp-file)
-    :search-regexp "^\\([^:]+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\): \\(.*\\)$"
-    :prep-diagnostic (let* ((lnum (string-to-number (match-string 2)))
-                            (col (string-to-number (match-string 3)))
-                            (text (match-string 4))
-                            (pos (flymake-diag-region fmqd-source lnum col))
-                            (beg (car pos))
-                            (end (cdr pos))
-                            (msg (format "typos> %s" text)))
-                       (list fmqd-source beg end :warning msg)))
+                            :pre-let ((typos-exec (executable-find "typos")))
+                            :pre-check (unless typos-exec (error "Cannot find typos executable"))
+                            :write-type 'file
+                            :proc-form (list typos-exec "--hidden" "--format" "brief" fmqd-temp-file)
+                            :search-regexp "^\\([^:]+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\): \\(.*\\)$"
+                            :prep-diagnostic (let* ((lnum (string-to-number (match-string 2)))
+                                                    (col (string-to-number (match-string 3)))
+                                                    (text (match-string 4))
+                                                    (pos (flymake-diag-region fmqd-source lnum col))
+                                                    (beg (car pos))
+                                                    (end (cdr pos))
+                                                    (msg (format "typos> %s" text)))
+                                               (list fmqd-source beg end :warning msg)))
   (add-hook 'flymake-diagnostic-functions 'flymake-check-typos)
 
   ;; https://github.com/rhysd/actionlint
   (flymake-quickdef-backend flymake-check-actionlint
-    :pre-let ((actionlint-exec (executable-find "actionlint")))
-    :pre-check (unless actionlint-exec (error "Cannot find actionlint executable"))
-    :write-type 'file
-    :proc-form (list actionlint-exec "-format" "{{range $err := .}}{{$err.Filepath}}:{{$err.Line}}:{{$err.Column}}:{{$err.Message}}\n{{end}}" fmqd-temp-file)
-    :search-regexp "^\\([^:]+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\):\\(.*\\)$"
-    :prep-diagnostic (let* ((lnum (string-to-number (match-string 2)))
-                            (col (string-to-number (match-string 3)))
-                            (text (match-string 4))
-                            (pos (flymake-diag-region fmqd-source lnum col))
-                            (beg (car pos))
-                            (end (cdr pos))
-                            (msg (format "actionlint> %s" text)))
-                       (list fmqd-source beg end :warning msg)))
+                            :pre-let ((actionlint-exec (executable-find "actionlint")))
+                            :pre-check (unless actionlint-exec (error "Cannot find actionlint executable"))
+                            :write-type 'file
+                            :proc-form (list actionlint-exec "-format" "{{range $err := .}}{{$err.Filepath}}:{{$err.Line}}:{{$err.Column}}:{{$err.Message}}\n{{end}}" fmqd-temp-file)
+                            :search-regexp "^\\([^:]+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\):\\(.*\\)$"
+                            :prep-diagnostic (let* ((lnum (string-to-number (match-string 2)))
+                                                    (col (string-to-number (match-string 3)))
+                                                    (text (match-string 4))
+                                                    (pos (flymake-diag-region fmqd-source lnum col))
+                                                    (beg (car pos))
+                                                    (end (cdr pos))
+                                                    (msg (format "actionlint> %s" text)))
+                                               (list fmqd-source beg end :warning msg)))
   (add-hook 'yaml-mode-hook
             (lambda ()
               (if (string-match-p ".*\\.github/workflows/.*\\.ya?ml" (buffer-file-name))
@@ -990,47 +1023,49 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   ;; https://github.com/golangci/golangci-lint/issues/1574#issuecomment-804500358
   ;; TODO: Find some way to run linters like errcheck, govet, staticcheck etc
   (flymake-quickdef-backend flymake-golangci
-    :pre-let ((golangci-exec (executable-find "golangci-lint")))
-    :pre-check (unless golangci-exec (error "Cannot find golangci-lint executable"))
-    :write-type 'file ; don't really use this
-    :proc-form (list golangci-exec "run"
-                     "--print-issued-lines=false" "--out-format=line-number"
-                     "--disable-all" "--fast" fmqd-temp-file) ; --fast ones can run on single file
-    :search-regexp "[^:]*:\\([[:digit:]]+\\):\\([[:digit:]]+\\): \\(.*\\)$"
-    :prep-diagnostic (let* ((lnum (string-to-number (match-string 1)))
-                            (col (string-to-number (match-string 2)))
-                            (text (match-string 3))
-                            (pos (flymake-diag-region fmqd-source lnum col))
-                            (beg (car pos))
-                            (end (cdr pos))
-                            (msg (format "golangci> %s" text)))
-                       (list fmqd-source beg end :warning msg)))
+                            :pre-let ((golangci-exec (executable-find "golangci-lint")))
+                            :pre-check (unless golangci-exec (error "Cannot find golangci-lint executable"))
+                            :write-type 'file ; don't really use this
+                            :proc-form (list golangci-exec "run"
+                                             "--print-issued-lines=false" "--out-format=line-number"
+                                             "--disable-all" "--fast" fmqd-temp-file) ; --fast ones can run on single file
+                            :search-regexp "[^:]*:\\([[:digit:]]+\\):\\([[:digit:]]+\\): \\(.*\\)$"
+                            :prep-diagnostic (let* ((lnum (string-to-number (match-string 1)))
+                                                    (col (string-to-number (match-string 2)))
+                                                    (text (match-string 3))
+                                                    (pos (flymake-diag-region fmqd-source lnum col))
+                                                    (beg (car pos))
+                                                    (end (cdr pos))
+                                                    (msg (format "golangci> %s" text)))
+                                               (list fmqd-source beg end :warning msg)))
 
   ;; https://github.com/hadolint/hadolint
   (flymake-quickdef-backend flymake-hadolint
-    :pre-let ((hadolint-exec (executable-find "hadolint")))
-    :pre-check (unless hadolint-exec (error "Cannot find hadolint executable"))
-    :write-type 'file
-    :proc-form (list hadolint-exec "--no-color" fmqd-temp-file)
-    :search-regexp "^\\([^:]+\\):\\([[:digit:]]+\\) \\(.*\\)$"
-    :prep-diagnostic (let* ((lnum (string-to-number (match-string 2)))
-                            (col 0)
-                            (text (match-string 3))
-                            (pos (flymake-diag-region fmqd-source lnum col))
-                            (beg (car pos))
-                            (end (cdr pos))
-                            (msg (format "hadolint> %s" text)))
-                       (list fmqd-source beg end :warning msg)))
+                            :pre-let ((hadolint-exec (executable-find "hadolint")))
+                            :pre-check (unless hadolint-exec (error "Cannot find hadolint executable"))
+                            :write-type 'file
+                            :proc-form (list hadolint-exec "--no-color" fmqd-temp-file)
+                            :search-regexp "^\\([^:]+\\):\\([[:digit:]]+\\) \\(.*\\)$"
+                            :prep-diagnostic (let* ((lnum (string-to-number (match-string 2)))
+                                                    (col 0)
+                                                    (text (match-string 3))
+                                                    (pos (flymake-diag-region fmqd-source lnum col))
+                                                    (beg (car pos))
+                                                    (end (cdr pos))
+                                                    (msg (format "hadolint> %s" text)))
+                                               (list fmqd-source beg end :warning msg)))
   (add-hook 'dockerfile-mode-hook
             (lambda ()
               (add-hook 'flymake-diagnostic-functions 'flymake-hadolint nil t))))
 
 (use-package flymake-collection
   :ensure t
+  :defer t
   :hook (after-init . flymake-collection-hook-setup))
 
 (use-package corfu
   :ensure (:files (:defaults "extensions/*"))
+  :defer t
   :config
   (setq completion-cycle-threshold 3)
   (setq corfu-auto t)
@@ -1063,6 +1098,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 ;; Add completion extensions
 (use-package cape
   :ensure t
+  :defer t
   :bind (("M-p" . completion-at-point) ;; capf
          ("M-f p t" . complete-tag)        ;; etags
          ("M-f p d" . cape-dabbrev)        ;; or dabbrev-completion
@@ -1160,9 +1196,10 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
           (consult-grep buffer)
           (t flat)))
   (vertico-mode))
-(use-package savehist :config (savehist-mode t))
+(use-package savehist :config (savehist-mode t) :defer t)
 (use-package orderless
   :ensure t
+  :defer nil
   :config
   (setq completion-styles '(orderless basic))
 
@@ -1198,7 +1235,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
           (file (styles basic partial-completion)))))
 (use-package marginalia
   :ensure t
-  :defer 1
+  :defer nil
   :bind (:map minibuffer-local-map ("C-b" . marginalia-cycle))
   :config (marginalia-mode))
 
@@ -1207,29 +1244,11 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 ;;   :ensure t
 ;;   :config (add-to-list 'completion-styles 'typo t))
 
-;; Aggressive completions
-(use-package aggressive-completion
-  :ensure t
-  :defer 1
-  :disabled t
-  :config
-  (setq aggressive-completion-delay 1.0)
-  (setq aggressive-completion-auto-completion-help nil)
-  (defun meain/vertico-complete ()
-    (interactive)
-    ;; (minibuffer-complete)
-    (when vertico--count-ov ;; Only if vertico is active.
-      (when vertico-flat-mode
-        (vertico-multiform-vertical 'vertico-grid-mode)
-        (vertico--exhibit))))
-  (setq aggressive-completion-auto-complete-fn #'meain/vertico-complete)
-  (aggressive-completion-mode t))
-
 ;; Consult without consultation fees
 (use-package consult
   :ensure t
-  :after (xref)
-  :defer 1
+  :after (xref evil)
+  :defer t
   :config
   (setq consult-ripgrep-args "rg --null --line-buffered --color=never --max-columns=1000 --path-separator /\
       --smart-case --no-heading --line-number --hidden --follow --glob \"!.git/*\"")
@@ -1241,10 +1260,11 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
 ;; Embark stuff
 (use-package embark
-  :defer 1
+  :defer t
   :ensure t
-  :init (setq prefix-help-command #'embark-prefix-help-command)
   :config
+  (setq prefix-help-command #'embark-prefix-help-command)
+  :init
   (global-set-key (kbd "C-'")  'embark-act)
   (global-set-key (kbd "C-.")  'embark-export)
   (global-set-key (kbd "C-h B")  'embark-bindings))
@@ -1265,11 +1285,10 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   (global-set-key (kbd "C-h k") #'helpful-key)
   (global-set-key (kbd "C-h x") #'helpful-command)
   (global-set-key (kbd "C-h o") #'helpful-symbol)
-  (global-set-key (kbd "C-c C-d") #'helpful-at-point))
+  (global-set-key (kbd "C-c C-d") #'helpful-at-point)
 
-;; Map find-library along with helpful keybinds
-(use-package emacs
-  :init
+  ;; find-library is not helpful related, but good to map in the same
+  ;; block along with the helpful keys as they have similar keybinds
   (global-set-key (kbd "C-h l") #'find-library))
 
 ;; ibuffer
@@ -1278,10 +1297,11 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   :init
   (setq ibuffer-expert t)
   (global-set-key (kbd "M-c")
-                  (meain/with-alternate (call-interactively 'switch-to-buffer)
-                                        (ibuffer-other-window))))
+                  (alambda (call-interactively 'switch-to-buffer)
+                           (ibuffer-other-window))))
 (use-package ibuffer-project
   :ensure t
+  :defer t
   :after (ibuffer project)
   :config
   (add-to-list 'ibuffer-project-root-functions '(file-remote-p . "Remote"))
@@ -1304,12 +1324,13 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   :after evil-leader
   :init
   (evil-leader/set-key "f"
-    (meain/with-alternate (consult-ripgrep) (call-interactively 'rg)))
+    (alambda (consult-ripgrep) (call-interactively 'rg)))
   :config (setq rg-command-line-flags '("--hidden" "--follow")))
 
 ;; dumber-jump
 (use-package dumber-jump
   :ensure t
+  :defer t
   :after evil-leader
   :config
   (add-hook 'xref-backend-functions #'dumber-jump-xref-activate))
@@ -1367,6 +1388,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 ;; Xref customization
 (use-package xref
   :after (evil)
+  :defer t
   :config
   (define-key evil-normal-state-map (kbd "M-.") #'xref-find-definitions)
   (define-key evil-normal-state-map (kbd "M-?") #'xref-find-references)
@@ -1395,7 +1417,23 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 ;;                                           ("C" "clangd" "--all-scopes-completion --clang-tidy --enable-config --header-insertion-decorators=0")
 ;;                                           ("java" "java" lspce-jdtls-cmd-args lspce-jdtls-initializationOptions)))))
 
-;; (use-package jsonrpc :ensure t)
+(use-package el-patch
+  :ensure t
+  :after eglot
+  :defer t
+  :config
+  ;; Make eglot play nicely with auto-revert mode
+  ;; https://github.com/joaotavora/eglot/issues/1449#issuecomment-2378670111
+  (with-eval-after-load 'eglot
+    (el-patch-defun eglot--signal-textDocument/didOpen ()
+      "Send textDocument/didOpen to server."
+      (el-patch-add (eglot--track-changes-fetch eglot--track-changes))
+      (setq eglot--recent-changes nil
+            eglot--versioned-identifier 0
+            eglot--TextDocumentIdentifier-cache nil)
+      (jsonrpc-notify
+       (eglot--current-server-or-lose)
+       :textDocument/didOpen `(:textDocument ,(eglot--TextDocumentItem))))))
 
 ;; LSP
 (use-package eglot
@@ -1450,10 +1488,12 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   (evil-define-key 'normal go-mode-map (kbd "g d") 'xref-find-definitions))
 
 ;; Speed up eglot communication by translating to bycode externally
+;; NOTE(meain): It is possible that the first lsp that gets started is
+;; not started using eglot-booster
 (use-package eglot-booster
   :ensure (:host github :repo "jdtsmith/eglot-booster")
   :after eglot
-  :config (eglot-booster-mode))
+  :config (eglot-booster-mode t))
 
 ;; Get hierarchy
 (use-package eglot-hierarchy
@@ -1500,123 +1540,10 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
   :init
   (add-to-list 'xref-backend-functions 'tree-jump-xref-backend)
   (global-set-key (kbd "M-I")
-                  (meain/with-alternate (if (s-ends-with-p "_test.go" (buffer-file-name))
-                                            (consult-tree-jump-search)
-                                          (consult-tree-jump-search "!mock !_test "))
-                                        (tree-jump-search))))
-
-;; LogSeq related things
-(use-package emacs
-  :after (evil-leader)
-  :config
-  (defvar logseq-directory "~/.local/share/logseq/"
-    "The directory where logseq files are stored.")
-
-  (defun logseq-journal-today ()
-    "Open the journal for today."
-    (interactive)
-    (let ((date (format-time-string "%Y_%m_%d")))
-      (find-file (concat logseq-directory "journals/" date ".md"))))
-
-  (add-to-list 'display-buffer-alist '("\\*logseq-journal\\*"
-                                       (display-buffer-reuse-window display-buffer-at-bottom)
-                                       (reusable-frames . visible)
-                                       (window-height . 0.3)))
-
-  (defun logseq-journal-toggle ()
-    "Open the journal for today."
-    (interactive)
-    (let* ((date (format-time-string "%Y_%m_%d"))
-           (file (expand-file-name (concat logseq-directory "journals/" date ".md")))
-           (buffer (get-buffer "*logseq-journal*")))
-      (if (equal (buffer-file-name) file)
-          (delete-window)
-        (progn
-          (if buffer
-              (when (not (equal (buffer-file-name buffer) file))
-                (kill-buffer buffer)
-                (with-current-buffer (find-file-noselect file)
-                  (rename-buffer "*logseq-journal*")))
-            (with-current-buffer (find-file-noselect file)
-              (rename-buffer "*logseq-journal*")))
-          (pop-to-buffer "*logseq-journal*")))))
-
-  (defun logseq-journal-previous (&optional count)
-    "If we are already in a journal page, go to the previous journal
-by getting the date from filename.  Does not do anything if we are not
-in a journal page.
-
-COUNT is the number of journal entries to go back by.  You can pass
-negative values to go forward."
-    (interactive)
-    (let ((dir (file-name-nondirectory (directory-file-name (file-name-directory (buffer-file-name)))))
-          (fn (file-name-nondirectory (buffer-file-name))))
-      (if (equal dir "journals")
-          ;; filename will be in the format %Y_%m_%d
-          (when-let* ((time-segments (split-string (substring fn 0 10) "_"))
-                      (year (string-to-number (car time-segments)))
-                      (month (string-to-number (cadr time-segments)))
-                      (day (string-to-number (caddr time-segments)))
-                      (date (encode-time (list 0 0 0 day month year)))
-                      (fname (format-time-string
-                              "%Y_%m_%d"
-                              (time-subtract date
-                                             (days-to-time (if count count 1)))))
-                      (path (concat logseq-directory "journals/" fname ".md")))
-            (when (or
-                   (file-exists-p path)
-                   (yes-or-no-p "Journal page does not exist.  Create new?"))
-              (find-file path)))
-        (message "Not in a journal page."))))
-
-  (defun logseq-journal-next ()
-    "Go to next journal page.
-Use `logseq-journal-previous' with a negative argument when using
-interactively."
-    (declare (interactive-only t))
-    (interactive)
-    (logseq-journal-previous -1))
-
-  (defun logseq-journal-entry ()
-    "Add an entry to today's journal.
-The journal entry line will be prefixed by the current timestamp."
-    (interactive)
-    (when-let ((text (read-string "Entry: "))
-               (time (format-time-string "**%H:%M**"))
-               (date (format-time-string "%Y_%m_%d"))
-               (file (concat logseq-directory "journals/" date ".md")))
-      ;; Append an entry to today's journal
-      (with-temp-buffer
-        (when (file-exists-p file)
-          (insert-file-contents file))
-        (goto-char (point-max))
-        (insert (concat "\n- " time " " text))
-        (write-file file))))
-
-  (defun logseq-journal-open (date)
-    "Open a journal for a given date.
-DATE is a string in the format YYYY_MM_DD.
-In case it is called interactively, the date can be picked using the calendar."
-    (interactive (list (let ((event (calendar-read-date)))
-                         (format "%04d_%02d_%02d" (caddr event) (car event) (cadr event)))))
-    (find-file (concat logseq-directory "journals/" date ".md")))
-
-  (defun logseq-page-open (page)
-    "Open a page in logseq.
-In case it is called interactively, the page is autocompleted from the
-list of available pages."
-    (interactive (list (completing-read
-                        "Page: "
-                        (directory-files (concat logseq-directory "pages/") nil "\\.md$"))))
-    (find-file (concat logseq-directory "pages/" page)))
-  :init
-  (evil-leader/set-key "le" 'logseq-journal-entry)
-  (evil-leader/set-key "ll" 'logseq-journal-toggle)
-  (evil-leader/set-key "lj" 'logseq-journal-today)
-  (evil-leader/set-key "lJ" 'logseq-journal-open)
-  (evil-leader/set-key "lp" 'logseq-journal-previous)
-  (evil-leader/set-key "ln" 'logseq-journal-next)
-  (evil-leader/set-key "lP" 'logseq-page-open))
+                  (alambda (if (s-ends-with-p "_test.go" (buffer-file-name))
+                               (consult-tree-jump-search)
+                             (consult-tree-jump-search "!mock !_test "))
+                           (tree-jump-search))))
 
 ;; Tagbar alternative
 (use-package imenu
@@ -1655,7 +1582,7 @@ list of available pages."
   :commands (symbol-overlay-mode symbol-overlay-put))
 
 ;; magit dependency
-(use-package transient :ensure t)
+(use-package transient :ensure t :defer t)
 
 ;; Magit
 (use-package magit
@@ -1707,12 +1634,14 @@ list of available pages."
 
 (use-package ediff
   :after (evil-leader)
+  :defer t
   :config
   (setq ediff-window-setup-function 'ediff-setup-windows-plain)
   (setq ediff-split-window-function 'split-window-horizontally))
 
 (use-package smerge-mode
   :after (evil evil-leader ediff)
+  :commands (smerge-mode)
   :config
 
   ;; Builtin smerge mode function has some issues (override it)
@@ -1725,7 +1654,7 @@ list of available pages."
       (smerge-remove-props match-begin-0 match-end-0)
       (delete-region match-end-n match-end-0)
       (delete-region match-begin-0 match-begin-n)))
-
+  :init
   (evil-leader/set-key "gmm" 'smerge-mode)
   (evil-leader/set-key "gme" 'smerge-ediff)
   (evil-leader/set-key "gmr" 'smerge-refine)
@@ -1738,7 +1667,7 @@ list of available pages."
 ;; Diff hl
 (use-package diff-hl
   :ensure t
-  :defer 1
+  :defer t
   :after evil-leader
   :config
   (diff-hl-flydiff-mode)
@@ -1773,18 +1702,10 @@ list of available pages."
   (setq blamer-border-lines '(?+ ?- ?+ ?| ?+ ?+ )) ;; default one creates issues with spacing
   :init (evil-leader/set-key "G" 'blamer-show-commit-info))
 
-;; Magit todo
-(use-package magit-todos
-  :ensure t
-  :disabled t
-  :defer 1
-  :config
-  (magit-todos-mode))
-
 ;; Matchit
 (use-package evil-matchit
   :ensure t
-  :defer 1
+  :defer t
   :config (global-evil-matchit-mode 1))
 
 ;; Highlight color codes
@@ -1798,8 +1719,9 @@ list of available pages."
 (use-package origami
   :ensure t
   :after (evil evil-leader)
-  :defer 1
+  :defer t
   :config (global-origami-mode)
+  :commands (evil-toggle-fold)
   :init
   (define-key evil-normal-state-map (kbd "<SPC> TAB") 'evil-toggle-fold)
   (evil-leader/set-key "o" 'evil-toggle-fold))
@@ -1808,7 +1730,6 @@ list of available pages."
 (use-package drag-stuff
   :ensure t
   :after evil
-  :diminish
   :commands (drag-stuff-up drag-stuff-down drag-stuff-left drag-stuff-right)
   :init
   (define-key evil-visual-state-map (kbd "<up>") 'drag-stuff-up)
@@ -1821,6 +1742,7 @@ list of available pages."
 
 ;; Saveplace
 (use-package saveplace
+  :defer t
   :init
   (save-place-mode t)
   (setq save-place-file "~/.local/share/emacs/saveplace"))
@@ -1828,7 +1750,6 @@ list of available pages."
 ;; Persistent undo using undo-tree
 (use-package undo-tree
   :ensure t
-  :diminish
   :config
   (global-undo-tree-mode t)
   (setq undo-limit 80000000)
@@ -1839,7 +1760,7 @@ list of available pages."
 ;; Fancier tab management
 (use-package tab-bar
   :after evil-leader
-  :defer 3
+  :defer t
   :commands (tab-close tab-new tab-next tab-bar-rename-tab
                        meain/switch-tab-dwim meain/create-or-delete-tab
                        tab-bar-switch-to-tab)
@@ -1905,8 +1826,7 @@ Pass `CHOOSER' as t to not automatically select the previous tab."
 ;; which-key mode
 (use-package which-key
   :ensure t
-  :defer 1
-  :diminish
+  :defer nil
   :config
   (which-key-mode))
 
@@ -1923,8 +1843,7 @@ Pass `CHOOSER' as t to not automatically select the previous tab."
 ;; dtrt (atuo find indend setting)
 (use-package dtrt-indent
   :ensure t
-  :defer 1
-  :diminish
+  :defer t
   :config (dtrt-indent-global-mode))
 
 (use-package indent-guide
@@ -1939,41 +1858,11 @@ Pass `CHOOSER' as t to not automatically select the previous tab."
   :config
   (set-face-attribute 'indent-guide-face nil :foreground "#DDD"))
 
-;; ranger in emacs
-(use-package ranger
-  :ensure t
-  :disabled t
-  :commands ranger
-  :config
-  (use-package image-dired+
-    :ensure t
-    :config (image-diredx-async-mode)))
-
 ;; editorconfig
 (use-package editorconfig
-  :defer 1
+  :defer t
   :ensure t
   :config (editorconfig-mode 1))
-
-;; eros for eval
-(use-package eros
-  :ensure t
-  :commands (eros-eval-last-sexp meain/eval-last-sexp)
-  :after evil-leader
-  :init
-  (evil-leader/set-key ";" 'meain/eval-last-sexp)
-  :config
-  (eros-mode)
-  (defun meain/eval-last-sexp (&optional alternate)
-    "Do `eval-last-sexp'.  Pass ALTERNATE to go to end of line and do the same."
-    (interactive "P")
-    (if alternate
-        (save-excursion
-          (end-of-line)
-          (eros-eval-last-sexp nil))
-      (save-excursion
-        (search-forward ")")
-        (eros-eval-last-sexp nil)))))
 
 ;; Quick calculations
 (use-package emacs
@@ -2076,7 +1965,7 @@ Pass universal args to run suite or project level tests."
 
 ;; Evil keybindings for a lot of things
 (use-package evil-collection
-  :defer 1
+  :defer nil
   :ensure t
   :after evil
   :config
@@ -2087,7 +1976,7 @@ Pass universal args to run suite or project level tests."
 ;; Highlight TODO items
 (use-package hl-todo
   :ensure t
-  :defer 1
+  :defer nil
   :config
   (setq hl-todo-keyword-faces '(("TODO" . "#FF0000")
                                 ("FIXME" . "#FF0000")
@@ -2106,7 +1995,7 @@ Pass universal args to run suite or project level tests."
 ;; Direnv support
 (use-package envrc
   :ensure t
-  :defer 1
+  :defer t
   :config (envrc-global-mode))
 
 (use-package emacs
@@ -2143,9 +2032,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   :defer t
   :config
   (evil-set-command-property 'godef-jump :jump t))
-(use-package go-fill-struct
-  :ensure t
-  :commands (go-fill-struct))
+(use-package go-fill-struct :ensure t :commands (go-fill-struct))
 (use-package go-tag
   :ensure t
   :commands (go-tag-add go-tag-remove go-tag-refresh)
@@ -2155,7 +2042,104 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   :commands (go-impl)
   :config (advice-add 'go-impl :around #'meain/use-custom-src-directory))
 (use-package go-stacktracer :ensure t :commands (go-stacktracer-region))
-(use-package go-guru :defer t :ensure t)
+(use-package lua-mode :ensure t :defer t)
+(use-package web-mode :ensure t :defer t)
+(use-package jinja2-mode :ensure t :defer t)
+(use-package config-general-mode :ensure t :defer t :mode "/\\.env")
+(use-package vimrc-mode :ensure t :defer t)
+(use-package sxhkdrc-mode :ensure t :defer t)
+(use-package edit-indirect :ensure t)
+(use-package reformatter :ensure t :defer t) ;; needed by nix-mode
+(use-package nix-mode :ensure t :defer t :mode "\\.nix\\'")
+;; builtin package for scheme (for tree-sitter grammar)
+(use-package scheme-mode :defer t :mode "\\.scm\\'")
+
+(use-package markdown-mode
+  :ensure t
+  :defer t
+  :after (edit-indirect)
+  :mode ("\\.md\\'" . gfm-mode)
+  :config
+  (setq markdown-url-compose-char '(8230 8943 35 9733 9875))
+  (setq markdown-enable-html -1)
+  (evil-define-key 'normal gfm-mode-map (kbd "<RET>") 'project-find-file)
+  (evil-define-key 'normal gfm-mode-map (kbd "g d") 'markdown-do)
+  (evil-define-key 'normal markdown-mode-map (kbd "<RET>") 'project-find-file)
+  (evil-define-key 'normal markdown-mode-map (kbd "g d") 'markdown-do)
+  (setq markdown-command "pandoc -t html5")
+  (setq markdown-fontify-code-blocks-natively t)
+
+  ;; Quickly add markdown links to document
+  (defun meain/markdown-linkify-thing (start end)
+    "Function to search and add markdown links to document.
+START and END for position."
+    (interactive "r")
+    (let* ((orig-thang (if (use-region-p)
+                           (buffer-substring start end)
+                         (thing-at-point 'symbol)))
+           (thang (read-string "Search term: " orig-thang))
+           (json-object-type 'plist)
+           (json-array-type 'list)
+           (lurl (car (split-string
+                       (completing-read
+                        (format "Choose URL (%s): " thang)
+                        (mapcar (lambda (entry)
+                                  (string-join (list (plist-get entry :url)
+                                                     " :: "
+                                                     (plist-get entry :title))))
+                                (json-read-from-string (shell-command-to-string (string-join (list "ddgr --json '" thang "'"))))))
+                       " "))))
+      (save-excursion
+        (if (use-region-p)
+            (kill-region start end)
+          (kill-region (beginning-of-thing 'symbol) (end-of-thing 'symbol)))
+        (insert (format "[%s](%s)" orig-thang lurl)))))
+
+  ;; Generate pdf from markdown document
+  (defun meain/markdown-pdf ()
+    "Generate pdf from markdown document."
+    (interactive)
+    (message "Generating pdf of %s. Just give it a moment.." (buffer-file-name))
+    (start-process-shell-command "*markdown-pdf*" "*markdown-pdf*"
+                                 (concat ",markdown-to-pdf " (buffer-file-name))))
+
+  (defun meain/markdown-html ()
+    "Generate pdf from markdown document."
+    (interactive)
+    (message "Generating markdown for %s. Just give it a moment.." (buffer-file-name))
+    (start-process-shell-command "*markdown-html*" "*markdown-html*"
+                                 (concat ",markdown-to-html " (buffer-file-name))))
+
+  ;; Run markdown code blocks (forest.el)
+  (defun meain/run-markdown-code-block (&optional insert-to-buffer)
+    "Run markdown code block under cursor.
+Pass INSERT-TO-BUFFER to insert output to current buffer."
+    (interactive "P")
+    (let* ((start (nth 0 (markdown-get-enclosing-fenced-block-construct)))
+           (end (nth 1 (markdown-get-enclosing-fenced-block-construct)))
+           (snippet-with-markers (buffer-substring start end))
+           (snippet (string-join (cdr (butlast (split-string snippet-with-markers "\n"))) "\n"))
+           (snippet-runner (car (last (split-string (car (split-string snippet-with-markers "\n")) "[ `]+")))))
+      (setq temp-source-file (make-temp-file "thing-to-run"))
+      (pulse-momentary-highlight-region start end 'mode-line)
+      (message "Code: %s" snippet)
+      (message "Runner: %s" snippet-runner)
+      (append-to-file snippet nil temp-source-file)
+      (message "Running code...")
+      (if insert-to-buffer
+          (progn
+            (goto-char end)
+            (end-of-line)
+            (newline)
+            (insert "\n```output\n")
+            (insert (shell-command-to-string (format "%s '%s'" snippet-runner temp-source-file)))
+            (insert "```"))
+        (with-current-buffer (get-buffer-create "*markdown-runner-output*")
+          (erase-buffer)
+          (insert (shell-command-to-string (format "%s '%s'" snippet-runner temp-source-file)))
+          (switch-to-buffer (current-buffer))))
+      (delete-file temp-source-file t))))
+
 (use-package go-dlv
   :ensure t
   :defer t
@@ -2207,31 +2191,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
             (dlv dlv-command))
         (call-interactively 'dlv))))
   :commands (dlv dlv-current-func meain/dlv meain/dlv-replay meain/dlv-current-func))
-(use-package lua-mode :ensure t :defer t)
-(use-package web-mode :ensure t :defer t)
-(use-package jinja2-mode :ensure t :defer t)
-(use-package config-general-mode :ensure t :defer t :mode "/\\.env")
-(use-package vimrc-mode :ensure t :defer t)
-(use-package sxhkdrc-mode :ensure t :defer t)
-(use-package edit-indirect :ensure t)
-(use-package markdown-mode
-  :ensure t
-  :defer t
-  :after (edit-indirect)
-  :mode ("\\.md\\'" . gfm-mode)
-  :config
-  (setq markdown-url-compose-char '(8230 8943 35 9733 9875))
-  (setq markdown-enable-html -1)
-  (evil-define-key 'normal gfm-mode-map (kbd "<RET>") 'project-find-file)
-  (evil-define-key 'normal gfm-mode-map (kbd "g d") 'markdown-do)
-  (evil-define-key 'normal markdown-mode-map (kbd "<RET>") 'project-find-file)
-  (evil-define-key 'normal markdown-mode-map (kbd "g d") 'markdown-do)
-  (setq markdown-command "pandoc -t html5")
-  (setq markdown-fontify-code-blocks-natively t))
-(use-package reformatter :ensure t :defer t) ;; needed by nix-mode
-(use-package nix-mode :ensure t :defer t :mode "\\.nix\\'")
-;; builtin package for scheme (for tree-sitter grammar)
-(use-package scheme-mode :defer t :mode "\\.scm\\'")
+
 (use-package csv-mode
   :ensure t
   :defer t
@@ -2265,11 +2225,12 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 
 (use-package emacs
   :config
-  (add-hook 'nxml-mode-hook (lambda ()
-                              (define-key nxml-mode-map (kbd "M-l") 'meain/move-swap-right)
-                              (define-key nxml-mode-map (kbd "M-h") 'meain/move-swap-left)
-                              (define-key nxml-mode-map (kbd "M-k") 'meain/move-swap-up)
-                              (define-key nxml-mode-map (kbd "M-j") 'meain/move-swap-down))))
+  (add-hook 'nxml-mode-hook
+            (lambda ()
+              (define-key nxml-mode-map (kbd "M-l") 'meain/move-swap-right)
+              (define-key nxml-mode-map (kbd "M-h") 'meain/move-swap-left)
+              (define-key nxml-mode-map (kbd "M-k") 'meain/move-swap-up)
+              (define-key nxml-mode-map (kbd "M-j") 'meain/move-swap-down))))
 (use-package json-mode :ensure t :defer t)
 (use-package yaml-mode :ensure t :defer t)
 (use-package yaml-ts-mode
@@ -2327,6 +2288,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 
 ;; Show metadata for binary files instead of opening them
 (use-package eff
+  :defer t
   :ensure (:host github :repo "oxidase/eff-mode"))
 
 ;; mtodo-mode
@@ -2371,6 +2333,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 
 (use-package gud
   :after (evil)
+  :commands (gud-break gud-cont)
   :init
   (define-key evil-normal-state-map (kbd "<SPC> d r") 'gud-reset)
   (define-key evil-normal-state-map (kbd "<SPC> d b") 'gud-break)
@@ -2382,7 +2345,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 
 ;; Winner mode
 (use-package winner
-  :defer 1
+  :defer nil
   :config
   (global-set-key (kbd "M-f <left>") 'winner-undo)
   (global-set-key (kbd "M-f <right>") 'winner-redo)
@@ -2405,162 +2368,9 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   (add-hook 'gnus-group-mode-hook 'hl-line-mode)
   (add-hook 'gnus-summary-mode-hook 'hl-line-mode))
 
-;; elfeed
-(use-package elfeed
-  :ensure t
-  :disabled t
-  :commands (elfeed elfeed-update)
-  :after (avl-tree evil-leader)
-  :init
-  ;; first run after 1 hour
-  (use-package avl-tree)
-  (run-at-time "1 hour" (* 6 60 60) (lambda () (elfeed-update) (elfeed-db-save)))
-  (evil-leader/set-key "a e" 'elfeed)
-  :config
-  (setq elfeed-sort-order 'ascending)
-  (setq elfeed-curl-timeout 60)
-  (setq browse-url-browser-function 'browse-url-default-browser)
-  (setq browse-url-generic-program "open")
-  (setq browse-url-generic-args nil)
-  (evil-define-key 'normal elfeed-search-mode-map (kbd "o") (meain/inlambda elfeed-search-browse-url t))
-  (evil-define-key 'visual elfeed-search-mode-map (kbd "o") 'elfeed-search-browse-url)
-  (evil-define-key 'normal elfeed-search-mode-map (kbd "d") 'meain/elfeed-search-filter)
-  (evil-define-key 'normal elfeed-search-mode-map (kbd "f") 'meain/elfeed-search-filter-by-name)
-  (evil-define-key 'normal elfeed-search-mode-map (kbd "D") (lambda ()
-                                                              (interactive)
-                                                              (setq elfeed-search-filter "@2-months-ago -nah +unread")
-                                                              (elfeed-search-update :force)))
-  (evil-define-key 'normal elfeed-search-mode-map (kbd "q") 'elfeed-db-unload)
-  (defun meain/elfeed-open-all ()
-    (interactive)
-    (with-current-buffer "*elfeed-search*"
-      (cl-loop for entry in elfeed-search-entries
-               collect (browse-url (elfeed-entry-link entry))))
-    (elfeed-untag elfeed-search-entries 'unread)
-    (mapc #'elfeed-search-update-entry elfeed-search-entries))
-  (evil-define-key 'normal elfeed-search-mode-map (kbd "O") 'meain/elfeed-open-all)
-  (defun meain/elfeed-search-filter ()
-    (interactive)
-    (setq elfeed-search-filter "@2-months-ago -nah +unread")
-    (elfeed-search-update :force)
-    (let ((tag
-           (completing-read
-            "Apply tag: "
-            (remove-if (lambda (x) (equalp x 'unread))
-                       (delete-dups (flatten-list
-                                     (cl-list*
-                                      (with-current-buffer "*elfeed-search*"
-                                        (cl-loop for entry in elfeed-search-entries
-                                                 collect (elfeed-entry-tags entry)))))))
-            nil t "\\.")))
-      (setq elfeed-search-filter (concatenate 'string "@2-months-ago -nah +unread +" tag))
-      (elfeed-search-update :force)
-      (evil-goto-first-line)))
-  (defun meain/elfeed-search-filter-by-name ()
-    (interactive)
-    (setq elfeed-search-filter (mapconcat 'identity
-                                          (remove-if-not (lambda (x)
-                                                           (or (string-prefix-p "+" x)
-                                                               (string-prefix-p "-" x)
-                                                               (string-prefix-p "@" x)))
-                                                         (split-string elfeed-search-filter))
-                                          " "))
-    (elfeed-search-update :force)
-    (let ((site
-           (completing-read
-            "Look for: "
-            (remove-if (lambda (x) (equalp x 'unread))
-                       (delete-dups
-                        (flatten-list
-                         (cl-list* (with-current-buffer "*elfeed-search*"
-                                     (cl-loop for entry in elfeed-search-entries
-                                              collect (cl-struct-slot-value
-                                                       (type-of (elfeed-entry-feed (car elfeed-search-entries)))
-                                                       'title
-                                                       (elfeed-entry-feed entry)))))))))))
-      ;; Need \s- instead of just a simple space because elfeed has issues with space in title
-      (setq elfeed-search-filter (concatenate 'string
-                                              elfeed-search-filter
-                                              " ="
-                                              (mapconcat 'identity
-                                                         (split-string site)
-                                                         "\\s-")))
-      (elfeed-search-update :force)
-      (evil-goto-first-line)))
-  (setq-default elfeed-search-filter "@2-months-ago -nah +unread ")
-  (setq elfeed-use-curl t)
-  (setq elfeed-curl-max-connections 10)
-  (setq elfeed-db-directory "~/.config/emacs/elfeed/")
-  (setq elfeed-enclosure-default-dir "~/Downloads/")
-  (add-to-list 'display-buffer-alist
-               '((lambda (bufname _)
-                   (with-current-buffer bufname
-                     (equal major-mode 'elfeed-show-mode)))
-                 (display-buffer-reuse-window display-buffer-at-bottom)
-                 (reusable-frames . visible)
-                 (window-height . 0.7)))
-  (defun meain/elfeed-search-print (entry)
-    "Print ENTRY to the buffer."
-    (let* ((feed-width 25)
-           (tags-width 50)
-           (title (or (elfeed-meta entry :title) (elfeed-entry-title entry) ""))
-           (title-faces (elfeed-search--faces (elfeed-entry-tags entry)))
-           (feed (elfeed-entry-feed entry))
-           (feed-title (when feed (or (elfeed-meta feed :title) (elfeed-feed-title feed))))
-           (tags (mapcar #'symbol-name (elfeed-entry-tags entry)))
-           (tags-str (concat " (" (mapconcat 'identity tags ",") ")"))
-           (title-width (- (window-width) feed-width tags-width 4))
-           (title-column (elfeed-format-column title
-                                               (elfeed-clamp elfeed-search-title-min-width
-                                                             title-width elfeed-search-title-max-width)
-                                               :left))
-           (tag-column (elfeed-format-column tags-str
-                                             (elfeed-clamp (length tags-str) tags-width tags-width)
-                                             :left))
-           (feed-column (elfeed-format-column feed-title
-                                              (elfeed-clamp feed-width feed-width feed-width)
-                                              :left)))
-      (insert (propertize feed-column 'face 'elfeed-search-feed-face) " ")
-      (insert (propertize title 'face title-faces 'kbd-help title))
-      (insert (propertize tag-column 'face 'elfeed-search-tag-face) " ")))
-  (setq elfeed-search-print-entry-function 'meain/elfeed-search-print)
-  (defun meain/elfeed-display-buffer (buf &optional act &rest _)
-    (pop-to-buffer buf))
-  (setq elfeed-show-entry-switch #'meain/elfeed-display-buffer)
-  (defun meain/elfeed-show-next-prev (&optional prev)
-    "Go to next elfeed entry.  Pass PREV to switch to prev entry."
-    (interactive)
-    (if (equal (buffer-name) "*elfeed-entry*")
-        (delete-window))
-    (switch-to-buffer "*elfeed-search*")
-    (if prev
-        (previous-line 2))
-    (pulse-momentary-highlight-one-line (point))
-    (call-interactively 'elfeed-search-show-entry))
-  (evil-define-key 'normal elfeed-show-mode-map (kbd "M-n") 'meain/elfeed-show-next-prev)
-  (evil-define-key 'normal elfeed-show-mode-map (kbd "M-p") (meain/inlambda meain/elfeed-show-next-prev t))
-  (defun meain/elfeed-enclosure-download (base-dir extension)
-    "Download podcast to `BASE-DIR' with proper heirary using feed and title using `EXTENSION'"
-    (start-process "*elfeed-enclosure-download*"
-                   "*elfeed-enclosure-download*"
-                   "downloader"
-                   (elt (car (elfeed-entry-enclosures elfeed-show-entry)) 0)
-                   (format "%s/%s/%s%s"
-                           base-dir
-                           (elfeed-feed-title (elfeed-entry-feed elfeed-show-entry))
-                           (elfeed-entry-title elfeed-show-entry)
-                           extension))
-    (message "Download started for %s - %s"
-             (elfeed-feed-title (elfeed-entry-feed elfeed-show-entry))
-             (elfeed-entry-title elfeed-show-entry)))
-  (defun meain/elfeed-podcast-download-to-local ()
-    "Download current feed(podcast) to usual dir."
-    (interactive)
-    (meain/elfeed-enclosure-download "Downloads/podcasts" ".mp3"))
-  (load-file "~/.config/emacs/elfeed-feeds.el"))
-
 ;; erc
 (use-package erc
+  :commands (erc)
   :config
   (setq erc-timestamp-format "[%I:%M %p]"))
 
@@ -2578,8 +2388,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 ;; Beacon mode
 (use-package beacon
   :ensure t
-  :defer 1
-  :diminish
+  :defer t
   :config
   (add-to-list 'beacon-dont-blink-major-modes 'notmuch-search-mode) ; makes the line move around horizontally
   (setq beacon-blink-when-window-scrolls t)
@@ -2662,7 +2471,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   (defun meain/tramp-open ()
     "Open dired in a server by selecting a host via autocomplete."
     (interactive)
-    (dired (concatenate 'string "/ssh:" (meain/ssh-host-picker) ":"))))
+    (dired (concat "/ssh:" (meain/ssh-host-picker) ":"))))
 
 ;; tramp-term
 (use-package tramp-term
@@ -2679,8 +2488,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 (use-package activity-watch-mode
   :ensure t
   :disabled t
-  :defer 1
-  :diminish
+  :defer t
   :config (global-activity-watch-mode))
 
 ;; Control bluetooth devices
@@ -2688,22 +2496,25 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   :ensure t
   :commands (bluetooth-list-devices))
 
-;; Markdown preview
-(defun meain/kill-markdown-preview ()
-  "Preview markdown.  Using pandoc under the hood."
-  (interactive)
-  (let ((kill-buffer-query-functions nil))
-    (if (get-buffer "*markdown-preview*")
-        (progn
-          (message "Killing old markdown preview server...")
-          (kill-buffer "*markdown-preview*")))))
-(defun meain/markdown-preview ()
-  "Preview markdown.  Using pandoc under the hood."
-  ;; TODO: handle local embedded images
-  (interactive)
-  (meain/kill-markdown-preview)
-  (start-process "*markdown-preview*" "*markdown-preview*"
-                 ",markdown-preview" buffer-file-name))
+(use-package emacs
+  :commands (meain/kill-markdown-preview meain/markdown-preview)
+  :config
+  ;; Markdown preview
+  (defun meain/kill-markdown-preview ()
+    "Preview markdown.  Using pandoc under the hood."
+    (interactive)
+    (let ((kill-buffer-query-functions nil))
+      (if (get-buffer "*markdown-preview*")
+          (progn
+            (message "Killing old markdown preview server...")
+            (kill-buffer "*markdown-preview*")))))
+  (defun meain/markdown-preview ()
+    "Preview markdown.  Using pandoc under the hood."
+    ;; TODO: handle local embedded images
+    (interactive)
+    (meain/kill-markdown-preview)
+    (start-process "*markdown-preview*" "*markdown-preview*"
+                   ",markdown-preview" buffer-file-name)))
 
 ;; Restclient
 ;; Alternative: https://github.com/federicotdn/verb
@@ -2763,7 +2574,8 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
         remember-notes-initial-major-mode 'org-mode
         remember-notes-auto-save-visited-file-name t))
 
-(use-package emacs
+(use-package treesit
+  :defer t
   :config
   (setq treesit-language-source-alist
         '((typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src"))
@@ -2798,136 +2610,13 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
   (add-to-list 'major-mode-remap-alist '(go-mode . go-ts-mode)))
 
-;; Tree sitter
-(use-package tree-sitter
-  :defer 1
-  :disabled t
-  :ensure t
-  :config
-  (global-tree-sitter-mode)
-  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
-  ;; debugging stuff
-  (setq tree-sitter-debug-jump-buttons t)
-  (setq tree-sitter-debug-highlight-jump-region nil)
-  ;; Override the tree sitter debug button does
-  (defun tree-sitter-debug--button-node-lookup (button)
-    "The function to call when a `tree-sitter-debug' BUTTON is clicked."
-    (unless tree-sitter-debug--source-code-buffer
-      (error "No source code buffer set"))
-    (unless (buffer-live-p tree-sitter-debug--source-code-buffer)
-      (user-error "Source code buffer has been killed"))
-    (unless button
-      (user-error "This function must be called on a button"))
-    (with-current-buffer tree-sitter-debug--source-code-buffer
-      (pulse-momentary-highlight-region (car (tsc-node-byte-range (button-get button 'points-to)))
-                                        (cdr (tsc-node-byte-range (button-get button 'points-to)))
-                                        'mode-line)))
-  (defvar meain/tree-sitter-config-nesting--queries '((json-mode . "(object (pair (string (string_content) @key) (_)) @item)")
-                                                      (yaml-mode . "(block_mapping_pair (flow_node) @key (_)) @item")
-                                                      (nix-mode . "(binding (attrpath (identifier) @key)) @item")))
-  (defun meain/tree-sitter-config-nesting ()
-    (when-let* ((query-s (cdr (assq major-mode meain/tree-sitter-config-nesting--queries)))
-                (query (tsc-make-query tree-sitter-language query-s))
-                (root-node (tsc-root-node tree-sitter-tree))
-                (matches (tsc-query-matches query root-node #'tsc--buffer-substring-no-properties)))
-      (string-join
-       (remove-if #'null
-                  (seq-map (lambda (x)
-                             (let* ((item (seq-elt (cdr x) 0))
-                                    (key (seq-elt (cdr x) 1))
-                                    (pos (tsc-node-byte-range (cdr item))))
-                               (when (> (byte-to-position (cdr pos))
-                                        (point)
-                                        (byte-to-position (car pos)))
-                                 (format "%s" (tsc-node-text (cdr key))))))
-                           matches))
-       ".")))
-  (defun meain/get-config-nesting-paths ()
-    "Get out all the nested paths in a config file."
-    (when-let* ((query-s (cdr (assq major-mode meain/tree-sitter-config-nesting--queries)))
-                (root-node (tsc-root-node tree-sitter-tree))
-                (query (tsc-make-query tree-sitter-language query-s))
-                (matches (tsc-query-matches query root-node #'tsc--buffer-substring-no-properties))
-                (item-ranges (seq-map (lambda (x)
-                                        (let ((item (seq-elt (cdr x) 0))
-                                              (key (seq-elt (cdr x) 1)))
-                                          (list (tsc-node-text (cdr key))
-                                                (tsc-node-range (cdr key))
-                                                (tsc-node-range (cdr item)))))
-                                      matches))
-                (parent-nodes '(("#" 0))))
-      (mapcar (lambda (x)
-                (let* ((current-end (seq-elt (cadr (cdr x)) 1))
-                       (parent-end (cadar parent-nodes))
-                       (current-key (car x)))
-                  (progn
-                    (if (> current-end parent-end)
-                        (setq parent-nodes
-                              (-filter (lambda (y) (< current-end (cadr y)))
-                                       parent-nodes)))
-                    (setq parent-nodes (cons (list current-key current-end) parent-nodes))
-                    (list (reverse (mapcar #'car parent-nodes))
-                          (seq-elt (cadr x) 0)))))
-              item-ranges)))
-  (defun meain/imenu-config-nesting-path ()
-    "Return config-nesting paths for use in imenu"
-    (mapcar (lambda (x)
-              (cons (string-join (car x) ".") (cadr x)))
-            (meain/get-config-nesting-paths)))
-  (setq meain/tree-sitter-class-like '((rust-mode . (impl_item))
-                                       (python-mode . (class_definition))))
-  (setq meain/tree-sitter-function-like '((rust-mode . (function_item))
-                                          (go-mode . (function_declaration method_declaration))
-                                          (sh-mode . (function_definition))
-                                          (python-mode . (function_definition))))
-  (defun meain/tree-sitter-thing-name (kind)
-    "Get name of tree-sitter KIND thing."
-    (when-let (tree-sitter-mode
-               (node-types (pcase kind
-                             ('class-like meain/tree-sitter-class-like)
-                             ('function-like meain/tree-sitter-function-like)))
-               (node-at-point (cl-some #'tree-sitter-node-at-point
-                                       (alist-get major-mode node-types)))
-               (node-name (tsc-get-child-by-field node-at-point :name)))
-      (tsc-node-text node-name)))
-  ;; Connect to which-function for magit-log-trace-definition
-  (setq which-func-functions
-        (list
-         (lambda () (meain/tree-sitter-thing-name 'function-like))
-         (lambda () (meain/tree-sitter-thing-name 'class-like)))))
-
-(use-package tree-sitter-langs
-  :defer 1
-  :ensure t
-  :disabled t
-  :after tree-sitter
-  :config
-  (push '(markdown-mode . markdown) tree-sitter-major-mode-language-alist)
-  (push '(gfm-mode . markdown) tree-sitter-major-mode-language-alist)
-
-  ;; Don't highlight constructors in rust with hima
-  (add-function :before-until tree-sitter-hl-face-mapping-function
-                (lambda (capture-name)
-                  (pcase capture-name
-                    ("rust.constructor" 'tree-sitter-hl-face:function.call))))
-  (add-hook 'rust-mode-hook
-            (lambda ()
-              (tree-sitter-hl-add-patterns nil
-                                           [((identifier) @rust.constructor
-                                             (.match? @rust.constructor "^[A-Z]"))]))))
-
 ;; Some custom text objects based on treesitter
 (use-package evil-textobj-tree-sitter
-  :defer 1
+  :defer t
   :load-path "/Users/meain/dev/src/evil-textobj-tree-sitter/"
   :after (evil)
   :config
-  (define-key evil-outer-text-objects-map "m" (evil-textobj-tree-sitter-get-textobj "import"
-                                                '((python-mode . ((import_statement) @import))
-                                                  (python-ts-mode . ((import_statement) @import))
-                                                  (go-mode . ((import_spec) @import))
-                                                  (go-ts-mode . ((import_spec) @import))
-                                                  (rust-mode . ((use_declaration) @import)))))
+  ;; NOTE(meain): Rework this
   (define-key evil-outer-text-objects-map "f" (cons "evil-outer-function" (evil-textobj-tree-sitter-get-textobj "function.outer")))
   (define-key evil-inner-text-objects-map "f" (cons "evil-inner-function" (evil-textobj-tree-sitter-get-textobj "function.inner")))
   (define-key evil-outer-text-objects-map "c" (cons "evil-outer-class" (evil-textobj-tree-sitter-get-textobj "class.outer")))
@@ -2939,29 +2628,39 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   (define-key evil-inner-text-objects-map "a" (cons "evil-inner-parameter" (evil-textobj-tree-sitter-get-textobj "parameter.inner")))
   (define-key evil-outer-text-objects-map "a" (cons "evil-outer-parameter" (evil-textobj-tree-sitter-get-textobj "parameter.outer")))
 
-  (define-key evil-normal-state-map (kbd "]a") (cons "goto-parameter-start" (meain/ilambda evil-textobj-tree-sitter-goto-textobj "parameter.inner")))
-  (define-key evil-normal-state-map (kbd "[a") (cons "goto-parameter-start" (meain/ilambda evil-textobj-tree-sitter-goto-textobj "parameter.inner" t)))
-  (define-key evil-normal-state-map (kbd "]A") (cons "goto-parameter-end" (meain/ilambda evil-textobj-tree-sitter-goto-textobj "parameter.inner" nil t)))
-  (define-key evil-normal-state-map (kbd "[A") (cons "goto-parameter-end" (meain/ilambda evil-textobj-tree-sitter-goto-textobj "parameter.inner" t t)))
-  (define-key evil-normal-state-map (kbd "]v") (cons "goto-conditional-start" (meain/ilambda evil-textobj-tree-sitter-goto-textobj ("conditional.outer" "loop.outer"))))
-  (define-key evil-normal-state-map (kbd "[v") (cons "goto-conditional-start" (meain/ilambda evil-textobj-tree-sitter-goto-textobj ("conditional.outer" "loop.outer") t)))
-  (define-key evil-normal-state-map (kbd "]V") (cons "goto-conditional-end" (meain/ilambda evil-textobj-tree-sitter-goto-textobj ("conditional.outer" "loop.outer") nil t)))
-  (define-key evil-normal-state-map (kbd "[V") (cons "goto-conditional-end" (meain/ilambda evil-textobj-tree-sitter-goto-textobj ("conditional.outer" "loop.outer") t t)))
-  (define-key evil-normal-state-map (kbd "]c") (cons "goto-class-start" (meain/ilambda evil-textobj-tree-sitter-goto-textobj "class.outer")))
-  (define-key evil-normal-state-map (kbd "[c") (cons "goto-class-start" (meain/ilambda evil-textobj-tree-sitter-goto-textobj "class.outer" t)))
-  (define-key evil-normal-state-map (kbd "]C") (cons "goto-class-end" (meain/ilambda evil-textobj-tree-sitter-goto-textobj "class.outer" nil t)))
-  (define-key evil-normal-state-map (kbd "[C") (cons "goto-class-end" (meain/ilambda evil-textobj-tree-sitter-goto-textobj "class.outer" t t)))
-  (define-key evil-normal-state-map (kbd "]n") (cons "goto-comment-start" (meain/ilambda evil-textobj-tree-sitter-goto-textobj "comment.outer")))
-  (define-key evil-normal-state-map (kbd "[n") (cons "goto-comment-start" (meain/ilambda evil-textobj-tree-sitter-goto-textobj "comment.outer" t)))
-  (define-key evil-normal-state-map (kbd "]N") (cons "goto-comment-end" (meain/ilambda evil-textobj-tree-sitter-goto-textobj "comment.outer" nil t)))
-  (define-key evil-normal-state-map (kbd "[N") (cons "goto-comment-end" (meain/ilambda evil-textobj-tree-sitter-goto-textobj "comment.outer" t t)))
+  (define-key evil-normal-state-map (kbd "]a") (cons "goto-parameter-start" (ilambda evil-textobj-tree-sitter-goto-textobj "parameter.inner")))
+  (define-key evil-normal-state-map (kbd "[a") (cons "goto-parameter-start" (ilambda evil-textobj-tree-sitter-goto-textobj "parameter.inner" t)))
+  (define-key evil-normal-state-map (kbd "]A") (cons "goto-parameter-end" (ilambda evil-textobj-tree-sitter-goto-textobj "parameter.inner" nil t)))
+  (define-key evil-normal-state-map (kbd "[A") (cons "goto-parameter-end" (ilambda evil-textobj-tree-sitter-goto-textobj "parameter.inner" t t)))
+  (define-key evil-normal-state-map (kbd "]v") (cons "goto-conditional-start" (ilambda evil-textobj-tree-sitter-goto-textobj ("conditional.outer" "loop.outer"))))
+  (define-key evil-normal-state-map (kbd "[v") (cons "goto-conditional-start" (ilambda evil-textobj-tree-sitter-goto-textobj ("conditional.outer" "loop.outer") t)))
+  (define-key evil-normal-state-map (kbd "]V") (cons "goto-conditional-end" (ilambda evil-textobj-tree-sitter-goto-textobj ("conditional.outer" "loop.outer") nil t)))
+  (define-key evil-normal-state-map (kbd "[V") (cons "goto-conditional-end" (ilambda evil-textobj-tree-sitter-goto-textobj ("conditional.outer" "loop.outer") t t)))
+  (define-key evil-normal-state-map (kbd "]c") (cons "goto-class-start" (ilambda evil-textobj-tree-sitter-goto-textobj "class.outer")))
+  (define-key evil-normal-state-map (kbd "[c") (cons "goto-class-start" (ilambda evil-textobj-tree-sitter-goto-textobj "class.outer" t)))
+  (define-key evil-normal-state-map (kbd "]C") (cons "goto-class-end" (ilambda evil-textobj-tree-sitter-goto-textobj "class.outer" nil t)))
+  (define-key evil-normal-state-map (kbd "[C") (cons "goto-class-end" (ilambda evil-textobj-tree-sitter-goto-textobj "class.outer" t t)))
+  (define-key evil-normal-state-map (kbd "]n") (cons "goto-comment-start" (ilambda evil-textobj-tree-sitter-goto-textobj "comment.outer")))
+  (define-key evil-normal-state-map (kbd "[n") (cons "goto-comment-start" (ilambda evil-textobj-tree-sitter-goto-textobj "comment.outer" t)))
+  (define-key evil-normal-state-map (kbd "]N") (cons "goto-comment-end" (ilambda evil-textobj-tree-sitter-goto-textobj "comment.outer" nil t)))
+  (define-key evil-normal-state-map (kbd "[N") (cons "goto-comment-end" (ilambda evil-textobj-tree-sitter-goto-textobj "comment.outer" t t)))
   (define-key evil-normal-state-map (kbd "]f") (cons "goto-function-start" (lambda () (interactive) (progn (evil-textobj-tree-sitter-goto-textobj "function.outer") (reposition-window)))))
   (define-key evil-normal-state-map (kbd "[f") (cons "goto-function-start" (lambda () (interactive) (progn (evil-textobj-tree-sitter-goto-textobj "function.outer" t) (reposition-window)))))
   (define-key evil-normal-state-map (kbd "]F") (cons "goto-function-end" (lambda () (interactive) (progn (evil-textobj-tree-sitter-goto-textobj "function.outer" nil t) (reposition-window)))))
-  (define-key evil-normal-state-map (kbd "[F") (cons "goto-function-end" (lambda () (interactive) (progn (evil-textobj-tree-sitter-goto-textobj "function.outer" t t) (reposition-window))))))
+  (define-key evil-normal-state-map (kbd "[F") (cons "goto-function-end" (lambda () (interactive) (progn (evil-textobj-tree-sitter-goto-textobj "function.outer" t t) (reposition-window)))))
+
+  (define-key evil-outer-text-objects-map "m"
+              (evil-textobj-tree-sitter-get-textobj
+               "import"
+               '((python-mode . ((import_statement) @import))
+                 (python-ts-mode . ((import_statement) @import))
+                 (go-mode . ((import_spec) @import))
+                 (go-ts-mode . ((import_spec) @import))
+                 (rust-mode . ((use_declaration) @import))))))
 
 ;; Show context using tree-sitter
 (use-package posframe-plus
+  :defer t
   :ensure (:host github :type git :repo "zbelial/posframe-plus" ))
 (use-package treesitter-context
   :after (tree-sitter posframe-plus)
@@ -3009,15 +2708,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   :config (setq scopeline-overlay-prefix " ~")
   :init (add-hook 'prog-mode-hook #'scopeline-mode))
 
-;; Show definition beyond top of buffer in header
-;; Similar: breadcrumb
-(use-package topsy
-  :defer t
-  :disabled t
-  :ensure t
-  :init
-  (add-hook 'find-file-hook #'topsy-mode))
-
+;; Breadcrumb of current file/func
 (use-package breadcrumb
   :ensure (:repo "joaotavora/breadcrumb" :host github)
   :config (breadcrumb-mode))
@@ -3050,42 +2741,10 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   (setq rfc-mode-directory (expand-file-name "~/.local/share/rfc/"))
   (add-hook 'rfc-mode-hook 'writeroom-mode))
 
-(use-package ledger-mode
-  :ensure t
-  :defer t
-  :commands (meain/ledger-add-entry)
-  :mode "\\.ledger\\'"
-  :config
-  (defun meain/ledger-add-entry (&optional no-switch)
-    (interactive "P")
-    (if (not no-switch)
-        (find-file "~/.local/share/ledger/master.ledger"))
-    (let* ((accounts (mapcar 'list
-                             (ledger-accounts-list)))
-           (title (concat (format-time-string "%Y/%m/%d "
-                                              (org-read-date nil 'to-time nil "Date:  "))
-                          (completing-read "Description: "
-                                           (split-string
-                                            (shell-command-to-string
-                                             "ledger -f ~/.local/share/ledger/master.ledger payees")
-                                            "\n"))))
-           (in (completing-read "What did you pay for? " accounts))
-           (amount (concat (read-string "How much did you pay? ") " INR"))
-           (out (completing-read "Where did the money come from? " accounts)))
-      (goto-char (point-max))
-      (newline)
-      (insert title)
-      (newline)
-      (indent-to 4)
-      (insert in "  " amount)
-      (newline)
-      (indent-to 4)
-      (insert out)
-      (ledger-mode-clean-buffer))))
-
 (use-package scroll-on-drag
   :ensure t
-  :defer 3
+  :disabled t
+  :defer nil
   :config
   (setq scroll-on-drag-motion-scale 0.1)
   (global-set-key [down-mouse-2]
@@ -3094,63 +2753,10 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
                     (unless (scroll-on-drag)
                       (mouse-yank-primary t)))))
 
-(use-package 0x0
-  :ensure t
-  :defer t
-  :disabled t
-  :after evil-leader
-  :commands (0x0-dwim 0x0-popup 0x0-upload-file 0x0-upload-text)
-  :init (evil-leader/set-key "a 0" '0x0-dwim))
-
 (use-package redacted
   :ensure t
   :commands (redacted-mode)
   :config (add-hook 'redacted-mode-hook (lambda () (read-only-mode (if redacted-mode 1 -1)))))
-
-(use-package avy
-  :ensure t
-  :defer 3
-  :after evil-leader
-  :config
-  (setq avy-timeout-seconds 0.2)
-  (evil-leader/set-key "n" 'avy-goto-char-timer))
-
-(use-package harpoon
-  :ensure t
-  :after evil-leader
-  :commands (harpoon-toggle-file
-             harpoon-toggle-quick-menu
-             harpoon-clear harpoon-add-file
-             harpoon-go-to-1 harpoon-go-to-2
-             harpoon-go-to-3 harpoon-go-to-4
-             harpoon-go-to-5 harpoon-go-to-6
-             harpoon-go-to-7 harpoon-go-to-8
-             harpoon-go-to-9)
-  :config
-  (setq harpoon-cache-file (concat user-emacs-directory "harpoon/"))
-  (setq harpoon-separate-by-branch nil)
-  (set harpoon-project-package 'project)
-  :init
-  (define-key evil-normal-state-map (kbd "<SPC> k") 'harpoon-toggle-quick-menu)
-  (evil-leader/set-key "h t" 'harpoon-toggle-file)
-  (evil-leader/set-key "h C" 'harpoon-clear)
-  (evil-leader/set-key "h a" 'harpoon-add-file)
-  (evil-leader/set-key "h j" 'harpoon-go-to-1)
-  (evil-leader/set-key "h k" 'harpoon-go-to-2)
-  (evil-leader/set-key "h l" 'harpoon-go-to-3)
-  (evil-leader/set-key "h ;" 'harpoon-go-to-4)
-  (evil-leader/set-key "h h j" 'harpoon-go-to-5)
-  (evil-leader/set-key "h h k" 'harpoon-go-to-6)
-  (evil-leader/set-key "h h l" 'harpoon-go-to-7)
-  (evil-leader/set-key "h h ;" 'harpoon-go-to-8)
-  (evil-leader/set-key "h h f" 'harpoon-go-to-9))
-
-;; Kinda like screensavers
-(use-package zone
-  :defer t
-  :config
-  (setq zone-programs [zone-pgm-rotate-LR-lockstep])
-  (zone-when-idle (* 5 60)))
 
 ;; Mermaid mode
 (use-package mermaid-mode :defer t :ensure t)
@@ -3158,6 +2764,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 ;; Edit any textfield in Emacs
 (use-package emacs-everywhere
   :defer t
+  :disabled t
   :ensure t
   :config
   (remove-hook 'emacs-everywhere-init-hooks #'emacs-everywhere-major-mode-org-or-markdown)
@@ -3195,38 +2802,13 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 ;; Font size changes
 (global-set-key (kbd "s-=") 'text-scale-increase)
 (global-set-key (kbd "s--") 'text-scale-decrease)
-(global-set-key (kbd "s-_") (meain/inlambda text-scale-set 0)) ; s-0 is used by wm
-
-;; host picker
-(defun meain/ssh-host-picker ()
-  "Interactively pick ssh host."
-  (with-temp-buffer
-    (insert-file-contents "~/.ssh/config")
-    (format "%s"
-            (completing-read
-             "Choose host: "
-             (mapcar (lambda (x) (replace-regexp-in-string (regexp-quote "Host ") "" x))
-                     (remove-if-not #'(lambda (x) (s-starts-with-p "Host" x))
-                                    (split-string (buffer-string) "\n")))))))
-
-;; split between hirizontal and vertical (simpler emacs-rotate)
-(defun meain/window-split-toggle ()
-  "Toggle between horizontal and vertical split with two windows."
-  (interactive)
-  (if (> (length (window-list)) 2)
-      (error "Can't toggle with more than 2 windows!")
-    (let ((func (if (window-full-height-p)
-                    #'split-window-vertically
-                  #'split-window-horizontally)))
-      (delete-other-windows)
-      (funcall func)
-      (save-selected-window (other-window 1)
-                            (switch-to-buffer (other-buffer))))))
+(global-set-key (kbd "s-_") (ilambda text-scale-set 0)) ; s-0 is used by wm
 
 ;; Add keybindings to access important files.
 (use-package emacs
   :after (evil-leader)
-  :init
+  :defer nil
+  :config
   (defun meain/qa--get-entries (filename)
     "Helper function to parse qa files.  `FILENAME' is the name of the file to parse."
     (let* ((contents (with-temp-buffer
@@ -3272,17 +2854,21 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
           (meain/qa--get-entries "~/.config/datafiles/qa-projects")))
 
 ;; Fullscreen current buffer
-(defvar meain/window-configuration nil)
-(define-minor-mode meain/monacle-mode
-  "Zoom in and out of single window."
-  :lighter " [M]"
-  :global nil
-  (if (one-window-p)
-      (when meain/window-configuration
-        (set-window-configuration meain/window-configuration))
-    (setq meain/window-configuration (current-window-configuration))
-    (delete-other-windows)))
-(global-set-key (kbd "M-f f") 'meain/monacle-mode)
+(use-package emacs
+  :commands meain/monacle-mode
+  :config
+  (defvar meain/window-configuration nil)
+  (define-minor-mode meain/monacle-mode
+    "Zoom in and out of single window."
+    :lighter " [M]"
+    :global nil
+    (if (one-window-p)
+        (when meain/window-configuration
+          (set-window-configuration meain/window-configuration))
+      (setq meain/window-configuration (current-window-configuration))
+      (delete-other-windows)))
+  :init
+  (global-set-key (kbd "M-f f") 'meain/monacle-mode))
 
 ;; Revert buffer quickly (fix for dealing with eglot loosing it)
 (global-set-key (kbd "M-f r") (lambda ()
@@ -3292,8 +2878,9 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 
 ;; Quick notes
 (use-package emacs
+  :after (evil-leader)
+  :commands (meain/create-quick-note)
   :config
-  (setq meain/quick-notes-directory "~/.local/share/vime/")
   (setq meain/quick-notes-templates-directory "~/dev/src/templates")
   (defun meain/create-quick-note ()
     (interactive)
@@ -3303,14 +2890,16 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
            (extension (if is-template "" ; template would have the extension
                         (concat "." (completing-read "Extension: " '("md") nil nil))))
            (filename (concat meain/quick-notes-directory "/"
-                             (format-time-string "%Y-%m/%d %H:%M " (current-time))
+                             (format-time-string "%Y-%m/%d %H.%M " (current-time))
                              name-input extension)))
       (find-file filename)
       (when is-template
         (insert-file-contents (concat meain/quick-notes-templates-directory "/" name-input))
         (goto-char (point-min)))))
+  :init
+  (setq meain/quick-notes-directory "~/.local/share/vime/")
   (evil-leader/set-key "v"
-    (meain/with-alternate
+    (alambda
      (project-switch-project meain/quick-notes-directory) ; TODO: sort files by timestamp
      (meain/create-quick-note))))
 
@@ -3320,32 +2909,31 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   :commands (meain/quick-print)
   :config
   (defun meain/quick-print (beg end)
-    "Quickly print the variable your cursor is under.  `BEG' and `END' is used in visual mode."
+    "Quickly print the variable your cursor is under.  `BEG' and `END' are for visual mode."
     (interactive "r")
     (let* ((thing-to-print (if (use-region-p)
                                (buffer-substring beg end)
                              (symbol-name (symbol-at-point))))
            (escaped-thing-to-print (string-replace "\"" "\\\"" thing-to-print)))
-      (if current-prefix-arg
-          (evil-open-above 1)
-        (evil-open-below 1))
-      (let* (
-             (filename (car (reverse (string-split (buffer-file-name) "/"))))
-             (prefix (format "%s:%s" filename (line-number-at-pos))))
-        (insert (pcase major-mode
-                  ('emacs-lisp-mode (format "(message \"%s %s: %%s\" %s)" prefix escaped-thing-to-print thing-to-print thing-to-print))
-                  ('lisp-interaction-mode (format "(message \"%s %s: %%s\" %s)" prefix escaped-thing-to-print thing-to-print thing-to-print))
-                  ('rust-mode (format "println!(\"%s %s: {:?}\", %s);" prefix escaped-thing-to-print thing-to-print))
-                  ('rust-ts-mode (format "println!(\"%s %s: {:?}\", %s);" prefix escaped-thing-to-print thing-to-print))
-                  ('go-mode (format "fmt.Println(\"%s %s:\", %s)" prefix escaped-thing-to-print thing-to-print))
-                  ('go-ts-mode (format "fmt.Println(\"%s %s:\", %s)" prefix escaped-thing-to-print thing-to-print))
-                  ('lua-mode (format "print(\"%s %s:\", %s)" prefix escaped-thing-to-print thing-to-print))
-                  ('js-mode (format "console.log(\"%s %s:\", %s)" prefix escaped-thing-to-print thing-to-print))
-                  ('typescript-ts-mode (format "console.log(\"%s %s:\", %s)" prefix escaped-thing-to-print thing-to-print))
-                  ('web-mode (format "console.log(\"%s %s:\", %s)" prefix escaped-thing-to-print thing-to-print))
-                  ('shell-script-mode (format "echo \"%s %s:\" %s" prefix escaped-thing-to-print thing-to-print))
-                  ('python-ts-mode (format "print(\"%s %s:\", %s)" prefix escaped-thing-to-print thing-to-print))
-                  ('python-mode (format "print(\"%s %s:\", %s)" prefix escaped-thing-to-print thing-to-print))))))
+      (let* ((filename (car (reverse (string-split (buffer-file-name) "/"))))
+             (prefix (format "%s:%s" filename (line-number-at-pos)))
+             (template
+              (pcase major-mode
+                ((or 'emacs-lisp-mode 'lisp-interaction-mode) "(message \"{pfx} {esc}: %s\" {thing})")
+                ((or 'rust-mode 'rust-ts-mode) "println!(\"{pfx} {esc}: {{:?}}\", {thing});")
+                ((or 'go-mode 'go-ts-mode) "fmt.Println(\"{pfx} {esc}:\", {thing})")
+                ((or 'lua-mode) "print(\"{pfx} {esc}:\", {thing})")
+                ((or 'js-mode 'typescript-ts-mode 'web-mode) "console.log(\"{pfx} {esc}:\", {thing})")
+                ((or 'shell-script-mode) "echo \"{pfx} {esc}:\" {thing}")
+                ((or 'python-ts-mode 'python-mode) "print(\"{pfx} {esc}:\", {thing})")
+                (_ (error "Unknown mode for quick-prin")))))
+        (if current-prefix-arg
+            (evil-open-above 1)
+          (evil-open-below 1))
+        (insert (string-replace
+                 "{thing}" thing-to-print
+                 (string-replace "{esc}" escaped-thing-to-print
+                                 (string-replace "{pfx}" prefix template))))))
     (evil-force-normal-state))
   :init
   (define-key evil-normal-state-map (kbd "g p") 'meain/quick-print))
@@ -3368,54 +2956,6 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
       (start-process-shell-command "journal" "*journal*"
                                    "EDITOR='emacsclient' ,journal"))))
 
-
-;; Narrow region
-(use-package fancy-narrow
-  :ensure t
-  :after evil
-  :commands (fancy-narrow-to-region fancy-widen evil-fancy-narrow)
-  :config
-  ;; TODO: remove extra args
-  (evil-define-operator evil-fancy-narrow (beg end type register _handler)
-    "Narrow to region"
-    :move-point nil
-    :repeat nil
-    (interactive "<R><x><y>")
-    (fancy-narrow-to-region beg end))
-  (defun meain/narrow-region-dwim (&optional basic)
-    "Narrow or widen the region (dwim)."
-    (interactive)
-    (if (eq evil-state 'visual)
-        (if basic
-            (call-interactively 'narrow-to-region)
-          (call-interactively 'fancy-narrow-to-region))
-      (if basic
-          (call-interactively 'widen)
-        (call-interactively 'fancy-widen))))
-  :init
-  (define-key evil-normal-state-map (kbd "X") 'evil-fancy-narrow)
-  (global-set-key (kbd "M-N") 'meain/narrow-region-dwim))
-
-(use-package emacs
-  :disabled t
-  :config
-  ;; https://emacs.stackexchange.com/a/38511
-  (defun meain/ad-timestamp-message (FORMAT-STRING &rest args)
-    "Advice to run before `message' that prepends a timestamp to each message.
-        Activate this advice with:
-          (advice-add 'message :before 'meain/ad-timestamp-message)
-        Deactivate this advice with:
-          (advice-remove 'message 'meain/ad-timestamp-message)"
-    (if message-log-max
-        (let ((deactivate-mark nil)
-              (inhibit-read-only t))
-          (with-current-buffer "*Messages*"
-            (goto-char (point-max))
-            (if (not (bolp))
-                (newline))
-            (insert (format-time-string "[%F %T.%3N] "))))))
-  (advice-add 'message :before 'meain/ad-timestamp-message))
-
 (use-package browse-url
   :config
   ;; Convert anything which looks like CP-<digits> to
@@ -3432,21 +2972,15 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   :init
   (add-hook 'prog-mode-hook #'auto-highlight-symbol-mode))
 
-;; Using aidermacs instead
-(use-package aider
-  :ensure (:host github :repo "tninja/aider.el" :files ("aider.el"))
-  :disabled t
-  :config
-  (setq aider-args '("--no-auto-commit" "--watch-files"))
-  (define-key evil-normal-state-map (kbd "<SPC> a") 'aider-transient-menu))
-
 (use-package aidermacs
   :ensure (:host github :repo "MatthewZMD/aidermacs")
+  :commands (aidermacs-transient-menu)
   :after (evil)
   :config
   (setq aidermacs-auto-commits nil)
   (setq aidermacs-use-architect-mode nil)
   (setq aidermacs-backend 'comint)
+  :init
   (define-key evil-normal-state-map (kbd "<SPC> a") 'aidermacs-transient-menu))
 
 ;; Copilot, I guess
@@ -3479,6 +3013,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 
 ;; Copilot chat
 (use-package copilot-chat
+  :defer t
   :after (request)
   :ensure (:host github :repo "chep/copilot-chat.el" :files ("*.el"))
   :config
@@ -3502,22 +3037,10 @@ Called with a PREFIX, resets the context buffer list before opening"
       (copilot-chat--add-buffer buf)
       (copilot-chat-display))))
 
-;; Better GPT-3 interaction
-(use-package c3po
-  :ensure (:host github :repo "d1egoaz/c3po.el")
-  :commands (c3po-assistant-new-chat
-             c3po-assistant-new-chat-replace-region
-             c3po-grammar-checker-new-chat c3po-grammar-checker-new-chat-replace-region
-             c3po-developer-new-chat c3po-developer-new-chat-replace-region
-             c3po-rewriter-new-chat c3po-rewriter-new-chat-replace-region)
-  :config (setq c3po-api-key openai-api-key))
-
 ;; OpenAI GPT-3 interaction
 (use-package gptel
-  ;; :ensure t
-  :ensure (:host github :repo "karthink/gptel")
-  ;; https://github.com/karthink/gptel/issues/514
-  ;; :ensure (:host github :repo "karthink/gptel" :branch "feature-tool-use")
+  :ensure t
+  ;; :ensure (:host github :repo "karthink/gptel")
   :commands (gptel gptel-send gptel-rewrite-menu)
   :config
   (setq gptel-model 'gpt-4o-mini)
@@ -3626,6 +3149,8 @@ For optional NO-CACHE, use caching by default."
   (global-set-key (kbd "M-f i j") 'gptel-quick))
 
 (use-package gptel-aibo
+  :commands (gptel-aibo)
+  :defer t
   :ensure (:host github :repo "dolmens/gptel-aibo"))
 
 (use-package llm :ensure t)
@@ -3777,7 +3302,7 @@ PROMPT-TYPE specifies the type of prompt to use ('rewrite or 'prompt)."
 ;; Text to speech stuff
 ;; Useful for reading out llm explanations
 (use-package read-aloud
-  :after evil-leader
+  :after evil
   :ensure (:host github :repo "gromnitsky/read-aloud.el")
   :commands (read-aloud-buf read-aloud-this)
   :init
@@ -3794,74 +3319,66 @@ PROMPT-TYPE specifies the type of prompt to use ('rewrite or 'prompt)."
         '("custom" (cmd ",speak" args nil)
           "macos" (cmd "/usr/bin/say" args ("-r" "250")))))
 
-;; Buffer/Frame/Window keybinds
-(use-package emacs
-  :after evil-leader
-  :init
-  (evil-leader/set-key "b k" 'kill-buffer)
-  (evil-leader/set-key "b o" 'previous-buffer)
-  (evil-leader/set-key "b f" 'find-file)
-  (evil-leader/set-key "b d" 'delete-frame))
-
-;; Server edit complete
-(use-package emacs
-  :after evil-leader
-  :init
-  (evil-leader/set-key "s s" 'server-edit))
-
-;; Next and previous buffer
-(use-package emacs
-  :after evil
-  :init
-  (define-key evil-normal-state-map (kbd "C-S-o") 'previous-buffer)
-  (define-key evil-normal-state-map (kbd "C-S-i") 'next-buffer))
-
 ;; Bookmarks
-(setq bookmark-save-flag 1)
-(setq bookmark-set-fringe-mark nil)
-(advice-add 'bookmark-jump :around #'meain/recenter-advice)
-(global-set-key (kbd "M-f m") 'bookmark-jump)
-(global-set-key (kbd "M-f M") 'bookmark-set)
+(use-package bookmark
+  :commands (bookmark-jump bookmark-set)
+  :config
+  (setq bookmark-save-flag 1)
+  (setq bookmark-set-fringe-mark nil)
+  (advice-add 'bookmark-jump :around #'meain/recenter-advice)
+  (global-set-key (kbd "M-f m") 'bookmark-jump)
+  (global-set-key (kbd "M-f M") 'bookmark-set))
 
-;; Quick file rename
-(defun meain/rename-current-file ()
-  "Rename current file in the same directory."
-  (interactive)
-  (let ((newname (read-string "New name: " (file-name-nondirectory (buffer-file-name)))))
-    (rename-file (buffer-file-name) (concat (file-name-directory (buffer-file-name)) newname))
-    (find-alternate-file (concat (file-name-directory (buffer-file-name)) newname))))
-(defun meain/move-current-file ()
-  "Rename the current visiting file and switch buffer focus to it."
-  (interactive)
-  (if (null (buffer-file-name))
-      (user-error "Buffer does not have a filename: %s" (current-buffer)))
-  (let ((new-filename (meain/expand-filename-prompt
-                       (format "Rename %s to: " (file-name-nondirectory (buffer-file-name))))))
-    (if (null (file-writable-p new-filename))
-        (user-error "New file not writable: %s" new-filename))
-    (rename-file (buffer-file-name) new-filename 1)
-    (find-alternate-file new-filename)
-    (message "Renamed to and now visiting: %s" (abbreviate-file-name new-filename))))
-(defun meain/expand-filename-prompt (prompt)
-  "Return expanded filename PROMPT."
-  (expand-file-name (read-file-name prompt)))
+;; File manipulations
+(use-package emacs
+  :commands (meain/delete-current-file meain/rename-current-file meain/move-current-file)
+  :config
+  ;; Delete current file
+  (defun meain/delete-current-file ()
+    "Delete current file and close buffer."
+    (interactive)
+    (delete-file (buffer-file-name))
+    (meain/kill-current-buffer-unless-scratch))
+  ;; Quick file rename
+  (defun meain/rename-current-file ()
+    "Rename current file in the same directory."
+    (interactive)
+    (let ((newname (read-string "New name: " (file-name-nondirectory (buffer-file-name)))))
+      (rename-file (buffer-file-name) (concat (file-name-directory (buffer-file-name)) newname))
+      (find-alternate-file (concat (file-name-directory (buffer-file-name)) newname))))
+  (defun meain/move-current-file ()
+    "Rename the current visiting file and switch buffer focus to it."
+    (interactive)
+    (if (null (buffer-file-name))
+        (user-error "Buffer does not have a filename: %s" (current-buffer)))
+    (let* ((prompt (format "Rename %s to: "
+                           (file-name-nondirectory (buffer-file-name))))
+           (new-filename (expand-file-name (read-file-name prompt))))
+      (if (null (file-writable-p new-filename))
+          (user-error "New file not writable: %s" new-filename))
+      (rename-file (buffer-file-name) new-filename 1)
+      (find-alternate-file new-filename)
+      (message "Renamed to and now visiting: %s" (abbreviate-file-name new-filename)))))
 
 ;; Fix any escaped escape code in selection
-(defun meain/fix-escapes ()
-  "Replace \\n to \n, \\t to \t and \\r to empty on selection."
-  (interactive)
-  (save-excursion
-    (let ((start (region-beginning))
-          (end (region-end)))
-      (goto-char start)
-      (while (search-forward "\\n" end t)
-        (replace-match "\n" nil t))
-      (goto-char start)
-      (while (search-forward "\\t" end t)
-        (replace-match "\t" nil t))
-      (goto-char start)
-      (while (search-forward "\\r" end t)
-        (replace-match "" nil t)))))
+(use-package emacs
+  :commands (meain/fix-escapes)
+  :config
+  (defun meain/fix-escapes ()
+    "Replace \\n to \n, \\t to \t and \\r to empty on selection."
+    (interactive)
+    (save-excursion
+      (let ((start (region-beginning))
+            (end (region-end)))
+        (goto-char start)
+        (while (search-forward "\\n" end t)
+          (replace-match "\n" nil t))
+        (goto-char start)
+        (while (search-forward "\\t" end t)
+          (replace-match "\t" nil t))
+        (goto-char start)
+        (while (search-forward "\\r" end t)
+          (replace-match "" nil t))))))
 
 (use-package emacs
   :config
@@ -3879,67 +3396,47 @@ We limit the search to just top 10 lines so as to only check the header."
           (message "Buffer seems to be generated. Set to read-only mode.")))))
   (add-hook 'find-file-hook 'meain/set-read-only-if-do-not-edit))
 
-;; Delete current file
-(defun meain/delete-current-file ()
-  "Delete current file and close buffer."
-  (interactive)
-  (delete-file (buffer-file-name))
-  (meain/kill-current-buffer-unless-scratch))
 
+;; Copy stuff
 (use-package emacs
-  :commands (meain/copy-debugger-break-statement)
+  :commands (meain/copy-to-clipboard meain/copy-debugger-break-statement meain/copy-file-name-to-clipboard meain/copy-path-to-clipboard)
   :config
+  (defun meain/copy-to-clipboard (message)
+    "Copy `MESSAGE' into clipboard."
+    (with-temp-buffer
+      (insert message)
+      (let ((deactivate-mark t))
+        (call-process-region (point-min) (point-max) "pbcopy"))))
+
   (defun meain/copy-debugger-break-statement ()
     (interactive)
     (let ((file-name (buffer-file-name))
           (line-number (line-number-at-pos)))
-      (meain/copy-to-clipboard (format "b %s:%s" file-name line-number)))))
+      (meain/copy-to-clipboard (format "b %s:%s" file-name line-number))))
 
-;; Copy filename to clipboard
-(defun meain/copy-file-name-to-clipboard (&optional abs-path)
-  "Copy the current filename into clipboard.  Pass `ABS-PATH' if you need absolute path."
-  (interactive "P")
-  (let ((file-path (if (equal major-mode 'dired-mode)
-                       default-directory
-                     (buffer-file-name))))
-    (if file-path
-        (let* ((project-path (if (and
-                                  (project-current)
-                                  (not (file-remote-p default-directory)))
-                                 (expand-file-name (car (project-roots (project-current))))
-                               ""))
-               (trimmed-path (if (length> project-path 0)
-                                 (string-replace project-path "" file-path)
-                               file-path))
-               (copy-path (if abs-path
-                              file-path
-                            trimmed-path)))
-          (meain/copy-to-clipboard copy-path)
-          (message "Copied '%s' to the clipboard" copy-path))
-      (message "No file associated with buffer"))))
-(defalias #'meain/copy-path-to-clipboard #'meain/copy-file-name-to-clipboard)
-
-;; Quickly add a prog1 wrapper for logging
-(defun meain/elisp-inspect-value (&optional before)
-  "Quick prog1/progn dance to view variable value.
-Default is after, but use BEFORE to print before."
-  (interactive)
-  (let* ((variable-name (read-string "Variable name: "))
-         (subst-string (concat "(message \"" variable-name ": %s\" " variable-name ")")))
-    (if before
-        (execute-kbd-macro (kbd "vabS)aprogn"))
-      (execute-kbd-macro (kbd "vabS)aprog1")))
-    (evil-force-normal-state)
-    (if before
-        (progn
-          (execute-kbd-macro (kbd "i"))
-          (insert subst-string))
-      (progn
-        (execute-kbd-macro (kbd "vab"))
-        (evil-force-normal-state)
-        (execute-kbd-macro (kbd "i"))
-        (insert subst-string)))
-    (evil-force-normal-state)))
+  ;; Copy filename to clipboard
+  (defun meain/copy-file-name-to-clipboard (&optional abs-path)
+    "Copy the current filename into clipboard.  Pass `ABS-PATH' if you need absolute path."
+    (interactive "P")
+    (let ((file-path (if (equal major-mode 'dired-mode)
+                         default-directory
+                       (buffer-file-name))))
+      (if file-path
+          (let* ((project-path (if (and
+                                    (project-current)
+                                    (not (file-remote-p default-directory)))
+                                   (expand-file-name (car (project-roots (project-current))))
+                                 ""))
+                 (trimmed-path (if (length> project-path 0)
+                                   (string-replace project-path "" file-path)
+                                 file-path))
+                 (copy-path (if abs-path
+                                file-path
+                              trimmed-path)))
+            (meain/copy-to-clipboard copy-path)
+            (message "Copied '%s' to the clipboard" copy-path))
+        (message "No file associated with buffer"))))
+  (defalias #'meain/copy-path-to-clipboard #'meain/copy-file-name-to-clipboard))
 
 ;; setting proper default-dir
 (defun meain/set-proper-default-dir ()
@@ -3954,50 +3451,10 @@ Default is after, but use BEFORE to print before."
                                  (t "~/"))))))
 (add-hook 'find-file-hook 'meain/set-proper-default-dir)
 
-(defun meain/speak ()
-  "Speak buffer or selection paragraph by paragraph."
-  (interactive)
-  (let ((start (if (use-region-p) (region-beginning) (point-min)))
-        (end (if (use-region-p) (region-end) (point-max))))
-    (save-excursion
-      (goto-char start)
-      (while (< (point) end)
-        (let ((para-end (save-excursion
-                          (forward-paragraph)
-                          (min (point) end))))
-          (call-shell-region (point) para-end ",speak" nil "*speak*")
-          (goto-char para-end))))))
-
-;; Quickly add markdown links to document
-(defun meain/markdown-linkify-thing (start end)
-  "Function to search and add markdown links to document.
-START and END for position."
-  (interactive "r")
-  (let* ((orig-thang (if (use-region-p)
-                         (buffer-substring start end)
-                       (thing-at-point 'symbol)))
-         (thang (read-string "Search term: " orig-thang))
-         (json-object-type 'plist)
-         (json-array-type 'list)
-         (lurl (car (split-string
-                     (completing-read
-                      (format "Choose URL (%s): " thang)
-                      (mapcar (lambda (entry)
-                                (string-join (list (plist-get entry :url)
-                                                   " :: "
-                                                   (plist-get entry :title))))
-                              (json-read-from-string (shell-command-to-string (string-join (list "ddgr --json '" thang "'"))))))
-                     " "))))
-    (save-excursion
-      (if (use-region-p)
-          (kill-region start end)
-        (kill-region (beginning-of-thing 'symbol) (end-of-thing 'symbol)))
-      (insert (format "[%s](%s)" orig-thang lurl)))))
-
 ;; Open current file in Github
 (use-package emacs
   :after evil-leader
-  :commands (meain/github-url)
+  :commands (meain/github-url meain/github-pr-url)
   :config
   (defun meain/github-pr-url ()
     "Open the Github PR page for the current file and line."
@@ -4048,64 +3505,6 @@ START and END for position."
   :init
   (evil-leader/set-key "g l" 'meain/github-url))
 
-;; Generate pdf from markdown document
-(defun meain/markdown-pdf ()
-  "Generate pdf from markdown document."
-  (interactive)
-  (message "Generating pdf of %s. Just give it a moment.." (buffer-file-name))
-  (start-process-shell-command "*markdown-pdf*" "*markdown-pdf*"
-                               (concatenate 'string ",markdown-to-pdf " (buffer-file-name))))
-
-(defun meain/markdown-html ()
-  "Generate pdf from markdown document."
-  (interactive)
-  (message "Generating markdown for %s. Just give it a moment.." (buffer-file-name))
-  (start-process-shell-command "*markdown-html*" "*markdown-html*"
-                               (concatenate 'string ",markdown-to-html " (buffer-file-name))))
-
-;; Run markdown code blocks (forest.el)
-(defun meain/run-markdown-code-block (&optional insert-to-buffer)
-  "Run markdown code block under cursor.
-Pass INSERT-TO-BUFFER to insert output to current buffer."
-  (interactive "P")
-  (let* ((start (nth 0 (markdown-get-enclosing-fenced-block-construct)))
-         (end (nth 1 (markdown-get-enclosing-fenced-block-construct)))
-         (snippet-with-markers (buffer-substring start end))
-         (snippet (string-join (cdr (butlast (split-string snippet-with-markers "\n"))) "\n"))
-         (snippet-runner (car (last (split-string (car (split-string snippet-with-markers "\n")) "[ `]+")))))
-    (setq temp-source-file (make-temp-file "thing-to-run"))
-    (pulse-momentary-highlight-region start end 'mode-line)
-    (message "Code: %s" snippet)
-    (message "Runner: %s" snippet-runner)
-    (append-to-file snippet nil temp-source-file)
-    (message "Running code...")
-    (if insert-to-buffer
-        (progn
-          (goto-char end)
-          (end-of-line)
-          (newline)
-          (insert "\n```output\n")
-          (insert (shell-command-to-string (format "%s '%s'" snippet-runner temp-source-file)))
-          (insert "```"))
-      (with-current-buffer (get-buffer-create "*markdown-runner-output*")
-        (erase-buffer)
-        (insert (shell-command-to-string (format "%s '%s'" snippet-runner temp-source-file)))
-        (switch-to-buffer (current-buffer))))
-    (delete-file temp-source-file t)))
-
-;; Fetch mail
-(defun meain/fetchmail ()
-  "Fetch email using mailsync."
-  (interactive)
-  (async-shell-command ",mail-sync"))
-
-(defun meain/copy-to-clipboard (message)
-  "Copy `MESSAGE' into clipboard."
-  (with-temp-buffer
-    (insert message)
-    (let ((deactivate-mark t))
-      (call-process-region (point-min) (point-max) "pbcopy"))))
-
 (use-package emacs
   :commands (meain/emacs-revert-all-project-buffers)
   :config
@@ -4148,7 +3547,7 @@ Pass `CREATE' to create the alternate file if it does not exits."
                                           (list (car x) (cadr x)))))
                                 meain/find-alternate-file--patterns)))
                (alt-file
-                (car (remove-if (lambda (x) (equal x nil))
+                (car (cl-remove-if (lambda (x) (equal x nil))
                                 (seq-map (lambda (f)
                                            (if (string-match (car f) (buffer-file-name))
                                                (s-replace-regexp (car f) (nth 1 f) (buffer-file-name))))
@@ -4170,7 +3569,8 @@ Pass `CREATE' to create the alternate file if it does not exits."
 (use-package tree-surgeon
   :load-path tree-surgeon-load-path
   :after (evil-leader)
-  :config (evil-leader/set-key "H j" 'tree-surgeon-split-join))
+  :defer t
+  :init (evil-leader/set-key "H j" 'tree-surgeon-split-join))
 
 ;; Just some hima testing code
 (use-package emacs
@@ -4187,9 +3587,7 @@ Pass `CREATE' to create the alternate file if it does not exits."
 (use-package which-func :commands (which-function))
 
 ;; Better modeline
-(use-package mode-line-idle
-  :ensure t
-  :commands (mode-line-idle))
+(use-package mode-line-idle :ensure t :commands (mode-line-idle))
 (setq-default mode-line-format
               (list
                '(:eval
@@ -4207,9 +3605,8 @@ Pass `CREATE' to create the alternate file if it does not exits."
                '(:eval (if (eq 'emacs evil-state) "[E] " " ")) ;; vim or emacs mode
                '(:eval (list (if (eq buffer-file-name nil)
                                  ""
-                               (concatenate 'string
-                                            (car (cdr (reverse (split-string (buffer-file-name) "/"))))
-                                            "/"))
+                               (concat (car (cdr (reverse (split-string (buffer-file-name) "/"))))
+                                       "/"))
                              (propertize "%b"
                                          'face
                                          (if (buffer-modified-p)
@@ -4233,7 +3630,7 @@ Pass `CREATE' to create the alternate file if it does not exits."
                ;;                                                        (let* ((explicit (cdr (car (cdr (cdr (tab-bar--current-tab))))))
                ;;                                                               (name (cdr (car (cdr (tab-bar--current-tab)))))
                ;;                                                               (out-name (if explicit
-               ;;                                                                             (concatenate 'string ":" name)
+               ;;                                                                             (concat ":" name)
                ;;                                                                           (if (project-current)
                ;;                                                                               (concat ";"
                ;;                                                                                       (meain/project-name))
