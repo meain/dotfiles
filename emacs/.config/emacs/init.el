@@ -197,7 +197,6 @@
 (use-package evil-leader
   :ensure t
   :after evil
-  :defer nil
   :config
   (global-evil-leader-mode)
   (evil-leader/set-leader "s")
@@ -281,7 +280,7 @@
   (defun meain/select-font ()
     "Select and set a font."
     (interactive)
-    (let ((font-name (completing-read "Choose font: " (remove-duplicates (font-family-list)))))
+    (let ((font-name (completing-read "Choose font: " (cl-remove-duplicates (font-family-list)))))
       (let ((family (meain/get-font-prop font-name 'family))
             (weight (meain/get-font-prop font-name 'weight)))
         (set-frame-font family)
@@ -760,8 +759,9 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
             #'meain/project-try-explicit 100)
 
   (defun meain/project-name ()
-    (file-name-nondirectory (directory-file-name
-                             (project-root (project-current)))))
+    (if (project-current)
+        (file-name-nondirectory (directory-file-name
+                                 (project-root (project-current))))))
 
   (defun meain/find-file-git-changed ()
     "Fuzzy find git changed files."
@@ -818,7 +818,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
 ;; dired
 (use-package dired
-  :defer t
+  :defer 1
   :after evil
   :config
   (require 'dired-x) ;; for dired-omit-files
@@ -872,29 +872,29 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   :config
   (aas-global-mode)
   (aas-set-snippets 'global
-    ";date" '(tempel (format-time-string "%a %b %d %Y"))
-    ";time" '(tempel (format-time-string "%H:%M"))
-    ";file" '(tempel (file-name-nondirectory (buffer-file-name)))
-    ";path" '(tempel (string-remove-prefix
-                      (expand-file-name (project-root (project-current)))
-                      (buffer-file-name))))
+                    ";date" '(tempel (format-time-string "%a %b %d %Y"))
+                    ";time" '(tempel (format-time-string "%H:%M"))
+                    ";file" '(tempel (file-name-nondirectory (buffer-file-name)))
+                    ";path" '(tempel (string-remove-prefix
+                                      (expand-file-name (project-root (project-current)))
+                                      (buffer-file-name))))
   (aas-set-snippets 'emacs-lisp-mode
-    ";auto" ";;;###autoload"
-    ";la" '(tempel "(lambda (" p ") " r ")")
-    ";li" '(tempel "(lambda () (interactive) " r ")")
-    ";j" '(tempel "(message \"" r "\")"))
+                    ";auto" ";;;###autoload"
+                    ";la" '(tempel "(lambda (" p ") " r ")")
+                    ";li" '(tempel "(lambda () (interactive) " r ")")
+                    ";j" '(tempel "(message \"" r "\")"))
   (aas-set-snippets 'sql-mode
-    ";base" "SELECT * FROM information_schema.tables;")
+                    ";base" "SELECT * FROM information_schema.tables;")
   (aas-set-snippets 'js-mode
-    ";j" '(tempel "console.log(\"" r "\")"))
+                    ";j" '(tempel "console.log(\"" r "\")"))
   (aas-set-snippets 'go-ts-mode
-    "!+" "!="
-    ";;" ":="
-    ";j" '(tempel "fmt.Println(\"" r "\")")
-    ";ap" '(tempel (s slice) " = append(" (s slice) ", " r ")")
-    ";rr" '(tempel "for _, " p " := range " p "{" n> r> n> "}")
-    ";ri" '(tempel "for i, " p " := range " p "{" n> r> n> "}")
-    ";er" '(tempel "if err != nil {" n> r> n> "}")))
+                    "!+" "!="
+                    ";;" ":="
+                    ";j" '(tempel "fmt.Println(\"" r "\")")
+                    ";ap" '(tempel (s slice) " = append(" (s slice) ", " r ")")
+                    ";rr" '(tempel "for _, " p " := range " p "{" n> r> n> "}")
+                    ";ri" '(tempel "for i, " p " := range " p "{" n> r> n> "}")
+                    ";er" '(tempel "if err != nil {" n> r> n> "}")))
 
 ;; Templates
 (use-package tempel
@@ -1065,7 +1065,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 
 (use-package corfu
   :ensure (:files (:defaults "extensions/*"))
-  :defer t
+  :defer 1
   :config
   (setq completion-cycle-threshold 3)
   (setq corfu-auto t)
@@ -1199,7 +1199,6 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 (use-package savehist :config (savehist-mode t) :defer t)
 (use-package orderless
   :ensure t
-  :defer nil
   :config
   (setq completion-styles '(orderless basic))
 
@@ -1488,8 +1487,6 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   (evil-define-key 'normal go-mode-map (kbd "g d") 'xref-find-definitions))
 
 ;; Speed up eglot communication by translating to bycode externally
-;; NOTE(meain): It is possible that the first lsp that gets started is
-;; not started using eglot-booster
 (use-package eglot-booster
   :ensure (:host github :repo "jdtsmith/eglot-booster")
   :after eglot
@@ -1643,7 +1640,6 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
   :after (evil evil-leader ediff)
   :commands (smerge-mode)
   :config
-
   ;; Builtin smerge mode function has some issues (override it)
   ;; TODO: Submit bug to bug-gnu-emacs once verified
   (defun smerge-keep-n (n)
@@ -1667,7 +1663,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
 ;; Diff hl
 (use-package diff-hl
   :ensure t
-  :defer t
+  :defer 1
   :after evil-leader
   :config
   (diff-hl-flydiff-mode)
@@ -2908,11 +2904,11 @@ Pass INSERT-TO-BUFFER to insert output to current buffer."
   :after evil
   :commands (meain/quick-print)
   :config
-  (defun meain/quick-print (beg end)
-    "Quickly print the variable your cursor is under.  `BEG' and `END' are for visual mode."
-    (interactive "r")
+  (defun meain/quick-print ()
+    "Quickly print the variable your cursor is under or the active region."
+    (interactive)
     (let* ((thing-to-print (if (use-region-p)
-                               (buffer-substring beg end)
+                               (buffer-substring (region-beginning) (region-end))
                              (symbol-name (symbol-at-point))))
            (escaped-thing-to-print (string-replace "\"" "\\\"" thing-to-print)))
       (let* ((filename (car (reverse (string-split (buffer-file-name) "/"))))
@@ -3037,7 +3033,7 @@ Called with a PREFIX, resets the context buffer list before opening"
       (copilot-chat--add-buffer buf)
       (copilot-chat-display))))
 
-;; OpenAI GPT-3 interaction
+;; LLM chat interface
 (use-package gptel
   :ensure t
   ;; :ensure (:host github :repo "karthink/gptel")
@@ -3117,20 +3113,20 @@ For optional NO-CACHE, use caching by default."
     (interactive (list (read-string "Ask ChatGPT: " nil gptel-lookup--history)))
     (when (string= prompt "") (user-error "A prompt is required"))
     (gptel-request
-        prompt
-      :callback
-      (lambda (response info)
-        (if (not response)
-            (message "gptel-lookup failed with message: %s" (plist-get info :status))
-          (with-current-buffer (get-buffer-create "*gptel-lookup*")
-            (let ((inhibit-read-only t))
-              (erase-buffer)
-              (insert response))
-            (special-mode)
-            (display-buffer (current-buffer)
-                            `((display-buffer-in-side-window)
-                              (side . bottom)
-                              (window-height . ,#'fit-window-to-buffer))))))))
+     prompt
+     :callback
+     (lambda (response info)
+       (if (not response)
+           (message "gptel-lookup failed with message: %s" (plist-get info :status))
+         (with-current-buffer (get-buffer-create "*gptel-lookup*")
+           (let ((inhibit-read-only t))
+             (erase-buffer)
+             (insert response))
+           (special-mode)
+           (display-buffer (current-buffer)
+                           `((display-buffer-in-side-window)
+                             (side . bottom)
+                             (window-height . ,#'fit-window-to-buffer))))))))
 
   (global-set-key (kbd "M-f i m") 'gptel)
   (global-set-key (kbd "M-f i s") 'gptel-send)
@@ -3149,7 +3145,7 @@ For optional NO-CACHE, use caching by default."
   (global-set-key (kbd "M-f i j") 'gptel-quick))
 
 (use-package gptel-aibo
-  :commands (gptel-aibo)
+  :commands (gptel-aibo gptel-aibo-summon)
   :defer t
   :ensure (:host github :repo "dolmens/gptel-aibo"))
 
@@ -3187,7 +3183,7 @@ For optional NO-CACHE, use caching by default."
                      ;; ("github:deepseekV3" . ("github" "DeepSeek-V3"))
                      ;; ("github:o1-mini" . ("github" "o1-mini"))
                      ;; ("github:o1-preview" . ("github" "o1-preview"))
-                     ("groq:llama-3.3-70b" . ("groq" "llama-3.3-70b-versatile"))
+                     ("groq:llama4-scout" . ("groq" "meta-llama/llama-4-scout-17b-16e-instruct"))
                      ("groq:llama-deepseek-r1" . ("groq" "deepseek-r1-distill-llama-70b"))
                      ("openrouter:qwen2.5-coder-32b" . ("openrouter" "qwen/qwen-2.5-coder-32b-instruct"))
                      ("openrouter:deepseek-v3" . ("openrouter" "deepseek/deepseek-chat-v3-0324:free"))
@@ -3210,27 +3206,26 @@ For optional NO-CACHE, use caching by default."
 
   (defun meain/yap-use-openrouter-free ()
     (interactive)
-    (let* ((models (seq-filter (lambda (x) (string-suffix-p ":free" x))
-                               (yap--get-models:openrouter)))
-           (model (completing-read "Model: " models)))
-      (setq yap-llm-provider-override nil)
-      (setq yap-service "openrouter")
-      (setq yap-model model)))
+    (let ((models (seq-filter (lambda (x) (string-suffix-p ":free" x))
+                              (yap--get-models:openrouter))))
+      (setq yap-llm-provider-override nil
+            yap-service "openrouter"
+            yap-model (completing-read "Model: " models))))
 
   (defun meain/yap-use-vscode-llm ()
     (interactive)
     (let ((vscode-llm (make-llm-openai-compatible
                        :chat-model "claude-3.5-sonnet"
                        :url "http://localhost:3838/v1")))
-      (setq yap-service "vscode-llm")
-      (setq yap-model "v:claude-3.5-sonnet")
-      (setq yap-llm-provider-override vscode-llm)))
+      (setq yap-service "vscode-llm"
+            yap-model "v:claude-3.5-sonnet"
+            yap-llm-provider-override vscode-llm)))
 
   (defun meain/yap-template-with-refer (prompt-type)
     "Enhance YAP templates with refer integration.
 PROMPT-TYPE specifies the type of prompt to use ('rewrite or 'prompt)."
     (let ((prompt (read-string "Prompt: "))
-          (buffer-content (or (yap--get-selected-text (current-buffer)) "")))
+          (buffer-content (or (yap--get-selected-text) "")))
       (yap-template-external-context
        (if (eq prompt-type 'rewrite)
            yap--default-system-prompt-for-rewrite
@@ -3241,9 +3236,9 @@ PROMPT-TYPE specifies the type of prompt to use ('rewrite or 'prompt)."
          (insert (concat prompt "\n" buffer-content))
          (shell-command-on-region
           (point-min) (point-max)
-          (concat "refer search --threshold 25 --format llm")
-          (current-buffer))
+          "refer search --threshold 25 --format llm")
          (buffer-string)))))
+
   (add-to-list 'yap-templates '(yap-rewrite-with-refer . (lambda () (meain/yap-template-with-refer 'rewrite))))
   (add-to-list 'yap-templates '(yap-prompt-with-refer . (lambda () (meain/yap-template-with-refer 'prompt))))
 
@@ -3251,12 +3246,8 @@ PROMPT-TYPE specifies the type of prompt to use ('rewrite or 'prompt)."
     "Get the prompt for NAME."
     (with-temp-buffer
       (insert-file-contents
-       (string-join (list
-                     (expand-file-name user-emacs-directory)
-                     "prompts"
-                     (format "%s.md" name)) "/"))
+       (concat user-emacs-directory "prompts/" name ".md"))
       (buffer-string)))
-  (meain/get-llm-prompt "identify-actionable-change")
 
   (add-to-list
    'yap-templates
@@ -3276,7 +3267,7 @@ PROMPT-TYPE specifies the type of prompt to use ('rewrite or 'prompt)."
                                   (current-buffer)))))
 
   (defun meain/select-enclosing-defun ()
-    (when (not (use-region-p))
+    (unless (use-region-p)
       (let ((bounds (bounds-of-thing-at-point 'defun)))
         (when bounds
           (goto-char (car bounds))
@@ -3339,6 +3330,7 @@ PROMPT-TYPE specifies the type of prompt to use ('rewrite or 'prompt)."
     (interactive)
     (delete-file (buffer-file-name))
     (meain/kill-current-buffer-unless-scratch))
+
   ;; Quick file rename
   (defun meain/rename-current-file ()
     "Rename current file in the same directory."
@@ -3346,6 +3338,7 @@ PROMPT-TYPE specifies the type of prompt to use ('rewrite or 'prompt)."
     (let ((newname (read-string "New name: " (file-name-nondirectory (buffer-file-name)))))
       (rename-file (buffer-file-name) (concat (file-name-directory (buffer-file-name)) newname))
       (find-alternate-file (concat (file-name-directory (buffer-file-name)) newname))))
+
   (defun meain/move-current-file ()
     "Rename the current visiting file and switch buffer focus to it."
     (interactive)
@@ -3370,15 +3363,10 @@ PROMPT-TYPE specifies the type of prompt to use ('rewrite or 'prompt)."
     (save-excursion
       (let ((start (region-beginning))
             (end (region-end)))
-        (goto-char start)
-        (while (search-forward "\\n" end t)
-          (replace-match "\n" nil t))
-        (goto-char start)
-        (while (search-forward "\\t" end t)
-          (replace-match "\t" nil t))
-        (goto-char start)
-        (while (search-forward "\\r" end t)
-          (replace-match "" nil t))))))
+        (dolist (pair '(("\\n" . "\n") ("\\t" . "\t") ("\\r" . "")))
+          (goto-char start)
+          (while (search-forward (car pair) end t)
+            (replace-match (cdr pair) nil t)))))))
 
 (use-package emacs
   :config
@@ -3387,15 +3375,12 @@ PROMPT-TYPE specifies the type of prompt to use ('rewrite or 'prompt)."
 We limit the search to just top 10 lines so as to only check the header."
     (save-excursion
       (goto-char (point-min))
-      (let ((content
-             (buffer-substring (point)
-                               (save-excursion (forward-line 10) (point)))))
+      (let ((content (buffer-substring (point) (line-end-position 10))))
         (when (and (not buffer-read-only)
                    (string-match "DO NOT EDIT" content))
           (read-only-mode 1)
           (message "Buffer seems to be generated. Set to read-only mode.")))))
   (add-hook 'find-file-hook 'meain/set-read-only-if-do-not-edit))
-
 
 ;; Copy stuff
 (use-package emacs
@@ -3414,25 +3399,13 @@ We limit the search to just top 10 lines so as to only check the header."
           (line-number (line-number-at-pos)))
       (meain/copy-to-clipboard (format "b %s:%s" file-name line-number))))
 
-  ;; Copy filename to clipboard
   (defun meain/copy-file-name-to-clipboard (&optional abs-path)
-    "Copy the current filename into clipboard.  Pass `ABS-PATH' if you need absolute path."
+    "Copy the current filename into clipboard. Pass `ABS-PATH' if you need absolute path."
     (interactive "P")
-    (let ((file-path (if (equal major-mode 'dired-mode)
-                         default-directory
-                       (buffer-file-name))))
+    (let ((file-path (or (buffer-file-name) default-directory)))
       (if file-path
-          (let* ((project-path (if (and
-                                    (project-current)
-                                    (not (file-remote-p default-directory)))
-                                   (expand-file-name (car (project-roots (project-current))))
-                                 ""))
-                 (trimmed-path (if (length> project-path 0)
-                                   (string-replace project-path "" file-path)
-                                 file-path))
-                 (copy-path (if abs-path
-                                file-path
-                              trimmed-path)))
+          (let ((copy-path (if abs-path file-path
+                             (string-replace (car (project-roots (project-current))) "" file-path))))
             (meain/copy-to-clipboard copy-path)
             (message "Copied '%s' to the clipboard" copy-path))
         (message "No file associated with buffer"))))
@@ -3523,7 +3496,7 @@ We limit the search to just top 10 lines so as to only check the header."
 ;; (cl-pushnew '("\\([^/]+\\)\\.el\\'" "\\1-test.el") find-sibling-rules :test #'equal)
 ;; (cl-pushnew '("\\([^/]+\\)-test\\.el\\'" "\\1.el") find-sibling-rules :test #'equal)
 (use-package emacs
-  :after evil-leader
+  :after (evil-leader)
   :commands (meain/find-alternate-file)
   :config
   (defvar meain/find-alternate-file--patterns '(("thing-for-today-personal.mtodo" "thing-for-today.mtodo")
@@ -3548,10 +3521,10 @@ Pass `CREATE' to create the alternate file if it does not exits."
                                 meain/find-alternate-file--patterns)))
                (alt-file
                 (car (cl-remove-if (lambda (x) (equal x nil))
-                                (seq-map (lambda (f)
-                                           (if (string-match (car f) (buffer-file-name))
-                                               (s-replace-regexp (car f) (nth 1 f) (buffer-file-name))))
-                                         file-patterns)))))
+                                   (seq-map (lambda (f)
+                                              (if (string-match (car f) (buffer-file-name))
+                                                  (s-replace-regexp (car f) (nth 1 f) (buffer-file-name))))
+                                            file-patterns)))))
           (message "Switching to %s" (file-name-nondirectory alt-file))
           (if alt-file
               (if (file-exists-p alt-file)
@@ -3588,74 +3561,44 @@ Pass `CREATE' to create the alternate file if it does not exits."
 
 ;; Better modeline
 (use-package mode-line-idle :ensure t :commands (mode-line-idle))
-(setq-default mode-line-format
-              (list
-               '(:eval
-                 (mode-line-idle 0.3
-                                 '(:eval (propertize
-                                          "█"
-                                          'font-lock-face
-                                          (list :foreground (concat "#"
-                                                                    (substring
-                                                                     (md5 (if (project-current)
-                                                                              ;; TODO: encode worktree information?
-                                                                              (meain/project-name)
-                                                                            "")) 0 6)))))
-                                 "░"))
-               '(:eval (if (eq 'emacs evil-state) "[E] " " ")) ;; vim or emacs mode
-               '(:eval (list (if (eq buffer-file-name nil)
-                                 ""
-                               (concat (car (cdr (reverse (split-string (buffer-file-name) "/"))))
-                                       "/"))
-                             (propertize "%b"
-                                         'face
-                                         (if (buffer-modified-p)
-                                             'font-lock-string-face
-                                           'font-lock-builtin-face)
-                                         'help-echo
-                                         (buffer-file-name))))
-               (propertize ":%l:%c")
-               ;; Now available in header-line via breadcrumb-mode
-               ;; '(:eval (mode-line-idle 0.3
-               ;;                         '(:propertize (:eval
-               ;;                                        (when-let (func-name (which-function))
-               ;;                                          (format ":%s" func-name)))
-               ;;                                       face
-               ;;                                       hima-simple-gray)
-               ;;                         ""))
-               ;; '(:eval (mode-line-idle 1.0
-               ;;                         '(:propertize (:eval (if (and (project-current)
-               ;;                                                       (not (file-remote-p default-directory)))
-               ;;                                                  (list " "
-               ;;                                                        (let* ((explicit (cdr (car (cdr (cdr (tab-bar--current-tab))))))
-               ;;                                                               (name (cdr (car (cdr (tab-bar--current-tab)))))
-               ;;                                                               (out-name (if explicit
-               ;;                                                                             (concat ":" name)
-               ;;                                                                           (if (project-current)
-               ;;                                                                               (concat ";"
-               ;;                                                                                       (meain/project-name))
-               ;;                                                                             ""))))
-               ;;                                                          (format "%s" out-name)))))
-               ;;                                       face
-               ;;                                       hima-simple-gray)
-               ;;                         ""))
-               '(:eval (mode-line-idle 1.0
-                                       '(:propertize (:eval (when-let (vc vc-mode)
-                                                              (list " @" (substring vc 5))))
-                                                     face
-                                                     hima-simple-gray)
-                                       ""))
-               '(:eval (mode-line-idle 1.0
-                                       '(:propertize (:eval (concat " [" yap-model "]"))
-                                                     face
-                                                     hima-simple-gray)
-                                       ""))
-               '(:eval (if (boundp 'keycast-mode-line) keycast-mode-line))
-               'mode-line-format-right-align
-               '(:eval (if (boundp 'org-timer-mode-line-string) (concat org-timer-mode-line-string " ")))
-               (propertize "%p") ;; position in file
-               (propertize " %m ")
-               " "))
+(defvar meain/modeline-project-color
+  '(:eval
+    (propertize
+     "█" 'font-lock-face
+     (list :foreground
+           ;; TODO: encode worktree information
+           (concat "#" (substring (md5 (or (meain/project-name) "")) 0 6))))))
+(defvar meain/modeline-filename
+  (list (if (eq buffer-file-name nil) ""
+          (concat (file-name-nondirectory
+                   (directory-file-name
+                    (file-name-directory (buffer-file-name)))) "/"))
+        (propertize "%b"
+                    'face (if (buffer-modified-p)
+                              'font-lock-string-face
+                            'font-lock-builtin-face)
+                    'help-echo (buffer-file-name))))
+
+(defun meain/modeline-segment (str expr face)
+  `(:propertize (:eval ,expr) face hima-simple-gray))
+(defvar meain/modeline-vcs (meain/modeline-segment " @" (substring vc 0 5)))
+(defvar meain/modeline-yap (meain/modeline-segment " [" yap-model "]"))
+
+(setq-default
+ mode-line-format
+ (list
+  '(:eval (mode-line-idle 0.3 meain/modeline-project-color "░"))
+  '(:eval (if (eq 'emacs evil-state) "[E] " " ")) ;; vim or emacs mode
+  '(:eval meain/modeline-filename)
+  (propertize ":%l:%c")
+  '(:eval (mode-line-idle 1.0 meain/modeline-vcs ""))
+  '(:eval (mode-line-idle 1.0 meain/modeline-yap ""))
+  '(:eval (if (boundp 'keycast-mode-line) keycast-mode-line))
+  'mode-line-format-right-align
+  '(:eval (if (boundp 'org-timer-mode-line-string) (concat org-timer-mode-line-string " ")))
+  (propertize "%p") ;; position in file
+  (propertize " %m ")
+  " "))
 
 ;; Print emacs startup time
 (add-hook 'emacs-startup-hook
@@ -3688,5 +3631,4 @@ Pass `CREATE' to create the alternate file if it does not exits."
     (start-process-shell-command "server-start-notify" "*server-start-notify*" "notify --pri 'Emacs server started'")))
 
 (provide 'init)
-
 ;;; init.el ends here
