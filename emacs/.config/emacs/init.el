@@ -3569,15 +3569,15 @@ Pass `CREATE' to create the alternate file if it does not exits."
            ;; TODO: encode worktree information
            (concat "#" (substring (md5 (or (meain/project-name) "")) 0 6))))))
 (defvar meain/modeline-filename
-  (list (if (eq buffer-file-name nil) ""
-          (concat (file-name-nondirectory
-                   (directory-file-name
-                    (file-name-directory (buffer-file-name)))) "/"))
-        (propertize "%b"
-                    'face (if (buffer-modified-p)
-                              'font-lock-string-face
-                            'font-lock-builtin-face)
-                    'help-echo (buffer-file-name))))
+  '(:eval (list (if (eq buffer-file-name nil) ""
+                  (concat (file-name-nondirectory
+                           (directory-file-name
+                            (file-name-directory (buffer-file-name)))) "/"))
+                (propertize "%b"
+                            'face (if (buffer-modified-p)
+                                      'font-lock-string-face
+                                    'font-lock-builtin-face)
+                            'help-echo (buffer-file-name)))))
 
 (defun meain/modeline-segment (str expr face)
   `(:propertize (:eval ,expr) face hima-simple-gray))
@@ -3589,7 +3589,7 @@ Pass `CREATE' to create the alternate file if it does not exits."
  (list
   '(:eval (mode-line-idle 0.3 meain/modeline-project-color "░"))
   '(:eval (if (eq 'emacs evil-state) "[E] " " ")) ;; vim or emacs mode
-  '(:eval meain/modeline-filename)
+  meain/modeline-filename
   (propertize ":%l:%c")
   '(:eval (mode-line-idle 1.0 meain/modeline-vcs ""))
   '(:eval (mode-line-idle 1.0 meain/modeline-yap ""))
