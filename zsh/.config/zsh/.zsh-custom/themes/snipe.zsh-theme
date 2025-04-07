@@ -163,7 +163,16 @@ function generate_lpropmpt() {
 }
 
 function generate_rpropmpt() {
-  echo "%F{003}$(virtualenv_info)%F{blue}$(_current_kubernetes_namespace)$FG[240]$(_git_pushable)%{$reset_color%} $(_cur_folder_with_git_base)%{%B%F{cyan}%}$(_hosthame_custom)%{$reset_color%}"
+  local custom=""
+
+  if git rev-parse --show-toplevel &>/dev/null; then
+    pushd "$(git rev-parse --show-toplevel 2>/dev/null)" > /dev/null
+    if [ -f .mscripts/shell-additions ]; then
+      custom=$(.mscripts/shell-additions)
+    fi
+  fi
+
+  echo "${custom}%F{003}$(virtualenv_info)%F{blue}$(_current_kubernetes_namespace)$FG[240]$(_git_pushable)%{$reset_color%} $(_cur_folder_with_git_base)%{%B%F{cyan}%}$(_hosthame_custom)%{$reset_color%}"
 }
 
 ASYNC_LPROC=0
