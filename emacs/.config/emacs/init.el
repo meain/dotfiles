@@ -930,6 +930,11 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
                   font-lock-comment-face
                   font-lock-doc-face
                   font-lock-string-face)))
+(use-package flyspell-correct
+  :ensure t
+  :after flyspell
+  :commands (flyspell-correct-wrapper flyspell-goto-next-error)
+  :bind (:map flyspell-mode-map ("C-:" . flyspell-correct-wrapper)))
 
 ;; flymake
 (use-package flymake
