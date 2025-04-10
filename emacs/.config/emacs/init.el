@@ -2060,6 +2060,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   :config
   (setq markdown-url-compose-char '(8230 8943 35 9733 9875))
   (setq markdown-enable-html -1)
+  (setq markdown-gfm-use-electric-backquote nil) ; don't ask me to pick lang in ```
   (evil-define-key 'normal gfm-mode-map (kbd "<RET>") 'project-find-file)
   (evil-define-key 'normal gfm-mode-map (kbd "g d") 'markdown-do)
   (evil-define-key 'normal markdown-mode-map (kbd "<RET>") 'project-find-file)
