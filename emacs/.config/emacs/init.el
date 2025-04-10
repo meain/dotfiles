@@ -3581,10 +3581,15 @@ Pass `CREATE' to create the alternate file if it does not exits."
                                     'font-lock-builtin-face)
                             'help-echo (buffer-file-name)))))
 
-(defun meain/modeline-segment (str expr face)
-  `(:propertize (:eval ,expr) face hima-simple-gray))
-(defvar meain/modeline-vcs (meain/modeline-segment " @" (substring vc 0 5)))
-(defvar meain/modeline-yap (meain/modeline-segment " [" yap-model "]"))
+(defun meain/modeline-segment (expr)
+  `(:eval (let ((value ,expr))
+            (if value (propertize value 'face 'hima-simple-gray) ""))))
+(defvar meain/modeline-vcs
+  (meain/modeline-segment
+   `(when-let (vc vc-mode) (concat " @" (substring vc 5)))))
+(defvar meain/modeline-yap
+  (meain/modeline-segment
+   `(when (boundp 'yap-model) (concat " [" yap-model "]"))))
 
 (setq-default
  mode-line-format
