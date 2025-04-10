@@ -2618,47 +2618,32 @@ Pass INSERT-TO-BUFFER to insert output to current buffer."
   :load-path "/Users/meain/dev/src/evil-textobj-tree-sitter/"
   :after (evil)
   :config
-  ;; NOTE(meain): Rework this
-  (define-key evil-outer-text-objects-map "f" (cons "evil-outer-function" (evil-textobj-tree-sitter-get-textobj "function.outer")))
-  (define-key evil-inner-text-objects-map "f" (cons "evil-inner-function" (evil-textobj-tree-sitter-get-textobj "function.inner")))
-  (define-key evil-outer-text-objects-map "c" (cons "evil-outer-class" (evil-textobj-tree-sitter-get-textobj "class.outer")))
-  (define-key evil-inner-text-objects-map "c" (cons "evil-inner-class" (evil-textobj-tree-sitter-get-textobj "class.inner")))
-  (define-key evil-outer-text-objects-map "n" (cons "evil-outer-comment" (evil-textobj-tree-sitter-get-textobj "comment.outer")))
-  (define-key evil-inner-text-objects-map "n" (cons "evil-outer-comment" (evil-textobj-tree-sitter-get-textobj "comment.outer")))
-  (define-key evil-outer-text-objects-map "v" (cons "evil-outer-conditional-loop" (evil-textobj-tree-sitter-get-textobj ("conditional.outer" "loop.outer"))))
-  (define-key evil-inner-text-objects-map "v" (cons "evil-inner-conditional-loop" (evil-textobj-tree-sitter-get-textobj ("conditional.inner" "loop.inner"))))
-  (define-key evil-inner-text-objects-map "a" (cons "evil-inner-parameter" (evil-textobj-tree-sitter-get-textobj "parameter.inner")))
-  (define-key evil-outer-text-objects-map "a" (cons "evil-outer-parameter" (evil-textobj-tree-sitter-get-textobj "parameter.outer")))
-
-  (define-key evil-normal-state-map (kbd "]a") (cons "goto-parameter-start" (ilambda evil-textobj-tree-sitter-goto-textobj "parameter.inner")))
-  (define-key evil-normal-state-map (kbd "[a") (cons "goto-parameter-start" (ilambda evil-textobj-tree-sitter-goto-textobj "parameter.inner" t)))
-  (define-key evil-normal-state-map (kbd "]A") (cons "goto-parameter-end" (ilambda evil-textobj-tree-sitter-goto-textobj "parameter.inner" nil t)))
-  (define-key evil-normal-state-map (kbd "[A") (cons "goto-parameter-end" (ilambda evil-textobj-tree-sitter-goto-textobj "parameter.inner" t t)))
-  (define-key evil-normal-state-map (kbd "]v") (cons "goto-conditional-start" (ilambda evil-textobj-tree-sitter-goto-textobj ("conditional.outer" "loop.outer"))))
-  (define-key evil-normal-state-map (kbd "[v") (cons "goto-conditional-start" (ilambda evil-textobj-tree-sitter-goto-textobj ("conditional.outer" "loop.outer") t)))
-  (define-key evil-normal-state-map (kbd "]V") (cons "goto-conditional-end" (ilambda evil-textobj-tree-sitter-goto-textobj ("conditional.outer" "loop.outer") nil t)))
-  (define-key evil-normal-state-map (kbd "[V") (cons "goto-conditional-end" (ilambda evil-textobj-tree-sitter-goto-textobj ("conditional.outer" "loop.outer") t t)))
-  (define-key evil-normal-state-map (kbd "]c") (cons "goto-class-start" (ilambda evil-textobj-tree-sitter-goto-textobj "class.outer")))
-  (define-key evil-normal-state-map (kbd "[c") (cons "goto-class-start" (ilambda evil-textobj-tree-sitter-goto-textobj "class.outer" t)))
-  (define-key evil-normal-state-map (kbd "]C") (cons "goto-class-end" (ilambda evil-textobj-tree-sitter-goto-textobj "class.outer" nil t)))
-  (define-key evil-normal-state-map (kbd "[C") (cons "goto-class-end" (ilambda evil-textobj-tree-sitter-goto-textobj "class.outer" t t)))
-  (define-key evil-normal-state-map (kbd "]n") (cons "goto-comment-start" (ilambda evil-textobj-tree-sitter-goto-textobj "comment.outer")))
-  (define-key evil-normal-state-map (kbd "[n") (cons "goto-comment-start" (ilambda evil-textobj-tree-sitter-goto-textobj "comment.outer" t)))
-  (define-key evil-normal-state-map (kbd "]N") (cons "goto-comment-end" (ilambda evil-textobj-tree-sitter-goto-textobj "comment.outer" nil t)))
-  (define-key evil-normal-state-map (kbd "[N") (cons "goto-comment-end" (ilambda evil-textobj-tree-sitter-goto-textobj "comment.outer" t t)))
-  (define-key evil-normal-state-map (kbd "]f") (cons "goto-function-start" (lambda () (interactive) (progn (evil-textobj-tree-sitter-goto-textobj "function.outer") (reposition-window)))))
-  (define-key evil-normal-state-map (kbd "[f") (cons "goto-function-start" (lambda () (interactive) (progn (evil-textobj-tree-sitter-goto-textobj "function.outer" t) (reposition-window)))))
-  (define-key evil-normal-state-map (kbd "]F") (cons "goto-function-end" (lambda () (interactive) (progn (evil-textobj-tree-sitter-goto-textobj "function.outer" nil t) (reposition-window)))))
-  (define-key evil-normal-state-map (kbd "[F") (cons "goto-function-end" (lambda () (interactive) (progn (evil-textobj-tree-sitter-goto-textobj "function.outer" t t) (reposition-window)))))
+  (defvar meain/tree-sitter-mappings '(("a" "parameter" ("parameter.inner") ("parameter.outer"))
+                                       ("v" "conditional" ("conditional.inner" "loop.inner") ("conditional.outer" "loop.outer"))
+                                       ("c" "class" ("class.inner") ("class.outer"))
+                                       ("f" "function" ("function.inner") ("function.outer"))
+                                       ("n" "comment" ("comment.outer") ("comment.outer"))))
+  (dolist (mapping meain/tree-sitter-mappings)
+    (let ((key (car mapping))
+          (name (cadr mapping))
+          (inner (caddr mapping))
+          (outer (cadddr mapping)))
+      ;; Need this weird `eval' here as `evil-textobj-tree-sitter-get-textobj' is a macro
+      (eval `(define-key evil-inner-text-objects-map ,key (cons ,(concat "evil-inner-" name) (evil-textobj-tree-sitter-get-textobj ,inner))))
+      (eval `(define-key evil-outer-text-objects-map ,key (cons ,(concat "evil-outer-" name) (evil-textobj-tree-sitter-get-textobj ,outer))))
+      (define-key evil-normal-state-map (kbd (concat "]" key)) (cons (concat "goto-" name "-start") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj outer))))
+      (define-key evil-normal-state-map (kbd (concat "[" key)) (cons (concat "goto-" name "-start") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj outer t))))
+      (define-key evil-normal-state-map (kbd (concat "]" (upcase key))) (cons (concat "goto-" name "-end") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj outer nil t))))
+      (define-key evil-normal-state-map (kbd (concat "[" (upcase key))) (cons (concat "goto-" name "-end") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj outer t t))))))
 
   (define-key evil-outer-text-objects-map "m"
               (evil-textobj-tree-sitter-get-textobj
-               "import"
-               '((python-mode . ((import_statement) @import))
-                 (python-ts-mode . ((import_statement) @import))
-                 (go-mode . ((import_spec) @import))
-                 (go-ts-mode . ((import_spec) @import))
-                 (rust-mode . ((use_declaration) @import))))))
+                "import"
+                '((python-mode . ((import_statement) @import))
+                  (python-ts-mode . ((import_statement) @import))
+                  (go-mode . ((import_spec) @import))
+                  (go-ts-mode . ((import_spec) @import))
+                  (rust-mode . ((use_declaration) @import))))))
 
 ;; Show context using tree-sitter
 (use-package posframe-plus
