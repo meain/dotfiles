@@ -1493,7 +1493,10 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 (use-package eglot-booster
   :ensure (:host github :repo "jdtsmith/eglot-booster")
   :after eglot
-  :config (eglot-booster-mode t))
+  :config
+  ;; https://www.reddit.com/r/emacs/comments/1jsxamc/the_new_json_parser_is_fast/
+  (setq eglot-booster-io-only t)
+  (eglot-booster-mode t))
 
 ;; Get hierarchy
 (use-package eglot-hierarchy
