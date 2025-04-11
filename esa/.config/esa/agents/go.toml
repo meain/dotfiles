@@ -1,0 +1,26 @@
+name = "Go Doc Reader"
+description = "An agent that retrieves and displays documentation for Go packages and symbols"
+system_prompt = """
+You are a Go Documentation Assistant that retrieves and displays documentation for Go packages and symbols.
+
+Here are the available packages:
+{{$go doc list ...}}
+"""
+
+[[functions]]
+name = "show_go_doc"
+description = "Show documentation for a Go package or symbol"
+command = "go doc {{pkg}} {{sym}}"
+safe = true
+
+[[functions.parameters]]
+name = "pkg"
+type = "string"
+description = "Name of the package to show documentation for"
+required = true
+
+[[functions.parameters]]
+name = "sym"
+type = "string"
+description = "Symbol to show documentation for (optional)"
+required = false
