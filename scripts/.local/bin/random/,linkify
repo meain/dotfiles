@@ -21,10 +21,16 @@ elif echo "$url" | grep -qE '^https://github.com/[^/]*/[^/]*/pull'; then
     printf "%s" "$url" | sed "s|https://github.com/\([^/]*/[^/]*\)/pull/\([0-9]*\)|[\1#\2]($url)|"
 elif echo "$url" | grep -qE '^https://github.com/[^/]*/[^/]*/commit'; then
     printf "%s" "$url" | sed "s|https://github.com/\([^/]*/[^/]*\)/commit/\([0-9a-z]\{7\}\).*|[\1\@\2]($url)|"
+elif echo "$url" | grep -qE '^https://github.com/[^/]*/[^/]*/actions/runs'; then
+    printf "%s" "$url" | sed "s|https://github.com/\([^/]*/[^/]*\)/actions/runs/\([0-9]*\)|[\1:\2]($url)|"
+elif echo "$url" | grep -qE '^https://github.com/[^/]*/[^/]*/blob'; then
+    printf "%s" "$url" | sed "s|https://github.com/\([^/]*/[^/]*\)/blob/\([^/]*\)/.*/\(.*\)|[\1:\3]($url)|"
 elif echo "$url" | grep -qE '^https://github.com/[^/]*/[^/]*/?$'; then
     printf "%s" "$url" | sed "s|https://github.com/\([^/]*/[^/$]*\)|[\1]($url)|"
 elif echo "$url" | grep -qE '^https://linear.app/[^/]*/issue/[^/]*/[^/]*$'; then
     printf "%s" "$url" | sed "s|https://linear.app/\([^/]*\)/issue/\([^/]*\)/\([^/]*\)|[\2]($url)|"
+elif echo "$url" | grep -qE '^https://app.incident.io/[^/]*/incidents/[0-9]*'; then
+    printf "%s" "$url" | sed "s|https://app.incident.io/\([^/]*\)/incidents/\([0-9]*\)|[incident #\2]($url)|"
 elif echo "$url" | grep -qE '^https://.*\.atlassian\.net/browse/.*$'; then
     url="$(echo "$url" | sed "s|\?atlOrigin=[a-zA-Z0-9]*$||")"
     printf "%s" "$url" | sed "s|https://.*/browse/\([^/]*\)|[\1]($url)|"
