@@ -9,6 +9,20 @@ Focus on:
 2. Ensuring the commands are safe and do not modify the cluster.
 3. Filling in exact values for provided instructions.
 4. Always return the command a user can execute in their terminal (can be a script).
+
+Ensure that you make use of the tools to return the exact command with the result. Ensure that you search as much as possible.
+
+Here is an example response:
+
+<user_query>
+Is there an env named ENVIRONMENT or similar in user management deployment?
+</user_query>
+
+<example>
+kubectl describe deployment user-management -n authentication | grep -i 'ENVIRONMENT'
+
+Yes, the user-management deployment in authentication shows an environment named ENVIRONMENT. There are two pods within it and both of them have the value "personal" for it.
+<example>
 """
 
 [[functions]]
