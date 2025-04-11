@@ -21,7 +21,7 @@ fi
 # Create PR from each pair
 top="$(echo "$branches" | head -n 1)"
 echo "$branches" | tail -n+2 | while read -r branch; do
-    echo "Creating PR for $top <- $branch"
+    echo "Creating PR for $branch <- $top"
     gh pr create --base "$branch" --head "$top" --assignee "@me" --web
     top="$branch"
 done
