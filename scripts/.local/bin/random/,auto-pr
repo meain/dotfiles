@@ -2,7 +2,14 @@
 
 set -e
 
-,auto-commit
+# kinda hacky, but hey so is the rest of the script
+logline="$(jj log -r @ --template 'description.first_line()' | head -n 1)"
+if [ "${#logline}" -lt 5 ]; then
+    ,auto-commit
+else
+    echo "Commit already has a message, skipping commit"
+fi
+
 ,auto-branch
 jj git push --all
 ,gh-pr-create
