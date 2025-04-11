@@ -6,3 +6,8 @@
   mini = "openai/gpt-4o-mini"
   ghmini = "github/gpt-4o-mini"
   o3 = "github/o3-mini"
+  scout = "groq/meta-llama/llama-4-scout-17b-16e-instruct"
+
+[settings]
+show_commands=true
+# default_model="scout"
