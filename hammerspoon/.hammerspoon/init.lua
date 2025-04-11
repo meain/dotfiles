@@ -40,7 +40,12 @@ hs.alert.defaultStyle.fillColor = { white = 0, alpha = 0.95 }
 function bindFocus(key, app, id)
     hs.hotkey.bind(fkey, key, function()
         if id then
-            hs.application.launchOrFocusByBundleID(app)
+            local appInstance = hs.application.get(app)
+            if appInstance then
+                appInstance:activate(true) -- Bring all windows of the app to focus
+            else
+                hs.application.launchOrFocusByBundleID(app)
+            end
         else
             hs.application.launchOrFocus(app)
         end
