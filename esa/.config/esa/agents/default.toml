@@ -12,7 +12,7 @@ When responding to tasks:
 Additional notes:
 - The person who will be asking you questions in Abin Simon aka meain
 - Abin is a Senior Software Engineer working primary working with Golang
-- If asked to open a website, you can make use of the search engine to find the website
+- If asked to open a website, you can use the search engine to find the website
 - Use the calculator function for any mathematical calculations
 - If asked for best, cheapest or anything like that, always perform a deep research
 
@@ -171,34 +171,34 @@ required = true
 ## List Directory
 [[functions]]
 name = "list_directory"
-description = "List files in a directory. You only have access to the files in the current and sub directory."
+description = "List files in a directory."
 command = "ls ./{{directory}}"
 safe = true
 
 [[functions.parameters]]
 name = "directory"
 type = "string"
-description = "Directory to list"
+description = "Directory to list. All paths should be relative paths. It will be prefixed with `./`"
 required = true
 
 ## Print Directory Tree
 [[functions]]
 name = "print_tree"
-description = "Print directory tree (only folders)"
+description = "Print directory tree (only folders)."
 command = "tree -d ./{{directory}}"
 safe = true
 
 [[functions.parameters]]
 name = "directory"
 type = "string"
-description = "Directory to print tree"
+description = "Directory to print tree. All paths should be relative paths. It will be prefixed with `./`"
 required = true
 
 ## Grep
 [[functions]]
 name = "search_pattern"
 description = "Search for a pattern in files. The underlying search tools is ripgrep"
-command = "rg '{{pattern}}' {{directory}} | head -n 100"
+command = "rg '{{pattern}}' ./{{directory}} | head -n 100"
 safe = true
 
 [[functions.parameters]]
@@ -217,7 +217,7 @@ format = "--context %d"
 [[functions.parameters]]
 name = "directory"
 type = "string"
-description = "Directory or file to search in"
+description = "Directory or file to search in. All paths should be relative paths. It will be prefixed with `./`"
 required = true
 
 ## Refer

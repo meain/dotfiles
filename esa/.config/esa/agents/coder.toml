@@ -106,7 +106,7 @@ safe = true
 [[functions.parameters]]
 name = "directory"
 type = "string"
-description = "Directory to list"
+description = "Directory to list. All paths should be relative paths. It will be prefixed with `./`"
 required = true
 
 ## Print Directory Tree
@@ -119,7 +119,7 @@ safe = true
 [[functions.parameters]]
 name = "directory"
 type = "string"
-description = "Directory to print tree"
+description = "Directory to print tree. All paths should be relative paths. It will be prefixed with `./`"
 required = true
 
 ## Convert to JSON
@@ -164,7 +164,7 @@ required = false
 name = "search_for_pattern"
 description = """Search for a pattern in files. Limited to the top 100 results.
 Use more precise queries if you need better results."""
-command = "rg '{{pattern}}' {{directory}} | head -n 100"
+command = "rg '{{pattern}}' ./{{directory}} | head -n 100"
 safe = true
 
 [[functions.parameters]]
@@ -176,7 +176,7 @@ required = true
 [[functions.parameters]]
 name = "directory"
 type = "string"
-description = "Directory or file to search in"
+description = "Directory or file to search in. All paths should be relative paths. It will be prefixed with `./`"
 required = true
 
 ## Tree Grepper
