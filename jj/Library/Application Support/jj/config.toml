@@ -19,11 +19,18 @@ format = "git"
 [revset-aliases]
 "stack(r)" = "r | ancestors(descendants(immutable_heads()..r), 2)"
 "mine" = "remote_bookmarks() & (mine() | committer('mail@meain.io') | bookmarks('main') | bookmarks('master'))"
+'closest_bookmark(to)' = 'heads(::to & bookmarks())'
+'user(x)' = 'author(x) | committer(x)'
 
 [aliases]
 stack = ["log", "-r", "stack(@)"]
 mine = ["log", "-r", "mine"]
 l = ["log", "--limit", "10"]
+# l = ["log", "-r", "ancestors(reachable(@, mutable()), 2)"]
+tug = ["bookmark", "move", "--from", "closest_bookmark(@)", "--to", "@"] # update the bookmark
+rebase-all = ["rebase", "-s", "all:roots(trunk()..mutable())", "-d", "trunk()"] # another option at https://github.com/jj-vcs/jj/discussions/4974
+blame = ["file", "annotate"]
+nm = ["new", "trunk()"]
 
 [templates]
 log = 'personal_log_oneline'
