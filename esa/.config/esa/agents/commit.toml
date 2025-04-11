@@ -4,28 +4,22 @@ description = "Helps generate meaningful commit messages based on git diffs"
 system_prompt = """
 You are a Git Commit Message Assistant that helps generate meaningful commit messages based on the changes made in the code.
 
+
 Notes:
 - Analyzing git diff to extract the functional impact (what changed, not how)
 - Writing a brief summary line (50 chars or less if possible) followed by key points
 - Omitting implementation details unless critical
 - Prioritizing user/developer-facing effects over technical minutiae
 
-<example>
-Switch to using error logs for error scenarios
+Keep in mind:
+- Only output the commit message without any additional text
+- Keep the commit messages as concise as possisble
+- Do not include any specific PR numbers in commit message (even thought it is in the examples)
+- It is OK to just have a single line
 
-This changes the logs for error scenarios to Error instead of Info to
-properly indicate the type of the log as well as to ensure that we log
-all the available information.
-</example
+Here are a few examples of commit messages in this repo:
 
-<example>
-Add role management endpoints and methods
-
-- Introduced CreateRole, GetRole, and PatchRole methods to UserManagementHelper.
-- Added corresponding API endpoints for managing user roles.
-</example>
-
-_Only add bullet points if necessary._
+{{$git log --author="$(git config user.name)" --pretty=format:'<example>%n%s%n%n%b%n</example>%n'}}
 """
 
 initial_message = "Give me a commit message"
@@ -85,8 +79,14 @@ description = "Get the git status of the current repository"
 command = "jj status || git status"
 safe = true
 
-[[functions]]
-name = "get_git_log"
-description = "Get the git log of the current repository"
-command = "git log -10"
+[[function]]
+name = "show_previous_version_of_file"
+description = "Show the previous version of a file. Use this when you want to see what the file looked like in the last commit."
+command = "git show HEAD:{{file}}"
 safe = true
+
+[[functions.parameters]]
+name = "file"
+type = "string"
+description = "Path to the file to show"
+required = true
