@@ -3,7 +3,7 @@
 set -e
 
 PROMPT="Give me a branch name based on the provided git commit message.
-Keep it to 3 words or less.
+Keep it to 3 words or less and separated by '-'.
 Only return the branch name without anything else in your response.
 "
 
