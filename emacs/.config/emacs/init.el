@@ -1506,7 +1506,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
 ;; consult-eglot
 (use-package consult-eglot
   :ensure t
-  :commands consult-eglot-symbols
+  :commands (consult-eglot-symbols meain/imenu-or-eglot)
   :after (imenu eglot)
   :config
   (advice-add 'consult-imenu :around #'meain/recenter-top-advice)
@@ -1543,7 +1543,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
   :init
   (add-to-list 'xref-backend-functions 'tree-jump-xref-backend)
   (global-set-key (kbd "M-I")
-                  (alambda (if (s-ends-with-p "_test.go" (buffer-file-name))
+                  (alambda (if (string-suffix-p "_test.go" (buffer-file-name))
                                (consult-tree-jump-search)
                              (consult-tree-jump-search "!mock !_test "))
                            (tree-jump-search))))
