@@ -14,12 +14,11 @@ Notes:
 Keep in mind:
 - Only output the commit message without any additional text
 - Keep the commit messages as concise as possisble
-- Do not include any specific PR numbers in commit message (even thought it is in the examples)
 - It is OK to just have a single line
 
 Here are a few examples of commit messages in this repo:
 
-{{$git log --author="$(git config user.name)" --pretty=format:'<example>%n%s%n%n%b%n</example>%n'}}
+{{$git log --author="$(git config user.name)" --pretty=format:'<example>%n%s%n%n%b%n</example>%n' | sed 's|(#[0-9]*)$||'}}
 """
 
 initial_message = "Give me a commit message"
