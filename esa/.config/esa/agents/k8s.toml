@@ -34,7 +34,7 @@ safe = true
 [[functions]]
 name = "get_resources"
 description = "Retrieve a list of all pods, optionally within a specific namespace."
-command = "kubectl get {{resource}} {{namespace}}"
+command = "kubectl get {{resource}} --all-namespaces"
 safe = true
 
 [[functions.parameters]]
@@ -43,12 +43,12 @@ type = "string"
 description = "The resource type to list."
 required = true
 
-[[functions.parameters]]
-name = "namespace"
-type = "string"
-description = "The namespace to list pods from. Default behavior lists pods in the current context namespace."
-required = false
-format = "--namespace %s"
+# [[functions.parameters]]
+# name = "namespace"
+# type = "string"
+# description = "The namespace to list resources from. Default behavior lists pods in the current context namespace."
+# required = false
+# format = "--namespace %s"
 
 [[functions]]
 name = "describe_resource"
