@@ -7,6 +7,8 @@ default-command = "l"
 pager = ["sh", "-c", "diff-so-fancy | less -RFX"]
 conflict-marker-style = "git"
 diff-editor = ":builtin"
+# log-synthetic-elided-nodes = true # NOTE: what is this?
+# graph.style = "square"
 
 [ui.diff]
 format = "git"
@@ -31,6 +33,7 @@ tug = ["bookmark", "move", "--from", "closest_bookmark(@)", "--to", "@"] # updat
 rebase-all = ["rebase", "-s", "all:roots(trunk()..mutable())", "-d", "trunk()"] # another option at https://github.com/jj-vcs/jj/discussions/4974
 blame = ["file", "annotate"]
 nm = ["new", "trunk()"]
+e = ["edit"]
 
 [templates]
 log = 'personal_log_oneline'
