@@ -429,8 +429,8 @@ Pass ORIGINAL and ALTERNATE options."
   :config (global-evil-surround-mode 1))
 
 ;; Evil text objects
-(use-package evil-textobj-line :ensure t :defer nil)
-(use-package evil-textobj-syntax :ensure t :defer nil)
+(use-package evil-textobj-line :ensure t)
+(use-package evil-textobj-syntax :ensure t)
 (use-package evil-indent-plus
   :ensure t
   :defer nil
@@ -1844,7 +1844,6 @@ Pass `CHOOSER' as t to not automatically select the previous tab."
 ;; dtrt (atuo find indend setting)
 (use-package dtrt-indent
   :ensure t
-  :defer t
   :config (dtrt-indent-global-mode))
 
 (use-package indent-guide
@@ -1996,7 +1995,6 @@ Pass universal args to run suite or project level tests."
 ;; Direnv support
 (use-package envrc
   :ensure t
-  :defer t
   :config (envrc-global-mode))
 
 (use-package emacs
@@ -3481,6 +3479,7 @@ We limit the search to just top 10 lines so as to only check the header."
          (revert-buffer-quick b)))
      (project-buffers (project-current)))))
 
+;; NOTE: Switch to find-sibling-file
 ;; Patterns for replacing filenames with (builtin option: find-sibling-file)
 ;; Sticking with custom version as we have an option to create the file if it does not exist
 ;; Example for find-sibling-file:
@@ -3533,7 +3532,6 @@ Pass `CREATE' to create the alternate file if it does not exits."
 (use-package tree-surgeon
   :load-path tree-surgeon-load-path
   :after (evil-leader)
-  :defer t
   :init (evil-leader/set-key "H j" 'tree-surgeon-split-join))
 
 ;; Just some hima testing code
