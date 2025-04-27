@@ -2056,7 +2056,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 (use-package markdown-mode
   :ensure t
   :defer t
-  :after (edit-indirect)
+  :after (edit-indirect evil)
   :mode ("\\.md\\'" . gfm-mode)
   :config
   (setq markdown-url-compose-char '(8230 8943 35 9733 9875))
@@ -2068,6 +2068,22 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   (evil-define-key 'normal markdown-mode-map (kbd "g d") 'markdown-do)
   (setq markdown-command "pandoc -t html5")
   (setq markdown-fontify-code-blocks-natively t)
+
+  ;; When a link is pasted with an active selection, convert to a markdown link
+  (defun meain/paste-after-or-create-link (from to)
+    (interactive "r")
+    (let ((clipboard-text (substring-no-properties (current-kill 0 t))))
+      (if (ffap-url-p clipboard-text)
+          (save-excursion
+            (goto-char from)
+            (insert "[")
+            (goto-char (1+ to))
+            (insert "](")
+            (yank)
+            (insert ")"))
+        (delete-region from to)
+        (yank))))
+  (evil-define-key 'visual markdown-mode-map "p" 'meain/paste-after-or-create-link)
 
   ;; Quickly add markdown links to document
   (defun meain/markdown-linkify-thing (start end)
@@ -2110,7 +2126,8 @@ START and END for position."
     (start-process-shell-command "*markdown-html*" "*markdown-html*"
                                  (concat ",markdown-to-html " (buffer-file-name))))
 
-  ;; Run markdown code blocks (forest.el)
+  ;; Run markdown code blocks
+  ;; Possible alternative https://github.com/md-babel/md-babel.el
   (defun meain/run-markdown-code-block (&optional insert-to-buffer)
     "Run markdown code block under cursor.
 Pass INSERT-TO-BUFFER to insert output to current buffer."
@@ -2131,7 +2148,7 @@ Pass INSERT-TO-BUFFER to insert output to current buffer."
             (goto-char end)
             (end-of-line)
             (newline)
-            (insert "\n```output\n")
+            (insert "\n```\n")
             (insert (shell-command-to-string (format "%s '%s'" snippet-runner temp-source-file)))
             (insert "```"))
         (with-current-buffer (get-buffer-create "*markdown-runner-output*")
