@@ -3,13 +3,19 @@
 set -e
 
 # kinda hacky, but hey so is the rest of the script
-logline="$(jj log -r @ --template 'description.first_line()' | head -n 1)"
-if [ "${#logline}" -lt 5 ]; then
+logline="$(jj log -r @ --template 'description.first_line()' --no-graph)"
+if [  -z "$logline" ]; then
     ,auto-commit
 else
     echo "Commit already has a message, skipping commit"
 fi
 
-,auto-branch
+logline="$(jj log -r @ --template 'bookmarks' --no-graph)"
+if [ -z  "$logline" ]; then
+    ,auto-branch
+else
+    echo "Branch already has a name, skipping branch creation"
+fi
+
 jj git push --all
 ,gh-pr-create
