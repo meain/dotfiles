@@ -10,7 +10,7 @@ When responding to tasks:
 4. Provide only concise responses that directly address the task.
 
 Additional notes:
-- You are working in a macOS environment
+- You are working in a {{$uname -o}} environment
 - The person who will be asking you questions in Abin Simon aka meain
 - Abin is a Senior Software Engineer working primary working with Golang
 - Use the files available in the current directory to answer questions
@@ -57,25 +57,6 @@ type = "string"
 description = "Message content of the notification"
 required = true
 
-## JQ
-[[functions]]
-name = "jq"
-description = "Process JSON with jq"
-command = "jq '{{filter}}' {{file}}"
-safe = true
-
-[[functions.parameters]]
-name = "filter"
-type = "string"
-description = "jq filter to apply"
-required = true
-
-[[functions.parameters]]
-name = "file"
-type = "string"
-description = "JSON file to process"
-required = true
-
 ## Read File
 [[functions]]
 name = "read_file"
@@ -95,6 +76,25 @@ type = "boolean"
 description = "Should show line number"
 required = false
 format = "-n"
+
+## Write File
+[[functions]]
+name = "write_file"
+description = "Write to a file"
+command = "tee {{file}}"
+stdin = "{{content}}"
+
+[[functions.parameters]]
+name = "file"
+type = "string"
+description = "File to write"
+required = true
+
+[[functions.parameters]]
+name = "content"
+type = "string"
+description = "Content to write"
+required = true
 
 ## List Directory
 [[functions]]
@@ -122,43 +122,6 @@ type = "string"
 description = "Directory to print tree. All paths should be relative paths. It will be prefixed with `./`"
 required = true
 
-## Convert to JSON
-[[functions]]
-name = "tojson"
-description = "Convert from different formats to json"
-command = "tojson {{flags}} {{options}} {{filename}}"
-safe = true
-
-[[functions.parameters]]
-name = "flags"
-type = "string"
-description = "Flags to use with tojson (e.g. -p, --pretty)"
-required = false
-
-[[functions.parameters]]
-name = "options"
-type = "string"
-description = "Options to use with tojson (e.g. -f yaml, -t json)"
-required = false
-
-[[functions.parameters]]
-name = "filename"
-type = "string"
-description = "File to convert"
-required = false
-
-[[functions.parameters]]
-name = "from"
-type = "string"
-description = "Format to convert from (possible values: auto, yaml, toml, json) (default: auto)"
-required = false
-
-[[functions.parameters]]
-name = "to"
-type = "string"
-description = "Format to convert to (possible values: json, yaml, toml) (default: json)"
-required = false
-
 ## Grep
 [[functions]]
 name = "search_for_pattern"
@@ -179,53 +142,34 @@ type = "string"
 description = "Directory or file to search in. All paths should be relative paths. It will be prefixed with `./`"
 required = true
 
-## Tree Grepper
+## Move file (do we need copy file?)
 [[functions]]
-name = "tree_grepper"
-description = """Search for matches using tree-grepper.
-This is a tool to search for code using tree-sitter queries.
-If this fails, you can fall back to using grep or printing file contents."""
-command = "tree-grepper -q {{language}} '{{query}}' {{paths}}"
-safe = true
+name = "move_file"
+description = "Move a file to a new location"
+command = "mv {{source}} {{destination}}"
+safe = false
 
 [[functions.parameters]]
-name = "paths"
+name = "source"
 type = "string"
-description = "Places to search for matches (default: .)"
-required = false
-
-[[functions.parameters]]
-name = "query"
-type = "string"
-description = """tree-sitter query which will be used to return the output.
-Example of a golang query: (function_declaration name: (identifier) @func_name (#eq? @func_name "functionName")) @func_body"""
+description = "Source file to move"
 required = true
 
 [[functions.parameters]]
-name = "language"
+name = "destination"
 type = "string"
-description = "Language for the query. Find the language by inspecting the files in the directory."
+description = "Destination path to move the file to"
 required = true
 
-## Tree Grepper Languages
+## Run command
 [[functions]]
-name = "tree_grepper_languages"
-description = "List available languages for tree-grepper"
-command = "tree-grepper --languages"
-safe = true
-
-## Refer
-[[functions]]
-name = "refer"
-description = """Refer is a tool that lets you perform a vector search on a documents in the directory.
-It can be performed if there is a .referdb file in the directory.
-This can be used to semantically search for things in the documents.
-It returns you a list of files that might contain relevant data."""
-command = "refer search '{{query}}'"
-safe = true
+name = "run_command"
+description = "Run a command in the current directory"
+command = "{{command}}"
+safe = false
 
 [[functions.parameters]]
-name = "query"
+name = "command"
 type = "string"
-description = "Query to search for in the referdb file"
+description = "Command to run"
 required = true
