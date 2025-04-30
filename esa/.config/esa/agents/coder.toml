@@ -1,60 +1,49 @@
 name = "Coder"
 description = "A coding assistant with access to various system functions"
 
-system_prompt="""You are Esa, a coding assistant capable of performing various tasks. You will receive a task to complete and have access to different functions that you can use to help you accomplish the task.
+system_prompt="""You are an intelligent coding assistant designed for efficient code analysis and modification.
 
-When responding to tasks:
-1. Analyze the task and determine if you need to use any functions to gather information.
-2. If needed, make function calls to gather necessary information.
-3. Process the information and formulate your response.
-4. Provide only concise responses that directly address the task.
+Core Responsibilities:
+1. Analyze requested tasks and files autonomously using available system functions
+2. Execute necessary file operations and modifications without requiring confirmation
+3. Provide concise, implementation-focused responses
+4. Maintain context awareness of the codebase structure and environment
 
-Additional notes:
-- You are working in a {{$uname -o}} environment
-- The person who will be asking you questions in Abin Simon aka meain
-- Abin is a Senior Software Engineer working primary working with Golang
-- Use the files available in the current directory to answer questions
-- All functions you run will be run in the specific project
+Task Execution Protocol:
+1. Gather context using appropriate system functions (read_file, list_directory, etc.)
+2. Process information and determine required actions
+3. Execute modifications using write_file or other relevant functions
+4. Return only essential feedback about completed actions
 
-Current directory: {{$pwd}}
+Environment Details:
+- Operating System: {{$uname -o}}
+- Working Directory: {{$pwd}}
+- Today's Date: {{$date}}
+- User: Abin Simon (meain), Senior Software Engineer specializing in Go
+- Context: Limited to current directory and its subdirectories
 
-Remember to keep your responses brief and to the point. Do not provide unnecessary explanations or elaborations unless specifically requested."""
+Response Guidelines:
+- Focus on direct, actionable answers
+- Skip explanations unless explicitly requested
+- Maintain awareness of file system boundaries
+- Execute tasks autonomously using available functions
 
-## Get Date and Time
-[[functions]]
-name = "get_datetime"
-description = "Get current date and time"
-command = "date"
+Project structure:
+{{$tree -d ./}}
+
+Remember, all user queries are to be answered based on the current project.
+"""
 
 ## Read Webpage
 [[functions]]
 name = "read_webpage"
 description = "Read the contents of a webpage"
-command = "readable '{{url}}'"
+command = "readable '{{url}}' | html2markdown"
 
 [[functions.parameters]]
 name = "url"
 type = "string"
 description = "URL of the website to read"
-required = true
-
-## Send Notification
-[[functions]]
-name = "send_notification"
-description = "Send a system notification"
-command = "notify '{{title}}' '{{message}}'"
-safe = true
-
-[[functions.parameters]]
-name = "title"
-type = "string"
-description = "Title of the notification (with single quotes escaped)"
-required = true
-
-[[functions.parameters]]
-name = "message"
-type = "string"
-description = "Message content of the notification"
 required = true
 
 ## Read File
@@ -112,8 +101,8 @@ required = true
 ## Print Directory Tree
 [[functions]]
 name = "print_tree"
-description = "Print directory tree (only folders)"
-command = "tree -d ./{{directory}}"
+description = "Print tree of files and folders"
+command = "tree ./{{directory}}"
 safe = true
 
 [[functions.parameters]]
@@ -124,14 +113,14 @@ required = true
 
 ## Grep
 [[functions]]
-name = "search_for_pattern"
-description = """Search for a pattern in files. Limited to the top 100 results.
+name = "search_for_text"
+description = """Search for a regex pattern in project files. Limited to the top 300 results.
 Use more precise queries if you need better results."""
-command = "rg '{{pattern}}' ./{{directory}} | head -n 100"
+command = "rg '{{search_pattern}}' ./{{directory}} | head -n 300"
 safe = true
 
 [[functions.parameters]]
-name = "pattern"
+name = "search_pattern"
 type = "string"
 description = "Pattern to search for"
 required = true
@@ -140,6 +129,46 @@ required = true
 name = "directory"
 type = "string"
 description = "Directory or file to search in. All paths should be relative paths. It will be prefixed with `./`"
+required = false
+
+## Find file
+[[functions]]
+name = "find_files_by_name"
+description = "Find a files in the current directory and subdirectories that match the given name."
+command = "fd '{{search_pattern}}'"
+safe = true
+
+[[functions.parameters]]
+name = "search_pattern"
+type = "string"
+description = "Pattern to search for"
+required = true
+
+## Search for symbols
+[[functions]]
+name = "search_symbols"
+description = "Find symbols (functions/types) in code from the specified directory and subdirectories. Use this if you want to get function names. Works better with single words."
+command = ",symbol-search | grep ':{{kind}}:' | grep -i '{{search_pattern}}'"
+pwd="{{directory}}"
+safe = true
+
+[[functions.parameters]]
+name = "directory"
+type = "string"
+description = "Directory to search in. All paths should be relative paths. It will be prefixed with `./`"
+required = false
+
+[[functions.parameters]]
+name = "kind"
+type = "string"
+description = "Kind of symbol to search for."
+options = ["function", "type"]
+required = true
+
+[[functions.parameters]]
+name = "search_pattern"
+type = "string"
+description = "Pattern to search for. Case insensitive"
 required = true
 
 ## Move file (do we need copy file?)
