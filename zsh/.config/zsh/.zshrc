@@ -135,7 +135,7 @@ fi
 # set repo root hash
 set_repo_root() {
   emulate -L zsh
-  hash -d m="$(git rev-parse --show-toplevel 2>/dev/null)" || true
+  hash -d r="$(git rev-parse --show-toplevel 2>/dev/null)" || true
 }
 if [[ ${chpwd_functions[(r)set_repo_root]} != "set_repo_root" ]];then
   chpwd_functions=(${chpwd_functions[@]} "set_repo_root")
