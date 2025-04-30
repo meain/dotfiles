@@ -38,6 +38,10 @@
 [init]
   templatedir = ~/.config/git/.git_template
   defaultBranch = master
+[branch]
+  sort = -committerdate
+[tag]
+  sort = -taggerdate
 [color "diff-highlight"]
   oldNormal = red
   oldHighlight = red reverse
