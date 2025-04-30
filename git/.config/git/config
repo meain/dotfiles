@@ -15,6 +15,7 @@
 [color]
   ui = true
 [core]
+  compression = 9 # compress to save network bandwidth
   editor = emacsclient
   pager = diff-so-fancy | less --tabs=4 -RFX
   excludesfile = ~/.config/git/.gitignore_global
