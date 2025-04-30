@@ -1,14 +1,9 @@
-[filter "lfs"]
-  required = true
-  clean = git-lfs clean %f
-  smudge = git-lfs smudge %f
 [user]
   name = Abin Simon
   email = mail@meain.io
   signingkey = B2BBAEE6203686675A9288737E2E3C7B32C8E368
 [alias]
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --branches
-
   st = status -sb -uno --ignore-submodules=untracked
   ba = branch --all -vv
   su = submodule update --init --recursive
@@ -34,6 +29,10 @@
   renames = true
 [diff "spaceman-diff"]
   command = spaceman-diff
+[filter "lfs"]
+  required = true
+  clean = git-lfs clean %f
+  smudge = git-lfs smudge %f
 [credential]
   helper = cache
 [init]
@@ -67,9 +66,6 @@
   default = current
 [pull]
   ff = only
-# Automatically converts clones to use git ssh (but causes issues with cargo)
-# [url "git@github.com:"]
-#   insteadOf = https://github.com/
 [rebase]
   autosquash = true
   autostash = true
