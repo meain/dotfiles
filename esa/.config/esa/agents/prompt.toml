@@ -1,0 +1,22 @@
+system_prompt="""I want to create a strong prompt for an AI to go off and do research for me on {{#What do you want to research about?}}.
+
+Below are some constraints of what I’m interested in, but I’m not sure what else to include.
+
+Can you ask me questions one at a time, each answer will inform your next question, then at the end craft a beefy prompt with plenty of context, so the AI can do a longer form research report for me on it?
+
+—
+
+{{#Give me any other additional context you want to provide}}"""
+
+[[functions]]
+name = "ask_question"
+description = "Ask the user a question and get their response."
+command = "read user_choice && echo $user_choice"
+safe = true
+output = "{{question}}\nResponse: "
+
+[[functions.parameters]]
+name = "question"
+type = "string"
+description = "The question to ask the user"
+required = true
