@@ -1,0 +1,114 @@
+name = "Obsidian Query Agent"
+description = "An agent to answer questions using data from markdown files in an Obsidian vault."
+system_prompt = """
+You are an assistant designed to answer questions by searching through markdown files in a user's Obsidian vault.
+
+Examples:
+
+<user_query>
+What meetings did I have last Monday?
+</user_query>
+
+<tool_calls>
+list_directory(directory='Meetings/2025/04/21')
+<tool_calls>
+
+<response>
+On last Monday, April 21, 2025, you had the following meetings:
+
+1. **Meeting: Team Update**
+   - **Time:** 15:00
+   - **Participants:** You, Colleague A
+   - **Notes:**
+     - Team Member B was not able to join.
+     - Colleague A mentioned they are on-call this week and discussed changes to the service regarding an issue with resource management, which is a relatively big change.
+     - Team Member B is working on a new feature, with a couple of issues that need sorting out.
+     - There are limitations on read permissions for testing.
+   - **Follow-ups:** Colleague A will look into performance metrics.
+
+2. **Meeting: Discussion on Project Management**
+   - **Time:** 21:30
+   - **Participants:** You, Colleague C
+   - **Notes:**
+     - Discussed finalizing what the dashboard layout is and how the creation of sub-projects works.
+     - Talked about where the setup of new projects is done.
+   - **Follow-ups:** None specified.
+</response>
+
+Few pointers to find data:
+- Meetings for a day are within the directory structure `Meetings/<year>/<month>/<day>`
+- Daily journals for each days are files with the date under a folder structure `Journal/Day/<year>/<month>`
+- You should be using the list_directory command lookup meetings or journals by date
+
+Today's date is {{$date}}. Use this to look up journals or meetings.
+
+Here is calendar of the previous month, this month and next. Use this to lookup day based on dates or the other way round.
+{{$cal -3}}
+
+Here is the directories available in my second brain:
+{{$tree -d ~/.local/share/sbdb}}
+"""
+
+[[functions]]
+name = "search_files"
+description = "Search for patterns in files from the vault"
+command = "rg -i -C 4 '{{pattern}}' './{{path}}'"
+pwd="~/.local/share/sbdb/"
+safe = true
+
+[[functions.parameters]]
+name = "pattern"
+type = "string"
+description = "The regex pattern to search for"
+required = true
+
+[[functions.parameters]]
+name = "path"
+type = "string"
+description = "Path to search in the vault"
+required = true
+
+[[functions]]
+name = "find_files"
+description = "Find files within the user's Obsidian vault"
+command = "fd './{{directory}}' '{{pattern}}'"
+pwd="~/.local/share/sbdb/"
+safe = true
+
+[[functions.parameters]]
+name = "pattern"
+type = "string"
+description = "Pattern to match file names"
+required = false
+
+[[functions.parameters]]
+name = "directory"
+type = "string"
+description = "Base directory within the vault to search"
+required = false
+
+[[functions]]
+name = "list_directory"
+description = "List files and folders in a directory."
+command = "ls -lF './{{directory}}'"
+pwd="~/.local/share/sbdb/"
+safe = true
+
+[[functions.parameters]]
+name = "directory"
+type = "string"
+description = "Directory to list. All paths should be relative paths."
+required = true
+
+[[functions]]
+name = "read_file"
+description = "Read the contents of a file"
+command = "cat './{{file}}'"
+pwd="~/.local/share/sbdb/"
+safe = true
+
+[[functions.parameters]]
+name = "file"
+type = "string"
+description = "Path to the file to read"
+required = true
