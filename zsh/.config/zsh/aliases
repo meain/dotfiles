@@ -72,6 +72,7 @@ alias glp="git lg @{1}.."
 alias gcob='git checkout -b'
 alias gffu='git pull upstream --ff-only $(git rev-parse --abbrev-ref HEAD)'
 alias gffo='git pull origin --ff-only $(git rev-parse --abbrev-ref HEAD)'
+alias ,gcl="git clone --recurse-submodules"
 
 # jj
 alias jjj='jj new'

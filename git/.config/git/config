@@ -6,7 +6,7 @@
   name = Abin Simon
   email = mail@meain.io
   signingkey = B2BBAEE6203686675A9288737E2E3C7B32C8E368
-[Alias]
+[alias]
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --branches
 
   st = status -sb -uno --ignore-submodules=untracked
@@ -78,3 +78,9 @@
   conflictstyle = zdiff3
 [rerere]
   enabled = true
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+[url "git@github.com:"]
+	insteadOf = "gh:"
+[url "git@github.com:meain/"]
+	insteadOf = "meain:"
