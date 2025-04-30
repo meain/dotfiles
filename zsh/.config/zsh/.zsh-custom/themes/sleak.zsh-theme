@@ -1,3 +1,4 @@
+#!/bin/sh
 # SLEEK ZSH Theme
 
 PROMPT='

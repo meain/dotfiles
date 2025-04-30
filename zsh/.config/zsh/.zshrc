@@ -48,7 +48,7 @@ ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 ZSH_AUTOSUGGEST_USE_ASYNC="true"
 
 # sourcing plugins & themes
-source "$ZDOTDIR/.zsh-custom/themes/snipe.zsh-theme"
+source "$ZDOTDIR/.zsh-custom/themes/multi.zsh-theme"
 source "$ZDOTDIR/.zsh-custom/plugins/z/z.sh"
 source "$ZDOTDIR/.zsh-custom/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh"
 source "$ZDOTDIR/.zsh-custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh"

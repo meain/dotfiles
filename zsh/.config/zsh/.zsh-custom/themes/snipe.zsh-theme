@@ -56,6 +56,8 @@ function _git_pushable() {
     git rev-list --count "origin/$(git rev-parse --abbrev-ref HEAD 2>/dev/null).." | sed 's/[1-9][0-9]*/ ↯/;s/[0-9]//'
   fi
 }
+
+# TODO: Use https://github.com/jj-vcs/jj/wiki/Shell-Prompt
 _vcs_info_wrapper() {
   vcs_info
   if echo "${vcs_info_msg_0_}" | grep -qE 'jj/keep'; then
