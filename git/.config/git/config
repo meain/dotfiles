@@ -38,6 +38,8 @@
 [init]
   templatedir = ~/.config/git/.git_template
   defaultBranch = master
+[interactive]
+  singlekey = true
 [branch]
   sort = -committerdate
 [tag]
