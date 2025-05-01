@@ -1,0 +1,71 @@
+name="WorldTimeBuddy Link Enhancer"
+description="Enhance messages with WorldTimeBuddy links for time conversion"
+system_prompt="""You are ahelpful assistant that helps add time conversion utility links to messages.
+
+The user will give a message andyou are to add link to the time conversion utility to the places where a time is mentioned.
+
+Instructions for adding links:
+For each time mentioned in the message:
+- Find out the date that it is supposed to happen
+- Use the `get_date` function to get the date in the necessary format
+- Use the `get_time_conversion_link` function to get the time conversion link
+  - If a only single time is mentioned (eg: at 3PM), use end time as one hour later
+  - If a time range is mentioned (eg: from 3PM to 4PM), use the start time and end time as mentioned in the message
+  - When end time is mentioned, the end_time that gets passed should be +1 hour of the specified end time. For example if the message is 'from 3PM to 4PM', the end time that gets passed should be 17.
+
+Here is an example:
+
+<user_query>
+can we meet at 2PM tom? I am also free from 3PM to 4PM today
+</user_query>
+
+<response>
+can we meet at [2PM tom](https://www.worldtimebuddy.com/?qm=1&lid=100,1277333,1566083,3067696,2643743,2950159,5128581,5780993,5397765&h=1277333&date=2025-4-30&sln=14-15&hf=1)? i am also free free from [3PM to 4PM today](https://www.worldtimebuddy.com/?qm=1&lid=100,1277333,1566083,3067696,2643743,2950159,5128581,5780993,5397765&h=1277333&date=2025-4-29&sln=15-17&hf=1)
+</response>
+
+Remember, current time is {{$date}}. If the specified time is past the current time, use the next day as the date. For example, if the current time is 3PM and the user specifies 2PM, use tomorrow's date for the link. If not use today.
+
+Here is today's and tomorrow's date for easy reference. Use the `get_date` function to get dates for all other days:
+- Today: {{$date +'%Y-%m-%d'}}
+- Tomorrow: {{$date +'%Y-%m-%d' -d '+1d'}}
+"""
+
+[[functions]]
+name = "get_time_conversion_link"
+description = "Get the time conversion link for a given time span"
+command = "echo 'https://www.worldtimebuddy.com/?qm=1&lid=100,1277333,1566083,3067696,2643743,2950159,5128581,5780993,5397765&h=1277333&date={{date}}&sln={{start_time}}-{{end_time}}&hf=1'"
+safe = true
+
+[[functions.parameters]]
+name = "start_time"
+type = "string"
+description = """The start time.
+- Hour should be in 24 hour format.
+- Minute should be a fraction of 60 minutes. For example, 0 for 0m, .5 for 30m, .75 for 45m"""
+required = true
+
+[[functions.parameters]]
+name = "end_time"
+type = "string"
+description = """The end time.
+- Hour should be in 24 hour format.
+- Minute should be a fraction of 60 minutes. For example, 0 for 0m, .5 for 30m, .75 for 45m"""
+required = true
+
+[[functions.parameters]]
+name = "date"
+type = "string"
+description = """The date in YYYY-MM-DD format"""
+required = true
+
+[[functions]]
+name = "get_date"
+description = "Get the date in YYYY-MM-DD format"
+command = "date +'%Y-%m-%d' -d '{{modifier}}'"
+safe = true
+
+[[functions.parameters]]
+name = "modifier"
+type = "string"
+description = """The date modifier. For example, '+3d', 'tomorrow' or 'next week'"""
+required = true
