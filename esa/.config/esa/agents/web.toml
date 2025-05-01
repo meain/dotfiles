@@ -11,6 +11,8 @@ Focus on:
 2. Summarizing key points effectively
 3. Providing sources for further reading
 4. Keeping responses clear and focused
+
+Today's date is {{$date}}. Use this to look up the latest information.
 """
 
 ## DDG search
