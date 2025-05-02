@@ -3569,11 +3569,17 @@ Pass `CREATE' to create the alternate file if it does not exits."
 (use-package mode-line-idle :ensure t :commands (mode-line-idle))
 (defvar meain/modeline-project-color
   '(:eval
-    (propertize
-     "█" 'font-lock-face
-     (list :foreground
-           ;; TODO: encode worktree information
-           (concat "#" (substring (md5 (or (meain/project-name) "")) 0 6))))))
+    (let* ((project-name (or (meain/project-name) ""))
+           (hex-color (concat "#" (substring (md5 project-name) 0 6)))
+           (rgb (color-name-to-rgb hex-color))
+           (hsl (apply #'color-rgb-to-hsl rgb))
+           (new-sat (min 0.3 (/ (nth 1 hsl) 2))) ; deccrease saturation
+           (new-light (min 0.8 (* (nth 2 hsl) 2))) ; increase lightness
+           (new-rgb (apply #'color-hsl-to-rgb (list (nth 0 hsl) new-sat new-light)))
+           (new-hex (apply #'color-rgb-to-hex new-rgb)))
+      ;; TODO: encode vcs worktree information
+      (propertize (format " %s " project-name) ;; Alt: use █ with foreground color
+                  'font-lock-face (list :background new-hex)))))
 (defvar meain/modeline-filename
   '(:eval (list (if (eq buffer-file-name nil) ""
                   (concat (file-name-nondirectory
