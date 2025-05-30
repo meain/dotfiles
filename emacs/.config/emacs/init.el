@@ -3149,11 +3149,6 @@ For optional NO-CACHE, use caching by default."
   :init
   (global-set-key (kbd "M-f i j") 'gptel-quick))
 
-(use-package gptel-aibo
-  :commands (gptel-aibo gptel-aibo-summon)
-  :defer t
-  :ensure (:host github :repo "dolmens/gptel-aibo"))
-
 (use-package llm :ensure t)
 (use-package yap
   :load-path "/Users/meain/dev/src/yap"
