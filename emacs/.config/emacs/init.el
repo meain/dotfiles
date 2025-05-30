@@ -591,7 +591,7 @@ Pass ORIGINAL and ALTERNATE options."
   :after evil-leader
   :defer t
   :config
-  (evil-leader/set-key "a f" 'other-frame))
+  (global-set-key (kbd "M-o") 'other-frame))
 
 (use-package emacs
   :after evil
@@ -1772,7 +1772,6 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
   ;; (global-set-key (kbd "M-f <right>") 'tab-bar-history-forward)
 
   (global-set-key (kbd "M-f ,") 'tab-bar-rename-tab)
-  (global-set-key (kbd "M-o") 'meain/switch-tab-dwim)
   (evil-leader/set-key "t" 'meain/switch-tab-dwim)
   (evil-leader/set-key "T" 'meain/create-or-delete-tab)
   (evil-leader/set-key "C"
