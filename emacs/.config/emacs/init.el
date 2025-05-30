@@ -3305,10 +3305,17 @@ PROMPT-TYPE specifies the type of prompt to use ('rewrite or 'prompt)."
   (define-key evil-visual-state-map (kbd "<SPC> r r") 'read-aloud-this)
   (define-key evil-visual-state-map (kbd "<SPC> r s") 'read-aloud-stop)
   :config
+  (setq meain/read-aloud-speed "250")
+  (defun meain/set-read-aloud-speed ()
+    "Set the speed of read-aloud."
+    (interactive)
+    (let ((speed (completing-read "Speed: " '("0.5" "1" "1.5" "2" "2.5" "3"))))
+      (setq meain/read-aloud-speed (number-to-string (floor (* (string-to-number speed) 100))))))
+
   (setq read-aloud-engine "macos")
   (setq read-aloud-engines
         '("custom" (cmd ",speak" args nil)
-          "macos" (cmd "/usr/bin/say" args ("-r" "250")))))
+          "macos" (cmd "/usr/bin/say" args ("-r" meain/read-aloud-speed)))))
 
 ;; Bookmarks
 (use-package bookmark
