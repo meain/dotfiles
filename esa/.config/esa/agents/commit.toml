@@ -18,10 +18,11 @@ Keep in mind:
 
 Here are a few examples of commit messages in this repo:
 
-{{$git log --author="$(git config user.name)" --pretty=format:'<example>%n%s%n%n%b%n</example>%n' | sed 's|(#[0-9]*)$||'}}
+{{$git log -10 --author="$(git config user.name)" --pretty=format:'<example>%n%s%n%n%b%n</example>%n' | sed 's|(#[0-9]*)$||'}}
 """
 
 initial_message = "Give me a commit message"
+default_model = "openai/gpt-4.1-nano"
 
 [[functions]]
 name = "read_file"
