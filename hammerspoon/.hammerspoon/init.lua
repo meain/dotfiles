@@ -39,15 +39,23 @@ hs.alert.defaultStyle.fillColor = { white = 0, alpha = 0.95 }
 
 function bindFocus(key, app, id)
     hs.hotkey.bind(fkey, key, function()
-        if id then
-            local appInstance = hs.application.get(app)
-            if appInstance then
-                appInstance:activate(true) -- Bring all windows of the app to focus
+        local appInstance = hs.application.get(app)
+        if appInstance then
+            -- Check if the app is already focused
+            if appInstance:isFrontmost() then
+                -- Focus on another window of the same app
+                local windows = appInstance:allWindows()
+                for _, window in ipairs(windows) do
+                    if not window:isMinimized() and window:isVisible() and window:id() ~= hs.window.frontmostWindow():id() then
+                        window:focus()
+                        return
+                    end
+                end
             else
-                hs.application.launchOrFocusByBundleID(app)
+                appInstance:activate(true) -- Bring all windows of the app to focus
             end
         else
-            hs.application.launchOrFocus(app)
+            hs.application.launchOrFocusByBundleID(app)
         end
 
         utils.moveMouseToCurrentWindowScreen()
@@ -56,7 +64,7 @@ end
 
 -- quick focus
 -- bindFocus("o", "/opt/homebrew/opt/emacs-mac/Emacs.app")
-bindFocus("k", "/Applications/Firefox.app")
+bindFocus("k", firefox, true)
 bindFocus("s", slack, true)
 bindFocus("l", teams, true)
 bindFocus("h", notesApp, true)
@@ -177,7 +185,7 @@ end
 
 hs.hotkey.bind(fkey, "n", noteTaker)
 hs.hotkey.bind(fkey, "b", function () centerMode(0.6, 0.6) end)
-hs.hotkey.bind(fkey, "g", function () centerMode(0.8, 0.7) end)
+hs.hotkey.bind(fkey, "g", function () centerMode(0.9, 0.9) end)
 hs.hotkey.bind(fkey, "a", mainMode)
 hs.hotkey.bind(fkey, "d", sideMode)
 
