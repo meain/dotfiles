@@ -11,58 +11,59 @@ if ! echo "$url" | grep -qE '^https?://'; then
 fi
 
 get_title() {
-    # https://github.com/ericchiang/pup/issues/8#issuecomment-66903085
     curl -s "$1" | pup --charset utf-8 --plain 'head title text{}'
 }
 
-if echo "$url" | grep -qE '^https://github.com/[^/]*/[^/]*/issues'; then
-    printf "%s" "$url" | sed "s|https://github.com/\([^/]*/[^/]*\)/issues/\([0-9]*\)|[\1#\2]($url)|"
-elif echo "$url" | grep -qE '^https://github.com/[^/]*/[^/]*/pull'; then
-    printf "%s" "$url" | sed "s|https://github.com/\([^/]*/[^/]*\)/pull/\([0-9]*\)|[\1#\2]($url)|"
-elif echo "$url" | grep -qE '^https://github.com/[^/]*/[^/]*/commit'; then
-    printf "%s" "$url" | sed "s|https://github.com/\([^/]*/[^/]*\)/commit/\([0-9a-z]\{7\}\).*|[\1\@\2]($url)|"
-elif echo "$url" | grep -qE '^https://github.com/[^/]*/[^/]*/actions/runs'; then
-    printf "%s" "$url" | sed "s|https://github.com/\([^/]*/[^/]*\)/actions/runs/\([0-9]*\)|[\1:\2]($url)|"
-elif echo "$url" | grep -qE '^https://github.com/[^/]*/[^/]*/blob'; then
-    printf "%s" "$url" | sed "s|https://github.com/\([^/]*/[^/]*\)/blob/\([^/]*\)/.*/\(.*\)|[\1:\3]($url)|"
-elif echo "$url" | grep -qE '^https://github.com/[^/]*/[^/]*/?$'; then
-    printf "%s" "$url" | sed "s|https://github.com/\([^/]*/[^/$]*\)|[\1]($url)|"
+format_github_url() {
+    url="$1"
+    pattern="$2"
+    template="$3"
+
+    if echo "$url" | grep -q '^https://github.com/Veeam-VDC/'; then
+        printf "%s" "$url" | sed "s|https://github.com/Veeam-VDC/\([^/]*\)$pattern|$template|"
+    else
+        printf "%s" "$url" | sed "s|https://github.com/\([^/]*/[^/]*\)$pattern|$template|"
+    fi
+}
+
+output=""
+if echo "$url" | grep -qE '^https://github.com/[^/]*/[^/]*'; then
+    if echo "$url" | grep -q '/issues/[0-9]*$'; then
+        output=$(format_github_url "$url" "/issues/\([0-9]*\)" "[\1#\2]($url)")
+    elif echo "$url" | grep -q '/pull/[0-9]*$'; then
+        output=$(format_github_url "$url" "/pull/\([0-9]*\)" "[\1#\2]($url)")
+    elif echo "$url" | grep -q '/commit/'; then
+        output=$(format_github_url "$url" "/commit/\([0-9a-z]\{7\}\).*" "[\1@\2]($url)")
+    elif echo "$url" | grep -q '/actions/runs/[0-9]*$'; then
+        output=$(format_github_url "$url" "/actions/runs/\([0-9]*\)" "[\1:\2]($url)")
+    elif echo "$url" | grep -q '/blob/'; then
+        output=$(format_github_url "$url" "/blob/[^/]*/\(.*\)" "[\1:\3]($url)")
+    else
+        output=$(format_github_url "$url" "" "[\1]($url)")
+    fi
 elif echo "$url" | grep -qE '^https://linear.app/[^/]*/issue/[^/]*/[^/]*$'; then
-    printf "%s" "$url" | sed "s|https://linear.app/\([^/]*\)/issue/\([^/]*\)/\([^/]*\)|[\2]($url)|"
-elif echo "$url" | grep -qE '^https://app.incident.io/[^/]*/incidents/[0-9]*'; then
-    printf "%s" "$url" | sed "s|https://app.incident.io/\([^/]*\)/incidents/\([0-9]*\)|[incident #\2]($url)|"
+    output=$(printf "%s" "$url" | sed "s|https://linear.app/[^/]*/issue/\([^/]*\)/[^/]*$|[\1]($url)|")
+elif echo "$url" | grep -qE '^https://app.incident.io/[^/]*/incidents/[0-9]*$'; then
+    output=$(printf "%s" "$url" | sed "s|.*/incidents/\([0-9]*\)$|[incident #\1]($url)|")
 elif echo "$url" | grep -qE '^https://.*\.atlassian\.net/browse/.*$'; then
-    url="$(echo "$url" | sed "s|\?atlOrigin=[a-zA-Z0-9]*$||")"
-    printf "%s" "$url" | sed "s|https://.*/browse/\([^/]*\)|[\1]($url)|"
+    url=$(printf "%s" "$url" | sed "s|\?atlOrigin=[a-zA-Z0-9]*$||")
+    output=$(printf "%s" "$url" | sed "s|.*/browse/\([^/]*\)$|[\1]($url)|")
 elif echo "$url" | grep -qE '^https://teams.microsoft.com'; then
-    # Using sed here was causing issues
-    team="$(echo "$url" | grep -o 'teamName=[^&]*' | cut -d= -f2)"
-    channel="$(echo "$url" | grep -o 'channelName=[^&]*' | cut -d= -f2)"
-    printf "[%s](%s)" "$team#$channel" "$url"
+    team=$(printf "%s" "$url" | grep -o 'teamName=[^&]*' | cut -d= -f2)
+    channel=$(printf "%s" "$url" | grep -o 'channelName=[^&]*' | cut -d= -f2)
+    output="[$team#$channel]($url)"
 else
-    # TODO: Make this generic work even if path is changed
-    # Using FF based way to get the title makes it faster as well as
-    # let us fetch names of pages which will need authentication to
-    # get the names.
-    title="$(dejsonlz4 "$HOME/Library/Application Support/Firefox/Profiles/68pk86vd.default-release/sessionstore-backups/recovery.jsonlz4" |
+    title=$(dejsonlz4 "$HOME/Library/Application Support/Firefox/Profiles/68pk86vd.default-release/sessionstore-backups/recovery.jsonlz4" |
         jq -r '.windows[].tabs[].entries[] | "\(.url) \(.title)"' |
-        grep "$url" | head -n1 | cut -d' ' -f2-)"
+        grep "$url" | head -n1 | cut -d' ' -f2-)
 
-    if [ -n "$title" ]; then
-        if echo "$title" | grep -q "^http"; then
-            # Some tabs end up reporting title as the url
-            title=""
-        fi
-    fi
-
-    if [ -z "$title" ]; then
-        title="$(get_title "$url" | sed 's| - YouTube$||')"
-    fi
-
+    [ -n "$title" ] && echo "$title" | grep -q "^http" && title=""
+    [ -z "$title" ] && title=$(get_title "$url" | sed 's| - YouTube$||')
     [ -z "$title" ] && title="$url"
-    printf "[%s](%s)" "$title" "$url"
-fi | tee /tmp/linkify | mdclip
+    output="[$title]($url)"
+fi
 
-title="$(cat /tmp/linkify | sed 's|.*\[\(.*\)\](.*)|\1|')"
+printf "%s" "$output" | tee /tmp/linkify | mdclip
+title=$(sed 's|.*\[\(.*\)\](.*)|\1|' /tmp/linkify)
 notify "$title" "$url"
 cat /tmp/linkify
