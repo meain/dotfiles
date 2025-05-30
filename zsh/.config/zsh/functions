@@ -12,7 +12,7 @@ tmp() {
         cd $(ls -t | fzf --preview 'ls -A {}') &&
         return 0
     r="/tmp/workspaces/$(xxd -l3 -ps /dev/urandom)"
-    mkdir -p "$r" && pushd "$r"
+    mkdir -p "$r" && cd "$r"
     git init
 }
 
@@ -33,7 +33,7 @@ rcd() {
 
 # Go to root of project
 r() {
-    pushd "$(git rev-parse --show-toplevel 2>/dev/null)" || return 1
+    cd "$(git rev-parse --show-toplevel 2>/dev/null)" || return 1
 }
 
 take() {
@@ -86,7 +86,7 @@ q() {
 m() {
     r >/dev/null
 
-    trap popd>/dev/null 1 2 3 6
+    trap popd 1 2 3 6 >/dev/null
 
     if [ ! -d .mscripts ]; then
         echo "Unable to find .mscripts" && return 1
@@ -105,7 +105,7 @@ m() {
 
 mm() {
     r >/dev/null
-    trap popd>/dev/null 1 2 3 6
+    trap popd 1 2 3 6 >/dev/null
 
     if [ ! -f .mscripts/default ]; then
         echo "Unable to find default mscript" && return 1
@@ -201,20 +201,20 @@ venv() {
 # make clear not delete scrollback
 # https://superuser.com/a/1667623/328228
 if echo "$OSTYPE" | grep -qv darwin; then
-clear() (
-    if [ "$#" -ne 0 ]; then
-        command clear "$@"
-        exit
-    fi
-    h="$(tput lines 2>/dev/null)"
-    if [ "$?" -eq 0 ]; then
-        until [ "$h" -le 1 ]; do
-            printf '\n'
-            h=$((h - 1))
-        done
-    fi
-    command clear -x
-)
+    clear() (
+        if [ "$#" -ne 0 ]; then
+            command clear "$@"
+            exit
+        fi
+        h="$(tput lines 2>/dev/null)"
+        if [ "$?" -eq 0 ]; then
+            until [ "$h" -le 1 ]; do
+                printf '\n'
+                h=$((h - 1))
+            done
+        fi
+        command clear -x
+    )
 fi
 
 hashdir() {
