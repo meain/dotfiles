@@ -61,8 +61,8 @@ in
     pkgs.notmuch
     pkgs.isync # mail synchronize with upstream
     pkgs.htop # process monitor
-    pkgs.mpc_cli # remote for mpd
-    spkgs.mpd # music player
+    # pkgs.mpc_cli # remote for mpd
+    # spkgs.mpd # music player
     pkgs.pandoc # convert document between different formats
     # pkgs.xsv # view/manage csv from terminal
     pkgs.parallel # exec things in parallel
@@ -99,7 +99,8 @@ in
     # ppkgs.logseq-doctor # logseq utils
     pkgs.emacs-lsp-booster # lsp json translation proxy
     pkgs.jujutsu # better git wrapper
-    spkgs.lazyjj # tui for jj
+    pkgs.lazyjj # tui for jj
+    # pkgs.comby # code modification
 
     # aspell dicts
     pkgs.aspellDicts.en
@@ -299,7 +300,7 @@ in
     # pkgs.comma # run literally anything
     ppkgs.gloc # run stuff in all git repos
     pkgs.dejsonlz4 # decode ff session data
-    ppkgs.tojson # convert yaml/toml/json
+    # ppkgs.tojson # convert yaml/toml/json
     # pkgs.jo # create json
     pkgs.jiq # interactive jq
     pkgs.jless # json viewer
@@ -325,8 +326,8 @@ in
     # pkgs.iamb # matrix chat client
     # pkgs.fabric-ai # llm interaction with predefined prompts
     pkgs.aichat # a better aichat
-    # ppkgs.aider # work on full codebase
-    pkgs.aider-chat.withPlaywright # work on full codebase
+    # ppkgs.aider-chat # work on full codebase
+    # pkgs.aider-chat # work on full codebase
     pkgs.openai-whisper-cpp # speech to text
     # pkgs.open-webui # webui for llms
     pkgs.feh # image viewer (for desktop background)
@@ -337,8 +338,9 @@ in
     pkgs.markdown-oxide # PKM via LSP
     pkgs.poppler_utils # pdf utils
     pkgs.jira-cli-go # jira cli
-    ppkgs.prr # local pr review
+    # ppkgs.prr # local pr review
     pkgs.ddgr # ddg search from terminal
+    ppkgs.probe # code search
 
     pkgs.nur.repos.rycee.mozilla-addons-to-nix # package firefox addons
   ]
