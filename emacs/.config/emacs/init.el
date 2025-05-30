@@ -3574,9 +3574,7 @@ Pass `CREATE' to create the alternate file if it does not exits."
            (hex-color (concat "#" (substring (md5 project-name) 0 6)))
            (rgb (color-name-to-rgb hex-color))
            (hsl (apply #'color-rgb-to-hsl rgb))
-           (new-sat (min 0.3 (/ (nth 1 hsl) 2))) ; deccrease saturation
-           (new-light (min 0.8 (* (nth 2 hsl) 2))) ; increase lightness
-           (new-rgb (apply #'color-hsl-to-rgb (list (nth 0 hsl) new-sat new-light)))
+           (new-rgb (apply #'color-hsl-to-rgb (list (nth 0 hsl) 0.13 0.7)))
            (new-hex (apply #'color-rgb-to-hex new-rgb)))
       ;; TODO: encode vcs worktree information
       (propertize (format " %s " project-name) ;; Alt: use █ with foreground color
