@@ -1643,7 +1643,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
   (setq ediff-split-window-function 'split-window-horizontally))
 
 (use-package smerge-mode
-  :after (evil evil-leader ediff)
+  :after (evil evil-leader)
   :config
   ;; Builtin smerge mode function has some issues (override it)
   ;; TODO: Submit bug to bug-gnu-emacs once verified
