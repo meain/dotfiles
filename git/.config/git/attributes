@@ -2,3 +2,4 @@
 *.jpg  diff=spaceman-diff
 *.jpeg diff=spaceman-diff
 *.gif  diff=spaceman-diff
+*.el diff=elisp

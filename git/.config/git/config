@@ -34,6 +34,9 @@
   required = true
   clean = git-lfs clean %f
   smudge = git-lfs smudge %f
+[diff "elisp"]
+  # https://www.reddit.com/r/emacs/comments/1kficpq/comment/mqwxaiy
+  xfuncname = "^(((;;;+ )|\\(use-package|\\([^[:space:]]*def[^[:space:]]+[[:space:]]+([^()[:space:]]+)).*)$"
 [credential]
   helper = cache
 [init]
