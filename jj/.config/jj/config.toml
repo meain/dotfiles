@@ -6,6 +6,7 @@ email = "mail@meain.io"
 default-command = "l"
 pager = ["sh", "-c", "diff-so-fancy | less -RFX"]
 conflict-marker-style = "git"
+# editor = "emacsclient"
 diff-editor = ":builtin"
 # log-synthetic-elided-nodes = true # NOTE: what is this?
 # graph.style = "square"
