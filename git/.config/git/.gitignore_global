@@ -22,6 +22,7 @@ run-dev
 .vimruncmd
 .todo.md
 .mscripts
+.mdocs
 .direnv
 resources
 .tint.toml
@@ -29,6 +30,8 @@ resources
 .referdb
 .llmrules
 .llmdocs
+mnotes.org
+mwork
 
 # programming
 .mypy_cache
