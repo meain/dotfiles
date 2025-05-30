@@ -22,24 +22,9 @@ if [ ! -f "$CACHE_DIR/$modelhigh.onnx" ]; then
     download_model "$(echo "$modellow" | cut -d'-' -f1)" "$(echo "$modellow" | cut -d'-' -f2)" "$(echo "$modellow" | cut -d'-' -f3)"
 fi
 
-if [ -z "$1" ]; then
-    input="$(cat /dev/stdin)"
-    mkdir -p /tmp/piper-stuff
-    # piper outputs filenames for each line which we can consume and playback
-    echo "$input" | sed 's/\. /\n/g' | piper -m "$CACHE_DIR/$modelhigh.onnx" --output-dir /tmp/piper-stuff |
-        xargs -I{} mpv --speed=2.5 {} --no-resume-playback
-else
-    prev=""
-    clip="Starting the engine."
-    while sleep 0.3; do
-        if [ "$clip" != "$prev" ] && [ "${#clip}" -ge 10 ]; then
-            echo "$clip" | piper -m "$CACHE_DIR/$modellow.onnx" -f /tmp/piper.wav
-            pkill mpv || true # for set -e
-            mpv --speed=2.5 /tmp/piper.wav --no-resume-playback &
-            prev="$clip"
-        fi
-
-        # clip="$(xclip -selection primary -o -)"
-        clip="$(pbpaste)"
-    done
-fi
+input="$(cat /dev/stdin)"
+mkdir -p /tmp/piper-stuff
+# piper outputs filenames for each line which we can consume and playback
+echo "$input" | sed 's/\. /\n/g' | tee /dev/stderr |
+    piper -m "$CACHE_DIR/$modelhigh.onnx" --output_dir /tmp/piper-stuff 2>/tmp/piper-logs |
+    xargs -I{} afplay -r "${1:-2.5}" {}
