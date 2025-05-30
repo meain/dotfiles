@@ -39,7 +39,7 @@ alias lj='lazyjj'
 alias mk=',mk'
 alias asi=',voice-assistant'
 alias lll='aichat --model ollama:granite3-dense:2b'
-alias tk=',tweak && pbpaste|mdclip'
+alias tk='fn(){,tweak "$*" && pbpaste | mdclip};fn'
 
 # ledger
 alias ledger='ledger -f ~/.local/share/ledger/master.ledger --strict'
@@ -75,6 +75,7 @@ alias gffo='git pull origin --ff-only $(git rev-parse --abbrev-ref HEAD)'
 alias ,gcl="git clone --recurse-submodules"
 
 # jj
+alias js="jj st"
 alias jjj='jj new'
 alias jd='jj diff'
 alias jpu='jj git push --allow-new'
