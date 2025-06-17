@@ -87,6 +87,7 @@ alias jbm=',jj-bookmark-move'
 alias je='jj edit'
 alias jab='jj abandon'
 alias jj-squash-multi="jj log | fzf -m | cut -d' ' -f3 | xargs -n1 jj squash -r"
+alias jwu='jj workspace update-stale'
 
 # utils
 alias ppid='ps -o ppid= -p'
