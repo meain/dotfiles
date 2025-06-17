@@ -12,6 +12,7 @@
     let
       configuration = { pkgs, ... }: {
         system.defaults = import ./system.nix;
+        system.primaryUser = "meain";
 
         nix.settings.experimental-features = "nix-command flakes";
 
