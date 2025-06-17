@@ -8,12 +8,9 @@ pager = ["sh", "-c", "diff-so-fancy | less -RFX"]
 conflict-marker-style = "git"
 # editor = "emacsclient"
 diff-editor = ":builtin"
+diff-formatter = ":git"
 # log-synthetic-elided-nodes = true # NOTE: what is this?
 # graph.style = "square"
-
-[ui.diff]
-format = "git"
-# tool = ["difft", "--color=always", "$left", "$right"]
 
 [colors]
 "diff removed token" = { underline = false }
@@ -91,3 +88,5 @@ highlight-color = "#f1f1f1"
 
 [git]
 push-bookmark-prefix = "meain/"
+write-change-id-header = true
+
