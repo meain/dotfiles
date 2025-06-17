@@ -52,3 +52,10 @@ default.rest
 
 # aider
 .aider.*
+
+# roo
+.roorules
+.roo
+
+# copilot
+.github/copilot-instructions.md
