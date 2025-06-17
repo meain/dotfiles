@@ -3045,17 +3045,29 @@ Called with a PREFIX, resets the context buffer list before opening"
   ;; :ensure (:host github :repo "karthink/gptel")
   :commands (gptel gptel-send gptel-rewrite-menu)
   :config
+  ;; Set default mdoels
   (setq gptel-model 'gpt-4o-mini)
+  (setq gptel-backend (gptel-make-openai "Github Models"
+                        :host "models.inference.ai.azure.com"
+                        :endpoint "/chat/completions?api-version=2024-05-01-preview"
+                        :stream t
+                        :key github-models-api-key
+                        :models '(gpt-4o gpt-4o-mini)))
+
+  ;; Some configuration
   (setq gptel-api-key openai-api-key)
   (setq gptel-expert-commands t)
   (setq gptel-use-tools t)
+  (setq gptel-include-tool-results t)
+  (setq gptel-default-mode 'org-mode)
+  (setq gptel-prompt-prefix-alist '((markdown-mode . "🗣️ ") (org-mode . "🗣️ ") (text-mode . "# ")))
+  (setq gptel-response-prefix-alist '((markdown-mode . "🤖 ") (org-mode . "🤖 ") (text-mode . "$ ")))
 
-  (gptel-make-openai "Github Models"
-    :host "models.inference.ai.azure.com"
-    :endpoint "/chat/completions?api-version=2024-05-01-preview"
-    :stream t
-    :key github-models-api-key
-    :models '(gpt-4o gpt-4o-mini))
+  ;; Hooks to update behaviour
+  (add-hook 'gptel-post-response-functions 'gptel-end-of-response)
+  (add-hook 'gptel-mode-hook (lambda ()
+                               (toggle-truncate-lines nil)
+                               (setq-local show-trailing-whitespace nil)))
 
   (gptel-make-openai "Groq"
     :host "api.groq.com"
@@ -3073,7 +3085,6 @@ Called with a PREFIX, resets the context buffer list before opening"
     :stream t
     :key anthropic-api-key)
 
-  :init
   (defun gptel-context-clear-all ()
     (interactive)
     (gptel-add -1))
@@ -3115,25 +3126,40 @@ For optional NO-CACHE, use caching by default."
   ;; https://github.com/karthink/gptel/wiki/Defining-custom-gptel-commands
   (defvar gptel-lookup--history nil)
   (defun gptel-lookup (prompt)
-    "Ask ChatGPT for a response to PROMPT."
-    (interactive (list (read-string "Ask ChatGPT: " nil gptel-lookup--history)))
+    "Ask an for a response to PROMPT."
+    (interactive (list (read-string "Q: " nil gptel-lookup--history)))
     (when (string= prompt "") (user-error "A prompt is required"))
     (gptel-request
-     prompt
-     :callback
-     (lambda (response info)
-       (if (not response)
-           (message "gptel-lookup failed with message: %s" (plist-get info :status))
-         (with-current-buffer (get-buffer-create "*gptel-lookup*")
-           (let ((inhibit-read-only t))
-             (erase-buffer)
-             (insert response))
-           (special-mode)
-           (display-buffer (current-buffer)
-                           `((display-buffer-in-side-window)
-                             (side . bottom)
-                             (window-height . ,#'fit-window-to-buffer))))))))
+        prompt
+      :callback
+      (lambda (response info)
+        (if (not response)
+            (message "gptel-lookup failed with message: %s" (plist-get info :status))
+          (with-current-buffer (get-buffer-create "*gptel-lookup*")
+            (let ((inhibit-read-only t))
+              (erase-buffer)
+              (insert response))
+            (special-mode)
+            (display-buffer (current-buffer)
+                            `((display-buffer-in-side-window)
+                              (side . bottom)
+                              (window-height . ,#'fit-window-to-buffer))))))))
 
+  ;; Tools
+  (gptel-make-tool
+   :name "read_buffer"
+   :function (lambda (buffer)
+               (unless (buffer-live-p (get-buffer buffer))
+                 (error "error: buffer %s is not live." buffer))
+               (with-current-buffer  buffer
+                 (buffer-substring-no-properties (point-min) (point-max))))
+   :description "return the contents of an emacs buffer"
+   :args (list '(:name "buffer"
+                       :type string
+                       :description "the name of the buffer whose contents are to be retrieved"))
+   :category "emacs")
+
+  :init
   (global-set-key (kbd "M-f i m") 'gptel)
   (global-set-key (kbd "M-f i s") 'gptel-send)
   (global-set-key (kbd "M-f i p") 'gptel-lookup)
