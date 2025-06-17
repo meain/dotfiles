@@ -135,7 +135,7 @@ required = false
 [[functions]]
 name = "find_files_by_name"
 description = "Find a files in the current directory and subdirectories that match the given name."
-command = "fd '{{search_pattern}}'"
+command = "find . -name '{{search_pattern}}'"
 safe = true
 
 [[functions.parameters]]
@@ -147,7 +147,13 @@ required = true
 ## Search for symbols
 [[functions]]
 name = "search_symbols"
-description = "Find symbols (functions/types) in code from the specified directory and subdirectories. Use this if you want to get function names. Works better with single words."
+description = """
+Find symbols (functions/types) in code from the specified directory and subdirectories.
+Use this if you want to get function names. Works better with single words.
+
+This will only tell you where the symbol is and you have to use
+`read_file` to read the file to get the full content.
+"""
 command = ",symbol-search | grep ':{{kind}}:' | grep -i '{{search_pattern}}'"
 pwd="{{directory}}"
 safe = true

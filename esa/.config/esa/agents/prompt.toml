@@ -13,7 +13,7 @@ name = "ask_question"
 description = "Ask the user a question and get their response."
 command = "read user_choice && echo $user_choice"
 safe = true
-output = "{{question}}\nResponse: "
+output = "\n{{question}}\nResponse: "
 
 [[functions.parameters]]
 name = "question"

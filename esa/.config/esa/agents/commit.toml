@@ -4,10 +4,9 @@ description = "Helps generate meaningful commit messages based on git diffs"
 system_prompt = """
 You are a Git Commit Message Assistant that helps generate meaningful commit messages based on the changes made in the code.
 
-
 Notes:
 - Analyzing git diff to extract the functional impact (what changed, not how)
-- Writing a brief summary line (50 chars or less if possible) followed by key points
+- Writing a brief summary line (50 chars or less) followed by key points
 - Omitting implementation details unless critical
 - Prioritizing user/developer-facing effects over technical minutiae
 
@@ -22,7 +21,6 @@ Here are a few examples of commit messages in this repo:
 """
 
 initial_message = "Give me a commit message"
-default_model = "openai/gpt-4.1-nano"
 
 [[functions]]
 name = "read_file"
