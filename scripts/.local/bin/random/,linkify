@@ -37,7 +37,7 @@ if echo "$url" | grep -qE '^https://github.com/[^/]*/[^/]*'; then
     elif echo "$url" | grep -q '/actions/runs/[0-9]*$'; then
         output=$(format_github_url "$url" "/actions/runs/\([0-9]*\)" "[\1:\2]($url)")
     elif echo "$url" | grep -q '/blob/'; then
-        output=$(format_github_url "$url" "/blob/[^/]*/\(.*\)" "[\1:\3]($url)")
+        output=$(format_github_url "$url" "/blob/[^/]*/\(.*\)" "[\1:\2]($url)")
     else
         output=$(format_github_url "$url" "" "[\1]($url)")
     fi
