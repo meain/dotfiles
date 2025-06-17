@@ -12,7 +12,7 @@ INSERT_COLOR="%{$reset_color%}"
 NORMAL_COLOR="%{%F{39}%}"
 
 function dir_from_base() {
-    root="$(git rev-parse --show-toplevel 2>/dev/null | xargs dirname)"
+    root="$(git rev-parse --show-toplevel 2>/dev/null | xargs dirname 2>/dev/null)"
     if [ -n "$root" ]; then
         echo "$(pwd)" | sed "s|$root||;s|^/||"
     else
