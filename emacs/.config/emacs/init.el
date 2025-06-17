@@ -2067,6 +2067,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   (evil-define-key 'normal markdown-mode-map (kbd "g d") 'markdown-do)
   (setq markdown-command "pandoc -t html5")
   (setq markdown-fontify-code-blocks-natively t)
+  (setq-default markdown-hide-urls t) ;; Or call markdown-toggle-url-hiding
 
   ;; When a link is pasted with an active selection, convert to a markdown link
   (defun meain/paste-after-or-create-link (from to)
