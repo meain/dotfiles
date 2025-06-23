@@ -3168,6 +3168,17 @@ For optional NO-CACHE, use caching by default."
   (global-set-key (kbd "M-f i i") 'gptel-menu)
   (global-set-key (kbd "M-f i r") 'gptel-rewrite))
 
+(use-package gptel-prompts
+  :ensure (:host github :repo "jwiegley/gptel-prompts")
+  :after (gptel)
+  :demand t
+  :config
+  (setq gptel-prompts-directory
+        (concat user-emacs-directory "prompts/"))
+  ;; Ensure prompts are updated if prompt files change
+  ;; (gptel-prompts-add-update-watchers)
+  (gptel-prompts-update))
+
 (use-package gptel-quick
   :ensure (:host github :repo "karthink/gptel-quick")
   :commands (gptel-quick)
