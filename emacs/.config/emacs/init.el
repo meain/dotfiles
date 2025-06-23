@@ -3088,6 +3088,7 @@ Called with a PREFIX, resets the context buffer list before opening"
   (defun gptel-context-clear-all ()
     (interactive)
     (gptel-add -1))
+
   (defun gptel-context-add-website (url &optional no-cache)
     "Add content from a website to the GPTel context.
 URL is the website address to fetch content from.
@@ -3105,6 +3106,7 @@ When NO-CACHE is non-nil, force fetching fresh content even if cached."
             (erase-buffer)
             (insert content-without-header)
             (gptel-add))))))
+
   (defun gptel-context-add-shell-command (command &optional cache)
     "Add context to gptel from the output of a shell command.
 If CACHE is non-nil, the output is cached."
@@ -3117,40 +3119,33 @@ If CACHE is non-nil, the output is cached."
           (erase-buffer)
           (insert (shell-command-to-string command))
           (gptel-add)))))
+
   (defun gptel-context-add-website-content (url &optional no-cache)
     "Add context to gptel from the readable content of a website URL.
 For optional NO-CACHE, use caching by default."
     (interactive "sEnter website URL: ")
     (gptel-context-add-shell-command (format "readable %s" url) (not no-cache)))
 
-  ;; https://github.com/karthink/gptel/wiki/Defining-custom-gptel-commands
-  (defvar gptel-lookup--history nil)
-  (defun gptel-lookup (prompt)
-    "Ask an for a response to PROMPT."
-    (interactive (list (read-string "Q: " nil gptel-lookup--history)))
-    (when (string= prompt "") (user-error "A prompt is required"))
-    (gptel-request
-        prompt
-      :callback
-      (lambda (response info)
-        (if (not response)
-            (message "gptel-lookup failed with message: %s" (plist-get info :status))
-          (with-current-buffer (get-buffer-create "*gptel-lookup*")
-            (let ((inhibit-read-only t))
-              (erase-buffer)
-              (insert response))
-            (special-mode)
-            (display-buffer (current-buffer)
-                            `((display-buffer-in-side-window)
-                              (side . bottom)
-                              (window-height . ,#'fit-window-to-buffer))))))))
-
   ;; Tools
+  ;; List buffer
+  (gptel-make-tool
+   :name "list_buffers"
+   :function (lambda ()
+               (mapcar (lambda (buf)
+                         (if (buffer-live-p buf)
+                             (buffer-name buf)
+                           (format "%s [dead]" (buffer-name buf))))
+                       (buffer-list)))
+   :description "return a list of all buffers in the current Emacs instance"
+   :args nil
+   :category "emacs")
+
+  ;; Read buffer
   (gptel-make-tool
    :name "read_buffer"
    :function (lambda (buffer)
                (unless (buffer-live-p (get-buffer buffer))
-                 (error "error: buffer %s is not live." buffer))
+                 (error "error: Buffer %s is not live" buffer))
                (with-current-buffer  buffer
                  (buffer-substring-no-properties (point-min) (point-max))))
    :description "return the contents of an emacs buffer"
@@ -3158,6 +3153,52 @@ For optional NO-CACHE, use caching by default."
                        :type string
                        :description "the name of the buffer whose contents are to be retrieved"))
    :category "emacs")
+
+  ;; Fetch website
+  ;; TODO: make this async
+  (gptel-make-tool
+   :name "fetch_website"
+   :function (lambda (url)
+               (let ((curl-output (shell-command-to-string (format "curl -s %s | html2markdown" url))))
+                 (unless (stringp curl-output)
+                   (error "error: Unable to fetch URL %s" url))
+                 curl-output))
+   :description "fetch the contents of a website and convert it from markdown"
+   :args (list '(:name "url"
+                       :type string
+                       :description "the URL of the website to fetch"))
+   :category "web")
+
+  ;; Search using ddg (ddgr --noua --json '{{query}}')
+  ;; TODO: make this async
+  (gptel-make-tool
+   :name "search_ddg"
+   :function (lambda (query)
+               (let* ((ddgr-output (shell-command-to-string (format "ddgr --noua --json '%s'" query)))
+                      (results (json-read-from-string ddgr-output)))
+                 (mapcar (lambda (result)
+                           (format "%s: %s" (cdr (assoc 'title result))
+                                   (cdr (assoc 'url result))))
+                         results)))
+   :description "search the web using DuckDuckGo and return the results"
+   :args (list '(:name "query"
+                       :type string
+                       :description "the search query to use"))
+   :category "web")
+
+  ;; Perform math (bc <<< 'scale=2; {{expression}}')
+  (gptel-make-tool
+   :name "math"
+   :function (lambda (expression)
+               (let ((bc-output (shell-command-to-string (format "bc <<< 'scale=2; %s'" expression))))
+                 (if (string-match-p "error" bc-output)
+                     (error "error: Invalid math expression")
+                   (string-trim bc-output))))
+   :description "perform a mathematical operation using bc"
+   :args (list '(:name "expression"
+                       :type string
+                       :description "the mathematical expression to evaluate"))
+   :category "general")
 
   :init
   (global-set-key (kbd "M-f i m") 'gptel)
