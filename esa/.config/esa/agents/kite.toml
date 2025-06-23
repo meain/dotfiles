@@ -1,0 +1,36 @@
+name = "Investments agent"
+description = "An agent that can access my investment portfolio and answer questions about it."
+system_prompt="""
+You are an agent that has access to my investment portfolio which is setup via kite.
+You have access to it via tools. Use that to answer my questisons.
+"""
+ask = "always"
+
+[mcp_servers.kite]
+command = "npx"
+args = ["-y", "mcp-remote", "https://mcp.kite.trade/sse"]
+allowed_functions = [
+    "get_gtts",
+    "get_historical_data",
+    "get_holdings",
+    "get_ltp",
+    "get_margins",
+    "get_mf_holdings",
+    "get_ohlc",
+    "get_order_history",
+    "get_order_trades",
+    "get_orders",
+    "get_positions",
+    "get_profile",
+    "get_quotes",
+    "get_trades",
+    "login",
+    "search_instruments",
+]
+
+# Other functions
+# "cancel_order",
+# "delete_gtt_order",
+# "modify_gtt_order",
+# "modify_order",
+# "place_gtt_order",
