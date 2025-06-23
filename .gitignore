@@ -47,3 +47,5 @@ zsh/.config/zsh/.zsh_sessions/
 /emacs/.config/emacs/harpoon/
 /emacs/.config/emacs/remember-notes
 /k9s/.config/k9s/clusters/
+emacs/.config/emacs/forge-database.sqlite
+/emacs/.config/emacs/.org-id-locations
