@@ -872,29 +872,29 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   :config
   (aas-global-mode)
   (aas-set-snippets 'global
-                    ";date" '(tempel (format-time-string "%a %b %d %Y"))
-                    ";time" '(tempel (format-time-string "%H:%M"))
-                    ";file" '(tempel (file-name-nondirectory (buffer-file-name)))
-                    ";path" '(tempel (string-remove-prefix
-                                      (expand-file-name (project-root (project-current)))
-                                      (buffer-file-name))))
+    ";date" '(tempel (format-time-string "%a %b %d %Y"))
+    ";time" '(tempel (format-time-string "%H:%M"))
+    ";file" '(tempel (file-name-nondirectory (buffer-file-name)))
+    ";path" '(tempel (string-remove-prefix
+                      (expand-file-name (project-root (project-current)))
+                      (buffer-file-name))))
   (aas-set-snippets 'emacs-lisp-mode
-                    ";auto" ";;;###autoload"
-                    ";la" '(tempel "(lambda (" p ") " r ")")
-                    ";li" '(tempel "(lambda () (interactive) " r ")")
-                    ";j" '(tempel "(message \"" r "\")"))
+    ";auto" ";;;###autoload"
+    ";la" '(tempel "(lambda (" p ") " r ")")
+    ";li" '(tempel "(lambda () (interactive) " r ")")
+    ";j" '(tempel "(message \"" r "\")"))
   (aas-set-snippets 'sql-mode
-                    ";base" "SELECT * FROM information_schema.tables;")
+    ";base" "SELECT * FROM information_schema.tables;")
   (aas-set-snippets 'js-mode
-                    ";j" '(tempel "console.log(\"" r "\")"))
+    ";j" '(tempel "console.log(\"" r "\")"))
   (aas-set-snippets 'go-ts-mode
-                    "!+" "!="
-                    ";;" ":="
-                    ";j" '(tempel "fmt.Println(\"" r "\")")
-                    ";ap" '(tempel (s slice) " = append(" (s slice) ", " r ")")
-                    ";rr" '(tempel "for _, " p " := range " p "{" n> r> n> "}")
-                    ";ri" '(tempel "for i, " p " := range " p "{" n> r> n> "}")
-                    ";er" '(tempel "if err != nil {" n> r> n> "}")))
+    "!+" "!="
+    ";;" ":="
+    ";j" '(tempel "fmt.Println(\"" r "\")")
+    ";ap" '(tempel (s slice) " = append(" (s slice) ", " r ")")
+    ";rr" '(tempel "for _, " p " := range " p "{" n> r> n> "}")
+    ";ri" '(tempel "for i, " p " := range " p "{" n> r> n> "}")
+    ";er" '(tempel "if err != nil {" n> r> n> "}")))
 
 ;; Templates
 (use-package tempel
@@ -964,99 +964,74 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   :config
   ;; tint lints
   (flymake-quickdef-backend flymake-check-tint
-                            :pre-let ((tint-exec (executable-find "tint")))
-                            :pre-check (unless tint-exec (error "Cannot find tint executable"))
-                            :write-type 'file
-                            :proc-form (list tint-exec "lint" fmqd-temp-file)
-                            :search-regexp "^\\([^:]+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\): \\(.*\\)$"
-                            :prep-diagnostic (let* ((lnum (string-to-number (match-string 2)))
-                                                    (col (string-to-number (match-string 3)))
-                                                    (pos (flymake-diag-region fmqd-source lnum col))
-                                                    (beg (car pos))
-                                                    (end (cdr pos))
-                                                    (msg (format "tint> %s" (match-string 6))))
-                                               (list fmqd-source beg end :warning msg)))
+    :pre-let ((tint-exec (executable-find "tint")))
+    :pre-check (unless tint-exec (error "Cannot find tint executable"))
+    :write-type 'file
+    :proc-form (list tint-exec "lint" fmqd-temp-file)
+    :search-regexp "^\\([^:]+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\): \\(.*\\)$"
+    :prep-diagnostic (let* ((lnum (string-to-number (match-string 2)))
+                            (col (string-to-number (match-string 3)))
+                            (pos (flymake-diag-region fmqd-source lnum col))
+                            (beg (car pos))
+                            (end (cdr pos))
+                            (msg (format "tint> %s" (match-string 6))))
+                       (list fmqd-source beg end :warning msg)))
   (add-hook 'go-ts-mode-hook
             (lambda ()
               (add-hook 'flymake-diagnostic-functions 'flymake-check-tint nil t)))
 
   ;; https://github.com/crate-ci/typos
   (flymake-quickdef-backend flymake-check-typos
-                            :pre-let ((typos-exec (executable-find "typos")))
-                            :pre-check (unless typos-exec (error "Cannot find typos executable"))
-                            :write-type 'file
-                            :proc-form (list typos-exec "--hidden" "--format" "brief" fmqd-temp-file)
-                            :search-regexp "^\\([^:]+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\): \\(.*\\)$"
-                            :prep-diagnostic (let* ((lnum (string-to-number (match-string 2)))
-                                                    (col (string-to-number (match-string 3)))
-                                                    (text (match-string 4))
-                                                    (pos (flymake-diag-region fmqd-source lnum col))
-                                                    (beg (car pos))
-                                                    (end (cdr pos))
-                                                    (msg (format "typos> %s" text)))
-                                               (list fmqd-source beg end :warning msg)))
+    :pre-let ((typos-exec (executable-find "typos")))
+    :pre-check (unless typos-exec (error "Cannot find typos executable"))
+    :write-type 'file
+    :proc-form (list typos-exec "--hidden" "--format" "brief" fmqd-temp-file)
+    :search-regexp "^\\([^:]+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\): \\(.*\\)$"
+    :prep-diagnostic (let* ((lnum (string-to-number (match-string 2)))
+                            (col (string-to-number (match-string 3)))
+                            (text (match-string 4))
+                            (pos (flymake-diag-region fmqd-source lnum col))
+                            (beg (car pos))
+                            (end (cdr pos))
+                            (msg (format "typos> %s" text)))
+                       (list fmqd-source beg end :warning msg)))
   (add-hook 'flymake-diagnostic-functions 'flymake-check-typos)
 
   ;; https://github.com/rhysd/actionlint
   (flymake-quickdef-backend flymake-check-actionlint
-                            :pre-let ((actionlint-exec (executable-find "actionlint")))
-                            :pre-check (unless actionlint-exec (error "Cannot find actionlint executable"))
-                            :write-type 'file
-                            :proc-form (list actionlint-exec "-format" "{{range $err := .}}{{$err.Filepath}}:{{$err.Line}}:{{$err.Column}}:{{$err.Message}}\n{{end}}" fmqd-temp-file)
-                            :search-regexp "^\\([^:]+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\):\\(.*\\)$"
-                            :prep-diagnostic (let* ((lnum (string-to-number (match-string 2)))
-                                                    (col (string-to-number (match-string 3)))
-                                                    (text (match-string 4))
-                                                    (pos (flymake-diag-region fmqd-source lnum col))
-                                                    (beg (car pos))
-                                                    (end (cdr pos))
-                                                    (msg (format "actionlint> %s" text)))
-                                               (list fmqd-source beg end :warning msg)))
+    :pre-let ((actionlint-exec (executable-find "actionlint")))
+    :pre-check (unless actionlint-exec (error "Cannot find actionlint executable"))
+    :write-type 'file
+    :proc-form (list actionlint-exec "-format" "{{range $err := .}}{{$err.Filepath}}:{{$err.Line}}:{{$err.Column}}:{{$err.Message}}\n{{end}}" fmqd-temp-file)
+    :search-regexp "^\\([^:]+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\):\\(.*\\)$"
+    :prep-diagnostic (let* ((lnum (string-to-number (match-string 2)))
+                            (col (string-to-number (match-string 3)))
+                            (text (match-string 4))
+                            (pos (flymake-diag-region fmqd-source lnum col))
+                            (beg (car pos))
+                            (end (cdr pos))
+                            (msg (format "actionlint> %s" text)))
+                       (list fmqd-source beg end :warning msg)))
   (add-hook 'yaml-mode-hook
             (lambda ()
               (if (string-match-p ".*\\.github/workflows/.*\\.ya?ml" (buffer-file-name))
                   (add-hook 'flymake-diagnostic-functions 'flymake-check-actionlint nil t))))
 
-  ;; https://github.com/golangci/golangci-lint
-  ;; Most linters in golangci-lint requires the project context. We
-  ;; can hack it together to make it work in a project context, but
-  ;; they will need the file to be save for it to work which creates
-  ;; more problems. So we are only enabling --fast linters as all of
-  ;; them are ones that can work on single file.
-  ;; https://github.com/golangci/golangci-lint/issues/1574#issuecomment-804500358
-  ;; TODO: Find some way to run linters like errcheck, govet, staticcheck etc
-  (flymake-quickdef-backend flymake-golangci
-                            :pre-let ((golangci-exec (executable-find "golangci-lint")))
-                            :pre-check (unless golangci-exec (error "Cannot find golangci-lint executable"))
-                            :write-type 'file ; don't really use this
-                            :proc-form (list golangci-exec "run"
-                                             "--print-issued-lines=false" "--out-format=line-number"
-                                             "--disable-all" "--fast" fmqd-temp-file) ; --fast ones can run on single file
-                            :search-regexp "[^:]*:\\([[:digit:]]+\\):\\([[:digit:]]+\\): \\(.*\\)$"
-                            :prep-diagnostic (let* ((lnum (string-to-number (match-string 1)))
-                                                    (col (string-to-number (match-string 2)))
-                                                    (text (match-string 3))
-                                                    (pos (flymake-diag-region fmqd-source lnum col))
-                                                    (beg (car pos))
-                                                    (end (cdr pos))
-                                                    (msg (format "golangci> %s" text)))
-                                               (list fmqd-source beg end :warning msg)))
-
   ;; https://github.com/hadolint/hadolint
   (flymake-quickdef-backend flymake-hadolint
-                            :pre-let ((hadolint-exec (executable-find "hadolint")))
-                            :pre-check (unless hadolint-exec (error "Cannot find hadolint executable"))
-                            :write-type 'file
-                            :proc-form (list hadolint-exec "--no-color" fmqd-temp-file)
-                            :search-regexp "^\\([^:]+\\):\\([[:digit:]]+\\) \\(.*\\)$"
-                            :prep-diagnostic (let* ((lnum (string-to-number (match-string 2)))
-                                                    (col 0)
-                                                    (text (match-string 3))
-                                                    (pos (flymake-diag-region fmqd-source lnum col))
-                                                    (beg (car pos))
-                                                    (end (cdr pos))
-                                                    (msg (format "hadolint> %s" text)))
-                                               (list fmqd-source beg end :warning msg)))
+    :pre-let ((hadolint-exec (executable-find "hadolint")))
+    :pre-check (unless hadolint-exec (error "Cannot find hadolint executable"))
+    :write-type 'file
+    :proc-form (list hadolint-exec "--no-color" fmqd-temp-file)
+    :search-regexp "^\\([^:]+\\):\\([[:digit:]]+\\) \\(.*\\)$"
+    :prep-diagnostic (let* ((lnum (string-to-number (match-string 2)))
+                            (col 0)
+                            (text (match-string 3))
+                            (pos (flymake-diag-region fmqd-source lnum col))
+                            (beg (car pos))
+                            (end (cdr pos))
+                            (msg (format "hadolint> %s" text)))
+                       (list fmqd-source beg end :warning msg)))
   (add-hook 'dockerfile-mode-hook
             (lambda ()
               (add-hook 'flymake-diagnostic-functions 'flymake-hadolint nil t))))
