@@ -692,6 +692,9 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   (setq compilation-ask-about-save nil)
   (setq compilation-scroll-output nil)
 
+  (setq compilation-scroll-output 'first-error) ; or nil
+  ;; (setq-default compilation-auto-jump-to-first-error nil)
+
   ;; Ensure ansi escape sequences are rendered properly
   (setq ansi-color-for-compilation-mode t)
   (add-hook 'compilation-filter-hook #'ansi-color-compilation-filter)
