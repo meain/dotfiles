@@ -1,0 +1,50 @@
+#!/bin/sh
+
+set -e
+
+[ -z "$1" ] && echo "Usage: $0 <workspace_name>" && exit 1
+
+name="$1" && shift
+base_dir="$HOME/worksapces"
+mkdir -p "$base_dir"
+root="$(jj root)"
+root_without_prefix="${root#"$HOME/dev/"}"
+
+if [ "$name" = "update" ]; then
+    jj workspace list | cut -d: -f1 | grep -v default |
+        while read -r ws; do
+            ws_dir="$base_dir/$root_without_prefix-$ws"
+            cd "$ws_dir"
+            echo "[WORKSPACE] $ws"
+            jj workspace update-stale || true
+        done
+
+    exit 0
+fi
+
+ws_dir="$base_dir/$root_without_prefix-$name"
+mkdir -p "$(dirname $ws_dir)"
+
+copy_from_base_if_exists() {
+    if [ -e "$root/$1" ]; then
+        cp -r "$root/$1" "$ws_dir/$1"
+    fi
+}
+
+if [ -d "$ws_dir" ]; then
+    echo "Workspace already exists"
+else
+    jj workspace add --name "$name" "$ws_dir"
+    copy_from_base_if_exists ".github/copilot-instructions.md"
+    copy_from_base_if_exists "shell.nix"
+    copy_from_base_if_exists ".envrc"
+    echo "Workspace '$name' created at $ws_dir"
+fi
+
+cd "$ws_dir" || exit 1
+pwd | pbcopy
+
+if [ -n "$1" ]; then
+    echo "Running command: $*"
+    eval "$*"
+fi
