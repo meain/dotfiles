@@ -39,6 +39,7 @@ Few pointers to find data:
 - Meetings for a day are within the directory structure `Meetings/<year>/<month>/<day>`
 - Daily journals for each days are files with the date under a folder structure `Journal/Day/<year>/<month>`
 - You should be using the list_directory command lookup meetings or journals by date
+- Linked pages are defined using `[[<name>]]` syntax. Look up the note with the name to get its content.
 
 Today's date is {{$date}}. Use this to look up journals or meetings.
 
@@ -50,9 +51,13 @@ Here is the directories available in my second brain:
 """
 
 [[functions]]
-name = "search_files"
-description = "Search for patterns in files from the vault"
-command = "rg -i -C 4 '{{pattern}}' './{{path}}'"
+name = "search_notes"
+description = """
+Search for patterns with the text of notes from the vault.
+It returns the files that the pattern has been found in.
+
+NOTE: If a search returns nothing, use a shorter search pattern."""
+command = "rg -il -C 4 '{{pattern}}' | head -n 100 ; find . -name '{{pattern}}' | head -n 100"
 pwd="~/.local/share/sbdb/"
 safe = true
 
@@ -69,16 +74,16 @@ description = "Path to search in the vault"
 required = true
 
 [[functions]]
-name = "find_files"
-description = "Find files within the user's Obsidian vault"
-command = "fd './{{directory}}' '{{pattern}}'"
+name = "find_note"
+description = "Find notes with a given name"
+command = "find . -name '*{{pattern}}*'"
 pwd="~/.local/share/sbdb/"
 safe = true
 
 [[functions.parameters]]
 name = "pattern"
 type = "string"
-description = "Pattern to match file names"
+description = "Pattern to search notes with"
 required = false
 
 [[functions.parameters]]
@@ -89,7 +94,10 @@ required = false
 
 [[functions]]
 name = "list_directory"
-description = "List files and folders in a directory."
+description = """
+List the file and folders in one of the directory in the vault
+In the reponse if something ends with a `/`, it is a directory, otherwise it is a file.
+"""
 command = "ls -lF './{{directory}}'"
 pwd="~/.local/share/sbdb/"
 safe = true
@@ -102,13 +110,13 @@ required = true
 
 [[functions]]
 name = "read_file"
-description = "Read the contents of a file"
-command = "cat './{{file}}'"
+description = "Read the contents of a note"
+command = "cat './{{note_name}}' || cat '{{note_name}}.md'"
 pwd="~/.local/share/sbdb/"
 safe = true
 
 [[functions.parameters]]
-name = "file"
+name = "note_name"
 type = "string"
-description = "Path to the file to read"
+description = "Name of the note to read"
 required = true
