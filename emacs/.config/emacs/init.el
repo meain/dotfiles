@@ -3209,13 +3209,14 @@ For optional NO-CACHE, use caching by default."
                               (window-height . 0.2))))))))
 
   :init
-  (global-set-key (kbd "M-f i m") 'gptel)
-  (global-set-key (kbd "M-f i s") 'gptel-send)
-  (global-set-key (kbd "M-f i p") 'gptel-lookup)
-  (global-set-key (kbd "M-f i c") 'gptel-context-clear-all)
-  (global-set-key (kbd "M-f i a") 'gptel-add)
-  (global-set-key (kbd "M-f i i") 'gptel-menu)
-  (global-set-key (kbd "M-f i r") 'gptel-rewrite))
+  (global-unset-key (kbd "M-;"))
+  (global-set-key (kbd "M-; m") 'gptel)
+  (global-set-key (kbd "M-; s") 'gptel-send)
+  (global-set-key (kbd "M-; p") 'gptel-lookup)
+  (global-set-key (kbd "M-; c") 'gptel-context-clear-all)
+  (global-set-key (kbd "M-; a") 'gptel-add)
+  (global-set-key (kbd "M-; i") 'gptel-menu)
+  (global-set-key (kbd "M-; r") 'gptel-rewrite))
 
 (use-package gptel-prompts
   :ensure (:host github :repo "jwiegley/gptel-prompts")
@@ -3230,11 +3231,12 @@ For optional NO-CACHE, use caching by default."
 
 (use-package gptel-quick
   :ensure (:host github :repo "karthink/gptel-quick")
+  :after (gptel)
   :commands (gptel-quick)
   :config
   (setq gptel-quick-timeout 100)
   :init
-  (global-set-key (kbd "M-f i j") 'gptel-quick))
+  (global-set-key (kbd "M-; j") 'gptel-quick))
 
 (use-package llm :ensure t)
 (use-package yap
