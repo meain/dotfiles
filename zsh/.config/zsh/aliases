@@ -42,7 +42,11 @@ alias lll='aichat --model ollama:granite3-dense:2b'
 alias tk='fn(){,tweak "$*" && pbpaste | mdclip};fn'
 alias aw=",agent-workspace"
 alias aww=",agent-workspace update && jj"
+
+# esa
 alias bud="esa +qa"
+alias mem="esa +mem"
+alias em=",emoji-picker"
 
 # ledger
 alias ledger='ledger -f ~/.local/share/ledger/master.ledger --strict'
