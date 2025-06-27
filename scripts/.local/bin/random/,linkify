@@ -30,6 +30,8 @@ output=""
 if echo "$url" | grep -qE '^https://github.com/[^/]*/[^/]*'; then
     if echo "$url" | grep -q '/issues/[0-9]*$'; then
         output=$(format_github_url "$url" "/issues/\([0-9]*\)" "[\1#\2]($url)")
+    elif echo "$url" | grep -q '/pull/[0-9]*/commits/[^/]*$'; then
+        output=$(format_github_url "$url" "/pull/\([0-9]*\)/commits/\([^/]*\).*" "[\1#\2@\3]($url)")
     elif echo "$url" | grep -q '/pull/[0-9]*$'; then
         output=$(format_github_url "$url" "/pull/\([0-9]*\)" "[\1#\2]($url)")
     elif echo "$url" | grep -q '/commit/'; then
