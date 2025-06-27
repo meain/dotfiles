@@ -3032,6 +3032,8 @@ Called with a PREFIX, resets the context buffer list before opening"
                         :key github-models-api-key
                         :models '(gpt-4o gpt-4o-mini)))
 
+  (gptel-make-gh-copilot "Copilot")
+
   ;; Some configuration
   (setq gptel-api-key openai-api-key)
   (setq gptel-expert-commands t)
