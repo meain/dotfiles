@@ -41,6 +41,7 @@ alias asi=',voice-assistant'
 alias lll='aichat --model ollama:granite3-dense:2b'
 alias tk='fn(){,tweak "$*" && pbpaste | mdclip};fn'
 alias aw=",agent-workspace"
+alias aww=",agent-workspace update && jj"
 
 # ledger
 alias ledger='ledger -f ~/.local/share/ledger/master.ledger --strict'
