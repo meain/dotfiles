@@ -3654,6 +3654,7 @@ Pass `CREATE' to create the alternate file if it does not exits."
                             'help-echo (buffer-file-name)))))
 
 (defun meain/modeline-segment (expr)
+  "Create a modeline segment with `EXPR' expression."
   `(:eval (let ((value ,expr))
             (if value (propertize value 'face 'hima-simple-gray) ""))))
 (defvar meain/modeline-vcs
@@ -3661,7 +3662,12 @@ Pass `CREATE' to create the alternate file if it does not exits."
    `(when-let (vc vc-mode) (concat " @" (substring vc 5)))))
 (defvar meain/modeline-yap
   (meain/modeline-segment
-   `(when (boundp 'yap-model) (concat " [" yap-model "]"))))
+   `(when (or (boundp 'gptel-model) (boundp 'yap-model))
+      (concat " ["
+              (when (boundp 'yap-model) yap-model)
+              "/"
+              (when (boundp 'gptel-model) (format "%s" gptel-model))
+              "]"))))
 
 (setq-default
  mode-line-format
