@@ -18,7 +18,7 @@
   compression = 9 # compress to save network bandwidth
   editor = emacsclient
   pager = diff-so-fancy | less --tabs=4 -RFX
-  excludesfile = ~/.config/git/.gitignore_global
+  excludesfile = ~/.config/git/ignore
   longpaths = true
 [diff]
   difftool = vimdiff
@@ -90,3 +90,7 @@
 	insteadOf = "gh:"
 [url "git@github.com:meain/"]
 	insteadOf = "meain:"
+[maintenance]
+	repo = /Users/meain/dev/alcion/canario
+	repo = /Users/meain/dev/alcion/ark
+	repo = /Users/meain/dev/src/nixpkgs
