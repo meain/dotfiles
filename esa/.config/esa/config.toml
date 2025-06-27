@@ -1,13 +1,27 @@
+[providers.copilot] # cannot use tools with this
+base_url = "http://localhost:3838/v1"
+
 [model_aliases]
   v3 = "openrouter/deepseek/deepseek-chat-v3-0324:free"
   flash = "openrouter/google/gemini-2.0-flash-exp:free"
   gemini = "openrouter/google/gemini-2.5-pro-exp-03-25:free"
-  4o = "openai/gpt-4o"
+  o4o = "openai/gpt-4o"
+  4o = "github/gpt-4o"
   mini = "openai/gpt-4o-mini"
   ghmini = "github/gpt-4o-mini"
   o3 = "github/o3-mini"
   scout = "groq/meta-llama/llama-4-scout-17b-16e-instruct"
+  nano = "openai/gpt-4.1-nano"
+  ghnano = "github/gpt-4.1-nano"
+  co = "copilot/openai/claude-3.5-sonnet"
+  qwen = "ollama/qwen3:4b"
+  qw = "ollama/qwen3:1.7b"
+  # granite = "ollama/granite3.2:2b"
+  jan = "ollama/hf.co/Menlo/Jan-nano-gguf:Q4_K_M"
+  # qw30 = "openrouter/qwen/qwen3-30b-a3b:free"
+  # qw8 = "openrouter/qwen/qwen3-8b:free"
+  mercury = "openrouter/inception/mercury-coder-small-beta"
 
 [settings]
 show_commands=true
-# default_model="scout"
+default_model="mini"
