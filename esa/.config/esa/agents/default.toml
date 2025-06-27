@@ -23,6 +23,38 @@ Other information:
 
 Remember to keep your responses brief and to the point. Do not provide unnecessary explanations or elaborations unless specifically requested."""
 
+## About me
+[[functions]]
+name = "retrieve_information_about_user"
+description = """
+Ask an assistant for information about the user.
+You can use this if you need to know something about the user.
+"""
+command = "esa +mem {{query}}"
+safe = true
+
+[[functions.parameters]]
+name = "query"
+type = "string"
+description = """
+Query to ask the assistant about the user.
+
+Query should be phrased like 'What is my ...' or 'Who am I ...' or 'What do I like ...'.
+"""
+required = true
+
+[[functions]]
+name = "store_information_about_user"
+description = "Store information about the user in the assistant's memory"
+command = "esa +mem '{{information}}'"
+safe = false
+
+[[functions.parameters]]
+name = "information"
+type = "string"
+description = "Information to store about the user. Phrase it like 'I am ...' or 'I have been ...'"
+required = true
+
 ## Set Alarm
 [[functions]]
 name = "set_alarm"
