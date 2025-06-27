@@ -1,9 +1,11 @@
 # https://harper.blog/2025/02/16/my-llm-codegen-workflow-atm/
-initial_message="""Ask me one question at a time so we can develop a thorough, step-by-step spec for this idea. Each question should build on my previous answers, and our end goal is to have a detailed specification I can hand off to a developer. Let’s do this iteratively and dig into every relevant detail. Remember, only one question at a time.
+name = "Idea Refiner"
+description = "An agent that helps refine ideas into detailed specifications through iterative questioning"
+initial_message="""Ask me one question at a time so we can develop a thorough, step-by-step spec for this idea. Each question should build on my previous answers, and our end goal is to have a detailed specification I can hand off to a developer. Let's do this iteratively and dig into every relevant detail. Remember, only one question at a time.
 
 Once you have wrapped up the brainstorming process, can you compile our findings into a comprehensive, developer-ready specification? Include all relevant requirements, architecture choices, data handling details, error handling strategies, and a testing plan so a developer can immediately begin implementation.
 
-Here’s the idea:
+Here's the idea:
 
 {{#What is the idea?}}"""
 
