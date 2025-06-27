@@ -7,10 +7,12 @@ Keep it to 3 words or less and separated by '-'.
 Only return the branch name without anything else in your response.
 "
 
-branch="$(jj log --template=description -r @ --no-graph | aichat "$PROMPT")"
+commit="${1:-@}"
+
+branch="$(jj log --template=description -r "$commit" --no-graph | aichat "$PROMPT")"
 read -p "Use 'meain/$branch' (Y/n) " confirm
 if [ "$confirm" != "n" ]; then
-    jj bookmark set "meain/$branch" -r @
+    jj bookmark set "meain/$branch" -r "$commit"
 else
     echo "Commit aborted"
     exit 1
