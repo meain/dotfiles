@@ -10,7 +10,7 @@ What meetings did I have last Monday?
 </user_query>
 
 <tool_calls>
-list_directory(directory='Meetings/2025/04/21')
+list_directory(directory='Meeting/2025/04/21')
 <tool_calls>
 
 <response>
@@ -36,7 +36,7 @@ On last Monday, April 21, 2025, you had the following meetings:
 </response>
 
 Few pointers to find data:
-- Meetings for a day are within the directory structure `Meetings/<year>/<month>/<day>`
+- Meetings for a day are within the directory structure `Meeting/<year>/<month>/<day>`
 - Daily journals for each days are files with the date under a folder structure `Journal/Day/<year>/<month>`
 - You should be using the list_directory command lookup meetings or journals by date
 - Linked pages are defined using `[[<name>]]` syntax. Look up the note with the name to get its content.
@@ -76,7 +76,7 @@ required = true
 [[functions]]
 name = "find_note"
 description = "Find notes with a given name"
-command = "find . -name '*{{pattern}}*'"
+command = "find . -name '*{{pattern}}*' -exec file {} \\;"
 pwd="~/.local/share/sbdb/"
 safe = true
 
@@ -96,9 +96,9 @@ required = false
 name = "list_directory"
 description = """
 List the file and folders in one of the directory in the vault
-In the reponse if something ends with a `/`, it is a directory, otherwise it is a file.
+In the response if something ends with a `/`, it is a directory, otherwise it is a file.
 """
-command = "ls -lF './{{directory}}'"
+command = "find './{{directory}}' -exec file {} \\;"
 pwd="~/.local/share/sbdb/"
 safe = true
 
@@ -111,12 +111,93 @@ required = true
 [[functions]]
 name = "read_file"
 description = "Read the contents of a note"
-command = "cat './{{note_name}}' || cat '{{note_name}}.md'"
+command = "cat './{{note_path}}' 2>/dev/null || cat '{{note_path}}.md'"
 pwd="~/.local/share/sbdb/"
 safe = true
 
 [[functions.parameters]]
+name = "note_path"
+type = "string"
+description = "Name of the note to read. Provide the full path"
+required = true
+
+
+[[functions]]
+name = "edit_note"
+description = """Edit a note using special diff format.
+
+Reads a diff and applies it to the specified file.
+The diff uses a special format with SEARCH and REPLACE blocks.
+
+NOTES:
+  - The search text must match exactly (including whitespace)
+  - If multiple matches exist, the operation will fail to avoid ambiguity
+  - Empty replace blocks will delete the search text
+  - The original file is overwritten with the changes
+  - The blocks should be named SEARCH and REPLACE as shown in the example
+"""
+command = "apply-edit '{{note_name}}.md'"
+stdin = "{{diff}}"
+pwd="~/.local/share/sbdb/"
+safe = false
+
+[[functions.parameters]]
 name = "note_name"
 type = "string"
-description = "Name of the note to read"
+description = "Name of the note to edit without the .md extension"
+required = true
+
+[[functions.parameters]]
+name = "diff"
+type = "string"
+description = """
+The diff to apply to the note in the format specified above
+
+FORMAT:
+  <<<<<<< SEARCH
+  [text to find]
+  =======
+  [text to replace with]
+  >>>>>>> REPLACE
+
+NOTES:
+  - The search text must match exactly (including whitespace)
+  - If multiple matches exist, the operation will fail to avoid ambiguity
+  - Empty replace blocks will delete the search text
+  - The original file is overwritten with the changes
+  - The blocks should be named SEARCH and REPLACE as shown in the example
+"""
+required = true
+
+[[functions]]
+name = "create_note"
+description = "Create a new note with the given name and content"
+command = "tee '{{note_name}}.md' >/dev/null && echo 'Note created: {{note_name}}.md'"
+stdin = "{{content}}"
+pwd="~/.local/share/sbdb/"
+safe = false
+
+[[functions.parameters]]
+name = "note_name"
+type = "string"
+description = "Name of the note to create without the .md extension"
+required = true
+
+[[functions.parameters]]
+name = "content"
+type = "string"
+description = "Content of the note to create"
+required = true
+
+[[functions]]
+name = "delete_note"
+description = "Delete a note with the given name"
+command = "rm -f '{{note_name}}.md'"
+pwd="~/.local/share/sbdb/"
+safe = false
+
+[[functions.parameters]]
+name = "note_name"
+type = "string"
+description = "Name of the note to delete without the .md extension"
 required = true
