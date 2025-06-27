@@ -3182,6 +3182,32 @@ For optional NO-CACHE, use caching by default."
                        :description "the mathematical expression to evaluate"))
    :category "general")
 
+  (defvar gptel-lookup--history nil)
+  (defun gptel-lookup (prompt)
+    "Quick lookup for `PROMPT' using gptel."
+    (interactive (list (read-string "Q: " nil gptel-lookup--history)))
+    (when (string= prompt "") (user-error "A prompt is required"))
+    (gptel-request
+        (concat (and (use-region-p)
+                     (buffer-substring-no-properties (region-beginning) (region-end)))
+                "\n\n"
+                prompt)
+      :callback
+      (lambda (response info)
+        (if (not response)
+            (message "gptel-lookup failed with message: %s" (plist-get info :status))
+          (with-current-buffer (get-buffer-create "*gptel-lookup*")
+            (let ((inhibit-read-only t))
+              (erase-buffer)
+              (insert response))
+            (gfm-mode)
+            (goto-char (point-min))
+            (display-buffer (current-buffer)
+                            `((display-buffer-in-side-window)
+                              (reusable-frames . visible)
+                              (side            . top)
+                              (window-height . 0.2))))))))
+
   :init
   (global-set-key (kbd "M-f i m") 'gptel)
   (global-set-key (kbd "M-f i s") 'gptel-send)
