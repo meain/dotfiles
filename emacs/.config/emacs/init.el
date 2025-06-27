@@ -2228,6 +2228,7 @@ Pass INSERT-TO-BUFFER to insert output to current buffer."
               (define-key nxml-mode-map (kbd "M-j") 'meain/move-swap-down))))
 (use-package json-mode :ensure t :defer t)
 (use-package yaml-mode :ensure t :defer t)
+(use-package k8s-mode :ensure t :defer t) ; syntax highlighting for templated yaml files (helm)
 (use-package yaml-ts-mode
   :after (tree-surgeon)
   :config
