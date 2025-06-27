@@ -59,3 +59,8 @@ default.rest
 
 # copilot
 .github/copilot-instructions.md
+
+# opencode
+.opencode/
+OpenCode.md
+opencode-panic-agent*
