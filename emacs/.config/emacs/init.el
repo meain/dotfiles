@@ -1540,6 +1540,7 @@ Giving it a name so that I can target it in vertico mode and make it use buffer.
                 ;; We want the previous .rest buffer if http response buffer
                 (if (equal (buffer-name) "*HTTP Response*")
                     (previous-window-any-frame))))
+  :init
   (global-set-key (kbd "M-i") 'consult-imenu))
 (use-package flimenu
   :ensure t
