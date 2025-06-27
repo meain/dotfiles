@@ -9,8 +9,29 @@ base_dir="$HOME/worksapces"
 mkdir -p "$base_dir"
 root="$(jj root)"
 root_without_prefix="${root#"$HOME/dev/"}"
+ws_dir="$base_dir/$root_without_prefix-$name"
+prev_commit="$(jj log --revisions @- --limit 1 --template=commit_id --no-graph)"
 
-if [ "$name" = "update" ]; then
+copy_from_base_if_exists() {
+    if [ -e "$root/$1" ]; then
+        if ! git ls-files --error-unmatch "$root/$1" >/dev/null 2>&1; then
+            cp -r "$root/$1" "$ws_dir/$1"
+        fi
+    fi
+}
+
+sync_additional_files() {
+    copy_from_base_if_exists ".github/copilot-instructions.md"
+    copy_from_base_if_exists "shell.nix"
+    copy_from_base_if_exists ".envrc"
+    copy_from_base_if_exists "OpenCode.md"
+    copy_from_base_if_exists "CLAUDE.md"
+    copy_from_base_if_exists ".llmrules"
+}
+
+case "$name" in
+update)
+    # update stale
     jj workspace list | cut -d: -f1 | grep -v default |
         while read -r ws; do
             ws_dir="$base_dir/$root_without_prefix-$ws"
@@ -20,24 +41,53 @@ if [ "$name" = "update" ]; then
         done
 
     exit 0
-fi
+    ;;
+new)
+    jj workspace list | cut -d: -f1 | grep -v default |
+        while read -r ws; do
+            ws_dir="$base_dir/$root_without_prefix-$ws"
+            cd "$ws_dir"
+            echo "[WORKSPACE] $ws"
+            jj workspace update-stale || true
+            jj new -r "$prev_commit"
+        done
 
-ws_dir="$base_dir/$root_without_prefix-$name"
+    exit 0
+    ;;
+# sync)
+#     jj workspace list | cut -d: -f1 | grep -v default |
+#         while read -r ws; do
+#             ws_dir="$base_dir/$root_without_prefix-$ws"
+#             sync_additional_files
+#         done
+#     echo "Synced additional files from all workspaces"
+#     exit 0
+#     ;;
+drop | delete | remove)
+    # delete the workspace
+    [ -z "$1" ] && echo "Usage: $0 drop|delete|remove <workspace_name>" && exit 1
+    name="$1"
+    if [ -d "$base_dir/$root_without_prefix-$name" ]; then
+        jj workspace forget "$name"
+        rm -rf "$base_dir/$root_without_prefix-$name"
+        echo "Workspace '$name' removed"
+        exit 0
+    else
+        echo "Workspace '$name' does not exist"
+        exit 1
+    fi
+    ;;
+list)
+    jj workspace list
+    exit 0
+    ;;
+esac
+
 mkdir -p "$(dirname $ws_dir)"
 
-copy_from_base_if_exists() {
-    if [ -e "$root/$1" ]; then
-        cp -r "$root/$1" "$ws_dir/$1"
-    fi
-}
-
-if [ -d "$ws_dir" ]; then
-    echo "Workspace already exists"
-else
+if [ ! -d "$ws_dir" ]; then
     jj workspace add --name "$name" "$ws_dir"
-    copy_from_base_if_exists ".github/copilot-instructions.md"
-    copy_from_base_if_exists "shell.nix"
-    copy_from_base_if_exists ".envrc"
+    sync_additional_files
     echo "Workspace '$name' created at $ws_dir"
 fi
 
@@ -45,6 +95,19 @@ cd "$ws_dir" || exit 1
 pwd | pbcopy
 
 if [ -n "$1" ]; then
-    echo "Running command: $*"
-    eval "$*"
+    case "$1" in
+    new)
+        # update to default's commit
+        jj workspace update-stale || true
+        jj new -r "$prev_commit"
+        ;;
+    sync)
+        sync_additional_files
+        echo "Synced additional files from current workspace"
+        ;;
+    *)
+        echo "Running command: $*"
+        eval "$*"
+        ;;
+    esac
 fi
