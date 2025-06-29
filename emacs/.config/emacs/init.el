@@ -2906,9 +2906,9 @@ Pass INSERT-TO-BUFFER to insert output to current buffer."
                 ((or 'go-mode 'go-ts-mode) "fmt.Println(\"{pfx} {esc}:\", {thing})")
                 ((or 'lua-mode) "print(\"{pfx} {esc}:\", {thing})")
                 ((or 'js-mode 'typescript-ts-mode 'web-mode) "console.log(\"{pfx} {esc}:\", {thing})")
-                ((or 'shell-script-mode) "echo \"{pfx} {esc}:\" {thing}")
+                ((or 'shell-script-mode 'sh-mode) "echo \"{pfx} {esc}:\" {thing}")
                 ((or 'python-ts-mode 'python-mode) "print(\"{pfx} {esc}:\", {thing})")
-                (_ (error "Unknown mode for quick-prin")))))
+                (_ (error "Unknown mode for quick-print")))))
         (if current-prefix-arg
             (evil-open-above 1)
           (evil-open-below 1))
