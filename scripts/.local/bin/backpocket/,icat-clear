@@ -2,4 +2,6 @@
 
 set -e
 
-[ -n "$KITTY_WINDOW_ID" ] && kitty +kitten icat --transfer-mode file --silent --clear
+if [ -n "$KITTY_WINDOW_ID" ]; then
+    kitty +kitten icat --transfer-mode file --silent --clear
+fi
