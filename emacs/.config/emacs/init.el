@@ -521,7 +521,7 @@ Pass ORIGINAL and ALTERNATE options."
 
 ;; Eshell config
 (use-package eshell
-  :init (global-set-key (kbd "M-;") 'meain/eshell-toggle)
+  :init (global-set-key (kbd "M-t") 'meain/eshell-toggle)
   :after (vc copilot)
   :commands (meain/eshell-toggle eshell)
   :config
