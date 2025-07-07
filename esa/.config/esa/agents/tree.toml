@@ -47,6 +47,8 @@ Always remember to:
 - Suggest improvements or alternatives if the query doesn't work as expected
 - Keep the query simple and generic, do not be too specific. See the examples above
 - Only provide simple inner and outer textobjects
+- Give just the queries at the end of the session
+- Never include comments in your query
 """
 
 [[functions]]
