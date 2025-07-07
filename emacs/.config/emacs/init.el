@@ -3045,8 +3045,8 @@ Called with a PREFIX, resets the context buffer list before opening"
   (setq gptel-use-tools t)
   (setq gptel-include-tool-results t)
   (setq gptel-default-mode 'org-mode)
-  (setq gptel-prompt-prefix-alist '((markdown-mode . "🗣️ ") (org-mode . "🗣️ ") (text-mode . "# ")))
-  (setq gptel-response-prefix-alist '((markdown-mode . "🤖 ") (org-mode . "🤖 ") (text-mode . "$ ")))
+  (setq gptel-prompt-prefix-alist '((markdown-mode . "🗣️ YOU\n") (org-mode . "🗣️ YOU\n") (text-mode . "# YOU\n")))
+  (setq gptel-response-prefix-alist '((markdown-mode . "🤖 BOT\n") (org-mode . "🤖 BOT\n") (text-mode . "$ BOT\n")))
 
   ;; Hooks to update behaviour
   (add-hook 'gptel-post-response-functions 'gptel-end-of-response)
