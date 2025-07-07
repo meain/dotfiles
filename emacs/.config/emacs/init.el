@@ -2228,6 +2228,7 @@ Pass INSERT-TO-BUFFER to insert output to current buffer."
               (define-key nxml-mode-map (kbd "M-k") 'meain/move-swap-up)
               (define-key nxml-mode-map (kbd "M-j") 'meain/move-swap-down))))
 (use-package json-mode :ensure t :defer t)
+(use-package just-ts-mode :ensure t :defer t)
 (use-package yaml-mode :ensure t :defer t)
 (use-package k8s-mode :ensure t :defer t) ; syntax highlighting for templated yaml files (helm)
 (use-package yaml-ts-mode
@@ -2581,6 +2582,7 @@ Pass INSERT-TO-BUFFER to insert output to current buffer."
           (jsdoc . ("https://github.com/tree-sitter/tree-sitter-jsdoc" "master"))
           (yaml . ("https://github.com/ikatyang/tree-sitter-yaml" "master"))
           (json . ("https://github.com/tree-sitter/tree-sitter-json" "master"))
+          (just . ("https://github.com/IndianBoy42/tree-sitter-just" "main"))
           ;; (nix . ("https://github.com/nix-community/tree-sitter-nix" "master")) ;; no nix-ts-mode
           ;; method_spec was removed from upstream go grammar, but emacs treesit depends on it
           (go . ("https://github.com/meain/tree-sitter-go" "e395081"))
