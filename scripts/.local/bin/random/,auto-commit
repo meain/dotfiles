@@ -6,7 +6,7 @@ base="$(git rev-parse --show-toplevel 2>/dev/null)"
 
 get_changes() {
     if [ -d "$base/.jj" ]; then
-        jj diff
+        jj diff -r "${1:-@}"
     elif [ -d "$base/.git" ]; then
         git diff --staged
     else
@@ -15,7 +15,7 @@ get_changes() {
     fi
 }
 
-changes=$(get_changes)
+changes=$(get_changes "$1")
 
 if [ -z "$changes" ]; then
     echo "No changes to commit"
@@ -38,10 +38,13 @@ commit_msg="$(cat /tmp/auto-pr-message)"
 
 echo
 if [ "$confirm" != "n" ]; then
-    if [ -d ".jj" ]; then
-        jj desc -m "$commit_msg"
-    else
+    if [ -d "$base/.jj" ]; then
+        jj desc -m "$commit_msg" -r "${1-@}"
+    elif [ -d "$base/.git" ]; then
         git commit -m "$commit_msg"
+    else
+        echo "No git or jj repository found"
+        exit 1
     fi
 else
     echo "Commit aborted"
