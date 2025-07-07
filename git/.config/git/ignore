@@ -13,6 +13,8 @@ dist
 # general
 *.log
 *.rdb
+tags
+TAGS
 
 # others
 .vscode
