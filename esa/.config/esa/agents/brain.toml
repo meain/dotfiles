@@ -40,6 +40,7 @@ Few pointers to find data:
 - Daily journals for each days are files with the date under a folder structure `Journal/Day/<year>/<month>`
 - You should be using the list_directory command lookup meetings or journals by date
 - Linked pages are defined using `[[<name>]]` syntax. Look up the note with the name to get its content.
+- Answer any and all queries based on my notes
 
 Today's date is {{$date}}. Use this to look up journals or meetings.
 
@@ -84,12 +85,6 @@ safe = true
 name = "pattern"
 type = "string"
 description = "Pattern to search notes with"
-required = false
-
-[[functions.parameters]]
-name = "directory"
-type = "string"
-description = "Base directory within the vault to search"
 required = false
 
 [[functions]]
