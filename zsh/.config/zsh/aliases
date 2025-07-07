@@ -44,9 +44,15 @@ alias aw=",agent-workspace"
 alias aww=",agent-workspace update && jj"
 
 # esa
+alias e="esa"
+alias ec="esa -c"
+alias ea="esa +auto"
 alias bud="esa +qa"
+alias co="esa +coder"
 alias mem="esa +mem"
 alias em=",emoji-picker"
+alias brain="esa +brain"
+alias eout="esa --show-output 1 | glow -p"
 
 # ledger
 alias ledger='ledger -f ~/.local/share/ledger/master.ledger --strict'
@@ -62,7 +68,6 @@ alias tl='tmux list-sessions'
 # editors
 alias vim='nvim'
 alias ivm='nvim'
-alias e="emacsclient  -a '' --no-wait"
 alias et='emacsclient -nw'
 
 # remote
