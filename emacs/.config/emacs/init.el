@@ -2948,7 +2948,8 @@ Pass INSERT-TO-BUFFER to insert output to current buffer."
     (let ((jira-id (replace-regexp-in-string "^http://\\(\\S+\\)" "\\1" url)))
       (browse-url (concat "https://veeam-vdc.atlassian.net/browse/" jira-id))))
   (setq browse-url-handlers
-        '(("^http://CP-[0-9]+" . meain/browse-jira))))
+        '(("^http://CP-[0-9]+" . meain/browse-jira) ; Control Plane
+          ("^http://DP-[0-9]+" . meain/browse-jira)))) ; Data Plane
 
 (use-package auto-highlight-symbol
   :ensure t
