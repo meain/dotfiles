@@ -107,7 +107,7 @@ if [ -n "$1" ]; then
         ;;
     *)
         echo "Running command: $*"
-        eval "$*"
+        zsh -ic "$*"
         ;;
     esac
 fi
