@@ -3029,15 +3029,15 @@ Called with a PREFIX, resets the context buffer list before opening"
   :commands (gptel gptel-send gptel-rewrite-menu)
   :config
   ;; Set default mdoels
-  (setq gptel-model 'gpt-4o-mini)
-  (setq gptel-backend (gptel-make-openai "Github Models"
-                        :host "models.inference.ai.azure.com"
-                        :endpoint "/chat/completions?api-version=2024-05-01-preview"
-                        :stream t
-                        :key github-models-api-key
-                        :models '(gpt-4o gpt-4o-mini)))
-
-  (gptel-make-gh-copilot "Copilot")
+  ;; (setq gptel-model 'claude-3.7-sonnet)
+  (setq gptel-model 'gpt-4.1)
+  (setq gptel-backend (gptel-make-gh-copilot "Copilot"))
+  (gptel-make-openai "Github Models"
+    :host "models.inference.ai.azure.com"
+    :endpoint "/chat/completions?api-version=2024-05-01-preview"
+    :stream t
+    :key github-models-api-key
+    :models '(gpt-4o gpt-4o-mini))
 
   ;; Some configuration
   (setq gptel-api-key openai-api-key)
