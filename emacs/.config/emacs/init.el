@@ -3157,7 +3157,7 @@ For optional NO-CACHE, use caching by default."
   ;; Search using ddg (ddgr --noua --json '{{query}}')
   ;; TODO: make this async
   (gptel-make-tool
-   :name "search_ddg"
+   :name "web_search"
    :function (lambda (query)
                (let* ((ddgr-output (shell-command-to-string (format "ddgr --noua --json '%s'" query)))
                       (results (json-read-from-string ddgr-output)))
@@ -3183,6 +3183,20 @@ For optional NO-CACHE, use caching by default."
    :args (list '(:name "expression"
                        :type string
                        :description "the mathematical expression to evaluate"))
+   :category "general")
+
+  (gptel-make-tool
+   :name "shell_execute"
+   :function (lambda (command)
+               (let ((bc-output (shell-command-to-string command)))
+                 (if (string-match-p "error" bc-output)
+                     (error "error: Invalid math expression")
+                   (string-trim bc-output))))
+   :description "Execute any bash command"
+   :args (list '(:name "command"
+                       :type string
+                       :description "the command to execute"))
+   :confirm t
    :category "general")
 
   (defvar gptel-lookup--history nil)
