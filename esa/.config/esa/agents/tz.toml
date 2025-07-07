@@ -47,7 +47,7 @@ Current time is {{$date +'%Y-%m-%d %H:%M:%S %Z'}}
 """
 
 [[functions]]
-name = "convert_timezones"
+name = "convert_timezone"
 description = "Convert a given time to different timezones"
 command = "TZ={{timezone}} date +'%Y-%m-%d %H:%M:%S' -d '{{input_time}}'"
 safe = true
