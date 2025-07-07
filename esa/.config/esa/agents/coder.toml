@@ -1,56 +1,80 @@
-name = "Coder"
-description = "A coding assistant with access to various system functions"
+name = "Advanced Coder"
+description = "An intelligent coding assistant with context-aware code editing and reliable technical guidance"
 
-system_prompt="""You are an intelligent coding assistant designed for efficient code analysis and modification.
+system_prompt = """
+You are a high-performance coding assistant optimized for fast, accurate codebase interaction and reliable development support.
 
-Core Responsibilities:
-1. Analyze requested tasks and files autonomously using available system functions
-2. Execute necessary file operations and modifications without requiring confirmation
-3. Provide concise, implementation-focused responses
-4. Maintain context awareness of the codebase structure and environment
+## 🔍 Core Directives
 
-Task Execution Protocol:
-1. Gather context using appropriate system functions (read_file, list_directory, etc.)
-2. Process information and determine required actions
-3. Execute modifications using write_file or other relevant functions
-4. Return only essential feedback about completed actions
+1. **Context-Aware Assistance**: Always check relevant files, symbols, and references before answering or modifying anything.
+2. **Minimal, Safe Edits**: Prefer localized, low-risk changes unless broader refactoring is explicitly requested.
+3. **Precision over Guessing**: Never assume code behavior—verify through context, usage, or related files.
+4. **Clarity in Responses**: Keep answers concise, actionable, and technically sound.
 
-Environment Details:
-- Operating System: {{$uname -o}}
-- Working Directory: {{$pwd}}
-- Today's Date: {{$date}}
-- User: Abin Simon (meain), Senior Software Engineer specializing in Go
-- Context: Limited to current directory and its subdirectories
+## 🧠 Functional Capabilities
 
-Response Guidelines:
-- Focus on direct, actionable answers
-- Skip explanations unless explicitly requested
-- Maintain awareness of file system boundaries
-- Execute tasks autonomously using available functions
+- **Code Understanding**: Navigate functions, types, and modules across files; recognize naming patterns, side effects, and architectural conventions.
+- **Targeted Editing**: Make surgical changes using diff-style edits; default to line-based edits unless structural refactoring is necessary.
+- **Dependency Awareness**: Handle `go.mod`, package imports, and init logic with insight into downstream implications.
+- **Testing Hooks**: Leverage existing tests to validate changes or generate relevant test cases on the fly.
+- **Cross-File Reasoning**: Trace references, call chains, and symbol definitions to answer complex questions with code-backed clarity.
 
-Project structure:
-{{$tree -d ./}}
+## ⚙️ Execution Workflow
 
-Remember, all user queries are to be answered based on the current project.
+1. **Discovery Phase**
+   - Load directory structure (`tree`)
+   - Check recent commits (`git log`)
+   - Analyze key files: entry points, configs, and usage-heavy components
+   - Identify relevant code symbols or patterns (via `ctags`, `rg`, or `symbol-search`)
+
+2. **Analysis Phase**
+   - Understand context before any change: use `read_file`, `find_references`, or `search_for_text`
+   - Answer questions using actual project code and conventions
+
+3. **Planning Phase**
+   - For edits: Determine the smallest valid change that meets the requirement
+   - For answers: Prioritize correctness, relevance, and project-fit over generic info
+
+4. **Implementation Phase**
+   - Apply exact, reversible changes via `apply_edit` or `write_file`
+   - Align with code style and naming conventions
+
+5. **Verification Phase**
+   - Optionally validate through test hooks or reference checks
+   - Clearly confirm change behavior and next steps if applicable
+
+## 🌐 Environment Context
+
+- OS: {{$uname -o}}
+- Directory: {{$pwd}}
+- Date: {{$date}}
+- User: Abin Simon (meain), Senior Software Engineer (Go)
+- Scope: Current directory & subdirectories with project-aware boundaries
+
+### Git Status
+{{$git log --oneline -10 2>/dev/null || echo "No git repository detected"}}
+
+### Directory Tree
+{{$git ls-files --others --exclude-standard --cached | tree --fromfile -d || tree -d ./}}
+
+## ✅ Response Protocol
+
+- **Answer Coding Questions**: Refer to real symbols, usage, or definitions when available. Use inline code snippets or edits.
+- **Modify Code**: Only change what’s needed. Follow project idioms. Use diff-style edits.
+- **Explain Only When Needed**: Avoid redundant elaboration unless asked.
+- **No Guesswork**: Validate with project data, not memory alone.
+- **Autonomous Execution**: Don’t wait for permission to fetch info, analyze context, or proceed with edits unless a risk is detected.
+
 """
 
-## Read Webpage
-[[functions]]
-name = "read_webpage"
-description = "Read the contents of a webpage"
-command = "readable '{{url}}' | html2markdown"
+default_model="copilot/gpt-4.1"
 
-[[functions.parameters]]
-name = "url"
-type = "string"
-description = "URL of the website to read"
-required = true
+## Enhanced File Operations
 
-## Read File
 [[functions]]
 name = "read_file"
-description = "Read the contents of a file"
-command = "cat {{show_line_numbers}} {{file}}"
+description = "Read file contents with optional line numbers and range selection"
+command = "cat {{show_line_numbers}} {{file}} {{line_range}}"
 safe = true
 
 [[functions.parameters]]
@@ -62,14 +86,20 @@ required = true
 [[functions.parameters]]
 name = "show_line_numbers"
 type = "boolean"
-description = "Should show line number"
+description = "Display line numbers"
 required = false
 format = "-n"
 
-## Write File
+[[functions.parameters]]
+name = "line_range"
+type = "string"
+description = "Line range to read (e.g., '10,20' for lines 10-20)"
+required = false
+format = "| sed -n '%sp'"
+
 [[functions]]
 name = "write_file"
-description = "Write to a file"
+description = "Write content to file"
 command = "tee {{file}}"
 stdin = "{{content}}"
 
@@ -85,126 +115,296 @@ type = "string"
 description = "Content to write"
 required = true
 
-## List Directory
 [[functions]]
-name = "list_directory"
-description = "List files in a directory. You only have access to the files in the current and sub directory."
-command = "ls ./{{directory}}"
-safe = true
+name = "apply_edit"
+description = "Apply precise search and replace edits to files using diff-style format. Uses SEARCH/REPLACE blocks: <<<<<<< SEARCH (text to find) ======= (replacement text) >>>>>>> REPLACE. Search text must match exactly including whitespace. Empty replace blocks delete the search text."
+command = "apply-edit {{file}}"
+stdin = "{{edit_content}}"
 
 [[functions.parameters]]
-name = "directory"
+name = "file"
 type = "string"
-description = "Directory to list. All paths should be relative paths. It will be prefixed with `./`"
-required = true
-
-## Print Directory Tree
-[[functions]]
-name = "print_tree"
-description = "Print tree of files and folders"
-command = "tree ./{{directory}}"
-safe = true
-
-[[functions.parameters]]
-name = "directory"
-type = "string"
-description = "Directory to print tree. All paths should be relative paths. It will be prefixed with `./`"
-required = true
-
-## Grep
-[[functions]]
-name = "search_for_text"
-description = """Search for a regex pattern in project files. Limited to the top 300 results.
-Use more precise queries if you need better results."""
-command = "rg '{{search_pattern}}' ./{{directory}} | head -n 300"
-safe = true
-
-[[functions.parameters]]
-name = "search_pattern"
-type = "string"
-description = "Pattern to search for"
+description = "File to apply edits to"
 required = true
 
 [[functions.parameters]]
-name = "directory"
+name = "edit_content"
 type = "string"
-description = "Directory or file to search in. All paths should be relative paths. It will be prefixed with `./`"
+description = """Edit content in SEARCH/REPLACE format.
+Ensure whitespace is not stripped in the search or replace blocks and exact search.
+
+EXAMPLE:
+Given a file 'app.py' with contents:
+
+```
+from flask import Flask
+app = Flask(__name__)
+```
+
+The below block:
+
+```
+<<<<<<< SEARCH
+from flask import Flask
+=======
+import math
+from flask import Flask
+>>>>>>> REPLACE
+```
+
+Result: The file will be updated to:
+
+```
+import math
+from flask import Flask
+app = Flask(__name__)
+```"""
+required = true
+
+## Enhanced Code Analysis
+
+[[functions]]
+name = "analyze_code_structure"
+description = "Analyze code structure and dependencies"
+command = "ctags -R --fields=+iaS --extra=+q . 2>/dev/null | head -n 500"
+safe = true
+
+[[functions.parameters]]
+name = "file_pattern"
+type = "string"
+description = "File pattern to analyze (e.g., '*.go', '*.py')"
 required = false
 
-## Find file
-[[functions]]
-name = "find_files_by_name"
-description = "Find a files in the current directory and subdirectories that match the given name."
-command = "find . -name '{{search_pattern}}'"
-safe = true
-
-[[functions.parameters]]
-name = "search_pattern"
-type = "string"
-description = "Pattern to search for"
-required = true
-
-## Search for symbols
 [[functions]]
 name = "search_symbols"
-description = """
-Find symbols (functions/types) in code from the specified directory and subdirectories.
-Use this if you want to get function names. Works better with single words.
-
-This will only tell you where the symbol is and you have to use
-`read_file` to read the file to get the full content.
-"""
-command = ",symbol-search | grep ':{{kind}}:' | grep -i '{{search_pattern}}'"
-pwd="{{directory}}"
+description = "Find symbols (functions/types/variables) with enhanced filtering"
+command = ",symbol-search | grep ':{{kind}}:' | grep -i '{{pattern}}'"
+pwd = "{{directory}}"
 safe = true
 
 [[functions.parameters]]
 name = "directory"
 type = "string"
-description = "Directory to search in. All paths should be relative paths. It will be prefixed with `./`"
+description = "Directory to search in"
 required = false
 
 [[functions.parameters]]
 name = "kind"
 type = "string"
-description = "Kind of symbol to search for."
-options = ["function", "type"]
+description = "Symbol type to search for"
+options = ["function", "type", "variable", "constant", "method", "struct", "interface"]
 required = true
 
 [[functions.parameters]]
-name = "search_pattern"
+name = "pattern"
 type = "string"
-description = "Pattern to search for. Case insensitive"
+description = "Pattern to search for (case insensitive)"
 required = true
 
-## Move file (do we need copy file?)
 [[functions]]
-name = "move_file"
-description = "Move a file to a new location"
-command = "mv {{source}} {{destination}}"
-safe = false
+name = "find_references"
+description = "Find all references to a symbol across the codebase"
+command = "rg -n '\\b{{symbol}}\\b' {{file_pattern}} | head -n 100"
+safe = true
 
 [[functions.parameters]]
-name = "source"
+name = "symbol"
 type = "string"
-description = "Source file to move"
+description = "Symbol to find references for"
 required = true
 
 [[functions.parameters]]
-name = "destination"
+name = "file_pattern"
 type = "string"
-description = "Destination path to move the file to"
+description = "File pattern to search in (e.g., '*.go')"
+required = false
+
+## Enhanced Search and Navigation
+
+[[functions]]
+name = "search_for_text"
+description = "Advanced text search with context and filtering"
+command = "rg {{case_sensitive}} {{whole_word}} {{context}} '{{pattern}}' {{file_pattern}} ./{{directory}} | head -n {{limit}}"
+safe = true
+
+[[functions.parameters]]
+name = "pattern"
+type = "string"
+description = "Pattern to search for (supports regex)"
 required = true
 
-## Run command
+[[functions.parameters]]
+name = "directory"
+type = "string"
+description = "Directory to search in"
+required = false
+
+[[functions.parameters]]
+name = "file_pattern"
+type = "string"
+description = "File pattern filter (e.g., 'go', 'py')"
+required = false
+format = "-t %s"
+
+[[functions.parameters]]
+name = "case_sensitive"
+type = "boolean"
+description = "Case sensitive search"
+required = false
+format = "-s"
+
+[[functions.parameters]]
+name = "whole_word"
+type = "boolean"
+description = "Match whole words only"
+required = false
+format = "-w"
+
+[[functions.parameters]]
+name = "context"
+type = "number"
+description = "Lines of context to show"
+required = false
+format = "-C %0.f"
+
+[[functions.parameters]]
+name = "limit"
+type = "number"
+description = "Maximum number of results"
+required = false
+default = "300"
+
+[[functions]]
+name = "find_files_by_name"
+description = "Find files with advanced filtering and sorting"
+command = "find . -name '{{pattern}}' {{file_type}} {{max_depth}} | sort"
+safe = true
+
+[[functions.parameters]]
+name = "pattern"
+type = "string"
+description = "Pattern to search for (supports wildcards)"
+required = true
+
+[[functions.parameters]]
+name = "file_type"
+type = "string"
+description = "File type filter"
+options = ["-type f", "-type d", "-type l"]
+required = false
+
+[[functions.parameters]]
+name = "max_depth"
+type = "number"
+description = "Maximum search depth"
+required = false
+format = "-maxdepth %0.f"
+
+## Project Management
+
+[[functions]]
+name = "list_directory"
+description = "Enhanced directory listing with file information"
+command = "ls -la {{directory}} | head -n {{limit}}"
+safe = true
+
+[[functions.parameters]]
+name = "directory"
+type = "string"
+description = "Directory to list"
+required = true
+
+[[functions.parameters]]
+name = "limit"
+type = "number"
+description = "Maximum number of entries"
+required = false
+default = "100"
+
+[[functions]]
+name = "print_tree"
+description = "Print directory tree with enhanced filtering"
+command = "tree {{directory}} {{depth}} {{file_pattern}} {{ignore_pattern}}"
+safe = true
+
+[[functions.parameters]]
+name = "directory"
+type = "string"
+description = "Directory to print tree for"
+required = true
+
+[[functions.parameters]]
+name = "depth"
+type = "number"
+description = "Maximum depth to traverse"
+required = false
+format = "-L %0.f"
+
+[[functions.parameters]]
+name = "file_pattern"
+type = "string"
+description = "File pattern to include (e.g., '*.go')"
+required = false
+format = "-P '%s'"
+
+[[functions.parameters]]
+name = "ignore_pattern"
+type = "string"
+description = "Pattern to ignore (e.g., 'node_modules|.git')"
+required = false
+format = "-I '%s'"
+
+## Advanced Operations
+
 [[functions]]
 name = "run_command"
-description = "Run a command in the current directory"
-command = "{{command}}"
+description = "Execute arbitrary commands with enhanced error handling"
+command = "{{command}} 2>&1 || echo 'Command failed with exit code $?'"
 safe = false
 
 [[functions.parameters]]
 name = "command"
 type = "string"
-description = "Command to run"
+description = "Command to execute"
+required = true
+
+[[functions]]
+name = "move_file"
+description = "Move or rename files"
+command = "mv {{source}} {{destination}} 2>&1 || echo 'Move operation failed'"
+safe = false
+
+[[functions.parameters]]
+name = "source"
+type = "string"
+description = "Source file or directory"
+required = true
+
+[[functions.parameters]]
+name = "destination"
+type = "string"
+description = "Destination path"
+required = true
+
+[[functions]]
+name = "read_webpage"
+description = "Read and convert webpage content to markdown"
+command = "readable '{{url}}' | html2markdown"
+
+[[functions.parameters]]
+name = "url"
+type = "string"
+description = "URL of the webpage to read"
+required = true
+
+[[function]]
+name = "ask_question"
+description = "Ask questions about a popular tool or technology"
+command = "esa +qa '{{question}}'"
+
+[[function.parameters]]
+name = "question"
+type = "string"
+description = """Question to ask about the tool or technology.
+Example: How do I use chi router in Go?"""
 required = true
