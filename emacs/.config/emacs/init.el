@@ -3049,7 +3049,7 @@ Called with a PREFIX, resets the context buffer list before opening"
   (setq gptel-response-prefix-alist '((markdown-mode . "🤖 BOT\n") (org-mode . "🤖 BOT\n") (text-mode . "$ BOT\n")))
 
   ;; Hooks to update behaviour
-  (add-hook 'gptel-post-response-functions 'gptel-end-of-response)
+  ;; (add-hook 'gptel-post-response-functions 'gptel-end-of-response) ;; jump to end of generated text
   (add-hook 'gptel-mode-hook (lambda ()
                                (toggle-truncate-lines nil)
                                (setq-local show-trailing-whitespace nil)))
