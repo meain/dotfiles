@@ -922,7 +922,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   :init
   (add-hook 'prog-mode-hook 'flyspell-prog-mode)
   (add-hook 'text-mode-hook 'flyspell-mode)
-  :bind (:map flyspell-mode-map ("C-;" . flyspell-auto-correct-word))
+  :bind ("C-;" . flyspell-auto-correct-word)
   :config
   (setq flyspell-delay-use-timer t) ;; use timer instead of sit-for
   ;; Make flyspell work with tree-sitter
