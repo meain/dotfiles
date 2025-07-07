@@ -3,7 +3,7 @@ name = "Abin Simon"
 email = "mail@meain.io"
 
 [ui]
-default-command = "l"
+default-command = "stack"
 pager = ["sh", "-c", "diff-so-fancy | less -RFX"]
 conflict-marker-style = "git"
 # editor = "emacsclient"
