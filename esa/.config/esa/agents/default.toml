@@ -17,7 +17,7 @@ Additional notes:
 - If asked for best, cheapest or anything like that, always perform a deep research
 
 Other information:
-- Date: {{$date '+%Y-%m-%d %A'}}
+- Date: {{$date}}
 - OS: {{$uname}}
 - Current directory: {{$pwd}}
 
@@ -43,29 +43,29 @@ Query should be phrased like 'What is my ...' or 'Who am I ...' or 'What do I li
 """
 required = true
 
+## Set Reminder
 [[functions]]
-name = "store_information_about_user"
-description = "Store information about the user in the assistant's memory"
-command = "esa +mem '{{information}}'"
-safe = false
-
-[[functions.parameters]]
-name = "information"
-type = "string"
-description = "Information to store about the user. Phrase it like 'I am ...' or 'I have been ...'"
-required = true
-
-## Set Alarm
-[[functions]]
-name = "set_alarm"
-description = "Set an alarm on the system"
-command = ",apple-alarm '{{time}}'"
+name = "set_reminder"
+description = "Set a reminder"
+command = ",apple-reminder '{{hour}}' '{{minute}}' '{{title}}'"
 safe = true
 
 [[functions.parameters]]
-name = "time"
+name = "hour"
 type = "string"
-description = "Time to set the alarm (HH:mm)"
+description = "Hour to set the reminder for (24-hour format) in IST"
+required = true
+
+[[functions.parameters]]
+name = "minute"
+type = "string"
+description = "Minute to set the reminder for in IST"
+required = true
+
+[[functions.parameters]]
+name = "title"
+type = "string"
+description = "Title of the reminder. This should be a good title."
 required = true
 
 ## Get Date and Time
@@ -75,17 +75,22 @@ description = "Get current date and time"
 command = "date"
 safe = true
 
-## Delete Alarm
 [[functions]]
-name = "delete_alarm"
-description = "Delete an alarm already based on time"
-command = ",alarm-delete '{{time}}'"
+name = "convert_timezone"
+description = "Convert a given time to different timezones"
+command = "TZ={{timezone}} date +'%Y-%m-%d %H:%M:%S' -d '{{input_time}}'"
 safe = true
 
 [[functions.parameters]]
-name = "time"
+name = "input_time"
 type = "string"
-description = "Time of the alarm to be deleted (HH:mm)"
+description = "The time to convert (in format 'YYYY-MM-DD HH:MM:SS Z')"
+required = true
+
+[[functions.parameters]]
+name = "timezone"
+type = "string"
+description = "The timezone to convert to (e.g., 'America/New_York')"
 required = true
 
 ## Open Website
@@ -129,19 +134,6 @@ safe = true
 name = "url"
 type = "string"
 description = "URL of the website to summarize"
-required = true
-
-## Adjust Brightness
-[[functions]]
-name = "adjust_brightness"
-description = "Adjust screen brightness"
-command = ",adjust-brightness '{{level}}'"
-safe = true
-
-[[functions.parameters]]
-name = "level"
-type = "string"
-description = "Direction to adjust brightness (increase/decrease)"
 required = true
 
 ## Get Weather
@@ -203,14 +195,17 @@ required = true
 ## List Directory
 [[functions]]
 name = "list_directory"
-description = "List files in a directory."
-command = "ls ./{{directory}}"
+description = """
+List the file and folders in one of the directory in the vault
+In the response if something ends with a `/`, it is a directory, otherwise it is a file.
+"""
+command = "find './{{directory}}' -exec file {} \\;"
 safe = true
 
 [[functions.parameters]]
 name = "directory"
 type = "string"
-description = "Directory to list. All paths should be relative paths. It will be prefixed with `./`"
+description = "Directory to list. All paths should be relative paths."
 required = true
 
 ## Print Directory Tree
@@ -250,22 +245,6 @@ format = "--context %d"
 name = "directory"
 type = "string"
 description = "Directory or file to search in. All paths should be relative paths. It will be prefixed with `./`"
-required = true
-
-## Refer
-[[functions]]
-name = "refer"
-description = """Refer is a tool that lets you perform a vector search on a documents in the directory.
-It can be performed if there is a .referdb file in the directory.
-This can be used to semantically search for things in the documents.
-It returns you a list of files that might contain relevant data."""
-command = "refer search '{{query}}'"
-safe = true
-
-[[functions.parameters]]
-name = "query"
-type = "string"
-description = "Query to search for in the referdb file"
 required = true
 
 ## Calendar
@@ -309,4 +288,17 @@ safe = true
 name = "expression"
 type = "string"
 description = "Mathematical expression to calculate (eg: 2+2)"
+required = true
+
+## Run command
+[[functions]]
+name = "run_shell_command"
+description = "Run a shell command in the current directory"
+command = "{{command}}"
+safe = false
+
+[[functions.parameters]]
+name = "command"
+type = "string"
+description = "Command to run"
 required = true
