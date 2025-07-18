@@ -212,7 +212,10 @@ function utils.moveMouseToCurrentWindowScreen()
     local currentApp = hs.window.focusedWindow()
     local screen = currentApp:screen()
     local pt = hs.geometry.rectMidPoint(screen:fullFrame())
-    hs.mouse.setAbsolutePosition(pt)
+    local currentScreen = hs.screen.mainScreen()
+    if currentScreen:id() ~= screen:id() then
+        hs.mouse.setAbsolutePosition(pt)
+    end
 end
 
 function utils.moveMouseToScreen(screen)
