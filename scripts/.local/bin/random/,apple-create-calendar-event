@@ -1,0 +1,46 @@
+#!/usr/bin/osascript
+
+-- This script creates a Calendar event with a notification at the specified time
+-- Usage: osascript this_script.scpt "HH:mm" "Event Title"
+
+on run argv
+    if (count of argv) < 1 then
+        display dialog "Please provide the time in HH:mm format as the first argument." buttons {"OK"}
+        return
+    end if
+
+    set inputTime to item 1 of argv
+    if (count of argv) ≥ 2 then
+        set eventTitle to item 2 of argv
+    else
+        set eventTitle to "Calendar Event"
+    end if
+
+    -- Parse input time
+    set currentTime to current date
+    set hourPart to word 1 of inputTime
+    set minutePart to word 2 of inputTime
+
+    try
+        set eventTime to currentTime
+        set hours of eventTime to hourPart
+        set minutes of eventTime to minutePart
+        set seconds of eventTime to 0
+    on error
+        display dialog "Invalid time format. Use HH:mm." buttons {"OK"}
+        return
+    end try
+
+    -- Create the calendar event with a notification (display alarm)
+    tell application "Calendar"
+        set calendarName to "Calendar"
+        tell calendar calendarName
+            set newEvent to make new event with properties {summary:eventTitle, start date:eventTime, end date:eventTime + (30 * 60)}
+            tell newEvent
+                make new display alarm with properties {trigger interval:0} -- Notification at event start
+            end tell
+        end tell
+    end tell
+
+    display dialog "Event '" & eventTitle & "' has been set for " & inputTime & " with a notification." buttons {"OK"}
+end run
