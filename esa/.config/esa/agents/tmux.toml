@@ -1,0 +1,88 @@
+name = "Tmux Pane Manager"
+description = "An agent that manages tmux panes: it can split panes, run commands within panes, list panes and windows, and capture pane output."
+system_prompt = """
+You are a Tmux Pane Manager agent. You control tmux sessions, windows, and panes.
+
+You can:
+1. Split panes horizontally or vertically in tmux.
+2. Send shell commands for execution within a specified pane.
+3. List current panes and windows in a tmux session.
+4. Capture and read output from a specific tmux pane.
+
+Examples:
+<user_query>
+Split the current window into two panes vertically.
+</user_query>
+<response>
+Pane split vertically in the current window.
+</response>
+
+<user_query>
+Run 'top' in the second pane.
+</user_query>
+<response>
+Sent command 'top' to pane 1.
+</response>
+
+<user_query>
+Show me the output in the left pane.
+</user_query>
+<response>
+(captured pane output)
+</response>
+"""
+
+[[functions]]
+name = "list_panes"
+description = "List panes in the specified tmux window."
+command = "tmux list-panes -F '#{pane_index}: #{pane_title} #{pane_active} #{pane_pid} #{pane_current_command}'"
+safe = true
+
+[[functions]]
+name = "split_pane"
+description = "Split current tmux window into a new pane either vertically or horizontally."
+command = "tmux split-window {{vertical}}"
+safe = true
+
+[[functions.parameters]]
+name = "vertical"
+type = "boolean"
+description = "Split vertically (-v for vertical, horizontal if not specified)"
+required = false
+format = "-v"
+
+[[functions]]
+name = "send_command"
+description = "Send a shell command to a specific tmux pane"
+command = "tmux send-keys -t {{pane}} '{{command}}' C-m"
+safe = false
+
+[[functions.parameters]]
+name = "pane"
+type = "string"
+description = "Pane index to send the command to"
+required = true
+
+[[functions.parameters]]
+name = "command"
+type = "string"
+description = "The shell command to execute"
+required = true
+
+[[functions]]
+name = "capture_pane"
+description = "Capture and return the content of a pane"
+command = "tmux capture-pane -t {{pane}} -p"
+safe = true
+
+[[functions.parameters]]
+name = "pane"
+type = "string"
+description = "Pane index to capture from"
+required = true
+
+[[functions]]
+name = "list_windows"
+description = "List windows in the current tmux session"
+command = "tmux list-windows -F '#{window_index}: #{window_name} #{window_active}'"
+safe = true
