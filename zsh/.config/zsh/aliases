@@ -50,6 +50,7 @@ alias co="esa +coder"
 alias mem="esa +mem"
 alias em=",emoji-picker"
 alias brain="esa +brain"
+alias rem="esa remind me at"
 alias tk=",tweak"
 
 # ledger
@@ -98,6 +99,7 @@ alias je='jj edit'
 alias jab='jj abandon'
 alias jj-squash-multi="jj log | fzf -m | cut -d' ' -f3 | xargs -n1 jj squash -r"
 alias jwu='jj workspace update-stale'
+alias jnm='jj git fetch && jj new main || jj new master'
 
 # utils
 alias ppid='ps -o ppid= -p'
