@@ -31,8 +31,15 @@ function custom_additions() {
 
 function precmd() {
     function asyncp() {
-      printf "\n%s[%s] %s%s\n✨ " '%F{white}' "$(dir_from_base)" "$(custom_additions)" "%{$reset_color%}" >"/tmp/zsh_lprompt_$$" # do not clear, let it persist
-        kill -s USR1 $$                                           # signal parent
+        # Alternate: "%(?..%F{red}[%?] )"
+        printf "\n%s[%s] %s%s\n%s " \
+            '%F{white}' \
+            "$(dir_from_base)" \
+            "$(custom_additions)" \
+            "%{$reset_color%}" \
+            "%(?.✨.💥️)" \
+            > "/tmp/zsh_lprompt_$$"
+        kill -s USR1 $$  # signal parent
     }
 
     asyncp &!
