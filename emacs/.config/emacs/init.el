@@ -893,6 +893,7 @@ Pass ORIG-FN, BEG, END, TYPE, ARGS."
   (aas-set-snippets 'go-ts-mode
     "!+" "!="
     ";;" ":="
+    ";ee" 'tree-surgeon-go-error
     ";j" '(tempel "fmt.Println(\"" r "\")")
     ";ap" '(tempel (s slice) " = append(" (s slice) ", " r ")")
     ";rr" '(tempel "for _, " p " := range " p "{" n> r> n> "}")
