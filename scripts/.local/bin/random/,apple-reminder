@@ -4,11 +4,20 @@ set -e
 
 HOUR="$1"
 MINUTE="$2"
-SECOND="0" # too much
-ALARM_NAME="${3:-"Reminder"}"
+SECOND="0"
+DATE="${3:-$(date +%Y-%m-%d)}"
+ALARM_NAME="${4:-Reminder}"
+
+# Parse date into Y M D
+YEAR=$(echo "$DATE" | cut -d- -f1)
+MONTH=$(echo "$DATE" | cut -d- -f2)
+DAY=$(echo "$DATE" | cut -d- -f3)
 
 osascript <<EOF
 set alarmTime to (current date)
+set year of alarmTime to $YEAR
+set month of alarmTime to $MONTH
+set day of alarmTime to $DAY
 set hours of alarmTime to $HOUR
 set minutes of alarmTime to $MINUTE
 set seconds of alarmTime to $SECOND
@@ -16,3 +25,4 @@ if alarmTime < (current date) then
     set alarmTime to alarmTime + (1 * days)
 end if
 tell application "Reminders" to make new reminder with properties {name:"$ALARM_NAME", remind me date:alarmTime}
+EOF
