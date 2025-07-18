@@ -2591,8 +2591,7 @@ Pass INSERT-TO-BUFFER to insert output to current buffer."
           (json . ("https://github.com/tree-sitter/tree-sitter-json" "master"))
           (just . ("https://github.com/IndianBoy42/tree-sitter-just" "main"))
           ;; (nix . ("https://github.com/nix-community/tree-sitter-nix" "master")) ;; no nix-ts-mode
-          ;; method_spec was removed from upstream go grammar, but emacs treesit depends on it
-          (go . ("https://github.com/meain/tree-sitter-go" "e395081"))
+          (go . ("https://github.com/tree-sitter/tree-sitter-go" "master"))
           (go-mod . ("https://github.com/camdencheek/tree-sitter-go-mod" "main"))
           (python . ("https://github.com/tree-sitter/tree-sitter-python"))))
 
