@@ -1,0 +1,39 @@
+#!/bin/sh
+
+set -e
+
+if [ -z "$1" ]; then
+  echo "Usage: $0 <youtube-url>" >&2
+  exit 1
+fi
+
+URL="$1"
+
+# Extract video ID from URL
+VIDEO_ID=$(echo "$URL" | sed -n 's/.*v=\([^&]*\).*/\1/p')
+if [ -z "$VIDEO_ID" ]; then
+  VIDEO_ID=$(echo "$URL" | sed -n 's#.*youtu\.be/\([^?&]*\).*#\1#p')
+fi
+
+if [ -z "$VIDEO_ID" ]; then
+  echo "Could not extract video ID." >&2
+  exit 2
+fi
+
+FILE="/tmp/yt-subtitle-$VIDEO_ID"
+
+if [ ! -f "$FILE.vtt" ]; then
+  yt-dlp --write-auto-sub --skip-download --sub-format "vtt" -o "$FILE" "$URL" >/dev/null
+  # yt-dlp may add '.en.vtt' postfix, so correct FILE name if needed
+  LANG_FILE="/tmp/yt-subtitle-$VIDEO_ID.en.vtt"
+  [ -f "$LANG_FILE" ] && mv "$LANG_FILE" "$FILE.vtt"
+fi
+
+if [ ! -f "$FILE.vtt" ]; then
+  echo "Subtitle file not found." >&2
+  exit 3
+fi
+
+ffmpeg -i "$FILE.vtt" -f srt pipe:1 2>/dev/null | 
+	sed -e '/^[0-9][0-9][0-9:,>]*/d;/^ *$/d' | tr -d '\r' | uniq
+
