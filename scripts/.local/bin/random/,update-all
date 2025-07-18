@@ -22,7 +22,7 @@ gh extension upgrade --all
 if [ "$1" != "nonix" ]; then
     if [ "$(uname -s)" = "Darwin" ]; then
         cd ~/.dotfiles/nix-darwin/.config/nix-darwin && nix flake update
-        darwin-rebuild switch --flake ~/.dotfiles/nix-darwin/.config/nix-darwin
+        sudo darwin-rebuild switch --flake ~/.dotfiles/nix-darwin/.config/nix-darwin
         killall Dock Finder
     fi
     ,hm update-all
