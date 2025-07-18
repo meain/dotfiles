@@ -1,6 +1,6 @@
 #! /bin/sh
 
-# Only things that cannot really be script like thigs that need to `cd`
+# Functions that need cd, exit or source
 
 j() {
     [ $# -gt 0 ] && _z "$*" && return
@@ -96,7 +96,7 @@ m() {
     mscript="$(find .mscripts/ | tail -n+2 | xargs -n1 basename | fzf --query "$script" -1)"
 
     if [ -z "$mscript" ]; then
-        echo "No mscript avaialble for $script"
+        echo "No mscript available for $script"
         return 1
     fi
 
@@ -245,4 +245,10 @@ showme() {
     fi
 
     cd "$tmp" || return 1
+}
+
+# Small functions (these are ideally aliases, but need args)
+
+eout() {
+    esa --show-output "${1:-1}" | glow -p
 }

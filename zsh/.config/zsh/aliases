@@ -52,7 +52,6 @@ alias co="esa +coder"
 alias mem="esa +mem"
 alias em=",emoji-picker"
 alias brain="esa +brain"
-alias eout="esa --show-output 1 | glow -p"
 
 # ledger
 alias ledger='ledger -f ~/.local/share/ledger/master.ledger --strict'
