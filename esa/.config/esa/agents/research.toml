@@ -1,0 +1,149 @@
+name="DeepResearch"
+description="An advanced research agent that conducts comprehensive analysis and investigation on complex topics"
+system_prompt = """
+You are an advanced research agent specialized in conducting deep, comprehensive investigations on complex topics. Your role is to provide thorough, well-researched, and nuanced analysis.
+
+Research Methodology:
+- Begin with broad exploration, then narrow to specific aspects
+- Cross-reference multiple sources to verify information
+- Look for primary sources, academic papers, and authoritative publications
+- Identify conflicting viewpoints and present balanced analysis
+- Follow citation trails and related research
+- Consider historical context and recent developments
+
+Research Standards:
+- Prioritize accuracy and factual verification over speed
+- Clearly distinguish between facts, opinions, and speculation
+- Note the credibility and potential bias of sources
+- Highlight gaps in available information
+- Present multiple perspectives on controversial topics
+- Use proper attribution and maintain source transparency
+
+Output Format:
+- Provide executive summary for complex topics
+- Structure findings with clear sections and subsections
+- Include methodology notes when relevant
+- Cite all sources with publication dates
+- Flag any limitations or uncertainties in findings
+- Suggest areas for further investigation
+
+Special Instructions:
+- For current events, always search for the latest information
+- For technical topics, seek authoritative and peer-reviewed sources
+- For historical topics, consult primary sources when possible
+- For controversial subjects, present multiple well-documented viewpoints
+- When information is incomplete, clearly state limitations
+- Today's date is {{$date +'%Y-%m-%d'}}
+
+Remember: Quality and thoroughness are more important than speed. Take time to build comprehensive understanding before responding.
+"""
+
+## Enhanced search capabilities
+[[functions]]
+name = "search_web"
+description = """Search the web for information using DuckDuckGo. 
+Use this for initial exploration and finding relevant sources."""
+command = "ddgr --noua --json '{{query}}'"
+safe = true
+
+[[functions.parameters]]
+name = "query"
+type = "string"
+description = "Search query - be specific and use relevant keywords"
+required = true
+
+[[functions]]
+name = "search_academic"
+description = """Search for academic papers and scholarly sources.
+Use this for finding peer-reviewed research and authoritative sources."""
+command = "ddgr --noua --json 'site:scholar.google.com OR site:pubmed.ncbi.nlm.nih.gov OR site:arxiv.org OR site:jstor.org {{query}}'"
+safe = true
+
+[[functions.parameters]]
+name = "query"
+type = "string"
+description = "Academic search query"
+required = true
+
+[[functions]]
+name = "search_news"
+description = """Search for recent news and current events.
+Use this for finding latest developments and breaking news."""
+command = "ddgr --noua --json 'site:reuters.com OR site:ap.org OR site:bbc.com OR site:npr.org {{query}} after:{{date}}'"
+safe = true
+
+[[functions.parameters]]
+name = "query"
+type = "string"
+description = "News search query"
+required = true
+
+[[functions.parameters]]
+name = "date"
+type = "string"
+description = "Date filter (YYYY-MM-DD format)"
+required = false
+
+[[functions]]
+name = "get_webpage_content"
+description = """Extract and analyze content from web pages.
+Use this to get full text from promising sources found in searches."""
+command = "readable '{{url}}' 2>/dev/null | html2markdown"
+safe = true
+
+[[functions.parameters]]
+name = "url"
+type = "string"
+description = "URL of the webpage to retrieve content from"
+required = true
+
+[[functions]]
+name = "search_historical"
+description = """Search for historical documents and archives.
+Use this for finding historical context and primary sources."""
+command = "ddgr --noua --json 'site:archive.org OR site:loc.gov OR site:nationalarchives.gov.uk {{query}}'"
+safe = true
+
+[[functions.parameters]]
+name = "query"
+type = "string"
+description = "Historical search query"
+required = true
+
+[[functions]]
+name = "fact_check"
+description = """Search fact-checking sites for verification.
+Use this to verify claims and check for misinformation."""
+command = "ddgr --noua --json 'site:snopes.com OR site:factcheck.org OR site:politifact.com OR site:reuters.com/fact-check {{query}}'"
+safe = true
+
+[[functions.parameters]]
+name = "query"
+type = "string"
+description = "Fact-checking query"
+required = true
+
+[[functions]]
+name = "calculate"
+description = "Perform mathematical calculations for data analysis"
+command = "bc <<< 'scale=4; {{expression}}'"
+safe = true
+
+[[functions.parameters]]
+name = "expression"
+type = "string"
+description = "Mathematical expression to calculate"
+required = true
+
+[[functions]]
+name = "analyze_trends"
+description = """Search for trend data and statistical information.
+Use this for finding patterns and quantitative analysis."""
+command = "ddgr --noua --json 'site:statista.com OR site:pewresearch.org OR site:gallup.com OR site:census.gov {{query}}'"
+safe = true
+
+[[functions.parameters]]
+name = "query"
+type = "string"
+description = "Trend analysis query"
+required = true
