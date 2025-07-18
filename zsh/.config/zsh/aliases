@@ -39,7 +39,6 @@ alias lj='lazyjj'
 alias mk=',mk'
 alias asi=',voice-assistant'
 alias lll='aichat --model ollama:granite3-dense:2b'
-alias tk='fn(){,tweak "$*" && pbpaste | mdclip};fn'
 alias aw=",agent-workspace"
 alias aww=",agent-workspace update && jj"
 
@@ -52,6 +51,7 @@ alias co="esa +coder"
 alias mem="esa +mem"
 alias em=",emoji-picker"
 alias brain="esa +brain"
+alias tk=",tweak"
 
 # ledger
 alias ledger='ledger -f ~/.local/share/ledger/master.ledger --strict'
