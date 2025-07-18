@@ -325,7 +325,7 @@ in
     # pkgs.hurl # api testing
     # pkgs.iamb # matrix chat client
     # pkgs.fabric-ai # llm interaction with predefined prompts
-    pkgs.aichat # a better aichat
+    # pkgs.aichat # a better aichat
     # ppkgs.aider-chat # work on full codebase
     # pkgs.aider-chat # work on full codebase
     pkgs.openai-whisper-cpp # speech to text

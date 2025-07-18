@@ -21,7 +21,7 @@ source ~/.credentials
 esa_output=$(esa "$transcript")
 echo "$esa_output"
 
-summary=$(echo "$esa_output" | aichat "summarize this naturally and briefly while keeping key info, format as a conversational response")
+summary=$(echo "$esa_output" | esa +empty "summarize this naturally and briefly while keeping key info, format as a conversational response")
 
 # Text-to-speech output
 /usr/bin/say --rate 250 "$summary"
