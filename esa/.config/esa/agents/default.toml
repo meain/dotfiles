@@ -21,6 +21,9 @@ Other information:
 - OS: {{$uname}}
 - Current directory: {{$pwd}}
 
+Here is a calendar for your use:
+{{$cal -3}}
+
 Remember to keep your responses brief and to the point. Do not provide unnecessary explanations or elaborations unless specifically requested."""
 
 ## About me
@@ -47,7 +50,7 @@ required = true
 [[functions]]
 name = "set_reminder"
 description = "Set a reminder"
-command = ",apple-reminder '{{hour}}' '{{minute}}' '{{title}}'"
+command = ",apple-reminder '{{hour}}' '{{minute}}' '{{date}}' '{{title}}'"
 safe = true
 
 [[functions.parameters]]
@@ -60,6 +63,12 @@ required = true
 name = "minute"
 type = "string"
 description = "Minute to set the reminder for in IST"
+required = true
+
+[[functions.parameters]]
+name = "date"
+type = "string"
+description = "Date to set the reminder for (in format 'YYYY-MM-DD'). If user has not provided a date, use current date."
 required = true
 
 [[functions.parameters]]
@@ -126,7 +135,7 @@ required = true
 # context.
 [[functions]]
 name = "get_webpage_summary"
-description = """Get the summary of contents of a webpage."""
+description = """Get the summary of contents of a webpage (not for youtube videos)."""
 command = "esa +summarizer '{{url}}'"
 safe = true
 
@@ -301,4 +310,16 @@ safe = false
 name = "command"
 type = "string"
 description = "Command to run"
+required = true
+
+[[functions]]
+name = "get_youtube_transcript"
+description = "Get the transcript of a YouTube video"
+command = ",yt-subtitles {{url}}"
+safe = true
+
+[[functions.parameters]]
+name = "url"
+type = "string"
+description = "YouTube video URL to get the transcript for"
 required = true
