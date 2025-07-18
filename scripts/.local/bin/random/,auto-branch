@@ -4,12 +4,11 @@ set -e
 
 PROMPT="Give me a branch name based on the provided git commit message.
 Keep it to 3 words or less and separated by '-'.
-Only return the branch name without anything else in your response.
-"
+Only return the branch name without anything else in your response."
 
 commit="${1:-@}"
 
-branch="$(jj log --template=description -r "$commit" --no-graph | aichat "$PROMPT")"
+branch="$(jj log --template=description -r "$commit" --no-graph | esa +empty "$PROMPT")"
 read -p "Use 'meain/$branch' (Y/n) " confirm
 if [ "$confirm" != "n" ]; then
     jj bookmark set "meain/$branch" -r "$commit"

@@ -28,72 +28,72 @@ fi
 case "$1" in
 professional)
     echo "$input" |
-        aichat "Make this message sound more professional but not lame. This is a chat message and so no need for signing like in an email."
+        esa +empty "Make this message sound more professional but not lame. This is a chat message and so no need for signing like in an email."
     ;;
 lame)
     echo "$input" |
-        aichat "Make this into a dead serious corporate sounding message. This is a chat message and so no need for signing like in an email."
+        esa +empty "Make this into a dead serious corporate sounding message. This is a chat message and so no need for signing like in an email."
     ;;
 email)
     echo "$input" |
-        aichat "Make this into a casual business email."
+        esa +empty "Make this into a casual business email."
     ;;
 summarize | summary)
     if [ -n "$input" ]; then
         echo "$input" |
-            aichat "Summarize the given text."
+            esa +empty "Summarize the given text."
     elif [ -n "$2" ]; then
         # if YouTube link then get subtitles and summarize that
         if echo "$2" | grep -q youtube.com; then
             get_youtube_subtitle "$2" |
-                aichat "Summarize the video using the subtitles provided."
+                esa +empty "Summarize the video using the subtitles provided."
         else
             printf "Downloading article from the web...\r" >&2
             readable "$2" 2>/dev/null |
-                aichat 'Summarize the given article.'
+                esa +empty 'Summarize the given article.'
         fi
     fi
     ;;
 article-summary)
     echo "$input" |
-        aichat "Summarize this article. Give a 2 line summary at the top with a point by point breakdown of the article (max 10 points).
+        esa +empty "Summarize this article. Give a 2 line summary at the top with a point by point breakdown of the article (max 10 points).
 Use markdown when necessary. Retain the relative order in which data is presented in the article. Use emojies to make it more engaging.
 No need to have headers like Article summary or point by point breakdown."
     ;;
 keypoints)
     echo "$input" |
-        aichat "List the key points of this message."
+        esa +empty "List the key points of this message."
     ;;
 explain)
     echo "$input" |
-        aichat "Can you explain this?"
+        esa +empty "Can you explain this?"
     ;;
 commit-message)
     get_git_diff |
-        aichat "Write a commit message header (limit to 80 chars) and a description for the following diff. The response should only contain the message and should not contain any extra markers or unnecessary quotes."
+        esa +empty "Write a commit message header (limit to 80 chars) and a description for the following diff. The response should only contain the message and should not contain any extra markers or unnecessary quotes."
     ;;
 declickbait)
     echo "$input" |
-        aichat "Can you make this less clickbaity?"
+        esa +empty "Can you make this less clickbaity?"
     ;;
 proofread)
     echo "$input" |
-        aichat "Can you proofread this for spelling, grammar and readability?"
+        esa +empty "Can you proofread this for spelling, grammar and readability?"
     ;;
 shell)
     shift
-    aichat --prompt "You are in a bash shell on $(uname -o). Give me the shell command to do the task I ask for." "$@"
+    esa +empty --prompt "You are in a bash shell on $(uname -o). Give me the shell command to do the task I ask for." "$@"
     ;;
 rec)
     shift
     echo "$input" |
-        aichat --prompt "This is the transcription of a thinking session where I was talking to myself. Can you summarize the important points  in short as well as list out any todo items I set up for myself? The todo items should be one liner markdown tasks"
+        esa +empty --prompt "This is the transcription of a thinking session where I was talking to myself. Can you summarize the important points  in short as well as list out any todo items I set up for myself? The todo items should be one liner markdown tasks"
     ;;
 howto)
     # https://antonz.org/howto/
     shift
     echo "$input" |
-        aichat --prompt "Give me a the command which lets me do the following task with short explanation.
+        esa +empty --prompt "Give me a the command which lets me do the following task with short explanation.
 First line of the response should be the command, following by a blank line followed by an explanation.
 
 For example if I ask 'curl example.org but print only the headers', the response should be:
@@ -104,7 +104,22 @@ The \`curl\` command is used to transfer data from or to a server.
 The \`-I\` option tells \`curl\` to fetch the HTTP headers only, without the body
 content." "$@"
     ;;
+breakdown)
+    # Inspired by Magic Todo https://goblin.tools/
+    shift
+    esa +empty --prompt "You are a task master.
+Break the provided task into smaller easily actionable tasks.
+
+Provide a simple bulleted list of tasks in the following format:
+
+<example>
+Task
+- [ ] Subtask 1
+- [ ] Subtask 2
+</example>
+" "$@"
+    ;;
 *)
-    aichat "$1"
+    esa +empty "$*"
     ;;
 esac

@@ -38,7 +38,6 @@ alias lg='lazygit'
 alias lj='lazyjj'
 alias mk=',mk'
 alias asi=',voice-assistant'
-alias lll='aichat --model ollama:granite3-dense:2b'
 alias aw=",agent-workspace"
 alias aww=",agent-workspace update && jj"
 

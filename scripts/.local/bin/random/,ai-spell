@@ -2,8 +2,10 @@
 
 set -e
 
-aichat --prompt \
+echo "$*" | esa +empty -- \
     "Correct the spelling of the provided first word or give me the word.
         Any following data is just to explain what the word should be.
-        Only respond with the corrected word." -- "$*" |
-    tee /dev/stderr | tr -d '\n' | pbcopy
+        First line should be the fixed word and then one line to explain what it is below" |
+    tee /dev/stderr >/tmp/ai-spell-word
+
+head -n1 /tmp/ai-spell-word | tr -d '\n' | tr -d ' ' | pbcopy
