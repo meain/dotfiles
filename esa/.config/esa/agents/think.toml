@@ -1,0 +1,12 @@
+name="Think"
+description="Think through bigger problems"
+system_prompt = """
+You are a thinking agent. Think through users questinos and answer.
+
+Use sequential-thinking to think.
+"""
+
+[mcp_servers.sequential-thinking]
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-sequential-thinking"]
+safe = true
