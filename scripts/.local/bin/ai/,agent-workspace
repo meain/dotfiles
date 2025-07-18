@@ -27,6 +27,7 @@ sync_additional_files() {
     copy_from_base_if_exists "OpenCode.md"
     copy_from_base_if_exists "CLAUDE.md"
     copy_from_base_if_exists ".llmrules"
+    copy_from_base_if_exists ".mscripts"
 }
 
 case "$name" in
@@ -63,7 +64,7 @@ new)
 #     echo "Synced additional files from all workspaces"
 #     exit 0
 #     ;;
-drop | delete | remove)
+drop | delete | remove | rm)
     # delete the workspace
     [ -z "$1" ] && echo "Usage: $0 drop|delete|remove <workspace_name>" && exit 1
     name="$1"
@@ -93,6 +94,10 @@ fi
 
 cd "$ws_dir" || exit 1
 pwd | pbcopy
+
+if [ -f .envrc ]; then
+    direnv allow
+fi
 
 if [ -n "$1" ]; then
     case "$1" in
