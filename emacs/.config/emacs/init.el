@@ -3050,9 +3050,9 @@ Called with a PREFIX, resets the context buffer list before opening"
   (setq gptel-expert-commands t)
   (setq gptel-use-tools t)
   (setq gptel-include-tool-results t)
-  (setq gptel-default-mode 'org-mode)
-  (setq gptel-prompt-prefix-alist '((markdown-mode . "🗣️ YOU\n") (org-mode . "🗣️ YOU\n") (text-mode . "# YOU\n")))
-  (setq gptel-response-prefix-alist '((markdown-mode . "🤖 BOT\n") (org-mode . "🤖 BOT\n") (text-mode . "$ BOT\n")))
+  (setq gptel-default-mode 'org-mode) ;; tool calls don't fold in markdown mode
+  (setq gptel-prompt-prefix-alist '((markdown-mode . "🗣️ YOU\n") (org-mode . "* 🗣️ YOU\n") (text-mode . "# YOU\n")))
+  (setq gptel-response-prefix-alist '((markdown-mode . "🤖 BOT\n") (org-mode . "* 🤖 BOT\n") (text-mode . "$ BOT\n")))
 
   ;; Hooks to update behaviour
   ;; (add-hook 'gptel-post-response-functions 'gptel-end-of-response) ;; jump to end of generated text
