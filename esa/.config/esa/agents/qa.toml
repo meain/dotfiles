@@ -14,7 +14,7 @@ Notes:
 
 ## DDG search
 [[functions]]
-name = "get_search_results"
+name = "web_search"
 description = """Get search results from DuckDuckGo.
 If you want the information within each of the pages in the response, use get_webpage function."""
 # https://github.com/jarun/ddgr/issues/159#issuecomment-1862655714
