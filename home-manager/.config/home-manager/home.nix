@@ -101,6 +101,7 @@ in
     pkgs.jujutsu # better git wrapper
     pkgs.lazyjj # tui for jj
     # pkgs.comby # code modification
+    pkgs.mbake # Makefile linter & formatter
 
     # aspell dicts
     pkgs.aspellDicts.en
@@ -161,7 +162,7 @@ in
     # pkgs.gotests # test generation for golang
 
     # programming-web
-    pkgs.deno # for running deno binaries (eg: silverbullet)
+    # pkgs.deno # for running deno binaries (eg: silverbullet)
     pkgs.html-tidy # html formatter
     pkgs.nodejs # nodejs
     # pkgs.nodePackages.neovim # neovim package for js support
@@ -169,7 +170,7 @@ in
     pkgs.nodePackages.prettier # formatting for web stuff
     # pkgs.nodePackages.pnpm # package management
     pkgs.nodePackages.typescript # typescript
-    pkgs.vscode-langservers-extracted # css languageserver
+    pkgs.vscode-langservers-extracted # languageservers from vscode (css, json)
     pkgs.nodePackages.typescript-language-server # javascript langserver
 
     # programming-nix
@@ -182,8 +183,8 @@ in
     # programming-python
     spkgs.python3 # python language
     spkgs.uv # a better python env
-    spkgs.poetry # better package manager
-    spkgs.black # python code formatter
+    # spkgs.poetry # better package manager
+    spkgs.black # python code formatter (TODO: switch to ruff)
     spkgs.python3Packages.pip
     spkgs.python3Packages.flake8 # linter
     # pkgs.python3Packages.ipdb # interactive debugging
@@ -223,7 +224,6 @@ in
 
     # programming-other
     pkgs.nodePackages.yaml-language-server # language server for yaml
-    pkgs.nodePackages.vscode-json-languageserver # language server for json
     # ppkgs.prosemd-lsp # prose lsp
     pkgs.nodePackages.fixjson # much better json formatter
     pkgs.nodePackages.jsonlint # json linting
@@ -234,7 +234,7 @@ in
     # pkgs.sqlfluff # sql linter
     # pkgs.python39Packages.sqlparse # sqlformat
     # pkgs.grpcurl # curl for grpc
-    pkgs.zprint # clojure formatter
+    # pkgs.zprint # clojure formatter
     tree-grepper.outputs.packages.${system}.tree-grepper # grep with tree-sitter
     # pkgs.comby # code mod
     # pkgs.ruby # ruby language
@@ -250,7 +250,7 @@ in
     # pkgs.guake # drop down terminal
     # pkgs.insomnia # simpler postman
     # pkgs.beekeeper-studio # db viewer
-    pkgs.zathura # pdf viewer
+    # pkgs.zathura # pdf viewer
     # pkgs.sxiv # image viewer
     # pkgs.vscode-fhs # vscode
 
@@ -281,7 +281,7 @@ in
     # pkgs.jrnl # journaling
     # pkgs.figlet # make big text
     # pkgs.gource # source tree visualisation
-    pkgs.tig # tui git interface
+    # pkgs.tig # tui git interface
     pkgs.lazygit # tui git interface
     # pkgs.lazydocker # tui docker interface
     # pkgs.docker-compose # docker-compose
@@ -319,7 +319,7 @@ in
     # pkgs.minicom # connect to rpi
     # pkgs.mitmproxy # mitm proxy
     # pkgs.spotifyd # spotify daemon
-    # pkgs.spotify-tui # control spotify
+    (pkgs.spotify-player.override { withSixel = false; }) # spotify tui (sixel not available in tmux)
     pkgs.cloc # line count code
     pkgs.helix # alternate editor
     # pkgs.hurl # api testing
@@ -330,8 +330,8 @@ in
     # pkgs.aider-chat # work on full codebase
     pkgs.openai-whisper-cpp # speech to text
     # pkgs.open-webui # webui for llms
-    pkgs.feh # image viewer (for desktop background)
-    pkgs.kopia # backup
+    # pkgs.feh # image viewer (for desktop background)
+    # pkgs.kopia # backup
     spkgs.piper-tts # text to speech
     pkgs.readability-cli # simplify articles
     pkgs.glow # markdown renderer
@@ -340,9 +340,11 @@ in
     pkgs.jira-cli-go # jira cli
     # ppkgs.prr # local pr review
     pkgs.ddgr # ddg search from terminal
-    ppkgs.probe # code search
+    # ppkgs.probe # code search
+    # pkgs.claude-code # ai coding
+    pkgs.opencode
 
-    pkgs.nur.repos.rycee.mozilla-addons-to-nix # package firefox addons
+    # pkgs.nur.repos.rycee.mozilla-addons-to-nix # package firefox addons
   ]
   # ++ linuxpkgs
   ++ fonts;
