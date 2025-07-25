@@ -51,6 +51,7 @@ alias mem="esa +mem"
 alias em=",emoji-picker"
 alias brain="esa +brain"
 alias rem="esa remind me at"
+alias summ="esa summarize key points from"
 alias tk=",tweak"
 
 # ledger
@@ -96,7 +97,6 @@ alias jr='jj rebase -d'
 alias jb='jj bookmark set'
 alias jbm=',jj-bookmark-move'
 alias je='jj edit'
-alias jab='jj abandon'
 alias jj-squash-multi="jj log | fzf -m | cut -d' ' -f3 | xargs -n1 jj squash -r"
 alias jwu='jj workspace update-stale'
 alias jnm='jj git fetch && jj new main || jj new master'
