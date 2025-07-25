@@ -324,3 +324,21 @@ name = "url"
 type = "string"
 description = "YouTube video URL to get the transcript for"
 required = true
+
+[[functions]]
+name = "write_file"
+description = "Write content to file"
+command = "tee {{file}}"
+stdin = "{{content}}"
+
+[[functions.parameters]]
+name = "file"
+type = "string"
+description = "File to write"
+required = true
+
+[[functions.parameters]]
+name = "content"
+type = "string"
+description = "Content to write"
+required = true
