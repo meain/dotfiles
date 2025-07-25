@@ -186,7 +186,7 @@ required = false
 [[functions]]
 name = "search_symbols"
 description = "Find symbols (functions/types/variables) with enhanced filtering"
-command = ",symbol-search | grep ':{{kind}}:' | grep -i '{{pattern}}'"
+command = ",symbol-search | grep -i '{{pattern}}'"
 pwd = "{{directory}}"
 safe = true
 
@@ -195,13 +195,6 @@ name = "directory"
 type = "string"
 description = "Directory to search in"
 required = false
-
-[[functions.parameters]]
-name = "kind"
-type = "string"
-description = "Symbol type to search for"
-options = ["function", "type", "variable", "constant", "method", "struct", "interface"]
-required = true
 
 [[functions.parameters]]
 name = "pattern"
