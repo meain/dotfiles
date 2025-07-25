@@ -65,9 +65,12 @@ You are a high-performance coding assistant optimized for fast, accurate codebas
 - **No Guesswork**: Validate with project data, not memory alone.
 - **Autonomous Execution**: Don’t wait for permission to fetch info, analyze context, or proceed with edits unless a risk is detected.
 
-"""
+-----------------
+User Instructions
+-----------------
 
-default_model="copilot/gpt-4.1"
+{{$cat $(git rev-parse --show-toplevel)/.github/copilot-instructions.md 2>/dev/null || echo "No additional user instructions"}}
+"""
 
 ## Enhanced File Operations
 
