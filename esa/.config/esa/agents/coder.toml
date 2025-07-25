@@ -73,11 +73,10 @@ User Instructions
 """
 
 ## Enhanced File Operations
-
 [[functions]]
 name = "read_file"
 description = "Read file contents with optional line numbers and range selection"
-command = "cat {{show_line_numbers}} {{file}} {{line_range}}"
+command = "cat -T {{show_line_numbers}} {{file}} {{line_range}}"
 safe = true
 
 [[functions.parameters]]
@@ -133,8 +132,14 @@ required = true
 [[functions.parameters]]
 name = "edit_content"
 type = "string"
-description = """Edit content in SEARCH/REPLACE format.
+description = """Edit content in SEARCH/REPLACE format similar to aider.
 Ensure whitespace is not stripped in the search or replace blocks and exact search.
+
+- Provide search replace blocks only for consecutive blocks
+- Ensure the original text is as is including whitespace
+- Ensure new text includes the necessary whitespace
+- Do not include like line numbers in search or replace blocks
+- Include only a single search replace block in a single tool call (use separate tool calls for each search and replace operation)
 
 EXAMPLE:
 Given a file 'app.py' with contents:
