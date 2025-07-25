@@ -3485,7 +3485,7 @@ PROMPT-TYPE specifies the type of prompt to use ('rewrite or 'prompt)."
     (save-excursion
       (let ((start (region-beginning))
             (end (region-end)))
-        (dolist (pair '(("\\n" . "\n") ("\\t" . "\t") ("\\r" . "")))
+        (dolist (pair '(("\\n" . "\n") ("\\t" . "\t") ("\\r" . "") ("\\\"". "\"")))
           (goto-char start)
           (while (search-forward (car pair) end t)
             (replace-match (cdr pair) nil t)))))))
