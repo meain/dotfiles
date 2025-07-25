@@ -68,7 +68,8 @@ required = true
 [[functions.parameters]]
 name = "date"
 type = "string"
-description = "Date to set the reminder for (in format 'YYYY-MM-DD'). If user has not provided a date, use current date."
+description = """Date to set the reminder for (in format 'YYYY-MM-DD').
+If user has not provided a date, use current date ({{$date '+%Y-%m-%d'}})."""
 required = true
 
 [[functions.parameters]]
