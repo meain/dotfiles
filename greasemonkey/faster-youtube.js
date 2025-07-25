@@ -9,7 +9,7 @@ let lastUpdated = ""
 setInterval(() => {
   if (lastUpdated != window.location.toString()) {
     setTimeout(() => {
-      document.getElementsByTagName("video")[0].playbackRate = 2;
+      document.getElementsByTagName("video")[0].playbackRate = 2.5;
       lastUpdated = window.location.toString()
     }, 2000);
   }
