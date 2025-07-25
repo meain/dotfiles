@@ -16,6 +16,7 @@ get_changes() {
 }
 
 changes=$(get_changes "$1")
+[ -n "$1" ] && shift
 
 if [ -z "$changes" ]; then
     echo "No changes to commit"
