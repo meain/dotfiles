@@ -35,6 +35,7 @@ e = ["edit"]
 
 [templates]
 log = 'personal_log_oneline'
+git_push_bookmark = '"meain/" ++ change_id.short()'
 
 draft_commit_description = '''
 concat(
@@ -87,6 +88,5 @@ if(root,
 highlight-color = "#f1f1f1"
 
 [git]
-push-bookmark-prefix = "meain/"
 write-change-id-header = true
 
