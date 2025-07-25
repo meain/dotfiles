@@ -21,7 +21,14 @@ fi
 # Create PR from each pair
 top="$(echo "$branches" | head -n 1)"
 echo "$branches" | tail -n+2 | while read -r branch; do
+    if gh pr list --head "$top" | grep -q .; then # when piped, empty output
+        echo "PR already exists for $branch <- $top, skipping"
+        top="$branch"
+        continue
+    fi
+
     echo "Creating PR for $branch <- $top"
+    # cannot add  --reviewer "@copilot"
     gh pr create --base "$branch" --head "$top" --assignee "@me" --web &
     top="$branch"
 done
