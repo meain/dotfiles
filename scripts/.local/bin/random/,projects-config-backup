@@ -1,58 +1,82 @@
 #!/bin/sh
 
 # Backup all project config files not backed up to project git to a separate git server
-# TODO(meain): optimize this to run `find` only once. It is pretty expensive
 set -e
 
 SAVEPATH="$HOME/.local/share/project-configs-backup"
 mkdir -p "$SAVEPATH"
 
-# Ignores
-# - temp directories
-# - .build/checkouts (swift builds)
-# - node_modules
+# Configuration: files to backup
+# Format: "source_path[:destination_name]"
+# If no destination_name provided, uses source_path as destination
+BACKUP_FILES="
+.git/config:git-config
+.mscripts
+shell.nix
+default.nix
+.dir-locals.el
+default.rest
+flake.nix
+flake.lock
+.llmrules
+.llmdocs
+.roo
+.roorules
+mnotes.org
+.github/copilot-instructions.md
+OpenCode.md
+CLAUDE.md
+"
 
-backup_loc() {
-    tput el && echo "Saving $1..."
-    find "$HOME/dev" -type d -name '.git' |
-        grep -v '/temp/' | grep -v '.build/checkouts' | grep -v '/node_modules/' |
-        while read -r path; do
-            dest="$2"
-            [ -z "$dest" ] && dest="$1"
+# Create temporary file to store git directories
+fd -H -t d '^\.git$' "$HOME/dev" \
+    --exclude 'temp' \
+    --exclude '.build/checkouts' \
+    --exclude 'node_modules' \
+    --exclude 'infra/interviews' |
+    while read -r git_path; do
+        dir="${git_path%/.git/}"
+        cleanpath="${dir#$HOME/dev/}"
 
-            dir="$(dirname "$path")"
-            [ -e "$dir/$1" ] || continue
-            cleanpath="$(echo "$dir" | sed "s|^$HOME/dev/||")"
-            tput el && printf "%s\r" "$cleanpath"
+        # Process each backup file for this repository
+        while IFS= read -r backup_entry; do
+            # Skip empty lines
+            [ -n "$backup_entry" ] || continue
 
-            # if dir, copy contents else the file directly as we specifically set the dest
-            if [ -d "$dir/$1" ]; then
-                mkdir -p "$SAVEPATH/$cleanpath/$dest"
-                cp -r "$dir/$1/"* "$SAVEPATH/$cleanpath/$dest"
+            # Parse source and destination using parameter expansion
+            case "$backup_entry" in
+            *:*)
+                source_file="${backup_entry%%:*}"
+                dest_name="${backup_entry#*:}"
+                ;;
+            *)
+                source_file="$backup_entry"
+                dest_name="$backup_entry"
+                ;;
+            esac
+
+            source_path="$dir/$source_file"
+            [ -e "$source_path" ] || continue
+
+            tput el && printf "Saving %s/%s\r" "$cleanpath" "$source_file"
+
+            dest_path="$SAVEPATH/$cleanpath/$dest_name"
+
+            # Handle directories vs files
+            if [ -d "$source_path" ]; then
+                mkdir -p "$dest_path"
+                cp -r "$source_path/"* "$dest_path" 2>/dev/null || true
             else
-                mkdir -p "$SAVEPATH/$cleanpath"
-                cp -r "$dir/$1" "$SAVEPATH/$cleanpath/$dest"
+                # Create parent directory of the destination file
+                mkdir -p "${dest_path%/*}"
+                cp -r "$source_path" "$dest_path"
             fi
-        done
-}
+        done <<EOF
+$BACKUP_FILES
+EOF
+    done
 
-backup_loc .git/config git-config
-backup_loc .mscripts
-backup_loc shell.nix
-backup_loc default.nix
-backup_loc .dir-locals.el
-backup_loc default.rest
-backup_loc flake.nix
-backup_loc flake.lock
-backup_loc .llmrules
-backup_loc .llmdocs
-backup_loc .roo
-backup_loc .roorules
-backup_loc mnotes.org
-backup_loc .github/copilot-instructions.md
-backup_loc OpenCode.md
-backup_loc CLAUDE.md
-
+tput el # clear the line
 cd "$SAVEPATH" || exit 1
 git add .
 git commit -m 'Update project configs'
