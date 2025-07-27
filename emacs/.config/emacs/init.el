@@ -2878,7 +2878,8 @@ Pass INSERT-TO-BUFFER to insert output to current buffer."
            (name-input (completing-read "Title: " templates nil nil))
            (is-template (member name-input templates))
            (extension (if is-template "" ; template would have the extension
-                        (concat "." (completing-read "Extension: " '("md") nil nil))))
+                        (if (s-contains-p "." name-input) ""
+                          (concat "." (completing-read "Extension: " '("md") nil nil)))))
            (filename (concat meain/quick-notes-directory "/"
                              (format-time-string "%Y-%m/%d %H.%M " (current-time))
                              name-input extension)))
@@ -3031,7 +3032,6 @@ Called with a PREFIX, resets the context buffer list before opening"
 ;; LLM chat interface
 (use-package gptel
   :ensure t
-  ;; :ensure (:host github :repo "karthink/gptel")
   :commands (gptel gptel-send gptel-rewrite-menu)
   :config
   ;; Set default mdoels
