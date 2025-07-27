@@ -52,6 +52,7 @@ alias em=",emoji-picker"
 alias brain="esa +brain"
 alias rem="esa remind me at"
 alias summ="esa summarize key points from"
+alias post="esa Short twitter post with bullet points based on"
 alias tk=",tweak"
 
 # ledger
