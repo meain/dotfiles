@@ -2054,6 +2054,8 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   (setq markdown-fontify-code-blocks-natively t)
   (setq-default markdown-hide-urls t) ;; Or call markdown-toggle-url-hiding
 
+  (add-hook 'gfm-mode-hook (lambda () (toggle-truncate-lines t)))
+
   ;; When a link is pasted with an active selection, convert to a markdown link
   (defun meain/paste-after-or-create-link (from to)
     (interactive "r")
