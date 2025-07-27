@@ -24,7 +24,7 @@ sync_additional_files() {
     copy_from_base_if_exists ".github/copilot-instructions.md"
     copy_from_base_if_exists "shell.nix"
     copy_from_base_if_exists ".envrc"
-    copy_from_base_if_exists "OpenCode.md"
+    copy_from_base_if_exists "AGENTS.md"
     copy_from_base_if_exists "CLAUDE.md"
     copy_from_base_if_exists ".llmrules"
     copy_from_base_if_exists ".mscripts"
