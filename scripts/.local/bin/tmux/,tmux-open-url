@@ -4,4 +4,4 @@ set -e
 
 tmux capture-pane -J -p |
     grep -oE '(https?|ftp|file):/?//[-A-Za-z0-9+&@#/%?=~_|!:,.;]*[-A-Za-z0-9+&@#/%=~_|]' |
-    sort -u | fzf -m --prompt "Select URL: " | xargs open
+    sort -u | fzf -m --prompt "Select URL: " -1 | xargs open
