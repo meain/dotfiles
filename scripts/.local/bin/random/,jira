@@ -27,7 +27,7 @@ v | view)
     jira issue view "$(pick_issue "$@")"
     ;;
 c | comment)
-    jira issue comment "$(pick_issue "$@")"
+    jira issue comment add "$(pick_issue "$@")"
     ;;
 *)
     list_issues
