@@ -391,6 +391,7 @@ required = true
 name = "read_webpage"
 description = "Read and convert webpage content to markdown"
 command = "readable '{{url}}' | html2markdown"
+safe = true
 
 [[functions.parameters]]
 name = "url"
