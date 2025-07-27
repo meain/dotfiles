@@ -100,7 +100,7 @@ alias jbm=',jj-bookmark-move'
 alias je='jj edit'
 alias jj-squash-multi="jj stack | fzf -m | cut -d' ' -f3 | xargs -n1 jj squash -r"
 alias jwu='jj workspace update-stale'
-alias jnm='jj git fetch && jj new main || jj new master'
+alias jnm='jj git fetch && jj new main 2>/dev/null || jj new master'
 
 # utils
 alias ppid='ps -o ppid= -p'
