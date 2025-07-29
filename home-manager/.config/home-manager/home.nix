@@ -102,6 +102,7 @@ in
     pkgs.lazyjj # tui for jj
     # pkgs.comby # code modification
     pkgs.mbake # Makefile linter & formatter
+    pkgs.tz # timezone viewer
 
     # aspell dicts
     pkgs.aspellDicts.en
