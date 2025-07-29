@@ -1,4 +1,4 @@
-;;; encourage.el --- Add a message to minibuffer every time you save a document
+;;; encourage.el --- Add a message to minibuffer every time you save a document -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;; Add a message to minibuffer every time you save a document
