@@ -6,5 +6,5 @@ if [ -n "$1" ]; then
    echo "Reviewing older commits might not work as expected as the files read are from current version"
 fi
 
-jj show $1 |
-    esa +coder 'Do a code review for the given diff. Do read any files as necessary. Look for any issues and only let me know if there are any. Keep it short.'
+SYSTEM_PROMPT='$(cat "$HOME/.config/datafiles/prompts/review-diff.md")'
+jj show $1 | esa -- +coder "$SYSTEM_PROMPT"
