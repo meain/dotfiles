@@ -183,11 +183,43 @@ function sideMode(x, y, w, h)
     ffw:setFrame(fff)
 end
 
+-- Alight to left or right side of the screen.  Alternate between
+-- sides based on where we currently are
+local prevSide = "right"
+function sidesMode()
+    local currentWindow = hs.window.focusedWindow()
+    local screenFrame = hs.mouse.getCurrentScreen():frame()
+    local windowFrame = currentWindow:frame()
+
+    -- Did this "prevSide" thing instead of checking if window in the
+    -- left because the frame dimensions were incorrect. But now it
+    -- seems more useful as we will align the first window to left and
+    -- the next one to right.
+    if prevSide == "right" then
+        -- Align to left side
+        windowFrame.x = screenFrame.x
+        windowFrame.w = screenFrame.w / 2
+        prevSide = "left"
+    else
+        -- Align to right side
+        windowFrame.x = screenFrame.x + (screenFrame.w / 2)
+        windowFrame.w = screenFrame.w / 2
+        prevSide = "right"
+    end
+
+    windowFrame.y = screenFrame.y
+    windowFrame.h = screenFrame.h
+
+    currentWindow:setFrame(windowFrame)
+end
+
 hs.hotkey.bind(fkey, "n", noteTaker)
 hs.hotkey.bind(fkey, "b", function () centerMode(0.6, 0.6) end)
 hs.hotkey.bind(fkey, "g", function () centerMode(0.9, 0.9) end)
+hs.hotkey.bind(fkey, "v", function () centerMode(0.7, 0.8) end)
 hs.hotkey.bind(fkey, "a", mainMode)
 hs.hotkey.bind(fkey, "d", sideMode)
+hs.hotkey.bind(fkey, "x", sidesMode)
 
 -- cmd+t from anywhere to open a new tab in browser
 browsernewtab =
