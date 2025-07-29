@@ -1,0 +1,7 @@
+#!/bin/sh
+
+set -e
+
+promptfile="$(ls $HOME/.config/datafiles/prompts |
+    fzf -1 --query "$*" --preview "cat $HOME/.config/datafiles/prompts/{}")"
+esa -- "$(cat "$HOME/.config/datafiles/prompts/$promptfile")"
