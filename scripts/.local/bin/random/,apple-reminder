@@ -25,4 +25,5 @@ if alarmTime < (current date) then
     set alarmTime to alarmTime + (1 * days)
 end if
 tell application "Reminders" to make new reminder with properties {name:"$ALARM_NAME", remind me date:alarmTime}
+return "Reminder set for " & (date string of alarmTime) & " with name: " & "$ALARM_NAME"
 EOF
