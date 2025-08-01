@@ -2,13 +2,11 @@
 
 set -e
 
-case $1 in
-	success-long) sound="success-trumpets.mp3" ;;
-	success) sound="message-incoming.mp3" ;;
-	error-long) sound="eerie-bell-loop.mp3" ;;
-	error) sound="error.mp3" ;;
-    done) sound="choir.mp3" ;;
-    ding) sound="ding.mp3" ;;
-	*) sound="diding.mp3" ;;
-esac
-mpv --really-quiet "$HOME/.config/datafiles/sounds/$sound" &
+sound="${1-default}"
+
+if ! ls "$HOME/.config/datafiles/sounds" | grep -q "$sound.mp3"; then
+    echo "Sound file '$sound' not available" 1>&2
+    sound="default"
+fi
+
+afplay "$HOME/.config/datafiles/sounds/$sound.mp3" &
