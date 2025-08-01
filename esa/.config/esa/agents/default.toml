@@ -56,7 +56,9 @@ safe = true
 [[functions.parameters]]
 name = "hour"
 type = "string"
-description = "Hour to set the reminder for (24-hour format) in IST"
+description = """Hour to set the reminder for (24-hour format) in IST.
+User might specify time in 12h format. Convert it appropriately to AM/PM based on the current time.
+Reminders should always be for future time."""
 required = true
 
 [[functions.parameters]]
