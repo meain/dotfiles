@@ -65,3 +65,7 @@ default.rest
 # opencode
 .opencode
 AGENTS.md
+
+# claude-code
+**/.claude/settings.local.json
+CLAUDE.md
