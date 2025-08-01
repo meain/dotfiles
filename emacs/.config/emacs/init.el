@@ -3231,7 +3231,7 @@ Return a list of filenames only, one per line without extension.
   :demand t
   :config
   (setq gptel-prompts-directory
-        (concat user-emacs-directory "prompts/"))
+        (concat (getenv "HOME") "/.config/datafiles/prompts/"))
   ;; Ensure prompts are updated if prompt files change
   ;; (gptel-prompts-add-update-watchers)
   (gptel-prompts-update))
