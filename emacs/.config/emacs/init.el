@@ -459,14 +459,22 @@ Pass ORIGINAL and ALTERNATE options."
               (kbd "<SPC> <SPC>")
               (lambda ()
                 (interactive)
-                (if (equal (buffer-name) "*scratch*")
-                    (with-temp-file
-                        (concat
-                         "/tmp/emacs-scratch-"
-                         (format-time-string "%Y-%m-%d-%H-%M-%S"))
-                      (message "Saved scratch to a temporary location")
-                      (insert (with-current-buffer "*scratch*" (buffer-string))))
-                  (call-interactively 'evil-write)))))
+                (cond
+                 ((equal (buffer-name) "*scratch*")
+                  (with-temp-file
+                      (concat
+                       "/tmp/emacs-scratch-"
+                       (format-time-string "%Y-%m-%d-%H-%M-%S"))
+                    (message "Saved scratch to a temporary location")
+                    (insert (with-current-buffer "*scratch*" (buffer-string)))))
+                 ((bound-and-true-p gptel-mode)
+                  ;; See if the buffer already has a filename, if so
+                  ;; use else, else call the gptel save buffer
+                  ;; function.
+                  (if (buffer-file-name)
+                      (save-buffer)
+                    (call-interactively 'meain/gptel-rename-chat-buffer)))
+                 (t (call-interactively 'evil-write))))))
 
 ;; Hit universal arg without ctrl
 (use-package emacs
@@ -2054,7 +2062,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   (setq markdown-fontify-code-blocks-natively t)
   (setq-default markdown-hide-urls t) ;; Or call markdown-toggle-url-hiding
 
-  (add-hook 'gfm-mode-hook (lambda () (toggle-truncate-lines t)))
+  (add-hook 'gfm-mode-hook #'toggle-truncate-lines)
 
   ;; When a link is pasted with an active selection, convert to a markdown link
   (defun meain/paste-after-or-create-link (from to)
@@ -3148,6 +3156,64 @@ For optional NO-CACHE, use caching by default."
                               (reusable-frames . visible)
                               (side            . top)
                               (window-height . 0.2))))))))
+
+  (defun gptel-get-user-queries ()
+    "Return a list of user queries (prompts) from the current gptel buffer.
+Skips regions marked as LLM responses (with 'gptel property set to 'response)
+and tool calls (with 'gptel property whose car is 'tool)."
+    (let ((queries '())
+          (pos (point-min)))
+      (while (< pos (point-max))
+        (let* ((next-change (next-single-property-change pos 'gptel nil (point-max)))
+               (prop (get-text-property pos 'gptel)))
+          (cond
+           ((or (eq prop 'response)
+                (and (consp prop) (eq (car prop) 'tool)))
+            ;; Skip response and tool call regions
+            (setq pos next-change))
+           (t
+            ;; Collect user query region
+            (let ((end (or next-change (point-max))))
+              (push (string-trim (buffer-substring-no-properties pos end)) queries)
+              (setq pos end))))))
+      (nreverse (cl-remove-if #'string-empty-p queries))))
+
+
+  (defun meain/gptel-rename-chat-buffer (&optional callback)
+    "Extract user queries from current buffer and send them to an LLM using `gptel-request`.
+The LLM will suggest filenames based on the themes discussed.
+If CALLBACK is non-nil, it will be called with the result.
+
+Just sending user messages for two reasons:
+- It will be much smaller
+- And more importantly, sending the full buffer produced bad filenames"
+    (interactive)
+    (message "Figuring out a good filename for this discussion...")
+    (let* ((user-messages (gptel-get-user-queries))
+           (prompt (format "Suggest concise filenames that reflect the main themes from the questions given in the context below.
+Return a list of filenames only, one per line without extension.
+
+<context>
+%s
+</context>
+"
+                           (mapconcat #'identity user-messages "\n"))))
+      (gptel-request
+          prompt
+        :callback (or callback
+                      (lambda (response _info)
+                        (let ((filenames (cl-remove-if #'string-empty-p
+                                                       (mapcar #'string-trim
+                                                               (split-string response "\n" t)))))
+                          (rename-visited-file
+                           (concat (expand-file-name "~/.local/share/llm-discussions/")
+                                   (completing-read "Pick a filename: " filenames nil t)
+                                   "."
+                                   (cond
+                                    ((derived-mode-p 'org-mode) "org")
+                                    ((derived-mode-p 'markdown-mode) "md")
+                                    (t "txt"))))
+                          filenames))))))
 
   :init
   (global-unset-key (kbd "M-;"))
