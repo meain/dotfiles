@@ -15,7 +15,8 @@ get_changes() {
     fi
 }
 
-changes=$(get_changes "$1")
+commit="${1:-@}"
+changes=$(get_changes "$commit")
 [ -n "$1" ] && shift
 
 if [ -z "$changes" ]; then
@@ -23,31 +24,58 @@ if [ -z "$changes" ]; then
     exit 1
 fi
 
-printf "Generating message...\r"
-echo "$changes" | esa +commit "$*" >/tmp/auto-pr-message
-printf "\033[2K" # clear line
+echo "$changes" | esa -- +commit "$*" | tee /tmp/auto-pr-message
 
-cat /tmp/auto-pr-message
-read -n 1 -p "Edit commit message? (y/N): " edit_confirm
+while true; do
+    read -n 1 -p "Use commit message (Y/n/r/e/m/?): " confirm
+    commit_msg="$(cat /tmp/auto-pr-message)"
 
-if [ "$edit_confirm" = "y" ]; then
-    vim /tmp/auto-pr-message
-fi
-
-read -n 1 -p "Use commit message (Y/n): " confirm
-commit_msg="$(cat /tmp/auto-pr-message)"
-
-echo
-if [ "$confirm" != "n" ]; then
-    if [ -d "$base/.jj" ]; then
-        jj desc -m "$commit_msg" -r "${1-@}"
-    elif [ -d "$base/.git" ]; then
-        git commit -m "$commit_msg"
-    else
-        echo "No git or jj repository found"
+    case $confirm in
+    [nN])
+        exit 0
+        ;;
+    [eE])
+        vim /tmp/auto-pr-message
+        break
+        ;;
+    [rR])
+        printf "\033[2K\r" # clear line
+        echo
+        echo "$changes" | esa -- +commit "$message" | tee /tmp/auto-pr-message
+        continue
+        ;;
+    [yY] | "")
+        break
+        ;;
+    [mM])
+        printf "\033[2K\r" # clear line
+        read -rp "Enter message for esa: " message
+        esa -c -- +commit "$message" | tee /tmp/auto-pr-message
+        continue
+        ;;
+    [\?])
+        echo "Options:
+        y/Y: Use commit message
+        n/N: Skip commit
+        r/R: Re-run esa with the same changes
+        e/E: Edit commit message
+        m/M: Enter a new message for esa
+        ?: Show this help"
+        continue
+        ;;
+    *)
+        echo "Invalid input. Please enter 'y' or 'n'."
         exit 1
-    fi
+        ;;
+    esac
+done
+
+commit_msg="$(cat /tmp/auto-pr-message)"
+if [ -d "$base/.jj" ]; then
+    jj desc -m "$commit_msg" -r "$commit"
+elif [ -d "$base/.git" ]; then
+    git commit -m "$commit_msg"
 else
-    echo "Commit aborted"
+    echo "No git or jj repository found"
     exit 1
 fi
