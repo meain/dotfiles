@@ -16,4 +16,4 @@ done
 end="$(date +%s)"
 echo "You are now connected. You were down for $((end-start)) seconds."
 notify "You are now connected."
-,make-noise success-long
+,make-noise notify
