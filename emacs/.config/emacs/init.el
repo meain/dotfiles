@@ -3521,12 +3521,15 @@ We limit the search to just top 10 lines so as to only check the header."
 (defun meain/set-proper-default-dir ()
   "Function to set the `default-directory' value as the project root if available."
   (interactive)
-  (let ((go-base (locate-dominating-file default-directory "go.mod")))
+  (let* ((file-directory (file-name-directory (or buffer-file-name default-directory)))
+         (go-base (locate-dominating-file file-directory "go.mod")) ;; when we navigate to installed go libs
+         (jj-base (locate-dominating-file file-directory ".jj"))) ;; when we use jj worktrees
     (if (not (file-remote-p default-directory))
         (setq default-directory (cond
                                  ((not (eq (project-current) nil))
                                   (car (project-roots (project-current))))
                                  ((not (eq go-base nil)) go-base)
+                                 ((not (eq jj-base nil)) jj-base)
                                  (t "~/"))))))
 (add-hook 'find-file-hook 'meain/set-proper-default-dir)
 
