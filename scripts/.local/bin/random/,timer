@@ -26,6 +26,6 @@ done
 printf "\rTime up (%s)     \n" "$duration" # extra space to clean up line
 notify "Time up" "Timer you set for $duration complete"
 while true; do
-    ,make-noise
+    ,make-noise timer
     sleep 0.1
 done
