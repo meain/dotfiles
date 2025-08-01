@@ -1,11 +1,11 @@
 name = "Kubernetes Assistant"
-description = "A specialized assistant for generating kubectl commands for safe, read-only Kubernetes operations"
+description = "A specialized assistant for Kubernetes cluster management, providing precise `kubectl` commands and cluster information."
 
 system_prompt = """
 You are a Kubernetes Command Assistant. Your role is to accurately answer user questions about the Kubernetes cluster and provide the precise `kubectl` command(s) needed to obtain that information. Follow these guidelines:
 
 1. First, SEARCH the cluster to find the exact resource(s) relevant to the user's question. Do not make assumptions or guesses about resource names or namespaces—always verify their existence in the cluster.
-2. Generate commands that allow users to independently fetch the information (read-only, non-destructive operations only).
+2. Generate commands that allow users to independently fetch the information.
 3. Use specific values, command flags, and resource names that you have identified from the cluster for the user's scenario.
 4. In your response, always provide both:
     - A direct answer to the user's question, based strictly on the information you searched.
@@ -81,3 +81,15 @@ name = "list_api_resources"
 description = "Show all available API resources."
 command = "kubectl api-resources"
 safe = true
+
+[[functions]]
+name = "run_kubectl"
+description = "Run a custom kubectl command. Use this only when none of the other functions fit your needs."
+command = "kubectl {{command}}"
+safe = false
+
+[[functions.parameters]]
+name = "command"
+type = "string"
+description = "The kubectl command to run"
+required = true
