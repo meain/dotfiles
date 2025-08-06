@@ -3042,18 +3042,13 @@ Called with a PREFIX, resets the context buffer list before opening"
 ;; LLM chat interface
 (use-package gptel
   :ensure t
+  ;; :load-path "/Users/meain/dev/src/gptel"
   :commands (gptel gptel-send gptel-rewrite-menu)
   :config
   ;; Set default mdoels
   ;; (setq gptel-model 'claude-3.7-sonnet)
   (setq gptel-model 'gpt-4.1)
   (setq gptel-backend (gptel-make-gh-copilot "Copilot"))
-  (gptel-make-openai "Github Models"
-    :host "models.inference.ai.azure.com"
-    :endpoint "/chat/completions?api-version=2024-05-01-preview"
-    :stream t
-    :key github-models-api-key
-    :models '(gpt-4o gpt-4o-mini))
 
   ;; Some configuration
   (setq gptel-api-key openai-api-key)
@@ -3064,11 +3059,22 @@ Called with a PREFIX, resets the context buffer list before opening"
   (setq gptel-prompt-prefix-alist '((markdown-mode . "🗣️ YOU\n") (org-mode . "* 🗣️ YOU\n") (text-mode . "# YOU\n")))
   (setq gptel-response-prefix-alist '((markdown-mode . "🤖 BOT\n") (org-mode . "* 🤖 BOT\n") (text-mode . "$ BOT\n")))
 
+  ;; Add gptel mode keybinds
+  (define-key gptel-mode-map (kbd "C-<return>") 'gptel-send)
+  (define-key gptel-mode-map (kbd "C-c C-k") 'gptel-abort)
+
   ;; Hooks to update behaviour
   ;; (add-hook 'gptel-post-response-functions 'gptel-end-of-response) ;; jump to end of generated text
   (add-hook 'gptel-mode-hook (lambda ()
                                (toggle-truncate-lines nil)
                                (setq-local show-trailing-whitespace nil)))
+
+  (gptel-make-openai "Github Models"
+    :host "models.inference.ai.azure.com"
+    :endpoint "/chat/completions?api-version=2024-05-01-preview"
+    :stream t
+    :key github-models-api-key
+    :models '(gpt-4o gpt-4o-mini))
 
   (gptel-make-openai "Groq"
     :host "api.groq.com"
@@ -3177,7 +3183,6 @@ and tool calls (with 'gptel property whose car is 'tool)."
               (push (string-trim (buffer-substring-no-properties pos end)) queries)
               (setq pos end))))))
       (nreverse (cl-remove-if #'string-empty-p queries))))
-
 
   (defun meain/gptel-rename-chat-buffer (&optional callback)
     "Extract user queries from current buffer and send them to an LLM using `gptel-request`.
