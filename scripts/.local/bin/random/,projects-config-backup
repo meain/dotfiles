@@ -78,6 +78,6 @@ EOF
 
 tput el # clear the line
 cd "$SAVEPATH" || exit 1
-git add .
+git add -f .
 git commit -m 'Update project configs'
 git push origin master
