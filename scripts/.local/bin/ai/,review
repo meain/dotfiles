@@ -6,5 +6,5 @@ if [ -n "$1" ]; then
    echo "Reviewing older commits might not work as expected as the files read are from current version"
 fi
 
-SYSTEM_PROMPT='$(cat "$HOME/.config/datafiles/prompts/review-diff.md")'
+SYSTEM_PROMPT="$(cat "$HOME/.config/datafiles/prompts/user/review-diff.md")"
 jj show $1 | esa -- +coder "$SYSTEM_PROMPT"
