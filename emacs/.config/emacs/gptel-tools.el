@@ -427,5 +427,130 @@ Or a default format if not provided."
  :category "git"
  :include t)
 
+;; Look up Emacs symbol documentation
+(defun meain/gptel-tool--describe-symbol (symbol-name)
+  "Look up documentation for Emacs symbol SYMBOL-NAME (function, variable, etc.)."
+  (condition-case err
+      (let ((symbol (intern symbol-name))
+            (help-content ""))
+        (cond
+         ;; If it's both function and variable, show both
+         ((and (fboundp symbol) (boundp symbol))
+          (with-temp-buffer
+            (let ((help-window-select nil))
+              (describe-function symbol))
+            (with-current-buffer "*Help*"
+              (setq help-content (concat help-content (buffer-string) "\n\n"))
+              (kill-buffer "*Help*")))
+          (with-temp-buffer
+            (let ((help-window-select nil))
+              (describe-variable symbol))
+            (with-current-buffer "*Help*"
+              (setq help-content (concat help-content (buffer-string)))
+              (kill-buffer "*Help*")))
+          help-content)
+         ;; Function only
+         ((fboundp symbol)
+          (with-temp-buffer
+            (let ((help-window-select nil))
+              (describe-function symbol))
+            (with-current-buffer "*Help*"
+              (prog1 (buffer-string)
+                (kill-buffer "*Help*")))))
+         ;; Variable only
+         ((boundp symbol)
+          (with-temp-buffer
+            (let ((help-window-select nil))
+              (describe-variable symbol))
+            (with-current-buffer "*Help*"
+              (prog1 (buffer-string)
+                (kill-buffer "*Help*")))))
+         ;; Face
+         ((facep symbol)
+          (with-temp-buffer
+            (let ((help-window-select nil))
+              (describe-face symbol))
+            (with-current-buffer "*Help*"
+              (prog1 (buffer-string)
+                (kill-buffer "*Help*")))))
+         ;; Not found
+         (t
+          (format "Symbol '%s' is not defined as a function, variable, or face." symbol-name))))
+    (error (format "Error looking up symbol '%s': %s" symbol-name (error-message-string err)))))
+
+(gptel-make-tool
+ :function #'meain/gptel-tool--describe-symbol
+ :name "describe_symbol"
+ :description "Look up documentation for any Emacs symbol (function, variable, face, etc.)."
+ :args (list
+        '(:name "symbol_name"
+                :type string
+                :description "Name of the Emacs symbol to look up"))
+ :category "emacs"
+ :include t)
+
+;; Execute Elisp code
+(defun meain/gptel-tool--eval-elisp (code)
+  "Execute Elisp CODE and return the result."
+  (condition-case err
+      (let ((result (eval (read code))))
+        (format "%S" result))
+    (error (format "Error evaluating elisp code: %s" (error-message-string err)))))
+
+(gptel-make-tool
+ :function #'meain/gptel-tool--eval-elisp
+ :name "eval_elisp"
+ :description "Execute Elisp code and return the result. Use with caution as this evaluates arbitrary code."
+ :args (list
+        '(:name "code"
+                :type string
+                :description "The Elisp code to evaluate"))
+ :category "emacs"
+ :confirm t
+ :include t)
+
+;; Search for Emacs symbols
+(defun meain/gptel-tool--search-symbols (pattern &optional type)
+  "Search for Emacs symbols matching PATTERN.
+TYPE can be 'function', 'variable', or 'all' (default)."
+  (condition-case err
+      (let ((symbols '())
+            (search-type (or type "all")))
+        (mapatoms
+         (lambda (symbol)
+           (when (string-match-p pattern (symbol-name symbol))
+             (cond
+              ((string= search-type "function")
+               (when (fboundp symbol)
+                 (push (format "Function: %s" (symbol-name symbol)) symbols)))
+              ((string= search-type "variable")
+               (when (boundp symbol)
+                 (push (format "Variable: %s" (symbol-name symbol)) symbols)))
+              (t ; "all"
+               (when (fboundp symbol)
+                 (push (format "Function: %s" (symbol-name symbol)) symbols))
+               (when (boundp symbol)
+                 (push (format "Variable: %s" (symbol-name symbol)) symbols))))))
+         obarray)
+        (if symbols
+            (mapconcat #'identity (sort symbols #'string<) "\n")
+          (format "No symbols found matching pattern: %s" pattern)))
+    (error (format "Error searching symbols: %s" (error-message-string err)))))
+
+(gptel-make-tool
+ :function #'meain/gptel-tool--search-symbols
+ :name "search_symbols"
+ :description "Search for Emacs symbols (functions, variables) matching a pattern."
+ :args (list
+        '(:name "pattern"
+                :type string
+                :description "Regular expression pattern to search for in symbol names")
+        '(:name "type"
+                :type string
+                :optional t
+                :description "Type of symbols to search: 'function', 'variable', or 'all' (default)"))
+ :category "emacs"
+ :include t)
+
 (provide 'gptel-tools)
 ;;; gptel-tools.el ends here
