@@ -53,7 +53,10 @@ alias brain="esa +brain"
 alias rem="esa Create a reminder with an emoji title: remind me to"
 alias summ="esa summarize key points from"
 alias post="esa Short twitter post with bullet points based on"
+alias resp="esa +coder \$(cat ~/.config/datafiles/prompts/user/message-response.md)"
 alias tk=",tweak"
+alias eo="esa --show-output 1"
+alias ep=',esa-with-prompt'
 
 # ledger
 alias ledger='ledger -f ~/.local/share/ledger/master.ledger --strict'
