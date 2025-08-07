@@ -3082,6 +3082,8 @@ Called with a PREFIX, resets the context buffer list before opening"
     :stream t
     :key groq-api-key
     :models '(llama-3.1-70b-versatile
+              openai/gpt-oss-20b
+              openai/gpt-oss-120b
               llama-3.1-8b-instant
               llama3-70b-8192
               llama3-8b-8192
