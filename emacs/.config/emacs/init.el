@@ -3697,6 +3697,17 @@ Pass `CREATE' to create the alternate file if it does not exits."
                                     'font-lock-builtin-face)
                             'help-echo (buffer-file-name)))))
 
+(defun meain/delete-all-buffers ()
+  "Delete all but some buffers.  Rest everything."
+  (interactive)
+  (dolist (buf (buffer-list))
+    (let ((name (buffer-name buf)))
+      (unless (member name
+                      '("*scratch*" "*Messages*" "*Warnings*"
+                        "*copilot events*" "*copilot-language-server-log*"))
+        (kill-buffer buf))))
+  (switch-to-buffer "*scratch*"))
+
 (defun meain/modeline-segment (expr)
   "Create a modeline segment with `EXPR' expression."
   `(:eval (let ((value ,expr))
