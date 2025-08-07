@@ -2,6 +2,12 @@
 
 set -e
 
-promptfile="$(ls $HOME/.config/datafiles/prompts |
-    fzf -1 --query "$*" --preview "cat $HOME/.config/datafiles/prompts/{}")"
-esa -- "$(cat "$HOME/.config/datafiles/prompts/$promptfile")"
+agent=""
+if [ -n "$1" ]; then
+    agent="$1"
+    shift
+fi
+
+promptfile="$(ls $HOME/.config/datafiles/prompts/user |
+    fzf -1 --query "$*" --preview "cat $HOME/.config/datafiles/prompts/user/{}")"
+esa -- $agent "$(cat "$HOME/.config/datafiles/prompts/user/$promptfile")"
