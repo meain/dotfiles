@@ -1,0 +1,68 @@
+#!/bin/sh
+
+# Create a new meeting note and open in Obsidian
+
+set -e
+
+basedir="$HOME/.local/share/sbdb"
+
+meeting="$(echo "IC Connect
+EARN team cycle sync
+Data Pipelines Demos
+Data Pipelines Cycle Plan" | fzf --header="Meeting type" --query "$*")"
+
+if [ -z "$meeting" ]; then
+    echo "No meeting selected, exiting."
+    exit 1
+fi
+
+meetingfile="$basedir/Meeting/$(date +%Y/%m/%d)/$meeting.md"
+
+if [ -f "$meetingfile" ]; then
+    echo "Meeting file already exists; Opening"
+    open "obsidian://open?path=$meetingfile"
+    exit 0
+fi
+
+participants=""
+tags=""
+
+case $meeting in
+"IC Connect")
+    participants='
+  - "[[Veeam IC Team]]"'
+    tags="
+  - veeam"
+    ;;
+"EARN team cycle sync")
+    participants='
+  - "[[EARN Team]]"'
+    tags="
+  - veeam"
+    ;;
+"Data Pipelines Demos" | "Data Pipelines Cycle Plan")
+    participants='
+  - "[[Data Pipelines Team]]"'
+    tags="
+  - veeam"
+    ;;
+*)
+    echo "Unknown meeting type: $meeting"
+    exit 1
+    ;;
+esac
+
+echo "---
+date: $(date +%Y-%m-%d)
+presenter:
+participants: $participants
+tags: $tags
+---
+### Agenda
+
+### Notes
+
+### Follow-ups
+" >"$meetingfile"
+
+open "obsidian://open?path=$meetingfile"
