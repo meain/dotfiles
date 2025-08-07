@@ -83,14 +83,18 @@ Errors reported as a string."
   (condition-case err
       (with-temp-buffer
         (insert-file-contents (expand-file-name filepath))
-        (let ((start (if start-line (max 1 start-line) 1))
-              (end (if end-line (max start-line end-line) nil)))
+        (let* ((start (if start-line (max 1 start-line) 1))
+               (end (if end-line (max start end-line)
+                      (progn
+                        (goto-char (point-max))
+                        (line-number-at-pos)))))
+          (message "%s %s" start end)
           (goto-char (point-min))
           (if (and start-line end-line)
               (progn
                 (forward-line (1- (max 0 (1- start))))
                 (let ((from (point)))
-                  (forward-line (- end start +1))
+                  (forward-line (1+ (- end start)))
                   (buffer-substring-no-properties from (point))))
             (buffer-string))))
     (error (format "Error reading file %s: %s" filepath (error-message-string err)))))
@@ -148,7 +152,7 @@ Returns results as string.  If rg is not found, returns an error string."
   "Search for files matching PATTERN in DIRECTORY using fd.
 Returns results as a newline-delimited string.
 If fd is not installed or an error occurs, returns an error message."
-  (let ((dir (or directory default-directory)))
+  (let ((dir (expand-file-name (or directory default-directory))))
     (if (executable-find "fd")
         (condition-case err
             (shell-command-to-string
@@ -164,12 +168,12 @@ If fd is not installed or an error occurs, returns an error message."
  :description "Search for files by pattern using the fd CLI. Returns the matching file paths as a newline-delimited string."
  :args (list
         '(:name "pattern"
-          :type string
-          :description "Filename pattern to search for (e.g. '*.el', 'main').")
+                :type string
+                :description "Filename pattern to search for (e.g. '*.el', 'main').")
         '(:name "directory"
-          :type string
-          :optional t
-          :description "Directory to search in (optional; defaults to current directory)"))
+                :type string
+                :optional t
+                :description "Directory to search in (optional; defaults to current directory)"))
  :category "filesystem")
 
 ;; List Files/Folders in a Directory
@@ -312,8 +316,8 @@ Returns buffer name or error message."
  :description "Open a file by path in Emacs (makes it visible in buffer list). Returns buffer name or error."
  :args (list
         '(:name "filepath"
-          :type string
-          :description "Path to the file to open in Emacs"))
+                :type string
+                :description "Path to the file to open in Emacs"))
  :category "emacs")
 
 ;; Run Arbitrary Shell Command (with confirmation)
