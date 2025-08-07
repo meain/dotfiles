@@ -1,3 +1,12 @@
 #!/bin/sh
 
-xsel --clipboard --input
+if command -v pbcopy >/dev/null 2>&1; then
+    command /usr/bin/pbcopy
+elif command -v xsel >/dev/null 2>&1; then
+    xsel --clipboard --input
+elif command -v xclip >/dev/null 2>&1; then
+    xclip -selection clipboard
+else
+    echo "No clipboard utility found." >&2
+    exit 1
+fi
