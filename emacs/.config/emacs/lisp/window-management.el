@@ -2,6 +2,22 @@
 
 ;;; Commentary:
 ;; Anything related to managing windows or buffers.
+
+;;; Code:
+;; Shrink and enlarge windows (not contextual as of now)
+;; https://www.emacswiki.org/emacs/WindowResize
+(global-set-key (kbd "M-H") (ilambda shrink-window-horizontally 5))
+(global-set-key (kbd "M-L") (ilambda enlarge-window-horizontally 5))
+(global-set-key (kbd "M-K") (ilambda shrink-window 5))
+(global-set-key (kbd "M-J") (ilambda enlarge-window 5))
+
+;; Switch to other frame
+(use-package frame
+  :after evil-leader
+  :defer t
+  :config
+  (global-set-key (kbd "M-o") 'other-frame))
+
 (use-package emacs
   :commands (meain/move-or-swap
              meain/move-swap-right
@@ -42,8 +58,21 @@
                                 (meain/split-window "right" term)))
   (global-set-key (kbd "M-w") 'delete-window))
 
-;;; Code:
+;; Midnight: Kill unused buffers at midnight
+(use-package midnight
+  :defer t
+  :config
+  (setq clean-buffer-list-delay-general 1)
+  (midnight-mode t))
 
+;; ibuffer
+(use-package ibuffer
+  :commands (ibuffer ibuffer-other-window)
+  :init
+  (setq ibuffer-expert t)
+  (global-set-key (kbd "M-c")
+                  (alambda (call-interactively 'switch-to-buffer)
+                           (ibuffer-other-window))))
 
 (provide 'window-management)
 ;;; window-management.el ends here

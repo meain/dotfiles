@@ -34,5 +34,16 @@ We limit the search to just top 10 lines so as to only check the header."
           (message "Buffer seems to be generated. Set to read-only mode.")))))
   (add-hook 'find-file-hook 'meain/set-read-only-if-do-not-edit))
 
+;; Keep files in sync with filesystem
+;; Tweak these settings carefully. This makes things quite slow if not
+;; configured correctly.
+(use-package autorevert
+  :config
+  (setq auto-revert-interval 5)
+  (setq auto-revert-check-vc-info nil)
+  (setq global-auto-revert-non-file-buffers nil)
+  (setq auto-revert-verbose nil)
+  (global-auto-revert-mode t))
+
 (provide 'automatic)
 ;;; automatic.el ends here
