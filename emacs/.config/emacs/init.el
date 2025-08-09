@@ -3327,14 +3327,14 @@ Return a list of filenames only, one per line without extension.
             yap-service "openrouter"
             yap-model (completing-read "Model: " models))))
 
-  (defun meain/yap-use-vscode-llm ()
+  (defun meain/yap-use-copilot-llm ()
     (interactive)
-    (let ((vscode-llm (make-llm-openai-compatible
-                       :chat-model "claude-3.5-sonnet"
-                       :url "http://localhost:3838/v1")))
-      (setq yap-service "vscode-llm"
-            yap-model "v:claude-3.5-sonnet"
-            yap-llm-provider-override vscode-llm)))
+    (setq yap-service "copilot"
+          yap-model "c:gpt-4.1"
+          yap-llm-provider-override
+          (make-llm-openai-compatible
+           :chat-model "gpt-4.1"
+           :url "http://localhost:4141/v1")))
 
   (defun meain/yap-template-with-refer (prompt-type)
     "Enhance YAP templates with refer integration.
