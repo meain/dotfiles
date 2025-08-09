@@ -4,7 +4,8 @@ set -e
 
 # npx copilot-api@latest start
 export ANTHROPIC_BASE_URL=http://localhost:4141 \
-    ANTHROPIC_AUTH_TOKEN=dummy \
+    ANTHROPIC_AUTH_TOKEN="" \
+    ANTHROPIC_API_KEY="" \
     ANTHROPIC_MODEL=claude-sonnet-4 \
     ANTHROPIC_SMALL_FAST_MODEL=gpt-4.1
 npx -y @anthropic-ai/claude-code "$@"
