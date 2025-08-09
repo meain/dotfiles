@@ -527,6 +527,20 @@ Pass ORIGINAL and ALTERNATE options."
   (global-set-key (kbd "M-v") (lambda (&optional term) (interactive "P") (meain/split-window "right" term)))
   (global-set-key (kbd "M-w") 'delete-window))
 
+;; Eat terminal
+;; TODO: Configure M-hjkl for split navigation
+(use-package eat
+  :ensure (:type git
+                 :host codeberg
+                 :repo "akib/emacs-eat"
+                 :files ("*.el" ("term" "term/*.el") "*.texi"
+                         "*.ti" ("terminfo/e" "terminfo/e/*")
+                         ("terminfo/65" "terminfo/65/*")
+                         ("integration" "integration/*")
+                         (:exclude ".dir-locals.el" "*-tests.el")))
+  :config
+  (add-hook 'eat-mode-hook (lambda () (setq-local show-trailing-whitespace nil))))
+
 ;; Eshell config
 (use-package eshell
   :init (global-set-key (kbd "M-t") 'meain/eshell-toggle)
