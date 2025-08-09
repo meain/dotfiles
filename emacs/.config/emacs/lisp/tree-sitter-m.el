@@ -135,5 +135,20 @@
   :after (evil-leader)
   :init (evil-leader/set-key "H j" 'tree-surgeon-split-join))
 
+;; Hacky symbol search using tree-sitter
+(use-package emacs
+  ;; TODO: Lazy load tree-jump
+  :after (consult)
+  :commands (tree-jump-search consult-tree-jump-search tree-jump-xref-backend)
+  :config
+  (load-file (concat (getenv "HOME") "/.config/emacs/tree-jump.el"))
+  :init
+  (add-to-list 'xref-backend-functions 'tree-jump-xref-backend)
+  (global-set-key (kbd "M-I")
+                  (alambda (if (string-suffix-p "_test.go" (buffer-file-name))
+                               (consult-tree-jump-search)
+                             (consult-tree-jump-search "!mock !_test "))
+                           (tree-jump-search))))
+
 (provide 'tree-sitter-m)
 ;;; tree-sitter-m.el ends here

@@ -17,5 +17,29 @@ Pass ORIGINAL and ALTERNATE options."
      (interactive "P")
      (if use-alternate ,alternate ,original)))
 
+(use-package emacs
+  :config
+  :commands (meain/cwd-fn meain/use-custom-src-directory)
+  :config
+  (defun meain/cwd-fn ()
+    (expand-file-name
+     ;; custom-src-directory is supposed to come from .dir-locals.el
+     (if (boundp 'custom-src-directory)
+         custom-src-directory
+       (or (when-let ((project (project-current)))
+             (project-root project))
+           default-directory))))
+
+  (defun meain/use-custom-src-directory (orig-fn &rest args)
+    "Use custom src directory as default directory.
+Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
+    (let ((default-directory
+           (expand-file-name
+            ;; custom-src-directory is supposed to come from .dir-locals.el
+            (if (boundp 'custom-src-directory)
+                custom-src-directory
+              default-directory))))
+      (apply orig-fn args))))
+
 (provide 'utils)
 ;;; utils.el ends here

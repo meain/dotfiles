@@ -41,6 +41,17 @@
   ;; block along with the helpful keys as they have similar keybinds
   (global-set-key (kbd "C-h l") #'find-library))
 
+;; which-key mode
+;; https://www.matem.unam.mx/~omar/apropos-emacs.html#the-case-against-which-key-a-polemic
+(use-package which-key
+  :ensure t
+  :defer nil
+  :config
+  ;; Only show up if explicitly requested
+  (setq which-key-show-early-on-C-h t
+        which-key-idle-delay 1e6 ; 11 days
+        which-key-idle-secondary-delay 0.05)
+  (which-key-mode))
 
 (provide 'documentation)
 ;;; documentation.el ends here

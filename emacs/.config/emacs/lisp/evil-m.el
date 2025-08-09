@@ -116,6 +116,16 @@
   (define-key evil-normal-state-map (kbd "g C-a") 'evil-numbers/inc-at-pt-incremental)
   (define-key evil-normal-state-map (kbd "g C-x") 'evil-numbers/dec-at-pt-incremental))
 
+;; Evil keybindings for a lot of things
+(use-package evil-collection
+  :defer nil
+  :ensure t
+  :after evil
+  :config
+  (setq evil-collection-magit-want-horizontal-movement t)
+  (setq evil-collection-magit-use-y-for-yank t)
+  (evil-collection-init))
+
 ;; Quit out of everything with esc
 (defun meain/keyboard-quit ()
   "Quit out of whatever."

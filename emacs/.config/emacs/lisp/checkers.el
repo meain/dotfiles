@@ -187,5 +187,18 @@
   (add-hook 'go-ts-mode-hook 'apheleia-mode)
   (define-key evil-normal-state-map (kbd ",,") #'meain/format-buffer))
 
+;; Code coverage in buffer
+;; To get coverage, run `go test -coverprofile=coverage.out ./...`
+;; and then convert this to lcov using
+;; gcov2lcov -infile coverage.out -outfile coverage.lcov -use-absolute-source-paths
+;; Now you can load this into coverlay
+(use-package coverlay
+  :ensure t
+  :commands (coverlay-load-file)
+  :config
+  (setq coverlay:tested-line-background-color "#C9F3D2")
+  (setq coverlay:untested-line-background-color "#F8CED3")
+  (setq coverlay:mark-tested-lines nil))
+
 (provide 'checkers)
 ;;; checkers.el ends here

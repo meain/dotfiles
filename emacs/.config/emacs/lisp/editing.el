@@ -96,5 +96,56 @@
   ;; Was having some trouble with aspell not detecting dicts
   (setq ispell-program-name "ispell"))
 
+;; drag-stuff
+(use-package drag-stuff
+  :ensure t
+  :after evil
+  :commands (drag-stuff-up drag-stuff-down drag-stuff-left drag-stuff-right)
+  :init
+  (define-key evil-visual-state-map (kbd "<up>") 'drag-stuff-up)
+  (define-key evil-visual-state-map (kbd "<down>") 'drag-stuff-down)
+  (define-key evil-visual-state-map (kbd "<left>") 'drag-stuff-left)
+  (define-key evil-visual-state-map (kbd "<right>") 'drag-stuff-right)
+  :config
+  (drag-stuff-mode t)
+  (drag-stuff-global-mode 1))
+
+;; Persistent undo using undo-tree
+(use-package undo-tree
+  :ensure t
+  :config
+  (global-undo-tree-mode t)
+  (setq undo-limit 80000000)
+  (setq evil-want-fine-undo nil)
+  (setq undo-tree-auto-save-history t)
+  (setq undo-tree-history-directory-alist '(("." . "~/.local/share/emacs/undo"))))
+
+;; Expand region
+(use-package expand-region
+  :ensure t
+  :commands (er/expand-region)
+  :config
+  ;; make evil jump list work with expand-region
+  (evil-set-command-property 'er/expand-region :jump t)
+  :init
+  (global-set-key (kbd "M--") 'er/expand-region))
+
+;; dtrt (atuo find indend setting)
+(use-package dtrt-indent
+  :ensure t
+  :config (dtrt-indent-global-mode))
+
+;; editorconfig
+(use-package editorconfig
+  :defer t
+  :ensure t
+  :config (editorconfig-mode 1))
+
+;; Emmet for html stuff (c-j to activate)
+(use-package emmet-mode
+  :ensure t
+  :defer t
+  :commands (emmet-mode))
+
 (provide 'editing)
 ;;; editing.el ends here
