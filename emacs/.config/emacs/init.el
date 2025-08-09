@@ -3039,6 +3039,15 @@ Called with a PREFIX, resets the context buffer list before opening"
       (copilot-chat--add-buffer buf)
       (copilot-chat-display))))
 
+;; Claude Code IDE
+(use-package claude-code-ide
+  :ensure (:type git :host github :repo "manzaltu/claude-code-ide.el")
+  :bind ("C-c C-'" . claude-code-ide-menu) ; Set your favorite keybinding
+  :config
+  (setq claude-code-ide-cli-path ",claude-code")
+  (setq claude-code-ide-terminal-backend 'eat)
+  (claude-code-ide-emacs-tools-setup)) ; Optionally enable Emacs MCP tools
+
 ;; LLM chat interface
 (use-package gptel
   :ensure t
