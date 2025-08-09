@@ -3154,25 +3154,25 @@ For optional NO-CACHE, use caching by default."
     (interactive (list (read-string "Q: " nil gptel-lookup--history)))
     (when (string= prompt "") (user-error "A prompt is required"))
     (gptel-request
-        (concat (and (use-region-p)
-                     (buffer-substring-no-properties (region-beginning) (region-end)))
-                "\n\n"
-                prompt)
-      :callback
-      (lambda (response info)
-        (if (not response)
-            (message "gptel-lookup failed with message: %s" (plist-get info :status))
-          (with-current-buffer (get-buffer-create "*gptel-lookup*")
-            (let ((inhibit-read-only t))
-              (erase-buffer)
-              (insert response))
-            (gfm-mode)
-            (goto-char (point-min))
-            (display-buffer (current-buffer)
-                            `((display-buffer-in-side-window)
-                              (reusable-frames . visible)
-                              (side            . top)
-                              (window-height . 0.2))))))))
+     (concat (and (use-region-p)
+                  (buffer-substring-no-properties (region-beginning) (region-end)))
+             "\n\n"
+             prompt)
+     :callback
+     (lambda (response info)
+       (if (not response)
+           (message "gptel-lookup failed with message: %s" (plist-get info :status))
+         (with-current-buffer (get-buffer-create "*gptel-lookup*")
+           (let ((inhibit-read-only t))
+             (erase-buffer)
+             (insert response))
+           (gfm-mode)
+           (goto-char (point-min))
+           (display-buffer (current-buffer)
+                           `((display-buffer-in-side-window)
+                             (reusable-frames . visible)
+                             (side            . top)
+                             (window-height . 0.2))))))))
 
   (defun gptel-get-user-queries ()
     "Return a list of user queries (prompts) from the current gptel buffer.
@@ -3215,21 +3215,21 @@ Return a list of filenames only, one per line without extension.
 "
                            (mapconcat #'identity user-messages "\n"))))
       (gptel-request
-          prompt
-        :callback (or callback
-                      (lambda (response _info)
-                        (let ((filenames (cl-remove-if #'string-empty-p
-                                                       (mapcar #'string-trim
-                                                               (split-string response "\n" t)))))
-                          (rename-visited-file
-                           (concat (expand-file-name "~/.local/share/llm-discussions/")
-                                   (completing-read "Pick a filename: " filenames nil t)
-                                   "."
-                                   (cond
-                                    ((derived-mode-p 'org-mode) "org")
-                                    ((derived-mode-p 'markdown-mode) "md")
-                                    (t "txt"))))
-                          filenames))))))
+       prompt
+       :callback (or callback
+                     (lambda (response _info)
+                       (let ((filenames (cl-remove-if #'string-empty-p
+                                                      (mapcar #'string-trim
+                                                              (split-string response "\n" t)))))
+                         (rename-visited-file
+                          (concat (expand-file-name "~/.local/share/llm-discussions/")
+                                  (completing-read "Pick a filename: " filenames nil t)
+                                  "."
+                                  (cond
+                                   ((derived-mode-p 'org-mode) "org")
+                                   ((derived-mode-p 'markdown-mode) "md")
+                                   (t "txt"))))
+                         filenames))))))
 
   :init
   (global-unset-key (kbd "M-;"))
