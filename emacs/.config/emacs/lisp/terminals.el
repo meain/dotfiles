@@ -49,6 +49,11 @@
      (call-interactively 'recompile)
      (call-interactively 'compile))))
 
+;; Auto recompile on save (useful for running tests)
+(use-package recompile-on-save
+  :ensure t
+  :commands (recompile-on-save-mode))
+
 (use-package comint
   :defer t
   :config

@@ -58,5 +58,7 @@
   (setq show-paren-style 'parenthesis)
   (show-paren-mode t))
 
+(use-package which-func :commands (which-function))
+
 (provide 'visual)
 ;;; visual.el ends here

@@ -4,6 +4,8 @@
 ;; All thing realted to working with scratch buffers
 
 ;;; Code:
+(setq initial-scratch-message ";; Where do you want to go today?")
+
 (use-package emacs
   :after evil
   :init
@@ -103,6 +105,9 @@
                       (save-buffer)
                     (call-interactively 'meain/gptel-rename-chat-buffer)))
                  (t (call-interactively 'evil-write))))))
+
+;; Auto updating scratch message
+(run-at-time "3 minutes" (* 5 60) 'meain/update-scratch-message)
 
 (provide 'scratcher)
 ;;; scratcher.el ends here

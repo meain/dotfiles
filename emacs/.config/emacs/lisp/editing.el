@@ -147,5 +147,23 @@
   :defer t
   :commands (emmet-mode))
 
+;; Quick calculations
+(use-package emacs
+  :commands (meain/calc-eval)
+  :after evil-leader
+  :init
+  (evil-leader/set-key ":" 'meain/calc-eval)
+  :config
+  (defun meain/calc-eval (start end)
+    (interactive "r")
+    (let ((thing (if (use-region-p)
+                     (buffer-substring start end)
+                   (thing-at-point 'line))))
+      (if current-prefix-arg ; replace in that case
+          (progn
+            (if (use-region-p) (goto-char end) (end-of-line))
+            (insert " = " (calc-eval thing)))
+        (message "%s" (calc-eval thing))))))
+
 (provide 'editing)
 ;;; editing.el ends here

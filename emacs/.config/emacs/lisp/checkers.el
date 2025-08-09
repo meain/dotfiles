@@ -200,5 +200,71 @@
   (setq coverlay:untested-line-background-color "#F8CED3")
   (setq coverlay:mark-tested-lines nil))
 
+;; Quick run current test
+(use-package emacs
+  :after (compile evil-leader)
+  :commands (meain/toffee-run-test meain/toffee--get-test-command)
+  :config
+  ;; if available in another frame, don't recreate in current frame
+  (push '("\\*compilation\\*" . (nil (reusable-frames . t))) display-buffer-alist)
+  (defvar meain/toffee--previous-command nil)
+  (defvar meain/toffee-run-previous-if-empty t)
+  (defun meain/toffee--get-cwd ()
+    "Get the current working directory to run the test.
+For example if it is go-mod file, look up the go.mod file and use that directory."
+    (pcase major-mode
+      ('go-mode (locate-dominating-file (buffer-file-name) "go.mod"))
+      ('go-ts-mode (locate-dominating-file (buffer-file-name) "go.mod"))
+      (_ default-directory)))
+  (defun meain/toffee--get-test-command (mode)
+    (let ((default-directory
+           (expand-file-name
+            ;; custom-src-directory is supposed to come from .dir-locals.el
+            (if (boundp 'custom-src-directory)
+                custom-src-directory
+              (meain/toffee--get-cwd))))
+          (command
+           (shell-command-to-string
+            (cond
+             ((eq mode 'function) (format "toffee --verbose '%s' '%s'" (buffer-file-name) (line-number-at-pos)))
+             ((eq mode 'suite) (format "toffee --verbose '%s'" (buffer-file-name)))
+             ((eq mode 'project) (format "toffee --verbose --full '%s'" (buffer-file-name)))
+             (t (error "Unknown mode for meain/toffee--get-test-command"))))))
+      (if (s-starts-with-p "Unable to find any test" command)
+          (cons default-directory nil)
+        (cons default-directory (s-trim command)))))
+  (defun meain/toffee-run-previous-test ()
+    "Run previous test."
+    (interactive)
+    (let* ((dir-cmd (meain/toffee--get-test-command  'function))
+           (default-directory (car dir-cmd))
+           (command meain/toffee--previous-command))
+      (if command
+          (progn (compile command))
+        (message "Unable to find any tests"))))
+  (defun meain/toffee-run-test (&optional _)
+    "Run test based on `MODE'. By default runs current function.
+Pass universal args to run suite or project level tests."
+    (interactive "P")
+    (let* ((mode (cond
+                  ((equal current-prefix-arg nil) 'function)
+                  ((equal current-prefix-arg '(4)) 'suite)
+                  ((equal current-prefix-arg '(16)) 'project)))
+           (dir-cmd (meain/toffee--get-test-command mode))
+           (default-directory (car dir-cmd))
+           (command (cdr dir-cmd)))
+      (if command
+          (progn
+            (setq meain/toffee--previous-command command)
+            (compile command))
+        (if (and meain/toffee-run-previous-if-empty meain/toffee--previous-command)
+            (progn
+              (message "Could not find any tests, running previous test...")
+              (compile (concat "nice " meain/toffee--previous-command)))
+          (message "Unable to find any tests")))))
+  :init
+  (evil-leader/set-key "d" 'meain/toffee-run-test)
+  (evil-leader/set-key "D" 'meain/toffee-run-previous-test))
+
 (provide 'checkers)
 ;;; checkers.el ends here

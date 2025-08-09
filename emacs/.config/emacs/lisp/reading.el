@@ -1,10 +1,11 @@
-;;; read-write.el --- Reading and writing prose related packages -*- lexical-binding: t; -*-
+;;; reading.el --- Reading related packages -*- lexical-binding: t; -*-
 
 ;;; Commentary:
-;; Packages that help me read or write long prose, not the actual
-;; modes, but other related packages.
+;; Packages that help me read stuff within emacs
 
 ;;; Code:
+(use-package focus :ensure t :commands focus-mode)
+
 ;; Text to speech stuff
 ;; Useful for reading out llm explanations
 (use-package read-aloud
@@ -33,5 +34,5 @@
           "macos" (cmd "/usr/bin/say" args ("-r" meain/read-aloud-speed)))))
 
 
-(provide 'read-write)
-;;; read-write.el ends here
+(provide 'reading)
+;;; reading.el ends here

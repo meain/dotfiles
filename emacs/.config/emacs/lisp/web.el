@@ -69,5 +69,11 @@
   :init
   (evil-leader/set-key "g l" 'meain/github-url))
 
+;; Link opening
+(use-package ace-link
+  :ensure t
+  :commands ace-link
+  :init (global-set-key (kbd "M-f l") 'ace-link))
+
 (provide 'web)
 ;;; web.el ends here

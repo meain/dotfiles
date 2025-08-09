@@ -151,5 +151,14 @@ Pass `CREATE' to create the alternate file if it does not exits."
   :init
   (global-set-key (kbd "M-f f") 'meain/monacle-mode))
 
+;; Hit universal arg without ctrl
+(use-package emacs
+  :after evil-leader
+  :defer t
+  :config
+  (evil-leader/set-key "u" 'universal-argument)
+  (global-set-key (kbd "M-u") 'universal-argument)
+  (define-key universal-argument-map (kbd "M-u") 'universal-argument-more))
+
 (provide 'random)
 ;;; random.el ends here

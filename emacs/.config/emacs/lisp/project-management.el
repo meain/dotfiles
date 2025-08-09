@@ -77,5 +77,10 @@
                   (lambda ()
                     (setq ibuffer-filter-groups (ibuffer-project-generate-filter-groups)))))
 
+;; Direnv support
+(use-package envrc
+  :ensure t
+  :config (envrc-global-mode))
+
 (provide 'project-management)
 ;;; project-management.el ends here

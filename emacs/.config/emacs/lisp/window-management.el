@@ -74,5 +74,21 @@
                   (alambda (call-interactively 'switch-to-buffer)
                            (ibuffer-other-window))))
 
+;; Winner mode
+(use-package winner
+  :defer nil
+  :config
+  (global-set-key (kbd "M-f <left>") 'winner-undo)
+  (global-set-key (kbd "M-f <right>") 'winner-redo)
+  (winner-mode))
+
+;; Window layout changer
+(use-package rotate
+  :ensure t
+  :after evil
+  :commands (rotate-layout rotate-window)
+  :init
+  (define-key evil-normal-state-map (kbd "M-f <SPC>") 'rotate-layout))
+
 (provide 'window-management)
 ;;; window-management.el ends here

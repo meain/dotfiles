@@ -4,6 +4,8 @@
 ;; Basic settings for Emacs, mostly related to system packages
 
 ;;; Code:
+(setq user-mail-address "mail@meain.io" user-full-name "Abin Simon")
+
 ;; Consistent window title
 (setq frame-title-format '("Emacs")) ; needed by hammerspoon
 
@@ -78,6 +80,20 @@
 ;; Use mouse to do some stuff when you are lazy
 ;; TODO: Causes Emacs to freeze when open
 (context-menu-mode nil)
+
+;; Automatic chmod +x when you save a file that starts with a #! shebang:
+(add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
+
+;; Font size changes
+(global-set-key (kbd "s-=") 'text-scale-increase)
+(global-set-key (kbd "s--") 'text-scale-decrease)
+(global-set-key (kbd "s-_") (ilambda text-scale-set 0)) ; s-0 is used by wm
+
+;; Revert buffer quickly (fix for dealing with eglot loosing it)
+(global-set-key (kbd "M-f r") (lambda ()
+                                (interactive)
+                                (save-buffer)
+                                (revert-buffer-quick)))
 
 (provide 'settings)
 ;;; settings.el ends here

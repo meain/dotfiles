@@ -53,5 +53,13 @@
         which-key-idle-secondary-delay 0.05)
   (which-key-mode))
 
+;; Quick lookup in a dictionary
+(use-package dictionary
+  :ensure t
+  :commands (dictionary-search)
+  :init
+  (global-set-key (kbd "C-c d") #'dictionary-search)
+  :config (setq dictionary-server "dict.org"))
+
 (provide 'documentation)
 ;;; documentation.el ends here

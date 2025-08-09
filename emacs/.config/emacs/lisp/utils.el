@@ -41,5 +41,14 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
               default-directory))))
       (apply orig-fn args))))
 
+(defun get-api-key (key)
+  "Retrieve the API key for the specified KEY from 'pass'."
+  (string-trim (shell-command-to-string (format "pass show %s 2>/dev/null" key)) "\n" "\n"))
+(defvar groq-api-key (get-api-key "groq/apikey"))
+(defvar openrouter-api-key (get-api-key "openrouter/apikey"))
+(defvar openai-api-key (get-api-key "openai/apikey"))
+(defvar anthropic-api-key (get-api-key "anthropic/apikey"))
+(defvar github-models-api-key (get-api-key "github-models/apikey"))
+
 (provide 'utils)
 ;;; utils.el ends here

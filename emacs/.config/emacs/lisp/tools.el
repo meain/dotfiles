@@ -35,5 +35,22 @@
   :defer t
   :config (global-activity-watch-mode))
 
+;; Restclient
+;; Alternative: https://github.com/federicotdn/verb
+(use-package restclient
+  :ensure t
+  :defer t
+  :mode ("\\.rest\\'". restclient-mode)
+  :config (add-hook 'restclient-mode-hook (lambda ()
+                                            (setq imenu-generic-expression '((nil "^#+\s+.+" 0))))))
+
+;; Restclient jq integration
+(use-package restclient-jq
+  :ensure t
+  :after restclient
+  :defer
+  :init
+  (add-hook 'restclient-mode-hook (lambda () (require 'restclient-jq))))
+
 (provide 'tools)
 ;;; tools.el ends here
