@@ -3361,25 +3361,14 @@ PROMPT-TYPE specifies the type of prompt to use ('rewrite or 'prompt)."
     "Get the prompt for NAME."
     (with-temp-buffer
       (insert-file-contents
-       (concat user-emacs-directory "prompts/" name ".md"))
+       (concat (getenv "HOME") "/.config/datafiles/prompts/user/" name ".md"))
       (buffer-string)))
 
-  (add-to-list
-   'yap-templates
-   '(identify-actionable-change . (lambda ()
-                                    (yap-template-prompt (meain/get-llm-prompt "identify-actionable-change")))))
-
-  (add-to-list
-   'yap-templates
-   '(perform-proposed-change . (lambda ()
-                                 (yap-template-buffer-context
-                                  (meain/get-llm-prompt "perform-proposed-change")
-                                  (let ((proposal (read-string "Proposal (default: prev yap response): ")))
-                                    (if (string= proposal "")
-                                        (with-current-buffer "*yap-response*"
-                                          (buffer-substring-no-properties (point-min) (point-max)))
-                                      proposal))
-                                  (current-buffer)))))
+  (cl-loop for name in '(identify-actionable-change message-response review-diff)
+           do (add-to-list
+               'yap-templates
+               (cons name (lambda ()
+                            (yap-template-prompt (meain/get-llm-prompt (symbol-name name)))))))
 
   (defun meain/select-enclosing-defun ()
     (unless (use-region-p)
