@@ -92,3 +92,39 @@ highlight-color = "#f1f1f1"
 [git]
 write-change-id-header = true
 
+# JJ tools (uses stdin and outputs to stdout)
+[fix.tools.gofmt]
+command = ["gofmt"]
+patterns = ["glob:'**/*.go'"]
+
+[fix.tools.goimports]
+command = ["goimports"]
+patterns = ["glob:'**/*.go'"]
+
+[fix.tools.prettier-javascript]
+command = ["prettier", "--stdin-filepath", "$path"]
+patterns = ["glob:'**/*.js'", "glob:'**/*.jsx'", "glob:'**/*.ts'", "glob:'**/*.tsx'"]
+
+# [fix.tools.prettier-json]
+# command = ["prettier", "--stdin-filepath", "$path"]
+# patterns = ["glob:'**/*.json'", "glob:'**/*.json5'"]
+
+# [fix.tools.prettier-yaml]
+# command = ["prettier", "--stdin-filepath", "$path"]
+# patterns = ["glob:'**/*.yaml'", "glob:'**/*.yml'"]
+
+[fix.tools.prettier-html]
+command = ["prettier", "--stdin-filepath", "$path"]
+patterns = ["glob:'**/*.html'", "glob:'**/*.htm'"]
+
+[fix.tools.prettier-css]
+command = ["prettier", "--stdin-filepath", "$path"]
+patterns = ["glob:'**/*.css'"]
+
+# [fix.tools.prettier-markdown]
+# command = ["prettier", "--stdin-filepath", "$path"]
+# patterns = ["glob:'**/*.md'", "glob:'**/*.markdown'"]
+
+[fix.tools.nixfmt-rfc-style]
+command = ["nixfmt", "-"]
+patterns = ["glob:'**/*.nix'"]
