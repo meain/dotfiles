@@ -13,7 +13,8 @@ tmp() {
         return 0
     r="/tmp/workspaces/$(xxd -l3 -ps /dev/urandom)"
     mkdir -p "$r" && cd "$r"
-    git init
+    echo "Created temporary directory $(basename "$r")"
+    jj git init --colocate
 }
 
 # cd, but use lf to choose dir
