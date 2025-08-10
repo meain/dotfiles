@@ -79,38 +79,49 @@ START and END for position."
     (interactive)
     (message "Generating markdown for %s. Just give it a moment.." (buffer-file-name))
     (start-process-shell-command "*markdown-html*" "*markdown-html*"
-                                 (concat ",markdown-to-html " (buffer-file-name))))
+                                 (concat ",markdown-to-html " (buffer-file-name)))))
 
+(use-package emacs
+  :config
   ;; Run markdown code blocks
   ;; Possible alternative https://github.com/md-babel/md-babel.el
+  (setq meain/run-markdown-code-block-marker "<!-- code block execution result -->")
   (defun meain/run-markdown-code-block (&optional insert-to-buffer)
-    "Run markdown code block under cursor.
-Pass INSERT-TO-BUFFER to insert output to current buffer."
+    "Run markdown code block at point.  Insert output after block if INSERT-TO-BUFFER is non-nil."
     (interactive "P")
-    (let* ((start (nth 0 (markdown-get-enclosing-fenced-block-construct)))
-           (end (nth 1 (markdown-get-enclosing-fenced-block-construct)))
-           (snippet-with-markers (buffer-substring start end))
-           (snippet (string-join (cdr (butlast (split-string snippet-with-markers "\n"))) "\n"))
-           (snippet-runner (car (last (split-string (car (split-string snippet-with-markers "\n")) "[ `]+")))))
-      (setq temp-source-file (make-temp-file "thing-to-run"))
-      (pulse-momentary-highlight-region start end 'mode-line)
-      (message "Code: %s" snippet)
-      (message "Runner: %s" snippet-runner)
-      (append-to-file snippet nil temp-source-file)
-      (message "Running code...")
-      (if insert-to-buffer
-          (progn
-            (goto-char end)
-            (end-of-line)
-            (newline)
-            (insert "\n```\n")
-            (insert (shell-command-to-string (format "%s '%s'" snippet-runner temp-source-file)))
-            (insert "```"))
-        (with-current-buffer (get-buffer-create "*markdown-runner-output*")
-          (erase-buffer)
-          (insert (shell-command-to-string (format "%s '%s'" snippet-runner temp-source-file)))
-          (switch-to-buffer (current-buffer))))
-      (delete-file temp-source-file t))))
+    (let* ((bounds (markdown-code-block-at-point))) ; returns (start . end) as integers
+      (unless bounds (user-error "Not inside a markdown code block"))
+      (let* ((start (car bounds))
+             (end (cadr bounds))
+             (raw-block (buffer-substring-no-properties start end))
+             (lines (split-string raw-block "\n"))
+             (fence-line (car lines))
+             (lang (car (last (split-string fence-line "[ `]+"))))
+             (code (string-join (butlast (cdr lines)) "\n"))
+             (interpreter (alist-get (intern lang)
+                                     '((python . "python3") (py . "python3")
+                                       (ruby . "ruby") (rb . "ruby")
+                                       (sh . "bash") (shell . "bash") (bash . "bash") (shell-script . "bash")
+                                       (js . "node") (javascript . "node") (typescript . "ts-node") (ts . "ts-node")
+                                       (emacs-lisp . "emacs --batch -l"))
+                                     nil nil #'string=)))
+        (unless (and lang (not (string= lang "")) interpreter)
+          (user-error "Unknown or unsupported language: %s" lang))
+        (let ((tmpfile (make-temp-file "md-run-block-")))
+          (with-temp-file tmpfile (insert code))
+          (unwind-protect
+              (let ((output (shell-command-to-string (format "%s '%s'" interpreter tmpfile))))
+                (if insert-to-buffer
+                    (save-excursion
+                      (goto-char end)
+                      (insert (format "\n\n%s\n```\n%s\n```\n\n"
+                                      meain/run-markdown-code-block-marker
+                                      (string-trim-right output))))
+                  (pop-to-buffer "*markdown-block-output*")
+                  (erase-buffer)
+                  (insert output)))
+            (delete-file tmpfile)))))))
+
 ;; Writing mode
 (use-package writeroom-mode
   :ensure t
