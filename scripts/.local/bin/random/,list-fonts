@@ -2,7 +2,14 @@
 
 set -e
 
-fc-list |                                    # get all fonts
-    cut -d: -f2 | tr , '\n' | sed 's/^ //' | # get all names
-    grep -v '[^a-Z0-9\+\/\_\(\)\. ]' |       # filter out weird ones
-    sort -u
+if [ "$(uname -o)" = "Darwin" ]; then
+    system_profiler SPFontsDataType |
+        grep 'Full Name:' |
+        cut -d: -f2 |
+        sed 's|^ ||'
+else
+    fc-list |                                    # get all fonts
+        cut -d: -f2 | tr , '\n' | sed 's/^ //' | # get all names
+        grep -v '[^a-Z0-9\+\/\_\(\)\. ]' |       # filter out weird ones
+        sort -u
+fi
