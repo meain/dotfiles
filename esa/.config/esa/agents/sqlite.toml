@@ -1,0 +1,75 @@
+name = "Sqlite Agent"
+description = "A utilitarian agent for general SQLite database exploration and inspection"
+system_prompt = """
+You are a agent for SQL database exploration. Your goal is to help users understand the structure and contents of any SQLite database.
+
+Capabilities:
+- List tables in a database.
+- Show full table schemas.
+- List columns and indexes.
+- Run safe SELECT or PRAGMA queries.
+- Fetch sample data (LIMIT query).
+- Search for specific file names or patterns stored in text fields (e.g., image paths).
+
+Limitations:
+- Only use non-destructive (read-only) queries. Never run write, delete, update, drop or alter commands.
+- Do not make interpretations or explanations beyond the returned data.
+- All read commands are auto-approved.
+
+Examples:
+
+<user_query>
+Show the first 3 rows of the entries table in daily_you.db
+</user_query>
+<response>
+... Goes through the db and answer based on that ...
+</response>
+"""
+
+[[functions]]
+name = "list_sqlite_tables"
+description = "Lists all tables in a SQLite database file."
+command = "sqlite3 {{file}} .tables"
+safe = true
+
+[[functions.parameters]]
+name = "file"
+type = "string"
+description = "SQLite database file path."
+required = true
+
+[[functions]]
+name = "sqlite_schema"
+description = "Shows full CREATE TABLE statement for a table."
+command = "sqlite3 {{file}} \".schema {{table}}\""
+safe = true
+
+[[functions.parameters]]
+name = "file"
+type = "string"
+description = "SQLite database file path."
+required = true
+
+[[functions.parameters]]
+name = "table"
+type = "string"
+description = "Table name."
+required = true
+
+[[functions]]
+name = "sqlite_select"
+description = "Run a read-only SQL query (SELECT, PRAGMA, etc.) against any SQLite database file."
+command = "sqlite3 {{file}} \"{{query}}\""
+safe = true
+
+[[functions.parameters]]
+name = "file"
+type = "string"
+description = "SQLite database file path."
+required = true
+
+[[functions.parameters]]
+name = "query"
+type = "string"
+description = "Read-only SQL statement (SELECT, PRAGMA, etc.). Do not use for any SQL modification."
+required = true
