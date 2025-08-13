@@ -40,31 +40,40 @@
         (yank))))
   (evil-define-key 'visual markdown-mode-map "p" 'meain/paste-after-or-create-link)
 
-  ;; Quickly add markdown links to document
-  (defun meain/markdown-linkify-thing (start end)
-    "Function to search and add markdown links to document.
-START and END for position."
-    (interactive "r")
-    (let* ((orig-thang (if (use-region-p)
-                           (buffer-substring start end)
-                         (thing-at-point 'symbol)))
-           (thang (read-string "Search term: " orig-thang))
-           (json-object-type 'plist)
-           (json-array-type 'list)
-           (lurl (car (split-string
-                       (completing-read
-                        (format "Choose URL (%s): " thang)
-                        (mapcar (lambda (entry)
-                                  (string-join (list (plist-get entry :url)
-                                                     " :: "
-                                                     (plist-get entry :title))))
-                                (json-read-from-string (shell-command-to-string (string-join (list "ddgr --json '" thang "'"))))))
-                       " "))))
-      (save-excursion
-        (if (use-region-p)
-            (kill-region start end)
-          (kill-region (beginning-of-thing 'symbol) (end-of-thing 'symbol)))
-        (insert (format "[%s](%s)" orig-thang lurl)))))
+(defun meain/markdown-linkify-thing (start end)
+  "Search for and insert a markdown link at START to END or at point.
+Uses 'ddgr' web search to look up a URL and insert a formatted markdown link."
+  (interactive "r")
+  (let* ((region-active (use-region-p))
+         (thing-bounds (if region-active
+                           (cons start end)
+                         (bounds-of-thing-at-point 'symbol)))
+         (thing-text (if region-active
+                         (buffer-substring-no-properties start end)
+                       (buffer-substring-no-properties (car thing-bounds) (cdr thing-bounds))))
+         (search-term (read-string "Search term: " thing-text))
+         (json-object-type 'plist)
+         (json-array-type 'list)
+         (search-cmd (format "ddgr --noua --json \"%s\"" search-term))
+         (json-result (ignore-errors (shell-command-to-string search-cmd)))
+         (results (condition-case nil
+                      (json-read-from-string json-result)
+                    (error nil))))
+    (if (and results (listp results) (> (length results) 0))
+        (let* ((candidates (mapcar (lambda (entry)
+                                     (cons (format "%s :: %s"
+                                                   (plist-get entry :url)
+                                                   (plist-get entry :title))
+                                           (plist-get entry :url)))
+                                   results))
+               (choose (completing-read
+                        (format "Choose URL for [%s]: " thing-text)
+                        candidates nil t))
+               (chosen-url (cdr (assoc choose candidates))))
+          (save-excursion
+            (delete-region (car thing-bounds) (cdr thing-bounds))
+            (insert (format "[%s](%s)" thing-text chosen-url))))
+      (user-error "No search results or API error for %s" search-term))))
 
   ;; Generate pdf from markdown document
   (defun meain/markdown-pdf ()
