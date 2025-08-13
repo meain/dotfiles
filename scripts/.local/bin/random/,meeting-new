@@ -42,14 +42,19 @@ get_property() {
     jq -r ".choices[] | select(.name == \"$meeting\") | $1" <"$config"
 }
 
-meetingname="$(get_property .fileNameFormat.format)"
+meetingname="$(get_property .fileNameFormat.format |
+    sed "s|{{DATE:YYYY/MM/DD}}|$(date +%Y/%m/%d)|" |
+    sed "s|{{DATE:YYYY}}|$(date +%Y)|" |
+    sed "s|{{DATE:\[W\]WW}}|W$(date +%V)|")"
 if [ "$(get_property .fileNameFormat.enabled)" = "false" ]; then
     read -rp "Enter meeting name: " meetingname || exit 1
 fi
 
 meetingtemplate="$(get_property .templatePath)"
-meetingfile="$basedir/$(get_property '.folder.folders[0]' <"$config" |
-    sed "s|{{DATE:YYYY/MM/DD}}|$(date +%Y/%m/%d)|")/$meetingname.md"
+templatedir="$(get_property '.folder.folders[0]' <"$config" |
+    sed "s|{{DATE:YYYY/MM/DD}}|$(date +%Y/%m/%d)|" |
+    sed "s|{{DATE:YYYY}}|$(date +%Y)|")"
+meetingfile="$basedir/$templatedir/$meetingname.md"
 
 if [ -f "$meetingfile" ]; then
     echo "Meeting file already exists; Opening"
