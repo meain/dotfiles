@@ -54,8 +54,8 @@
       # "anythingllm"
       # "cursor"
       "zed"
-      "wezterm"
-      "vscodium" # cody and cline
+      # "wezterm"
+      # "vscodium" # cody and cline
       "visual-studio-code" # copilot
       # "thunderbird"
       "orbstack" # better docker
@@ -71,7 +71,7 @@
       # "utm" # virtualization
       # "rectangle" # window management
       # "tailscale" # vpn
-      "chatgpt" # quick shortcut is awesome
+      # "chatgpt" # quick shortcut is awesome
       "meetingbar" # next meeting in bar
       "obs" # screen recording
       "keycastr" # show keys being typed (for recording)
