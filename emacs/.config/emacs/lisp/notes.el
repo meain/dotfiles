@@ -12,6 +12,7 @@
   (setq meain/quick-notes-templates-directory "~/dev/src/templates")
   (defun meain/create-quick-note ()
     (interactive)
+    (require 's)
     (let* ((templates (directory-files meain/quick-notes-templates-directory nil ".+\\..+"))
            (name-input (completing-read "Title: " templates nil nil))
            (is-template (member name-input templates))
@@ -29,8 +30,9 @@
   (setq meain/quick-notes-directory "~/.local/share/vime/")
   (evil-leader/set-key "v"
     (alambda
-     (project-switch-project meain/quick-notes-directory) ; TODO: sort files by timestamp
-     (meain/create-quick-note))))
+     (meain/create-quick-note)
+     ;; TODO: sort files by timestamp when displaying
+     (dired (concat meain/quick-notes-directory "/" (format-time-string "%Y-%m" (current-time)))))))
 
 ;; Journal entry
 (use-package emacs
