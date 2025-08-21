@@ -165,7 +165,8 @@ required = false
 [[functions]]
 name = "send_email"
 description = "Send an email"
-command = ",send-email '{{recipient}}' '{{subject}}' '{{body}}'"
+command = ",send-email '{{recipient}}' '{{subject}}'"
+stdin="{{body}}"
 
 [[functions.parameters]]
 name = "recipient"

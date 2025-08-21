@@ -1,15 +1,56 @@
-#!/usr/bin/osascript
+#!/usr/bin/env bash
+set -euo pipefail
 
-on run argv
-    set recipientEmail to item 1 of argv
-    set emailSubject to item 2 of argv
-    set emailBody to item 3 of argv
+# Usage: send-email.sh <recipient-email> <subject>
+[ -z "$2" ] && echo "Usage: $0 <recipient-email> <subject>" && exit 1
 
-    tell application "Mail"
-        set newMessage to make new outgoing message with properties {subject:emailSubject, content:emailBody, visible:true}
-        tell newMessage
-            make new to recipient at end of to recipients with properties {address:recipientEmail}
-        end tell
-        send newMessage
-    end tell
-end run
+TO="$1"
+FROM="mail@meain.io"
+SUBJECT="$2"
+BOUNDARY="5805bf167ff37d5bfdcd0529f44699dcacff35f92aa68c6e453ff0ebbae6e1ac" # some random string
+
+# Read markdown from stdin
+MD_CONTENT=$(cat)
+
+# Convert markdown to text and html
+TEXT=$(echo "$MD_CONTENT" | pandoc -t plain)
+HTML=$(echo "$MD_CONTENT" | pandoc -t html)
+
+cat <<EOF | msmtp "$TO"
+From: $FROM
+To: $TO
+Subject: $SUBJECT
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="$BOUNDARY"
+
+--$BOUNDARY
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+$TEXT
+
+--$BOUNDARY
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+$HTML
+
+--$BOUNDARY--
+EOF
+
+# #!/usr/bin/osascript
+
+# on run argv
+#     set recipientEmail to item 1 of argv
+#     set emailSubject to item 2 of argv
+#     set emailBody to item 3 of argv
+
+#     tell application "Mail"
+#         set newMessage to make new outgoing message with properties {subject:emailSubject, content:emailBody, visible:true}
+#         tell newMessage
+#             make new to recipient at end of to recipients with properties {address:recipientEmail}
+#         end tell
+#         send newMessage
+#     end tell
+# end run
+
