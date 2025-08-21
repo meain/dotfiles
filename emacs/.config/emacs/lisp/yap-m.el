@@ -80,27 +80,6 @@
            :chat-model "gpt-4.1"
            :url "http://localhost:4141/v1")))
 
-  (defun meain/yap-template-with-refer (prompt-type)
-    "Enhance YAP templates with refer integration.
-PROMPT-TYPE specifies the type of prompt to use ('rewrite or 'prompt)."
-    (let ((prompt (read-string "Prompt: "))
-          (buffer-content (or (yap--get-selected-text) "")))
-      (yap-template-external-context
-       (if (eq prompt-type 'rewrite)
-           yap--default-system-prompt-for-rewrite
-         yap--default-system-prompt-for-prompt)
-       prompt
-       (current-buffer)
-       (with-temp-buffer
-         (insert (concat prompt "\n" buffer-content))
-         (shell-command-on-region
-          (point-min) (point-max)
-          "refer search --threshold 25 --format llm")
-         (buffer-string)))))
-
-  (add-to-list 'yap-templates '(yap-rewrite-with-refer . (lambda () (meain/yap-template-with-refer 'rewrite))))
-  (add-to-list 'yap-templates '(yap-prompt-with-refer . (lambda () (meain/yap-template-with-refer 'prompt))))
-
   (defun meain/get-llm-prompt (name)
     "Get the prompt for NAME."
     (with-temp-buffer
@@ -127,8 +106,6 @@ PROMPT-TYPE specifies the type of prompt to use ('rewrite or 'prompt)."
   (global-set-key (kbd "M-m M-m") 'yap-prompt)
   (global-set-key (kbd "M-m M-r") 'yap-rewrite)
   (global-set-key (kbd "M-m M-w") 'yap-write)
-  (global-set-key (kbd "M-m M-x M-m") (lambda () (interactive) (yap-prompt 'yap-prompt-with-refer)))
-  (global-set-key (kbd "M-m M-x M-r") (lambda () (interactive) (yap-rewrite 'yap-rewrite-with-refer)))
   (global-set-key (kbd "M-m M-o") (lambda () (interactive) (yap-rewrite 'optimize-code)))
   (global-set-key (kbd "M-m M-i")
                   (lambda ()
