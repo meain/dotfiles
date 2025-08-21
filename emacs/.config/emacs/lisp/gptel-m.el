@@ -189,12 +189,15 @@ Return a list of filenames only, one per line without extension.
   :init
   (global-unset-key (kbd "M-;"))
   (global-set-key (kbd "M-; m") 'gptel)
+  (global-set-key (kbd "M-; M-m") 'gptel)
   (global-set-key (kbd "M-; s") 'gptel-send)
   (global-set-key (kbd "M-; p") 'gptel-lookup)
   (global-set-key (kbd "M-; c") 'gptel-context-clear-all)
   (global-set-key (kbd "M-; a") 'gptel-add)
   (global-set-key (kbd "M-; i") 'gptel-menu)
-  (global-set-key (kbd "M-; r") 'gptel-rewrite))
+  (global-set-key (kbd "M-; M-i") 'gptel-menu)
+  (global-set-key (kbd "M-; r") 'gptel-rewrite)
+  (global-set-key (kbd "M-; M-r") 'gptel-rewrite))
 
 (use-package gptel-prompts
   :ensure (:host github :repo "jwiegley/gptel-prompts")
