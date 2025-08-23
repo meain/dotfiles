@@ -3,8 +3,17 @@
 set -e
 
 if [ -n "$1" ]; then
-   echo "Reviewing older commits might not work as expected as the files read are from current version"
+    echo "Reviewing older commits might not work as expected as the files read are from current version"
+fi
+
+commit="@"
+if [ -z "$1" ]; then
+    if ! jj diff | grep -q .; then
+        commit="@-"
+    fi
+else
+    commit="$1"
 fi
 
 SYSTEM_PROMPT="$(cat "$HOME/.config/datafiles/prompts/user/review-diff.md")"
-jj show $1 | esa -- +coder "$SYSTEM_PROMPT"
+jj show "$commit" | esa -- +coder "$SYSTEM_PROMPT"
