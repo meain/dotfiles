@@ -165,7 +165,7 @@ function mainMode(x, y, w, h)
 
     fff.x = scf.x
     fff.y = scf.y
-    fff.w = scf.w * 0.75 - 20
+    fff.w = scf.w * 0.75
     fff.h = scf.h
     ffw:setFrame(fff)
 end
