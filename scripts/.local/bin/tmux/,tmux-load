@@ -3,9 +3,9 @@
 LOAD=$(ps -A -o %cpu | awk '{s+=$1} END {print s}' | sed 's/\..*//')
 if [ "$LOAD" -ge 200 ]; then
     if [ "$(uname -o)" = "Darwin" ]; then
-        PROCESS=$(ps -o command -r | head -n2 | tail -n1 | xargs basename)
+        PROCESS=$(ps -o command -r | head -n2 | tail -n1 | xargs basename --)
     else
-        PROCESS=$(ps -eo cmd --sort=-%cpu --no-headers | head -n 1 | xargs basename)
+        PROCESS=$(ps -eo cmd --sort=-%cpu --no-headers | head -n 1 | xargs basename --)
     fi
     echo "#[fg=red]$LOAD%($PROCESS)#[fg=default]"
 else
