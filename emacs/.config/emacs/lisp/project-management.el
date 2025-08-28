@@ -46,7 +46,7 @@
   (defun meain/refresh-semantic-search-index ()
     (interactive)
     (let ((default-directory (project-root (project-current))))
-      (async-shell-command "refer add . --ignore && refer reindex" "*semantic-index-refresh*")))
+      (async-shell-command "refer add . && refer reindex" "*semantic-index-refresh*")))
 
   :init
   (evil-leader/set-key "p p"
@@ -61,7 +61,6 @@
 
 (use-package ibuffer-project
   :ensure t
-  :defer t
   :after (ibuffer project)
   :config
   (add-to-list 'ibuffer-project-root-functions '(file-remote-p . "Remote"))
