@@ -15,5 +15,5 @@ else
     commit="$1"
 fi
 
-SYSTEM_PROMPT="$(cat "$HOME/.config/datafiles/prompts/user/review-diff.md")"
-jj show "$commit" | esa -- +coder "$SYSTEM_PROMPT"
+REVIEW_PROMPT="$(cat "$HOME/.config/datafiles/prompts/user/review-diff.md")"
+jj show "$commit" | esa -- +coder "$REVIEW_PROMPT"
