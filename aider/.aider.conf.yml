@@ -8,4 +8,4 @@ vim: true # need them keybinds
 analytics: false # I want to, but shit breaks
 light-mode: false # I use light mode, but this is better
 cache-prompts: true # not sure why this is disabled by default
-read: .github/copilot-instructions.md
+read: AGENTS.md
