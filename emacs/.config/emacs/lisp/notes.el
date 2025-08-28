@@ -53,5 +53,17 @@
                                    "EDITOR='emacsclient' ,journal"))))
 
 
+;; Obsidian handling
+(use-package emacs
+  :after (evil-leader)
+  :config
+  (defun meain/notes-goto-today-journal ()
+    (interactive)
+    (find-file (concat (getenv "NOTES_PATH")
+                       "/Journal/Day/"
+                       (format-time-string "%Y/%m/%Y-%m-%d" (current-time)) ".md")))
+  :init
+  (evil-leader/set-key "e n" 'meain/notes-goto-today-journal))
+
 (provide 'notes)
 ;;; notes.el ends here
