@@ -128,7 +128,7 @@ Returns results as string.  If rg is not found, returns an error string."
             (shell-command-to-string
              (format "rg --no-heading --line-number --color never %s %s"
                      (shell-quote-argument pattern)
-                     (shell-quote-argument dir)))
+                     (shell-quote-argument (expand-file-name dir))))
           (error (format "Error running rg: %s" (error-message-string err))))
       "Error: rg (ripgrep) not found on system PATH.")))
 
@@ -158,7 +158,7 @@ If fd is not installed or an error occurs, returns an error message."
             (shell-command-to-string
              (format "fd --type f %s %s"
                      (shell-quote-argument pattern)
-                     (shell-quote-argument dir)))
+                     (shell-quote-argument (expand-file-name dir))))
           (error (format "Error running fd: %s" (error-message-string err))))
       "Error: fd CLI not found in PATH.")))
 
