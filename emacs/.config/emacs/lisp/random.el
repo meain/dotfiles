@@ -40,6 +40,7 @@
   :after (evil-leader)
   :commands (meain/find-alternate-file)
   :config
+  (require 's)
   (defvar meain/find-alternate-file--patterns '(("thing-for-today-personal.mtodo" "thing-for-today.mtodo")
                                                 ("early-init.el" "init.el")
                                                 ("i3/config" "i3status/config")
