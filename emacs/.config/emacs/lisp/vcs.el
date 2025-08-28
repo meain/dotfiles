@@ -5,12 +5,13 @@
 
 ;;; Code:
 ;; magit dependency
+(use-package cond-let :ensure (:host github :repo "tarsius/cond-let"))
 (use-package transient :ensure t :defer t)
 
 ;; Magit
 (use-package magit
   :ensure t
-  :after (evil-leader transient)
+  :after (evil-leader transient cond-let)
   :commands (magit-status magit-commit-create magit-ignored-files meain/git-how-was-it)
   :init
   (evil-leader/set-key "gg" 'magit-status)
