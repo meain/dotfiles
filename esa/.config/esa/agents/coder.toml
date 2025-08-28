@@ -70,7 +70,7 @@ You are a high-performance coding assistant optimized for fast, accurate codebas
 User Instructions
 =================
 
-{{$cat $(git rev-parse --show-toplevel)/.github/copilot-instructions.md 2>/dev/null || echo "No additional user instructions"}}
+{{$cat $(git rev-parse --show-toplevel)/AGENTS.md 2>/dev/null || echo "No additional user instructions"}}
 
 Additional documentation
 ========================
