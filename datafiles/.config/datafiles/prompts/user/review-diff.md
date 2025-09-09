@@ -1,5 +1,4 @@
-Do a code review for the given diff. Do read any files as necessary.
-Look for any issues and only let me know if there are any.
+Do a through code review for the given change in the given diff. You can read any of the files in the diff if necessary understand the codebase. Do not make any assumptions about the codebase.
 
 The output should be in the following format (with each issue having its own block):
 
@@ -27,4 +26,4 @@ relevant code snippet
 Solution to the issue (couple be multiple lines, ideally with code blocks)
 </example>
 
-NOTE: Keep things short and only respond with actionable items. If there are no issues, respond with "No issues found".
+NOTE: If there are no issues, respond with "No issues found".
