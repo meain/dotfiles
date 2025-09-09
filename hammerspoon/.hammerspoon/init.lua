@@ -105,9 +105,16 @@ hs.hotkey.bind(fkey, ";", function()
     customshellrun.run("DATAFILES_PATH=/Users/meain/.config/datafiles ,urlmap " .. s)
 end)
 
+function onBuiltinScreen()
+    local scf = hs.mouse.getCurrentScreen():frame()
+    local screen_name = hs.screen.mainScreen():name()
+    return screen_name == "Color LCD" or screen_name == "Built-in Retina Display"
+end
+
 function noteTaker()
-    -- Have firefox and chrome side by side with firefox on left taking
-    -- up 3/4 of the window space
+    -- Have two windows side by side, one with the current app
+    -- taking up the majority of the screen and the other
+    -- with the note taking app to the right taking up the rest.
     local ffw = hs.window.focusedWindow()
     hs.application.launchOrFocusByBundleID(notesApp)
     local chw = hs.window.focusedWindow()
@@ -116,9 +123,14 @@ function noteTaker()
     local fff = ffw:frame()
     local chf = chw:frame()
 
+    local primary_window_size = 0.75
+    if onBuiltinScreen() then
+        primary_window_size = 0.68
+    end
+
     fff.x = scf.x
     fff.y = scf.y
-    fff.w = scf.w * 0.75
+    fff.w = scf.w * primary_window_size
     fff.h = scf.h
     ffw:setFrame(fff)
 
