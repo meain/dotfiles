@@ -20,15 +20,21 @@
   :commands (meain/delete-all-buffers)
   :config
   (defun meain/delete-all-buffers ()
-    "Delete all but some buffers.  Rest everything."
+    "Delete all but some buffers, tabs and refresh scratch.  Rest everything."
     (interactive)
+    ;; Delete all tab-bar-tabs
+    (seq-do (lambda (t) (tab-close t)) (tab-bar-tabs))
+    (tab-bar-rename-tab "")
     (dolist (buf (buffer-list))
       (let ((name (buffer-name buf)))
         (unless (member name
                         '("*scratch*" "*Messages*" "*Warnings*"
                           "*copilot events*" "*copilot-language-server-log*"))
           (kill-buffer buf))))
-    (switch-to-buffer "*scratch*")))
+    (delete-other-windows)
+    (meain/update-scratch-message)
+    (switch-to-buffer "*scratch*")
+    (message "Ready for a fresh start 🌱")))
 
 ;; NOTE: Switch to find-sibling-file
 ;; Patterns for replacing filenames with (builtin option: find-sibling-file)
