@@ -85,23 +85,27 @@ q() {
 }
 
 m() {
+    prev_dir="$(pwd)"
     r >/dev/null
 
-    trap popd 1 2 3 6 >/dev/null
-
     if [ ! -d .mscripts ]; then
-        echo "Unable to find .mscripts" && return 1
+        echo "Unable to find .mscripts"
+        cd "$prev_dir" >/dev/null || return 1
+        return 1
     fi
+
     script="$1"
     [ -n "$1" ] && shift
-    mscript="$(find .mscripts/ | tail -n+2 | xargs -n1 basename | fzf --query "$script" -1)"
+    mscript="$(find .mscripts/ -type f -executable | tail -n+2 | xargs -n1 basename | fzf --query "$script" -1)"
 
     if [ -z "$mscript" ]; then
         echo "No mscript available for $script"
+        cd "$prev_dir" >/dev/null
         return 1
     fi
 
     eval .mscripts/"$mscript" $*
+    cd "$prev_dir" >/dev/null
 }
 
 mm() {
