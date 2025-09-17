@@ -91,6 +91,8 @@ highlight-color = "#f1f1f1"
 
 [git]
 write-change-id-header = true
+auto-local-bookmark = false # automatically create local bookmarks for remote ones
+colocate = true
 
 # JJ tools (uses stdin and outputs to stdout)
 [fix.tools.gofmt]
