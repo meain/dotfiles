@@ -19,7 +19,7 @@
   (evil-define-key 'normal markdown-mode-map (kbd "<RET>") 'project-find-file)
   (evil-define-key 'normal markdown-mode-map (kbd "g d") 'markdown-do)
   (setq markdown-command "pandoc -t html5")
-  (setq markdown-fontify-code-blocks-natively t)
+  (setq-default markdown-fontify-code-blocks-natively t)
   (setq-default markdown-hide-urls t) ;; Or call markdown-toggle-url-hiding
 
   (add-hook 'gfm-mode-hook #'toggle-truncate-lines)
