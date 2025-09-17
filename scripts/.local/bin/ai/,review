@@ -6,14 +6,17 @@ if [ -n "$1" ]; then
     echo "Reviewing older commits might not work as expected as the files read are from current version"
 fi
 
-commit="@"
-if [ -z "$1" ]; then
-    if ! jj diff | grep -q .; then
-        commit="@-"
-    fi
-else
-    commit="$1"
+cur="@"
+if ! jj diff | grep -q .; then
+    cur="@-"
+fi
+
+# By default, diff from last bookmark to now
+diff="$(jj diff -r "latest(bookmarks() & ::$cur-)..$cur")"
+if [ -n "$1" ]; then
+    diff="$(jj show $1)"
 fi
 
 REVIEW_PROMPT="$(cat "$HOME/.config/datafiles/prompts/user/review-diff.md")"
-jj show "$commit" | esa -- +coder "$REVIEW_PROMPT"
+echo "Using Claude Sonnet 4"
+echo "$diff" | esa -m sonnet -- +coder "$REVIEW_PROMPT"
