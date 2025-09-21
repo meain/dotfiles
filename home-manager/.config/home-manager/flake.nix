@@ -9,7 +9,7 @@
     };
 
     bleeding.url = "nixpkgs/nixos-unstable"; # another experimental commit of nixpkgs
-    stable.url = "nixpkgs/nixos-24.11";
+    stable.url = "github:NixOS/nixpkgs/nixos-25.05";
 
     nur.url = "github:nix-community/NUR";
     personal = {
