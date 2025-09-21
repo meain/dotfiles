@@ -1,6 +1,7 @@
 ;;-*-coding: utf-8;-*-
 (define-abbrev-table 'global-abbrev-table
   '(
+    ("dashbaord" "dashboard" nil :count 6)
     ("defenition" "definition" nil :count 0)
     ("differnt" "different" nil :count 0)
     ("dockerfile" "Dockerfile" nil :count 0)
