@@ -127,6 +127,6 @@ patterns = ["glob:'**/*.css'"]
 # command = ["prettier", "--stdin-filepath", "$path"]
 # patterns = ["glob:'**/*.md'", "glob:'**/*.markdown'"]
 
-[fix.tools.nixfmt-rfc-style]
+[fix.tools.nixfmt]
 command = ["nixfmt", "-"]
 patterns = ["glob:'**/*.nix'"]

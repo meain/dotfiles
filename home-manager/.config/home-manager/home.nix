@@ -175,7 +175,7 @@ in
     pkgs.nodePackages.typescript-language-server # javascript langserver
 
     # programming-nix
-    pkgs.nixfmt-rfc-style # nix formatter
+    pkgs.nixfmt # nix formatter
     pkgs.statix # linter for nix
     pkgs.nix-init # auto create nix expressions
     pkgs.nixpkgs-review # review upstream PRs
