@@ -78,7 +78,7 @@ drop | delete | remove | rm)
         exit 1
     fi
     ;;
-list)
+ls | list)
     jj workspace list
     exit 0
     ;;
