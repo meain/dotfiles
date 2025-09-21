@@ -34,6 +34,7 @@ resources
 .llmdocs
 mnotes.org
 mwork
+.editorconfig
 
 # programming
 .mypy_cache
