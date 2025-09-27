@@ -11,6 +11,7 @@
   outputs = inputs@{ self, nix-darwin, nixpkgs }:
     let
       configuration = { pkgs, ... }: {
+        nix.enable = false; # since we are using determinate nix
         system.defaults = import ./system.nix;
         system.primaryUser = "meain";
 
