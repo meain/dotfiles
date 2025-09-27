@@ -159,5 +159,21 @@ _direnv_hook() {
 # Completions for jj
 source <(jj util completion zsh)
 
+# Run jj on CTRL-J
+function run_jj_widget() {
+  jj
+  zle reset-prompt
+}
+zle -N run_jj_widget
+bindkey '^J' run_jj_widget
+
+# Run jd on CTRL-K
+function run_jd_widget() {
+  jd
+  zle reset-prompt
+}
+zle -N run_jd_widget
+bindkey '^K' run_jd_widget
+
 # ,darkmode quiet # set dark or light mode
 export ZSH_LOADED=1
