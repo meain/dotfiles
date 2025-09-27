@@ -94,6 +94,7 @@ alias ,gcl="git clone --recurse-submodules"
 alias js="jj st"
 alias jjj='jj new'
 alias jd='jj diff'
+alias jab='jj absorb'
 alias jpu='jj git push --allow-new'
 alias jsk='jj squash'
 alias jf='jj git fetch'
