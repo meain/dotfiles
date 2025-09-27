@@ -396,6 +396,20 @@ description = "Destination path"
 required = true
 
 [[functions]]
+name = "get_search_results"
+description = """Get search results from DuckDuckGo.
+Use get_webpage function to get the full content of relevant webpages within the search results."""
+# https://github.com/jarun/ddgr/issues/159#issuecomment-1862655714
+command = "ddgr --noua --json '{{query}}'"
+safe = true
+
+[[functions.parameters]]
+name = "query"
+type = "string"
+description = "Query to search for"
+required = true
+
+[[functions]]
 name = "read_webpage"
 description = "Read and convert webpage content to markdown"
 command = "readable '{{url}}' | html2markdown"
