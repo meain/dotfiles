@@ -1,0 +1,55 @@
+#!/bin/sh
+
+set -e
+
+disconnect_existing() {
+    connected=$(scutil --nc list | awk -F'"' '/Connected/ {print $2}')
+    if [ -n "$connected" ]; then
+        scutil --nc stop "$connected"
+
+        # Need explicit wait here as macOS does not like it if we try to
+        # connect another VPN immediately. We cannot also check if the
+        # existing VPN is connected as the status for that one gets
+        # flipped as soon as we issue the command.
+        echo "Disconnecting VPN..."
+        sleep 10 # It takes a while
+    fi
+}
+
+case "$1" in
+h | help)
+    echo "Usage: ,vpn [options]"
+    echo ""
+    echo "Options:"
+    echo "  h, help        Show this help message"
+    echo "  d, disconnect  Disconnect the current VPN"
+    echo "  s, status      Show the current VPN status"
+    echo "  [search-term]  Search and connect to a VPN"
+    exit 0
+    ;;
+d | disconnect)
+    disconnect_existing
+    exit 0
+    ;;
+s | status)
+    connected=$(scutil --nc list | awk -F'"' '/Connected/ {print $2}')
+    if [ -n "$connected" ]; then
+        echo "Connected to VPN: $connected"
+    else
+        echo "No VPN is currently connected."
+    fi
+    exit 0
+    ;;
+esac
+
+vpns=$(scutil --nc list | grep -v Connected | awk -F'"' '/\* / {print $2}')
+selected=$(echo "$vpns" | fzf --prompt="Select VPN: " --query="$*" -1)
+
+if [ -z "$selected" ]; then
+    echo "No VPN selected."
+    exit 1
+fi
+
+disconnect_existing
+
+scutil --nc start "$selected"
