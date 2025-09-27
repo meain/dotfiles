@@ -25,7 +25,7 @@ diff-formatter = ":git"
 [aliases]
 stack = ["log", "-r", "stack(@)"]
 mine = ["log", "-r", "mine"]
-l = ["log", "--limit", "10"]
+l = ["log", "-r", "..", "--limit", "10"]
 llog = ["log", "-r", ".."] # https://maddie.wtf/posts/2025-07-21-jujutsu-for-busy-devs/entry/1#see-more-of-the-log
 lmain = ["log", "-r", "::main"] # https://maddie.wtf/posts/2025-07-21-jujutsu-for-busy-devs/entry/1#see-more-of-the-log
 # l = ["log", "-r", "ancestors(reachable(@, mutable()), 2)"]
