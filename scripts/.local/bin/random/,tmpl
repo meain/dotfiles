@@ -1,0 +1,104 @@
+#!/bin/sh
+
+set -e
+
+# Generate things from templates
+# Collect templates here and in future move them to a better package
+# Maybe this should be just a set of shell scripts
+# Might wanna checkout lemoony/snipkit or knqyf263/pet
+
+ESQL_MINIMAL_FILTERS="?&_a=(dataSource:(type:esql),query:(esql:'FROM%20logs-*'))"
+
+uin() {
+    if [ -z "$2" ]; then
+        printf "%s: " "$1" >&2
+        read -r INPUT
+    else
+        shift
+        INPUT="$*"
+    fi
+    echo "$INPUT"
+}
+
+open_elastic() {
+    fzf --prompt 'ES URL: ' --query="$*" -1 <"$HOME/.local/share/elastic-urls" |
+        cut -d' ' -f2 |
+        xargs -I {} open "{}/app/discover#/$ESQL_MINIMAL_FILTERS"
+}
+
+esql_e2e() {
+    RUNCODE="$(uin "E2E runcode" "$1")"
+    # Maybe we can provide options for customizing the query, like
+    # show all, filter by error etc, but we also have to be wary
+    # complicating the UX. Better to avoid it. In this case, it is
+    # easier for the user to comment it out later.
+    esql="FROM logs-*,-logs-generic.otel*
+| WHERE labels.test_e2e_run_code==\"$RUNCODE\"
+| WHERE message like \"*rror*\"
+| KEEP @timestamp, message"
+    printf "%s" "$esql" | tee /dev/stderr | pbcopy
+    open_elastic
+}
+
+github_repo() {
+    REPO="$(uin "GitHub repo" "$1")"
+    if ! echo "$REPO" | grep -q '/'; then
+        REPO="meain/$REPO"
+    fi
+
+    repo="https://github.com/$REPO"
+    printf "%s" "$repo" | tee /dev/stderr | pbcopy
+    open "$repo"
+}
+
+service_logs() {
+    services="earn earn-telemetry"
+    SERVICE="$(echo "$services" | tr ' ' '\n' | fzf --prompt 'Service: ' --query="$*" -1)"
+    if [ -z "$SERVICE" ]; then
+        echo "No service selected"
+        exit 1
+    fi
+
+    MESSAGE="rror"
+
+    esql="FROM logs-*,-logs-generic.otel*
+| WHERE service.name == \"$SERVICE\"
+| WHERE service.environment == \"dev\"
+| WHERE message LIKE \"*$MESSAGE*\"
+| KEEP @timestamp, message"
+    printf "%s" "$esql" | tee /dev/stderr | pbcopy
+    open_elastic
+}
+
+choices='    esql_e2e | ES/QL E2E test logs based on runcode
+service_logs | Logs from a particular service
+open_elastic | Open ElasticSearch URL from list
+ github_repo | Open GitHub repo from owner/repo'
+
+query="$1"
+if [ -n "$query" ]; then
+    shift
+fi
+
+choice="$(echo "$choices" |
+    fzf --query="$query" -1 --prompt "Template: " |
+    cut -d'|' -f1 | tr -d ' ')"
+[ -z "$choice" ] && echo "No choice selected" && exit 0
+
+case "$choice" in
+open_elastic)
+    open_elastic "$@"
+    ;;
+service_logs)
+    service_logs "$@"
+    ;;
+esql_e2e)
+    esql_e2e "$@"
+    ;;
+github_repo)
+    github_repo "$@"
+    ;;
+*)
+    echo "Unknown choice: $choice"
+    ;;
+esac
