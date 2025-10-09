@@ -39,6 +39,13 @@ e = ["edit"]
 [templates]
 log = 'personal_log_oneline'
 git_push_bookmark = '"meain/" ++ change_id.short()'
+# Show revisions that will be pushed in with a special icon
+log_node = '''
+if(self && !current_working_copy && !immutable && !conflict && in_branch(self),
+  "◇",
+  builtin_log_node
+)
+'''
 
 draft_commit_description = '''
 concat(
@@ -62,6 +69,8 @@ concat(
 # https://martinvonz.github.io/jj/latest/config/#display-of-commit-and-change-ids
 'format_short_id(id)' = 'id.shortest(5)'
 'format_timestamp(timestamp)' = 'timestamp.ago()'
+# https://andre.arko.net/2025/09/28/stupid-jj-tricks/
+'in_branch(commit)' = 'commit.contained_in("immutable_heads()..bookmarks()")'
 
 # Refer to jj/cli/src/config/templates.toml
 personal_log_oneline = '''
