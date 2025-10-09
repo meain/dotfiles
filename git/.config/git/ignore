@@ -47,6 +47,8 @@ debug.test*
 # nix
 shell.nix
 .envrc
+flake.nix
+flake.lock
 
 # emacs
 .dir-locals.el
