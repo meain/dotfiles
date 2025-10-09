@@ -32,6 +32,18 @@ open_elastic() {
         xargs -I {} open "{}/app/discover#/$ESQL_MINIMAL_FILTERS"
 }
 
+open_dashboard() {
+    if [ ! -f "$HOME/.local/share/elastic-dashboards" ]; then
+        echo "No elastic dashboards found. Create $HOME/.local/share/elastic-dashboards with lines like:"
+        echo "prd-us https://my-cluster.elastic-cloud.com/app/dashboards#/view/12345678-1234-1234-1234-123456789012"
+        exit 1
+    fi
+
+    fzf --prompt 'ES Dashboard: ' --query="$*" -1 -m <"$HOME/.local/share/elastic-dashboards" |
+        cut -d' ' -f2 |
+        xargs -I {} open "{}"
+}
+
 esql_e2e() {
     RUNCODE="$(uin "E2E runcode" "$1")"
     # Maybe we can provide options for customizing the query, like
@@ -65,6 +77,7 @@ service_logs() {
         exit 1
     fi
 
+    # rror instead of error to catch both error and Error
     MESSAGE="rror"
 
     esql="FROM logs-*,-logs-generic.otel*
@@ -76,10 +89,11 @@ service_logs() {
     open_elastic
 }
 
-choices='    esql_e2e | ES/QL E2E test logs based on runcode
-service_logs | Logs from a particular service
-open_elastic | Open ElasticSearch URL from list
- github_repo | Open GitHub repo from owner/repo'
+choices='      esql_e2e | ES/QL E2E test logs based on runcode
+  service_logs | Logs from a particular service
+  open_elastic | Open ElasticSearch URL from list
+open_dashboard | Open ElasticSearch Dashboard from list
+   github_repo | Open GitHub repo from owner/repo'
 
 query="$1"
 if [ -n "$query" ]; then
@@ -94,6 +108,9 @@ choice="$(echo "$choices" |
 case "$choice" in
 open_elastic)
     open_elastic "$@"
+    ;;
+open_dashboard)
+    open_dashboard "$@"
     ;;
 service_logs)
     service_logs "$@"
