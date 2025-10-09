@@ -21,6 +21,7 @@ diff-formatter = ":git"
 "mine" = "remote_bookmarks() & (mine() | committer('mail@meain.io') | bookmarks('main') | bookmarks('master'))"
 'closest_bookmark(to)' = 'heads(::to & bookmarks())'
 'user(x)' = 'author(x) | committer(x)'
+'unpushed(x)' = '::x & ~reachable(::x, remote_bookmarks())'
 
 [aliases]
 stack = ["log", "-r", "stack(@)"]
