@@ -257,3 +257,7 @@ showme() {
 eout() {
     esa --show-output "${1:-1}" | glow -p
 }
+
+eoh() {
+    esa --show-output "${1:-1}" | ,markdown-to-html
+}
