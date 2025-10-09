@@ -20,6 +20,12 @@ function dir_from_base() {
     fi
 }
 
+function virtualenv_info {
+    if [[ -n "$VIRTUAL_ENV" ]] ; then
+        echo " py:${VIRTUAL_ENV:t}"
+    fi
+}
+
 function custom_additions() {
     if git rev-parse --show-toplevel &>/dev/null; then
         pushd "$(git rev-parse --show-toplevel 2>/dev/null)" >/dev/null
@@ -32,9 +38,10 @@ function custom_additions() {
 function precmd() {
     function asyncp() {
         # Alternate: "%(?..%F{red}[%?] )"
-        printf "\n%s[%s] %s%s\n%s " \
+        printf "\n%s[%s] %s%s%s\n%s " \
             '%F{white}' \
             "$(dir_from_base)" \
+            "$(virtualenv_info)" \
             "$(custom_additions)" \
             "%{$reset_color%}" \
             "%(?.✨.💥️)" \
