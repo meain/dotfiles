@@ -53,6 +53,7 @@
   (add-to-list 'eglot-server-programs '(markdown-mode . ("markdown-oxide" "--stdio"))) ;; (also: prosemd-lsp)
   (add-to-list 'eglot-server-programs '(rust-mode . ("rust-analyzer")))
   (add-to-list 'eglot-server-programs '(python-mode . ("pylsp")))
+  (add-to-list 'eglot-server-programs '(python-ts-mode . ("pylsp")))
   (add-to-list 'eglot-server-programs '(nix-mode . ("rnix-lsp")))
   (setq-default eglot-workspace-configuration
                 ;; https://cs.opensource.google/go/x/tools/+/master:gopls/doc/emacs.md
