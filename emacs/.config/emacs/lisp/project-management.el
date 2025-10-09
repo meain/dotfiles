@@ -81,5 +81,10 @@
   :ensure t
   :config (envrc-global-mode))
 
+;; Python virtualenv handling
+(use-package pyvenv
+  :commands (pyvenv-activate pyvenv-workon)
+  :ensure (:host github :repo "jorgenschaefer/pyvenv"))
+
 (provide 'project-management)
 ;;; project-management.el ends here
