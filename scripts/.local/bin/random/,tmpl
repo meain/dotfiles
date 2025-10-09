@@ -21,7 +21,13 @@ uin() {
 }
 
 open_elastic() {
-    fzf --prompt 'ES URL: ' --query="$*" -1 <"$HOME/.local/share/elastic-urls" |
+    if [ ! -f "$HOME/.local/share/elastic-urls" ]; then
+        echo "No elastic URLs found. Create $HOME/.local/share/elastic-urls with lines like:"
+        echo "prd-us https://my-cluster.elastic-cloud.com"
+        exit 1
+    fi
+
+    fzf --prompt 'ES URL: ' --query="$*" -1 -m <"$HOME/.local/share/elastic-urls" |
         cut -d' ' -f2 |
         xargs -I {} open "{}/app/discover#/$ESQL_MINIMAL_FILTERS"
 }
