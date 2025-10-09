@@ -96,16 +96,22 @@ m() {
 
     script="$1"
     [ -n "$1" ] && shift
-    mscript="$(find .mscripts/ -type f -executable | tail -n+2 | xargs -n1 basename | fzf --query "$script" -1)"
+
+    # Need the funky find command below as we want to find all files or symlinks
+    # \( ... \) groups expressions for logical precedence (escaped for the shell);
+    # -type f: regular files; -type l: symlinks; -o: OR; -perm /111: any executable bit set
+    mscript="$(find .mscripts \( -type f -o -type l \) -perm /111 |
+        tail -n+2 | xargs -n1 basename |
+        fzf --query "$script" -1)"
 
     if [ -z "$mscript" ]; then
         echo "No mscript available for $script"
-        cd "$prev_dir" >/dev/null
+        cd "$prev_dir" >/dev/null || return 1
         return 1
     fi
 
     eval .mscripts/"$mscript" $*
-    cd "$prev_dir" >/dev/null
+    cd "$prev_dir" >/dev/null || return 1
 }
 
 mm() {
