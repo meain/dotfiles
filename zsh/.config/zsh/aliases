@@ -88,7 +88,6 @@ alias glp="git lg @{1}.."
 alias gcob='git checkout -b'
 alias gffu='git pull upstream --ff-only $(git rev-parse --abbrev-ref HEAD)'
 alias gffo='git pull origin --ff-only $(git rev-parse --abbrev-ref HEAD)'
-alias ,gcl="git clone --recurse-submodules"
 
 # jj
 alias js="jj st"
@@ -106,6 +105,7 @@ alias je='jj edit'
 alias jj-squash-multi="jj stack | fzf -m | cut -d' ' -f3 | xargs -n1 jj squash -r"
 alias jwu='jj workspace update-stale'
 alias jnm='jj git fetch && jj new main 2>/dev/null || jj new master'
+alias ,gcl="jj git clone --colocate"
 
 # utils
 alias ppid='ps -o ppid= -p'
