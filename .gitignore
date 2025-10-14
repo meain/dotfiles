@@ -49,3 +49,4 @@ zsh/.config/zsh/.zsh_sessions/
 /k9s/.config/k9s/clusters/
 emacs/.config/emacs/forge-database.sqlite
 /emacs/.config/emacs/.org-id-locations
+emacs/.config/emacs/tramp
