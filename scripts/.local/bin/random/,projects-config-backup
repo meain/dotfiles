@@ -79,5 +79,6 @@ EOF
 tput el # clear the line
 cd "$SAVEPATH" || exit 1
 git add -f .
+git diff --stat --staged
 git commit -m 'Update project configs'
 git push origin master
