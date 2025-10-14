@@ -108,7 +108,10 @@ Pass `CREATE' to create the alternate file if it does not exits."
     (let ((file-path (or (buffer-file-name) default-directory)))
       (if file-path
           (let ((copy-path (if abs-path file-path
-                             (string-replace (car (project-roots (project-current))) "" file-path))))
+                             (string-replace
+                              (expand-file-name (car (project-roots (project-current))))
+                              ""
+                              file-path))))
             (meain/copy-to-clipboard copy-path)
             (message "Copied '%s' to the clipboard" copy-path))
         (message "No file associated with buffer"))))
