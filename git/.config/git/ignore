@@ -1,22 +1,12 @@
-# mac
-.DS_Store
-
-# python
-*.pyc
-__pycache__
-
-# js
-build
-dist
-.cache
-
 # general
+.DS_Store
 *.log
 *.rdb
 tags
 TAGS
 
-# others
+# editors
+.editorconfig
 .vscode
 
 # personal
@@ -34,13 +24,19 @@ resources
 .llmdocs
 mnotes.org
 mwork
-.editorconfig
 
-# programming
+# python
+*.pyc
+__pycache__
 .mypy_cache
+
+# javascript
+build
+dist
+.cache
 node_modules
 
-# dlv
+# golang (dlv stuff)
 __debug_bin*
 debug.test*
 
@@ -55,20 +51,12 @@ flake.lock
 .rworkspaceignore
 default.rest
 
-# aider
+# AI tools
 .aider.*
-
-# roo
 .roorules
 .roo
-
-# copilot
 .github/copilot-instructions.md
-
-# opencode
 .opencode
 AGENTS.md
-
-# claude-code
 **/.claude/settings.local.json
 CLAUDE.md
