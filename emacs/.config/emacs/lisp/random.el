@@ -170,5 +170,16 @@ Pass `CREATE' to create the alternate file if it does not exits."
   (global-set-key (kbd "M-u") 'universal-argument)
   (define-key universal-argument-map (kbd "M-u") 'universal-argument-more))
 
+;; https://zed.dev/blog/hidden-gems-team-edition-part-1?s=09#copy-and-trim
+(defun meain/trim-and-copy (beg end)
+  "Copy selected text with leading whitespace trimmed to minimum indentation from BEG to END."
+  (interactive "r")
+  (let* ((text (buffer-substring-no-properties beg end))
+         (lines (split-string text "\n"))
+         (prefix (s-replace-regexp "^\\([ \t]*\\).*" "\\1" (car lines))))
+    (kill-new (string-join
+               (mapcar (lambda (x) (string-remove-prefix prefix x)) lines)
+               "\n"))))
+
 (provide 'random)
 ;;; random.el ends here
