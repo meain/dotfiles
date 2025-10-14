@@ -1,14 +1,17 @@
 #!/bin/sh
 
-# Do something with a specific thing which is found suing fuzzy find
-# Example usage: ,kk log --tail 10 -f
+# Fuzzy select a kubernetes resource and run a kubectl command on it
+# Example usage: ,kk log --tail 10 -f (this will let you pick a resource and log it)
+#
+# We could probably filter the resources only down tot he ones that
+# support the command, but this is good enough for now
 
 set -e
 
-line="$(kubectl get all --all-namespaces | tail -n +2 | fzf)"
+line="$(kubectl get all --no-headers --all-namespaces | fzf)"
+
 namespace="$(echo "$line" | awk '{print $1}')"
-pod="$(echo "$line" | awk '{print $2}')"
-# container="$(kubectl get pods "$pod" -n "$namespace" -o jsonpath='{.spec.containers[*].name}' | fzf -1)"
-# echo Using $pod"($container)" in $namespace
-echo kubectl $* -n "$namespace" "$pod" >&2
-kubectl $* -n "$namespace" "$pod"
+resource="$(echo "$line" | awk '{print $2}')"
+
+echo kubectl "$@" -n "$namespace" "$resource" >&2
+kubectl "$@" -n "$namespace" "$resource"
