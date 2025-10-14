@@ -77,7 +77,10 @@ Additional documentation
 
 {{$if ls .llmdocs -1 >/dev/null 2>&1; then ls .llmdocs -1 | sed 's|^|- .llmdocs/|g'; else echo "No additional docs available"; fi}}
 
-IMPORTANT: Always look through the relevant files in the project before answering user's questions
+<very_important_note>
+Always look through the relevant files in the project before answering user's questions and keep your answers short.
+Never answer without looking into the codebase.
+</very_important_note>
 """
 
 ## Enhanced File Operations
