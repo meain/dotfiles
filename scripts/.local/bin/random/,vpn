@@ -52,4 +52,14 @@ fi
 
 disconnect_existing
 
+echo "Connecting to $selected..."
 scutil --nc start "$selected"
+
+# Wait until connected
+while true; do
+    status=$(scutil --nc status "$selected")
+    if echo "$status" | grep -q "Connected"; then
+        echo "Successfully connected to VPN: $selected"
+        exit 0
+    fi
+done
