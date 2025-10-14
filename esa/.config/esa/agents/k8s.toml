@@ -23,6 +23,11 @@ The deployment named `user-management` exists in the `authentication` namespace 
 kubectl describe deployment user-management -n authentication | grep -i 'ENVIRONMENT'
 <example>
 
+Notes:
+- Use control-plane namespace unless mentioned otherwise.
+- Try to avoid using -o json as that will return a huge response
+- Filter to exactly what you need when querying
+
 Remember: Do not infer or invent information. Use kubectl commands to discover resources and verify configurations before answering. Always provide the command you used to get the answer.
 """
 
@@ -34,53 +39,29 @@ safe = true
 
 [[functions]]
 name = "get_resources"
-description = "Retrieve a list of all pods, optionally within a specific namespace."
-command = "kubectl get {{resource}} --all-namespaces"
+description = "Use this to perform any get operations"
+command = "kubectl get {{arguments}}"
 safe = true
 
 [[functions.parameters]]
-name = "resource"
+name = "arguments"
 type = "string"
-description = "The resource type to list."
+description = """Arguments for get operation.
+Example: jobs -n control-plane
+The above one will result in kubectl get jobs -n control-plane"""
 required = true
-
-# [[functions.parameters]]
-# name = "namespace"
-# type = "string"
-# description = "The namespace to list resources from. Default behavior lists pods in the current context namespace."
-# required = false
-# format = "--namespace %s"
 
 [[functions]]
-name = "describe_resource"
-description = "Show details for a specified pod in a namespace."
-command = "kubectl describe {{resource_type}} {{resource_name}} {{namespace}}"
+name = "describe_resources"
+description = "Use this to perform any describe operations"
+command = "kubectl describe {{arguments}}"
 safe = true
 
 [[functions.parameters]]
-name = "resource_type"
+name = "arguments"
 type = "string"
-description = "The type of resource to describe."
+description = "Arguments for describe operation"
 required = true
-
-[[functions.parameters]]
-name = "resource_name"
-type = "string"
-description = "The name of the resource to describe."
-required = true
-
-[[functions.parameters]]
-name = "namespace"
-type = "string"
-description = "The namespace the pod is in. Default behavior chooses the current context namespace."
-required = false
-format = "--namespace %s"
-
-[[functions]]
-name = "list_api_resources"
-description = "Show all available API resources."
-command = "kubectl api-resources"
-safe = true
 
 [[functions]]
 name = "run_kubectl"
