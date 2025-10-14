@@ -2,13 +2,15 @@
   v3 = "openrouter/deepseek/deepseek-chat-v3-0324:free"
   flash = "openrouter/google/gemini-2.0-flash-exp:free"
   gemini = "openrouter/google/gemini-2.5-pro-exp-03-25:free"
-  kimi = "openrouter/moonshotai/kimi-k2"
+  kimi = "openrouter/moonshotai/kimi-k2:free"
   o4o = "openai/gpt-4o"
   4o = "github/gpt-4o"
   mini = "openai/gpt-4o-mini"
   ghmini = "github/gpt-4o-mini"
   o3 = "github/o3-mini"
   scout = "groq/meta-llama/llama-4-scout-17b-16e-instruct"
+  gpto = "groq/openai/gpt-oss-20b"
+  gptoo = "groq/openai/gpt-oss-120b"
   nano = "openai/gpt-4.1-nano"
   ghnano = "github/gpt-4.1-nano"
   qwen = "ollama/qwen3:4b"
@@ -19,7 +21,9 @@
   # qw8 = "openrouter/qwen/qwen3-8b:free"
   mercury = "openrouter/inception/mercury-coder-small-beta"
   co = "copilot/gpt-4.1"
-  sonnet = "copilot/claude-3.7-sonnet"
+  fi = "copilot/gpt-5"
+  sonnet = "copilot/claude-sonnet-4"
+  ha = "openrouter/openrouter/horizon-alpha"
 
 [settings]
   show_commands=true
