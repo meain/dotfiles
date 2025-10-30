@@ -40,11 +40,18 @@ e = ["edit"]
 log = 'personal_log_oneline'
 git_push_bookmark = '"meain/" ++ change_id.short()'
 # Show revisions that will be pushed in with a special icon
+# https://oppi.li/posts/configuring_jujutsu/
 log_node = '''
-if(self && !current_working_copy && !immutable && !conflict && in_branch(self),
-  "◇",
-  builtin_log_node
-)
+  label("node",
+    coalesce(
+      if(!self, label("elided", "~")),
+      if(current_working_copy, label("working_copy", "@")),
+      if(conflict, label("conflict", "×")),
+      if(immutable, label("immutable", "*")),
+      if(in_branch(self), "+"),
+      label("normal", builtin_log_node)
+    )
+  )
 '''
 
 draft_commit_description = '''
