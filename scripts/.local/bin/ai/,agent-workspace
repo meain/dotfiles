@@ -35,19 +35,34 @@ prev_commit="$(jj log --revisions @- --limit 1 --template=commit_id --no-graph)"
 copy_from_base_if_exists() {
     if [ -e "$root/$1" ]; then
         if ! git ls-files --error-unmatch "$root/$1" >/dev/null 2>&1; then
+            mkdir -p "$(dirname "$ws_dir/$1")"
             cp -r "$root/$1" "$ws_dir/$1"
         fi
     fi
 }
 
+link_from_base_if_exists() {
+    if [ -e "$root/$1" ]; then
+        if ! git ls-files --error-unmatch "$root/$1" >/dev/null 2>&1; then
+            mkdir -p "$(dirname "$ws_dir/$1")"
+            rm -rf "$ws_dir/$1"
+            ln -s "$root/$1" "$ws_dir/$1"
+        fi
+    fi
+}
+
 sync_additional_files() {
-    copy_from_base_if_exists ".github/copilot-instructions.md"
+    # copy files that might have to be unique per workspace
     copy_from_base_if_exists "shell.nix"
     copy_from_base_if_exists ".envrc"
-    copy_from_base_if_exists "AGENTS.md"
-    copy_from_base_if_exists "CLAUDE.md"
-    copy_from_base_if_exists ".llmrules"
-    copy_from_base_if_exists ".mscripts"
+
+    # link files that can be shared across workspaces
+    link_from_base_if_exists ".github/copilot-instructions.md"
+    link_from_base_if_exists "AGENTS.md"
+    link_from_base_if_exists "CLAUDE.md"
+    link_from_base_if_exists ".llmrules"
+    link_from_base_if_exists ".mscripts"
+    link_from_base_if_exists ".claude/settings.local.json" # copy claude settings
 }
 
 case "$name" in
