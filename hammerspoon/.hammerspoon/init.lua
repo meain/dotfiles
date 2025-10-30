@@ -101,8 +101,18 @@ hs.hotkey.bind(hyper, "u", function() customshellrun.launch(",voice-assistant") 
 hs.hotkey.bind(hyper, "s", function() hs.alert(customshellrun.run("GUI_PICKER=1 ,se", true)) end)
 
 hs.hotkey.bind(fkey, ";", function()
-    _, s = hs.dialog.textPrompt("", "Where do you want to go today?", "", "Go")
-    customshellrun.run("DATAFILES_PATH=/Users/meain/.config/datafiles ,urlmap " .. s)
+                   _, s = hs.dialog.textPrompt(
+                       "Where to?", [[
+= Work: iw, it, ia
+= Jira: back, dp, cp
+= GitHub: gg, gn, cpb, cpp
+= Dashboard: dpu, dsa, dd
+= Elastic: epu, esa, ed
+]], "", "Go")
+    local result = customshellrun.run("DATAFILES_PATH=/Users/meain/.config/datafiles ,urlmap " .. s)
+    if #result > 0 then
+        hs.alert(result) -- show any error
+    end
 end)
 
 function onBuiltinScreen()
