@@ -276,6 +276,17 @@ showme() {
     cd "$tmp" || return 1
 }
 
+# Need to be a function to capture exit code
+boop () {
+  local last="$?"
+  if [[ "$last" == '0' ]]; then
+    ,make-noise notify
+  else
+    ,make-noise error
+  fi
+  $(exit "$last")
+}
+
 # Small functions (these are ideally aliases, but need args)
 
 eout() {
