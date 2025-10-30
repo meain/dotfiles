@@ -6,6 +6,8 @@ sound="${1-default}"
 
 if ! ls "$HOME/.config/datafiles/sounds" | grep -q "$sound.mp3"; then
     echo "Sound file '$sound' not available" 1>&2
+    echo Use of of the following: 1>&2
+    ls "$HOME/.config/datafiles/sounds" | sed 's/\.mp3$//' 1>&2
     sound="default"
 fi
 
