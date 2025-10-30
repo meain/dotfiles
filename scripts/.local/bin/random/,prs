@@ -4,7 +4,8 @@ set -e
 
 repos="$(cat $HOME/.config/datafiles/prs-repos)"
 
-run_command(){
+run_command() {
+    action="$1" && shift
     tempfile=$(mktemp)
     echo $repos | while read -r repo; do
         output="$(chainlink log --cache-time 5m --all --output markdown "$@" --repo "$repo" 2>/dev/null || true)"
@@ -13,28 +14,36 @@ run_command(){
             echo "$output"
             echo
         fi
-    done > $tempfile
+    done >$tempfile
 
     if cat "$tempfile" | grep -q "."; then
         cat "$tempfile" | sed 's|##|#|' | sed 's|\[\(#.*\)\](.*)\(.*\)|\1\2|'
         sed 's|\ *-|-|' <"$tempfile" | pbcopy
         ,linkify
+
+        if [ "$action" != "show" ]; then
+            cat "$tempfile" | grep -E '^\s*-' | cut -d'(' -f2 | cut -d')' -f1 | xargs open
+        fi
     else
         echo "No PRs found"
     fi
 }
 
 case "$1" in
-r|review)
-    run_command --reviewer meain --review-status unapproved;;
-a|approved)
-    run_command --author meain --review-status approved;;
-p|pending)
-    run_command --author meain --review-status unapproved ;;
+r | review)
+    run_command "${2:-show}" --reviewer meain --review-status unapproved
+    ;;
+a | approved)
+    run_command "${2:-show}" --author meain --review-status approved
+    ;;
+p | pending)
+    run_command "${2:-show}" --author meain --review-status unapproved
+    ;;
 *)
     echo "Use one of:"
     echo "- [p]ending: Pending approvals on others"
     echo "- [a]pproved: Approved PRs"
     echo "- [r]eview: Review pending on me"
     exit 1
+    ;;
 esac
