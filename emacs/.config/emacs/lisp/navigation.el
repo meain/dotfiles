@@ -44,11 +44,8 @@
   (global-set-key (kbd "M-f ,") 'tab-bar-rename-tab)
   (evil-leader/set-key "t" 'meain/switch-tab-dwim)
   (evil-leader/set-key "T" 'meain/create-or-delete-tab)
-  (evil-leader/set-key "C"
-    (lambda ()
-      (interactive)
-      ;; TODO: make notmuch and elfeed automatically open up in scratch tab
-      (tab-bar-switch-to-tab "scratch")))
+  (evil-leader/set-key "C" (lambda () (interactive) (tab-bar-switch-to-tab "-scratch")))
+  (evil-leader/set-key "s c" (lambda () (interactive) (tab-bar-switch-to-tab "-scratch")))
   (global-set-key (kbd "M-f s") 'meain/switch-tab-dwim)
   :config
   (setq tab-bar-close-button-show nil)
@@ -66,7 +63,7 @@
     "Create or close tab"
     (interactive "P")
     (let ((tabs (cl-remove-if (lambda (x)
-                                (equal x "scratch"))
+                                (equal x "-scratch"))
                               (mapcar (lambda (tab)
                                         (alist-get 'name tab))
                                       (tab-bar--tabs-recent)))))
@@ -75,17 +72,22 @@
               (message "Not closing last tab")
             (tab-close))
         (tab-new))))
-  (defun meain/switch-tab-dwim (&optional chooser)
-    "Switch between available tabs.
-Pass `CHOOSER' as t to not automatically select the previous tab."
+  (defun meain/switch-tab-dwim (&optional show-hidden)
+      "Switch between available tabs.
+If only two tabs, we switch to the other tab, and if we have more than
+two tabs, prompt for which tab to switch to.
+
+You can mark a tab as hidden by prefixing it with a -. These won't be
+shown unless the `SHOW-HIDDEN' arg is provided."
     (interactive "P")
     (let ((tabs (cl-remove-if (lambda (x)
-                                (equal x "scratch"))
+                                (and (not show-hidden)
+                                     (string-prefix-p "-" x)))
                               (mapcar (lambda (tab)
                                         (alist-get 'name tab))
                                       (tab-bar--tabs-recent)))))
-      (if chooser
-          (tab-bar-switch-to-tab (completing-read "Select tab: " tabs))
+      (if (> (length tabs) 1)
+          (tab-bar-switch-to-tab (completing-read "Select tab: " tabs nil t nil 'meain/tab-switch-history))
         (cond
          ((eq tabs nil)
           (message (concat "Only one tab present. Use `"
