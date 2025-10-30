@@ -91,12 +91,13 @@
                 (interactive)
                 (cond
                  ((equal (buffer-name) "*scratch*")
-                  (with-temp-file
-                      (concat
-                       "/tmp/emacs-scratch-"
-                       (format-time-string "%Y-%m-%d-%H-%M-%S"))
-                    (message "Saved scratch to a temporary location")
-                    (insert (with-current-buffer "*scratch*" (buffer-string)))))
+                  (let ((filename (concat
+                                   "/tmp/emacs-scratch-"
+                                   (format-time-string "%Y-%m-%d-%H-%M-%S")
+                                   ".el")))
+                    (with-temp-file filename
+                      (message "Saving to %s" filename)
+                      (insert (with-current-buffer "*scratch*" (buffer-string))))))
                  ((bound-and-true-p gptel-mode)
                   ;; See if the buffer already has a filename, if so
                   ;; use else, else call the gptel save buffer
