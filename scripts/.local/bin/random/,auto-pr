@@ -17,5 +17,5 @@ else
     echo "Branch already has a name, skipping branch creation"
 fi
 
-jj git push --all
+jj git push --allow-new
 ,gh-pr-create
