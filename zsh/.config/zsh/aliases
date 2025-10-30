@@ -8,42 +8,46 @@ alias ....='cd ../../..'
 alias .....='cd ../../../..'
 alias ......='cd ../../../../..'
 
-# simple
+# builtins
 alias mkdir='mkdir -p'
 alias clera='clear'
 alias clea='clear'
 alias chmox='chmod +x'
-
-# ls
 alias ls='lsd'
 alias l='ls'
 alias la='ls -A'
 alias ll='ls -Alh'
+alias c='clear && echo "" && pwd && ls'
 
-# random
+# renames
 alias rr=lf
 alias rm=trash
-alias k="kubecolor --light-background"
 alias kk=kubectl
+alias lg=lazygit
+alias lj=lazyjj
+alias mk=,mk
+alias to=,ca
+alias dict=,dict
+alias lk=,let-me-know
+alias um=,urlmap
+alias apr=,auto-pr
+alias asi=,voice-assistant
+
+# random
 alias wk="watch kubectl"
-alias brew='HOMEBREW_NO_AUTO_UPDATE=1 brew'
 alias ax="axel -a -n 10"
+alias ppid="ps -o ppid= -p"
+alias brew="HOMEBREW_NO_AUTO_UPDATE=1 brew"
 alias lynx='lynx -lss="~/.config/lynx/.lynx.lss" -cfg="~/.config/lynx/.lynx.cfg"'
-alias c='clear && echo "" && pwd && ls'
-alias wf='venv activate'
-alias yd='youtube-dl'
-alias ydp='youtube-dl -o "%(playlist_index)s_%(title)s.%(ext)s"'
-alias sbnoah='noah -o ~sbdb/Resources'
-alias lg='lazygit'
-alias lj='lazyjj'
-alias mk=',mk'
-alias asi=',voice-assistant'
+alias sbnoah="noah -o ~sbdb/Resources"
+alias acti="source .venv/bin/activate"
+alias scratch="$EDITOR /tmp/scratch-$(date +%s)"
+alias ,remote-work="ssh $EXPERIMENT_VM"
+
+# agents
 alias aw=",agent-workspace"
 alias aww=",agent-workspace update && jj"
-alias acti="source .venv/bin/activate"
 alias ,gh-copilot="npx -y @github/copilot"
-alias scratch="$EDITOR /tmp/scratch-$(date +%s)"
-alias apr=",auto-pr"
 
 # esa
 alias e="esa"
@@ -63,26 +67,11 @@ alias eo="esa --show-output 1"
 alias ep=',esa-with-prompt'
 alias sonv="ec -m sonnet validate your previous statements" # sonnet supremacy
 
-# ledger
-alias ledger='ledger -f ~/.local/share/ledger/master.ledger --strict'
-alias ,ledger-bal='ledger bal'
-alias ,ledger-cashflow='ledger bal ^Income ^Expenses'
-alias ,ledger-networth='ledger bal ^Assets ^Liabilities'
-
-# tmux
-alias ta='tmux attach -t'
-alias tn='tmux new-session -s'
-alias tl='tmux list-sessions'
-
 # editors
 alias vim='nvim'
 alias ivm='nvim'
-alias et='emacsclient -nw'
-alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs"
 alias ec='emacsclient  -a "" --no-wait -c'
-
-# remote
-alias ,remote-work="ssh $EXPERIMENT_VM"
+alias et='emacsclient -nw'
 
 # git
 alias gs='git status'
@@ -114,10 +103,7 @@ alias jwu='jj workspace update-stale'
 alias jnm='jj git fetch && jj new main 2>/dev/null || jj new master'
 alias ,gcl="jj git clone --colocate"
 
-# utils
-alias ppid='ps -o ppid= -p'
-
-# other
+# linux only
 if [ "$OSTYPE" = "linux" ]; then
     alias caffienate='systemd-inhibit tail -f /dev/null'
     alias suspend='systemctl suspend'
@@ -125,15 +111,5 @@ if [ "$OSTYPE" = "linux" ]; then
     alias lim="cpulimit -l 200 -i --"
 fi
 
-# shorthand
-alias to=,ca
-alias dict=,dict
-alias lk=,let-me-know
-alias um=,urlmap
-
 # global
-alias -g JL="cut -d{ -f2-|sed 's|^|{|'"
-
-# aider
-alias aider-sonnet="OPENAI_API_BASE=https://api.githubcopilot.com OPENAI_API_KEY=\$COPILOT_API_KEY aider --model openai/claude-3.7-sonnet --no-show-model-warnings --edit-format=diff"
-alias aider-copilot="OPENAI_API_BASE=https://api.githubcopilot.com OPENAI_API_KEY=\$COPILOT_API_KEY aider --model openai/gpt-4.1 --no-show-model-warnings --edit-format=diff"
+alias -g JL="cut -d{ -f2-|sed 's|^|{|'" # pull json part out of a log line (assume first { is start)
