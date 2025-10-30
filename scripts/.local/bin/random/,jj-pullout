@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -e
+
+# Pull out the last commit (not revision) from the evolog and move it
+# to a new revision. This is useful in case we accidentally make some
+# change.
+
+last="$(jj evolog -r @ --template 'concat(commit.commit_id(),"\n")' --no-graph | head -n1)"
+prev="$(jj evolog -r @ --template 'concat(commit.commit_id(),"\n")' --no-graph | head -n2 | tail -n+2)"
+
+jj new "$prev"
+jj restore --from "$last" --restore-descendants
+jj abandon "$last" --retain-bookmarks
