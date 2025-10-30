@@ -40,6 +40,10 @@ alias mk=',mk'
 alias asi=',voice-assistant'
 alias aw=",agent-workspace"
 alias aww=",agent-workspace update && jj"
+alias acti="source .venv/bin/activate"
+alias ,gh-copilot="npx -y @github/copilot"
+alias scratch="$EDITOR /tmp/scratch-$(date +%s)"
+alias apr=",auto-pr"
 
 # esa
 alias e="esa"
@@ -50,13 +54,14 @@ alias co="esa +coder"
 alias mem="esa +mem"
 alias em=",emoji-picker"
 alias brain="esa +brain"
-alias rem="esa Create a reminder with an emoji title: remind me to"
+alias rem=",reminder"
 alias summ="esa summarize key points from"
 alias post="esa Short twitter post with bullet points based on"
 alias resp="esa +coder \$(cat ~/.config/datafiles/prompts/user/message-response.md)"
 alias tk=",tweak"
 alias eo="esa --show-output 1"
 alias ep=',esa-with-prompt'
+alias sonv="ec -m sonnet validate your previous statements" # sonnet supremacy
 
 # ledger
 alias ledger='ledger -f ~/.local/share/ledger/master.ledger --strict'
@@ -73,6 +78,8 @@ alias tl='tmux list-sessions'
 alias vim='nvim'
 alias ivm='nvim'
 alias et='emacsclient -nw'
+alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs"
+alias ec='emacsclient  -a "" --no-wait -c'
 
 # remote
 alias ,remote-work="ssh $EXPERIMENT_VM"
