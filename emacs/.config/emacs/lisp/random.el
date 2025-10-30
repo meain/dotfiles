@@ -20,7 +20,7 @@
   :commands (meain/delete-all-buffers)
   :config
   (defun meain/delete-all-buffers ()
-    "Delete all but some buffers, tabs and refresh scratch.  Rest everything."
+    "Delete all tabs, windows and almost all buffers and switch to *scratch*."
     (interactive)
     ;; Delete all tab-bar-tabs
     (seq-do (lambda (t) (tab-close t)) (tab-bar-tabs))
