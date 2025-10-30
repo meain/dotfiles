@@ -117,7 +117,8 @@ m() {
     # Need the funky find command below as we want to find all files or symlinks
     # \( ... \) groups expressions for logical precedence (escaped for the shell);
     # -type f: regular files; -type l: symlinks; -o: OR; -perm /111: any executable bit set
-    mscript="$(find .mscripts \( -type f -o -type l \) -perm /111 |
+    # Also need the `/` after .mscripts to ensure symlinks to .mscripts are also used
+    mscript="$(find .mscripts/ \( -type f -o -type l \) -perm /111 |
         tail -n+2 | xargs -n1 basename |
         fzf --query "$script" -1)"
 
