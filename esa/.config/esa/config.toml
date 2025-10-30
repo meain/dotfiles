@@ -21,8 +21,16 @@
   # qw8 = "openrouter/qwen/qwen3-8b:free"
   mercury = "openrouter/inception/mercury-coder-small-beta"
   co = "copilot/gpt-4.1"
-  fi = "copilot/gpt-5"
-  sonnet = "copilot/claude-sonnet-4"
+  g5 = "copilot/gpt-5"
+  gpt5 = "copilot/gpt-5"
+  codex = "copilot/gpt-5-codex"
+  g5c = "copilot/gpt-5-codex"
+  sonnet4 = "copilot/claude-sonnet-4"
+  s4 = "copilot/claude-sonnet-4"
+  sonnet = "copilot/claude-sonnet-4.5"
+  s = "copilot/claude-sonnet-4.5"
+  haiku = "copilot/claude-haiku-4.5"
+  grok = "copilot/grok-code-fast-1"
   ha = "openrouter/openrouter/horizon-alpha"
 
 [settings]
