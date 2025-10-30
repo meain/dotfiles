@@ -27,12 +27,22 @@
                                  (project-root (project-current))))))
 
   (defun meain/find-file-git-changed ()
-    "Fuzzy find git changed files."
+    "Fuzzy find git or jj changed files."
     (interactive)
-    (let* ((untracked-files (shell-command-to-string "git ls-files --others --exclude-standard"))
-           (changed-files (shell-command-to-string "git diff --name-only"))
-           (files (split-string (concat untracked-files "\n" changed-files) "\n" t)))
-      (find-file (completing-read "Pick file: " files))))
+    (let* ((project-root (locate-dominating-file default-directory ".jj"))
+           (get-changed-files
+            (if project-root
+                ;; Use jj (use `jj diff --name-only -r 'trunk()..@'` for since trunk)
+                (lambda ()
+                  (let ((changed (shell-command-to-string "jj diff --name-only -r 'latest(bookmarks() & ::@)..@'")))
+                    (split-string changed "\n" t)))
+              ;; Use git
+              (lambda ()
+                (let ((untracked-files (shell-command-to-string "git ls-files --others --exclude-standard"))
+                      (changed-files (shell-command-to-string "git diff --name-only")))
+                  (split-string (concat untracked-files "\n" changed-files) "\n" t)))))
+           (files (funcall get-changed-files)))
+      (find-file (completing-read "Find git/jj changed file: " files))))
 
   (defun meain/find-file-semantic ()
     (interactive)
