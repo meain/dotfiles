@@ -17,6 +17,7 @@
   ;; Some configuration
   (setq gptel-api-key openai-api-key)
   (setq gptel-expert-commands t)
+  (setq gptel-use-context 'user)
   (setq gptel-use-tools t)
   (setq gptel-include-tool-results t)
   (setq gptel-default-mode 'org-mode) ;; tool calls don't fold in markdown mode
