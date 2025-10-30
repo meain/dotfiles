@@ -1,0 +1,19 @@
+#!/bin/sh
+
+set -e
+
+if [ -z "$1" ]; then
+    reminders show-all
+    exit 0
+fi
+
+if [ -n "$2" ] && [ -z "$3" ]; then
+    case "$1" in
+    d|c)
+        reminders complete Reminders "$2"
+        exit 0
+        ;;
+    esac
+fi
+
+esa +reminders "$@"
