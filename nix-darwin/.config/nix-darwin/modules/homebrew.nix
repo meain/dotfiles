@@ -15,6 +15,7 @@
       # "railwaycat/emacsmacport"
       # "d12frosted/emacs-plus"
       "zackelia/formulae" # for bclm
+      "keith/formulae" # for reminders-cli
     ];
     brews = [
       # Switching away from these builds onto installing the builds from jimeh/build-emacs-for-macos
@@ -31,6 +32,7 @@
 
       "choose-gui" # dmenu alternative
       "bclm" # limit battery charge
+      "reminders-cli" # manage apple reminders from cli
 
       "ispell" # Emacs does not pick up nix version
       "ical-buddy" # Read from macos calendar
