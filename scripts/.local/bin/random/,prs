@@ -16,8 +16,8 @@ run_command(){
     done > $tempfile
 
     if cat "$tempfile" | grep -q "."; then
-        cat $tempfile | sed 's|##|#|' | glow --width 0
-         sed 's|\ *-|-|'<$tempfile | pbcopy
+        cat "$tempfile" | sed 's|##|#|' | sed 's|\[\(#.*\)\](.*)\(.*\)|\1\2|'
+        sed 's|\ *-|-|' <"$tempfile" | pbcopy
         ,linkify
     else
         echo "No PRs found"
