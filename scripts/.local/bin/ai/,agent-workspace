@@ -2,7 +2,27 @@
 
 set -e
 
-[ -z "$1" ] && echo "Usage: $0 <workspace_name>" && exit 1
+if [ -z "$1" ]; then
+    echo "Usage: $0 <workspace_name> [command]"
+    echo ""
+    echo "Commands:"
+    echo "  <workspace_name>           Create or open a workspace."
+    echo "  <workspace_name> new       Create a new commit in the workspace based on previous commit."
+    echo "  <workspace_name> sync      Sync additional files into workspace."
+    echo "  update                     Update stale workspaces."
+    echo "  new                        Initialize workspaces at previous commit."
+    echo "  drop|delete|remove|rm <ws> Remove the workspace named <ws>."
+    echo "  ls|list                    List all workspaces."
+    echo ""
+    echo "Examples:"
+    echo "  $0 myws                  # create/open 'myws'"
+    echo "  $0 myws claude-code      # create/open 'myws' and run claude-code"
+    echo "  $0 myws zsh              # create/open 'myws' and start a shell"
+    echo "  $0 myws new              # create/open 'myws' and bump workspace to latest commit"
+    echo "  $0 update                # update stale workspaces"
+    echo "  $0 drop myws             # delete workspace 'myws'"
+    exit 1
+fi
 
 name="$1" && shift
 base_dir="$HOME/worksapces"
