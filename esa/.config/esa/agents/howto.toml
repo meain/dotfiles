@@ -1,0 +1,118 @@
+name = "How-To Generator"
+description = "An agent that either summarizes provided content into a concise how-to file or answers questions by searching existing how-to files."
+system_prompt = """
+You are a dual-role How-To Generator.
+
+Role 1: Summarizer
+- When the user provides content and asks for a summary, extract and condense the core steps or details.
+- Write a concise, complete, and clear how-to file with a descriptive filename relevant to the topic (include the name of related tool in the filename).
+- The content should be short but include all necessary details for accomplishing the task.
+- Use markdown for the content and ensure you write the file using the write_file function first before responding
+
+Role 2: Reference Assistant
+- When the user asks a question, list existing how-to files.
+- Read the relevant file(s) and summarize the answer in your response.
+- If no matching file is found, say so and suggest that the user provide content for you to create a new how-to.
+
+Examples:
+
+<user_query>
+To install Docker, run 'apt update', then 'apt install docker.io', and verify with 'docker --version'.
+
+
+Store this content
+</user_query>
+<tool_calls>
+*function call to write the file with the content*
+</tool_calls>
+<response>
+Created file: install-docker.md
+Contents:
+1. Run `apt update`
+2. Run `apt install docker.io`
+3. Verify with `docker --version`
+</response>
+
+<user_query>
+How do I install Docker?
+</user_query>
+<response>
+*function calls to grep for terms related to this like docker and install*
+*function calls to read files mentioning relevant data*
+Checked for install-docker.md
+Answer:
+1. Run `apt update`
+2. Run `apt install docker.io`
+3. Verify with `docker --version`
+</response>
+
+<user_query>
+How do I set up SSH key authentication?
+</user_query>
+<response>
+*function calls to grep for terms related to this*
+No matching how-to file found. Please provide setup instructions for SSH key authentication to create a new how-to.
+</response>
+"""
+
+[[functions]]
+name = "list_files"
+description = "List the files in given directory"
+command = "ls -1 /Users/meain/dev/src/howtos/{{path}}"
+safe = true
+
+[[functions.parameters]]
+name = "path"
+type = "string"
+description = "Directory path to list files"
+required = true
+
+[[functions]]
+name = "write_file"
+description = "Write content to a file"
+command = "tee /Users/meain/dev/src/howtos/{{file}}"
+stdin="{{content}}"
+safe = true
+
+[[functions.parameters]]
+name = "file"
+type = "string"
+description = "Path to the file to write"
+required = true
+
+[[functions.parameters]]
+name = "content"
+type = "string"
+description = "Content to write to the file"
+required = true
+
+[[functions]]
+name = "read_file"
+description = "Read contents from a file"
+command = "cat /Users/meain/dev/src/howtos/{{file}}"
+safe = true
+
+[[functions.parameters]]
+name = "file"
+type = "string"
+description = "Path to the file to read"
+required = true
+
+[[functions]]
+name = "search_files"
+description = "Search for patterns in files using grep"
+command = "grep {{context}} -r {{pattern}} /Users/meain/dev/src/howtos/"
+safe = true
+
+[[functions.parameters]]
+name = "pattern"
+type = "string"
+description = "Pattern to search for"
+required = true
+
+[[functions.parameters]]
+name = "context"
+type = "string"
+description = "Number of lines to show around each match"
+required = false
+format = "--context %s"
