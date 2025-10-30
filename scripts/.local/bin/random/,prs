@@ -7,7 +7,7 @@ repos="$(cat $HOME/.config/datafiles/prs-repos)"
 run_command(){
     tempfile=$(mktemp)
     echo $repos | while read -r repo; do
-        output="$(chainlink log --all --output markdown "$@" --repo "$repo" 2> /dev/null || true)"
+        output="$(chainlink log --cache-time 5m --all --output markdown "$@" --repo "$repo" 2>/dev/null || true)"
         if [[ -n $output ]]; then
             printf "## %s\n" "$repo"
             echo "$output"
