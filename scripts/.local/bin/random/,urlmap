@@ -2,14 +2,25 @@
 
 set -e
 
+# We could have made a picker work if we are able to somehow also
+# handle cases where we have to substitute parameters.
 [ -z "$1" ] && echo "Usage: $0 <prefix>" && exit 1
 
 FILE="$DATAFILES_PATH/urlmap"
 
 prefix="$1" && shift
 
-grep -vE '^#' "$FILE" | grep -vE "^$" |
+result=$(grep -vE "^$" "$FILE" |
     grep -E "^$prefix " |
-    cut -d ' ' -f 2- |
-    xargs -I{} printf '{}' "$@" |
-    xargs open
+    cut -d ' ' -f 2-)
+
+if [ -z "$result" ]; then
+    echo "No matches found for prefix: $prefix"
+    exit 1
+fi
+
+if [ -n "$1" ]; then
+    result=$(echo "$result" | sed "s|%s|$1|g")
+fi
+
+open "$result"
