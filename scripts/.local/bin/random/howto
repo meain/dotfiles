@@ -1,0 +1,10 @@
+#!/bin/sh
+
+set -e
+
+if [ -t 0 ]; then
+    esa +howto "$@"
+else
+    esa +howto Store this content in howtos. "$*"
+    git add . && git commit -m "Automatic update"
+fi
