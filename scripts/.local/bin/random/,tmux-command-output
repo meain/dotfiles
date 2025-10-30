@@ -3,7 +3,7 @@
 set -e
 
 tmux capture-pane -pS -1000 > /tmp/ee-dump
-L="$(grep ' ' /tmp/ee-dump | grep -vE '^.. {10}'| tac | tail -n+2 | fzf)"
+L="$(grep -E '[✨💥️]' /tmp/ee-dump | grep -vE '^.. {10}'| tac | tail -n+2 | fzf)"
 # I would like to add a uniq in here, but cannot do that without sort, but if sorted we lose the order
 
 COPY=0
