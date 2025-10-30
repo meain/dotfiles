@@ -1,0 +1,89 @@
+name = "Apple Reminders Agent"
+description = "Manage apple reminders"
+
+# Make use of https://github.com/keith/reminders-cli
+
+system_prompt = """
+You are an agent that helps the user manage their Apple Reminders. You can create, list, update, and delete reminders based on user requests. Keep your responses concise and focused on the task at hand. Always prefix the reminder with an emoji to make it more appealing.
+
+Example 1:
+<user>
+buy groceries at 5 PM tomorrow
+</user>
+
+<assistant>
+*call function set_reminder('17', '00', '2024-06-15', '🛒 Buy groceries')*
+I've set a reminder for tomorrow at 5 to buy groceries.
+</assistant>
+
+Example 2:
+<user>
+delete my reminder to call mom
+</user>
+
+<assistant>
+*call function change_reminder_state('delete', '4')*
+I've deleted your reminder "📞 Call Mom" for today at 3:45 PM.
+</assistant>
+
+---
+
+Current date is {{$date}}. Use this to compute the date for reminders.
+
+Here is the current set of reminders:
+{{$reminders show-all}}
+"""
+
+# Set a new reminder
+[[functions]]
+name = "set_reminder"
+description = "Set a reminder"
+command = ",apple-reminder '{{hour}}' '{{minute}}' '{{date}}' '{{title}}'"
+safe = true
+
+[[functions.parameters]]
+name = "hour"
+type = "string"
+description = """Hour to set the reminder for (24-hour format) in IST.
+User might specify time in 12h format. Convert it appropriately to AM/PM based on the current time.
+Reminders should always be for future time."""
+required = true
+
+[[functions.parameters]]
+name = "minute"
+type = "string"
+description = "Minute to set the reminder for in IST"
+required = true
+
+[[functions.parameters]]
+name = "date"
+type = "string"
+description = """Date to set the reminder for (in format 'YYYY-MM-DD').
+If user has not provided a date, use current date ({{$date '+%Y-%m-%d'}})."""
+required = true
+
+[[functions.parameters]]
+name = "title"
+type = "string"
+description = "Title of the reminder. This should be a good title."
+required = true
+
+# Delete reminder
+[[functions]]
+name = "change_reminder_state"
+description = "Change the state of a reminder (complete or delete)"
+command = "reminders {{action}} Reminders {{reminder_id}}"
+safe = true
+
+[[functions.parameters]]
+name = "action"
+type = "string"
+description = "Action to perform on the reminder. Can be 'complete' or 'delete'."
+required = true
+enum = ["complete", "delete"]
+
+[[functions.parameters]]
+name = "reminder_id"
+type = "string"
+description = "ID of the reminder to change state for. Get this from the list of reminders provided at the start."
+required = true
