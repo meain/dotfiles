@@ -1,0 +1,22 @@
+#!/bin/sh
+
+set -e
+
+case "$1" in
+"" | help | --help | -h)
+    echo "Usage: kk <kubectl command>"
+    echo "Aliases:"
+    echo "  gd  -> get deployment"
+    echo "  gp  -> get pods"
+    echo "  gj  -> get jobs"
+    echo "  l   -> logs -f"
+    exit 0
+    ;;
+"gd") command="get deployment" && shift ;;
+"gp") command="get pods" && shift ;;
+"gj") command="get jobs" && shift ;;
+"l") command="logs -f" && shift ;;
+esac
+
+echo kubectl $command "$@"
+kubecolor --light-background $command "$@"

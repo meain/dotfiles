@@ -34,7 +34,6 @@ alias apr=,auto-pr
 alias asi=,voice-assistant
 
 # random
-alias kk="kubecolor --light-background"
 alias wk="watch kubectl"
 alias ax="axel -a -n 10"
 alias ppid="ps -o ppid= -p"
