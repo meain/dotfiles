@@ -15,19 +15,19 @@ if [ -z "$1" ]; then
     echo "  ls|list                    List all workspaces."
     echo ""
     echo "Examples:"
-    echo "  $0 myws                  # create/open 'myws'"
-    echo "  $0 myws claude-code      # create/open 'myws' and run claude-code"
-    echo "  $0 myws zsh              # create/open 'myws' and start a shell"
-    echo "  $0 myws new              # create/open 'myws' and bump workspace to latest commit"
-    echo "  $0 update                # update stale workspaces"
-    echo "  $0 drop myws             # delete workspace 'myws'"
+    echo "  aw myws                  # create/open 'myws'"
+    echo "  aw myws claude-code      # create/open 'myws' and run claude-code"
+    echo "  aw myws zsh              # create/open 'myws' and start a shell"
+    echo "  aw myws new              # create/open 'myws' and bump workspace to latest commit"
+    echo "  aw update                # update stale workspaces"
+    echo "  aw drop myws             # delete workspace 'myws'"
     exit 1
 fi
 
 name="$1" && shift
 base_dir="$HOME/worksapces"
 mkdir -p "$base_dir"
-root="$(jj root)"
+root="$(jj git root | sed 's|/.git$||')"
 root_without_prefix="${root#"$HOME/dev/"}"
 ws_dir="$base_dir/$root_without_prefix-$name"
 prev_commit="$(jj log --revisions @- --limit 1 --template=commit_id --no-graph)"
@@ -132,6 +132,10 @@ pwd | pbcopy
 
 if [ -f .envrc ]; then
     direnv allow
+fi
+
+if [ -z "$1" ]; then
+    zsh -i
 fi
 
 if [ -n "$1" ]; then
