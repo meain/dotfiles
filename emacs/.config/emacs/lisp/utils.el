@@ -50,5 +50,9 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 (defvar anthropic-api-key (get-api-key "anthropic/apikey"))
 (defvar github-models-api-key (get-api-key "github-models/apikey"))
 
+(defun meain/cmd-head (command)
+  "Get the first line of the given `COMMAND'."
+  (cat (split-string (shell-command-to-string command) "\n")))
+
 (provide 'utils)
 ;;; utils.el ends here
