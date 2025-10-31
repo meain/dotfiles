@@ -153,7 +153,7 @@ copy_function() {
 }
 copy_function _direnv_hook _direnv_hook__old
 _direnv_hook() {
-	_direnv_hook__old "$@" 2> >(grep -vE '^direnv: export')
+	_direnv_hook__old "$@" 2> >(grep -vE 'direnv: export ')
 }
 
 # Completions for jj
