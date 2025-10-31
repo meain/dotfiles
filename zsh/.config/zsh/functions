@@ -259,6 +259,14 @@ dc() {
     cd "${PWD%/$1/*}/$1/" 2>/dev/null || echo "Directory not found: $1"
 }
 
+# cd into the latest directory in the current dir
+cdn() {
+    dir="$(fd --type d --max-depth 1 --exec stat -c '%Y %n' {} |
+        sort -n | tail -1 | cut -d' ' -f2)"
+    echo "$dir"
+    cd "$dir" || return 1
+}
+
 # Create a tmp dir, unzip file into it, cd into it
 showme() {
     [ -z "$1" ] && echo "Pass file to show" && return 1
@@ -278,14 +286,14 @@ showme() {
 }
 
 # Need to be a function to capture exit code
-boop () {
-  local last="$?"
-  if [[ "$last" == '0' ]]; then
-    ,make-noise notify
-  else
-    ,make-noise error
-  fi
-  $(exit "$last")
+boop() {
+    local last="$?"
+    if [[ "$last" == '0' ]]; then
+        ,make-noise notify
+    else
+        ,make-noise error
+    fi
+    $(exit "$last")
 }
 
 # Small functions (these are ideally aliases, but need args)
