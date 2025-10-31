@@ -33,41 +33,29 @@
                         relative-path
                         (line-number-at-pos))))))
 
-  (defun meain/github-url (&optional use-branch)
-    "Open the Github page for the current file.  Pass USE-BRANCH to use branch name instead of commit hash."
+  (defun meain/github-url (&optional use-master)
+    "Link to the currently selected code in GitHub.  Pass `USE-MASTER' to use master branch."
     (interactive "P")
     (save-restriction
       (widen)
       (let* ((git-url (replace-regexp-in-string
-                       "\.git$"
-                       ""
-                       (s-replace "git@github\.com:"
-                                  "https://github.com/"
-                                  (car (split-string
-                                        (shell-command-to-string
-                                         "git config --get remote.origin.url") "\n")))))
-             (git-branch (car (split-string
-                               (shell-command-to-string
-                                (if use-branch
-                                    "git rev-parse --abbrev-ref HEAD"
-                                  "git log --format='%H' -n 1"
-                                  ))
-                               "\n")))
-             (web-url (format "%s/blob/%s/%s%s"
-                              git-url
-                              git-branch
-                              (file-relative-name (if (equal major-mode 'dired-mode)
-                                                      default-directory
-                                                    buffer-file-name)
-                                                  (car (project-roots (project-current))))
-                              (if (equal major-mode 'dired-mode)
-                                  ""
-                                (format "#L%s" (line-number-at-pos))))))
-        (progn
-          (message "%s coped to clipboard." web-url)
-          (meain/copy-to-clipboard web-url)))))
+                       "^git@github.com:\\(.*\\)\\.git$" "https://github.com/\\1"
+                       (meain/cmd-head "git config --get remote.origin.url")))
+             (git-ref (if use-master
+                          (replace-regexp-in-string
+                           "^origin/" ""
+                           (meain/cmd-head "git symbolic-ref --short refs/remotes/origin/HEAD"))
+                        (meain/cmd-head "git log --format='%H' -n 1")))
+             (file-path (file-relative-name (or buffer-file-name default-directory)
+                                            (car (project-roots (project-current)))))
+             (line-frag (unless (equal major-mode 'dired-mode)
+                          (format "#L%s" (line-number-at-pos))))
+             (web-url (concat git-url "/blob/" git-ref "/" file-path (or line-frag ""))))
+        (message "%s copied to clipboard." web-url)
+        (meain/copy-to-clipboard web-url))))
   :init
   (evil-leader/set-key "g l" 'meain/github-url))
+
 
 ;; Link opening
 (use-package ace-link
