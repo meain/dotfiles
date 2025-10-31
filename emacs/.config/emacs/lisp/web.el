@@ -48,7 +48,7 @@ If region is active, link covers the region."
                     "git branch -r --contains "
                     (meain/cmd-head "git log --format='%H' -n 1"))))
                  1)
-          (user-error "Current latest commit not available upstream")))
+          (user-error "Current commit not available upstream")))
 
       (let* ((git-url (replace-regexp-in-string
                        "^git@github.com:\\(.*\\)\\.git$" "https://github.com/\\1"
