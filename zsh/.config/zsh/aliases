@@ -85,7 +85,7 @@ alias gffu='git pull upstream --ff-only $(git rev-parse --abbrev-ref HEAD)'
 alias gffo='git pull origin --ff-only $(git rev-parse --abbrev-ref HEAD)'
 
 # jj
-alias js="jj st"
+alias js="jj show"
 alias jjj='jj new'
 alias jd='jj diff'
 alias jab='jj absorb'
@@ -95,7 +95,6 @@ alias jf='jj git fetch'
 alias jr='jj rebase -d'
 alias jfr='jj git fetch && jj rebase -d'
 alias jb='jj bookmark set'
-alias jbm=',jj-bookmark-move'
 alias je='jj edit'
 alias jj-squash-multi="jj stack | fzf -m | cut -d' ' -f3 | xargs -n1 jj squash -r"
 alias jwu='jj workspace update-stale'
