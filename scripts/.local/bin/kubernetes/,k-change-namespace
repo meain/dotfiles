@@ -4,7 +4,5 @@
 
 set -eo pipefail
 
-NAMESPCE="$(kubectl get namespace | tail -n+2 | ,picker --query "$1" | cut -d' ' -f1)"
-[ -z "$NAMESPCE" ] && exit 0
-echo "Changing namespace to $NAMESPACE"
-kubectl config set-context --current --namespace="$NAMESPCE"
+kubectl get namespace | tail -n+2 | ,picker --query "$1" | cut -d' ' -f1 |
+    xargs -r -I{} kubectl config set-context --current --namespace="{}"
