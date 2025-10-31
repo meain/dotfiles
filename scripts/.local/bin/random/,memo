@@ -1,0 +1,21 @@
+#!/bin/sh
+
+set -e
+
+# Memorize the command output and reuse it if the same command is run
+# again. Useful to cache long-running commands or curls.
+# Usage: ,memo <command> | ...
+
+command="$*"
+cmdhash=$(printf "%s" "$command" | base64 | tr -d '\n')
+
+cache_dir="/tmp/memo"
+cache_file="$cache_dir/$cmdhash"
+
+mkdir -p "$cache_dir"
+
+if [ -f "$cache_file" ]; then
+    cat "$cache_file"
+else
+    eval "$command" | tee "$cache_file"
+fi
