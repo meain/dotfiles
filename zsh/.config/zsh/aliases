@@ -50,7 +50,6 @@ alias aww=",agent-workspace update && jj"
 alias ,gh-copilot="npx -y @github/copilot"
 
 # esa
-alias e="esa"
 alias ec="esa -c"
 alias ea="esa +auto"
 alias bud="esa +qa"
@@ -70,7 +69,7 @@ alias sonv="ec -m sonnet validate your previous statements" # sonnet supremacy
 # editors
 alias vim='nvim'
 alias ivm='nvim'
-alias ec='emacsclient  -a "" --no-wait -c'
+alias e='emacsclient  -a "" --no-wait -c'
 alias et='emacsclient -nw'
 
 # git
