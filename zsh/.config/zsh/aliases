@@ -10,6 +10,7 @@ alias ......='cd ../../../../..'
 
 # builtins
 alias mkdir='mkdir -p'
+alias clear="tput clear"
 alias clera='clear'
 alias clea='clear'
 alias chmox='chmod +x'

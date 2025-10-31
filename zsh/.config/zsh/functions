@@ -222,25 +222,6 @@ venv() {
     esac
 }
 
-# make clear not delete scrollback
-# https://superuser.com/a/1667623/328228
-if echo "$OSTYPE" | grep -qv darwin; then
-    clear() (
-        if [ "$#" -ne 0 ]; then
-            command clear "$@"
-            exit
-        fi
-        h="$(tput lines 2>/dev/null)"
-        if [ "$?" -eq 0 ]; then
-            until [ "$h" -le 1 ]; do
-                printf '\n'
-                h=$((h - 1))
-            done
-        fi
-        command clear -x
-    )
-fi
-
 hashdir() {
     [ -z "$1" ] && echo "Pass hash to use for dir" && return 1
     hash -d "$1"="$(pwd)"
