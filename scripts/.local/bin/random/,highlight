@@ -2,4 +2,26 @@
 
 set -e
 
-echo -e "\e[31m$*\e[0m"
+# Highlight occurrences of a string in input text
+# echo "some text" | ,highlight "string1" "string2" ...
+# https://news.ycombinator.com/item?id=45676608
+
+highlight() {
+    # Foreground:
+    # 30:black, 31:red, 32:green, 33:yellow, 34:blue, 35:magenta, 36:cyan
+
+    # Background:
+    # 40:black, 41:red, 42:green, 43:yellow, 44:blue, 45:magenta, 46:cyan
+    escape=$(printf '\033')
+    sed "s,$2,${escape}[$1m&${escape}[0m,g"
+}
+
+if [[ $# == 1 ]]; then
+    highlight 31 $1
+elif [[ $# == 2 ]]; then
+    highlight 31 $1 | highlight 32 $2
+elif [[ $# == 3 ]]; then
+    highlight 31 $1 | highlight 32 $2 | highlight 35 $3
+elif [[ $# == 4 ]]; then
+    highlight 31 $1 | highlight 32 $2 | highlight 35 $3 | highlight 36 $4
+fi
