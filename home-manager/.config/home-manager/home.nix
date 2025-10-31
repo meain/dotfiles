@@ -109,7 +109,7 @@ in
 
     # apps
     # pkgs.kubectl # kubernetes cli
-    # pkgs.kubecolor # colorful kubectl
+    pkgs.kubecolor # colorful kubectl
     # pkgs.kubernetes-helm # helm cli
     # pkgs.stern # better way to fetch kubernetes log
     pkgs.yt-dlp # download youtube videos
@@ -343,7 +343,8 @@ in
     pkgs.ddgr # ddg search from terminal
     # ppkgs.probe # code search
     # pkgs.claude-code # ai coding
-    pkgs.opencode
+    pkgs.opencode # AI coding
+    pkgs.openapi-tui # TUI openapi viewer
 
     # pkgs.nur.repos.rycee.mozilla-addons-to-nix # package firefox addons
   ]
