@@ -22,7 +22,6 @@ alias c='clear && echo "" && pwd && ls'
 # renames
 alias rr=lf
 alias rm=trash
-alias kk=kubectl
 alias lg=lazygit
 alias lj=lazyjj
 alias mk=,mk
@@ -34,6 +33,7 @@ alias apr=,auto-pr
 alias asi=,voice-assistant
 
 # random
+alias kk="kubecolor --light-background"
 alias wk="watch kubectl"
 alias ax="axel -a -n 10"
 alias ppid="ps -o ppid= -p"
