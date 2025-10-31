@@ -38,6 +38,18 @@
     (interactive "P")
     (save-restriction
       (widen)
+      ;; Check if the commit is even available upstream and
+      ;; only generate a link if it is.
+      (unless use-master
+        (when (< (length
+                  (shell-command-to-string
+                   (concat
+                    "git branch -r --contains "
+                    (meain/cmd-head "git log --format='%H' -n 1"))))
+                 1)
+          (user-error "Current latest commit not available upstream")))
+
+
       (let* ((git-url (replace-regexp-in-string
                        "^git@github.com:\\(.*\\)\\.git$" "https://github.com/\\1"
                        (meain/cmd-head "git config --get remote.origin.url")))
