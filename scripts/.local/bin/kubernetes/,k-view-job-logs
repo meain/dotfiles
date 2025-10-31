@@ -1,0 +1,18 @@
+#!/bin/sh
+
+set -e
+
+# View logs of the jobs
+printf "Fetching jobs...\r" >&2
+job="$(kubectl get jobs -A --sort-by=.metadata.creationTimestamp | # get jobs sorted by timestamp
+    tail -n+2 | grep -v kube-system | tail -n 10 | tac |           # get last 10 non-kube-system jobs and reverse order
+    awk '{print $1,$2,$3,$5}' | column -t |                        # format columns
+    fzf | awk '{print $1,$2}')"
+
+namespace=$(echo "$job" | awk '{print $1}')
+job_name=$(echo "$job" | awk '{print $2}')
+
+printf "Fetching pods for job...\r" >&2
+kubectl get pods --selector=job-name="$job_name" -n "$namespace" |
+    tail -n+2 | column -t | fzf -1 | awk '{print $1}' |
+    xargs kubectl logs -f -n "$namespace"
