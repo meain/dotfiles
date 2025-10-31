@@ -253,6 +253,12 @@ er() {
     [ -d "$entry" ] && cd "$entry" || return 1
 }
 
+# jump backwards from cwd path
+# https://news.ycombinator.com/item?id=45684759
+dc() {
+    cd "${PWD%/$1/*}/$1/" 2>/dev/null || echo "Directory not found: $1"
+}
+
 # Create a tmp dir, unzip file into it, cd into it
 showme() {
     [ -z "$1" ] && echo "Pass file to show" && return 1
