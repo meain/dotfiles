@@ -34,7 +34,8 @@
                         (line-number-at-pos))))))
 
   (defun meain/github-url (&optional use-master)
-    "Link to the currently selected code in GitHub.  Pass `USE-MASTER' to use master branch."
+    "Link to the currently selected code in GitHub.  Pass `USE-MASTER' to use master branch.
+If region is active, link covers the region."
     (interactive "P")
     (save-restriction
       (widen)
@@ -49,7 +50,6 @@
                  1)
           (user-error "Current latest commit not available upstream")))
 
-
       (let* ((git-url (replace-regexp-in-string
                        "^git@github.com:\\(.*\\)\\.git$" "https://github.com/\\1"
                        (meain/cmd-head "git config --get remote.origin.url")))
@@ -60,8 +60,15 @@
                         (meain/cmd-head "git log --format='%H' -n 1")))
              (file-path (file-relative-name (or buffer-file-name default-directory)
                                             (car (project-roots (project-current)))))
-             (line-frag (unless (equal major-mode 'dired-mode)
-                          (format "#L%s" (line-number-at-pos))))
+             (line-frag
+              (unless (equal major-mode 'dired-mode)
+                (if (use-region-p)
+                    (let* ((start (line-number-at-pos (region-beginning)))
+                           (end (1- (line-number-at-pos (region-end)))))
+                      (if (= start end)
+                          (format "#L%s" start)
+                        (format "#L%s-L%s" start end)))
+                  (format "#L%s" (line-number-at-pos)))))
              (web-url (concat git-url "/blob/" git-ref "/" file-path (or line-frag ""))))
         (message "%s copied to clipboard." web-url)
         (meain/copy-to-clipboard web-url))))
