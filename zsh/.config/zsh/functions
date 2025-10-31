@@ -2,11 +2,6 @@
 
 # Functions that need cd, exit or source
 
-j() {
-    [ $# -gt 0 ] && _z "$*" && return
-    cd "$(_z -l 2>&1 | cat | sed 's/^[^ ]*\ *//' | fzf --height 40% --reverse --inline-info +s --tac --query "$*" --preview "ls {}")" || return
-}
-
 tmp() {
     base="/tmp/workspaces"
     repo=""
