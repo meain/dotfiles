@@ -64,7 +64,7 @@ If region is active, link covers the region."
               (unless (equal major-mode 'dired-mode)
                 (if (use-region-p)
                     (let* ((start (line-number-at-pos (region-beginning)))
-                           (end (1- (line-number-at-pos (region-end)))))
+                           (end (line-number-at-pos (1- (region-end)))))
                       (if (= start end)
                           (format "#L%s" start)
                         (format "#L%s-L%s" start end)))
