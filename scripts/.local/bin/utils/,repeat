@@ -4,6 +4,7 @@ set -e
 
 [ -z $2 ] && echo "usage: ,repeat <count> <command...>" && exit 1
 count="$1" && shift
-sed "$count" | while read -r c; do
-	eval "$*"
+echo "[$count] $@"
+seq "$count" | while read -r; do
+    eval "$@"
 done
