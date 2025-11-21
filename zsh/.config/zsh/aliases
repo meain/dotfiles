@@ -13,6 +13,7 @@ alias mkdir='mkdir -p'
 alias clear="tput clear"
 alias clera='clear'
 alias clea='clear'
+alias tclear='tmux clear-history'
 alias chmox='chmod +x'
 alias ls='lsd'
 alias l='ls'
@@ -47,7 +48,7 @@ alias ,remote-work="ssh $EXPERIMENT_VM"
 # agents
 alias aw=",agent-workspace"
 alias aww=",agent-workspace update && jj"
-alias ,gh-copilot="npx -y @github/copilot"
+alias ,gh-copilot="npx -y @github/copilot --allow-tool 'write'"
 
 # esa
 alias ec="esa -c"
