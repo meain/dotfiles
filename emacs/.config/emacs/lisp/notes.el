@@ -13,12 +13,12 @@
   (defun meain/create-quick-note ()
     (interactive)
     (require 's)
-    (let* ((templates (directory-files meain/quick-notes-templates-directory nil ".+\\..+"))
-           (name-input (completing-read "Title: " templates nil nil))
+    (let* ((templates (seq-filter (lambda (x) (not (s-starts-with-p "_" x)))
+                                  (directory-files meain/quick-notes-templates-directory nil ".+\\..+")))
+           (name-input (completing-read "Name: " templates nil nil))
            (is-template (member name-input templates))
            (extension (if is-template "" ; template would have the extension
-                        (if (s-contains-p "." name-input) ""
-                          (concat "." (completing-read "Extension: " '("md") nil nil)))))
+                        (if (s-contains-p "." name-input) "" ".md")))
            (filename (concat meain/quick-notes-directory "/"
                              (format-time-string "%Y-%m/%d %H.%M " (current-time))
                              name-input extension)))
