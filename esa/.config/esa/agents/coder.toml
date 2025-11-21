@@ -235,7 +235,7 @@ required = false
 
 [[functions]]
 name = "search_for_text"
-description = "Advanced text search with context and filtering"
+description = "Text search with context and filtering. Uses grep like to tool to perform searches."
 command = "rg {{case_sensitive}} {{whole_word}} {{context}} '{{pattern}}' {{file_pattern}} ./{{directory}} | head -n {{limit}}"
 safe = true
 
