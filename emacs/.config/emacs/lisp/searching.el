@@ -11,7 +11,14 @@
   :after evil-leader
   :init
   (evil-leader/set-key "f"
-    (alambda (consult-ripgrep) (call-interactively 'rg)))
+    (alambda (if (use-region-p)
+                 (let ((text (buffer-substring-no-properties
+                              (region-beginning)
+                              (region-end))))
+                   (evil-normal-state)
+                   (consult-ripgrep default-directory text))
+               (consult-ripgrep))
+             (call-interactively 'rg)))
   :config (setq rg-command-line-flags '("--hidden" "--follow")))
 
 ;; dumber-jump
