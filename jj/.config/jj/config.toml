@@ -97,6 +97,7 @@ if(root,
           description.first_line(),
           label(if(empty, "empty"), description_placeholder),
         ),
+        format_short_commit_id(self.commit_id()),
       ) ++ "\n",
     ),
   )
