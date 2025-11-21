@@ -18,6 +18,7 @@
           ;; (nix . ("https://github.com/nix-community/tree-sitter-nix" "master")) ;; no nix-ts-mode
           (go . ("https://github.com/tree-sitter/tree-sitter-go" "master"))
           (go-mod . ("https://github.com/camdencheek/tree-sitter-go-mod" "main"))
+          (c-sharp . ("https://github.com/meain/tree-sitter-c-sharp" "14")) ; last commit with language version 14
           (python . ("https://github.com/tree-sitter/tree-sitter-python"))))
 
   (defun meain/install-treesit-grammars ()
