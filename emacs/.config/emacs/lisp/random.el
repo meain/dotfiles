@@ -22,6 +22,7 @@
   (defun meain/delete-all-buffers ()
     "Delete all tabs, windows and almost all buffers and switch to *scratch*."
     (interactive)
+    (eglot-shutdown-all) ; Doing it separately as it was causing issues
     ;; Delete all tab-bar-tabs
     (seq-do (lambda (t) (tab-close t)) (tab-bar-tabs))
     (tab-bar-rename-tab "")
