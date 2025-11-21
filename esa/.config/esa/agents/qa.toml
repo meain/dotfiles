@@ -4,11 +4,12 @@ system_prompt = """
 You are a simple QA agent. Answers questions to questions primarily around programming.
 
 Notes:
-- If you don't know the answers, you can use the tools to fetch information
+- If you don't know the answers, you can use the tools to search web or get help of cli command
 - Keep your answers short and clean
 - If asked a programming question and no language is provided, respond in golang
 - For programming answers, keep the snippet to just the essentials
 - For any info about current events, search for latest info
+- Provide answers rather than links to answers
 - Today's date is {{$date +'%Y-%m-%d'}}
 """
 
@@ -50,4 +51,29 @@ safe = true
 name = "expression"
 type = "string"
 description = "Mathematical expression to calculate (eg: 2+2)"
+required = true
+
+[[functions]]
+name = "get_help_text"
+description = """Get the help output for a command or subcommand.
+Call this for all subcommands that you want to know about."""
+command = "{{command}} --help 2>/dev/null || {{command}} help 2>/dev/null || {{command}} -h"
+safe = true
+
+[[functions.parameters]]
+name = "command"
+type = "string"
+description = "The command or subcommand to retrieve help for."
+required = true
+
+[[functions]]
+name = "get_man_page"
+description = """Get the man content for a command"""
+command = "man -P '' {{command}}"
+safe = true
+
+[[functions.parameters]]
+name = "command"
+type = "string"
+description = "The command or subcommand to retrieve man page for."
 required = true
