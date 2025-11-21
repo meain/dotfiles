@@ -11,8 +11,8 @@ tmp() {
             repo="$1"
             ;;
         *)
-            ls -t $base | fzf --preview "tree -L 3 $base/{}" |
-                xargs -r -I {} cd "$base/{}"
+            dir=$(ls -t $base | fzf --preview "tree -L 3 $base/{}")
+            cd "$base/$dir"
             return 0
             ;;
         esac
@@ -229,7 +229,7 @@ hashdir() {
 }
 
 er() {
-    entry="$(fd | fzf)"
+    entry="$(fd | fzf -1 --query "$1")"
     [ -f "$entry" ] && cd "$(dirname "$entry")" || return 1
     [ -d "$entry" ] && cd "$entry" || return 1
 }
