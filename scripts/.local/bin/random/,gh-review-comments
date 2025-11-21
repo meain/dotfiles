@@ -1,0 +1,358 @@
+#!/bin/bash
+
+# review_processor.sh - Process GitHub PR review comments with code context
+# Usage: ./review_processor.sh [review_comments.json]
+
+set -euo pipefail
+
+# Configuration
+CONTEXT_LINES_BEFORE=5
+CONTEXT_LINES_AFTER=5
+MAX_DIFF_HUNK_LINES=20
+TEMP_DIR=$(mktemp -d)
+PICKER_MODE=false
+
+# Cleanup function
+cleanup() {
+    if [[ -d "$TEMP_DIR" ]]; then
+        rm -rf "$TEMP_DIR"
+    fi
+}
+trap cleanup EXIT
+
+print_section() {
+    echo -e "\n## $1"
+}
+
+print_error() {
+    echo "ERROR: $1" >&2
+}
+
+print_warning() {
+    echo "WARNING: $1" >&2
+}
+
+# Check if required tools are available
+if ! command -v jq &> /dev/null; then
+    print_error "jq is required but not installed. Please install jq first."
+    exit 1
+fi
+
+if ! command -v fzf &> /dev/null; then
+    print_error "fzf is required but not installed. Please install fzf first."
+    exit 1
+fi
+
+if ! command -v gh &> /dev/null; then
+    print_error "gh (GitHub CLI) is required but not installed. Please install gh first."
+    exit 1
+fi
+
+# Parse command line arguments
+show_usage() {
+    echo "Usage: $0 [OPTIONS] PR_NUMBER"
+    echo ""
+    echo "OPTIONS:"
+    echo "  -p, --picker    Show fzf picker to select comments interactively"
+    echo "  -h, --help      Show this help message"
+    echo ""
+    echo "ARGUMENTS:"
+    echo "  PR_NUMBER       Fetch review comments for PR number (e.g., 3036)"
+    echo ""
+    echo "EXAMPLES:"
+    echo "  $0 3036         # Fetch and process PR #3036 comments"
+    echo "  $0 -p 3036      # Fetch PR #3036 and show picker"
+}
+
+PR_NUMBER=""
+
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        -p|--picker)
+            PICKER_MODE=true
+            shift
+            ;;
+        -h|--help)
+            show_usage
+            exit 0
+            ;;
+        -*)
+            print_error "Unknown option: $1"
+            show_usage
+            exit 1
+            ;;
+        *)
+            if [[ "$1" =~ ^[0-9]+$ ]]; then
+                PR_NUMBER="$1"
+            else
+                print_error "Invalid PR number: $1"
+                show_usage
+                exit 1
+            fi
+            shift
+            ;;
+    esac
+done
+
+if [[ -z "$PR_NUMBER" ]]; then
+    print_error "PR number is required"
+    show_usage
+    exit 1
+fi
+
+fetch_review_comments() {
+    local pr_number="$1"
+    local output_file="$2"
+
+    # Get repository info from git remote
+    local repo_info
+    repo_info=$(gh repo view --json owner,name 2>/dev/null || {
+        print_error "Could not determine repository info. Make sure you're in a git repository with GitHub remote."
+        exit 1
+    })
+
+    local owner=$(echo "$repo_info" | jq -r '.owner.login')
+    local repo=$(echo "$repo_info" | jq -r '.name')
+
+    echo "Fetching review comments for PR #$pr_number from $owner/$repo..." >&2
+
+    # Fetch review comments using GitHub API
+    if ! gh api "repos/$owner/$repo/pulls/$pr_number/comments" --paginate > "$output_file"; then
+        print_error "Failed to fetch review comments for PR #$pr_number"
+        exit 1
+    fi
+
+    # Check if we got any comments
+    local comment_count=$(jq length "$output_file" 2>/dev/null || echo "0")
+    if [[ "$comment_count" -eq 0 ]]; then
+        print_error "No review comments found for PR #$pr_number"
+        exit 1
+    fi
+
+    echo "Fetched $comment_count review comments" >&2
+}
+
+# Handle PR input and fetch comments
+INPUT_FILE="$TEMP_DIR/fetched_comments.json"
+fetch_review_comments "$PR_NUMBER" "$INPUT_FILE"
+
+# Check if we're in a git repository
+if ! git rev-parse --git-dir > /dev/null 2>&1; then
+    print_error "This script must be run from within a git repository"
+    exit 1
+fi
+
+get_file_content_at_commit() {
+    local file_path="$1"
+    local commit_id="$2"
+    local line_start="$3"
+    local line_end="$4"
+
+    # Try to get the file content at the specific commit
+    if git cat-file -e "$commit_id:$file_path" 2>/dev/null; then
+        git show "$commit_id:$file_path" | sed -n "${line_start},${line_end}p" | nl -ba -nln -w4 -s": " -v"$line_start"
+    else
+        echo "File not found at commit $commit_id"
+        return 1
+    fi
+}
+
+get_current_file_content() {
+    local file_path="$1"
+    local line_start="$2"
+    local line_end="$3"
+
+    if [[ -f "$file_path" ]]; then
+        sed -n "${line_start},${line_end}p" "$file_path" | nl -ba -nln -w4 -s": " -v"$line_start"
+    else
+        echo "File not found in current working directory"
+        return 1
+    fi
+}
+
+process_diff_hunk() {
+    local diff_hunk="$1"
+
+    echo '```diff'
+    echo "$diff_hunk" | head -n "$MAX_DIFF_HUNK_LINES"
+    echo '```'
+}
+
+format_comment_body() {
+    local body="$1"
+
+    # Handle code suggestions
+    if [[ "$body" == *'```suggestion'* ]]; then
+        echo "💡 **Code Suggestion:**"
+        echo ""
+        echo "$body"
+    else
+        echo "💬 **Comment:**"
+        echo ""
+        echo "$body"
+    fi
+}
+
+generate_comment_file() {
+    local comment_index="$1"
+    local comment_data="$2"
+    local output_file="$3"
+
+    # Extract comment data
+    local FILE_PATH=$(echo "$comment_data" | jq -r '.path')
+    local COMMIT_ID=$(echo "$comment_data" | jq -r '.commit_id')
+    local LINE=$(echo "$comment_data" | jq -r '.line // empty')
+    local START_LINE=$(echo "$comment_data" | jq -r '.start_line // empty')
+    local COMMENT_BODY=$(echo "$comment_data" | jq -r '.body')
+    local DIFF_HUNK=$(echo "$comment_data" | jq -r '.diff_hunk // empty')
+    local USER_LOGIN=$(echo "$comment_data" | jq -r '.user.login')
+    local CREATED_AT=$(echo "$comment_data" | jq -r '.created_at')
+    local HTML_URL=$(echo "$comment_data" | jq -r '.html_url')
+
+    # Generate the comment file
+    {
+        # Display comment metadata
+        print_section "Comment Details"
+        echo "👤 **Author:** $USER_LOGIN"
+        echo "📅 **Date:** $CREATED_AT"
+        echo "📁 **File:** $FILE_PATH"
+        echo "🔗 **URL:** $HTML_URL"
+
+        if [[ "$LINE" != "null" && "$LINE" != "" ]]; then
+            echo "📍 **Line:** $LINE"
+            TARGET_LINE="$LINE"
+        elif [[ "$START_LINE" != "null" && "$START_LINE" != "" ]]; then
+            echo "📍 **Start Line:** $START_LINE"
+            TARGET_LINE="$START_LINE"
+        else
+            TARGET_LINE=""
+        fi
+
+        echo "🔄 **Commit:** $COMMIT_ID"
+
+        # Display the comment
+        print_section "Review Comment"
+        format_comment_body "$COMMENT_BODY"
+
+        # Display diff hunk if available
+        if [[ "$DIFF_HUNK" != "null" && "$DIFF_HUNK" != "" ]]; then
+            print_section "Diff Context"
+            process_diff_hunk "$DIFF_HUNK"
+        fi
+
+        # Get additional code context around the commented line
+        if [[ "$TARGET_LINE" != "" && "$TARGET_LINE" != "null" ]]; then
+            TARGET_LINE_NUM=$(echo "$TARGET_LINE" | grep -o '[0-9]\+' | head -1)
+
+            if [[ "$TARGET_LINE_NUM" =~ ^[0-9]+$ ]]; then
+                CONTEXT_START=$((TARGET_LINE_NUM - CONTEXT_LINES_BEFORE))
+                CONTEXT_END=$((TARGET_LINE_NUM + CONTEXT_LINES_AFTER))
+
+                # Ensure we don't go below line 1
+                if [[ $CONTEXT_START -lt 1 ]]; then
+                    CONTEXT_START=1
+                fi
+
+                print_section "Code Context at Commit ($COMMIT_ID)"
+                echo "**Lines $CONTEXT_START-$CONTEXT_END around line $TARGET_LINE_NUM:**"
+                echo ""
+                echo '```'
+
+                if get_file_content_at_commit "$FILE_PATH" "$COMMIT_ID" "$CONTEXT_START" "$CONTEXT_END"; then
+                    echo '```'
+                    echo ""
+                else
+                    echo '```'
+                    print_warning "Could not retrieve file content at commit $COMMIT_ID"
+
+                    # Try to get current file content as fallback
+                    print_section "Current File Content (Fallback)"
+                    echo "**Lines $CONTEXT_START-$CONTEXT_END around line $TARGET_LINE_NUM (current version):**"
+                    echo ""
+                    echo '```'
+                    if ! get_current_file_content "$FILE_PATH" "$CONTEXT_START" "$CONTEXT_END"; then
+                        print_warning "Could not retrieve current file content either"
+                    fi
+                    echo '```'
+                fi
+            fi
+        fi
+    } > "$output_file"
+}
+
+create_picker_list() {
+    local total_comments="$1"
+    local picker_list_file="$TEMP_DIR/picker_list.txt"
+
+    for i in $(seq 0 $((total_comments - 1))); do
+        local comment_data=$(jq ".[$i]" "$INPUT_FILE")
+        local file_path=$(echo "$comment_data" | jq -r '.path')
+        local user_login=$(echo "$comment_data" | jq -r '.user.login')
+        local created_at=$(echo "$comment_data" | jq -r '.created_at')
+        local line=$(echo "$comment_data" | jq -r '.line // empty')
+        local comment_body=$(echo "$comment_data" | jq -r '.body' | head -1 | cut -c1-80)
+
+        # Format the picker line
+        local display_line=""
+        if [[ "$line" != "null" && "$line" != "" ]]; then
+            display_line="$((i + 1)). $(basename "$file_path"):$line by $user_login - $comment_body"
+        else
+            display_line="$((i + 1)). $(basename "$file_path") by $user_login - $comment_body"
+        fi
+
+        echo "$i|$display_line" >> "$picker_list_file"
+    done
+
+    echo "$picker_list_file"
+}
+
+show_fzf_picker() {
+    local total_comments="$1"
+    local picker_list_file=$(create_picker_list "$total_comments")
+
+    local selected
+    selected=$(cat "$picker_list_file" | fzf -m \
+        --delimiter="|" \
+        --with-nth=2 \
+        --preview="glow --style=light $TEMP_DIR/comment_{1}.txt" \
+        --preview-window=bottom:80%:wrap \
+        --header="Select review comments (Tab to multi-select, Enter to confirm)" \
+        --border \
+        --height=80%)
+
+    if [[ -n "$selected" ]]; then
+        # Process multiple selected comments
+        while IFS= read -r line; do
+            if [[ -n "$line" ]]; then
+                local comment_index=$(echo "$line" | cut -d'|' -f1)
+                cat "$TEMP_DIR/comment_${comment_index}.txt"
+                echo -e "\n---\n"
+            fi
+        done <<< "$selected" | head -c -6  # Remove the last separator
+    fi
+}
+
+# Main processing
+TOTAL_COMMENTS=$(jq length "$INPUT_FILE")
+
+# Generate individual comment files silently
+for i in $(seq 0 $((TOTAL_COMMENTS - 1))); do
+    COMMENT_DATA=$(jq ".[$i]" "$INPUT_FILE")
+    OUTPUT_FILE="$TEMP_DIR/comment_${i}.txt"
+    generate_comment_file "$i" "$COMMENT_DATA" "$OUTPUT_FILE"
+done
+
+if [[ "$PICKER_MODE" == true ]]; then
+    # Show fzf picker
+    show_fzf_picker "$TOTAL_COMMENTS"
+else
+    # Process all comments sequentially (original behavior)
+    for i in $(seq 0 $((TOTAL_COMMENTS - 1))); do
+        cat "$TEMP_DIR/comment_${i}.txt"
+
+        # Add separator between comments
+        if [[ $i -lt $((TOTAL_COMMENTS - 1)) ]]; then
+            echo -e "\n---\n"
+        fi
+    done
+fi
