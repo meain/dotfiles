@@ -12,18 +12,29 @@ run_command() {
         if [[ -n $output ]]; then
             printf "## %s\n" "$repo"
             echo "$output"
-            echo
         fi
     done >$tempfile
 
     if cat "$tempfile" | grep -q "."; then
-        cat "$tempfile" | sed 's|##|#|' | sed 's|\[\(#.*\)\](.*)\(.*\)|\1\2|'
-        sed 's|\ *-|-|' <"$tempfile" | pbcopy
-        ,linkify
 
-        if [ "$action" != "show" ]; then
+        case "$action" in
+        cache)
+            # Do nothing (just want to cache the data)
+            ;;
+        show)
+            cat "$tempfile" | sed 's|##|#|' | sed 's|\[\(#.*\)\](.*)\(.*\)|\1\2|'
+            sed 's|\ *-|-|' <"$tempfile" | pbcopy
+            ,linkify
+            ;;
+        *)
+            cat "$tempfile" | sed 's|##|#|' | sed 's|\[\(#.*\)\](.*)\(.*\)|\1\2|'
+            sed 's|\ *-|-|' <"$tempfile" | pbcopy
+            ,linkify
+
             cat "$tempfile" | grep -E '^\s*-' | cut -d'(' -f2 | cut -d')' -f1 | xargs open
-        fi
+            ;;
+        esac
+
     else
         echo "No PRs found"
     fi
@@ -39,11 +50,23 @@ a | approved)
 p | pending)
     run_command "${2:-show}" --author meain --review-status unapproved
     ;;
-*)
+h | help | --help | -h)
     echo "Use one of:"
-    echo "- [p]ending: Pending approvals on others"
     echo "- [a]pproved: Approved PRs"
+    echo "- [p]ending: Pending approvals on others"
     echo "- [r]eview: Review pending on me"
-    exit 1
+    exit 0
+    ;;
+*) # Show all with color headings for each seaction
+    printf "Fetcing PRs from all repos...\r"
+    ,prs approved cache # cache them first
+    printf "\033[K" # clear line
+
+    printf "%sApproved[a]%s\n" "$(tput setaf 3)" "$(tput sgr0)"
+    ,prs approved
+    printf "\n%sPending Approval[p]%s\n" "$(tput setaf 3)" "$(tput sgr0)"
+    ,prs pending
+    printf "\n%sTo Review[r]%s\n" "$(tput setaf 3)" "$(tput sgr0)"
+    ,prs review
     ;;
 esac
