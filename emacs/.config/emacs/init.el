@@ -81,5 +81,9 @@
 (require 'random)
 (require 'modeline)
 
+;; External packages
+(add-to-list 'load-path (expand-file-name "lisp/external" user-emacs-directory))
+(require 'go-template-mode) ; should replace this with tree-sitter one
+
 (provide 'init)
 ;;; init.el ends here
