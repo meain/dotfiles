@@ -93,6 +93,9 @@ shown unless the `SHOW-HIDDEN' arg is provided."
           (message (concat "Only one tab present. Use `"
                            (substitute-command-keys "\\[meain/create-or-delete-tab]")
                            "` to create another tab.")))
+         ;; NOTE: tab-bar-switch-to-tab will not work reliably if
+         ;; multiple tabs have the same name. This can happen if we
+         ;; open the same file in multiple tabs.
          (t (tab-bar-switch-to-tab (car tabs))))))))
 
 (use-package indent-guide
