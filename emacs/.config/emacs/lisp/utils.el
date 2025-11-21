@@ -52,7 +52,7 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 
 (defun meain/cmd-head (command)
   "Get the first line of the given `COMMAND'."
-  (cat (split-string (shell-command-to-string command) "\n")))
+  (car (split-string (shell-command-to-string command) "\n")))
 
 (provide 'utils)
 ;;; utils.el ends here
