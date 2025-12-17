@@ -106,7 +106,8 @@ Pass `CREATE' to create the alternate file if it does not exits."
   (defun meain/copy-file-name-to-clipboard (&optional abs-path)
     "Copy the current filename into clipboard. Pass `ABS-PATH' if you need absolute path."
     (interactive "P")
-    (let ((file-path (or (buffer-file-name) default-directory)))
+    (let ((file-path (or (buffer-file-name) default-directory))
+          (abs-path (or abs-path (not (project-current))))) ; use abs if not in project
       (if file-path
           (let ((copy-path (if abs-path file-path
                              (string-replace
