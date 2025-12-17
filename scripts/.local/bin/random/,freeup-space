@@ -19,6 +19,51 @@ nix-store --optimize
 echo "Cleaning up docker..."
 docker system prune -a
 
+if command -v brew >/dev/null 2>&1; then
+    echo "Cleaning brew cache..."
+    brew cleanup
+fi
+
+if command -v gem >/dev/null 2>&1; then
+    echo "Cleaning gem cache..."
+    gem cleanup
+fi
+
+if command -v yarn >/dev/null 2>&1; then
+    echo "Cleaning yarn cache..."
+    yarn cache clean
+fi
+
+if command -v npm >/dev/null 2>&1; then
+    echo "Cleaning npm cache..."
+    npm cache clean --force
+fi
+
+if command -v pip >/dev/null 2>&1; then
+    echo "Cleaning pip cache..."
+    pip cache purge
+fi
+
+if command -v uv >/dev/null 2>&1; then
+    echo "Cleaning uv cache..."
+    uv cache clean
+fi
+
+if [ -e "${HOME}/Library/Caches/CocoaPods" ]; then
+    echo "Cleaning CocoaPods cache..."
+    rm -rf "${HOME}/Library/Caches/CocoaPods"
+fi
+
+if command -v xcrun >/dev/null 2>&1; then
+    echo "Cleaning iOS simulators..."
+    xcrun simctl delete unavailable
+
+    echo "Cleaning XCode logs..."
+    rm -rf ~/Library/Developer/Xcode/Archives
+    rm -rf ~/Library/Developer/Xcode/DerivedData
+    rm -rf "$HOME/Library/Developer/Xcode/iOS Device Logs/"
+fi
+
 [ "$answer" != "y" ] && exit 0
 
 echo "Cleaning up go cache..."
