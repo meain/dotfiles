@@ -34,10 +34,9 @@
             (if value (propertize value 'face 'hima-simple-gray) ""))))
 (defvar meain/modeline-vcs
   (meain/modeline-segment
-   `(when-let (vc vc-mode)
-      (or
-       (meain/jj-current-workspace)
-       (concat " @" (substring vc 5))))))
+   `(or
+     (meain/jj-current-workspace)
+     (when (boundp 'vc-mode) (concat " @" (substring vc-mode 5))))))
 (defvar meain/modeline-yap
   (meain/modeline-segment
    `(when (or (boundp 'gptel-model) (boundp 'yap-model))
