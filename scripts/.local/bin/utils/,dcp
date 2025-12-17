@@ -5,7 +5,7 @@
 set -e
 
 FROMFILE=$(\ls -t "$DOWNLOADS_PATH" | fzf --query="$1")
-if [ -z $FROMFILE ]; then
+if [ -z "$FROMFILE" ]; then
 	echo "No file selected"
 	return 1
 fi

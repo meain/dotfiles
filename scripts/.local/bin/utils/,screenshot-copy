@@ -4,5 +4,15 @@
 
 set -e
 
-FILE="$(\ls -t $SCREENSHOTS_PATH | fzf)"
-cp "$SCREENSHOTS_PATH/$FILE" "${1:-$FILE}"
+FROMFILE=$(\ls -t "$SCREENSHOTS_PATH" | fzf --query="$1")
+if [ -z "$FROMFILE" ]; then
+	echo "No file selected"
+	return 1
+fi
+printf "Name of destination file (%s): " "$(basename "$FROMFILE")"
+read -r TOFILE
+
+if [ -z "$TOFILE" ]; then
+	TOFILE=$(basename "$FROMFILE")
+fi
+cp -riv "$SCREENSHOTS_PATH/$FROMFILE" "$TOFILE"
