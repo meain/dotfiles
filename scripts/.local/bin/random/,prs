@@ -2,25 +2,30 @@
 
 set -e
 
-repos="$(cat $HOME/.config/datafiles/prs-repos)"
+repos="$(cat "$HOME/.config/datafiles/prs-repos")"
+
+cache_repos() {
+    echo "$repos" | while read -r repo; do
+        chainlink log --repo "$repo" >/dev/null 2>&1 &
+    done
+
+    wait
+}
 
 run_command() {
     action="$1" && shift
     tempfile=$(mktemp)
-    echo $repos | while read -r repo; do
+    echo "$repos" | while read -r repo; do
         output="$(chainlink log --cache-time 5m --all --output markdown "$@" --repo "$repo" 2>/dev/null || true)"
         if [[ -n $output ]]; then
             printf "## %s\n" "$repo"
             echo "$output"
         fi
-    done >$tempfile
+    done >"$tempfile"
 
     if cat "$tempfile" | grep -q "."; then
 
         case "$action" in
-        cache)
-            # Do nothing (just want to cache the data)
-            ;;
         show)
             cat "$tempfile" | sed 's|##|#|' | sed 's|\[\(#.*\)\](.*)\(.*\)|\1\2|'
             sed 's|\ *-|-|' <"$tempfile" | pbcopy
@@ -34,7 +39,6 @@ run_command() {
             cat "$tempfile" | grep -E '^\s*-' | cut -d'(' -f2 | cut -d')' -f1 | xargs open
             ;;
         esac
-
     else
         echo "No PRs found"
     fi
@@ -59,7 +63,7 @@ h | help | --help | -h)
     ;;
 *) # Show all with color headings for each seaction
     printf "Fetcing PRs from all repos...\r"
-    ,prs approved cache # cache them first
+    cache_repos     # cache them first
     printf "\033[K" # clear line
 
     printf "%sApproved[a]%s\n" "$(tput setaf 3)" "$(tput sgr0)"
