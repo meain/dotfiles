@@ -5,6 +5,26 @@ set -e
 url="$1"
 [ -z "$url" ] && url="$(pbpaste)"
 
+output=""
+linkify() {
+    printf "%s" "$output" | tee /tmp/linkify | mdclip
+    title=$(sed 's|.*\[\(.*\)\](.*)|\1|' /tmp/linkify)
+    iurl=$(sed 's|.*\[\(.*\)\](\(.*\))|\2|' /tmp/linkify)
+    notify "$title" "$iurl"
+    cat /tmp/linkify
+}
+
+# Known keywords
+if echo "$url" | grep -qE '^[A-Z]{2,3}-[0-9]+$'; then
+    output="[$url](https://veeam-vdc.atlassian.net/browse/$url)"
+fi
+
+if [ -n "$output" ]; then
+    linkify
+    exit 0
+fi
+
+# Note a URL
 if ! echo "$url" | grep -qE '^https?://'; then
     echo "$url" | mdclip
     exit 0
@@ -26,7 +46,6 @@ format_github_url() {
     fi
 }
 
-output=""
 if echo "$url" | grep -qE '^https://github.com/[^/]*/[^/]*'; then
     if echo "$url" | grep -q '/issues/[0-9]*$'; then
         output=$(format_github_url "$url" "/issues/\([0-9]*\)" "[\1#\2]($url)")
@@ -65,7 +84,4 @@ else
     output="[$title]($url)"
 fi
 
-printf "%s" "$output" | tee /tmp/linkify | mdclip
-title=$(sed 's|.*\[\(.*\)\](.*)|\1|' /tmp/linkify)
-notify "$title" "$url"
-cat /tmp/linkify
+linkify
