@@ -221,5 +221,11 @@ Return a list of filenames only, one per line without extension.
   :init
   (global-set-key (kbd "M-; j") 'gptel-quick))
 
+(use-package gptel-agent
+  :defer t
+  :after (gptel)
+  :ensure (:host github :repo "karthink/gptel-agent" :files (:defaults "agents"))
+  :config (gptel-agent-update))
+
 (provide 'gptel-m)
 ;;; gptel-m.el ends here
