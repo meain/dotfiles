@@ -2,4 +2,10 @@
 
 set -e
 
-jj describe -m "$*"
+revision="@"
+if  echo "$1" | grep -q '^,[^ ]'; then
+    revision="${1#,}"
+    shift
+fi
+
+jj describe -r "$revision" -m "$*"

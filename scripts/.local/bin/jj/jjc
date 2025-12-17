@@ -2,4 +2,10 @@
 
 set -e
 
-jj commit -m "$*"
+revision="@"
+if  echo "$1" | grep -q '^,[^ ]'; then
+    revision="${1#,}"
+    shift
+fi
+
+jj commit -r "$revision" -m "$*"
