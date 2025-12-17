@@ -2,17 +2,25 @@
 
 set -e
 
+rev="@"
+if [ -n "$1" ]; then
+    rev="$1"
+elif [ -z "$(jj diff)" ]; then
+    echo "[NOTE] Empty revision. Using previous revision."
+    rev="@-"
+fi
+
 # kinda hacky, but hey so is the rest of the script
-logline="$(jj log -r @ --template 'description.first_line()' --no-graph)"
-if [  -z "$logline" ]; then
-    ,auto-commit
+logline="$(jj log -r $rev --template 'description.first_line()' --no-graph)"
+if [ -z "$logline" ]; then
+    ,auto-commit "$rev"
 else
     echo "Commit already has a message, skipping commit"
 fi
 
-logline="$(jj log -r @ --template 'bookmarks' --no-graph)"
-if [ -z  "$logline" ]; then
-    ,auto-branch
+logline="$(jj log -r $rev --template 'bookmarks' --no-graph)"
+if [ -z "$logline" ]; then
+    ,auto-branch "$rev"
 else
     echo "Branch already has a name, skipping branch creation"
 fi
