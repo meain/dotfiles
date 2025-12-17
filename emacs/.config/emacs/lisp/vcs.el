@@ -127,11 +127,12 @@
 ;; Used by modeline display
 (defun meain/jj-current-workspace ()
   "Get the current jj workspace name."
-  (when (locate-dominating-file (buffer-file-name) ".jj")
-    (concat " " (car
-                 (string-split
-                  (meain/cmd-head "jj log -r @ --no-graph -T 'working_copies'")
-                  " ")))))
+  (when (buffer-file-name)
+    (when (locate-dominating-file (buffer-file-name) ".jj")
+      (concat " " (car
+                   (string-split
+                    (meain/cmd-head "jj log -r @ --no-graph -T 'working_copies'")
+                    " "))))))
 
 (provide 'vcs)
 ;;; vcs.el ends here
