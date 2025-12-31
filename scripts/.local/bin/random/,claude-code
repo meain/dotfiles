@@ -7,5 +7,9 @@ export ANTHROPIC_BASE_URL=http://localhost:4141 \
     ANTHROPIC_AUTH_TOKEN="" \
     ANTHROPIC_API_KEY="" \
     ANTHROPIC_MODEL=claude-sonnet-4 \
-    ANTHROPIC_SMALL_FAST_MODEL=gpt-4.1
+    ANTHROPIC_DEFAULT_SONNET_MODEL=claude-sonnet-4 \
+    ANTHROPIC_SMALL_FAST_MODEL=gpt-4.1 \
+    ANTHROPIC_DEFAULT_HAIKU_MODEL=gpt-4.1 \
+    DISABLE_NON_ESSENTIAL_MODEL_CALLS=1 \
+    CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
 npx -y @anthropic-ai/claude-code --permission-mode acceptEdits "$@"
