@@ -148,3 +148,9 @@ patterns = ["glob:'**/*.css'"]
 [fix.tools.nixfmt]
 command = ["nixfmt", "-"]
 patterns = ["glob:'**/*.nix'"]
+
+[remotes.origin]
+auto-track-bookmarks = "glob:*"
+
+[remotes.upstream]
+auto-track-bookmarks = "glob:*"
