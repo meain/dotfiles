@@ -227,7 +227,6 @@ in
     pkgs.nodePackages.yaml-language-server # language server for yaml
     # ppkgs.prosemd-lsp # prose lsp
     pkgs.nodePackages.fixjson # much better json formatter
-    pkgs.nodePackages.jsonlint # json linting
     pkgs.nodePackages.markdownlint-cli # markdown linter
     pkgs.vale # prose lint
     # pkgs.hadolint # Dockerfile lint
@@ -320,7 +319,7 @@ in
     # pkgs.minicom # connect to rpi
     # pkgs.mitmproxy # mitm proxy
     # pkgs.spotifyd # spotify daemon
-    (pkgs.spotify-player.override { withSixel = false; }) # spotify tui (sixel not available in tmux)
+    # (pkgs.spotify-player.override { withSixel = false; }) # spotify tui (sixel not available in tmux)
     pkgs.cloc # line count code
     pkgs.helix # alternate editor
     # pkgs.hurl # api testing
@@ -329,7 +328,7 @@ in
     # pkgs.aichat # a better aichat
     # ppkgs.aider-chat # work on full codebase
     # pkgs.aider-chat # work on full codebase
-    pkgs.openai-whisper-cpp # speech to text
+    pkgs.whisper-cpp # speech to text
     # pkgs.open-webui # webui for llms
     # pkgs.feh # image viewer (for desktop background)
     # pkgs.kopia # backup
@@ -337,7 +336,7 @@ in
     pkgs.readability-cli # simplify articles
     pkgs.glow # markdown renderer
     pkgs.markdown-oxide # PKM via LSP
-    pkgs.poppler_utils # pdf utils
+    pkgs.poppler-utils # pdf utils
     pkgs.jira-cli-go # jira cli
     # ppkgs.prr # local pr review
     pkgs.ddgr # ddg search from terminal
