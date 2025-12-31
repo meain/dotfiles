@@ -10,6 +10,7 @@
 
 ;; Magit
 (use-package magit
+  :disabled t
   :ensure t
   :after (evil-leader transient cond-let)
   :commands (magit-status magit-commit-create magit-ignored-files meain/git-how-was-it)
