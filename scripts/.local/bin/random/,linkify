@@ -73,6 +73,9 @@ elif echo "$url" | grep -qE '^https://teams.microsoft.com'; then
     team=$(printf "%s" "$url" | grep -o 'teamName=[^&]*' | cut -d= -f2)
     channel=$(printf "%s" "$url" | grep -o 'channelName=[^&]*' | cut -d= -f2)
     output="[$team#$channel]($url)"
+elif echo "$url" | grep -qE '^https://.*\.azure\.elastic-cloud\.com/.*$'; then
+    title=$(echo "$url" | sed 's|https://\([a-zA-Z0-9-]*\).*|\1|')
+    output="[Logs in $title]($url)"
 else
     title=$(dejsonlz4 "$HOME/Library/Application Support/Firefox/Profiles/68pk86vd.default-release/sessionstore-backups/recovery.jsonlz4" |
         jq -r '.windows[].tabs[].entries[] | "\(.url) \(.title)"' |
