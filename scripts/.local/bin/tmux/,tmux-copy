@@ -18,7 +18,7 @@ text=$(tmux capture-pane -J -p)
     echo "$text" | grep -oE '(https?|ftp|file):/?//[-A-Za-z0-9+&@#/%?=~_|!:,.;]*[-A-Za-z0-9+&@#/%=~_|]' | sed 's/^/URL: /'
 
     # File paths (specific extensions)
-    echo "$text" | grep -oE '\b[a-zA-Z0-9_/-\.]*\.(go|py|rs|js|ts|json|yaml|yml|md)\b' |
+    echo "$text" | grep -oE '\b[a-zA-Z0-9_/\.-]*\.(go|py|rs|js|ts|json|yaml|yml|md)\b' |
         grep -v '^https\?:' | sed 's/^/FILE: /'
 
     # IP addresses
