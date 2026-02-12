@@ -67,7 +67,9 @@ sync_additional_files() {
 
 case "$name" in
 update)
-    # update stale
+    # Update stale workspaces.  Have to update current workspace first
+    # to be able to switch to other workspaces
+    jj workspace update-stale
     jj workspace list | cut -d: -f1 | grep -v default |
         while read -r ws; do
             ws_dir="$base_dir/$root_without_prefix-$ws"
