@@ -1,0 +1,12 @@
+#!/bin/sh
+
+set -e
+
+base="$1"
+
+if [ -z "$1" ]; then
+	base="$(git symbolic-ref --short refs/remotes/origin/HEAD | sed 's@^origin/@@')"
+    echo Rebasing onto "$base"
+fi
+
+jj git fetch && jj rebase -d "$base"
