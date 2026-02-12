@@ -2,4 +2,6 @@
 
 set -e
 
-jj log --template='bookmarks++"\n"' --no-graph | grep -vE '^$'| grep -v main | sed 's|\*$||' | fzf -m | xargs -n1 jj rebase -d main -b
+jj log --template='bookmarks++"\n"' --no-graph |
+    grep -vE '^$' | grep -v main | sed 's|\*$||' |
+    fzf -m | xargs -n1 jj rebase -d main -b
