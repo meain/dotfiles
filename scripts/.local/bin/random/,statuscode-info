@@ -2,7 +2,8 @@
 
 set -e
 
-find "$DATAFILES_PATH"/statuscodes/ -type f |
-	sort | xargs -n1 basename |
-	,picker --preview "cat $DATAFILES_PATH/statuscodes/{}" |
-	xargs -I{} cat "$DATAFILES_PATH/statuscodes/{}"
+# find "$DATAFILES_PATH"/statuscodes/ -maxdepth 1 -type f |
+#     sort | xargs -n1 basename |
+ls "$DATAFILES_PATH"/statuscodes/ | # find would be more "correct", but is way slower
+    ,picker --preview "cat $DATAFILES_PATH/statuscodes/{}" |
+    xargs -I{} cat "$DATAFILES_PATH/statuscodes/{}"
