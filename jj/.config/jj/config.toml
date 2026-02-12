@@ -11,6 +11,7 @@ diff-editor = ":builtin"
 diff-formatter = ":git"
 # log-synthetic-elided-nodes = true # NOTE: what is this?
 # graph.style = "square"
+revsets-use-glob-by-default=true # just to make things silent
 
 [colors]
 "diff removed token" = { underline = false }
@@ -18,7 +19,7 @@ diff-formatter = ":git"
 
 [revset-aliases]
 "stack(r)" = "r | ancestors(descendants(immutable_heads()..r), 2)"
-"mine" = "remote_bookmarks() & (mine() | committer('mail@meain.io') | bookmarks('main') | bookmarks('master'))"
+"mine" = "remote_bookmarks() & (mine() | committer('exact:mail@meain.io') | bookmarks('main') | bookmarks('master'))"
 'closest_bookmark(to)' = 'heads(::to & bookmarks())'
 'user(x)' = 'author(x) | committer(x)'
 'unpushed(x)' = '::x & ~reachable(::x, remote_bookmarks())'
@@ -80,6 +81,7 @@ concat(
 'in_branch(commit)' = 'commit.contained_in("immutable_heads()..bookmarks()")'
 
 # Refer to jj/cli/src/config/templates.toml
+# TODO(meain): might have to change conflict to conflicted
 personal_log_oneline = '''
 if(root,
   format_root_commit(self),
