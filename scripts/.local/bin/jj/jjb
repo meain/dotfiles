@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -e
+
+revision="@"
+if  echo "$1" | grep -q '^,[^ ]'; then
+    revision="${1#,}"
+    shift
+fi
+
+jj bookmark set -r "$revision" "meain/$1"
