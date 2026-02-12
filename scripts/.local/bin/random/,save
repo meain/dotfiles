@@ -1,0 +1,92 @@
+#!/bin/sh
+
+set -e
+
+url="$1"
+dir="$HOME/dev/src/notebook"
+
+
+generate_summary(){
+    # Generate summary using AI via esa CLI
+    title="$(jq -r '.title' "$dir/$1.json")"
+    url="$(jq -r '.url' "$dir/$1.json")"
+
+    SUMMARY_PROMPT="Summarize the webpage clearly and concisely.
+
+    Title: $title
+    URL: $url
+
+    * Start with a one line summary
+    * Capture the main purpose and key takeaways
+    * Include important facts, steps, arguments, or conclusions
+    * Omit marketing fluff, repetition, and minor details
+    * Preserve technical accuracy and context
+    * Use short paragraphs or bullet points where appropriate
+
+    Target length: ~150–250 words.
+
+    **Optional tweak (apply if relevant):**
+    * Assume the reader is technically competent; avoid basic explanations unless essential
+    * Or: write as an executive summary / notes-style bullets / TL;DR
+
+    NOTE: Do not any additional headers like 'Here is the summary'."
+    esa "$SUMMARY_PROMPT"  <"$dir/$1.md" >"$dir/$1.summary"
+}
+
+save_url(){
+    # First pull the page into a temp location
+    tmpfile=$(mktemp)
+    printf "Pulling page...\r"
+    curl -s "$url" > "$tmpfile"
+    printf "\e[2K\r"
+
+    # Get the title using pup to be used as filename (need to escape)
+    title=$(pup 'title text{}' <"$tmpfile")
+    escaped=$(echo "$title" | sed 's/ /_/g' | sed 's/[^a-zA-Z0-9_]//g')
+
+    # Create the directory if it doesn't exist
+    mkdir -p "$dir"
+
+    # Move the file to the directory with the escaped as the filename
+    html2markdown <"$tmpfile" >"$dir/$escaped.md"
+
+    # Save metadata into json file
+    echo "{\"url\": \"$url\", \"title\": \"$title\", \"date\": \"$(date +%Y-%m-%d)\"}" > "$dir/$escaped.json"
+
+    # Generate summary using AI via esa CLI
+    printf "Generating summary...\r"
+    generate_summary "$escaped"
+    printf "\e[2K\r"
+
+    # Commit via git (keep in mind that we are not in that directory)
+    git -C "$dir" add "$escaped.md" "$escaped.json" "$escaped.summary"
+    git -C "$dir" commit -m "Add $title"
+}
+
+# If url does not start with http, then perform a search using rg and show urls.
+# The url can be fetched from the corresponding json file and the search is to
+# be performed only on te md file.
+if [ "$url" = "resummarize" ]; then
+    # Resummarize all pages using AI via esa CLI
+    total=$(ls "$dir"/*.md | wc -l)
+    i=1
+    for file in "$dir"/*.md; do
+        filename=$(basename "$file" | sed 's/\.md$//')
+        title=$(jq -r '.title' "$dir/$filename.json")
+        printf "Generating summary for page [%d/%d]..." "$((i++))" "$total"
+        generate_summary "$filename"
+        printf "\e[2K\r"
+    done
+elif ! echo "$url" | grep -q '^http'; then
+    rg -S "$url" "$dir"/*.md --files-with-matches |
+    while read -r file; do
+        filename=$(basename "$file" | sed 's/\.md$//')
+        title=$(jq -r '.title' "$dir/$filename.json")
+        url_val=$(jq -r '.url' "$dir/$filename.json")
+        echo "$title~$url_val~$dir/$filename.summary" # using ~ is kinda hacky but seems to work well enough
+    done |
+    fzf -m --delimiter='~' --with-nth=1 --preview 'cat {3}' --preview-window=right:70%:wrap |
+    awk -F'~' '{print $2}'
+else
+    save_url
+fi
