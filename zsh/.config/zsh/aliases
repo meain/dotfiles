@@ -13,7 +13,7 @@ alias mkdir='mkdir -p'
 alias clear="tput clear"
 alias clera='clear'
 alias clea='clear'
-alias tclear='tmux clear-history'
+alias tclear='clear && tmux clear-history'
 alias chmox='chmod +x'
 alias ls='lsd'
 alias l='ls'
@@ -44,6 +44,7 @@ alias sbnoah="noah -o ~sbdb/Resources"
 alias acti="source .venv/bin/activate"
 alias scratch="$EDITOR /tmp/scratch-$(date +%s)"
 alias ,remote-work="ssh $EXPERIMENT_VM"
+alias s=",save"
 
 # agents
 alias aw=",agent-workspace"
@@ -95,7 +96,7 @@ alias jpua='jj git push --all'
 alias jsk='jj squash'
 alias jf='jj git fetch'
 alias jr='jj rebase -d'
-alias jfr='jj git fetch && jj rebase -d'
+alias jfr=',jfr'
 alias jb='jj bookmark set'
 alias je='jj edit'
 alias jj-squash-multi="jj stack | fzf -m | cut -d' ' -f3 | xargs -n1 jj squash -r"
