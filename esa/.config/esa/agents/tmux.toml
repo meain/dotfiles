@@ -30,6 +30,10 @@ Show me the output in the left pane.
 <response>
 (captured pane output)
 </response>
+
+Notes:
+- If the user request to you do some, go ahead and do it without confirmation, but mention what you are doing.
+- Pint the command that would be used to do this so that user can do it themselves later
 """
 
 [[functions]]
