@@ -74,7 +74,13 @@ save_url(){
 # If url does not start with http, then perform a search using rg and show urls.
 # The url can be fetched from the corresponding json file and the search is to
 # be performed only on te md file.
-if [ "$url" = "resummarize" ]; then
+if [ "$url" = "ai" ]; then
+    cd "$dir"
+    # NOTE: Do not quote $ESA_ARGS
+    shift && echo "$*" | esa $ESA_ARGS "Refer the local markdown files in this directory and answer the user query
+- Perform a deep search before you answer any queries
+- Only answer based on the local files available."
+elif [ "$url" = "resummarize" ]; then
     # Resummarize all pages using AI via esa CLI
     total=$(ls "$dir"/*.md | wc -l)
     i=1
