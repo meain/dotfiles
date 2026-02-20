@@ -11,12 +11,18 @@ if ! jj diff | grep -q .; then
     cur="@-"
 fi
 
+echo "Using Claude Sonnet 4.5"
+echo
+echo Reviewing the following commits:
 # By default, diff from last bookmark to now
-diff="$(jj diff -r "latest(bookmarks() & ::$cur-)..$cur")"
 if [ -n "$1" ]; then
     diff="$(jj show $1)"
+    jj log -r "$1" --no-graph
+else
+    diff="$(jj diff -r "latest(bookmarks() & ::$cur-)..$cur")"
+    jj log -r "latest(bookmarks() & ::$cur-)..$cur" --no-graph
 fi
 
+
 REVIEW_PROMPT="$(cat "$HOME/.config/datafiles/prompts/user/review-diff.md")"
-echo "Using Claude Sonnet 4"
 echo "$diff" | esa -m sonnet -- +coder "$REVIEW_PROMPT"
