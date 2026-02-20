@@ -45,6 +45,7 @@ alias acti="source .venv/bin/activate"
 alias scratch="$EDITOR /tmp/scratch-$(date +%s)"
 alias ,remote-work="ssh $EXPERIMENT_VM"
 alias s=",save"
+alias pwdp="pwd|p"
 
 # agents
 alias aw=",agent-workspace"
