@@ -50,6 +50,14 @@ save_url(){
     # Move the file to the directory with the escaped as the filename
     html2markdown <"$tmpfile" >"$dir/$escaped.md"
 
+    # If the markdown file is empty, then delete it and exit
+    # Only newlines does not count
+    if [ -z "$(grep -v '^$' "$dir/$escaped.md")" ]; then
+        rm "$dir/$escaped.md"
+        echo "Failed to pull the page or the page is empty."
+        exit 1
+    fi
+
     # Save metadata into json file
     echo "{\"url\": \"$url\", \"title\": \"$title\", \"date\": \"$(date +%Y-%m-%d)\"}" > "$dir/$escaped.json"
 
