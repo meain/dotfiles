@@ -33,6 +33,7 @@ alias lk=,let-me-know
 alias um=,urlmap
 alias apr=,auto-pr
 alias asi=,voice-assistant
+alias mdh=,markdown-to-html
 
 # random
 alias wk="watch kubectl"
@@ -46,6 +47,7 @@ alias scratch="$EDITOR /tmp/scratch-$(date +%s)"
 alias ,remote-work="ssh $EXPERIMENT_VM"
 alias s=",save"
 alias pwdp="pwd|p"
+alias research="cd $HOME/dev/docs/research && opencode"
 
 # agents
 alias aw=",agent-workspace"
