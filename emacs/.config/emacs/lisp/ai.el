@@ -7,6 +7,7 @@
 
 ;;; Code:
 ;; Copilot
+(use-package track-changes :ensure t) ;; dependency for copilot
 (use-package copilot
   :defer t
   :after jsonrpc

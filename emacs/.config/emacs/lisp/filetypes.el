@@ -25,7 +25,7 @@
 (use-package lua-mode :ensure t :defer t)
 (use-package web-mode :ensure t :defer t)
 (use-package jinja2-mode :ensure t :defer t)
-(use-package config-general-mode :ensure t :defer t :mode "/\\.env")
+;; (use-package config-general-mode :ensure t :defer t :mode "/\\.env")
 (use-package vimrc-mode :ensure t :defer t)
 (use-package sxhkdrc-mode :ensure t :defer t)
 (use-package edit-indirect :ensure t)

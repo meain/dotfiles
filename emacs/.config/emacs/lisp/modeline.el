@@ -6,7 +6,7 @@
 ;;; Code:
 ;; Better modeline
 (use-package mode-line-idle
-  :ensure (:type git :host codeberg :repo "ideasman42/emacs-mode-line-idle")
+  :ensure (:type git :host github :repo "emacsmirror/mode-line-idle")
   :commands (mode-line-idle))
 (defvar meain/modeline-project-color
   '(:eval
