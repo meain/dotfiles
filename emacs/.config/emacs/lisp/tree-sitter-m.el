@@ -28,13 +28,14 @@
   ;; You can find out the function by running "strings" in the so or dylib
   (setq treesit-load-name-override-list '((go-mod "libtree-sitter-go-mod"  "tree_sitter_gomod")))
 
+  :init
   (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
   (add-to-list 'auto-mode-alist '("\\.js\\'" . js-ts-mode))
   (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
   (add-to-list 'auto-mode-alist '("\\.go\\'" . go-ts-mode))
 
   (add-to-list 'auto-mode-alist '("\\.yaml\\'" . yaml-ts-mode))
-  (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-ts-modmodee))
+  (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-ts-mode))
   (add-to-list 'auto-mode-alist '("\\.json\\'" . json-ts-mode))
   ;; (add-to-list 'auto-mode-alist '("\\.nix\\'" . nix-mode))
 
