@@ -13,11 +13,12 @@
     masApps = { }; # from mac app store
     taps = [
       # "railwaycat/emacsmacport"
-      # "d12frosted/emacs-plus"
+      "d12frosted/emacs-plus"
       "zackelia/formulae" # for bclm
       "keith/formulae" # for reminders-cli
     ];
     brews = [
+      "emacs-plus-app"
       # Switching away from these builds onto installing the builds from jimeh/build-emacs-for-macos
       # emacs-mac has not been updated in a long time
       # {
@@ -47,8 +48,6 @@
       "slack"
       "signal"
 
-      # "emacs" # also emacs@pretest
-      # "emacs-app" # ???
       # "logseq"
       "obsidian"
       "ollama"
