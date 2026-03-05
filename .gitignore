@@ -50,3 +50,4 @@ zsh/.config/zsh/.zsh_sessions/
 emacs/.config/emacs/forge-database.sqlite
 /emacs/.config/emacs/.org-id-locations
 emacs/.config/emacs/tramp
+/jj/.config/jj/repos/
