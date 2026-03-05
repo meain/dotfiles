@@ -3,7 +3,7 @@
 set -e
 
 if [ "$1" = push ]; then
-    cd "$HOME/dev/src/howtos/" || exit 1
+    cd "$HOME/dev/docs/howtos/" || exit 1
     git push
     exit 0
 fi
@@ -14,6 +14,6 @@ if [ -t 0 ]; then
 else
     esa +howto Store this content in howtos. "$*"
 
-    cd "$HOME/dev/src/howtos/" || exit 1
+    cd "$HOME/dev/docs/howtos/" || exit 1
     git add . && git commit -m "Automatic update"
 fi

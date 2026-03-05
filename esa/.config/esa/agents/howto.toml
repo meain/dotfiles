@@ -80,13 +80,13 @@ Would you like to provide the steps so I can create a guide? Just share the conf
 [[functions]]
 name = "list_files"
 description = "List all files in the how-to directory"
-command = "ls -1 /Users/meain/dev/src/howtos"
+command = "ls -1 /Users/meain/dev/docs/howtos"
 safe = true
 
 [[functions]]
 name = "write_file"
 description = "Create or overwrite a how-to file with the provided content"
-command = "tee /Users/meain/dev/src/howtos/{{file}}"
+command = "tee /Users/meain/dev/docs/howtos/{{file}}"
 stdin = "{{content}}"
 safe = true
 
@@ -105,7 +105,7 @@ required = true
 [[functions]]
 name = "read_file"
 description = "Read and return the complete contents of a how-to file"
-command = "cat /Users/meain/dev/src/howtos/{{file}}"
+command = "cat /Users/meain/dev/docs/howtos/{{file}}"
 safe = true
 
 [[functions.parameters]]
@@ -117,7 +117,7 @@ required = true
 [[functions]]
 name = "search_file"
 description = "Search for text patterns across all how-to files using grep. Returns matching lines with optional surrounding context."
-command = "grep {{context}} -i -r {{pattern}} /Users/meain/dev/src/howtos/ 2>/dev/null"
+command = "grep {{context}} -i -r {{pattern}} /Users/meain/dev/docs/howtos/ 2>/dev/null"
 safe = true
 
 [[functions.parameters]]
