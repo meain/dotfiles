@@ -32,9 +32,11 @@
   haiku = "copilot/claude-haiku-4.5"
   grok = "copilot/grok-code-fast-1"
   ha = "openrouter/openrouter/horizon-alpha"
+  son="anthropic/claude-sonnet-4-5"
+  opus="anthropic/claude-opus-4-6"
 
 [settings]
   show_commands=true
   # default_model="mini"
-  default_model="copilot/gpt-4.1"
+  default_model="anthropic/claude-sonnet-4-5"
 
