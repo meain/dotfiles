@@ -23,7 +23,7 @@ pandoc --no-highlight \
     --template "$DATAFILES_PATH/pandoc-github-template.html" \
     --output - -f gfm -t html5 \
     --metadata title="$(basename "$input")" "$input" |
-    sed -z 's|<pre class="mermaid"><code>\([^<]*\)</code></pre>|<div class="mermaid">\1</div>|g' >"$outfile"
+    perl -0777 -pe 's|<pre class="mermaid"><code>([^<]*)</code></pre>|<div class="mermaid">$1</div>|g' >"$outfile"
 # we can safely use `<` in sed as pandoc will convert < in code to &le
 
 [ -z "$NO_OPEN" ] && open "$outfile"
