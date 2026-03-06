@@ -5,4 +5,4 @@ set -e
 mkdir -p '/tmp/markdownpdfrenders'
 filename="/tmp/markdownpdfrenders/$(date '+%s').pdf"
 
-pandoc "$1" -t ms --pdf-engine-opt=-p -o "$filename" && open "$filename"
+pandoc ${1:+"$1"} -f gfm -t ms --pdf-engine-opt=-p -o "$filename" && open "$filename"
