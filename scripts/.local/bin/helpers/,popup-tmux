@@ -8,7 +8,7 @@ if echo "$CURRENT_PANE" | grep -q '^popup.*'; then
 else
     case "$1" in
     "single")
-        tmux popup -d '#{pane_current_path}' -x100% -y0% -w50% -h50% -E "tmux attach -t 'popup-$CURRENT_PANE' || tmux new -s 'popup-$CURRENT_PANE'" || true
+        tmux popup -d "$HOME" -w90% -h90% -E "tmux attach -t 'popup-$CURRENT_PANE' || tmux new -s 'popup-$CURRENT_PANE'" || true
         ;;
     "folder")
         # Get current folder path from tmux pane, defaulting to git root if available
