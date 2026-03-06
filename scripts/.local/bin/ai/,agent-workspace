@@ -27,14 +27,14 @@ fi
 name="$1" && shift
 base_dir="$HOME/worksapces"
 mkdir -p "$base_dir"
-root="$(jj git root | sed 's|/.git$||')"
+root="$(jj workspace root)"
 root_without_prefix="${root#"$HOME/dev/"}"
 ws_dir="$base_dir/$root_without_prefix-$name"
 prev_commit="$(jj log --revisions @- --limit 1 --template=commit_id --no-graph)"
 
 copy_from_base_if_exists() {
     if [ -e "$root/$1" ]; then
-        if ! git ls-files --error-unmatch "$root/$1" >/dev/null 2>&1; then
+        if ! jj file list "$1" 2>/dev/null | grep -qx "$1"; then
             mkdir -p "$(dirname "$ws_dir/$1")"
             cp -r "$root/$1" "$ws_dir/$1"
         fi
@@ -43,7 +43,7 @@ copy_from_base_if_exists() {
 
 link_from_base_if_exists() {
     if [ -e "$root/$1" ]; then
-        if ! git ls-files --error-unmatch "$root/$1" >/dev/null 2>&1; then
+        if ! jj file list "$1" 2>/dev/null | grep -qx "$1"; then
             mkdir -p "$(dirname "$ws_dir/$1")"
             rm -rf "$ws_dir/$1"
             ln -s "$root/$1" "$ws_dir/$1"
