@@ -2,7 +2,7 @@
 
 set -e
 
-base="$(git rev-parse --show-toplevel 2>/dev/null)"
+base="$(reporoot 2>/dev/null)"
 
 get_changes() {
     if [ -d "$base/.jj" ]; then

@@ -14,7 +14,7 @@ else
         # Get current folder path from tmux pane, defaulting to git root if available
         FOLDER="$(
             cd "$(tmux display-message -p "#{pane_current_path}")" &&
-                git rev-parse --show-toplevel 2>/dev/null ||
+                reporoot 2>/dev/null ||
                 tmux display-message -p "#{pane_current_path}"
         )"
         FOLDER_NAME="$(basename "$FOLDER")"

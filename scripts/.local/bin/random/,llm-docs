@@ -2,7 +2,7 @@
 
 set -e
 
-cd "$(git rev-parse --show-toplevel)"
+cd "$(reporoot)"
 mkdir -p .llmdocs
 
 LLM_DOCS_DIR="$HOME/dev/src/llmdocs"

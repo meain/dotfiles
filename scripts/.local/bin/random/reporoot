@@ -1,0 +1,6 @@
+#!/bin/sh
+
+set -e
+
+# same as the function, but easier for other scripts to find
+jj workspace root 2> /dev/null || git rev-parse --show-toplevel
