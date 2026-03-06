@@ -40,55 +40,58 @@
         (yank))))
   (evil-define-key 'visual markdown-mode-map "p" 'meain/paste-after-or-create-link)
 
-(defun meain/markdown-linkify-thing (start end)
-  "Search for and insert a markdown link at START to END or at point.
+  (defun meain/markdown-linkify-thing (start end)
+    "Search for and insert a markdown link at START to END or at point.
 Uses 'ddgr' web search to look up a URL and insert a formatted markdown link."
-  (interactive "r")
-  (let* ((region-active (use-region-p))
-         (thing-bounds (if region-active
-                           (cons start end)
-                         (bounds-of-thing-at-point 'symbol)))
-         (thing-text (if region-active
-                         (buffer-substring-no-properties start end)
-                       (buffer-substring-no-properties (car thing-bounds) (cdr thing-bounds))))
-         (search-term (read-string "Search term: " thing-text))
-         (json-object-type 'plist)
-         (json-array-type 'list)
-         (search-cmd (format "ddgr --noua --json \"%s\"" search-term))
-         (json-result (ignore-errors (shell-command-to-string search-cmd)))
-         (results (condition-case nil
-                      (json-read-from-string json-result)
-                    (error nil))))
-    (if (and results (listp results) (> (length results) 0))
-        (let* ((candidates (mapcar (lambda (entry)
-                                     (cons (format "%s :: %s"
-                                                   (plist-get entry :url)
-                                                   (plist-get entry :title))
-                                           (plist-get entry :url)))
-                                   results))
-               (choose (completing-read
-                        (format "Choose URL for [%s]: " thing-text)
-                        candidates nil t))
-               (chosen-url (cdr (assoc choose candidates))))
-          (save-excursion
-            (delete-region (car thing-bounds) (cdr thing-bounds))
-            (insert (format "[%s](%s)" thing-text chosen-url))))
-      (user-error "No search results or API error for %s" search-term))))
+    (interactive "r")
+    (let* ((region-active (use-region-p))
+           (thing-bounds (if region-active
+                             (cons start end)
+                           (bounds-of-thing-at-point 'symbol)))
+           (thing-text (if region-active
+                           (buffer-substring-no-properties start end)
+                         (buffer-substring-no-properties (car thing-bounds) (cdr thing-bounds))))
+           (search-term (read-string "Search term: " thing-text))
+           (json-object-type 'plist)
+           (json-array-type 'list)
+           (search-cmd (format "ddgr --noua --json \"%s\"" search-term))
+           (json-result (ignore-errors (shell-command-to-string search-cmd)))
+           (results (condition-case nil
+                        (json-read-from-string json-result)
+                      (error nil))))
+      (if (and results (listp results) (> (length results) 0))
+          (let* ((candidates (mapcar (lambda (entry)
+                                       (cons (format "%s :: %s"
+                                                     (plist-get entry :url)
+                                                     (plist-get entry :title))
+                                             (plist-get entry :url)))
+                                     results))
+                 (choose (completing-read
+                          (format "Choose URL for [%s]: " thing-text)
+                          candidates nil t))
+                 (chosen-url (cdr (assoc choose candidates))))
+            (save-excursion
+              (delete-region (car thing-bounds) (cdr thing-bounds))
+              (insert (format "[%s](%s)" thing-text chosen-url))))
+        (user-error "No search results or API error for %s" search-term))))
 
-  ;; Generate pdf from markdown document
   (defun meain/markdown-pdf ()
     "Generate pdf from markdown document."
     (interactive)
-    (message "Generating pdf of %s. Just give it a moment.." (buffer-file-name))
-    (start-process-shell-command "*markdown-pdf*" "*markdown-pdf*"
-                                 (concat ",markdown-to-pdf " (buffer-file-name))))
+    (if (not (buffer-file-name))
+        (user-error "No file associated with current buffer")
+      (message "Generating pdf of %s. Just give it a moment.." (buffer-file-name))
+      (start-process-shell-command "*markdown-pdf*" "*markdown-pdf*"
+                                   (concat ",markdown-to-pdf '" (buffer-file-name) "'"))))
 
   (defun meain/markdown-html ()
-    "Generate pdf from markdown document."
+    "Generate html from markdown document."
     (interactive)
-    (message "Generating markdown for %s. Just give it a moment.." (buffer-file-name))
-    (start-process-shell-command "*markdown-html*" "*markdown-html*"
-                                 (concat ",markdown-to-html " (buffer-file-name)))))
+    (if (not (buffer-file-name))
+        (user-error "No file associated with current buffer")
+      (message "Generating markdown for %s. Just give it a moment.." (buffer-file-name))
+      (start-process-shell-command "*markdown-html*" "*markdown-html*"
+                                   (concat ",markdown-to-html '" (buffer-file-name) "'")))))
 
 (use-package emacs
   :config
