@@ -47,7 +47,8 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
 (defvar groq-api-key (get-api-key "groq/apikey"))
 (defvar openrouter-api-key (get-api-key "openrouter/apikey"))
 (defvar openai-api-key (get-api-key "openai/apikey"))
-(defvar anthropic-api-key (get-api-key "anthropic/apikey"))
+;; (defvar anthropic-api-key (get-api-key "anthropic/apikey"))
+(defvar anthropic-api-key (getenv "ANTHROPIC_API_KEY"))
 (defvar github-models-api-key (get-api-key "github-models/apikey"))
 
 (defun meain/cmd-head (command)
