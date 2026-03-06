@@ -52,3 +52,4 @@ emacs/.config/emacs/forge-database.sqlite
 emacs/.config/emacs/tramp
 /jj/.config/jj/repos/
 /emacs/.config/emacs/agent
+.agent-shell
