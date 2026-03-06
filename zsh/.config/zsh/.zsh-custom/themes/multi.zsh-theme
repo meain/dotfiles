@@ -11,8 +11,13 @@ colors
 INSERT_COLOR="%{$reset_color%}"
 NORMAL_COLOR="%{%F{39}%}"
 
+function sroot(){
+    jj workspace root 2>/dev/null ||
+        git rev-parse --show-toplevel
+}
+
 function dir_from_base() {
-    root="$(git rev-parse --show-toplevel 2>/dev/null | xargs dirname 2>/dev/null)"
+    root="$(sroot 2>/dev/null | xargs dirname 2>/dev/null)"
     if [ -n "$root" ]; then
         echo "$(pwd)" | sed "s|$root||;s|^/||"
     else
@@ -27,29 +32,29 @@ function virtualenv_info {
 }
 
 function custom_additions() {
-    if git rev-parse --show-toplevel &>/dev/null; then
-        pushd "$(git rev-parse --show-toplevel 2>/dev/null)" >/dev/null
+    if sroot &>/dev/null; then
+        pushd "$(sroot 2>/dev/null)" >/dev/null
         if [ -f .mscripts/shell-additions ]; then
             .mscripts/shell-additions
         fi
     fi
 }
 
-function precmd() {
-    function asyncp() {
-        # Alternate: "%(?..%F{red}[%?] )"
-        printf "\n%s[%s] %s%s%s\n%s " \
-            '%F{white}' \
-            "$(dir_from_base)" \
-            "$(virtualenv_info)" \
-            "$(custom_additions)" \
-            "%{$reset_color%}" \
-            "%(?.✨.💥️)" \
-            > "/tmp/zsh_lprompt_$$"
-        kill -s USR1 $$  # signal parent
-    }
+function _multi_theme_asyncp() {
+    # Alternate: "%(?..%F{red}[%?] )"
+    printf "\n%s[%s] %s%s%s\n%s " \
+        '%F{white}' \
+        "$(dir_from_base)" \
+        "$(virtualenv_info)" \
+        "$(custom_additions)" \
+        "%{$reset_color%}" \
+        "%(?.✨.💥️)" \
+        > "/tmp/zsh_lprompt_$$"
+    kill -s USR1 $$  # signal parent
+}
 
-    asyncp &!
+function _multi_theme_precmd() {
+    _multi_theme_asyncp &!
 
     if [[ -n $CMD_START_DATE ]]; then
         CMD_ELAPSED_TIME=$(($(date +%s) - $CMD_START_DATE))
@@ -60,6 +65,9 @@ function precmd() {
         fi
     fi
 }
+
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd _multi_theme_precmd
 
 function TRAPUSR1() {
     PS1="$(cat /tmp/zsh_lprompt_$$)" # read from temp file ( uses non breaking space )
