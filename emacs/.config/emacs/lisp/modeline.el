@@ -38,7 +38,9 @@
   (meain/modeline-segment
    `(or
      (meain/jj-current-workspace)
-     (when (boundp 'vc-mode) (concat " @" (substring vc-mode 5))))))
+     (when (and (boundp 'vc-mode)
+                (length> vc-mode 0))
+       (concat " @" (substring vc-mode 5))))))
 (defvar meain/modeline-yap
   (meain/modeline-segment
    `(when (or (boundp 'gptel-model) (boundp 'yap-model))
