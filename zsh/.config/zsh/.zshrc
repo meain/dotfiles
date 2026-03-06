@@ -47,6 +47,17 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=244"
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 ZSH_AUTOSUGGEST_USE_ASYNC="true"
 
+# core utility functions
+reporoot() {
+    jj workspace root 2>/dev/null ||
+        git rev-parse --show-toplevel 2>/dev/null
+}
+
+gitdir() {
+    jj git root 2>/dev/null || echo ".git"
+}
+
+
 # sourcing plugins & themes
 source "$ZDOTDIR/.zsh-custom/themes/multi.zsh-theme"
 source "$ZDOTDIR/.zsh-custom/plugins/z/z.sh"
@@ -132,10 +143,14 @@ if [[ ${chpwd_functions[(r)list_all]} != "list_all" ]];then
   chpwd_functions=(${chpwd_functions[@]} "list_all")
 fi
 
+# set it when shell starts
+export GIT_DIR="$(gitdir)"
+
 # set repo root hash
 set_repo_root() {
   emulate -L zsh
-  hash -d r="$(git rev-parse --show-toplevel 2>/dev/null)" || true
+    export GIT_DIR="$(gitdir)"
+    hash -d r="$(reporoot)" || true
 }
 if [[ ${chpwd_functions[(r)set_repo_root]} != "set_repo_root" ]];then
   chpwd_functions=(${chpwd_functions[@]} "set_repo_root")

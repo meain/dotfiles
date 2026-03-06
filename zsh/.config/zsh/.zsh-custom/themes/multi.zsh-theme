@@ -11,13 +11,8 @@ colors
 INSERT_COLOR="%{$reset_color%}"
 NORMAL_COLOR="%{%F{39}%}"
 
-function sroot(){
-    jj workspace root 2>/dev/null ||
-        git rev-parse --show-toplevel
-}
-
 function dir_from_base() {
-    root="$(sroot 2>/dev/null | xargs dirname 2>/dev/null)"
+    root="$(reporoot 2>/dev/null | xargs dirname 2>/dev/null)"
     if [ -n "$root" ]; then
         echo "$(pwd)" | sed "s|$root||;s|^/||"
     else
@@ -32,8 +27,8 @@ function virtualenv_info {
 }
 
 function custom_additions() {
-    if sroot &>/dev/null; then
-        pushd "$(sroot 2>/dev/null)" >/dev/null
+    if reporoot &>/dev/null; then
+        pushd "$(reporoot 2>/dev/null)" >/dev/null
         if [ -f .mscripts/shell-additions ]; then
             .mscripts/shell-additions
         fi

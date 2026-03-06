@@ -1,12 +1,6 @@
 #! /bin/sh
 
 # Functions that need cd, exit or source
-
-reporoot() {
-    jj workspace root 2>/dev/null ||
-        git rev-parse --show-toplevel
-}
-
 tmp() {
     base="/tmp/workspaces"
     repo=""
