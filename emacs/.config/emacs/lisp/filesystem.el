@@ -25,14 +25,15 @@
   (add-hook 'dired-mode-hook (lambda ()
                                (setq imenu-generic-expression '((nil "\s+.+$" 0)))))
 
-  ;; TODO: make it work with directories
-  (defun dired-dim-git-ignores ()
-    "Dim out .gitignore contents"
-    (when-let (((require 'vc))
-               (ignores (magit-ignored-files))
-               (exts (make-local-variable 'completion-ignored-extensions)))
-      (dolist (item ignores) (add-to-list exts item))))
-  (add-hook 'dired-mode-hook #'dired-dim-git-ignores))
+  ;; ;; TODO: make it work with directories
+  ;; (defun dired-dim-git-ignores ()
+  ;;   "Dim out .gitignore contents"
+  ;;   (when-let (((require 'vc))
+  ;;              ((require 'magit))
+  ;;              (ignores (magit-ignored-files))
+  ;;              (exts (make-local-variable 'completion-ignored-extensions)))
+  ;;     (dolist (item ignores) (add-to-list exts item))))
+  ;; (add-hook 'dired-mode-hook #'dired-dim-git-ignores))
 
 (use-package dired-x
   :after dired
