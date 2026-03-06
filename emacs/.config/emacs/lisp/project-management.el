@@ -9,8 +9,25 @@
   :after (evil evil-leader)
   :commands (project-switch-project project-find-file project-roots project-current)
   :config
-  (setq project-vc-ignores '("target/" "node_modules/")) ; default ignores
+  (add-to-list 'project-vc-extra-root-markers ".jj")
+  (setq project-vc-ignores '("target/" "node_modules/" ".jj/")) ; default ignores
   (setq project-switch-commands 'project-find-file) ; start `project-find-file' by default
+
+  ;; Redefining project-files for jj repos. `project' by default uses
+  ;; `git ls-files` which does not work if are not colocating the git
+  ;; directory. This will fallback to fd in case we are in a jj only
+  ;; repository.
+  (cl-defmethod project-files ((project (head vc)) &optional dirs)
+    (let* ((root (project-root project))
+           (default-directory root))
+      (if (file-directory-p (expand-file-name ".jj" root))
+          (split-string
+           (shell-command-to-string
+            "fd --type f --hidden \
+             --exclude .jj \
+             --exclude .git")
+           "\n" t)
+        (cl-call-next-method))))
 
   ;; Find root for go projects without vcs
   (defun meain/project-try-explicit (dir)
