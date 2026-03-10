@@ -34,32 +34,40 @@
                         (line-number-at-pos))))))
 
   (defun meain/github-url (&optional use-master)
-    "Link to the currently selected code in GitHub.  Pass `USE-MASTER' to use master branch.
-If region is active, link covers the region."
+    "Link to the currently selected code in GitHub.  Pass `USE-MASTER'
+to use master branch.  If region is active, link covers the region."
     (interactive "P")
     (save-restriction
       (widen)
-      ;; Check if the commit is even available upstream and
-      ;; only generate a link if it is.
-      (unless use-master
-        (when (< (length
-                  (shell-command-to-string
-                   (concat
-                    "git branch -r --contains "
-                    (meain/cmd-head "git log --format='%H' -n 1"))))
-                 1)
-          (user-error "Current commit not available upstream")))
-
-      (let* ((git-url (replace-regexp-in-string
+      (let* ((is-jj (not (string-empty-p (shell-command-to-string "jj root 2>/dev/null"))))
+             (project-root (if is-jj
+                               (string-trim (shell-command-to-string "jj root"))
+                             (car (project-roots (project-current)))))
+             (git-url (replace-regexp-in-string
                        "^git@github.com:\\(.*\\)\\.git$" "https://github.com/\\1"
-                       (meain/cmd-head "git config --get remote.origin.url")))
-             (git-ref (if use-master
+                       (if is-jj
+                           (string-trim (shell-command-to-string "jj config get --repo git.fetch 2>/dev/null || jj git remote list | awk '/origin/ {print $2}'"))
+                         (meain/cmd-head "git config --get remote.origin.url"))))
+             (git-ref (cond
+                       (use-master
+                        (if is-jj
+                            (string-trim (shell-command-to-string "jj log -r 'trunk()' --no-graph -T 'bookmarks'"))
                           (replace-regexp-in-string
                            "^origin/" ""
-                           (meain/cmd-head "git symbolic-ref --short refs/remotes/origin/HEAD"))
-                        (meain/cmd-head "git log --format='%H' -n 1")))
+                           (meain/cmd-head "git symbolic-ref --short refs/remotes/origin/HEAD"))))
+                       (is-jj
+                        (string-trim (shell-command-to-string "jj log -r @ --no-graph -T 'commit_id'")))
+                       (t
+                        ;; Check if the commit is even available upstream
+                        (let ((commit (meain/cmd-head "git log --format='%H' -n 1")))
+                          (when (< (length
+                                    (shell-command-to-string
+                                     (concat "git branch -r --contains " commit)))
+                                   1)
+                            (user-error "Current commit not available upstream"))
+                          commit))))
              (file-path (file-relative-name (or buffer-file-name default-directory)
-                                            (car (project-roots (project-current)))))
+                                            project-root))
              (line-frag
               (unless (equal major-mode 'dired-mode)
                 (if (use-region-p)
