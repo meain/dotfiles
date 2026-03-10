@@ -48,6 +48,7 @@ alias ,remote-work="ssh $EXPERIMENT_VM"
 alias s=",save"
 alias pwdp="pwd|p"
 alias research="cd $HOME/dev/docs/research && opencode"
+alias gh="GIT_DIR=\$GIT_ROOT_DIR gh" # since we don't colocate git dir anymore
 
 # agents
 alias aw=",agent-workspace"

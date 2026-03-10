@@ -143,13 +143,27 @@ if [[ ${chpwd_functions[(r)list_all]} != "list_all" ]];then
   chpwd_functions=(${chpwd_functions[@]} "list_all")
 fi
 
-# set it when shell starts
-export GIT_DIR="$(gitdir)"
+# Set GIT_DIR when shell starts
+# NOTE: Setting GIT_DIR like this causes other things to fail as
+# anything that uses git within a jj directory gets its GIT_DIR set
+# without any warning. This causes things that clone stuff into cache
+# dirs inside the project to fail.
+# However I will set a GIT_ROOT_DIR just so that I can easily use it
+# in other scripts.
+# export GIT_DIR="$(gitdir)"
+export GIT_ROOT_DIR="$(gitdir)"
 
 # set repo root hash
 set_repo_root() {
   emulate -L zsh
-    export GIT_DIR="$(gitdir)"
+    # NOTE: Setting GIT_DIR like this causes other things to fail as
+    # anything that uses git within a jj directory gets its GIT_DIR
+    # set without any warning. This causes things that clone stuff
+    # into cache dirs inside the project to fail.
+    # However I will set a GIT_ROOT_DIR just so that I can easily use it
+    # in other scripts.
+    # export GIT_DIR="$(gitdir)"
+    export GIT_ROOT_DIR="$(gitdir)"
     hash -d r="$(reporoot)" || true
 }
 if [[ ${chpwd_functions[(r)set_repo_root]} != "set_repo_root" ]];then
