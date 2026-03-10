@@ -344,6 +344,7 @@ in
     # pkgs.claude-code # ai coding
     pkgs.opencode # AI coding
     pkgs.openapi-tui # TUI openapi viewer
+    pkgs.emacs-lsp-booster # lsp booster for Emacs (converts JSON to Lisp object)
 
     # pkgs.nur.repos.rycee.mozilla-addons-to-nix # package firefox addons
   ]
