@@ -55,5 +55,14 @@ Instead of `default-directory' when calling `ORIG-FN' with `ARGS'."
   "Get the first line of the given `COMMAND'."
   (car (split-string (shell-command-to-string command) "\n")))
 
+(defun meain/git_dir (&optional project)
+  "Return the git directory of the current project or `PROJECT' if given.
+The function will work with both jj and git repos.  In jj repos, use
+the jj git root command else return .git."
+    (let ((jj-root (string-trim (shell-command-to-string "jj git root 2>/dev/null"))))
+        (if (string-empty-p jj-root)
+            (concat (or project default-directory) ".git")
+        jj-root)))
+
 (provide 'utils)
 ;;; utils.el ends here
