@@ -12,6 +12,7 @@ mkdir -p "$SAVEPATH"
 BACKUP_FILES="
 .git/config:git-config
 .mscripts
+.mdocs
 shell.nix
 default.nix
 .dir-locals.el
@@ -26,6 +27,8 @@ mnotes.org
 .github/copilot-instructions.md
 OpenCode.md
 CLAUDE.md
+.claude/skills
+.claude/settings.local.json
 "
 
 # Create temporary file to store git directories
