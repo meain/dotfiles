@@ -23,7 +23,7 @@
   (define-key evil-normal-state-map (kbd "_") 'find-file)
 
   (add-hook 'dired-mode-hook (lambda ()
-                               (setq imenu-generic-expression '((nil "\s+.+$" 0)))))
+                               (setq imenu-generic-expression '((nil "\s+.+$" 0))))))
 
   ;; ;; TODO: make it work with directories
   ;; (defun dired-dim-git-ignores ()
@@ -33,7 +33,7 @@
   ;;              (ignores (magit-ignored-files))
   ;;              (exts (make-local-variable 'completion-ignored-extensions)))
   ;;     (dolist (item ignores) (add-to-list exts item))))
-  ;; (add-hook 'dired-mode-hook #'dired-dim-git-ignores))
+  ;; (add-hook 'dired-mode-hook #'dired-dim-git-ignores)
 
 (use-package dired-x
   :after dired
