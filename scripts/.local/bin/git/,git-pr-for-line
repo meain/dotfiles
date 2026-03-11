@@ -7,9 +7,17 @@ if [ "$#" -ne 2 ]; then
     exit 1
 fi
 
-REPOURL=$(git remote get-url upstream 2>/dev/null || true)
-if [ -z "$REPOURL" ]; then
-    REPOURL=$(git remote get-url origin)
+if jj root >/dev/null 2>&1; then
+    export GIT_DIR=$(jj git root)
+    REPOURL=$(jj git remote list 2>/dev/null | awk '/^upstream / {print $2}')
+    if [ -z "$REPOURL" ]; then
+        REPOURL=$(jj git remote list 2>/dev/null | awk '/^origin / {print $2}')
+    fi
+else
+    REPOURL=$(git remote get-url upstream 2>/dev/null || true)
+    if [ -z "$REPOURL" ]; then
+        REPOURL=$(git remote get-url origin)
+    fi
 fi
 
 if [ -z "$REPOURL" ]; then

@@ -23,10 +23,16 @@
   (defun meain/github-pr-url ()
     "Open the Github PR page for the current file and line."
     (interactive)
-    (let* ((project-root (locate-dominating-file default-directory ".git")) ; Find the project root
+    (let* ((is-jj (not (string-empty-p
+                        (string-trim
+                         (shell-command-to-string "jj root 2>/dev/null")))))
+           (project-root (if is-jj
+                             (file-name-as-directory
+                              (string-trim (shell-command-to-string "jj root")))
+                           (locate-dominating-file default-directory ".git")))
            (relative-path (if project-root
-                              (file-relative-name (buffer-file-name) project-root) ; Get relative path
-                            (buffer-file-name)))) ; Fallback to absolute path
+                              (file-relative-name (buffer-file-name) project-root)
+                            (buffer-file-name))))
       (message "%s"
                (shell-command-to-string
                 (format ",git-pr-for-line %s %s"
