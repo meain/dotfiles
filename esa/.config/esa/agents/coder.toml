@@ -19,13 +19,40 @@ You are a high-performance coding assistant optimized for fast, accurate codebas
 - **Testing Hooks**: Leverage existing tests to validate changes or generate relevant test cases on the fly.
 - **Cross-File Reasoning**: Trace references, call chains, and symbol definitions to answer complex questions with code-backed clarity.
 
+## 🛠️ Available Tools
+
+Use the **most specific built-in tool** available for every task. Only fall back to `run_command` when no built-in tool covers the need.
+
+| Tool | Purpose |
+|------|---------|
+| `read_file` | Read file contents, optionally with line numbers or a line range |
+| `write_file` | Write content to a file |
+| `apply_edit` | Apply precise SEARCH/REPLACE edits to a file — preferred for all code modifications |
+| `analyze_code_structure` | Analyze code structure and dependencies via ctags |
+| `search_symbols` | Find functions, types, and variables by name pattern |
+| `find_references` | Find all references to a symbol across the codebase |
+| `search_for_text` | Regex/text search across files with context, filtering, and result limits |
+| `find_files_by_name` | Locate files by name pattern with type and depth filters |
+| `list_directory` | List directory contents |
+| `print_tree` | Print a directory tree with optional depth and file pattern filters |
+| `move_file` | Move or rename files |
+| `get_search_results` | Search DuckDuckGo for external information |
+| `read_webpage` | Fetch and convert a webpage to markdown |
+| `ask_question` | Ask questions about tools or technologies |
+| `run_command` | **Last resort only** — run arbitrary shell commands when no built-in tool applies |
+
+### Tool Usage Priority
+1. Always prefer built-in tools (`read_file`, `search_for_text`, `find_references`, `apply_edit`, etc.)
+2. Use `run_command` **only** when the task cannot be accomplished with any built-in tool
+3. Never use `run_command` as a shortcut for tasks that built-in tools already handle
+
 ## ⚙️ Execution Workflow
 
 1. **Discovery Phase**
-   - Load directory structure (`tree`)
-   - Check recent commits (`git log`)
-   - Analyze key files: entry points, configs, and usage-heavy components
-   - Identify relevant code symbols or patterns (via `ctags`, `rg`, or `symbol-search`)
+   - Load directory structure (`print_tree`)
+   - Check recent commits (`run_command` with `git log`)
+   - Analyze key files: entry points, configs, and usage-heavy components via `read_file`
+   - Identify relevant code symbols or patterns via `search_symbols`, `find_references`, or `search_for_text`
 
 2. **Analysis Phase**
    - Understand context before any change: use `read_file`, `find_references`, or `search_for_text`
@@ -60,10 +87,10 @@ You are a high-performance coding assistant optimized for fast, accurate codebas
 ## ✅ Response Protocol
 
 - **Answer Coding Questions**: Refer to real symbols, usage, or definitions when available. Use inline code snippets or edits.
-- **Modify Code**: Only change what’s needed. Follow project idioms. Use diff-style edits.
+- **Modify Code**: Only change what's needed. Follow project idioms. Use diff-style edits.
 - **Explain Only When Needed**: Avoid redundant elaboration unless asked.
 - **No Guesswork**: Validate with project data, not memory alone.
-- **Autonomous Execution**: Don’t wait for permission to fetch info, analyze context, or proceed with edits unless a risk is detected.
+- **Autonomous Execution**: Don't wait for permission to fetch info, analyze context, or proceed with edits unless a risk is detected.
 
 ---
 
@@ -80,6 +107,7 @@ Additional documentation
 <very_important_note>
 Always look through the relevant files in the project before answering user's questions and keep your answers short.
 Never answer without looking into the codebase.
+Always prefer built-in tools over run_command. Use run_command only as a last resort when no built-in tool can accomplish the task.
 </very_important_note>
 """
 
@@ -87,7 +115,7 @@ Never answer without looking into the codebase.
 [[functions]]
 name = "read_file"
 description = "Read file contents with optional line numbers and range selection"
-command = "cat -T {{show_line_numbers}} {{file}} {{line_range}}"
+command = "cat -T {{show_line_numbers}} '{{file}}' {{line_range}}"
 safe = true
 
 [[functions.parameters]]
@@ -216,7 +244,7 @@ required = true
 [[functions]]
 name = "find_references"
 description = "Find all references to a symbol across the codebase"
-command = "rg -n '\\b{{symbol}}\\b' {{file_pattern}} | head -n 100"
+command = "rg -n '\\b{{symbol}}\\b' '{{file_pattern}}' | head -n 500"
 safe = true
 
 [[functions.parameters]]
@@ -236,7 +264,7 @@ required = false
 [[functions]]
 name = "search_for_text"
 description = "Text search with context and filtering. Uses grep like to tool to perform searches."
-command = "rg {{case_sensitive}} {{whole_word}} {{context}} '{{pattern}}' {{file_pattern}} ./{{directory}} | head -n {{limit}}"
+command = "rg {{case_sensitive}} {{context}} '{{pattern}}' './{{directory}}' | head -n {{limit}}"
 safe = true
 
 [[functions.parameters]]
@@ -252,25 +280,11 @@ description = "Directory to search in"
 required = false
 
 [[functions.parameters]]
-name = "file_pattern"
-type = "string"
-description = "File pattern filter (e.g., 'go', 'py')"
-required = false
-format = "-t %s"
-
-[[functions.parameters]]
 name = "case_sensitive"
 type = "boolean"
 description = "Case sensitive search"
 required = false
 format = "-s"
-
-[[functions.parameters]]
-name = "whole_word"
-type = "boolean"
-description = "Match whole words only"
-required = false
-format = "-w"
 
 [[functions.parameters]]
 name = "context"
@@ -284,12 +298,12 @@ name = "limit"
 type = "number"
 description = "Maximum number of results"
 required = false
-default = "300"
+default = "500"
 
 [[functions]]
 name = "find_files_by_name"
 description = "Find files with advanced filtering and sorting"
-command = "find . -name '{{pattern}}' {{file_type}} {{max_depth}} | sort"
+command = "find . -name '{{pattern}}' {{file_type}} {{max_depth}}"
 safe = true
 
 [[functions.parameters]]
@@ -317,7 +331,7 @@ format = "-maxdepth %0.f"
 [[functions]]
 name = "list_directory"
 description = "Enhanced directory listing with file information"
-command = "ls -la {{directory}} | head -n {{limit}}"
+command = "ls -la '{{directory}}' | head -n {{limit}}"
 safe = true
 
 [[functions.parameters]]
@@ -336,7 +350,7 @@ default = "100"
 [[functions]]
 name = "print_tree"
 description = "Print directory tree with enhanced filtering"
-command = "tree {{directory}} {{depth}} {{file_pattern}} {{ignore_pattern}}"
+command = "tree '{{directory}}' {{depth}} {{file_pattern}} {{ignore_pattern}}"
 safe = true
 
 [[functions.parameters]]
@@ -370,8 +384,8 @@ format = "-I '%s'"
 
 [[functions]]
 name = "run_command"
-description = "Execute arbitrary commands with enhanced error handling"
-command = "{{command}} 2>&1 || echo 'Command failed with exit code $?'"
+description = "Execute arbitrary commands. Use this ONLY as a last resort when no built-in tool can accomplish the task. Prefer read_file, search_for_text, find_references, apply_edit, and other built-in tools whenever possible."
+command = "{{command}}"
 safe = false
 
 [[functions.parameters]]
@@ -383,7 +397,7 @@ required = true
 [[functions]]
 name = "move_file"
 description = "Move or rename files"
-command = "mv {{source}} {{destination}} 2>&1 || echo 'Move operation failed'"
+command = "mv '{{source}}' '{{destination}}' 2>&1 || echo 'Move operation failed'"
 safe = false
 
 [[functions.parameters]]
