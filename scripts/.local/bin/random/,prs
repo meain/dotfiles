@@ -46,7 +46,7 @@ run_command() {
 
 case "$1" in
 r | review)
-    run_command "${2:-show}" --reviewer meain --review-status unapproved
+    run_command "${2:-show}" --reviewer meain --review-status unapproved --draft-status ready --author=-meain
     ;;
 a | approved)
     run_command "${2:-show}" --author meain --review-status approved
