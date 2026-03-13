@@ -15,7 +15,8 @@ if [ -z "$input" ]; then
     fi
 fi
 
-filename="/tmp/$(xxd -l2 -ps /dev/urandom).html"
+basename_noext=$(basename "$input" .md)
+filename="/tmp/$(xxd -l2 -ps /dev/urandom)-${basename_noext}.html"
 outfile=${2:-$filename}
 
 cat "$DATAFILES_PATH/pandoc-github-template.html" >"$outfile"
