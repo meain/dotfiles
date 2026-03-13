@@ -31,14 +31,18 @@ CLAUDE.md
 .claude/settings.local.json
 "
 
+# Clear all saved files to ensure removed sources are cleaned up
+rm -rf "${SAVEPATH:?}/"*
+
 # Create temporary file to store git directories
-fd -H -t d '^\.git$' "$HOME/dev" \
+fd -H -t d '^(\.git|\.jj)$' "$HOME/dev" \
     --exclude 'temp' \
     --exclude '.build/checkouts' \
     --exclude 'node_modules' \
     --exclude 'infra/interviews' |
     while read -r git_path; do
         dir="${git_path%/.git/}"
+        dir="${dir%/.jj/}"
         cleanpath="${dir#$HOME/dev/}"
 
         # Process each backup file for this repository
@@ -59,20 +63,21 @@ fd -H -t d '^\.git$' "$HOME/dev" \
             esac
 
             source_path="$dir/$source_file"
+            dest_path="$SAVEPATH/$cleanpath/$dest_name"
+
+            # Skip if source does not exist
             [ -e "$source_path" ] || continue
 
             tput el && printf "Saving %s/%s\r" "$cleanpath" "$source_file"
 
-            dest_path="$SAVEPATH/$cleanpath/$dest_name"
-
             # Handle directories vs files
             if [ -d "$source_path" ]; then
                 mkdir -p "$dest_path"
-                cp -r "$source_path/"* "$dest_path" 2>/dev/null || true
+                cp -r "$source_path/"* "$dest_path" || true
             else
                 # Create parent directory of the destination file
                 mkdir -p "${dest_path%/*}"
-                cp -r "$source_path" "$dest_path"
+                cp -r "$source_path" "$dest_path" || true
             fi
         done <<EOF
 $BACKUP_FILES
