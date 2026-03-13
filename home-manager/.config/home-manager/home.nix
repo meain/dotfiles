@@ -1,4 +1,4 @@
-{ system, personal, bleeding, stable, tree-grepper, firefox-addons, ... }:
+{ system, personal, bleeding, stable, tree-grepper, firefox-addons, tuicr, ... }:
 { pkgs, ... }:
 let
   ppkgs = personal.packages.${system};
@@ -236,6 +236,7 @@ in
     # pkgs.grpcurl # curl for grpc
     # pkgs.zprint # clojure formatter
     tree-grepper.outputs.packages.${system}.tree-grepper # grep with tree-sitter
+    tuicr.defaultPackage.${system} # TUI for code review
     # pkgs.comby # code mod
     # pkgs.ruby # ruby language
     # pkgs.actionlint # linting for gihtub actions

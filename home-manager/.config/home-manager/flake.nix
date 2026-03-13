@@ -23,6 +23,10 @@
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    tuicr = {
+      url = "github:agavra/tuicr";
+    };
   };
 
   outputs =
@@ -37,6 +41,7 @@
       emacsOverlay,
       tree-grepper,
       firefox-addons,
+      tuicr,
     }:
     {
       homeConfigurations =
@@ -51,6 +56,7 @@
               personal
               tree-grepper
               firefox-addons
+              tuicr
               ;
           };
         in
