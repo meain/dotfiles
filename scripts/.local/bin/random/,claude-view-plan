@@ -1,0 +1,25 @@
+#!/bin/sh
+# Print the most recently modified Claude Code plan
+
+set -e
+
+plan_dir="$HOME/.claude/plans"
+
+if [ ! -d "$plan_dir" ]; then
+    echo "No plans directory found at $plan_dir" >&2
+    exit 1
+fi
+
+latest=$(ls -t "$plan_dir"/*.md 2>/dev/null | head -1)
+
+if [ -z "$latest" ]; then
+    echo "No plans found in $plan_dir" >&2
+    exit 1
+fi
+
+if [ -z "$1" ]; then
+    ,markdown-to-html "$latest"
+else
+    ,markdown-preview "$latest"
+fi
+glow "$latest"
