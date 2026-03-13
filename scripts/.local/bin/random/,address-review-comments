@@ -2,6 +2,8 @@
 
 set -e
 
+export GIT_DIR="$GIT_ROOT_DIR" 
+
 jj log -r 'trunk()..@' --no-graph -T 'local_bookmarks ++ "\n"' |
     sed '/^$/d' |
     xargs -I {} gh pr list --head {} --json number --jq '.[0].number' |
