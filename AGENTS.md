@@ -20,6 +20,8 @@ Commits follow the format: `[component] brief description`
 - Use sub-areas when helpful: `[emacs] web: refactor github-url helpers`
 - Keep first line short and lowercase
 - Group changes by component into separate commits — stage specific files, never `git add -A`
+- Never combine multiple scripts into a single commit — each script gets its own commit
+- Always use a single component name in `[component]` — pick the primary one if changes span multiple
 - Do NOT add `Co-Authored-By` lines unless asked
 - Use the `/commit` skill which handles all of this automatically
 
