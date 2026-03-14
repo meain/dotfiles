@@ -13,6 +13,7 @@ namespace=$(echo "$job" | awk '{print $1}')
 job_name=$(echo "$job" | awk '{print $2}')
 
 printf "Fetching pods for job...\r" >&2
-kubectl get pods --selector=job-name="$job_name" -n "$namespace" |
-    tail -n+2 | column -t | fzf -1 | awk '{print $1}' |
-    xargs kubectl logs -f -n "$namespace"
+pod="$(kubectl get pods --selector=job-name="$job_name" -n "$namespace" |
+    tail -n+2 | column -t | fzf -1 | awk '{print $1}')"
+echo kubectl logs -f -n "$namespace" "$pod"
+kubectl logs -f -n "$namespace" "$pod"
