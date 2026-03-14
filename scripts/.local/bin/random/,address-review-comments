@@ -2,10 +2,10 @@
 
 set -e
 
-export GIT_DIR="$GIT_ROOT_DIR" 
+export GIT_DIR="$GIT_ROOT_DIR"
 
 jj log -r 'trunk()..@' --no-graph -T 'local_bookmarks ++ "\n"' |
     sed '/^$/d' |
     xargs -I {} gh pr list --head {} --json number --jq '.[0].number' |
     xargs -I {} ,gh-review-comments -p {} |
-    ,claude-code --permission-mode acceptEdits "Address the following review comments"
+    claude --permission-mode acceptEdits "Address the following review comments"
