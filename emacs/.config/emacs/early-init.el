@@ -74,7 +74,7 @@
                           ("Dank Mono" . '(160 .1 'regular))
                           ("DankMono Nerd Font" . '(160 nil 'regular))
                           ("DejaVu Sans Mono" . '(160 nil 'regular))
-                          ("Departure Mono" . '(160 .2 'regular))
+                          ("Departure Mono" . '(150 .2 'regular))
                           ("DinaRemaster" . '(160 .2 'regular))
                           ("DM Mono" . '(150 .1 'light))
                           ("Edlo" . '(160 nil 'regular))
@@ -100,7 +100,7 @@
                           ("Indicate Mono" . '(160 .2 'regular))
                           ("Input Mono Compressed" . '(150 .2 'light))
                           ("Input Mono Condensed" . '(140 .2 'light))
-                          ("Input Mono" . '(160 .2 'regular))
+                          ("Input Mono" . '(140 .2 'light))
                           ("Input" . '(160 nil 'regular)) ; custom version
                           ("Intel One Mono" . '(160 nil 'thin))
                           ("Iosevka Comfy Motion" . '(160 .1 'light))
