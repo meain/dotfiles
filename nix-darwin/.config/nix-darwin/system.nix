@@ -63,9 +63,10 @@
     location = "~/Documents/Screenshots"; # will have to create it manually
   };
 
-  universalaccess = {
-    closeViewScrollWheelToggle = true; # enable zoom with scroll wheel
-    reduceMotion = true; # disable animations
-    reduceTransparency = true; # disable transparency
-  };
+  # Unable to set these with latest version of macOS
+  # universalaccess = {
+  #   closeViewScrollWheelToggle = true; # enable zoom with scroll wheel
+  #   reduceMotion = true; # disable animations
+  #   reduceTransparency = true; # disable transparency
+  # };
 }
