@@ -36,6 +36,12 @@ rebase-all = ["rebase", "-s", "all:roots(trunk()..mutable())", "-d", "trunk()"] 
 blame = ["file", "annotate"]
 nm = ["new", "trunk()"]
 e = ["edit"]
+dft = ["diff", "--tool", "difft"]
+showft = ["show", "--tool", "difft"]
+logft = ["log", "-p", "--tool", "difft"]
+
+[merge-tools.difft]
+diff-args = ["--color=always", "$left", "$right"]
 
 [templates]
 log = 'personal_log_oneline'
