@@ -18,7 +18,6 @@
       "keith/formulae" # for reminders-cli
     ];
     brews = [
-      "emacs-plus-app"
       # Switching away from these builds onto installing the builds from jimeh/build-emacs-for-macos
       # emacs-mac has not been updated in a long time
       # {
@@ -39,6 +38,7 @@
       "ical-buddy" # Read from macos calendar
     ];
     casks = [
+      "emacs-plus-app"
       "hammerspoon" # make macOS usable
       # "hiddenbar" # hide items in bar
       "maccy" # clipboard history
@@ -76,6 +76,13 @@
       "meetingbar" # next meeting in bar
       "obs" # screen recording
       "keycastr" # show keys being typed (for recording)
+
+      # ai agents
+      "claude"
+      "claude-code"
+      "copilot-cli"
+      "warp"
+      # "windsurf"
     ];
   };
 }
