@@ -94,3 +94,5 @@
 	repo = /Users/meain/dev/alcion/canario
 	repo = /Users/meain/dev/alcion/ark
 	repo = /Users/meain/dev/src/nixpkgs
+[url "ssh://git@github.com/"]
+	insteadOf = https://github.com/
