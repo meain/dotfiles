@@ -4,6 +4,19 @@ set -euo pipefail
 
 INPUT=$(cat)
 
+# Find project root by walking up from cwd looking for .jj or .git
+CWD=$(echo "$INPUT" | jq -r '.cwd // empty')
+PROJECT_ROOT="$CWD"
+DIR="$CWD"
+while [ -n "$DIR" ] && [ "$DIR" != "/" ]; do
+  if [ -d "$DIR/.jj" ] || [ -d "$DIR/.git" ]; then
+    PROJECT_ROOT="$DIR"
+    break
+  fi
+  DIR=$(dirname "$DIR")
+done
+CWD_SHORT=$(basename "$PROJECT_ROOT")
+
 # Get last assistant message: directly from Stop hook, or from transcript for Notification
 TEXT=$(echo "$INPUT" | jq -r '.last_assistant_message // empty')
 
@@ -26,7 +39,11 @@ if [ -z "$TEXT" ]; then
 fi
 
 if [ -z "$TEXT" ]; then
-  notify "Claude Code" "Waiting for input"
+  TITLE="Claude Code"
+  if [ -n "$CWD_SHORT" ]; then
+    TITLE="Claude Code [$CWD_SHORT]"
+  fi
+  notify "$TITLE" "Waiting for input"
   exit 0
 fi
 
@@ -45,4 +62,9 @@ SUMMARY=$(curl -s https://api.anthropic.com/v1/messages \
   -H "content-type: application/json" \
   -d "$PAYLOAD" | jq -r '.content[0].text // "Task update"') || SUMMARY="Task update"
 
-notify "Claude Code" "$SUMMARY"
+TITLE="Claude Code"
+if [ -n "$CWD_SHORT" ]; then
+  TITLE="Claude Code [$CWD_SHORT]"
+fi
+
+notify "$TITLE" "$SUMMARY"
