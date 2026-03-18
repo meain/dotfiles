@@ -49,14 +49,17 @@ If it is unclear whether the research is project-specific or generic, **ask the 
 
 ### Phase 4: Write the Document
 
-Use the following structure for the markdown file:
+Use the following structure for the markdown file. The title, date, tags, and status
+should be in YAML front matter metadata rather than in the document body. This keeps
+the `#` (h1) heading level available for use within the document content itself.
 
 ```markdown
-# <Title of Research Topic>
-
-> **Date:** YYYY-MM-DD
-> **Tags:** tag1, tag2, tag3
-> **Status:** complete | in-progress | needs-review
+---
+title: <Title of Research Topic>
+date: YYYY-MM-DD
+tags: [tag1, tag2, tag3]
+status: complete | in-progress | needs-review
+---
 
 ## Summary
 
