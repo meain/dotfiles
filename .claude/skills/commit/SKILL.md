@@ -53,7 +53,7 @@ EOF
 ```
 
 - **Stage specific files** — never use `git add -A` or `git add .`
-- Create commits **sequentially**, one component at a time
+- Issue all `git add && git commit` calls as **parallel tool calls in a single response** so the user can approve them all at once
 
 ### 5. Verify
 Run `git log --oneline -5` to confirm all commits were created.
