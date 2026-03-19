@@ -1,0 +1,8 @@
+#!/bin/sh
+
+set -e
+
+rootdir="$(reporoot)"
+ls -t "$rootdir/.mdocs" |
+    fzf -1 -m --query "$1" |
+    xargs -r -I{} ,markdown-to-html "$rootdir/.mdocs/{}"
