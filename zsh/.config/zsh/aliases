@@ -103,7 +103,7 @@ alias jr='jj rebase -d'
 alias jfr=',jfr'
 alias jb='jj bookmark set'
 alias je='jj edit'
-alias jj-squash-multi="jj stack | fzf -m | cut -d' ' -f3 | xargs -n1 jj squash -r"
+alias jj-squash-multi="jj stack | fzf -m | cut -d' ' -f3 | xargs -n1 JJ_EDITOR=true jj squash -r"
 alias jwu='jj workspace update-stale'
 alias jnm='jj git fetch && jj new main 2>/dev/null || jj new master'
 alias ,gcl="jj git clone --colocate"
