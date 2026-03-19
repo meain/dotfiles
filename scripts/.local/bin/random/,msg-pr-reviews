@@ -1,0 +1,25 @@
+#!/bin/sh
+# Create a Teams message to be sent to request for PR reviews
+
+set -e
+
+repos="$(cat "$HOME/.config/datafiles/prs-repos")"
+msgfile=$(mktemp)
+
+# Cache all repos in parallel to speed up the process
+echo "$repos" | while read -r repo; do
+    chainlink log --repo "$repo" >/dev/null 2>&1 &
+done
+
+wait
+
+echo "Here is a list of PRs that I could use reviews on:" | tee "$msgfile"
+echo "$repos" | while read -r repo; do
+    output="$(chainlink log --author meain --review-status unapproved --all --output markdown --repo "$repo" 2>/dev/null || true)"
+    if [[ -n $output ]]; then
+        printf "\n%s\n" "$repo"
+        echo "$output" | sed 's|^\s*-|-|'
+    fi
+done | tee -a "$msgfile"
+
+mdclip --hardbreaks <"$msgfile"
