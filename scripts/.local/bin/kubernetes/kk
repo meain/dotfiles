@@ -14,6 +14,7 @@ case "$1" in
     ;;
 "gd") command="get deployment" && shift ;;
 "gdw") command="get deployment --watch" && shift ;;
+"gp") command="get pods" && shift ;;
 "gpw") command="get pods --watch" && shift ;;
 "gj") command="get jobs --sort-by=.metadata.creationTimestamp" && shift ;;
 "gjw") command="get jobs --sort-by=.metadata.creationTimestamp --watch" && shift ;;
