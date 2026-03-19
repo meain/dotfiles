@@ -35,7 +35,7 @@ CLAUDE.md
 rm -rf "${SAVEPATH:?}/"*
 
 # Create temporary file to store git directories
-fd -H -t d '^(\.git|\.jj)$' "$HOME/dev" \
+fd -I -H -t d '^(\.git|\.jj)$' "$HOME/dev" \
     --exclude 'temp' \
     --exclude '.build/checkouts' \
     --exclude 'node_modules' \
@@ -87,6 +87,6 @@ EOF
 tput el # clear the line
 cd "$SAVEPATH" || exit 1
 git add -f .
-git diff --stat --staged
+git --no-pager diff --stat --staged
 git commit -m 'Update project configs'
 git push origin master
