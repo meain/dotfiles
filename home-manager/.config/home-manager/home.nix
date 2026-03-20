@@ -339,6 +339,7 @@ in
     pkgs.markdown-oxide # PKM via LSP
     pkgs.poppler-utils # pdf utils
     pkgs.jira-cli-go # jira cli
+    ppkgs.confluence-cli # confluence cli
     # ppkgs.prr # local pr review
     pkgs.ddgr # ddg search from terminal
     # ppkgs.probe # code search
