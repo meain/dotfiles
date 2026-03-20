@@ -1,0 +1,86 @@
+#!/usr/bin/env python3
+
+import argparse
+import json
+import os
+import sys
+import urllib.request
+import urllib.error
+
+def do_request(url, body=None):
+    headers = {}
+    if body is not None:
+        headers["Content-Type"] = "application/json"
+        body = body.encode()
+
+    api_key = os.environ.get("ES_API_KEY")
+    token = os.environ.get("ES_TOKEN")
+    if api_key:
+        headers["Authorization"] = f"ApiKey {api_key}"
+    elif token:
+        headers["Authorization"] = f"Bearer {token}"
+
+    req = urllib.request.Request(url, data=body, headers=headers)
+    try:
+        with urllib.request.urlopen(req) as resp:
+            return resp.read().decode()
+    except urllib.error.HTTPError as e:
+        return e.read().decode()
+
+def pretty(text):
+    try:
+        return json.dumps(json.loads(text), indent=2)
+    except (json.JSONDecodeError, ValueError):
+        return text
+
+def main():
+    parser = argparse.ArgumentParser(
+        prog=",es",
+        description="Query Elasticsearch clusters from the command line.",
+        epilog="""environment variables:
+  ES_HOST     Elasticsearch URL (required, e.g. https://host:9243)
+  ES_API_KEY  API key for authentication (base64 encoded id:key)
+  ES_TOKEN    Bearer token for authentication
+
+auth priority: ES_API_KEY > ES_TOKEN > basic auth in ES_HOST URL
+
+examples:
+  ,es /_cluster/health
+  ,es /_cat/indices?v
+  ,es -q 'service.name:earn AND message:timeout'
+  ,es -q 'status:>=400' -i 'logs-apm.error-*'
+  ,es -q 'service.name:earn' -n 5
+  ,es '/myindex/_search' '{"query":{"match_all":{}}}'""",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+    parser.add_argument("-q", metavar="query", help="Lucene query string")
+    parser.add_argument("-i", metavar="index", default="logs-*", help="index pattern (default: logs-*)")
+    parser.add_argument("-n", metavar="count", type=int, default=10, help="number of results (default: 10)")
+    parser.add_argument("path", nargs="?", help="API path (e.g. /_cluster/health)")
+    parser.add_argument("body", nargs="?", help="JSON request body")
+    args = parser.parse_args()
+
+    host = os.environ.get("ES_HOST")
+    if not host:
+        print("ES_HOST is not set", file=sys.stderr)
+        sys.exit(1)
+
+    if args.q:
+        path = f"/{args.i}/_search"
+        body = json.dumps({
+            "size": args.n,
+            "sort": [{"@timestamp": "desc"}],
+            "query": {"query_string": {"query": args.q}},
+        })
+    elif args.path:
+        path = args.path
+        body = args.body
+    else:
+        parser.print_help()
+        sys.exit(1)
+
+    result = do_request(host + path, body)
+    print(pretty(result))
+
+if __name__ == "__main__":
+    main()
