@@ -54,7 +54,7 @@
                      ;; ("ollama:gemma" . ("ollama" "gemma:2b-instruct-q8_0"))
                      ;; ("ollama:macro-o1" . ("ollama" "marco-o1:7b-q8_0"))
                      ("anthropic:4.6sonnet" . ("anthropic" "claude-sonnet-4-6"))
-                     ("anthropic:4.6opus" . ("anthropic" "claude-opus-4.6"))
+                     ("anthropic:4.6opus" . ("anthropic" "claude-opus-4-6"))
                      ("anthropic:3.5haiku" . ("anthropic" "claude-3-5-haiku-latest"))))
            (name (completing-read "Model: " models nil t))
            (vals (cdr (assoc name models))))
