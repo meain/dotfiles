@@ -112,7 +112,10 @@ m() {
     # \( ... \) groups expressions for logical precedence (escaped for the shell);
     # -type f: regular files; -type l: symlinks; -o: OR; -perm /111: any executable bit set
     # Also need the `/` after .mscripts to ensure symlinks to .mscripts are also used
-    mscript="$(find .mscripts/ \( -type f -o -type l \) -perm /111 |
+    # Need both \+111 and /111 as one works in macOS and the other in linux
+    paths="$(find .mscripts/ \( -type f -o -type l \) -perm \+111 2>/dev/null ||
+        find .mscripts/ \( -type f -o -type l \) -perm /111)"
+    mscript="$(echo "$paths" |
         tail -n+1 | xargs -n1 basename |
         fzf --query "$script" -1)"
 
