@@ -13,6 +13,7 @@ query=""
 print_query=""
 exact=""
 ignore_case=""
+one=""
 while expr "$1" : '-.*' >/dev/null; do
     [ "$1" = "-p" ] && shift && prompt="$1" && shift && continue
     [ "$1" = "--preview" ] && shift && preview="$1" && shift && continue
@@ -26,6 +27,7 @@ while expr "$1" : '-.*' >/dev/null; do
     [ "$1" = "--print-query" ] && shift && print_query="1" && continue
     [ "$1" = "--exact" ] && shift && exact="1" && continue
     [ "$1" = "-i" ] && shift && ignore_case="1" && continue
+    [ "$1" = "-1" ] && shift && one="1" && shift && continue
     echo "Unknown option $1" && exit 1
 done
 
@@ -56,5 +58,6 @@ else
     [ -n "$exact" ] && cmd="$cmd --exact"
     [ -n "$query" ] && cmd="$cmd --query='$query'"
     [ -n "$1" ] && cmd="$cmd --query='$1'"
+    [ -n "$one" ] && cmd="$cmd -1"
     eval "$cmd"
 fi
