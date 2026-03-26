@@ -110,11 +110,18 @@ Pass `CREATE' to create the alternate file if it does not exits."
     (let ((file-path (or (buffer-file-name) default-directory))
           (abs-path (or abs-path (not (project-current))))) ; use abs if not in project
       (if file-path
-          (let ((copy-path (if abs-path file-path
-                             (string-replace
-                              (expand-file-name (car (project-roots (project-current))))
-                              ""
-                              file-path))))
+          (let* ((copy-path (if abs-path file-path
+                              (string-replace
+                               (expand-file-name (car (project-roots (project-current))))
+                               ""
+                               file-path)))
+                 (copy-path (if (use-region-p)
+                                (let ((start-line (line-number-at-pos (region-beginning)))
+                                      (end-line (line-number-at-pos (region-end))))
+                                  (if (= start-line end-line)
+                                      (format "%s:%d" copy-path start-line)
+                                    (format "%s:%d-%d" copy-path start-line end-line)))
+                              copy-path)))
             (meain/copy-to-clipboard copy-path)
             (message "Copied '%s' to the clipboard" copy-path))
         (message "No file associated with buffer"))))
