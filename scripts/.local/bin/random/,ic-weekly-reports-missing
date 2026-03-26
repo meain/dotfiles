@@ -1,0 +1,25 @@
+#!/bin/sh
+# Show names of folks who have not filled in the weekly report
+
+set -e
+
+pages="$(confluence children $IC_WEEKLY_REPORTS_CONFLUENCE_PAGE --format json)"
+
+# Print name
+echo "$pages" |
+    jq -r '.children[].title' |
+    tail -n1
+
+echo "$pages" |
+    jq -r '.children[].id' |
+    tail -n1 |
+    xargs confluence read |
+    esa -- "Who all has not filled in the weekly reports? " \
+        "I need just names as a list with \- prefix. The output should contain nothing else."
+
+printf "\n\nPress any key to open the webpage"
+read -r REPLY # just waiting for a keypress
+
+echo "$pages" |
+    jq -r '.children[].url' |
+    tail -n1 | xargs open
