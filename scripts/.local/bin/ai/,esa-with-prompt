@@ -3,7 +3,7 @@
 set -e
 
 agent=""
-if [ -n "$1" ]; then
+if [ -n "$1" ] && [ "$(echo "$1" | grep "^\+")" ]; then
     agent="$1"
     shift
 fi
