@@ -9,18 +9,18 @@ set -e
 BM_FILE="${BM_FILE:-$HOME/.local/share/bookmarks.md}"
 SEARCH_TERM=""
 case "${1:-}" in
-    add|list|show|open|remove|help|edit)
-        OPERATION="$1"
-        SEARCH_TERM="${2:-}"
-        ;;
-    "")
-        echo "No search term provided" >&2
-        exit 1
-        ;;
-    *)
-        OPERATION="open"
-        SEARCH_TERM="$1"
-        ;;
+add | list | show | pick | open | remove | help | edit | tags)
+    OPERATION="$1"
+    SEARCH_TERM="${2:-}"
+    ;;
+"")
+    echo "No search term provided" >&2
+    exit 1
+    ;;
+*)
+    OPERATION="open"
+    SEARCH_TERM="$1"
+    ;;
 esac
 
 touch "$BM_FILE"
@@ -36,6 +36,11 @@ extract_url() {
     sed 's/.*](\([^)]*\)).*/\1/'
 }
 
+render() {
+    sed 's/^- \[\([^]]*\)\]([^)]*)/- \1/' |
+        sed 's/#\([^ ]*\)/\x1b[36m#\1\x1b[0m/g'
+}
+
 case "$OPERATION" in
 help)
     echo "Usage: ,bm [command] [url]"
@@ -46,11 +51,13 @@ help)
     echo "  show       Fuzzy-pick bookmark(s), output URL(s) (default)"
     echo "  open       Fuzzy-pick bookmark(s), open in browser"
     echo "  remove     Fuzzy-pick bookmark(s) to remove"
+    echo "  tags       Filter by tags (AND): ,bm tags tag1 tag2"
     echo "  help       Show this help"
     ;;
 add)
     url="${2:-$(pbpaste)}"
-    if grep -F "($url)" "$BM_FILE" | glow; then
+    if grep -qF "($url)" "$BM_FILE"; then
+        grep -F "($url)" "$BM_FILE" | render
         echo "Bookmark already exists" >&2
         exit 1
     fi
@@ -58,7 +65,13 @@ add)
     fetched_title="$(curl -sL "$url" | pup 'title text{}')"
     printf "\r\033[K"
     read -r -e -i "$fetched_title" -p "Title: " title
-    printf "Tags (space-separated): "
+    domain="$(echo "$url" | sed 's|.*://\([^/]*\).*|\1|')"
+    suggested_tags="$(grep -F "$domain" "$BM_FILE" | grep -oE '#[^ ]+' | sort | uniq -c | sort -rn | head -3 | awk '{print $2}' | tr '\n' ' ' | sed 's/ $//')"
+    if [ -n "$suggested_tags" ]; then
+        printf "Tags (space-separated) [%s]: " "$suggested_tags"
+    else
+        printf "Tags (space-separated): "
+    fi
     read -r tags
     tag_str=""
     if [ -n "$tags" ]; then
@@ -66,36 +79,63 @@ add)
             tag_str="$tag_str #$t"
         done
     fi
-    echo "- [$title]($url)$tag_str" >> "$BM_FILE"
+    echo "- [$title]($url)$tag_str" >>"$BM_FILE"
     ;;
 list)
     check_bookmarks
     if [ -n "$SEARCH_TERM" ]; then
-        grep -i "$SEARCH_TERM" "$BM_FILE" | glow
+        grep -i "$SEARCH_TERM" "$BM_FILE" | render
     else
-        glow "$BM_FILE"
+        cat "$BM_FILE" | render
     fi
+    ;;
+tags)
+    check_bookmarks
+    shift
+    if [ $# -eq 0 ]; then
+        grep -oE '#[^ ]+' "$BM_FILE" | sort | uniq -c | sort -rn | awk '{print $2, "(" $1 ")"}'
+        exit 0
+    fi
+    results="$(cat "$BM_FILE")"
+    for tag in "$@"; do
+        results="$(echo "$results" | grep -i "#$tag")"
+    done
+    if [ -z "$results" ]; then
+        echo "No bookmarks found for given tags" >&2
+        exit 1
+    fi
+    echo "$results" | render
     ;;
 edit)
     $EDITOR "$BM_FILE"
     ;;
-show)
+show | pick)
     check_bookmarks
-    cat "$BM_FILE" | ,picker -1 -i -m "$SEARCH_TERM" | extract_url
+    result="$(cat "$BM_FILE" | ,picker -1 -i -m -e ${SEARCH_TERM:+"$SEARCH_TERM"} || true)"
+    if [ -z "$result" ]; then
+        echo "No links found" >&2
+        exit 1
+    fi
+    echo "$result" | extract_url
     ;;
 open)
     check_bookmarks
-    cat "$BM_FILE" | ,picker -1 -i -m "$SEARCH_TERM" | extract_url |
+    result="$(cat "$BM_FILE" | ,picker -1 -i -m -e ${SEARCH_TERM:+"$SEARCH_TERM"} || true)"
+    if [ -z "$result" ]; then
+        echo "No links found" >&2
+        exit 1
+    fi
+    echo "$result" | extract_url |
         while IFS= read -r url; do
             open "$url"
         done
     ;;
 remove)
     check_bookmarks
-    selected="$(cat "$BM_FILE" | ,picker -i -m "$SEARCH_TERM")"
+    selected="$(cat "$BM_FILE" | ,picker -i -m -e ${SEARCH_TERM:+"$SEARCH_TERM"} || true)"
     if [ -n "$selected" ]; then
         echo "$selected" | while IFS= read -r line; do
-            grep -vF "$line" "$BM_FILE" > "$BM_FILE.tmp"
+            grep -vF "$line" "$BM_FILE" >"$BM_FILE.tmp"
             mv "$BM_FILE.tmp" "$BM_FILE"
         done
     fi
