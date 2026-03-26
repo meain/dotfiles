@@ -32,10 +32,6 @@ export PATH="$HOME/.deno/bin:$PATH"
 
 # opencode
 PATH=$HOME/.opencode/bin:$PATH
-# OpenCode's new markdown renderer cannot properly display code
-# snippets while in tmux. This is a temporary fix for it.
-# https://github.com/anomalyco/opencode/issues/16470
-export OPENCODE_EXPERIMENTAL_MARKDOWN=false
 
 # Latex (macos)
 PATH=/Library/TeX/texbin:$PATH
