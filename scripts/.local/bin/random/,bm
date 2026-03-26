@@ -1,58 +1,103 @@
-#!/bin/sh
+#!/usr/bin/env bash
+# bash for read -ei (editable pre-filled input)
 
-# Global bookmarking (uses sqlite to store data)
-# Usage: bm [add|pick|list|remove] [bookmark]
+# Plaintext bookmark manager (markdown format)
+# Usage: ,bm [add|show|list|open|remove] [url]
 
 set -e
 
-VIEW_FORMAT='{printf "[%02d] %s (%s)\n", $NF, $2, $1}'
-QUERY="SELECT url, name, count FROM bookmarks ORDER BY count DESC, date DESC;"
-BM_FILE="${BM_FILE:-$HOME/.local/share/bm.db}"
-OPERATION="${1:-pick}"
+BM_FILE="${BM_FILE:-$HOME/.local/share/bookmarks.md}"
+SEARCH_TERM=""
+case "${1:-}" in
+    add|list|show|open|remove|help|edit)
+        OPERATION="$1"
+        SEARCH_TERM="${2:-}"
+        ;;
+    "")
+        echo "No search term provided" >&2
+        exit 1
+        ;;
+    *)
+        OPERATION="open"
+        SEARCH_TERM="$1"
+        ;;
+esac
 
-if [ ! -f "$BM_FILE" ]; then
-    sqlite3 "$BM_FILE" "CREATE TABLE bookmarks (url TEXT PRIMARY KEY, name TEXT, title TEXT, date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, count INTEGER DEFAULT 0);"
-fi
+touch "$BM_FILE"
 
-# alter prev db to make sure date has default by modifying existing column
-# sqlite3 "$BM_FILE" "ALTER TABLE bookmarks RENAME TO bookmarks_old;"
-# sqlite3 "$BM_FILE" "CREATE TABLE bookmarks (url TEXT PRIMARY KEY, name TEXT, title TEXT, date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, count INTEGER DEFAULT 0);"
-# sqlite3 "$BM_FILE" "INSERT INTO bookmarks (url, name, title, date, count) SELECT url, name, title, date, count FROM bookmarks_old;"
-# sqlite3 "$BM_FILE" "DROP TABLE bookmarks_old;"
+check_bookmarks() {
+    if [ ! -s "$BM_FILE" ]; then
+        echo "No bookmarks found" >&2
+        exit 1
+    fi
+}
+
+extract_url() {
+    sed 's/.*](\([^)]*\)).*/\1/'
+}
 
 case "$OPERATION" in
+help)
+    echo "Usage: ,bm [command] [url]"
+    echo ""
+    echo "Commands:"
+    echo "  add [url]  Add bookmark (url defaults to clipboard)"
+    echo "  list       List all bookmarks"
+    echo "  show       Fuzzy-pick bookmark(s), output URL(s) (default)"
+    echo "  open       Fuzzy-pick bookmark(s), open in browser"
+    echo "  remove     Fuzzy-pick bookmark(s) to remove"
+    echo "  help       Show this help"
+    ;;
 add)
-    URL="${2:-$(pbpaste)}"
-    NAME="$3"
-    if [ -z "$NAME" ]; then
-        printf "Name: "
-        read -r name # name can include tags (comma prefix as hash is harder to enter in cli)
+    url="${2:-$(pbpaste)}"
+    if grep -F "($url)" "$BM_FILE" | glow; then
+        echo "Bookmark already exists" >&2
+        exit 1
     fi
-    title="$(curl -s "$URL" | grep -Eo '<title>[^<]+</title>' | sed -E 's/<title>([^<]+)<\/title>/\1/')"
-    date="$(date +%s)"
-    sqlite3 "$BM_FILE" "INSERT INTO bookmarks (url, name, title, date) VALUES ('$URL', '$name', '$title', '$date');"
-    ;;
-open)
-    url=$(sqlite3 "$BM_FILE" "$QUERY" |
-        awk -F'|' "$VIEW_FORMAT" | ,picker -i |
-        awk '{print $NF}' | cut -d'(' -f2 | cut -d')' -f1)
-    if [ -n "$url" ]; then
-        sqlite3 "$BM_FILE" "UPDATE bookmarks SET count=count+1 WHERE url='$url';"
-        open "$url"
+    printf "Fetching title..."
+    fetched_title="$(curl -sL "$url" | pup 'title text{}')"
+    printf "\r\033[K"
+    read -r -e -i "$fetched_title" -p "Title: " title
+    printf "Tags (space-separated): "
+    read -r tags
+    tag_str=""
+    if [ -n "$tags" ]; then
+        for t in $tags; do
+            tag_str="$tag_str #$t"
+        done
     fi
-    ;;
-pick)
-    sqlite3 "$BM_FILE" "$QUERY" |
-        awk -F'|' "$VIEW_FORMAT" | ,picker -i |
-        awk '{print $NF}' | cut -d'(' -f2 | cut -d')' -f1
+    echo "- [$title]($url)$tag_str" >> "$BM_FILE"
     ;;
 list)
-    sqlite3 "$BM_FILE" "$QUERY" | awk -F'|' "$VIEW_FORMAT"
+    check_bookmarks
+    if [ -n "$SEARCH_TERM" ]; then
+        grep -i "$SEARCH_TERM" "$BM_FILE" | glow
+    else
+        glow "$BM_FILE"
+    fi
+    ;;
+edit)
+    $EDITOR "$BM_FILE"
+    ;;
+show)
+    check_bookmarks
+    cat "$BM_FILE" | ,picker -1 -i -m "$SEARCH_TERM" | extract_url
+    ;;
+open)
+    check_bookmarks
+    cat "$BM_FILE" | ,picker -1 -i -m "$SEARCH_TERM" | extract_url |
+        while IFS= read -r url; do
+            open "$url"
+        done
     ;;
 remove)
-    sqlite3 "$BM_FILE" "$QUERY" |
-        awk -F'|' "$VIEW_FORMAT" | ,picker -i |
-        awk '{print $NF}' | cut -d'(' -f2 | cut -d')' -f1 |
-        xargs -r -I{} sqlite3 "$BM_FILE" "DELETE FROM bookmarks WHERE url='{}';"
+    check_bookmarks
+    selected="$(cat "$BM_FILE" | ,picker -i -m "$SEARCH_TERM")"
+    if [ -n "$selected" ]; then
+        echo "$selected" | while IFS= read -r line; do
+            grep -vF "$line" "$BM_FILE" > "$BM_FILE.tmp"
+            mv "$BM_FILE.tmp" "$BM_FILE"
+        done
+    fi
     ;;
 esac
