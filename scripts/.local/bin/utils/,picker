@@ -14,6 +14,9 @@ print_query=""
 exact=""
 ignore_case=""
 one=""
+ansi=""
+with_nth=""
+delimiter=""
 while expr "$1" : '-.*' >/dev/null; do
     [ "$1" = "-p" ] && shift && prompt="$1" && shift && continue
     [ "$1" = "--preview" ] && shift && preview="$1" && shift && continue
@@ -29,6 +32,10 @@ while expr "$1" : '-.*' >/dev/null; do
     [ "$1" = "-e" ] && shift && exact="1" && continue
     [ "$1" = "-i" ] && shift && ignore_case="1" && continue
     [ "$1" = "-1" ] && shift && one="1" && continue
+    [ "$1" = "--ansi" ] && shift && ansi="1" && continue
+    [ "$1" = "--with-nth" ] && shift && with_nth="$1" && shift && continue
+    [ "$1" = "-d" ] && shift && delimiter="$1" && shift && continue
+    [ "$1" = "--delimiter" ] && shift && delimiter="$1" && shift && continue
     echo "Unknown option $1" && exit 1
 done
 
@@ -60,5 +67,8 @@ else
     [ -n "$query" ] && cmd="$cmd --query='$query'"
     [ -n "$1" ] && cmd="$cmd --query='$1'"
     [ -n "$one" ] && cmd="$cmd -1"
+    [ -n "$ansi" ] && cmd="$cmd --ansi"
+    [ -n "$with_nth" ] && cmd="$cmd --with-nth='$with_nth'"
+    [ -n "$delimiter" ] && cmd="$cmd -d '$delimiter'"
     eval "$cmd"
 fi
