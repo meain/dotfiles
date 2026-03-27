@@ -88,10 +88,11 @@
       (buffer-string)))
 
   (cl-loop for name in '(identify-actionable-change message-response review-diff)
-           do (add-to-list
-               'yap-templates
-               (cons name (lambda ()
-                            (yap-template-prompt (meain/get-llm-prompt (symbol-name name)))))))
+           do (let ((n name))
+                (add-to-list
+                 'yap-templates
+                 (cons n (lambda ()
+                           (yap-template-prompt (meain/get-llm-prompt (symbol-name n))))))))
 
   (defun meain/select-enclosing-defun ()
     (unless (use-region-p)
