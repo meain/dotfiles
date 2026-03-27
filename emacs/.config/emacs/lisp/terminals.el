@@ -11,7 +11,6 @@
   :config
   (setq compilation-always-kill t)
   (setq compilation-ask-about-save nil)
-  (setq compilation-scroll-output nil)
 
   (setq compilation-scroll-output 'first-error) ; or nil
   ;; (setq-default compilation-auto-jump-to-first-error nil)
