@@ -46,7 +46,7 @@
   (add-to-list 'eglot-server-programs '(javascript-mode . ("typescript-language-server" "--stdio" "--tsserver-path" "/home/meain/.nix-profile/bin/tsserver")))
   (add-to-list 'eglot-server-programs '(web-mode . ("typescript-language-server" "--stdio" "--tsserver-path" "/home/meain/.nix-profile/bin/tsserver")))
   (add-to-list 'eglot-server-programs '(js-mode . ("typescript-language-server" "--stdio" "--tsserver-path" "/home/meain/.nix-profile/bin/tsserver")))
-  (add-to-list 'eglot-server-programs '(typescipt-mode . ("typescript-language-server" "--stdio" "--tsserver-path" "/home/meain/.nix-profile/bin/tsserver")))
+  (add-to-list 'eglot-server-programs '(typescript-mode . ("typescript-language-server" "--stdio" "--tsserver-path" "/home/meain/.nix-profile/bin/tsserver")))
   (add-to-list 'eglot-server-programs '(gfm-mode . ("logseqlsp" "-t" "logseqlsp-token")))
   ;; Can be enabled on fiction like things
   ;; (add-to-list 'eglot-server-programs '(markdown-mode . ("unified-language-server" "--parser=remark-parse" "--stdio")))
@@ -54,7 +54,7 @@
   (add-to-list 'eglot-server-programs '(rust-mode . ("rust-analyzer")))
   (add-to-list 'eglot-server-programs '(python-mode . ("pylsp")))
   (add-to-list 'eglot-server-programs '(python-ts-mode . ("pylsp")))
-  (add-to-list 'eglot-server-programs '(nix-mode . ("rnix-lsp")))
+  (add-to-list 'eglot-server-programs '(nix-mode . ("nixd")))
   (setq-default eglot-workspace-configuration
                 ;; https://cs.opensource.google/go/x/tools/+/master:gopls/doc/emacs.md
                 ;; https://cs.opensource.google/go/x/tools/+/master:gopls/doc/settings.md
