@@ -18,7 +18,7 @@
 (global-set-key (kbd "s-c") 'kill-ring-save)
 
 ;; Quicker yes or no
-(fset 'yes-or-no-p 'y-or-n-p)
+(setq use-short-answers t)
 
 ;; UTF-8 please
 (setq locale-coding-system 'utf-8)
