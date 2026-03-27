@@ -32,17 +32,41 @@ Use this skill when:
 Ask the user or infer from context:
 
 - **Project-specific research** (related to the current codebase or project):
-  Save to `.mdocs/` in the project root. Create the directory if it does not exist.
+  Save to `.mdocs/<category>/` in the project root (see Phase 2b for categories).
+  Create the directory if it does not exist.
 - **Generic / cross-project research** (general knowledge, tools, techniques):
   Save to `/Users/meain/dev/docs/research/`. Create subdirectories as needed.
 
 If it is unclear whether the research is project-specific or generic, **ask the user**.
 
+### Phase 2b: Determine the Category
+
+Project-specific documents must be placed in a category subdirectory under `.mdocs/`.
+Pick the best-fit category based on the document's purpose:
+
+| Category        | When to use                                                                 |
+|-----------------|-----------------------------------------------------------------------------|
+| `plan`          | Step-by-step plans for executing a task across repos/systems (has ordered steps, timelines, or rollout tiers) |
+| `guide`         | Proactive how-to instructions — "I want to do X" (testing guides, operational procedures, style guides) |
+| `runbook`       | Reactive incident response — "something broke, now what?" (triage steps, remediation, rollback procedures) |
+| `design`        | Forward-looking proposals and architecture decisions (options analysis, solution designs, feature specs) |
+| `reference`     | Explanations of how something already works (system behavior, patterns, tool docs, configuration references) |
+| `investigation` | Analysis of bugs, performance issues, code quality, or root causes (debugging findings, violation reports, post-mortems) |
+| `task`          | Tracking documents for specific tickets or work items (task checklists, ticket context, status tracking) |
+
+If a document spans multiple categories, pick the **primary purpose**:
+- A design doc that includes investigation context → `design`
+- A guide that was born from an investigation → `guide`
+- A plan driven by a specific ticket → `plan` (not `task`)
+
+If genuinely unsure, **ask the user**.
+
 ### Phase 3: Determine the Filename
 
 1. Derive a descriptive, kebab-case filename from the research topic.
-   - Example: `understanding-go-generics.md`, `react-server-components-patterns.md`
-2. If a file with the same name already exists, **ask the user** whether to:
+   - Example: `.mdocs/reference/go-generics.md`, `.mdocs/design/react-server-components-patterns.md`
+2. For project-specific research, the full path is: `.mdocs/<category>/<filename>.md`
+3. If a file with the same name already exists, **ask the user** whether to:
    - Append to the existing file
    - Overwrite it
    - Use a different name
