@@ -125,7 +125,7 @@ m() {
         return 1
     fi
 
-    eval .mscripts/"$mscript" $*
+    .mscripts/"$mscript" "$@"
     cd "$prev_dir" >/dev/null || return 1
 }
 
@@ -142,7 +142,7 @@ mm() {
 
 # python venv setup (need to be function as we have to source)
 venv() {
-    DEFAULT_VENV_PYTHON_VERSION=${DEFAULT_VENV_PYTHON_VERSION:-"3.6.6"}
+    DEFAULT_VENV_PYTHON_VERSION=${DEFAULT_VENV_PYTHON_VERSION:-"3.12"}
     PYENV_ROOT=${PYENV_ROOT:-"$HOME/.pyenv"}
     if [ -z "$VENV_HOME" ]; then
         if [ -n "$WORKON_HOME" ]; then
@@ -232,8 +232,9 @@ hashdir() {
 
 er() {
     entry="$(fd | fzf -1 --query "$1")"
-    [ -f "$entry" ] && cd "$(dirname "$entry")" || return 1
-    [ -d "$entry" ] && cd "$entry" || return 1
+    if [ -f "$entry" ]; then cd "$(dirname "$entry")"
+    elif [ -d "$entry" ]; then cd "$entry"
+    else return 1; fi
 }
 
 # jump backwards from cwd path

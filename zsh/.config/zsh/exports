@@ -11,7 +11,7 @@ PATH=$PATH:$GOPATH/bin
 PATH=$PATH:/opt/homebrew/bin
 
 # Poetry
-PATH="$HOME/.loca/share/poetry/bin:$PATH"
+PATH="$HOME/.local/share/poetry/bin:$PATH"
 
 # pyenv
 export PYENV_ROOT="$HOME/.local/share/pyenv"

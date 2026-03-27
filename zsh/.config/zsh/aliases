@@ -111,7 +111,7 @@ alias ,gcl="jj git clone --colocate"
 
 # linux only
 if [ "$OSTYPE" = "linux" ]; then
-    alias caffienate='systemd-inhibit tail -f /dev/null'
+    alias caffeinate='systemd-inhibit tail -f /dev/null'
     alias suspend='systemctl suspend'
     alias dr="dragon -x"
     alias lim="cpulimit -l 200 -i --"

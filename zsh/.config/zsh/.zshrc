@@ -11,8 +11,8 @@ source "$ZDOTDIR/exports"
 export DISABLE_AUTO_TITLE="true"
 export COMPLETION_WAITING_DOTS="false"
 export HIST_STAMPS="dd.mm.yyyy"
-export HISTSIZE=5000
-export SAVEHIST=5000
+export HISTSIZE=50000
+export SAVEHIST=50000
 export HISTFILE="$HOME/.local/share/zsh/.zsh_history"
 setopt HIST_IGNORE_SPACE
 setopt appendhistory
@@ -21,7 +21,6 @@ setopt incappendhistory
 setopt HIST_EXPIRE_DUPS_FIRST
 setopt HIST_IGNORE_DUPS
 setopt HIST_IGNORE_ALL_DUPS
-setopt HIST_IGNORE_SPACE
 setopt HIST_FIND_NO_DUPS
 setopt HIST_SAVE_NO_DUPS
 
@@ -40,7 +39,11 @@ zstyle ':completion:::::' completer _expand _complete _ignored _approximate # en
 # autocompletions
 autoload -Uz compinit
 zmodload zsh/complist
-compinit
+if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
+    compinit
+else
+    compinit -C
+fi
 
 # autosuggestions settings
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=244"
