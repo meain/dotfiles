@@ -3,6 +3,7 @@
 set -e
 
 rootdir="$(reporoot)"
-ls -t "$rootdir/.mdocs" |
-    fzf -1 -m --query "$1" |
+find "$rootdir/.mdocs" -type f -name '*.md' -exec ls -t {} + |
+    sed "s|$rootdir/.mdocs/||" |
+    fzf -1 -m --query "$1" --preview "cat '$rootdir/.mdocs/{}'" |
     xargs -r -I{} ,markdown-to-html "$rootdir/.mdocs/{}"
