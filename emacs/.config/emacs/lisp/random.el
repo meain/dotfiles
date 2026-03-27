@@ -112,7 +112,7 @@ Pass `CREATE' to create the alternate file if it does not exits."
       (if file-path
           (let* ((copy-path (if abs-path file-path
                               (string-replace
-                               (expand-file-name (car (project-roots (project-current))))
+                               (expand-file-name (project-root (project-current)))
                                ""
                                file-path)))
                  (copy-path (if (use-region-p)

@@ -94,7 +94,7 @@ If region is active, link covers the region."
                        (car info)))
              (git-ref (cadr info))
              (file-path (file-relative-name (or buffer-file-name default-directory)
-                                            (car (project-roots (project-current)))))
+                                            (project-root (project-current))))
              (line-frag
               (unless (equal major-mode 'dired-mode)
                 (if (use-region-p)

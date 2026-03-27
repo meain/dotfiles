@@ -14,7 +14,7 @@
     (if (not (file-remote-p default-directory))
         (setq default-directory (cond
                                  ((not (eq (project-current) nil))
-                                  (car (project-roots (project-current))))
+                                  (project-root (project-current)))
                                  ((not (eq go-base nil)) go-base)
                                  ((not (eq jj-base nil)) jj-base)
                                  (t "~/"))))))
