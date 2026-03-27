@@ -1,42 +1,39 @@
 [model_aliases]
-  v3 = "openrouter/deepseek/deepseek-chat-v3-0324:free"
-  flash = "openrouter/google/gemini-2.0-flash-exp:free"
-  gemini = "openrouter/google/gemini-2.5-pro-exp-03-25:free"
-  kimi = "openrouter/moonshotai/kimi-k2:free"
-  o4o = "openai/gpt-4o"
-  4o = "github/gpt-4o"
-  mini = "openai/gpt-4o-mini"
-  ghmini = "github/gpt-4o-mini"
-  o3 = "github/o3-mini"
-  scout = "groq/meta-llama/llama-4-scout-17b-16e-instruct"
-  gpto = "groq/openai/gpt-oss-20b"
-  gptoo = "groq/openai/gpt-oss-120b"
-  nano = "openai/gpt-4.1-nano"
-  ghnano = "github/gpt-4.1-nano"
+  # openai
+  ogpt = "openai/gpt-5.4"
+  omini = "openai/gpt-5.4-mini"
+  onano = "openai/gpt-5.4-nano"
+
+  # github
+  ghgpt = "github/gpt-5.4"
+  ghmini = "github/gpt-5.4-mini"
+  ghnano = "github/gpt-5.4-nano"
+
+  # groq
+  groq = "groq/openai/gpt-oss-120b"
+
+  # ollama
   qwen = "ollama/qwen3:4b"
-  gemma = "ollama/gemma3n:e2b"
-  # granite = "ollama/granite3.2:2b"
   jan = "ollama/hf.co/Menlo/Jan-nano-gguf:Q4_K_M"
-  # qw30 = "openrouter/qwen/qwen3-30b-a3b:free"
-  # qw8 = "openrouter/qwen/qwen3-8b:free"
+
+  # openrouter
   mercury = "openrouter/inception/mercury-coder-small-beta"
-  co = "copilot/gpt-4.1"
-  g5 = "copilot/gpt-5"
-  gpt5 = "copilot/gpt-5"
-  codex = "copilot/gpt-5-codex"
-  g5c = "copilot/gpt-5-codex"
-  sonnet4 = "copilot/claude-sonnet-4"
-  s4 = "copilot/claude-sonnet-4"
-  sonnet = "copilot/claude-sonnet-4.5"
-  s = "copilot/claude-sonnet-4.5"
-  haiku = "copilot/claude-haiku-4.5"
-  grok = "copilot/grok-code-fast-1"
-  ha = "openrouter/openrouter/horizon-alpha"
-  son="anthropic/claude-sonnet-4-5"
+
+  # copilot
+  gpt = "copilot/gpt-5.4"
+  mini = "copilot/gpt-5-mini"
+  codex = "copilot/gpt-5.3-codex"
+  cgemini = "copilot/gemini-2.5-pro"
+  csonnet = "copilot/claude-sonnet-4.6"
+  copus = "copilot/claude-opus-4.6"
+  chaiku = "copilot/claude-haiku-4.5"
+  cgrok = "copilot/grok-code-fast-1"
+
+  # anthropic
+  sonnet="anthropic/claude-sonnet-4-5"
   opus="anthropic/claude-opus-4-6"
 
 [settings]
   show_commands=true
-  # default_model="mini"
-  default_model="anthropic/claude-sonnet-4-5"
+  default_model="sonnet"
 
