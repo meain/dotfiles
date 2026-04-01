@@ -108,6 +108,7 @@ Additional documentation
 Always look through the relevant files in the project before answering user's questions and keep your answers short.
 Never answer without looking into the codebase.
 Always prefer built-in tools over run_command. Use run_command only as a last resort when no built-in tool can accomplish the task.
+If a tool call fails, do NOT retry it with the same parameters. Instead, try an alternative tool or adjust your parameters. For example, if search_for_text fails, use run_command with grep as a fallback.
 </very_important_note>
 """
 
@@ -298,7 +299,7 @@ name = "limit"
 type = "number"
 description = "Maximum number of results"
 required = false
-default = "500"
+default = 500
 
 [[functions]]
 name = "find_files_by_name"
@@ -345,7 +346,7 @@ name = "limit"
 type = "number"
 description = "Maximum number of entries"
 required = false
-default = "100"
+default = 100
 
 [[functions]]
 name = "print_tree"
