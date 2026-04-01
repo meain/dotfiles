@@ -2,19 +2,37 @@
 # bash for read -ei (editable pre-filled input)
 
 # Plaintext bookmark manager (markdown format)
-# Usage: ,bm [add|show|list|open|remove] [url]
+# Format: - [Title](url) #tag1 #tag2 @alias
+# URLs can contain %s placeholders for parameters
+# Usage: ,bm [add|show|list|open|remove|go|aliases] [url]
 
 set -e
 
 BM_FILE="${BM_FILE:-$HOME/.local/share/bookmarks.md}"
+
+show_help() {
+    echo "Usage: ,bm [command] [url]"
+    echo ""
+    echo "Commands:"
+    echo "  add [url]  Add bookmark (url defaults to clipboard)"
+    echo "  list       List all bookmarks"
+    echo "  show       Fuzzy-pick bookmark(s), output URL(s) (default)"
+    echo "  open       Fuzzy-pick bookmark(s), open in browser"
+    echo "  remove     Fuzzy-pick bookmark(s) to remove"
+    echo "  go <alias> [param]  Open bookmark by alias (%s replaced with param)"
+    echo "  tags       Filter by tags (AND): ,bm tags tag1 tag2"
+    echo "  aliases    List all defined aliases"
+    echo "  help       Show this help"
+}
+
 SEARCH_TERM=""
 case "${1:-}" in
-add | list | show | pick | open | remove | help | edit | tags)
+add | list | show | pick | open | remove | help | edit | tags | go | aliases)
     OPERATION="$1"
     SEARCH_TERM="${2:-}"
     ;;
 "")
-    echo "No search term provided" >&2
+    show_help >&2
     exit 1
     ;;
 *)
@@ -33,32 +51,41 @@ check_bookmarks() {
 }
 
 extract_url() {
-    sed 's/.*](\([^)]*\)).*/\1/'
+    sed -E 's/.*\]\((.*)\).*/\1/'
 }
 
 render() {
-    sed 's/^- \[\([^]]*\)\]([^)]*)/- \1/' |
+    sed -E 's/^- \[([^]]*)\]\(.*\)/- \1/' |
+        sed 's/ @\([^ ]*\)/ \x1b[33m@\1\x1b[0m/g' |
         sed 's/#\([^ ]*\)/\x1b[36m#\1\x1b[0m/g'
 }
 
-# format for picker: url<tab>Title #tag1 #tag2 (with colored tags)
+# format for picker: url<tab>Title #tag1 #tag2 @alias (with colored tags/aliases)
 picker_format() {
-    sed 's/^- \[\([^]]*\)\](\([^)]*\))\(.*\)/\2\t\1\3/' |
+    sed -E 's/^- \[([^]]*)\]\((.*)\)( [#@].*)/\2\t\1\3/' |
+        sed -E 's/^- \[([^]]*)\]\((.*)\)/\2\t\1/' |
+        sed 's/ @\([^ ]*\)/ \x1b[33m@\1\x1b[0m/g' |
         sed 's/#\([^ ]*\)/\x1b[36m#\1\x1b[0m/g'
+}
+
+# prompt for %s parameter if url contains it, then open
+open_url() {
+    local url="$1"
+    if echo "$url" | grep -qF '%s'; then
+        if [ -t 0 ]; then
+            read -r -p "Parameter: " param
+            url="${url//%s/$param}"
+        else
+            echo "URL requires a parameter (%s)" >&2
+            return 1
+        fi
+    fi
+    open "$url"
 }
 
 case "$OPERATION" in
 help)
-    echo "Usage: ,bm [command] [url]"
-    echo ""
-    echo "Commands:"
-    echo "  add [url]  Add bookmark (url defaults to clipboard)"
-    echo "  list       List all bookmarks"
-    echo "  show       Fuzzy-pick bookmark(s), output URL(s) (default)"
-    echo "  open       Fuzzy-pick bookmark(s), open in browser"
-    echo "  remove     Fuzzy-pick bookmark(s) to remove"
-    echo "  tags       Filter by tags (AND): ,bm tags tag1 tag2"
-    echo "  help       Show this help"
+    show_help
     ;;
 add)
     url="${2:-$(pbpaste)}"
@@ -85,7 +112,14 @@ add)
             tag_str="$tag_str #$t"
         done
     fi
-    echo "- [$title]($url)$tag_str" >>"$BM_FILE"
+    read -r -p "Aliases (space-separated, optional): " aliases
+    alias_str=""
+    if [ -n "$aliases" ]; then
+        for a in $aliases; do
+            alias_str="$alias_str @$a"
+        done
+    fi
+    echo "- [$title]($url)$tag_str$alias_str" >>"$BM_FILE"
     ;;
 list)
     check_bookmarks
@@ -99,7 +133,7 @@ tags)
     check_bookmarks
     shift
     if [ $# -eq 0 ]; then
-        grep -oE '#[^ ]+' "$BM_FILE" | sort | uniq -c | sort -rn | awk '{print $2, "(" $1 ")"}'
+        sed -E 's/.*\)//' "$BM_FILE" | grep -oE '#[^ ]+' | sort | uniq -c | sort -rn | awk '{print $2, "(" $1 ")"}'
         exit 0
     fi
     results="$(cat "$BM_FILE")"
@@ -111,6 +145,31 @@ tags)
         exit 1
     fi
     echo "$results" | render
+    ;;
+aliases)
+    check_bookmarks
+    sed 's/.*)//' "$BM_FILE" | grep -oE '@[^ ]+' | sort | uniq -c | sort -rn | awk '{print $2, "(" $1 ")"}'
+    ;;
+go)
+    check_bookmarks
+    alias="${2:?Usage: ,bm go <alias> [param]}"
+    lines="$(grep -E "\) .* @${alias}( |$)" "$BM_FILE")"
+    if [ -z "$lines" ]; then
+        echo "No bookmark found for alias: @$alias" >&2
+        exit 1
+    fi
+    echo "$lines" | extract_url |
+        while IFS= read -r url; do
+            if echo "$url" | grep -qF '%s'; then
+                param="${3:-}"
+                if [ -z "$param" ]; then
+                    echo "URL requires a parameter: $url" >&2
+                    exit 1
+                fi
+                url="${url//%s/$param}"
+            fi
+            open "$url"
+        done
     ;;
 edit)
     $EDITOR "$BM_FILE"
@@ -133,7 +192,7 @@ open)
     fi
     echo "$result" | cut -f1 |
         while IFS= read -r url; do
-            open "$url"
+            open_url "$url"
         done
     ;;
 remove)
