@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interview Report Card -- {{CANDIDATE_NAME}} -- {{PROJECT_NAME}}</title>
+<style>
+  :root {
+    --bg: #f8f9fb;
+    --surface: #ffffff;
+    --surface2: #f0f1f4;
+    --border: #d8dbe3;
+    --text: #1e2330;
+    --text-muted: #5f6578;
+    --accent: #3b5ccc;
+    --green: #1a8a5c;
+    --yellow: #a67c00;
+    --red: #c93a3a;
+    --orange: #c06a1a;
+    --code-bg: #f3f4f7;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    padding: 2rem;
+  }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .header {
+    text-align: center;
+    padding: 3rem 2rem 2rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2.5rem;
+  }
+  .header h1 { font-size: 1.75rem; font-weight: 700; color: var(--text); margin-bottom: .25rem; }
+  .header .subtitle { color: var(--text-muted); font-size: .95rem; }
+  .header .candidate {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: .4rem 1.2rem;
+    border-radius: 999px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    font-weight: 600;
+    color: var(--accent);
+    font-size: 1rem;
+  }
+  .score-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+  .score-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    text-align: center;
+  }
+  .score-card .label { font-size: .8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: .5rem; }
+  .score-card .score { font-size: 2rem; font-weight: 800; }
+  .score-card .max { font-size: .9rem; color: var(--text-muted); }
+  .score-card .bar { height: 4px; border-radius: 2px; background: var(--surface2); margin-top: .75rem; overflow: hidden; }
+  .score-card .bar-fill { height: 100%; border-radius: 2px; }
+  .c-green { color: var(--green); }
+  .c-yellow { color: var(--yellow); }
+  .c-orange { color: var(--orange); }
+  .c-red { color: var(--red); }
+  .bg-green { background: var(--green); }
+  .bg-yellow { background: var(--yellow); }
+  .bg-orange { background: var(--orange); }
+  .bg-red { background: var(--red); }
+  .verdict {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  .verdict .overall-score {
+    font-size: 3rem;
+    font-weight: 900;
+    min-width: 100px;
+    text-align: center;
+  }
+  .verdict .overall-label {
+    font-size: .8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+  }
+  .verdict .summary { flex: 1; }
+  .verdict .summary p { color: var(--text-muted); margin-top: .5rem; }
+  .section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+  }
+  .section-header {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    cursor: pointer;
+    user-select: none;
+  }
+  .section-header:hover { background: var(--surface2); }
+  .section-header h2 { font-size: 1.1rem; font-weight: 600; flex: 1; }
+  .section-header .badge {
+    padding: .2rem .7rem;
+    border-radius: 999px;
+    font-size: .75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .badge-critical { background: rgba(201,58,58,.1); color: var(--red); }
+  .badge-warning { background: rgba(166,124,0,.1); color: var(--yellow); }
+  .badge-good { background: rgba(26,138,92,.1); color: var(--green); }
+  .badge-info { background: rgba(59,92,204,.1); color: var(--accent); }
+  .section-body { padding: 1.5rem; }
+  .section-body.collapsed { display: none; }
+  .finding {
+    margin-bottom: 1.75rem;
+    padding-bottom: 1.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .finding:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .finding h3 {
+    font-size: .95rem;
+    font-weight: 600;
+    margin-bottom: .5rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+  .finding p, .finding ul { color: var(--text-muted); font-size: .9rem; margin-bottom: .75rem; }
+  .finding ul { padding-left: 1.25rem; }
+  .finding li { margin-bottom: .35rem; }
+  .finding .tag {
+    display: inline-block;
+    padding: .1rem .5rem;
+    border-radius: 4px;
+    font-size: .7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+  }
+  .tag-bug { background: rgba(201,58,58,.1); color: var(--red); }
+  .tag-design { background: rgba(59,92,204,.1); color: var(--accent); }
+  .tag-security { background: rgba(166,124,0,.1); color: var(--yellow); }
+  .tag-style { background: rgba(26,138,92,.1); color: var(--green); }
+  .tag-testing { background: rgba(192,106,26,.1); color: var(--orange); }
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    overflow-x: auto;
+    font-size: .82rem;
+    line-height: 1.6;
+    margin: .75rem 0;
+  }
+  code {
+    font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', monospace;
+    font-size: .82rem;
+  }
+  p code, li code {
+    background: var(--code-bg);
+    padding: .15rem .4rem;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+  }
+  .file-ref { color: var(--accent); font-weight: 500; }
+  .diff { margin: .75rem 0; }
+  .diff-label { font-size: .75rem; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; padding: .25rem .75rem; border-radius: 6px 6px 0 0; }
+  .diff-bad-label { background: rgba(201,58,58,.1); color: var(--red); }
+  .diff-good-label { background: rgba(26,138,92,.1); color: var(--green); }
+  .diff pre { border-radius: 0 0 8px 8px; margin-top: 0; }
+  .line-bad { color: var(--red); }
+  .line-good { color: var(--green); }
+  .line-neutral { color: var(--text-muted); }
+  table { width: 100%; border-collapse: collapse; margin: .75rem 0; font-size: .85rem; }
+  th, td { padding: .6rem .75rem; text-align: left; border-bottom: 1px solid var(--border); }
+  th { color: var(--text-muted); font-weight: 600; font-size: .75rem; text-transform: uppercase; letter-spacing: .04em; }
+  .strength-item {
+    display: flex;
+    gap: .75rem;
+    padding: .75rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .strength-item:last-child { border-bottom: none; }
+  .strength-icon { color: var(--green); font-size: 1.1rem; flex-shrink: 0; margin-top: .1rem; }
+  .strength-text { color: var(--text-muted); font-size: .9rem; }
+  .strength-text strong { color: var(--text); }
+  .recommendation {
+    margin-top: 2.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+  }
+  .recommendation h2 { font-size: 1.2rem; margin-bottom: 1rem; }
+  .rec-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-top: 1.25rem; }
+  .rec-option {
+    padding: 1rem;
+    border-radius: 8px;
+    border: 2px solid var(--border);
+    text-align: center;
+    font-weight: 600;
+    font-size: .9rem;
+  }
+  .rec-option.selected { border-color: var(--orange); background: rgba(192,106,26,.08); }
+  .rec-option .rec-label { font-size: .7rem; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: .25rem; }
+  .chevron {
+    transition: transform .2s;
+    color: var(--text-muted);
+    font-size: .8rem;
+  }
+  .chevron.open { transform: rotate(90deg); }
+  .footnote {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: .75rem;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  @media (max-width: 640px) {
+    body { padding: 1rem; }
+    .verdict { flex-direction: column; text-align: center; }
+    .score-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media print {
+    body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- TEMPLATE STRUCTURE REFERENCE
+     This file defines the visual style and HTML structure.
+     Claude should use this as a base and populate with actual findings.
+     All sections below are illustrative of the structure. -->
+
+<!-- Header -->
+<div class="header">
+  <h1>Take-Home Assignment Report Card</h1>
+  <div class="subtitle">{{PROJECT_NAME}} -- {{LANGUAGE}}</div>
+  <div class="candidate">{{CANDIDATE_NAME}}</div>
+</div>
+
+<!-- Overall Verdict: color class should match score (c-green/c-yellow/c-orange/c-red) -->
+<div class="verdict">
+  <div>
+    <div class="overall-label">Overall</div>
+    <div class="overall-score {{SCORE_COLOR}}">{{OVERALL_SCORE}}<span style="font-size:1.2rem;color:var(--text-muted)">/10</span></div>
+  </div>
+  <div class="summary">
+    <strong>{{ONE_LINE_VERDICT}}</strong>
+    <p>{{VERDICT_PARAGRAPH}}</p>
+  </div>
+</div>
+
+<!-- Score Grid: one card per dimension. Use c-green/c-yellow/c-orange/c-red and matching bg- -->
+<div class="score-grid">
+  <!-- Repeat this block for each scoring dimension -->
+  <div class="score-card">
+    <div class="label">{{DIMENSION_NAME}}</div>
+    <div class="score {{SCORE_COLOR}}">{{SCORE}}</div><div class="max">/ 10</div>
+    <div class="bar"><div class="bar-fill {{BG_COLOR}}" style="width:{{SCORE_PCT}}%"></div></div>
+  </div>
+</div>
+
+<!-- Collapsible Section template -->
+<div class="section" id="sec-{{ID}}">
+  <div class="section-header" onclick="toggle('{{ID}}')">
+    <span class="chevron open" id="chev-{{ID}}">&#9654;</span>
+    <h2>{{SECTION_TITLE}}</h2>
+    <span class="badge {{BADGE_CLASS}}">{{BADGE_TEXT}}</span>
+  </div>
+  <div class="section-body" id="body-{{ID}}">
+
+    <!-- Finding template -->
+    <div class="finding">
+      <h3><span class="tag {{TAG_CLASS}}">{{TAG}}</span> {{FINDING_TITLE}}</h3>
+      <p>{{DESCRIPTION}}</p>
+      <p><span class="file-ref">{{FILE}}:{{LINE}}</span></p>
+      <pre><code>{{CODE_WITH_COLORED_SPANS}}</code></pre>
+
+      <!-- Optional diff block -->
+      <div class="diff">
+        <div class="diff-label diff-good-label">{{DIFF_LABEL}}</div>
+        <pre><code>{{SUGGESTED_FIX}}</code></pre>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Strengths section uses strength-item class -->
+<!-- Follow-up questions section uses finding class with tables for good/bad signals -->
+
+<!-- Recommendation block -->
+<div class="recommendation">
+  <h2>Recommendation</h2>
+  <p style="color:var(--text-muted); margin-bottom: 1rem;">Based on the analysis of code correctness, architecture, testing, security, and production readiness.</p>
+  <div class="rec-options">
+    <div class="rec-option {{#if strong_hire}}selected{{/if}}"><span class="rec-label">Strong Hire</span>{{STRONG_HIRE_TEXT}}</div>
+    <div class="rec-option {{#if hire}}selected{{/if}}"><span class="rec-label">Hire</span>{{HIRE_TEXT}}</div>
+    <div class="rec-option {{#if lean_no}}selected{{/if}}"><span class="rec-label">Lean No Hire</span>{{LEAN_NO_TEXT}}</div>
+    <div class="rec-option {{#if no_hire}}selected{{/if}}"><span class="rec-label">No Hire</span>{{NO_HIRE_TEXT}}</div>
+  </div>
+  <div style="margin-top: 1.5rem; padding: 1.25rem; background: var(--surface2); border-radius: 8px;">
+    <p><strong>Rationale:</strong></p>
+    <p style="color: var(--text-muted); margin-top: .5rem;">{{RATIONALE}}</p>
+  </div>
+</div>
+
+<div class="footnote">
+  Generated on {{DATE}} &middot; Review of <code>{{SOURCE}}</code>
+</div>
+
+</div>
+
+<script>
+function toggle(id) {
+  const body = document.getElementById('body-' + id);
+  const chev = document.getElementById('chev-' + id);
+  body.classList.toggle('collapsed');
+  chev.classList.toggle('open');
+}
+</script>
+</body>
+</html>
