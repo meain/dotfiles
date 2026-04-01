@@ -41,8 +41,10 @@
     "code-review@claude-plugins-official": true,
     "swift-lsp@claude-plugins-official": true
   },
+  "autoDreamEnabled": true,
   "skipDangerousModePermissionPrompt": true,
   "feedbackSurveyState": {
     "lastShownTime": 1753939897813
-  }
+  },
+  "skipAutoPermissionPrompt": true
 }
