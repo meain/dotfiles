@@ -16,7 +16,12 @@ run_command() {
     action="$1" && shift
     tempfile=$(mktemp)
     echo "$repos" | while read -r repo; do
-        output="$(chainlink log --cache-time 5m --all --output markdown "$@" --repo "$repo" $CHAINLINK_ARGS 2>/dev/null || true)"
+        errfile=$(mktemp)
+        output="$(chainlink log --cache-time 5m --all --output json "$@" --repo "$repo" $CHAINLINK_ARGS 2>"$errfile" | jq -r '.chains[]? | .pullRequest | "- [#\(.number)](\(.url)) \(.title) @\(.author)"' || true)"
+        if [[ -s $errfile ]]; then
+            printf "## \033[31m%s (FAILED)\033[0m\n" "$repo" >&2
+        fi
+        rm -f "$errfile"
         if [[ -n $output ]]; then
             printf "## %s\n" "$repo"
             echo "$output"
@@ -27,12 +32,12 @@ run_command() {
 
         case "$action" in
         show)
-            cat "$tempfile" | sed 's|##|#|' | sed 's|\[\(#.*\)\](.*)\(.*\)|\1\2|'
+            cat "$tempfile" | sed 's|##|#|' | sed 's|\[\(#.*\)\](.*)\(.*\)|\1\2|' | sed $'s|@\\([^ ]*\\)|\033[90m@\\1\033[0m|'
             sed 's|\ *-|-|' <"$tempfile" | pbcopy
             ,linkify
             ;;
         *)
-            cat "$tempfile" | sed 's|##|#|' | sed 's|\[\(#.*\)\](.*)\(.*\)|\1\2|'
+            cat "$tempfile" | sed 's|##|#|' | sed 's|\[\(#.*\)\](.*)\(.*\)|\1\2|' | sed $'s|@\\([^ ]*\\)|\033[90m@\\1\033[0m|'
             sed 's|\ *-|-|' <"$tempfile" | pbcopy
             ,linkify
 
