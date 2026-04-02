@@ -1,18 +1,33 @@
 #!/bin/sh
 
-# Convert markdown to html once. Use ,markdown-preview for continues updates.
+# Convert markdown to html once. Use -l for live preview via ,markdown-preview.
 
 set -e
 
+live=0
+if [ "$1" = "-l" ]; then
+    live=1
+    shift
+fi
+
 input="$1"
+# if no file provided and interactive terminal, pick one with fzf
+if [ -z "$input" ] && [ -t 0 ]; then
+    input=$(fd -e md --max-depth 3 | fzf --preview 'head -50 {}') || exit 1
+fi
+
 # read from stdin if available
 if [ -z "$input" ]; then
     if [ -t 0 ]; then
-        echo "Usage: $0 <input.md> [output.html]"
+        echo "Usage: $0 [-l] <input.md> [output.html]"
         exit 1
     else
         input="/dev/stdin"
     fi
+fi
+
+if [ "$live" = 1 ]; then
+    exec ,markdown-preview "$input"
 fi
 
 basename_noext=$(basename "$input" .md)
