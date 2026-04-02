@@ -3,6 +3,11 @@
     "defaultMode": "auto"
   },
   "model": "opus[1m]",
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline.sh",
+    "padding": 2
+  },
   "hooks": {
     "Notification": [
       {
@@ -28,6 +33,17 @@
           {
             "type": "command",
             "command": ",make-noise"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/update-task-summary.sh",
+            "async": true
           }
         ]
       }
