@@ -1,0 +1,38 @@
+#!/bin/sh
+
+# Browse recent Claude Code assistant messages and render selected one in browser.
+# Usage: ,claude-view-message
+
+set -e
+
+CLAUDE_DIR="$HOME/.claude/projects"
+
+tmpdir=$(mktemp -d)
+trap 'rm -rf "$tmpdir"' EXIT
+
+# Extract last assistant text from a jsonl file using a single jq call
+cat >"$tmpdir/extract.sh" <<'SCRIPT'
+#!/bin/sh
+jq -rs '[.[] | select(.message.role=="assistant")] | last | [.message.content[]? | select(.type=="text") | .text] | join("\n\n") // empty' "$1" 2>/dev/null
+SCRIPT
+chmod +x "$tmpdir/extract.sh"
+
+# Build entries from sessions modified in last 24h
+for f in $(find "$CLAUDE_DIR" -maxdepth 2 -name "*.jsonl" -mmin -1440 2>/dev/null); do
+    text=$("$tmpdir/extract.sh" "$f")
+    [ "$(printf '%s' "$text" | wc -l)" -gt 3 ] || continue
+    ts=$(jq -rs '[.[] | select(.message.role=="assistant")] | last | .timestamp // empty' "$f" 2>/dev/null)
+    project_dir=$(dirname "$f")
+    project=$(jq -r '.originalPath // empty' "$project_dir/sessions-index.json" 2>/dev/null | xargs basename 2>/dev/null)
+    [ -z "$project" ] && project=$(basename "$project_dir")
+    short_id=$(basename "$f" .jsonl | cut -c1-8)
+    printf '%s|%s  %s/%s\n' "$f" "$ts" "$project" "$short_id"
+done | sort -t'|' -k2,2r >"$tmpdir/entries"
+
+[ -s "$tmpdir/entries" ] || { echo "No messages found" >&2; exit 1; }
+
+selected=$(,picker --no-sort -d '|' --with-nth 2 \
+    --preview "$tmpdir/extract.sh {1}" \
+    --preview-window 'bottom:60%:wrap' <"$tmpdir/entries") || exit 0
+
+printf '%s' "$selected" | sed 's/|.*//' | xargs "$tmpdir/extract.sh" | ,markdown-to-html
