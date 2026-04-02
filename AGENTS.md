@@ -38,6 +38,10 @@ Commits follow the format: `[component] brief description`
 
 When config files reference scripts or other dotfiles (e.g., shell aliases calling `,some-script`), those files live in this repo, not at their home directory symlink targets. Always look for and edit files here in the repo — the home directory paths are just symlinks back to this repo.
 
+## Conventions
+
+- Use `,picker` instead of `fzf` directly in scripts — it's a wrapper that supports both terminal and GUI picker backends
+
 ## Version Control
 
 This repo uses **git** (not jj) for its own version control. The `jj/` directory contains jj config for use in other repos.
