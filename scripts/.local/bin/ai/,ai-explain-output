@@ -1,0 +1,17 @@
+#!/bin/sh
+
+set -e
+
+# Capture tmux pane content and extract the previous command's output.
+# We look for prompt markers (✨/💥) to find command boundaries,
+# then grab the second-to-last block (the one before the current prompt).
+output="$(tmux capture-pane -pS -500)"
+
+last_output="$(echo "$output" |
+    awk '/[✨💥]/{n++; if(n>1) prev=curr; curr=""; cmd_prev=cmd_curr; cmd_curr=$0; next} {curr=curr $0 "\n"} END{printf "%s\n%s", cmd_prev, prev}')"
+
+esa +coder "Explain the following terminal output. If the command errored, explain what caused the error and how to fix it.
+
+\`\`\`
+$last_output
+\`\`\`"
