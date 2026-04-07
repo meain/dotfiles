@@ -126,6 +126,7 @@ Keep the summary under 200 characters. Include the failing step name and a brief
 
 ## Important notes
 
+- **Only run the specifically requested command in tmux.** Any other commands needed for the task (e.g., looking up information, reading files, searching code) should be run directly in Claude Code using the normal tools. Tmux is only for the command the user explicitly asked to run there.
 - Always use `dangerouslyDisableSandbox: true` for all tmux commands since they need socket access at `/private/tmp/tmux-*/`.
 - The user may ask you to do other work while monitoring. Use `run_in_background: true` for the sleep+capture commands to avoid blocking.
 - If the pane's working directory changes or a new command starts, re-evaluate whether you're still monitoring the right thing.
