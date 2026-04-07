@@ -292,7 +292,8 @@ in
     # pkgs.googler # search google from terminal
     # pkgs.cmatrix # matrix thingy in shell
     # pkgs.graphviz # draw graphs with code
-    # pkgs.groff # gnu troff  ## needed for md->pdf conversion
+    pkgs.groff # gnu troff  ## needed for md->pdf conversion
+    pkgs.ghostscript # needed by pdfroff for ps->pdf conversion
     # pkgs.pgcli # fancier postgres cli
     # pkgs.trivy # docker vulnerability scanner
     # pkgs.act # github ci locally
