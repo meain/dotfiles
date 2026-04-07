@@ -17,7 +17,7 @@ run_command() {
     tempfile=$(mktemp)
     echo "$repos" | while read -r repo; do
         errfile=$(mktemp)
-        output="$(chainlink log --cache-time 5m --all --output json "$@" --repo "$repo" $CHAINLINK_ARGS 2>"$errfile" | jq -r '.chains[]? | .pullRequest | "- [#\(.number)](\(.url)) \(.title) @\(.author)"' || true)"
+        output="$(chainlink log --cache-time 5m --all --output json "$@" --repo "$repo" $CHAINLINK_ARGS 2>"$errfile" | jq -r 'def flatten_chain(depth): .pullRequest as $pr | "\("  " * depth)- [#\($pr.number)](\($pr.url)) \($pr.title) @\($pr.author)", (.children[]? | flatten_chain(depth + 1)); .chains[]? | flatten_chain(0)' || true)"
         if [[ -s $errfile ]]; then
             printf "## \033[31m%s (FAILED)\033[0m\n" "$repo" >&2
         fi
