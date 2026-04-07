@@ -26,6 +26,7 @@ Read through the entire current conversation and identify moments where:
 - The user had to **repeat themselves** about something they'd already said
 - The agent **asked unnecessary questions** or stalled when it could have acted
 - The agent **missed a convention or pattern** that was already in the codebase
+- A **skill was invoked** and the agent had to work around a gap, use an undocumented pattern, or the skill instructions were incomplete/misleading
 
 For each moment, note:
 - What the agent did wrong or inefficiently
@@ -46,8 +47,9 @@ Group related corrections into concise, actionable lessons. A good lesson is:
 
 For each lesson, decide the best way to capture it:
 1. **CLAUDE.md rule** — behavioral guideline, convention, or preference
-2. **Skill suggestion** — if a multi-step workflow recurred that would benefit from a dedicated skill
-3. **Script suggestion** — if a specific repetitive task could be automated into a helper script
+2. **Skill update** — if an existing skill was invoked and its instructions were incomplete, misleading, or missing a pattern that came up during the session
+3. **Skill suggestion** — if a multi-step workflow recurred that would benefit from a dedicated skill
+4. **Script suggestion** — if a specific repetitive task could be automated into a helper script
 
 ## Step 4: Present all proposals
 
@@ -65,6 +67,10 @@ I found N things worth capturing from this session:
    What happened: ...
    Proposed rule: "..."
    Section: ...
+
+📝 **Skill update: [skill name]**
+   What happened: [gap or undocumented pattern encountered]
+   Proposed change: "[exact text to add/modify in the skill's SKILL.md]"
 
 🔧 **Skill suggestion: [name]**
    What happened: [recurring workflow that came up]
@@ -86,7 +92,11 @@ You already read CLAUDE.md in Step 2, so you know its structure and tone. For ea
 
 After all edits, show a brief summary of what was added and where.
 
-## Step 6: Handle skill/script suggestions
+## Step 6: Apply confirmed skill updates
+
+For each confirmed skill update, read the skill's SKILL.md, find the appropriate section, and apply the change — same principles as CLAUDE.md edits (match tone, minimal addition, no duplicates).
+
+## Step 7: Handle skill/script suggestions
 
 If the user confirmed a skill suggestion, say:
 
