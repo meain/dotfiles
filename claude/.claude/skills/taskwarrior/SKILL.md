@@ -196,6 +196,9 @@ Learning notes should be concise bullet points covering:
 task a1b2c3d4 done                  # mark complete
 task a1b2c3d4 delete                # mark deleted
 task undo                    # revert most recent change
+
+# Revert a completed task back to pending (works for any task, not just the last action)
+task a1b2c3d4 modify status:pending
 ```
 
 **On completion**: Always write task notes (and learning notes if applicable) before marking done. See Phase 2F.
