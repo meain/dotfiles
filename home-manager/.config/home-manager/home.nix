@@ -122,7 +122,7 @@ in
     pkgs.gnuplot # plotting
     pkgs.ddgr # search ddg from terminal
     # pkgs.dasht # terminal docs
-    # pkgs.taskwarrior # task management
+    pkgs.taskwarrior3 # task management
     pkgs.todo-txt-cli # todo management
     # pkgs.ts # task spooler
     pkgs.pup # html filtering
