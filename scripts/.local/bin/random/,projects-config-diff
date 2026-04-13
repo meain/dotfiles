@@ -1,0 +1,79 @@
+#!/bin/sh
+
+# Diff current project configs (.mscripts etc.) against the backup
+# See ,projects-config-backup for the backup location
+
+set -e
+
+SAVEPATH="$HOME/.local/share/project-configs-backup"
+
+if [ ! -d "$SAVEPATH" ]; then
+    echo "Backup directory not found: $SAVEPATH" >&2
+    echo "Run ,projects-config-backup first" >&2
+    exit 1
+fi
+
+# Determine project root and clean path
+find_project_root() {
+    dir="$PWD"
+    while [ "$dir" != "/" ]; do
+        [ -d "$dir/.git" ] || [ -d "$dir/.jj" ] && echo "$dir" && return
+        dir="${dir%/*}"
+    done
+    return 1
+}
+
+project_root="$(find_project_root)" || {
+    echo "Not inside a git/jj project" >&2
+    exit 1
+}
+
+cleanpath="${project_root#$HOME/dev/}"
+backup_dir="$SAVEPATH/$cleanpath"
+
+if [ ! -d "$backup_dir" ]; then
+    echo "No backup found for project: $cleanpath" >&2
+    exit 1
+fi
+
+# What to diff - default to .mscripts, or accept argument
+target="${1:-.mscripts}"
+
+current="$project_root/$target"
+backed_up="$backup_dir/$target"
+
+if [ ! -e "$current" ] && [ ! -e "$backed_up" ]; then
+    echo "Neither current nor backed up '$target' exists for $cleanpath" >&2
+    exit 1
+fi
+
+if [ ! -e "$backed_up" ]; then
+    echo "No backup exists for '$target' (only exists in current project)"
+    echo "---"
+    if [ -d "$current" ]; then
+        find "$current" -type f | while read -r f; do
+            echo "+ ${f#$project_root/}"
+        done
+    else
+        echo "+ $target"
+    fi
+    exit 0
+fi
+
+if [ ! -e "$current" ]; then
+    echo "'$target' exists in backup but not in current project (deleted locally)"
+    echo "---"
+    if [ -d "$backed_up" ]; then
+        find "$backed_up" -type f | while read -r f; do
+            echo "- ${f#$backup_dir/}"
+        done
+    else
+        echo "- $target"
+    fi
+    exit 0
+fi
+
+diff -ru "$backed_up" "$current" \
+    --label "backup/$cleanpath/$target" \
+    --label "current/$cleanpath/$target" \
+    || true
