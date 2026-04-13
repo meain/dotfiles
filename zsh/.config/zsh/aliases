@@ -110,6 +110,9 @@ alias jwu='jj workspace update-stale'
 alias jnm='jj git fetch && jj new main 2>/dev/null || jj new master'
 alias ,gcl="jj git clone --colocate"
 
+# taskwarrior
+alias tsk='task rc.verbose=label -BLOCKED list'
+
 # linux only
 if [ "$OSTYPE" = "linux" ]; then
     alias caffeinate='systemd-inhibit tail -f /dev/null'
