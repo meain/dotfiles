@@ -3,7 +3,7 @@
 set -euo pipefail
 
 if jj stack >/dev/null 2>&1; then
-    branches="$(jj log -r 'main..@' --template='bookmarks++"\n"' --no-graph |
+    branches="$(jj log -r 'main-..@' --template='bookmarks++"\n"' --no-graph |
         grep -vE '^$' | sed 's|\*$||;s|@origin$||' | uniq)"
 else
     branches="$(git branch --sort=-committerdate | sed 's|^..||' | grep -v 'HEAD detached')"
