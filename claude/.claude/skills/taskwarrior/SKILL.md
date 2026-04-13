@@ -162,6 +162,8 @@ task a1b2c3d4 modify depends:d5e6f7a8    # add dependency
 
 Detailed notes for tasks live in `/Users/meain/.local/share/tasknotes/`. Each note is a markdown file named `<uuid-prefix> - <task name>.md`.
 
+**All task-related resources go here** — not just notes, but also drafts, templates, support ticket messages, or any other artifacts tied to a task. Name them with the task UUID prefix for discoverability (e.g., `<uuid> - Azure support ticket draft.md`). Never save task-related files to `/tmp` or other locations.
+
 **When completing a task**, always write detailed notes summarizing what was done, findings, and outcomes. If you learned something new during the task (new patterns, gotchas, field types, service behaviors, etc.), also create a separate learning note named `<uuid-prefix> learning.md` with bullet points of key learnings.
 
 After writing notes, annotate the task with the filenames:
