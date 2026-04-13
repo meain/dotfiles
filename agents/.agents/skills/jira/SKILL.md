@@ -176,15 +176,17 @@ jira issue assign ISSUE-KEY x
 
 ### Phase 2F: Comment
 
+Always use `--no-input` to avoid interactive prompts.
+
 ```bash
 # Add a comment
-jira issue comment add ISSUE-KEY "Comment text here"
+jira issue comment add ISSUE-KEY --no-input "Comment text here"
 
 # Multi-line comment
-jira issue comment add ISSUE-KEY $'First line\n\nSecond paragraph'
+jira issue comment add ISSUE-KEY --no-input $'First line\n\nSecond paragraph'
 
 # Internal comment (not visible to external users)
-jira issue comment add ISSUE-KEY "Internal note" --internal
+jira issue comment add ISSUE-KEY --no-input "Internal note" --internal
 ```
 
 ### Phase 2G: Link
@@ -243,7 +245,7 @@ When the user needs issue context for coding work, focus on:
 ## Guidelines
 
 - Always use `--plain` flag when listing/viewing issues so output is parseable (avoid the interactive TUI)
-- Always use `--no-input` flag on create/edit to avoid interactive prompts
+- Always use `--no-input` flag on create/edit/comment to avoid interactive prompts
 - Use `--no-truncate` with list commands to show full field contents when details matter
 - If the jira CLI is not configured or authentication fails, inform the user and suggest running `jira init`
 - **Confirm before mutating**: For write operations (create, edit, move, assign, comment, link, delete), confirm the action with the user before executing unless they gave an explicit and unambiguous instruction
