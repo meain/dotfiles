@@ -69,9 +69,11 @@ USE-MASTER returns the trunk bookmark instead of current commit."
         (user-error "Current commit not available upstream")))
     (let* ((raw-url (nth 1 (split-string (meain/cmd-head "jj git remote list"))))
            (ref (if use-master
-                    (string-trim
-                     (shell-command-to-string
-                      "jj log -r 'trunk()' --no-graph -T 'bookmarks'"))
+                    (string-trim-right
+                     (string-trim
+                      (shell-command-to-string
+                       "jj log -r 'trunk()' --no-graph -T 'bookmarks'"))
+                     "\*")
                   (string-trim
                    (shell-command-to-string
                     "jj log -r @ --no-graph -T 'commit_id'")))))
