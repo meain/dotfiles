@@ -73,7 +73,7 @@
       # "rectangle" # window management
       # "tailscale" # vpn
       # "chatgpt" # quick shortcut is awesome
-      "meetingbar" # next meeting in bar
+      # "meetingbar" # next meeting in bar
       "obs" # screen recording
       "keycastr" # show keys being typed (for recording)
 
