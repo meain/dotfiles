@@ -18,8 +18,8 @@ confluence read "$id" |
     esa +notools -- "Who all has not filled in the weekly reports? " \
         "Output just the names as a list with \- prefix. The output should contain nothing else." > "$tmp"
 
-printf 'Submit your updates for last week in [%s](%s)\n\nMissing:\n%s\n' "$title" "$url" "$(cat "$tmp")" | glow
-printf 'Submit your updates for last week in [%s](%s)\n\nMissing:\n%s\n' "$title" "$url" "$(cat "$tmp")" | mdclip
+printf 'Submit your weekly updates\n[%s](%s)\n\nMissing:\n%s\n' "$title" "$url" "$(cat "$tmp")" | glow
+printf 'Submit your weekly updates\n[%s](%s)\n\nMissing:\n%s\n' "$title" "$url" "$(cat "$tmp")" | mdclip
 
 printf "\n\nPress any key to open the webpage"
 read -r REPLY # just waiting for a keypress
