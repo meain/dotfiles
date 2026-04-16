@@ -126,7 +126,7 @@
                           ("Lotion" . '(160 nil 'regular))
                           ("Luculent" . '(160 .2 'regular))
                           ("M+ 1m" . '(160 nil 'regular))
-                          ("Maple Mono" . '(160 nil 'light))
+                          ("Maple Mono" . '(150 nil 'light))
                           ("Martian Mono Condensed" . '(160 nil 'regular))
                           ("Martian Mono ExtraLight" . '(160 nil 'regular))
                           ("Martian Mono Light" . '(160 nil 'regular))
