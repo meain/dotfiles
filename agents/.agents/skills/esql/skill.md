@@ -10,101 +10,63 @@ Query Elasticsearch via the Kibana ES|QL async search API. Run ES|QL queries dir
 
 ## Setup
 
-On first use in a conversation, ask the user to provide a curl command from Kibana's network tab (browser DevTools). Extract these from the curl:
+### Staging / Production — `,es-web` CLI
 
-1. **Kibana URL** — the base URL (e.g., `https://<region>.azure.elastic-cloud.com`)
-2. **Cookie** — the `sid=...` session cookie
-3. **kbn-version** — the Kibana version header
-4. **kbn-build-number** — the Kibana build number header
+The `,es-web` CLI at `/Users/meain/.local/bin/utils/,es-web` handles Kibana ES|QL queries with automatic async polling, session management, and table output.
 
-Store these in shell variables for the session:
-
+**First-time setup** for a cluster: the user provides a curl command from Kibana's network tab:
 ```bash
-export KIBANA_URL="https://..."
-export KIBANA_COOKIE="sid=..."
-export KBN_VERSION="8.x.x"
-export KBN_BUILD_NUMBER="12345"
+pbpaste | ,es-web init stg-us
+pbpaste | ,es-web init prd-eu
 ```
 
-The cookie is a session token and will expire — if you get 401s, ask the user for a fresh curl.
+**Check configured clusters:**
+```bash
+,es-web list
+```
 
-## How to query
+Session cookies expire after a few hours. If you get a 401/session expired error, ask the user to paste a fresh curl from Kibana.
 
-Use curl to POST to the Kibana async ES|QL endpoint:
+## How to query with `,es-web`
 
 ```bash
-curl -s "${KIBANA_URL}/internal/search/esql_async" \
-  --compressed \
-  -X POST \
-  -H 'Content-Type: application/json' \
-  -H "kbn-version: ${KBN_VERSION}" \
-  -H "kbn-build-number: ${KBN_BUILD_NUMBER}" \
-  -H 'elastic-api-version: 1' \
-  -H 'x-elastic-internal-origin: Kibana' \
-  -H "Cookie: ${KIBANA_COOKIE}" \
-  --data-raw '{"params":{"query":"YOUR_ESQL_QUERY_HERE","locale":"en","include_execution_metadata":true,"filter":{"bool":{"must":[],"filter":[],"should":[],"must_not":[]}},"dropNullColumns":true},"isSearchStored":false,"stream":true}'
+# Simple: service + time window
+,es-web -c stg-us -s earn -t 1h -n 20
+
+# With additional WHERE clause
+,es-web -c stg-us -s earn -t 1h -q 'message LIKE "*validation*"'
+
+# Custom fields
+,es-web -c stg-us -s earn -t 1h -f '@timestamp, message, labels.error'
+
+# Raw ES|QL query
+,es-web -c stg-us 'FROM logs-* | WHERE service.name == "earn" | STATS count = COUNT(*) BY labels.event_type | SORT count DESC | LIMIT 10'
+
+# JSON output for further processing
+,es-web -c stg-us -s earn -t 30m --json
+
+# Debug: print generated query
+,es-web -c stg-us -s earn -t 1h --debug
 ```
+
+### `,es-web` options
+
+- `-c` — Cluster alias (e.g. `stg-us`, `prd-eu`)
+- `-s` — `service.name` filter
+- `-t` — Time window (e.g. `30m`, `1h`, `2d`)
+- `-n` — Max rows (default: 20)
+- `-q` — Additional WHERE clause
+- `-f` — Comma-separated fields for KEEP clause
+- `-i` — Index pattern (default: `logs-*`)
+- `--json` — Raw JSON output
+- `--debug` — Print generated query to stderr
 
 ### Important notes
 
-- ES|QL query must have newlines escaped as `\n` and quotes escaped as `\"` in the JSON payload
 - `labels.status` is a **keyword** field — compare with strings, not integers (e.g., `labels.status >= "500"`)
-- `service.environment` values vary by cluster — common values: `prod`, `prd`, `qa`, `dev`
-- Use `dropNullColumns: true` to keep response compact
-
-### Handling async responses
-
-The endpoint may return results immediately or require polling:
-
-- **Immediate**: Response contains `columns`, `values`, and `"is_running": false` — parse directly.
-- **Still running**: Response contains `"is_running": true` and an `id` but no `columns`/`values` — you must poll.
-
-**Polling**: Re-POST to the same endpoint with the returned `id` appended as a query parameter, or use the Elasticsearch async get API. In practice, poll by re-requesting with a short delay:
-
-```bash
-# If is_running is true, wait and poll
-QUERY_ID="<id from response>"
-sleep 2
-curl -s "${KIBANA_URL}/internal/search/esql_async/${QUERY_ID}" \
-  --compressed \
-  -H "kbn-version: ${KBN_VERSION}" \
-  -H "kbn-build-number: ${KBN_BUILD_NUMBER}" \
-  -H 'elastic-api-version: 1' \
-  -H 'x-elastic-internal-origin: Kibana' \
-  -H "Cookie: ${KIBANA_COOKIE}"
-```
-
-Repeat until `is_running` is `false` (max ~5 attempts with increasing delay).
-
-### Parsing results
-
-Pipe curl output to python3 for readable tables. This script handles both immediate and still-running responses:
-
-```bash
-| python3 -c "
-import sys, json
-d = json.load(sys.stdin)
-if d.get('is_running'):
-    print(f'Query still running. ID: {d.get(\"id\", \"unknown\")}')
-    sys.exit(1)
-if 'statusCode' in d:
-    print(f'Error {d[\"statusCode\"]}: {d.get(\"message\", \"unknown error\")}')
-    sys.exit(1)
-cols = [c['name'] for c in d.get('columns', [])]
-vals = d.get('values', [])
-found = d.get('documents_found', len(vals))
-print(f'Found: {found} docs, showing {len(vals)} rows')
-if not cols:
-    print('No columns returned')
-    sys.exit(0)
-widths = [max(len(c), max((len(str(v[i])[:80]) for v in vals), default=0)) for i, c in enumerate(cols)]
-header = ' | '.join(c.ljust(w) for c, w in zip(cols, widths))
-print(header)
-print('-' * len(header))
-for v in vals:
-    print(' | '.join(str(x if x is not None else '')[:80].ljust(w) for x, w in zip(v, widths)))
-"
-```
+- When no `-f` is specified, default fields are: `@timestamp, service.name, message, labels.error, labels.error_message, labels.path, labels.status, trace.id`
+- For raw ES|QL queries, pass the full query as a positional argument — no default KEEP is added
+- LIKE queries on `message` across many services can be slow — scope with service and tight time windows
 
 ## Known service names
 
@@ -300,16 +262,17 @@ Broader service-level search (no trace ID):
 | Environment | Method |
 |---|---|
 | Dev / personal | Use `,es` CLI directly |
-| Staging / production | Use the Kibana ES\|QL curl approach (requires session cookie from user) |
-| Unknown / `,es` fails | Fall back to clipboard mode (see below) |
+| Staging / production | Use `,es-web -c <cluster>` (requires session cookie from user) |
+| No session available | Fall back to clipboard mode (see below) |
 
-When falling back to clipboard mode (no session cookie available):
-1. Copy the ES|QL query to the user's clipboard with `pbcopy`
-2. Tell the user to open Kibana for the appropriate environment
-3. Open browser DevTools Network tab, filter for `esql_async`
-4. Paste and run the ESQL query in Discover (ESQL mode)
-5. In the Network tab, find the `esql_async` request, copy the response JSON
-6. Paste the response back into the conversation
+**Cluster naming convention:** `<env>-<region>`, e.g. `stg-us`, `stg-eu`, `prd-us`, `prd-eu`, `prd-apac`.
+
+When no `,es-web` session is configured for the target cluster:
+1. Ask the user to paste a curl from Kibana's network tab, then run `pbpaste | ,es-web init <cluster>`
+2. If that's not possible, fall back to clipboard mode:
+   - Copy the ES|QL query to the user's clipboard with `pbcopy`
+   - Tell the user to open Kibana, run the query in Discover (ES|QL mode)
+   - Have them copy the response JSON from the network tab
 
 ## Investigation workflow tips
 

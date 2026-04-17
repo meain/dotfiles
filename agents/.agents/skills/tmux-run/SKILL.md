@@ -8,6 +8,8 @@ user_invocable: true
 
 Run a command in a tmux pane and continuously monitor its output, notifying the user via system notification if something fails.
 
+> **Sandbox**: All tmux commands require `dangerouslyDisableSandbox: true` (socket access at `/private/tmp/tmux-*/`).
+
 ## Step 1: Determine or create the target pane
 
 The user may specify where to run the command. Handle each case:
@@ -127,7 +129,6 @@ Keep the summary under 200 characters. Include the failing step name and a brief
 ## Important notes
 
 - **Only run the specifically requested command in tmux.** Any other commands needed for the task (e.g., looking up information, reading files, searching code) should be run directly in Claude Code using the normal tools. Tmux is only for the command the user explicitly asked to run there.
-- Always use `dangerouslyDisableSandbox: true` for all tmux commands since they need socket access at `/private/tmp/tmux-*/`.
 - The user may ask you to do other work while monitoring. Use `run_in_background: true` for the sleep+capture commands to avoid blocking.
 - If the pane's working directory changes or a new command starts, re-evaluate whether you're still monitoring the right thing.
 - If the pane is in a different directory than needed, `cd` before running the command.
