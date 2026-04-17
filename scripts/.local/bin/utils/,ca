@@ -2,7 +2,14 @@
 
 set -e
 
-if echo "$1" | grep -qE '^[0-9][0-9]*$' && [ -z "$2" ]; then
+if [ "$1" = "last" ]; then
+    last_item=$(todo.sh list | head -n -2 | sort -k1n | tail -n 1)
+    last_num=$(echo "$last_item" | awk '{print $1}')
+    echo "$last_item" |
+        grep -E -o "https?://[^ ]*" |
+        sort -u | xargs -I{} open '{}'
+    todo.sh do "$last_num"
+elif echo "$1" | grep -qE '^[0-9][0-9]*$' && [ -z "$2" ]; then
     if [ "$(uname)" = "Linux" ]; then
         prevwindowname="$(xdotool getactivewindow getwindowname)"
     fi
