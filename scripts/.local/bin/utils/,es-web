@@ -1,0 +1,332 @@
+#!/usr/bin/env python3
+
+"""Query Elasticsearch via Kibana ES|QL for staging/production clusters."""
+
+import argparse
+import json
+import os
+import re
+import sys
+import time
+import urllib.request
+import urllib.error
+
+CONFIG_DIR = os.path.expanduser("~/.config/es-web")
+
+
+def config_path(cluster):
+    return os.path.join(CONFIG_DIR, f"{cluster}.json")
+
+
+def load_config(cluster):
+    path = config_path(cluster)
+    if not os.path.exists(path):
+        print(f"No config for cluster '{cluster}'. Run: ,es-web init {cluster}", file=sys.stderr)
+        sys.exit(1)
+    with open(path) as f:
+        return json.load(f)
+
+
+def save_config(cluster, cfg):
+    os.makedirs(CONFIG_DIR, exist_ok=True)
+    with open(config_path(cluster), "w") as f:
+        json.dump(cfg, f, indent=2)
+
+
+def parse_curl(text):
+    """Extract Kibana URL, cookie, kbn-version, and kbn-build-number from a curl command."""
+    url_match = re.search(r"curl\s+'(https://[^']+)'", text)
+    if not url_match:
+        url_match = re.search(r'curl\s+"(https://[^"]+)"', text)
+    if not url_match:
+        print("Could not find URL in curl command", file=sys.stderr)
+        sys.exit(1)
+
+    full_url = url_match.group(1)
+    # Extract base URL (scheme + host)
+    from urllib.parse import urlparse
+    parsed = urlparse(full_url)
+    base_url = f"{parsed.scheme}://{parsed.netloc}"
+
+    cookie = None
+    kbn_version = None
+    kbn_build = None
+
+    cookie_match = re.search(r"-H\s+'Cookie:\s*([^']+)'", text)
+    if not cookie_match:
+        cookie_match = re.search(r'-H\s+"Cookie:\s*([^"]+)"', text)
+    if cookie_match:
+        cookie = cookie_match.group(1).strip()
+
+    ver_match = re.search(r"-H\s+'kbn-version:\s*([^']+)'", text)
+    if not ver_match:
+        ver_match = re.search(r'-H\s+"kbn-version:\s*([^"]+)"', text)
+    if ver_match:
+        kbn_version = ver_match.group(1).strip()
+
+    build_match = re.search(r"-H\s+'kbn-build-number:\s*([^']+)'", text)
+    if not build_match:
+        build_match = re.search(r'-H\s+"kbn-build-number:\s*([^"]+)"', text)
+    if build_match:
+        kbn_build = build_match.group(1).strip()
+
+    if not cookie:
+        print("Could not find Cookie header in curl command", file=sys.stderr)
+        sys.exit(1)
+    if not kbn_version:
+        print("Could not find kbn-version header in curl command", file=sys.stderr)
+        sys.exit(1)
+    if not kbn_build:
+        print("Could not find kbn-build-number header in curl command", file=sys.stderr)
+        sys.exit(1)
+
+    return {
+        "url": base_url,
+        "cookie": cookie,
+        "kbn_version": kbn_version,
+        "kbn_build_number": kbn_build,
+    }
+
+
+def do_esql(cfg, query, poll_attempts=8):
+    """Execute an ES|QL query via Kibana async search, handling polling."""
+    url = cfg["url"] + "/internal/search/esql_async"
+    headers = {
+        "Content-Type": "application/json",
+        "kbn-version": cfg["kbn_version"],
+        "kbn-build-number": cfg["kbn_build_number"],
+        "elastic-api-version": "1",
+        "x-elastic-internal-origin": "Kibana",
+        "Cookie": cfg["cookie"],
+    }
+    body = json.dumps({
+        "params": {
+            "query": query,
+            "locale": "en",
+            "include_execution_metadata": True,
+            "filter": {"bool": {"must": [], "filter": [], "should": [], "must_not": []}},
+            "dropNullColumns": True,
+        },
+        "isSearchStored": False,
+        "stream": True,
+    }).encode()
+
+    req = urllib.request.Request(url, data=body, headers=headers, method="POST")
+    try:
+        with urllib.request.urlopen(req) as resp:
+            data = json.loads(resp.read())
+    except urllib.error.HTTPError as e:
+        if e.code == 401:
+            print("Session expired. Run: ,es-web init <cluster>", file=sys.stderr)
+            sys.exit(1)
+        print(f"HTTP {e.code}: {e.read().decode()[:500]}", file=sys.stderr)
+        sys.exit(1)
+
+    # Poll if still running
+    if data.get("is_running"):
+        qid = data.get("id")
+        if not qid:
+            print("Query returned is_running but no ID", file=sys.stderr)
+            sys.exit(1)
+
+        for attempt in range(poll_attempts):
+            delay = min(2 * (attempt + 1), 10)
+            time.sleep(delay)
+
+            poll_url = url + "/" + qid
+            poll_body = json.dumps({
+                "id": qid,
+                "params": {"dropNullColumns": True},
+                "isSearchStored": False,
+                "stream": True,
+            }).encode()
+            poll_req = urllib.request.Request(poll_url, data=poll_body, headers=headers, method="POST")
+            try:
+                with urllib.request.urlopen(poll_req) as resp:
+                    data = json.loads(resp.read())
+            except urllib.error.HTTPError as e:
+                if e.code == 404:
+                    # Query expired, retry from scratch won't help
+                    print("Query expired during polling. Try a narrower time range.", file=sys.stderr)
+                    sys.exit(1)
+                if e.code == 401:
+                    print("Session expired. Run: ,es-web init <cluster>", file=sys.stderr)
+                    sys.exit(1)
+                continue
+
+            if not data.get("is_running"):
+                break
+        else:
+            print("Query timed out after polling. Try a narrower time range.", file=sys.stderr)
+            sys.exit(1)
+
+    if "statusCode" in data:
+        print(f"Error {data['statusCode']}: {data.get('message', '')}", file=sys.stderr)
+        sys.exit(1)
+
+    return data
+
+
+def format_table(data):
+    """Format ES|QL response as a readable table."""
+    columns = [c["name"] for c in data.get("columns", [])]
+    values = data.get("values", [])
+
+    if not columns:
+        print("No results")
+        return
+
+    found = data.get("documents_found", len(values))
+    print(f"Found: {found} docs, showing {len(values)} rows\n")
+
+    # Calculate column widths (cap at 80)
+    max_width = 80
+    widths = []
+    for i, col in enumerate(columns):
+        col_max = len(col)
+        for row in values:
+            val = str(row[i]) if row[i] is not None else ""
+            col_max = max(col_max, min(len(val), max_width))
+        widths.append(col_max)
+
+    # Print header
+    header = " | ".join(c.ljust(w) for c, w in zip(columns, widths))
+    print(header)
+    print("-" * len(header))
+
+    # Print rows
+    for row in values:
+        line = " | ".join(
+            str(v if v is not None else "")[:max_width].ljust(w)
+            for v, w in zip(row, widths)
+        )
+        print(line)
+
+
+def build_query(args):
+    """Build ES|QL query from flags or raw query."""
+    if args.raw:
+        return args.raw
+
+    parts = [f"FROM {args.index}"]
+
+    wheres = []
+
+    if args.time:
+        match = re.match(r"^(\d+)([mhd])$", args.time)
+        if not match:
+            print("Invalid time format. Use e.g. 30m, 1h, 2d", file=sys.stderr)
+            sys.exit(1)
+        amount, unit = int(match.group(1)), match.group(2)
+        from datetime import datetime, timedelta, timezone
+        now = datetime.now(timezone.utc)
+        delta = {"m": timedelta(minutes=amount), "h": timedelta(hours=amount), "d": timedelta(days=amount)}[unit]
+        start = (now - delta).strftime("%Y-%m-%dT%H:%M:%S.000Z")
+        end = now.strftime("%Y-%m-%dT%H:%M:%S.000Z")
+        wheres.append(f'@timestamp >= "{start}"')
+        wheres.append(f'@timestamp <= "{end}"')
+
+    if args.service:
+        wheres.append(f'service.name == "{args.service}"')
+
+    if args.query:
+        wheres.append(args.query)
+
+    if wheres:
+        parts.append("| WHERE " + "\n  AND ".join(wheres))
+
+    parts.append("| SORT @timestamp DESC")
+    parts.append(f"| LIMIT {args.limit}")
+
+    if args.fields:
+        parts.append(f"| KEEP {args.fields}")
+    elif not args.raw:
+        # Default useful fields when no KEEP is specified
+        parts.append("| KEEP @timestamp, service.name, message, labels.error, labels.error_message, labels.path, labels.status, trace.id")
+
+    return "\n".join(parts)
+
+
+def cmd_init(args):
+    """Parse a curl command from stdin and store config."""
+    text = sys.stdin.read()
+    if not text.strip():
+        print("Paste a curl command from Kibana network tab into stdin", file=sys.stderr)
+        print("Usage: pbpaste | ,es-web init stg-us", file=sys.stderr)
+        sys.exit(1)
+
+    cfg = parse_curl(text)
+    save_config(args.cluster, cfg)
+    print(f"Saved config for '{args.cluster}' ({cfg['url']})")
+
+
+def cmd_query(args):
+    """Run an ES|QL query."""
+    cfg = load_config(args.cluster)
+    query = build_query(args)
+
+    if args.debug:
+        print(f"Query:\n{query}\n", file=sys.stderr)
+
+    data = do_esql(cfg, query)
+
+    if args.json:
+        print(json.dumps(data, indent=2))
+    else:
+        format_table(data)
+
+
+def cmd_list(_args):
+    """List configured clusters."""
+    if not os.path.exists(CONFIG_DIR):
+        print("No clusters configured. Run: ,es-web init <cluster>")
+        return
+    for f in sorted(os.listdir(CONFIG_DIR)):
+        if f.endswith(".json"):
+            name = f[:-5]
+            with open(os.path.join(CONFIG_DIR, f)) as fh:
+                cfg = json.load(fh)
+            print(f"  {name}: {cfg['url']}")
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        prog=",es-web",
+        description="Query Elasticsearch via Kibana ES|QL for staging/production.",
+    )
+    sub = parser.add_subparsers(dest="command")
+
+    # init
+    init_p = sub.add_parser("init", help="Store Kibana session from a curl command")
+    init_p.add_argument("cluster", help="Cluster alias (e.g. stg-us, prd-eu)")
+
+    # list
+    sub.add_parser("list", help="List configured clusters")
+
+    # query (default)
+    parser.add_argument("-c", dest="cluster", help="Cluster alias (e.g. stg-us)")
+    parser.add_argument("-s", dest="service", help="service.name filter")
+    parser.add_argument("-t", dest="time", help="Time window (e.g. 30m, 1h, 2d)")
+    parser.add_argument("-n", dest="limit", type=int, default=20, help="Max rows (default: 20)")
+    parser.add_argument("-i", dest="index", default="logs-*", help="Index pattern (default: logs-*)")
+    parser.add_argument("-q", dest="query", help="Additional WHERE clause")
+    parser.add_argument("-f", dest="fields", help="Comma-separated fields for KEEP clause")
+    parser.add_argument("--json", action="store_true", help="Output raw JSON")
+    parser.add_argument("--debug", action="store_true", help="Print query to stderr")
+    parser.add_argument("raw", nargs="?", help="Raw ES|QL query")
+
+    args = parser.parse_args()
+
+    if args.command == "init":
+        cmd_init(args)
+    elif args.command == "list":
+        cmd_list(args)
+    elif args.cluster:
+        cmd_query(args)
+    else:
+        parser.print_help()
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()
