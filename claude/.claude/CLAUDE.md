@@ -15,3 +15,4 @@
 - When creating temporary resources, create it in /tmp and not the repo root
 - If the user suggests corrections or you find issues in how you work through issues, suggest adding changes in skills/CLAUDE.md to the user. Do not add it without user confirmation.
 - Ask me before you do action on a public forum like Jira or GitHub PRs/issues unless I have already explicitly asked you to do it.
+- Use CLI tools to access external services: `confluence` for Confluence pages, `jira` for Jira tickets, and `gh` (with GIT_DIR set) for GitHub. Prefer these over web fetching or asking the user to look things up.
