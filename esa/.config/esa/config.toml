@@ -30,6 +30,7 @@
   cgrok = "copilot/grok-code-fast-1"
 
   # anthropic
+  haiku="anthropic/claude-haiku-4-5"
   sonnet="anthropic/claude-sonnet-4-5"
   opus="anthropic/claude-opus-4-6"
 
