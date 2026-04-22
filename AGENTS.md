@@ -41,6 +41,8 @@ When config files reference scripts or other dotfiles (e.g., shell aliases calli
 ## Conventions
 
 - Use `,picker` instead of `fzf` directly in scripts — it's a wrapper that supports both terminal and GUI picker backends
+- When writing new scripts, follow the style of existing scripts in the same category — check shebang (`#!/bin/sh` vs `#!/usr/bin/env bash`), `set -e` usage, and argument parsing patterns
+- Prefer fewer commits when changes are closely related within a component — the "one commit per script" rule applies to independent scripts, not tightly coupled edits
 
 ## Version Control
 
