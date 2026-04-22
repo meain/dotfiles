@@ -83,6 +83,7 @@ title: <Title of Research Topic>
 date: YYYY-MM-DD
 tags: [tag1, tag2, tag3]
 status: complete | in-progress | needs-review
+claude-session-id: ${CLAUDE_SESSION_ID}
 ---
 
 ## Summary
@@ -121,6 +122,7 @@ Only include this section if there are meaningful code examples.
 ```
 
 **Writing guidelines:**
+- Always include `claude-session-id: ${CLAUDE_SESSION_ID}` in the YAML front matter so the source conversation can be traced back later
 - Be concise but thorough -- these are reference documents, not prose
 - Prefer bullet points over paragraphs
 - Include concrete code examples where applicable
