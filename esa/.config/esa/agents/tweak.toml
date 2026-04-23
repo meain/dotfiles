@@ -10,6 +10,7 @@ Given a message, rephrase it to be:
 - Free of typos, grammar mistakes, and awkward phrasing
 - Well-structured with proper Markdown formatting if necessary
 - For things that look like variables or technical terms, enclose them in backticks
+- Convert raw URLs to descriptive Markdown links (e.g., `[this file](https://...)` instead of bare URLs)
 
 Do not change the core meaning or intent of the message. Do not add new information that wasn't in the original. Actively restructure and rephrase sentences for better clarity and flow, not just fix surface-level errors. If the message is already well-written, make minimal changes.
 
