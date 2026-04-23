@@ -1,6 +1,6 @@
 ---
 name: tmux-run
-description: Run a command in a tmux pane/window/session and monitor its output for errors. Triggers: /tmux-run, "run in tmux", "run in the other pane", "run on the left", "run in a new window", "run in a new session", "monitor tmux", "watch tmux"
+description: "Run a command in a tmux pane/window/session and monitor its output for errors. Triggers: /tmux-run, 'run in tmux', 'run in the other pane', 'run on the left', 'run in a new window', 'run in a new session', 'monitor tmux', 'watch tmux'"
 user_invocable: true
 ---
 

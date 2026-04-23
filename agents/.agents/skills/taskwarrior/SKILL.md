@@ -1,5 +1,5 @@
 ---
-name: tw
+name: taskwarrior
 description: Manage tasks using Taskwarrior (task CLI) - create, list, update, complete, annotate, and manage dependencies between tasks.
 triggers:
   - /tw

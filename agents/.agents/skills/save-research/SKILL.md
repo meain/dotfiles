@@ -83,7 +83,7 @@ title: <Title of Research Topic>
 date: YYYY-MM-DD
 tags: [tag1, tag2, tag3]
 status: complete | in-progress | needs-review
-claude-session-id: ${CLAUDE_SESSION_ID}
+claude-session-id: ${CLAUDE_SESSION_ID}  # or pi-session-id: <ask user> when under pi agent
 ---
 
 ## Summary
@@ -122,7 +122,7 @@ Only include this section if there are meaningful code examples.
 ```
 
 **Writing guidelines:**
-- Always include `claude-session-id: ${CLAUDE_SESSION_ID}` in the YAML front matter so the source conversation can be traced back later
+- Always include a session ID in the YAML front matter so the source conversation can be traced back later. If `${CLAUDE_SESSION_ID}` is available (Claude Code), use `claude-session-id:` as the key. Otherwise, when running under pi agent (check `PI_CODING_AGENT=true` env var), ask the user to provide the session ID and use `pi-session-id:` as the key
 - Be concise but thorough -- these are reference documents, not prose
 - Prefer bullet points over paragraphs
 - Include concrete code examples where applicable

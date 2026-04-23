@@ -1,6 +1,6 @@
 ---
 name: split-commit
-description: Analyze changed files and split them into separate jj commits for each logical group of changes. Triggers: /split-commit, "split into commits", "split changes", "commit each change separately", "split this into logical commits"
+description: "Analyze changed files and split them into separate jj commits for each logical group of changes. Triggers: /split-commit, 'split into commits', 'split changes', 'commit each change separately', 'split this into logical commits'"
 ---
 
 Split the current working copy changes into separate Jujutsu (jj) commits, one per logical group.
