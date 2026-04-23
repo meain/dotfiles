@@ -6,6 +6,7 @@
 
 ## Project Structure
 
+- When working in any Veeam project (`/Users/meain/dev/veeam/`), refer to `/Users/meain/dev/docs/veeam-repo-map.md` for how repos connect, dependency graphs, deployment flows, useful scripts/commands, and which repo to change for a given task. If you find any inaccuracies or missing information in that doc, update it.
 - Each project will have `.mdocs` and `.mscripts` folders in the root containing docs or scripts related to the project. These provide insights into how the user works on it and how you can do certain things.
 - Do not reference `.mdocs`/`.mscripts` in documentation outside of taskwarrior tasks. Use the `save-research` skill when working with `.mdocs`.
 - You might find additional instructions or research docs at `/Users/meain/dev/docs`. Refer to these if necessary. If you find outdated or incorrect information in those docs, suggest updates to them.
