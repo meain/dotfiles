@@ -16,6 +16,15 @@ if [ -z "$input" ] && [ -t 0 ]; then
     input=$(fd -e md --max-depth 3 | fzf --preview 'head -50 {}') || exit 1
 fi
 
+if [ -d "$input" ]; then
+    input="$input/$(fd -e md --max-depth 3 -C "$input" | fzf --preview "head -50 $input/{}")" || exit 1
+fi
+
+if [ ! -f "$input" ]; then
+    echo "Not a file"
+    exit 1
+fi
+
 # read from stdin if available
 if [ -z "$input" ]; then
     if [ -t 0 ]; then
