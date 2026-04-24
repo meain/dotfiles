@@ -9,8 +9,11 @@ mkdir -p "$SAVEPATH"
 # Configuration: files to backup
 # Format: "source_path[:destination_name]"
 # If no destination_name provided, uses source_path as destination
+# Prefix with @ to resolve symlinks
 BACKUP_FILES="
 .git/config:git-config
+@.jj/repo/config.toml:jj-config
+.jj/repo/store/git/config:jj-git-config
 .mscripts
 .mdocs
 shell.nix
@@ -27,6 +30,7 @@ mnotes.org
 .github/copilot-instructions.md
 OpenCode.md
 CLAUDE.md
+AGENTS.md
 .claude/skills
 .claude/settings.local.json
 "
@@ -49,6 +53,15 @@ fd -I -H -t d '^(\.git|\.jj)$' "$HOME/dev" \
         while IFS= read -r backup_entry; do
             # Skip empty lines
             [ -n "$backup_entry" ] || continue
+
+            # Check for @ prefix (resolve symlinks)
+            cp_flags="-r"
+            case "$backup_entry" in
+            @*)
+                cp_flags="-rL"
+                backup_entry="${backup_entry#@}"
+                ;;
+            esac
 
             # Parse source and destination using parameter expansion
             case "$backup_entry" in
@@ -73,11 +86,11 @@ fd -I -H -t d '^(\.git|\.jj)$' "$HOME/dev" \
             # Handle directories vs files
             if [ -d "$source_path" ]; then
                 mkdir -p "$dest_path"
-                cp -r "$source_path/"* "$dest_path" || true
+                cp $cp_flags "$source_path/"* "$dest_path" || true
             else
                 # Create parent directory of the destination file
                 mkdir -p "${dest_path%/*}"
-                cp -r "$source_path" "$dest_path" || true
+                cp $cp_flags "$source_path" "$dest_path" || true
             fi
         done <<EOF
 $BACKUP_FILES
