@@ -60,6 +60,7 @@
     "swift-lsp@claude-plugins-official": true
   },
   "autoDreamEnabled": true,
+  "showThinkingSummaries": true,
   "skipDangerousModePermissionPrompt": true,
   "skipAutoPermissionPrompt": true,
   "feedbackSurveyState": {
