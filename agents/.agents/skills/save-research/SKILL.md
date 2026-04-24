@@ -35,7 +35,7 @@ Ask the user or infer from context:
   Save to `.mdocs/<category>/` in the project root (see Phase 2b for categories).
   Create the directory if it does not exist.
 - **Generic / cross-project research** (general knowledge, tools, techniques):
-  Save to `/Users/meain/dev/docs/research/`. Create subdirectories as needed.
+  Save to `/Users/meain/dev/mdocs/<category>/` using the same category system as project-specific research (see Phase 2b). Create the directory if it does not exist.
 
 If it is unclear whether the research is project-specific or generic, **ask the user**.
 
