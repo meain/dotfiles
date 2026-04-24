@@ -450,3 +450,16 @@ type = "string"
 description = """Question to ask about the tool or technology.
 Example: How do I use chi router in Go?"""
 required = true
+
+[[functions]]
+name = "read_image"
+description = "Read an image file and return its contents for visual analysis"
+command = "cat '{{file}}'"
+output_type = "image"
+safe = true
+
+[[functions.parameters]]
+name = "file"
+type = "string"
+description = "Path to the image file to read (png, jpeg, gif, or webp)"
+required = true
