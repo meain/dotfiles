@@ -1,6 +1,6 @@
 ## File & Output Conventions
 
-- When the user specifically asks to generate a markdown file, open it after writing using `,markdown-to-html <filepath>`. This only works for markdown files. For HTML files, use `open <filepath>`.
+- When the user specifically asks to generate a markdown file, open it after writing using `,markdown-to-html <filepath>`. This only works for markdown files. For HTML files, use `open <filepath>` with `dangerouslyDisableSandbox: true` — the sandbox blocks `open` from launching GUI apps.
 - When creating HTML resources like dashboards or slides, prefer light mode unless explicitly stated.
 - When creating temporary resources, create it in /tmp and not the repo root.
 
