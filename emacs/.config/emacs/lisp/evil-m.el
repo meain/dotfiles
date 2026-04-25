@@ -13,7 +13,7 @@
   (setq evil-want-keybinding nil)
   (setq evil-want-C-u-scroll t)
   (setq evil-want-minibuffer nil) ; messes with esc to quit
-  (setq evil-undo-system 'undo-tree)
+  (setq evil-undo-system 'undo-redo)
   (setq evil-kill-on-visual-paste nil)
   (setq evil-respect-visual-line-mode nil)
   (setq evil-symbol-word-search t)

@@ -110,15 +110,23 @@
   (drag-stuff-mode t)
   (drag-stuff-global-mode 1))
 
-;; Persistent undo using undo-tree
-(use-package undo-tree
+;; Persistent undo using vundo
+(use-package vundo
+  :ensure t
+  :after evil
+  :commands (vundo)
+  :init
+  (define-key evil-normal-state-map (kbd "U") 'vundo)
+  :config
+  (setq undo-limit 80000000)
+  (setq evil-want-fine-undo nil))
+
+;; Persistent undo history
+(use-package undo-fu-session
   :ensure t
   :config
-  (global-undo-tree-mode t)
-  (setq undo-limit 80000000)
-  (setq evil-want-fine-undo nil)
-  (setq undo-tree-auto-save-history t)
-  (setq undo-tree-history-directory-alist '(("." . "~/.local/share/emacs/undo"))))
+  (undo-fu-session-global-mode)
+  (setq undo-fu-session-directory "~/.local/share/emacs/undo-fu-session/"))
 
 ;; Expand region
 (use-package expand-region
