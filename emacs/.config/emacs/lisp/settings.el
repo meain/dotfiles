@@ -27,6 +27,11 @@
 (set-selection-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
 
+;; Skip bidi processing for LTR-only text (perf win in large files)
+(setq-default bidi-display-reordering 'left-to-right
+              bidi-paragraph-direction 'left-to-right)
+(setq bidi-inhibit-bpa t)
+
 ;; vim like scroll behaviour
 (setq scroll-conservatively 100)
 (setq scroll-step 1)
@@ -70,6 +75,9 @@
 
 ;; Cursor blink
 (blink-cursor-mode -1)
+
+;; Auto-focus help windows when opened
+(setq help-window-select t)
 
 ;; Follow symlinks for vc
 (setq vc-follow-symlinks t)

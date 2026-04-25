@@ -22,6 +22,9 @@
        (eglot--current-server-or-lose)
        :textDocument/didOpen `(:textDocument ,(eglot--TextDocumentItem))))))
 
+;; Increase LSP process output buffer (eglot-booster bypasses this, but good default)
+(setq read-process-output-max (* 4 1024 1024))
+
 ;; LSP
 (use-package eglot
   :commands eglot-ensure

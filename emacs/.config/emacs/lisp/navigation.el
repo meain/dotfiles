@@ -26,7 +26,11 @@
   :defer t
   :init
   (save-place-mode t)
-  (setq save-place-file "~/.local/share/emacs/saveplace"))
+  (setq save-place-file "~/.local/share/emacs/saveplace")
+  ;; Recenter view after save-place restores cursor so it's not at screen edge
+  (advice-add 'save-place-find-file-hook :after
+              (lambda (&rest _)
+                (when buffer-file-name (ignore-errors (recenter))))))
 
 ;; Fancier tab management
 (use-package tab-bar

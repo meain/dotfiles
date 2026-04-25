@@ -4,6 +4,9 @@
 ;; Anything related to managing windows or buffers.
 
 ;;; Code:
+;; Resize all windows proportionally when splitting, not just the current one
+(setq window-combination-resize t)
+
 ;; Shrink and enlarge windows (not contextual as of now)
 ;; https://www.emacswiki.org/emacs/WindowResize
 (global-set-key (kbd "M-H") (ilambda shrink-window-horizontally 5))
