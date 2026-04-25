@@ -13,11 +13,10 @@ lang=""
 
 dropMd() {
 	filepath="$1"
-	pandoc --no-highlight --template ~/.config/datafiles/github-template.html \
-		-f gfm -t html5 --metadata title="Document" $filepath |
-		sed -z 's|<pre class="mermaid"><code>\([^<]*\)</code></pre>|<div class="mermaid">\1</div>|g' >/tmp/formatted
+	filename="$2"
+	NO_OPEN=1 ,markdown-to-html "$filepath" /tmp/drop-formatted.html
 	scp "$filepath" $DROP_VM:$DROP_PATH/$filename
-	scp /tmp/formatted $DROP_VM:$DROP_PATH/$filename.html
+	scp /tmp/drop-formatted.html $DROP_VM:$DROP_PATH/${filename%.md}.html
 }
 
 dropLang() {
@@ -58,9 +57,10 @@ else
 	fi
 fi
 
-if [ $md -eq 1 ]; then
+if [ $md -eq 1 ] || [ "${sourcefile%.md}" != "$sourcefile" ]; then
 	dropMd "$sourcefile" "$filename"
-	filename="$filename".html
+	echo "https://d.meain.io/$filename"
+	filename="${filename%.md}.html"
 elif [ "$lang" != "" ]; then
 	dropLang "$sourcefile" "$filename"
 	filename="$filename".html
