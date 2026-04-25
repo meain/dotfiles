@@ -59,12 +59,13 @@
     "code-review@claude-plugins-official": true,
     "swift-lsp@claude-plugins-official": true
   },
-"autoDreamEnabled": true,
+  "autoDreamEnabled": true,
   "showThinkingSummaries": true,
   "skipDangerousModePermissionPrompt": true,
   "skipAutoPermissionPrompt": true,
   "feedbackSurveyState": {
     "lastShownTime": 1753939897813
   },
-  "teammateMode": "in-process"
+  "teammateMode": "in-process",
+  "model": "opus[1m]"
 }
