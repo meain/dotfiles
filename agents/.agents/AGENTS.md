@@ -9,7 +9,8 @@
 - When working in any Veeam project (`/Users/meain/dev/veeam/`), refer to `/Users/meain/dev/mdocs/reference/veeam-repo-map.md` for how repos connect, dependency graphs, deployment flows, useful scripts/commands, and which repo to change for a given task. If you find any inaccuracies or missing information in that doc, update it.
 - Each project will have `.mdocs` and `.mscripts` folders in the root containing docs or scripts related to the project. These provide insights into how the user works on it and how you can do certain things.
 - Do not reference `.mdocs`/`.mscripts` in documentation outside of taskwarrior tasks. Use the `save-research` skill when working with `.mdocs`.
-- Cross-project research, guides, runbooks, and reference docs live in `/Users/meain/dev/mdocs/` (the global mdocs directory). It follows the same category structure as project-level `.mdocs/` folders. Refer to these if necessary. If you find outdated or incorrect information, suggest updates.
+- Cross-project research, guides, runbooks, reference docs, and workflows live in `/Users/meain/dev/mdocs/` (the global mdocs directory). It follows the same category structure as project-level `.mdocs/` folders. Refer to these if necessary. If you find outdated or incorrect information, suggest updates.
+- Workflows in `/Users/meain/dev/mdocs/workflows/` define structured processes that combine multiple data sources (Jira, Confluence, vault) to provide intelligent recommendations and automation.
 - We use nix in almost all projects. If you find a `flake.nix`, adding new tools/CLIs should be done using that instead of homebrew.
 
 ## Version Control & PRs
