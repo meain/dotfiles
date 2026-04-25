@@ -36,3 +36,15 @@
 - My personal backlog is in `/Users/meain/.local/share/sbdb/Backlog/Backlog.md`. You can refer to it as necessary. The tasks for today will be towards the top.
 - Task notes with detailed research/context live in `/Users/meain/.local/share/sbdb/Tasks/YYYY-MM/<Task Name>.md`. They are referenced from the backlog using `[[Tasks/YYYY-MM/Task Name]]` wiki-links.
 - Use the `/vault` skill when working with these notes.
+
+## User Context
+
+- **User**: Abin Simon (aka meain)
+- **Role**: Senior Software Engineer working primarily with Golang
+
+## Communication Preferences
+
+- Prefer concise, high-signal communication over lengthy explanations
+- Use direct, no-nonsense tone
+- Strip away unnecessary complexity and focus on what's immediately useful
+- Default to brief responses unless specifically asked for detail
