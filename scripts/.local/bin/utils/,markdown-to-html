@@ -52,4 +52,4 @@ awk 'NR==1 && /^---$/{skip=1; next} skip && /^---$/{skip=0; next} !skip' "$input
     perl -0777 -pe 's|<pre class="mermaid"><code>([^<]*)</code></pre>|<div class="mermaid">$1</div>|g' >"$outfile"
 # we can safely use `<` in sed as pandoc will convert < in code to &le
 
-[ -z "$NO_OPEN" ] && open "$outfile"
+[ -z "$NO_OPEN" ] && open "$outfile" || true
