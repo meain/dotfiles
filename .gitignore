@@ -53,6 +53,7 @@ emacs/.config/emacs/tramp
 /jj/.config/jj/repos/
 /emacs/.config/emacs/agent
 .agent-shell
+!.claude/
 !claude/.claude/
 !claude/.claude/CLAUDE.md
 /.agents

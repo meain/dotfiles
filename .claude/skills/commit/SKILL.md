@@ -63,3 +63,4 @@ Run `git log --oneline -5` to confirm all commits were created.
 - Do NOT commit files containing secrets
 - If the user has both staged and unstaged changes, ask which to include
 - Prefer fewer commits when changes are closely related within a component
+- **Skip `claude/.claude/settings.json` model changes** — the `"model"` field changes frequently and is not worth tracking; omit it from commits unless other meaningful settings changed alongside it
