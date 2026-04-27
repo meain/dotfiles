@@ -5,6 +5,7 @@
   "permissions": {
     "defaultMode": "auto"
   },
+  "model": "sonnet[1m]",
   "hooks": {
     "Notification": [
       {
@@ -66,6 +67,5 @@
   "feedbackSurveyState": {
     "lastShownTime": 1753939897813
   },
-  "teammateMode": "in-process",
-  "model": "opus[1m]"
+  "teammateMode": "in-process"
 }
