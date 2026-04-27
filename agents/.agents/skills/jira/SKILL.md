@@ -96,11 +96,12 @@ jira issue list --plain --paginate 20
 Always use `--no-input` to avoid interactive prompts.
 
 ```bash
-# Basic creation
-jira issue create -tTask -s "Summary here" -b "Description here" --no-input
+# Basic creation (always specify Story type)
+jira issue create -tStory -s "Summary here" -b "Description here" --no-input
 
-# With priority, labels, assignee
+# Other issue types when explicitly needed
 jira issue create -tBug -s "Bug title" -yHigh -lbug -lurgent -a "user@example.com" -b "Bug description" --no-input
+jira issue create -tTask -s "Task title" -b "Description here" --no-input
 
 # Create subtask under a parent
 jira issue create -tSubtask -P PARENT-KEY -s "Subtask title" -b "Details" --no-input
@@ -112,13 +113,14 @@ jira issue create -p PROJECT -tStory -s "Story title" -b "As a user..." --no-inp
 jira issue create -tStory -s "Story" --custom story-points=3 --no-input
 
 # Pipe description from stdin for long bodies
-echo "Long description here" | jira issue create -tTask -s "Summary" --no-input
+echo "Long description here" | jira issue create -tStory -s "Summary" --no-input
 ```
 
 **Important**: When creating or editing issue descriptions:
 - Use markdown format for descriptions
 - Start with a descriptive paragraph, not section headings like "Context" or "Background"
 - Structure content naturally with markdown formatting (lists, code blocks, etc.)
+- **Always explicitly specify `-tStory` when creating issues unless told to use a different type**
 
 **Issue types:** Task, Bug, Story, Epic, Subtask
 
