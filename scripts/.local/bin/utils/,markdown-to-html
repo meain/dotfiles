@@ -20,11 +20,6 @@ if [ -d "$input" ]; then
     input="$input/$(fd -e md --max-depth 3 -C "$input" | fzf --preview "head -50 $input/{}")" || exit 1
 fi
 
-if [ ! -f "$input" ]; then
-    echo "Not a file"
-    exit 1
-fi
-
 # read from stdin if available
 if [ -z "$input" ]; then
     if [ -t 0 ]; then
@@ -33,6 +28,11 @@ if [ -z "$input" ]; then
     else
         input="/dev/stdin"
     fi
+fi
+
+if [ ! -f "$input" ] && [ ! -p "$input" ] && [ "$input" != "/dev/stdin" ]; then
+    echo "Not a file"
+    exit 1
 fi
 
 if [ "$live" = 1 ]; then
@@ -46,9 +46,9 @@ outfile=${2:-$filename}
 cat "$DATAFILES_PATH/pandoc-github-template.html" >"$outfile"
 awk 'NR==1 && /^---$/{skip=1; next} skip && /^---$/{skip=0; next} !skip' "$input" |
     pandoc --no-highlight \
-    --template "$DATAFILES_PATH/pandoc-github-template.html" \
-    --output - -f gfm -t html5 \
-    --metadata title="$(basename "$input")" |
+        --template "$DATAFILES_PATH/pandoc-github-template.html" \
+        --output - -f gfm -t html5 \
+        --metadata title="$(basename "$input")" |
     perl -0777 -pe 's|<pre class="mermaid"><code>([^<]*)</code></pre>|<div class="mermaid">$1</div>|g' >"$outfile"
 # we can safely use `<` in sed as pandoc will convert < in code to &le
 
