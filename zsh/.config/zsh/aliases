@@ -58,9 +58,9 @@ alias ,gh-copilot="npx -y @github/copilot --allow-tool 'write'"
 
 # fin
 alias finc="fin -c"
-alias fincc="fin -m"
+alias fincc="fin -match"
 alias fine="fin -export message | ,markdown-to-html"
-alias finm="fin -export message"
+alias finm="fin -export message | glow"
 
 # esa
 alias ec="esa -c"
