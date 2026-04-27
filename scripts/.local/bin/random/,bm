@@ -95,17 +95,12 @@ add)
         exit 1
     fi
     printf "Fetching title..."
-    fetched_title="$(curl -sL "$url" | pup 'title text{}')"
+    fetched_title="$(curl -sgL "$url" | pup 'title text{}')"
     printf "\r\033[K"
     read -r -e -i "$fetched_title" -p "Title: " title
     domain="$(echo "$url" | sed 's|.*://\([^/]*\).*|\1|')"
     suggested_tags="$(grep -F "$domain" "$BM_FILE" | grep -oE '#[^ ]+' | sort | uniq -c | sort -rn | head -3 | awk '{print $2}' | tr '\n' ' ' | sed 's/ $//')"
-    if [ -n "$suggested_tags" ]; then
-        printf "Tags (space-separated) [%s]: " "$suggested_tags"
-    else
-        printf "Tags (space-separated): "
-    fi
-    read -r tags
+    read -r -e -i "$suggested_tags" -p "Tags (space-separated): " tags
     tag_str=""
     if [ -n "$tags" ]; then
         for t in $tags; do
