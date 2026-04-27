@@ -3,7 +3,7 @@
 set -e
 
 disconnect_existing() {
-    connected=$(scutil --nc list | awk -F'"' '/Connected/ {print $2}')
+    connected=$(scutil --nc list | awk '/Connected/ {print $3}')
     if [ -n "$connected" ]; then
         scutil --nc stop "$connected"
 
@@ -42,8 +42,9 @@ s | status)
     ;;
 esac
 
-vpns=$(scutil --nc list | grep -v Connected | awk -F'"' '/\* / {print $2}')
-selected=$(echo "$vpns" | fzf --prompt="Select VPN: " --query="$*" -1)
+selected=$(scutil --nc list | tail -n+2 | grep -v Connected |
+    fzf --delimiter='"' --with-nth 2 --prompt="Select VPN: " --query="$*" -1 |
+    awk '{print $3}')
 
 if [ -z "$selected" ]; then
     echo "No VPN selected."
@@ -52,14 +53,15 @@ fi
 
 disconnect_existing
 
-echo "Connecting to $selected..."
+name="$(scutil --nc list | grep "$selected" | cut -d'"' -f2)"
+echo "Connecting to $name"
 scutil --nc start "$selected"
 
 # Wait until connected
 while true; do
     status=$(scutil --nc status "$selected")
     if echo "$status" | grep -q "Connected"; then
-        echo "Successfully connected to VPN: $selected"
+        echo "Successfully connected to VPN: $name"
         exit 0
     fi
 done
