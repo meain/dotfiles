@@ -63,9 +63,10 @@
   "autoDreamEnabled": true,
   "showThinkingSummaries": true,
   "skipDangerousModePermissionPrompt": true,
+  "teammateMode": "in-process",
   "skipAutoPermissionPrompt": true,
   "feedbackSurveyState": {
     "lastShownTime": 1753939897813
   },
-  "teammateMode": "in-process"
+  "theme": "light"
 }
