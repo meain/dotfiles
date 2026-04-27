@@ -25,7 +25,10 @@ pbpaste | ,es-web init prd-eu
 ,es-web list
 ```
 
-Session cookies expire after a few hours. If you get a 401/session expired error, ask the user to paste a fresh curl from Kibana.
+Session cookies expire after a few hours. If you get a 401/session expired error:
+1. Look up the Kibana URL for the target cluster from the Confluence Speed Dial page (`confluence page 405504500`)
+2. Open it with `open <url>` (with `dangerouslyDisableSandbox: true`)
+3. Ask the user to copy a curl from the network tab and run `! pbpaste | ,es-web init <cluster>`
 
 ## How to query with `,es-web`
 
@@ -268,7 +271,7 @@ Broader service-level search (no trace ID):
 **Cluster naming convention:** `<env>-<region>`, e.g. `stg-us`, `stg-eu`, `prd-us`, `prd-eu`, `prd-apac`.
 
 When no `,es-web` session is configured for the target cluster:
-1. Ask the user to paste a curl from Kibana's network tab, then run `pbpaste | ,es-web init <cluster>`
+1. Look up the Kibana URL on the Confluence Speed Dial page (`confluence page 405504500`), open `<kibana-base-url>/app/discover#/` with `open <url>` (with `dangerouslyDisableSandbox: true`), then ask the user to copy a curl from the network tab and run `! pbpaste | ,es-web init <cluster>`
 2. If that's not possible, fall back to clipboard mode:
    - Copy the ES|QL query to the user's clipboard with `pbcopy`
    - Tell the user to open Kibana, run the query in Discover (ES|QL mode)
