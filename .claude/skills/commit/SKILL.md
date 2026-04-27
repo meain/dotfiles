@@ -55,8 +55,8 @@ EOF
 - **Stage specific files** — never use `git add -A` or `git add .`
 - Issue all `git add && git commit` calls as **parallel tool calls in a single response** so the user can approve them all at once
 
-### 5. Verify
-Run `git log --oneline -5` to confirm all commits were created.
+### 5. Verify and Report
+Run `git log --oneline -5` to confirm all commits were created, then show the output to the user.
 
 ## Guidelines
 - Do NOT push unless explicitly requested
