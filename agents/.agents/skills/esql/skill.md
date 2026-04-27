@@ -56,7 +56,7 @@ Session cookies expire after a few hours. If you get a 401/session expired error
 
 - `-c` — Cluster alias (e.g. `stg-us`, `prd-eu`)
 - `-s` — `service.name` filter
-- `-t` — Time window (e.g. `30m`, `1h`, `2d`)
+- `-t` — Time window (e.g. `30m`, `1h`, `2d`). Defaults to `4h` if omitted (a warning is printed to stderr)
 - `-n` — Max rows (default: 20)
 - `-q` — Additional WHERE clause
 - `-f` — Comma-separated fields for KEEP clause
@@ -284,5 +284,5 @@ When no `,es-web` session is configured for the target cluster:
 - **Use trace.id** to correlate requests across services when available.
 - **Error details** live in `labels.error` and `labels.error_message`.
 - **Field types matter:** `numeric_labels.*` fields are numeric; `labels.*` fields are keywords (strings).
-- **Time windows:** Always scope queries with `@timestamp` ranges to avoid scanning too much data. Start with 1-hour windows and expand if needed.
+- **Time windows:** Default is 4h when `-t` is omitted. If a query times out, retry with a narrower window (e.g., `1h` → `30m`). For very broad searches (e.g., no service filter), start at `30m` and expand only if needed.
 - **Overview labels** (like `http_server_overview`, `dispatcher_overview`) are useful for filtering to structured log categories without needing to match on message text.

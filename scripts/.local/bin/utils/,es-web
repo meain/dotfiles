@@ -172,10 +172,6 @@ def format_table(data):
     columns = [c["name"] for c in data.get("columns", [])]
     values = data.get("values", [])
 
-    if not columns:
-        print("No results")
-        return
-
     found = data.get("documents_found", len(values))
     print(f"Found: {found} docs, showing {len(values)} rows\n")
 
@@ -268,11 +264,20 @@ def cmd_query(args):
     if args.debug:
         print(f"Query:\n{query}\n", file=sys.stderr)
 
+    if not args.time and not args.raw:
+        args.time = "4h"
+        print("No time filter specified, defaulting to last 4h. Use -t to override.", file=sys.stderr)
+
     data = do_esql(cfg, query)
 
     if args.json:
         print(json.dumps(data, indent=2))
     else:
+        columns = data.get("columns", [])
+        values = data.get("values", [])
+        if not columns or not values:
+            print(f"No results\n\nQuery used:\n{query}", file=sys.stderr)
+            sys.exit(0)
         format_table(data)
 
 
