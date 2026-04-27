@@ -115,6 +115,11 @@ jira issue create -tStory -s "Story" --custom story-points=3 --no-input
 echo "Long description here" | jira issue create -tTask -s "Summary" --no-input
 ```
 
+**Important**: When creating or editing issue descriptions:
+- Use markdown format for descriptions
+- Start with a descriptive paragraph, not section headings like "Context" or "Background"
+- Structure content naturally with markdown formatting (lists, code blocks, etc.)
+
 **Issue types:** Task, Bug, Story, Epic, Subtask
 
 ### Phase 2C: Edit (write operation)
