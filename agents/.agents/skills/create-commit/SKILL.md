@@ -37,6 +37,11 @@ EOF
 ### 4. Verify
 Run `jj status` and `jj log -r @` to confirm the commit was created successfully.
 
+## Branch/Bookmark Naming
+- For Veeam repos (`/Users/meain/dev/veeam/`), use `meain/` prefix for branch names
+- Example: `meain/earn-prod-adx-sku-downsize`, `meain/fix-auth-bug`
+- For other repos, follow the project's naming conventions
+
 ## Guidelines
 - Keep the message brief (1-2 sentences)
 - NEVER use TodoWrite or Task tools for commits
