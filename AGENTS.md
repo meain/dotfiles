@@ -38,6 +38,19 @@ Commits follow the format: `[component] brief description`
 
 When config files reference scripts or other dotfiles (e.g., shell aliases calling `,some-script`), those files live in this repo, not at their home directory symlink targets. Always look for and edit files here in the repo — the home directory paths are just symlinks back to this repo.
 
+## Finding Commands
+
+When the user references a command, use `which <command>` to resolve it. If it's an alias, follow through with `which` again on the resolved name to get the script path, then find it in this repo. Example:
+
+```
+$ which bb
+bb: aliased to ,bm
+$ which ,bm
+/Users/meain/.local/bin/random/,bm
+```
+
+That path is a symlink into this repo at `scripts/.local/bin/random/,bm`.
+
 ## Conventions
 
 - Use `,picker` instead of `fzf` directly in scripts — it's a wrapper that supports both terminal and GUI picker backends

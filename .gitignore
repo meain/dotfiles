@@ -55,3 +55,4 @@ emacs/.config/emacs/tramp
 .agent-shell
 !claude/.claude/
 !claude/.claude/CLAUDE.md
+/.agents
