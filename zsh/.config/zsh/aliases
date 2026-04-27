@@ -56,6 +56,12 @@ alias aw=",agent-workspace"
 alias aww=",agent-workspace update && jj"
 alias ,gh-copilot="npx -y @github/copilot --allow-tool 'write'"
 
+# fin
+alias finc="fin -c"
+alias fincc="fin -m"
+alias fine="fin -export message | ,markdown-to-html"
+alias finm="fin -export message"
+
 # esa
 alias ec="esa -c"
 alias ea="esa +auto"
