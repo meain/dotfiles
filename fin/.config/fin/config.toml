@@ -1,0 +1,26 @@
+[settings]
+  default_model = "anthropic/claude-sonnet-4-20250514"
+  project_file = "AGENTS.md"
+  max_turns = 50
+  yolo = true
+  ui = "minimal"
+
+[model_aliases]
+
+[providers]
+  [providers.anthropic]
+    base_url = "https://api.anthropic.com"
+    api_key_env = "ANTHROPIC_API_KEY"
+  [providers.openai]
+    base_url = "https://api.openai.com"
+    api_key_env = "OPENAI_API_KEY"
+
+[tools]
+  [tools.edit]
+    approval = "confirm"
+  [tools.read]
+    approval = "auto"
+  [tools.shell]
+    approval = "confirm"
+  [tools.write]
+    approval = "confirm"
