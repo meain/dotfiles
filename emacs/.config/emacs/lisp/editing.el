@@ -124,9 +124,10 @@
 ;; Persistent undo history
 (use-package undo-fu-session
   :ensure t
+  :init
+  (setq undo-fu-session-directory "~/.local/share/emacs/undo-fu-session/")
   :config
-  (undo-fu-session-global-mode)
-  (setq undo-fu-session-directory "~/.local/share/emacs/undo-fu-session/"))
+  (undo-fu-session-global-mode))
 
 ;; Expand region
 (use-package expand-region
