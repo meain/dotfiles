@@ -59,7 +59,8 @@ alias ,gh-copilot="npx -y @github/copilot --allow-tool 'write'"
 # fin
 alias finc="fin -c"
 alias fincc="fin -match"
-alias fine="fin -export message | ,markdown-to-html"
+alias fins="fin -session \$(fin -sessions | fzf | cut -d' ' -f1) -export html >/tmp/fin-session-export.html && open /tmp/fin-session-export.html"
+alias finh="fin -export message | ,markdown-to-html"
 alias finm="fin -export message | glow"
 
 # esa
