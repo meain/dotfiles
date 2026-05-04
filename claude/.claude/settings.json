@@ -5,7 +5,7 @@
   "permissions": {
     "defaultMode": "auto"
   },
-  "model": "sonnet[1m]",
+  "model": "opus[1m]",
   "hooks": {
     "Notification": [
       {
@@ -58,13 +58,15 @@
     "frontend-design@claude-plugins-official": true,
     "skill-creator@claude-plugins-official": true,
     "code-review@claude-plugins-official": true,
-    "swift-lsp@claude-plugins-official": true
+    "swift-lsp@claude-plugins-official": true,
+    "oncall-copilot@oncall-copilot-plugins": true,
+    "platform-tools@oncall-copilot-plugins": true
   },
   "autoDreamEnabled": true,
   "showThinkingSummaries": true,
   "skipDangerousModePermissionPrompt": true,
-  "teammateMode": "in-process",
   "skipAutoPermissionPrompt": true,
+  "teammateMode": "in-process",
   "feedbackSurveyState": {
     "lastShownTime": 1753939897813
   },
