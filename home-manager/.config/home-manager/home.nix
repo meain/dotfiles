@@ -112,7 +112,7 @@ in
     pkgs.kubecolor # colorful kubectl
     # pkgs.kubernetes-helm # helm cli
     # pkgs.stern # better way to fetch kubernetes log
-    # pkgs.yt-dlp # download youtube videos (pulls in deno/rusty-v8)
+    (pkgs.yt-dlp.override { javascriptSupport = false; }) # download youtube videos (no deno/rusty-v8)
     pkgs.chafa # show images in terminal using half blocks
     # pkgs.hub # Github integration for git
     pkgs.gh # Yet another Github integration for git
@@ -242,7 +242,7 @@ in
     # pkgs.actionlint # linting for gihtub actions
 
     # gui
-    (pkgs.mpv.override { youtubeSupport = false; }) # audio/video player (no yt-dlp/deno)
+    (pkgs.mpv.override { youtubeSupport = false; }) # audio/video player (disable yt support to avoid deno/rusty-v8)
     # pkgs.kitty # terminal emulator
     # pkgs.alacritty # terminal emulator
     # pkgs.firefox # browser
