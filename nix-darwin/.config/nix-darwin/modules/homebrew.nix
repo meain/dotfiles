@@ -16,6 +16,7 @@
       "d12frosted/emacs-plus"
       "zackelia/formulae" # for bclm
       "keith/formulae" # for reminders-cli
+      "databricks/tap"
     ];
     brews = [
       # Switching away from these builds onto installing the builds from jimeh/build-emacs-for-macos
@@ -36,6 +37,7 @@
 
       "ispell" # Emacs does not pick up nix version
       "ical-buddy" # Read from macos calendar
+      "databricks" # databricks cli
     ];
     casks = [
       "emacs-plus-app"
