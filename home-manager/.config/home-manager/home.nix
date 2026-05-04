@@ -112,7 +112,7 @@ in
     pkgs.kubecolor # colorful kubectl
     # pkgs.kubernetes-helm # helm cli
     # pkgs.stern # better way to fetch kubernetes log
-    pkgs.yt-dlp # download youtube videos
+    # pkgs.yt-dlp # download youtube videos (pulls in deno/rusty-v8)
     pkgs.chafa # show images in terminal using half blocks
     # pkgs.hub # Github integration for git
     pkgs.gh # Yet another Github integration for git
@@ -150,7 +150,7 @@ in
     pkgs.go # go programming language
     pkgs.gopls # language server
     pkgs.godef # language server helper
-    pkgs.gotools # go formatter
+    (pkgs.lib.lowPrio pkgs.gotools) # go formatter (lowPrio to avoid modernize conflict with gopls)
     pkgs.go-tools # installing staticcheck (technically available in golangci-lint, but for use in lsp)
     pkgs.errcheck # available in golangci-lint, but still
     pkgs.golangci-lint # all kinds of linters for go
@@ -167,12 +167,12 @@ in
     pkgs.html-tidy # html formatter
     pkgs.nodejs # nodejs
     # pkgs.nodePackages.neovim # neovim package for js support
-    pkgs.nodePackages.stylelint # css linter
-    pkgs.nodePackages.prettier # formatting for web stuff
-    # pkgs.nodePackages.pnpm # package management
-    pkgs.nodePackages.typescript # typescript
+    pkgs.stylelint # css linter
+    pkgs.prettier # formatting for web stuff
+    # pkgs.pnpm # package management
+    pkgs.typescript # typescript
     pkgs.vscode-langservers-extracted # languageservers from vscode (css, json)
-    pkgs.nodePackages.typescript-language-server # javascript langserver
+    pkgs.typescript-language-server # javascript langserver
 
     # programming-nix
     pkgs.nixfmt # nix formatter
@@ -217,17 +217,17 @@ in
     # pkgs.cargo-watch # continuously run cargo check
 
     # programming-lua
-    # pkgs.nodePackages.lua-fmt
+    # pkgs.lua-fmt
 
     # programming-haskell
     # pkgs.ghc # haskell compiler
     # pkgs.haskellPackages.brittany # haskell code formatter
 
     # programming-other
-    pkgs.nodePackages.yaml-language-server # language server for yaml
+    pkgs.yaml-language-server # language server for yaml
     # ppkgs.prosemd-lsp # prose lsp
-    pkgs.nodePackages.fixjson # much better json formatter
-    pkgs.nodePackages.markdownlint-cli # markdown linter
+    pkgs.fixjson # much better json formatter
+    pkgs.markdownlint-cli # markdown linter
     pkgs.vale # prose lint
     # pkgs.hadolint # Dockerfile lint
     # pkgs.sqls # lsp server for sql
@@ -242,7 +242,7 @@ in
     # pkgs.actionlint # linting for gihtub actions
 
     # gui
-    pkgs.mpv # audio/video player
+    (pkgs.mpv.override { youtubeSupport = false; }) # audio/video player (no yt-dlp/deno)
     # pkgs.kitty # terminal emulator
     # pkgs.alacritty # terminal emulator
     # pkgs.firefox # browser
