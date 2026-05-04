@@ -2,17 +2,59 @@
 
 set -e
 
-rootdir="$(reporoot)"
+usage() {
+    echo "Usage: mdoc [-g] [-l] [-e] [-p] [-c] [query]"
+    echo ""
+    echo "Browse and view .mdocs files"
+    echo ""
+    echo "Options:"
+    echo "  -g  Use global mdocs (~/dev/mdocs)"
+    echo "  -l  Live reload mode (passed to ,markdown-to-html)"
+    echo "  -e  Open in \$EDITOR instead of rendering"
+    echo "  -p  Print to stdout instead of rendering"
+    echo "  -c  Search within file contents (grep mode)"
+    echo "  -h  Show this help"
+}
 
 flag=""
-if [ "$1" = "-l" ]; then
-    flag="-l"
-    shift
+global=false
+mode="view"
+while [ $# -gt 0 ]; do
+    case "$1" in
+        -l) flag="-l"; shift ;;
+        -g) global=true; shift ;;
+        -e) mode="edit"; shift ;;
+        -p) mode="print"; shift ;;
+        -c) mode="content"; shift ;;
+        -h) usage; exit 0 ;;
+        *) break ;;
+    esac
+done
+
+if [ "$global" = true ]; then
+    mdocs_dir="$HOME/dev/mdocs"
+    label="mdocs(global)"
+else
+    rootdir="$(reporoot)"
+    mdocs_dir="$rootdir/.mdocs"
+    label=".mdocs"
 fi
 
-doc="$(find "$rootdir/.mdocs" -type f -name '*.md' -exec ls -t {} + |
-    sed "s|$rootdir/.mdocs/||" |
-    fzf -1 -m --query "$1" --preview "cat '$rootdir/.mdocs/{}'")"
+if [ "$mode" = "content" ]; then
+    doc="$(rg --files-with-matches --no-messages "${1:-.}" "$mdocs_dir" |
+        grep '\.md$' |
+        sed "s|$mdocs_dir/||" |
+        fzf -1 -m --query "" --preview "rg --color=always '${1:-.}' '$mdocs_dir/{}'")"
+else
+    doc="$(find "$mdocs_dir" -type f -name '*.md' -exec ls -t {} + |
+        sed "s|$mdocs_dir/||" |
+        fzf -1 -m --query "$1" --preview "cat '$mdocs_dir/{}'")"
+fi
 
-echo ".mdocs/$doc"
-,markdown-to-html $flag "$rootdir/.mdocs/$doc"
+echo "$label/$doc"
+
+case "$mode" in
+    edit) ${EDITOR:-vi} "$mdocs_dir/$doc" ;;
+    print) cat "$mdocs_dir/$doc" ;;
+    *) ,markdown-to-html $flag "$mdocs_dir/$doc" ;;
+esac
