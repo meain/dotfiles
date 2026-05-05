@@ -34,8 +34,14 @@ EOF
 )"
 ```
 
-### 4. Verify
-Run `jj status` and `jj log -r @` to confirm the commit was created successfully.
+### 4. Create New Revision
+After describing the commit, always create a new empty revision on top:
+```bash
+jj new
+```
+
+### 5. Verify
+Run `jj log -r 'ancestors(@, 3)'` to confirm the commit and new revision were created successfully.
 
 ## Branch/Bookmark Naming
 - For Veeam repos (`/Users/meain/dev/veeam/`), use `meain/` prefix for branch names

@@ -154,6 +154,21 @@ jira issue edit ISSUE-KEY --custom story-points=5 --no-input
 jira issue edit ISSUE-KEY -s "Updated title" -yHigh -l backend --no-input
 ```
 
+### Phase 2J: Story Points
+
+The `--custom story-points=N` flag on `jira issue edit` does **not** work in this Jira instance. Story points must be set via the REST API directly using the `customfield_10016` field (`Story point estimate`) and the `JIRA_API_TOKEN` environment variable:
+
+```bash
+curl -s -o /dev/null -w "%{http_code}" \
+  -X PUT "https://veeam-vdc.atlassian.net/rest/api/3/issue/ISSUE-KEY" \
+  -u "abin.simon@veeam.com:$JIRA_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"fields":{"customfield_10016": N}}'
+# 204 = success
+```
+
+When setting story points on multiple issues, loop over them in a single shell command.
+
 ### Phase 2D: Transition / Move
 
 ```bash
@@ -255,7 +270,7 @@ When the user needs issue context for coding work, focus on:
 - Always use `--no-input` flag on create/edit/comment to avoid interactive prompts
 - Use `--no-truncate` with list commands to show full field contents when details matter
 - If the jira CLI is not configured or authentication fails, inform the user and suggest running `jira init`
-- **Confirm before mutating**: For write operations (create, edit, move, assign, comment, link, delete), confirm the action with the user before executing unless they gave an explicit and unambiguous instruction
+- **Show before mutating**: For write operations (create, edit, move, assign, comment, link, delete), always show the user exactly what will be changed (field name, old value → new value, or full content for descriptions/comments) and wait for confirmation before executing. Do not skip this even if the instruction seems unambiguous.
 - If a project key is ambiguous or missing, ask the user which project to query
 - When an issue key is mentioned in a branch name or commit message, offer to look it up
 - Summarize long descriptions and comment threads instead of dumping raw output
