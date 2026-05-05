@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# pbpaste for the previous clipboard entry, via Maccy's SQLite database
+
+set -e
+
+db="$HOME/Library/Containers/org.p0deje.Maccy/Data/Library/Application Support/Maccy/Storage.sqlite"
+
+sqlite3 "$db" "
+  SELECT hic.ZVALUE
+  FROM ZHISTORYITEM hi
+  JOIN ZHISTORYITEMCONTENT hic ON hic.ZITEM = hi.Z_PK
+  WHERE hic.ZTYPE = 'public.utf8-plain-text'
+  ORDER BY hi.ZLASTCOPIEDAT DESC
+  LIMIT 1 OFFSET 1;
+"
