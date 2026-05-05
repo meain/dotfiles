@@ -13,11 +13,11 @@ fi
 input="$1"
 # if no file provided and interactive terminal, pick one with fzf
 if [ -z "$input" ] && [ -t 0 ]; then
-    input=$(fd -e md --max-depth 3 | fzf --preview 'head -50 {}') || exit 1
+    input=$(fd -e md --max-depth 3 | fzf -1 --preview 'head -50 {}') || exit 1
 fi
 
 if [ -d "$input" ]; then
-    input="$input/$(fd -e md --max-depth 3 -C "$input" | fzf --preview "head -50 $input/{}")" || exit 1
+    input="$input/$(fd -e md --max-depth 3 -C "$input" | fzf -1 --preview "head -50 $input/{}")" || exit 1
 fi
 
 # read from stdin if available
