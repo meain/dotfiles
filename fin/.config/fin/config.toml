@@ -1,11 +1,35 @@
 [settings]
-  default_model = "anthropic/claude-sonnet-4-20250514"
+  default_model = "anthropic/claude-sonnet-4-6"
   project_file = "AGENTS.md"
   max_turns = 50
   yolo = true
   ui = "minimal"
 
 [model_aliases]
+  # openai
+  gpt = "openai/gpt-5.4"
+  mini = "openai/gpt-5.4-mini"
+  nano = "openai/gpt-5.4-nano"
+
+  # github
+  ghgpt = "github/gpt-5.4"
+  ghmini = "github/gpt-5.4-mini"
+  ghnano = "github/gpt-5.4-nano"
+
+  # groq
+  groq = "groq/openai/gpt-oss-120b"
+
+  # ollama
+  qwen = "ollama/qwen3:4b"
+  jan = "ollama/hf.co/Menlo/Jan-nano-gguf:Q4_K_M"
+
+  # openrouter
+  mercury = "openrouter/inception/mercury-2"
+
+  # anthropic
+  haiku = "anthropic/claude-haiku-4-5"
+  sonnet = "anthropic/claude-sonnet-4-5"
+  opus = "anthropic/claude-opus-4-6"
 
 [providers]
   [providers.anthropic]
@@ -14,6 +38,18 @@
   [providers.openai]
     base_url = "https://api.openai.com"
     api_key_env = "OPENAI_API_KEY"
+  [providers.openrouter]
+    base_url = "https://openrouter.ai/api"
+    api_key_env = "OPENROUTER_API_KEY"
+  [providers.groq]
+    base_url = "https://api.groq.com/openai"
+    api_key_env = "GROQ_API_KEY"
+  [providers.github]
+    base_url = "https://models.inference.ai.azure.com"
+    api_key_env = "GITHUB_MODELS_API_KEY"
+  [providers.ollama]
+    base_url = "http://localhost:11434"
+    api_key_env = "OLLAMA_API_KEY"
 
 [tools]
   [tools.edit]
