@@ -3,32 +3,57 @@
 set -euo pipefail
 
 if jj stack >/dev/null 2>&1; then
-    branches="$(jj log -r 'main-..@' --template='bookmarks++"\n"' --no-graph |
-        grep -vE '^$' | sed 's|\*$||;s|@origin$||' | uniq)"
-else
-    branches="$(git branch --sort=-committerdate | sed 's|^..||' | grep -v 'HEAD detached')"
-fi
+    # Get each branch with its parent branch, using actual jj parent relationships
+    # Format: "head_branch base_branch" per line
+    pairs="$(jj log -r '(main-..@) ~ main' --template='
+        if(bookmarks,
+            bookmarks.join(",") ++ " " ++
+            parents.map(|p| if(p.bookmarks(), p.bookmarks().join(","), "")).join(",") ++
+            "\n"
+        )' --no-graph |
+        sed 's|\*||g;s|@origin||g' |
+        grep -vE '^\s*$')"
 
-if [ -n "$*" ]; then
-    branches="$(echo "$branches" | fzf -m --prompt "Pick branches: " --preview "git show {1}")"
-fi
-
-if [ "$(echo "$branches" | wc -l)" -le 1 ]; then
-    echo "Invalid number of branches selected $(echo "$branches" | wc -l)"
-    exit 1
-fi
-
-# Create PR from each pair
-top="$(echo "$branches" | head -n 1)"
-echo "$branches" | tail -n+2 | while read -r branch; do
-    if GIT_DIR="$GIT_ROOT_DIR" gh pr list --head "$top" | grep -q .; then # when piped, empty output
-        echo "PR already exists for $branch <- $top, skipping"
-        top="$branch"
-        continue
+    if [ -z "$pairs" ]; then
+        echo "No branches found to create PRs for"
+        exit 1
     fi
 
-    echo "Creating PR for $branch <- $top"
-    # cannot add  --reviewer "@copilot"
-    GIT_DIR="$GIT_ROOT_DIR" gh pr create --base "$branch" --head "$top" --assignee "@me" --web &
-    top="$branch"
-done
+    echo "$pairs" | while read -r head base; do
+        # Default to main if no parent bookmark found
+        base="${base:-main}"
+
+        if GIT_DIR="$GIT_ROOT_DIR" gh pr list --head "$head" | grep -q .; then
+            echo "PR already exists for $base <- $head, skipping"
+            continue
+        fi
+
+        echo "Creating PR for $base <- $head"
+        GIT_DIR="$GIT_ROOT_DIR" gh pr create --base "$base" --head "$head" --assignee "@me" --web &
+    done
+else
+    branches="$(git branch --sort=-committerdate | sed 's|^..||' | grep -v 'HEAD detached')"
+
+    if [ -n "$*" ]; then
+        branches="$(echo "$branches" | fzf -m --prompt "Pick branches: " --preview "git show {1}")"
+    fi
+
+    if [ "$(echo "$branches" | wc -l)" -le 1 ]; then
+        echo "Invalid number of branches selected $(echo "$branches" | wc -l)"
+        exit 1
+    fi
+
+    # Create PR from each pair (git: linear chain)
+    top="$(echo "$branches" | head -n 1)"
+    echo "$branches" | tail -n+2 | while read -r branch; do
+        if GIT_DIR="$GIT_ROOT_DIR" gh pr list --head "$top" | grep -q .; then
+            echo "PR already exists for $branch <- $top, skipping"
+            top="$branch"
+            continue
+        fi
+
+        echo "Creating PR for $branch <- $top"
+        GIT_DIR="$GIT_ROOT_DIR" gh pr create --base "$branch" --head "$top" --assignee "@me" --web &
+        top="$branch"
+    done
+fi
