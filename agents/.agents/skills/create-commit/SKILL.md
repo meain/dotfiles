@@ -49,6 +49,7 @@ Run `jj log -r 'ancestors(@, 3)'` to confirm the commit and new revision were cr
 - For other repos, follow the project's naming conventions
 
 ## Guidelines
+- Keep the first line (header) under 72 characters; use a blank line + body for details if needed
 - Keep the message brief (1-2 sentences)
 - NEVER use TodoWrite or Task tools for commits
 - DO NOT push unless explicitly requested
