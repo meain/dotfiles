@@ -465,7 +465,7 @@ function showDetail(it){
 // ── KEYBOARD NAV ──
 document.addEventListener('keydown',e=>{
   // ignore if typing in an input
-  if(e.target.tagName==='INPUT'&&e.target.type!=='checkbox')return;
+  if(e.target.tagName==='TEXTAREA'||(e.target.tagName==='INPUT'&&e.target.type!=='checkbox'))return;
 
   const vis=visibleItems();
   if(!vis.length)return;
