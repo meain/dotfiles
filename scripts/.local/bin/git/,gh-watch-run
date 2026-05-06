@@ -1,0 +1,44 @@
+#!/bin/bash
+# Usage: ,watch-github-run <github-run-url>
+
+set -euo pipefail
+
+URL="${1:?Usage: ,watch-github-run <github-run-url>}"
+INTERVAL=30
+
+if [[ "$URL" =~ github\.com/([^/]+/[^/]+)/actions/runs/([0-9]+) ]]; then
+  REPO="${BASH_REMATCH[1]}"
+  RUN_ID="${BASH_REMATCH[2]}"
+else
+  echo "Invalid GitHub run URL: $URL" >&2
+  exit 1
+fi
+
+echo "Watching $REPO run $RUN_ID..."
+
+while true; do
+  STATUS=$(gh run view "$RUN_ID" -R "$REPO" --json status,conclusion -q '.status + "/" + (.conclusion // "pending")')
+  echo "$(date '+%H:%M:%S') $STATUS"
+
+  case "$STATUS" in
+    completed/success)
+      notify "GitHub CI ✅" "Run $RUN_ID succeeded"
+      echo "✅ Run succeeded"
+      exit 0
+      ;;
+    completed/failure|completed/cancelled|completed/timed_out)
+      CONCLUSION="${STATUS#*/}"
+      notify --pri "GitHub CI ❌" "Run $RUN_ID $CONCLUSION"
+      echo "❌ Run $CONCLUSION"
+      gh run view "$RUN_ID" -R "$REPO" --log-failed 2>/dev/null | tail -50 || true
+      exit 1
+      ;;
+    completed/*)
+      notify "GitHub CI" "Run $RUN_ID: $STATUS"
+      echo "Run finished: $STATUS"
+      exit 0
+      ;;
+  esac
+
+  sleep "$INTERVAL"
+done
