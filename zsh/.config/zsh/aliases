@@ -49,7 +49,7 @@ alias s=",save"
 alias pwdp="pwd|p"
 alias research="cd $HOME/dev/docs/research && opencode"
 alias gh="GIT_DIR=\$GIT_ROOT_DIR gh" # since we don't colocate git dir anymore
-alias bb=",bm" # bookmark-manager
+alias bb=",bm"                       # bookmark-manager
 
 # agents
 alias aw=",agent-workspace"
@@ -59,7 +59,7 @@ alias ,gh-copilot="npx -y @github/copilot --allow-tool 'write'"
 # fin
 alias finc="fin -c"
 alias fincc="fin -match"
-alias fins="fin -session \$(fin -sessions | fzf | cut -d' ' -f1) -export html >/tmp/fin-session-export.html && open /tmp/fin-session-export.html"
+alias fins=",fin-session-export"
 alias finh="fin -export message | ,markdown-to-html"
 alias finm="fin -export message | glow"
 

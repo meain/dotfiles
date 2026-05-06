@@ -1,0 +1,13 @@
+#!/bin/sh
+
+set -e
+
+selected=$(fin -sessions -color never 2>/dev/null | cut -d' ' -f2- | ,picker -m)
+
+echo "$selected" | while read -r line; do
+	session_id=$(echo "$line" | cut -d' ' -f1)
+	session_name=$(echo "$line" | cut -d' ' -f2- | sed 's/ ([^)]*$//' | tr ' ' '-' | tr -cd 'a-zA-Z0-9-' | head -c 50)
+	outfile="/tmp/fin-session-${session_id}-${session_name}.html"
+	fin -export html -session "$session_id" >"$outfile"
+	open "$outfile"
+done
