@@ -125,6 +125,35 @@
   (setq blamer-border-lines '(?+ ?- ?+ ?| ?+ ?+ )) ;; default one creates issues with spacing
   :init (evil-leader/set-key "G" 'blamer-show-commit-info))
 
+;; vc backend for jj
+(use-package vc-jj
+  :ensure (:host codeberg :repo "emacs-jj-vc/vc-jj.el")
+  :config
+  ;; Default template truncates author name; use full name and date-only.
+  ;; Override annotation line regex to match date-only format
+  ;; (default expects full datetime with HH:MM:SS)
+  (setq vc-jj--annotation-line-prefix-re
+        (rx bol
+            (group (+ (any "a-z")))           ; change id
+            " "
+            (group (+? anychar))              ; author name
+            (+ " ")
+            (group                            ; iso 8601 date
+             (= 4 digit) "-" (= 2 digit) "-" (= 2 digit))
+            (+ " ")
+            (group (+ digit))                 ; line number
+            ": "))
+  (setq vc-jj-annotate-switches
+        `("-T" ,(concat "self.commit().change_id().shortest(8)"
+                        " ++ \" \" ++ "
+                        "pad_end(20, truncate_end(20, self.commit().author().name()))"
+                        " ++ \" \" ++ "
+                        "self.commit().committer().timestamp().format(\"%Y-%m-%d\")"
+                        " ++ \"  \" ++ "
+                        "self.line_number()"
+                        " ++ \": \" ++ "
+                        "self.content()"))))
+
 ;; Used by modeline display
 (defun meain/jj-current-workspace ()
   "Get the current jj workspace name."
