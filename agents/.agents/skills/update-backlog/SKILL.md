@@ -31,9 +31,13 @@ cd /Users/meain/.local/share/sbdb && git add -A && git commit -m "Before backlog
 
 This creates a safety checkpoint. If the commit fails because there are no changes, that's fine -- continue.
 
-## Step 1: Handle Checked-Off Items in Today
+## Step 1: Read the Backlog
 
-Read the backlog and find all checked-off items (`- [x]`) in the Today section(s).
+Read the full backlog file first to understand the current state before making any changes.
+
+## Step 2: Handle Checked-Off Items in Today
+
+Find all checked-off items (`- [x]`) in the Today section(s).
 
 If there are checked-off items, use `AskUserQuestion` to ask what to do with them.
 List all checked-off items in the question text and offer options:
@@ -47,11 +51,11 @@ The user can also select "Other" to provide custom instructions (e.g., "move to 
 
 After the user decides, apply the changes.
 
-## Step 2: Gather Data from External Sources
+## Step 3: Gather Data from External Sources
 
 Gather all data in parallel:
 
-### 2a. Jira -- Current Sprint Tickets
+### 3a. Jira -- Current Sprint Tickets
 
 ```bash
 jira issue list -q "sprint in openSprints() AND assignee = currentUser()" 2>&1
@@ -59,7 +63,7 @@ jira issue list -q "sprint in openSprints() AND assignee = currentUser()" 2>&1
 
 Note the ticket key, summary, priority, status, and story points.
 
-### 2b. GitHub PRs -- Pending Review
+### 3b. GitHub PRs -- Pending Review
 
 ```bash
 GH_TOKEN=$(security find-generic-password -s "gh:github.com" -w 2>&1)
@@ -73,20 +77,23 @@ curl -s -H "Authorization: bearer $GH_TOKEN" -H "Content-Type: application/json"
 
 Filter: Only PRs where `meain` is a direct User reviewer. Exclude PRs already approved.
 
-### 2c. Current Backlog State
+### 3c. GitHub PRs -- Authored by User
 
-Read the full backlog file to understand:
-- What's already in Today (unchecked items that remain)
-- What's in Tomorrow, This Week, Next Week that might need to move up
-- What's in Ongoing
+Look up open PRs authored by the user across Veeam-VDC org. Surface PRs that:
+- Have been approved (ready to merge)
+- Have review comments to address
+- Have requested changes
 
-### 2d. Calendar (optional)
+Add these to the summary under a "My PRs" section so the user can decide
+which to act on today.
+
+### 3d. Calendar (optional)
 
 If MS365 MCP is available, check today's calendar for meetings that might affect capacity:
 - Use `mcp__claude_ai_Microsoft_365__outlook_calendar_search` with today's date range
 - This helps estimate available working hours
 
-## Step 3: Present a Summary and Collaborate
+## Step 4: Present a Summary and Collaborate
 
 Present a concise summary to the user:
 
@@ -97,8 +104,13 @@ List items already in the Today section (unchecked).
 List sprint tickets not yet represented in Today, grouped by priority.
 For each, show: `[STATUS] TICKET-KEY: Summary (priority, story points)`
 
+### My PRs (Approved / Needs Action)
+List PRs authored by the user that are approved and ready to merge, or have review comments
+to address. Each PR on its own line. These go at the top of the PR section since they're
+actionable now.
+
 ### PRs Needing Review
-List PRs awaiting review with repo, PR number, author, and age.
+List PRs awaiting review with repo, PR number, author, and age. Each PR on its own line.
 
 ### Candidates from Other Sections
 Highlight items from Tomorrow/This Week/Whenever that might be worth pulling into Today.
@@ -111,7 +123,7 @@ Then use `AskUserQuestion` to ask the user which items to add to Today, whether 
 and any other decisions needed. Use numbered references from the summary so the user can respond concisely.
 Iterate with follow-up questions if needed until the user is satisfied.
 
-## Step 4: Update the Backlog
+## Step 5: Update the Backlog
 
 Once the user confirms the plan:
 
@@ -138,17 +150,28 @@ Once the user confirms the plan:
 ## Formatting Rules
 
 - Use the exact task format from the vault skill (see vault SKILL.md for details)
-- Links can be inline within the description, just not at the very start of the line
+- Prefer inline links over trailing links. If the PR or ticket reference is already mentioned in the text, make it the link itself rather than duplicating it at the end.
+  - Good: `Merge [control-plane-backend#123](https://github.com/...) (approved)`
+  - Bad: `Merge control-plane-backend#123 (approved) [control-plane-backend#123](https://github.com/...)`
+- Only use trailing `[ref](url)` links for URLs that don't have a natural inline anchor (e.g. Teams message links)
 - Jira links: `[DP-1509](https://veeam-vdc.atlassian.net/browse/DP-1509)`
 - PR links: `[control-plane-backend#123](https://github.com/Veeam-VDC/control-plane-backend/pull/123)`
 - Generic refs: `[ref](url)`
-- Priority emojis go after the description but before links
+- Priority emojis go after the description but before any trailing links
 - Keep descriptions concise -- one line per task
+- Each PR (to review or authored) must be on its own separate line -- never combine multiple PRs into one line
+- Approved PRs needing merge or PRs with comments to address go near the top of the Today section, but after the standard morning routine items (charge devices, check emails/slack/teams/confluence)
 
 ## Notes
 
 - The jira CLI and GH token extraction require running outside the sandbox (keychain access).
 - Be reasonable with workload -- some leftover is fine, but don't overload the day.
 - If the user has many meetings, suggest fewer coding tasks.
-- Add morning routine items (Check emails, Check Slack, Check Teams, Check Confluence) at the top of Today before other tasks. These are standard items that should always be present.
+- Add morning routine items  at the top of Today before other tasks. These are standard items that should always be present:
+  - Check emails
+  - Check Slack
+  - Check Teams
+  - Check Confluence
+  - Charge devices
 - When moving items between sections, preserve their existing links and formatting exactly.
+- Never remove generic section headers (Today, Tomorrow, This Week, Next Week, Whenever, Weekend, Ongoing). Leave them in place even when empty.
