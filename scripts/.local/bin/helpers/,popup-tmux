@@ -7,6 +7,9 @@ if echo "$CURRENT_PANE" | grep -q '^popup.*'; then
     tmux detach-client
 else
     case "$1" in
+    "floater")
+        tmux popup -d "$HOME" -w90% -h90% -E "tmux attach -t 'popup-floater' || tmux new -s 'popup-floater'" || true
+        ;;
     "single")
         tmux popup -d "$HOME" -w90% -h90% -E "tmux attach -t 'popup-$CURRENT_PANE' || tmux new -s 'popup-$CURRENT_PANE'" || true
         ;;
