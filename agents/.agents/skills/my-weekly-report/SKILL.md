@@ -1,5 +1,5 @@
 ---
-name: weekly-report
+name: my-weekly-report
 description: >
   Generate a concise weekly status update in team format by pulling data from
   the current Jira sprint (tickets assigned to me), backlog, and recent activity.
@@ -7,12 +7,12 @@ description: >
   sprint), "What's next" (To Do in current sprint), and standard blockers/leaves
   fields. When asked for last week's report, covers completed items from last
   week. Upcoming items are based on the current sprint's To Do tickets.
-  Triggers: /weekly-report, "weekly update", "weekly status", "generate my weekly",
-  "write my weekly", "weekly report"
+  Triggers: /my-weekly-report, "my weekly update", "my weekly status", "generate my weekly",
+  "write my weekly", "my weekly report"
 user_invocable: true
 ---
 
-# /weekly-report — Weekly Status Update Generator
+# /my-weekly-report — Weekly Status Update Generator
 
 Generate a concise weekly update in the team's standard format, based on the
 current Jira sprint tickets assigned to you.
