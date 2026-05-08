@@ -45,6 +45,8 @@ List all checked-off items in the question text and offer options:
 1. **Move all to Before section (Recommended)** -- Move to the bottom of the file under a new dated heading
    with yesterday's date. If today is Monday, use last Friday's date instead.
    Format: `### YYYY-MM-DD (DayOfWeek)`
+   IMPORTANT: Compute the date correctly — subtract exactly 1 day from today's date (or 3 days if Monday).
+   Verify the day-of-week name matches the computed date. Do NOT guess the day name.
 2. **Keep all in Today** -- Leave the items where they are
 
 The user can also select "Other" to provide custom instructions (e.g., "move to Ongoing", "delete it").
@@ -119,9 +121,9 @@ Highlight items from Tomorrow/This Week/Whenever that might be worth pulling int
 Based on calendar meetings and estimated task sizes, suggest a reasonable workload.
 A typical day has ~6 hours of productive work after meetings and routine tasks.
 
-Then use `AskUserQuestion` to ask the user which items to add to Today, whether to merge duplicates,
-and any other decisions needed. Use numbered references from the summary so the user can respond concisely.
-Iterate with follow-up questions if needed until the user is satisfied.
+Present this summary as plain text with lettered/numbered references. Do NOT use `AskUserQuestion` for
+this step — let the user respond conversationally. The user will reply with which items to include
+(e.g., "B,C,D,K") or give other instructions. Iterate as needed until the user is satisfied.
 
 ## Step 5: Update the Backlog
 
