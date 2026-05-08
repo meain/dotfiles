@@ -2,8 +2,8 @@
   default_model = "anthropic/claude-sonnet-4-6"
   project_file = "AGENTS.md"
   max_turns = 50
-  yolo = true
-  ui = "minimal"
+  approve = "all"
+  ui = "default"
 
 [model_aliases]
   # openai
