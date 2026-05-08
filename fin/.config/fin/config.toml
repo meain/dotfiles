@@ -1,5 +1,5 @@
 [settings]
-  default_model = "anthropic/claude-sonnet-4-6"
+  model = "anthropic/claude-sonnet-4-6"
   project_file = "AGENTS.md"
   max_turns = 50
   approve = "all"
