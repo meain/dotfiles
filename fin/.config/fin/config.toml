@@ -3,7 +3,6 @@
   project_file = "AGENTS.md"
   max_turns = 50
   approve = "all"
-  ui = "default"
 
 [model_aliases]
   # openai
