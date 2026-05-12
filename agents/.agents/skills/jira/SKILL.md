@@ -103,6 +103,9 @@ jira issue create -tStory -s "Summary here" -b "Description here" --no-input
 jira issue create -tBug -s "Bug title" -yHigh -lbug -lurgent -a "user@example.com" -b "Bug description" --no-input
 jira issue create -tTask -s "Task title" -b "Description here" --no-input
 
+# Create under a parent (epic or parent issue)
+jira issue create -tStory -P EPIC-KEY -s "Story title" -b "Description" --no-input
+
 # Create subtask under a parent
 jira issue create -tSubtask -P PARENT-KEY -s "Subtask title" -b "Details" --no-input
 
@@ -123,6 +126,8 @@ echo "Long description here" | jira issue create -tStory -s "Summary" --no-input
 - **Always explicitly specify `-tStory` when creating issues unless told to use a different type**
 
 **Issue types:** Task, Bug, Story, Epic, Subtask
+
+**Parent/Epic linking**: Use `-P EPIC-KEY` to set the parent (epic) on create. Do NOT use `-l` (label) for this — `-l` adds labels, `-P` sets the parent.
 
 ### Phase 2C: Edit (write operation)
 

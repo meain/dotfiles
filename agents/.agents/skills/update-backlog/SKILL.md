@@ -43,10 +43,12 @@ If there are checked-off items, use `AskUserQuestion` to ask what to do with the
 List all checked-off items in the question text and offer options:
 
 1. **Move all to Before section (Recommended)** -- Move to the bottom of the file under a new dated heading
-   with yesterday's date. If today is Monday, use last Friday's date instead.
+   with the last working day's date. If today is Monday, use last Friday's date.
+   If today is Sunday, use Friday. If today is Saturday, use Friday. Otherwise use yesterday.
    Format: `### YYYY-MM-DD (DayOfWeek)`
-   IMPORTANT: Compute the date correctly — subtract exactly 1 day from today's date (or 3 days if Monday).
-   Verify the day-of-week name matches the computed date. Do NOT guess the day name.
+   IMPORTANT: Compute the date correctly. Verify the day-of-week name matches the computed date.
+   Do NOT guess the day name. The default suggestion in the prompt should already use the correct
+   last-working-day date (e.g., suggest Friday when running on Monday).
 2. **Keep all in Today** -- Leave the items where they are
 
 The user can also select "Other" to provide custom instructions (e.g., "move to Ongoing", "delete it").
