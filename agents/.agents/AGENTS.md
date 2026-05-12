@@ -25,7 +25,7 @@
 
 ## External Tools
 
-- Use CLI tools to access external services: `confluence` for Confluence pages, `jira` for Jira tickets, and `gh` (with GIT_DIR set) for GitHub. Prefer these over MCP tools, web fetching, or asking the user to look things up.
+- Use the `/jira` and `/confluence` skills when working with Jira tickets and Confluence pages. These skills wrap the CLI tools with best practices and correct flags. Use `gh` (with GIT_DIR set) for GitHub. Prefer these over MCP tools, web fetching, or asking the user to look things up.
 
 ## Workflow
 
