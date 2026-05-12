@@ -14,7 +14,7 @@ show_help() {
     echo "Usage: ,bm [command] [url]"
     echo ""
     echo "Commands:"
-    echo "  add [url]  Add bookmark (url defaults to clipboard)"
+    echo "  add [url] [title]  Add bookmark (url defaults to clipboard, title fetched if omitted)"
     echo "  list       List all bookmarks"
     echo "  show       Fuzzy-pick bookmark(s), output URL(s) (default)"
     echo "  open       Fuzzy-pick bookmark(s), open in browser"
@@ -94,10 +94,14 @@ add)
         echo "Bookmark already exists" >&2
         exit 1
     fi
-    printf "Fetching title..."
-    fetched_title="$(curl -sgL "$url" | pup 'title text{}')"
-    printf "\r\033[K"
-    read -r -e -i "$fetched_title" -p "Title: " title
+    if [ -n "${3:-}" ]; then
+        title="$3"
+    else
+        printf "Fetching title..."
+        fetched_title="$(curl -sgL "$url" | pup 'title text{}')"
+        printf "\r\033[K"
+        read -r -e -i "$fetched_title" -p "Title: " title
+    fi
     domain="$(echo "$url" | sed 's|.*://\([^/]*\).*|\1|')"
     suggested_tags="$(grep -F "$domain" "$BM_FILE" | grep -oE '#[^ ]+' | sort | uniq -c | sort -rn | head -3 | awk '{print $2}' | tr '\n' ' ' | sed 's/ $//')"
     read -r -e -i "$suggested_tags" -p "Tags (space-separated): " tags
