@@ -1,15 +1,15 @@
 ---
-name: update-backlog
+name: backlog-review
 description: >
   Update the daily backlog by gathering data from Jira sprint, GitHub PRs, and existing backlog,
   then collaboratively deciding what to work on today. Handles checked-off items, moves existing
   tasks to Today, and adds new items with reference links. Commits the backlog folder before
-  making changes. Triggers: /update-backlog, "update my backlog", "plan my backlog",
+  making changes. Triggers: /backlog-review, /update-backlog, "update my backlog", "plan my backlog",
   "what should I work on today", "refresh backlog", "backlog update"
 user_invocable: true
 ---
 
-# /update-backlog -- Update Daily Backlog
+# /backlog-review -- Update Daily Backlog
 
 Collaboratively update the Today section of the backlog by pulling data from external sources
 and working with the user to decide what's realistic for the day.
@@ -168,6 +168,7 @@ Once the user confirms the plan:
 
 ## Notes
 
+- Always show meeting times and timestamps in IST (Indian Standard Time, UTC+5:30), not UTC.
 - The jira CLI and GH token extraction require running outside the sandbox (keychain access).
 - Be reasonable with workload -- some leftover is fine, but don't overload the day.
 - If the user has many meetings, suggest fewer coding tasks.
