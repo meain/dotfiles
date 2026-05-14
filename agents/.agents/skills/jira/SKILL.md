@@ -271,6 +271,7 @@ When the user needs issue context for coding work, focus on:
 
 ## Guidelines
 
+- Always run `jira` CLI commands with `dangerouslyDisableSandbox: true` — the sandbox blocks TLS verification for Jira's certificate chain, causing x509 errors
 - Always use `--plain` flag when listing/viewing issues so output is parseable (avoid the interactive TUI)
 - Always use `--no-input` flag on create/edit/comment to avoid interactive prompts
 - Use `--no-truncate` with list commands to show full field contents when details matter
