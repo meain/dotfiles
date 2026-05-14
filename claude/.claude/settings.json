@@ -60,7 +60,16 @@
     "code-review@claude-plugins-official": true,
     "swift-lsp@claude-plugins-official": true,
     "oncall-copilot@oncall-copilot-plugins": true,
-    "platform-tools@oncall-copilot-plugins": true
+    "platform-tools@oncall-copilot-plugins": true,
+    "caveman@caveman": true
+  },
+  "extraKnownMarketplaces": {
+    "caveman": {
+      "source": {
+        "source": "github",
+        "repo": "JuliusBrussee/caveman"
+      }
+    }
   },
   "autoDreamEnabled": true,
   "showThinkingSummaries": true,
