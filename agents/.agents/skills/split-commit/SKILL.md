@@ -62,10 +62,19 @@ EOF
 )"
 ```
 
-### 4. Verify
+### 4. Create Empty Working Revision
+
+After all splits and describes are done, create a new empty revision on top:
+```bash
+jj new
+```
+
+This ensures `@` is a clean working copy on top of the split commits.
+
+### 5. Verify
 
 ```bash
-jj log -r 'ancestors(@, <N+1>)'
+jj log -r 'ancestors(@, <N+2>)'
 ```
 
 Show the resulting commit stack to the user.
