@@ -78,7 +78,7 @@ Guidelines:
 - For incidents/alerts: link to the incident (e.g., "Investigate [INC-456](url): RDIS 5xx surge in prod")
 - For Teams: summarize the ask and use `[ref](url)` for the message link (e.g., "Review Org Anchoring CP spec from Robert [ref](url)")
 - Do NOT duplicate links that are already discoverable from the ref URL -- the ref link is the entry point, keep it minimal
-- Ask the user to confirm the entry text before adding
+- Compose the entry and add it directly without waiting for confirmation. Add to end of Today by default.
 
 ## Step 4: Add to Backlog
 
