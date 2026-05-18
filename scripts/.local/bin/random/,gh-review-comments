@@ -314,7 +314,7 @@ show_fzf_picker() {
     selected=$(cat "$picker_list_file" | fzf -m \
         --delimiter="|" \
         --with-nth=2 \
-        --preview="glow --style=light $TEMP_DIR/comment_{1}.txt" \
+        --preview="leaf --inline $TEMP_DIR/comment_{1}.txt" \
         --preview-window=bottom:80%:wrap \
         --header="Select review comments (Tab to multi-select, Enter to confirm)" \
         --border \

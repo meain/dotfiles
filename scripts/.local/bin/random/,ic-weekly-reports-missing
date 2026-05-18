@@ -50,7 +50,7 @@ Output only the final message. No preamble, no code fences, no commentary."
 confluence read "$id" |
     fin -tools read -ui quiet "$prompt" > "$tmp"
 
-cat "$tmp" | glow
+cat "$tmp" | leaf --inline
 cat "$tmp" | mdclip
 
 printf "\n\nPress any key to open the webpage"

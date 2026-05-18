@@ -22,4 +22,4 @@ if [ -z "$1" ]; then
 else
     ,markdown-preview "$latest"
 fi
-glow "$latest"
+leaf --inline "$latest"
