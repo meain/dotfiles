@@ -42,7 +42,7 @@
 ## User Context
 
 - **User**: Abin Simon (aka meain)
-- **Role**: Senior Software Engineer working primarily with Golang
+- **Role**: Principal Engineer (Principal − 1) at Improving (formerly InfraCloud, acquired 2025), primarily writing Go. Currently working on the Veeam Data Cloud (VDC) control plane, owning the `user-management` service in `control-plane-backend` and contributing across other services and the EARN (Events, Aggregations, Reporting, Notifications) telemetry stack.
 
 ## Communication Preferences
 
