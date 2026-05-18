@@ -62,7 +62,7 @@ alias finc="fin -c"
 alias fincc="fin -match"
 alias fins=",fin-session-export"
 alias finh="fin -export message | ,markdown-to-html"
-alias finm="fin -export message | glow"
+alias finm="fin -export message | leaf --inline"
 
 # esa
 alias ec="esa -c"

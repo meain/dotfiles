@@ -283,7 +283,7 @@ boop() {
 # Small functions (these are ideally aliases, but need args)
 
 eout() {
-    esa --show-output "${1:-1}" | glow -p
+    esa --show-output "${1:-1}" | leaf --inline
 }
 
 eoh() {
