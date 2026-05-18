@@ -14,12 +14,44 @@ url="$(echo "$pages" | jq -r '.children[-1].url')"
 id="$(echo "$pages" | jq -r '.children[-1].id')"
 
 echo "$title"
-confluence read "$id" |
-    esa +notools -- "Who all has not filled in the weekly reports? " \
-        "Output just the names as a list with \- prefix. The output should contain nothing else." > "$tmp"
 
-printf 'Submit your weekly updates\n\n[%s](%s)\n\nMissing:\n%s\n' "$title" "$url" "$(cat "$tmp")" | glow
-printf 'Submit your weekly updates\n\n[%s](%s)\n\nMissing:\n%s\n' "$title" "$url" "$(cat "$tmp")" | mdclip
+dow=$(date +%u)
+if [ "$dow" -le 5 ]; then
+    days_to_fri=$((5 - dow))
+else
+    days_to_fri=$((12 - dow))
+fi
+case "$days_to_fri" in
+0) urgency="It is FRIDAY — the submission deadline is TODAY. Tone should be firm and urgent: this is the final call." ;;
+1) urgency="The deadline is TOMORROW (Friday). Tone should be noticeably urgent — make it clear time is running out." ;;
+2) urgency="The deadline (Friday) is 2 days away. Tone should be a firm reminder, slightly pressing." ;;
+3) urgency="The deadline (Friday) is 3 days away. Tone should be a friendly nudge." ;;
+*) urgency="The deadline (Friday) is $days_to_fri days away. Tone should be light and friendly." ;;
+esac
+
+vault_weekly_dir="/Users/meain/.local/share/sbdb/InfraCloud/Weekly Updates Submitted"
+
+prompt="Construct a short markdown message nudging folks to submit their weekly updates. Vary the wording each time so it does not feel repetitive.
+
+Urgency context: $urgency
+
+Required structure:
+1. A nudge line (or two) that matches the urgency above.
+2. A blank line.
+3. A markdown link to the report page in the form [TITLE](URL) where TITLE='$title' and URL='$url'.
+4. A blank line.
+5. The literal heading 'Missing:' on its own line.
+6. A bullet list (one per line, '- ' prefix) of the names of people who have NOT filled in the weekly report, based on the page content provided on stdin. For each missing person, ALSO look at the most recent weekly report files under '$vault_weekly_dir' (the latest 1-2 WNN.md files) and check that person's 'Upcoming leaves' field. If they appear to be on leave/holiday covering today, annotate the bullet inline like '- Name (on leave: <short reason or dates>)' so it is highlighted.
+
+Use the read tool to list and read files under '$vault_weekly_dir' as needed. Only read recent week files. Do not read anything outside that directory.
+
+Output only the final message. No preamble, no code fences, no commentary."
+
+confluence read "$id" |
+    fin -tools read -ui quiet "$prompt" > "$tmp"
+
+cat "$tmp" | glow
+cat "$tmp" | mdclip
 
 printf "\n\nPress any key to open the webpage"
 read -r REPLY # just waiting for a keypress
