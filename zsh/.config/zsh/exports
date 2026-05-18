@@ -50,6 +50,7 @@ PATH=$HOME/.local/bin/kubernetes:$PATH
 PATH=$HOME/.local/bin/music:$PATH
 PATH=$HOME/.local/bin/tmux:$PATH
 PATH=$HOME/.local/bin/ai:$PATH
+PATH=$HOME/.config/fin/scripts:$PATH
 export PATH
 
 # rustup and cargo
