@@ -2,11 +2,14 @@
 
 set -e
 
-selected=$(fin -sessions -color never 2>/dev/null | cut -d' ' -f2- | ,picker -m)
+tab=$(printf '\t')
 
-echo "$selected" | while read -r line; do
-	session_id=$(echo "$line" | cut -d' ' -f1)
-	session_name=$(echo "$line" | cut -d' ' -f2- | sed 's/ ([^)]*$//' | tr ' ' '-' | tr -cd 'a-zA-Z0-9-' | head -c 50)
+selected=$(fin -sessions 2>/dev/null \
+	| jq -r '.[] | "\(.id)\t\(.title) (\(.last_activity))"' \
+	| ,picker -m -d "$tab" --with-nth 2 --preview 'fin -export message -session {1} 2>/dev/null | head -200')
+
+echo "$selected" | while IFS="$tab" read -r session_id title; do
+	session_name=$(echo "$title" | sed 's/ ([^)]*$//' | tr ' ' '-' | tr -cd 'a-zA-Z0-9-' | head -c 50)
 	outfile="/tmp/fin-session-${session_id}-${session_name}.html"
 	fin -export html -session "$session_id" >"$outfile"
 	open "$outfile"
