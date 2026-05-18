@@ -341,6 +341,7 @@ in
     pkgs.poppler-utils # pdf utils
     pkgs.jira-cli-go # jira cli
     ppkgs.confluence-cli # confluence cli
+    ppkgs.leaf # terminal markdown previewer
     # ppkgs.prr # local pr review
     pkgs.ddgr # ddg search from terminal
     # ppkgs.probe # code search
