@@ -1,0 +1,4 @@
+theme = "arctic"
+editor = "vim"
+watch = true
+extras = ["txt"]
