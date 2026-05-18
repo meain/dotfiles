@@ -276,7 +276,8 @@ When the user needs issue context for coding work, focus on:
 - Always use `--no-input` flag on create/edit/comment to avoid interactive prompts
 - Use `--no-truncate` with list commands to show full field contents when details matter
 - If the jira CLI is not configured or authentication fails, inform the user and suggest running `jira init`
-- **Show before mutating**: For write operations (create, edit, move, assign, comment, link, delete), always show the user exactly what will be changed (field name, old value → new value, or full content for descriptions/comments) and wait for confirmation before executing. Do not skip this even if the instruction seems unambiguous.
+- **Show before mutating**: For write operations (edit, move, assign, comment, link, delete), always show the user exactly what will be changed (field name, old value → new value, or full content for descriptions/comments) and wait for confirmation before executing. Do not skip this even if the instruction seems unambiguous.
+- **Create requires explicit confirmation**: Before creating any new Jira issue, show the full details (type, summary, description, parent, labels, etc.) and ask the user to explicitly confirm. Do not create the issue until they say yes — even if the request seems clear and complete.
 - If a project key is ambiguous or missing, ask the user which project to query
 - When an issue key is mentioned in a branch name or commit message, offer to look it up
 - Summarize long descriptions and comment threads instead of dumping raw output
