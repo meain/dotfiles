@@ -20,7 +20,7 @@
 - When creating PRs, do not add "Generated with Claude Code" or similar labels/footers to the PR body.
 - When creating a new PR in Veeam repos, look up the associated Jira ticket and link it in the PR description body (not as a comment). Use the `jira` CLI to fetch ticket details.
 - When creating a new PR, ensure the PR template is used. If there is none, include a summary of the changes and why they were made as two paragraphs. Include examples of code flow if it makes sense.
-- I usually want to set `rs-malik` (Rabee Sohail Malik) and `ryanfkeepers` (Ryan Keepers) as reviewers on PRs from repos in /Users/meain/dev/veeam. Once the PR is created ask me if I want to add them as reviewers. Always add `Copilot` as a reviewer (note: capital C, it's a GitHub user not a bot).
+- I usually want to set `rs-malik` (Rabee Sohail Malik), `ryanfkeepers` (Ryan Keepers), and `rami-veeam` as reviewers on PRs from repos in /Users/meain/dev/veeam. Once the PR is created ask me if I want to add them as reviewers.
 - After you push a PR, ensure the CI is green in the background.
 
 ## External Tools
