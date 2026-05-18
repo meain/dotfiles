@@ -6,6 +6,13 @@ me="meain"
 since="$(date -v-1m +%Y-%m-%d 2>/dev/null || date -d '1 month ago' +%Y-%m-%d)"
 fields="number,url,title,author,repository,createdAt"
 
+if [[ -t 1 ]]; then
+    dim=$'\033[90m'; reset=$'\033[0m'
+    hdr=$(tput setaf 3); hdr_reset=$(tput sgr0)
+else
+    dim=""; reset=""; hdr=""; hdr_reset=""
+fi
+
 search_prs() {
     case "$1" in
     review)
@@ -20,9 +27,9 @@ search_prs() {
     esac
 }
 
-# $1 = json file, $2 = "color" (terminal ANSI, #N only) or "md" (plain markdown with [#N](url) links)
+# $1 = json file, $2 = "term" (short #N, dim ANSI when stdout is a tty) or "md" (plain markdown with [#N](url) links)
 render() {
-    jq -r --arg mode "$2" '
+    jq -r --arg mode "$2" --arg dim "$dim" --arg reset "$reset" '
         def age:
           ((now - (.createdAt | fromdateiso8601)) / 86400 | floor) as $d
           | if   $d >= 30 then "\($d / 30 | floor)mo"
@@ -31,10 +38,10 @@ render() {
             else "<1d"
             end;
         def header(name):
-          if $mode == "color" then "# \(name)" else "## \(name)" end;
+          if $mode == "term" then "# \(name)" else "## \(name)" end;
         def line:
-          if $mode == "color" then
-            "- #\(.number) \(.title) [90m@\(.author.login)[0m [90m(\(age))[0m"
+          if $mode == "term" then
+            "- #\(.number) \(.title) \($dim)@\(.author.login)\($reset) \($dim)(\(age))\($reset)"
           else
             "- [#\(.number)](\(.url)) \(.title) @\(.author.login) (\(age))"
           end;
@@ -57,7 +64,7 @@ run_command() {
     search_prs "$kind" >"$tempfile"
 
     if has_results "$tempfile"; then
-        render "$tempfile" color
+        render "$tempfile" term
         render "$tempfile" md | pbcopy
         ,linkify
 
@@ -96,17 +103,17 @@ h | help | --help | -h)
 
     section() {
         if has_results "$1"; then
-            render "$1" color
+            render "$1" term
         else
             echo "No PRs found"
         fi
     }
 
-    printf "%sApproved[a]%s\n" "$(tput setaf 3)" "$(tput sgr0)"
+    printf "%sApproved[a]%s\n" "$hdr" "$hdr_reset"
     section "$tmp_a"
-    printf "\n%sPending Approval[p]%s\n" "$(tput setaf 3)" "$(tput sgr0)"
+    printf "\n%sPending Approval[p]%s\n" "$hdr" "$hdr_reset"
     section "$tmp_p"
-    printf "\n%sTo Review[r]%s\n" "$(tput setaf 3)" "$(tput sgr0)"
+    printf "\n%sTo Review[r]%s\n" "$hdr" "$hdr_reset"
     section "$tmp_r"
 
     rm -f "$tmp_a" "$tmp_p" "$tmp_r"
