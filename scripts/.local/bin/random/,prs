@@ -4,33 +4,50 @@ set -e
 
 me="meain"
 since="$(date -v-1m +%Y-%m-%d 2>/dev/null || date -d '1 month ago' +%Y-%m-%d)"
+fields="number,url,title,author,repository,createdAt"
 
 search_prs() {
-    kind="$1"
-    case "$kind" in
+    case "$1" in
     review)
-        set -- --review-requested "$me" --state open --updated ">$since" --json number,url,title,author,repository,createdAt --limit 100 -- "draft:false -author:$me -review:approved"
+        gh search prs --review-requested "$me" --state open --updated ">$since" --json $fields --limit 100 -- "draft:false -author:$me -review:approved"
         ;;
     approved)
-        set -- --author "$me" --state open --review approved --json number,url,title,author,repository,createdAt --limit 100
+        gh search prs --author "$me" --state open --review approved --json $fields --limit 100
         ;;
     pending)
-        set -- --author "$me" --state open --json number,url,title,author,repository,createdAt --limit 100 -- "-review:approved"
+        gh search prs --author "$me" --state open --json $fields --limit 100 -- "-review:approved"
         ;;
     esac
-    gh search prs "$@" |
-        jq -r 'def age:
-                 ((now - (.createdAt | fromdateiso8601)) / 86400 | floor) as $d
-                 | if $d >= 30 then "\($d / 30 | floor)mo"
-                   elif $d >= 7 then "\($d / 7 | floor)w"
-                   elif $d >= 1 then "\($d)d"
-                   else "<1d"
-                   end;
-               group_by(.repository.nameWithOwner)
-            | sort_by(.[0].repository.nameWithOwner)
-            | .[]
-            | "## \(.[0].repository.nameWithOwner)",
-              (.[] | "- [#\(.number)](\(.url)) \(.title) @\(.author.login) (\(age))")'
+}
+
+# $1 = json file, $2 = "color" (terminal ANSI, #N only) or "md" (plain markdown with [#N](url) links)
+render() {
+    jq -r --arg mode "$2" '
+        def age:
+          ((now - (.createdAt | fromdateiso8601)) / 86400 | floor) as $d
+          | if   $d >= 30 then "\($d / 30 | floor)mo"
+            elif $d >=  7 then "\($d /  7 | floor)w"
+            elif $d >=  1 then "\($d)d"
+            else "<1d"
+            end;
+        def header(name):
+          if $mode == "color" then "# \(name)" else "## \(name)" end;
+        def line:
+          if $mode == "color" then
+            "- #\(.number) \(.title) [90m@\(.author.login)[0m [90m(\(age))[0m"
+          else
+            "- [#\(.number)](\(.url)) \(.title) @\(.author.login) (\(age))"
+          end;
+        group_by(.repository.nameWithOwner)
+        | sort_by(.[0].repository.nameWithOwner)
+        | .[]
+        | header(.[0].repository.nameWithOwner),
+          (.[] | line)
+    ' "$1"
+}
+
+has_results() {
+    [[ -s $1 ]] && [[ $(jq 'length' "$1") -gt 0 ]]
 }
 
 run_command() {
@@ -39,21 +56,14 @@ run_command() {
     tempfile=$(mktemp)
     search_prs "$kind" >"$tempfile"
 
-    if [[ -s $tempfile ]]; then
-        case "$action" in
-        show)
-            cat "$tempfile" | sed 's|##|#|' | sed 's|\[\(#[0-9]*\)\]([^)]*)\(.*\)|\1\2|' | sed $'s|@\\([^ ]*\\)|\033[90m@\\1\033[0m|' | sed $'s| (\\([^)]*\\))$| \033[90m(\\1)\033[0m|'
-            sed 's|\ *-|-|' <"$tempfile" | pbcopy
-            ,linkify
-            ;;
-        *)
-            cat "$tempfile" | sed 's|##|#|' | sed 's|\[\(#[0-9]*\)\]([^)]*)\(.*\)|\1\2|' | sed $'s|@\\([^ ]*\\)|\033[90m@\\1\033[0m|' | sed $'s| (\\([^)]*\\))$| \033[90m(\\1)\033[0m|'
-            sed 's|\ *-|-|' <"$tempfile" | pbcopy
-            ,linkify
+    if has_results "$tempfile"; then
+        render "$tempfile" color
+        render "$tempfile" md | pbcopy
+        ,linkify
 
-            cat "$tempfile" | grep -E '^\s*-' | cut -d'(' -f2 | cut -d')' -f1 | xargs open
-            ;;
-        esac
+        if [[ $action != show ]]; then
+            jq -r '.[].url' "$tempfile" | xargs open
+        fi
     else
         echo "No PRs found"
     fi
@@ -80,24 +90,24 @@ h | help | --help | -h)
 *) # Show all with color headings for each section
     tmp_a=$(mktemp); tmp_p=$(mktemp); tmp_r=$(mktemp)
     (search_prs approved >"$tmp_a") &
-    (search_prs pending >"$tmp_p") &
-    (search_prs review >"$tmp_r") &
+    (search_prs pending  >"$tmp_p") &
+    (search_prs review   >"$tmp_r") &
     wait
 
-    fmt() {
-        if [[ -s $1 ]]; then
-            cat "$1" | sed 's|##|#|' | sed 's|\[\(#[0-9]*\)\]([^)]*)\(.*\)|\1\2|' | sed $'s|@\\([^ ]*\\)|\033[90m@\\1\033[0m|' | sed $'s| (\\([^)]*\\))$| \033[90m(\\1)\033[0m|'
+    section() {
+        if has_results "$1"; then
+            render "$1" color
         else
             echo "No PRs found"
         fi
     }
 
     printf "%sApproved[a]%s\n" "$(tput setaf 3)" "$(tput sgr0)"
-    fmt "$tmp_a"
+    section "$tmp_a"
     printf "\n%sPending Approval[p]%s\n" "$(tput setaf 3)" "$(tput sgr0)"
-    fmt "$tmp_p"
+    section "$tmp_p"
     printf "\n%sTo Review[r]%s\n" "$(tput setaf 3)" "$(tput sgr0)"
-    fmt "$tmp_r"
+    section "$tmp_r"
 
     rm -f "$tmp_a" "$tmp_p" "$tmp_r"
     ;;
