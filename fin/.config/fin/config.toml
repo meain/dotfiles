@@ -1,5 +1,8 @@
+[models]
+  primary = "anthropic/claude-sonnet-4-6"
+  secondary = "haiku"
+
 [settings]
-  model = "anthropic/claude-sonnet-4-6"
   project_file = "AGENTS.md"
   max_turns = 50
   approve = "all"
@@ -24,6 +27,7 @@
 
   # openrouter
   mercury = "openrouter/inception/mercury-2"
+  ring = "openrouter/inclusionai/ring-2.6-1t:free"
 
   # anthropic
   haiku = "anthropic/claude-haiku-4-5"
