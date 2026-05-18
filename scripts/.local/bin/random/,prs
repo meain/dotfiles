@@ -9,21 +9,28 @@ search_prs() {
     kind="$1"
     case "$kind" in
     review)
-        set -- --review-requested "$me" --state open --updated ">$since" --json number,url,title,author,repository --limit 100 -- "draft:false -author:$me -review:approved"
+        set -- --review-requested "$me" --state open --updated ">$since" --json number,url,title,author,repository,createdAt --limit 100 -- "draft:false -author:$me -review:approved"
         ;;
     approved)
-        set -- --author "$me" --state open --review approved --json number,url,title,author,repository --limit 100
+        set -- --author "$me" --state open --review approved --json number,url,title,author,repository,createdAt --limit 100
         ;;
     pending)
-        set -- --author "$me" --state open --json number,url,title,author,repository --limit 100 -- "-review:approved"
+        set -- --author "$me" --state open --json number,url,title,author,repository,createdAt --limit 100 -- "-review:approved"
         ;;
     esac
     gh search prs "$@" |
-        jq -r 'group_by(.repository.nameWithOwner)
+        jq -r 'def age:
+                 ((now - (.createdAt | fromdateiso8601)) / 86400 | floor) as $d
+                 | if $d >= 30 then "\($d / 30 | floor)mo"
+                   elif $d >= 7 then "\($d / 7 | floor)w"
+                   elif $d >= 1 then "\($d)d"
+                   else "<1d"
+                   end;
+               group_by(.repository.nameWithOwner)
             | sort_by(.[0].repository.nameWithOwner)
             | .[]
             | "## \(.[0].repository.nameWithOwner)",
-              (.[] | "- [#\(.number)](\(.url)) \(.title) @\(.author.login)")'
+              (.[] | "- [#\(.number)](\(.url)) \(.title) @\(.author.login) (\(age))")'
 }
 
 run_command() {
@@ -35,12 +42,12 @@ run_command() {
     if [[ -s $tempfile ]]; then
         case "$action" in
         show)
-            cat "$tempfile" | sed 's|##|#|' | sed 's|\[\(#.*\)\](.*)\(.*\)|\1\2|' | sed $'s|@\\([^ ]*\\)|\033[90m@\\1\033[0m|'
+            cat "$tempfile" | sed 's|##|#|' | sed 's|\[\(#[0-9]*\)\]([^)]*)\(.*\)|\1\2|' | sed $'s|@\\([^ ]*\\)|\033[90m@\\1\033[0m|' | sed $'s| (\\([^)]*\\))$| \033[90m(\\1)\033[0m|'
             sed 's|\ *-|-|' <"$tempfile" | pbcopy
             ,linkify
             ;;
         *)
-            cat "$tempfile" | sed 's|##|#|' | sed 's|\[\(#.*\)\](.*)\(.*\)|\1\2|' | sed $'s|@\\([^ ]*\\)|\033[90m@\\1\033[0m|'
+            cat "$tempfile" | sed 's|##|#|' | sed 's|\[\(#[0-9]*\)\]([^)]*)\(.*\)|\1\2|' | sed $'s|@\\([^ ]*\\)|\033[90m@\\1\033[0m|' | sed $'s| (\\([^)]*\\))$| \033[90m(\\1)\033[0m|'
             sed 's|\ *-|-|' <"$tempfile" | pbcopy
             ,linkify
 
@@ -79,7 +86,7 @@ h | help | --help | -h)
 
     fmt() {
         if [[ -s $1 ]]; then
-            cat "$1" | sed 's|##|#|' | sed 's|\[\(#.*\)\](.*)\(.*\)|\1\2|' | sed $'s|@\\([^ ]*\\)|\033[90m@\\1\033[0m|'
+            cat "$1" | sed 's|##|#|' | sed 's|\[\(#[0-9]*\)\]([^)]*)\(.*\)|\1\2|' | sed $'s|@\\([^ ]*\\)|\033[90m@\\1\033[0m|' | sed $'s| (\\([^)]*\\))$| \033[90m(\\1)\033[0m|'
         else
             echo "No PRs found"
         fi
