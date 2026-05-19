@@ -127,6 +127,17 @@ Present this summary as plain text with lettered/numbered references. Do NOT use
 this step — let the user respond conversationally. The user will reply with which items to include
 (e.g., "B,C,D,K") or give other instructions. Iterate as needed until the user is satisfied.
 
+### Interactive Selection via emacsclient (preferred)
+
+For longer candidate lists, prefer this workflow over letter-selection:
+
+1. Write candidate list to `/tmp/backlog-candidates.md` grouped by section, each candidate as a `- [ ]` line. Include a top-of-file instruction comment (lines starting with `#`) telling the user to delete lines they DON'T want and to save+close when done. Inline annotations starting with `>` or after the line are OK for free-form notes.
+2. Open the file with `emacsclient /tmp/backlog-candidates.md` -- this blocks until the user finishes editing and closes the buffer (`C-x #` or kill-buffer). Run with `dangerouslyDisableSandbox: true` since it talks to the user's emacs daemon. Use a long timeout (e.g. 600000ms).
+3. When emacsclient returns, the file diff is surfaced via system-reminder. Re-read the file if needed. Treat any remaining `- [ ]` lines as the selected candidates. Honor free-form notes (e.g. `> all 3 as a single one` means combine those lines into one entry).
+4. Apply edits to the backlog accordingly.
+
+This avoids letter-mapping back-and-forth and lets the user freely annotate.
+
 ## Step 5: Update the Backlog
 
 Once the user confirms the plan:
