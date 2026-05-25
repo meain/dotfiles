@@ -202,7 +202,7 @@
                           ("Ubuntu Mono" . '(160 .1 'regular))
                           ("Unifont" . '(160 .2 'regular))
                           ("Uroob" . '(160 nil 'regular))
-                          ("Victor Mono" . '(160 nil 'regular))
+                          ("Victor Mono" . '(150 nil 'regular))
                           ("Whois" . '(160 .2 'regular))
                           ("Wire Type Mono" . '(160 nil 'regular))
                           ("Xanh Mono" . '(160 .1 'regular))
