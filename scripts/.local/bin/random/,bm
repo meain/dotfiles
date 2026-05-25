@@ -32,12 +32,11 @@ add | list | show | pick | open | remove | help | edit | tags | go | aliases)
     SEARCH_TERM="${2:-}"
     ;;
 "")
-    show_help >&2
-    exit 1
+    OPERATION="open"
     ;;
 *)
     OPERATION="open"
-    SEARCH_TERM="$1"
+    SEARCH_TERM="$*"
     ;;
 esac
 
