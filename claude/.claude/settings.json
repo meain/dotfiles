@@ -5,7 +5,7 @@
   "permissions": {
     "defaultMode": "auto"
   },
-  "model": "opus[1m]",
+  "model": "sonnet",
   "hooks": {
     "Notification": [
       {
@@ -60,24 +60,16 @@
     "code-review@claude-plugins-official": true,
     "swift-lsp@claude-plugins-official": true,
     "oncall-copilot@oncall-copilot-plugins": true,
-    "platform-tools@oncall-copilot-plugins": true,
-    "caveman@caveman": true
+    "platform-tools@oncall-copilot-plugins": true
   },
-  "extraKnownMarketplaces": {
-    "caveman": {
-      "source": {
-        "source": "github",
-        "repo": "JuliusBrussee/caveman"
-      }
-    }
-  },
+  "extraKnownMarketplaces": {},
   "autoDreamEnabled": true,
   "showThinkingSummaries": true,
   "skipDangerousModePermissionPrompt": true,
-  "skipAutoPermissionPrompt": true,
+  "theme": "light",
   "teammateMode": "in-process",
+  "skipAutoPermissionPrompt": true,
   "feedbackSurveyState": {
     "lastShownTime": 1753939897813
-  },
-  "theme": "light"
+  }
 }
