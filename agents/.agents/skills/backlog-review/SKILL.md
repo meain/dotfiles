@@ -31,6 +31,10 @@ cd /Users/meain/.local/share/sbdb && git add -A && git commit -m "Before backlog
 
 This creates a safety checkpoint. If the commit fails because there are no changes, that's fine -- continue.
 
+## Step 0.5: Verify Today's Date
+
+Always run `date "+%Y-%m-%d (%A)"` and treat its output as authoritative for the rest of the workflow. The system-injected `currentDate` in CLAUDE.md can lag by a day.
+
 ## Step 1: Read the Backlog
 
 Read the full backlog file first to understand the current state before making any changes.
@@ -42,8 +46,8 @@ Find all checked-off items (`- [x]`) in the Today section(s).
 If there are checked-off items, use `AskUserQuestion` to ask what to do with them.
 List all checked-off items in the question text and offer options:
 
-1. **Move all to Before section (Recommended)** -- Move to the bottom of the file under a new dated heading
-   with the last working day's date. If today is Monday, use last Friday's date.
+1. **Move all to Before section (Recommended)** -- Append at the very end of the file (after the last existing dated section). The "Before" sections grow chronologically with the newest date at the bottom.
+   Use the last working day's date. If today is Monday, use last Friday's date.
    If today is Sunday, use Friday. If today is Saturday, use Friday. Otherwise use yesterday.
    Format: `### YYYY-MM-DD (DayOfWeek)`
    IMPORTANT: Compute the date correctly. Verify the day-of-week name matches the computed date.
@@ -131,8 +135,8 @@ this step — let the user respond conversationally. The user will reply with wh
 
 For longer candidate lists, prefer this workflow over letter-selection:
 
-1. Write candidate list to `/tmp/backlog-candidates.md` grouped by section, each candidate as a `- [ ]` line. Include a top-of-file instruction comment (lines starting with `#`) telling the user to delete lines they DON'T want and to save+close when done. Inline annotations starting with `>` or after the line are OK for free-form notes.
-2. Open the file with `emacsclient /tmp/backlog-candidates.md` -- this blocks until the user finishes editing and closes the buffer (`C-x #` or kill-buffer). Run with `dangerouslyDisableSandbox: true` since it talks to the user's emacs daemon. Use a long timeout (e.g. 600000ms).
+1. Write candidate list to `/tmp/backlog-candidates-YYYY-MM-DD.md` (use today's date from Step 0.5 — e.g. `/tmp/backlog-candidates-2026-05-21.md`) to avoid collisions with stale files from prior sessions. Group by section, each candidate as a `- [ ]` line. Include a top-of-file instruction comment (lines starting with `#`) telling the user to delete lines they DON'T want and to save+close when done. Inline annotations starting with `>` or after the line are OK for free-form notes.
+2. Open the file with `emacsclient /tmp/backlog-candidates-YYYY-MM-DD.md` -- this blocks until the user finishes editing and closes the buffer (`C-x #` or kill-buffer). Run with `dangerouslyDisableSandbox: true` since it talks to the user's emacs daemon. Use a long timeout (e.g. 600000ms). IMPORTANT: Write the file fresh BEFORE opening with emacsclient — do NOT call Write and emacsclient in parallel. Write may fail if the file already exists and hasn't been Read first, leaving emacsclient showing stale content.
 3. When emacsclient returns, the file diff is surfaced via system-reminder. Re-read the file if needed. Treat any remaining `- [ ]` lines as the selected candidates. Honor free-form notes (e.g. `> all 3 as a single one` means combine those lines into one entry).
 4. Apply edits to the backlog accordingly.
 
