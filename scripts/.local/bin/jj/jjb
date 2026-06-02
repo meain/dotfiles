@@ -3,9 +3,19 @@
 set -e
 
 revision="@"
-if  echo "$1" | grep -q '^,[^ ]'; then
+if echo "$1" | grep -q '^,[^ ]'; then
     revision="${1#,}"
     shift
 fi
 
-jj bookmark set -r "$revision" "meain/$1"
+bookmark="$1"
+
+if [ -z "$bookmark" ]; then
+    echo "Empty bookmark" && exit 1
+fi
+
+if ! echo "$bookmark" | grep -q '^meain/'; then
+    bookmark="meain/$bookmark"
+fi
+
+jj bookmark set -r "$revision" "$bookmark"
