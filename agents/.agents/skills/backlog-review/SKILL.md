@@ -79,11 +79,11 @@ if [[ "$GH_TOKEN" == go-keyring-base64:* ]]; then
   GH_TOKEN=$(echo "${GH_TOKEN#go-keyring-base64:}" | base64 -d)
 fi
 curl -s -H "Authorization: bearer $GH_TOKEN" -H "Content-Type: application/json" \
-  -d '{"query":"{ search(query: \"is:pr is:open review-requested:meain review:required org:Veeam-VDC\", type: ISSUE, first: 30) { nodes { ... on PullRequest { number title url repository { nameWithOwner } author { login } createdAt reviews(first: 10) { nodes { state author { login } } } reviewRequests(first: 20) { nodes { requestedReviewer { ... on User { login } ... on Team { name slug } } } } } } } }"}' \
+  -d '{"query":"{ search(query: \"is:pr is:open review-requested:meain review:required org:Veeam-VDC\", type: ISSUE, first: 30) { nodes { ... on PullRequest { number title url isDraft repository { nameWithOwner } author { login } createdAt reviews(first: 10) { nodes { state author { login } } } reviewRequests(first: 20) { nodes { requestedReviewer { ... on User { login } ... on Team { name slug } } } } } } } }"}' \
   https://api.github.com/graphql
 ```
 
-Filter: Only PRs where `meain` is a direct User reviewer. Exclude PRs already approved.
+Filter: Only PRs where `meain` is a direct User reviewer. Exclude PRs already approved. **Exclude draft PRs (`isDraft: true`)** — add `isDraft` to the GraphQL query and skip any drafts.
 
 ### 3c. GitHub PRs -- Authored by User
 
