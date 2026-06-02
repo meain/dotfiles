@@ -82,6 +82,7 @@
       # ai agents
       "claude"
       "claude-code"
+      "pi-coding-agent"
       "copilot-cli"
       "warp"
       # "windsurf"
