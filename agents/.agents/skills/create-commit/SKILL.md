@@ -1,56 +1,79 @@
 ---
 name: create-commit
-description: Create a Jujutsu (jj) commit with a concise message
+description: Create Jujutsu (jj) commits — simple one-shot or split across logical groups. Also suggest splitting when changes span multiple unrelated areas or when user explicitly requests it.
 ---
 
-When the user asks you to create a new commit, follow these steps to create a commit using Jujutsu (jj):
+Create one or more jj commits from the working copy. If the user asked to split changes or if the diff spans clearly unrelated areas, use the split workflow. Otherwise, default to a single commit.
 
 ## Important Context
-- This project uses **Jujutsu (jj)**, NOT git
+- Uses **Jujutsu (jj)**, not git
 - All changes in the working copy are automatically tracked
-- Use `jj describe` to set commit messages (opens interactive editor)
 
-## Steps to Create a Commit
+## Steps
 
 ### 1. Understand Current State
-Run these jj commands in parallel:
+Run these in parallel:
 ```bash
-jj status           # See all changes in working copy
+jj status           # See all changes
 jj diff             # See detailed changes
-jj log -r 'ancestors(@, 3)'  # See recent commits for style reference
+jj log -r 'ancestors(@, 3)'  # Recent commits for style reference
 ```
 
-### 2. Analyze and Draft Message
-- Summarize the nature of changes (feature, enhancement, bug fix, refactoring, test, docs, etc.)
-- Ensure accuracy of the summary
-- Do NOT commit secrets (.env, credentials.json, etc.)
+### 2. Assess Changes
+Check if changes should be a single commit or split:
+- **Single commit**: changes are few, logically one unit (feature, bug fix, refactor)
+- **Suggest split**: changes span multiple distinct areas (e.g. unrelated features, tests + code changes + config). Present the proposed groups to the user and let them decide.
+- **User requested split**: skip suggestion, go straight to split workflow
 
-### 3. Create the Commit
-Draft a concise commit message (1-2 sentences explaining what changed and why), then use:
+### 3a. Simple Commit
 ```bash
 jj describe -m "$(cat <<'EOF'
-[Your drafted message here]
+brief description (1-2 sentences)
+
+Optional body if reasoning isn't obvious from the diff
 EOF
 )"
-```
-
-### 4. Create New Revision
-After describing the commit, always create a new empty revision on top:
-```bash
 jj new
 ```
 
-### 5. Verify
-Run `jj log -r 'ancestors(@, 3)'` to confirm the commit and new revision were created successfully.
+Guidelines:
+- Keep first line under 72 chars
+- Do NOT commit secrets
+- Do NOT push unless requested
+- Do NOT add `Co-Authored-By` lines unless the user asks
+
+### 3b. Split into Logical Commits
+1. Group changed files into logical sets — by feature/purpose, layer (code vs tests vs config), or file relationships
+2. Present the proposed grouping to the user and wait for confirmation
+3. For N groups, do N-1 splits:
+   ```bash
+   jj split -m "$(cat <<'EOF'
+<commit message for this group>
+EOF
+)" <file1> <file2> ...
+   ```
+4. After all splits, describe the remaining commit:
+   ```bash
+   jj describe -m "$(cat <<'EOF'
+<commit message for last group>
+EOF
+)"
+   ```
+5. Create new working revision:
+   ```bash
+   jj new
+   ```
+
+### 4. Verify
+```bash
+jj log -r 'ancestors(@, 3)'
+```
 
 ## Branch/Bookmark Naming
-- For Veeam repos (`/Users/meain/dev/veeam/`), use `meain/` prefix for branch names
-- Example: `meain/earn-prod-adx-sku-downsize`, `meain/fix-auth-bug`
-- For other repos, follow the project's naming conventions
+- Veeam repos: prefix with `meain/` (e.g. `meain/earn-prod-adx-sku-downsize`)
+- Other repos: follow project conventions
 
-## Guidelines
-- Keep the first line (header) under 72 characters; use a blank line + body for details if needed
-- Keep the message brief (1-2 sentences)
-- NEVER use TodoWrite or Task tools for commits
-- DO NOT push unless explicitly requested
-- If commit fails: fix the issue and try again
+## Notes
+- If changes within a single file need splitting, mention this limitation and suggest `jj split -i` done manually
+- Never use interactive split (`-i` flag) in scripts
+- Prefer meaningful groups over many tiny commits
