@@ -10,8 +10,8 @@
   :load-path "/Users/meain/dev/src/yap"
   :after (llm)
   :config
-  (setq yap-service "github")
-  (setq yap-model "gpt-4o-mini") ; start with something cheap
+  (setq yap-service "anthropic")
+  (setq yap-model "claude-sonnet-4-6")
 
   (setq yap-api-key:groq groq-api-key)
   (setq yap-api-key:openrouter openrouter-api-key)
