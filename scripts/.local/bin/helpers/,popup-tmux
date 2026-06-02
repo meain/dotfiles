@@ -13,6 +13,10 @@ else
     "single")
         tmux popup -d "$HOME" -w90% -h90% -E "tmux attach -t 'popup-$CURRENT_PANE' || tmux new -s 'popup-$CURRENT_PANE'" || true
         ;;
+    "companion")
+        COMPANION_DIR="$HOME/dev/src/companion"
+        tmux popup -d "$COMPANION_DIR" -x160% -y30% -w40% -h80% -E "tmux attach -t 'popup-companion' || tmux new-session -s 'popup-companion' -c $COMPANION_DIR claude" || true
+        ;;
     "folder")
         # Get current folder path from tmux pane, defaulting to git root if available
         FOLDER="$(
