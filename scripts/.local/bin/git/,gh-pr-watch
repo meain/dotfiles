@@ -1,0 +1,81 @@
+#!/bin/bash
+# Watch PRs in the merge queue and notify on merge or failure.
+# Usage: ,gh-pr-watch [repo]  (defaults to current repo)
+
+set -euo pipefail
+
+INTERVAL=60
+REPO="${1:-}"
+
+gh_cmd() {
+    if [ -n "$REPO" ]; then
+        gh "$@" -R "$REPO"
+    else
+        gh "$@"
+    fi
+}
+
+queue_prs() {
+    gh_cmd pr list \
+        --author "@me" \
+        --json number,title,mergeStateStatus,headRefName \
+        --jq '.[] | select(.mergeStateStatus == "BLOCKED" or .mergeStateStatus == "CLEAN" or .mergeStateStatus == "HAS_HOOKS") | "\(.number)\t\(.title)\t[\(.headRefName)]"' \
+        2>/dev/null
+}
+
+all_prs() {
+    gh_cmd pr list \
+        --author "@me" \
+        --json number,title,headRefName \
+        --jq '.[] | "\(.number)\t\(.title)\t[\(.headRefName)]"'
+}
+
+prs="$(queue_prs)"
+[ -z "$prs" ] && prs="$(all_prs)"
+
+if [ -z "$prs" ]; then
+    echo "No open PRs found"
+    exit 0
+fi
+
+selected="$(echo "$prs" | column -t -s$'\t' | fzf -m --prompt="Select PRs to watch> ")"
+[ -z "$selected" ] && echo "No PR selected" && exit 0
+
+pr_numbers="$(echo "$selected" | awk '{print $1}')"
+
+echo "Watching PRs: $(echo "$pr_numbers" | tr '\n' ' ')"
+
+done_prs=""
+
+while true; do
+    remaining=0
+    for pr in $pr_numbers; do
+        echo "$done_prs" | grep -qw "$pr" && continue
+        remaining=$((remaining + 1))
+
+        data="$(gh_cmd pr view "$pr" --json state,mergeStateStatus,title --jq '[.state, .mergeStateStatus, .title] | @tsv')"
+        state="$(echo "$data" | cut -f1)"
+        merge_status="$(echo "$data" | cut -f2)"
+        title="$(echo "$data" | cut -f3)"
+
+        echo "$(date '+%H:%M:%S') #$pr [$state/$merge_status] $title"
+
+        if [ "$state" = "MERGED" ]; then
+            notify "PR Merged ✅" "#$pr: $title"
+            done_prs="$done_prs $pr"
+            remaining=$((remaining - 1))
+        elif [ "$state" = "CLOSED" ]; then
+            notify --pri "PR Closed ❌" "#$pr closed without merging: $title"
+            done_prs="$done_prs $pr"
+            remaining=$((remaining - 1))
+        elif [ "$merge_status" = "BLOCKED" ]; then
+            notify --pri "PR Blocked ⚠️" "#$pr is blocked: $title"
+        fi
+    done
+
+    [ "$remaining" -eq 0 ] && break
+
+    sleep "$INTERVAL"
+done
+
+echo "All done."
