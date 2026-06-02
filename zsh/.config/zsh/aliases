@@ -59,6 +59,7 @@ alias ,gh-copilot="npx -y @github/copilot --allow-tool 'write'"
 # fin
 alias finn="fin -m haiku"
 alias finc="fin -c"
+alias fint="fin -temp"
 alias fincc="fin -match"
 alias fins=",fin-session-export"
 alias finh="fin -export message | ,markdown-to-html"
@@ -112,7 +113,7 @@ alias jf='jj git fetch'
 alias jfm='jj git fetch && jj new main'
 alias jr='jj rebase -d'
 alias jfr=',jfr'
-alias jb='jj bookmark set'
+alias jb='jjb'
 alias je='jj edit'
 alias jj-squash-multi="jj stack | fzf -m | cut -d' ' -f3 | JJ_EDITOR=true xargs -n1 jj squash -r"
 alias jwu='jj workspace update-stale'
