@@ -88,6 +88,8 @@ Find checked-off items (`- [x]`) in Today. Ask the user what to do:
 
 ### Step 3: Gather External Data (parallel)
 
+> **All Jira and GitHub commands must be run with `dangerouslyDisableSandbox: true`** — the sandbox blocks TLS certificate verification needed for these hosts.
+
 **3a. Jira sprint:**
 ```bash
 jira issue list -q "sprint in openSprints() AND assignee = currentUser()" 2>&1
@@ -109,20 +111,20 @@ Filter: only direct reviews (not team), exclude approved PRs and drafts.
 
 **3d. Calendar (optional):** If MS365 MCP available, check today's meetings.
 
-### Step 4: Present Summary
+### Step 4: Present Summary and Select Candidates via Emacs
 
-Present as plain text:
-- **Already in Today** — unchecked items
-- **From Jira Sprint** — tickets not yet in Today, grouped by priority
-- **My PRs** — approved (ready to merge) and needs action
-- **PRs Needing Review** — with repo, number, author
-- **Candidates from other sections** — Tomorrow/This Week/Whenever items worth pulling in
-- **Capacity estimate** — based on meetings and task sizes (~6h productive)
+Give a brief plain-text summary (no Q&A prompts), then **always** use the emacsclient workflow to let the user choose what to add:
 
-For longer lists, use the emacsclient workflow:
-1. Write candidates to `/tmp/backlog-candidates-YYYY-MM-DD.md` with `- [ ]` lines
-2. `emacsclient /tmp/backlog-candidates-YYYY-MM-DD.md` (blocking, 600s timeout)
-3. Treat remaining `- [ ]` lines as selections
+1. Write all candidates to `/tmp/backlog-candidates-YYYY-MM-DD.md` with `- [ ]` lines, grouped by:
+   - Morning routine (Check emails, Check Slack, Check Teams, Charge devices)
+   - My PRs — approved (ready to merge)
+   - My PRs — needs action
+   - PRs needing direct review (only where `login: meain` is a direct reviewer, not team)
+   - Candidates from other sections (Tomorrow/This Week/Whenever worth pulling in)
+2. Invoke the `/edit-in-emacs` skill with the file path (blocking, 600s timeout)
+3. After emacsclient returns, read the file — treat remaining `- [ ]` lines as selections
+
+**Never use AskUserQuestion / multi-select prompts** to pick candidates — always go straight to the emacs file.
 
 ### Step 5: Update Backlog
 
