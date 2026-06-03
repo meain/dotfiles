@@ -38,6 +38,7 @@
       "ispell" # Emacs does not pick up nix version
       "ical-buddy" # Read from macos calendar
       "databricks" # databricks cli
+      "pi-coding-agent" # pi coding agent
     ];
     casks = [
       "emacs-plus-app"
@@ -82,7 +83,6 @@
       # ai agents
       "claude"
       "claude-code"
-      "pi-coding-agent"
       "copilot-cli"
       "warp"
       # "windsurf"
