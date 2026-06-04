@@ -29,33 +29,7 @@
   (define-key transient-map (kbd "<escape>") 'transient-quit-one)
   (setq magit-diff-refine-hunk (quote all))
   (define-key magit-mode-map (kbd "M-w") 'delete-window)
-  (setq magit-completing-read-function #'completing-read)
-
-  (defun meain/git-how-was-it ()
-    (interactive)
-    (let* ((filepath (magit-file-relative-name))
-           (filename (file-name-nondirectory (magit-file-relative-name)))
-           (line-no (line-number-at-pos))
-           (mm major-mode)
-           (branch (completing-read "Branch: " (magit-list-local-branch-names)))
-           (buffer (get-buffer-create (format "*git-how-was-it %s:%s*" branch filename))))
-      (message (concat "git show " branch ":" filepath))
-      (other-window 1)
-      (switch-to-buffer buffer)
-      (erase-buffer)
-      (insert (shell-command-to-string (concat "git show " branch ":" filepath)))
-      (goto-line line-no) ;; will be different, but just a start
-      (funcall mm))))
-
-;; Structural diff using difftastic
-(use-package difftastic
-  :disabled t
-  :ensure (:host github :repo "pkryger/difftastic.el")
-  :config
-  (eval-after-load 'magit-diff
-    '(transient-append-suffix 'magit-diff '(-1 -1)
-       [("D" "Difftastic diff (dwim)" difftastic-magit-diff)
-        ("S" "Difftastic show" difftastic-magit-show)])))
+  (setq magit-completing-read-function #'completing-read))
 
 (use-package ediff
   :after (evil-leader)
@@ -111,20 +85,6 @@
   (evil-leader/set-key "gn" 'diff-hl-next-hunk)
   (evil-leader/set-key "gp" 'diff-hl-previous-hunk))
 
-;; Git blame info
-(use-package blamer
-  :ensure t
-  :after evil-leader
-  :commands (blamer-show-commit-info blamer-mode global-blamer-mode)
-  :config
-  (setq blamer-idle-time 0.1)
-  (setq blamer-min-offset 30)
-  (setq blamer-commit-formatter ":: %s")
-  (set-face-attribute 'blamer-face nil :height 0.9)
-  (setq blamer-max-commit-message-length 90)
-  (setq blamer-border-lines '(?+ ?- ?+ ?| ?+ ?+ )) ;; default one creates issues with spacing
-  :init (evil-leader/set-key "G" 'blamer-show-commit-info))
-
 ;; vc backend for jj
 (use-package vc-jj
   :ensure (:host codeberg :repo "emacs-jj-vc/vc-jj.el")
@@ -150,7 +110,7 @@
                         " ++ \" \" ++ "
                         "self.commit().committer().timestamp().format(\"%Y-%m-%d\")"
                         " ++ \"  \" ++ "
-                        "self.line_number()"
+                        "pad_start(4, self.line_number())"
                         " ++ \": \" ++ "
                         "self.content()"))))
 
