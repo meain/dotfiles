@@ -10,12 +10,14 @@
   ;; :load-path "/Users/meain/dev/src/gptel"
   :commands (gptel gptel-send gptel-rewrite-menu)
   :config
-  ;; (setq gptel-model 'claude-3.7-sonnet)
-  (setq gptel-model 'gpt-4.1)
-  (setq gptel-backend (gptel-make-gh-copilot "Copilot"))
+  (setq gptel-model 'claude-sonnet-4-6)
+  (setq gptel-backend
+        (gptel-make-anthropic "Anthropic"
+          :key (getenv "ANTHROPIC_API_KEY")
+          :stream t))
+  (setq gptel-api-key (getenv "ANTHROPIC_API_KEY"))
 
   ;; Some configuration
-  (setq gptel-api-key openai-api-key)
   (setq gptel-expert-commands t)
   (setq gptel-use-context 'user)
   (setq gptel-use-tools t)
@@ -55,31 +57,9 @@
               mixtral-8x7b-32768
               gemma-7b-it))
 
-  (gptel-make-anthropic "Claude"
-    :stream t
-    :key anthropic-api-key)
-
   (defun gptel-context-clear-all ()
     (interactive)
     (gptel-add -1))
-
-  (defun gptel-context-add-website (url &optional no-cache)
-    "Add content from a website to the GPTel context.
-URL is the website address to fetch content from.
-When NO-CACHE is non-nil, force fetching fresh content even if cached."
-    (interactive "sURL: ")
-    (let ((buffer-name (format "*gptel-context-website:%s*" url)))
-      (with-current-buffer (get-buffer-create buffer-name)
-        (if (and (not no-cache) (> (buffer-size) 0))
-            (gptel-add)
-          (let* ((url-buffer (url-retrieve-synchronously url))
-                 (content-without-header (with-current-buffer url-buffer
-                                           (buffer-substring-no-properties
-                                            (search-forward "\n\n")
-                                            (point-max)))))
-            (erase-buffer)
-            (insert content-without-header)
-            (gptel-add))))))
 
   (defun gptel-context-add-shell-command (command &optional cache)
     "Add context to gptel from the output of a shell command.
@@ -99,10 +79,6 @@ If CACHE is non-nil, the output is cached."
 For optional NO-CACHE, use caching by default."
     (interactive "sEnter website URL: ")
     (gptel-context-add-shell-command (format "readable %s" url) (not no-cache)))
-
-  ;; Tools & Presets
-  (require 'gptel-tools)
-  (require 'gptel-presets)
 
   (defvar gptel-lookup--history nil)
   (defun gptel-lookup (prompt)
@@ -200,17 +176,6 @@ Return a list of filenames only, one per line without extension.
   (global-set-key (kbd "M-; M-i") 'gptel-menu)
   (global-set-key (kbd "M-; r") 'gptel-rewrite)
   (global-set-key (kbd "M-; M-r") 'gptel-rewrite))
-
-(use-package gptel-prompts
-  :ensure (:host github :repo "jwiegley/gptel-prompts")
-  :after (gptel)
-  :demand t
-  :config
-  (setq gptel-prompts-directory
-        (concat (getenv "HOME") "/.config/datafiles/prompts/system"))
-  ;; Ensure prompts are updated if prompt files change
-  ;; (gptel-prompts-add-update-watchers)
-  (gptel-prompts-update))
 
 (use-package gptel-quick
   :ensure (:host github :repo "karthink/gptel-quick")
