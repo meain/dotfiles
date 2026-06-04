@@ -58,27 +58,16 @@
   :config
   (add-hook 'comint-mode-hook (lambda () (setq-local show-trailing-whitespace nil))))
 
-;; Eat terminal
-;; TODO: Configure M-hjkl for split navigation
-(use-package eat
-  :ensure (:type git
-                 :host codeberg
-                 :repo "akib/emacs-eat"
-                 :files ("*.el" ("term" "term/*.el") "*.texi"
-                         "*.ti" ("terminfo/e" "terminfo/e/*")
-                         ("terminfo/65" "terminfo/65/*")
-                         ("integration" "integration/*")
-                         (:exclude ".dir-locals.el" "*-tests.el")))
-  :config
-  (add-hook 'eat-mode-hook (lambda () (setq-local show-trailing-whitespace nil))))
-
 ;; Eshell config
 (use-package eshell
   :init (global-set-key (kbd "M-t") 'meain/eshell-toggle)
   :after (vc copilot)
   :commands (meain/eshell-toggle eshell)
   :config
-  (add-hook 'eshell-mode-hook (lambda () (copilot-mode -1)))
+  (add-hook 'eshell-mode-hook
+            (lambda ()
+              (whitespace-mode -1)
+              (copilot-mode -1)))
   (defun meain/eshell-name ()
     "Get the name of the eshell based on project info."
     (format "*popup-eshell-%s*"
@@ -101,8 +90,8 @@
                                    (split-string
                                     (eshell/pwd) "/")))) "/")
                        'face `(:foreground "#93a1a1"))
-           (propertize (if (car (vc-git-branches))
-                           (concat "[" (car (vc-git-branches)) "]")
+           (propertize (if (car (vc-git-concat))
+                           (branches "[" (car (vc-git-branches)) "]")
                          "") 'face `(:foreground "#93a1a1"))
            " ")))
   (add-hook 'eshell-mode-hook (lambda ()
