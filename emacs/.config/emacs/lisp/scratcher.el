@@ -66,20 +66,7 @@
 (use-package recentf
   :defer t
   :init
-  (recentf-mode t)
-  (add-hook 'after-init-hook
-            (lambda ()
-              (with-current-buffer "*scratch*"
-                (goto-char (point-max))
-                (insert initial-scratch-message)
-                (newline 2)
-                (mapcar (lambda (x)
-                          (insert "\n")
-                          (insert-button
-                           (string-join (reverse (cl-subseq (reverse (split-string x "/")) 0 2)) "/")
-                           'action (lambda (_button) (find-file x))
-                           'follow-link t))
-                        (cl-subseq recentf-list 0 (min 3 (length recentf-list))))))))
+  (recentf-mode t))
 
 ;; Save buffer
 (use-package emacs
