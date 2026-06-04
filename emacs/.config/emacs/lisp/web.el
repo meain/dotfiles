@@ -109,6 +109,20 @@ automatically. If region is active, link covers the region."
   :init
   (evil-leader/set-key "g l" 'meain/github-url))
 
+;; Alternative: https://github.com/federicotdn/verb
+(use-package restclient
+  :ensure t
+  :defer t
+  :mode ("\\.rest\\'". restclient-mode)
+  :config (add-hook 'restclient-mode-hook (lambda ()
+                                            (setq imenu-generic-expression '((nil "^#+\s+.+" 0))))))
+(use-package restclient-jq
+  :ensure t
+  :after restclient
+  :defer
+  :init
+  (add-hook 'restclient-mode-hook (lambda () (require 'restclient-jq))))
+
 ;; Link opening
 (use-package ace-link
   :ensure t

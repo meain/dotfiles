@@ -65,7 +65,6 @@
 (require 'filetypes)
 (require 'debuggers)
 (require 'extras)
-(require 'tools)
 (require 'tree-sitter-m)
 (require 'bookmarking)
 (require 'notes)
