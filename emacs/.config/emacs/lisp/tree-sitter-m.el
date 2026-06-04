@@ -75,28 +75,6 @@
                   (go-ts-mode . ((import_spec) @import))
                   (rust-mode . ((use_declaration) @import))))))
 
-;; Show context using tree-sitter
-(use-package posframe-plus
-  :defer t
-  :ensure (:host github :type git :repo "zbelial/posframe-plus" ))
-(use-package treesitter-context
-  :after (tree-sitter posframe-plus)
-  :ensure (:type git :host github :repo "zbelial/treesitter-context.el")
-  :commands (treesitter-context-toggle-show)
-  :config
-  (setq treesitter-context-idle-time 0.5)
-  (setq treesitter-context-show-context-always t)
-  (setq treesitter-context-frame-autohide-timeout 15)
-  (setq meain/treesitter-context-shown nil)
-
-  (require 'treesitter-context-utils) ;; for `treesitter-context-toggle-show'
-  :init
-  (global-set-key (kbd "M-r") #'treesitter-context-toggle-show))
-
-(use-package combobulate
-  :commands (combobulate)
-  :ensure (:repo "mickeynp/combobulate" :host github))
-
 (use-package treesit-fold
   :defer t
   :after (evil-leader)
@@ -138,8 +116,7 @@
   :init (evil-leader/set-key "H j" 'tree-surgeon-split-join))
 
 ;; Hacky symbol search using tree-sitter
-(use-package emacs
-  ;; TODO: Lazy load tree-jump
+(use-package emacs ;; TODO: lazy load the tree-jump package
   :after (consult)
   :commands (tree-jump-search consult-tree-jump-search tree-jump-xref-backend)
   :config
