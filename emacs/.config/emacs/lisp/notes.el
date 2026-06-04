@@ -34,25 +34,6 @@
      ;; TODO: sort files by timestamp when displaying
      (dired (concat meain/quick-notes-directory "/" (format-time-string "%Y-%m" (current-time)))))))
 
-;; Journal entry
-(use-package emacs
-  :after evil-leader
-  :init
-  (add-hook 'find-file-hook
-            (lambda ()
-              (if (string-prefix-p (expand-file-name "~/.local/share/journal")
-                                   default-directory)
-                  (progn
-                    (copilot-mode -1) ; noooope
-                    (auto-fill-mode)))))
-  (evil-leader/set-key "a J"
-    (lambda ()
-      "Start writing journal entry.  `journal' invokes emacsclient and gives control back over to Emacs."
-      (interactive)
-      (start-process-shell-command "journal" "*journal*"
-                                   "EDITOR='emacsclient' ,journal"))))
-
-
 ;; Obsidian handling
 (use-package emacs
   :after (evil-leader)
