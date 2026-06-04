@@ -60,3 +60,4 @@ default.rest
 AGENTS.md
 **/.claude
 CLAUDE.md
+.osgrep
