@@ -1,5 +1,5 @@
 ---
-name: backlog-review
+name: backlog
 description: >
   Daily backlog management — full planning review OR add a single entry from a URL.
   Full review: gathers Jira sprint, GitHub PRs, checked-off items, and collaboratively
@@ -121,6 +121,8 @@ Give a brief plain-text summary (no Q&A prompts), then **always** use the emacsc
    - My PRs — needs action
    - PRs needing direct review (only where `login: meain` is a direct reviewer, not team)
    - Candidates from other sections (Tomorrow/This Week/Whenever worth pulling in)
+   
+   In the candidates file, the "Checked-off items to move to Before" header must include the day name, e.g. `(2026-06-03, Wednesday)`.
 2. Invoke the `/edit-in-emacs` skill with the file path (blocking, 600s timeout)
 3. After emacsclient returns, read the file — treat remaining `- [ ]` lines as selections
 
