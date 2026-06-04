@@ -71,7 +71,6 @@
 (require 'ai)
 (require 'gptel-m)
 (require 'yap-m)
-(require 'templating)
 (require 'reading)
 (require 'writing)
 (require 'file-manip)
