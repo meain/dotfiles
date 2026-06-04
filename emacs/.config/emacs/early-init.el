@@ -131,7 +131,7 @@
                           ("Martian Mono ExtraLight" . '(160 nil 'regular))
                           ("Martian Mono Light" . '(160 nil 'regular))
                           ("Martian Mono" . '(160 nil 'regular))
-                          ("MD IO" . '(160 .2 'thin))
+                          ("MD IO" . '(150 .2 'thin))
                           ("Menlo" . '(160 .1 'regular))
                           ("Monaco for Powerline" . '(160 .1 'regular))
                           ("Monaco" . '(160 .1 'regular))
