@@ -1,0 +1,8 @@
+#!/bin/sh
+
+set -e
+
+npx -y osgrep search --compact "$*" |
+    tail -n+3 | awk '{print $1,$2}' |
+    sed 's| \([0-9]*\)-\([0-9]*\)$| \1,\2|' |
+    fzf --preview "sed -n '{2}p' {1}"
