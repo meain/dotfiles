@@ -70,7 +70,6 @@ Collaboratively update the Today section of the backlog by pulling data from ext
 ```bash
 cd /Users/meain/.local/share/sbdb && git add -A && git commit -m "Before backlog updates"
 ```
-If no changes to commit, that's fine — continue.
 
 ### Step 0.5: Verify Today's Date
 
@@ -82,9 +81,7 @@ Read the full backlog file first.
 
 ### Step 2: Handle Checked-Off Items
 
-Find checked-off items (`- [x]`) in Today. Ask the user what to do:
-1. **Move all to Before** (recommended) — Append at the very end with the last working day's date. Format: `### YYYY-MM-DD (DayOfWeek)`. Compute the date correctly.
-2. **Keep all in Today** — Leave as-is.
+Move all `- [x]` items from Today to Before with the last working day's date. Format: `### YYYY-MM-DD (DayOfWeek)`. Compute the date correctly.
 
 ### Step 3: Gather External Data (parallel)
 
@@ -109,33 +106,29 @@ Filter: only direct reviews (not team), exclude approved PRs and drafts.
 
 **3c. PRs authored by user:** Open PRs authored by the user across Veeam-VDC org.
 
-**3d. Calendar (optional):** If MS365 MCP available, check today's meetings.
+**3d. Calendar:** Use MS365 MCP `outlook_calendar_search` to fetch today's meetings.
 
-### Step 4: Present Summary and Select Candidates via Emacs
+### Step 4: Select Candidates via Emacs
 
-Give a brief plain-text summary (no Q&A prompts), then **always** use the emacsclient workflow to let the user choose what to add:
+Write all candidates to `/tmp/backlog-candidates-YYYY-MM-DD.md` with `- [ ]` lines, grouped by:
+- Morning routine (Apply rosemarry water, Apply sunscreen, Check emails, Check Slack, Check Teams, Charge devices)
+- Today's meetings (from calendar — list as info, no checkboxes; don't add to backlog)
+- My PRs — approved (ready to merge)
+- My PRs — needs action
+- PRs needing direct review (only where `login: meain` is a direct reviewer, not team)
+- Candidates from other sections (Tomorrow/This Week/Whenever worth pulling in)
 
-1. Write all candidates to `/tmp/backlog-candidates-YYYY-MM-DD.md` with `- [ ]` lines, grouped by:
-   - Morning routine (Check emails, Check Slack, Check Teams, Charge devices)
-   - My PRs — approved (ready to merge)
-   - My PRs — needs action
-   - PRs needing direct review (only where `login: meain` is a direct reviewer, not team)
-   - Candidates from other sections (Tomorrow/This Week/Whenever worth pulling in)
-   
-   In the candidates file, the "Checked-off items to move to Before" header must include the day name, e.g. `(2026-06-03, Wednesday)`.
-2. Invoke the `/edit-in-emacs` skill with the file path (blocking, 600s timeout)
-3. After emacsclient returns, read the file — treat remaining `- [ ]` lines as selections
+The "Checked-off items to move to Before" header must include the day name, e.g. `(2026-06-03, Wednesday)`.
 
-**Never use AskUserQuestion / multi-select prompts** to pick candidates — always go straight to the emacs file.
+Invoke the `/edit-in-emacs` skill with the file path (blocking, 600s timeout). After it returns, treat remaining `- [ ]` lines as selections.
+
+**Never use AskUserQuestion / multi-select prompts** — always go straight to the emacs file.
 
 ### Step 5: Update Backlog
 
-Once confirmed:
-1. Consolidate duplicate Today sections into one
-2. Move items from other sections to Today (don't duplicate)
-3. Add new items with reference links
-4. Create task notes (`Tasks/YYYY-MM/`) for items needing significant context
-5. Preserve priority emojis near top of Today
+1. Move items from other sections to Today (don't duplicate)
+2. Add new items with reference links
+3. Preserve priority emojis near top of Today
 
 ### Formatting Rules
 
