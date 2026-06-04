@@ -21,12 +21,6 @@
   (add-hook 'gnus-group-mode-hook 'hl-line-mode)
   (add-hook 'gnus-summary-mode-hook 'hl-line-mode))
 
-;; erc
-(use-package erc
-  :commands (erc)
-  :config
-  (setq erc-timestamp-format "[%I:%M %p]"))
-
 ;; command log
 (use-package command-log-mode
   :commands global-command-log-mode
