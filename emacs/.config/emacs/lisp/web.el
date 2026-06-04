@@ -39,49 +39,46 @@
                         relative-path
                         (line-number-at-pos))))))
 
-  (defun meain/github-url--git-info (use-master)
-    "Return (REMOTE-URL REF) for a git repository.
+(defun meain/github-url--git-info (use-master)
+  "Return (REMOTE-URL REF) for a git repository.
 USE-MASTER returns the default branch instead of current commit."
-    (unless use-master
-      (when (< (length
-                (shell-command-to-string
-                 (concat
-                  "git branch -r --contains "
-                  (meain/cmd-head "git log --format='%H' -n 1"))))
-               1)
-        (user-error "Current commit not available upstream")))
-    (let* ((raw-url (meain/cmd-head "git config --get remote.origin.url"))
-           (ref (if use-master
-                    (replace-regexp-in-string
-                     "^origin/" ""
-                     (meain/cmd-head "git symbolic-ref --short refs/remotes/origin/HEAD"))
-                  (meain/cmd-head "git log --format='%H' -n 1"))))
-      (list raw-url ref)))
+  (let* ((raw-url (meain/cmd-head "git config --get remote.origin.url"))
+         (ref (if (or use-master
+                      (< (length
+                          (shell-command-to-string
+                           (concat
+                            "git branch -r --contains "
+                            (meain/cmd-head "git log --format='%H' -n 1"))))
+                         1))
+                  (replace-regexp-in-string
+                   "^origin/" ""
+                   (meain/cmd-head "git symbolic-ref --short refs/remotes/origin/HEAD"))
+                (meain/cmd-head "git log --format='%H' -n 1"))))
+    (list raw-url ref)))
 
-  (defun meain/github-url--jj-info (use-master)
-    "Return (REMOTE-URL REF) for a jj repository.
+(defun meain/github-url--jj-info (use-master)
+  "Return (REMOTE-URL REF) for a jj repository.
 USE-MASTER returns the trunk bookmark instead of current commit."
-    (unless use-master
-      (when (string-empty-p
-             (string-trim
-              (shell-command-to-string
-               "jj log -r '@ & ancestors(remote_bookmarks())' --no-graph -T 'commit_id'")))
-        (user-error "Current commit not available upstream")))
-    (let* ((raw-url (nth 1 (split-string (meain/cmd-head "jj git remote list"))))
-           (ref (if use-master
-                    (string-trim-right
-                     (string-trim
-                      (shell-command-to-string
-                       "jj log -r 'trunk()' --no-graph -T 'bookmarks'"))
-                     "\*")
-                  (string-trim
-                   (shell-command-to-string
-                    "jj log -r @ --no-graph -T 'commit_id'")))))
-      (list raw-url ref)))
+  (let* ((raw-url (nth 1 (split-string (meain/cmd-head "jj git remote list"))))
+         (ref (if (or use-master
+                      (string-empty-p
+                       (string-trim
+                        (shell-command-to-string
+                         "jj log -r '@ & ancestors(remote_bookmarks())' --no-graph -T 'commit_id'"))))
+                  (string-trim-right
+                   (string-trim
+                    (shell-command-to-string
+                     "jj log -r 'trunk()' --no-graph -T 'bookmarks'"))
+                   "\*")
+                (string-trim
+                 (shell-command-to-string
+                  "jj log -r @ --no-graph -T 'commit_id'")))))
+    (list raw-url ref)))
 
   (defun meain/github-url (&optional use-master)
     "Link to the currently selected code in GitHub.  Pass `USE-MASTER' to use master branch.
-If region is active, link covers the region."
+If a commit is not available upstream. `USE-MASTER' is set to t
+automatically. If region is active, link covers the region."
     (interactive "P")
     (save-restriction
       (widen)
@@ -111,7 +108,6 @@ If region is active, link covers the region."
         (meain/copy-to-clipboard web-url))))
   :init
   (evil-leader/set-key "g l" 'meain/github-url))
-
 
 ;; Link opening
 (use-package ace-link
