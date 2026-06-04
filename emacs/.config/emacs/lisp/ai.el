@@ -62,28 +62,5 @@ Called with a PREFIX, resets the context buffer list before opening"
       (copilot-chat--add-buffer buf)
       (copilot-chat-display))))
 
-;; Aider from Emacs (termainl version is better)
-(use-package aidermacs
-  :ensure (:host github :repo "MatthewZMD/aidermacs")
-  :disabled t
-  :commands (aidermacs-transient-menu)
-  :after (evil)
-  :config
-  (setq aidermacs-auto-commits nil)
-  (setq aidermacs-use-architect-mode nil)
-  (setq aidermacs-backend 'comint)
-  :init
-  (define-key evil-normal-state-map (kbd "<SPC> a") 'aidermacs-transient-menu))
-
-;; Claude Code IDE
-(use-package claude-code-ide
-  :ensure (:type git :host github :repo "manzaltu/claude-code-ide.el")
-  :disabled t
-  :bind ("C-c C-'" . claude-code-ide-menu) ; Set your favorite keybinding
-  :config
-  (setq claude-code-ide-cli-path ",claude-code")
-  (setq claude-code-ide-terminal-backend 'eat)
-  (claude-code-ide-emacs-tools-setup)) ; Optionally enable Emacs MCP tools
-
 (provide 'ai)
 ;;; ai.el ends here
