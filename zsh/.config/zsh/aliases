@@ -50,6 +50,7 @@ alias pwdp="pwd|p"
 alias research="cd $HOME/dev/docs/research && opencode"
 alias gh="GIT_DIR=\$GIT_ROOT_DIR gh" # since we don't colocate git dir anymore
 alias bb=",bm"                       # bookmark-manager
+alias se=",semantic-find-file|xargs --no-run-if-empty emacsclient -n"
 
 # agents
 alias aw=",agent-workspace"
