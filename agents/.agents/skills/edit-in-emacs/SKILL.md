@@ -20,6 +20,7 @@ Use this skill when the user wants to manually review or edit a draft (commit me
    ```
    - Do **not** use `-n` — blocking is the whole point. The Bash call returns only after the user does `C-x #` (`server-edit`) in Emacs.
    - Pass `timeout: 600000` (10 min) on the Bash tool call so it does not abort while the user is editing.
+   - Always use `dangerouslyDisableSandbox: true` — `emacsclient` connects to a Unix socket and the sandbox blocks it.
 
 3. After the Bash call returns, the edited file is on disk.
    - The harness usually emits a system-reminder showing the diff of any changes — use that if it is present.
