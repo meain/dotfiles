@@ -65,13 +65,7 @@ Use `/vault` skill to add to the specified section (default: Today). If unavaila
 
 Collaboratively update the Today section of the backlog by pulling data from external sources and working with the user to decide what's realistic.
 
-### Step 0: Commit Before Changes
-
-```bash
-cd /Users/meain/.local/share/sbdb && git add -A && git commit -m "Before backlog updates"
-```
-
-### Step 0.5: Verify Today's Date
+### Step 0: Verify Today's Date
 
 Always run `date "+%Y-%m-%d (%A)"` and treat its output as authoritative.
 
@@ -82,6 +76,8 @@ Read the full backlog file first.
 ### Step 2: Handle Checked-Off Items
 
 Move all `- [x]` items from Today to Before with the last working day's date. Format: `### YYYY-MM-DD (DayOfWeek)`. Compute the date correctly.
+
+Insert the new date block at the **end (bottom)** of the Before section — Before is chronologically ascending (oldest at top, newest at bottom).
 
 ### Step 3: Gather External Data (parallel)
 
@@ -124,7 +120,15 @@ Invoke the `/edit-in-emacs` skill with the file path (blocking, 600s timeout). A
 
 **Never use AskUserQuestion / multi-select prompts** — always go straight to the emacs file.
 
-### Step 5: Update Backlog
+### Step 5: Commit Then Update Backlog
+
+Before writing any changes to the backlog file, commit the current state:
+
+```bash
+cd /Users/meain/.local/share/sbdb && git add -A && git commit -m "Before backlog updates"
+```
+
+Then:
 
 1. Move items from other sections to Today (don't duplicate)
 2. Add new items with reference links
