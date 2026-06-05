@@ -13,12 +13,23 @@
   :config
   (setq markdown-url-compose-char '(8230 8943 35 9733 9875))
   (setq markdown-enable-html -1)
+  (setq markdown-enable-wiki-links t)
   (setq markdown-gfm-use-electric-backquote nil) ; don't ask me to pick lang in ```
   (evil-define-key 'normal gfm-mode-map (kbd "<RET>") 'project-find-file)
   (evil-define-key 'normal gfm-mode-map (kbd "g d") 'markdown-do)
   (evil-define-key 'normal markdown-mode-map (kbd "<RET>") 'project-find-file)
   (evil-define-key 'normal markdown-mode-map (kbd "g d") 'markdown-do)
-  (setq markdown-command "pandoc -t html5")
+  (setq markdown-command "pandoc -t html5 -f gfm")
+
+  ;; Make it look like GitHub markdown
+  (setq markdown-xhtml-body-preamble "<div class=\"markdown-body\">")
+  (setq markdown-xhtml-body-epilogue "</div>")
+  (setq markdown-xhtml-header-content
+        "<style>.markdown-body { max-width: 800px; margin: 0 auto; padding: 2rem; }</style>")
+  (setq markdown-css-paths (list (concat
+                                  (getenv "HOME")
+                                  "/.dotfiles/datafiles/.config/datafiles/github-markdown.css")))
+
   (setq-default markdown-fontify-code-blocks-natively t)
   (setq-default markdown-hide-urls t) ;; Or call markdown-toggle-url-hiding
 
