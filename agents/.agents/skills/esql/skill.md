@@ -1,6 +1,6 @@
 ---
 name: esql
-description: Query Elasticsearch/Kibana using ES|QL via the Kibana async search API. Requires an initial curl command from the user to extract session credentials. Triggers: /esql, "query elastic", "search logs", "check elastic logs", "run esql", "elasticsearch query", "check kibana"
+description: "Query Elasticsearch/Kibana using ES|QL via the Kibana async search API. Requires an initial curl command from the user to extract session credentials. Triggers: /esql, 'query elastic', 'search logs', 'check elastic logs', 'run esql', 'elasticsearch query', 'check kibana'"
 user_invocable: true
 ---
 
