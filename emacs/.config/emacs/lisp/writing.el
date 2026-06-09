@@ -13,12 +13,14 @@
   :config
   (setq markdown-url-compose-char '(8230 8943 35 9733 9875))
   (setq markdown-enable-html -1)
-  (setq markdown-enable-wiki-links t)
+  (setq markdown-enable-wiki-links nil) ; makes markdown mode super slow
   (setq markdown-gfm-use-electric-backquote nil) ; don't ask me to pick lang in ```
   (evil-define-key 'normal gfm-mode-map (kbd "<RET>") 'project-find-file)
   (evil-define-key 'normal gfm-mode-map (kbd "g d") 'markdown-do)
   (evil-define-key 'normal markdown-mode-map (kbd "<RET>") 'project-find-file)
   (evil-define-key 'normal markdown-mode-map (kbd "g d") 'markdown-do)
+  (evil-define-key 'insert gfm-mode-map (kbd "C-<return>") 'markdown-insert-list-item)
+  (evil-define-key 'insert markdown-mode-map (kbd "C-<return>") 'markdown-insert-list-item)
   (setq markdown-command "pandoc -t html5 -f gfm")
 
   ;; Make it look like GitHub markdown
