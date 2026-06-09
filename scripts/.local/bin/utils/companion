@@ -1,0 +1,22 @@
+#!/bin/bash
+# Send a message to the popup-companion tmux session.
+# Default: fire-and-forget (no popup).
+# Use -o/--open to also open the popup.
+
+open_popup=false
+
+if [[ "$1" == "-o" || "$1" == "--open" ]]; then
+    open_popup=true
+    shift
+fi
+
+if [[ $# -eq 0 ]]; then
+    echo "Usage: companion [-o] <message>" >&2
+    exit 1
+fi
+
+tmux send-keys -t popup-companion "$*" Enter
+
+if $open_popup; then
+    tmux display-popup -E "tmux attach-session -t popup-companion"
+fi
