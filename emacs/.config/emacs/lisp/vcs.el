@@ -114,6 +114,37 @@
                         " ++ \": \" ++ "
                         "self.content()"))))
 
+;; Embark actions for jj revisions in vc-print-log
+(require 'vc-review)
+
+(defun meain/jj-log-view-diff (change-id)
+  "Show diff for the jj revision with CHANGE-ID in *vc-diff*."
+  (let ((buf (get-buffer-create (format "*vc-diff: %s*" (substring change-id 0 8)))))
+    (with-current-buffer buf
+      (let ((inhibit-read-only t))
+        (erase-buffer)))
+    (vc-jj-diff nil change-id change-id buf)
+    (with-current-buffer buf
+      (vc-run-delayed
+        (goto-char (point-min))))
+    (pop-to-buffer buf)))
+
+(defun meain/embark-target-jj-revision ()
+  "Target the jj change ID at point in `vc-jj-log-view-mode' buffers."
+  (when (derived-mode-p 'vc-jj-log-view-mode)
+    (when-let ((rev (log-view-current-tag)))
+      `(jj-revision ,rev . ,(cons (point) (point))))))
+
+(defvar meain/embark-jj-revision-map
+  (define-keymap
+    :doc "Embark keymap for jj revisions."
+    "d" #'meain/jj-log-view-diff
+    "r" #'vc-review-open))
+
+(with-eval-after-load 'embark
+  (add-to-list 'embark-target-finders #'meain/embark-target-jj-revision t)
+  (add-to-list 'embark-keymap-alist '(jj-revision . meain/embark-jj-revision-map) t))
+
 ;; Used by modeline display
 (defun meain/jj-current-workspace ()
   "Get the current jj workspace name."
