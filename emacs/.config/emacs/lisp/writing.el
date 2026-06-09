@@ -35,7 +35,17 @@
   (setq-default markdown-fontify-code-blocks-natively t)
   (setq-default markdown-hide-urls t) ;; Or call markdown-toggle-url-hiding
 
-  (add-hook 'gfm-mode-hook #'toggle-truncate-lines)
+  ;; Mark completed markdown list items with a grey and strikethrough
+  (defface meain/markdown-done-item
+    '((t :foreground "#A0A0A0" :strike-through "#D0D0D0"))
+    "Face for completed GFM checklist items.")
+  (font-lock-add-keywords
+   'gfm-mode
+   '(("^[[:space:]]*-[[:space:]]\\[x\\][[:space:]]\\(.*\\)$"
+      1 'meain/markdown-done-item prepend))
+   'append)
+
+  (add-hook 'gfm-mode-hook (lambda () (toggle-truncate-lines t)))
 
   ;; When a link is pasted with an active selection, convert to a markdown link
   (defun meain/paste-after-or-create-link (from to)
