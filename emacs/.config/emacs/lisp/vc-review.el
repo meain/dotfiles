@@ -14,7 +14,7 @@
 ;;; Code:
 
 (require 'diff-mode)
-(require 'vc-jj)
+(declare-function vc-jj-diff "vc-jj")
 
 (defconst vc-review-dir (expand-file-name "~/.local/share/vc-review")
   "Directory where .vcr review files are stored.")

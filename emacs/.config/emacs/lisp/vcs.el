@@ -137,7 +137,6 @@
 
 (defvar meain/embark-jj-revision-map
   (define-keymap
-    :doc "Embark keymap for jj revisions."
     "d" #'meain/jj-log-view-diff
     "r" #'vc-review-open))
 
