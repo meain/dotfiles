@@ -51,7 +51,7 @@
   (evil-leader/set-key "C" (lambda () (interactive) (tab-bar-switch-to-tab "-scratch")))
   (evil-leader/set-key "s c" (lambda () (interactive) (tab-bar-switch-to-tab "-scratch")))
   (global-set-key (kbd "M-f s") 'meain/switch-tab-dwim)
-  :config
+
   (setq tab-bar-close-button-show nil)
   (setq tab-bar-close-last-tab-choice 'tab-bar-mode-disable)
   (setq tab-bar-close-tab-select 'recent)
@@ -63,6 +63,7 @@
   (setq tab-bar-tab-name-function 'tab-bar-tab-name-all)
   (tab-bar-mode -1)
   (tab-bar-history-mode -1)
+
   (defun meain/create-or-delete-tab (&optional close)
     "Create or close tab"
     (interactive "P")
