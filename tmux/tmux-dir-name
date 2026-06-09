@@ -1,0 +1,11 @@
+#!/bin/sh
+set -e
+
+dir="${1:-$PWD}"
+hash_file="$HOME/.local/share/zsh/.zsh_dir_hashes"
+
+if grep -q "=\"$dir\"$" "$hash_file"; then
+    grep "=\"$dir\"$" "$hash_file" | cut -d' ' -f3 | cut -d'=' -f1 | sed 's|^|~|'
+else
+    basename "$dir"
+fi
