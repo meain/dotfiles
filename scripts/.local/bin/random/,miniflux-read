@@ -1,0 +1,20 @@
+#!/bin/sh
+
+set -e
+
+tmpfile="$(mktemp)"
+MINIFLUX_API="https://${MINIFLUX_URL}/v1"
+
+curl -s -H "X-Auth-Token: $MINIFLUX_TOKEN" \
+    "$MINIFLUX_API/entries?status=unread&direction=desc&order=published_at&limit=500" >"$tmpfile"
+
+jq -r '.entries[] | "\(.id)\t\(.published_at | split("T")[0]) \(.title) [\(.feed.title)]\t\(.url)"' <"$tmpfile" |
+    fzf -m --delimiter '\t' --with-nth=2 |
+    while read -r line; do
+        link="$(echo "$line" | cut -d $'\t' -f3)"
+        id="$(echo "$line" | cut -d $'\t' -f1)"
+        echo "$link"
+        open "$link"
+        curl -s -X PUT -H "X-Auth-Token: $MINIFLUX_TOKEN" "$MINIFLUX_API/entries" \
+            --json '{"entry_ids": ['"$id"'], "status": "read"}'
+    done
