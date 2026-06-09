@@ -15,14 +15,15 @@
 
 ## Version Control & PRs
 
-- Most projects are maintained using `jj` and not `git`. Use `jj` commands whenever possible instead of git commands. If using `gh` cli, set `GIT_DIR` to `jj git root 2>/dev/null || echo .git` and call it.
+- Most projects are maintained using `jj` and not `git`. Use `jj` commands whenever possible instead of git commands. If using `gh` cli, set `GIT_DIR=$(jj git root 2>/dev/null || echo .git)` inline when calling it.
+- Use the `/create-commit` skill when making jj commits in non-dotfiles repos.
 - Do not squash changes or push to upstream without explicit user request.
 - Branch names in Veeam repos should start with `meain/` (e.g., `meain/earn-prod-adx-sku-downsize`).
 - When creating PRs, do not add "Generated with Claude Code" or similar labels/footers to the PR body.
 - When creating a new PR in Veeam repos, look up the associated Jira ticket and link it in the PR description body (not as a comment). Use the `jira` CLI to fetch ticket details.
 - When creating a new PR, ensure the PR template is used. If there is none, include a summary of the changes and why they were made as two paragraphs. Include examples of code flow if it makes sense.
 - I usually want to set `rs-malik` (Rabee Sohail Malik), `ryanfkeepers` (Ryan Keepers), and `rami-veeam` as reviewers on PRs from repos in /Users/meain/dev/veeam. Once the PR is created ask me if I want to add them as reviewers.
-- After you push a PR, ensure the CI is green in the background.
+- After you push a PR, ensure the CI is green in the background. If CI fails, notify the user proactively.
 
 ## Networking & TLS
 
@@ -31,11 +32,12 @@
 ## External Tools
 
 - Use the `/jira` and `/confluence` skills when working with Jira tickets and Confluence pages. These skills wrap the CLI tools with best practices and correct flags. Use `gh` (with GIT_DIR set) for GitHub. Prefer these over MCP tools, web fetching, or asking the user to look things up.
+- Use the `/web-search` skill for web searches when the built-in WebSearch tool is unavailable.
 
 ## Workflow
 
 - Ask me before you do action on a public forum like Jira or GitHub PRs/issues unless I have already explicitly asked you to do it.
-- When the user corrects your approach or points out issues in how you work, suggest updating relevant instructions (CLAUDE.md, skills, or both) to prevent recurrence. Always ask for confirmation before making the update.
+- When the user corrects your approach or points out issues in how you work, suggest updating relevant instructions (AGENTS.md, skills, or both) to prevent recurrence. Always ask for confirmation before making the update. Note: CLAUDE.md is a symlink to AGENTS.md — always edit AGENTS.md directly.
 
 ## Personal Notes
 

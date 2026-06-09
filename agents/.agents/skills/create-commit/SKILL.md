@@ -5,6 +5,8 @@ description: Create Jujutsu (jj) commits — simple one-shot or split across log
 
 Create one or more jj commits from the working copy. If the user asked to split changes or if the diff spans clearly unrelated areas, use the split workflow. Otherwise, default to a single commit.
 
+> Prefer using a subagent as the context is unnecessary in main thread. Can return final commit message back from the subagent.
+
 ## Important Context
 - Uses **Jujutsu (jj)**, not git
 - All changes in the working copy are automatically tracked
