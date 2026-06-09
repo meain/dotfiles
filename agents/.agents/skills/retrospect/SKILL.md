@@ -35,7 +35,7 @@ For each moment, note:
 
 ## Step 2: Read CLAUDE.md first
 
-Before deriving any lessons, find and read the project's CLAUDE.md (look in the current working directory, then parent directories up to home). This is essential — you need to know what's already there so you don't propose duplicates or near-duplicates.
+Before deriving any lessons, find and read the project's CLAUDE.md (look in the current working directory, then parent directories up to home). The global user AGENTS.md lives at `/Users/meain/.agents/AGENTS.md` — always check there. This is essential — you need to know what's already there so you don't propose duplicates or near-duplicates.
 
 ## Step 3: Derive lessons
 

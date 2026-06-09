@@ -37,7 +37,8 @@
 ## Workflow
 
 - Ask me before you do action on a public forum like Jira or GitHub PRs/issues unless I have already explicitly asked you to do it.
-- When the user corrects your approach or points out issues in how you work, suggest updating relevant instructions (AGENTS.md, skills, or both) to prevent recurrence. Always ask for confirmation before making the update. Note: CLAUDE.md is a symlink to AGENTS.md — always edit AGENTS.md directly.
+- When the user corrects your approach or points out issues in how you work, suggest updating relevant instructions (AGENTS.md, skills, or both) to prevent recurrence. Always ask for confirmation before making the update. Note: CLAUDE.md is a symlink to AGENTS.md — always edit `/Users/meain/.agents/AGENTS.md` directly.
+- Keep commit message subject lines short and descriptive — avoid listing every change in the summary. One concise phrase is enough.
 
 ## Personal Notes
 
