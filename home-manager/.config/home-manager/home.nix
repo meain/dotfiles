@@ -136,6 +136,7 @@ in
     # pkgs.k9s # kubernetes tui
     # pkgs.screenkey # show keys (useful when recording screen)
     pkgs.lnav # log viewer
+    pkgs.cliflux # miniflux tui
 
     # programming
     # pkgs.gist # create gist
