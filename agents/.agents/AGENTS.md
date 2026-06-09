@@ -16,6 +16,7 @@
 ## Version Control & PRs
 
 - Most projects are maintained using `jj` and not `git`. Use `jj` commands whenever possible instead of git commands. If using `gh` cli, set `GIT_DIR` to `jj git root 2>/dev/null || echo .git` and call it.
+- Do not squash changes or push to upstream without explicit user request.
 - Branch names in Veeam repos should start with `meain/` (e.g., `meain/earn-prod-adx-sku-downsize`).
 - When creating PRs, do not add "Generated with Claude Code" or similar labels/footers to the PR body.
 - When creating a new PR in Veeam repos, look up the associated Jira ticket and link it in the PR description body (not as a comment). Use the `jira` CLI to fetch ticket details.
