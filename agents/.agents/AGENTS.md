@@ -24,6 +24,10 @@
 - I usually want to set `rs-malik` (Rabee Sohail Malik), `ryanfkeepers` (Ryan Keepers), and `rami-veeam` as reviewers on PRs from repos in /Users/meain/dev/veeam. Once the PR is created ask me if I want to add them as reviewers.
 - After you push a PR, ensure the CI is green in the background.
 
+## Networking & TLS
+
+- TLS/connection failures (curl exit 35, HTTP:000) when making HTTPS calls from Bash are caused by the sandbox blocking outbound network. Use `dangerouslyDisableSandbox: true` on the Bash tool call for any command that makes outbound network requests (curl, az CLI, etc.).
+
 ## External Tools
 
 - Use the `/jira` and `/confluence` skills when working with Jira tickets and Confluence pages. These skills wrap the CLI tools with best practices and correct flags. Use `gh` (with GIT_DIR set) for GitHub. Prefer these over MCP tools, web fetching, or asking the user to look things up.
