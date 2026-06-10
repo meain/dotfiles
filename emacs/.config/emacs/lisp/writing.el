@@ -157,6 +157,13 @@ Uses 'ddgr' web search to look up a URL and insert a formatted markdown link."
                   (insert output)))
             (delete-file tmpfile)))))))
 
+(use-package real-auto-save
+  :ensure t
+  :hook ((markdown-mode . real-auto-save-mode)
+         (gfm-mode . real-auto-save-mode))
+  :config
+  (setq real-auto-save-interval 5))
+
 ;; Writing mode
 (use-package writeroom-mode
   :ensure t
