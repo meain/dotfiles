@@ -1,0 +1,13 @@
+#!/bin/sh
+# Start kmonad with the right config based on whether an external keyboard is plugged in
+
+KMONAD_DIR="/Users/meain/.dotfiles/kmonad/.config/kmonad"
+
+if ioreg -p IOService -c IOHIDKeyboard -l | grep -q '"USB Keyboard"'; then
+    config="$KMONAD_DIR/vp3-mac.kbd"
+else
+    config="$KMONAD_DIR/mac.kbd"
+fi
+
+echo "Using config: $config"
+exec sudo kmonad "$config"
