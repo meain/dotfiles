@@ -38,7 +38,7 @@
   :defer t
   :commands (tab-close tab-new tab-next tab-bar-rename-tab
                        meain/switch-tab-dwim meain/create-or-delete-tab
-                       tab-bar-switch-to-tab)
+                       meain/toggle-scratch-tab tab-bar-switch-to-tab)
   :config
   (setq tab-bar-history-limit 100)
   ;; (tab-bar-history-mode t)
@@ -51,6 +51,7 @@
   (evil-leader/set-key "C" (lambda () (interactive) (tab-bar-switch-to-tab "-scratch")))
   (evil-leader/set-key "s c" (lambda () (interactive) (tab-bar-switch-to-tab "-scratch")))
   (global-set-key (kbd "M-f s") 'meain/switch-tab-dwim)
+  (global-set-key (kbd "M-; M-;") 'meain/toggle-scratch-tab)
 
   (setq tab-bar-close-button-show nil)
   (setq tab-bar-close-last-tab-choice 'tab-bar-mode-disable)
@@ -77,6 +78,15 @@
               (message "Not closing last tab")
             (tab-close))
         (tab-new))))
+  (defun meain/toggle-scratch-tab ()
+    "Toggle to/from the -scratch tab.
+If currently on -scratch, switch back to the previous tab.
+Otherwise, switch to -scratch."
+    (interactive)
+    (if (equal (alist-get 'name (tab-bar--current-tab)) "-scratch")
+        (tab-bar-switch-to-recent-tab)
+      (tab-bar-switch-to-tab "-scratch")))
+
   (defun meain/switch-tab-dwim (&optional show-hidden)
       "Switch between available tabs.
 If only two tabs, we switch to the other tab, and if we have more than
