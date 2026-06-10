@@ -83,7 +83,7 @@
                           ("Envy Code R" . '(160 nil 'regular))
                           ("FairfaxHD" . '(160 nil 'regular))
                           ("Fantasque Sans Mono" . '(160 .1 'regular))
-                          ("Fira Code" . '(160 .2 'thin))
+                          ("Fira Code" . '(150 nil 'thin))
                           ("fixed" . '(160 nil 'regular))
                           ("Geist Mono Light" . '(160 .1 'regular))
                           ("Geist Mono" . '(160 .1 'light))
