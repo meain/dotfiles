@@ -75,7 +75,10 @@ Read the full backlog file first.
 
 ### Step 2: Handle Checked-Off Items
 
-Move all `- [x]` items from Today to Before with the last working day's date. Format: `### YYYY-MM-DD (DayOfWeek)`. Compute the date correctly.
+Move all `- [x]` items from Today to Before with the last working day's date. Format: `### YYYY-MM-DD (DayOfWeek)`. Never reason about the date mentally — compute it with:
+```bash
+YESTERDAY=$(date -d "yesterday" "+%A"); case "$YESTERDAY" in Saturday) date -d "2 days ago" "+%Y-%m-%d (%A)";; Sunday) date -d "3 days ago" "+%Y-%m-%d (%A)";; *) date -d "yesterday" "+%Y-%m-%d (%A)";; esac
+```
 
 Insert the new date block at the **end (bottom)** of the Before section — Before is chronologically ascending (oldest at top, newest at bottom).
 
