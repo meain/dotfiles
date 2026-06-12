@@ -94,5 +94,10 @@
   (define-key evil-normal-state-map (kbd "<SPC> d u") 'gud-up)
   (define-key evil-normal-state-map (kbd "<SPC> d g") 'gud-until))
 
+;; Flamegraph visualization for Emacs profiler
+(use-package flamegraph
+  :ensure (flamegraph :type git :host github :repo "dgutov/emacs-flamegraph")
+  :commands (flamegraph-from-cpu-profile))
+
 (provide 'debuggers)
 ;;; debuggers.el ends here
