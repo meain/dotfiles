@@ -119,7 +119,7 @@
                           ("Latin Modern Mono Light Cond" . '(160 nil 'regular))
                           ("Latin Modern Mono" . '(160 nil 'regular))
                           ("League Mono" . '(160 .2 'light))
-                          ("Lekton" . '(160 .2 'regular))
+                          ("Lekton" . '(170 .2 'regular))
                           ("Letter Gothic Std" . '(160 nil 'bold))
                           ("Liberation Mono" . '(160 .1 'regular))
                           ("Liga CamingoCode" . '(160 nil 'regular))
