@@ -2,6 +2,7 @@ local apps = require("apps")
 local keys = require("keys")
 local customshellrun = require("customshellrun")
 local utils = require("utils")
+local gotoview = require("gotoview")
 
 local pasteboard = require("hs.pasteboard")
 
@@ -31,19 +32,7 @@ hs.hotkey.bind(keys.hyper, "i",
 hs.hotkey.bind(keys.hyper, "u", function() customshellrun.launch(",voice-assistant") end)
 hs.hotkey.bind(keys.hyper, "s", function() hs.alert(customshellrun.run("GUI_PICKER=1 ,se", true)) end)
 
-hs.hotkey.bind(keys.fkey, ";", function()
-    _, s = hs.dialog.textPrompt("Go to", [[
-= Work: iw, it, ia
-= Jira: back, dp, cp
-= GitHub: gg, gn, cpb, cpp
-= Dashboard: dpu, dsa, dd
-= Elastic: epu, esa, ed
-]], "", "Go")
-    local result = customshellrun.run(",bm go " .. s)
-    if #result > 0 then
-        hs.alert(result)
-    end
-end)
+hs.hotkey.bind(keys.fkey, ";", function() gotoview.show() end)
 
 -- cmd+t from anywhere to open a new tab in browser
 browsernewtab =
