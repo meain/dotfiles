@@ -45,7 +45,7 @@
       1 'meain/markdown-done-item prepend))
    'append)
 
-  (add-hook 'gfm-mode-hook (lambda () (toggle-truncate-lines t)))
+  (add-hook 'gfm-mode-hook (lambda () (toggle-truncate-lines nil)))
 
   ;; When a link is pasted with an active selection, convert to a markdown link
   (defun meain/paste-after-or-create-link (from to)
