@@ -1,4 +1,9 @@
 #!/bin/sh
+# Open unread miniflux entries in browser and mark them as read.
+# Usage: ,miniflux-read [n|filter]
+#   (no args)  -- interactive picker over all unread entries
+#   n          -- open the n latest unread entries directly
+#   filter     -- open all entries matching filter (feed name or title)
 
 set -e
 
@@ -8,13 +13,39 @@ MINIFLUX_API="https://${MINIFLUX_URL}/v1"
 curl -s -H "X-Auth-Token: $MINIFLUX_TOKEN" \
     "$MINIFLUX_API/entries?status=unread&direction=desc&order=published_at&limit=500" >"$tmpfile"
 
-jq -r '.entries[] | "\(.id)\t\(.published_at | split("T")[0]) \(.title) [\(.feed.title)]\t\(.url)"' <"$tmpfile" |
+arg="$1"
+
+open_entry() {
+    link="$(echo "$1" | cut -d $'\t' -f3)"
+    id="$(echo "$1" | cut -d $'\t' -f1)"
+    echo "$link"
+    open "$link"
+    curl -s -X PUT -H "X-Auth-Token: $MINIFLUX_TOKEN" "$MINIFLUX_API/entries" \
+        --json '{"entry_ids": ['"$id"'], "status": "read"}'
+}
+
+entries="$(jq -r '.entries[] | "\(.id)\t\(.published_at | split("T")[0]) \(.title) [\(.feed.title)]\t\(.url)"' <"$tmpfile")"
+[ -z "$entries" ] && echo "all caught up, go touch grass" && exit 0
+
+# numeric arg: open the n latest entries directly
+if echo "$arg" | grep -qE '^[0-9]+$'; then
+    filtered="$(echo "$entries" | head -n "$arg")"
+    [ -z "$filtered" ] && echo "no unread entries" && exit 0
+    echo "$filtered" | while IFS= read -r line; do open_entry "$line"; done
+    exit 0
+fi
+
+# string arg: open all entries matching the filter
+if [ -n "$arg" ]; then
+    filtered="$(echo "$entries" | grep -i "$arg")"
+    [ -z "$filtered" ] && echo "no entries matching '$arg'" && exit 0
+    echo "$filtered" | while IFS= read -r line; do open_entry "$line"; done
+    exit 0
+fi
+
+# no arg: interactive picker
+echo "$entries" |
     fzf -m --delimiter '\t' --with-nth=2 |
-    while read -r line; do
-        link="$(echo "$line" | cut -d $'\t' -f3)"
-        id="$(echo "$line" | cut -d $'\t' -f1)"
-        echo "$link"
-        open "$link"
-        curl -s -X PUT -H "X-Auth-Token: $MINIFLUX_TOKEN" "$MINIFLUX_API/entries" \
-            --json '{"entry_ids": ['"$id"'], "status": "read"}'
+    while IFS= read -r line; do
+        open_entry "$line"
     done
