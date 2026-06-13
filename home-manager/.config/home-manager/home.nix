@@ -137,6 +137,7 @@ in
     # pkgs.screenkey # show keys (useful when recording screen)
     pkgs.lnav # log viewer
     pkgs.cliflux # miniflux tui
+    pkgs.ripdrag # drag and drop from cli
 
     # programming
     # pkgs.gist # create gist
