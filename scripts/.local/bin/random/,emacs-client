@@ -1,7 +1,0 @@
-#!/bin/sh
-
-# Quick open a new emacs client
-
-set -e
-
-emacsclient  -a "" --no-wait -c

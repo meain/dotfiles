@@ -1,0 +1,31 @@
+#!/bin/sh
+
+set -e
+
+# Open file:line[:col] in emacs, jumping to the right line.
+# Usage: ,edit main.go:42
+#        ,edit main.go:42:8
+#        rg "something" | ,edit   (uses ,picker to select)
+
+if [ -z "$1" ]; then
+    input="$(cat | ,picker)"
+else
+    input="$1"
+fi
+
+file="$(echo "$input" | cut -d: -f1)"
+line="$(echo "$input" | cut -d: -f2)"
+col="$(echo "$input" | cut -d: -f3)"
+
+if [ -z "$file" ]; then
+    echo "usage: ,edit file[:line[:col]]" >&2
+    exit 1
+fi
+
+if [ -n "$line" ] && [ -n "$col" ]; then
+    emacsclient -n "+${line}:${col}" "$file"
+elif [ -n "$line" ]; then
+    emacsclient -n "+${line}" "$file"
+else
+    emacsclient -n "$file"
+fi

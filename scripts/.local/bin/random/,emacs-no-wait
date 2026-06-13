@@ -1,7 +1,0 @@
-#!/bin/sh
-#
-# Used to set $EDITOR for tools which epects only a single binary (eg: delve)
-
-set -e
-
-emacsclient -n "$@"
