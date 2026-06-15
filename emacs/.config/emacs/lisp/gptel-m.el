@@ -200,7 +200,49 @@ Return a list of filenames only, one per line without extension.
   :defer t
   :after (gptel)
   :ensure (:host github :repo "karthink/gptel-agent" :files (:defaults "agents"))
-  :config (gptel-agent-update))
+  :config
+  (gptel-agent-update)
+
+  (defun meain/gptel-agent--agents-md-content ()
+    "Return content from root AGENTS.md and project-local AGENTS.md if available.
+Each section is prefixed with a comment indicating the source file."
+    (let ((root-file (expand-file-name "~/.agents/AGENTS.md"))
+          (project-file (when-let* ((proj (project-current))
+                                    (dir (project-root proj)))
+                          (let ((f (expand-file-name "AGENTS.md" dir)))
+                            (when (file-readable-p f) f))))
+          (parts nil))
+      (when (file-readable-p root-file)
+        (push (cons root-file
+                    (with-temp-buffer
+                      (insert-file-contents root-file)
+                      (buffer-string)))
+              parts))
+      (when project-file
+        (push (cons project-file
+                    (with-temp-buffer
+                      (insert-file-contents project-file)
+                      (buffer-string)))
+              parts))
+      (when parts
+        (mapconcat (lambda (entry)
+                     (format "# Instructions from: %s\n\n%s" (car entry) (cdr entry)))
+                   (nreverse parts)
+                   "\n\n"))))
+
+  (advice-add 'gptel-agent-update :after
+              (lambda (&rest _)
+                (when-let* ((extra (meain/gptel-agent--agents-md-content))
+                            (preset (alist-get 'gptel-agent gptel--known-presets)))
+                  (let* ((current-post (plist-get preset :post))
+                         (new-post (lambda ()
+                                     (when current-post (funcall current-post))
+                                     (setq-local gptel-system-prompt
+                                                 (concat gptel-system-prompt
+                                                         "\n\n<agents-md>\n"
+                                                         extra
+                                                         "\n</agents-md>")))))
+                    (plist-put preset :post new-post))))))
 
 (provide 'gptel-m)
 ;;; gptel-m.el ends here
