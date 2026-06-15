@@ -7,7 +7,7 @@
 
 ;;; Code:
 ;; Copilot
-(use-package track-changes :ensure t) ;; dependency for copilot
+;; (use-package track-changes :ensure t) ;; dependency for copilot (causing issues with elapaca, temporarily disabled)
 (use-package copilot
   :defer t
   :after jsonrpc

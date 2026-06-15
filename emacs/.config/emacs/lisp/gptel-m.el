@@ -9,6 +9,7 @@
   :ensure t
   ;; :load-path "/Users/meain/dev/src/gptel"
   :commands (gptel gptel-send gptel-rewrite-menu)
+  :after (tab-bar) ; dependency because of M-; keybinding
   :config
   (setq gptel-model 'claude-sonnet-4-6)
   (setq gptel-backend
@@ -166,7 +167,6 @@ Return a list of filenames only, one per line without extension.
                           filenames))))))
 
   :init
-  (global-unset-key (kbd "M-;"))
   (global-set-key (kbd "M-; m") 'gptel)
   (global-set-key (kbd "M-; M-m") 'gptel)
   (global-set-key (kbd "M-; s") 'gptel-send)

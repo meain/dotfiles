@@ -51,6 +51,7 @@
   (evil-leader/set-key "C" (lambda () (interactive) (tab-bar-switch-to-tab "-scratch")))
   (evil-leader/set-key "s c" (lambda () (interactive) (tab-bar-switch-to-tab "-scratch")))
   (global-set-key (kbd "M-f s") 'meain/switch-tab-dwim)
+  (global-unset-key (kbd "M-;"))
   (global-set-key (kbd "M-; M-;") 'meain/toggle-scratch-tab)
 
   (setq tab-bar-close-button-show nil)

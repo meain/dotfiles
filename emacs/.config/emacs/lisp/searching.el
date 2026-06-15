@@ -21,10 +21,9 @@
              (call-interactively 'rg)))
   :config (setq rg-command-line-flags '("--hidden" "--follow")))
 
-;; dumber-jump
+;; dumber-jump (doing defer on this seees to not work reliably)
 (use-package dumber-jump
   :ensure t
-  :defer t
   :after evil-leader
   :config
   (add-hook 'xref-backend-functions #'dumber-jump-xref-activate))
