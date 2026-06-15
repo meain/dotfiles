@@ -1,5 +1,5 @@
 [models]
-  primary = "anthropic/claude-sonnet-4-6"
+  primary = "sonnet"
   secondary = "haiku"
 
 [settings]
