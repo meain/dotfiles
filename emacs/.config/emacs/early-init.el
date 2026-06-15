@@ -144,7 +144,7 @@
                           ("Monaspace Radon" . '(160 .2 'regular))
                           ("Monaspace Xenon" . '(160 .2 'regular))
                           ("Monoflow" . '(160 nil 'regular))
-                          ("monofur" . '(160 .2 'regular))
+                          ("monofur" . '(180 .2 'regular))
                           ("Monoid HalfLoose" . '(160 .1 'light))
                           ("Monoid" . '(160 .2 'light))
                           ("Monoisome HalfLoose" . '(160 .2 'light))
