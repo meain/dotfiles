@@ -25,8 +25,17 @@
   (setq gptel-confirm-tool-calls nil)
   (setq gptel-include-tool-results t)
   (setq gptel-default-mode 'org-mode) ;; tool calls don't fold in markdown mode
-  (setq gptel-prompt-prefix-alist '((markdown-mode . "🗣️ YOU\n") (org-mode . "* 🗣️ YOU\n") (text-mode . "# YOU\n")))
-  (setq gptel-response-prefix-alist '((markdown-mode . "🤖 BOT\n") (org-mode . "* 🤖 BOT\n") (text-mode . "$ BOT\n")))
+  ;; Customize prefixes for user prompts and LLM responses per major mode
+  ;; These appear before each exchange in the conversation buffer
+  (setq gptel-prompt-prefix-alist
+        '((markdown-mode . "## User\n\n")
+          (org-mode . "* User\n")
+          (text-mode . "### User\n\n")))
+  
+  (setq gptel-response-prefix-alist
+        '((markdown-mode . "## Assistant\n\n")
+          (org-mode . "* Assistant\n")
+          (text-mode . "### Assistant\n\n")))
 
   ;; Add gptel mode keybinds
   (define-key gptel-mode-map (kbd "C-<return>") 'gptel-send)
