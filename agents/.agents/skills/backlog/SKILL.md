@@ -75,7 +75,7 @@ Read the full backlog file first.
 
 ### Step 2: Handle Checked-Off Items
 
-Move all `- [x]` items from Today to Before with the last working day's date. Format: `### YYYY-MM-DD (DayOfWeek)`. Never reason about the date mentally — compute it with:
+Note the checked-off items from Today — they will be archived to Before during Step 5. Format: `### YYYY-MM-DD (DayOfWeek)`. Never reason about the date mentally — compute it with:
 ```bash
 YESTERDAY=$(date -d "yesterday" "+%A"); case "$YESTERDAY" in Saturday) date -d "2 days ago" "+%Y-%m-%d (%A)";; Sunday) date -d "3 days ago" "+%Y-%m-%d (%A)";; *) date -d "yesterday" "+%Y-%m-%d (%A)";; esac
 ```
@@ -110,7 +110,7 @@ Filter: only direct reviews (not team), exclude approved PRs and drafts.
 ### Step 4: Select Candidates via Emacs
 
 Write all candidates to `/tmp/backlog-candidates-YYYY-MM-DD.md` with `- [ ]` lines, grouped by:
-- Morning routine (Apply rosemarry water, Apply sunscreen, Check emails, Check Slack, Check Teams, Charge devices)
+- Morning routine (Apply rosemary water, Apply sunscreen, Check emails, Check Slack, Check Teams, Charge devices)
 - Today's meetings (from calendar — list as info, no checkboxes; don't add to backlog)
 - My PRs — approved (ready to merge)
 - My PRs — needs action
@@ -142,6 +142,5 @@ Then:
 - Prefer inline links over trailing links (e.g. `Merge [repo#123](url)`)
 - Trailing `[ref](url)` only for URLs without a natural inline anchor (Teams links)
 - Each PR must be on its own line
-- Add morning routine items at top: Check emails, Check Slack, Check Teams, Check Confluence, Charge devices
 - Never remove section headers (Today, Tomorrow, etc.) even when empty
 - Show meeting times in IST (UTC+5:30)
