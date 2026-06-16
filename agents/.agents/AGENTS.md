@@ -33,6 +33,7 @@
 
 - Use the `/jira` and `/confluence` skills when working with Jira tickets and Confluence pages. These skills wrap the CLI tools with best practices and correct flags. Use `gh` (with GIT_DIR set) for GitHub. Prefer these over MCP tools, web fetching, or asking the user to look things up.
 - Use the `/web-search` skill for web searches when the built-in WebSearch tool is unavailable.
+- To open a URL in the browser, use `open <url>` (no sandbox needed). Reserve the `/firefox` skill for interactions that require UI scripting — tab switching, keyboard shortcuts, getting tab info.
 
 ## Workflow
 
