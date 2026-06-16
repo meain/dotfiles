@@ -204,8 +204,7 @@ Return a list of filenames only, one per line without extension.
   (gptel-agent-update)
 
   (defun meain/gptel-agent--agents-md-content ()
-    "Return content from root AGENTS.md and project-local AGENTS.md if available.
-Each section is prefixed with a comment indicating the source file."
+    "Return content from root and project AGENTS.md files, with source headers."
     (let ((root-file (expand-file-name "~/.agents/AGENTS.md"))
           (project-file (when-let* ((proj (project-current))
                                     (dir (project-root proj)))
@@ -230,19 +229,28 @@ Each section is prefixed with a comment indicating the source file."
                    (nreverse parts)
                    "\n\n"))))
 
-  (advice-add 'gptel-agent-update :after
-              (lambda (&rest _)
-                (when-let* ((extra (meain/gptel-agent--agents-md-content))
-                            (preset (alist-get 'gptel-agent gptel--known-presets)))
-                  (let* ((current-post (plist-get preset :post))
-                         (new-post (lambda ()
-                                     (when current-post (funcall current-post))
-                                     (setq-local gptel-system-prompt
-                                                 (concat gptel-system-prompt
-                                                         "\n\n<agents-md>\n"
-                                                         extra
-                                                         "\n</agents-md>")))))
-                    (plist-put preset :post new-post))))))
+  (gptel-make-preset 'meain/gptel-agent
+    :description "gptel-agent with AGENTS.md instructions"
+    :parents '(gptel-agent)
+    :post (lambda ()
+            (when-let ((extra (meain/gptel-agent--agents-md-content)))
+              (setq-local gptel-system-prompt
+                          (concat gptel-system-prompt
+                                  "\n\n<agents-md>\n"
+                                  extra
+                                  "\n</agents-md>")))))
+
+  (defun meain/gptel-agent (&optional project-dir)
+    "Start a gptel-agent session using the meain/gptel-agent preset."
+    (interactive)
+    (gptel-agent project-dir 'meain/gptel-agent))
+
+  (advice-add 'gptel-agent :around
+              (lambda (orig &optional project-dir agent-preset)
+                (funcall orig project-dir
+                         (if (memq agent-preset '(nil gptel-agent))
+                             'meain/gptel-agent
+                           agent-preset)))))
 
 (provide 'gptel-m)
 ;;; gptel-m.el ends here
