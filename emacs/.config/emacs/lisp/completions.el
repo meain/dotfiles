@@ -51,10 +51,17 @@
          ("M-f p i" . cape-ispell)
          ("M-f p l" . cape-line)
          ("M-f p w" . cape-dict)
-         ("M-f p &" . cape-sgml))
+         ("M-f p &" . cape-sgml)
+         ("M-f p e" . cape-emoji))
   :init
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-  (add-to-list 'completion-at-point-functions #'cape-file))
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-hook 'markdown-mode-hook
+            (lambda ()
+              (add-hook 'completion-at-point-functions #'cape-emoji nil t)))
+  (add-hook 'gfm-mode-hook
+            (lambda ()
+              (add-hook 'completion-at-point-functions #'cape-emoji nil t))))
 
 ;; Completions (core framework)
 (use-package vertico

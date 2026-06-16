@@ -15,6 +15,8 @@
   (setq markdown-enable-html -1)
   (setq markdown-enable-wiki-links nil) ; makes markdown mode super slow
   (setq markdown-gfm-use-electric-backquote nil) ; don't ask me to pick lang in ```
+  (evil-define-key 'insert gfm-mode-map (kbd "C-c e") 'meain/insert-emoji)
+  (evil-define-key 'insert markdown-mode-map (kbd "C-c e") 'meain/insert-emoji)
   (evil-define-key 'normal gfm-mode-map (kbd "<RET>") 'project-find-file)
   (evil-define-key 'normal gfm-mode-map (kbd "g d") 'markdown-do)
   (evil-define-key 'normal markdown-mode-map (kbd "<RET>") 'project-find-file)
@@ -196,7 +198,7 @@ Uses 'ddgr' web search to look up a URL and insert a formatted markdown link."
   (evil-leader/set-key "b W" 'meain/toggle-writing-mode))
 
 (use-package emacs
-  :commands (meain/kill-markdown-preview meain/markdown-preview)
+  :commands (meain/kill-markdown-preview meain/markdown-preview meain/insert-emoji)
   :config
   ;; Markdown preview
   (defun meain/kill-markdown-preview ()
@@ -213,7 +215,22 @@ Uses 'ddgr' web search to look up a URL and insert a formatted markdown link."
     (interactive)
     (meain/kill-markdown-preview)
     (start-process "*markdown-preview*" "*markdown-preview*"
-                   ",markdown-preview" buffer-file-name)))
+                   ",markdown-preview" buffer-file-name))
+
+  ;; Emoji picker using built-in emoji.el
+  (defun meain/insert-emoji ()
+    "Insert an emoji via completing-read using Emacs built-in emoji data."
+    (interactive)
+    (require 'emoji)
+    (emoji--init)
+    (let* ((emojis nil))
+      (maphash (lambda (glyph name)
+                 (push (cons (format "%s %s" name glyph) glyph) emojis))
+               emoji--names)
+      (let* ((choice (completing-read "Emoji: " emojis nil t))
+             (emoji (cdr (assoc choice emojis))))
+        (when emoji
+          (insert emoji))))))
 
 (provide 'writing)
 ;;; writing.el ends here
