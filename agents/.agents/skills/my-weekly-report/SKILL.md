@@ -115,10 +115,40 @@ or notable pages were created or updated this week, add a bullet for them in
 - Default all three fields to "None" unless backlog or Jira indicates otherwise
 - Check backlog for any explicit blocker notes or upcoming leave entries
 
-### 7. Output
+### 7. Open in Emacs for Review
 
-Print the report directly in the chat. Do not save to a file, do not open anything.
-Keep bullets terse — one line each, like the examples in W17.md.
+Write the draft to `/tmp/weekly-report-<YYYY-MM-DD>.md` and open it for editing:
+
+```bash
+emacsclient /tmp/weekly-report-<YYYY-MM-DD>.md
+```
+
+Use `dangerouslyDisableSandbox: true` and `timeout: 600000`. Wait for the user to
+finish editing (they'll do `C-x #` to close). Read back the edited content from
+the system-reminder diff or by re-reading the file.
+
+Also print the draft in the chat before opening Emacs so the user can see it.
+
+### 8. Update Confluence
+
+Once the user confirms the draft is good (or after Emacs closes without objection),
+update the weekly updates Confluence page with the edited content.
+
+Find the page ID by searching for "Updates for week of <current Monday's date>":
+
+```bash
+confluence search 'title = "Updates for week of <YYYY-MM-DD>" AND space = "~712020cccc16439d5041339f95122d8d977f63"' --cql 2>/dev/null
+```
+
+Read the current page (`confluence read -f markdown <pageId>`), replace only the
+Abin Simon section with the edited content, write the full updated page to a temp
+file, then update:
+
+```bash
+confluence update <pageId> -f /tmp/weekly-update-full-<YYYY-MM-DD>.md --format markdown
+```
+
+Use `dangerouslyDisableSandbox: true` for all confluence CLI calls.
 
 ## Reference Format
 
