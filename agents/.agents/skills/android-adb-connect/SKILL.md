@@ -32,6 +32,15 @@ adb devices   # check what's already attached
 
 If `adb` isn't found, the SDK is at `~/Android/sdk-edo/platform-tools/adb`.
 
+If any entry shows status `device`, check if it's the Galaxy S25 before proceeding to connect:
+
+```bash
+adb -s <device-id> shell getprop ro.product.model
+# SM-S938B → it's the Galaxy S25, use this device ID and skip Step 2 entirely
+```
+
+Use that ID with `-s` for all subsequent commands.
+
 ## Step 2 — connect
 
 ### Already paired (the common case)
