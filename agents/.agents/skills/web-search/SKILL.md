@@ -2,7 +2,8 @@
 name: web-search
 description: >
   Search the web using lynx and DuckDuckGo. Performs text-based web searches and can dump specific
-  website content. Only use when the built-in WebSearch tool is not available.
+  website content. Do NOT use in Claude Code — use the built-in WebSearch tool instead. Only use
+  this skill in environments where WebSearch is unavailable.
 triggers:
   - /web-search
   - "search the web"
