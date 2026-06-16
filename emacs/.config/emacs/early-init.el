@@ -143,7 +143,7 @@
                           ("Monaspace Neon" . '(160 .2 'regular))
                           ("Monaspace Radon" . '(160 .2 'regular))
                           ("Monaspace Xenon" . '(160 .2 'regular))
-                          ("Monoflow" . '(160 nil 'regular))
+                          ("Monoflow" . '(150 nil 'regular))
                           ("monofur" . '(180 .2 'regular))
                           ("Monoid HalfLoose" . '(160 .1 'light))
                           ("Monoid" . '(160 .2 'light))
