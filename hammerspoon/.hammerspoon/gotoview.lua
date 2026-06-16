@@ -63,36 +63,15 @@ local function buildGroupsHtml()
     return table.concat(parts, '\n')
 end
 
-local function show()
-    local screen = hs.screen.mainScreen():frame()
-    -- start with a generous height; JS will resize after render
-    local h = 400
-    local x = screen.x + (screen.w - w) / 2
-    local y = screen.y + (screen.h - h) / 2
+-- Pre-built static HTML (groups never change at runtime)
+local cachedGroupsHtml = buildGroupsHtml()
 
-    local wv
-    local usercontent = hs.webview.usercontent.new("gotoview")
-    usercontent:setCallback(function(msg)
-        local body = msg.body
-        if body:sub(1, 7) == "resize:" then
-            local newH = tonumber(body:sub(8))
-            if newH and wv then
-                local f = wv:frame()
-                local newY = screen.y + (screen.h - newH) / 2
-                wv:frame({x=f.x, y=newY, w=f.w, h=newH})
-            end
-        else
-            local s = body
-            wv:delete()
-            wv = nil
-            if s and s ~= "" then
-                local result = customshellrun.run(",bm go " .. s)
-                if #result > 0 then hs.alert(result) end
-            end
-        end
-    end)
+-- Persistent webview state
+local wv = nil
+local wvH = 400  -- updated after first resize message
 
-    local html = [[<!DOCTYPE html>
+local function buildHtml()
+    return [[<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -186,7 +165,7 @@ local function show()
 </head>
 <body>
 <div class="groups">
-]] .. buildGroupsHtml() .. [[
+]] .. cachedGroupsHtml .. [[
 </div>
 <div class="input-row">
   <input id="q" type="text" placeholder="shortcut…" autofocus />
@@ -201,19 +180,59 @@ local function show()
   function go() {
     webkit.messageHandlers.gotoview.postMessage(document.getElementById('q').value.trim());
   }
-  // auto-size: report content height after render
   window.addEventListener('load', function() {
     var h = document.body.scrollHeight;
     webkit.messageHandlers.gotoview.postMessage('resize:' + h);
   });
+  function reset() {
+    var q = document.getElementById('q');
+    q.value = '';
+    q.focus();
+  }
 </script>
 </body>
 </html>]]
+end
 
-    wv = hs.webview.new({x=x, y=y, w=w, h=h}, {developerExtrasEnabled=false}, usercontent)
-    wv:windowStyle({})
-    wv:allowTextEntry(true)
-    wv:html(html)
+local function centerFrame(h)
+    local screen = hs.screen.mainScreen():frame()
+    return {
+        x = screen.x + (screen.w - w) / 2,
+        y = screen.y + (screen.h - h) / 2,
+        w = w,
+        h = h,
+    }
+end
+
+local usercontent = hs.webview.usercontent.new("gotoview")
+usercontent:setCallback(function(msg)
+    local body = msg.body
+    if body:sub(1, 7) == "resize:" then
+        local newH = tonumber(body:sub(8))
+        if newH and wv then
+            wvH = newH
+            wv:frame(centerFrame(newH))
+        end
+    else
+        -- hide first so the window disappears immediately
+        wv:hide()
+        local s = body
+        if s and s ~= "" then
+            local result = customshellrun.run(",bm go " .. s)
+            if #result > 0 then hs.alert(result) end
+        end
+    end
+end)
+
+-- Create the persistent webview once at load time
+wv = hs.webview.new(centerFrame(wvH), {developerExtrasEnabled=false}, usercontent)
+wv:windowStyle({})
+wv:allowTextEntry(true)
+wv:html(buildHtml())
+
+local function show()
+    wv:frame(centerFrame(wvH))
+    wv:evaluateJavaScript("reset()")
     wv:show()
     wv:hswindow():focus()
 end
