@@ -33,6 +33,7 @@
 
 - Use the `/jira` and `/confluence` skills when working with Jira tickets and Confluence pages. These skills wrap the CLI tools with best practices and correct flags. Use `gh` (with GIT_DIR set) for GitHub. Prefer these over MCP tools, web fetching, or asking the user to look things up.
 - Use the `/web-search` skill for web searches when the built-in WebSearch tool is unavailable.
+- Use the `/vibediff` skill when working with VibeDiff code review instances. VibeDiff defaults to localhost:8888 (verify with `curl http://localhost:8888/api/directory`) and provides REST APIs for comments, diffs, and revisions. When replying to comments, only provide `content` and `parentId` — other fields are inherited from the parent. If behavior seems wrong, check `http://localhost:8888/docs` for the instance-specific API reference.
 - To open a URL in the browser, use `open <url>` (no sandbox needed). Reserve the `/firefox` skill for interactions that require UI scripting — tab switching, keyboard shortcuts, getting tab info.
 - When debugging Emacs issues, connect to the running instance via `emacsclient --eval '(...)'` to inspect state, evaluate expressions, or test fixes without restarting.
 
