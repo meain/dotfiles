@@ -63,3 +63,7 @@ Set `run_in_background: true`.
 ## Step 4: Report
 
 Wait for the background subagent to complete, then return its findings verbatim.
+
+**Stop here.** Do NOT attempt to fix any of the findings. The user reads the
+findings and decides what to act on. Only make changes if the user explicitly
+asks for them after seeing the report.
