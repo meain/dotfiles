@@ -11,59 +11,79 @@ Interact with VibeDiff code review instances - fetch review comments, reply to t
 
 ## How it works
 
-VibeDiff runs as a local HTTP server (default port 8888) serving one repository at a time. Each instance provides:
-- REST API for comments, diffs, and revisions
-- WebSocket for real-time updates
+VibeDiff runs as a local HTTP server (default port 8888) that can review **multiple repositories** at once. Directory is a **per-request parameter** — there is no server-side "current directory" state. Each API call must include the `directory` query param (or body field for POSTs).
+
+Each instance provides:
+- REST API for comments, diffs, and revisions (all require `directory`)
+- Directory registry for managing known repos
+- WebSocket for real-time updates (messages include `directory`)
 - MCP server for agent integration
 
-### Finding the running instance
+### Finding the running instance and active directories
 
 ```bash
-# VibeDiff defaults to port 8888 - check if it's responding
-curl http://localhost:8888/api/directory
+# Check VibeDiff is up and list registered directories
+curl http://localhost:8888/api/directories
+
+# Instance-specific docs (always check if API behavior seems wrong)
+curl http://localhost:8888/docs
 
 # If on a different port, search all listening ports
 lsof -iTCP -sTCP:LISTEN
-
-# Check instance-specific docs (always check if API behavior seems wrong)
-curl http://localhost:8888/docs
 ```
 
-The `/docs` endpoint provides instance-specific API documentation with the current base URL, project path, and VCS backend.
+The `/docs` endpoint provides instance-specific API documentation with the current base URL, registered projects, and endpoint reference.
+
+## Directory registry
+
+### List registered directories
+
+```bash
+curl http://localhost:8888/api/directories
+# ["\/path\/to\/repo-a", "\/path\/to\/repo-b"]
+```
+
+### Register a new directory
+
+```bash
+curl -X POST http://localhost:8888/api/directories \
+  -H 'Content-Type: application/json' \
+  -d '{"directory":"/path/to/repo"}'
+# Returns: {"directory":"/path/to/repo","backend":"jj"}
+```
+
+### Get backend info for a directory
+
+```bash
+curl 'http://localhost:8888/api/directory?directory=/path/to/repo'
+# {"directory":"/path/to/repo","backend":"git"}
+```
 
 ## Common operations
 
-### Connect to instance and switch project
-
-```bash
-# Check current project
-curl http://localhost:8888/api/directory
-
-# Switch to different repo
-curl -X POST http://localhost:8888/api/directory \
-  -H 'Content-Type: application/json' \
-  -d '{"directory":"/path/to/repo"}'
-```
-
 ### Fetch review comments
 
-```bash
-# All comments
-curl http://localhost:8888/api/review/comments
+All comment endpoints require `?directory=...`.
 
-# Open comments only
+```bash
+DIR="/path/to/repo"
+
+# All comments for a directory
+curl "http://localhost:8888/api/review/comments?directory=$DIR"
+
+# Open comments only (across all directories — no dir param needed)
 curl http://localhost:8888/api/review/comments/open
 
 # Filter by revision
-curl 'http://localhost:8888/api/review/comments?revision=abc123xyz'
+curl "http://localhost:8888/api/review/comments?directory=$DIR&revision=abc123xyz"
 
 # Filter by file
-curl 'http://localhost:8888/api/review/comments?file=path/to/file.go'
+curl "http://localhost:8888/api/review/comments?directory=$DIR&file=path/to/file.go"
 ```
 
 ### Reply to comments
 
-**Important**: When replying (setting `parentId`), only provide `content`, `author`, and `parentId`. The API automatically inherits `file`, `line`, `lineEnd`, and `revision` from the parent comment.
+**Important**: When replying (setting `parentId`), only provide `content`, `author`, and `parentId`. The API automatically inherits `file`, `line`, `lineEnd`, `revision`, and `directory` from the parent comment.
 
 ```bash
 curl -X POST http://localhost:8888/api/review/comment \
@@ -75,7 +95,7 @@ curl -X POST http://localhost:8888/api/review/comment \
   }'
 ```
 
-If you provide `file`, `line`, etc. they will override the inherited values. Always set `"author": "agent"` when creating replies.
+Always set `"author": "agent"` when creating replies.
 
 ### Create new comment
 
@@ -83,6 +103,7 @@ If you provide `file`, `line`, etc. they will override the inherited values. Alw
 curl -X POST http://localhost:8888/api/review/comment \
   -H 'Content-Type: application/json' \
   -d '{
+    "directory": "/path/to/repo",
     "file": "path/to/file.go",
     "line": 42,
     "lineEnd": 44,
@@ -92,7 +113,7 @@ curl -X POST http://localhost:8888/api/review/comment \
   }'
 ```
 
-Leave `revision` empty for working-copy comments. Always set `"author": "agent"` when creating comments as the agent.
+`directory` is required for root comments. Leave `revision` empty for working-copy comments. Always set `"author": "agent"`.
 
 ### Resolve/reopen comments
 
@@ -104,58 +125,79 @@ curl -X POST http://localhost:8888/api/review/comment/{id}/resolve
 curl -X POST http://localhost:8888/api/review/comment/{id}/reopen
 ```
 
+No `directory` param needed — the server looks it up from the stored comment.
+
 ### Get diff and revisions
 
+All diff/revision endpoints require `?directory=...`.
+
 ```bash
+DIR="/path/to/repo"
+
 # Current working copy diff
-curl http://localhost:8888/api/diff
+curl "http://localhost:8888/api/diff?directory=$DIR"
 
 # Diff for specific revision
-curl 'http://localhost:8888/api/diff?revision=abc123'
+curl "http://localhost:8888/api/diff?directory=$DIR&revision=abc123"
 
 # List recent revisions
-curl 'http://localhost:8888/api/revisions?limit=10'
+curl "http://localhost:8888/api/revisions?directory=$DIR&limit=10"
 ```
+
+**jj repos**: VibeDiff uses **jj change IDs**, not git commit hashes. Always resolve a revision to its change ID before using it as a `revision` parameter:
+
+```bash
+# Get change ID for a specific revision
+jj log --no-graph -r '<rev>' --template 'change_id' -R $DIR
+
+# Get change ID for working copy
+jj log --no-graph -r '@' --template 'change_id' -R $DIR
+```
+
+Confirm via `GET /api/revisions` — the `id` field is always the jj change ID.
 
 ## Comment object structure
 
 ```json
 {
   "id": "a1b2c3d4",
+  "directory": "/path/to/repo",
   "file": "internal/git/parser.go",
   "line": 42,
   "lineEnd": 44,
   "content": "Why is this offset by one?",
-  "author": "user",          // "user" or "agent"
-  "status": "open",           // "open" or "resolved"
-  "parentId": null,           // set for replies
-  "revision": "",             // empty for working-copy
+  "author": "user",
+  "status": "open",
+  "parentId": "",
+  "revision": "",
   "commit": "abc1234",
   "createdAt": "2026-06-16T15:04:05Z"
 }
 ```
 
-Replies have `parentId` set and are listed as separate entries (not nested), linked via the parent ID.
+Replies have `parentId` set. All comments in the API response are flat — group by `parentId` to build threads.
 
 ## Workflow patterns
 
 ### Address review comments
 
-1. Fetch open comments for current revision
-2. Make code changes to address feedback
-3. Reply to each comment explaining the fix
-4. Resolve the comment thread
+1. List registered directories to find the repo: `GET /api/directories`
+2. Fetch open comments: `GET /api/review/comments?directory=...`
+3. Make code changes to address feedback
+4. Reply to each comment explaining the fix
+5. Optionally resolve the thread
 
 ### Review summary
 
-1. Switch to target repo
-2. Fetch current diff and open comments
+1. Get registered directories
+2. Fetch current diff and open comments for the target directory
 3. Provide summary of changes and outstanding feedback
 
 ## Notes
 
 - VibeDiff stores comments in `~/.config/vibediff/comments/<sha256-of-path>.json`
 - Comments are scoped to revisions via the `revision` field
+- The `directory` field on a comment tells the server where to save it — always include it for root comments
 - Only one MCP session allowed per instance
-- WebSocket available at `/api/ws` for push notifications
+- WebSocket at `/api/ws` — messages include a `directory` field so clients can filter by repo
 - Full API docs at `/docs` endpoint
