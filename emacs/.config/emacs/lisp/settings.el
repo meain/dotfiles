@@ -103,5 +103,12 @@
                                 (save-buffer)
                                 (revert-buffer-quick)))
 
+(setq initial-scratch-message ";; Where do you want to go today?")
+
+;; Prevent killing *scratch* buffer accidentally. I usually have
+;; important stuff there and I don't want to accidentally kill it.
+(with-current-buffer "*scratch*" (emacs-lock-mode 'kill))
+
+
 (provide 'settings)
 ;;; settings.el ends here

@@ -114,9 +114,6 @@
                         " ++ \": \" ++ "
                         "self.content()"))))
 
-;; Embark actions for jj revisions in vc-print-log
-(require 'vc-review)
-
 (defun meain/jj-log-view-diff (change-id)
   "Show diff for the jj revision with CHANGE-ID in *vc-diff*."
   (let ((buf (get-buffer-create (format "*vc-diff: %s*" (substring change-id 0 8)))))
@@ -137,8 +134,7 @@
 
 (defvar meain/embark-jj-revision-map
   (define-keymap
-    "d" #'meain/jj-log-view-diff
-    "r" #'vc-review-open))
+    "d" #'meain/jj-log-view-diff))
 
 (with-eval-after-load 'embark
   (add-to-list 'embark-target-finders #'meain/embark-target-jj-revision t)
