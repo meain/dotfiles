@@ -1,0 +1,27 @@
+#!/bin/sh
+
+set -e
+
+# Select which sites to fetch from
+selected=$(printf "Hacker News\nLobsters\n" | fzf -m --prompt="Select news sites: ")
+
+if [ -z "$selected" ]; then
+    echo "No selection made"
+    exit 0
+fi
+
+# Fetch Hacker News links
+if echo "$selected" | grep -q "Hacker News"; then
+    echo "Fetching Hacker News articles..." >&2
+    curl -s https://news.ycombinator.com/ | \
+        pup 'span.titleline > a:first-child json{}' | \
+        jq -r '.[] | .href' | xargs open
+fi
+
+# Fetch Lobsters links
+if echo "$selected" | grep -q "Lobsters"; then
+    echo "Fetching Lobsters articles..." >&2
+    curl -s https://lobste.rs/ | \
+        pup 'span.link a json{}' | \
+        jq -r '.[] | .href' | xargs open
+fi
