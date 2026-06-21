@@ -40,7 +40,7 @@
       "signal"
 
       "obsidian"
-      "ollama"
+      # "ollama"
       # "lm-studio"
       "zed"
       "vscodium" # a gui editor
