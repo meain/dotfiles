@@ -25,7 +25,9 @@ open_entry() {
 }
 
 entries="$(jq -r '.entries[] | "\(.id)\t\(.published_at | split("T")[0]) \(.title) [\(.feed.title)]\t\(.url)"' <"$tmpfile")"
-[ -z "$entries" ] && echo "all caught up, go touch grass" && exit 0
+[ -z "$entries" ] && echo "All caught up, go touch grass" && exit 0
+
+printf "Total %s entries(s) pending\n" "$(echo "$entries" | wc -l)"
 
 # numeric arg: open the n latest entries directly
 if echo "$arg" | grep -qE '^[0-9]+$'; then
