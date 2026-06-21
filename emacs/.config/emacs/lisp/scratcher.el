@@ -1,7 +1,7 @@
 ;;; scratcher.el --- Scratch buffer related things -*- lexical-binding: t; -*-
 
 ;;; Commentary:
-;; All thing realted to working with scratch buffers
+;; All thing related to working with scratch buffers
 
 ;;; Code:
 (setq initial-scratch-message ";; Where do you want to go today?")
@@ -9,6 +9,11 @@
 (use-package emacs
   :after evil
   :init
+  ;; Prevent killing *scratch* buffer accidentally. I usually have
+  ;; important stuff there and I don't want to accidentally kill it.
+  (with-current-buffer "*scratch*"
+    (emacs-lock-mode 'kill))
+
   (evil-leader/set-key "c" 'meain/create-or-switch-to-scratch)
   (define-key evil-normal-state-map (kbd "q") 'meain/kill-current-buffer-unless-scratch)
   :commands (meain/update-scratch-message meain/create-or-switch-to-scratch meain/kill-current-buffer-unless-scratch)
