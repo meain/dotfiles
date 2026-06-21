@@ -32,8 +32,13 @@
                                       (concat file "/"
                                               (completing-read
                                                "Choose file:"
-                                               (directory-files file nil
-                                                                directory-files-no-dot-files-regexp))))
+                                               (mapcar (lambda (f)
+                                                         (file-relative-name f file))
+                                                       (sort (directory-files-recursively file ".*" nil)
+                                                             (lambda (a b)
+                                                               (time-less-p
+                                                                (file-attribute-modification-time (file-attributes b))
+                                                                (file-attribute-modification-time (file-attributes a)))))))))
                                    (find-file file))
                                (if create
                                    (find-file file)
