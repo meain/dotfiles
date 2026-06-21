@@ -82,7 +82,7 @@
                           ("Ellograph CF" . '(160 .1 'regular))
                           ("Envy Code R" . '(160 nil 'regular))
                           ("FairfaxHD" . '(160 nil 'regular))
-                          ("Fantasque Sans Mono" . '(160 .1 'regular))
+                          ("Fantasque Sans Mono" . '(180 .1 'regular))
                           ("Fira Code" . '(150 nil 'thin))
                           ("fixed" . '(160 nil 'regular))
                           ("Geist Mono" . '(160 .1 'light))
