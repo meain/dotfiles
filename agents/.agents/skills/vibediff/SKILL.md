@@ -1,3 +1,13 @@
+---
+name: vibediff
+description: >
+  Control VibeDiff code review instances — fetch review comments, reply to
+  threads, create comments, resolve/reopen threads, and manage review state.
+  Use when the user says /vibediff, "check vibediff", "get review comments",
+  "reply to review comment", "resolve vibediff comment", or when working on
+  code changes that have active VibeDiff review comments.
+---
+
 # VibeDiff Integration
 
 Interact with VibeDiff code review instances - fetch review comments, reply to threads, resolve comments, and manage review state.

@@ -1,3 +1,13 @@
+---
+name: vibediff-explain
+description: >
+  Explain a jj revision by fetching its diff and adding explanatory comments
+  in VibeDiff to document WHY changes were made. Use when the user says
+  /vibediff-explain, "explain this commit in vibediff", "add comments to
+  vibediff", "explain this revision in vibediff", or asks to annotate a diff
+  with explanatory comments.
+---
+
 # VibeDiff Explain Workflow
 
 Explain a specific jj revision by fetching its diff and adding explanatory comments in VibeDiff to document the changes.
