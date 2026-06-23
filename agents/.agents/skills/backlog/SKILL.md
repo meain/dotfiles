@@ -114,7 +114,7 @@ Write all candidates to `/tmp/backlog-candidates-YYYY-MM-DD.md` with `- [ ]` lin
 - Today's meetings (from calendar — list as info, no checkboxes; don't add to backlog)
 - My PRs — approved (ready to merge)
 - My PRs — needs action
-- PRs needing direct review (only where `login: meain` is a direct reviewer, not team)
+- PRs needing direct review (only where `login: meain` is a direct reviewer, not team; exclude PRs authored by `rami-veeam` or `tford-veeam`; exclude PRs with "local-dev" in the title)
 - Candidates from other sections (Tomorrow/This Week/Whenever worth pulling in)
 
 The "Checked-off items to move to Before" header must include the day name, e.g. `(2026-06-03, Wednesday)`.
