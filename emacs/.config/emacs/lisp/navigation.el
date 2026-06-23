@@ -122,11 +122,55 @@
   (setq tab-bar-new-tab-choice t)
   (setq tab-bar-new-tab-to 'right)
   (setq tab-bar-position nil)
-  (setq tab-bar-show nil)
+  (setq tab-bar-show t)
   (setq tab-bar-tab-hints nil)
   (setq tab-bar-tab-name-function 'tab-bar-tab-name-all)
-  (tab-bar-mode -1)
+  (tab-bar-mode 1)
   (tab-bar-history-mode -1)
+  (set-frame-parameter nil 'tab-bar-lines 1)
+
+  ;; Custom tab bar display
+  (defun meain/tab-bar-current-tab ()
+    "Display all tabs with current tab highlighted, -scratch always first."
+    (let* ((tabs (tab-bar-tabs))
+           (current-tab (assq 'current-tab tabs))
+           (sorted-tabs (sort (copy-sequence tabs)
+                             (lambda (a b)
+                               (let ((name-a (alist-get 'name a))
+                                     (name-b (alist-get 'name b)))
+                                 (cond
+                                  ((string= name-a "-scratch") t)
+                                  ((string= name-b "-scratch") nil)
+                                  (t nil))))))
+           (shrug " ¯\\_(ツ)_/¯ "))
+      (concat
+       (propertize shrug 'face 'shadow)
+       (mapconcat
+        (lambda (tab)
+          (let ((name (alist-get 'name tab))
+                (is-current (eq (car tab) 'current-tab)))
+            (if is-current
+                (propertize (format " [%s] " name) 'face 'tab-bar)
+              (propertize (format " |%s| " name) 'face 'shadow))))
+        sorted-tabs
+        ""))))
+
+  (defun meain/tab-bar-model-info ()
+    "Display yap/gptel model information in faded text."
+    (let ((yap (when (boundp 'yap-model) yap-model))
+          (gptel (when (boundp 'gptel-model) (format "%s" gptel-model))))
+      (when (or yap gptel)
+        (propertize (format " [%s/%s] "
+                            (or yap "") (or gptel ""))
+                    'face 'shadow))))
+
+  (setq tab-bar-format '(meain/tab-bar-current-tab
+                         tab-bar-format-align-right
+                         meain/tab-bar-model-info))
+
+  (custom-set-faces
+   '(tab-bar ((t (:box nil))))
+   '(tab-bar-tab ((t (:box nil)))))
 
   (defun meain/create-or-delete-tab (&optional close)
     "Create or close tab"
@@ -328,7 +372,7 @@ shown unless the `SHOW-HIDDEN' arg is provided."
 
 ;; Remember
 (use-package remember
-  :commands remember
+  :commands (remember remember-notes)
   :config
   (setq remember-data-file "~/.config/emacs/remember-notes"
         remember-notes-initial-major-mode 'org-mode

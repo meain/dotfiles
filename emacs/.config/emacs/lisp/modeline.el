@@ -41,15 +41,6 @@
      (when (and (boundp 'vc-mode)
                 (length> vc-mode 0))
        (concat " @" (substring vc-mode 5))))))
-(defvar meain/modeline-yap
-  (meain/modeline-segment
-   `(when (or (boundp 'gptel-model) (boundp 'yap-model))
-      (concat " ["
-              (when (boundp 'yap-model) yap-model)
-              "/"
-              (when (boundp 'gptel-model) (format "%s" gptel-model))
-              "]"))))
-
 (setq-default
  mode-line-format
  (list
@@ -58,7 +49,6 @@
   meain/modeline-filename
   (propertize ":%l:%c")
   '(:eval (mode-line-idle 1.0 meain/modeline-vcs ""))
-  '(:eval (mode-line-idle 1.0 meain/modeline-yap ""))
   '(:eval (if (boundp 'keycast-mode-line) keycast-mode-line))
   'mode-line-format-right-align
   '(:eval (if (boundp 'org-timer-mode-line-string) (concat org-timer-mode-line-string " ")))
