@@ -74,7 +74,7 @@ function window.mainMode(x, y, w, h)
 
     fff.x = scf.x
     fff.y = scf.y
-    fff.w = scf.w * 0.75
+    fff.w = scf.w * 0.65
     fff.h = scf.h
     ffw:setFrame(fff)
 end
@@ -85,9 +85,9 @@ function window.sideMode(x, y, w, h)
     local scf = hs.mouse.getCurrentScreen():frame()
     local fff = ffw:frame()
 
-    fff.x = scf.x + (scf.w * 0.75)
+    fff.x = scf.x + (scf.w * 0.65)
     fff.y = scf.y
-    fff.w = scf.w * 0.25
+    fff.w = scf.w * 0.35
     fff.h = scf.h
     ffw:setFrame(fff)
 end
