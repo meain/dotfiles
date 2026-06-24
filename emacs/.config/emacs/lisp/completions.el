@@ -8,6 +8,8 @@
   :ensure (:files (:defaults "extensions/*"))
   :defer 1
   :config
+  ;; Plugin in case we need in buffer overlay for completions
+  ;; https://code.bsdgeek.org/adam/corfu-candidate-overlay
   (setq completion-cycle-threshold 3)
   (setq corfu-auto t)
   (setq corfu-cycle t)
@@ -17,16 +19,16 @@
   (setq corfu-count 5)
   (define-key corfu-map (kbd "RET") 'newline-and-indent) ; default: corfu-insert
 
-  ;; Plugin in case we need in buffer overlay for completions
-  ;; https://code.bsdgeek.org/adam/corfu-candidate-overlay
-
   (defun corfu-move-to-minibuffer ()
-    "Move completion to minibuffer instead of corfu."
+    "Move completion to minibuffer for orderless and marginalia."
     (interactive)
-    (let ((completion-extra-properties corfu--extra)
-          completion-cycle-threshold completion-cycling)
-      (apply #'consult-completion-in-region completion-in-region--data)))
-  (define-key corfu-map "\M-m" #'corfu-move-to-minibuffer)
+    (pcase completion-in-region--data
+      (`(,beg ,end ,table ,pred ,extras)
+       (let ((completion-extra-properties extras)
+             completion-cycle-threshold completion-cycling)
+         (consult-completion-in-region beg end table pred)))))
+  (keymap-set corfu-map "M-m" #'corfu-move-to-minibuffer)
+  (add-to-list 'corfu-continue-commands #'corfu-move-to-minibuffer)
 
   (global-corfu-mode)
   (corfu-popupinfo-mode)
@@ -72,7 +74,6 @@
   (define-key vertico-map (kbd "M-q") 'vertico-multiform-vertical)
   (define-key vertico-map (kbd "M-g") 'vertico-multiform-grid)
   (define-key vertico-map (kbd "<S-backspace>") 'vertico-directory-up)
-
   (define-key vertico-map (kbd "M-n") 'vertico-next-group)
   (define-key vertico-map (kbd "M-p") 'vertico-previous-group)
 
@@ -144,52 +145,43 @@
           (consult-grep buffer)
           (t flat)))
   (vertico-mode))
+
 (use-package savehist :config (savehist-mode t) :defer t)
 (use-package orderless
   :ensure t
   :config
-  (setq completion-styles '(orderless basic))
-
+  ;; Allow flex matching with ~foo or foo~
   (defun flex-if-twiddle (pattern _index _total)
-    (cond ((string-suffix-p "~" pattern)
-           `(orderless-flex . ,(substring pattern 0 -1)))
-          ((string-prefix-p "~" pattern)
-           `(orderless-flex . ,(substring pattern 1)))))
+    (cond ((string-suffix-p "~" pattern) `(orderless-flex . ,(substring pattern 0 -1)))
+          ((string-prefix-p "~" pattern) `(orderless-flex . ,(substring pattern 1)))))
+
+  ;; Allow initials matching with ,foo or foo,
   (defun initialism-if-comma (pattern index _total)
-    (cond ((string-suffix-p "," pattern)
-           `(orderless-initialism . ,(substring pattern 0 -1)))
-          ((string-prefix-p "," pattern)
-           `(orderless-initialism . ,(substring pattern 1)))))
+    (cond ((string-suffix-p "," pattern) `(orderless-initialism . ,(substring pattern 0 -1)))
+          ((string-prefix-p "," pattern) `(orderless-initialism . ,(substring pattern 1)))))
+
+  ;; Allow negative matching with !foo or foo!
   (defun without-if-bang (pattern _index _total)
     (cond
-     ((equal "!" pattern)
-      '(orderless-literal . ""))
-     ((string-suffix-p "!" pattern)
-      `(orderless-without-literal . ,(substring pattern 0 -1)))
-     ((string-prefix-p "!" pattern)
-      `(orderless-without-literal . ,(substring pattern 1)))))
+     ((equal "!" pattern) '(orderless-literal . ""))
+     ((string-suffix-p "!" pattern) `(orderless-without-literal . ,(substring pattern 0 -1)))
+     ((string-prefix-p "!" pattern) `(orderless-without-literal . ,(substring pattern 1)))))
 
-  (setq orderless-style-dispatchers '(initialism-if-comma
-                                      flex-if-twiddle
-                                      without-if-bang))
-  (orderless-define-completion-style orderless+basic
-    (orderless-matching-styles '(orderless-literal
-                                 orderless-regexp)))
+  (setq completion-styles '(orderless))
+  (setq orderless-style-dispatchers '(initialism-if-comma flex-if-twiddle without-if-bang))
+
   (setq completion-category-overrides
-        '((command (styles orderless+basic))
-          (symbol (styles orderless+basic))
-          (variable (styles orderless+basic))
-          (file (styles basic partial-completion)))))
+        '((command (styles initials))
+          (symbol (styles initials))
+          (buffer (styles)) ; none
+          (variable (styles initials))
+          (file (styles basic)))))
+
 (use-package marginalia
   :ensure t
   :defer nil
   :bind (:map minibuffer-local-map ("C-b" . marginalia-cycle))
   :config (marginalia-mode))
-
-;; Show completions option even when there is a typo
-;; (use-package typo
-;;   :ensure t
-;;   :config (add-to-list 'completion-styles 'typo t))
 
 ;; Consult without consultation fees
 (use-package consult
