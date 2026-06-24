@@ -43,7 +43,7 @@
 ;; Fine grained size control (set-face-attribute 'default nil :height 110)
 
 (defvar meain/font-list '(;; name height line-spacing weight
-                          ("0xProto" . '(140 .3 'regular))
+                          ("0xProto" . '(150 .2 'regular))
                           ("Adelle Mono" . '(160 .1 'regular))
                           ("Agave" . '(160 .1 'regular))
                           ("Aglet Mono" . '(160 .2 'regular))
