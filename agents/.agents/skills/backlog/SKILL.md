@@ -75,9 +75,9 @@ Read the full backlog file first.
 
 ### Step 2: Handle Checked-Off Items
 
-Note the checked-off items from Today — they will be archived to Before during Step 5. Format: `### YYYY-MM-DD (DayOfWeek)`. Never reason about the date mentally — compute it with:
+Note the checked-off items from Today — they will be archived to Before during Step 5. Format: `### YYYY-MM-DD (DayOfWeek)`. Get the date with:
 ```bash
-YESTERDAY=$(date -d "yesterday" "+%A"); case "$YESTERDAY" in Saturday) date -d "2 days ago" "+%Y-%m-%d (%A)";; Sunday) date -d "3 days ago" "+%Y-%m-%d (%A)";; *) date -d "yesterday" "+%Y-%m-%d (%A)";; esac
+~/.agents/skills/backlog/scripts/date-before.sh
 ```
 
 Insert the new date block at the **end (bottom)** of the Before section — Before is chronologically ascending (oldest at top, newest at bottom).
@@ -88,20 +88,15 @@ Insert the new date block at the **end (bottom)** of the Before section — Befo
 
 **3a. Jira sprint:**
 ```bash
-jira issue list -q "sprint in openSprints() AND assignee = currentUser()" 2>&1
+jira issue list -q "sprint in openSprints() AND assignee = currentUser()" --raw 2>&1
 ```
+Returns JSON array with raw Jira issue data. Parse with `jq` to extract key, status, summary.
 
 **3b. GitHub PRs — pending reviews:**
 ```bash
-GH_TOKEN=$(security find-generic-password -s "gh:github.com" -w 2>&1)
-if [[ "$GH_TOKEN" == go-keyring-base64:* ]]; then
-  GH_TOKEN=$(echo "${GH_TOKEN#go-keyring-base64:}" | base64 -d)
-fi
-curl -s -H "Authorization: bearer $GH_TOKEN" -H "Content-Type: application/json" \
-  -d '{"query":"{ search(query: \"is:pr is:open review-requested:meain review:required org:Veeam-VDC\", type: ISSUE, first: 30) { nodes { ... on PullRequest { number title url isDraft repository { nameWithOwner } author { login } createdAt reviews(first: 10) { nodes { state author { login } } } reviewRequests(first: 20) { nodes { requestedReviewer { ... on User { login } ... on Team { name slug } } } } } } } }"}' \
-  https://api.github.com/graphql
+~/.agents/skills/backlog/scripts/pending-prs.sh
 ```
-Filter: only direct reviews (not team), exclude approved PRs and drafts.
+Returns JSON array of PRs where user is a direct reviewer (not via team), excluding approved PRs and drafts.
 
 **3c. PRs authored by user:** Open PRs authored by the user across Veeam-VDC org.
 

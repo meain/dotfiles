@@ -41,10 +41,10 @@ Filter to time range.
 
 ### 4. Gather Jira Tickets (parallel)
 ```bash
-jira issue list --assignee="$(jira me)" --order-by "updated" --reverse --paginate 100 --plain --no-headers --columns key,status,summary,type,created,updated
-jira issue list --reporter="$(jira me)" --order-by "updated" --reverse --paginate 100 --plain --no-headers --columns key,status,summary,type,created,updated
+jira issue list --assignee="$(jira me)" --order-by "updated" --reverse --paginate 100 --raw
+jira issue list --reporter="$(jira me)" --order-by "updated" --reverse --paginate 100 --raw
 ```
-Merge by ticket key, filter to time range.
+Both return JSON arrays. Merge by ticket key, filter to time range. Parse with `jq` to extract needed fields.
 
 ### 5. Gather Confluence Context (parallel)
 ```bash

@@ -51,13 +51,10 @@ Note its ID.
 ### 2. Get Sprint Tickets
 
 ```bash
-jira issue list --plain -q "assignee = currentUser() AND sprint = <SPRINT_ID>" --no-truncate
+~/.agents/skills/my-weekly-report/scripts/sprint-tickets.sh
 ```
 
-Split tickets by status:
-- **Done** → "What I worked on" (completed this sprint)
-- **In Progress / IN REVIEW** → "What I worked on" (currently active)
-- **To Do** → "What's next"
+Returns JSON with tickets grouped by status: `done`, `in_progress`, `to_do`.
 
 ### 3. Check Backlog for Notable Non-Jira Work
 
@@ -69,35 +66,24 @@ ones in "What I worked on".
 
 ### 4. Check GitHub PRs
 
-Get the list of repos from `~/.config/datafiles/prs-repos`. For each repo, fetch
-PRs authored by the user (run in parallel across repos):
-
 ```bash
-GIT_DIR=$(jj git root 2>/dev/null || echo .git) gh pr list --repo <REPO> --author "@me" --state all --limit 20 --json number,title,state,mergedAt,createdAt,url
+~/.agents/skills/my-weekly-report/scripts/user-prs.sh "@me" $(cat ~/.config/datafiles/prs-repos)
 ```
 
-Also do a broader org-wide search to catch PRs in repos not in the list:
-
-```bash
-gh search prs --author "@me" --owner Veeam-VDC --state all --limit 20 --json number,title,repository,state,mergedAt,createdAt,url
-```
-
-Filter both results to PRs created or merged this week. Include merged PRs as
+Returns JSON array of PRs created or merged this week. Include merged PRs as
 evidence of completed work. PRs still in review signal active "What I worked on"
 items. Do NOT list PRs as separate bullets — use them to enrich Jira ticket bullets
 or add a single "PR reviews" bullet if you reviewed several PRs by others.
 
 ### 5. Check Confluence for Recent Pages
 
-Search for pages created or updated by you recently:
-
 ```bash
-confluence search 'contributor = currentUser() order by lastmodified desc' --cql --limit 10
+~/.agents/skills/my-weekly-report/scripts/confluence-updates.sh
 ```
 
-From the results, filter to pages modified this week. If any design docs, runbooks,
-or notable pages were created or updated this week, add a bullet for them in
-"What I worked on" (e.g. "Created design doc for Org Anchoring").
+Returns text listing of pages modified this week. Parse the output to extract page titles.
+If any design docs, runbooks, or notable pages were created or updated this week, add a
+bullet for them in "What I worked on" (e.g. "Created design doc for Org Anchoring").
 
 ### 6. Build the Report
 
