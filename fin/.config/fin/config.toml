@@ -28,6 +28,7 @@
   # openrouter
   mercury = "openrouter/inception/mercury-2"
   ring = "openrouter/inclusionai/ring-2.6-1t:free"
+  flash = "openrouter/deepseek/deepseek-v4-flash"
 
   # anthropic
   haiku = "anthropic/claude-haiku-4-5"
