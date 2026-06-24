@@ -150,6 +150,9 @@ confluence update <pageId> -f /tmp/weekly-update-full-<YYYY-MM-DD>.md --format m
 
 Use `dangerouslyDisableSandbox: true` for all confluence CLI calls.
 
+Do NOT save the report locally — do not write to any file under
+`/Users/meain/.local/share/sbdb/InfraCloud/Weekly Updates Submitted/`.
+
 ## Reference Format
 
 See `/Users/meain/.local/share/sbdb/InfraCloud/Weekly Updates Submitted/2026/W17.md`
