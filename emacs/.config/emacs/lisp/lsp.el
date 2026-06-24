@@ -62,7 +62,8 @@
                 ;; https://cs.opensource.google/go/x/tools/+/master:gopls/doc/emacs.md
                 ;; https://cs.opensource.google/go/x/tools/+/master:gopls/doc/settings.md
                 ;; (:gopls . ((staticcheck . t))) ;; Huge mem usage penalty
-                '((:json.schemas . [((:fileMatch . ["package.json"]) (:url . "https://json.schemastore.org/package.json"))])))
+                '((:gopls . ((vulncheck . "Off")))
+                  (:json.schemas . [((:fileMatch . ["package.json"]) (:url . "https://json.schemastore.org/package.json"))])))
 
   ;; add flymake backend separately so that I can add other things as well to flymake
   (add-to-list 'eglot-stay-out-of 'flymake)
