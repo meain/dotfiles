@@ -20,7 +20,7 @@
 - Do not squash changes or push to upstream without explicit user request.
 - Branch names in Veeam repos should start with `meain/` (e.g., `meain/earn-prod-adx-sku-downsize`).
 - When creating PRs, do not add "Generated with Claude Code" or similar labels/footers to the PR body.
-- When creating a new PR in Veeam repos, look up the associated Jira ticket and link it in the PR description body (not as a comment). Use the `jira` CLI to fetch ticket details.
+- When creating a new PR in Veeam repos, look up the associated Jira ticket and link it in the PR description body (not as a comment). Use the `jira` CLI to fetch ticket details. To find the ticket, fetch all open tickets assigned to me (`jira issue list --assignee $(jira me) --status-not Done`) and look for one that matches the PR's purpose — do not do a keyword search.
 - When creating a new PR, look up the repo's PR template first (`.github/pull_request_template.md`) and use it as the structure for the PR body. If there is none, include a summary of the changes and why they were made as two paragraphs. Include examples of code flow if it makes sense.
 - I usually want to set `rs-malik` (Rabee Sohail Malik), `ryanfkeepers` (Ryan Keepers), and `rami-veeam` as reviewers on PRs from repos in /Users/meain/dev/veeam. After creating the PR, check `.github/CODEOWNERS` for the changed paths — if all three are already auto-assigned via CODEOWNERS, skip the reviewer ask; otherwise ask if I want to add the missing ones.
 - After you push a PR, ensure the CI is green in the background. If CI fails, notify the user proactively.
@@ -32,6 +32,7 @@
 ## External Tools
 
 - Use the `/jira` and `/confluence` skills when working with Jira tickets and Confluence pages. These skills wrap the CLI tools with best practices and correct flags. Use `gh` (with GIT_DIR set) for GitHub. Prefer these over MCP tools, web fetching, or asking the user to look things up.
+- When creating Jira tickets, always use `-p DP` as the default project unless the user explicitly specifies a different one.
 - Use the `/web-search` skill for web searches when the built-in WebSearch tool is unavailable.
 - Use the `/vibediff` skill when working with VibeDiff code review instances. VibeDiff defaults to localhost:8888 (verify with `curl http://localhost:8888/api/directory`) and provides REST APIs for comments, diffs, and revisions. When replying to comments, only provide `content` and `parentId` — other fields are inherited from the parent. If behavior seems wrong, check `http://localhost:8888/docs` for the instance-specific API reference.
 - To open a URL in the browser, use `open <url>` (no sandbox needed). Reserve the `/firefox` skill for interactions that require UI scripting — tab switching, keyboard shortcuts, getting tab info.
