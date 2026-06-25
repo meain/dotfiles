@@ -52,8 +52,12 @@
   '(:eval (if (boundp 'keycast-mode-line) keycast-mode-line))
   'mode-line-format-right-align
   '(:eval (if (boundp 'org-timer-mode-line-string) (concat org-timer-mode-line-string " ")))
-  (propertize "%p") ;; position in file
-  (propertize " %m ")
+  (propertize "%p ")
+  '(:eval (let ((size (buffer-size)))
+            (cond ((> size 1048576) (format "%.1fM " (/ size 1048576.0)))
+                  ((> size 1024) (format "%.1fK " (/ size 1024.0)))
+                  (t (format "%dB " size)))))
+  (propertize "%m ")
   " "))
 
 (provide 'modeline)
