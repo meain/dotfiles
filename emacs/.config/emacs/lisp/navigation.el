@@ -169,8 +169,8 @@
                          meain/tab-bar-model-info))
 
   (custom-set-faces
-   '(tab-bar ((t (:box nil))))
-   '(tab-bar-tab ((t (:box nil)))))
+   '(tab-bar ((t (:box nil :background "#e6f2ff"))))
+   '(tab-bar-tab ((t (:box nil :background "#e6f2ff")))))
 
   (defun meain/create-or-delete-tab (&optional close)
     "Create or close tab"
