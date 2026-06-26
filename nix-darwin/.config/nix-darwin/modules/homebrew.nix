@@ -12,14 +12,12 @@
 
     masApps = { }; # from mac app store
     taps = [
-      "d12frosted/emacs-plus"
-      "zackelia/formulae" # for bclm
-      "keith/formulae" # for reminders-cli
-      "databricks/tap"
+      { name = "d12frosted/emacs-plus"; trusted = true; }
+      { name = "keith/formulae"; trusted = true; } # for reminders-cli
+      { name = "databricks/tap"; trusted = true; }
     ];
     brews = [
       "choose-gui" # dmenu alternative
-      "bclm" # limit battery charge
       "reminders-cli" # manage apple reminders from cli
 
       "ispell" # Emacs does not pick up nix version
