@@ -16,6 +16,7 @@
         system.primaryUser = "meain";
 
         nix.settings.experimental-features = "nix-command flakes";
+        nix.settings.trusted-users = [ "root" "meain" ];
 
         nixpkgs.hostPlatform = "aarch64-darwin";
         system.configurationRevision = self.rev or self.dirtyRev or null;
