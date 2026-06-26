@@ -16,6 +16,7 @@
 ## Version Control & PRs
 
 - Most projects are maintained using `jj` and not `git`. Use `jj` commands whenever possible instead of git commands. If using `gh` cli, set `GIT_DIR=$(jj git root 2>/dev/null || echo .git)` inline when calling it.
+- A path under `/Users/meain/worksapces/<folder>/<repo>-<suffix>` is a jj workspace of `/Users/meain/dev/<folder>/<repo>`; the trailing `-<suffix>` is the workspace name. For example, `/Users/meain/worksapces/some-org/my-project-feature2` is the `feature2` workspace of `/Users/meain/dev/some-org/my-project`.
 - Use the `/create-commit` skill when making jj commits in non-dotfiles repos.
 - Do not squash changes or push to upstream without explicit user request.
 - Branch names in Veeam repos should start with `meain/` (e.g., `meain/earn-prod-adx-sku-downsize`).
