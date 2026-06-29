@@ -1,7 +1,7 @@
 ;;; notes.el --- Note taking related packages -*- lexical-binding: t; -*-
 
 ;;; Commentary:
-;; Note taking related packages. All configuration for note taking as
+;; Note taking related packages.  All configuration for note taking as
 ;; well as markdown specific configurations.
 
 ;;; Code:
@@ -51,7 +51,7 @@
 ;; Common markdown functions for both markdown-mode and markdown-ts-mode
 (use-package emacs
   :commands (meain/paste-after-or-create-link meain/markdown-linkify-thing
-             meain/markdown-pdf meain/markdown-html)
+                                              meain/markdown-pdf meain/markdown-html)
   :config
   ;; When a link is pasted with an active selection, convert to a markdown link
   (defun meain/paste-after-or-create-link (from to)
@@ -166,23 +166,72 @@ Uses 'ddgr' web search to look up a URL and insert a formatted markdown link."
 
   (add-hook 'gfm-mode-hook (lambda () (toggle-truncate-lines nil))))
 
+;; Necessary to make M-hjkl work in markdown-ts-mode and bunch of
+;; other builtin emacs modes.
+(use-package outline
+  :after (evil)
+  :config
+  ;; Make M-{hjkl} work everywhere
+  (define-key outline-mode-map (kbd "M-l") 'meain/move-swap-right)
+  (define-key outline-mode-map (kbd "M-h") 'meain/move-swap-left)
+  (define-key outline-mode-map (kbd "M-k") 'meain/move-swap-up)
+  (define-key outline-mode-map (kbd "M-j") 'meain/move-swap-down)
+
+  (evil-define-key 'normal outline-mode-map (kbd "M-l") 'meain/move-swap-right)
+  (evil-define-key 'normal outline-mode-map (kbd "M-h") 'meain/move-swap-left)
+  (evil-define-key 'normal outline-mode-map (kbd "M-k") 'meain/move-swap-up)
+  (evil-define-key 'normal outline-mode-map (kbd "M-j") 'meain/move-swap-down))
+
 (use-package markdown-ts-mode
   :defer t
   :after evil
   :config
-  (setq-default markdown-ts-hide-markup t)
+  (setq-default markdown-ts-hide-markup nil)
   (setq-default markdown-ts-fontify-code-blocks-natively t)
 
-  (evil-define-key 'normal org-mode-map (kbd "M-l") 'meain/move-swap-right)
-  (evil-define-key 'normal org-mode-map (kbd "M-h") 'meain/move-swap-left)
-  (evil-define-key 'normal org-mode-map (kbd "M-k") 'meain/move-swap-up)
-  (evil-define-key 'normal org-mode-map (kbd "M-j") 'meain/move-swap-down)
+  (define-key markdown-ts-mode-map (kbd "M-l") 'meain/move-swap-right)
+  (define-key markdown-ts-mode-map (kbd "M-h") 'meain/move-swap-left)
+  (define-key markdown-ts-mode-map (kbd "M-k") 'meain/move-swap-up)
+  (define-key markdown-ts-mode-map (kbd "M-j") 'meain/move-swap-down)
 
-  ;; (evil-define-key 'normal markdown-ts-mode-map (kbd "g d") 'markdown-ts-toggle-checkbox)
+  (evil-define-key 'normal markdown-ts-mode-map (kbd "g d") 'markdown-ts-toggle-checkbox)
   (evil-define-key 'insert markdown-ts-mode-map (kbd "C-c e") 'meain/insert-emoji)
   (evil-define-key 'normal markdown-ts-mode-map (kbd "<RET>") 'project-find-file)
   (evil-define-key 'insert markdown-ts-mode-map (kbd "C-<return>") 'markdown-ts-insert-list-item)
-  (evil-define-key 'visual markdown-ts-mode-map "p" 'meain/paste-after-or-create-link))
+  (evil-define-key 'visual markdown-ts-mode-map "p" 'meain/paste-after-or-create-link)
+
+  ;; Strikethrough for completed items
+  (defface markdown-ts-checked-item
+    '((t :foreground "#A0A0A0" :strike-through "#D0D0D0"))
+    "Face for checked-off task list items in markdown-ts-mode.")
+  (defun meain/markdown-ts-dim-checked-items ()
+    (let ((rules (treesit-font-lock-rules
+                  :language 'markdown
+                  :feature 'meain-checked-dim
+                  :override t
+                  '(((list_item (task_list_marker_checked) (paragraph) @markdown-ts-checked-item))))))
+      (setq-local treesit-font-lock-settings
+                  (append treesit-font-lock-settings rules))
+      (treesit-font-lock-recompute-features '(meain-checked-dim))))
+  (add-hook 'markdown-ts-mode-hook #'meain/markdown-ts-dim-checked-items)
+
+  ;; Custom link only hiding for `markdown-ts-mode'.
+  ;; `markdown-ts-hide-markup' only lets you hide all or nothing and I
+  ;; only want to hide the links.
+  (defvar meain/markdown-ts-hide-urls nil)
+  (defun meain/markdown-ts-toggle-hide-urls ()
+    (interactive)
+    (setq-local meain/markdown-ts-hide-urls (not meain/markdown-ts-hide-urls))
+    (font-lock-flush))
+  (with-eval-after-load 'markdown-ts-mode
+    (dolist (fn '(markdown-ts--fontify-link-destination
+                  markdown-ts--fontify-link-ref-destination))
+      (advice-add fn :after
+                  (lambda (node &rest _)
+                    (when meain/markdown-ts-hide-urls
+                      (put-text-property (treesit-node-start node)
+                                         (treesit-node-end node)
+                                         'display "…")))))))
 
 ;; Run markdown code blocks
 ;; Possible alternative https://github.com/md-babel/md-babel.el
