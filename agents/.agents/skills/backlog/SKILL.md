@@ -102,6 +102,8 @@ Returns JSON array of PRs where user is a direct reviewer (not via team), exclud
 
 **3d. Calendar:** Use MS365 MCP `outlook_calendar_search` to fetch today's meetings.
 
+**3e. This Cycle candidates:** From the Jira sprint results (Step 3a), identify items that are **not Done** and **not already present anywhere in the backlog file** (check all sections — Today, Tomorrow, This Week, This Cycle, Next Week, Whenever). These are sprint commitments that have fallen off the radar.
+
 ### Step 4: Select Candidates via Emacs
 
 Write all candidates to `/tmp/backlog-candidates-YYYY-MM-DD.md` with `- [ ]` lines, grouped by:
@@ -109,7 +111,10 @@ Write all candidates to `/tmp/backlog-candidates-YYYY-MM-DD.md` with `- [ ]` lin
 - Today's meetings (from calendar — list as info, no checkboxes; don't add to backlog)
 - My PRs — approved (ready to merge)
 - My PRs — needs action
-- PRs needing direct review (only where `login: meain` is a direct reviewer, not team; exclude PRs authored by `rami-veeam` or `tford-veeam`; exclude PRs with "local-dev" in the title)
+- PRs needing direct review — split into two subsections:
+  - **Recent (this week)**: PRs updated within the last ~7 days (only where `login: meain` is a direct reviewer, not team; exclude PRs with "local-dev" in the title)
+  - **Older (sitting for a while)**: PRs more than ~7 days old that are still open and awaiting review (same exclusion rules apply) — useful for surfacing stale reviews that may have been overlooked
+- This Cycle — sprint items not yet in the backlog (from Step 3e); selected items go into the `### This Cycle` section, not Today
 - Candidates from other sections (Tomorrow/This Week/Whenever worth pulling in)
 
 The "Checked-off items to move to Before" header must include the day name, e.g. `(2026-06-03, Wednesday)`.
@@ -129,8 +134,9 @@ cd /Users/meain/.local/share/sbdb && git add -A && git commit -m "Before backlog
 Then:
 
 1. Move items from other sections to Today (don't duplicate)
-2. Add new items with reference links
-3. Preserve priority emojis near top of Today
+2. Add new "This Cycle" candidates to the `### This Cycle` section (not Today)
+3. Add new items with reference links
+4. Preserve priority emojis near top of Today
 
 ### Formatting Rules
 
