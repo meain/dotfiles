@@ -21,8 +21,8 @@
   (global-set-key (kbd "M-d")
                   (lambda ()
                     (interactive)
-                    (if (eldoc-box--frame-visible-p)
-                        (eldoc-box-quit-frame)
+                    (if (eq (selected-frame) eldoc-box--frame)
+                        (eldoc-box-unfocus-frame)
                       (let ((eldoc-echo-area-use-multiline-p t))
                         (call-interactively #'eldoc-box-help-at-point)))))
 
