@@ -295,6 +295,13 @@ def cmd_list(_args):
 
 
 def main():
+    # Pre-extract raw ES|QL query before argparse sees it, since subparsers
+    # consume the first positional argument before the main parser's "raw" arg
+    # can receive it.
+    raw_query = None
+    if len(sys.argv) >= 2 and sys.argv[-1].upper().lstrip().startswith("FROM ") and not sys.argv[-1].startswith("-"):
+        raw_query = sys.argv.pop()
+
     parser = argparse.ArgumentParser(
         prog=",es-web",
         description="Query Elasticsearch via Kibana ES|QL for staging/production.",
@@ -321,6 +328,8 @@ def main():
     parser.add_argument("raw", nargs="?", help="Raw ES|QL query")
 
     args = parser.parse_args()
+    if raw_query and not args.raw:
+        args.raw = raw_query
 
     if args.command == "init":
         cmd_init(args)
