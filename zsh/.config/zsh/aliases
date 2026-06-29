@@ -89,8 +89,7 @@ alias ep=',esa-with-prompt'
 alias sonv="ec -m sonnet validate your previous statements" # sonnet supremacy
 
 # editors
-alias vim='nvim'
-alias ivm='nvim'
+alias ivm='vim'
 alias e='emacsclient  -a "" --no-wait'
 alias et='emacsclient -nw'
 

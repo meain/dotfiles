@@ -57,7 +57,7 @@ in
     # packages
     # ppkgs.notmuch-git # mail indexer
     # pkgs.tree
-    pkgs.neovim
+    # pkgs.neovim
     pkgs.notmuch
     pkgs.isync # mail synchronize with upstream
     pkgs.htop # process monitor
