@@ -60,10 +60,5 @@
   (setq rfc-mode-directory (expand-file-name "~/.local/share/rfc/"))
   (add-hook 'rfc-mode-hook 'writeroom-mode))
 
-(use-package redacted
-  :ensure t
-  :commands (redacted-mode)
-  :config (add-hook 'redacted-mode-hook (lambda () (read-only-mode (if redacted-mode 1 -1)))))
-
 (provide 'extras)
 ;;; extras.el ends here
