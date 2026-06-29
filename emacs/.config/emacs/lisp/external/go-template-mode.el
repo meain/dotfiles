@@ -1,4 +1,4 @@
-;;; go-template-mode.el --- Major mode for Go template language
+;;; go-template-mode.el --- Major mode for Go template language  -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
