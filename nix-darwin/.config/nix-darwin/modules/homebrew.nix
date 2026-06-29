@@ -12,9 +12,22 @@
 
     masApps = { }; # from mac app store
     taps = [
-      { name = "d12frosted/emacs-plus"; trusted = true; }
-      { name = "keith/formulae"; trusted = true; } # for reminders-cli
-      { name = "databricks/tap"; trusted = true; }
+      {
+        name = "d12frosted/emacs-plus";
+        trusted = true;
+      }
+      {
+        name = "jimeh/emacs-builds";
+        trusted = true;
+      }
+      {
+        name = "keith/formulae"; # for reminders-cli
+        trusted = true;
+      }
+      {
+        name = "databricks/tap";
+        trusted = true;
+      }
     ];
     brews = [
       "choose-gui" # dmenu alternative
@@ -26,7 +39,9 @@
       "pi-coding-agent" # pi coding agent
     ];
     casks = [
-      "emacs-plus-app"
+      # "emacs-plus-app" # stable emacs
+      "emacs-app-nightly"
+
       "hammerspoon" # make macOS usable
       # "hiddenbar" # hide items in bar
       "maccy" # clipboard history
