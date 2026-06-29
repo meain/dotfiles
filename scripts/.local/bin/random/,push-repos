@@ -1,0 +1,24 @@
+#!/bin/sh
+# Push repos that are not pushed in the background, but are actively committed to
+
+push() {
+	printf "\033[48;5;153m Pushing %s \033[0m\n" "$1"
+	cd "$1" || return 0
+	if [ -d .jj ]; then
+		if [ -n "$(jj diff -s)" ]; then
+			jj desc -m 'Automatic commit'
+		fi
+		jj tug && jj git push
+	else
+		git add . &&
+			git commit -m 'Automatic commit' &&
+			git push
+	fi
+}
+
+push "/Users/meain/.local/share/sbdb"
+push "/Users/meain/.local/share/dump"
+push "/Users/meain/.local/share/project-configs-backup"
+push "/Users/meain/dev/src/ai-artifacts"
+push "/Users/meain/dev/src/llmdocs"
+push "/Users/meain/dev/mdocs"
