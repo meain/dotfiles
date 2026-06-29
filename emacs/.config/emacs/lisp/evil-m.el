@@ -61,7 +61,6 @@
 ;; Evil leader
 (use-package evil-leader
   :ensure t
-  :after evil
   :config
   (global-evil-leader-mode)
   (evil-leader/set-leader "s")
@@ -79,7 +78,14 @@
   (evil-leader/set-key "b w" 'toggle-truncate-lines)
 
   ;; Auto fill mode enable
-  (evil-leader/set-key "b F" 'auto-fill-mode))
+  (evil-leader/set-key "b F" 'auto-fill-mode)
+
+  ;; Enable evil-leader local mode in scratch buffer after load. For
+  ;; some reason, the scratch buffer is having trouble with Emacs 32.
+  (add-hook 'emacs-startup-hook
+            (lambda ()
+              (with-current-buffer "*scratch*"
+                (evil-leader-mode 1)))))
 
 ;; Evil commentary
 (use-package evil-commentary
