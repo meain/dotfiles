@@ -1,4 +1,4 @@
-;;; notes.el --- Note taking realted packages -*- lexical-binding: t; -*-
+;;; notes.el --- Note taking related packages -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;; Note taking related packages. All configuration for note taking as
@@ -48,50 +48,11 @@
   (evil-leader/set-key "e n" 'meain/notes-goto-today-journal))
 
 ;; Markdown package configuration
-(use-package markdown-mode
-  :ensure t
-  :defer t
-  :after (edit-indirect evil)
-  :mode ("\\.md\\'" . gfm-mode)
+;; Common markdown functions for both markdown-mode and markdown-ts-mode
+(use-package emacs
+  :commands (meain/paste-after-or-create-link meain/markdown-linkify-thing
+             meain/markdown-pdf meain/markdown-html)
   :config
-  (setq markdown-url-compose-char '(8230 8943 35 9733 9875))
-  (setq markdown-enable-html -1)
-  (setq markdown-enable-wiki-links nil) ; makes markdown mode super slow
-  (setq markdown-gfm-use-electric-backquote nil) ; don't ask me to pick lang in ```
-  (evil-define-key 'insert gfm-mode-map (kbd "C-c e") 'meain/insert-emoji)
-  (evil-define-key 'insert markdown-mode-map (kbd "C-c e") 'meain/insert-emoji)
-  (evil-define-key 'normal gfm-mode-map (kbd "<RET>") 'project-find-file)
-  (evil-define-key 'normal gfm-mode-map (kbd "g d") 'markdown-do)
-  (evil-define-key 'normal markdown-mode-map (kbd "<RET>") 'project-find-file)
-  (evil-define-key 'normal markdown-mode-map (kbd "g d") 'markdown-do)
-  (evil-define-key 'insert gfm-mode-map (kbd "C-<return>") 'markdown-insert-list-item)
-  (evil-define-key 'insert markdown-mode-map (kbd "C-<return>") 'markdown-insert-list-item)
-  (setq markdown-command "pandoc -t html5 -f gfm")
-
-  ;; Make it look like GitHub markdown
-  (setq markdown-xhtml-body-preamble "<div class=\"markdown-body\">")
-  (setq markdown-xhtml-body-epilogue "</div>")
-  (setq markdown-xhtml-header-content
-        "<style>.markdown-body { max-width: 800px; margin: 0 auto; padding: 2rem; }</style>")
-  (setq markdown-css-paths (list (concat
-                                  (getenv "HOME")
-                                  "/.dotfiles/datafiles/.config/datafiles/github-markdown.css")))
-
-  (setq-default markdown-fontify-code-blocks-natively t)
-  (setq-default markdown-hide-urls t) ;; Or call markdown-toggle-url-hiding
-
-  ;; Mark completed markdown list items with a grey and strikethrough
-  (defface meain/markdown-done-item
-    '((t :foreground "#A0A0A0" :strike-through "#D0D0D0"))
-    "Face for completed GFM checklist items.")
-  (font-lock-add-keywords
-   'gfm-mode
-   '(("^[[:space:]]*-[[:space:]]\\[x\\][[:space:]]\\(.*\\)$"
-      1 'meain/markdown-done-item prepend))
-   'append)
-
-  (add-hook 'gfm-mode-hook (lambda () (toggle-truncate-lines nil)))
-
   ;; When a link is pasted with an active selection, convert to a markdown link
   (defun meain/paste-after-or-create-link (from to)
     (interactive "r")
@@ -106,7 +67,6 @@
             (insert ")"))
         (delete-region from to)
         (yank))))
-  (evil-define-key 'visual markdown-mode-map "p" 'meain/paste-after-or-create-link)
 
   (defun meain/markdown-linkify-thing (start end)
     "Search for and insert a markdown link at START to END or at point.
@@ -160,6 +120,69 @@ Uses 'ddgr' web search to look up a URL and insert a formatted markdown link."
       (message "Generating markdown for %s. Just give it a moment.." (buffer-file-name))
       (start-process-shell-command "*markdown-html*" "*markdown-html*"
                                    (concat ",markdown-to-html '" (buffer-file-name) "'")))))
+
+(use-package markdown-mode
+  :ensure t
+  :defer t
+  :after (edit-indirect evil)
+  :mode ("\\.md\\'" . gfm-mode)
+  :config
+  (setq markdown-url-compose-char '(8230 8943 35 9733 9875))
+  (setq markdown-enable-html -1)
+  (setq markdown-enable-wiki-links nil) ; makes markdown mode super slow
+  (setq markdown-gfm-use-electric-backquote nil) ; don't ask me to pick lang in ```
+  (evil-define-key 'insert gfm-mode-map (kbd "C-c e") 'meain/insert-emoji)
+  (evil-define-key 'insert markdown-mode-map (kbd "C-c e") 'meain/insert-emoji)
+  (evil-define-key 'normal gfm-mode-map (kbd "<RET>") 'project-find-file)
+  (evil-define-key 'normal gfm-mode-map (kbd "g d") 'markdown-do)
+  (evil-define-key 'normal markdown-mode-map (kbd "<RET>") 'project-find-file)
+  (evil-define-key 'normal markdown-mode-map (kbd "g d") 'markdown-do)
+  (evil-define-key 'insert gfm-mode-map (kbd "C-<return>") 'markdown-insert-list-item)
+  (evil-define-key 'insert markdown-mode-map (kbd "C-<return>") 'markdown-insert-list-item)
+  (evil-define-key 'visual markdown-mode-map "p" 'meain/paste-after-or-create-link)
+  (setq markdown-command "pandoc -t html5 -f gfm")
+
+  ;; Make it look like GitHub markdown
+  (setq markdown-xhtml-body-preamble "<div class=\"markdown-body\">")
+  (setq markdown-xhtml-body-epilogue "</div>")
+  (setq markdown-xhtml-header-content
+        "<style>.markdown-body { max-width: 800px; margin: 0 auto; padding: 2rem; }</style>")
+  (setq markdown-css-paths (list (concat
+                                  (getenv "HOME")
+                                  "/.dotfiles/datafiles/.config/datafiles/github-markdown.css")))
+
+  (setq-default markdown-fontify-code-blocks-natively t)
+  (setq-default markdown-hide-urls t) ;; Or call markdown-toggle-url-hiding
+
+  ;; Mark completed markdown list items with a grey and strikethrough
+  (defface meain/markdown-done-item
+    '((t :foreground "#A0A0A0" :strike-through "#D0D0D0"))
+    "Face for completed GFM checklist items.")
+  (font-lock-add-keywords
+   'gfm-mode
+   '(("^[[:space:]]*-[[:space:]]\\[x\\][[:space:]]\\(.*\\)$"
+      1 'meain/markdown-done-item prepend))
+   'append)
+
+  (add-hook 'gfm-mode-hook (lambda () (toggle-truncate-lines nil))))
+
+(use-package markdown-ts-mode
+  :defer t
+  :after evil
+  :config
+  (setq-default markdown-ts-hide-markup t)
+  (setq-default markdown-ts-fontify-code-blocks-natively t)
+
+  (evil-define-key 'normal org-mode-map (kbd "M-l") 'meain/move-swap-right)
+  (evil-define-key 'normal org-mode-map (kbd "M-h") 'meain/move-swap-left)
+  (evil-define-key 'normal org-mode-map (kbd "M-k") 'meain/move-swap-up)
+  (evil-define-key 'normal org-mode-map (kbd "M-j") 'meain/move-swap-down)
+
+  ;; (evil-define-key 'normal markdown-ts-mode-map (kbd "g d") 'markdown-ts-toggle-checkbox)
+  (evil-define-key 'insert markdown-ts-mode-map (kbd "C-c e") 'meain/insert-emoji)
+  (evil-define-key 'normal markdown-ts-mode-map (kbd "<RET>") 'project-find-file)
+  (evil-define-key 'insert markdown-ts-mode-map (kbd "C-<return>") 'markdown-ts-insert-list-item)
+  (evil-define-key 'visual markdown-ts-mode-map "p" 'meain/paste-after-or-create-link))
 
 ;; Run markdown code blocks
 ;; Possible alternative https://github.com/md-babel/md-babel.el
