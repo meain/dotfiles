@@ -21,8 +21,10 @@
   (global-set-key (kbd "M-d")
                   (lambda ()
                     (interactive)
-                    (let ((eldoc-echo-area-use-multiline-p t))
-                      (call-interactively #'eldoc-box-help-at-point)))))
+                    (if (eldoc-box--frame-visible-p)
+                        (eldoc-box-quit-frame)
+                      (let ((eldoc-echo-area-use-multiline-p t))
+                        (call-interactively #'eldoc-box-help-at-point)))))
 
 ;; Helpful package
 (use-package helpful
