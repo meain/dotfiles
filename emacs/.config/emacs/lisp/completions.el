@@ -146,7 +146,7 @@
           (t flat)))
   (vertico-mode))
 
-(use-package savehist :config (savehist-mode t) :defer t)
+(use-package savehist :config (savehist-mode t))
 (use-package orderless
   :ensure t
   :config
