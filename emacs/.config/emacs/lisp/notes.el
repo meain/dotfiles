@@ -84,10 +84,13 @@
                (note-name (read-string "Task note name: " default-name))
                (note-rel-path (concat "Tasks/" month "/" note-name))
                (note-file (concat (getenv "NOTES_PATH") "/" note-rel-path ".md")))
-          ;; Update backlog line: prefix + wiki-link + rest (keep Jira links etc.)
+          ;; Update backlog line: prefix + wiki-link + trailing annotations only
+          ;; Strip the task text from rest so it isn't duplicated after the wiki-link
           (save-excursion
             (delete-region (line-beginning-position) (line-end-position))
-            (let ((tail (string-trim rest)))
+            (let* ((tail (string-trim
+                          (replace-regexp-in-string
+                           (concat "^" (regexp-quote note-name)) "" (string-trim rest)))))
               (insert (concat prefix "[[" note-rel-path "]]" (if (string-empty-p tail) "" (concat " " tail))))))
           ;; Open (or create) the task note
           (make-directory (file-name-directory note-file) t)
