@@ -142,6 +142,7 @@ in
     # programming
     # pkgs.gist # create gist
     # pkgs.hey # http load generator
+    bpkgs.codebase-memory-mcp # cli/mcp for codebase graph
 
     # programming-shell
     pkgs.shellcheck # shell checker
