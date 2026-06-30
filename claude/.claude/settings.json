@@ -5,7 +5,6 @@
   "permissions": {
     "defaultMode": "auto"
   },
-  "model": "sonnet",
   "hooks": {
     "Notification": [
       {
@@ -71,5 +70,6 @@
   "skipAutoPermissionPrompt": true,
   "feedbackSurveyState": {
     "lastShownTime": 1753939897813
-  }
+  },
+  "model": "sonnet[1m]"
 }
