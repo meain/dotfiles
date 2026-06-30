@@ -44,8 +44,58 @@
     (find-file (concat (getenv "NOTES_PATH")
                        "/Journal/Day/"
                        (format-time-string "%Y/%m/%Y-%m-%d" (current-time)) ".md")))
+
+  (defun meain/notes-goto-backlog ()
+    (interactive)
+    (find-file (concat (getenv "NOTES_PATH") "/Backlog/Backlog.md")))
+
+  (defun meain/notes--extract-task-name (line)
+    "Strip list prefix, Jira/ref links, bare URLs, and trailing emoji from LINE."
+    (let* ((text (replace-regexp-in-string
+                  "^[[:space:]]*-[[:space:]]\\(\\[.\\][[:space:]]\\)?" "" line))
+           ;; strip [DP-123](url) and [ref](url) style links
+           (text (replace-regexp-in-string "\\[[^]]+\\]([^)]+)" "" text))
+           (text (replace-regexp-in-string "https?://[^[:space:]]+" "" text))
+           ;; collapse and trim
+           (text (string-trim (replace-regexp-in-string "[[:space:]]+" " " text))))
+      text))
+
+  (defun meain/notes-open-or-create-task-note ()
+    "Open or create a task note for the backlog item on the current line.
+    If the line has a [[Tasks/YYYY-MM/Name]] wiki-link, open that file.
+    Otherwise, prompt for a name, create the note, and update the line."
+    (interactive)
+    (let* ((line (buffer-substring-no-properties
+                  (line-beginning-position) (line-end-position)))
+           (wiki-match (string-match "\\[\\[\\(Tasks/[^]]+\\)\\]\\]" line))
+           (wiki-path (when wiki-match (match-string 1 line))))
+      (if wiki-path
+          (find-file (concat (getenv "NOTES_PATH") "/" wiki-path ".md"))
+        ;; Extract list prefix (e.g. "- [ ] " or "  - [x] ")
+        (let* ((prefix-match (string-match
+                              "^[[:space:]]*-[[:space:]]\\(\\[.\\][[:space:]]\\)?"
+                              line))
+               (prefix (if prefix-match (match-string 0 line) "- [ ] "))
+               ;; Everything after the prefix (task text + any trailing links)
+               (rest (if prefix-match (substring line (match-end 0)) line))
+               ;; Default name: strip trailing links/URLs from rest
+               (default-name (meain/notes--extract-task-name line))
+               (month (format-time-string "%Y-%m" (current-time)))
+               (note-name (read-string "Task note name: " default-name))
+               (note-rel-path (concat "Tasks/" month "/" note-name))
+               (note-file (concat (getenv "NOTES_PATH") "/" note-rel-path ".md")))
+          ;; Update backlog line: prefix + wiki-link + rest (keep Jira links etc.)
+          (save-excursion
+            (delete-region (line-beginning-position) (line-end-position))
+            (let ((tail (string-trim rest)))
+              (insert (concat prefix "[[" note-rel-path "]]" (if (string-empty-p tail) "" (concat " " tail))))))
+          ;; Open (or create) the task note
+          (make-directory (file-name-directory note-file) t)
+          (find-file note-file)))))
+
   :init
-  (evil-leader/set-key "e n" 'meain/notes-goto-today-journal))
+  (evil-leader/set-key "e n" 'meain/notes-goto-today-journal)
+  (evil-leader/set-key "e b" 'meain/notes-goto-backlog))
 
 ;; Markdown package configuration
 ;; Common markdown functions for both markdown-mode and markdown-ts-mode
@@ -135,8 +185,10 @@ Uses 'ddgr' web search to look up a URL and insert a formatted markdown link."
   (evil-define-key 'insert markdown-mode-map (kbd "C-c e") 'meain/insert-emoji)
   (evil-define-key 'normal gfm-mode-map (kbd "<RET>") 'project-find-file)
   (evil-define-key 'normal gfm-mode-map (kbd "g d") 'markdown-do)
+  (evil-define-key 'normal gfm-mode-map (kbd "g n") 'meain/notes-open-or-create-task-note)
   (evil-define-key 'normal markdown-mode-map (kbd "<RET>") 'project-find-file)
   (evil-define-key 'normal markdown-mode-map (kbd "g d") 'markdown-do)
+  (evil-define-key 'normal markdown-mode-map (kbd "g n") 'meain/notes-open-or-create-task-note)
   (evil-define-key 'insert gfm-mode-map (kbd "C-<return>") 'markdown-insert-list-item)
   (evil-define-key 'insert markdown-mode-map (kbd "C-<return>") 'markdown-insert-list-item)
   (evil-define-key 'visual markdown-mode-map "p" 'meain/paste-after-or-create-link)
@@ -195,6 +247,7 @@ Uses 'ddgr' web search to look up a URL and insert a formatted markdown link."
   (define-key markdown-ts-mode-map (kbd "M-j") 'meain/move-swap-down)
 
   (evil-define-key 'normal markdown-ts-mode-map (kbd "g d") 'markdown-ts-toggle-checkbox)
+  (evil-define-key 'normal markdown-ts-mode-map (kbd "g n") 'meain/notes-open-or-create-task-note)
   (evil-define-key 'insert markdown-ts-mode-map (kbd "C-c e") 'meain/insert-emoji)
   (evil-define-key 'normal markdown-ts-mode-map (kbd "<RET>") 'project-find-file)
   (evil-define-key 'insert markdown-ts-mode-map (kbd "C-<return>") 'markdown-ts-insert-list-item)
