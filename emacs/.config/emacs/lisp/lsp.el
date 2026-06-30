@@ -4,24 +4,6 @@
 ;; LSP related things
 
 ;;; Code:
-(use-package el-patch
-  :ensure t
-  :after eglot
-  :defer t
-  :config
-  ;; Make eglot play nicely with auto-revert mode
-  ;; https://github.com/joaotavora/eglot/issues/1449#issuecomment-2378670111
-  (with-eval-after-load 'eglot
-    (el-patch-defun eglot--signal-textDocument/didOpen ()
-      "Send textDocument/didOpen to server."
-      (el-patch-add (eglot--track-changes-fetch eglot--track-changes))
-      (setq eglot--recent-changes nil
-            eglot--versioned-identifier 0
-            eglot--TextDocumentIdentifier-cache nil)
-      (jsonrpc-notify
-       (eglot--current-server-or-lose)
-       :textDocument/didOpen `(:textDocument ,(eglot--TextDocumentItem))))))
-
 ;; Increase LSP process output buffer (eglot-booster bypasses this, but good default)
 (setq read-process-output-max (* 4 1024 1024))
 
@@ -52,8 +34,9 @@
   (add-to-list 'eglot-server-programs '(typescript-mode . ("typescript-language-server" "--stdio")))
   ;; Can be enabled on fiction like things
   ;; (add-to-list 'eglot-server-programs '(markdown-mode . ("unified-language-server" "--parser=remark-parse" "--stdio")))
-  (add-to-list 'eglot-server-programs '(markdown-mode . ("markdown-oxide" "--stdio"))) ;; (also: prosemd-lsp)
-  (add-to-list 'eglot-server-programs '(gfm-mode . ("markdown-oxide" "--stdio")))
+  (add-to-list 'eglot-server-programs '(markdown-mode . ("markdown-oxide"))) ;; (also: prosemd-lsp)
+  (add-to-list 'eglot-server-programs '(gfm-mode . ("markdown-oxide")))
+  (add-to-list 'eglot-server-programs '(markdown-ts-mode . ("markdown-oxide")))
   (add-to-list 'eglot-server-programs '(rust-mode . ("rust-analyzer")))
   (add-to-list 'eglot-server-programs '(python-mode . ("pylsp")))
   (add-to-list 'eglot-server-programs '(python-ts-mode . ("pylsp")))
