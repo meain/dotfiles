@@ -94,7 +94,7 @@ Returns JSON array with raw Jira issue data. Parse with `jq` to extract key, sta
 
 Also fetch the sprint end date for the "This Cycle" section header:
 ```bash
-jira sprint list --project DP | awk '/active/ {print $4}' | head -1
+jira sprint list --project DP | awk '/active/ {print $6}' | head -1
 ```
 Returns a date like `2026-06-29`. Use it in the section header as `### This Cycle (ends YYYY-MM-DD)`. If the backlog already has a "This Cycle" header with a different date, update it to reflect the current sprint.
 

@@ -25,6 +25,7 @@ Use this skill when the user wants to manually review or edit a draft (commit me
 3. After the Bash call returns, the edited file is on disk.
    - The harness usually emits a system-reminder showing the diff of any changes — use that if it is present.
    - If no diff was shown (e.g. user did not modify the file, or the change is large), Read the file to get the current contents.
+   - **If `emacsclient` runs as a background process**, a system-reminder may show a mid-session diff before the user is done. Do NOT apply changes from that diff — wait for the background task completion notification, then Read the file for the final state.
 
 4. Use the edited contents in the downstream action (jira create, gh pr create, commit, etc.). Do not re-prompt the user for the same content; trust their edits.
 
