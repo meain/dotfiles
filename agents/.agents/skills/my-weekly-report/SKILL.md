@@ -101,40 +101,28 @@ bullet for them in "What I worked on" (e.g. "Created design doc for Org Anchorin
 - Default all three fields to "None" unless backlog or Jira indicates otherwise
 - Check backlog for any explicit blocker notes or upcoming leave entries
 
-### 7. Open in Emacs for Review
+### 7. Copy to Clipboard and Open Confluence
 
-Write the draft to `/tmp/weekly-report-<YYYY-MM-DD>.md` and open it for editing:
+Print the draft in the chat, then copy it to the clipboard:
 
 ```bash
-emacsclient /tmp/weekly-report-<YYYY-MM-DD>.md
+printf '%s' "<report text>" | pbcopy
 ```
 
-Use `dangerouslyDisableSandbox: true` and `timeout: 600000`. Wait for the user to
-finish editing (they'll do `C-x #` to close). Read back the edited content from
-the system-reminder diff or by re-reading the file.
-
-Also print the draft in the chat before opening Emacs so the user can see it.
-
-### 8. Update Confluence
-
-Once the user confirms the draft is good (or after Emacs closes without objection),
-update the weekly updates Confluence page with the edited content.
-
-Find the page ID by searching for "Updates for week of <current Monday's date>":
+Use `dangerouslyDisableSandbox: true`. Then find the Confluence page ID by searching
+for "Updates for week of <current Monday's date>":
 
 ```bash
 confluence search 'title = "Updates for week of <YYYY-MM-DD>" AND space = "~712020cccc16439d5041339f95122d8d977f63"' --cql 2>/dev/null
 ```
 
-Read the current page (`confluence read -f markdown <pageId>`), replace only the
-Abin Simon section with the edited content, write the full updated page to a temp
-file, then update:
+Open the page in the browser:
 
 ```bash
-confluence update <pageId> -f /tmp/weekly-update-full-<YYYY-MM-DD>.md --format markdown
+open "https://veeam-vdc.atlassian.net/wiki/spaces/~712020cccc16439d5041339f95122d8d977f63/pages/<pageId>/..."
 ```
 
-Use `dangerouslyDisableSandbox: true` for all confluence CLI calls.
+The user will paste and save it manually in the browser.
 
 Do NOT save the report locally — do not write to any file under
 `/Users/meain/.local/share/sbdb/InfraCloud/Weekly Updates Submitted/`.
