@@ -100,7 +100,28 @@
   :after dired
   :defer t
   :config
-  (setq dired-omit-files "\\.DS_Store$\\|__pycache__$\\|.pytest_cache$\\|\\.mypy_cache$\\|\\.egg-info$"))
+  (let ((omit-patterns
+         '("\\.DS_Store$"
+           "Thumbs\\.db$"
+           "__pycache__$"
+           "\\.pytest_cache$"
+           "\\.mypy_cache$"
+           "\\.egg-info$"
+           "\\.tox$"
+           "\\.venv$"
+           "\\.coverage$"
+           "\\.cache$"
+           "\\.sass-cache$"
+           "\\.next$"
+           "\\.nuxt$"
+           "\\.git$"
+           "\\.jj$"
+           "\\.svn$"
+           "\\.elc$"
+           "\\.o$"
+           "\\.so$")))
+    (setq dired-omit-files
+          (mapconcat #'identity omit-patterns "\\|"))))
 
 ;; tramp dired
 (use-package tramp
