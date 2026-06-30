@@ -218,7 +218,7 @@ Uses 'ddgr' web search to look up a URL and insert a formatted markdown link."
   ;; Custom link only hiding for `markdown-ts-mode'.
   ;; `markdown-ts-hide-markup' only lets you hide all or nothing and I
   ;; only want to hide the links.
-  (defvar meain/markdown-ts-hide-urls nil)
+  (defvar meain/markdown-ts-hide-urls t)
   (defun meain/markdown-ts-toggle-hide-urls ()
     (interactive)
     (setq-local meain/markdown-ts-hide-urls (not meain/markdown-ts-hide-urls))
