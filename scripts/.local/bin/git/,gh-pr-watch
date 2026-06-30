@@ -1,11 +1,28 @@
 #!/bin/bash
 # Watch PRs in the merge queue and notify on merge or failure.
-# Usage: ,gh-pr-watch [repo]  (defaults to current repo)
+# Usage: ,gh-pr-watch [repo|pr-url]  (defaults to current repo)
 
 set -euo pipefail
 
 INTERVAL=60
-REPO="${1:-}"
+ARG="${1:-}"
+REPO=""
+DIRECT_PR=""
+
+# Parse argument - could be repo, PR URL, or PR number
+if [ -n "$ARG" ]; then
+    if [[ "$ARG" =~ ^https://github\.com/([^/]+/[^/]+)/pull/([0-9]+) ]]; then
+        # GitHub PR URL
+        REPO="${BASH_REMATCH[1]}"
+        DIRECT_PR="${BASH_REMATCH[2]}"
+    elif [[ "$ARG" =~ ^[0-9]+$ ]]; then
+        # Just a PR number
+        DIRECT_PR="$ARG"
+    else
+        # Assume it's a repo slug
+        REPO="$ARG"
+    fi
+fi
 
 gh_cmd() {
     if [ -n "$REPO" ]; then
@@ -30,18 +47,24 @@ all_prs() {
         --jq '.[] | "\(.number)\t\(.title)\t[\(.headRefName)]"'
 }
 
-prs="$(queue_prs)"
-[ -z "$prs" ] && prs="$(all_prs)"
+if [ -n "$DIRECT_PR" ]; then
+    # Direct PR provided, use it
+    pr_numbers="$DIRECT_PR"
+else
+    # Interactive selection
+    prs="$(queue_prs)"
+    [ -z "$prs" ] && prs="$(all_prs)"
 
-if [ -z "$prs" ]; then
-    echo "No open PRs found"
-    exit 0
+    if [ -z "$prs" ]; then
+        echo "No open PRs found"
+        exit 0
+    fi
+
+    selected="$(echo "$prs" | column -t -s$'\t' | fzf -m --prompt="Select PRs to watch> ")"
+    [ -z "$selected" ] && echo "No PR selected" && exit 0
+
+    pr_numbers="$(echo "$selected" | awk '{print $1}')"
 fi
-
-selected="$(echo "$prs" | column -t -s$'\t' | fzf -m --prompt="Select PRs to watch> ")"
-[ -z "$selected" ] && echo "No PR selected" && exit 0
-
-pr_numbers="$(echo "$selected" | awk '{print $1}')"
 
 echo "Watching PRs: $(echo "$pr_numbers" | tr '\n' ' ')"
 
