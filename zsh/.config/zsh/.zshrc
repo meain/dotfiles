@@ -73,7 +73,7 @@ zstyle ':completion:*:git-checkout:*' sort false # disable sorting for git-check
 zstyle ':fzf-tab:*' use-fzf-default-opts yes # use fzf default options
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls -1 --color=always $realpath' # preview for cd
 
-export EDITOR='nvim'
+export EDITOR='vim'
 export BROWSER= # do not set browser
 export DIFFTOOL='icdiff'
 

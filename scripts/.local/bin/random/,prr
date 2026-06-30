@@ -4,7 +4,7 @@ set -euo pipefail
 
 # Review PRs using prr, fetching them via gh
 
-export EDITOR="emacsclient" # use emacsclient instead of nvim(default)
+export EDITOR="emacsclient" # use emacsclient instead of vim(default)
 
 prs="$(gh pr list --json number,url,author,title,reviewRequests,reviewDecision)"
 ids="$(echo "$prs" |
