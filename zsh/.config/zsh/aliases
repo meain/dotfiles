@@ -46,7 +46,7 @@ alias acti="source .venv/bin/activate"
 alias scratch="$EDITOR /tmp/scratch-$(date +%s)"
 alias ,remote-work="ssh $EXPERIMENT_VM"
 alias s=",save"
-alias pwdp="pwd|p"
+alias pwdp="pwd|tr -d '\n'|p"
 alias research="cd $HOME/dev/docs/research && opencode"
 alias gh="GIT_DIR=\$GIT_ROOT_DIR gh" # since we don't colocate git dir anymore
 alias bb=",bm"                       # bookmark-manager
