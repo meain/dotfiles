@@ -44,15 +44,13 @@
   (evil-set-command-property 'flymake-goto-next-error :jump t)
   (evil-set-command-property 'flymake-goto-prev-error :jump t))
 
-(use-package flymake-diagnostic-at-point
-  :ensure t
+(use-package emacs
   :after (flymake evil-leader)
   :config
-  (setq flymake-diagnostic-at-point-error-prefix "! ")
-  (setq flymake-diagnostic-at-point-display-diagnostic-function 'flymake-diagnostic-at-point-display-minibuffer)
+  ;; Use built-in flymake diagnostics display (Emacs 30+)
+  (setq flymake-show-diagnostics-at-end-of-line t)
   (evil-leader/set-key "j" 'flymake-goto-next-error)
-  (evil-leader/set-key "k" 'flymake-goto-prev-error)
-  (add-hook 'flymake-mode-hook #'flymake-diagnostic-at-point-mode))
+  (evil-leader/set-key "k" 'flymake-goto-prev-error))
 
 (use-package flymake-quickdef
   :ensure t
