@@ -1,104 +1,102 @@
-#!/bin/bash
+#!/bin/sh
 # Watch PRs in the merge queue and notify on merge or failure.
 # Usage: ,gh-pr-watch [repo|pr-url]  (defaults to current repo)
 
-set -euo pipefail
+set -e
 
-INTERVAL=60
-ARG="${1:-}"
-REPO=""
-DIRECT_PR=""
+INTERVAL=10 # seconds
+arg="$1"
 
-# Parse argument - could be repo, PR URL, or PR number
-if [ -n "$ARG" ]; then
-    if [[ "$ARG" =~ ^https://github\.com/([^/]+/[^/]+)/pull/([0-9]+) ]]; then
-        # GitHub PR URL
-        REPO="${BASH_REMATCH[1]}"
-        DIRECT_PR="${BASH_REMATCH[2]}"
-    elif [[ "$ARG" =~ ^[0-9]+$ ]]; then
-        # Just a PR number
-        DIRECT_PR="$ARG"
-    else
-        # Assume it's a repo slug
-        REPO="$ARG"
-    fi
-fi
-
-gh_cmd() {
-    if [ -n "$REPO" ]; then
-        gh "$@" -R "$REPO"
-    else
-        gh "$@"
-    fi
+# Notify user
+notter() {
+	echo "$1"
+	notify "PR Watch" "$1"
 }
 
-queue_prs() {
-    gh_cmd pr list \
-        --author "@me" \
-        --json number,title,mergeStateStatus,headRefName \
-        --jq '.[] | select(.mergeStateStatus == "BLOCKED" or .mergeStateStatus == "CLEAN" or .mergeStateStatus == "HAS_HOOKS") | "\(.number)\t\(.title)\t[\(.headRefName)]"' \
-        2>/dev/null
+# pick a pr given a repo
+pick_pr() {
+	gh -R "$1" pr list --author '@me' --json number,title,mergeStateStatus,headRefName |
+		jq -r '.[] | "\(.number) | \(.title) (\(.headRefName)"' |
+		fzf -1 | cut -d' ' -f1
 }
 
-all_prs() {
-    gh_cmd pr list \
-        --author "@me" \
-        --json number,title,headRefName \
-        --jq '.[] | "\(.number)\t\(.title)\t[\(.headRefName)]"'
-}
-
-if [ -n "$DIRECT_PR" ]; then
-    # Direct PR provided, use it
-    pr_numbers="$DIRECT_PR"
+if [ -n "$arg" ]; then
+	if echo "$arg" | grep -q 'github.com/[^/]*/[^/]*/pull/[^/]*'; then # pr url
+		repo="$(echo "$arg" | sed 's|.*github.com/||;s|/pull/.*||')"
+		pr="$(echo "$arg" | sed 's|.*github.com/.*/pull/||')"
+	elif echo "$arg" | grep -q 'github.com/[^/]*/[^/]*$'; then # repo url
+		repo="$(echo "$arg" | sed 's|.*github.com/||')"
+		pr="$(pick_pr "$repo")"
+	elif echo "$arg" | grep -q '^[^/]*/[^/]*$'; then # repo name
+		repo="$arg"
+		pr="$(pick_pr "$repo")"
+	fi
 else
-    # Interactive selection
-    prs="$(queue_prs)"
-    [ -z "$prs" ] && prs="$(all_prs)"
-
-    if [ -z "$prs" ]; then
-        echo "No open PRs found"
-        exit 0
-    fi
-
-    selected="$(echo "$prs" | column -t -s$'\t' | fzf -m --prompt="Select PRs to watch> ")"
-    [ -z "$selected" ] && echo "No PR selected" && exit 0
-
-    pr_numbers="$(echo "$selected" | awk '{print $1}')"
+	if jj status 2>/dev/null 1>/dev/null; then
+		url="$(jj git remote list | grep origin | cut -d' ' -f2-)"
+	else
+		url="$(git remote get-url origin)"
+	fi
+	repo="$(echo "$url" | sed 's|git@github.com:||;s|\.git$||')"
+	pr="$(pick_pr "$repo")"
 fi
 
-echo "Watching PRs: $(echo "$pr_numbers" | tr '\n' ' ')"
+# Watch a pr given a repo and url name
+watch_pr() {
+	owner="$(echo "$1" | cut -d/ -f1)"
+	repo="$(echo "$1" | cut -d/ -f2)"
+	mergepos=""
+	while true; do
+		data="$(gh api graphql -f query='
+{
+  repository(owner: "'$owner'", name: "'$repo'") {
+    pullRequest(number: '$2') {
+      state
+      mergedAt
+      mergeQueueEntry {
+        position
+        state
+        estimatedTimeToMerge
+      }
+    }
+  }
+}' | jq -c)"
+		state="$(echo "$data" | jq -r .data.repository.pullRequest.state)"
+		position="$(echo "$data" | jq -r .data.repository.pullRequest.mergeQueueEntry.position)"
+		mstate="$(echo "$data" | jq -r .data.repository.pullRequest.mergeQueueEntry.state)"
+		est="$(echo "$data" | jq -r .data.repository.pullRequest.mergeQueueEntry.estimatedTimeToMerge)"
 
-done_prs=""
+		if [ "$mergepos" != "$position" ] && [ "$position" != "null" ]; then
+			mergepos="$position"
+			echo "$2: Awaiting merge (pos: $position, $(echo "$est"/60 | bc)m)"
+		elif [ -n "$mergepos" ] && [ "$mstate" == "null" ]; then
+			mergepos=""
+			case "$state" in
+			OPEN) notter "$2: Removed form mergequeue" ;;
+			MERGED) notter "$2: Successfully merged" ;;
+			CLOSED) notter "$2: PR closed" ;;
+			esac
+			return # stop watching
+		else
+			case "$state" in
+			OPEN) echo "$2: PR open" ;;
+			CLOSED) echo "$2: PR closed" ;;
+			MERGED) notter "$2: Successfully merged" ;;
+			esac
 
-while true; do
-    remaining=0
-    for pr in $pr_numbers; do
-        echo "$done_prs" | grep -qw "$pr" && continue
-        remaining=$((remaining + 1))
+			if [ "$state" != "OPEN" ]; then
+				return
+			fi
+		fi
 
-        data="$(gh_cmd pr view "$pr" --json state,mergeStateStatus,title --jq '[.state, .mergeStateStatus, .title] | @tsv')"
-        state="$(echo "$data" | cut -f1)"
-        merge_status="$(echo "$data" | cut -f2)"
-        title="$(echo "$data" | cut -f3)"
+		sleep $INTERVAL
+	done
+}
 
-        echo "$(date '+%H:%M:%S') #$pr [$state/$merge_status] $title"
+if [ -z "$pr" ]; then
+	echo "No PR to watch"
+	exit 1
+fi
 
-        if [ "$state" = "MERGED" ]; then
-            notify "PR Merged ✅" "#$pr: $title"
-            done_prs="$done_prs $pr"
-            remaining=$((remaining - 1))
-        elif [ "$state" = "CLOSED" ]; then
-            notify --pri "PR Closed ❌" "#$pr closed without merging: $title"
-            done_prs="$done_prs $pr"
-            remaining=$((remaining - 1))
-        elif [ "$merge_status" = "BLOCKED" ]; then
-            notify --pri "PR Blocked ⚠️" "#$pr is blocked: $title"
-        fi
-    done
-
-    [ "$remaining" -eq 0 ] && break
-
-    sleep "$INTERVAL"
-done
-
-echo "All done."
+echo "Watching $repo/$pr"
+watch_pr "$repo" "$pr" # currently only supports a single pr
