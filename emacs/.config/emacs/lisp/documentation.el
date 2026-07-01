@@ -24,7 +24,7 @@
                     (if (eq (selected-frame) eldoc-box--frame)
                         (eldoc-box-unfocus-frame)
                       (let ((eldoc-echo-area-use-multiline-p t))
-                        (call-interactively #'eldoc-box-help-at-point)))))
+                        (call-interactively #'eldoc-box-help-at-point))))))
 
 ;; Helpful package
 (use-package helpful
