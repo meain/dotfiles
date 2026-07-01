@@ -1,0 +1,27 @@
+#!/bin/sh
+# Show Claude Code status for a specific tmux window.
+# Called from window-status-format with #{window_id} as the argument.
+# Outputs a single indicator character, or nothing if idle/absent.
+
+WINDOW_ID="${1:-}"
+[ -z "$WINDOW_ID" ] && exit 0
+
+STATUS_DIR="$HOME/.local/share/claudestatus"
+FILE="$STATUS_DIR/window-${WINDOW_ID}.json"
+[ -f "$FILE" ] || exit 0
+
+NOW=$(date +%s)
+STALE_SECS=7200  # 2 hours
+
+TS=$(jq -r '.timestamp // 0' "$FILE" 2>/dev/null)
+[ -z "$TS" ] || [ "$TS" = "0" ] && exit 0
+
+AGE=$((NOW - TS))
+[ "$AGE" -gt "$STALE_SECS" ] && exit 0
+
+STATUS=$(jq -r '.status // empty' "$FILE" 2>/dev/null)
+case "$STATUS" in
+  working) printf '#' ;;
+  waiting) printf '%%' ;;
+  idle)    printf '@' ;;
+esac

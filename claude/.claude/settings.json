@@ -11,6 +11,10 @@
         "hooks": [
           {
             "type": "command",
+            "command": "~/.claude/hooks/update-status.sh || exit 0"
+          },
+          {
+            "type": "command",
             "command": "~/.claude/hooks/notify-summary.sh"
           },
           {
@@ -23,6 +27,10 @@
     "Stop": [
       {
         "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/update-status.sh || exit 0"
+          },
           {
             "type": "command",
             "command": "~/.claude/hooks/notify-summary.sh"
@@ -40,6 +48,22 @@
           {
             "type": "command",
             "command": "~/.claude/hooks/update-task-summary.sh",
+            "async": true
+          },
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/update-status.sh || exit 0",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/update-status.sh || exit 0",
             "async": true
           }
         ]
