@@ -18,6 +18,7 @@ push() {
 
 push "/Users/meain/.local/share/sbdb"
 push "/Users/meain/.local/share/dump"
+push "/Users/meain/.local/share/edo"
 push "/Users/meain/.local/share/project-configs-backup"
 push "/Users/meain/dev/src/ai-artifacts"
 push "/Users/meain/dev/src/llmdocs"
