@@ -19,6 +19,7 @@ fi
 
 gh extension upgrade --all
 # uv tool install --force --python python3.12 --with pip aider-chat@latest
+pi update --extensions
 
 if [ "$1" != "nonix" ]; then
     if [ "$(uname -s)" = "Darwin" ]; then
