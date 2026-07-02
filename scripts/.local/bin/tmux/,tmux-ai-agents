@@ -55,7 +55,7 @@ done
 
 SELECTED=$(printf "%b" "$ENTRIES" \
     | fzf --ansi -d "	" --with-nth=4 --prompt='agent: ' \
-        --preview 'tmux capture-pane -t {3} -p -e 2>/dev/null' \
+        --preview 'tmux capture-pane -t {3} -p -e 2>/dev/null | awk "NF{blank=0;print} !NF{blank++;if(blank<3)print}" | tail -n $FZF_PREVIEW_LINES' \
         --preview-window 'right:60%' \
         --height=100% \
         --bind "alt-enter:execute(printf 'Message: '; read -r msg; [ -n \"\$msg\" ] && tmux send-keys -t {3} \"\$msg\" Enter)" \
