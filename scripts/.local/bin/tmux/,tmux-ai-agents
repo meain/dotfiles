@@ -45,7 +45,9 @@ done
 [ -z "$ENTRIES" ] && echo "No active AI agents" && exit 0
 
 SELECTED=$(printf "%b" "$ENTRIES" \
-    | ,picker --ansi -d "	" --with-nth 2 -p "agent: ")
+    | ,picker --ansi -d "	" --with-nth 2 -p "agent: " \
+        --preview 'tmux capture-pane -t {1} -p -e 2>/dev/null' \
+        --preview-window 'right:60%')
 
 [ -z "$SELECTED" ] && exit 0
 
