@@ -14,7 +14,15 @@ lang=""
 dropMd() {
 	filepath="$1"
 	filename="$2"
-	NO_OPEN=1 ,markdown-to-html "$filepath" /tmp/drop-formatted.html
+	dir=$(dirname "$filepath")
+	awk 'NR==1 && /^---$/{skip=1; next} skip && /^---$/{skip=0; next} !skip' "$filepath" |
+		pandoc --no-highlight \
+			--template "$DATAFILES_PATH/pandoc-github-template.html" \
+			--embed-resources --standalone \
+			--resource-path "$dir" \
+			-f gfm -t html5 \
+			--metadata title="$(basename "$filepath" .md)" \
+			-o /tmp/drop-formatted.html
 	scp "$filepath" $DROP_VM:$DROP_PATH/$filename
 	scp /tmp/drop-formatted.html $DROP_VM:$DROP_PATH/${filename%.md}.html
 }
