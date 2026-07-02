@@ -57,7 +57,7 @@ SELECTED=$(printf "%b" "$ENTRIES" \
     | fzf --ansi -d "	" --with-nth=4 --prompt='agent: ' \
         --preview 'tmux capture-pane -t {3} -p -e 2>/dev/null' \
         --preview-window 'right:60%' \
-        --height=100%)
+        --height=100% || true)
 
 [ -z "$SELECTED" ] && exit 0
 
