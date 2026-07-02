@@ -1,5 +1,5 @@
 #!/bin/sh
-# Show running AI agents and their status, switch to selected window.
+# Show running AI agents and their status, switch to selected window/pane.
 
 set -e
 
@@ -32,6 +32,8 @@ for file in "$STATUS_DIR"/window-*.json; do
 
     WINDOW_NAME=$(tmux list-windows -a -F '#{window_id} #{window_name}' 2>/dev/null \
         | awk -v id="$WINDOW_ID" '$1 == id { print $2 }')
+    SESSION=$(tmux list-windows -a -F '#{window_id} #{session_name}' 2>/dev/null \
+        | awk -v id="$WINDOW_ID" '$1 == id { print $2 }')
 
     case "$STATUS" in
         working) INDICATOR="$(printf '\033[32m▶\033[0m')" ;;
@@ -40,25 +42,43 @@ for file in "$STATUS_DIR"/window-*.json; do
         *)       INDICATOR=" " ;;
     esac
 
+    POPUP_TAG=""
+    if [ "$SESSION" = "popup-floater" ]; then
+        POPUP_TAG=" $(printf '\033[34m[popup]\033[0m')"
+    fi
+
     CAPTURE_TARGET="${PANE_ID:-$WINDOW_ID}"
-    ENTRIES="$ENTRIES$WINDOW_ID	$CAPTURE_TARGET	$INDICATOR [$AGENT] $PROJECT ($WINDOW_NAME) — $STATUS\n"
+    ENTRIES="$ENTRIES$WINDOW_ID	$PANE_ID	$CAPTURE_TARGET	$INDICATOR [$AGENT] $PROJECT ($WINDOW_NAME) — $STATUS$POPUP_TAG\n"
 done
 
 [ -z "$ENTRIES" ] && echo "No active AI agents" && exit 0
 
 SELECTED=$(printf "%b" "$ENTRIES" \
-    | fzf --ansi -d "	" --with-nth=3 --prompt='agent: ' \
-        --preview 'tmux capture-pane -t {2} -p -e 2>/dev/null' \
+    | fzf --ansi -d "	" --with-nth=4 --prompt='agent: ' \
+        --preview 'tmux capture-pane -t {3} -p -e 2>/dev/null' \
         --preview-window 'right:60%' \
         --height=100%)
 
 [ -z "$SELECTED" ] && exit 0
 
 TARGET_WINDOW=$(echo "$SELECTED" | cut -f1)
+TARGET_PANE=$(echo "$SELECTED" | cut -f2)
 
 TARGET=$(tmux list-windows -a -F '#{session_name}:#{window_id}' 2>/dev/null \
     | awk -F: -v id="$TARGET_WINDOW" '$2 == id { print $1 ":" $2 }')
 
 [ -z "$TARGET" ] && exit 0
 
-tmux switch-client -t "$TARGET"
+TARGET_SESSION=$(echo "$TARGET" | cut -d: -f1)
+
+# Select the specific pane first so switch-client lands on it
+[ -n "$TARGET_PANE" ] && tmux select-pane -t "$TARGET_PANE" 2>/dev/null || true
+
+if [ "$TARGET_SESSION" = "popup-floater" ]; then
+    # TODO: opening popup-floater from within a popup (the ai-agents picker) doesn't
+    # work reliably — display-popup and run-shell approaches both fail when the client
+    # is already in popup mode. For now, fall through to direct switch-client.
+    tmux switch-client -t "$TARGET"
+else
+    tmux switch-client -t "$TARGET"
+fi
