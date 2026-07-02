@@ -1,0 +1,70 @@
+#!/bin/sh
+# Find tmux panes running a pi/claude agent process.
+# Source of truth is the live process tree, not the aistatus files.
+#
+# Usage: ,tmux-agent-scan [tmux-target]
+#   With no target, scans all panes across all sessions.
+#   With a target (window/session id), scoped to `tmux list-panes -t <target>`.
+#
+# Output (TSV): pane_id  window_id  session_name  window_name  pane_current_path  agent_pid  agent_name
+
+set -e
+
+TARGET="${1:-}"
+
+FMT='#{pane_id}	#{window_id}	#{session_name}	#{window_name}	#{pane_current_path}	#{pane_pid}'
+if [ -n "$TARGET" ]; then
+    PANES=$(tmux list-panes -t "$TARGET" -F "$FMT" 2>/dev/null) || true
+else
+    PANES=$(tmux list-panes -a -F "$FMT" 2>/dev/null) || true
+fi
+
+[ -z "$PANES" ] && exit 0
+
+PS_DATA=$(ps -Ao pid,ppid,comm 2>/dev/null | tail -n +2)
+
+awk -v panes="$PANES" '
+BEGIN {
+    n = split(panes, lines, "\n")
+    for (i = 1; i <= n; i++) {
+        split(lines[i], f, "\t")
+        pane_id[i] = f[1]; window_id[i] = f[2]; session[i] = f[3]
+        wname[i] = f[4]; path[i] = f[5]; pane_pid[i] = f[6]
+    }
+    num_panes = n
+}
+{
+    pid = $1; ppid = $2
+    comm = $3
+    for (k = 4; k <= NF; k++) comm = comm " " $k
+    # basename of comm (ps may report a full executable path)
+    slash = comm
+    while ((idx = index(slash, "/")) > 0) slash = substr(slash, idx + 1)
+    parent[pid] = ppid
+    name[pid] = slash
+    children[ppid] = children[ppid] " " pid
+}
+END {
+    for (i = 1; i <= num_panes; i++) {
+        root = pane_pid[i]
+        agent_pid = ""; agent_name = ""
+        qn = 1; queue[1] = root
+        for (qi = 1; qi <= qn; qi++) {
+            cur = queue[qi]
+            if (name[cur] == "pi" || name[cur] == "claude") {
+                agent_pid = cur; agent_name = name[cur]
+                break
+            }
+            m = split(children[cur], kids, " ")
+            for (k = 1; k <= m; k++) {
+                if (kids[k] == "") continue
+                qn++
+                queue[qn] = kids[k]
+            }
+        }
+        print pane_id[i] "\t" window_id[i] "\t" session[i] "\t" wname[i] "\t" path[i] "\t" agent_pid "\t" agent_name
+    }
+}
+' <<EOF
+$PS_DATA
+EOF

@@ -1,5 +1,9 @@
 #!/bin/sh
 # Show running AI agents and their status, switch to selected window/pane.
+#
+# Source of truth is the live process tree (via ,tmux-agent-scan); the
+# aistatus/pid-<pid>.json files are only used as a status/project lookup,
+# and are cleaned up here once their pid is no longer alive.
 
 set -e
 
@@ -7,33 +11,38 @@ STATUS_DIR="$HOME/.local/share/aistatus"
 NOW=$(date +%s)
 STALE_SECS=7200
 
-[ -d "$STATUS_DIR" ] || exit 0
+SCAN=$("$(dirname "$0")/,tmux-agent-scan" 2>/dev/null)
+[ -z "$SCAN" ] && echo "No active AI agents" && exit 0
+
+# Drop status files for pids that are no longer running anywhere.
+if [ -d "$STATUS_DIR" ]; then
+    for file in "$STATUS_DIR"/pid-*.json; do
+        [ -f "$file" ] || continue
+        pid=$(basename "$file" .json | sed 's/^pid-//')
+        kill -0 "$pid" 2>/dev/null || rm -f "$file"
+    done
+fi
 
 ENTRIES=""
-for file in "$STATUS_DIR"/window-*.json; do
-    [ -f "$file" ] || continue
+while IFS='	' read -r PANE_ID WINDOW_ID SESSION WINDOW_NAME PANE_PATH PID AGENT_NAME; do
+    [ -n "$PID" ] || continue
 
-    TS=$(jq -r '.timestamp // 0' "$file" 2>/dev/null)
-    if [ -z "$TS" ] || [ "$TS" = "0" ]; then continue; fi
-
-    AGE=$((NOW - TS))
-    if [ "$AGE" -gt "$STALE_SECS" ]; then
-        rm -f "$file"
-        continue
+    FILE="$STATUS_DIR/pid-${PID}.json"
+    STATUS=""
+    AGENT="$AGENT_NAME"
+    PROJECT=""
+    if [ -f "$FILE" ]; then
+        TS=$(jq -r '.timestamp // 0' "$FILE" 2>/dev/null)
+        AGE=$((NOW - ${TS:-0}))
+        if [ -n "$TS" ] && [ "$TS" != "0" ] && [ "$AGE" -le "$STALE_SECS" ]; then
+            STATUS=$(jq -r '.status // empty' "$FILE" 2>/dev/null)
+            AGENT=$(jq -r '.agent // empty' "$FILE" 2>/dev/null)
+            PROJECT=$(jq -r '.project // empty' "$FILE" 2>/dev/null)
+        fi
     fi
-
-    WINDOW_ID=$(jq -r '.window_id // empty' "$file")
-    PANE_ID=$(jq -r '.pane_id // empty' "$file")
-    STATUS=$(jq -r '.status // empty' "$file")
-    AGENT=$(jq -r '.agent // "?"' "$file")
-    PROJECT=$(jq -r '.project // "?"' "$file")
-
-    if [ -z "$WINDOW_ID" ] || [ -z "$STATUS" ]; then continue; fi
-
-    WINDOW_NAME=$(tmux list-windows -a -F '#{window_id} #{window_name}' 2>/dev/null \
-        | awk -v id="$WINDOW_ID" '$1 == id { print $2 }')
-    SESSION=$(tmux list-windows -a -F '#{window_id} #{session_name}' 2>/dev/null \
-        | awk -v id="$WINDOW_ID" '$1 == id { print $2 }')
+    [ -z "$STATUS" ] && STATUS="idle"
+    [ -z "$AGENT" ] && AGENT="$AGENT_NAME"
+    [ -z "$PROJECT" ] && PROJECT=$(basename "$PANE_PATH")
 
     case "$STATUS" in
         working) INDICATOR="$(printf '\033[32m▶\033[0m')" ;;
@@ -47,9 +56,10 @@ for file in "$STATUS_DIR"/window-*.json; do
         POPUP_TAG=" $(printf '\033[34m[popup]\033[0m')"
     fi
 
-    CAPTURE_TARGET="${PANE_ID:-$WINDOW_ID}"
-    ENTRIES="$ENTRIES$WINDOW_ID	$PANE_ID	$CAPTURE_TARGET	$INDICATOR [$AGENT] $PROJECT ($WINDOW_NAME) — $STATUS$POPUP_TAG\n"
-done
+    ENTRIES="$ENTRIES$WINDOW_ID	$PANE_ID	$PANE_ID	$INDICATOR [$AGENT] $PROJECT ($WINDOW_NAME) — $STATUS$POPUP_TAG\n"
+done <<EOF
+$SCAN
+EOF
 
 [ -z "$ENTRIES" ] && echo "No active AI agents" && exit 0
 

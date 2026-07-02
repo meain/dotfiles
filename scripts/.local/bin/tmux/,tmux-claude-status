@@ -1,27 +1,49 @@
 #!/bin/sh
-# Show Claude Code status for a specific tmux window.
+# Show AI agent status for a specific tmux window.
 # Called from window-status-format with #{window_id} as the argument.
 # Outputs a single indicator character, or nothing if idle/absent.
+#
+# Source of truth is the live process tree (via ,tmux-agent-scan); the
+# aistatus/pid-<pid>.json file is only used as a status lookup.
 
 WINDOW_ID="${1:-}"
 [ -z "$WINDOW_ID" ] && exit 0
 
 STATUS_DIR="$HOME/.local/share/aistatus"
-FILE="$STATUS_DIR/window-${WINDOW_ID}.json"
-[ -f "$FILE" ] || exit 0
-
 NOW=$(date +%s)
 STALE_SECS=7200  # 2 hours
 
-TS=$(jq -r '.timestamp // 0' "$FILE" 2>/dev/null)
-[ -z "$TS" ] || [ "$TS" = "0" ] && exit 0
+SCAN=$("$(dirname "$0")/,tmux-agent-scan" "$WINDOW_ID" 2>/dev/null)
+[ -z "$SCAN" ] && exit 0
 
-AGE=$((NOW - TS))
-[ "$AGE" -gt "$STALE_SECS" ] && exit 0
+# A window can host multiple panes, each running its own agent, so pick the
+# highest-priority status across all agents found in this window.
+printf '%s\n' "$SCAN" | while IFS='	' read -r _pane_id _window_id _session _wname _path pid _agent; do
+    [ -n "$pid" ] || continue
 
-STATUS=$(jq -r '.status // empty' "$FILE" 2>/dev/null)
-case "$STATUS" in
-  working) printf '#' ;;
-  waiting) printf '%%' ;;
-  idle)    printf '@' ;;
-esac
+    FILE="$STATUS_DIR/pid-${pid}.json"
+    STATUS=""
+    if [ -f "$FILE" ]; then
+        TS=$(jq -r '.timestamp // 0' "$FILE" 2>/dev/null)
+        AGE=$((NOW - ${TS:-0}))
+        if [ -n "$TS" ] && [ "$TS" != "0" ] && [ "$AGE" -le "$STALE_SECS" ]; then
+            STATUS=$(jq -r '.status // empty' "$FILE" 2>/dev/null)
+        fi
+    fi
+    # Process is alive but hasn't reported yet (new instance) — treat as idle.
+    [ -z "$STATUS" ] && STATUS="idle"
+
+    echo "$STATUS"
+done | awk '
+    $0 == "working" { print "working"; exit }
+    $0 == "waiting" { best = "waiting" }
+    $0 == "idle" && best == "" { best = "idle" }
+    END { if (best != "") print best }
+' | {
+    read -r BEST
+    case "$BEST" in
+        working) printf '#' ;;
+        waiting) printf '%%' ;;
+        idle)    printf '@' ;;
+    esac
+}
