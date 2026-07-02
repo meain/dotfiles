@@ -102,7 +102,7 @@ Returns a date like `2026-06-29`. Use it in the section header as `### This Cycl
 ```bash
 ~/.agents/skills/backlog/scripts/pending-prs.sh
 ```
-Returns JSON array of PRs where user is a direct reviewer (not via team), excluding approved PRs and drafts.
+Returns JSON array of PRs where user is a direct reviewer (not via team), excluding approved PRs, drafts, and `Veeam-VDC/vdc-shared-data-plane` PRs (never surface data-plane PRs — not the user's area).
 
 **3c. PRs authored by user:** Open PRs authored by the user across Veeam-VDC org.
 
@@ -118,7 +118,7 @@ Write all candidates to `/tmp/backlog-candidates-YYYY-MM-DD.md` with `- [ ]` lin
 - My PRs — approved (ready to merge)
 - My PRs — needs action
 - PRs needing direct review — split into two subsections:
-  - **Recent (this week)**: PRs updated within the last ~7 days (only where `login: meain` is a direct reviewer, not team; exclude PRs with "local-dev" in the title)
+  - **Recent (this week)**: PRs updated within the last ~7 days (only where `login: meain` is a direct reviewer, not team; exclude PRs with "local-dev" in the title, and never include `vdc-shared-data-plane` PRs)
   - **Older (sitting for a while)**: PRs more than ~7 days old that are still open and awaiting review (same exclusion rules apply) — useful for surfacing stale reviews that may have been overlooked
 - This Cycle — sprint items not yet in the backlog (from Step 3e); selected items go into the `### This Cycle` section, not Today
 - Candidates from other sections (Tomorrow/This Week/Whenever worth pulling in)

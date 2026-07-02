@@ -14,9 +14,11 @@ response=$(curl -s -H "Authorization: bearer $GH_TOKEN" -H "Content-Type: applic
     -d '{"query":"{ search(query: \"is:pr is:open review-requested:meain review:required org:Veeam-VDC\", type: ISSUE, first: 30) { nodes { ... on PullRequest { number title url isDraft repository { nameWithOwner } author { login } } } } }"}' \
     https://api.github.com/graphql)
 
-# Filter out drafts and format output
+# Filter out drafts and vdc-shared-data-plane PRs, then format output
 echo "$response" | jq -c '.data.search.nodes | map(
-    select(.isDraft == false) | {
+    select(.isDraft == false)
+    | select(.repository.nameWithOwner != "Veeam-VDC/vdc-shared-data-plane")
+    | {
         number,
         title,
         url,
