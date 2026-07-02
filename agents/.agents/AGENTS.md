@@ -63,3 +63,24 @@
 - Use direct, no-nonsense tone
 - Strip away unnecessary complexity and focus on what's immediately useful
 - Default to brief responses unless specifically asked for detail
+
+## Additional tools
+
+Use the `/codebase-query` skill (aliases: `/cbm`, `/code-graph`) to analyze codebases semantically. It uses `codebase-memory-mcp` to query code structure, complexity, dependencies, and architecture via a graph database. Prefer this over reading entire files or grep for understanding code relationships.
+
+Examples:
+- "show me high complexity functions in earn"
+- "what calls GetOrgRegion?"
+- "find implementations of EventRouter"
+- "map service entry points"
+
+The skill handles project detection, query construction, and result formatting. For direct CLI usage (when not in conversation), see `references/cookbook.md` inside the skill directory.
+
+Common direct commands:
+```
+codebase-memory-mcp cli search_graph '{"project": "...", "name_pattern": ".*Handler.*", "label": "Function"}'
+codebase-memory-mcp cli trace_path '{"project": "...", "function_name": "Search", "direction": "both"}'
+codebase-memory-mcp cli query_graph '{"project": "...", "query": "MATCH (f:Function) WHERE f.complexity > 15 RETURN f.name, f.file_path LIMIT 10"}'
+```
+
+Note: CLI commands require explicit `"project"` parameter (e.g., `"Users-meain-dev-veeam-control-plane-backend"`). Use `list_projects` to find indexed project names.
