@@ -69,6 +69,7 @@ alias finxs=",fin-session-export"
 alias fincs=",fin-session-continue"
 alias finh="fin -export message | ,markdown-to-html"
 alias finm="fin -export message | leaf --inline"
+alias finr=",fin-repl"
 
 # esa
 alias ec="esa -c"
