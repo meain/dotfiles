@@ -74,11 +74,4 @@ TARGET_SESSION=$(echo "$TARGET" | cut -d: -f1)
 # Select the specific pane first so switch-client lands on it
 [ -n "$TARGET_PANE" ] && tmux select-pane -t "$TARGET_PANE" 2>/dev/null || true
 
-if [ "$TARGET_SESSION" = "popup-floater" ]; then
-    # TODO: opening popup-floater from within a popup (the ai-agents picker) doesn't
-    # work reliably — display-popup and run-shell approaches both fail when the client
-    # is already in popup mode. For now, fall through to direct switch-client.
-    tmux switch-client -t "$TARGET"
-else
-    tmux switch-client -t "$TARGET"
-fi
+tmux switch-client -t "$TARGET"
