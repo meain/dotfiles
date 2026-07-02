@@ -57,7 +57,9 @@ SELECTED=$(printf "%b" "$ENTRIES" \
     | fzf --ansi -d "	" --with-nth=4 --prompt='agent: ' \
         --preview 'tmux capture-pane -t {3} -p -e 2>/dev/null' \
         --preview-window 'right:60%' \
-        --height=100% || true)
+        --height=100% \
+        --bind "alt-enter:execute(printf 'Message: '; read -r msg; [ -n \"\$msg\" ] && tmux send-keys -t {3} \"\$msg\" Enter)" \
+        || true)
 
 [ -z "$SELECTED" ] && exit 0
 
@@ -68,8 +70,6 @@ TARGET=$(tmux list-windows -a -F '#{session_name}:#{window_id}' 2>/dev/null \
     | awk -F: -v id="$TARGET_WINDOW" '$2 == id { print $1 ":" $2 }')
 
 [ -z "$TARGET" ] && exit 0
-
-TARGET_SESSION=$(echo "$TARGET" | cut -d: -f1)
 
 # Select the specific pane first so switch-client lands on it
 [ -n "$TARGET_PANE" ] && tmux select-pane -t "$TARGET_PANE" 2>/dev/null || true
