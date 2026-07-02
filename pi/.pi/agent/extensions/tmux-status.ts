@@ -1,8 +1,10 @@
 /**
  * Tmux Status Extension
  *
- * Updates ~/.local/share/aistatus/window-<window_id>.json on agent lifecycle
- * events so the tmux window status line can show pi's working/idle state.
+ * Updates ~/.local/share/aistatus/pid-<pid>.json on agent lifecycle events.
+ * Readers discover live pi/claude processes from the tmux pane tree and use
+ * this file only as a status/project lookup keyed by pid, so it stays
+ * accurate across pane splits, moves, and restarts.
  */
 
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
@@ -12,26 +14,6 @@ import { join } from "node:path";
 
 export default function (pi: ExtensionAPI) {
   const STATUS_DIR = join(homedir(), ".local/share/aistatus");
-  let windowId: string | undefined;
-  let paneId: string | undefined;
-
-  async function resolveIds(): Promise<void> {
-    const tmuxPane = process.env.TMUX_PANE;
-    if (!tmuxPane) return;
-    paneId = tmuxPane;
-    try {
-      const result = await pi.exec("tmux", [
-        "display-message",
-        "-p",
-        "-t",
-        tmuxPane,
-        "#{window_id}",
-      ]);
-      windowId = result.stdout.trim() || undefined;
-    } catch {
-      return;
-    }
-  }
 
   async function writeStatus(
     status: "working" | "idle",
@@ -39,26 +21,22 @@ export default function (pi: ExtensionAPI) {
     project: string,
     event: string
   ): Promise<void> {
-    if (!windowId) return;
+    if (!process.env.TMUX_PANE) return;
     await mkdir(STATUS_DIR, { recursive: true });
+    const pid = process.pid;
     const payload = JSON.stringify({
       session_id: sessionId,
-      window_id: windowId,
-      pane_id: paneId ?? "",
+      pid,
       status,
       hook_event: event,
       project,
       agent: "pi",
       timestamp: Math.floor(Date.now() / 1000),
     });
-    const tmp = join(STATUS_DIR, `.tmp.${windowId}.${process.pid}`);
+    const tmp = join(STATUS_DIR, `.tmp.${pid}`);
     await writeFile(tmp, payload);
-    await pi.exec("mv", [tmp, join(STATUS_DIR, `window-${windowId}.json`)]);
+    await pi.exec("mv", [tmp, join(STATUS_DIR, `pid-${pid}.json`)]);
   }
-
-  pi.on("session_start", async (_event, _ctx) => {
-    await resolveIds();
-  });
 
   pi.on("agent_start", async (_event, ctx) => {
     const sessionId = ctx.sessionManager.getSessionId?.() ?? "";
