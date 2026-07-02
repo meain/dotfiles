@@ -1,0 +1,5 @@
+#!/bin/sh
+# A script that runs things that should be running periodically.
+
+,projects-config-backup
+,push-repos
