@@ -204,7 +204,7 @@
                           ("Unifont" . '(160 .2 'regular))
                           ("Uroob" . '(160 nil 'regular))
                           ("Victor Mono" . '(150 nil 'regular))
-                          ("Whois" . '(160 .2 'regular))
+                          ("Whois" . '(170 .1 'regular))
                           ("Wire Type Mono" . '(160 nil 'regular))
                           ("Xanh Mono" . '(160 .1 'regular))
                           ("Zed Mono" . '(160 .1 'light))
