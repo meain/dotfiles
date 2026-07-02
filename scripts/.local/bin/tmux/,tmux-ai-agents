@@ -23,6 +23,7 @@ for file in "$STATUS_DIR"/window-*.json; do
     fi
 
     WINDOW_ID=$(jq -r '.window_id // empty' "$file")
+    PANE_ID=$(jq -r '.pane_id // empty' "$file")
     STATUS=$(jq -r '.status // empty' "$file")
     AGENT=$(jq -r '.agent // "?"' "$file")
     PROJECT=$(jq -r '.project // "?"' "$file")
@@ -39,14 +40,15 @@ for file in "$STATUS_DIR"/window-*.json; do
         *)       INDICATOR=" " ;;
     esac
 
-    ENTRIES="$ENTRIES$WINDOW_ID	$INDICATOR [$AGENT] $PROJECT ($WINDOW_NAME) — $STATUS\n"
+    CAPTURE_TARGET="${PANE_ID:-$WINDOW_ID}"
+    ENTRIES="$ENTRIES$WINDOW_ID	$CAPTURE_TARGET	$INDICATOR [$AGENT] $PROJECT ($WINDOW_NAME) — $STATUS\n"
 done
 
 [ -z "$ENTRIES" ] && echo "No active AI agents" && exit 0
 
 SELECTED=$(printf "%b" "$ENTRIES" \
-    | fzf --ansi -d "	" --with-nth=2 --prompt='agent: ' \
-        --preview 'tmux capture-pane -t {1} -p -e 2>/dev/null' \
+    | fzf --ansi -d "	" --with-nth=3 --prompt='agent: ' \
+        --preview 'tmux capture-pane -t {2} -p -e 2>/dev/null' \
         --preview-window 'right:60%' \
         --height=100%)
 
