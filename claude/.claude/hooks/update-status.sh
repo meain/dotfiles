@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Update Claude session status for tmux window status display.
 # Triggered by Stop, Notification, UserPromptSubmit, and PostToolUse hooks.
-# Writes to ~/.local/share/claudestatus/window-<window_id>.json
+# Writes to ~/.local/share/aistatus/window-<window_id>.json
 
 INPUT=$(cat)
 
@@ -25,7 +25,7 @@ case "$HOOK_EVENT" in
   *)            STATUS="working" ;;
 esac
 
-STATUS_DIR="$HOME/.local/share/claudestatus"
+STATUS_DIR="$HOME/.local/share/aistatus"
 mkdir -p "$STATUS_DIR"
 
 TMP=$(mktemp "$STATUS_DIR/.tmp.XXXXXX")
@@ -35,6 +35,7 @@ jq -n \
   --arg status "$STATUS" \
   --arg hook_event "$HOOK_EVENT" \
   --arg project "$PROJECT" \
+  --arg agent "claude" \
   --argjson timestamp "$(date +%s)" \
-  '{session_id: $session_id, window_id: $window_id, status: $status, hook_event: $hook_event, project: $project, timestamp: $timestamp}' \
+  '{session_id: $session_id, window_id: $window_id, status: $status, hook_event: $hook_event, project: $project, agent: $agent, timestamp: $timestamp}' \
   > "$TMP" && mv "$TMP" "$STATUS_DIR/window-${WINDOW_ID}.json"
