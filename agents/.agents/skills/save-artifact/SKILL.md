@@ -22,7 +22,7 @@ Save an AI-generated artifact to the artifacts repository with structured metada
 1. **Identify the artifact**: Determine what file/content to save (either just created, or user specifies a path)
 2. **Collect metadata**: Gather required and optional fields
 3. **Save the artifact**: Copy/write to `/Users/meain/dev/src/ai-artifacts/artifacts/`
-4. **Update catalog**: Add entry to `/Users/meain/dev/src/ai-artifacts/artifacts.json`
+4. **Update catalog**: Append a line to `/Users/meain/dev/src/ai-artifacts/artifacts.jsonl`
 5. **Confirm**: Show the artifact name and key metadata fields
 
 ## Required Metadata
@@ -53,11 +53,10 @@ Save an AI-generated artifact to the artifacts repository with structured metada
 
 ## Implementation Notes
 
-- Read existing `artifacts.json`, parse it, add the new entry, write it back with proper formatting (2-space indent, sorted keys)
-- Use `jq` for JSON manipulation: `jq --indent 2 '.artifacts["<name>"] = <metadata>' artifacts.json`
-- Preserve existing entries and formatting
+- Append a single JSON line to `artifacts.jsonl` — include `filename` as the first field
+- Use `jq -c` to produce compact JSON: `jq -cn '{filename: "...", type: "...", ...}'  >> artifacts.jsonl`
 - For the `created` timestamp, use ISO 8601 format: `date -u +"%Y-%m-%dT%H:%M:%SZ"`
-- If artifact with same name exists, ask user whether to overwrite or create versioned copy
+- If artifact with same filename already exists in the file, ask user whether to overwrite (remove old line, append new) or create versioned copy
 
 ## Example
 
@@ -67,19 +66,9 @@ User: "save this dashboard to artifacts"
 # Copy file
 cp dashboard.html /Users/meain/dev/src/ai-artifacts/artifacts/adx-metrics-dashboard.html
 
-# Update catalog
+# Append to catalog
 cd /Users/meain/dev/src/ai-artifacts
-jq --indent 2 '.artifacts["adx-metrics-dashboard.html"] = {
-  "type": "html",
-  "description": "Interactive dashboard for ADX query metrics",
-  "tags": ["visualization", "monitoring", "adx"],
-  "repository": "veeam/control-plane-backend",
-  "agent": "fin",
-  "model": "claude-3.5-sonnet",
-  "created": "2026-06-26T13:50:00Z",
-  "purpose": "Debug ADX query performance issues",
-  "session_id": "23051bf6-89b7-44cb-b19f-cd9019a967bc"
-}' artifacts.json > artifacts.json.tmp && mv artifacts.json.tmp artifacts.json
+jq -cn '{filename: "adx-metrics-dashboard.html", type: "html", description: "Interactive dashboard for ADX query metrics", tags: ["visualization", "monitoring", "adx"], repository: "veeam/control-plane-backend", agent: "fin", model: "claude-3.5-sonnet", created: "2026-06-26T13:50:00Z", purpose: "Debug ADX query performance issues", session_id: "23051bf6-89b7-44cb-b19f-cd9019a967bc"}' >> artifacts.jsonl
 ```
 
 Response: "Saved as `adx-metrics-dashboard.html` — interactive dashboard for ADX query metrics"
