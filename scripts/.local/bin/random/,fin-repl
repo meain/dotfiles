@@ -1,0 +1,21 @@
+#!/bin/sh
+# Add a minimal repl for fin
+
+set -e
+
+read_user_input() {
+	printf '\033[0;34m→\033[0m '
+	IFS= read -e -r message # -e allow for arrow keys and other niceties
+	if [ -z "$message" ]; then
+		read_user_input
+	fi
+}
+
+read_user_input
+fin "$1" "$message" # optionally take in fin args
+echo
+
+while read_user_input; do
+	fin -c "$message"
+	echo
+done
