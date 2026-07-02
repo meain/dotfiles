@@ -6,7 +6,7 @@
 WINDOW_ID="${1:-}"
 [ -z "$WINDOW_ID" ] && exit 0
 
-STATUS_DIR="$HOME/.local/share/claudestatus"
+STATUS_DIR="$HOME/.local/share/aistatus"
 FILE="$STATUS_DIR/window-${WINDOW_ID}.json"
 [ -f "$FILE" ] || exit 0
 
