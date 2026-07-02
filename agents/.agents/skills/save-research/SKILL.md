@@ -122,7 +122,7 @@ Only include this section if there are meaningful code examples.
 ```
 
 **Writing guidelines:**
-- Always include a session ID in the YAML front matter so the source conversation can be traced back later. If `${CLAUDE_SESSION_ID}` is available (Claude Code), use `claude-session-id:` as the key. Otherwise, when running under pi agent (check `PI_CODING_AGENT=true` env var), ask the user to provide the session ID and use `pi-session-id:` as the key
+- Always include a session ID in the YAML front matter so the source conversation can be traced back later. If `${CLAUDE_SESSION_ID}` is available (Claude Code), use `claude-session-id:` as the key. Otherwise, when running under pi agent (check `PI_CODING_AGENT=true` env var), ask the user to provide the session ID and use `pi-session-id:` as the key. The user can run `/session` in pi to look up the current session ID.
 - Be concise but thorough -- these are reference documents, not prose
 - Prefer bullet points over paragraphs
 - Include concrete code examples where applicable
