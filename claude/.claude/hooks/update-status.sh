@@ -8,10 +8,12 @@ INPUT=$(cat)
 SESSION_ID=$(echo "$INPUT" | jq -r '.session_id // empty')
 [ -z "$SESSION_ID" ] && exit 0
 
-# Resolve the tmux window this Claude session is running in
+# Resolve the tmux window and pane this Claude session is running in
 WINDOW_ID=""
+PANE_ID=""
 if [ -n "${TMUX_PANE:-}" ]; then
   WINDOW_ID=$(tmux display-message -p -t "$TMUX_PANE" '#{window_id}' 2>/dev/null || true)
+  PANE_ID="$TMUX_PANE"
 fi
 [ -z "$WINDOW_ID" ] && exit 0
 
@@ -36,6 +38,7 @@ jq -n \
   --arg hook_event "$HOOK_EVENT" \
   --arg project "$PROJECT" \
   --arg agent "claude" \
+  --arg pane_id "$PANE_ID" \
   --argjson timestamp "$(date +%s)" \
-  '{session_id: $session_id, window_id: $window_id, status: $status, hook_event: $hook_event, project: $project, agent: $agent, timestamp: $timestamp}' \
+  '{session_id: $session_id, window_id: $window_id, pane_id: $pane_id, status: $status, hook_event: $hook_event, project: $project, agent: $agent, timestamp: $timestamp}' \
   > "$TMP" && mv "$TMP" "$STATUS_DIR/window-${WINDOW_ID}.json"
