@@ -49,6 +49,33 @@
     (interactive)
     (find-file (concat (getenv "NOTES_PATH") "/Backlog/Backlog.md")))
 
+  (defun meain/notes-create-meeting-note ()
+    "Create (or open) a meeting note for today under Meeting/YYYY/MM/DD/<Name>.md.
+ Prompts for an optional template from NOTES_PATH/Templates to prefill the note."
+    (interactive)
+    (require 's)
+    (let* ((templates-directory (concat (getenv "NOTES_PATH") "/Templates"))
+           (templates (when (file-directory-p templates-directory)
+                       (seq-filter (lambda (x) (not (s-starts-with-p "_" x)))
+                                   (directory-files templates-directory nil "\\.md\\'"))))
+           (template-choice (completing-read "Template: " (cons "Blank" templates) nil t nil nil "Blank"))
+           (name (read-string "Meeting name: "))
+           (date-path (format-time-string "%Y/%m/%d" (current-time)))
+           (rel-path (concat "Meeting/" date-path "/" name))
+           (note-file (concat (getenv "NOTES_PATH") "/" rel-path ".md")))
+      (make-directory (file-name-directory note-file) t)
+      (find-file note-file)
+      (when (zerop (buffer-size))
+        (if (and template-choice (not (string= template-choice "Blank")))
+            (insert-file-contents (concat templates-directory "/" template-choice))
+          (insert (format "---\ndate: %s\npresenter:\nparticipants:\ntags:\n---\n### Agenda\n### Notes\n### Follow-ups\n"
+                         (format-time-string "%Y-%m-%d" (current-time)))))
+        ;; Replace Obsidian-style {{date}} placeholder with today's date
+        (goto-char (point-min))
+        (while (search-forward "{{date}}" nil t)
+          (replace-match (format-time-string "%Y-%m-%d" (current-time)) t t))
+        (goto-char (point-min)))))
+
   (defun meain/notes--extract-task-name (line)
     "Strip list prefix, Jira/ref links, bare URLs, and trailing emoji from LINE."
     (let* ((text (replace-regexp-in-string
@@ -98,7 +125,8 @@
 
   :init
   (evil-leader/set-key "e n" 'meain/notes-goto-today-journal)
-  (evil-leader/set-key "e b" 'meain/notes-goto-backlog))
+  (evil-leader/set-key "e b" 'meain/notes-goto-backlog)
+  (evil-leader/set-key "e m" 'meain/notes-create-meeting-note))
 
 ;; Markdown package configuration
 ;; Common markdown functions for both markdown-mode and markdown-ts-mode
