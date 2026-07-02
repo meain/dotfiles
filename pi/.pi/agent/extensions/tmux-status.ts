@@ -13,10 +13,12 @@ import { join } from "node:path";
 export default function (pi: ExtensionAPI) {
   const STATUS_DIR = join(homedir(), ".local/share/aistatus");
   let windowId: string | undefined;
+  let paneId: string | undefined;
 
-  async function resolveWindowId(): Promise<string | undefined> {
+  async function resolveIds(): Promise<void> {
     const tmuxPane = process.env.TMUX_PANE;
-    if (!tmuxPane) return undefined;
+    if (!tmuxPane) return;
+    paneId = tmuxPane;
     try {
       const result = await pi.exec("tmux", [
         "display-message",
@@ -25,9 +27,9 @@ export default function (pi: ExtensionAPI) {
         tmuxPane,
         "#{window_id}",
       ]);
-      return result.stdout.trim() || undefined;
+      windowId = result.stdout.trim() || undefined;
     } catch {
-      return undefined;
+      return;
     }
   }
 
@@ -42,6 +44,7 @@ export default function (pi: ExtensionAPI) {
     const payload = JSON.stringify({
       session_id: sessionId,
       window_id: windowId,
+      pane_id: paneId ?? "",
       status,
       hook_event: event,
       project,
@@ -54,7 +57,7 @@ export default function (pi: ExtensionAPI) {
   }
 
   pi.on("session_start", async (_event, _ctx) => {
-    windowId = await resolveWindowId();
+    await resolveIds();
   });
 
   pi.on("agent_start", async (_event, ctx) => {
