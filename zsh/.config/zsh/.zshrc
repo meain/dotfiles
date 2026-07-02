@@ -191,13 +191,13 @@ _direnv_hook() {
 # Completions for jj
 source <(jj util completion zsh)
 
-# # Run jj on CTRL-J
-# function run_jj_widget() {
-#   jj
-#   zle reset-prompt
-# }
-# zle -N run_jj_widget
-# bindkey '^J' run_jj_widget
+# Run jj on CTRL-J
+function run_jj_widget() {
+  jj
+  zle reset-prompt
+}
+zle -N run_jj_widget
+bindkey '^J' run_jj_widget
 
 # # Run jd on CTRL-K
 # function run_jd_widget() {
