@@ -12,10 +12,11 @@ read_user_input() {
 }
 
 read_user_input
-fin "$1" "$message" # optionally take in fin args
+fin "$@" "$message" # optionally take in fin args
 echo
 
+session="$(fin -export json|jq -r .id)" # ensure that we reuse the session
 while read_user_input; do
-	fin -c "$message"
+	fin -session "$session" -c "$message"
 	echo
 done
