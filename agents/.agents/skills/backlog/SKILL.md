@@ -125,6 +125,8 @@ Write all candidates to `/tmp/backlog-candidates-YYYY-MM-DD.md` with `- [ ]` lin
 
 The "Checked-off items to move to Before" header must include the day name, e.g. `(2026-06-03, Wednesday)`.
 
+**Inline Jira details**: For any candidate line that references a Jira ticket (e.g. `[DP-1234](url)` or a `DP-1234` in a PR title), fetch the ticket with `jira issue view DP-1234 --plain` (run in parallel for all tickets, `dangerouslyDisableSandbox: true`) and add a concise detail line immediately below the candidate, indented and prefixed with `↳`. Format: `↳ DP-1234 (Type, Status, assignee/mine): one-line summary of the ask`. This lets the reader glance at ticket context while selecting. These `↳` lines are candidate-file only — do NOT carry them into `Backlog.md`, which stays single-line per item.
+
 Invoke the `/edit-in-emacs` skill with the file path (blocking, 600s timeout). After it returns, treat remaining `- [ ]` lines as selections.
 
 **Never use AskUserQuestion / multi-select prompts** — always go straight to the emacs file.
