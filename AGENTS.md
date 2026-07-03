@@ -54,8 +54,19 @@ That path is a symlink into this repo at `scripts/.local/bin/random/,bm`.
 ## Conventions
 
 - Use `,picker` instead of `fzf` directly in scripts — it's a wrapper that supports both terminal and GUI picker backends
-- When writing new scripts, follow the style of existing scripts in the same category — check shebang (`#!/bin/sh` vs `#!/usr/bin/env bash`), `set -e` usage, and argument parsing patterns
 - Prefer fewer commits when changes are closely related within a component — the "one commit per script" rule applies to independent scripts, not tightly coupled edits
+
+## Shell Scripts
+
+When creating or modifying shell scripts:
+
+- **Shebang**: Use `#!/bin/sh` by default (not `#!/bin/bash`). Only use `#!/usr/bin/env bash` when you need bash-specific features (e.g., `read -ei` for editable input, arrays, `[[`, `set -euo pipefail`). Add a comment on line 2 explaining why bash is needed.
+- **Second line**: After the shebang, line 2 should be either:
+  - A descriptive comment explaining what the script does (for sh scripts)
+  - A comment explaining why bash is required (for bash scripts)
+- **Error handling**: Use `set -e` on line 3 or 4 (after the initial comment). For bash scripts that need stricter error handling, use `set -euo pipefail`.
+- **Structure**: Follow the pattern from existing scripts in `scripts/.local/bin/` — check shebang, `set -e` usage, and argument parsing patterns in the same category.
+- **Naming**: Scripts are prefixed with `,` (comma) to distinguish them from system commands.
 
 ## Version Control
 
