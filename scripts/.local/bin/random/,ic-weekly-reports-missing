@@ -1,26 +1,31 @@
-#!/bin/sh
-# Generate a message asking folks to fill in their weekly report
+#!/usr/bin/env bash
+set -euo pipefail
 
-set -e
-
+# Get the latest weekly report page
 pages="$(confluence children "$IC_WEEKLY_REPORTS_CONFLUENCE_PAGE" --format json)"
-
-title="$(echo "$pages" | jq -r '.children[-1].title')"
 url="$(echo "$pages" | jq -r '.children[-1].url')"
 id="$(echo "$pages" | jq -r '.children[-1].id')"
 
-prompt="Construct a short markdown message nudging folks to submit their weekly updates.
+# Find people with empty updates
+missing=$(confluence read "$id" | awk '
+/^[A-Z]/ && !/^(What|Blockers|Upcoming|Unplanned|Discussion|----)/ { name = $0 }
+/^What I worked on:/ { in_section = 1; next }
+/^What/ || /^Blockers/ || /^Upcoming/ || /^Unplanned/ { in_section = 0 }
+in_section && /^[[:space:]]*\*[[:space:]]*$/ && name { print name; name = "" }
+' | paste -sd ',' -)
 
-Required structure:
+# Get week date (Monday of current week)
+week_date=$(date -v-Mon +%Y-%m-%d 2>/dev/null || date -d 'last monday' +%Y-%m-%d 2>/dev/null || date +%Y-%m-%d)
 
-<output>
-[$title]($url)
+# Generate message
+if [ -n "$missing" ]; then
+    cat << EOF | tee /dev/stderr | mdclip
+[Updates for week of $week_date]($url)
 
-A short (max 7 words) professional blunt nudge line.
+Please submit your weekly updates today.
 
-A comma-separated list of names of people who have NOT filled in the weekly report, based on the page content provided on stdin. All on one line.
-</output>
-
-Output only the final message. No preamble, no code fences, no commentary."
-
-confluence read "$id" | fin -ui quiet "$prompt" | tee /dev/stderr | mdclip
+$missing
+EOF
+else
+    echo "Everyone has submitted their updates!"
+fi
