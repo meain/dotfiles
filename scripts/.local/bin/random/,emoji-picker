@@ -2,4 +2,4 @@
 
 set -e
 
-esa +emoji "$*" | fzf | tr -d '\n' | tr -d ' ' | pbcopy
+emoji.fin "$*" | fzf | tr -d '\n' | tr -d ' ' | pbcopy
