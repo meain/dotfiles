@@ -8,10 +8,19 @@ id="$(echo "$pages" | jq -r '.children[-1].id')"
 
 # Find people with empty updates
 missing=$(confluence read "$id" | awk '
-/^[A-Z]/ && !/^(What|Blockers|Upcoming|Unplanned|Discussion|----)/ { name = $0 }
+/^[A-Z]/ && !/^(What|Blockers|Upcoming|Unplanned|Discussion|----)/ { name = $0; has_content = 0; has_empty = 0 }
 /^What I worked on:/ { in_section = 1; next }
-/^What/ || /^Blockers/ || /^Upcoming/ || /^Unplanned/ { in_section = 0 }
-in_section && /^[[:space:]]*\*[[:space:]]*$/ && name { print name; name = "" }
+/^What/ || /^Blockers/ || /^Upcoming/ || /^Unplanned/ { 
+    if (in_section && has_empty && !has_content && name) print name
+    in_section = 0
+    has_content = 0
+    has_empty = 0
+}
+in_section && /^[[:space:]]*\*[[:space:]]*$/ { has_empty = 1; next }
+in_section && /^[[:space:]]*\*[[:space:]]/ { has_content = 1 }
+END {
+    if (in_section && has_empty && !has_content && name) print name
+}
 ' | paste -sd ',' -)
 
 # Get week date (Monday of current week)
