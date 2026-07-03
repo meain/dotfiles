@@ -63,6 +63,7 @@ alias finn="fin -m haiku"
 alias finc="fin -c"
 alias finq="fin -q"
 alias fint="fin -temp"
+alias fintc="fin -temp -c"
 alias fincc="fin -match"
 alias finx="fin -export html > /tmp/fin-export.html && open /tmp/fin-export.html"
 alias finxs=",fin-session-export"
@@ -124,6 +125,9 @@ alias jj-squash-multi="jj stack | fzf -m | cut -d' ' -f3 | JJ_EDITOR=true xargs 
 alias jwu='jj workspace update-stale'
 alias jnm='jj git fetch && jj new main 2>/dev/null || jj new master'
 alias ,gcl="jj git clone --colocate"
+# Push after some time, the agent is still working on it, 20s is an
+# arbitrary delay for the agent to complete what it is doing.
+alias sjpu="sleep 20 && jpu"
 
 # taskwarrior
 alias tsk='task rc.verbose=label -BLOCKED list'
