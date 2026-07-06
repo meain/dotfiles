@@ -2,7 +2,6 @@ local apps = require("apps")
 local keys = require("keys")
 local customshellrun = require("customshellrun")
 local utils = require("utils")
-local gotoview = require("gotoview")
 
 local pasteboard = require("hs.pasteboard")
 
@@ -25,14 +24,13 @@ end)
 -- hyper key commands
 hs.hotkey.bind(keys.hyper, "l", function() hs.alert(customshellrun.run(",linkify")) end)
 hs.hotkey.bind(keys.hyper, "y", function() hs.alert(customshellrun.run(",weather-current")) end)
-hs.hotkey.bind(keys.hyper, "b", function() customshellrun.run("GUI_PICKER=1 ,bm open") end)
 hs.hotkey.bind(keys.hyper, "o", function() hs.alert(customshellrun.run(",open-or-search " .. pasteboard.getContents())) end)
 hs.hotkey.bind(keys.hyper, "i",
     function() hs.urlevent.openURL("https://duckduckgo.com/?q=!ducky+" .. pasteboard.getContents()) end)
 hs.hotkey.bind(keys.hyper, "u", function() customshellrun.launch(",voice-assistant") end)
 hs.hotkey.bind(keys.hyper, "s", function() hs.alert(customshellrun.run("GUI_PICKER=1 ,se", true)) end)
 
-hs.hotkey.bind(keys.fkey, ";", function() gotoview.show() end)
+hs.hotkey.bind(keys.fkey, ";", function() hs.application.launchOrFocusByBundleID("com.meain.booker") end)
 
 -- cmd+t from anywhere to open a new tab in browser
 browsernewtab =
