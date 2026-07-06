@@ -49,6 +49,7 @@
 - Keep commit message subject lines short and descriptive — avoid listing every change in the summary. One concise phrase is enough.
 - When committing in this dotfiles repo, git does not handle parallel commits well due to index locking. Issue `git add && git commit` calls sequentially, not in parallel.
 - When committing nix flake.lock updates in this dotfiles repo, commit `home-manager/.config/home-manager/flake.lock` and `nix-darwin/.config/nix-darwin/flake.lock` separately with component-specific prefixes (`[home-manager]` and `[nix-darwin]`), not together as `[nix]`.
+- For dotfiles commits that don't belong to a specific stow package subfolder (e.g., root-level meta files, shared configs), use `[]` with no component name.
 - If in doubt about commit conventions, component names, or how to structure commits in this dotfiles repo, check `git log` for similar past changes to see how they were committed.
 
 ## Personal Notes
