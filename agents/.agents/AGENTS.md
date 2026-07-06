@@ -47,6 +47,9 @@
 - Ask me before you do action on a public forum like Jira or GitHub PRs/issues unless I have already explicitly asked you to do it.
 - When the user corrects your approach or points out issues in how you work, suggest updating relevant instructions (AGENTS.md, skills, or both) to prevent recurrence. Always ask for confirmation before making the update. Note: CLAUDE.md is a symlink to AGENTS.md — always edit `/Users/meain/.agents/AGENTS.md` directly.
 - Keep commit message subject lines short and descriptive — avoid listing every change in the summary. One concise phrase is enough.
+- When committing in this dotfiles repo, git does not handle parallel commits well due to index locking. Issue `git add && git commit` calls sequentially, not in parallel.
+- When committing nix flake.lock updates in this dotfiles repo, commit `home-manager/.config/home-manager/flake.lock` and `nix-darwin/.config/nix-darwin/flake.lock` separately with component-specific prefixes (`[home-manager]` and `[nix-darwin]`), not together as `[nix]`.
+- If in doubt about commit conventions, component names, or how to structure commits in this dotfiles repo, check `git log` for similar past changes to see how they were committed.
 
 ## Personal Notes
 
