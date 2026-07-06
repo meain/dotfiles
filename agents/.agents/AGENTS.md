@@ -21,6 +21,7 @@
 - A path under `/Users/meain/worksapces/<folder>/<repo>-<suffix>` is a jj workspace of `/Users/meain/dev/<folder>/<repo>`; the trailing `-<suffix>` is the workspace name. For example, `/Users/meain/worksapces/some-org/my-project-feature2` is the `feature2` workspace of `/Users/meain/dev/some-org/my-project`.
 - Use the `/create-commit` skill when making jj commits in non-dotfiles repos.
 - Do not squash changes or push to upstream without explicit user request.
+- For long or multi-line commit/PR messages, pipe the content in via stdin from a temp file (e.g. `jj describe --stdin < /tmp/msg.txt`) rather than inlining a heredoc in the command.
 - Branch names in Veeam repos should start with `meain/` (e.g., `meain/earn-prod-adx-sku-downsize`).
 - When creating PRs, do not add "Generated with Claude Code" or similar labels/footers to the PR body.
 - When creating a new PR in Veeam repos, look up the associated Jira ticket and link it in the PR description body (not as a comment). Use the `jira` CLI to fetch ticket details. To find the ticket, fetch all open tickets assigned to me (`jira issue list --assignee $(jira me) --status-not Done`) and look for one that matches the PR's purpose — do not do a keyword search.
