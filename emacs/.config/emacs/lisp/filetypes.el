@@ -107,6 +107,9 @@
   (use-package org-timer
     :config
     (setq org-clock-sound "~/.config/datafiles/sounds/timer.mp3"))
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((shell . t)))
   (setq org-agenda-files (list "~/.local/share/org/master.org"))
   (setq org-log-done 'time)
   (setq org-todo-keywords '((sequence "TODO" "|" "DONE" "CANCELLED")))
