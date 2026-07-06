@@ -68,6 +68,8 @@ case "$1" in
 *.mp3) audiopreview "$1" ;;
 *.sketch) sketchpreview "$1" ;;
 *.json) jq -C <"$1" ;;
+*.json.gz) gunzip -c "$1" | jq -C ;;
+*.gz) gunzip -c "$1" | head -100 ;;
 *.csv) xsv table "$1" ;;
 *) everythingelse "$1" ;;
 esac
