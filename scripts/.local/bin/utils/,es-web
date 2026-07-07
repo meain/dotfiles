@@ -6,6 +6,7 @@ import argparse
 import json
 import os
 import re
+import subprocess
 import sys
 import time
 import urllib.request
@@ -256,6 +257,59 @@ def cmd_init(args):
     print(f"Saved config for '{args.cluster}' ({cfg['url']})")
 
 
+def get_clipboard():
+    """Return the current clipboard contents (empty string on failure)."""
+    try:
+        return subprocess.run(
+            ["pbpaste"], capture_output=True, text=True, check=True
+        ).stdout
+    except Exception:
+        return ""
+
+
+def cmd_reinit(args):
+    """Reopen Kibana for a cluster, wait for a fresh curl on the clipboard,
+    then validate the session and save it."""
+    path = config_path(args.cluster)
+    base_url = None
+    if os.path.exists(path):
+        with open(path) as f:
+            base_url = json.load(f).get("url")
+
+    if not base_url:
+        print(
+            f"No existing config for '{args.cluster}' to derive the Kibana URL from.",
+            file=sys.stderr,
+        )
+        print(f"Use: pbpaste | ,es-web init {args.cluster}", file=sys.stderr)
+        sys.exit(1)
+
+    discover_url = base_url + "/app/discover#/"
+    baseline = get_clipboard()
+    subprocess.run(["open", discover_url])
+    print(f"Opened {discover_url}")
+    print("Run any search, then 'Copy as cURL' a request from the Network tab.")
+    print("Waiting for the clipboard to change... (Ctrl-C to cancel)")
+
+    timeout = 300
+    start = time.time()
+    current = baseline
+    while time.time() - start < timeout:
+        time.sleep(1)
+        current = get_clipboard()
+        if current != baseline and "curl" in current:
+            break
+    else:
+        print("Timed out waiting for a curl on the clipboard.", file=sys.stderr)
+        sys.exit(1)
+
+    cfg = parse_curl(current)
+    print(f"Parsed session for {cfg['url']}. Testing...")
+    do_esql(cfg, "FROM logs-* | STATS n = COUNT(*) | LIMIT 1")
+    save_config(args.cluster, cfg)
+    print(f"Session valid. Saved config for '{args.cluster}' ({cfg['url']}).")
+
+
 def cmd_query(args):
     """Run an ES|QL query."""
     cfg = load_config(args.cluster)
@@ -312,6 +366,13 @@ def main():
     init_p = sub.add_parser("init", help="Store Kibana session from a curl command")
     init_p.add_argument("cluster", help="Cluster alias (e.g. stg-us, prd-eu)")
 
+    # reinit
+    reinit_p = sub.add_parser(
+        "reinit",
+        help="Reopen Kibana, wait for a fresh curl on the clipboard, then test & save",
+    )
+    reinit_p.add_argument("cluster", help="Cluster alias (e.g. stg-us, prd-eu)")
+
     # list
     sub.add_parser("list", help="List configured clusters")
 
@@ -333,6 +394,8 @@ def main():
 
     if args.command == "init":
         cmd_init(args)
+    elif args.command == "reinit":
+        cmd_reinit(args)
     elif args.command == "list":
         cmd_list(args)
     elif args.cluster:
