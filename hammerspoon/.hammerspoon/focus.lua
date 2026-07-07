@@ -85,3 +85,4 @@ bindFocus("e", apps.mail, true)
 bindFocus("y", apps.cal, true)
 
 hs.hotkey.bind(keys.fkey, "i", function() focusandback("ghostty") end)
+hs.hotkey.bind(keys.fkey, "'", function() focusandback("kitty") end)

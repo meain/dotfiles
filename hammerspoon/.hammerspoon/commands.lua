@@ -30,6 +30,7 @@ hs.hotkey.bind(keys.hyper, "i",
 hs.hotkey.bind(keys.hyper, "u", function() customshellrun.launch(",voice-assistant") end)
 hs.hotkey.bind(keys.hyper, "s", function() hs.alert(customshellrun.run("GUI_PICKER=1 ,se", true)) end)
 
+hs.hotkey.bind(keys.fkey, ",", function() hs.alert(customshellrun.run("open /Applications/fin-ui.app", true)) end)
 hs.hotkey.bind(keys.fkey, ";", function() hs.application.launchOrFocusByBundleID("com.meain.booker") end)
 
 -- cmd+t from anywhere to open a new tab in browser
