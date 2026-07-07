@@ -58,6 +58,7 @@
 - Task notes with detailed research/context live in `/Users/meain/.local/share/sbdb/Tasks/YYYY-MM/<Task Name>.md`. They are referenced from the backlog using `[[Tasks/YYYY-MM/Task Name]]` wiki-links.
 - Use the `/vault` skill when working with these notes.
 - My dotfiles are managed at `/Users/meain/.dotfiles` and stowed from there to the appropriate locations in my home directory.
+- Personal bookmarks are available at `/Users/meain/.local/share/bookmarks.md`
 
 ## User Context
 
