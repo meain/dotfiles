@@ -110,6 +110,7 @@ alias gffo='git pull origin --ff-only $(git rev-parse --abbrev-ref HEAD)'
 # jj
 alias js="jj show"
 alias jjj='jj new'
+alias jc="jjc"
 alias jd='jj diff'
 alias jab='jj absorb'
 alias jpu='jj git push'
@@ -121,6 +122,7 @@ alias jr='jj rebase -d'
 alias jfr=',jfr'
 alias jb='jjb'
 alias je='jj edit'
+alias jtp='jj tug && jj git push'
 alias jj-squash-multi="jj stack | fzf -m | cut -d' ' -f3 | JJ_EDITOR=true xargs -n1 jj squash -r"
 alias jwu='jj workspace update-stale'
 alias jnm='jj git fetch && jj new main 2>/dev/null || jj new master'
