@@ -46,6 +46,12 @@ BEGIN {
 }
 END {
     for (i = 1; i <= num_panes; i++) {
+        # A window can be linked into multiple sessions (e.g. tmux session
+        # groups used by floating popups), so the same pane_id can show up
+        # more than once in `list-panes -a`. Keep only the first sighting.
+        if (pane_id[i] in seen) continue
+        seen[pane_id[i]] = 1
+
         root = pane_pid[i]
         agent_pid = ""; agent_name = ""
         qn = 1; queue[1] = root

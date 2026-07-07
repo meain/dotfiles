@@ -53,7 +53,6 @@ jq -n \
   --arg status "$STATUS" \
   --arg hook_event "$HOOK_EVENT" \
   --arg project "$PROJECT" \
-  --arg agent "claude" \
   --argjson timestamp "$(date +%s)" \
-  '{session_id: $session_id, pid: $pid, status: $status, hook_event: $hook_event, project: $project, agent: $agent, timestamp: $timestamp}' \
+  '{session_id: $session_id, pid: $pid, status: $status, hook_event: $hook_event, project: $project, timestamp: $timestamp}' \
   > "$TMP" && mv "$TMP" "$STATUS_DIR/pid-${PID}.json"

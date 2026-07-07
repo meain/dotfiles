@@ -36,12 +36,10 @@ while IFS='	' read -r PANE_ID WINDOW_ID SESSION WINDOW_NAME PANE_PATH PID AGENT_
         AGE=$((NOW - ${TS:-0}))
         if [ -n "$TS" ] && [ "$TS" != "0" ] && [ "$AGE" -le "$STALE_SECS" ]; then
             STATUS=$(jq -r '.status // empty' "$FILE" 2>/dev/null)
-            AGENT=$(jq -r '.agent // empty' "$FILE" 2>/dev/null)
             PROJECT=$(jq -r '.project // empty' "$FILE" 2>/dev/null)
         fi
     fi
     [ -z "$STATUS" ] && STATUS="idle"
-    [ -z "$AGENT" ] && AGENT="$AGENT_NAME"
     [ -z "$PROJECT" ] && PROJECT=$(basename "$PANE_PATH")
 
     case "$STATUS" in

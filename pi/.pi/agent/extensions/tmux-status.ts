@@ -30,7 +30,6 @@ export default function (pi: ExtensionAPI) {
       status,
       hook_event: event,
       project,
-      agent: "pi",
       timestamp: Math.floor(Date.now() / 1000),
     });
     const tmp = join(STATUS_DIR, `.tmp.${pid}`);
