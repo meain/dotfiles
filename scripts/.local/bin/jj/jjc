@@ -2,4 +2,8 @@
 
 set -e
 
-jj commit -m "$*"
+if [ -z "$1" ]; then
+	jj commit
+else
+	jj commit -m "$*"
+fi
