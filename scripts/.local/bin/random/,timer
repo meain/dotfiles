@@ -16,13 +16,32 @@ case "$unit" in
 *) echo "Unknown unit" && exit 1 ;;
 esac
 
+format_time() {
+    t=$1
+    h=$(($t / 3600))
+    m=$(($t % 3600 / 60))
+    s=$(($t % 60))
+
+    result=""
+    if [ "$h" -gt 0 ]; then
+        result="${h}h"
+    fi
+    if [ "$m" -gt 0 ] || [ "$h" -gt 0 ]; then
+        result="${result}${m}m"
+    fi
+    result="${result}${s}s"
+    echo "$result"
+}
+
 seconds="$(($count$multiplier))"
 tick="$seconds"
+spinner="|/-\\"
 while [ "$tick" -ge "1" ]; do
-    printf "\r%s seconds left" "$tick"
+    spin_char="$(echo "$spinner" | cut -c$(( (($seconds - $tick) % 4) + 1 )))"
+    printf "%s %s left      \r" "$spin_char" "$(format_time $tick)"
     tick="$(($tick - 1))"
     sleep 1
 done
-printf "\rTime up (%s)     \n" "$duration" # extra space to clean up line
+printf "\rTime up (%s)      \n" "$duration" # extra space to clean up line
 notify "Time up" "Timer you set for $duration complete"
 ,make-noise notify
