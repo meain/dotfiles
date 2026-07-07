@@ -3,6 +3,7 @@
 - When the user specifically asks to generate a markdown file, open it once right after first creating it using `open -a Firefox <filepath>` (with `dangerouslyDisableSandbox: true`) — do not reopen it after subsequent edits, since a browser refresh picks up changes. For HTML or other file formats, use `open <filepath>` with `dangerouslyDisableSandbox: true` — the sandbox blocks `open` from launching GUI apps.
 - Never number things (headings, sections) when creating markdown documents — use plain headings and unordered lists.
 - When creating HTML resources like dashboards or slides, prefer light mode unless explicitly stated.
+- Do not create Claude Artifacts (via the Artifact tool) unless the user explicitly asks for one.
 - When creating temporary resources, create it in /tmp and not the repo root.
 - Screenshots are stored in `/Users/meain/Documents/Screenshots/` with format `Screenshot YYYY-MM-DD at H.MM.SS AM.png`.
 
