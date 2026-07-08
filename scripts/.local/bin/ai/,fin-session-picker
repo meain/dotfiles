@@ -1,0 +1,11 @@
+#!/bin/sh
+# select a non-temporary fin conversation and output its session ID
+
+set -e
+
+tab=$(printf '\t')
+
+fin -sessions 2>/dev/null \
+	| jq -r '.[] | select(.title | test("\\[temp\\]") | not) | "\(.id)\t\(.title) (\(.last_activity))"' \
+	| ,picker -d "$tab" --with-nth 2 --preview 'fin -export message -session {1} 2>/dev/null | head -200' \
+	| cut -f1
