@@ -6,7 +6,12 @@ SESSION="$(echo "$1" | sed 's| |-|g')"
 
 if [ -z "$TMUX" ]; then
     clear # imoprtant, do not remove
-    tmux new-session -t "$SESSION" -s "$SESSION-$(xxd -l1 -ps /dev/urandom)" || tmux new -s "$SESSION"
+    if tmux has-session -t "$SESSION" 2>/dev/null; then
+        # session already exists, join it as a grouped session (unique name required)
+        tmux new-session -t "$SESSION" -s "$SESSION-$(xxd -l1 -ps /dev/urandom)"
+    else
+        tmux new-session -s "$SESSION"
+    fi
 else
     tmux switch-client -t "$SESSION" || tmux -2 new-session -d -s "$SESSION" &&
         tmux switch-client -t "$SESSION"
