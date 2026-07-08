@@ -5,6 +5,17 @@ set -e
 url="$1"
 [ -z "$url" ] && url="$(pbpaste)"
 
+# Not a URL
+if ! echo "$url" | grep -qE '^https?://'; then
+    # If we are not dealing with a url, call mdclip to do its
+    # thing. All the custom parsing we have is just for encoding of
+    # urls. This way we can ensure that html clipboard can be reverse
+    # converted just as easily.
+    mdclip
+    notify "Clipboard updated"
+    exit 0
+fi
+
 output=""
 linkify() {
     printf "%s" "$output" | tee /tmp/linkify | mdclip
@@ -24,11 +35,6 @@ if [ -n "$output" ]; then
     exit 0
 fi
 
-# Note a URL
-if ! echo "$url" | grep -qE '^https?://'; then
-    echo "$url" | mdclip
-    exit 0
-fi
 
 get_title() {
     curl -s "$1" | pup --charset utf-8 --plain 'head title text{}'
