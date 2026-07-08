@@ -15,11 +15,11 @@
           },
           {
             "type": "command",
-            "command": "~/.claude/hooks/notify-summary.sh"
+            "command": "~/.claude/hooks/notify-summary.sh &"
           },
           {
             "type": "command",
-            "command": ",make-noise"
+            "command": ",make-noise &"
           }
         ]
       }
@@ -33,11 +33,11 @@
           },
           {
             "type": "command",
-            "command": "~/.claude/hooks/notify-summary.sh"
+            "command": "~/.claude/hooks/notify-summary.sh &"
           },
           {
             "type": "command",
-            "command": ",make-noise"
+            "command": ",make-noise &"
           }
         ]
       }
