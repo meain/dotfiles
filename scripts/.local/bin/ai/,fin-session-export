@@ -4,9 +4,18 @@ set -e
 
 tab=$(printf '\t')
 
-selected=$(fin -sessions 2>/dev/null \
-	| jq -r '.[] | "\(.id)\t\(.title) (\(.last_activity))"' \
-	| ,picker -m -d "$tab" --with-nth 2 --preview 'fin -export message -session {1} 2>/dev/null | head -200')
+selected="$1"
+
+if [ "$selected" = "last" ]; then
+	selected="$(fin -sessions 2>/dev/null |
+		jq -r '.[0].id' | head -n1 | cut -f1)"
+elif [ -z "$selected" ]; then
+	selected=$(,fin-session-picker)
+fi
+
+if [ -z "$selected" ]; then
+	exit 0
+fi
 
 echo "$selected" | while IFS="$tab" read -r session_id title; do
 	session_name=$(echo "$title" | sed 's/ ([^)]*$//' | tr ' ' '-' | tr -cd 'a-zA-Z0-9-' | head -c 50)
