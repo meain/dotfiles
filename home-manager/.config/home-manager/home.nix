@@ -90,6 +90,7 @@ in
     # pkgs.haskellPackages.kmonad # key remapping
     # ppkgs.kmonad # key remapping
     # ppkgs.warpd # mouse control
+    ppkgs.stochos # keyboard-driven mouse control
     pkgs.trash-cli # rm -> trash
     pkgs.entr # continuously run stuff
     # pkgs.bandwhich # view network stats (alt: nethogs)
