@@ -2,7 +2,9 @@
 
 SEARCH_BASE='https://duckduckgo.com/?q='
 
-if echo "$1" | grep -qE '^https://[A-z]+.zoom.us/j/'; then
+if [ -f "$1" ]; then
+  open -a Firefox "$1"
+elif echo "$1" | grep -qE '^https://[A-z]+.zoom.us/j/'; then
   echo "$1" | xargs open -a /Applications/zoom.us.app
   echo "📞 $1"
 elif echo "$1" | grep -qE '^http[s]?://'; then
