@@ -13,6 +13,7 @@ hs.hotkey.bind(keys.fkey, "w", function()
 end)
 hs.hotkey.bind(keys.fkey, "r", hs.reload)
 hs.hotkey.bind(keys.fkey, "z", function() hs.application.frontmostApplication():focusedWindow():maximize() end)
+hs.hotkey.bind(keys.fkey, "space", function() hs.execute("/Users/meain/.nix-profile/bin/stochos", true) end)
 
 hs.hotkey.bind(keys.fkey, 'm', function()
     local win = hs.window.focusedWindow()
@@ -30,7 +31,7 @@ hs.hotkey.bind(keys.hyper, "i",
 hs.hotkey.bind(keys.hyper, "u", function() customshellrun.launch(",voice-assistant") end)
 hs.hotkey.bind(keys.hyper, "s", function() hs.alert(customshellrun.run("GUI_PICKER=1 ,se", true)) end)
 
-hs.hotkey.bind(keys.fkey, ",", function() hs.alert(customshellrun.run("open /Applications/fin-ui.app", true)) end)
+hs.hotkey.bind(keys.fkey, ",", function() hs.alert(customshellrun.run("open /Applications/beacon.app", true)) end)
 hs.hotkey.bind(keys.fkey, ";", function() hs.application.launchOrFocusByBundleID("com.meain.booker") end)
 
 -- cmd+t from anywhere to open a new tab in browser
