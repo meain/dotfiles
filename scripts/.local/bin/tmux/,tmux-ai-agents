@@ -31,12 +31,14 @@ while IFS='	' read -r PANE_ID WINDOW_ID SESSION WINDOW_NAME PANE_PATH PID AGENT_
     STATUS=""
     AGENT="$AGENT_NAME"
     PROJECT=""
+    TS=0
     if [ -f "$FILE" ]; then
-        TS=$(jq -r '.timestamp // 0' "$FILE" 2>/dev/null)
-        AGE=$((NOW - ${TS:-0}))
-        if [ -n "$TS" ] && [ "$TS" != "0" ] && [ "$AGE" -le "$STALE_SECS" ]; then
+        FTS=$(jq -r '.timestamp // 0' "$FILE" 2>/dev/null)
+        AGE=$((NOW - ${FTS:-0}))
+        if [ -n "$FTS" ] && [ "$FTS" != "0" ] && [ "$AGE" -le "$STALE_SECS" ]; then
             STATUS=$(jq -r '.status // empty' "$FILE" 2>/dev/null)
             PROJECT=$(jq -r '.project // empty' "$FILE" 2>/dev/null)
+            TS="$FTS"
         fi
     fi
     [ -z "$STATUS" ] && STATUS="idle"
@@ -49,12 +51,19 @@ while IFS='	' read -r PANE_ID WINDOW_ID SESSION WINDOW_NAME PANE_PATH PID AGENT_
         *)       INDICATOR=" " ;;
     esac
 
-    POPUP_TAG=""
-    if [ "$SESSION" = "popup-floater" ]; then
-        POPUP_TAG=" $(printf '\033[34m[popup]\033[0m')"
+    TS_DISPLAY="-"
+    if [ "$TS" != "0" ]; then
+        ELAPSED=$((NOW - TS))
+        if [ "$ELAPSED" -lt 60 ]; then
+            TS_DISPLAY="${ELAPSED}s ago"
+        elif [ "$ELAPSED" -lt 3600 ]; then
+            TS_DISPLAY="$((ELAPSED / 60))m ago"
+        else
+            TS_DISPLAY="$((ELAPSED / 3600))h ago"
+        fi
     fi
 
-    ENTRIES="$ENTRIES$WINDOW_ID	$PANE_ID	$PANE_ID	$INDICATOR [$AGENT] $PROJECT ($WINDOW_NAME) — $STATUS$POPUP_TAG\n"
+    ENTRIES="$ENTRIES$WINDOW_ID	$PANE_ID	$PANE_ID	$INDICATOR $SESSION/$PROJECT $WINDOW_NAME:$STATUS ($TS_DISPLAY) [$AGENT]	$TS\n"
 done <<EOF
 $SCAN
 EOF
@@ -62,9 +71,10 @@ EOF
 [ -z "$ENTRIES" ] && echo "No active AI agents" && exit 0
 
 SELECTED=$(printf "%b" "$ENTRIES" \
+    | sort -t "	" -k5,5nr \
     | fzf --ansi -d "	" --with-nth=4 --prompt='agent: ' \
         --preview 'tmux capture-pane -t {3} -p -e 2>/dev/null | awk "NF{blank=0;print} !NF{blank++;if(blank<3)print}" | tail -n $FZF_PREVIEW_LINES' \
-        --preview-window 'right:70%' \
+        --preview-window 'bottom:80%' \
         --height=100% \
         --bind "alt-enter:execute(printf 'Message: '; read -r msg; [ -n \"\$msg\" ] && tmux send-keys -t {3} \"\$msg\" Enter)" \
         || true)

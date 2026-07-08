@@ -6,13 +6,16 @@
 #   With no target, scans all panes across all sessions.
 #   With a target (window/session id), scoped to `tmux list-panes -t <target>`.
 #
-# Output (TSV): pane_id  window_id  session_name  window_name  pane_current_path  agent_pid  agent_name
+# Output (TSV): pane_id  window_id  session_group_or_name  window_name  pane_current_path  agent_pid  agent_name
+# session_group_or_name is the session_group when grouped (e.g. floating popups
+# joined under one group), falling back to the plain session_name otherwise --
+# same display logic tmux itself uses in the status bar.
 
 set -e
 
 TARGET="${1:-}"
 
-FMT='#{pane_id}	#{window_id}	#{session_name}	#{window_name}	#{pane_current_path}	#{pane_pid}'
+FMT='#{pane_id}	#{window_id}	#{?session_group,#{session_group},#{session_name}}	#{window_name}	#{pane_current_path}	#{pane_pid}'
 if [ -n "$TARGET" ]; then
     PANES=$(tmux list-panes -t "$TARGET" -F "$FMT" 2>/dev/null) || true
 else
