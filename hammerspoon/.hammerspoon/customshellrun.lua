@@ -1,6 +1,10 @@
 local utils = require("utils")
-
 local module = {}
+
+-- Dump the fully loaded zsh PATH so other tools can reuse it, since
+-- hammerspoon's own PATH is minimal. Used for customshell run
+hs.execute("zsh -ilc 'echo $PATH > ~/.local/share/latestpath'")
+
 
 module.run = function(script, use_zsh)
     use_zsh = use_zsh or false
@@ -9,7 +13,7 @@ module.run = function(script, use_zsh)
         -- no need to specify full path in script, but just too slow
         result = hs.execute(script, "/bin/zsh")
     else
-        -- Do `echo $PATH > ~/.local/share/latestpath` once in a while
+        -- PATH dumped on hammerspoon start (see init.lua) since hammerspoon's own PATH is minimal
         local path = io.open("/Users/meain/.local/share/latestpath"):read()
         result = hs.execute("PATH='"..path.."' " .. script)
     end
