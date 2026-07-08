@@ -49,11 +49,13 @@ When given a URL, classify the source, fetch content, and add a task to the back
 Format: `- [ ] <concise description> [ref](<original-url>)`
 
 Guidelines:
-- Keep description under ~80 visible chars
+- Keep description **short** — a few words, enough to identify the task. No inline rationale or detail.
+- If more context is needed, create a task note and link it with a wiki-link instead of expanding the description.
 - Include person's first name if someone is asking/assigning something
 - Jira: `Fix auth token storage bug [DP-1234](url)`
 - GitHub PR: `Review [repo#number](url): summary`
 - Teams: `Review topic from Name [ref](url)`
+- Use `[x]` for completed or won't-do items. Never use `[-]` or any other checkbox state.
 
 ### Step 4: Add to Backlog
 
@@ -153,3 +155,5 @@ Then:
 - Each PR must be on its own line
 - Never remove section headers (Today, Tomorrow, etc.) even when empty
 - Show meeting times in IST (UTC+5:30)
+- Keep all backlog entries short — a few words per line. Use task notes for detail.
+- Only two checkbox states: `- [ ]` (open) and `- [x]` (done/won't-do). Never use `[-]`.

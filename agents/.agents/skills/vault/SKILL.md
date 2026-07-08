@@ -26,13 +26,17 @@ description: >
 
 ```
 - [ ] Task description                        # unchecked
-- [x] Task description                        # completed
+- [x] Task description                        # completed (use for done OR won't-do — no [-] state)
 - [ ] Description 🔺                          # high priority
 - [ ] Description 📅 YYYY-MM-DD               # due date
 - [ ] [[Tasks/YYYY-MM/Task Name]]             # linked task note
 - [ ] Description [PROJ-123](url)             # linked to Jira
 - [ ] Description [ref](url)                  # linked to external ref
 ```
+
+**Entry length**: Keep backlog entries short — a few words, enough to identify the task. Do NOT add long descriptions, rationale, or investigation notes inline. If more context is needed, create a task note (`Tasks/YYYY-MM/<name>.md`) and link it with a wiki-link.
+
+**Completion**: Always use `[x]` for completed/won't-do items. Never use `[-]` or any other state.
 
 ## Operations
 
@@ -47,8 +51,8 @@ Append `- [ ] <description>` to the end of the target section in `Backlog/Backlo
 - "weekend" → Weekend | "next week" → Next Week | "whenever"/"someday" → Whenever | "ongoing" → Ongoing
 - Day names → match the `### DayName` section heading
 
-Include links: `[PROJ-123](https://...)` for Jira, `[ref](url)` for Teams/PRs.
-If a detailed task note is needed, create it first then link with wiki-link.
+Keep the description short. Include a link if there's a Jira ticket or PR: `[PROJ-123](https://...)` or `[ref](url)`.
+If additional context is needed, create a task note first and link with a wiki-link.
 
 ### 3. Complete Task
 Find the line by substring match in `Backlog.md`, change `- [ ]` to `- [x]`. If multiple matches, show and ask.
