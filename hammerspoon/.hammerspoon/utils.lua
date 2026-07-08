@@ -236,5 +236,19 @@ function utils.dump(o)
    end
 end
 
+function utils.loadCredentials()
+    local env = {}
+    local file = io.open(os.getenv("HOME") .. "/.credentials", "r")
+    if not file then return env end
+    
+    for line in file:lines() do
+        local key, value = line:match("^export%s+([%w_]+)%s*=%s*[\"']?([^\"']+)[\"']?")
+        if key and value then
+            env[key] = value
+        end
+    end
+    file:close()
+    return env
+end
 
 return utils

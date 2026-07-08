@@ -31,7 +31,14 @@ hs.hotkey.bind(keys.hyper, "i",
 hs.hotkey.bind(keys.hyper, "u", function() customshellrun.launch(",voice-assistant") end)
 hs.hotkey.bind(keys.hyper, "s", function() hs.alert(customshellrun.run("GUI_PICKER=1 ,se", true)) end)
 
-hs.hotkey.bind(keys.fkey, ",", function() hs.alert(customshellrun.run("open /Applications/beacon.app", true)) end)
+hs.hotkey.bind(keys.fkey, ",", function()
+    local utils = require("utils")
+    local credentials = utils.loadCredentials()
+    
+    local task = hs.task.new("/usr/bin/open", nil, {"/Applications/beacon.app"})
+    task:setEnvironment(credentials)
+    task:start()
+end)
 hs.hotkey.bind(keys.fkey, ";", function() hs.application.launchOrFocusByBundleID("com.meain.booker") end)
 
 -- cmd+t from anywhere to open a new tab in browser
