@@ -9,61 +9,77 @@ description: >
 
 # /explain-flow — Explain Code with Concrete Examples
 
-Produce a clear explanation of how data flows through a PR, function, or module using concrete
-input/output examples. The goal is to make the reader *see* the data transforming at each step.
+Produce a clear explanation of how data flows through a PR, function, or module. The goal is to
+build the reader's mental model first, then confirm it with code — not to narrate the diff line
+by line.
 
-## Process
+## Step 1 — Gather the source material
 
-### 1. Identify the target
-
-- **PR**: Fetch with `gh pr view` and `gh pr diff`. Read all changed files.
-- **Function**: Read the function and its callers/callees (one level each direction).
+- **PR**: `gh pr view` and `gh pr diff`. Read all changed files.
+- **Function**: Read the function and its callers/callees one level in each direction.
 - **Module/package**: Read the public API surface and key internal wiring.
 
-### 2. Understand the before and after
+For PRs and refactors, understand what the code did *before* the change and what it does *after*
+before writing anything.
 
-For PRs and refactors, understand what the code did *before* the change and what it does *after*.
-For functions/modules, understand the entry points, exit points, and key decision branches.
+## Step 2 — Write the explanation
 
-### 3. Write the explanation
+Work through these sections in order. Each one builds on the last.
 
-Structure the output as follows:
+### Background
 
-#### a. One-paragraph summary
-What does this change/code do and why? Lead with the motivation.
+Orient the reader before touching the code. Assume no prior knowledge of the surrounding system.
+Cover:
+- What the surrounding system does (one short paragraph)
+- What was missing, broken, or constrained that prompted this change
+- Any architectural rules or design decisions that shaped the approach
 
-#### b. Step-by-step flow with concrete examples
-Walk through the code path using realistic example data. Show the actual values at each step.
+### Intuition
 
-Use indented code blocks for data snapshots:
+Explain the 2–4 core ideas in the change *before* showing any real code. Use toy examples and
+analogies. For each concept:
+- Name it
+- Make it concrete with a minimal before/after or a simple example
+- State why it matters
+
+This section should make the Code section feel like confirmation rather than discovery. Don't
+front-load implementation detail here — that belongs in the next section.
+
+### Code walkthrough
+
+One-paragraph summary of what the change does and why, then a step-by-step trace through the
+key code path using realistic example data. Show actual values at each step:
 
 ```
-Request: GET /api/items?filter=active
-  1. Parse filters → { status: "active" }
-  2. Check permissions → { orgIDs: ["org-1"], tenantIDs: ["t-1"] }
-  3. Query DB with filters + permissions → SELECT ... WHERE status='active' AND org_id IN ('org-1')
-  4. Return → [{ id: "item-1", status: "active" }]
+Input: GET /api/items?filter=active
+  1. Parse filters      → { status: "active" }
+  2. Check permissions  → { orgIDs: ["org-1"], tenantIDs: ["t-1"] }
+  3. Query DB           → SELECT ... WHERE status='active' AND org_id IN ('org-1')
+  4. Return             → [{ id: "item-1", status: "active" }]
 ```
 
-#### c. Decision matrix (when there are branches)
-Use a markdown table showing different scenarios and their outcomes:
+When a transformation spans multiple steps, show the data in both old and new form at *each*
+step — not just the endpoints. The reader should see the value mutating stage by stage.
+
+When there are meaningful branches, add a decision matrix:
 
 ```
-| Input condition       | Path taken     | Result              |
-|----------------------|----------------|---------------------|
-| flag ON + authorized | new + old path | union of both       |
-| flag OFF             | old path only  | legacy behavior     |
-| neither authorized   | early return   | empty response      |
+| Input condition       | Path taken     | Result          |
+|----------------------|----------------|-----------------|
+| flag ON + authorized | new + old path | union of both   |
+| flag OFF             | old path only  | legacy behavior |
+| neither authorized   | early return   | empty response  |
 ```
 
-#### d. Other changes (if PR)
-Briefly list supporting/mechanical changes (test updates, helpers, config) that don't affect the core flow.
+### Other changes (PRs only)
+
+Briefly list mechanical or supporting changes — test updates, config, helpers — that don't affect
+the core flow.
 
 ## Guidelines
 
-- Use **realistic field names and values** from the actual code, not generic placeholders.
-- Keep examples **short but complete** — show enough to understand the transformation, not every field.
-- When explaining PRs, always contrast **before vs after** behavior.
+- Use realistic field names and values from the actual code, not generic placeholders.
+- Keep examples short but complete: enough to see the transformation, not every field.
 - Prefer ASCII flow notation over prose for multi-step pipelines.
-- If a function has many branches, pick the 2-3 most important paths to trace rather than being exhaustive.
-- For modules, start with the "happy path" then mention error/edge paths.
+- Pick the 2-3 most important code paths; don't trace every branch.
+- For modules, lead with the happy path, then note error/edge cases.

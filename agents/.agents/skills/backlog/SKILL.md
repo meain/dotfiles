@@ -148,6 +148,26 @@ Then:
 3. Add new items with reference links
 4. Preserve priority emojis near top of Today
 
+### Step 6: Generate Code Review Summaries (background, best-effort)
+
+After the backlog is committed and usable, spin off **parallel background agents** — one per PR selected for review. Each agent should:
+
+1. Fetch the PR diff and details from GitHub
+2. Run `/explain-flow` on the PR to generate a code flow summary
+3. Write the result to:
+   ```
+   /Users/meain/.local/share/sbdb/Artifacts/Code Reviews/<org>/<repo>/<pr-number>.md
+   ```
+   For example: `Artifacts/Code Reviews/Veeam-VDC/control-plane-backend/5046.md`
+4. Update the matching backlog line to append a markdown link:
+   ```
+   - [ ] Review [cpb#5046](https://github.com/...): title (author) [summary](Artifacts/Code%20Reviews/Veeam-VDC/control-plane-backend/5046.md)
+   ```
+   Use `[summary]` as link text. Path is vault-root-relative (no `../`). URL-encode spaces (`Code%20Reviews`).
+5. Commit the updated backlog file.
+
+This step is best-effort — the backlog is already complete and usable from Step 5. Summaries enrich the review items but are not blocking.
+
 ### Formatting Rules
 
 - Prefer inline links over trailing links (e.g. `Merge [repo#123](url)`)
