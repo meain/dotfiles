@@ -2,6 +2,16 @@
 
 set -e
 
-jj log --template='bookmarks++"\n"' --no-graph |
-    grep -vE '^$' | grep -v main | sed 's|\*$||' |
-    fzf -m | xargs -n1 jj rebase -d main -b
+# Filter bookmarks to only those modified in the last 14 days
+two_weeks_ago=$(date -d '14 days ago' +%Y-%m-%d)
+
+bookmarks=$(jj log --template='bookmarks++"\n"' --no-graph \
+	--revisions="bookmarks() & mine() & (committer_date(after:'$two_weeks_ago') | empty())" |
+	grep -vE '^$' | grep -v main | sed 's|\*$||' |
+	grep meain/ | fzf -m)
+
+echo "$bookmarks" | xargs -rn1 jj rebase -d main -b
+
+echo
+echo "To push all rebased bookmarks:"
+echo "jj git push $(echo "$bookmarks" | xargs -I{} echo -n '-b {} ')"
