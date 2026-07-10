@@ -61,3 +61,4 @@ AGENTS.md
 **/.claude
 CLAUDE.md
 .osgrep
+.pi-subagents
