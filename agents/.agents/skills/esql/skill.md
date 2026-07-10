@@ -14,7 +14,7 @@ Query Elasticsearch via the Kibana ES|QL async search API. Run ES|QL queries dir
 
 The `,es-web` CLI at `/Users/meain/.local/bin/utils/,es-web` handles Kibana ES|QL queries with automatic async polling, session management, and table output.
 
-**First-time setup** for a cluster: the user provides a curl command from Kibana's network tab:
+**First-time setup** for a cluster: open Kibana's ES|QL tab (use the URL with `dataSource:(type:esql)` so an `esql_async` request fires on load), open DevTools → Network, filter by `esql_async`, right-click the request → **Copy as cURL**, then run:
 ```bash
 pbpaste | ,es-web init stg-us
 pbpaste | ,es-web init prd-eu

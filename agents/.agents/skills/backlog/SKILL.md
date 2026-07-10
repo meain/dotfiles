@@ -104,7 +104,13 @@ Returns a date like `2026-06-29`. Use it in the section header as `### This Cycl
 ```bash
 ~/.agents/skills/backlog/scripts/pending-prs.sh
 ```
-Returns JSON array of PRs where user is a direct reviewer (not via team), excluding approved PRs, drafts, and `Veeam-VDC/vdc-shared-data-plane` PRs (never surface data-plane PRs — not the user's area).
+Returns JSON array of PRs where user is a direct reviewer (not via team), excluding approved PRs, drafts, and `Veeam-VDC/vdc-shared-data-plane` PRs (never surface data-plane PRs — not the user's area). Also exclude dependabot PRs from Veeam-VDC repos — they are auto-reviewed and merged.
+
+**3b-ii. PRs from meain/* repos needing review:** Open PRs in repos owned by the `meain` GitHub org (user's personal projects where others open PRs):
+```bash
+GIT_DIR=$(jj git root 2>/dev/null || echo .git) gh search prs --state=open --owner=meain --json number,title,url,repository,updatedAt,isDraft,author 2>&1
+```
+Include all non-draft PRs not authored by meain. Surface these in a separate "meain/* repos" subsection of the candidates file.
 
 **3c. PRs authored by user:** Open PRs authored by the user across Veeam-VDC org.
 
@@ -119,9 +125,10 @@ Write all candidates to `/tmp/backlog-candidates-YYYY-MM-DD.md` with `- [ ]` lin
 - Today's meetings (from calendar — list as info, no checkboxes; don't add to backlog)
 - My PRs — approved (ready to merge)
 - My PRs — needs action
-- PRs needing direct review — split into two subsections:
-  - **Recent (this week)**: PRs updated within the last ~7 days (only where `login: meain` is a direct reviewer, not team; exclude PRs with "local-dev" in the title, and never include `vdc-shared-data-plane` PRs)
+- PRs needing direct review — split into subsections:
+  - **Recent (this week)**: PRs updated within the last ~7 days (only where `login: meain` is a direct reviewer, not team; exclude PRs with "local-dev" in the title, never include `vdc-shared-data-plane` PRs, and never include dependabot PRs from Veeam-VDC repos — they are auto-reviewed)
   - **Older (sitting for a while)**: PRs more than ~7 days old that are still open and awaiting review (same exclusion rules apply) — useful for surfacing stale reviews that may have been overlooked
+  - **meain/* repos**: Open PRs in `meain`-owned repos (from Step 3b-ii), grouped separately — always include these regardless of age
 - This Cycle — sprint items not yet in the backlog (from Step 3e); selected items go into the `### This Cycle` section, not Today
 - Candidates from other sections (Tomorrow/This Week/Whenever worth pulling in)
 
