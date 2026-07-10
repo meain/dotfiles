@@ -6,6 +6,7 @@
   project_file = "AGENTS.md"
   max_turns = 50
   approve = "all"
+  skills_dirs = ["/Users/meain/dev/veeam/oncall-copilot-plugins/plugins/data-pipelines/skills"]
 
 [model_aliases]
   # openai
