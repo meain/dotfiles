@@ -10,6 +10,4 @@ else
 fi
 
 echo "Using config: $config"
-
-touch /tmp/kmonad-marker
-echo '/tmp/kmonad-marker' | entr -r sudo kmonad "$config"
+sudo kmonad "$config"
