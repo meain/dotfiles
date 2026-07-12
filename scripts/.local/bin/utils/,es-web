@@ -348,6 +348,16 @@ def cmd_list(_args):
             print(f"  {name}: {cfg['url']}")
 
 
+def cmd_remove(args):
+    """Remove a stored cluster config."""
+    path = config_path(args.cluster)
+    if not os.path.exists(path):
+        print(f"No config found for '{args.cluster}'.", file=sys.stderr)
+        sys.exit(1)
+    os.remove(path)
+    print(f"Removed config for '{args.cluster}'.")
+
+
 def main():
     # Pre-extract raw ES|QL query before argparse sees it, since subparsers
     # consume the first positional argument before the main parser's "raw" arg
@@ -376,6 +386,10 @@ def main():
     # list
     sub.add_parser("list", help="List configured clusters")
 
+    # remove
+    remove_p = sub.add_parser("remove", help="Remove a stored cluster config")
+    remove_p.add_argument("cluster", help="Cluster alias to remove (e.g. prd-emea)")
+
     # query (default)
     parser.add_argument("-c", dest="cluster", help="Cluster alias (e.g. stg-us)")
     parser.add_argument("-s", dest="service", help="service.name filter")
@@ -398,6 +412,8 @@ def main():
         cmd_reinit(args)
     elif args.command == "list":
         cmd_list(args)
+    elif args.command == "remove":
+        cmd_remove(args)
     elif args.cluster:
         cmd_query(args)
     else:
