@@ -310,6 +310,14 @@ def cmd_reinit(args):
     print(f"Session valid. Saved config for '{args.cluster}' ({cfg['url']}).")
 
 
+def cmd_test(args):
+    """Test whether the stored session for a cluster is still valid."""
+    cfg = load_config(args.cluster)
+    print(f"Testing session for '{args.cluster}' ({cfg['url']})...")
+    do_esql(cfg, "FROM logs-* | STATS n = COUNT(*) | LIMIT 1")
+    print(f"Session valid for '{args.cluster}' ({cfg['url']}).")
+
+
 def cmd_query(args):
     """Run an ES|QL query."""
     cfg = load_config(args.cluster)
@@ -383,6 +391,12 @@ def main():
     )
     reinit_p.add_argument("cluster", help="Cluster alias (e.g. stg-us, prd-eu)")
 
+    # test
+    test_p = sub.add_parser(
+        "test", help="Test whether the stored session for a cluster is still valid"
+    )
+    test_p.add_argument("cluster", help="Cluster alias (e.g. stg-us, prd-eu)")
+
     # list
     sub.add_parser("list", help="List configured clusters")
 
@@ -410,6 +424,8 @@ def main():
         cmd_init(args)
     elif args.command == "reinit":
         cmd_reinit(args)
+    elif args.command == "test":
+        cmd_test(args)
     elif args.command == "list":
         cmd_list(args)
     elif args.command == "remove":
