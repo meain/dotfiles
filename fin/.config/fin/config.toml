@@ -4,7 +4,7 @@
 
 [settings]
   project_file = "AGENTS.md"
-  max_turns = 50
+  max_turns = 200
   approve = "all"
   skills_dirs = ["/Users/meain/dev/veeam/oncall-copilot-plugins/plugins/data-pipelines/skills"]
 
@@ -33,7 +33,8 @@
 
   # anthropic
   haiku = "anthropic/claude-haiku-4-5"
-  sonnet = "anthropic/claude-sonnet-4-5"
+  sonnet4 = "anthropic/claude-sonnet-4-5"
+  sonnet = "anthropic/claude-sonnet-5"
   opus = "anthropic/claude-opus-4-6"
 
 [providers]
