@@ -71,6 +71,14 @@ Collaboratively update the Today section of the backlog by pulling data from ext
 
 Always run `date "+%Y-%m-%d (%A)"` and treat its output as authoritative.
 
+**Monday cleanup:** If today is Monday, check each PR in `/Users/meain/.local/share/ignored-prs-for-review` to see if it has been merged or closed. For each non-empty line:
+```bash
+export GIT_DIR=$(jj git root 2>/dev/null || echo .git)
+result=$(gh pr view "https://github.com/$path" --json state 2>&1)
+state=$(echo "$result" | grep -o 'OPEN\|MERGED\|CLOSED')
+```
+Remove any entries where state is not `OPEN` (merged, closed, or unknown/deleted). Rewrite the file keeping only `OPEN` entries. Report how many were pruned.
+
 ### Step 1: Read Backlog
 
 Read the full backlog file first.
@@ -106,11 +114,16 @@ Returns a date like `2026-06-29`. Use it in the section header as `### This Cycl
 ```
 Returns JSON array of PRs where user is a direct reviewer (not via team), excluding approved PRs, drafts, and `Veeam-VDC/vdc-shared-data-plane` PRs (never surface data-plane PRs — not the user's area). Also exclude dependabot PRs from Veeam-VDC repos — they are auto-reviewed and merged.
 
+After fetching, filter out ignored PRs:
+```bash
+~/.agents/skills/backlog/scripts/pending-prs.sh | grep -vFf /Users/meain/.local/share/ignored-prs-for-review
+```
+
 **3b-ii. PRs from meain/* repos needing review:** Open PRs in repos owned by the `meain` GitHub org (user's personal projects where others open PRs):
 ```bash
 GIT_DIR=$(jj git root 2>/dev/null || echo .git) gh search prs --state=open --owner=meain --json number,title,url,repository,updatedAt,isDraft,author 2>&1
 ```
-Include all non-draft PRs not authored by meain. Surface these in a separate "meain/* repos" subsection of the candidates file.
+Include all non-draft PRs not authored by meain. Filter out ignored PRs using `grep -vFf /Users/meain/.local/share/ignored-prs-for-review`. Surface these in a separate "meain/* repos" subsection of the candidates file.
 
 **3c. PRs authored by user:** Open PRs authored by the user across Veeam-VDC org.
 
@@ -137,6 +150,8 @@ The "Checked-off items to move to Before" header must include the day name, e.g.
 **Inline Jira details**: For any candidate line that references a Jira ticket (e.g. `[DP-1234](url)` or a `DP-1234` in a PR title), fetch the ticket with `jira issue view DP-1234 --plain` (run in parallel for all tickets, `dangerouslyDisableSandbox: true`) and add a concise detail line immediately below the candidate, indented and prefixed with `↳`. Format: `↳ DP-1234 (Type, Status, assignee/mine): one-line summary of the ask`. This lets the reader glance at ticket context while selecting. These `↳` lines are candidate-file only — do NOT carry them into `Backlog.md`, which stays single-line per item.
 
 Invoke the `/edit-in-emacs` skill with the file path (blocking, 600s timeout). After it returns, treat remaining `- [ ]` lines as selections.
+
+**Handling `(ignored)` markers:** After the emacs edit returns, scan the candidates file for any lines containing `(ignored)`. For each such line, extract the GitHub URL and append it (as a path fragment like `owner/repo/pull/N`) to `/Users/meain/.local/share/ignored-prs-for-review`. Do not add these PRs to the backlog.
 
 **Never use AskUserQuestion / multi-select prompts** — always go straight to the emacs file.
 
