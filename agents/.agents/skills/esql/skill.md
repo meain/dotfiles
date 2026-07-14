@@ -71,6 +71,21 @@ Session cookies expire after a few hours. If you get a 401/session expired error
 - For raw ES|QL queries, pass the full query as a positional argument — no default KEEP is added
 - LIKE queries on `message` across many services can be slow — scope with service and tight time windows
 
+## EARN-specific reference
+
+For EARN log fields, structured labels, message strings, query patterns, and metrics, read:
+`.mdocs/reference/earn-kibana-esql-reference.md` (relative to the `control-plane-backend` repo root).
+
+That doc is authoritative for EARN. The quick summary of EARN-specific field names (these differ from other services):
+- `labels.workload_tenant_id` — workload tenant UUID (not `labels.workload_tenant.id`)
+- `labels.event_type` — EARN event type (not `labels.earn.event.type`)
+- `labels.organization_id` — org UUID in EARN context
+- `labels.operation` — EARN operation name (e.g. `get_workload_tenant_metadata`)
+- `labels.clog_labels` — structured log category (e.g. `[earn_event_dropped]`)
+- `log.level` — log level in EARN APM logs (not `level`)
+
+Note: EARN logs appear **twice** in `logs-*` — once as APM-parsed (`data_stream.dataset: apm.app.earn`, has structured fields) and once as raw filebeat (`data_stream.dataset: kubernetes.container_logs`, has JSON in message). Filter to `data_stream.dataset == "apm.app.earn"` to avoid double-counting in STATS.
+
 ## Known service names
 
 These are the `service.name` values for control-plane-backend services:
@@ -106,11 +121,11 @@ The nginx ingress controller logs under `service.name == "nginx"`.
 - `labels.error` / `labels.error_message` — error details
 - `labels.organization_id` / `labels.org_id` — organization identifier
 - `labels.organization.id` — alternative org ID field
-- `labels.workload_tenant.id` — workload tenant identifier
+- `labels.workload_tenant_id` — workload tenant identifier (EARN: same field, see EARN reference)
 - `labels.user.id` / `labels.principal.id` — user/principal identifiers
 - `labels.operation` — operation being performed
 - `labels.handler` — handler name
-- `labels.earn.event.type` — EARN event type
+- `labels.event_type` — EARN event type (use `labels.event_type`, not `labels.earn.event.type`)
 - `labels.earn.event.dedupe_key` — EARN dedup key
 - `labels.scheduler.event.id` — scheduler event ID
 - `labels.request.url` — outgoing request URL
@@ -182,7 +197,7 @@ FROM logs-*
 | WHERE service.environment == "prod"
   AND @timestamp >= "START"
   AND @timestamp <= "END"
-  AND labels.workload_tenant.id == "TENANT_ID"
+  AND labels.workload_tenant_id == "TENANT_ID"
 | SORT @timestamp DESC
 | LIMIT 30
 | KEEP @timestamp, service.name, message, labels.error, labels.operation
@@ -268,7 +283,7 @@ Broader service-level search (no trace ID):
 | Staging / production | Use `,es-web -c <cluster>` (requires session cookie from user) |
 | No session available | Fall back to clipboard mode (see below) |
 
-**Cluster naming convention:** `<env>-<region>`, e.g. `stg-us`, `stg-eu`, `prd-us`, `prd-eu`, `prd-apac`.
+**Cluster naming convention:** `<env>-<region>`, e.g. `stg-us`, `stg-eu`, `prd-us`, `prd-eu`, `prd-apj` (APJ, not apac).
 
 When no `,es-web` session is configured for the target cluster:
 1. Look up the Kibana URL on the Confluence Speed Dial page (`confluence page 405504500`), open `<kibana-base-url>/app/discover#/` with `open <url>` (with `dangerouslyDisableSandbox: true`), then ask the user to copy a curl from the network tab and run `! pbpaste | ,es-web init <cluster>`
