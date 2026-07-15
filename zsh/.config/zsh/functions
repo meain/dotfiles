@@ -289,3 +289,22 @@ eout() {
 eoh() {
     esa --show-output "${1:-1}" | ,markdown-to-html
 }
+
+# use leaf --inline only when stdout is a terminal; otherwise pass through raw
+finm() {
+    if [ -t 1 ]; then
+        fin -export message | leaf --inline
+    else
+        fin -export message
+    fi
+}
+
+finms() {
+    session="$(,fin-session-picker)"
+    [ -z "$session" ] && return 1
+    if [ -t 1 ]; then
+        fin -export message -session "$session" | leaf --inline
+    else
+        fin -export message -session "$session"
+    fi
+}

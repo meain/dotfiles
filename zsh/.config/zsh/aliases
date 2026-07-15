@@ -70,8 +70,6 @@ alias finxs=",fin-session-export"
 alias fincs=",fin-session-picker | xargs -rI{} fin -session {} "
 alias finh="fin -export message | ,markdown-to-html"
 alias finhs=",fin-session-picker | xargs -rn1 fin -export message -session | ,markdown-to-html"
-alias finm="fin -export message | leaf --inline"
-alias finms=",fin-session-picker | xargs -rn1 fin -export message -session | leaf --inline"
 alias finr=",fin-repl"
 
 # esa
