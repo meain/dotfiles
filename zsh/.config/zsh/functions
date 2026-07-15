@@ -308,3 +308,16 @@ finms() {
         fin -export message -session "$session"
     fi
 }
+
+# open piped stdin content in emacs (via a temp file)
+oe() {
+    f="$(mktemp)"
+    cat >"$f"
+    if [ -s "$f" ]; then
+        emacsclient -n "$f"
+    else
+        echo "oe: no input, nothing to open" >&2
+        rm -f "$f"
+        return 1
+    fi
+}
