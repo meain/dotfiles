@@ -208,7 +208,7 @@ Uses 'ddgr' web search to look up a URL and insert a formatted markdown link."
   :after (edit-indirect evil)
   :mode ("\\.md\\'" . gfm-mode)
   :config
-  (setq markdown-url-compose-char '(8230 8943 35 9733 9875))
+  (setq markdown-url-compose-char '(?@ 8230 8943 35 9733 9875))
   (setq markdown-enable-html -1)
   (setq markdown-enable-wiki-links nil) ; makes markdown mode super slow
   (setq markdown-gfm-use-electric-backquote nil) ; don't ask me to pick lang in ```
@@ -315,7 +315,7 @@ Uses 'ddgr' web search to look up a URL and insert a formatted markdown link."
                     (when meain/markdown-ts-hide-urls
                       (put-text-property (treesit-node-start node)
                                          (treesit-node-end node)
-                                         'display "…")))))))
+                                         'display "@")))))))
 
 ;; Run markdown code blocks
 ;; Possible alternative https://github.com/md-babel/md-babel.el
