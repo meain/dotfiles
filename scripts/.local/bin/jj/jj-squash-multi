@@ -1,0 +1,10 @@
+#!/bin/sh
+
+set -e
+
+if [ -n "$1" ]; then
+    # auto mode: squash every revision without a description into its parent
+    jj stack | grep -F '(no description set)' | cut -d' ' -f3 | JJ_EDITOR=true xargs -n1 jj squash -r
+else
+    jj stack | ,picker -m | cut -d' ' -f3 | JJ_EDITOR=true xargs -n1 jj squash -r
+fi
