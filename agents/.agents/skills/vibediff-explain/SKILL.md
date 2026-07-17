@@ -95,7 +95,8 @@ curl -s -X POST http://localhost:8888/api/review/comment \
     "file": "path/to/file.go",
     "line": 42,
     "content": "Explanation of why this change was made",
-    "author": "EXPLAIN"
+    "author": "agent",
+    "authorName": "explain"
   }'
 ```
 
@@ -142,7 +143,8 @@ curl -s -X POST http://localhost:8888/api/review/comment \
     \"revision\": \"$REV\",
     \"file\": \"services/earn/tests/earn-e2e/org-anchoring_test.go\",
     \"line\": 1,
-    \"author\": \"EXPLAIN\",
+    \"author\": \"agent\",
+    \"authorName\": \"explain\",
     \"content\": \"E2E test suite validating EARN's org anchor geo routing behavior...\"
   }"
 
@@ -154,14 +156,15 @@ curl -s -X POST http://localhost:8888/api/review/comment \
     \"revision\": \"$REV\",
     \"file\": \"services/earn/tests/earn-e2e/api.go\",
     \"line\": 53,
-    \"author\": \"EXPLAIN\",
+    \"author\": \"agent\",
+    \"authorName\": \"explain\",
     \"content\": \"Added variadic opts parameter to allow passing additional HTTP client options...\"
   }"
 ```
 
 ## Notes
 
-- Always set `"author": "EXPLAIN"` in comment payloads (not "agent" — this is the user's preferred identifier)
+- Always set `"author": "agent"` and `"authorName": "explain"` in comment payloads — the backend only accepts `"user"` or `"agent"` for `author`; `authorName` is the tag for which kind of agent posted it, and the UI renders it as `agent:explain`
 - `directory` and `file` are required for root comments
 - Comments are persisted in `~/.config/vibediff/comments/<sha256-of-path>.json`
 - Focus on WHY over WHAT — the code shows what changed

@@ -101,11 +101,12 @@ curl -X POST http://localhost:8888/api/review/comment \
   -d '{
     "content": "Your reply text here",
     "author": "agent",
+    "authorName": "explainer",
     "parentId": "parent-comment-id"
   }'
 ```
 
-Always set `"author": "agent"` when creating replies.
+Always set `"author": "agent"` when creating replies. Optionally set `authorName` (max 50 chars) to tag which kind of agent posted the comment (e.g. `"explainer"`) — the UI renders it as `agent:<authorName>`.
 
 ### Create new comment
 
@@ -177,6 +178,7 @@ Confirm via `GET /api/revisions` — the `id` field is always the jj change ID.
   "lineEnd": 44,
   "content": "Why is this offset by one?",
   "author": "user",
+  "authorName": "",
   "status": "open",
   "parentId": "",
   "revision": "",
@@ -184,6 +186,8 @@ Confirm via `GET /api/revisions` — the `id` field is always the jj change ID.
   "createdAt": "2026-06-16T15:04:05Z"
 }
 ```
+
+`authorName` is optional and typically only set on agent comments/replies (see above).
 
 Replies have `parentId` set. All comments in the API response are flat — group by `parentId` to build threads.
 
