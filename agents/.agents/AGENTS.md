@@ -42,6 +42,13 @@
 - To open a URL in the browser, use `open <url>` (no sandbox needed). Reserve the `/firefox` skill for interactions that require UI scripting — tab switching, keyboard shortcuts, getting tab info.
 - When debugging Emacs issues, connect to the running instance via `emacsclient --eval '(...)'` to inspect state, evaluate expressions, or test fixes without restarting.
 
+## CLI Tool Preferences
+
+- Use `rg` (ripgrep) instead of `grep` for searching file contents — it's faster and respects `.gitignore` by default, avoiding huge vendored/cache directories (e.g. `node_modules`, `elpaca`, `.git`).
+- Use `fd` instead of `find` for locating files — simpler syntax, faster, and also respects `.gitignore` by default.
+- If a search needs to include ignored files (e.g. inside a gitignored cache dir), pass `-uu`/`--no-ignore` to `rg`/`fd` explicitly rather than reaching for `grep`/`find`.
+- Scope searches to the relevant directory rather than the whole repo root when possible, even with `rg`/`fd`.
+
 ## Workflow
 
 - Ask me before you do action on a public forum like Jira or GitHub PRs/issues unless I have already explicitly asked you to do it.
