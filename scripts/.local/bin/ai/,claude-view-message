@@ -10,21 +10,51 @@ CLAUDE_DIR="$HOME/.claude/projects"
 tmpdir=$(mktemp -d)
 trap 'rm -rf "$tmpdir"' EXIT
 
-# Extract last assistant text from a jsonl file using a single jq call
+# Extract last assistant text from a single jsonl file (used for preview + final render)
 cat >"$tmpdir/extract.sh" <<'SCRIPT'
 #!/bin/sh
 jq -rs '[.[] | select(.message.role=="assistant")] | last | [.message.content[]? | select(.type=="text") | .text] | join("\n\n") // empty' "$1" 2>/dev/null
 SCRIPT
 chmod +x "$tmpdir/extract.sh"
 
+# jq program: single pass over all candidate files, streaming inputs across file
+# boundaries. Tracks the last assistant message per file (detected via
+# input_filename changing) and emits {file, cwd, ts, text} once per file,
+# filtered to messages with more than 3 lines of text. This avoids spawning a
+# jq process per file, which is what made the old implementation slow.
+cat >"$tmpdir/build.jq" <<'JQ'
+def mk($f; $cwd; $l):
+  ($l.timestamp // "") as $ts
+  | ([$l.message.content[]? | select(.type=="text") | .text] | join("\n\n")) as $text
+  | { file: $f, cwd: $cwd, ts: $ts, text: $text };
+
+reduce inputs as $item (
+  {file: null, cwd: null, last: null, out: []};
+  (input_filename) as $f
+  | if $f != .file then
+      (if .last != null then .out += [mk(.file; .cwd; .last)] else . end)
+      | .file = $f
+      | .cwd = null
+      | .last = (if ($item.message.role? // "") == "assistant" then $item else null end)
+      | (if $item.cwd then .cwd = $item.cwd else . end)
+    else
+      (if $item.cwd then .cwd = $item.cwd else . end)
+      | (if ($item.message.role? // "") == "assistant" then .last = $item else . end)
+    end
+) as $r
+| ($r.out + (if $r.last != null then [mk($r.file; $r.cwd; $r.last)] else [] end))[]
+| select((.text | [scan("\n")] | length) > 3)
+| [.file, .cwd, .ts] | @tsv
+JQ
+
 # Build entries from sessions modified in last 24h
-for f in $(find "$CLAUDE_DIR" -maxdepth 2 -name "*.jsonl" -mmin -1440 2>/dev/null); do
-    text=$("$tmpdir/extract.sh" "$f")
-    [ "$(printf '%s' "$text" | wc -l)" -gt 3 ] || continue
-    ts=$(jq -rs '[.[] | select(.message.role=="assistant")] | last | .timestamp // empty' "$f" 2>/dev/null)
-    project_dir=$(dirname "$f")
-    project=$(jq -r '.originalPath // empty' "$project_dir/sessions-index.json" 2>/dev/null | xargs basename 2>/dev/null)
-    [ -z "$project" ] && project=$(basename "$project_dir")
+files=$(find "$CLAUDE_DIR" -maxdepth 2 -name "*.jsonl" -mmin -1440 2>/dev/null)
+[ -n "$files" ] || { echo "No messages found" >&2; exit 1; }
+
+jq -n -r -f "$tmpdir/build.jq" $files 2>/dev/null | while IFS="$(printf '\t')" read -r f cwd ts; do
+    project="$cwd"
+    [ -n "$project" ] && project=$(basename "$project")
+    [ -z "$project" ] && project=$(basename "$(dirname "$f")")
     short_id=$(basename "$f" .jsonl | cut -c1-8)
     printf '%s|%s  %s/%s\n' "$f" "$ts" "$project" "$short_id"
 done | sort -t'|' -k2,2r >"$tmpdir/entries"
