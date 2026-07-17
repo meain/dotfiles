@@ -1,0 +1,15 @@
+#!/bin/sh
+
+set -e
+
+revset='stack(immutable_heads()..@)'
+
+if [ -n "$1" ]; then
+	# auto mode: squash every revision without a description into its
+	# parent, except the oldest one (closest to a described ancestor)
+	# so it isn't squashed away entirely
+	jj log -r "heads(stack(immutable_heads()..@) & ~description(''))..@" \
+		--no-graph -T 'change_id.shortest(12) ++ "\n"' | head -n-1
+else
+	jj stack | ,picker -m | cut -d' ' -f3
+fi | JJ_EDITOR=true xargs -n1 jj squash -r
