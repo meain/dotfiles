@@ -11,5 +11,5 @@ if [ -n "$1" ]; then
 	jj log -r "heads(stack(immutable_heads()..@) & ~description(''))..@" \
 		--no-graph -T 'change_id.shortest(12) ++ "\n"' | head -n-1
 else
-	jj stack | ,picker -m | cut -d' ' -f3
+	jj stack | ,picker -m --preview 'jj show {2}' | cut -d' ' -f3
 fi | JJ_EDITOR=true xargs -n1 jj squash -r
