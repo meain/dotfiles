@@ -11,9 +11,36 @@
   (defun meain/browse-jira (url &rest _)
     (let ((jira-id (replace-regexp-in-string "^http://\\(\\S+\\)" "\\1" url)))
       (browse-url (concat "https://veeam-vdc.atlassian.net/browse/" jira-id))))
+  ;; Convert anything which looks like #<digits> to a GitHub issue/PR URL
+  ;; by looking up the git remote for the current buffer's repo
+  (defun meain/browse-github-issue (url &rest _)
+    (let* ((issue-number (replace-regexp-in-string "^http://#\\([0-9]+\\)" "\\1" url))
+           (default-directory (or (when buffer-file-name (vc-root-dir))
+                                  default-directory))
+           (remote-url (string-trim
+                        (shell-command-to-string "git remote get-url origin")))
+           (repo-path (replace-regexp-in-string
+                       "\\(?:git@github\\.com:\\|https://github\\.com/\\)\\(.*?\\)\\(?:\\.git\\)?$"
+                       "\\1"
+                       remote-url)))
+      (browse-url (concat "https://github.com/" repo-path "/issues/" issue-number))))
   (setq browse-url-handlers
         '(("^http://CP-[0-9]+" . meain/browse-jira) ; Control Plane
-          ("^http://DP-[0-9]+" . meain/browse-jira)))) ; Data Plane
+          ("^http://DP-[0-9]+" . meain/browse-jira)  ; Data Plane
+          ("^http://#[0-9]+"   . meain/browse-github-issue)))) ; GitHub issue/PR
+
+;; Embark target finder so `embark-act' on CP-1234/DP-1234/#1234 at
+;; point offers the usual url actions (browse-url, embark-download-url,
+;; etc.), which then dispatch through the browse-url-handlers above.
+(defun meain/embark-target-jira-github-at-point ()
+  "Target a CP-/DP- Jira ticket or #NNN GitHub issue at point as a url."
+  (when (thing-at-point-looking-at "\\(?:CP\\|DP\\)-[0-9]+\\|#[0-9]+" 20)
+    (let ((match (match-string 0))
+          (bounds (cons (match-beginning 0) (match-end 0))))
+      `(url ,(concat "http://" match) . ,bounds))))
+
+(with-eval-after-load 'embark
+  (add-to-list 'embark-target-finders #'meain/embark-target-jira-github-at-point))
 
 ;; Open current file in Github
 (use-package emacs
