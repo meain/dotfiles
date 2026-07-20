@@ -71,13 +71,21 @@ Collaboratively update the Today section of the backlog by pulling data from ext
 
 Always run `date "+%Y-%m-%d (%A)"` and treat its output as authoritative.
 
-**Monday cleanup:** If today is Monday, check each PR in `/Users/meain/.local/share/ignored-prs-for-review` to see if it has been merged or closed. For each non-empty line:
+**Monday cleanup:** `/Users/meain/.local/share/ignored-prs-for-review.yaml` is a YAML file with three top-level list keys: `prs` (specific PR path fragments, e.g. `owner/repo/pull/123`), `repos` (bare repo names — blocks every PR from that repo), and `people` (author logins — blocks every PR by that person). Only the `prs` list resolves to real PRs, so Monday cleanup only touches that section — leave `repos` and `people` entries untouched.
+
+If today is Monday, extract just the `prs` entries and check each one's state:
+```bash
+awk '/^prs:/{f=1;next} /^[a-zA-Z_]+:/{f=0} f' /Users/meain/.local/share/ignored-prs-for-review.yaml | sed -E 's/^[[:space:]]*- //'
+```
+For each non-empty result line:
 ```bash
 export GIT_DIR=$(jj git root 2>/dev/null || echo .git)
-result=$(gh pr view "https://github.com/$path" --json state 2>&1)
+result=$(gh pr view "https://github.com/$prpath" --json state 2>&1)
 state=$(echo "$result" | grep -o 'OPEN\|MERGED\|CLOSED')
 ```
-Remove any entries where state is not `OPEN` (merged, closed, or unknown/deleted). Rewrite the file keeping only `OPEN` entries. Report how many were pruned.
+(use a variable name other than `path` — zsh aliases lowercase `path` to `$PATH`, and overwriting it breaks every subsequent command in the shell).
+
+Remove any `prs` entries where state is not `OPEN` (merged, closed, or unknown/deleted), rewriting only that list in the YAML file — leave `repos` and `people` untouched. Report how many were pruned.
 
 ### Step 1: Read Backlog
 
@@ -114,16 +122,18 @@ Returns a date like `2026-06-29`. Use it in the section header as `### This Cycl
 ```
 Returns JSON array of PRs where user is a direct reviewer (not via team), excluding approved PRs, drafts, and `Veeam-VDC/vdc-shared-data-plane` PRs (never surface data-plane PRs — not the user's area). Also exclude dependabot PRs from Veeam-VDC repos — they are auto-reviewed and merged.
 
-After fetching, filter out ignored PRs:
+After fetching, filter out ignored PRs/repos/people. Flatten the YAML blocklist to one pattern per line, then filter the one-PR-per-line JSON with `grep -vFf`:
 ```bash
-~/.agents/skills/backlog/scripts/pending-prs.sh | grep -vFf /Users/meain/.local/share/ignored-prs-for-review
+~/.agents/skills/backlog/scripts/pending-prs.sh | jq -c '.[]' | grep -vFf <(grep -E '^[[:space:]]*- ' /Users/meain/.local/share/ignored-prs-for-review.yaml | sed -E 's/^[[:space:]]*- //')
 ```
+
+Apply the same flatten-and-filter pattern (jq per-line, then `grep -vFf` against the flattened YAML) whenever filtering PR lists in this skill, including the meain/* repos list in 3b-ii.
 
 **3b-ii. PRs from meain/* repos needing review:** Open PRs in repos owned by the `meain` GitHub org (user's personal projects where others open PRs):
 ```bash
 GIT_DIR=$(jj git root 2>/dev/null || echo .git) gh search prs --state=open --owner=meain --json number,title,url,repository,updatedAt,isDraft,author 2>&1
 ```
-Include all non-draft PRs not authored by meain. Filter out ignored PRs using `grep -vFf /Users/meain/.local/share/ignored-prs-for-review`. Surface these in a separate "meain/* repos" subsection of the candidates file.
+Include all non-draft PRs not authored by meain. Filter out ignored PRs/repos/authors using the same flatten-and-filter pattern as 3b. Surface these in a separate "meain/* repos" subsection of the candidates file.
 
 **3c. PRs authored by user:** Open PRs authored by the user across Veeam-VDC org.
 
