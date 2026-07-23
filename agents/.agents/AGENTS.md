@@ -4,7 +4,7 @@
 - Never number things (headings, sections) when creating markdown documents — use plain headings and unordered lists.
 - When creating HTML resources like dashboards or slides, prefer light mode unless explicitly stated.
 - When creating temporary resources, create it in /tmp and not the repo root.
-- Screenshots are stored in `/Users/meain/Documents/Screenshots/` with format `Screenshot YYYY-MM-DD at H.MM.SS AM.png`.
+- Screenshots are stored in `/Users/meain/Documents/Screenshots/` with format `Screenshot YYYY-MM-DD at H.MM.SS AM.png`. Latest screenshot however can be found at `/Users/meain/Documents/latest_screenshot.png`.
 
 ## Project Structure
 
