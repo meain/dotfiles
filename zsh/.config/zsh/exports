@@ -143,3 +143,6 @@ export AIDER_CHECK_UPDATE=false # managed via nix
 
 # k9s
 export K9S_CONFIG_DIR="$HOME/.config/k9s"
+
+# jira-cli (force light theme for markdown rendering via glamour)
+export GLAMOUR_STYLE="light"
