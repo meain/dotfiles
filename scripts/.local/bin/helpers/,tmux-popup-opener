@@ -1,28 +1,62 @@
 #!/bin/sh
+# Route a word (from a tmux double-click or passed directly) to the right
+# opener: URL -> browser, rust error code -> rustc --explain, file/dir ->
+# dragger, git commit -> git show, anything else -> clipboard.
+#
+# Usage: ,tmux-popup-opener --mouse <x> <y> <pane-id> <cwd>
+# Usage: tmux-popup-opener <word> <cwd>
 
 set -e
 
-if [ -z "$1" ]; then
-	xdotool type "rcd # prev: $2"
-	xdotool key "Return"
-elif echo "$1" | grep -qE '^xhttps?\:\/\/[a-z0-9_\.\?\&\=#-]+'; then
-	URL="$(echo "$1" | cut -c2-)" # this is from the separator in neomutt
-	tmux popup -w90% -h90% -E -d "$2" "open '$URL'"
-elif echo "$1" | grep -qE '^https?\:\/\/[a-z0-9_\.\?\&\=#-]+'; then
-	tmux popup -w90% -h90% -E -d "$2" "open '$1'"
-elif echo "$1" | grep -qE '^E\d{4}`\.'; then
-	ERR=$(echo "$1" | cut -c1-5)
+dragger() {
+	case "$(uname -s)" in
+	Darwin) maru "$1" ;;
+	*) dragon -x "$1" ;;
+	esac
+}
+
+word="$1"
+cwd="$2"
+if [ "$1" = "--mouse" ]; then
+	word="$(,tmux-mouse-word "$4" "$2" "$3")"
+	cwd="$5"
+fi
+
+[ -z "$word" ] && exit 0
+
+if echo "$word" | grep -qE '^xhttps?\:\/\/[a-z0-9_\.\?\&\=#-]+'; then
+	URL="$(echo "$word" | cut -c2-)" # this is from the separator in neomutt
+	open "$URL"
+elif echo "$word" | grep -qE '^https?\:\/\/[a-z0-9_\.\?\&\=#-]+'; then
+	open "$word"
+elif echo "$word" | grep -qE '^(DP|CP)-[0-9]+'; then
+	printf "https://veeam-vdc.atlassian.net/browse/%s" "$word" | pbcopy
+	tmux popup -w90% -h90% -E "jira issue view $word"
+elif echo "$word" | grep -qE '^#[0-9]+'; then
+	ISSUE_NUM=$(echo "$word" | cut -c2-)
+	if jj --repository "$cwd" root >/dev/null 2>&1; then
+		REPO_URL=$(jj --repository "$cwd" git remote list | grep origin | cut -d' ' -f2)
+	else
+		REPO_URL=$(git -C "$cwd" remote get-url origin)
+	fi
+
+	REPO_URL=$(printf '%s\n' "$REPO_URL" | sed \
+		-e 's#git@github.com:#https://github.com/#' \
+		-e 's#\.git$##')
+	open "$REPO_URL/issues/$ISSUE_NUM"
+elif echo "$word" | grep -qE '^E\d{4}`\.'; then
+	ERR=$(echo "$word" | cut -c1-5)
 	tmux popup -w50% -h80% -E "rustc --explain '$ERR'"
-elif [ -f "$2/$1" ]; then
-	dragon -x "$2/$1"
-elif [ -d "$1" ]; then
-	dragon -x "$1"
-elif [ -d "$2/$1" ]; then
-	dragon -x "$2/$1"
-elif git log --format=format:%H | grep -q "$1"; then
+elif [ -f "$cwd/$word" ]; then
+	dragger "$cwd/$word"
+elif [ -d "$word" ]; then
+	dragger "$word"
+elif [ -d "$cwd/$word" ]; then
+	dragger "$cwd/$word"
+elif git log --format=format:%H | grep -q "$word"; then
 	tmux popup -w90% -h90% -E -d "$2" \
-		"git log --format=format:%H | grep '$1' | xargs git show;read"
+		"git log --format=format:%H | grep '$word' | xargs git show | less"
 else
-	printf "$1" | pbcopy
-	notify "Copied to clipboard" "$1"
+	printf "$word" | pbcopy
+	notify "Copied to clipboard" "$word"
 fi
