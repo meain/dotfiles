@@ -57,11 +57,22 @@ has_results() {
     [[ -s $1 ]] && [[ $(jq 'length' "$1") -gt 0 ]]
 }
 
+# Filters a search_prs JSON output file in place to repos whose
+# nameWithOwner matches $repo_filter (case-insensitive), when set.
+filter_repos() {
+    [[ -z "$repo_filter" ]] && return
+    local out
+    out=$(mktemp)
+    jq --arg f "$repo_filter" '[.[] | select(.repository.nameWithOwner | test($f; "i"))]' "$1" >"$out"
+    mv "$out" "$1"
+}
+
 run_command() {
     action="$1"
     kind="$2"
     tempfile=$(mktemp)
     search_prs "$kind" >"$tempfile"
+    filter_repos "$tempfile"
 
     if has_results "$tempfile"; then
         render "$tempfile" term
@@ -76,6 +87,21 @@ run_command() {
     fi
     rm -f "$tempfile"
 }
+
+# A repo filter term is any arg longer than one character that isn't a
+# known kind keyword (e.g. `,prs veeam`). Single-char args are always
+# classified as a kind shortcut, never as a filter.
+repo_filter=""
+is_kind_word() {
+    case "$1" in
+    a | approved | p | pending | r | review | h | help | --help | -h) return 0 ;;
+    *) return 1 ;;
+    esac
+}
+if [[ $# -gt 0 ]] && [[ ${#1} -gt 1 ]] && ! is_kind_word "$1"; then
+    repo_filter="$1"
+    shift
+fi
 
 case "$1" in
 r | review)
@@ -92,6 +118,7 @@ h | help | --help | -h)
     echo "- [a]pproved: Approved PRs"
     echo "- [p]ending: Pending approvals on others"
     echo "- [r]eview: Review pending on me"
+    echo "Prefix with a repo filter term, e.g. \`,prs veeam a\`"
     exit 0
     ;;
 *) # Show all with color headings for each section
@@ -100,6 +127,9 @@ h | help | --help | -h)
     (search_prs pending  >"$tmp_p") &
     (search_prs review   >"$tmp_r") &
     wait
+    filter_repos "$tmp_a"
+    filter_repos "$tmp_p"
+    filter_repos "$tmp_r"
 
     section() {
         if has_results "$1"; then
