@@ -95,11 +95,7 @@
                          "") 'face `(:foreground "#93a1a1"))
            " ")))
   (add-hook 'eshell-mode-hook (lambda ()
-                                (setenv "TERM" "xterm-256color")
-                                (define-key eshell-mode-map (kbd "M-l") 'meain/move-swap-right)
-                                (define-key eshell-mode-map (kbd "M-h") 'meain/move-swap-left)
-                                (define-key eshell-mode-map (kbd "M-k") 'meain/move-swap-up)
-                                (define-key eshell-mode-map (kbd "M-j") 'meain/move-swap-down))))
+                                (setenv "TERM" "xterm-256color"))))
 
 ;; Show the last command in the shell at top
 (use-package sticky-shell

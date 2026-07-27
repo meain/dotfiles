@@ -65,14 +65,6 @@
 ;; Just the syntax files for cedar mode
 (use-package cedar-mode :load-path "/Users/meain/dev/src/cedar-mode")
 
-(use-package emacs
-  :config
-  (add-hook 'nxml-mode-hook
-            (lambda ()
-              (define-key nxml-mode-map (kbd "M-l") 'meain/move-swap-right)
-              (define-key nxml-mode-map (kbd "M-h") 'meain/move-swap-left)
-              (define-key nxml-mode-map (kbd "M-k") 'meain/move-swap-up)
-              (define-key nxml-mode-map (kbd "M-j") 'meain/move-swap-down))))
 (use-package json-mode :ensure t :defer t)
 (use-package just-ts-mode :ensure t :defer t)
 (use-package kql-mode :ensure t :defer t)

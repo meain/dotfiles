@@ -275,11 +275,6 @@ Uses 'ddgr' web search to look up a URL and insert a formatted markdown link."
   (setq-default markdown-ts-hide-markup nil)
   (setq-default markdown-ts-fontify-code-blocks-natively t)
 
-  (define-key markdown-ts-mode-map (kbd "M-l") 'meain/move-swap-right)
-  (define-key markdown-ts-mode-map (kbd "M-h") 'meain/move-swap-left)
-  (define-key markdown-ts-mode-map (kbd "M-k") 'meain/move-swap-up)
-  (define-key markdown-ts-mode-map (kbd "M-j") 'meain/move-swap-down)
-
   (evil-define-key 'normal markdown-ts-mode-map (kbd "g d") 'markdown-ts-toggle-checkbox)
   (evil-define-key 'normal markdown-ts-mode-map (kbd "g n") 'meain/notes-open-or-create-task-note)
   (evil-define-key 'insert markdown-ts-mode-map (kbd "C-c e") 'meain/insert-emoji)

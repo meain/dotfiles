@@ -41,25 +41,44 @@
   (defun meain/move-swap-up () (interactive) (meain/move-or-swap "up"))
   (defun meain/move-swap-down () (interactive) (meain/move-or-swap "down"))
 
-  (global-set-key (kbd "M-l") 'meain/move-swap-right)
-  (global-set-key (kbd "M-h") 'meain/move-swap-left)
-  (global-set-key (kbd "M-k") 'meain/move-swap-up)
-  (global-set-key (kbd "M-j") 'meain/move-swap-down)
-
   (defun meain/split-window (direction &optional open-term)
     "Split window in DIRECTION and optionally OPEN-TERM."
     (funcall (intern (format "split-window-%s" direction)))
     (funcall (intern (format "windmove-%s" (if (equal direction "below") "down" "right"))))
     (when open-term (meain/eshell-toggle)))
 
-  :init
-  (global-set-key (kbd "M-b") (lambda (&optional term)
-                                (interactive "P")
-                                (meain/split-window "below" term)))
-  (global-set-key (kbd "M-v") (lambda (&optional term)
-                                (interactive "P")
-                                (meain/split-window "right" term)))
-  (global-set-key (kbd "M-w") 'delete-window))
+  (defun meain/split-vertical (&optional term) (interactive "P") (meain/split-window "below" term))
+  (defun meain/split-horizontal (&optional term) (interactive "P") (meain/split-window "right" term))
+
+  (global-set-key (kbd "M-l") 'meain/move-swap-right)
+  (global-set-key (kbd "M-h") 'meain/move-swap-left)
+  (global-set-key (kbd "M-k") 'meain/move-swap-up)
+  (global-set-key (kbd "M-j") 'meain/move-swap-down)
+  (global-set-key (kbd "M-b") 'meain/split-vertical)
+  (global-set-key (kbd "M-v") 'meain/split-horizontal)
+  (global-set-key (kbd "M-w") 'delete-window)
+
+  ;; Global navigation key overrides. The outline minor mode still
+  ;; overrides this and so we need additional keybindings jut for
+  ;; that, but major modes which define these are good like shells.
+  ;; https://protesilaos.com/codelog/2026-07-08-emacs-global-keybinding-overrides/
+  (defvar meain-overrides-mode-map (make-sparse-keymap) "Keymap for the `meain-overrides-mode'.")
+
+  (define-minor-mode meain-overrides-mode
+    "Activate the `meain-overrides-mode-map'."
+    :global t
+    :init-value nil
+    :keymap meain-overrides-mode-map)
+
+  (define-key meain-overrides-mode-map (kbd "M-l") 'meain/move-swap-right)
+  (define-key meain-overrides-mode-map (kbd "M-h") 'meain/move-swap-left)
+  (define-key meain-overrides-mode-map (kbd "M-k") 'meain/move-swap-up)
+  (define-key meain-overrides-mode-map (kbd "M-j") 'meain/move-swap-down)
+  (define-key meain-overrides-mode-map (kbd "M-b") 'meain/split-vertical)
+  (define-key meain-overrides-mode-map (kbd "M-v") 'meain/split-horizontal)
+  (define-key meain-overrides-mode-map (kbd "M-w") 'delete-window)
+
+  (meain-overrides-mode 1))
 
 ;; Midnight: Kill unused buffers at midnight
 (use-package midnight
