@@ -117,7 +117,7 @@
                           ("Kraft Mono" . '(160 .2 'regular))
                           ("Lab Mono" . '(160 .1 'regular))
                           ("Latin Modern Mono Light Cond" . '(160 nil 'regular))
-                          ("Latin Modern Mono Light" . '(160 nil 'regular))
+                          ("Latin Modern Mono Light" . '(180 nil 'regular))
                           ("Latin Modern Mono" . '(180 nil 'regular))
                           ("League Mono" . '(160 .2 'light))
                           ("Lekton" . '(170 .2 'regular))
