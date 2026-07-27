@@ -180,9 +180,11 @@ Then:
 3. Add new items with reference links
 4. Preserve priority emojis near top of Today
 
-### Step 6: Generate Code Review Summaries (background, best-effort)
+### Step 6: Code Review Summaries (on request only)
 
-After the backlog is committed and usable, spin off **parallel background agents** — one per PR selected for review. Each agent should:
+Do **not** generate these automatically — the user rarely reads them. Only do this if explicitly asked (e.g. "generate summaries for today's reviews", "add a code review summary for cpb#5046").
+
+When asked, spin off **parallel background agents** — one per requested PR. Each agent should:
 
 1. Fetch the PR diff and details from GitHub
 2. Run `/explain-flow` on the PR to generate a code flow summary
@@ -197,8 +199,6 @@ After the backlog is committed and usable, spin off **parallel background agents
    ```
    Use `[summary]` as link text. Path is vault-root-relative (no `../`). URL-encode spaces (`Code%20Reviews`).
 5. Commit the updated backlog file.
-
-This step is best-effort — the backlog is already complete and usable from Step 5. Summaries enrich the review items but are not blocking.
 
 ### Formatting Rules
 
