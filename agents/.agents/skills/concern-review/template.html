@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Review by concern</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --panel: #f6f8fa;
+    --border: #d0d7de;
+    --text: #1f2328;
+    --text-muted: #656d76;
+    --add-bg: #e6ffec;
+    --add-bg-strong: #abf2bc;
+    --add-text: #1a7f37;
+    --del-bg: #ffebe9;
+    --del-bg-strong: #ffc1bc;
+    --del-text: #cf222e;
+    --hunk-bg: #ddf4ff;
+    --hunk-text: #0969da;
+    --link: #0969da;
+    --active-bg: #ddf4ff;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif; height: 100%; }
+  a { color: var(--link); }
+
+  .layout { display: grid; grid-template-columns: var(--nav-w, 300px) 6px 1fr; min-height: 100vh; }
+
+  nav.side {
+    position: sticky; top: 0; align-self: start; height: 100vh; overflow-y: auto;
+    background: var(--panel); padding: 20px 14px; min-width: 180px;
+  }
+  nav.side .pr-title { font-size: 13px; font-weight: 650; margin-bottom: 2px; }
+  nav.side .pr-sub { font-size: 11.5px; color: var(--text-muted); margin-bottom: 18px; }
+  nav.side .cat-nav { margin-bottom: 4px; border-radius: 8px; }
+  nav.side .cat-nav .cat-link {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 8px;
+    font-size: 13px; font-weight: 600; color: var(--text);
+    text-decoration: none; padding: 7px 8px; border-radius: 6px; cursor: pointer;
+  }
+  nav.side .cat-nav .cat-link:hover { background: rgba(9,105,218,0.08); }
+  nav.side .cat-nav.active .cat-link { background: var(--active-bg); }
+  nav.side .cat-nav .cat-link .n { color: var(--text-muted); font-weight: 400; flex-shrink: 0; }
+  nav.side .cat-nav .file-list { padding-left: 4px; margin-bottom: 8px; }
+  nav.side .cat-nav .file-link {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 8px;
+    font-size: 12px; color: var(--text-muted); text-decoration: none;
+    padding: 4px 8px 4px 18px; border-radius: 6px;
+    border-left: 2px solid transparent; cursor: pointer;
+  }
+  nav.side .cat-nav .file-link:hover { color: var(--text); background: rgba(9,105,218,0.06); }
+  nav.side .cat-nav .file-link.current { border-left-color: var(--link); color: var(--text); font-weight: 600; }
+  nav.side .cat-nav .file-link .fname-txt {
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0;
+    direction: rtl; text-align: left;
+  }
+  nav.side .cat-nav .file-link .stat { flex-shrink: 0; font-variant-numeric: tabular-nums; font-size: 11px; white-space: nowrap; }
+  nav.side .cat-nav .file-link .stat .a { color: var(--add-text); }
+  nav.side .cat-nav .file-link .stat .d { color: var(--del-text); }
+
+  .resizer {
+    cursor: col-resize; background: var(--border); position: relative;
+  }
+  .resizer:hover, .resizer.dragging { background: var(--link); }
+  .resizer::after { content: ""; position: absolute; inset: 0 -4px; }
+
+  main { padding: 24px 32px 80px; min-width: 0; }
+  main .content-inner { max-width: 1100px; }
+
+  section.category { scroll-margin-top: 16px; }
+  section.category > .cat-head { margin-bottom: 20px; }
+  section.category > .cat-head h2 { font-size: 20px; margin: 0 0 4px; }
+  section.category > .cat-head p { font-size: 13.5px; color: var(--text-muted); margin: 0; max-width: 760px; }
+
+  .cat-notes {
+    margin-top: 14px; max-width: 760px; background: #fff8e6; border: 1px solid #eac54f;
+    border-radius: 8px; padding: 10px 14px;
+  }
+  .cat-notes .cat-notes-title {
+    font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em;
+    color: #7a5c00; margin-bottom: 6px;
+  }
+  .cat-notes ul { margin: 0; padding-left: 18px; }
+  .cat-notes li { font-size: 13px; color: #5c4a00; line-height: 1.5; margin-bottom: 6px; }
+  .cat-notes li:last-child { margin-bottom: 0; }
+
+  .file-block { border: 1px solid var(--border); border-radius: 8px; margin-bottom: 18px; overflow: hidden; scroll-margin-top: 16px; }
+  .file-block.flash { animation: flash 1.1s ease; }
+  @keyframes flash { 0% { box-shadow: 0 0 0 3px rgba(9,105,218,0.5); } 100% { box-shadow: 0 0 0 0 rgba(9,105,218,0); } }
+
+  .file-head {
+    display: flex; justify-content: space-between; align-items: center; gap: 12px;
+    background: var(--panel); border-bottom: 1px solid var(--border);
+    padding: 8px 14px; font-size: 13px; cursor: pointer; user-select: none;
+  }
+  .file-head .fname { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; }
+  .file-head .fstat { font-size: 12px; white-space: nowrap; font-variant-numeric: tabular-nums; color: var(--text-muted); flex-shrink: 0; }
+  .file-head .fstat .a { color: var(--add-text); }
+  .file-head .fstat .d { color: var(--del-text); }
+  .file-head .chev { transition: transform 0.15s; color: var(--text-muted); font-size: 11px; }
+  .file-block.collapsed .chev { transform: rotate(-90deg); }
+  .file-block.collapsed .diff-body { display: none; }
+  .file-block.collapsed .file-summary { display: none; }
+
+  .file-summary {
+    padding: 10px 14px; font-size: 13px; color: var(--text); line-height: 1.5;
+    border-bottom: 1px solid var(--border); background: #fffef8;
+  }
+
+  .diff-body { overflow-x: auto; }
+  table.diff { border-collapse: collapse; width: 100%; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; }
+  table.diff td { padding: 0 8px; vertical-align: top; white-space: pre; }
+  table.diff td.num { width: 1%; text-align: right; color: var(--text-muted); user-select: none; border-right: 1px solid var(--border); background: var(--panel); }
+  table.diff tr.add td.num { background: var(--add-bg-strong); }
+  table.diff tr.del td.num { background: var(--del-bg-strong); }
+  table.diff tr.add td.code { background: var(--add-bg); }
+  table.diff tr.del td.code { background: var(--del-bg); }
+  table.diff tr.hunk td { background: var(--hunk-bg); color: var(--hunk-text); padding: 4px 8px; }
+  table.diff tr.hunk td.num { background: var(--hunk-bg); }
+  table.diff td.code { white-space: pre; }
+
+  .toolbar { position: sticky; top: 0; z-index: 5; background: var(--bg); padding: 10px 0 14px;
+    display: flex; gap: 8px; align-items: center; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
+  .toolbar button {
+    font: inherit; font-size: 12.5px; color: var(--text); background: var(--panel);
+    border: 1px solid var(--border); border-radius: 6px; padding: 5px 10px; cursor: pointer;
+  }
+  .toolbar .active-title { font-size: 13px; font-weight: 650; margin-left: 4px; }
+</style>
+</head>
+<body>
+<div class="layout" id="layout">
+  <nav class="side" id="sideNav"></nav>
+  <div class="resizer" id="resizer"></div>
+  <main>
+    <div class="content-inner">
+      <div class="toolbar">
+        <button id="expandAll">Expand all</button>
+        <button id="collapseAll">Collapse all</button>
+        <span class="active-title" id="activeTitle"></span>
+      </div>
+      <div id="content"></div>
+    </div>
+  </main>
+</div>
+
+<script>
+const DATA = __DATA_JSON__;
+
+document.title = (DATA.pr && DATA.pr.label ? DATA.pr.label + " — " : "") + "Review by concern";
+
+function escapeHtml(s) {
+  return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+
+function splitHeaderHunks(text) {
+  const lines = text.split("\n");
+  let i = 0;
+  while (i < lines.length && !lines[i].startsWith("@@")) i++;
+  return { header: lines.slice(0, i), rest: lines.slice(i) };
+}
+
+function parseFileDiff(text) {
+  const { header, rest } = splitHeaderHunks(text);
+  const isNew = header.some(l => l.startsWith("new file mode"));
+  const rows = [];
+  let oldLn = 0, newLn = 0;
+
+  for (const line of rest) {
+    if (line.startsWith("@@")) {
+      const m = line.match(/@@ -(\d+)(?:,\d+)? \+(\d+)(?:,\d+)? @@/);
+      if (m) { oldLn = parseInt(m[1], 10); newLn = parseInt(m[2], 10); }
+      rows.push({ type: "hunk", text: line });
+      continue;
+    }
+    if (line.length === 0) continue;
+    const marker = line[0];
+    const codeText = line.slice(1);
+    if (marker === "+") {
+      rows.push({ type: "add", newN: newLn, code: codeText });
+      newLn++;
+    } else if (marker === "-") {
+      rows.push({ type: "del", oldN: oldLn, code: codeText });
+      oldLn++;
+    } else {
+      rows.push({ type: "ctx", oldN: oldLn, newN: newLn, code: codeText });
+      oldLn++; newLn++;
+    }
+  }
+  return { isNew, rows };
+}
+
+function renderDiffTable(parsed) {
+  let html = '<table class="diff">';
+  for (const r of parsed.rows) {
+    if (r.type === "hunk") {
+      html += `<tr class="hunk"><td class="num"></td><td class="num"></td><td class="code">${escapeHtml(r.text)}</td></tr>`;
+    } else if (r.type === "add") {
+      html += `<tr class="add"><td class="num"></td><td class="num">${r.newN}</td><td class="code">+ ${escapeHtml(r.code)}</td></tr>`;
+    } else if (r.type === "del") {
+      html += `<tr class="del"><td class="num">${r.oldN}</td><td class="num"></td><td class="code">- ${escapeHtml(r.code)}</td></tr>`;
+    } else {
+      html += `<tr class="ctx"><td class="num">${r.oldN}</td><td class="num">${r.newN}</td><td class="code">&nbsp;&nbsp;${escapeHtml(r.code)}</td></tr>`;
+    }
+  }
+  html += "</table>";
+  return html;
+}
+
+function fileStats(diffText) {
+  const parsed = parseFileDiff(diffText);
+  let add = 0, del = 0;
+  for (const r of parsed.rows) { if (r.type === "add") add++; if (r.type === "del") del++; }
+  return { add, del, parsed };
+}
+
+function slug(s) { return s.replace(/[^a-zA-Z0-9]+/g, "-"); }
+function shortName(path) {
+  const prefix = (DATA.pathPrefix || "");
+  return prefix && path.startsWith(prefix) ? path.slice(prefix.length) : path;
+}
+
+// pre-compute stats once
+DATA.categories.forEach(cat => {
+  cat.files.forEach(f => {
+    const { add, del, parsed } = fileStats(f.diff);
+    f._add = add; f._del = del; f._parsed = parsed;
+  });
+});
+
+const sideNav = document.getElementById("sideNav");
+const content = document.getElementById("content");
+const activeTitle = document.getElementById("activeTitle");
+
+let navHtml = `<div class="pr-title">${escapeHtml((DATA.pr && DATA.pr.label) || "")}</div>
+<div class="pr-sub">${escapeHtml((DATA.pr && DATA.pr.subtitle) || "")}</div>`;
+
+DATA.categories.forEach((cat, ci) => {
+  navHtml += `<div class="cat-nav" data-cat="${cat.key}">
+    <a class="cat-link" data-cat-select="${cat.key}">${cat.title} <span class="n">(${cat.files.length})</span></a>
+    <div class="file-list">`;
+  cat.files.forEach(f => {
+    const id = "file-" + cat.key + "-" + slug(f.path);
+    navHtml += `<a class="file-link" data-cat-select="${cat.key}" data-file-id="${id}" title="${f.path}">
+      <span class="fname-txt">${shortName(f.path)}</span>
+      <span class="stat"><span class="a">+${f._add}</span> <span class="d">-${f._del}</span></span>
+    </a>`;
+  });
+  navHtml += `</div></div>`;
+});
+sideNav.innerHTML = navHtml;
+
+function renderCategory(catKey, focusFileId) {
+  const cat = DATA.categories.find(c => c.key === catKey);
+  if (!cat) return;
+
+  activeTitle.textContent = cat.title;
+
+  const section = document.createElement("section");
+  section.className = "category";
+  section.id = "cat-" + cat.key;
+  const notesHtml = (cat.notes && cat.notes.length)
+    ? `<div class="cat-notes"><div class="cat-notes-title">Might be confusing</div>
+        <ul>${cat.notes.map(n => `<li>${escapeHtml(n)}</li>`).join("")}</ul></div>`
+    : "";
+  section.innerHTML = `<div class="cat-head"><h2>${cat.title}</h2><p>${cat.desc}</p>${notesHtml}</div>`;
+
+  cat.files.forEach(f => {
+    const id = "file-" + cat.key + "-" + slug(f.path);
+    const block = document.createElement("div");
+    block.className = "file-block";
+    block.id = id;
+    block.innerHTML = `
+      <div class="file-head" data-toggle>
+        <span class="fname">${f.path}${f._parsed.isNew ? " (new file)" : ""}</span>
+        <span class="fstat"><span class="a">+${f._add}</span> <span class="d">-${f._del}</span> <span class="chev">▾</span></span>
+      </div>
+      <div class="file-summary">${escapeHtml(f.summary)}</div>
+      <div class="diff-body">${renderDiffTable(f._parsed)}</div>
+    `;
+    block.querySelector("[data-toggle]").addEventListener("click", () => {
+      block.classList.toggle("collapsed");
+    });
+    section.appendChild(block);
+  });
+
+  content.innerHTML = "";
+  content.appendChild(section);
+
+  // update active state in nav
+  document.querySelectorAll(".cat-nav").forEach(el => el.classList.toggle("active", el.dataset.cat === catKey));
+
+  if (focusFileId) {
+    const el = document.getElementById(focusFileId);
+    if (el) {
+      requestAnimationFrame(() => {
+        el.scrollIntoView({ behavior: "instant", block: "start" });
+        el.classList.add("flash");
+        setTimeout(() => el.classList.remove("flash"), 1200);
+      });
+    }
+  } else {
+    window.scrollTo(0, 0);
+  }
+}
+
+sideNav.addEventListener("click", (e) => {
+  const t = e.target.closest("[data-cat-select]");
+  if (!t) return;
+  e.preventDefault();
+  const catKey = t.dataset.catSelect;
+  const fileId = t.dataset.fileId || null;
+  renderCategory(catKey, fileId);
+});
+
+document.getElementById("expandAll").addEventListener("click", () => {
+  document.querySelectorAll(".file-block").forEach(b => b.classList.remove("collapsed"));
+});
+document.getElementById("collapseAll").addEventListener("click", () => {
+  document.querySelectorAll(".file-block").forEach(b => b.classList.add("collapsed"));
+});
+
+// default: first category
+if (DATA.categories.length) renderCategory(DATA.categories[0].key);
+
+// ---- resizable sidebar ----
+const layout = document.getElementById("layout");
+const resizer = document.getElementById("resizer");
+const savedW = localStorage.getItem("concern-review-nav-w");
+if (savedW) layout.style.setProperty("--nav-w", savedW + "px");
+
+let dragging = false;
+resizer.addEventListener("mousedown", (e) => {
+  dragging = true;
+  resizer.classList.add("dragging");
+  document.body.style.userSelect = "none";
+  e.preventDefault();
+});
+window.addEventListener("mousemove", (e) => {
+  if (!dragging) return;
+  const w = Math.min(Math.max(e.clientX, 180), 640);
+  layout.style.setProperty("--nav-w", w + "px");
+});
+window.addEventListener("mouseup", () => {
+  if (!dragging) return;
+  dragging = false;
+  resizer.classList.remove("dragging");
+  document.body.style.userSelect = "";
+  const w = getComputedStyle(layout).getPropertyValue("--nav-w");
+  localStorage.setItem("concern-review-nav-w", parseInt(w, 10));
+});
+</script>
+</body>
+</html>
