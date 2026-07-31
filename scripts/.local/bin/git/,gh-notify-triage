@@ -1,0 +1,26 @@
+#!/bin/sh
+# Mark GitHub notifications for CI failures and merged/closed PRs/issues as done.
+# Usage: ,gh-notify-triage
+
+set -e
+
+mark_done() {
+	gh api -X DELETE "/notifications/threads/$1" >/dev/null
+}
+
+echo "Checking CI failure notifications..."
+gh api notifications --paginate --jq '.[] | select(.reason=="ci_activity") | .id' |
+	while read -r id; do
+		echo "  done: ci notification $id"
+		mark_done "$id"
+	done
+
+echo "Checking merged/closed PR and issue notifications..."
+gh api notifications --paginate --jq '.[] | select(.subject.type=="PullRequest" or .subject.type=="Issue") | [.id, .subject.url] | @tsv' |
+	while IFS="$(printf '\t')" read -r id url; do
+		state="$(gh api "$url" --jq '.state')"
+		if [ "$state" = "closed" ]; then
+			echo "  done: $url ($id)"
+			mark_done "$id"
+		fi
+	done
