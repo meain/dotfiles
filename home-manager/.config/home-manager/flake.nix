@@ -65,6 +65,12 @@
               overlays = [
                 emacsOverlay.overlay
                 nur.overlays.default
+                # mailutils fails to build on darwin (undefined _mu_strerror in
+                # spamd/vacation). emacs only needs it for legacy movemail, which
+                # we don't use, so drop the dependency to keep the build working.
+                (final: prev: {
+                  emacs = prev.emacs.override { withMailutils = false; };
+                })
               ];
             };
           };

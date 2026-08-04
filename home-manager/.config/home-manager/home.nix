@@ -58,8 +58,8 @@ in
     # ppkgs.notmuch-git # mail indexer
     # pkgs.tree
     # pkgs.neovim
-    pkgs.notmuch
-    pkgs.isync # mail synchronize with upstream
+    # pkgs.notmuch
+    # pkgs.isync # mail synchronize with upstream
     pkgs.htop # process monitor
     # pkgs.mpc_cli # remote for mpd
     # spkgs.mpd # music player
@@ -81,7 +81,7 @@ in
     pkgs.wget # get stuff from internet
     pkgs.tmux # terminal multiplexer
     pkgs.aspell # spell checker
-    pkgs.msmtp # smtp client
+    # pkgs.msmtp # smtp client
     pkgs.android-tools # adb and friends  # not available for macos
     # pkgs.restic # backup
     # pkgs.ledger # double entry accounting
