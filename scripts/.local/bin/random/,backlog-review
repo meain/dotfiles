@@ -1,0 +1,125 @@
+#!/usr/bin/env ruby
+# Show my PRs by status, PRs needing my review, and Jira sprint tickets.
+
+require "json"
+require "yaml"
+require "open3"
+
+IGNORE_FILE = "/Users/meain/.local/share/ignored-prs-for-review.yaml"
+
+BOLD = "\e[1m"
+DIM = "\e[2m"
+RESET = "\e[0m"
+
+MY_PRS_QUERY = <<~GRAPHQL
+  {
+    search(query: "is:pr is:open author:meain org:Veeam-VDC", type: ISSUE, first: 30) {
+      nodes {
+        ... on PullRequest {
+          number title url isDraft reviewDecision
+          repository { nameWithOwner }
+        }
+      }
+    }
+  }
+GRAPHQL
+
+REVIEW_REQUESTED_QUERY = <<~GRAPHQL
+  {
+    search(query: "is:pr is:open review-requested:meain review:required org:Veeam-VDC", type: ISSUE, first: 30) {
+      nodes {
+        ... on PullRequest {
+          number title url isDraft
+          repository { nameWithOwner }
+          author { login }
+        }
+      }
+    }
+  }
+GRAPHQL
+
+def gh_graphql(query)
+  stdout, _stderr, status = Open3.capture3("gh", "api", "graphql", "-f", "query=#{query}")
+  raise "gh api graphql failed" unless status.success?
+
+  JSON.parse(stdout).dig("data", "search", "nodes")
+end
+
+def load_ignore_patterns
+  return [] unless File.exist?(IGNORE_FILE)
+
+  (YAML.load_file(IGNORE_FILE) || {}).values.flatten.compact
+end
+
+def ignored?(patterns, *fields)
+  text = fields.join(" ")
+  patterns.any? { |p| text.include?(p) }
+end
+
+def print_entry(title, meta, url)
+  puts meta ? "#{title} (#{meta})" : title
+  puts "#{DIM}#{url}#{RESET}"
+end
+
+def print_section(title, items, show_meta: true)
+  return if items.empty?
+
+  puts "#{BOLD}#{title}#{RESET}"
+  items.each { |item| print_entry(item[:title], show_meta ? item[:meta] : nil, item[:url]) }
+  puts
+end
+
+def fetch_my_prs
+  gh_graphql(MY_PRS_QUERY).map do |n|
+    meta = n["isDraft"] ? "DRAFT" : (n["reviewDecision"] || "PENDING")
+    { title: n["title"], meta: meta, url: n["url"] }
+  end
+end
+
+def fetch_review_requested(patterns)
+  gh_graphql(REVIEW_REQUESTED_QUERY).map do |n|
+    next if n["isDraft"]
+
+    repo = n["repository"]["nameWithOwner"]
+    author = n["author"]["login"]
+    next if repo == "Veeam-VDC/vdc-shared-data-plane" || author == "dependabot[bot]"
+    next if ignored?(patterns, repo, n["url"], author)
+
+    { title: n["title"], meta: author, url: n["url"] }
+  end.compact
+end
+
+def fetch_jira_sprint
+  sprint_out, = Open3.capture3("jira", "sprint", "list", "--plain")
+  sprint_line = sprint_out.lines.find { |l| l.downcase.include?("earn") && l.downcase.include?("active") }
+  return nil unless sprint_line
+
+  sprint_id = sprint_line.split.first
+
+  issues_out, = Open3.capture3(
+    "jira", "issue", "list", "-q",
+    "assignee = currentUser() AND sprint = #{sprint_id} AND status != Done", "--plain"
+  )
+  issues_out.lines.drop(1).map do |line|
+    cols = line.chomp.split("\t")
+    next if cols.length < 3
+
+    { key: cols[1], title: cols[2], status: cols[-1] }
+  end.compact
+end
+
+def main
+  patterns = load_ignore_patterns
+  my_prs = fetch_my_prs
+  tickets = fetch_jira_sprint || []
+
+  print_section("Approved PRs", my_prs.select { |pr| pr[:meta] == "APPROVED" }, show_meta: false)
+  print_section("Chase review", my_prs.reject { |pr| %w[APPROVED DRAFT].include?(pr[:meta]) })
+  print_section("PRs to review", fetch_review_requested(patterns))
+  print_section("Draft PRs", my_prs.select { |pr| pr[:meta] == "DRAFT" }, show_meta: false)
+  print_section("Pending Jira tickets", tickets.map do |t|
+    { title: t[:title], meta: t[:status], url: "https://veeam-vdc.atlassian.net/browse/#{t[:key]}" }
+  end)
+end
+
+main
