@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # Get the latest weekly report page
-pages="$(confluence children "$IC_WEEKLY_REPORTS_CONFLUENCE_PAGE" --format json)"
+pages="$(confluence --json children "$IC_WEEKLY_REPORTS_CONFLUENCE_PAGE")"
 url="$(echo "$pages" | jq -r '.children[-1].url')"
 id="$(echo "$pages" | jq -r '.children[-1].id')"
 
@@ -21,7 +21,7 @@ in_section && /^[[:space:]]*\*[[:space:]]/ { has_content = 1 }
 END {
     if (in_section && has_empty && !has_content && name) print name
 }
-' | paste -sd ', ' -)
+')
 
 # Get week date (Monday of current week)
 week_date=$(date -v-Mon +%Y-%m-%d 2>/dev/null || date -d 'last monday' +%Y-%m-%d 2>/dev/null || date +%Y-%m-%d)
@@ -29,9 +29,7 @@ week_date=$(date -v-Mon +%Y-%m-%d 2>/dev/null || date -d 'last monday' +%Y-%m-%d
 # Generate message
 if [ -n "$missing" ]; then
     cat << EOF | tee /dev/stderr | mdclip
-[Updates for week of $week_date]($url)
-
-Please submit your weekly updates today.
+Reminder to submit your [weekly updates]($url).
 
 $missing
 EOF
