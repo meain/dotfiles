@@ -4,6 +4,8 @@
 ;; All things related to managing multiple projects
 
 ;;; Code:
+;; vmargb/project-x might be an interesting alternative to check out
+;; if you want tmux sessions like project management within Emacs
 (use-package project
   :defer t
   :after (evil evil-leader)
