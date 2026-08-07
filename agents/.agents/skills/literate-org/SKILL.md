@@ -56,9 +56,22 @@ investigation, turn the evidence trail into a self-verifiable document.
 - **`:dir` for cwd-dependent commands.** If a script must run from a repo,
   set it per block: `#+begin_src bash :dir ~/dev/<path>`. Prefer `~/...` over
   `/Users/<name>/...`.
-- **Self-contained blocks.** Each block must run on its own — no shell state
-  shared between blocks. If a value comes from a previous block (an ID, a pod
-  name), hardcode the observed value and say in prose how to refresh it.
+- **Self-contained blocks.** Each block must run on its own — no reliance on
+  shared shell state (env vars, `cd`) between blocks.
+- **Chain values between blocks with org, don't make the user paste.** When a
+  downstream block needs a value a previous block produced (an operation id, a
+  pod name, a resource id), wire it through org-babel instead of hardcoding:
+  - Name the producer block `#+name: <slug>` and make it print *only* the bare
+    value (e.g. `... | jq -r '.Tables[0].Rows[][0]'`).
+  - Consume it with a `:var` header: `#+begin_src bash :var X=<slug>`. Sanitize
+    on the way in, since the value may carry a trailing newline:
+    `ID=$(printf '%s' "$X" | tr -d '[:space:]')`.
+  - **Caveat — resolving a `:var` that points at a src block re-executes that
+    block.** So only chain this way when the producer is *idempotent and cheap*
+    (a read, or an idempotent write like an `.set-or-append` no-op). State the
+    re-run in prose ("resolving this var re-runs <slug>; it's idempotent").
+    If the producer is expensive or has side effects, fall back to hardcoding
+    the observed value and saying in prose how to refresh it.
 - **Org escaping inside blocks:** any line starting with `*` or `#+` inside a
   src block must be prefixed with a comma (`,*`, `,#+`). Inline verbatim in
   prose uses `=text=` or `~text~`, not backticks.
