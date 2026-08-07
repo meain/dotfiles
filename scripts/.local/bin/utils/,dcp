@@ -4,15 +4,23 @@
 
 set -e
 
-FROMFILE=$(\ls -t "$DOWNLOADS_PATH" | fzf --query="$1")
-if [ -z "$FROMFILE" ]; then
+FROMFILES=$(\ls -t "$DOWNLOADS_PATH" | fzf -m --query="$1")
+if [ -z "$FROMFILES" ]; then
 	echo "No file selected"
 	return 1
 fi
-printf "Name of destination file (%s): " "$(basename "$FROMFILE")"
-read -r TOFILE
 
-if [ -z "$TOFILE" ]; then
-	TOFILE=$(basename "$FROMFILE")
+COUNT=$(echo "$FROMFILES" | wc -l)
+
+if [ "$COUNT" -eq 1 ]; then
+	printf "Name of destination file (%s): " "$(basename "$FROMFILES")"
+	read -r TOFILE
+	if [ -z "$TOFILE" ]; then
+		TOFILE=$(basename "$FROMFILES")
+	fi
+	cp -riv "$DOWNLOADS_PATH/$FROMFILES" "$TOFILE"
+else
+	echo "$FROMFILES" | while IFS= read -r FROMFILE; do
+		cp -riv "$DOWNLOADS_PATH/$FROMFILE" "$(basename "$FROMFILE")"
+	done
 fi
-cp -riv "$DOWNLOADS_PATH/$FROMFILE" "$TOFILE"
