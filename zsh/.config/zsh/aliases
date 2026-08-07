@@ -34,6 +34,7 @@ alias um=,urlmap
 alias apr=,auto-pr
 alias asi=,voice-assistant
 alias mdh=,markdown-to-html
+alias drag=maru
 
 # random
 alias wk="watch kubectl"
