@@ -58,7 +58,7 @@ end
 
 def print_entry(title, meta, url)
   puts meta ? "#{title} (#{meta})" : title
-  puts "#{DIM}#{url}#{RESET}"
+  puts "#{DIM}#{url}#{RESET}" if url
 end
 
 def print_section(title, items, show_meta: true)
