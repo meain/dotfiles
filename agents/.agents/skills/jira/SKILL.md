@@ -129,6 +129,16 @@ echo "Long description here" | jira issue create -tStory -s "Summary" --no-input
 
 **Parent/Epic linking**: Use `-P EPIC-KEY` to set the parent (epic) on create. Do NOT use `-l` (label) for this — `-l` adds labels, `-P` sets the parent.
 
+**Labels — reuse, don't invent**: Never create a new label unless the user explicitly asks for a new one. Before adding a label (on create or edit), check it already exists:
+
+```bash
+# Search existing labels by substring (paginated, org-wide)
+curl -s -u "abin.simon@veeam.com:$JIRA_API_TOKEN" \
+  "https://veeam-vdc.atlassian.net/rest/api/3/label?maxResults=50" | jq '.values[]' | grep -i "search-term"
+```
+
+If no close match exists, ask the user whether to use a similar existing label or confirm they want a brand-new one.
+
 ### Phase 2C: Edit (write operation)
 
 Always use `--no-input` to avoid interactive prompts.
@@ -282,3 +292,4 @@ When the user needs issue context for coding work, focus on:
 - When an issue key is mentioned in a branch name or commit message, offer to look it up
 - Summarize long descriptions and comment threads instead of dumping raw output
 - The default project is `DP` (Data Pipelines) — only specify `-p` when targeting a different project
+- Never invent new labels — always check the existing label list first (see Labels note in Phase 2B) and reuse a matching one
