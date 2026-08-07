@@ -9,6 +9,11 @@
   skills_dirs = ["/Users/meain/dev/veeam/oncall-copilot-plugins/plugins/data-pipelines/skills"]
 
 [model_aliases]
+  # most used
+  fast = "flash"
+  cheap = "luna" # a good cheap one
+  free = "ling"
+
   # openai
   gpt = "openai/gpt-5.4"
   mini = "openai/gpt-5.4-mini"
@@ -28,15 +33,14 @@
 
   # openrouter
   mercury = "openrouter/inception/mercury-2"
-  flash = "openrouter/deepseek/deepseek-v4-flash"
+  flash = "openrouter/~deepseek/deepseek-v4-flash-latest"
   ling = "openrouter/inclusionai/ling-3.0-flash:free"
-  free = "openrouter/inclusionai/ling-3.0-flash:free"
+  luna = "openrouter/openai/gpt-5.6-luna"
 
   # anthropic
   haiku = "anthropic/claude-haiku-4-5"
-  sonnet4 = "anthropic/claude-sonnet-4-5"
   sonnet = "anthropic/claude-sonnet-5"
-  opus = "anthropic/claude-opus-4-6"
+  opus = "anthropic/claude-opus-4-8"
 
 [providers]
   [providers.anthropic]
