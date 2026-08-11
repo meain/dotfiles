@@ -89,6 +89,17 @@ def fetch_review_requested(patterns)
   end.compact
 end
 
+def fetch_calendar_events
+  out, _stderr, status = Open3.capture3("icalBuddy", "-nc", "-npn", "-b", "", "-iep", "title,datetime", "eventsToday")
+  return [] unless status.success?
+
+  out.lines.each_slice(2).map do |title_line, time_line|
+    next unless title_line && time_line
+
+    { title: title_line.strip, meta: time_line.strip, url: nil }
+  end.compact
+end
+
 def fetch_jira_sprint
   sprint_out, = Open3.capture3("jira", "sprint", "list", "--plain")
   sprint_line = sprint_out.lines.find { |l| l.downcase.include?("earn") && l.downcase.include?("active") }
@@ -113,6 +124,7 @@ def main
   my_prs = fetch_my_prs
   tickets = fetch_jira_sprint || []
 
+  print_section("Today's calendar", fetch_calendar_events)
   print_section("Approved PRs", my_prs.select { |pr| pr[:meta] == "APPROVED" }, show_meta: false)
   print_section("Chase review", my_prs.reject { |pr| %w[APPROVED DRAFT].include?(pr[:meta]) })
   print_section("PRs to review", fetch_review_requested(patterns))
