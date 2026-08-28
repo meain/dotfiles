@@ -26,6 +26,7 @@ revsets-use-glob-by-default=true # just to make things silent
 
 [aliases]
 stack = ["log", "-r", "stack(@)"]
+bstack = ["bookmark", "list", "-r", "stack(@)", "-T", "if(self.remote() || self.normal_target().immutable(), \"\", name ++ \"\\n\")"]
 mine = ["log", "-r", "mine"]
 l = ["log", "-r", "..", "--limit", "10"]
 llog = ["log", "-r", ".."] # https://maddie.wtf/posts/2025-07-21-jujutsu-for-busy-devs/entry/1#see-more-of-the-log
