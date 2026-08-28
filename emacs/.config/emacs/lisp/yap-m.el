@@ -37,7 +37,7 @@
                      ("openrouter:flash" . ("openrouter" "google/gemini-2.0-flash-exp:free"))
                      ("openrouter:gpt-5.6-luna" . ("openrouter" "openai/gpt-5.6-luna"))
                      ("anthropic:sonnet-5" . ("anthropic" "claude-sonnet-5"))
-                     ("anthropic:opus-4-8" . ("anthropic" "claude-opus-4-8"))
+                     ("anthropic:opus-5" . ("anthropic" "claude-opus-5"))
                      ("anthropic:haiku-4-5" . ("anthropic" "claude-haiku-4-5"))))
            (name (completing-read "Model: " models nil t))
            (vals (cdr (assoc name models))))

@@ -1,4 +1,4 @@
-;;; gptel-m.el --- Configuratino for gptel -*- lexical-binding: t; -*-
+;;; gptel-m.el --- Configuration for gptel -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;; Primarily module for gptel and related package.  We do however load
@@ -47,13 +47,6 @@
                                (toggle-truncate-lines nil)
                                (setq-local show-trailing-whitespace nil)))
 
-  (gptel-make-openai "Github Models"
-    :host "models.inference.ai.azure.com"
-    :endpoint "/chat/completions?api-version=2024-05-01-preview"
-    :stream t
-    :key github-models-api-key
-    :models '(gpt-4o gpt-4o-mini))
-
   (gptel-make-openai "Groq"
     :host "api.groq.com"
     :endpoint "/openai/v1/chat/completions"
@@ -62,10 +55,6 @@
     :models '(llama-3.1-70b-versatile
               openai/gpt-oss-20b
               openai/gpt-oss-120b
-              llama-3.1-8b-instant
-              llama3-70b-8192
-              llama3-8b-8192
-              mixtral-8x7b-32768
               gemma-7b-it))
 
   (defun gptel-context-clear-all ()
