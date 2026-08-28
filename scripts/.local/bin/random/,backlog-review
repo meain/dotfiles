@@ -4,6 +4,7 @@
 require "json"
 require "yaml"
 require "open3"
+require "time"
 
 IGNORE_FILE = "/Users/meain/.local/share/ignored-prs-for-review.yaml"
 
@@ -56,16 +57,31 @@ def ignored?(patterns, *fields)
   patterns.any? { |p| text.include?(p) }
 end
 
-def print_entry(title, meta, url)
-  puts meta ? "#{title} (#{meta})" : title
-  puts "#{DIM}#{url}#{RESET}" if url
+def print_entry(item, show_meta: true, meta_first: false, meta_width: 0)
+  title = item[:title]
+  meta = show_meta ? item[:meta] : nil
+  line =
+    if meta.nil?
+      title
+    elsif meta_first
+      "#{meta.ljust(meta_width)}  #{title}"
+    else
+      "#{title} (#{meta})"
+    end
+  line += " #{item[:extra]}" if item[:extra]
+  puts line
+  puts "#{DIM}#{item[:url]}#{RESET}" if item[:url]
 end
 
-def print_section(title, items, show_meta: true)
+def print_section(title, items, show_meta: true, meta_first: false)
   return if items.empty?
 
   puts "#{BOLD}#{title}#{RESET}"
-  items.each { |item| print_entry(item[:title], show_meta ? item[:meta] : nil, item[:url]) }
+  # align titles by padding the meta column to the widest entry
+  meta_width = meta_first ? items.map { |i| i[:meta].to_s.length }.max : 0
+  items.each do |item|
+    print_entry(item, show_meta: show_meta, meta_first: meta_first, meta_width: meta_width)
+  end
   puts
 end
 
@@ -89,15 +105,45 @@ def fetch_review_requested(patterns)
   end.compact
 end
 
+def format_duration(minutes)
+  hours, mins = minutes.divmod(60)
+  return "#{mins}m" if hours.zero?
+
+  mins.zero? ? "#{hours}h" : "#{hours}h#{mins}m"
+end
+
+# "8:00 AM - 4:00 PM" -> ["08:00 AM - 04:00 PM", "8h"]
+# falls back to the raw range (no duration) when it is unparseable
+def event_times(range)
+  start_s, end_s = range.split("-", 2).map { |p| p.tr("\u{202f}\u{2060}", " ").gsub(" at ", " ").strip }
+  raise ArgumentError unless start_s && end_s
+
+  start_t = Time.parse(start_s)
+  end_t = Time.parse(end_s)
+  end_t += 24 * 60 * 60 if end_t < start_t # crosses midnight
+  display = "#{start_t.strftime('%I:%M %p')} - #{end_t.strftime('%I:%M %p')}"
+  [display, format_duration(((end_t - start_t) / 60).round)]
+rescue ArgumentError, TypeError
+  [range, nil]
+end
+
 def fetch_calendar_events
   out, _stderr, status = Open3.capture3("icalBuddy", "-nc", "-npn", "-b", "", "-iep", "title,datetime", "eventsToday")
   return [] unless status.success?
 
-  out.lines.each_slice(2).map do |title_line, time_line|
-    next unless title_line && time_line
+  events = []
+  out.lines.each do |line|
+    next if line.strip.empty?
 
-    { title: title_line.strip, meta: time_line.strip, url: nil }
-  end.compact
+    if line.start_with?(" ", "\t") && !events.empty?
+      # indented lines are the datetime for the preceding title
+      events.last[:meta], events.last[:extra] = event_times(line.strip)
+    else
+      # all-day events have no datetime line at all
+      events << { title: line.strip, meta: "all day", url: nil }
+    end
+  end
+  events
 end
 
 def fetch_jira_sprint
@@ -124,7 +170,7 @@ def main
   my_prs = fetch_my_prs
   tickets = fetch_jira_sprint || []
 
-  print_section("Today's calendar", fetch_calendar_events)
+  print_section("Today's calendar", fetch_calendar_events, meta_first: true)
   print_section("Approved PRs", my_prs.select { |pr| pr[:meta] == "APPROVED" }, show_meta: false)
   print_section("Chase review", my_prs.reject { |pr| %w[APPROVED DRAFT].include?(pr[:meta]) })
   print_section("PRs to review", fetch_review_requested(patterns))
