@@ -11,7 +11,7 @@
   :commands (gptel gptel-send gptel-rewrite-menu)
   :after (tab-bar) ; dependency because of M-; keybinding
   :config
-  (setq gptel-model 'claude-sonnet-4-6)
+  (setq gptel-model 'claude-sonnet-5)
   (setq gptel-backend
         (gptel-make-anthropic "Anthropic"
           :key (getenv "ANTHROPIC_API_KEY")
