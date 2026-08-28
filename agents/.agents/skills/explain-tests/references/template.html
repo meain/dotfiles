@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<!--
+  explain-tests page template.
+
+  Fill in: <title>, h1, the intro line, the inventory table, then one <h2> per
+  test function/group with .file underneath and one .row per case.
+
+  Keep the CSS as-is so pages stay consistent across runs.
+  Syntax highlighting is manual: wrap tokens in <span class="kw|str|cmt|fn|typ">.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TOPIC — tests</title>
+<style>
+  :root{--fg:#1f2328;--muted:#59636e;--line:#d1d9e0;--code:#f6f8fa;--accent:#0969da;
+        --kw:#cf222e;--str:#0a3069;--cmt:#6e7781;--fn:#6639ba;--typ:#953800}
+  *{box-sizing:border-box}
+  body{margin:0;background:#fff;color:var(--fg);
+       font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+  .wrap{max-width:1400px;margin:0 auto;padding:32px 24px 70px}
+  h1{font-size:23px;margin:0 0 4px}
+  h2{font-size:18px;margin:34px 0 2px}
+  .file{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;color:var(--muted);margin-bottom:10px}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 6px}
+
+  .row{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:0;
+       border:1px solid var(--line);border-radius:8px;margin-bottom:12px;overflow:hidden}
+  .row > div{padding:12px 14px}
+  .code{background:var(--code);border-right:1px solid var(--line);overflow-x:auto}
+  .code pre{margin:0;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+            font-size:12px;line-height:1.5;white-space:pre}
+  .exp .t{font-weight:600;font-size:13.5px;margin-bottom:4px}
+  .exp p{margin:0;font-size:13.5px;color:#32383f}
+  .exp code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;
+            background:var(--code);padding:1px 4px;border-radius:4px}
+  @media(max-width:900px){.row{grid-template-columns:1fr}
+                          .code{border-right:0;border-bottom:1px solid var(--line)}}
+
+  .kw{color:var(--kw)}.str{color:var(--str)}.cmt{color:var(--cmt)}.fn{color:var(--fn)}.typ{color:var(--typ)}
+  table{border-collapse:collapse;margin:8px 0 4px;font-size:13.5px}
+  td{border:1px solid var(--line);padding:5px 9px}
+  td:first-child{color:var(--muted)}
+  footer{margin-top:40px;padding-top:12px;border-top:1px solid var(--line);color:var(--muted);font-size:12.5px}
+  footer code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;
+              background:var(--code);padding:1px 4px;border-radius:4px}
+
+  /* Optional: only include past ~15 rows. */
+  .filter{margin:14px 0 18px}
+  .filter input{font:14px inherit;padding:6px 10px;border:1px solid var(--line);
+                border-radius:6px;width:280px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>TOPIC — tests</h1>
+<p class="sub">One sentence on what this page covers. Left: the code. Right: the case it covers.</p>
+
+<table>
+<tr><td>N new test funcs</td><td>Name, Name</td></tr>
+<tr><td>N new cases</td><td>in TestSomething</td></tr>
+<tr><td>N files</td><td>mechanical fixture rewrapping only</td></tr>
+</table>
+
+<!-- Optional filter box; drop it for short pages.
+<div class="filter"><input id="f" type="text" placeholder="filter cases..."></div>
+-->
+
+
+<h2>TestSomething</h2>
+<div class="file">path/to/thing_test.go — one-line framing of what this group asserts</div>
+
+<div class="row">
+<div class="code"><pre>name: <span class="str">"case_name"</span>,
+input: {Field: <span class="str">"value"</span>, Other: <span class="kw">true</span>},
+setup: <span class="kw">func</span>(...) {
+    mock.<span class="fn">EXPECT</span>().<span class="fn">Thing</span>(...).<span class="fn">Return</span>(...)   <span class="cmt">// trimmed</span>
+},
+want:    {expected},
+wantErr: unit.NoError,</pre></div>
+<div class="exp"><div class="t">Short label for the case</div><p>Which case this covers, and what makes it distinct from its neighbours.</p></div>
+</div>
+
+<div class="row">
+<div class="code"><pre><span class="cmt">// the shared harness / assertion, if the group has one</span>
+got, err := pkg.<span class="fn">FunctionUnderTest</span>(...)
+test.<span class="fn">wantErr</span>(t, err)
+<span class="kw">if</span> err != <span class="kw">nil</span> { <span class="kw">return</span> }
+assert.<span class="fn">Equal</span>(t, test.want, got)</pre></div>
+<div class="exp"><div class="t">The shape</div><p>What the table asserts on each case, and any non-obvious detail about the assertion itself.</p></div>
+</div>
+
+
+<footer>
+Run: <code>go test ./path/...</code><br>
+Single: <code>go test -run TestSomething ./path/</code><br><br>
+Snippets are trimmed for width; field names and values are verbatim.
+Not covered: ... (only if genuinely worth stating).
+</footer>
+
+</div>
+
+<!-- Optional, pairs with the filter box above.
+<script>
+document.getElementById('f').addEventListener('input', function (e) {
+  var q = e.target.value.toLowerCase();
+  document.querySelectorAll('.row').forEach(function (r) {
+    r.style.display = r.textContent.toLowerCase().includes(q) ? '' : 'none';
+  });
+});
+</script>
+-->
+</body>
+</html>
