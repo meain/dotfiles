@@ -4,7 +4,7 @@
 - Never number things (headings, sections) when creating markdown documents — use plain headings and unordered lists.
 - When creating HTML resources like dashboards or slides, prefer light mode unless explicitly stated.
 - When creating temporary resources, create it in /tmp and not the repo root.
-- Screenshots are stored in `/Users/meain/Documents/Screenshots/` with format `Screenshot YYYY-MM-DD at H.MM.SS AM.png`. Latest screenshot however can be found at `/Users/meain/Documents/latest_screenshot.png`.
+- Screenshots are stored in `/Users/meain/Documents/Screenshots/` with format `Screenshot YYYY-MM-DD at H.MM.SS AM.png`.
 
 ## Project Structure
 
@@ -27,6 +27,7 @@
 - When creating PRs, do not add "Generated with Claude Code" or similar labels/footers to the PR body.
 - When creating a new PR in Veeam repos, look up the associated Jira ticket and link it in the PR description body (not as a comment). Use the `jira` CLI to fetch ticket details. To find the ticket, fetch all open tickets assigned to me (`jira issue list --assignee $(jira me) --status-not Done`) and look for one that matches the PR's purpose — do not do a keyword search.
 - When creating a new PR, look up the repo's PR template first (`.github/pull_request_template.md`) and use it as the structure for the PR body. If there is none, include a summary of the changes and why they were made as two paragraphs. Include examples of code flow if it makes sense.
+- Keep PR and Jira descriptions short. Link the relevant references (design doc, ticket, related PR) but don't overdo the links — only ones a reviewer would actually open. Include a small diagram (ASCII flow, before/after) when it explains the change better than prose.
 - I usually want to set `rs-malik` (Rabee Sohail Malik), `ryanfkeepers` (Ryan Keepers), `rami-veeam`, and `tford-veeam` (Tim Ford) as reviewers on PRs from repos in /Users/meain/dev/veeam. After creating the PR, check `.github/CODEOWNERS` for the changed paths — if all four are already auto-assigned via CODEOWNERS, skip the reviewer ask; otherwise ask if I want to add the missing ones.
 - After you push a PR, ensure the CI is green in the background. If CI fails, notify the user proactively.
 
@@ -42,6 +43,7 @@
 - Use the `/vibediff` skill when working with VibeDiff code review instances. VibeDiff defaults to localhost:8888 (verify with `curl http://localhost:8888/api/directory`) and provides REST APIs for comments, diffs, and revisions. When replying to comments, only provide `content` and `parentId` — other fields are inherited from the parent. If behavior seems wrong, check `http://localhost:8888/docs` for the instance-specific API reference.
 - To open a URL in the browser, use `open <url>` (no sandbox needed). Reserve the `/firefox` skill for interactions that require UI scripting — tab switching, keyboard shortcuts, getting tab info.
 - When debugging Emacs issues, connect to the running instance via `emacsclient --eval '(...)'` to inspect state, evaluate expressions, or test fixes without restarting.
+- To make a file draggable (e.g. to drag an attachment into Teams/Jira), run `maru <file>` (needs `dangerouslyDisableSandbox: true`); it opens a draggable tray window. `maru --quit` closes it. Use this when the user asks to make a generated doc/artifact "draggable" or attachable.
 
 ## CLI Tool Preferences
 

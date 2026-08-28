@@ -120,6 +120,8 @@ echo "Long description here" | jira issue create -tStory -s "Summary" --no-input
 ```
 
 **Important**: When creating or editing issue descriptions:
+- **Keep descriptions short — never more than 5 lines.** Say what's needed and stop; do not pad with background or restated context.
+- **Use a diagram when it explains the change better than prose** (e.g. an ASCII flow, sequence, or before/after). A small diagram often replaces several lines of text.
 - Use markdown format for descriptions
 - Start with a descriptive paragraph, not section headings like "Context" or "Background"
 - Structure content naturally with markdown formatting (lists, code blocks, etc.)

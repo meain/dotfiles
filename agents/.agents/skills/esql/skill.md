@@ -66,6 +66,7 @@ Session cookies expire after a few hours. If you get a 401/session expired error
 
 ### Important notes
 
+- `,es-web` swallows unknown-column errors — a `KEEP`/`STATS BY` on a **non-existent field returns an empty "No results"**, not an error. Before concluding "no data", confirm the field exists (e.g. `... | WHERE <field> IS NOT NULL | STATS COUNT(*)`). Field names vary by dataset (e.g. `apm.app.earn` has no HTTP path field; `apm.app.nginx` uses `labels.path`).
 - `labels.status` is a **keyword** field — compare with strings, not integers (e.g., `labels.status >= "500"`)
 - When no `-f` is specified, default fields are: `@timestamp, service.name, message, labels.error, labels.error_message, labels.path, labels.status, trace.id`
 - For raw ES|QL queries, pass the full query as a positional argument — no default KEEP is added
