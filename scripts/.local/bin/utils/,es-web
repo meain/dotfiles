@@ -371,8 +371,10 @@ def main():
     # consume the first positional argument before the main parser's "raw" arg
     # can receive it.
     raw_query = None
-    if len(sys.argv) >= 2 and sys.argv[-1].upper().lstrip().startswith("FROM ") and not sys.argv[-1].startswith("-"):
-        raw_query = sys.argv.pop()
+    for i, arg in enumerate(sys.argv[1:], start=1):
+        if arg.upper().lstrip().startswith("FROM ") and not arg.startswith("-"):
+            raw_query = sys.argv.pop(i)
+            break
 
     parser = argparse.ArgumentParser(
         prog=",es-web",
