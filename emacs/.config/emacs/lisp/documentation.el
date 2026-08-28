@@ -17,11 +17,19 @@
 (use-package eldoc-box
   :ensure t
   :commands (eldoc-box-help-at-point eldoc-box-hover-mode eldoc-box-hover-at-point-mode)
+  :config
+  ;; The following is supposed to make eldoc not steal focus. We can
+  ;; remove them if the bug is fixed where the pointer goes into
+  ;; eldoc-box and I am not able to move around in the original window
+  ;; unless I click on it with mouse.
+  (advice-add 'eldoc-box-focus-frame :override
+              (lambda () (interactive) (message "eldoc-box: leaving focus on main frame")))
   :init
   (global-set-key (kbd "M-d")
                   (lambda ()
                     (interactive)
-                    (if (eq (selected-frame) eldoc-box--frame)
+                    (if (and (boundp 'eldoc-box--frame)
+                             (eq (selected-frame) eldoc-box--frame))
                         (eldoc-box-unfocus-frame)
                       (let ((eldoc-echo-area-use-multiline-p t))
                         (call-interactively #'eldoc-box-help-at-point))))))
