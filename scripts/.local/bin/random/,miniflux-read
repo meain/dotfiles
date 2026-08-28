@@ -15,13 +15,18 @@ curl -s -H "X-Auth-Token: $MINIFLUX_TOKEN" \
 
 arg="$1"
 
-open_entry() {
-    link="$(echo "$1" | cut -d $'\t' -f3)"
-    id="$(echo "$1" | cut -d $'\t' -f1)"
-    echo "$link"
-    open "$link"
+open_entries() {
+    lines="$1"
+    [ -z "$lines" ] && return
+
+    links="$(echo "$lines" | cut -d $'\t' -f3)"
+    ids="$(echo "$lines" | cut -d $'\t' -f1 | paste -sd, -)"
+
+    echo "$links"
+    echo "$links" | xargs open
+
     curl -s -X PUT -H "X-Auth-Token: $MINIFLUX_TOKEN" "$MINIFLUX_API/entries" \
-        --json '{"entry_ids": ['"$id"'], "status": "read"}'
+        --json '{"entry_ids": ['"$ids"'], "status": "read"}'
 }
 
 entries="$(jq -r '.entries[] | "\(.id)\t\(.published_at | split("T")[0]) \(.title) [\(.feed.title)]\t\(.url)"' <"$tmpfile")"
@@ -33,7 +38,7 @@ printf "Total %s entries(s) pending\n" "$(echo "$entries" | wc -l)"
 if echo "$arg" | grep -qE '^[0-9]+$'; then
     filtered="$(echo "$entries" | head -n "$arg")"
     [ -z "$filtered" ] && echo "no unread entries" && exit 0
-    echo "$filtered" | while IFS= read -r line; do open_entry "$line"; done
+    open_entries "$filtered"
     exit 0
 fi
 
@@ -41,13 +46,10 @@ fi
 if [ -n "$arg" ]; then
     filtered="$(echo "$entries" | grep -i "$arg")"
     [ -z "$filtered" ] && echo "no entries matching '$arg'" && exit 0
-    echo "$filtered" | while IFS= read -r line; do open_entry "$line"; done
+    open_entries "$filtered"
     exit 0
 fi
 
 # no arg: interactive picker
-echo "$entries" |
-    fzf -m --delimiter '\t' --with-nth=2 |
-    while IFS= read -r line; do
-        open_entry "$line"
-    done
+selected="$(echo "$entries" | fzf -m --delimiter '\t' --with-nth=2)"
+open_entries "$selected"
