@@ -12,10 +12,10 @@
 
     masApps = { }; # from mac app store
     taps = [
-      {
-        name = "d12frosted/emacs-plus";
-        trusted = true;
-      }
+      # {
+      #   name = "d12frosted/emacs-plus";
+      #   trusted = true;
+      # }
       {
         name = "jimeh/emacs-builds";
         trusted = true;
@@ -40,7 +40,8 @@
     ];
     casks = [
       # "emacs-plus-app" # stable emacs
-      "emacs-app-nightly"
+      # "emacs-app-nightly"
+      "emacs-app" # stable version
 
       "hammerspoon" # make macOS usable
       # "hiddenbar" # hide items in bar
