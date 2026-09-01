@@ -17,7 +17,7 @@ MY_PRS_QUERY = <<~GRAPHQL
     search(query: "is:pr is:open author:meain org:Veeam-VDC", type: ISSUE, first: 30) {
       nodes {
         ... on PullRequest {
-          number title url isDraft reviewDecision
+          number title url isDraft reviewDecision createdAt
           repository { nameWithOwner }
         }
       }
@@ -30,7 +30,7 @@ REVIEW_REQUESTED_QUERY = <<~GRAPHQL
     search(query: "is:pr is:open review-requested:meain review:required org:Veeam-VDC", type: ISSUE, first: 30) {
       nodes {
         ... on PullRequest {
-          number title url isDraft
+          number title url isDraft createdAt
           repository { nameWithOwner }
           author { login }
         }
@@ -85,10 +85,17 @@ def print_section(title, items, show_meta: true, meta_first: false)
   puts
 end
 
+def pr_age(created_at)
+  days = ((Time.now - Time.parse(created_at)) / 86400).floor
+  return "today" if days.zero?
+
+  days == 1 ? "1 day open" : "#{days} days open"
+end
+
 def fetch_my_prs
   gh_graphql(MY_PRS_QUERY).map do |n|
     meta = n["isDraft"] ? "DRAFT" : (n["reviewDecision"] || "PENDING")
-    { title: n["title"], meta: meta, url: n["url"] }
+    { title: n["title"], meta: meta, url: n["url"], extra: "(#{pr_age(n["createdAt"])})" }
   end
 end
 
@@ -101,7 +108,7 @@ def fetch_review_requested(patterns)
     next if repo == "Veeam-VDC/vdc-shared-data-plane" || author == "dependabot[bot]"
     next if ignored?(patterns, repo, n["url"], author)
 
-    { title: n["title"], meta: author, url: n["url"] }
+    { title: n["title"], meta: author, url: n["url"], extra: "(#{pr_age(n["createdAt"])})" }
   end.compact
 end
 
