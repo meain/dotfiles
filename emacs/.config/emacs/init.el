@@ -42,6 +42,7 @@
 ;; Good luck!
 
 ;;; Code:
+;; TODO: Might be able to make use of user-lisp directory in Emacs 31
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (require 'initialization) ; should be first
 (require 'evil-m) ; should be second

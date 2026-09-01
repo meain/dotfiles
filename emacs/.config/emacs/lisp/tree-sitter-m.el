@@ -33,12 +33,12 @@
   (add-to-list 'auto-mode-alist '("\\.js\\'" . js-ts-mode))
   (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
   (add-to-list 'auto-mode-alist '("\\.go\\'" . go-ts-mode))
-
   (add-to-list 'auto-mode-alist '("\\.yaml\\'" . yaml-ts-mode))
   (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-ts-mode))
   (add-to-list 'auto-mode-alist '("\\.json\\'" . json-ts-mode))
   ;; (add-to-list 'auto-mode-alist '("\\.nix\\'" . nix-mode))
 
+  ;; TODO: replace this and above with treesit-enabled-modes
   (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
   (add-to-list 'major-mode-remap-alist '(go-mode . go-ts-mode)))
 
