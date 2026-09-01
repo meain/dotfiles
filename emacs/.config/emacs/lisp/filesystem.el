@@ -62,7 +62,7 @@
     (when-let* ((git-root (let ((jj-root (string-trim (shell-command-to-string "jj git root 2>/dev/null"))))
                             (if (and jj-root (not (string-empty-p jj-root)))
                                 jj-root
-                              (when-let ((repo-root (locate-dominating-file default-directory ".git")))
+                              (when-let* ((repo-root (locate-dominating-file default-directory ".git")))
                                 (expand-file-name ".git" repo-root)))))
                 ((file-directory-p git-root))
                 (work-tree (expand-file-name default-directory)))
@@ -74,7 +74,7 @@
         (save-excursion
           (goto-char (point-min))
           (while (not (eobp))
-            (when-let ((file (dired-get-filename 'relative 'noerror)))
+            (when-let* ((file (dired-get-filename 'relative 'noerror)))
               (when (or (member file ignores)
                         (member (concat file "/") ignores)
                         ;; Handle directory entries

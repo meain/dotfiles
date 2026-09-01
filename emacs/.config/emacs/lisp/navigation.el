@@ -317,9 +317,9 @@ shown unless the `SHOW-HIDDEN' arg is provided."
       qa-entries))
 
   (mapcar (lambda (e)
-            (when-let ((key (car e))
-                       (name (cadr e))
-                       (file (caddr e)))
+            (when-let* ((key (car e))
+                        (name (cadr e))
+                        (file (caddr e)))
               (evil-leader/set-key (concat "e " key)
                 (cons name (lambda (&optional create)
                              (interactive "P")
@@ -346,9 +346,9 @@ shown unless the `SHOW-HIDDEN' arg is provided."
   ;; qa-projects (quick-access-projects) file contains the list of
   ;; projects that will be added here.
   (mapcar (lambda (e)
-            (when-let ((key (car e))
-                       (name (cadr e))
-                       (folder (caddr e)))
+            (when-let* ((key (car e))
+                        (name (cadr e))
+                        (folder (caddr e)))
               (evil-leader/set-key (concat "s e " key)
                 (cons name (lambda ()
                              (interactive)

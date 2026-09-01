@@ -26,7 +26,7 @@ Pass ORIGINAL and ALTERNATE options."
      ;; custom-src-directory is supposed to come from .dir-locals.el
      (if (boundp 'custom-src-directory)
          custom-src-directory
-       (or (when-let ((project (project-current)))
+       (or (when-let* ((project (project-current)))
              (project-root project))
            default-directory))))
 

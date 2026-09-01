@@ -129,7 +129,7 @@
 (defun meain/embark-target-jj-revision ()
   "Target the jj change ID at point in `vc-jj-log-view-mode' buffers."
   (when (derived-mode-p 'vc-jj-log-view-mode)
-    (when-let ((rev (log-view-current-tag)))
+    (when-let* ((rev (log-view-current-tag)))
       `(jj-revision ,rev . ,(cons (point) (point))))))
 
 (defvar meain/embark-jj-revision-map
