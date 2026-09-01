@@ -51,6 +51,7 @@
 - Use `fd` instead of `find` for locating files — simpler syntax, faster, and also respects `.gitignore` by default.
 - If a search needs to include ignored files (e.g. inside a gitignored cache dir), pass `-uu`/`--no-ignore` to `rg`/`fd` explicitly rather than reaching for `grep`/`find`.
 - Scope searches to the relevant directory rather than the whole repo root when possible, even with `rg`/`fd`.
+- Never run `find`/`grep`/`rg`/`fd` (or any search) from the filesystem root `/` or from `$HOME`. Always search inside a specific project or known directory. If you don't know where a file lives, ask instead of sweeping the filesystem.
 
 ## Workflow
 
