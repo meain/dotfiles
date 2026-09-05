@@ -71,6 +71,18 @@ ambiguous whether something is personal or work (e.g. "Apply for leave",
 health, shopping). When genuinely unsure, include it — the user filters
 the final draft, not you.
 
+**Note on refiling — normally not something you need to think about.** The
+target week should already be in `Backlog.md`'s `## Before` section, since
+that's the week just completed. This only becomes relevant if
+`last-week-backlog.sh` comes back empty for every single day (e.g. a
+manual re-run for an older week): the vault periodically refiles old
+`## Before` entries out of `Backlog.md` into
+`Backlog/Refiled/YYYY/MM/Backlog.md`. Those refiled files drop the
+`## Before` header — they're just bare `### YYYY-MM-DD (Day)` sections
+at the top of the file. If you hit an all-empty week, check the matching
+`Refiled/YYYY/MM/Backlog.md` directly instead of assuming it was a light
+week.
+
 ### 2. Get the exact date range as YYYY-MM-DD
 
 You'll need this for steps 3 and 4. Compute it the same way the script
