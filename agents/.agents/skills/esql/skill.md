@@ -25,10 +25,11 @@ pbpaste | ,es-web init prd-eu
 ,es-web list
 ```
 
-Session cookies expire after a few hours. If you get a 401/session expired error:
-1. Look up the Kibana URL for the target cluster from the Confluence Speed Dial page (`confluence page 405504500`)
-2. Open it with `open <url>` (with `dangerouslyDisableSandbox: true`)
-3. Ask the user to copy a curl from the network tab and run `! pbpaste | ,es-web init <cluster>`
+Session cookies expire after a few hours. If you get a 401/session expired error, use `reinit` — it reopens Kibana and waits for a fresh curl on the clipboard itself, then tests & saves:
+```bash
+,es-web reinit prd-us
+```
+Run this with `dangerouslyDisableSandbox: true` since it needs to open the browser. It blocks until a valid curl shows up on the clipboard, so tell the user to copy one (DevTools → Network → filter `esql_async` → right-click → Copy as cURL) while it's waiting.
 
 ## How to query with `,es-web`
 
