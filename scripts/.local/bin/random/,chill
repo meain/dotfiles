@@ -22,11 +22,27 @@ if [ "$1" = "cache" ]; then
     exit 0
 fi
 
+duration_of() {
+    file="$dir/$1"
+    [ -f "$file" ] || { echo "-"; return; }
+    secs="$(ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "$file" 2>/dev/null)"
+    [ -n "$secs" ] || { echo "-"; return; }
+    secs="${secs%.*}"
+    printf '%d:%02d:%02d\n' $((secs / 3600)) $(((secs / 60) % 60)) $((secs % 60))
+}
+
 if echo "$1" | grep -q '^https://'; then
     key="$(echo "$1" | grep -o 'v=.*$')"
     item="$key $1"
 else
-    item="$(,picker -l 10 <"$HOME/.config/datafiles/chills")"
+    name="$(
+        while read -r line; do
+            n="$(echo "$line" | awk '{print $1}')"
+            printf '%-30s %s\n' "$n" "$(duration_of "$n")"
+        done <"$HOME/.config/datafiles/chills" | ,picker -l 10 | awk '{print $1}'
+    )"
+    url="$(awk -v n="$name" '$1==n{print $2}' "$HOME/.config/datafiles/chills")"
+    item="$name $url"
 fi
 
 download "$item"
