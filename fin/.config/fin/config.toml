@@ -15,16 +15,6 @@
   free = "openrouter/poolside/laguna-s-2.1:free"
   ofree = "openrouter/openrouter/free"
 
-  # openai
-  gpt = "openai/gpt-5.4"
-  mini = "openai/gpt-5.4-mini"
-  nano = "openai/gpt-5.4-nano"
-
-  # github
-  ghgpt = "github/gpt-5.4"
-  ghmini = "github/gpt-5.4-mini"
-  ghnano = "github/gpt-5.4-nano"
-
   # groq
   groq = "groq/openai/gpt-oss-120b"
 
@@ -33,14 +23,14 @@
   jan = "ollama/hf.co/Menlo/Jan-nano-gguf:Q4_K_M"
 
   # openrouter
-  flash = "openrouter/~deepseek/deepseek-v4-flash-latest"
-  luna = "openrouter/openai/gpt-5.6-luna"
+  flash = "openrouter/deepseek/deepseek-v4.1-flash"
+  luna = "openrouter/openai/gpt-6-luna"
   gflash = "openrouter/z-ai/glm-5.3-flash"
 
   # anthropic
   haiku = "anthropic/claude-haiku-4-5"
   sonnet = "anthropic/claude-sonnet-5"
-  opus = "anthropic/claude-opus-4-8"
+  opus = "anthropic/claude-opus-5-5"
 
 [providers]
   [providers.anthropic]
@@ -55,19 +45,6 @@
   [providers.groq]
     base_url = "https://api.groq.com/openai"
     api_key_env = "GROQ_API_KEY"
-  [providers.github]
-    base_url = "https://models.inference.ai.azure.com"
-    api_key_env = "GITHUB_MODELS_API_KEY"
   [providers.ollama]
     base_url = "http://localhost:11434"
     api_key_env = "OLLAMA_API_KEY"
-
-[tools]
-  [tools.edit]
-    approval = "confirm"
-  [tools.read]
-    approval = "auto"
-  [tools.shell]
-    approval = "confirm"
-  [tools.write]
-    approval = "confirm"
