@@ -112,12 +112,16 @@ jira issue create -tSubtask -P PARENT-KEY -s "Subtask title" -b "Details" --no-i
 # In a specific project
 jira issue create -p PROJECT -tStory -s "Story title" -b "As a user..." --no-input
 
-# With custom fields
-jira issue create -tStory -s "Story" --custom story-points=3 --no-input
+# With story points (field name is story-point-estimate; works on create)
+jira issue create -tStory -s "Story" --custom story-point-estimate=3 --no-input
 
 # Pipe description from stdin for long bodies
-echo "Long description here" | jira issue create -tStory -s "Summary" --no-input
+timeout 60 jira issue create -tStory -s "Summary" --no-input < /tmp/body.md
 ```
+
+Pass multi-line descriptions via stdin, not `-b "$(cat ...)"` — the `-b` form has hung indefinitely without creating the issue. Wrap `create` in `timeout 60` and, if it times out, check whether the issue was created before retrying.
+
+To create directly into a sprint, get the ID from `jira sprint list --state active --plain`, then `jira sprint add <SPRINT_ID> <KEY>` after creation.
 
 **Important**: When creating or editing issue descriptions:
 - **Keep descriptions short — never more than 5 lines.** Say what's needed and stop; do not pad with background or restated context.
@@ -173,7 +177,7 @@ jira issue edit ISSUE-KEY -s "Updated title" -yHigh -l backend --no-input
 
 ### Phase 2J: Story Points
 
-The `--custom story-points=N` flag on `jira issue edit` does **not** work in this Jira instance. Story points must be set via the REST API directly using the `customfield_10016` field (`Story point estimate`) and the `JIRA_API_TOKEN` environment variable:
+On create, `--custom story-point-estimate=N` works. On `jira issue edit`, the `--custom story-points=N` flag does **not** work in this Jira instance. Story points must be set via the REST API directly using the `customfield_10016` field (`Story point estimate`) and the `JIRA_API_TOKEN` environment variable:
 
 ```bash
 curl -s -o /dev/null -w "%{http_code}" \
