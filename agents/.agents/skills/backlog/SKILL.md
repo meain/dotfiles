@@ -147,6 +147,7 @@ Write all candidates to `/tmp/backlog-candidates-YYYY-MM-DD.md` with `- [ ]` lin
 - Morning routine (Apply rosemary water, Apply sunscreen, Check emails, Check Slack, Check Teams, Charge devices)
 - Today's meetings (from calendar — list as info, no checkboxes; don't add to backlog)
 - My PRs — approved (ready to merge)
+- My PRs — changes requested (others requested changes on my PRs; `reviewDecision == CHANGES_REQUESTED`)
 - My PRs — needs action
 - PRs needing direct review — split into subsections:
   - **Recent (this week)**: PRs updated within the last ~7 days (only where `login: meain` is a direct reviewer, not team; exclude PRs with "local-dev" in the title, never include `vdc-shared-data-plane` PRs, and never include dependabot PRs from Veeam-VDC repos — they are auto-reviewed)

@@ -179,7 +179,8 @@ def main
 
   print_section("Today's calendar", fetch_calendar_events, meta_first: true)
   print_section("Approved PRs", my_prs.select { |pr| pr[:meta] == "APPROVED" }, show_meta: false)
-  print_section("Chase review", my_prs.reject { |pr| %w[APPROVED DRAFT].include?(pr[:meta]) })
+  print_section("Changes requested", my_prs.select { |pr| pr[:meta] == "CHANGES_REQUESTED" }, show_meta: false)
+  print_section("Chase review", my_prs.reject { |pr| %w[APPROVED DRAFT CHANGES_REQUESTED].include?(pr[:meta]) })
   print_section("PRs to review", fetch_review_requested(patterns))
   print_section("Draft PRs", my_prs.select { |pr| pr[:meta] == "DRAFT" }, show_meta: false)
   print_section("Pending Jira tickets", tickets.map do |t|
