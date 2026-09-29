@@ -12,14 +12,6 @@
           {
             "type": "command",
             "command": "~/.claude/hooks/update-status.sh || exit 0"
-          },
-          {
-            "type": "command",
-            "command": "~/.claude/hooks/notify-summary.sh &"
-          },
-          {
-            "type": "command",
-            "command": ",make-noise &"
           }
         ]
       }
@@ -30,14 +22,6 @@
           {
             "type": "command",
             "command": "~/.claude/hooks/update-status.sh || exit 0"
-          },
-          {
-            "type": "command",
-            "command": "~/.claude/hooks/notify-summary.sh &"
-          },
-          {
-            "type": "command",
-            "command": ",make-noise &"
           }
         ]
       }
