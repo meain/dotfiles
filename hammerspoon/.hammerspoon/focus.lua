@@ -75,7 +75,8 @@ end
 -- quick focus
 -- bindFocus("o", "/opt/homebrew/opt/emacs-mac/Emacs.app")
 bindFocus("k", apps.firefox, true)
-bindFocus("s", apps.slack, true)
+-- bindFocus("s", apps.slack, true)
+hs.hotkey.bind(keys.fkey, "s", function() hs.alert("Slack is long gone") end)
 bindFocus("l", apps.teams, true)
 bindFocus("h", apps.notesApp, true)
 bindFocus("j", apps.editor, true)
