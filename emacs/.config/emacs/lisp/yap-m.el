@@ -11,7 +11,7 @@
   :after (llm)
   :config
   (setq yap-service "anthropic")
-  (setq yap-model "claude-sonnet-5")
+  (setq yap-model "claude-sonnet-5-5")
 
   (setq yap-api-key:groq groq-api-key)
   (setq yap-api-key:openrouter openrouter-api-key)
@@ -36,7 +36,7 @@
                      ("openrouter:deepseek-v4-flash" . ("openrouter" "~deepseek/deepseek-v4-flash-latest"))
                      ("openrouter:flash" . ("openrouter" "google/gemini-2.0-flash-exp:free"))
                      ("openrouter:gpt-5.6-luna" . ("openrouter" "openai/gpt-5.6-luna"))
-                     ("anthropic:sonnet-5" . ("anthropic" "claude-sonnet-5"))
+                     ("anthropic:sonnet-5-5" . ("anthropic" "claude-sonnet-5-5"))
                      ("anthropic:opus-5" . ("anthropic" "claude-opus-5"))
                      ("anthropic:haiku-4-5" . ("anthropic" "claude-haiku-4-5"))))
            (name (completing-read "Model: " models nil t))
