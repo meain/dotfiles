@@ -25,6 +25,7 @@ Keep these in the main loop — delegating them costs more than it saves:
 - Deciding how to decompose the work, and in what order.
 - Anything needing the full conversation history or a long back-and-forth with the user.
 - Trivial one-liners: a single file read you already know the path of, one grep, one short command. Spinning up an agent for these is slower than doing it.
+- Tasks that are purely finding files (by name, pattern, or location — no reasoning about what's inside them). Use `fd`/`Glob`/`Bash` directly instead of delegating; orchestration only pays off once the task involves judgment, multi-step work, or reading content across files.
 - Reviewing and reconciling subagent output. Do not relay it verbatim — subagent reports are not shown to the user. Verify claims that matter (did the test actually pass? does the file actually exist?) before reporting them as fact.
 - The final answer to the user.
 
