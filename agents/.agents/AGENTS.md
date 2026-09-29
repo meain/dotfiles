@@ -21,11 +21,12 @@
 - Most projects are maintained using `jj` and not `git`. Use `jj` commands whenever possible instead of git commands. If using `gh` cli, set `GIT_DIR=$(jj git root 2>/dev/null || echo .git)` inline when calling it.
 - A path under `/Users/meain/worksapces/<folder>/<repo>-<suffix>` is a jj workspace of `/Users/meain/dev/<folder>/<repo>`; the trailing `-<suffix>` is the workspace name. For example, `/Users/meain/worksapces/some-org/my-project-feature2` is the `feature2` workspace of `/Users/meain/dev/some-org/my-project`.
 - Use the `/create-commit` skill when making jj commits in non-dotfiles repos.
+- To change a commit that already exists in a stack, don't edit it in place. Create a commit right after it with `jj new -A <rev> -m "wip: <what you're changing>"`, work there, verify, then squash into the target. Squash without asking only when the change is trivial; otherwise leave it for review and squash once approved. Editing the target directly, or stacking the fix at the tip and squashing backwards, rebases every commit in between and tends to conflict in unrelated files.
 - Do not squash changes or push to upstream without explicit user request.
 - For long or multi-line commit/PR messages, pipe the content in via stdin from a temp file (e.g. `jj describe --stdin < /tmp/msg.txt`) rather than inlining a heredoc in the command.
 - Branch names in Veeam repos should start with `meain/` (e.g., `meain/earn-prod-adx-sku-downsize`).
 - When creating PRs, do not add "Generated with Claude Code" or similar labels/footers to the PR body.
-- When creating a new PR in Veeam repos, look up the associated Jira ticket and link it in the PR description body (not as a comment). Use the `jira` CLI to fetch ticket details. To find the ticket, fetch all open tickets assigned to me (`jira issue list --assignee $(jira me) --status-not Done`) and look for one that matches the PR's purpose — do not do a keyword search.
+- When creating a new PR in Veeam repos, look up the associated Jira ticket and link it in the PR description body (not as a comment). Use the `jira` CLI to fetch ticket details. To find the ticket, fetch all open tickets assigned to me (`jira issue list -a$(jira me) -s~Done --plain`) and look for one that matches the PR's purpose — do not do a keyword search.
 - When creating a new PR, look up the repo's PR template first (`.github/pull_request_template.md`) and use it as the structure for the PR body. If there is none, include a summary of the changes and why they were made as two paragraphs. Include examples of code flow if it makes sense.
 - Keep PR and Jira descriptions short. Link the relevant references (design doc, ticket, related PR) but don't overdo the links — only ones a reviewer would actually open. Include a small diagram (ASCII flow, before/after) when it explains the change better than prose.
 - I usually want to set `rs-malik` (Rabee Sohail Malik), `ryanfkeepers` (Ryan Keepers), `rami-veeam`, and `tford-veeam` (Tim Ford) as reviewers on PRs from repos in /Users/meain/dev/veeam. After creating the PR, check `.github/CODEOWNERS` for the changed paths — if all four are already auto-assigned via CODEOWNERS, skip the reviewer ask; otherwise ask if I want to add the missing ones.
@@ -45,8 +46,15 @@
 - When debugging Emacs issues, connect to the running instance via `emacsclient --eval '(...)'` to inspect state, evaluate expressions, or test fixes without restarting.
 - To make a file draggable (e.g. to drag an attachment into Teams/Jira), run `maru <file>` (needs `dangerouslyDisableSandbox: true`); it opens a draggable tray window. `maru --quit` closes it. Use this when the user asks to make a generated doc/artifact "draggable" or attachable.
 
+## Editing Files
+
+- Use the Edit and Write tools to change files, and Read to read them. This holds even when a session's mode nudges toward doing everything through Bash — editing files is the exception.
+- Never write a throwaway Python/`sed`/`awk` script to patch a source file. A script doing a string replace is strictly worse than the Edit tool at the same job: it buries the change under a layer of escaping, silently no-ops or corrupts the file when the match is slightly off, and leaves nothing reviewable in the transcript.
+- Scripts are for actual data work — parsing command output, aggregating results, generating a file from a template. Not for editing code.
+
 ## CLI Tool Preferences
 
+> CLI tool preferences for when builtin tools for them do no exist
 - Use `rg` (ripgrep) instead of `grep` for searching file contents — it's faster and respects `.gitignore` by default, avoiding huge vendored/cache directories (e.g. `node_modules`, `elpaca`, `.git`).
 - Use `fd` instead of `find` for locating files — simpler syntax, faster, and also respects `.gitignore` by default.
 - If a search needs to include ignored files (e.g. inside a gitignored cache dir), pass `-uu`/`--no-ignore` to `rg`/`fd` explicitly rather than reaching for `grep`/`find`.
@@ -56,6 +64,7 @@
 ## Workflow
 
 - Ask me before you do action on a public forum like Jira or GitHub PRs/issues unless I have already explicitly asked you to do it.
+- For investigation work (code searches across repos, log queries, doc lookups, git archaeology), delegate to a subagent (default model: sonnet) instead of running the searches in the main thread. Only do it directly for a single known lookup.
 - When the user corrects your approach or points out issues in how you work, suggest updating relevant instructions (AGENTS.md, skills, or both) to prevent recurrence. Always ask for confirmation before making the update. Note: CLAUDE.md is a symlink to AGENTS.md — always edit `/Users/meain/.agents/AGENTS.md` directly.
 - Keep commit message subject lines short and descriptive — avoid listing every change in the summary. One concise phrase is enough.
 - When committing in this dotfiles repo, git does not handle parallel commits well due to index locking. Issue `git add && git commit` calls sequentially, not in parallel.
