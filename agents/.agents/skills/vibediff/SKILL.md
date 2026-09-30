@@ -19,6 +19,28 @@ Interact with VibeDiff code review instances - fetch review comments, reply to t
 - Working on code changes that have active VibeDiff review comments
 - User mentions VibeDiff by name or asks about review feedback
 
+## Helper script (use this first)
+
+`vd.py` in this skill directory wraps the common chores. It defaults `--dir` to the cwd and uses `VIBEDIFF_URL` (default `http://localhost:8888`).
+
+```bash
+VD=~/.claude/skills/vibediff/vd.py
+
+$VD comments                         # open threads in the cwd repo, with replies
+$VD comments --rev trswtrqn          # filter by revision prefix (jj change id)
+$VD comments --author user           # only threads a human started
+$VD comments --all --json            # include resolved threads, as JSON (with replies)
+$VD reply <id> "Fixed in wip abc"    # reply as agent:claude; --resolve also resolves
+$VD reply <id> - < msg.txt           # reply text from stdin (multi-line)
+$VD post --rev <change-id> --file path/to/x.go --line 42 [--line-end 44] [--name reviewer] "text"
+$VD resolve <id>... / $VD reopen <id>...
+$VD revisions [--limit 10]
+```
+
+Replies must include `directory` even though the API inherits the other fields. Without it the server answers `400 directory is required`, and it's easy to miss when the output is discarded. The script always sends it, and exits non-zero with the server's message on any HTTP error.
+
+A human reply can sit under an agent's root comment, so `comments --author user` (which filters on the root author) can miss it. To catch every thread a human touched, check `comments` without `--author`.
+
 ## How it works
 
 VibeDiff runs as a local HTTP server (default port 8888) that can review **multiple repositories** at once. Directory is a **per-request parameter** — there is no server-side "current directory" state. Each API call must include the `directory` query param (or body field for POSTs).
