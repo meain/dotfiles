@@ -2,11 +2,8 @@
 
 set -e
 
-printf "Hardcore? [y/N] "
-read -r answer
-
 echo "Emptying trash..."
-trash-empty
+trash-empty -f
 
 echo "Cleaning up rr..."
 command rm -rf ~/.local/share/rr
@@ -17,7 +14,7 @@ nix-collect-garbage
 nix-store --optimize
 
 echo "Cleaning up docker..."
-docker system prune -a
+docker system prune -a -f
 
 if command -v brew >/dev/null 2>&1; then
     echo "Cleaning brew cache..."
@@ -64,10 +61,5 @@ if command -v xcrun >/dev/null 2>&1; then
     rm -rf "$HOME/Library/Developer/Xcode/iOS Device Logs/"
 fi
 
-[ "$answer" != "y" ] && exit 0
-
 echo "Cleaning up go cache..."
 go clean -cache
-
-echo "Cleaning up extra folders..."
-command rm -rf ~/.local/share/{go,containers} # kinda hardcore
