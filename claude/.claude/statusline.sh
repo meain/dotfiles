@@ -29,8 +29,8 @@ echo "$CTX" > "$LAST_CTX_FILE"
 
 BASELINE=$(cat "$COST_BASELINE_FILE" 2>/dev/null || echo "0")
 
-# USD to INR rate as of 2026-04-24 (~94.13); update periodically
-COST=$(echo "$CURRENT_COST_USD $BASELINE 94.13" | awk '{v=($1-$2)*$3; printf "%d", (v<0)?0:v}')
+# Display cost in USD (no conversion needed)
+COST=$(echo "$CURRENT_COST_USD $BASELINE" | awk '{v=($1-$2); printf "%.2f", (v<0)?0:v}')
 
 # Format duration: show as Xm or Xs
 DURATION=""
@@ -60,7 +60,7 @@ if [ "$CTX" -gt 0 ] 2>/dev/null; then
 fi
 
 if [ "$COST" != "0" ] 2>/dev/null; then
-  PARTS="${PARTS:+$PARTS }₹${COST}"
+  PARTS="${PARTS:+$PARTS }\$${COST}"
 fi
 
 if [ -n "$DURATION" ]; then
