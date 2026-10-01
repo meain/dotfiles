@@ -10,7 +10,7 @@
 
 [model_aliases]
   # most used
-  fast = "flash"
+  fast = "luna"
   cheap = "luna" # a good cheap one
   free = "openrouter/poolside/laguna-s-2.1:free"
   ofree = "openrouter/openrouter/free"
