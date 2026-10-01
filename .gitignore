@@ -58,3 +58,4 @@ emacs/.config/emacs/tramp
 !claude/.claude/CLAUDE.md
 /.agents
 /emacs/.config/emacs/multisession/files/emoji
+/agents/.agents/skills/synced
