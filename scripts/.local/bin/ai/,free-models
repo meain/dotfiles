@@ -1,0 +1,25 @@
+#!/bin/sh
+# List the best free models on OpenRouter, ranked by intelligence index.
+# Usage: free-models [N]   (default: top 20)
+
+set -e
+
+n="${1:-20}"
+
+curl -s https://openrouter.ai/api/v1/models | jq -r --argjson n "$n" '
+  def k: if . < 1000 then tostring + "K" else ((. / 1000) | floor | tostring + "K") end;
+  def int_or_zero: if type == "number" then . else 0 end;
+  .data
+  | map(select(
+      (.pricing.prompt // 0 | tostring) == "0" and
+      (.pricing.completion // 0 | tostring) == "0"))
+  | map({
+      id,
+      name,
+      ctx: (.context_length // 0 | int_or_zero),
+      idx: (.benchmarks.artificial_analysis.intelligence_index // 0 | int_or_zero)})
+  | sort_by([.idx, .ctx]) | reverse
+  | .[0:($n // 20)]
+  | .[]
+  | "\(.idx | if . > 0 then tostring else "    -" end)  \(.ctx | k)  \(.id)\n          \(.name)"
+'
