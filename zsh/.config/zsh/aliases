@@ -63,6 +63,7 @@ alias ,gh-copilot="npx -y @github/copilot --allow-tool 'write'"
 
 # fin
 alias finn="fin -m haiku"
+alias finf="fin -m free"
 alias finc="fin -c"
 alias finq="fin -q"
 alias fint="fin -temp"
