@@ -2,32 +2,22 @@
 
 set -e
 
-if [ "$1" = "last" ]; then
-    last_item=$(todo.sh list | head -n -2 | sort -k1n | tail -n 1)
-    last_num=$(echo "$last_item" | awk '{print $1}')
-    echo "$last_item" |
-        grep -E -o "https?://[^ ]*" |
-        sort -u | xargs -I{} open '{}'
-    todo.sh do "$last_num"
-elif echo "$1" | grep -qE '^[0-9][0-9]*$' && [ -z "$2" ]; then
-    if [ "$(uname)" = "Linux" ]; then
-        prevwindowname="$(xdotool getactivewindow getwindowname)"
-    fi
-
-    [ -n "$1" ] &&
-        todo.sh do "$1" |
-        grep -E -o "https?://[^ ]*" |
-            sort -u | xargs -I{} open '{}'
-
-    if [ "$(uname)" = "Linux" ]; then
-        [ "$(xdotool getactivewindow getwindowname)" = "$prevwindowname" ] || i3-msg scratchpad show >/dev/null
-    else
-        # flip back to previous application
-        osascript -e 'tell application "System Events" to keystroke tab using {command down}'
-    fi
-elif [ -n "$1" ]; then
-    todo.sh $*
+if [ -z "$1" ]; then
+	# No argument
+	todo.sh list | head -n -2 | sort -k1n
+	echo ""
+	echo "$(basename "$0") N   : to open the links in task N"
+	echo "$(basename "$0") N M : to open the links in tasks N through M"
+elif [ -z "$2" ] && echo "$1" | grep -qE '^[0-9][0-9]*$'; then
+	# Single number passed in, open that
+	todo.sh 'do' "$1" | grep -E -o "https?://[^ ]*" | sort -u | xargs -I{} open '{}'
+elif [ -n "$2" ] && echo "$1" | grep -qE '^[0-9][0-9]*$' && echo "$2" | grep -qE '^[0-9][0-9]*$'; then
+	# Range paseed in, open all in range
+	seq "$1" "$2" | while read; do
+		todo.sh 'do' "$1" | grep -E -o "https?://[^ ]*"
+	done |
+		sort -u | xargs open
+else
+	# Forward it to underlying CLI
+	todo.sh "$*"
 fi
-
-clear -x
-todo.sh list | head -n -2 | sort -k1n
