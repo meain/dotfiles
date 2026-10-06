@@ -130,7 +130,7 @@ if [ ! -d "$ws_dir" ]; then
 fi
 
 cd "$ws_dir" || exit 1
-pwd | pbcopy
+pwd
 
 if [ -f .envrc ]; then
     direnv allow
