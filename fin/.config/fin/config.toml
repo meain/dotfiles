@@ -11,8 +11,9 @@
 [model_aliases]
   # most used
   fast = "luna"
-  cheap = "luna" # a good cheap one
-  free = "openrouter/poolside/laguna-s-2.1:free"
+  cheap = "openrouter/deepseek/deepseek-v4-flash"
+  free = "openrouter/openrouter/free"
+  exp = "openrouter/stealth/space-bunny-alpha"
   ofree = "openrouter/openrouter/free"
 
   # groq
