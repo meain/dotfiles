@@ -24,6 +24,10 @@ Commits follow the format: `[component] brief description`
 - Always use a single component name in `[component]` — pick the primary one if changes span multiple
 - Do NOT add `Co-Authored-By` lines unless asked
 - Use the `/commit` skill which handles all of this automatically
+- Git index locking breaks parallel commits — issue `git add && git commit` calls sequentially, never in parallel
+- Commit `home-manager/.config/home-manager/flake.lock` and `nix-darwin/.config/nix-darwin/flake.lock` separately with `[home-manager]` and `[nix-darwin]` prefixes, not together as `[nix]`
+- Commits that don't belong to a specific stow package (root-level meta files, shared configs) use `[]` with no component name
+- If unsure about conventions or component names, check `git log` for similar past changes
 
 ## Key Config Files
 
