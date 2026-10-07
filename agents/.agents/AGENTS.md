@@ -3,84 +3,83 @@
 - When the user specifically asks to generate a markdown file, open it once right after first creating it using `open -a Firefox <filepath>` (with `dangerouslyDisableSandbox: true`) — do not reopen it after subsequent edits, since a browser refresh picks up changes. For HTML or other file formats, use `open <filepath>` with `dangerouslyDisableSandbox: true` — the sandbox blocks `open` from launching GUI apps.
 - Never number things (headings, sections) when creating markdown documents — use plain headings and unordered lists.
 - When creating HTML resources like dashboards or slides, prefer light mode unless explicitly stated.
-- When creating temporary resources, create it in /tmp and not the repo root.
+- Create temporary resources in `/tmp`, not the repo root.
 - Screenshots are stored in `/Users/meain/Documents/Screenshots/` with format `Screenshot YYYY-MM-DD at H.MM.SS AM.png`.
 
 ## Project Structure
 
-- When working in any Veeam project (`/Users/meain/dev/veeam/`), refer to `/Users/meain/dev/mdocs/reference/veeam-repo-map.md` for how repos connect, dependency graphs, deployment flows, useful scripts/commands, and which repo to change for a given task. If you find any inaccuracies or missing information in that doc, update it.
-- Each project will have `.mdocs` and `.mscripts` folders in the root containing docs or scripts related to the project. These provide insights into how the user works on it and how you can do certain things.
-- Use a `.martifacts` folder in the project root to store artifacts generated for that project (e.g. generated runbooks, docs, reports). Create it if it doesn't exist.
-- Never reference `.mdocs`/`.mscripts` (or any file under them) from committed code, code comments, or any other file. The only things that may reference an `.mdocs`/`.mscripts` path are other `.mdocs`/`.mscripts` files (and taskwarrior tasks). If you need context that lives in `.mdocs`, inline the relevant detail rather than pointing at the file. Use the `save-research` skill when working with `.mdocs`.
-- Cross-project research, guides, runbooks, reference docs, and workflows live in `/Users/meain/dev/mdocs/` (the global mdocs directory). It follows the same category structure as project-level `.mdocs/` folders. Refer to these if necessary. If you find outdated or incorrect information, suggest updates.
-- Workflows in `/Users/meain/dev/mdocs/workflows/` define structured processes that combine multiple data sources (Jira, Confluence, vault) to provide intelligent recommendations and automation.
-- We use nix in almost all projects. If you find a `flake.nix`, adding new tools/CLIs should be done using that instead of homebrew.
+- In any Veeam project (`/Users/meain/dev/veeam/`), refer to `/Users/meain/dev/mdocs/reference/veeam-repo-map.md` for how repos connect, dependency graphs, deployment flows, useful scripts/commands, and which repo to change for a task. If it is inaccurate or incomplete, update it.
+- Each project has `.mdocs` and `.mscripts` folders in its root with project docs and scripts. They show how I work on the project and how to do certain things. Use the `save-research` skill when writing to `.mdocs`.
+- Never reference `.mdocs`/`.mscripts` paths from committed code, comments, PRs, or any file outside `.mdocs`/`.mscripts` (taskwarrior tasks are the only other exception). Inline the relevant detail instead.
+- Generated artifacts for a project (runbooks, docs, reports) go in `.martifacts` in the project root (create if missing). Throwaway files still go in `/tmp`.
+- Cross-project research, guides, runbooks, reference docs, and workflows live in `/Users/meain/dev/mdocs/`, with the same category structure as project-level `.mdocs/`. `workflows/` there defines structured processes combining Jira, Confluence, and the vault. Suggest updates if anything is outdated or wrong.
+- We use nix in almost all projects. If there is a `flake.nix`, add new tools/CLIs through it, not homebrew.
 
 ## Version Control & PRs
 
-- Most projects are maintained using `jj` and not `git`. Use `jj` commands whenever possible instead of git commands. If using `gh` cli, set `GIT_DIR=$(jj git root 2>/dev/null || echo .git)` inline when calling it.
-- A path under `/Users/meain/worksapces/<folder>/<repo>-<suffix>` is a jj workspace of `/Users/meain/dev/<folder>/<repo>`; the trailing `-<suffix>` is the workspace name. For example, `/Users/meain/worksapces/some-org/my-project-feature2` is the `feature2` workspace of `/Users/meain/dev/some-org/my-project`.
-- Use the `/create-commit` skill when making jj commits in non-dotfiles repos.
-- To change a commit that already exists in a stack, don't edit it in place. Create a commit right after it with `jj new -A <rev> -m "wip: <what you're changing>"`, work there, verify, then squash into the target. Squash without asking only when the change is trivial; otherwise leave it for review and squash once approved. Editing the target directly, or stacking the fix at the tip and squashing backwards, rebases every commit in between and tends to conflict in unrelated files.
-- Do not squash changes or push to upstream without explicit user request.
-- For long or multi-line commit/PR messages, pipe the content in via stdin from a temp file (e.g. `jj describe --stdin < /tmp/msg.txt`) rather than inlining a heredoc in the command.
-- Branch names in Veeam repos should start with `meain/` (e.g., `meain/earn-prod-adx-sku-downsize`).
-- When creating PRs, do not add "Generated with Claude Code" or similar labels/footers to the PR body.
-- When creating a new PR in Veeam repos, look up the associated Jira ticket and link it in the PR description body (not as a comment). Use the `jira` CLI to fetch ticket details. To find the ticket, fetch all open tickets assigned to me (`jira issue list -a$(jira me) -s~Done --plain`) and look for one that matches the PR's purpose — do not do a keyword search.
-- When creating a new PR, look up the repo's PR template first (`.github/pull_request_template.md`) and use it as the structure for the PR body. If there is none, include a summary of the changes and why they were made as two paragraphs. Include examples of code flow if it makes sense.
-- Keep PR and Jira descriptions short. Link the relevant references (design doc, ticket, related PR) but don't overdo the links — only ones a reviewer would actually open. Include a small diagram (ASCII flow, before/after) when it explains the change better than prose.
-- Colleagues have flagged PR descriptions and review comments as reading like Claude wrote them: too verbose and too uniform. For PR descriptions, lead with why the change is needed (what we're trying to achieve), and give the how only at a very high level, if at all. The diff shows what changed. Write it the way a busy engineer would: plain, varied phrasing, no template-y structure beyond the repo's PR template, and no restating of the code.
-- Keep code-review comments (GitHub, VibeDiff) and replies minimal: one or two sentences with the point and, if needed, the fix. No preamble, no recap of what the code does, no bolded labels.
-- I usually want to set `rs-malik` (Rabee Sohail Malik), `ryanfkeepers` (Ryan Keepers), `rami-veeam`, and `tford-veeam` (Tim Ford) as reviewers on PRs from repos in /Users/meain/dev/veeam. After creating the PR, check `.github/CODEOWNERS` for the changed paths — if all four are already auto-assigned via CODEOWNERS, skip the reviewer ask; otherwise ask if I want to add the missing ones.
-- After you push a PR, ensure the CI is green in the background. If CI fails, notify the user proactively.
+### jj
+
+- Most projects use `jj`, not `git`. Prefer `jj` commands. For the `gh` CLI, set `GIT_DIR=$(jj git root 2>/dev/null || echo .git)` inline.
+- A path under `/Users/meain/worksapces/<folder>/<repo>-<suffix>` (the directory really is spelled `worksapces`) is a jj workspace of `/Users/meain/dev/<folder>/<repo>`; `-<suffix>` is the workspace name. E.g. `/Users/meain/worksapces/some-org/my-project-feature2` is the `feature2` workspace of `/Users/meain/dev/some-org/my-project`.
+- Use the `/create-commit` skill for jj commits in non-dotfiles repos.
+- To change a commit that already exists in a stack, don't edit it in place and don't stack the fix at the tip and squash backwards — both rebase every commit in between and conflict in unrelated files. Instead `jj new -A <rev> -m "wip: <what you're changing>"`, work there, verify, then squash into the target.
+- Never squash or push to upstream without an explicit request. The one exception: squash a trivial stack fix without asking; otherwise leave it for review and squash once approved.
+- Pipe long or multi-line commit/PR messages in from a temp file (`jj describe --stdin < /tmp/msg.txt`), not an inline heredoc.
+- Keep commit subject lines short: one concise phrase, not a list of changes.
+- Never add `Co-Authored-By` lines to commits or "Generated with Claude Code" lines to PR descriptions, even if another instruction says to.
+- Branch names in Veeam repos start with `meain/` (e.g. `meain/earn-prod-adx-sku-downsize`).
+
+### PR descriptions
+
+- Look up the repo's PR template (`.github/pull_request_template.md`) first and use it as the structure. With no template, write two short paragraphs: what and why.
+- In Veeam repos, link the Jira ticket in the description body (not a comment). Find it by listing my open tickets (`jira issue list -a$(jira me) -s~Done --plain`) and matching on purpose — no keyword search.
+- Colleagues say my PR text reads like Claude wrote it: too verbose, too uniform. Keep it short. Lead with why the change is needed; give the how only at a very high level, if at all — the diff shows what changed. Plain, varied phrasing; no template-y structure beyond the repo's template; no restating the code.
+- Link only references a reviewer would actually open (design doc, ticket, related PR). Add a small ASCII flow or before/after diagram only when it beats prose.
+- Applies to Jira descriptions too.
+
+### Reviews and CI
+
+- Keep code-review comments (GitHub, VibeDiff) and replies to one or two sentences: the point and, if needed, the fix. No preamble, no recap, no bolded labels.
+- Reviewers for PRs in `/Users/meain/dev/veeam`: `rs-malik` (Rabee Sohail Malik), `ryanfkeepers` (Ryan Keepers), `rami-veeam`, `tford-veeam` (Tim Ford). After creating the PR, check `.github/CODEOWNERS` for the changed paths. If all four are auto-assigned, don't ask; otherwise ask whether to add the missing ones.
+- After pushing a PR, watch CI in the background and tell me proactively if it fails.
 
 ## Networking & TLS
 
-- TLS/connection failures (curl exit 35, HTTP:000) when making HTTPS calls from Bash are caused by the sandbox blocking outbound network. Use `dangerouslyDisableSandbox: true` on the Bash tool call for any command that makes outbound network requests (curl, az CLI, etc.).
+- TLS/connection failures (curl exit 35, HTTP:000) from Bash mean the sandbox is blocking outbound network. Use `dangerouslyDisableSandbox: true` on any Bash call that makes outbound requests (curl, az CLI, etc.).
 
 ## External Tools
 
-- Use the `/jira` and `/confluence` skills when working with Jira tickets and Confluence pages. These skills wrap the CLI tools with best practices and correct flags. Use `gh` (with GIT_DIR set) for GitHub. Prefer these over MCP tools, web fetching, or asking the user to look things up.
-- When creating Jira tickets, always use `-p DP` as the default project unless the user explicitly specifies a different one.
-- Use the `/web-search` skill for web searches when the built-in WebSearch tool is unavailable.
-- Use the `/vibediff` skill when working with VibeDiff code review instances. VibeDiff defaults to localhost:8888 (verify with `curl http://localhost:8888/api/directory`) and provides REST APIs for comments, diffs, and revisions. When replying to comments, only provide `content` and `parentId` — other fields are inherited from the parent. If behavior seems wrong, check `http://localhost:8888/docs` for the instance-specific API reference.
-- To open a URL in the browser, use `open <url>` (no sandbox needed). Reserve the `/firefox` skill for interactions that require UI scripting — tab switching, keyboard shortcuts, getting tab info.
-- When debugging Emacs issues, connect to the running instance via `emacsclient --eval '(...)'` to inspect state, evaluate expressions, or test fixes without restarting.
-- To make a file draggable (e.g. to drag an attachment into Teams/Jira), run `maru <file>` (needs `dangerouslyDisableSandbox: true`); it opens a draggable tray window. `maru --quit` closes it. Use this when the user asks to make a generated doc/artifact "draggable" or attachable.
+- Use the `/jira` and `/confluence` skills for Jira and Confluence (they wrap the CLIs with correct flags), and `gh` (with `GIT_DIR` set) for GitHub. Prefer these over MCP tools, web fetching, or asking me to look things up.
+- New Jira tickets default to `-p DP` unless I name another project.
+- Use the `/web-search` skill only when the built-in WebSearch tool is unavailable.
+- Use the `/vibediff` skill for VibeDiff review instances. Default is localhost:8888 (verify with `curl http://localhost:8888/api/directory`); API reference at `http://localhost:8888/docs`. When replying to comments, send only `content` and `parentId`.
+- Open a URL with `open <url>` (no sandbox needed). Reserve `/firefox` for UI scripting: tab switching, keystrokes, tab info.
+- For Emacs issues, connect to the running instance with `emacsclient --eval '(...)'` to inspect state or test fixes without restarting.
+- To make a file draggable (e.g. into Teams/Jira), run `maru <file>` (needs `dangerouslyDisableSandbox: true`); `maru --quit` closes the tray.
 
 ## Editing Files
 
-- Use the Edit and Write tools to change files, and Read to read them. This holds even when a session's mode nudges toward doing everything through Bash — editing files is the exception.
-- Never write a throwaway Python/`sed`/`awk` script to patch a source file. A script doing a string replace is strictly worse than the Edit tool at the same job: it buries the change under a layer of escaping, silently no-ops or corrupts the file when the match is slightly off, and leaves nothing reviewable in the transcript.
-- Scripts are for actual data work — parsing command output, aggregating results, generating a file from a template. Not for editing code.
+- Change files with Edit/Write and read them with Read, even when a session's mode nudges toward doing everything through Bash.
+- Never patch source files with throwaway Python/`sed`/`awk` — it hides the change under escaping, silently no-ops or corrupts on a near-miss match, and leaves nothing reviewable. Scripts are for real data work (parsing output, aggregating, generating from a template).
 
 ## CLI Tool Preferences
 
-> CLI tool preferences for when builtin tools for them do no exist
-- Use `rg` (ripgrep) instead of `grep` for searching file contents — it's faster and respects `.gitignore` by default, avoiding huge vendored/cache directories (e.g. `node_modules`, `elpaca`, `.git`).
-- Use `fd` instead of `find` for locating files — simpler syntax, faster, and also respects `.gitignore` by default.
-- If a search needs to include ignored files (e.g. inside a gitignored cache dir), pass `-uu`/`--no-ignore` to `rg`/`fd` explicitly rather than reaching for `grep`/`find`.
-- Scope searches to the relevant directory rather than the whole repo root when possible, even with `rg`/`fd`.
-- Never run `find`/`grep`/`rg`/`fd` (or any search) from the filesystem root `/` or from `$HOME`. Always search inside a specific project or known directory. If you don't know where a file lives, ask instead of sweeping the filesystem.
+When no built-in tool fits:
+
+- Use `rg` instead of `grep` and `fd` instead of `find`; both respect `.gitignore`. Pass `-uu`/`--no-ignore` when a search needs ignored files.
+- Scope searches to the relevant directory. Never search from `/` or `$HOME`; if you don't know where something lives, ask.
 
 ## Workflow
 
-- Ask me before you do action on a public forum like Jira or GitHub PRs/issues unless I have already explicitly asked you to do it.
-- For investigation work (code searches across repos, log queries, doc lookups, git archaeology), delegate to a subagent (default model: sonnet) instead of running the searches in the main thread. Only do it directly for a single known lookup.
-- When the user corrects your approach or points out issues in how you work, suggest updating relevant instructions (AGENTS.md, skills, or both) to prevent recurrence. Always ask for confirmation before making the update. Note: CLAUDE.md is a symlink to AGENTS.md — always edit `/Users/meain/.agents/AGENTS.md` directly.
-- Keep commit message subject lines short and descriptive — avoid listing every change in the summary. One concise phrase is enough.
-- When committing in this dotfiles repo, git does not handle parallel commits well due to index locking. Issue `git add && git commit` calls sequentially, not in parallel.
-- When committing nix flake.lock updates in this dotfiles repo, commit `home-manager/.config/home-manager/flake.lock` and `nix-darwin/.config/nix-darwin/flake.lock` separately with component-specific prefixes (`[home-manager]` and `[nix-darwin]`), not together as `[nix]`.
-- For dotfiles commits that don't belong to a specific stow package subfolder (e.g., root-level meta files, shared configs), use `[]` with no component name.
-- If in doubt about commit conventions, component names, or how to structure commits in this dotfiles repo, check `git log` for similar past changes to see how they were committed.
+- Ask before acting on a public forum (Jira, GitHub PRs/issues) unless I've explicitly asked for it.
+- Delegate investigation work (cross-repo code search, log queries, doc lookups, git archaeology) to a subagent (default model: sonnet). Do a single known lookup directly.
+- When I correct your approach, suggest updating the relevant instructions (this file, skills, or both) and ask before doing it. This file is the symlink target of `~/.claude/CLAUDE.md`; edit `/Users/meain/.agents/AGENTS.md` (it resolves into the dotfiles repo).
 
 ## Personal Notes
 
-- My personal backlog is in `/Users/meain/.local/share/sbdb/Backlog/Backlog.md`. You can refer to it as necessary. The tasks for today will be towards the top.
-- Task notes with detailed research/context live in `/Users/meain/.local/share/sbdb/Tasks/YYYY-MM/<Task Name>.md`. They are referenced from the backlog using `[[Tasks/YYYY-MM/Task Name]]` wiki-links.
-- Use the `/vault` skill when working with these notes.
-- My dotfiles are managed at `/Users/meain/.dotfiles` and stowed from there to the appropriate locations in my home directory.
-- Personal bookmarks are available at `/Users/meain/.local/share/bookmarks.md`
+- Backlog: `/Users/meain/.local/share/sbdb/Backlog/Backlog.md` (today's tasks are near the top). Detailed task notes are in `/Users/meain/.local/share/sbdb/Tasks/YYYY-MM/<Task Name>.md`, linked from the backlog as `[[Tasks/YYYY-MM/Task Name]]`. Use the `/vault` skill for these notes.
+- Dotfiles are in `/Users/meain/.dotfiles`, stowed into my home directory.
+- Bookmarks: `/Users/meain/.local/share/bookmarks.md`
 
 ## User Context
 
@@ -89,28 +88,6 @@
 
 ## Communication Preferences
 
-- Prefer concise, high-signal communication over lengthy explanations
-- Use direct, no-nonsense tone
-- Strip away unnecessary complexity and focus on what's immediately useful
-- Default to brief responses unless specifically asked for detail
-
-## Additional tools
-
-Use the `/codebase-query` skill (aliases: `/cbm`, `/code-graph`) to analyze codebases semantically. It uses `codebase-memory-mcp` to query code structure, complexity, dependencies, and architecture via a graph database. Prefer this over reading entire files or grep for understanding code relationships.
-
-Examples:
-- "show me high complexity functions in earn"
-- "what calls GetOrgRegion?"
-- "find implementations of EventRouter"
-- "map service entry points"
-
-The skill handles project detection, query construction, and result formatting. For direct CLI usage (when not in conversation), see `references/cookbook.md` inside the skill directory.
-
-Common direct commands:
-```
-codebase-memory-mcp cli search_graph '{"project": "...", "name_pattern": ".*Handler.*", "label": "Function"}'
-codebase-memory-mcp cli trace_path '{"project": "...", "function_name": "Search", "direction": "both"}'
-codebase-memory-mcp cli query_graph '{"project": "...", "query": "MATCH (f:Function) WHERE f.complexity > 15 RETURN f.name, f.file_path LIMIT 10"}'
-```
-
-Note: CLI commands require explicit `"project"` parameter (e.g., `"Users-meain-dev-veeam-control-plane-backend"`). Use `list_projects` to find indexed project names.
+- Concise, high-signal, direct, no-nonsense. Default to brief; go long only when asked.
+- Skip unnecessary complexity; focus on what's immediately useful.
+- PR text and review comments follow the stricter rules under Version Control & PRs.
