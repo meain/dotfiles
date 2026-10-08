@@ -77,7 +77,7 @@
       "keycastr" # show keys being typed (for recording)
 
       # ai agents
-      "claude"
+      # "claude"
       "claude-code"
     ];
   };
