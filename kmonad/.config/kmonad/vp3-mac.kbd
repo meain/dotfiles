@@ -46,7 +46,7 @@
 (deflayer custom
   _    _    _    _    _    _    _    _    _    _    _    _    _    del
   _    _    _    _    _    _    +    \(   *    \)   _    _    _    _
-  _    _    _    _    _    _    left down up   rght ^    "    _
+  _    _    _    _    _    _    left down up   rght ^    _    _
   _    _    _    caps _    _    %    ~    &    @me  _    _
   _    _    _            @cbsp            _    _    _    _
 )
@@ -61,7 +61,7 @@
 
 (deflayer music
   _    _    _    _    _    _    _    _    _    _    _    _    _    _
-  _    _    _    _    _    _    _   volu mute vold  _    _    _    _
+  _    _    _    _    _    _    _   vold mute volu  _    _    _    _
   _    _    _    _    _    _    _   prev  pp  next  _    _    _
   _    _    _    _    _    _    _    _    _    _    _    _
   _    _    _              _              _    _    _    _
