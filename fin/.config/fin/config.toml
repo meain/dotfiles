@@ -29,7 +29,7 @@
   gflash = "openrouter/z-ai/glm-5.3-flash"
 
   # anthropic
-  haiku = "anthropic/claude-haiku-4-5"
+  haiku = "anthropic/claude-haiku-5-5"
   sonnet = "anthropic/claude-sonnet-5-5"
   opus = "anthropic/claude-opus-5-5"
 
