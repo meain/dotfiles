@@ -72,6 +72,7 @@ When no built-in tool fits:
 ## Workflow
 
 - Ask before acting on a public forum (Jira, GitHub PRs/issues) unless I've explicitly asked for it.
+- If you're stuck (repeated failed fixes, unclear root cause) or facing a hard-to-reverse decision, invoke the `/advisor` skill to consult a stronger model before continuing.
 - Delegate investigation work (cross-repo code search, log queries, doc lookups, git archaeology) to a subagent (default model: sonnet). Do a single known lookup directly.
 - When I correct your approach, suggest updating the relevant instructions (this file, skills, or both) and ask before doing it. This file is the symlink target of `~/.claude/CLAUDE.md`; edit `/Users/meain/.agents/AGENTS.md` (it resolves into the dotfiles repo).
 
