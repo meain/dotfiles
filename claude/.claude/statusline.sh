@@ -11,21 +11,21 @@ DURATION_MS=$(echo "$INPUT" | jq -r '.cost.total_duration_ms // 0')
 LINES_ADDED=$(echo "$INPUT" | jq -r '.cost.total_lines_added // 0')
 LINES_REMOVED=$(echo "$INPUT" | jq -r '.cost.total_lines_removed // 0')
 
-# Track cost baseline so /clear resets the displayed cost.
-# We detect /clear by a significant drop in context window usage.
+# State is kept per session so concurrent sessions don't clobber each other.
+# Context drops are NOT used to detect /clear: auto-compaction drops context
+# just as far and would zero the cost. If the reported cost ever goes down,
+# the counter was reset, so the baseline is discarded.
 STATE_DIR="$HOME/.claude/statusline-state"
 mkdir -p "$STATE_DIR"
-LAST_CTX_FILE="$STATE_DIR/last_ctx"
-COST_BASELINE_FILE="$STATE_DIR/cost_baseline"
+STATE_KEY="${SESSION_ID:-default}"
+LAST_COST_FILE="$STATE_DIR/$STATE_KEY.last_cost"
+COST_BASELINE_FILE="$STATE_DIR/$STATE_KEY.cost_baseline"
 
-LAST_CTX=$(cat "$LAST_CTX_FILE" 2>/dev/null || echo "0")
-
-# If context dropped significantly (>15% → <5%), treat it as a /clear
-if [ "$LAST_CTX" -gt 15 ] && [ "$CTX" -lt 5 ]; then
-  echo "$CURRENT_COST_USD" > "$COST_BASELINE_FILE"
+LAST_COST=$(cat "$LAST_COST_FILE" 2>/dev/null || echo "0")
+if awk -v c="$CURRENT_COST_USD" -v l="$LAST_COST" 'BEGIN{exit !(c<l)}'; then
+  echo "0" > "$COST_BASELINE_FILE"
 fi
-
-echo "$CTX" > "$LAST_CTX_FILE"
+echo "$CURRENT_COST_USD" > "$LAST_COST_FILE"
 
 BASELINE=$(cat "$COST_BASELINE_FILE" 2>/dev/null || echo "0")
 
