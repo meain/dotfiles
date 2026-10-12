@@ -10,8 +10,9 @@
 
 [model_aliases]
   # most used
-  fast = "luna"
-  cheap = "openrouter/deepseek/deepseek-v4-flash"
+  goto = "flash4"
+  fast = "flash"
+  cheap = "flash4"
   free = "openrouter/openrouter/free"
   exp = "openrouter/stealth/space-bunny-alpha"
   ofree = "openrouter/openrouter/free"
@@ -25,6 +26,7 @@
 
   # openrouter
   flash = "openrouter/deepseek/deepseek-v4.1-flash"
+  flash4 = "openrouter/~deepseek/deepseek-v4-flash-latest" # much cheaper
   luna = "openrouter/openai/gpt-6-luna"
   gflash = "openrouter/z-ai/glm-5.3-flash"
 
@@ -34,15 +36,6 @@
   opus = "anthropic/claude-opus-5-5"
 
 [providers]
-  [providers.anthropic]
-    base_url = "https://api.anthropic.com"
-    api_key_env = "ANTHROPIC_API_KEY"
-  [providers.openai]
-    base_url = "https://api.openai.com"
-    api_key_env = "OPENAI_API_KEY"
-  [providers.openrouter]
-    base_url = "https://openrouter.ai/api"
-    api_key_env = "OPENROUTER_API_KEY"
   [providers.groq]
     base_url = "https://api.groq.com/openai"
     api_key_env = "GROQ_API_KEY"
