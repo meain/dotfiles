@@ -103,7 +103,7 @@ curl -s -X POST http://localhost:8888/api/review/comment \
 ## Comment placement strategy
 
 ### Focus on:
-- New files: Add overview comment at line 1 explaining purpose
+- New files: Add a file-level comment (omit `line`, or `"line": 0`) explaining purpose
 - Key architectural changes: Explain the design decision
 - Non-obvious logic: Clarify intent
 - Cross-cutting changes: Explain how pieces connect
@@ -142,7 +142,6 @@ curl -s -X POST http://localhost:8888/api/review/comment \
     \"directory\": \"$DIR\",
     \"revision\": \"$REV\",
     \"file\": \"services/earn/tests/earn-e2e/org-anchoring_test.go\",
-    \"line\": 1,
     \"author\": \"agent\",
     \"authorName\": \"explain\",
     \"content\": \"E2E test suite validating EARN's org anchor geo routing behavior...\"

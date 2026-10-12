@@ -33,6 +33,9 @@ $VD comments --all --json            # include resolved threads, as JSON (with r
 $VD reply <id> "Fixed in wip abc"    # reply as agent:claude; --resolve also resolves
 $VD reply <id> - < msg.txt           # reply text from stdin (multi-line)
 $VD post --rev <change-id> --file path/to/x.go --line 42 [--line-end 44] [--name reviewer] "text"
+$VD post --rev <change-id> --file path/to/x.go "file-level text"   # no --line => file-level
+$VD comments --reaction down         # threads the user thumbed down (also: up)
+$VD react <id> up|down|clear         # set/clear a thumbs reaction
 $VD resolve <id>... / $VD reopen <id>...
 $VD revisions [--limit 10]
 ```
@@ -148,6 +151,20 @@ curl -X POST http://localhost:8888/api/review/comment \
 
 `directory` is required for root comments. Leave `revision` empty for working-copy comments. Always set `"author": "agent"`.
 
+**File-level comments**: omit `line`/`lineEnd` (or send `0`) to attach a comment to the whole file instead of a diff line. The UI shows these above the file's diff. Use them for file overviews rather than pinning to line 1.
+
+### Thumbs up/down reactions
+
+The user can thumbs-up/down any comment in the UI; it is stored as `reaction` (`"up"`, `"down"`, or absent) on the Comment. Treat it as feedback on your comments: 👎 on an agent comment usually means wrong, noisy or unwanted, 👍 means useful. Reactions are not resolution, so a thumbed-down thread is still open until resolved.
+
+```bash
+# Set (up|down) or clear ("") a reaction — no directory param needed
+curl -X POST http://localhost:8888/api/review/comment/{id}/reaction \
+  -H 'Content-Type: application/json' -d '{"reaction":"down"}'
+```
+
+When addressing review comments, check for 👎 on your own earlier comments and avoid repeating that kind of comment.
+
 ### Resolve/reopen comments
 
 ```bash
@@ -202,6 +219,7 @@ Confirm via `GET /api/revisions` — the `id` field is always the jj change ID.
   "author": "user",
   "authorName": "",
   "status": "open",
+  "reaction": "down",
   "parentId": "",
   "revision": "",
   "commit": "abc1234",
@@ -209,7 +227,7 @@ Confirm via `GET /api/revisions` — the `id` field is always the jj change ID.
 }
 ```
 
-`authorName` is optional and typically only set on agent comments/replies (see above).
+`authorName` is optional and typically only set on agent comments/replies (see above). `reaction` is optional (`"up"`/`"down"`); `line` is `0`/absent for file-level comments.
 
 Replies have `parentId` set. All comments in the API response are flat — group by `parentId` to build threads.
 

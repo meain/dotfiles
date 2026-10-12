@@ -70,6 +70,8 @@ If `revision` is empty (working-copy review), omit it from the payload rather th
 
 ### 5. Report back
 
+For a finding that applies to the file as a whole (no specific line), omit `line` to post a file-level comment. The user may thumbs up/down posted comments (`reaction` field, see the `vibediff` skill); on later runs, check `GET /api/review/comments?directory=$DIR` for 👎 on earlier `agent:reviewer` comments and don't re-post that kind of finding.
+
 Tell the user how many findings were posted and to which file/line pairs. Don't repeat the full finding text in chat — that's what the VibeDiff comments are for — a one-line-per-finding recap is enough.
 
 ## Notes

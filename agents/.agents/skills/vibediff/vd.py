@@ -2,10 +2,13 @@
 """Small VibeDiff CLI for the common review-comment chores.
 
 Usage (VIBEDIFF_URL defaults to http://localhost:8888; --dir defaults to cwd):
-  vd.py comments [--dir D] [--rev R] [--author user|agent] [--all] [--json]
-      Open threads (root + replies), optionally filtered by revision prefix
-      and root author. --all includes resolved threads.
-  vd.py post --file F --line N [--line-end M] --rev R [--dir D] [--name reviewer] TEXT
+  vd.py comments [--dir D] [--rev R] [--author user|agent] [--reaction up|down] [--all] [--json]
+      Open threads (root + replies), optionally filtered by revision prefix,
+      root author and thumbs reaction. --all includes resolved threads.
+      Reactions show as [+1] / [-1] after the comment header.
+  vd.py post --file F [--line N [--line-end M]] --rev R [--dir D] [--name reviewer] TEXT
+      Omit --line for a file-level comment.
+  vd.py react ID up|down|clear
   vd.py reply ID [--name NAME] [--resolve] TEXT      (TEXT "-" reads stdin)
   vd.py resolve ID... | vd.py reopen ID...
   vd.py revisions [--dir D] [--limit N]
@@ -57,6 +60,8 @@ def cmd_comments(args):
             return False
         if args.rev and not c.get("revision", "").startswith(args.rev):
             return False
+        if args.reaction and c.get("reaction") != args.reaction:
+            return False
         return not args.author or c.get("author") == args.author
 
     roots = [c for c in roots if keep(c)]
@@ -66,21 +71,33 @@ def cmd_comments(args):
 
     for c in sorted(roots, key=lambda c: (c.get("revision", ""), c.get("file", ""), c.get("line", 0))):
         who = c.get("author", "?") + (f":{c['authorName']}" if c.get("authorName") else "")
-        span = f"{c.get('line')}" + (f"-{c['lineEnd']}" if c.get("lineEnd") and c["lineEnd"] != c.get("line") else "")
-        print(f"[{c['id']}] {c.get('revision', '')[:8]} {c.get('file')}:{span} ({who}, {c.get('status')})")
+        if not c.get("line"):
+            span = "(file)"
+        else:
+            span = f"{c['line']}" + (f"-{c['lineEnd']}" if c.get("lineEnd") and c["lineEnd"] != c["line"] else "")
+        print(f"[{c['id']}] {c.get('revision', '')[:8]} {c.get('file')}:{span} ({who}, {c.get('status')}){react_tag(c)}")
         print("    " + c["content"].replace("\n", "\n    "))
         for r in replies.get(c["id"], []):
             rwho = r.get("author", "?") + (f":{r['authorName']}" if r.get("authorName") else "")
-            print(f"    ↳ ({rwho}) " + r["content"].replace("\n", "\n      "))
+            print(f"    ↳ ({rwho}){react_tag(r)} " + r["content"].replace("\n", "\n      "))
         print()
+
+
+def react_tag(c):
+    return {"up": " [+1]", "down": " [-1]"}.get(c.get("reaction", ""), "")
+
+
+def cmd_react(args):
+    call("POST", f"/api/review/comment/{args.id}/reaction", body={"reaction": "" if args.reaction == "clear" else args.reaction})
+    print(f"{args.reaction} {args.id}")
 
 
 def cmd_post(args):
     body = {
         "directory": args.dir,
         "file": args.file,
-        "line": args.line,
-        "lineEnd": args.line_end or args.line,
+        "line": args.line or 0,
+        "lineEnd": args.line_end or args.line or 0,
         "revision": args.rev,
         "content": text_arg(args.text),
         "author": "agent",
@@ -128,12 +145,13 @@ def main():
     c = with_dir(sub.add_parser("comments"))
     c.add_argument("--rev")
     c.add_argument("--author", choices=["user", "agent"])
+    c.add_argument("--reaction", choices=["up", "down"])
     c.add_argument("--all", action="store_true")
     c.add_argument("--json", action="store_true")
 
     po = with_dir(sub.add_parser("post"))
     po.add_argument("--file", required=True)
-    po.add_argument("--line", type=int, required=True)
+    po.add_argument("--line", type=int, help="omit for a file-level comment")
     po.add_argument("--line-end", type=int)
     po.add_argument("--rev", required=True)
     po.add_argument("--name", default="reviewer")
@@ -144,6 +162,10 @@ def main():
     r.add_argument("--name", default="claude")
     r.add_argument("--resolve", action="store_true")
     r.add_argument("text")
+
+    re_ = sub.add_parser("react")
+    re_.add_argument("id")
+    re_.add_argument("reaction", choices=["up", "down", "clear"])
 
     for action in ("resolve", "reopen"):
         s = sub.add_parser(action)
@@ -159,6 +181,8 @@ def main():
         cmd_post(args)
     elif args.cmd == "reply":
         cmd_reply(args)
+    elif args.cmd == "react":
+        cmd_react(args)
     elif args.cmd in ("resolve", "reopen"):
         cmd_status(args, args.cmd)
     else:
