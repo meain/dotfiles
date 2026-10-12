@@ -46,6 +46,7 @@
 ## Networking & TLS
 
 - TLS/connection failures (curl exit 35, HTTP:000) from Bash mean the sandbox is blocking outbound network. Use `dangerouslyDisableSandbox: true` on any Bash call that makes outbound requests (curl, az CLI, etc.).
+- Clipboard writes (`pbcopy`) also fail inside the sandbox. Run them with `dangerouslyDisableSandbox: true` straight away instead of asking me to copy manually.
 
 ## External Tools
 
