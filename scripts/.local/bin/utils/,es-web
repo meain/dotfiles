@@ -153,6 +153,7 @@ def do_esql(cfg, query, poll_attempts=8):
                 if e.code == 401:
                     print("Session expired. Run: ,es-web init <cluster>", file=sys.stderr)
                     sys.exit(1)
+                print(f"HTTP {e.code} while polling: {e.read().decode()[:500]}", file=sys.stderr)
                 continue
 
             if not data.get("is_running"):
@@ -163,6 +164,16 @@ def do_esql(cfg, query, poll_attempts=8):
 
     if "statusCode" in data:
         print(f"Error {data['statusCode']}: {data.get('message', '')}", file=sys.stderr)
+        sys.exit(1)
+
+    err = data.get("error")
+    if err:
+        if isinstance(err, dict):
+            reason = err.get("reason") or err.get("type") or json.dumps(err)
+            kind = err.get("type", "error")
+        else:
+            reason, kind = str(err), "error"
+        print(f"Query error ({data.get('status', '?')}, {kind}): {reason}", file=sys.stderr)
         sys.exit(1)
 
     return data
