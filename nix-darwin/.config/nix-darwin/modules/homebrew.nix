@@ -61,6 +61,9 @@
       # "visual-studio-code" # copilot
       "orbstack" # better docker
       "kitty" # terminal emulator
+      "colima"
+      "qemu"
+      "lima-additional-guestagents"
 
       "firefox"
       "google-chrome"
