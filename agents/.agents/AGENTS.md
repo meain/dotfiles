@@ -21,7 +21,7 @@
 
 - Most projects use `jj`, not `git`. Prefer `jj` commands. For the `gh` CLI, set `GIT_DIR=$(jj git root 2>/dev/null || echo .git)` inline.
 - A path under `/Users/meain/worksapces/<folder>/<repo>-<suffix>` (the directory really is spelled `worksapces`) is a jj workspace of `/Users/meain/dev/<folder>/<repo>`; `-<suffix>` is the workspace name. E.g. `/Users/meain/worksapces/some-org/my-project-feature2` is the `feature2` workspace of `/Users/meain/dev/some-org/my-project`.
-- Use the `/create-commit` skill for jj commits in non-dotfiles repos.
+- Use the `/create-commit` skill for jj commits in non-dotfiles repos. The dotfiles repo is plain git and has its own `/commit` skill; use that there.
 - To change a commit that already exists in a stack, don't edit it in place and don't stack the fix at the tip and squash backwards — both rebase every commit in between and conflict in unrelated files. Instead `jj new -A <rev> -m "wip: <what you're changing>"`, work there, verify, then squash into the target.
 - Never squash or push to upstream without an explicit request. The one exception: squash a trivial stack fix without asking; otherwise leave it for review and squash once approved.
 - Pipe long or multi-line commit/PR messages in from a temp file (`jj describe --stdin < /tmp/msg.txt`), not an inline heredoc.
