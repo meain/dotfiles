@@ -83,7 +83,7 @@ alias bud="esa +qa"
 alias co="esa +coder"
 alias mem="esa +mem"
 alias em=",emoji-picker"
-alias brain="esa +brain"
+brain() { (cd ~/.local/share/sbdb >/dev/null && fin "$@") }
 alias mi="esa +michel"
 alias rem=",reminder"
 alias summ="esa summarize key points from"
