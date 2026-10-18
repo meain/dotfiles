@@ -40,7 +40,8 @@
 ### Reviews and CI
 
 - Keep code-review comments (GitHub, VibeDiff) and replies to one or two sentences: the point and, if needed, the fix. No preamble, no recap, no bolded labels.
-- Reviewers for PRs in `/Users/meain/dev/veeam`: `rs-malik` (Rabee Sohail Malik), `ryanfkeepers` (Ryan Keepers), `rami-veeam`, `tford-veeam` (Tim Ford). After creating the PR, check `.github/CODEOWNERS` for the changed paths. If all four are auto-assigned, don't ask; otherwise ask whether to add the missing ones.
+- Reviewers for PRs in `/Users/meain/dev/veeam`: `rs-malik` (Rabee Sohail Malik), `ryanfkeepers` (Ryan Keepers), `rami-veeam`, `tford-veeam` (Tim Ford). After creating the PR, check `.github/CODEOWNERS` for the changed paths. If all four are auto-assigned, don't ask; otherwise ask whether to add the missing ones. Draft PRs get no reviewers unless I explicitly ask; add them when the PR is marked ready.
+- After creating a PR, open it in the browser with `open <pr-url>` (no sandbox needed).
 - After pushing a PR, watch CI in the background and tell me proactively if it fails.
 
 ## Networking & TLS
@@ -80,6 +81,7 @@ When no built-in tool fits:
 ## Personal Notes
 
 - Backlog: `/Users/meain/.local/share/sbdb/Backlog/Backlog.md` (today's tasks are near the top). Detailed task notes are in `/Users/meain/.local/share/sbdb/Tasks/YYYY-MM/<Task Name>.md`, linked from the backlog as `[[Tasks/YYYY-MM/Task Name]]`. Use the `/vault` skill for these notes.
+- After saving anything to the vault (`/Users/meain/.local/share/sbdb`), open the note in Obsidian once with `open "obsidian://open?path=<url-encoded absolute path>"` (with `dangerouslyDisableSandbox: true`). Don't reopen after later edits.
 - Dotfiles are in `/Users/meain/.dotfiles`, stowed into my home directory.
 - Bookmarks: `/Users/meain/.local/share/bookmarks.md`
 
