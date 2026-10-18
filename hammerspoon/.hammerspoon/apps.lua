@@ -18,6 +18,6 @@ apps.kitty = "net.kovidgoyal.kitty"
 -- role assignments
 apps.browser = apps.firefox
 apps.notesApp = apps.obsidian
-apps.editor = apps.emacs
+apps.editor = apps.zed
 
 return apps
