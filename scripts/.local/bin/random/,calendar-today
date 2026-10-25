@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+# Print today's calendar events, one per line: "h:mm a - h:mm a | title | location" (IST).
+# Uses EventKit directly because icalBuddy 1.10.1 reports "No calendars" on current macOS.
+# The Swift source is compiled once and cached, keyed on its hash.
+set -euo pipefail
+
+cache="${XDG_CACHE_HOME:-$HOME/.cache}/calendar-today"
+mkdir -p "$cache"
+
+src=$(cat <<'SWIFT'
+import EventKit
+import Foundation
+
+let store = EKEventStore()
+let sem = DispatchSemaphore(value: 0)
+var granted = false
+store.requestFullAccessToEvents { ok, _ in granted = ok; sem.signal() }
+_ = sem.wait(timeout: .now() + 60)
+guard granted else {
+    FileHandle.standardError.write("calendar access not granted\n".data(using: .utf8)!)
+    exit(1)
+}
+
+let start = Calendar.current.startOfDay(for: Date())
+let end = Calendar.current.date(byAdding: .day, value: 1, to: start)!
+let events = store.events(matching: store.predicateForEvents(withStart: start, end: end, calendars: nil))
+let fmt = DateFormatter()
+fmt.dateFormat = "h:mm a"
+fmt.timeZone = TimeZone(identifier: "Asia/Kolkata")
+for e in events.sorted(by: { $0.startDate < $1.startDate }) {
+    let when = e.isAllDay ? "all day" : "\(fmt.string(from: e.startDate)) - \(fmt.string(from: e.endDate))"
+    let loc = (e.location ?? "").isEmpty ? "" : " | \(e.location!)"
+    print("\(when) | \(e.title ?? "")\(loc)")
+}
+SWIFT
+)
+
+hash=$(printf '%s' "$src" | shasum | cut -c1-12)
+bin="$cache/calendar-today-$hash"
+if [ ! -x "$bin" ]; then
+  printf '%s\n' "$src" >"$cache/calendar-today.swift"
+  swiftc -O -o "$bin" "$cache/calendar-today.swift"
+fi
+exec "$bin"
