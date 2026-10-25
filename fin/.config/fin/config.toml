@@ -25,8 +25,7 @@
   jan = "ollama/hf.co/Menlo/Jan-nano-gguf:Q4_K_M"
 
   # openrouter
-  flash = "openrouter/deepseek/deepseek-v4.1-flash"
-  flash4 = "openrouter/~deepseek/deepseek-v4-flash-latest" # much cheaper
+  flash = "openrouter/~deepseek/deepseek-v4-flash-latest"
   luna = "openrouter/openai/gpt-6-luna"
   gflash = "openrouter/z-ai/glm-5.3-flash"
 
