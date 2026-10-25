@@ -1,6 +1,11 @@
 ---
 name: monica
-description: Inspect and control other AI coding agents (Claude Code, pi) running in tmux panes via the `monica` CLI — list them, read their last message, send them a prompt, wait for them to finish, or focus their pane. Triggers: /monica, "what agents are running", "which agent needs me", "send this to the other agent", "ask the X agent", "wait for the other claude", "focus the oncall agent", "check on the other session".
+description: >
+  Inspect and control other AI coding agents (Claude Code, pi) running in tmux panes via the
+  `monica` CLI — list them, read their last message, send them a prompt, wait for them to finish,
+  or focus their pane. Triggers: /monica, "what agents are running", "which agent needs me",
+  "send this to the other agent", "ask the X agent", "wait for the other claude",
+  "focus the oncall agent", "check on the other session".
 ---
 
 # monica CLI
