@@ -78,6 +78,10 @@ tags:
 ```
 Optionally add to backlog: `- [ ] [[Meeting/YYYY/MM/DD/<Name>]]`
 
+**People links**: `presenter` and `participants` link to existing pages in `People/` by slug, not by display name. I am `[[me]]`; others look like `[[rabee-alcion]]`, `[[keepers]]`. Find the slug with `fd -i <name> People/` before writing; never guess `[[First Last]]`. If no page exists, ask rather than creating a dangling link.
+
+**Calendar**: to get the real title, time and attendees, run `icalBuddy -n -ea -f -nc -iep "title,datetime,attendees" eventsToday` (needs `dangerouslyDisableSandbox: true`; without it, it reports "No calendars"). Name the note after the event title.
+
 ### 7. Update Meeting Note
 Find with `Meeting/YYYY/MM/**/<partial-name>*.md`. Add to Notes, Follow-ups, and optionally extract follow-ups to backlog.
 
