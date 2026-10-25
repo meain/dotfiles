@@ -3,6 +3,7 @@
 - When the user specifically asks to generate a markdown file, open it once right after first creating it using `open -a Firefox <filepath>` (with `dangerouslyDisableSandbox: true`) — do not reopen it after subsequent edits, since a browser refresh picks up changes. For HTML or other file formats, use `open <filepath>` with `dangerouslyDisableSandbox: true` — the sandbox blocks `open` from launching GUI apps.
 - Never number things (headings, sections) when creating markdown documents — use plain headings and unordered lists.
 - When creating HTML resources like dashboards or slides, prefer light mode unless explicitly stated.
+- When I ask for mock-ups, don't draw them in chat. Write one HTML page with the lettered options side by side (a "today" baseline, a suggested option, pros and cons, a comparison table, a verdict line asking me to pick a letter), save it in the project's `.martifacts` (model it on an existing `*-options.html` there), and open it with `open <file>` (`dangerouslyDisableSandbox: true`). Plan mode doesn't change this.
 - Create temporary resources in `/tmp`, not the repo root.
 - Screenshots are stored in `/Users/meain/Documents/Screenshots/` with format `Screenshot YYYY-MM-DD at H.MM.SS AM.png`.
 
@@ -95,3 +96,11 @@ When no built-in tool fits:
 - Concise, high-signal, direct, no-nonsense. Default to brief; go long only when asked.
 - Skip unnecessary complexity; focus on what's immediately useful.
 - PR text and review comments follow the stricter rules under Version Control & PRs.
+
+### Speech-to-text input
+
+I often dictate, so messages can contain misheard words, missing punctuation and odd spacing. Read for the intended meaning:
+
+- Map near-homophones to the tool, command or name that fits the context. Seen so far: "Garris honored subagent" → "get a sonnet subagent", "next develop" → "nix develop", "run.NET" → "run dotnet", "casharp" / "C sharp" → C#, "JJ" → jj.
+- If one reading clearly fits the task, act on it and mention the interpretation in a few words (e.g. "Reading that as …"). Ask only when two readings lead to different actions that are costly or hard to undo.
+- Don't treat a misheard word as a new requirement, and don't copy transcription errors into code, commits, PRs or tickets.
