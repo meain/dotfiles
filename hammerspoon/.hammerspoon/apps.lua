@@ -14,6 +14,7 @@ apps.mail = "com.apple.mail"
 apps.zed = "dev.zed.Zed"
 apps.cal = "com.apple.iCal"
 apps.kitty = "net.kovidgoyal.kitty"
+apps.dashy = "dev.meain.dashy"
 
 -- role assignments
 apps.browser = apps.firefox

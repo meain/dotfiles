@@ -80,7 +80,7 @@ bindFocus("l", apps.teams, true)
 bindFocus("h", apps.notesApp, true)
 bindFocus("j", apps.editor, true)
 bindFocus("o", apps.vscode, true)
-bindFocus("p", apps.zed, true)
+bindFocus("p", apps.dashy, true)
 bindFocus("e", apps.mail, true)
 bindFocus("y", apps.cal, true)
 
