@@ -22,6 +22,12 @@
 
 - Most projects use `jj`, not `git`. Prefer `jj` commands. For the `gh` CLI, set `GIT_DIR=$(jj git root 2>/dev/null || echo .git)` inline.
 - A path under `/Users/meain/worksapces/<folder>/<repo>-<suffix>` (the directory really is spelled `worksapces`) is a jj workspace of `/Users/meain/dev/<folder>/<repo>`; `-<suffix>` is the workspace name. E.g. `/Users/meain/worksapces/some-org/my-project-feature2` is the `feature2` workspace of `/Users/meain/dev/some-org/my-project`.
+- Create new jj workspaces under `/Users/meain/worksapces/`, mirroring the `/Users/meain/dev/` layout, never inside the repo or elsewhere:
+  ```
+  /Users/meain/dev/<folder>/<repo>                 # main checkout
+  /Users/meain/worksapces/<folder>/<repo>-<suffix> # workspaces (e.g. veeam/control-plane-backend-review)
+  ```
+  Create with `jj workspace add --name <suffix> /Users/meain/worksapces/<folder>/<repo>-<suffix>` from the main checkout (`mkdir -p` the `<folder>` first if missing). Existing suffixes include `claude`, `fin`, `oncall`, `review`, `secondary`, `ast`, `e2e-um`.
 - Use the `/create-commit` skill for jj commits in non-dotfiles repos. The dotfiles repo is plain git and has its own `/commit` skill; use that there.
 - To change a commit that already exists in a stack, don't edit it in place and don't stack the fix at the tip and squash backwards — both rebase every commit in between and conflict in unrelated files. Instead `jj new -A <rev> -m "wip: <what you're changing>"`, work there, verify, then squash into the target.
 - Never squash or push to upstream without an explicit request. The one exception: squash a trivial stack fix without asking; otherwise leave it for review and squash once approved.
@@ -36,6 +42,7 @@
 - In Veeam repos, link the Jira ticket in the description body (not a comment). Find it by listing my open tickets (`jira issue list -a$(jira me) -s~Done --plain`) and matching on purpose — no keyword search.
 - Colleagues say my PR text reads like Claude wrote it: too verbose, too uniform. Keep it short. Lead with why the change is needed; give the how only at a very high level, if at all — the diff shows what changed. Plain, varied phrasing; no template-y structure beyond the repo's template; no restating the code.
 - Link only references a reviewer would actually open (design doc, ticket, related PR). Add a small ASCII flow or before/after diagram only when it beats prose.
+- Don't write "stacked on #N" (or similar) in PR descriptions. We use GitHub PR stacks, so the stack is already visible in the GitHub UI.
 - Applies to Jira descriptions too.
 
 ### Reviews and CI
@@ -83,6 +90,7 @@ When no built-in tool fits:
 
 - Backlog: `/Users/meain/.local/share/sbdb/Backlog/Backlog.md` (today's tasks are near the top). Detailed task notes are in `/Users/meain/.local/share/sbdb/Tasks/YYYY-MM/<Task Name>.md`, linked from the backlog as `[[Tasks/YYYY-MM/Task Name]]`. Use the `/vault` skill for these notes.
 - After saving anything to the vault (`/Users/meain/.local/share/sbdb`), open the note in Obsidian once with `open "obsidian://open?path=<url-encoded absolute path>"` (with `dangerouslyDisableSandbox: true`). Don't reopen after later edits.
+- Two vaults: sbdb (`/Users/meain/.local/share/sbdb`) is the vault for human notes (mine); aidb (`/Users/meain/dev/src/aidb`) is the vault for agent notes: the master agent's own repo for memory, notes, research write-ups (`research/YYYY-MM-DD-<topic>.md`), recurring tasks and Dashy schedules. When I say "store this in aidb" (or the agent vault) or "save notes for later", write to aidb, not sbdb; read its `AGENTS.md` first. It's a jj repo; commit after each change, never push.
 - Dotfiles are in `/Users/meain/.dotfiles`, stowed into my home directory.
 - Bookmarks: `/Users/meain/.local/share/bookmarks.md`
 
@@ -91,11 +99,18 @@ When no built-in tool fits:
 - **User**: Abin Simon (aka meain)
 - **Role**: Principal Engineer (Principal − 1) at Improving (formerly InfraCloud, acquired 2025), primarily writing Go. Currently working on the Veeam Data Cloud (VDC) control plane, owning the `user-management` service in `control-plane-backend` and contributing across other services and the EARN (Events, Aggregations, Reporting, Notifications) telemetry stack.
 
+## Working Environment (Dashy)
+
+- I do all my AI-assisted development in Dashy (source: `/Users/meain/dev/src/dashy`), my own macOS app that runs many Claude Code agents side by side. You are most likely one of those agents, and I may be juggling several at once, so finish clearly and say what you need from me.
+- Dashy has a CLI (`dashy-cli`) to list, start, message, fork and wait on agents, plus scheduled (cron-style) agents. The `/dashy` skill covers how to use them.
+- I also use tmux for terminals and long-running commands (see the `/tmux-run` skill).
+
 ## Communication Preferences
 
 - Concise, high-signal, direct, no-nonsense. Default to brief; go long only when asked.
 - Skip unnecessary complexity; focus on what's immediately useful.
 - PR text and review comments follow the stricter rules under Version Control & PRs.
+- When giving me several options to pick from in chat, number them so I can reply with just the numbers (e.g. "1, 3, 5"). This is an exception to the no-numbering rule for markdown documents.
 
 ### Speech-to-text input
 
