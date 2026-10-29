@@ -50,7 +50,7 @@ Format: `- [ ] <concise description> [ref](<original-url>)`
 
 Guidelines:
 - Keep description **short** — a few words, enough to identify the task. No inline rationale or detail.
-- If more context is needed, create a task note and link it with a wiki-link instead of expanding the description.
+- Every `Backlog.md` entry is exactly **one line**. Never add sub-bullets or nested checkboxes under an entry. If a task has sub-items or needs more context, put them in a task note (`Tasks/YYYY-MM/<Task Name>.md`) and make the entry a single line that links it with a wiki-link, e.g. `- [ ] [[Tasks/2026-10/Task Name]]`.
 - Include person's first name if someone is asking/assigning something
 - Jira: `Fix auth token storage bug [DP-1234](url)`
 - GitHub PR: `Review [repo#number](url): summary`
@@ -208,5 +208,5 @@ When asked, spin off **parallel background agents** — one per requested PR. Ea
 - Each PR must be on its own line
 - Never remove section headers (Today, Tomorrow, etc.) even when empty
 - Show meeting times in IST (UTC+5:30)
-- Keep all backlog entries short — a few words per line. Use task notes for detail.
+- Keep all backlog entries short — a few words per line, one line per entry, never nested. Use task notes for detail and sub-items.
 - Only two checkbox states: `- [ ]` (open) and `- [x]` (done/won't-do). Never use `[-]`.

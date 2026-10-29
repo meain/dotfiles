@@ -40,6 +40,8 @@ dashy-cli begin AGENT [--plan]             # start a planned agent (--plan: in p
 dashy-cli fork AGENT ["prompt"] [--title T] [--wait]   # copy the conversation into a new agent
 dashy-cli bookmark AGENT [--off]                # keep a chat findable: survives archiving; delete refuses bookmarked
 dashy-cli agents --bookmarked --all         # open and archived bookmarks
+dashy-cli pin AGENT [--off]                     # Pinned section at the top of Overview (open agents only; archiving unpins); `pinned` shows in show and --json
+dashy-cli tag AGENT ["text"]                # label on the card's third line, coloured from a hash of the text; no text removes it
 dashy-cli archive AGENT [--remove-workspace]
 dashy-cli delete AGENT [--remove-workspace]            # archived agents only (planned ones too)
 dashy-cli schedule add NAME --when "weekdays 09:00" --project DIR "prompt" [--isolation ..] [--model ..] [--mode ..] [--catch-up]
@@ -54,7 +56,7 @@ Add `--json` for machine-readable output. A `-` as the prompt or text reads stdi
 - **States** (for `--state`): needs-you, error, working, starting, done, idle, planned, archived.
 - **Schedule refs:** every `schedule` subcommand takes a name or an id prefix (4+ chars); `schedule ls` shows ids. `schedule edit` changes only the flags you pass, and `default` clears model, mode or effort.
 - **Exit codes** of `wait`, `new --wait`, `send --wait`: 0 finished, 1 error, 3 needs you (permission or question pending), 4 timed out.
-- **`--when`:** `every 30m`, `hourly`, `daily 09:00`, `weekdays 09:00`, or a cron expression (`0 9 * * 1-5`). Local time.
+- **`--when`:** `every 30m`, `hourly`, `daily 09:00`, `weekdays 09:00`, or a cron expression (`0 9 * * 1-5`). Local time. Cron also takes `L` for the last day of the month (`0 18 L * *`), `5L` for the last Friday and `5#1` for the first Friday; don't fake month-end with `28-31`. A plain day plus weekday (`1-7 * 5`) means either, so use `#` for "first Friday". Older Dashy builds reject `L`.
 
 ## Patterns
 

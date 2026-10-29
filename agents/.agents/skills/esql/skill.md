@@ -249,7 +249,7 @@ FROM logs-*
 | KEEP @timestamp, service.name, message, labels.error, trace.id
 ```
 
-## Dev / Personal Environments — `,es` CLI
+## Dev Environment — `,es` CLI
 
 The `,es` CLI at `/Users/meain/.local/bin/utils/,es` provides a simpler way to query Elasticsearch, but it **only works for the dev environment**. Do not use it for staging or production.
 
@@ -281,7 +281,7 @@ Broader service-level search (no trace ID):
 
 | Environment | Method |
 |---|---|
-| Dev / personal | Use `,es` CLI directly |
+| Dev | Use `,es` CLI directly |
 | Staging / production | Use `,es-web -c <cluster>` (requires session cookie from user) |
 | No session available | Fall back to clipboard mode (see below) |
 
