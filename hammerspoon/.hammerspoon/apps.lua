@@ -15,6 +15,7 @@ apps.zed = "dev.zed.Zed"
 apps.cal = "com.apple.iCal"
 apps.kitty = "net.kovidgoyal.kitty"
 apps.dashy = "dev.meain.dashy"
+apps.gloss = "dev.meain.gloss"
 
 -- role assignments
 apps.browser = apps.firefox
