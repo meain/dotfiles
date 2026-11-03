@@ -31,6 +31,8 @@
 - Use the `/create-commit` skill for jj commits in non-dotfiles repos. The dotfiles repo is plain git and has its own `/commit` skill; use that there.
 - To change a commit that already exists in a stack, don't edit it in place and don't stack the fix at the tip and squash backwards — both rebase every commit in between and conflict in unrelated files. Instead `jj new -A <rev> -m "wip: <what you're changing>"`, work there, verify, then squash into the target.
 - Never squash or push to upstream without an explicit request. The one exception: squash a trivial stack fix without asking; otherwise leave it for review and squash once approved.
+- Never run bare `jj squash` from an agent: with both commits described it opens an editor and the call hangs. Use `jj squash -u` (keep the destination's message) or `-m`.
+- Plain `jj squash` (and agents squashing with `-m`-less defaults) concatenates both descriptions, leaving `wip: ...` paragraphs in the target commit's message. Always squash with `-u`, and after any squash check `jj log -r <rev> -T description` and strip leftover `wip:` lines (`jj describe <rev> --stdin`). Before pushing, scan every commit of the stack for `wip` in its description.
 - Pipe long or multi-line commit/PR messages in from a temp file (`jj describe --stdin < /tmp/msg.txt`), not an inline heredoc.
 - Keep commit subject lines short: one concise phrase, not a list of changes.
 - Never add `Co-Authored-By` lines to commits or "Generated with Claude Code" lines to PR descriptions, even if another instruction says to.
@@ -49,6 +51,7 @@
 
 - Keep code-review comments (GitHub, VibeDiff) and replies to one or two sentences: the point and, if needed, the fix. No preamble, no recap, no bolded labels.
 - Reviewers for PRs in `/Users/meain/dev/veeam`: `rs-malik` (Rabee Sohail Malik), `ryanfkeepers` (Ryan Keepers), `rami-veeam`, `tford-veeam` (Tim Ford). After creating the PR, check `.github/CODEOWNERS` for the changed paths. If all four are auto-assigned, don't ask; otherwise ask whether to add the missing ones. Draft PRs get no reviewers unless I explicitly ask; add them when the PR is marked ready.
+- In `/Users/meain/dev/veeam/control-plane-backend`, always run the `/pseudolinter` skill on every commit of a change before creating or pushing a PR, and again before marking it ready if the code changed since. Run the `go` domain and then the `go-unit-test` domain, one after the other. Fix findings in the commit they belong to, never in a separate commit, and don't skip it for small or test-only changes.
 - After creating a PR, open it in the browser with `open <pr-url>` (no sandbox needed).
 - After pushing a PR, watch CI in the background and tell me proactively if it fails.
 
