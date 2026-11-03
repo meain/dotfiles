@@ -69,13 +69,17 @@ case "$name" in
 update)
     # Update stale workspaces.  Have to update current workspace first
     # to be able to switch to other workspaces
-    jj workspace update-stale
-    jj workspace list | cut -d: -f1 | grep -v default |
+    jj workspace update-stale || true
+    jj workspace list | cut -d: -f1 | { grep -v '^default$' || true; } |
         while read -r ws; do
             ws_dir="$base_dir/$root_without_prefix-$ws"
-            cd "$ws_dir"
             echo "[WORKSPACE] $ws"
-            jj workspace update-stale || true
+            # a missing dir or failed update must not stop the remaining ones
+            if [ ! -d "$ws_dir" ]; then
+                echo "  skipped: $ws_dir does not exist"
+                continue
+            fi
+            (cd "$ws_dir" && jj workspace update-stale) || echo "  failed to update $ws"
         done
 
     exit 0
