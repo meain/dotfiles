@@ -1,0 +1,911 @@
+{
+ "day": "2026-10-29",
+ "title": "Todo dashboard: 2026-10-29",
+ "subtitle": "Thu 2026-10-29, generated 9:42 PM IST",
+ "events": [
+  {
+   "s": "12:00",
+   "e": "13:00",
+   "t": "VDC Technical Brownbags"
+  },
+  {
+   "s": "16:30",
+   "e": "18:30",
+   "t": "Busy"
+  },
+  {
+   "s": "17:30",
+   "e": "18:30",
+   "t": "VDC Architecture Office Hours (APAC+EMEA)",
+   "opt": true
+  },
+  {
+   "s": "19:30",
+   "e": "20:30",
+   "t": "Data Pipelines: Demos & Team Social"
+  },
+  {
+   "s": "20:30",
+   "e": "21:30",
+   "t": "VDC+Kasten All Hands"
+  },
+  {
+   "s": "23:30",
+   "e": "24:30",
+   "t": "VDC Architecture Office Hours (AMER+EMEA)",
+   "opt": true
+  }
+ ],
+ "todos": [
+  {
+   "id": "t1",
+   "src": "Backlog",
+   "proj": "EARN",
+   "title": "DP-2823 objectTypes and protectionTypes filters",
+   "urg": 4,
+   "imp": 4,
+   "eff": 3,
+   "age": 3,
+   "blocks": false,
+   "tags": [
+    "dev",
+    "reporting"
+   ],
+   "ctx": "Today list item. Backend PRs are already up and waiting on review (forward backup activity filters; history filters set protection thresholds). Remaining work is in the task note.",
+   "links": [
+    {
+     "t": "Task note",
+     "u": "obsidian://open?path=%2FUsers%2Fmeain%2F.local%2Fshare%2Fsbdb%2FTasks%2F2026-10%2FDP-2823%20objectTypes%20and%20protectionTypes%20filters.md"
+    },
+    {
+     "t": "Forward backup activity filters to earn-query",
+     "u": "https://github.com/Veeam-VDC/control-plane-backend/pull/7074"
+    },
+    {
+     "t": "Let history filters set the protection thresholds",
+     "u": "https://github.com/Veeam-VDC/control-plane-backend/pull/7073"
+    },
+    {
+     "t": "Carry more earn-query inputs on report filters (cp-api)",
+     "u": "https://github.com/Veeam-VDC/control-plane-api/pull/855"
+    }
+   ]
+  },
+  {
+   "id": "t2",
+   "src": "Backlog",
+   "proj": "EARN",
+   "title": "DP-2826 nextRunAt on the schedule",
+   "urg": 3,
+   "imp": 3,
+   "eff": 2,
+   "age": 3,
+   "blocks": false,
+   "tags": [
+    "dev",
+    "reporting"
+   ],
+   "ctx": "Today list item. Three backend PRs plus a cp-api PR for the last scheduled run are open and need review.",
+   "links": [
+    {
+     "t": "Serve the last scheduled run from the report service",
+     "u": "https://github.com/Veeam-VDC/control-plane-backend/pull/7070"
+    },
+    {
+     "t": "Return the last scheduled run on the report schedule",
+     "u": "https://github.com/Veeam-VDC/control-plane-backend/pull/7058"
+    },
+    {
+     "t": "Read the last scheduled run of a report from its runs",
+     "u": "https://github.com/Veeam-VDC/control-plane-backend/pull/7057"
+    },
+    {
+     "t": "Add the last scheduled run to EarnReportSchedule (cp-api)",
+     "u": "https://github.com/Veeam-VDC/control-plane-api/pull/853"
+    }
+   ]
+  },
+  {
+   "id": "t3",
+   "src": "Backlog",
+   "proj": "EARN",
+   "title": "Work on pending items from Tim",
+   "urg": 4,
+   "imp": 4,
+   "eff": 2,
+   "age": 1,
+   "blocks": true,
+   "tags": [
+    "dev",
+    "reporting",
+    "tim"
+   ],
+   "ctx": "Tim wants the relative date range reshaped from numdays to num + unit (enum), flowing into report schedule creation. This directly affects the DP-2824 PRs. Tim is waiting on this to land his own expression PRs.",
+   "links": [
+    {
+     "t": "Relative date range (backend)",
+     "u": "https://github.com/Veeam-VDC/control-plane-backend/pull/7071"
+    },
+    {
+     "t": "Relative date range (cp-api)",
+     "u": "https://github.com/Veeam-VDC/control-plane-api/pull/854"
+    },
+    {
+     "t": "Cover relative date ranges through the API",
+     "u": "https://github.com/Veeam-VDC/control-plane-backend/pull/7072"
+    },
+    {
+     "t": "Tim: num + unit message",
+     "u": "https://teams.microsoft.com/l/message/19%3a2c1f7fa69d1c4ae69d9a03615a0c245c%40thread.v2/1793247119263?context=%7B%22contextType%22:%22chat%22%7D"
+    }
+   ]
+  },
+  {
+   "id": "t4",
+   "src": "Backlog",
+   "proj": "EARN",
+   "title": "Confirm open decisions on the DP-1808 reporting PRs",
+   "urg": 3,
+   "imp": 4,
+   "eff": 1,
+   "age": 2,
+   "blocks": true,
+   "tags": [
+    "decision",
+    "reporting"
+   ],
+   "ctx": "Quick decision pass. Open questions block the reporting PR stack from moving, so a short answer unblocks reviewers.",
+   "links": [
+    {
+     "t": "Task note",
+     "u": "obsidian://open?path=%2FUsers%2Fmeain%2F.local%2Fshare%2Fsbdb%2FTasks%2F2026-10%2FConfirm%20open%20decisions%20on%20the%20DP-1808%20reporting%20PRs.md"
+    }
+   ]
+  },
+  {
+   "id": "t5",
+   "src": "Backlog",
+   "proj": "Tooling",
+   "title": "Dashy reviewer changes",
+   "urg": 2,
+   "imp": 3,
+   "eff": 2,
+   "age": 3,
+   "blocks": false,
+   "tags": [
+    "dev",
+    "dashy"
+   ],
+   "ctx": "Today list item. Own tooling work; no external dependency.",
+   "links": [
+    {
+     "t": "Task note",
+     "u": "obsidian://open?path=%2FUsers%2Fmeain%2F.local%2Fshare%2Fsbdb%2FTasks%2F2026-10%2FDashy%20reviewer%20changes.md"
+    }
+   ]
+  },
+  {
+   "id": "t6",
+   "src": "Backlog",
+   "proj": "EARN",
+   "title": "Prep a demo for kqlcheck for the weekly demo call",
+   "urg": 1,
+   "imp": 2,
+   "eff": 2,
+   "age": 0,
+   "blocks": false,
+   "tags": [
+    "demo"
+   ],
+   "ctx": "The Data Pipelines demos call was at 7:30 PM today, so this is effectively overdue. Carry to next week or drop.",
+   "links": []
+  },
+  {
+   "id": "m1",
+   "src": "Merge",
+   "proj": "EARN",
+   "title": "Merge the approved kqlcheck stack in earn (10 PRs)",
+   "urg": 5,
+   "imp": 3,
+   "eff": 1,
+   "age": 7,
+   "blocks": false,
+   "tags": [
+    "merge",
+    "kqlcheck"
+   ],
+   "ctx": "All ten PRs are approved and have been open for 7 days. Merge bottom-up; each is a small step in the kqlcheck analyzer and global audit checks.",
+   "links": [
+    {
+     "t": "Run kqlcheck tests in CI",
+     "u": "https://github.com/Veeam-VDC/earn/pull/412"
+    },
+    {
+     "t": "Check global audit arm mappings",
+     "u": "https://github.com/Veeam-VDC/earn/pull/411"
+    },
+    {
+     "t": "Check global audit arm structure",
+     "u": "https://github.com/Veeam-VDC/earn/pull/410"
+    },
+    {
+     "t": "Check global audit result columns",
+     "u": "https://github.com/Veeam-VDC/earn/pull/409"
+    },
+    {
+     "t": "Check global audit union arms",
+     "u": "https://github.com/Veeam-VDC/earn/pull/408"
+    },
+    {
+     "t": "Reduce function syntax trees to union arms",
+     "u": "https://github.com/Veeam-VDC/earn/pull/407"
+    },
+    {
+     "t": "Check generated KQL loads and has no diagnostics",
+     "u": "https://github.com/Veeam-VDC/earn/pull/406"
+    },
+    {
+     "t": "Run kqlcheck from Go tests",
+     "u": "https://github.com/Veeam-VDC/earn/pull/405"
+    },
+    {
+     "t": "Add kqlcheck KQL analyzer",
+     "u": "https://github.com/Veeam-VDC/earn/pull/404"
+    },
+    {
+     "t": "Test leaf-first coalesce order in the global audit generator",
+     "u": "https://github.com/Veeam-VDC/earn/pull/403"
+    }
+   ]
+  },
+  {
+   "id": "c1",
+   "src": "Chase review",
+   "proj": "EARN",
+   "title": "Chase review on my EARN backend PRs (12 open)",
+   "urg": 3,
+   "imp": 4,
+   "eff": 1,
+   "age": 2,
+   "blocks": false,
+   "tags": [
+    "chase",
+    "reporting"
+   ],
+   "ctx": "All REVIEW_REQUIRED, 1–2 days open. Tim and Ryan are active in chat tonight; a single nudge covers all of them. Ryan already said he is looking at reviews today.",
+   "links": [
+    {
+     "t": "Forward backup activity filters",
+     "u": "https://github.com/Veeam-VDC/control-plane-backend/pull/7074"
+    },
+    {
+     "t": "History filters set protection thresholds",
+     "u": "https://github.com/Veeam-VDC/control-plane-backend/pull/7073"
+    },
+    {
+     "t": "Serve last scheduled run from report service",
+     "u": "https://github.com/Veeam-VDC/control-plane-backend/pull/7070"
+    },
+    {
+     "t": "Return last scheduled run on the schedule",
+     "u": "https://github.com/Veeam-VDC/control-plane-backend/pull/7058"
+    },
+    {
+     "t": "Read last scheduled run from runs",
+     "u": "https://github.com/Veeam-VDC/control-plane-backend/pull/7057"
+    },
+    {
+     "t": "Add INTUNE_ROLE Entra object type",
+     "u": "https://github.com/Veeam-VDC/control-plane-backend/pull/7056"
+    },
+    {
+     "t": "Add reportName to runs",
+     "u": "https://github.com/Veeam-VDC/control-plane-backend/pull/7054"
+    },
+    {
+     "t": "Add runs:actors",
+     "u": "https://github.com/Veeam-VDC/control-plane-backend/pull/7052"
+    },
+    {
+     "t": "List the actors that triggered runs",
+     "u": "https://github.com/Veeam-VDC/control-plane-backend/pull/7051"
+    },
+    {
+     "t": "Add modes and triggeredBy filters to runs:list",
+     "u": "https://github.com/Veeam-VDC/control-plane-backend/pull/7001"
+    },
+    {
+     "t": "Add hasSchedule filter to reports:list (backend, 2d)",
+     "u": "https://github.com/Veeam-VDC/control-plane-backend/pull/6984"
+    },
+    {
+     "t": "Add hasSchedule filter to reports:list (cp-api, 2d)",
+     "u": "https://github.com/Veeam-VDC/control-plane-api/pull/841"
+    }
+   ]
+  },
+  {
+   "id": "c2",
+   "src": "Chase review",
+   "proj": "EARN",
+   "title": "Chase review on cp-api companion PRs (8 pending)",
+   "urg": 2,
+   "imp": 3,
+   "eff": 1,
+   "age": 2,
+   "blocks": false,
+   "tags": [
+    "chase",
+    "api"
+   ],
+   "ctx": "API contract PRs paired with the backend ones. Backend PRs can not land before these.",
+   "links": [
+    {
+     "t": "Carry more earn-query inputs on report filters",
+     "u": "https://github.com/Veeam-VDC/control-plane-api/pull/855"
+    },
+    {
+     "t": "Relative date range",
+     "u": "https://github.com/Veeam-VDC/control-plane-api/pull/854"
+    },
+    {
+     "t": "Add last scheduled run to EarnReportSchedule",
+     "u": "https://github.com/Veeam-VDC/control-plane-api/pull/853"
+    },
+    {
+     "t": "Add INTUNE_ROLE and drop SERVICE_PRINCIPAL",
+     "u": "https://github.com/Veeam-VDC/control-plane-api/pull/852"
+    },
+    {
+     "t": "Add reportName to EarnReportRun",
+     "u": "https://github.com/Veeam-VDC/control-plane-api/pull/851"
+    },
+    {
+     "t": "Add runs:list filters and runs:actors",
+     "u": "https://github.com/Veeam-VDC/control-plane-api/pull/844"
+    },
+    {
+     "t": "Test relative date ranges through the API",
+     "u": "https://github.com/Veeam-VDC/control-plane-backend/pull/7072"
+    },
+    {
+     "t": "Relative date range (backend)",
+     "u": "https://github.com/Veeam-VDC/control-plane-backend/pull/7071"
+    }
+   ]
+  },
+  {
+   "id": "r1",
+   "src": "PR review",
+   "proj": "Platform",
+   "title": "Query view by name (rs-malik)",
+   "urg": 3,
+   "imp": 3,
+   "eff": 2,
+   "age": 8,
+   "blocks": true,
+   "tags": [
+    "review"
+   ],
+   "ctx": "Oldest review request, 8 days open. Rabee is a teammate and likely blocked on feedback.",
+   "links": [
+    {
+     "t": "Query view by name",
+     "u": "https://github.com/Veeam-VDC/control-plane-backend/pull/6862"
+    }
+   ]
+  },
+  {
+   "id": "r2",
+   "src": "PR review",
+   "proj": "EARN",
+   "title": "fix(earn): format large counts in the pdf (Peterabsolon)",
+   "urg": 2,
+   "imp": 2,
+   "eff": 1,
+   "age": 6,
+   "blocks": true,
+   "tags": [
+    "review",
+    "pdf"
+   ],
+   "ctx": "Small fix, 6 days open. Not part of the restacked PDF stack, so safe to review now.",
+   "links": [
+    {
+     "t": "format large counts in the pdf",
+     "u": "https://github.com/Veeam-VDC/control-plane-backend/pull/6924"
+    }
+   ]
+  },
+  {
+   "id": "r3",
+   "src": "PR review",
+   "proj": "EARN",
+   "title": "DP-2828: read the scheduler service account in the scheduler callback (tford-veeam)",
+   "urg": 3,
+   "imp": 3,
+   "eff": 1,
+   "age": 1,
+   "blocks": true,
+   "tags": [
+    "review",
+    "reporting",
+    "tim"
+   ],
+   "ctx": "Tim is waiting on reviews for his reporting work.",
+   "links": [
+    {
+     "t": "DP-2828 scheduler service account",
+     "u": "https://github.com/Veeam-VDC/control-plane-backend/pull/7011"
+    }
+   ]
+  },
+  {
+   "id": "r4",
+   "src": "PR review",
+   "proj": "Platform",
+   "title": "[VMCP-2750] Pin toolchain go1.26.10 for CVE-2026-111943 (mlprosper)",
+   "urg": 3,
+   "imp": 3,
+   "eff": 1,
+   "age": 1,
+   "blocks": false,
+   "tags": [
+    "review",
+    "security"
+   ],
+   "ctx": "Small CVE toolchain pin in control-plane-ops-cli. Quick to approve.",
+   "links": [
+    {
+     "t": "Pin toolchain go1.26.10",
+     "u": "https://github.com/Veeam-VDC/control-plane-ops-cli/pull/68"
+    }
+   ]
+  },
+  {
+   "id": "r5",
+   "src": "PR review",
+   "proj": "Platform",
+   "title": "CP-7486: Support session-less Auth0 authentication (sougiovn)",
+   "urg": 2,
+   "imp": 3,
+   "eff": 3,
+   "age": 0,
+   "blocks": false,
+   "tags": [
+    "review",
+    "auth"
+   ],
+   "ctx": "New today, in control-plane-platform. Auth change, so worth a careful read.",
+   "links": [
+    {
+     "t": "Session-less Auth0 authentication",
+     "u": "https://github.com/Veeam-VDC/control-plane-platform/pull/3731"
+    }
+   ]
+  },
+  {
+   "id": "r6",
+   "src": "PR review",
+   "proj": "EARN",
+   "title": "Allow EARN to start without Amplitude (haileyveeam)",
+   "urg": 2,
+   "imp": 2,
+   "eff": 1,
+   "age": 0,
+   "blocks": false,
+   "tags": [
+    "review",
+    "earn"
+   ],
+   "ctx": "New today.",
+   "links": [
+    {
+     "t": "Allow EARN to start without Amplitude",
+     "u": "https://github.com/Veeam-VDC/control-plane-backend/pull/7096"
+    }
+   ]
+  },
+  {
+   "id": "r7",
+   "src": "PR review",
+   "proj": "EARN",
+   "title": "DP-2935: capture the actor email on createdBy, updatedBy and triggeredBy (paladdins)",
+   "urg": 2,
+   "imp": 3,
+   "eff": 2,
+   "age": 0,
+   "blocks": false,
+   "tags": [
+    "review",
+    "reporting"
+   ],
+   "ctx": "New today.",
+   "links": [
+    {
+     "t": "DP-2935 actor email",
+     "u": "https://github.com/Veeam-VDC/control-plane-backend/pull/7093"
+    }
+   ]
+  },
+  {
+   "id": "r8",
+   "src": "PR review",
+   "proj": "EARN",
+   "title": "DP-2871: column expressions, 2 PRs (tford-veeam)",
+   "urg": 2,
+   "imp": 3,
+   "eff": 2,
+   "age": 0,
+   "blocks": false,
+   "tags": [
+    "review",
+    "reporting",
+    "tim"
+   ],
+   "ctx": "Review last. They depend on the cp-api expression-kinds PR landing and will need a slight update after it.",
+   "links": [
+    {
+     "t": "Evaluate column expressions in export cells",
+     "u": "https://github.com/Veeam-VDC/control-plane-backend/pull/7100"
+    },
+    {
+     "t": "Carry column expressions in the template model",
+     "u": "https://github.com/Veeam-VDC/control-plane-backend/pull/7099"
+    },
+    {
+     "t": "Expression kinds in cp-api",
+     "u": "https://github.com/Veeam-VDC/control-plane-api/pull/846"
+    }
+   ]
+  },
+  {
+   "id": "r9",
+   "src": "PR review",
+   "proj": "EARN",
+   "title": "Peterabsolon's PDF stack (10 PRs)",
+   "urg": 1,
+   "imp": 3,
+   "eff": 3,
+   "age": 1,
+   "blocks": false,
+   "held": true,
+   "tags": [
+    "review",
+    "pdf"
+   ],
+   "ctx": "Tim asked Peter to restack these so they no longer sit on the older expression PRs. Reviewing now would likely be wasted; wait until restacked.",
+   "links": [
+    {
+     "t": "document print-pdf v1",
+     "u": "https://github.com/Veeam-VDC/control-plane-backend/pull/7069"
+    },
+    {
+     "t": "build the pdf table from the run pdf columns",
+     "u": "https://github.com/Veeam-VDC/control-plane-backend/pull/7068"
+    },
+    {
+     "t": "draw a pdf column with no presenter",
+     "u": "https://github.com/Veeam-VDC/control-plane-backend/pull/7067"
+    },
+    {
+     "t": "key restore-activity pdf columns",
+     "u": "https://github.com/Veeam-VDC/control-plane-backend/pull/7066"
+    },
+    {
+     "t": "key backup-activity pdf columns",
+     "u": "https://github.com/Veeam-VDC/control-plane-backend/pull/7065"
+    },
+    {
+     "t": "key protected-objects-history pdf columns",
+     "u": "https://github.com/Veeam-VDC/control-plane-backend/pull/7064"
+    },
+    {
+     "t": "key protected-objects-latest pdf columns",
+     "u": "https://github.com/Veeam-VDC/control-plane-backend/pull/7063"
+    },
+    {
+     "t": "print summary pages for each tenant",
+     "u": "https://github.com/Veeam-VDC/control-plane-backend/pull/7062"
+    },
+    {
+     "t": "serve print-pdf v1 from DATA artifact",
+     "u": "https://github.com/Veeam-VDC/control-plane-backend/pull/7061"
+    },
+    {
+     "t": "read DATA artifact for the pdf",
+     "u": "https://github.com/Veeam-VDC/control-plane-backend/pull/7060"
+    }
+   ]
+  },
+  {
+   "id": "x1",
+   "src": "Teams",
+   "proj": "Platform",
+   "title": "Review Tim's postgres and blobs data-distribution wiki",
+   "urg": 2,
+   "imp": 3,
+   "eff": 2,
+   "age": 1,
+   "blocks": true,
+   "tags": [
+    "review",
+    "tim",
+    "design"
+   ],
+   "ctx": "Tim: \"think this needs a review: stage / prod postgres & blobs\". Inferred as a review ask; he also noted replication options and that he avoided self-managed postgres to limit risk.",
+   "links": [
+    {
+     "t": "Message",
+     "u": "https://teams.microsoft.com/l/message/19%3a2c1f7fa69d1c4ae69d9a03615a0c245c%40thread.v2/1793237617364?context=%7B%22contextType%22:%22chat%22%7D"
+    }
+   ]
+  },
+  {
+   "id": "x2",
+   "src": "Teams",
+   "proj": "EARN",
+   "title": "Check AI review comments and \"breaking change\" note on 7039/40",
+   "urg": 3,
+   "imp": 3,
+   "eff": 1,
+   "age": 1,
+   "blocks": false,
+   "tags": [
+    "review",
+    "tim"
+   ],
+   "ctx": "Tim: there are AI comments on 7039/40, the \"breaking change\" label is not accurate, and the API should be adjusted. Check whether these are your PRs.",
+   "links": [
+    {
+     "t": "Message",
+     "u": "https://teams.microsoft.com/l/message/19%3a2c1f7fa69d1c4ae69d9a03615a0c245c%40thread.v2/1793213598753?context=%7B%22contextType%22:%22chat%22%7D"
+    }
+   ]
+  },
+  {
+   "id": "x3",
+   "src": "Teams",
+   "proj": "EARN",
+   "title": "cp-api#867 EARN contract update approved, CI failing (FYI?)",
+   "urg": 2,
+   "imp": 2,
+   "eff": 1,
+   "age": 0,
+   "blocks": false,
+   "tags": [
+    "fyi",
+    "api"
+   ],
+   "ctx": "Ryan forwarded Nikita Epshtein's EARN API contract update for Rabee and Rami. Approved but CI failing. Not clearly addressed to you.",
+   "links": [
+    {
+     "t": "Message",
+     "u": "https://teams.microsoft.com/l/message/19%3a2c1f7fa69d1c4ae69d9a03615a0c245c%40thread.v2/1793286835364?context=%7B%22contextType%22:%22chat%22%7D"
+    },
+    {
+     "t": "cp-api 867",
+     "u": "https://github.com/Veeam-VDC/control-plane-api/pull/867"
+    }
+   ]
+  },
+  {
+   "id": "x4",
+   "src": "Teams",
+   "proj": "EARN",
+   "title": "Ryan: hold off on rebasing until his e2e fix PR lands",
+   "urg": 2,
+   "imp": 2,
+   "eff": 1,
+   "age": 0,
+   "blocks": false,
+   "held": true,
+   "tags": [
+    "fyi"
+   ],
+   "ctx": "Ryan approved something but asked to hold off on it because he is about to put out e2e test fixes he does not want to rebase. The target of \"that\" is unclear; confirm before merging anything.",
+   "links": [
+    {
+     "t": "Message",
+     "u": "https://teams.microsoft.com/l/message/19%3a2c1f7fa69d1c4ae69d9a03615a0c245c%40thread.v2/1793288485108?context=%7B%22contextType%22:%22chat%22%7D"
+    }
+   ]
+  },
+  {
+   "id": "x5",
+   "src": "Teams",
+   "proj": "KaaS",
+   "title": "Vilakshan: Reader vs PIM role for EARN DLQ peek and purge",
+   "urg": 1,
+   "imp": 2,
+   "eff": 1,
+   "age": 0,
+   "blocks": false,
+   "tags": [
+    "fyi",
+    "oncall"
+   ],
+   "ctx": "Vilakshan asked whether Reader on the Control Plane subs is enough for peeking via the proxy, or whether a PIM role is needed. Ryan replied. Only act if EARN-side input is needed.",
+   "links": [
+    {
+     "t": "Message",
+     "u": "https://teams.microsoft.com/l/message/19%3ae87c5975d83e4343853b6e7c43b994d4%40thread.tacv2/1793284790280"
+    }
+   ]
+  },
+  {
+   "id": "b1",
+   "src": "Backlog",
+   "proj": "People",
+   "title": "Set up 1:1s with Jainil Patel, Davinder Pal, Harshika Sajja",
+   "urg": 2,
+   "imp": 3,
+   "eff": 1,
+   "age": 10,
+   "blocks": false,
+   "tags": [
+    "people"
+   ],
+   "ctx": "High priority backlog. Three short calendar invites.",
+   "links": []
+  },
+  {
+   "id": "b2",
+   "src": "Backlog",
+   "proj": "EARN",
+   "title": "Add x-react-query-type to reporting list endpoints",
+   "urg": 2,
+   "imp": 3,
+   "eff": 2,
+   "age": 5,
+   "blocks": false,
+   "tags": [
+    "dev",
+    "reporting"
+   ],
+   "ctx": "Backlog item with task note.",
+   "links": [
+    {
+     "t": "Task note",
+     "u": "obsidian://open?path=%2FUsers%2Fmeain%2F.local%2Fshare%2Fsbdb%2FTasks%2F2026-10%2FAdd%20x-react-query-type%20to%20reporting%20list%20endpoints.md"
+    }
+   ]
+  },
+  {
+   "id": "b3",
+   "src": "Backlog",
+   "proj": "EARN",
+   "title": "Automate creation of PRs from earn schema repo",
+   "urg": 1,
+   "imp": 3,
+   "eff": 3,
+   "age": 10,
+   "blocks": false,
+   "tags": [
+    "dev",
+    "automation"
+   ],
+   "ctx": "Backlog. Would remove manual cp-api and backend PR pairing work.",
+   "links": []
+  },
+  {
+   "id": "b4",
+   "src": "Backlog",
+   "proj": "Admin",
+   "title": "Calendar invite to fill in weekly updates",
+   "urg": 1,
+   "imp": 2,
+   "eff": 1,
+   "age": 10,
+   "blocks": false,
+   "tags": [
+    "admin"
+   ],
+   "ctx": "Backlog.",
+   "links": []
+  },
+  {
+   "id": "b5",
+   "src": "Backlog",
+   "proj": "Learning",
+   "title": "Prepare for the Demystifying Agent Harness course",
+   "urg": 1,
+   "imp": 2,
+   "eff": 2,
+   "age": 10,
+   "blocks": false,
+   "tags": [
+    "learning"
+   ],
+   "ctx": "Backlog with task note.",
+   "links": [
+    {
+     "t": "Task note",
+     "u": "obsidian://open?path=%2FUsers%2Fmeain%2F.local%2Fshare%2Fsbdb%2FTasks%2F2026-10%2FPrepare%20for%20the%20Demystifying%20Agent%20Harness%20course.md"
+    }
+   ]
+  },
+  {
+   "id": "k1",
+   "src": "Blocked",
+   "proj": "Org anchoring",
+   "title": "Ensure e2e for org anchoring in stage",
+   "urg": 3,
+   "imp": 4,
+   "eff": 2,
+   "age": 10,
+   "blocks": false,
+   "held": true,
+   "tags": [
+    "blocked",
+    "org-anchoring"
+   ],
+   "ctx": "Marked high priority but blocked.",
+   "links": []
+  },
+  {
+   "id": "k2",
+   "src": "Blocked",
+   "proj": "Org anchoring",
+   "title": "Remove known broken from org anchoring tests",
+   "urg": 2,
+   "imp": 3,
+   "eff": 1,
+   "age": 10,
+   "blocks": false,
+   "held": true,
+   "tags": [
+    "blocked",
+    "org-anchoring"
+   ],
+   "ctx": "Blocked.",
+   "links": []
+  },
+  {
+   "id": "k3",
+   "src": "Blocked",
+   "proj": "Org anchoring",
+   "title": "Post about control-plane-backend#6694 and needing CP deploy",
+   "urg": 2,
+   "imp": 3,
+   "eff": 1,
+   "age": 10,
+   "blocks": true,
+   "held": true,
+   "tags": [
+    "blocked",
+    "org-anchoring"
+   ],
+   "ctx": "Blocked on a CP deploy.",
+   "links": [
+    {
+     "t": "PR 6694",
+     "u": "https://github.com/Veeam-VDC/control-plane-backend/pull/6694"
+    }
+   ]
+  },
+  {
+   "id": "k4",
+   "src": "Blocked",
+   "proj": "Org anchoring",
+   "title": "Remove org anchoring from earn",
+   "urg": 2,
+   "imp": 3,
+   "eff": 3,
+   "age": 10,
+   "blocks": false,
+   "held": true,
+   "tags": [
+    "blocked",
+    "org-anchoring"
+   ],
+   "ctx": "Blocked, with task note.",
+   "links": [
+    {
+     "t": "Task note",
+     "u": "obsidian://open?path=%2FUsers%2Fmeain%2F.local%2Fshare%2Fsbdb%2FTasks%2F2026-10%2FRemove%20org%20anchoring%20from%20earn.md"
+    }
+   ]
+  }
+ ]
+}
