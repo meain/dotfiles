@@ -16,7 +16,7 @@ h2.grp{font-size:17px;margin:26px 0 10px;border-bottom:1px solid #e3e8ee;padding
 .tag.good{background:#dff5e3;color:#1a6b2c}.tag.warn{background:#fff3cd;color:#8a6500}.tag.bad{background:#fde2e2;color:#a33}.tag.rec{background:#dbeafe;color:#1e4fa3}
 .card p.desc{margin:6px 0 8px;color:#445;font-size:14px}
 .meta{font-size:12.5px;color:#667}
-.pick{display:none;position:absolute;right:14px;top:40px;color:#1a6b2c;font-weight:700;font-size:13px}.card.on .pick{display:block}
+.pick{display:none;color:#1a6b2c;background:#dff5e3;font-weight:700;font-size:11px;border-radius:10px;padding:2px 8px}.card.on .pick{display:inline-block}
 .mock{margin:6px 0 8px;overflow-x:auto}
 .mock.html{border:1px solid #e3e8ee;border-radius:8px;padding:10px;background:#fafbfc}
 pre.term{background:#13232f;color:#d6dde3;font:12.5px/1.3 "SF Mono",Menlo,Consolas,monospace;padding:10px 12px;border-radius:8px;overflow-x:auto;margin:6px 0 8px}
@@ -70,9 +70,8 @@ for(const o of cfg.options){
   if(o.mockup){mock=(o.mockup_kind==='html')?'<div class="mock html">'+o.mockup+'</div>':(o.mockup_kind==='text')?'<pre class="term">'+esc(o.mockup)+'</pre>':'<pre class="term">'+o.mockup+'</pre>'}
   const card=document.createElement('label');card.className='card';card.dataset.id=o.id;
   card.innerHTML='<input type="'+(single?'radio':'checkbox')+'" name="pick" value="'+esc(o.id)+'">'+
-   '<div class="ch"><span class="num">'+esc(o.id)+'</span><span class="ttl">'+esc(o.title)+'</span>'+tags+'</div>'+
+   '<div class="ch"><span class="num">'+esc(o.id)+'</span><span class="ttl">'+esc(o.title)+'</span>'+tags+'<span class="pick">✓ '+(single?'chosen':'picked')+'</span></div>'+
    (o.desc?'<p class="desc">'+o.desc+'</p>':'')+mock+(o.meta?'<div class="meta">'+o.meta+'</div>':'')+
-   '<div class="pick">✓ '+(single?'chosen':'picked')+'</div>'+
    '<textarea class="cm" data-id="'+esc(o.id)+'" data-title="'+esc(o.title)+'" rows="2" placeholder="Note for the agent on this option (optional; does not pick it)"></textarea>';
   grid.appendChild(card);
 }

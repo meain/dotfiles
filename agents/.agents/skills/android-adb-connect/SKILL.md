@@ -69,6 +69,19 @@ Then connect using the regular (non-pairing) port shown on the main Wireless deb
 adb connect 192.168.1.3:38181
 ```
 
+### QR pairing (no code or port to type)
+
+Prefer this for first-time or expired pairing. Run `bash ~/.claude/skills/android-adb-connect/qr-pair.sh` with `dangerouslyDisableSandbox: true` and `run_in_background: true`. It makes a QR (`WIFI:T:ADB;S:<name>;P:<password>;;`, via `nix run nixpkgs#qrencode`), opens `/tmp/adb-qr.png`, waits for the phone's pairing service, then runs `adb pair` and lists devices. Once paired, the phone shows in `adb devices` as `adb-<serial>-xxxx._adb-tls-connect._tcp`; no `adb connect` needed.
+
+Gotchas, all hit in practice:
+
+- **Timing:** the phone advertises `_adb-tls-pairing._tcp` only while **Pair device with QR code** (the camera screen) is open. The script waits about 120 s, and the user can't reply while it blocks. So first ask the user to open the camera screen and say "ready", then start the script and tell them to scan straight away. Each run makes a new QR with a new password, so a scan of an old image never works (the phone just spins).
+- **`adb mdns services` is empty on this Mac**, so discovery goes through `dns-sd` (`-B` to browse, `-L` for host and port, `-G v4` for the IP). When parsing `-G`, match rows where `$2=="Add"`; the header line also contains "Add".
+- **`error: protocol fault (couldn't read status message)`** from `adb pair` means the local adb server is stale (one had been up for days), not that the phone is wrong. `adb kill-server && adb start-server`, then re-run with a fresh scan. It's safe when no devices are attached.
+- **Stray `dns-sd` processes** can be left behind by interrupted runs; `pkill dns-sd`.
+- The script writes `ip:port password` to `/tmp/adb-qr.last` so a failed `adb pair` can be retried without scanning again, while the phone is still on the camera screen.
+- Don't use `tr ... | head -c` for random strings under `set -o pipefail` (SIGPIPE, exit 141); the script uses `openssl rand -hex`.
+
 ### Discovering the port
 
 If the user can't read the port off the phone, try mDNS:

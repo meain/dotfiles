@@ -74,13 +74,28 @@ an unpicked card is still information, and a pick without a note is fine.
 - `mode`: `multi` (checkboxes, default) or `single` (radio, one choice).
 - `id`: unique; use plain numbers so the user can reply "1, 3, 5". The page stores picks
   under `id` in the browser, so use a distinct top-level `id` per page.
-- `mockup_kind`: `terminal` (default; content goes in a dark `<pre>`, supports the colour
-  classes below), `html` (rendered as a boxed HTML block, for web UI mockups), or `text`
-  (escaped plain text in the dark `<pre>`).
+- `mockup_kind`: set it on every option, matching the medium of what is being proposed
+  (see "Match the mockup to the medium" below). `terminal` (the fallback when unset;
+  content goes in a dark `<pre>`, supports the colour classes below), `html` (rendered
+  as a boxed HTML block, for web or GUI mockups), or `text` (escaped plain text in the
+  dark `<pre>`).
 - `tags[].kind`: `good`, `warn`, `bad`, `rec` or empty. Typical use: effort (small = good,
   medium = warn, large = bad), risk, or "writes data".
 - `group` starts a new heading when it changes between consecutive options.
 - Page is light mode. Terminal mockups are dark on purpose.
+
+## Match the mockup to the medium
+
+The mockup must look like what the user will actually get. `terminal` is only for TUIs,
+CLI output and scripts. If the feature lives in a web page, dashboard, desktop or mobile
+UI, use `html` and draw it as real UI (cards, buttons, chips, progress bars, tables), not
+as monospaced ASCII in a dark box. Mixed lists are fine: a script-backed option can use
+`terminal` for its output while the UI options beside it use `html`.
+
+The `html` box only adds a border and padding, so style the mockup yourself with inline
+`style` attributes (the page's own classes are not available). Keep it light mode, about
+13px sans-serif, and reuse the host page's look when mocking an existing UI (same
+colours, chip and button styles). Do not use the terminal colour classes in `html`.
 
 ## Terminal mockup classes
 
