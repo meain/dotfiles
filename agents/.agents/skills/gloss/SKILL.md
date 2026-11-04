@@ -12,7 +12,7 @@ user_invocable: true
 
 # gloss
 
-gloss is the user's own macOS app for writing design docs together with a Claude agent (source: `/Users/meain/dev/src/chino`, run with `open /Users/meain/dev/src/chino/build/Gloss.app`; `docs/plan.md` there is the contract, `AGENTS.md` the dev guide). The user mostly uses this skill to have *you* write a prompt they paste into gloss. You don't edit docs or run gloss yourself.
+gloss is the user's own macOS app for writing design docs together with a Claude agent (source: `/Users/meain/dev/src/gloss`, run with `open /Users/meain/dev/src/gloss/build/Gloss.app`; `docs/plan.md` there is the contract, `AGENTS.md` the dev guide). The user mostly uses this skill to have *you* write a prompt they paste into gloss. You don't edit docs or run gloss yourself.
 
 ## What gloss is
 
@@ -91,4 +91,4 @@ Is 2 seconds to sync after reconnect realistic on flaky 3G? Answer here; apply n
 
 ## Prompts about gloss itself
 
-If the user wants a prompt for an agent to *work on* gloss (not to use it), point that agent at `/Users/meain/dev/src/chino`: read `AGENTS.md`, then `docs/plan.md` and `docs/status.md`; build with `swift build --build-system native`, test with `./scripts/test.sh`; never quit or touch the user's running instance or `~/Documents/Gloss`.
+If the user wants a prompt for an agent to *work on* gloss (not to use it), point that agent at `/Users/meain/dev/src/gloss`: read `AGENTS.md`, then `docs/plan.md` and `docs/status.md`; build with `swift build --build-system native`, test with `./scripts/test.sh`; never quit or touch the user's running instance or `~/Documents/Gloss`.
