@@ -106,6 +106,13 @@ When no built-in tool fits:
 
 - I do all my AI-assisted development in Dashy (source: `/Users/meain/dev/src/dashy`), my own macOS app that runs many Claude Code agents side by side. You are most likely one of those agents, and I may be juggling several at once, so finish clearly and say what you need from me.
 - Dashy has a CLI (`dashy-cli`) to list, start, message, fork and wait on agents, plus scheduled (cron-style) agents. The `/dashy` skill covers how to use them.
+- Dashy handles `dashy://` links, so artifacts only I will open (HTML reports, pickers, dashboards, my bookmarks) can have buttons or links that act in Dashy: `dashy://new` pre-fills the New Agent sheet, `dashy://quick` makes a quick-agent card where Dashy picks the repo from the text (good for PR URLs), `dashy://send` puts text in an agent's message box (your own id comes from the `whoami` MCP tool, for follow-up buttons) and `dashy://open` selects an agent. Links only pre-fill; I press the key. Always build them with `dashy-cli link new|quick|send|open` (the `/dashy` skill has the details), never by hand. Use them where they save me retyping, such as follow-up buttons in a report, and skip them otherwise.
+  - Never put `dashy://` links in anything that will be shared or leave my machine (PR descriptions, Jira, Confluence, Teams or Slack messages, docs committed to a repo, reports sent to others): they mean nothing to anyone else and expose my agent ids and local paths.
+  - They need a Dashy build that has the link handler, and GitHub and Jira strip them from rendered markdown, so only use them in local HTML or other local files.
+- For long-running or multi-step work (stack bring-ups, multi-agent investigations, fix-then-retest loops, anything I'd otherwise keep asking "what's the state?" about), keep a Dashy widget up with the `dashy` MCP tools (`widget_set`, `widget_patch`) instead of narrating progress in chat. Create it early with a stable id, then patch it as steps change.
+  - Put a pipeline table first (step, state, time in IST, note), then results, open questions and a live metric.
+  - Give each subagent its own block index so concurrent `widget_patch` calls don't overwrite each other, and tell it to update only that block. Widgets can be scoped to the agent that made them, so a subagent's patch may fail: it should say so in its report and you update the widget from that report.
+  - Use `set_status` for the one-line live progress and the widget for structured state. Don't create widgets for trivial work.
 - I also use tmux for terminals and long-running commands (see the `/tmux-run` skill).
 
 ## Communication Preferences

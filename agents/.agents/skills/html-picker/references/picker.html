@@ -44,7 +44,7 @@ textarea.cm:focus{outline:2px solid #5fa8ff;border-color:#5fa8ff}
 <p class="sub" id="subtitle"></p>
 <div class="legend" id="legend"></div>
 <div id="root"></div>
-<div class="bar"><div class="status"><span class="count" id="count"></span><div class="chips" id="list"></div><span class="notes" id="notes" hidden></span></div><button class="alt" id="all">Select all</button><button class="alt" id="none">Clear</button><span class="sep"></span><button class="go" id="copy">Copy picks + notes</button></div>
+<div class="bar"><div class="status"><span class="count" id="count"></span><div class="chips" id="list"></div><span class="notes" id="notes" hidden></span></div><button class="alt" id="all">Select all</button><button class="alt" id="none">Clear</button><span class="sep"></span><button class="go" id="send" hidden>Send to agent</button><button class="go" id="copy">Copy picks + notes</button></div>
 <script id="data" type="application/json">/*OPTIONS_JSON*/</script>
 <script>
 const cfg=JSON.parse(document.getElementById('data').textContent);
@@ -98,6 +98,15 @@ boxes.forEach(b=>{b.checked=saved.includes(b.value);b.addEventListener('change',
 areas.forEach(a=>{a.value=notes[a.dataset.id]||'';a.addEventListener('input',render);a.addEventListener('click',e=>e.stopPropagation());a.addEventListener('keydown',e=>e.stopPropagation())});
 document.getElementById('all').onclick=()=>{boxes.forEach(b=>b.checked=true);render()};
 document.getElementById('none').onclick=()=>{boxes.forEach(b=>b.checked=false);areas.forEach(a=>a.value='');render()};
-document.getElementById('copy').onclick=async e=>{const b=e.currentTarget,label='Copy picks + notes',t=summary();try{await navigator.clipboard.writeText(t);b.textContent='Copied ✓';b.classList.add('done')}catch(_){prompt('Copy this:',t)}setTimeout(()=>{b.textContent=label;b.classList.remove('done')},1600)};
+// With cfg.agent set, the main button opens a dashy://send link that fills that agent's message box in Dashy
+// (the user presses Enter there); copying stays as the fallback. Past Dashy's 8000 character cap, copy instead.
+const copyBtn=document.getElementById('copy'),sendBtn=document.getElementById('send'),copyLabel=cfg.agent?'Copy instead':'Copy picks + notes';
+copyBtn.textContent=copyLabel;
+if(cfg.agent){sendBtn.hidden=false;copyBtn.className='alt'}
+copyBtn.onclick=async e=>{const b=e.currentTarget,t=summary();try{await navigator.clipboard.writeText(t);b.textContent='Copied ✓';b.classList.add('done')}catch(_){prompt('Copy this:',t)}setTimeout(()=>{b.textContent=copyLabel;b.classList.remove('done')},1600)};
+sendBtn.onclick=e=>{const b=e.currentTarget,t=summary();
+  if(t.length>7500){b.textContent='Too long to send, use Copy';setTimeout(()=>{b.textContent='Send to agent'},2400);return}
+  location.href=(cfg.scheme||'dashy')+'://send?agent='+encodeURIComponent(cfg.agent)+'&text='+encodeURIComponent(t);
+  b.textContent='Sent to Dashy ✓';b.classList.add('done');setTimeout(()=>{b.textContent='Send to agent';b.classList.remove('done')},1600)};
 render();
 </script></body></html>

@@ -48,6 +48,10 @@ dashy-cli schedule add NAME --when "weekdays 09:00" --project DIR "prompt" [--is
 dashy-cli schedule edit NAME [--name N] [--prompt P] [--when SPEC] [--project DIR] [--isolation ..] [--model ..] [--mode ..] [--effort ..] [--catch-up|--no-catch-up]
 dashy-cli schedule ls | runs NAME | rm NAME | run NAME | pause NAME | resume NAME
 dashy-cli agents --schedule NAME          # only that schedule's runs
+dashy-cli link new "prompt" [--project DIR] [--isolation same|jj|git] [--mode M] [--model M] [--effort E] [--title T]
+dashy-cli link quick "prompt"                              # ⇧⌘N quick-agent card: Dashy's helper picks the repo from the text (a PR URL works); waits for Start
+dashy-cli link send AGENT "text"
+dashy-cli link open AGENT [--tab thread|widgets|files]    # print a dashy:// URL; needs no running app, changes nothing
 ```
 
 Add `--json` for machine-readable output. A `-` as the prompt or text reads stdin (use it for long or multi-line text).
@@ -69,6 +73,7 @@ Add `--json` for machine-readable output. A `-` as the prompt or text reads stdi
 - **Schedule default mode:** always pass `--mode auto` on `schedule add` (and when editing a schedule that has no mode) unless the user asks for a different mode. Don't use `acceptEdits`.
 - **Schedule caveats:** runs only happen while Dashy is open and the Mac is awake (Dashy can hold off idle sleep while agents work, but not lid-close sleep, and it can't wake the Mac for a schedule). A run uses the schedule's mode, so one that hits a permission shows up as needs-you; prefer read-only prompts. Each schedule keeps its last 60 events (started, skipped, failed); `schedule runs NAME` shows them.
 - **Plan first:** `new --plan` creates an agent without starting it; review it, then `begin AGENT` (or `begin AGENT --plan`).
+- **Links (`dashy://`) for bookmarks, HTML reports and notes:** always build them with `dashy-cli link`, never by hand-encoding (it percent-encodes and refuses values the app would reject). `link new` makes a link that opens the New Agent sheet pre-filled; `link send AGENT "text"` one that puts text in an agent's message box (get your own id from the `whoami` MCP tool); `link quick "prompt"` one that spawns a quick-agent card where the repo is picked for you (use it when the repo depends on the value, such as a PR URL); `link open` selects an agent. The user always presses the key themselves; a link never starts or sends anything alone. For a bookmark that takes a value, write `%s` in the prompt/title, then `sed 's/%25s/%s/g'` the output so the launcher can substitute it. Prompt and text cap at 8000 characters, so long ones belong in a file the prompt points to. Under Dashy Debug (`DASHY_DEBUG=1`) it prints `dashy-debug://` links. Builds older than the link feature have no `link` command and don't handle the URLs.
 - **Socket:** `~/Library/Application Support/dashy/control.sock`; `DASHY_CONTROL_SOCKET` overrides it. The newest app instance owns it.
 
 ## Rules
