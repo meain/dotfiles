@@ -1,27 +1,26 @@
 ---
 name: vibediff
 description: >
-  Control VibeDiff code review instances — fetch review comments, reply to
-  threads, create comments, resolve/reopen threads, and manage review state.
-  Use when the user says /vibediff, "check vibediff", "get review comments",
-  "reply to review comment", "resolve vibediff comment", or when working on
-  code changes that have active VibeDiff review comments.
+  Work with VibeDiff code review instances: fetch and reply to review comments,
+  resolve or reopen threads, post findings from a code review as inline comments
+  (agent:reviewer), and annotate a jj revision with explanatory comments
+  (agent:explain). Use when the user says /vibediff, /vibediff-review,
+  /vibediff-explain, "check vibediff", "get review comments", "reply to review
+  comment", "resolve vibediff comment", "review and post to vibediff", "explain
+  this commit in vibediff", "add comments to vibediff", or when working on code
+  changes that have active VibeDiff review comments.
 ---
 
-# VibeDiff Integration
+# VibeDiff
 
-Interact with VibeDiff code review instances - fetch review comments, reply to threads, resolve comments, and manage review state.
+VibeDiff is a local review server (default `http://localhost:8888`) that can hold
+several repositories at once. Everything below works the same whether you are
+answering comments, posting a review, or writing explanations.
 
-## When to use
+## Helper script
 
-- User says "check vibediff", "get review comments", "vibediff review", "reply to review comment"
-- User asks to resolve/close VibeDiff comments
-- Working on code changes that have active VibeDiff review comments
-- User mentions VibeDiff by name or asks about review feedback
-
-## Helper script (use this first)
-
-`vd.py` in this skill directory wraps the common chores. It defaults `--dir` to the cwd and uses `VIBEDIFF_URL` (default `http://localhost:8888`).
+`vd.py` in this skill directory wraps the common chores. It defaults `--dir` to the
+cwd and uses `VIBEDIFF_URL` (default `http://localhost:8888`). Use it first; fall back to curl only for things it does not cover.
 
 ```bash
 VD=~/.claude/skills/vibediff/vd.py
@@ -30,183 +29,74 @@ $VD comments                         # open threads in the cwd repo, with replie
 $VD comments --rev trswtrqn          # filter by revision prefix (jj change id)
 $VD comments --author user           # only threads a human started
 $VD comments --all --json            # include resolved threads, as JSON (with replies)
+$VD comments --reaction down         # threads the user thumbed down (also: up)
 $VD reply <id> "Fixed in wip abc"    # reply as agent:claude; --resolve also resolves
 $VD reply <id> - < msg.txt           # reply text from stdin (multi-line)
 $VD post --rev <change-id> --file path/to/x.go --line 42 [--line-end 44] [--name reviewer] "text"
 $VD post --rev <change-id> --file path/to/x.go "file-level text"   # no --line => file-level
-$VD comments --reaction down         # threads the user thumbed down (also: up)
-$VD react <id> up|down|clear         # set/clear a thumbs reaction
+$VD react <id> up|down|clear
 $VD resolve <id>... / $VD reopen <id>...
 $VD revisions [--limit 10]
 ```
 
-Replies must include `directory` even though the API inherits the other fields. Without it the server answers `400 directory is required`, and it's easy to miss when the output is discarded. The script always sends it, and exits non-zero with the server's message on any HTTP error.
+`post` defaults `--name` to `reviewer`; pass `--name explain` for explanations. `reply` defaults to `claude`.
 
 A human reply can sit under an agent's root comment, so `comments --author user` (which filters on the root author) can miss it. To catch every thread a human touched, check `comments` without `--author`.
 
-## How it works
+## Shared rules
 
-VibeDiff runs as a local HTTP server (default port 8888) that can review **multiple repositories** at once. Directory is a **per-request parameter** — there is no server-side "current directory" state. Each API call must include the `directory` query param (or body field for POSTs).
+- Every comment endpoint needs `directory` (query param for GET, body field for POST), except reactions, resolve and reopen, which look it up from the stored comment. Replies must also include `directory`; without it the server answers `400 directory is required`. The script always sends it and exits non-zero with the server's message on HTTP errors.
+- Replies (`parentId` set) should send only `content`, `author`, `authorName` and `parentId`. The server inherits `file`, `line`, `lineEnd`, `revision` and `directory` from the parent.
+- `author` is always `"agent"` for anything this skill posts. `authorName` (max 50 chars) is the tag the UI shows as `agent:<name>`: `reviewer` for review findings, `explain` for explanations, `claude` for replies.
+- Leave `revision` out (or empty) for working-copy comments. Otherwise pass a jj change ID.
+- In jj repos VibeDiff uses jj change IDs, never git hashes. Resolve first:
 
-Each instance provides:
-- REST API for comments, diffs, and revisions (all require `directory`)
-- Directory registry for managing known repos
-- WebSocket for real-time updates (messages include `directory`)
-- MCP server for agent integration
+  ```bash
+  REV=$(jj log --no-graph -r '<rev>' --template 'change_id' -R $DIR)   # or -r '@'
+  curl -s "http://localhost:8888/api/revisions?directory=$DIR&limit=5"  # confirm ids
+  ```
 
-### Finding the running instance and active directories
+- File-level comments: omit `line` (or send `0`). Use them for overviews and new files instead of pinning to line 1.
+- Directory registration: if the repo is not in `GET /api/directories`, register it with `POST /api/directories {"directory": "..."}`.
+- Thumbs: the user can thumb a comment up or down (`reaction`). 👎 on an agent comment means wrong or unwanted. Reactions do not resolve a thread. Before posting, check `GET /api/review/comments?directory=$DIR` for 👎 on earlier agent comments and do not repeat that kind of comment.
+- Discovery: `curl http://localhost:8888/api/directories`, or `curl http://localhost:8888/docs` for instance-specific API docs (check there first if behaviour looks wrong). If the port differs, `lsof -iTCP -sTCP:LISTEN`.
 
-```bash
-# Check VibeDiff is up and list registered directories
-curl http://localhost:8888/api/directories
+## Fetch and answer comments
 
-# Instance-specific docs (always check if API behavior seems wrong)
-curl http://localhost:8888/docs
+1. `$VD comments` (or `GET /api/review/comments?directory=$DIR`, with `&revision=` or `&file=` to filter).
+2. Make the code changes.
+3. `$VD reply <id> "<what changed>" --resolve` for each thread you addressed.
 
-# If on a different port, search all listening ports
-lsof -iTCP -sTCP:LISTEN
-```
+Replies should be one or two sentences: the fix, nothing more.
 
-The `/docs` endpoint provides instance-specific API documentation with the current base URL, registered projects, and endpoint reference.
+## Post review findings
 
-## Directory registry
+Use this after a code review run when findings should show up in VibeDiff instead of only in chat.
 
-### List registered directories
+1. Run the `code-review` skill on the current diff. Pass through any effort level the user gave. Do not pass `--comment` (that posts to GitHub) or `--fix`; this workflow owns the output.
+2. If there are no verified findings, say so in chat and stop. Do not post a "no issues" comment.
+3. Post one comment per finding at its file and line, with `$VD post ... --name reviewer`. Put the summary and failure scenario together in the text.
+4. Use one `revision` value (or none for working copy) across the whole run so the comments group together.
+5. In chat, report the count and the file:line pairs, one line each. Do not repeat the finding text.
 
-```bash
-curl http://localhost:8888/api/directories
-# ["\/path\/to\/repo-a", "\/path\/to\/repo-b"]
-```
+## Explain a revision
 
-### Register a new directory
+Use this when the user asks to document WHY a revision changed, not to review it.
 
-```bash
-curl -X POST http://localhost:8888/api/directories \
-  -H 'Content-Type: application/json' \
-  -d '{"directory":"/path/to/repo"}'
-# Returns: {"directory":"/path/to/repo","backend":"jj"}
-```
+1. Resolve the change ID and look at the commit: `jj show $REV -R $DIR`, and the diff from `GET /api/diff?directory=$DIR&revision=$REV`.
+2. Pick the files and lines where a reader needs the reason. Aim for roughly 10 to 20 comments per revision, fewer for small changes.
+3. Post with `$VD post --rev $REV --file <path> [--line N] --name explain "<text>"`.
 
-### Get backend info for a directory
+What to comment on:
 
-```bash
-curl 'http://localhost:8888/api/directory?directory=/path/to/repo'
-# {"directory":"/path/to/repo","backend":"git"}
-```
+- New files: a file-level comment on purpose.
+- Non-obvious design decisions, constraints, invariants, workarounds.
+- Cross-file or cross-service impact.
+- Refactors where the pattern needs naming.
 
-## Common operations
+What to skip: self-explanatory changes, mechanical refactors, and every single line. Explain WHY, not WHAT. Use the commit message and PR context for content.
 
-### Fetch review comments
-
-All comment endpoints require `?directory=...`.
-
-```bash
-DIR="/path/to/repo"
-
-# All comments for a directory
-curl "http://localhost:8888/api/review/comments?directory=$DIR"
-
-# Open comments only (across all directories — no dir param needed)
-curl http://localhost:8888/api/review/comments/open
-
-# Filter by revision
-curl "http://localhost:8888/api/review/comments?directory=$DIR&revision=abc123xyz"
-
-# Filter by file
-curl "http://localhost:8888/api/review/comments?directory=$DIR&file=path/to/file.go"
-```
-
-### Reply to comments
-
-**Important**: When replying (setting `parentId`), only provide `content`, `author`, and `parentId`. The API automatically inherits `file`, `line`, `lineEnd`, `revision`, and `directory` from the parent comment.
-
-```bash
-curl -X POST http://localhost:8888/api/review/comment \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "content": "Your reply text here",
-    "author": "agent",
-    "authorName": "explainer",
-    "parentId": "parent-comment-id"
-  }'
-```
-
-Always set `"author": "agent"` when creating replies. Optionally set `authorName` (max 50 chars) to tag which kind of agent posted the comment (e.g. `"explainer"`) — the UI renders it as `agent:<authorName>`.
-
-### Create new comment
-
-```bash
-curl -X POST http://localhost:8888/api/review/comment \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "directory": "/path/to/repo",
-    "file": "path/to/file.go",
-    "line": 42,
-    "lineEnd": 44,
-    "content": "Comment text",
-    "author": "agent",
-    "revision": ""
-  }'
-```
-
-`directory` is required for root comments. Leave `revision` empty for working-copy comments. Always set `"author": "agent"`.
-
-**File-level comments**: omit `line`/`lineEnd` (or send `0`) to attach a comment to the whole file instead of a diff line. The UI shows these above the file's diff. Use them for file overviews rather than pinning to line 1.
-
-### Thumbs up/down reactions
-
-The user can thumbs-up/down any comment in the UI; it is stored as `reaction` (`"up"`, `"down"`, or absent) on the Comment. Treat it as feedback on your comments: 👎 on an agent comment usually means wrong, noisy or unwanted, 👍 means useful. Reactions are not resolution, so a thumbed-down thread is still open until resolved.
-
-```bash
-# Set (up|down) or clear ("") a reaction — no directory param needed
-curl -X POST http://localhost:8888/api/review/comment/{id}/reaction \
-  -H 'Content-Type: application/json' -d '{"reaction":"down"}'
-```
-
-When addressing review comments, check for 👎 on your own earlier comments and avoid repeating that kind of comment.
-
-### Resolve/reopen comments
-
-```bash
-# Resolve
-curl -X POST http://localhost:8888/api/review/comment/{id}/resolve
-
-# Reopen
-curl -X POST http://localhost:8888/api/review/comment/{id}/reopen
-```
-
-No `directory` param needed — the server looks it up from the stored comment.
-
-### Get diff and revisions
-
-All diff/revision endpoints require `?directory=...`.
-
-```bash
-DIR="/path/to/repo"
-
-# Current working copy diff
-curl "http://localhost:8888/api/diff?directory=$DIR"
-
-# Diff for specific revision
-curl "http://localhost:8888/api/diff?directory=$DIR&revision=abc123"
-
-# List recent revisions
-curl "http://localhost:8888/api/revisions?directory=$DIR&limit=10"
-```
-
-**jj repos**: VibeDiff uses **jj change IDs**, not git commit hashes. Always resolve a revision to its change ID before using it as a `revision` parameter:
-
-```bash
-# Get change ID for a specific revision
-jj log --no-graph -r '<rev>' --template 'change_id' -R $DIR
-
-# Get change ID for working copy
-jj log --no-graph -r '@' --template 'change_id' -R $DIR
-```
-
-Confirm via `GET /api/revisions` — the `id` field is always the jj change ID.
-
-## Comment object structure
+## Comment object
 
 ```json
 {
@@ -227,31 +117,9 @@ Confirm via `GET /api/revisions` — the `id` field is always the jj change ID.
 }
 ```
 
-`authorName` is optional and typically only set on agent comments/replies (see above). `reaction` is optional (`"up"`/`"down"`); `line` is `0`/absent for file-level comments.
-
-Replies have `parentId` set. All comments in the API response are flat — group by `parentId` to build threads.
-
-## Workflow patterns
-
-### Address review comments
-
-1. List registered directories to find the repo: `GET /api/directories`
-2. Fetch open comments: `GET /api/review/comments?directory=...`
-3. Make code changes to address feedback
-4. Reply to each comment explaining the fix
-5. Optionally resolve the thread
-
-### Review summary
-
-1. Get registered directories
-2. Fetch current diff and open comments for the target directory
-3. Provide summary of changes and outstanding feedback
+All comments come back flat. Group by `parentId` to build threads. `line` is `0` or absent for file-level comments.
 
 ## Notes
 
-- VibeDiff stores comments in `~/.config/vibediff/comments/<sha256-of-path>.json`
-- Comments are scoped to revisions via the `revision` field
-- The `directory` field on a comment tells the server where to save it — always include it for root comments
-- Only one MCP session allowed per instance
-- WebSocket at `/api/ws` — messages include a `directory` field so clients can filter by repo
-- Full API docs at `/docs` endpoint
+- Comments persist in `~/.config/vibediff/comments/<sha256-of-path>.json`.
+- The server allows one MCP session per instance. WebSocket is at `/api/ws`; messages carry `directory`.
