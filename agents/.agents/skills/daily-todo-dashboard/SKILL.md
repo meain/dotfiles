@@ -47,6 +47,14 @@ in `.martifacts`), then apply the pick to the template here.
    marker, so never set `opt` from the title (that was a past mistake). Convert to 24h.
    An event that shows a different timezone label (e.g. an all-shift on-call block) is
    an all-day style block: leave it out and mention it.
+   On-call check: call `schedule_list` with `user: "me"` on the incident.io MCP
+   (`mcp__claude_ai_Incident_io_--_Veeam_CT_Gateway__schedule_list`, load with `ToolSearch select:`).
+   A non-empty `user_current_shift` means I am on call (the calendar's on-call block is
+   labelled UTC but the shift times in the schedule are authoritative). If I am on call
+   on a weekday, add two todos: promote earn from stage to prod first, then dev to
+   stage/qa. On a Friday add only dev to stage (no prod promotion on Fridays). Weekend:
+   no promotion todos. Say in `ctx` when the shift ends. If incident.io is unavailable,
+   say so in the reply.
 3. `,backlog-review` with `dangerouslyDisableSandbox: true`: open PRs, PRs needing my
    review, Jira sprint tickets. It prints the PR URLs. Ignore its calendar section. Its
    "PRs to review" list is incomplete (it showed about 29 when 68 PRs requested me), so
@@ -58,6 +66,12 @@ in `.martifacts`), then apply the pick to the template here.
    state of any PR a Teams message asks me to approve (`gh pr view --json state,latestReviews`);
    merged PRs are not todos. Group old requests too (a stack from three weeks ago still counts)
    and show their age.
+   Also check feedback on my own open PRs (`gh pr list --author @me --state open`, then
+   `gh pr view --json reviews,comments,reviewDecision,mergeable` plus unresolved
+   `reviewThreads` via `gh api graphql`). Unresolved human review threads, changes
+   requested, merge conflicts and failing checks go into the `ctx` of that PR's Chase
+   review or Merge todo; a human comment I haven't answered is its own `dev` todo.
+   Bot comments (coderabbit, claude, github-actions) count only when unresolved and real.
 4. Read `/Users/meain/.local/share/sbdb/Backlog/Backlog.md`: the dated section for today
    (Today list), plus Backlog, Blocked and High priority backlog. If the newest dated
    section is an earlier day (e.g. Monday morning, newest is Sunday), carry its open items
@@ -72,6 +86,13 @@ in `.martifacts`), then apply the pick to the template here.
      parallel. Page every query to the end (`offset` = `nextOffset` until no `moreResults`
      or results predate the window); do not stop at a page cap. If a query still cannot be
      finished, say which dates were covered.
+   - Also read the team's PR review request channel `project.EARN.backend.CodeReviews`
+     (`teams_list_channel_messages`, teamId `7e735ea1-c2fb-430e-a0d3-395e63680899`, channelId
+     `19:5729597e716c441b8d30bcc3e4240b86@thread.tacv2`, page to the window start; load with
+     `ToolSearch select:`). It holds all of the team's review requests. Only posts that tag
+     me (check `mentions` via `read_resource`, also in thread replies) are directed at me;
+     make review todos only for those, and list untagged ones as `fyi` at most. Still verify
+     PR state with `gh`.
    - Skip incident.io and Azure alert posts, all-hands/meeting-chat chatter, workflow
      cards, and anything I sent. Use `read_resource` when a preview is cut off (channel
      messages sometimes return NOT_FOUND; skip them and say so).
