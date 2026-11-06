@@ -19,5 +19,5 @@ elif [ -n "$2" ] && echo "$1" | grep -qE '^[0-9][0-9]*$' && echo "$2" | grep -qE
 		sort -u | xargs open
 else
 	# Forward it to underlying CLI
-	todo.sh "$*"
+	todo.sh "$@"
 fi
