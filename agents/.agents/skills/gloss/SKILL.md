@@ -4,15 +4,18 @@ description: >
   What gloss is (the user's native macOS design-doc editor where a Claude agent co-writes
   MDX docs) and how to write a prompt for it. Use when the user asks for a prompt to give to
   gloss, wants to know what to ask gloss, or mentions gloss's chat, threads, decisions or
-  slash commands. The output is a ready-to-paste prompt, not an edit to a doc.
+  slash commands. By default the output is a ready-to-paste prompt, not an edit to a doc. Also
+  covers `gloss-cli`, the command line for the running app, for when you're asked to act on a
+  doc yourself (read it, edit it, message its agent, answer its cards).
   Triggers: /gloss, "prompt for gloss", "give me a prompt for gloss", "what should I ask gloss",
-  "write this up for gloss", "gloss prompt", "ask gloss to"
+  "write this up for gloss", "gloss prompt", "ask gloss to", "gloss-cli", "read the gloss doc",
+  "send this to gloss", "answer the gloss decision", "update the gloss doc"
 user_invocable: true
 ---
 
 # gloss
 
-gloss is the user's own macOS app for writing design docs together with a Claude agent (source: `/Users/meain/dev/src/gloss`, run with `open /Users/meain/dev/src/gloss/build/Gloss.app`; `docs/plan.md` there is the contract, `AGENTS.md` the dev guide). The user mostly uses this skill to have *you* write a prompt they paste into gloss. You don't edit docs or run gloss yourself.
+gloss is the user's own macOS app for writing design docs together with a Claude agent (source: `/Users/meain/dev/src/gloss`, run with `open /Users/meain/dev/src/gloss/build/Gloss.app`; `docs/plan.md` there is the contract, `AGENTS.md` the dev guide). The user mostly uses this skill to have *you* write a prompt they paste into gloss. Unless they ask you to act on a doc, don't edit docs or drive gloss yourself; when they do ask, use `gloss-cli` (last section).
 
 ## What gloss is
 
@@ -92,3 +95,37 @@ Is 2 seconds to sync after reconnect realistic on flaky 3G? Answer here; apply n
 ## Prompts about gloss itself
 
 If the user wants a prompt for an agent to *work on* gloss (not to use it), point that agent at `/Users/meain/dev/src/gloss`: read `AGENTS.md`, then `docs/plan.md` and `docs/status.md`; build with `swift build --build-system native`, test with `./scripts/test.sh`; never quit or touch the user's running instance or `~/Documents/Gloss`.
+
+## Driving gloss with gloss-cli
+
+Use it only when the user asks you to act on a gloss doc (read it, change it, message its agent, answer a card). It talks to the **running** gloss over a Unix socket (`gloss-cli ping` checks), so run it with `dangerouslyDisableSandbox: true`: the sandbox blocks the socket. It never launches or quits gloss. Never quit, kill or touch the user's running gloss.
+
+Binary, first that exists: `gloss-cli` on PATH (`make link` in `/Users/meain/dev/src/gloss` links it into `~/.local/bin`), else `/Users/meain/dev/src/gloss/build/Gloss.app/Contents/MacOS/gloss-cli`. `gloss-cli help` has the full reference; `docs/plan.md` ("Control CLI") the contract. An older gloss build without the control socket answers "gloss isn't running": the user needs `make app` and a relaunch.
+
+`<doc>` is an id, an id prefix (4+ characters), a title, part of a title, a path, or `current` (the doc on screen). `-` reads text from stdin; `--json` prints the raw result. Exit codes: 0 done, 1 failed, 2 usage, 3 the agent waits on a card, 4 timed out.
+
+```sh
+gloss-cli docs [--archived]                 # id, title, path; [on screen] marks the open one
+gloss-cli new "Title" [--in DIR] [--body -] [--open]
+gloss-cli read <doc> [--section "Heading"]  # MDX; outline <doc> lists the headings
+gloss-cli edit-section <doc> "Heading" - <<'EOF'   # replace the body under a heading (stdin)
+gloss-cli insert <doc> - --after-heading "H" | --after-text "exact phrase"
+gloss-cli callout <doc> risk|question|note|blocker "text" [--after-heading H]
+gloss-cli decision ask <doc> "Question?" --option "A: trade-off" --option "B" [--recommended 2]
+gloss-cli send <doc> "message" --wait [--timeout 600]   # the doc's agent; prints its closing reply
+gloss-cli status <doc> | chat <doc> --last 6 | cancel <doc> | wait <doc>
+gloss-cli permission answer <doc> <card> allow|reject|cancel
+gloss-cli question answer <doc> <card> "Blue" [--skip]
+gloss-cli decisions <doc> | decision answer <doc> d1 "label" [--note ...]
+gloss-cli threads <doc> | thread start <doc> --quote "exact text" "message" | thread reply|resolve <doc> <thread>
+gloss-cli versions <doc> | restore <doc> latest | undo <doc>
+gloss-cli export <doc> md|pdf <path> | move <doc> <folder> | archive <doc> | settings get
+```
+
+Things to know:
+
+- **CLI edits write directly** like a user's edit: no agent turn, no markers. A `pre-cli` version is saved first, so `restore <doc> latest` (or a name from `versions`) steps back. Edit through the CLI rather than the file when the doc is open in gloss.
+- **`send` asks gloss's own agent**, which is slower and costs money; to change the doc yourself use `edit-section` / `insert`. A message to a working agent is steered into its turn.
+- **Exit 3** means the agent is blocked on a permission or question card: `status <doc>` lists them with ids; answer, then `wait <doc>`. Don't answer cards the user should decide unless they told you to.
+- Research answers come back in chat (`send --wait` prints them); the agent doesn't write them into the doc unless asked.
+- `decision answer` and `thread start|reply` start an agent turn; follow with `wait <doc>` if you need the result.
