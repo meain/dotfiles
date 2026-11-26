@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# code-card: print an HTML code card for lines of a file, read from disk (never retyped).
+#
+#   code-card REPO_ROOT PATH:START[-END] ["caption"] ["N:note" ...]
+#
+# Each "N:note" adds a callout under the card, pointing at absolute line N of the file.
+# Lines N within the range are highlighted. Output is an HTML fragment (paste into flow.html).
+# Styles come from references/page-template.html (.code, .ln, .hl, .callout). Max 40 lines.
+set -u
+root=${1:?repo root}; cite=${2:?PATH:START[-END]}; caption=${3:-}
+shift 2; [ $# -gt 0 ] && shift
+notes=("$@")
+cd "$root" || { echo "<!-- BAD no such directory $root -->"; exit 1; }
+
+path=${cite%%:*}; range=${cite#*:}
+start=${range%%-*}; end=${range#*-}
+case "$start$end" in *[!0-9]*|"") echo "<!-- BAD $cite -->"; exit 1;; esac
+[ -f "$path" ] || { echo "<!-- BAD $cite no such file -->"; exit 1; }
+total=$(awk 'END{print NR}' "$path")
+if [ "$start" -lt 1 ] || [ "$end" -lt "$start" ] || [ "$end" -gt "$total" ] || [ $((end-start+1)) -gt 40 ]; then
+  echo "<!-- BAD $cite (file has $total lines, max 40 per card) -->"; exit 1
+fi
+
+hl=""
+for n in ${notes[@]+"${notes[@]}"}; do hl="$hl ${n%%:*}"; done
+
+esc() { sed -e 's/&/\&amp;/g' -e 's/</\&lt;/g' -e 's/>/\&gt;/g'; }
+
+echo "<figure class=\"code\">"
+echo "<figcaption><code>$path:$start-$end</code>${caption:+ &mdash; $(printf '%s' "$caption" | esc)}</figcaption>"
+echo "<pre>"
+awk -v s="$start" -v e="$end" -v hl="$hl" '
+  BEGIN { n = split(hl, a, " "); for (i = 1; i <= n; i++) mark[a[i]] = 1 }
+  NR>=s && NR<=e {
+    line = $0
+    gsub(/&/, "\\&amp;", line); gsub(/</, "\\&lt;", line); gsub(/>/, "\\&gt;", line)
+    cls = (NR in mark) ? "l hl" : "l"
+    # no newline between line spans: each span is display:block, a newline would double the spacing
+    printf "<span class=\"%s\"><span class=\"ln\">%d</span>%s</span>", cls, NR, line
+  }' "$path"
+echo "</pre>"
+for n in ${notes[@]+"${notes[@]}"}; do
+  num=${n%%:*}; txt=${n#*:}
+  printf '<p class="callout"><b>line %s</b> %s</p>\n' "$num" "$(printf '%s' "$txt" | esc)"
+done
+echo "</figure>"

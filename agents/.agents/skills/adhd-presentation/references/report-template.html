@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>REPLACE: noun phrase naming the thing — Report</title>
+<!--
+  Report skeleton for the adhd-presentation skill.
+  Replace every REPLACE marker. Delete blocks you don't need; do not reorder
+  the top three (bottom-line, statusbar, KPIs) — they are the "first screen"
+  contract. Comments explain which rule each block serves.
+-->
+<link rel="stylesheet" href="adhd.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="layout layout--with-toc">
+
+  <!-- Rule 3: stable on-page nav, current section marked. Drop this whole
+       <nav> for reports under ~3 screens. -->
+  <nav class="toc no-print" aria-label="On this page">
+    <p class="meta" style="margin:0 0 .5rem">On this page</p>
+    <ol>
+      <li><a href="#summary">Summary</a></li>
+      <li><a href="#whats-changed">What changed</a></li>
+      <li><a href="#detail">Detail</a></li>
+      <li><a href="#next">What happens next</a></li>
+    </ol>
+  </nav>
+
+  <main id="main">
+
+    <h1>REPLACE: what this is, as a noun phrase</h1>
+
+    <!-- ===================================================================
+         RULE 1 — ANSWER FIRST.
+         Conclusion + the single ask, before any background. If the reader
+         stops here they must still have the point.
+         =================================================================== -->
+    <div class="bottom-line">
+      <span class="label">Bottom line</span>
+      <p><strong>REPLACE: the conclusion in one sentence.</strong> Say the thing
+        that is true, not the thing you did to find out.</p>
+      <p style="margin-bottom:0"><strong>You need to:</strong> REPLACE with the
+        single next action and who owns it — or write “Nothing. This is FYI.”</p>
+    </div>
+
+    <!-- RULE 3 — the re-entry header. Someone returning cold reads this. -->
+    <dl class="statusbar">
+      <div><dt>Status</dt>
+           <dd><span class="status status--progress">In progress</span></dd></div>
+      <div><dt>Owner</dt><dd>REPLACE</dd></div>
+      <div><dt>Next step</dt><dd>REPLACE</dd></div>
+      <!-- RULE 6 — absolute AND relative, always both. -->
+      <div><dt>Due</dt>
+           <dd><time datetime="2026-12-02">Wed 2 Dec <span class="rel">(in 7 days)</span></time></dd></div>
+      <div><dt>Updated</dt>
+           <dd><time datetime="2026-11-25">25 Nov 2026 <span class="rel">(today)</span></time></dd></div>
+      <div><dt>Read time</dt><dd>~6 min</dd></div>
+    </dl>
+
+    <!-- ===================================================================
+         RULE 2 — 3 to 4 KPIs maximum. Each carries its own comparison
+         baseline, so nothing has to be remembered from elsewhere.
+         =================================================================== -->
+    <section class="section" id="summary">
+      <h2>Summary <a class="anchor" href="#summary" aria-label="Link to Summary">#</a></h2>
+
+      <div class="kpis">
+        <div class="kpi">
+          <span class="kpi__label">REPLACE: metric name</span>
+          <span class="kpi__value">1,284<span class="kpi__unit">req/s</span></span>
+          <span class="kpi__compare"><b>+12%</b> vs last week (1,146)</span>
+          <span><span class="status status--done">Healthy</span></span>
+        </div>
+        <div class="kpi">
+          <span class="kpi__label">REPLACE: metric name</span>
+          <span class="kpi__value">340<span class="kpi__unit">ms p95</span></span>
+          <span class="kpi__compare"><b>+8%</b> vs last week (314 ms)</span>
+          <span><span class="status status--waiting">Watch</span></span>
+        </div>
+        <div class="kpi">
+          <span class="kpi__label">REPLACE: metric name</span>
+          <span class="kpi__value">0.4<span class="kpi__unit">% errors</span></span>
+          <span class="kpi__compare">target &lt; 1.0%</span>
+          <span><span class="status status--done">Within target</span></span>
+        </div>
+      </div>
+
+      <!-- RULE 6 — progress as a bar AND a count AND the remaining items. -->
+      <div class="progress">
+        <div class="progress__bar">
+          <div class="progress__fill" style="width:57%"></div>
+        </div>
+        <p class="progress__text"><b>4 of 7</b> checks complete · remaining:
+          schema migration, cache warm-up, rollback drill</p>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         RULE 1 — the "so what" before the evidence.
+         =================================================================== -->
+    <section class="section" id="whats-changed">
+      <h2>What changed <a class="anchor" href="#whats-changed" aria-label="Link">#</a></h2>
+
+      <div class="callout callout--action">
+        <span class="callout__title">Needs a decision</span>
+        <p>REPLACE: state the decision needed and the recommended option first.
+          Give the reason in one clause. Then the alternatives.</p>
+      </div>
+
+      <!-- RULE 2 — sticky header keeps column labels with their data.
+           Numbers right-aligned, tabular figures, rounded to decision
+           precision. Sorted by what matters, not alphabetically. -->
+      <div class="table-wrap">
+        <table>
+          <caption>REPLACE: a caption that states the takeaway, not the contents</caption>
+          <thead>
+            <tr>
+              <th scope="col">Item</th>
+              <th scope="col">Status</th>
+              <th scope="col" class="num">Before</th>
+              <th scope="col" class="num">After</th>
+              <th scope="col">Owner</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">REPLACE</th>
+              <td><span class="status status--done">Done</span></td>
+              <td class="num">1,146</td><td class="num">1,284</td>
+              <td>REPLACE</td>
+            </tr>
+            <tr>
+              <th scope="row">REPLACE</th>
+              <td><span class="status status--blocked">Blocked</span></td>
+              <td class="num">314</td><td class="num">340</td>
+              <td>REPLACE</td>
+            </tr>
+            <tr class="is-done">
+              <th scope="row">REPLACE (completed items grey out, stay visible)</th>
+              <td><span class="status status--done">Done</span></td>
+              <td class="num">—</td><td class="num">—</td>
+              <td>REPLACE</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         A chart. Title = the conclusion as a sentence. Direct labels, no
+         legend. Position/length encoding. Okabe-Ito tokens for categories.
+         =================================================================== -->
+    <section class="section" id="detail">
+      <h2>Detail <a class="anchor" href="#detail" aria-label="Link">#</a></h2>
+
+      <figure>
+        <p class="chart-title">REPLACE: the conclusion, e.g. “Latency rose only
+          on the EU region after the 14 Nov deploy”</p>
+        <p class="chart-sub">p95 response time, milliseconds · 1–25 Nov 2026</p>
+
+        <svg viewBox="0 0 640 220" role="img" width="100%"
+             aria-label="REPLACE with a sentence describing the trend and the values.">
+          <!-- gridlines: light, >=8px apart -->
+          <line class="grid-line" x1="48" y1="30"  x2="560" y2="30"/>
+          <line class="grid-line" x1="48" y1="90"  x2="560" y2="90"/>
+          <line class="grid-line" x1="48" y1="150" x2="560" y2="150"/>
+          <line class="grid-line" x1="48" y1="180" x2="560" y2="180"/>
+          <text class="axis-text" x="40" y="34"  text-anchor="end">400</text>
+          <text class="axis-text" x="40" y="94"  text-anchor="end">300</text>
+          <text class="axis-text" x="40" y="154" text-anchor="end">200</text>
+
+          <!-- context series: muted, not competing -->
+          <polyline class="mark-muted" fill="none" stroke-width="2"
+                    points="48,140 150,138 252,142 354,139 456,141 540,140"/>
+          <!-- the series the chart is about: accent -->
+          <polyline class="mark-accent" fill="none" stroke-width="3"
+                    points="48,146 150,143 252,140 354,96 456,74 540,66"/>
+
+          <!-- RULE 2: direct labels at the line end, never a legend -->
+          <text class="series-label" x="548" y="70"  fill="currentColor">EU</text>
+          <text class="series-label" x="548" y="144" fill="currentColor">US</text>
+
+          <!-- one annotation stating the "so what" -->
+          <line class="grid-line" x1="354" y1="20" x2="354" y2="190"
+                stroke-dasharray="4 4"/>
+          <text class="axis-text" x="358" y="26">14 Nov deploy</text>
+
+          <text class="axis-text" x="48"  y="206">1 Nov</text>
+          <text class="axis-text" x="540" y="206" text-anchor="end">25 Nov</text>
+        </svg>
+
+        <figcaption>REPLACE: source, query, caveats. Keep it short.
+          <!-- RULE 2: always provide the numbers in text too, so nobody has
+               to read a value off a line. -->
+          EU p95 went 290 → 395 ms; US held at 205–215 ms.</figcaption>
+      </figure>
+
+      <!-- RULE 6 — "now" is marked explicitly; past is greyed, not hidden. -->
+      <h3>Timeline</h3>
+      <ol class="timeline">
+        <li class="is-past"><strong>14 Nov</strong> — REPLACE: what happened</li>
+        <li class="is-past"><strong>19 Nov</strong> — REPLACE</li>
+        <li class="is-now"><strong>25 Nov (now)</strong> — REPLACE: current state</li>
+        <li><strong>2 Dec <span class="rel">(in 7 days)</span></strong> — REPLACE</li>
+      </ol>
+
+      <!-- RULE 5 — optional bulk only, and the summary names it AND counts it.
+           Never "More" / "Show details". -->
+      <details>
+        <summary>Show the 12 failing checks <span class="count">(raw output, ~200 lines)</span></summary>
+        <pre><code>REPLACE: raw logs, full query output, long tables.
+Only things a reader can skip without losing the thread belong in here.</code></pre>
+      </details>
+    </section>
+
+    <!-- ===================================================================
+         RULE 4 — externalise at the point of performance. Actions are here,
+         concrete, copy-pasteable, with the owner and the date attached.
+         =================================================================== -->
+    <section class="section" id="next">
+      <h2>What happens next <a class="anchor" href="#next" aria-label="Link">#</a></h2>
+
+      <ul class="checklist">
+        <li class="is-done">REPLACE: completed action — <span class="meta">REPLACE owner · 20 Nov</span></li>
+        <li>REPLACE: one action, one verb, concrete —
+            <span class="meta">REPLACE owner ·
+            <time datetime="2026-11-27">Thu 27 Nov <span class="rel">(in 2 days)</span></time></span></li>
+        <li>REPLACE: the next one —
+            <span class="meta">REPLACE owner ·
+            <time datetime="2026-12-02">Wed 2 Dec <span class="rel">(in 7 days)</span></time></span></li>
+      </ul>
+
+      <p>Run this to reproduce:</p>
+      <pre><code>REPLACE: the exact, runnable command — not the parameters to assemble</code></pre>
+    </section>
+
+    <hr>
+    <p class="meta">Generated REPLACE date · Source: REPLACE ·
+       Light/dark follows your system setting · Prints to PDF cleanly.</p>
+
+  </main>
+</div>
+
+<script>
+// RULE 3 — mark the current section in the nav so a returning reader can see
+// where they are. No other JS: nothing here moves, autoplays, or re-layouts.
+(function () {
+  var links = {};
+  document.querySelectorAll('.toc a[href^="#"]').forEach(function (a) {
+    links[a.getAttribute('href').slice(1)] = a;
+  });
+  var sections = document.querySelectorAll('main section[id]');
+  if (!sections.length || !('IntersectionObserver' in window)) return;
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      var a = links[e.target.id];
+      if (!a) return;
+      if (e.isIntersecting) {
+        Object.values(links).forEach(function (l) { l.removeAttribute('aria-current'); });
+        a.setAttribute('aria-current', 'true');
+      }
+    });
+  }, { rootMargin: '-10% 0px -70% 0px' });
+
+  sections.forEach(function (s) { io.observe(s); });
+})();
+</script>
+
+</body>
+</html>

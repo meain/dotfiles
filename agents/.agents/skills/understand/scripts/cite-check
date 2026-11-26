@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+# cite-check: verify citations against the working tree and print the real lines.
+#
+#   cite-check --state REPO_ROOT          vcs kind, current revision, dirty or clean
+#   cite-check REPO_ROOT PATH:START[-END]...   OK/BAD per citation, with the lines from disk
+#
+# Snippets in a session must come from this output, never retyped. Exit 1 if any citation is bad.
+set -u
+
+max_lines=60
+
+if [ "${1:-}" = "--state" ]; then
+  root=${2:?repo root}
+  cd "$root" || { echo "BAD no such directory $root"; exit 1; }
+  if [ -d .jj ]; then
+    rev=$(jj log -r @ --no-graph -T 'change_id.shortest(8) ++ " " ++ commit_id.shortest(8)' 2>/dev/null)
+    dirty=$(jj diff -r @ --summary 2>/dev/null | wc -l | tr -d ' ')
+    echo "jj @ $rev; working copy changes: $dirty files"
+  elif [ -d .git ]; then
+    rev=$(git rev-parse --short HEAD 2>/dev/null)
+    dirty=$(git status --porcelain 2>/dev/null | wc -l | tr -d ' ')
+    echo "git $rev; working tree changes: $dirty files"
+  else
+    echo "no jj or git repo at $root"
+  fi
+  exit 0
+fi
+
+root=${1:?repo root}
+shift
+[ $# -gt 0 ] || { echo "usage: cite-check REPO_ROOT PATH:START[-END]..."; exit 2; }
+cd "$root" || { echo "BAD no such directory $root"; exit 1; }
+
+status=0
+for cite in "$@"; do
+  path=${cite%%:*}
+  range=${cite#*:}
+  if [ "$range" = "$cite" ]; then echo "BAD $cite (need PATH:START[-END])"; status=1; continue; fi
+  start=${range%%-*}
+  end=${range#*-}
+  case "$start$end" in *[!0-9]*|"") echo "BAD $cite (lines must be numbers)"; status=1; continue;; esac
+  if [ ! -f "$path" ]; then echo "BAD $cite (no such file)"; status=1; continue; fi
+  total=$(awk 'END{print NR}' "$path")
+  if [ "$start" -lt 1 ] || [ "$end" -lt "$start" ] || [ "$end" -gt "$total" ]; then
+    echo "BAD $cite (file has $total lines)"; status=1; continue
+  fi
+  if [ $((end - start + 1)) -gt $max_lines ]; then
+    echo "BAD $cite (range over $max_lines lines, cite less)"; status=1; continue
+  fi
+  echo "OK $path:$start-$end"
+  awk -v s="$start" -v e="$end" 'NR>=s && NR<=e { printf "%6d | %s\n", NR, $0 }' "$path"
+done
+exit $status

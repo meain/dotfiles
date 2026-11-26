@@ -1,0 +1,541 @@
+/* ===========================================================================
+   adhd.css — drop-in stylesheet for information-dense artifacts
+   ---------------------------------------------------------------------------
+   Companion to the adhd-presentation skill. Every number here has a reason;
+   see references/evidence.md. Nothing in this file is "an ADHD font" or "an
+   ADHD colour" — no such thing is evidenced. It is strict universal design:
+   calm chrome, zero held state, zero imposed motion, readable at a glance.
+
+   Usage:  <link rel="stylesheet" href="adhd.css">
+   Dark mode is automatic via prefers-color-scheme; a manual override is
+   available with <html data-theme="dark"> / data-theme="light".
+   =========================================================================== */
+
+/* --- Design tokens ------------------------------------------------------ */
+
+:root {
+  /* Type. Atkinson Hyperlegible if the user happens to have it (distinct
+     confusable glyphs, designed for low vision); otherwise a plain system
+     sans. Rello & Baeza-Yates found sans-serif / roman beats serif / italic;
+     no typeface has ADHD evidence, so don't ship a webfont for this. */
+  --font-body: "Atkinson Hyperlegible Next", "Atkinson Hyperlegible",
+               system-ui, -apple-system, "Segoe UI", Roboto, Verdana, Arial,
+               sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono",
+               monospace;
+
+  --fs-base: 1.125rem;   /* 18px at default root — 16px floor, 14px captions */
+  --fs-sm:   0.9375rem;  /* 15px */
+  --fs-xs:   0.875rem;   /* 14px — absolute floor, captions only */
+  --fs-h1:   2rem;
+  --fs-h2:   1.5rem;
+  --fs-h3:   1.1875rem;
+
+  --lh-body: 1.6;        /* WCAG 1.4.8 AAA anchors at 1.5; never go tighter */
+  --lh-head: 1.3;
+
+  --measure: 65ch;       /* 60-70ch; WCAG 1.4.8 AAA caps at 80 */
+
+  /* Spacing — a 4px scale. Group separation uses >=2x the intra-group gap
+     so proximity reads as grouping (Gestalt). */
+  --s-1: 0.25rem; --s-2: 0.5rem;  --s-3: 0.75rem; --s-4: 1rem;
+  --s-5: 1.5rem;  --s-6: 2rem;    --s-7: 3rem;    --s-8: 4rem;
+
+  --radius: 8px;
+  --border-w: 1px;
+
+  /* Light theme. Not pure #000 on #fff (no evidence it harms, but off-white
+     reduces glare and the contrast is still ~15:1). */
+  --bg:          #FAF9F6;
+  --bg-raised:   #FFFFFF;
+  --bg-sunken:   #F1EFEA;
+  --fg:          #1F2328;  /* ~15:1 on --bg */
+  --fg-muted:    #4B535C;  /* 7.4:1 on --bg — AAA, never lighter than this */
+  --fg-faint:    #6B7280;  /* 4.6:1 — AA only; metadata, never body text */
+  --border:      #DAD6CE;
+  --border-strong:#8A8478;  /* 3.5:1 — carries meaning (timeline dots) */
+  --accent:      #0A5491;  /* 7.4:1 on --bg — AAA */
+  --accent-soft: #E3EEF8;
+  --focus:       #0A5491;
+
+  /* Status. Deliberately NOT red/green-coded for "not done yet".
+     Red is reserved for genuine danger. Each is always paired with a word
+     and/or icon in markup — colour is never the sole encoding. */
+  --st-done-fg:  #1F5D3A; --st-done-bg:  #E4F0E8; --st-done-bd: #9CC6AC;
+  --st-prog-fg:  #0B5FA5; --st-prog-bg:  #E3EEF8; --st-prog-bd: #9DC2E0;
+  --st-wait-fg:  #6B5410; --st-wait-bg:  #FAF0D7; --st-wait-bd: #D9C58A;
+  --st-block-fg: #8A3A12; --st-block-bg: #FBEBE2; --st-block-bd:#E2B094;
+  --st-danger-fg:#9B1C1C; --st-danger-bg:#FBE9E9; --st-danger-bd:#E2A0A0;
+  --st-idle-fg:  #4B535C; --st-idle-bg:  #F1EFEA; --st-idle-bd: #D3CEC4;
+
+  /* Okabe-Ito categorical palette — colour-vision-deficiency safe, 8 hues.
+     Use at most 5-7. Beyond that, highlight one and grey the rest. */
+  --cat-1: #E69F00; --cat-2: #56B4E9; --cat-3: #009E73; --cat-4: #F0E442;
+  --cat-5: #0072B2; --cat-6: #D55E00; --cat-7: #CC79A7; --cat-8: #000000;
+  --cat-muted: #C3BDB2;  /* the "everything else" grey for highlight charts */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:          #16181C;
+    --bg-raised:   #1E2126;
+    --bg-sunken:   #101215;
+    --fg:          #E6E8EB;  /* not pure white on pure black */
+    --fg-muted:    #AFB6BE;
+    --fg-faint:    #8B939C;
+    --border:      #333842;
+    --border-strong:#6B7380;  /* 3.7:1 on dark --bg */
+    --accent:      #7FB8EA;
+    --accent-soft: #1B2B3A;
+    --focus:       #7FB8EA;
+
+    --st-done-fg:  #8FD6AC; --st-done-bg:  #15291E; --st-done-bd: #2E5740;
+    --st-prog-fg:  #8EC2EE; --st-prog-bg:  #15222E; --st-prog-bd: #2D4A66;
+    --st-wait-fg:  #E0C778; --st-wait-bg:  #2A2413; --st-wait-bd: #5C4E22;
+    --st-block-fg: #EDA880; --st-block-bg: #2D1C12; --st-block-bd:#5F3A22;
+    --st-danger-fg:#EE9A9A; --st-danger-bg:#2C1616; --st-danger-bd:#5C2D2D;
+    --st-idle-fg:  #AFB6BE; --st-idle-bg:  #1E2126; --st-idle-bd: #3A404A;
+
+    --cat-muted: #4A5059;
+  }
+}
+:root[data-theme="dark"] { color-scheme: dark; }
+:root[data-theme="light"] { color-scheme: light; }
+
+/* --- Base --------------------------------------------------------------- */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  font-size: 100%;              /* never px — honour the user's zoom setting */
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;     /* so a sticky header never hides the target
+                                   (WCAG 2.4.11 Focus Not Obscured) */
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  padding: var(--s-5) var(--s-4) var(--s-8);
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  line-height: var(--lh-body);
+  letter-spacing: 0.01em;
+  color: var(--fg);
+  background: var(--bg);
+  text-align: left;             /* never justify: rivers + uneven word spacing */
+  hyphens: manual;
+  text-rendering: optimizeLegibility;
+}
+
+/* Prose column. Dashboards opt out with .wide on their container. */
+.prose, main > :not(.wide) { max-width: var(--measure); }
+.wide  { max-width: 100%; }
+
+/* --- Headings: re-entry points ------------------------------------------ */
+
+h1, h2, h3, h4 {
+  line-height: var(--lh-head);
+  font-weight: 650;
+  text-wrap: balance;
+  scroll-margin-top: 5rem;
+}
+h1 { font-size: var(--fs-h1); margin: 0 0 var(--s-3); letter-spacing: -0.01em; }
+h2 {
+  font-size: var(--fs-h2);
+  margin: var(--s-7) 0 var(--s-3);
+  padding-top: var(--s-4);
+  border-top: var(--border-w) solid var(--border);
+}
+h3 { font-size: var(--fs-h3); margin: var(--s-5) 0 var(--s-2); }
+h4 { font-size: var(--fs-base); margin: var(--s-4) 0 var(--s-2);
+     color: var(--fg-muted); }
+
+/* Anchor affordance — appears on hover/focus, never shifts layout. */
+.anchor {
+  margin-left: var(--s-2); color: var(--fg-faint);
+  text-decoration: none; opacity: 0; font-weight: 400;
+}
+h2:hover .anchor, h3:hover .anchor, .anchor:focus { opacity: 1; }
+
+/* --- Text --------------------------------------------------------------- */
+
+p { margin: 0 0 var(--s-4); }
+p:last-child { margin-bottom: 0; }
+
+strong, b { font-weight: 680; }      /* bold = "find this". Use sparingly. */
+em, i     { font-style: italic; }    /* short runs only */
+small, .caption, .meta { font-size: var(--fs-xs); color: var(--fg-muted); }
+
+a {
+  color: var(--accent);
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 0.08em;
+}
+a:hover { text-decoration-thickness: 0.14em; }
+
+:where(a, button, summary, input, select, textarea, [tabindex]):focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+ul, ol { padding-left: 1.4em; margin: 0 0 var(--s-4); }
+li { margin: var(--s-2) 0; }
+li > ul, li > ol { margin: var(--s-2) 0 0; }
+
+code, kbd, samp {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--bg-sunken);
+  border: var(--border-w) solid var(--border);
+  border-radius: 4px;
+  padding: 0.12em 0.36em;
+}
+pre {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  background: var(--bg-sunken);
+  border: var(--border-w) solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--s-4);
+  overflow-x: auto;
+}
+pre code { background: none; border: 0; padding: 0; font-size: inherit; }
+
+hr { border: 0; border-top: var(--border-w) solid var(--border);
+     margin: var(--s-6) 0; }
+
+/* --- Rule 1: answer first ----------------------------------------------- */
+
+/* The block that must be in the first screen. Conclusion, ask, status. */
+.bottom-line {
+  background: var(--accent-soft);
+  border: var(--border-w) solid var(--accent);
+  border-left-width: 5px;
+  border-radius: var(--radius);
+  padding: var(--s-4) var(--s-5);
+  margin: 0 0 var(--s-6);
+  font-size: 1.0625rem;
+}
+.bottom-line > :first-child { margin-top: 0; }
+.bottom-line > :last-child  { margin-bottom: 0; }
+.bottom-line .label {
+  display: block;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;   /* 1-3 word label only — caps cost reading speed */
+  color: var(--accent);
+  margin-bottom: var(--s-1);
+}
+
+/* Status strip: Owner / Status / Next / Updated — the re-entry header. */
+.statusbar {
+  display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-5);
+  padding: var(--s-3) var(--s-4);
+  margin: 0 0 var(--s-6);
+  background: var(--bg-raised);
+  border: var(--border-w) solid var(--border);
+  border-radius: var(--radius);
+  font-size: var(--fs-sm);
+}
+.statusbar dt { color: var(--fg-muted); font-size: var(--fs-xs);
+                letter-spacing: 0.04em; margin: 0; }
+.statusbar dd { margin: 0; font-weight: 600; }
+.statusbar > div { display: flex; flex-direction: column; gap: 2px; }
+
+/* --- Rule 7: status without verdict ------------------------------------- */
+
+.status {
+  display: inline-flex; align-items: center; gap: 0.4em;
+  padding: 0.12em 0.6em 0.18em;
+  border-radius: 999px;
+  border: var(--border-w) solid;
+  font-size: var(--fs-xs);
+  font-weight: 650;
+  white-space: nowrap;
+}
+/* ::before supplies a non-colour encoding — never colour alone. */
+.status::before { font-size: 0.9em; line-height: 1; }
+.status--done    { color: var(--st-done-fg);  background: var(--st-done-bg);
+                   border-color: var(--st-done-bd); }
+.status--done::before    { content: "✓"; }
+.status--progress{ color: var(--st-prog-fg);  background: var(--st-prog-bg);
+                   border-color: var(--st-prog-bd); }
+.status--progress::before{ content: "▸"; }
+.status--waiting { color: var(--st-wait-fg);  background: var(--st-wait-bg);
+                   border-color: var(--st-wait-bd); }
+.status--waiting::before { content: "◴"; }
+.status--blocked { color: var(--st-block-fg); background: var(--st-block-bg);
+                   border-color: var(--st-block-bd); }
+.status--blocked::before { content: "■"; }
+.status--danger  { color: var(--st-danger-fg);background: var(--st-danger-bg);
+                   border-color: var(--st-danger-bd); }
+.status--danger::before  { content: "!"; }
+.status--idle    { color: var(--st-idle-fg);  background: var(--st-idle-bg);
+                   border-color: var(--st-idle-bd); }
+.status--idle::before    { content: "○"; }
+
+/* Callouts. Tone is informational, never accusatory. */
+.callout {
+  border: var(--border-w) solid var(--border);
+  border-left-width: 5px;
+  border-radius: var(--radius);
+  background: var(--bg-raised);
+  padding: var(--s-4) var(--s-5);
+  margin: var(--s-5) 0;
+}
+.callout > :first-child { margin-top: 0; }
+.callout > :last-child  { margin-bottom: 0; }
+.callout--note   { border-left-color: var(--accent); }
+.callout--good   { border-left-color: var(--st-done-bd);
+                   background: var(--st-done-bg); }
+.callout--watch  { border-left-color: var(--st-wait-bd);
+                   background: var(--st-wait-bg); }
+.callout--action { border-left-color: var(--st-block-bd);
+                   background: var(--st-block-bg); }
+.callout__title { font-weight: 700; display: block; margin-bottom: var(--s-2); }
+
+/* --- KPIs: 3-4 max above the fold --------------------------------------- */
+
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: var(--s-4);
+  margin: 0 0 var(--s-6);
+}
+.kpi {
+  background: var(--bg-raised);
+  border: var(--border-w) solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--s-4);
+  display: flex; flex-direction: column; gap: var(--s-1);
+}
+.kpi__label { font-size: var(--fs-xs); color: var(--fg-muted);
+              letter-spacing: 0.03em; }
+.kpi__value { font-size: 1.875rem; font-weight: 700; line-height: 1.1;
+              font-variant-numeric: tabular-nums lining-nums; }
+.kpi__unit  { font-size: 0.5em; font-weight: 500; color: var(--fg-muted);
+              margin-left: 0.2em; }
+/* Always show the comparison baseline — don't make the reader recall it. */
+.kpi__compare { font-size: var(--fs-xs); color: var(--fg-muted);
+                font-variant-numeric: tabular-nums; }
+.kpi__compare b { color: var(--fg); font-weight: 650; }
+
+/* --- Rule 6: time and progress made spatial ----------------------------- */
+
+.progress {
+  display: flex; flex-direction: column; gap: var(--s-2);
+  margin: var(--s-4) 0;
+}
+.progress__bar {
+  height: 10px; border-radius: 999px;
+  background: var(--bg-sunken);
+  border: var(--border-w) solid var(--border);
+  overflow: hidden;
+}
+.progress__fill {
+  height: 100%; background: var(--accent);
+  /* width set inline; no transition by default */
+}
+.progress__text { font-size: var(--fs-sm); color: var(--fg-muted);
+                  font-variant-numeric: tabular-nums; }
+.progress__text b { color: var(--fg); }
+
+/* A duration shown as a proportional block, not only a number. */
+.duration { display: inline-flex; align-items: center; gap: 0.5em;
+            font-variant-numeric: tabular-nums; }
+.duration__track {
+  display: inline-block; width: 90px; height: 8px; border-radius: 999px;
+  background: var(--bg-sunken); border: var(--border-w) solid var(--border);
+  overflow: hidden; vertical-align: middle;
+}
+.duration__fill { display: block; height: 100%; background: var(--fg-muted); }
+
+/* Dates: always absolute + relative. Markup pattern:
+   <time datetime="2026-11-27">Thu 27 Nov 2026 <span class="rel">(in 2 days)</span></time> */
+time .rel, .rel { color: var(--fg-muted); font-size: 0.92em; }
+
+/* Vertical "now"-anchored timeline. Past is greyed, not hidden. */
+.timeline { list-style: none; padding: 0; margin: var(--s-5) 0;
+            border-left: 2px solid var(--border); }
+.timeline li { position: relative; padding: 0 0 var(--s-4) var(--s-5);
+               margin: 0; }
+.timeline li::before {
+  content: ""; position: absolute; left: -7px; top: 0.55em;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--bg); border: 2px solid var(--border-strong);
+}
+.timeline li.is-past   { color: var(--fg-faint); }
+.timeline li.is-past::before { background: var(--border-strong); }
+.timeline li.is-now::before  { background: var(--accent);
+                               border-color: var(--accent);
+                               box-shadow: 0 0 0 4px var(--accent-soft); }
+.timeline li.is-now { font-weight: 650; }
+
+/* --- Tables: no held state ---------------------------------------------- */
+
+.table-wrap { overflow-x: auto; margin: var(--s-5) 0; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+caption {
+  caption-side: top; text-align: left;
+  font-weight: 650; font-size: var(--fs-base);
+  padding-bottom: var(--s-2);
+}
+/* Sticky header: the column label must stay with its data. */
+thead th {
+  position: sticky; top: 0; z-index: 2;
+  background: var(--bg-sunken);
+  text-align: left;
+  font-weight: 650;
+  padding: var(--s-3);
+  border-bottom: 2px solid var(--border-strong);
+}
+td, tbody th { padding: var(--s-3); border-bottom: var(--border-w) solid var(--border);
+               vertical-align: top; }
+tbody th { text-align: left; font-weight: 600; }
+td.num, th.num { text-align: right; }
+tbody tr:hover { background: var(--bg-sunken); }
+tr.is-done td, tr.is-done th { color: var(--fg-faint); }
+
+/* --- Progressive disclosure: max 2 levels, always counted ---------------- */
+
+details {
+  border: var(--border-w) solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-raised);
+  padding: 0;
+  margin: var(--s-4) 0;
+}
+summary {
+  cursor: pointer;
+  padding: var(--s-3) var(--s-4);
+  font-weight: 650;
+  list-style-position: inside;
+  min-height: 24px;              /* WCAG 2.5.8 target size */
+}
+summary::marker { color: var(--fg-muted); }
+details[open] > summary { border-bottom: var(--border-w) solid var(--border); }
+details > :not(summary) { padding: var(--s-4); margin: 0; }
+summary .count { color: var(--fg-muted); font-weight: 500; }
+
+/* --- Checklists --------------------------------------------------------- */
+
+.checklist { list-style: none; padding: 0; }
+.checklist li { display: flex; gap: var(--s-3); align-items: baseline;
+                padding: var(--s-2) 0;
+                border-bottom: var(--border-w) solid var(--border); }
+.checklist li::before { content: "○"; color: var(--fg-faint); flex: none; }
+.checklist li.is-done { color: var(--fg-faint); }
+.checklist li.is-done::before { content: "✓"; color: var(--st-done-fg); }
+
+/* --- Navigation: stable, current section marked -------------------------- */
+
+.toc {
+  position: sticky; top: var(--s-4);
+  background: var(--bg-raised);
+  border: var(--border-w) solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--s-4);
+  font-size: var(--fs-sm);
+  max-height: calc(100vh - 2 * var(--s-4));
+  overflow-y: auto;
+}
+.toc ol { list-style: none; padding: 0; margin: 0; }
+.toc li { margin: var(--s-1) 0; }
+.toc a { display: block; padding: var(--s-1) var(--s-2);
+         border-radius: 4px; text-decoration: none; color: var(--fg-muted); }
+.toc a:hover { background: var(--bg-sunken); color: var(--fg); }
+.toc a[aria-current="true"] {
+  background: var(--accent-soft); color: var(--accent);
+  font-weight: 650; box-shadow: inset 3px 0 0 var(--accent);
+}
+
+.skip-link {
+  position: absolute; left: -9999px;
+  background: var(--accent); color: #fff; padding: var(--s-3) var(--s-4);
+  border-radius: 0 0 var(--radius) 0; z-index: 100;
+}
+.skip-link:focus { left: 0; top: 0; }
+
+/* --- Charts ------------------------------------------------------------- */
+
+figure { margin: var(--s-6) 0; }
+/* Chart title states the conclusion as a sentence; the caption carries
+   metric, unit and source. Order matters: conclusion before evidence. */
+figure > figcaption { font-size: var(--fs-xs); color: var(--fg-muted);
+                      margin-top: var(--s-2); }
+.chart-title { font-size: var(--fs-h3); font-weight: 650;
+               line-height: var(--lh-head); margin: 0 0 var(--s-1);
+               text-wrap: balance; }
+.chart-sub   { font-size: var(--fs-xs); color: var(--fg-muted);
+               margin: 0 0 var(--s-3); }
+/* Direct labels, not legends. */
+.series-label { font-size: var(--fs-xs); font-weight: 650; }
+.grid-line { stroke: var(--border); stroke-width: 1; }  /* keep >=8px apart */
+.axis-text { fill: var(--fg-muted); font-size: 12px; }
+.mark-muted { fill: var(--cat-muted); stroke: var(--cat-muted); }
+.mark-accent{ fill: var(--accent);    stroke: var(--accent); }
+
+/* --- Motion: off by default, honoured when the OS asks ------------------- */
+
+/* Nothing in this stylesheet animates. If you add a transition, add it only
+   for a user-triggered state change and keep it <=0.5s, inside this guard. */
+@media (prefers-reduced-motion: no-preference) {
+  .progress__fill { transition: width 320ms ease-out; }
+  .toc a { transition: background-color 120ms ease-out; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :root { --fg-faint: var(--fg-muted); --border: var(--border-strong); }
+  :where(a, button, summary):focus-visible { outline-width: 4px; }
+}
+
+/* --- Density control (user-adjustable; COGA Objective 8) ----------------- */
+
+:root[data-density="compact"] { --fs-base: 1rem; --lh-body: 1.5; }
+:root[data-density="compact"] body { padding-top: var(--s-4); }
+:root[data-density="roomy"]   { --fs-base: 1.1875rem; --lh-body: 1.75; }
+
+/* --- Layout helpers ------------------------------------------------------ */
+
+.layout { display: grid; gap: var(--s-6); align-items: start; }
+@media (min-width: 62rem) {
+  .layout--with-toc { grid-template-columns: 15rem minmax(0, var(--measure)); }
+  .layout--with-toc.wide { grid-template-columns: 15rem minmax(0, 1fr); }
+}
+.stack > * + * { margin-top: var(--s-4); }
+.section { margin: 0 0 var(--s-7); }
+
+/* --- Print --------------------------------------------------------------- */
+
+@media print {
+  :root {
+    --bg: #fff; --bg-raised: #fff; --bg-sunken: #f4f4f4;
+    --fg: #000; --fg-muted: #333; --fg-faint: #555; --border: #bbb;
+  }
+  body { font-size: 11pt; padding: 0; max-width: none; }
+  .toc, .skip-link, nav, .no-print { display: none !important; }
+  .layout--with-toc { grid-template-columns: 1fr; }
+  h2, h3 { break-after: avoid; }
+  figure, table, .callout, .kpi { break-inside: avoid; }
+  details { border: 0; }
+  details:not([open]) > :not(summary) { display: block; } /* print everything */
+  a[href^="http"]::after { content: " (" attr(href) ")";
+                           font-size: 9pt; color: #555; word-break: break-all; }
+}

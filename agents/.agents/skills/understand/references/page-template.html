@@ -1,0 +1,106 @@
+<!doctype html>
+<!-- understand: visual page template. Copy, then replace every {{...}} and delete sections you do not need.
+     Rules: static HTML + inline SVG + CSS only (Dashy renders with scripts off). No external assets, no JS.
+     <details> works without JS. Light mode. Code cards come from scripts/code-card, never typed by hand. -->
+<html><head><meta charset="utf-8"><title>{{slug}}: {{title}}</title>
+<style>
+:root{--ink:#1f2933;--mute:#6b7785;--line:#dde3ea;--bg:#fff;--soft:#f5f7fa;--blue:#2f6fed;--blue-s:#e8f0ff;--green:#1f9d63;--green-s:#e5f6ee;--amber:#b7791f;--amber-s:#fdf3dc;--red:#c53030;--red-s:#fde8e8}
+*{box-sizing:border-box}
+body{font:15px/1.6 -apple-system,BlinkMacSystemFont,sans-serif;color:var(--ink);background:var(--bg);max-width:900px;margin:28px auto;padding:0 20px}
+h1{font-size:24px;margin:0 0 4px}h2{font-size:18px;margin:36px 0 10px;padding-top:8px;border-top:1px solid var(--line)}h3{font-size:15px;margin:18px 0 6px}
+.lead{color:var(--mute);margin:0 0 16px}
+code{background:var(--soft);padding:1px 5px;border-radius:4px;font:12.5px ui-monospace,Menlo,monospace}
+/* story steps: numbered, one plain sentence each */
+.story{list-style:none;counter-reset:s;padding:0;margin:12px 0}
+.story li{counter-increment:s;position:relative;padding:8px 12px 8px 46px;margin:6px 0;background:var(--soft);border-radius:8px}
+.story li::before{content:counter(s);position:absolute;left:12px;top:8px;width:24px;height:24px;border-radius:50%;background:var(--blue);color:#fff;font-weight:600;font-size:13px;text-align:center;line-height:24px}
+.story li.focus{background:var(--blue-s);outline:2px solid var(--blue)}
+.story small{display:block;color:var(--mute)}
+/* chips: status and where */
+.chip{display:inline-block;font-size:11.5px;padding:1px 8px;border-radius:99px;border:1px solid var(--line);background:#fff;color:var(--mute);margin-left:4px}
+.chip.obs{background:var(--green-s);color:var(--green);border-color:#bfe6d3}.chip.doc{background:var(--blue-s);color:var(--blue);border-color:#c5d8fb}
+.chip.inf{background:var(--amber-s);color:var(--amber);border-color:#f0dba5}.chip.unk{background:var(--red-s);color:var(--red);border-color:#f3c3c3}
+/* code cards (scripts/code-card) */
+figure.code{margin:14px 0;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+figure.code figcaption{background:var(--soft);padding:6px 12px;font-size:12.5px;color:var(--mute);border-bottom:1px solid var(--line)}
+figure.code pre{margin:0;padding:8px 0;overflow-x:auto;font:12.5px/1.55 ui-monospace,Menlo,monospace;background:#fff}
+figure.code pre>span.l{display:block;padding:0 12px;white-space:pre}
+figure.code .ln{display:inline-block;width:42px;color:#a0aab4;user-select:none}
+.hl{background:var(--amber-s)}
+.callout{margin:0;padding:6px 12px;border-top:1px solid var(--line);background:var(--amber-s);font-size:13.5px}
+/* before / after, example walk-through */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+.card{border:1px solid var(--line);border-radius:8px;padding:10px 14px;background:#fff}
+.card h4{margin:0 0 6px;font-size:13px;color:var(--mute);text-transform:uppercase;letter-spacing:.04em}
+.card.good{border-color:#bfe6d3;background:var(--green-s)}.card.bad{border-color:#f3c3c3;background:var(--red-s)}
+table{border-collapse:collapse;width:100%;font-size:13.5px}th,td{border:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top}th{background:var(--soft)}
+dl.gloss dt{font-weight:600;margin-top:8px}dl.gloss dd{margin:0 0 0 0;color:var(--mute)}
+details{border:1px solid var(--line);border-radius:8px;padding:8px 12px;margin:10px 0}summary{cursor:pointer;font-weight:600}
+.you{border-left:4px solid var(--blue);background:var(--blue-s);padding:8px 14px;border-radius:0 8px 8px 0;margin:14px 0}
+</style></head><body>
+
+<h1>{{title}}</h1>
+<p class="lead">{{one sentence: what this section does and why you are reading it}} &middot; {{vcs state from cite-check --state}}</p>
+
+<!-- 1. THE STORY: five to eight plain-language steps, no paths, no jargon. Mark the step the user is about to look at with class="focus". -->
+<h2>The story in plain words</h2>
+<ol class="story">
+  <li>{{what happens, as if telling a colleague}}<small>{{who does it, in plain words}}</small></li>
+  <li class="focus">{{the step we look at next}}<small>{{...}}</small></li>
+</ol>
+
+<!-- 2. WHO TALKS TO WHOM: sequence diagram in inline SVG. Lifelines = the actors from the story, arrows = calls in time order top to bottom.
+     Label arrows with what is passed ("run id", "recipients + link"), not function names. Dashed arrow = reply. Red arrow = failure path. -->
+<h2>Who talks to whom</h2>
+<svg viewBox="0 0 860 300" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,sans-serif" font-size="12">
+  <defs>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8z" fill="#2f6fed"/></marker>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8z" fill="#c53030"/></marker>
+  </defs>
+  <!-- actors: rect + name on top, dashed lifeline below -->
+  <g text-anchor="middle">
+    <rect x="20" y="10" width="150" height="34" rx="6" fill="#e8f0ff" stroke="#2f6fed"/><text x="95" y="31">{{actor 1}}</text>
+    <rect x="260" y="10" width="150" height="34" rx="6" fill="#e8f0ff" stroke="#2f6fed"/><text x="335" y="31">{{actor 2}}</text>
+    <rect x="500" y="10" width="150" height="34" rx="6" fill="#e8f0ff" stroke="#2f6fed"/><text x="575" y="31">{{actor 3}}</text>
+    <rect x="700" y="10" width="140" height="34" rx="6" fill="#f5f7fa" stroke="#9aa5b1"/><text x="770" y="31" fill="#6b7785">{{not read}}</text>
+  </g>
+  <g stroke="#c4ccd6" stroke-dasharray="4 4"><line x1="95" y1="44" x2="95" y2="290"/><line x1="335" y1="44" x2="335" y2="290"/><line x1="575" y1="44" x2="575" y2="290"/><line x1="770" y1="44" x2="770" y2="290"/></g>
+  <!-- messages: number circle + arrow + label -->
+  <g stroke="#2f6fed" fill="none" marker-end="url(#ar)"><line x1="95" y1="80" x2="333" y2="80"/><line x1="335" y1="130" x2="573" y2="130"/></g>
+  <g font-size="12" fill="#1f2933"><text x="120" y="73">1  {{what is passed}}</text><text x="360" y="123">2  {{what is passed}}</text></g>
+  <!-- failure path example: <line stroke="#c53030" stroke-dasharray="5 3" marker-end="url(#arr)" .../> -->
+</svg>
+
+<!-- 3. ONE REAL EXAMPLE, WALKED THROUGH: concrete values, not placeholders. Values must come from tests, fixtures or code you cite. -->
+<h2>One real example</h2>
+<table>
+  <tr><th>Step</th><th>What goes in</th><th>What comes out</th></tr>
+  <tr><td>{{step}}</td><td><code>{{real input}}</code></td><td><code>{{real output}}</code></td></tr>
+</table>
+
+<!-- 4. THE CODE FOR THE STEP WE ARE ON: paste scripts/code-card output here. One card per hop, one or two highlighted lines with a callout each. -->
+<h2>The code, one hop at a time</h2>
+<h3>Hop 1: {{plain title}}</h3>
+<p>{{two plain sentences: what this code does}} <span class="chip obs">observed</span></p>
+{{code-card output}}
+
+<!-- 5. BEFORE / AFTER or WHAT IF: use to show a difference the user must feel (stored vs looked up, retry vs no retry). -->
+<h2>What if&hellip;</h2>
+<div class="cols">
+  <div class="card bad"><h4>{{situation A}}</h4>{{what happens}}</div>
+  <div class="card good"><h4>{{situation B}}</h4>{{what happens}}</div>
+</div>
+
+<!-- 6. WORDS WE USED: every term the user did not bring with them. -->
+<h2>Words we used</h2>
+<dl class="gloss"><dt>{{term}}</dt><dd>{{one plain line}}</dd></dl>
+
+<!-- 7. YOUR GUESS vs THE CODE: only after the user has guessed. -->
+<div class="you"><b>You guessed:</b> {{their words}}<br><b>The code does:</b> {{what it does}} <code>{{path:line}}</code></div>
+
+<!-- 8. EVIDENCE: the claims table, collapsed. This is the audit trail, not the explanation. -->
+<details><summary>Evidence: every claim with its source</summary>
+<table><tr><th>Claim</th><th>Where</th><th>Status</th></tr>
+<tr><td>{{claim}}</td><td><code>{{path:line}}</code></td><td><span class="chip obs">observed</span></td></tr></table>
+</details>
+</body></html>
