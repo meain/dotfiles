@@ -127,6 +127,7 @@ When no built-in tool fits:
 - Skip unnecessary complexity; focus on what's immediately useful.
 - PR text and review comments follow the stricter rules under Version Control & PRs.
 - When giving me several options to pick from in chat, number them so I can reply with just the numbers (e.g. "1, 3, 5"). This is an exception to the no-numbering rule for markdown documents.
+- When you need a decision or confirmation from me (post this Jira comment? mark the PR ready? which option?), ask with an inline `widget_show` that has `action` buttons (`action` = the message sent back to you, e.g. "Post it", "Skip", "Change it"), not a plain-text question. Show the exact content under decision (comment text, message, diff summary) in the widget above the buttons, and mark the recommended button `primary`. Button labels carry no numbers. Use `confirm: true` on destructive or outward-facing actions. Fall back to numbered chat options only when a widget can't express the choice. Load the tool with ToolSearch `select:mcp__dashy__widget_show` if it isn't available yet.
 
 ### Speech-to-text input
 
