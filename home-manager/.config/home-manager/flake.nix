@@ -70,6 +70,11 @@
                 # we don't use, so drop the dependency to keep the build working.
                 (final: prev: {
                   emacs = prev.emacs.override { withMailutils = false; };
+                  # only needs emacs for its tests; skip them so nix doesn't build emacs
+                  emacs-lsp-booster = prev.emacs-lsp-booster.overrideAttrs {
+                    doCheck = false;
+                    nativeCheckInputs = [ ];
+                  };
                 })
               ];
             };
