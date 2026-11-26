@@ -63,5 +63,6 @@ Run `git log --oneline -5` to confirm all commits were created, then show the ou
 - Do NOT commit files containing secrets
 - If the user has both staged and unstaged changes, ask which to include
 - Prefer fewer commits when changes are closely related within a component
+- **Commit `flake.nix` and its `flake.lock` together** — a nix file and its lock file (e.g. `home-manager/.config/home-manager/flake.nix` + `flake.lock`) always go in the same commit, never two. `home-manager` and `nix-darwin` stay separate commits (`[home-manager]`, `[nix-darwin]`), not combined as `[nix]`
 - **Skip `claude/.claude/settings.json` model changes** — the `"model"` field changes frequently and is not worth tracking; omit it from commits unless other meaningful settings changed alongside it
 - **Scope commits to what the user named** — if the user says "commit the gptel changes", stage and commit only that file; don't expand to other changed files unless asked
