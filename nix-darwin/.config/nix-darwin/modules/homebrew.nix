@@ -37,6 +37,9 @@
       "ical-buddy" # Read from macos calendar
       "databricks" # databricks cli
       "pi-coding-agent" # pi coding agent
+      "colima"
+      "qemu"
+      "lima-additional-guestagents"
     ];
     casks = [
       # "emacs-plus-app" # stable emacs
@@ -61,9 +64,6 @@
       # "visual-studio-code" # copilot
       "orbstack" # better docker
       "kitty" # terminal emulator
-      "colima"
-      "qemu"
-      "lima-additional-guestagents"
 
       "firefox"
       "google-chrome"
