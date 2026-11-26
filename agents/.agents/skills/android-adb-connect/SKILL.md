@@ -32,6 +32,8 @@ adb devices   # check what's already attached
 
 If `adb` isn't found, the SDK is at `~/Android/sdk-edo/platform-tools/adb`.
 
+If `adb devices` is empty, don't ask the user for a `host:port` yet. The phone usually reconnects by itself over mDNS (it shows up as `adb-<serial>-xxxx._adb-tls-connect._tcp`) once the adb server restarts, so try `adb kill-server && adb start-server; sleep 2; adb devices -l` (with `dangerouslyDisableSandbox: true`) first. Only fall back to Step 2 if the phone is still missing.
+
 If any entry shows status `device`, check if it's the Galaxy S25 before proceeding to connect:
 
 ```bash
@@ -71,7 +73,9 @@ adb connect 192.168.1.3:38181
 
 ### QR pairing (no code or port to type)
 
-Prefer this for first-time or expired pairing. Run `bash ~/.claude/skills/android-adb-connect/qr-pair.sh` with `dangerouslyDisableSandbox: true` and `run_in_background: true`. It makes a QR (`WIFI:T:ADB;S:<name>;P:<password>;;`, via `nix run nixpkgs#qrencode`), opens `/tmp/adb-qr.png`, waits for the phone's pairing service, then runs `adb pair` and lists devices. Once paired, the phone shows in `adb devices` as `adb-<serial>-xxxx._adb-tls-connect._tcp`; no `adb connect` needed.
+Prefer this for first-time or expired pairing. Run `bash ~/.claude/skills/android-adb-connect/qr-pair.sh` with `dangerouslyDisableSandbox: true` and `run_in_background: true`. It makes a QR (`WIFI:T:ADB;S:<name>;P:<password>;;`, via `nix run nixpkgs#qrencode`), writes `/tmp/adb-qr.png` (and opens it in Preview), waits for the phone's pairing service, then runs `adb pair` and lists devices. Once paired, the phone shows in `adb devices` as `adb-<serial>-xxxx._adb-tls-connect._tcp`; no `adb connect` needed.
+
+**Show the QR in the chat**, don't just say it was opened: as soon as the script prints "QR for … opened", reply with a line that is only `![adb pairing QR](/tmp/adb-qr.png)` (Dashy renders it inline), plus one line telling the user to scan it. Do this every run, since each run makes a new QR.
 
 Gotchas, all hit in practice:
 

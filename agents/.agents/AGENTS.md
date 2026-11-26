@@ -1,9 +1,9 @@
 ## File & Output Conventions
 
-- When the user specifically asks to generate a markdown file, open it once right after first creating it using `open -a Firefox <filepath>` (with `dangerouslyDisableSandbox: true`) — do not reopen it after subsequent edits, since a browser refresh picks up changes. For HTML or other file formats, use `open <filepath>` with `dangerouslyDisableSandbox: true` — the sandbox blocks `open` from launching GUI apps.
+- Generated artifacts (markdown, HTML or any other file written for me to read, including mock-ups and `.martifacts` pages): don't open them. Just give the file path in chat; I view them inside Dashy.
 - Never number things (headings, sections) when creating markdown documents — use plain headings and unordered lists.
 - When creating HTML resources like dashboards or slides, prefer light mode unless explicitly stated.
-- When I ask for mock-ups, don't draw them in chat. Write one HTML page with the lettered options side by side (a "today" baseline, a suggested option, pros and cons, a comparison table, a verdict line asking me to pick a letter), save it in the project's `.martifacts` (model it on an existing `*-options.html` there), and open it with `open <file>` (`dangerouslyDisableSandbox: true`). Plan mode doesn't change this.
+- When I ask for mock-ups, don't draw them in chat. Write one HTML page with the lettered options side by side (a "today" baseline, a suggested option, pros and cons, a comparison table, a verdict line asking me to pick a letter), save it in the project's `.martifacts` (model it on an existing `*-options.html` there), and give me its path (don't open it). Plan mode doesn't change this.
 - Create temporary resources in `/tmp`, not the repo root.
 - Screenshots are stored in `/Users/meain/Documents/Screenshots/` with format `Screenshot YYYY-MM-DD at H.MM.SS AM.png`.
 
@@ -22,6 +22,7 @@
 
 - Most projects use `jj`, not `git`. Prefer `jj` commands. For the `gh` CLI, set `GIT_DIR=$(jj git root 2>/dev/null || echo .git)` inline.
 - A path under `/Users/meain/worksapces/<folder>/<repo>-<suffix>` (the directory really is spelled `worksapces`) is a jj workspace of `/Users/meain/dev/<folder>/<repo>`; `-<suffix>` is the workspace name. E.g. `/Users/meain/worksapces/some-org/my-project-feature2` is the `feature2` workspace of `/Users/meain/dev/some-org/my-project`.
+- Implement in the main workspace by default. Only use a separate jj workspace (or Dashy `--isolation jj|git`) when I explicitly ask for one.
 - Create new jj workspaces under `/Users/meain/worksapces/`, mirroring the `/Users/meain/dev/` layout, never inside the repo or elsewhere:
   ```
   /Users/meain/dev/<folder>/<repo>                 # main checkout
@@ -74,7 +75,7 @@
 ## Editing Files
 
 - Change files with Edit/Write and read them with Read, even when a session's mode nudges toward doing everything through Bash.
-- Never patch source files with throwaway Python/`sed`/`awk` — it hides the change under escaping, silently no-ops or corrupts on a near-miss match, and leaves nothing reviewable. Scripts are for real data work (parsing output, aggregating, generating from a template).
+- Prefer Edit/Write over throwaway Python/`sed`/`awk` for patching source files: a script hides the change under escaping, can silently no-op or corrupt on a near-miss match, and leaves nothing reviewable. Reach for one where it genuinely wins — a mechanical change across many files, say — and check the result afterwards. Scripts stay the right tool for real data work: parsing output, aggregating, generating from a template.
 
 ## CLI Tool Preferences
 
@@ -88,11 +89,14 @@ When no built-in tool fits:
 - Ask before acting on a public forum (Jira, GitHub PRs/issues) unless I've explicitly asked for it.
 - If you're stuck (repeated failed fixes, unclear root cause) or facing a hard-to-reverse decision, invoke the `/advisor` skill to consult a stronger model before continuing.
 - Delegate investigation work (cross-repo code search, log queries, doc lookups, git archaeology) to a subagent (default model: sonnet). Do a single known lookup directly.
+- Run subagents in parallel only when their work genuinely cannot collide. Before launching a batch, state which files or directories each one owns, and make those sets disjoint — two agents told to add something to the same file will clobber each other, and one editing a file another is mid-build on breaks that build. Shared entry points (an index/barrel, a registry, a scene list, a `package.json`) belong to you, not to them: have each report what it needs exported and wire it yourself. When ownership cannot be made disjoint, run them one at a time instead.
+- Name subagents for the work they do, not with opaque identifiers. `doc-placement` or `spend-page`, not `R27` or `agent-3`; I read those names to follow what is happening, and a task number means nothing to me.
 - When I correct your approach, suggest updating the relevant instructions (this file, skills, or both) and ask before doing it. This file is the symlink target of `~/.claude/CLAUDE.md`; edit `/Users/meain/.agents/AGENTS.md` (it resolves into the dotfiles repo).
 
 ## Personal Notes
 
 - Backlog: `/Users/meain/.local/share/sbdb/Backlog/Backlog.md` (today's tasks are near the top). Detailed task notes are in `/Users/meain/.local/share/sbdb/Tasks/YYYY-MM/<Task Name>.md`, linked from the backlog as `[[Tasks/YYYY-MM/Task Name]]`. Use the `/vault` skill for these notes.
+- Keep task notes to exactly what I ask for. If I ask for a path and a link, write only those, with no summary, numbers, other files or follow-ups unless I say so.
 - After saving anything to the vault (`/Users/meain/.local/share/sbdb`), open the note in Obsidian once with `open "obsidian://open?path=<url-encoded absolute path>"` (with `dangerouslyDisableSandbox: true`). Don't reopen after later edits.
 - Two vaults: sbdb (`/Users/meain/.local/share/sbdb`) is the vault for human notes (mine); aidb (`/Users/meain/dev/src/aidb`) is the vault for agent notes: the master agent's own repo for memory, notes, research write-ups (`research/YYYY-MM-DD-<topic>.md`), recurring tasks and Dashy schedules. When I say "store this in aidb" (or the agent vault) or "save notes for later", write to aidb, not sbdb; read its `AGENTS.md` first. It's a jj repo; commit after each change, never push.
 - Dotfiles are in `/Users/meain/.dotfiles`, stowed into my home directory.
@@ -106,6 +110,7 @@ When no built-in tool fits:
 ## Working Environment (Dashy)
 
 - I do all my AI-assisted development in Dashy (source: `/Users/meain/dev/src/dashy`), my own macOS app that runs many Claude Code agents side by side. You are most likely one of those agents, and I may be juggling several at once, so finish clearly and say what you need from me.
+- Dashy's chat renders markdown images and mermaid diagrams inline. A line that is only `![alt](path-or-url)` shows the image (an `https://` URL, `file://` URL or absolute path), and a ` ```mermaid ` block shows a diagram (needs `make mermaid` once in the Dashy repo). Clicking either opens the image viewer. Use them in replies instead of `show_file` when showing a picture or diagram.
 - Dashy has a CLI (`dashy-cli`) to list, start, message, fork and wait on agents, plus scheduled (cron-style) agents. The `/dashy` skill covers how to use them.
 - Dashy handles `dashy://` links, so artifacts only I will open (HTML reports, pickers, dashboards, my bookmarks) can have buttons or links that act in Dashy: `dashy://new` pre-fills the New Agent sheet, `dashy://quick` opens the quick-agent panel filled in, and Dashy picks the repo from the text once I press ↩ (good for PR URLs), `dashy://send` puts text in an agent's message box (your own id comes from the `whoami` MCP tool, for follow-up buttons) and `dashy://open` selects an agent. Links only pre-fill; I press the key. Always build them with `dashy-cli link new|quick|send|open` (the `/dashy` skill has the details), never by hand. Use them where they save me retyping, such as follow-up buttons in a report, and skip them otherwise.
   - Never put `dashy://` links in anything that will be shared or leave my machine (PR descriptions, Jira, Confluence, Teams or Slack messages, docs committed to a repo, reports sent to others): they mean nothing to anyone else and expose my agent ids and local paths.

@@ -51,6 +51,7 @@ Format: `- [ ] <concise description> [ref](<original-url>)`
 Guidelines:
 - Keep description **short** — a few words, enough to identify the task. No inline rationale or detail.
 - Every `Backlog.md` entry is exactly **one line**. Never add sub-bullets or nested checkboxes under an entry. If a task has sub-items or needs more context, put them in a task note (`Tasks/YYYY-MM/<Task Name>.md`) and make the entry a single line that links it with a wiki-link, e.g. `- [ ] [[Tasks/2026-10/Task Name]]`.
+- A task's details live in that task's own note (`Tasks/YYYY-MM/<Task Name>.md`), never in another task's note. If a new entry relates to an existing note, give it its own note and link the existing one from a "Related" line.
 - Include person's first name if someone is asking/assigning something
 - Jira: `Fix auth token storage bug [DP-1234](url)`
 - GitHub PR: `Review [repo#number](url): summary`

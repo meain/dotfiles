@@ -15,7 +15,7 @@ description: >
 
 | Path | Purpose |
 |------|---------|
-| `Backlog/Backlog.md` | **Primary backlog** — sections: Today, Tomorrow, day names, This Week, Weekend, Next Week, Whenever, Ongoing |
+| `Backlog/Backlog.md` | **Primary backlog** — dated sections (`### YYYY-MM-DD (Weekday)`) first, in ascending date order (oldest first, newest last), then `### Backlog`, Blocked, High/Low priority backlog, This Cycle, Next Cycle, Weekend, Someday, Ongoing. Read the file's actual headings before editing; they drift from this list |
 | `Tasks/YYYY-MM/<Task Name>.md` | Detailed task notes |
 | `Meeting/YYYY/MM/DD/<Name>.md` | Meeting notes |
 | `Journal/Day/YYYY/MM/YYYY-MM-DD.md` | Daily journal |
@@ -34,7 +34,7 @@ description: >
 - [ ] Description [ref](url)                  # linked to external ref
 ```
 
-**Entry length**: Keep backlog entries short — a few words, enough to identify the task. Do NOT add long descriptions, rationale, or investigation notes inline. If more context is needed, create a task note (`Tasks/YYYY-MM/<name>.md`) and link it with a wiki-link.
+**Entry length**: Keep backlog entries short — a few words, enough to identify the task. Do NOT add long descriptions, rationale, instructions, agent ids or investigation notes inline, even for a single todo. If more context is needed, create a task note (`Tasks/YYYY-MM/<name>.md`) with the details and make the backlog line just `- [ ] [[Tasks/YYYY-MM/<name>]]` (plus 🔺 or a Jira link if relevant).
 
 **Completion**: Always use `[x]` for completed/won't-do items. Never use `[-]` or any other state.
 
@@ -50,6 +50,7 @@ Append `- [ ] <description>` to the end of the target section in `Backlog/Backlo
 - "today"/"now"/"next" → Today | "tomorrow" → Tomorrow | "this week" → This Week
 - "weekend" → Weekend | "next week" → Next Week | "whenever"/"someday" → Whenever | "ongoing" → Ongoing
 - Day names → match the `### DayName` section heading
+- A specific date (e.g. "tomorrow" resolved to 2026-11-10): use the `### YYYY-MM-DD (Weekday)` section. If it doesn't exist, create it so the dated sections stay in ascending order: after the latest earlier date, before the next later one (and before `### Backlog` if it is the newest). Never put a newer date above an older one.
 
 Keep the description short. Include a link if there's a Jira ticket or PR: `[PROJ-123](https://...)` or `[ref](url)`.
 If additional context is needed, create a task note first and link with a wiki-link.

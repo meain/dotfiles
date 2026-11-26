@@ -79,6 +79,7 @@ Add `--json` for machine-readable output. A `-` as the prompt or text reads stdi
 ## Rules
 
 - `new`, `send`, `fork`, `delete` and `schedule add` change state in the user's running app. Confirm first when the user didn't clearly ask for that exact action. `delete` is permanent (it also drops the agent's review comments).
+- To get rid of, replace or clean up an agent, `archive` it (without `--remove-workspace`). Run `delete` only when the user explicitly asks for that agent to be deleted permanently. Words like "remove", "get rid of" or "delete the old one" during a restart mean archive. If unsure, archive and say it can still be deleted.
 - Don't pass `--model opus` or long-running prompts for tests; use `haiku` and tiny prompts.
 - A remote start doesn't move the highlight in the app window, so tell the user the title and id of what you started.
 - If `ping` says Dashy isn't running, tell the user. Don't launch the app yourself: quitting or relaunching it kills their running agents.
